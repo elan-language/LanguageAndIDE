@@ -1,0 +1,9 @@
+obj/
+bin/
+*.vsidx
+*.v2
+*.testlog
+*.manifest
+*.bin
+Editor_POC/Frames/.vs/Frames/v17/.suo
+Editor_POC/Frames/.vs/Parts/v17/.suo
