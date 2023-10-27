@@ -1,14 +1,15 @@
-﻿public abstract class Frame
+﻿public interface Frame
 {
+    public  string FrameName();
+
+    //Called only when state of frame is valid
+    public  string RenderContent();
+
+
     //KNOW WHAT/WHETHER
 
-    // Own name
+    // Own name (for listing as an option in right-click menu
     // Fields (properties) concrete sub-classes only
-    // IsEditable
-    // IsLeafNode
-    // Text (if LeafNode)
-    // IsMultiLinePart
-    // IsAFieldInItself
     // StartLineNo, and StartColNo
 
     //KNOW HOW TO
