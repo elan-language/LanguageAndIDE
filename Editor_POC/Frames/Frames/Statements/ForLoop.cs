@@ -1,24 +1,6 @@
-﻿public class ForLoop : Frame, Statement
+﻿public class ForLoop : CompoundFrame
 {
-    public StatementBlock StatementBlock { get; set; } = new StatementBlock();
-
-    public void AddStatement(Frame s)
+    public ForLoop(Frame? superFrame, string prompt) : base(superFrame, prompt)
     {
-        throw new NotImplementedException();
-    }
-
-    public string FrameName()
-    {
-        throw new NotImplementedException();
-    }
-
-    public string RenderContent()
-    {
-        throw new NotImplementedException();
-    }
-
-    public string StatementBlockRendered()
-    {
-        throw new NotImplementedException();
     }
 }

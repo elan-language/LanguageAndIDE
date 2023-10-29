@@ -1,17 +1,6 @@
-﻿public class WhileLoop : Frame, Statement
+﻿public class WhileLoop : CompoundFrame
 {
-    public WhileLoop(string condition) : base()
+    public WhileLoop(Frame? superFrame, string prompt) : base(superFrame, prompt)
     {
-        Condition.EnterText(condition);
     }
-
-    public StatementBlock StatementBlock { get; set; } = new StatementBlock();
-
-    private Expression Condition { get; set; } = new Expression("condition");
-
-    public string FrameName() => "While loop";
-
-    public string RenderContent() => $@"{@while} {Condition} {NL} {StatementBlock} {NL} {end} {@while}{NL}";
-
-
 }

@@ -1,20 +1,6 @@
-﻿public class Enumeration : Frame, TopLevelConstruct
+﻿public class Enumeration : CompoundFrame
 {
-    private IdentifierList Values { get; set; } = new IdentifierList("enumValue"); 
-
-    private Identifier Name { get; set; } = new Identifier("name");
-
-    public string FrameName()
+    public Enumeration(Frame? superFrame, string prompt) : base(superFrame, prompt)
     {
-        throw new NotImplementedException();
-    }
-
-    public string RenderContent()
-    {
-        return $@"
-{@enumeration} {Name}{NL}
-  {Values}
-{@end} {enumeration} {NL}
-";
     }
 }

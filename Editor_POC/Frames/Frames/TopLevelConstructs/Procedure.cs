@@ -1,15 +1,6 @@
-﻿public class Procedure :  TopLevelConstruct
+﻿public class Procedure : CompoundFrame
 {
-    public List<Frame> StatementBlock { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-    public string FrameName()
+    public Procedure(Frame? superFrame, string prompt) : base(superFrame, prompt)
     {
-        throw new NotImplementedException();
     }
-
-    public string RenderContent()
-    {
-        throw new NotImplementedException();
-    }
-
 }
