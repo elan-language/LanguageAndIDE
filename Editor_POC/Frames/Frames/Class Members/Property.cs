@@ -1,6 +1,6 @@
 ﻿public class Property : CompoundFrame
 {
-    public Property(Frame? superFrame, string prompt) : base(superFrame, prompt)
+    public Property(Frame? superFrame) : base(superFrame, "")
     {
     }
 }

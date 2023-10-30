@@ -4,6 +4,8 @@
     {
     }
 
+    protected List<Frame> SubFrames = new List<Frame>();
+
     public override string RenderCodeAsHtml()
     {
         // Aggregate equivalent method on all sub frames

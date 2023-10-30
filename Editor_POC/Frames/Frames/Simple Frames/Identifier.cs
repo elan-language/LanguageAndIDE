@@ -1,6 +1,6 @@
 ﻿public class Identifier : SimpleFrame
 {
-    public Identifier(Frame? superFrame) : base(superFrame,"identifier")
+    public Identifier(Frame? superFrame) : base(superFrame,"name")
     {
     }
 

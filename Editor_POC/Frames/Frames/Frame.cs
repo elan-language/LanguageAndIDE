@@ -10,11 +10,20 @@
 
     public bool Optional { get; init; }
 
-    public bool CannotBeDeletedWithinSuperFrame { get; init; }
+    //TODO - could make these abstract
+    public bool CanBeDeletedWithinSuperFrame { get; init; }
+    public bool CanBeMovedWithinSuperFrame { get; init; }
+    public bool CanBeMovedOutOfSuperFrame { get; init; }
+
+    //TODO: Immediate deletion ? i.e. remove incorrectly added
 
     public string Prompt { get; init; }
 
     public string Text { get; set; } = "";
+
+    public bool HasFocus { get; }
+    
+    public (int, int) CursorPosition { get; set; } //Relevant only if HasFocus
 
 
     public abstract int LengthInChars();

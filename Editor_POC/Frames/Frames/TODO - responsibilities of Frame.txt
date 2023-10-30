@@ -34,11 +34,6 @@ Properties of a frame
 
 
 Responsibilities of a frame ? 
-- Know its sub-frames and super-frame as appropriate
-- Know if it can be moved/deleted
-- Know its extent (row, cols? or just charCount?)
-- Know if it has focus, and if so the position of the cursor (line, col, or just charNo?) within it.
-- Know whether it can be moved and/or deleted
 - If cursor is moved over a sub-frame, transfer focus to the sub-frame
 - If cursor is moved before first or after last sub-frame, transfer focus to super-frame
 - If cursor is between sub-frames,know whether (and which) sub-frames may be inserted - 
@@ -53,17 +48,4 @@ Responsibilities of a frame ?
 - Respond to all keystrokes incl. Tab, Enter, Cursor keys
 - Direct focus to subframe or superframe based on cursor position
 
-A list can be a list of a single type of parsed field, with separator e.g. argument list
-
-Statement list
-Existing statements are held as a list of Statement Frames, with a method to render them as a single string. 
-The owning object detects an Enter (newline) at start/end of any statement frame. and inserts as StatementField.
-The statementField offers right click options or when typed text matchesand just one type of possible statement in
-the context, inserts that statement frame, with cursor put in suitable position and text added to field(s) within statement
-as appropriate.
-
-Member list should work like statement list
-
-Argument list
-Works the same as above
 

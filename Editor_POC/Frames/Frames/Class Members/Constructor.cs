@@ -2,7 +2,7 @@
 {
     public Constructor(Frame? superFrame) : base(superFrame, "")
     {
-        CannotBeDeletedWithinSuperFrame = true;
+        CanBeDeletedWithinSuperFrame = false;
     }
 }
 
