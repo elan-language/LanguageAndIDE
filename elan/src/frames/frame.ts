@@ -1,3 +1,6 @@
 export interface Frame {
-    renderAsHtml() : string;
+    renderAsHtml(): string;
+
+    applyClass(id: string, cls: string): void;
+
 }

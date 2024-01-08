@@ -16,6 +16,12 @@ export function frameFactory(code : string) : [Frame, string] {
     return [null!, ""];
 } 
 
+var id = 0;
+
+export function nextId() {
+  return id++; 
+}
+
 function mainFrameFactory(code : string) : [Frame, string] {
     const mainBodyRegex = /main([\s\S]*)end main([\s\S]*)/;
     const match = code.match(mainBodyRegex);
@@ -23,7 +29,7 @@ function mainFrameFactory(code : string) : [Frame, string] {
 }
 
 function varFrameFactory(code : string) : [Frame, string] {
-    const varRegex = /var(.*)set to (.*)\r\n(.*)/;
+    const varRegex = /var(.*)set to (.*)\r\n([\s\S]*)/;
     const match = code.match(varRegex);
     return [new VarFrame(match![1], match![2]), match![3]];
 }

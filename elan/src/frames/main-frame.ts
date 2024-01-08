@@ -5,6 +5,8 @@ export class MainFrame implements Frame{
 
     private frames : Array<Frame> = new Array<Frame>();
 
+    private classes = '';
+
     constructor(code : string) {
         while (code.length > 0){
             const [f, c] = frameFactory(code);
@@ -12,6 +14,17 @@ export class MainFrame implements Frame{
             this.frames.push(f);
             code = c;
          }
+    }
+
+    public applyClass(id: string, cls: string) {
+        this.classes = '';
+        if (id === "main"){
+           this.classes = cls;
+        }
+
+        for (var frame of this.frames) {
+            frame.applyClass(id, cls);
+        }
     }
 
     public renderAsHtml() {
@@ -22,9 +35,10 @@ export class MainFrame implements Frame{
         }
 
         const statements = ss.join("\n");
+        const cls = `frame ${this.classes}`;
 
         return `
-      <div class='frame'><span class='keyword'>main</span>
+      <div id='main' class='${cls}'><span class='keyword'>main</span>
       ${statements}<span class='keyword'>end main</span></div>`;
 
     }

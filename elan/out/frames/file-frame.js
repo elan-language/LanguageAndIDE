@@ -14,6 +14,11 @@ class FileFrame {
             restOfCode = c;
         }
     }
+    applyClass(id, cls) {
+        for (var frame of this.frames) {
+            frame.applyClass(id, cls);
+        }
+    }
     renderAsHtml() {
         const ss = [];
         for (var frame of this.frames) {
