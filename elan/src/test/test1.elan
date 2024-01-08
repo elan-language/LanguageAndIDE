@@ -1,0 +1,3 @@
+main
+  var a set to "Hello World"
+end main
