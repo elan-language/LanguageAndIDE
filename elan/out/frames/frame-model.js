@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FrameModel = void 0;
+const frame_factory_1 = require("./frame-factory");
 class FrameModel {
+    frame;
     load(rawCode) {
+        [this.frame,] = (0, frame_factory_1.frameFactory)(rawCode);
     }
     renderAsHtml() {
-        return `
-      <div id='1' class='frame'><span class='keyword'>main</span>
-      <div id='2' class='frame'><span class='keyword'>var</span> a <span class='keyword'>set to</span><span class='string-value'> "Hello World"</span></div>
-      <span class='keyword'>end main</span></div>`;
+        return this.frame?.renderAsHtml();
     }
 }
 exports.FrameModel = FrameModel;

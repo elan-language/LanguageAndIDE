@@ -1,15 +1,16 @@
+import { Frame } from "./frame";
+import { frameFactory } from "./frame-factory";
+
 export class FrameModel {
 
-    public load(rawCode : string){
+    private frame? : Frame;
 
+    public load(rawCode : string) {
+       [this.frame,] = frameFactory(rawCode);
     }
 
-
     public renderAsHtml() {
-      return `
-      <div id='1' class='frame'><span class='keyword'>main</span>
-      <div id='2' class='frame'><span class='keyword'>var</span> a <span class='keyword'>set to</span><span class='string-value'> "Hello World"</span></div>
-      <span class='keyword'>end main</span></div>`;
+      return this.frame?.renderAsHtml();
     }
 
 }
