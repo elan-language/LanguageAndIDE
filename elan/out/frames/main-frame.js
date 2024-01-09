@@ -4,11 +4,21 @@ exports.MainFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
 class MainFrame {
     frames = new Array();
+    classes = '';
     constructor(code) {
         while (code.length > 0) {
             const [f, c] = (0, frame_factory_1.frameFactory)(code);
             this.frames.push(f);
             code = c;
+        }
+    }
+    applyClass(id, cls) {
+        this.classes = '';
+        if (id === "main") {
+            this.classes = cls;
+        }
+        for (var frame of this.frames) {
+            frame.applyClass(id, cls);
         }
     }
     renderAsHtml() {
@@ -17,8 +27,9 @@ class MainFrame {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
+        const cls = `frame ${this.classes}`;
         return `
-      <div class='frame'><span class='keyword'>main</span>
+      <div id='main' class='${cls}'><span class='keyword'>main</span>
       ${statements}<span class='keyword'>end main</span></div>`;
     }
 }

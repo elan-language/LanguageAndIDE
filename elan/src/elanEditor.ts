@@ -36,9 +36,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
 		let fm = this.frameModel;
+		fm.load(document.getText());
 
 		function updateWebview() {
-			fm.load(document.getText());
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: fm.renderAsHtml(),
@@ -69,6 +69,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			switch (e.type) {
 				case 'click':
 					this.click(e.id);
+					updateWebview();
 					return;
 
 				case 'delete':
@@ -81,9 +82,8 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
     private click(id : string){
-
+		this.frameModel.applyClass(id, "highlight");
 	}
-
 
 	/**
 	 * Get the static html used for the editor webviews.

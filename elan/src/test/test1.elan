@@ -1,4 +1,5 @@
 # Elan v0.1
 main
   var a set to "Hello World"
+  var b set to 6
 end main
