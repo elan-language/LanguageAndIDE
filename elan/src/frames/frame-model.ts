@@ -3,18 +3,25 @@ import { frameFactory } from "./frame-factory";
 
 export class FrameModel {
 
-    private frame? : Frame;
+  private frame?: Frame;
 
-    public load(rawCode : string) {
-       [this.frame,] = frameFactory(rawCode);
-    }
+  public load(rawCode: string) {
+    [this.frame,] = frameFactory(rawCode);
+  }
 
-    public applyClass(id : string, cls: string){
-      this.frame?.applyClass(id, cls);
-    }
+  public applyClass(id: string, cls: string) {
+    this.frame?.applyClass(id, cls);
+  }
 
-    public renderAsHtml() {
-      return this.frame?.renderAsHtml();
-    }
+  public renderAsHtml() {
+    return this.frame?.renderAsHtml();
+  }
 
+  public newFrame() {
+    this.frame?.newFrame();
+  }
+
+  public frameType(key: string): void {
+    this.frame?.frameType(key);
+  }
 }

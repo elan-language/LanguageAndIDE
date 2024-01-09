@@ -13,6 +13,12 @@ class FrameModel {
     renderAsHtml() {
         return this.frame?.renderAsHtml();
     }
+    newFrame() {
+        this.frame?.newFrame();
+    }
+    frameType(key) {
+        this.frame?.frameType(key);
+    }
 }
 exports.FrameModel = FrameModel;
 //# sourceMappingURL=frame-model.js.map

@@ -13,21 +13,6 @@
 	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.code'));
 	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
 
-	
-
-
-
-	// addButtonContainer.querySelector('button').addEventListener('click', () => {
-	// 	vscode.postMessage({
-	// 		type: 'add'
-	// 	});
-	// })
-
-	// const errorContainer = document.createElement('div');
-	// document.body.appendChild(errorContainer);
-	// errorContainer.className = 'error'
-	// errorContainer.style.display = 'none'
-
 	/**
 	 * Render the document in the webview.
 	 */
@@ -44,6 +29,24 @@
 				event.stopPropagation();
 			});
 		}
+
+		const input = /** @type {HTMLElement} */ (document.querySelector('input'));
+
+        if (input){
+			input.focus();
+			input.addEventListener('keydown', event => {
+			
+
+				const msg = { type: 'frameType', key: event.key };
+				vscode.postMessage(msg);
+				event.stopPropagation();
+			});
+			input.addEventListener('click', event => {
+			
+				event.stopPropagation();
+			});
+		}
+
 	}
 
 	// Handle messages sent from the extension to the webview
@@ -63,6 +66,28 @@
 				return;
 		}
 	});
+
+	// spike new frames
+	window.addEventListener('click', event => {
+		const msg = { type: 'newFrame' };
+		vscode.postMessage(msg);
+		event.stopPropagation();
+	});
+
+
+
+	function isArrowKey(k) {
+		return k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight";
+	}
+
+    window.addEventListener('keydown', event => {
+		
+        
+		if (event.ctrlKey && isArrowKey(event.key)){
+			handleCtrlArrow(event.key);
+		}
+	});
+
 
 	// Webviews are normally torn down when not visible and re-created when they become visible again.
 	// State lets us save information across these re-loads

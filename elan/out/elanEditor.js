@@ -81,8 +81,13 @@ class ElanEditorProvider {
                     this.click(e.id);
                     updateWebview();
                     return;
-                case 'delete':
-                    //this.deleteScratch(document, e.id);
+                case 'newFrame':
+                    this.newFrame();
+                    updateWebview();
+                    return;
+                case 'frameType':
+                    this.frameType(e.key);
+                    updateWebview();
                     return;
             }
         });
@@ -90,6 +95,12 @@ class ElanEditorProvider {
     }
     click(id) {
         this.frameModel.applyClass(id, "highlight");
+    }
+    newFrame() {
+        this.frameModel.newFrame();
+    }
+    frameType(key) {
+        this.frameModel.frameType(key);
     }
     /**
      * Get the static html used for the editor webviews.

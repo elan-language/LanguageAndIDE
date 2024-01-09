@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VarFrame = void 0;
+exports.PendingFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
-class VarFrame {
+class PendingFrame {
     id;
     expr;
     classes = '';
@@ -10,12 +10,6 @@ class VarFrame {
         this.id = id;
         this.expr = expr;
         this.elementId = (0, frame_factory_1.nextId)();
-    }
-    frameType(key) {
-        throw new Error("Method not implemented.");
-    }
-    newFrame() {
-        throw new Error("Method not implemented.");
     }
     elementId;
     applyClass(id, cls) {
@@ -29,5 +23,5 @@ class VarFrame {
         return `<div id='var${this.elementId}' class='${cls}'><span class='keyword'>var</span> ${this.id} <span class='keyword'>set to</span><span class='string-value'>  ${this.expr} </span></div>`;
     }
 }
-exports.VarFrame = VarFrame;
-//# sourceMappingURL=var-frame.js.map
+exports.PendingFrame = PendingFrame;
+//# sourceMappingURL=var-frame%20copy.js.map

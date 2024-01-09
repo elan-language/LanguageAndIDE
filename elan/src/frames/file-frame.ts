@@ -1,5 +1,6 @@
 import { Frame } from "./frame";
 import { frameFactory } from "./frame-factory";
+import { PendingFrame } from "./pending-frame";
 
 export class FileFrame implements Frame {
 
@@ -17,6 +18,22 @@ export class FileFrame implements Frame {
             this.frames.push(f);
             restOfCode = c;
         }
+    }
+
+    frameType(key: string): Frame {
+        var lastFrame = this.frames[this.frames.length -1];
+        if (lastFrame instanceof PendingFrame){
+            const nf = lastFrame.frameType(key);
+            this.frames.pop();
+            this.frames.push(nf);
+            return nf;
+        }
+        return lastFrame;
+    }
+
+    newFrame(): void {
+        var pf = new PendingFrame();
+        this.frames.push(pf);
     }
 
     public applyClass(id: string, cls: string) {

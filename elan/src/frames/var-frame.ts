@@ -9,6 +9,14 @@ export class VarFrame implements Frame {
         this.elementId = nextId();
     }
 
+    frameType(key: string): Frame {
+        throw new Error("Method not implemented.");
+    }
+    
+    newFrame(): void {
+        throw new Error("Method not implemented.");
+    }
+
     private elementId: number;
 
     public applyClass(id: string, cls: string) {

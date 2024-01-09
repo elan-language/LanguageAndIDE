@@ -12,6 +12,12 @@ class MainFrame {
             code = c;
         }
     }
+    frameType(key) {
+        throw new Error("Method not implemented.");
+    }
+    newFrame() {
+        throw new Error("Method not implemented.");
+    }
     applyClass(id, cls) {
         this.classes = '';
         if (id === "main") {

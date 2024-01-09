@@ -15,6 +15,12 @@ export class MainFrame implements Frame{
             code = c;
          }
     }
+    frameType(key: string): Frame {
+        throw new Error("Method not implemented.");
+    }
+    newFrame(): void {
+        throw new Error("Method not implemented.");
+    }
 
     public applyClass(id: string, cls: string) {
         this.classes = '';

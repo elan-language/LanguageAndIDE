@@ -72,8 +72,13 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					updateWebview();
 					return;
 
-				case 'delete':
-					//this.deleteScratch(document, e.id);
+				case 'newFrame':
+					this.newFrame();
+					updateWebview();
+					return;
+				case 'frameType':
+					this.frameType(e.key);
+					updateWebview();
 					return;
 			}
 		});
@@ -83,6 +88,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
     private click(id : string){
 		this.frameModel.applyClass(id, "highlight");
+	}
+
+	private newFrame(){
+		this.frameModel.newFrame();
+	}
+
+
+	private frameType(key: string){
+		this.frameModel.frameType(key);
 	}
 
 	/**

@@ -9,3 +9,8 @@
 .highlight {
     background-color: yellow;
 }
+
+input {
+    border: none;
+    background-color: aqua;
+}

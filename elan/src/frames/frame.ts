@@ -3,4 +3,7 @@ export interface Frame {
 
     applyClass(id: string, cls: string): void;
 
+    newFrame(): void;
+
+    frameType(key : string): Frame;
 }

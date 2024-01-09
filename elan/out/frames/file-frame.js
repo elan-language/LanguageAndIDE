@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
+const pending_frame_1 = require("./pending-frame");
 class FileFrame {
     frames = new Array();
     // to do hash 
@@ -13,6 +14,20 @@ class FileFrame {
             this.frames.push(f);
             restOfCode = c;
         }
+    }
+    frameType(key) {
+        var lastFrame = this.frames[this.frames.length - 1];
+        if (lastFrame instanceof pending_frame_1.PendingFrame) {
+            const nf = lastFrame.frameType(key);
+            this.frames.pop();
+            this.frames.push(nf);
+            return nf;
+        }
+        return lastFrame;
+    }
+    newFrame() {
+        var pf = new pending_frame_1.PendingFrame();
+        this.frames.push(pf);
     }
     applyClass(id, cls) {
         for (var frame of this.frames) {
