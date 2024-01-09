@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
-const pending_frame_1 = require("./pending-frame");
+const global_selector_frame_1 = require("./global-selector-frame");
 class FileFrame {
     frames = new Array();
     // to do hash 
@@ -17,16 +17,17 @@ class FileFrame {
     }
     frameType(key) {
         var lastFrame = this.frames[this.frames.length - 1];
-        if (lastFrame instanceof pending_frame_1.PendingFrame) {
+        if (lastFrame instanceof global_selector_frame_1.GlobalSelectorFrame) {
             const nf = lastFrame.frameType(key);
             this.frames.pop();
             this.frames.push(nf);
-            return nf;
+            return this;
         }
-        return lastFrame;
+        lastFrame.frameType(key);
+        return this;
     }
     newFrame() {
-        var pf = new pending_frame_1.PendingFrame();
+        var pf = new global_selector_frame_1.GlobalSelectorFrame();
         this.frames.push(pf);
     }
     applyClass(id, cls) {

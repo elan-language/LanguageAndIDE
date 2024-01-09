@@ -1,29 +1,26 @@
 import { Frame } from "./frame";
-import { frameFactory, nextId } from "./frame-factory";
+import { nextId } from "./frame-factory";
 import { MainFrame } from "./main-frame";
+import { StatementSelectorFrame } from "./statement-selector-frame";
 
-export class PendingFrame implements Frame {
-
-    private classes = '';
+export class GlobalSelectorFrame implements Frame {
 
     constructor() {
-        this.elementId = nextId();
+    
     }
 
     private kw = "main";
     private endkw = "end main";
-    private index = 0; 
-
+    private index = 0;
 
     frameType(key: string): Frame {
         if (key === this.kw[this.index]) {
             this.index++;
         }
-        else if (key === "Tab" && this.index > 0){
-            return new MainFrame("");
-        }
-        if (this.index === this.kw.length){
-            return new MainFrame("");
+        if ((key === "Tab" && this.index > 0) || (this.index === this.kw.length)) {
+            const mf = new MainFrame("");
+            mf.addFrame(new StatementSelectorFrame()); 
+            return mf;
         }
 
         return this;
@@ -33,25 +30,16 @@ export class PendingFrame implements Frame {
         throw new Error("Method not implemented.");
     }
 
-    private elementId: number;
-
     public applyClass(id: string, cls: string) {
-        this.classes = '';
-        if (id === `var${this.elementId}`){
-           this.classes = cls;
-        }
+      
     }
 
     renderAsHtml(): string {
-        if (this.index === 0){
+        if (this.index === 0) {
             return `<input type="text">`;
         }
         else {
-            // return `<div id='main' class='frame'>
-            //         <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
-            //         <span class='keyword'>end main</span></div>`;
-
-                    return `<global id='main' class='frame'>
+            return `<global id='main' class='frame'>
                             <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
                             <statementBlock>
                             </statementBlock>

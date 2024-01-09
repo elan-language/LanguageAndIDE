@@ -1,6 +1,6 @@
 import { Frame } from "./frame";
 import { frameFactory } from "./frame-factory";
-import { PendingFrame } from "./pending-frame";
+import { GlobalSelectorFrame } from "./global-selector-frame";
 
 export class FileFrame implements Frame {
 
@@ -22,17 +22,18 @@ export class FileFrame implements Frame {
 
     frameType(key: string): Frame {
         var lastFrame = this.frames[this.frames.length -1];
-        if (lastFrame instanceof PendingFrame){
+        if (lastFrame instanceof GlobalSelectorFrame){
             const nf = lastFrame.frameType(key);
             this.frames.pop();
             this.frames.push(nf);
-            return nf;
+            return this;
         }
-        return lastFrame;
+        lastFrame.frameType(key);
+        return this;
     }
 
     newFrame(): void {
-        var pf = new PendingFrame();
+        var pf = new GlobalSelectorFrame();
         this.frames.push(pf);
     }
 

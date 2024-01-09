@@ -1,16 +1,47 @@
 import { Frame } from "./frame";
 import { nextId } from "./frame-factory";
+import { TextFrame } from "./text-frame";
+import { TextSelectorFrame, TextType } from "./text-selector-frame";
 
 export class VarFrame implements Frame {
 
     private classes = '';
 
-    constructor(private id: string, private expr: string) {
+    private idFrame : Frame;
+    private exprFrame : Frame;
+
+    constructor(id: string, expr: string) {
         this.elementId = nextId();
+        this.idFrame = new TextFrame(id, TextType.identifier);
+        this.exprFrame = new TextFrame(expr, TextType.expression);
     }
 
+    addFrame(frame : Frame, textType : TextType){
+        if (textType === TextType.identifier){
+            this.idFrame = frame;
+        }
+        else {
+            this.exprFrame = frame;
+        }
+    }
+
+
     frameType(key: string): Frame {
-        throw new Error("Method not implemented.");
+        if (this.idFrame instanceof TextSelectorFrame) {
+            this.idFrame = this.idFrame.frameType(key);
+
+            if (this.idFrame instanceof TextFrame && this.exprFrame instanceof TextFrame){
+                if (this.exprFrame.value.length === 0){
+                    this.exprFrame = new TextSelectorFrame(TextType.expression);
+                }
+            }
+        }
+
+        if (this.exprFrame instanceof TextSelectorFrame) {
+            this.exprFrame = this.exprFrame.frameType(key);
+        }
+
+        return this;
     }
     
     newFrame(): void {
@@ -28,8 +59,9 @@ export class VarFrame implements Frame {
 
     renderAsHtml(): string {
         const cls = `frame ${this.classes}`;
-        // return `<div id='var${this.elementId}' class='${cls}'><span class='keyword'>var</span> ${this.id} <span class='keyword'>set to</span><span class='string-value'>  ${this.expr} </span></div>`;
-    
-        return `<statement id='var${this.elementId}' class="${cls}"><keyword>var</keyword><identifier>a</identifier><keyword>set to</keyword><expression class="">3</expression></statement>`;
+        const id = this.idFrame.renderAsHtml();
+        const expr = this.exprFrame.renderAsHtml();
+      
+        return `<statement id='var${this.elementId}' class="${cls}"><keyword>var</keyword>${id}<keyword>set to</keyword>${expr}</statement>`;
     }
 }

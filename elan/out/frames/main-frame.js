@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MainFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
+const statement_selector_frame_1 = require("./statement-selector-frame");
 class MainFrame {
     frames = new Array();
     classes = '';
@@ -12,8 +13,18 @@ class MainFrame {
             code = c;
         }
     }
+    addFrame(frame) {
+        this.frames.push(frame);
+    }
     frameType(key) {
-        throw new Error("Method not implemented.");
+        var lastFrame = this.frames[this.frames.length - 1];
+        if (lastFrame instanceof statement_selector_frame_1.StatementSelectorFrame) {
+            const nf = lastFrame.frameType(key);
+            this.frames.pop();
+            this.frames.push(nf);
+        }
+        lastFrame.frameType(key);
+        return this;
     }
     newFrame() {
         throw new Error("Method not implemented.");
@@ -34,17 +45,13 @@ class MainFrame {
         }
         const statements = ss.join("\n");
         const cls = `frame ${this.classes}`;
-        //     return `
-        //   <div id='main' class='${cls}'><span class='keyword'>main</span>
-        //   ${statements}<span class='keyword'>end main</span></div>`;
-        return `
-      <global id='main' class='${cls}'>
-        <keyword>main</keyword>
-        <statementBlock>
-        ${statements}
-        </statementBlock>
-        <keyword>end main</keyword>
-      </global>`;
+        return `<global id='main' class='${cls}'>
+                    <keyword>main</keyword>
+                    <statementBlock>
+                    ${statements}
+                    </statementBlock>
+                    <keyword>end main</keyword>
+                </global>`;
     }
 }
 exports.MainFrame = MainFrame;
