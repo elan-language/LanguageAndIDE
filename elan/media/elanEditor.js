@@ -35,14 +35,14 @@
         if (input){
 			input.focus();
 			input.addEventListener('keydown', event => {
-			
-
-				const msg = { type: 'frameType', key: event.key };
-				vscode.postMessage(msg);
+                const text = event.key;
+				if (text.length === 1 || text === "Tab") {
+					const msg = { type: 'userInput', key: text };
+					vscode.postMessage(msg);
+				}
 				event.stopPropagation();
 			});
 			input.addEventListener('click', event => {
-			
 				event.stopPropagation();
 			});
 		}

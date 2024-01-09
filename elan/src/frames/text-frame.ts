@@ -8,7 +8,7 @@ export class TextFrame implements Frame {
         this.elementId = nextId();
     }
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         throw new Error("Method not implemented.");
     }
     

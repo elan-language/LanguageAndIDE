@@ -9,7 +9,7 @@ class GlobalSelectorFrame {
     kw = "main";
     endkw = "end main";
     index = 0;
-    frameType(key) {
+    userInput(key) {
         if (key === this.kw[this.index]) {
             this.index++;
         }

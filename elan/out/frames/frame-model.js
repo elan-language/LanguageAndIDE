@@ -16,8 +16,8 @@ class FrameModel {
     newFrame() {
         this.frame?.newFrame();
     }
-    frameType(key) {
-        this.frame?.frameType(key);
+    userInput(key) {
+        this.frame?.userInput(key);
     }
 }
 exports.FrameModel = FrameModel;

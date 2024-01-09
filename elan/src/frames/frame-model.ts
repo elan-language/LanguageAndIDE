@@ -21,7 +21,7 @@ export class FrameModel {
     this.frame?.newFrame();
   }
 
-  public frameType(key: string): void {
-    this.frame?.frameType(key);
+  public userInput(key: string): void {
+    this.frame?.userInput(key);
   }
 }

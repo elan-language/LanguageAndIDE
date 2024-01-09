@@ -26,9 +26,9 @@ export class VarFrame implements Frame {
     }
 
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         if (this.idFrame instanceof TextSelectorFrame) {
-            this.idFrame = this.idFrame.frameType(key);
+            this.idFrame = this.idFrame.userInput(key);
 
             if (this.idFrame instanceof TextFrame && this.exprFrame instanceof TextFrame){
                 if (this.exprFrame.value.length === 0){
@@ -38,7 +38,7 @@ export class VarFrame implements Frame {
         }
 
         if (this.exprFrame instanceof TextSelectorFrame) {
-            this.exprFrame = this.exprFrame.frameType(key);
+            this.exprFrame = this.exprFrame.userInput(key);
         }
 
         return this;

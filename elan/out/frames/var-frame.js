@@ -21,9 +21,9 @@ class VarFrame {
             this.exprFrame = frame;
         }
     }
-    frameType(key) {
+    userInput(key) {
         if (this.idFrame instanceof text_selector_frame_1.TextSelectorFrame) {
-            this.idFrame = this.idFrame.frameType(key);
+            this.idFrame = this.idFrame.userInput(key);
             if (this.idFrame instanceof text_frame_1.TextFrame && this.exprFrame instanceof text_frame_1.TextFrame) {
                 if (this.exprFrame.value.length === 0) {
                     this.exprFrame = new text_selector_frame_1.TextSelectorFrame(text_selector_frame_1.TextType.expression);
@@ -31,7 +31,7 @@ class VarFrame {
             }
         }
         if (this.exprFrame instanceof text_selector_frame_1.TextSelectorFrame) {
-            this.exprFrame = this.exprFrame.frameType(key);
+            this.exprFrame = this.exprFrame.userInput(key);
         }
         return this;
     }

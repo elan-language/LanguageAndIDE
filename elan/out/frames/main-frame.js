@@ -16,14 +16,14 @@ class MainFrame {
     addFrame(frame) {
         this.frames.push(frame);
     }
-    frameType(key) {
+    userInput(key) {
         var lastFrame = this.frames[this.frames.length - 1];
         if (lastFrame instanceof statement_selector_frame_1.StatementSelectorFrame) {
-            const nf = lastFrame.frameType(key);
+            const nf = lastFrame.userInput(key);
             this.frames.pop();
             this.frames.push(nf);
         }
-        lastFrame.frameType(key);
+        lastFrame.userInput(key);
         return this;
     }
     newFrame() {

@@ -20,15 +20,15 @@ export class FileFrame implements Frame {
         }
     }
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         var lastFrame = this.frames[this.frames.length -1];
         if (lastFrame instanceof GlobalSelectorFrame){
-            const nf = lastFrame.frameType(key);
+            const nf = lastFrame.userInput(key);
             this.frames.pop();
             this.frames.push(nf);
             return this;
         }
-        lastFrame.frameType(key);
+        lastFrame.userInput(key);
         return this;
     }
 

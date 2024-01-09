@@ -20,7 +20,7 @@ class TextSelectorFrame {
         return s !== s.toLowerCase() &&
             s === s.toUpperCase();
     }
-    frameType(key) {
+    userInput(key) {
         if (this.textType === TextType.identifier && this.currentValue === "") {
             if (this.isUpperCase(key)) {
                 return this;

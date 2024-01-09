@@ -5,5 +5,5 @@ export interface Frame {
 
     newFrame(): void;
 
-    frameType(key : string): Frame;
+    userInput(key : string): Frame;
 }

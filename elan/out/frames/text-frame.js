@@ -11,7 +11,7 @@ class TextFrame {
         this.textType = textType;
         this.elementId = (0, frame_factory_1.nextId)();
     }
-    frameType(key) {
+    userInput(key) {
         throw new Error("Method not implemented.");
     }
     newFrame() {

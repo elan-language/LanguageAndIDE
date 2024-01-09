@@ -13,7 +13,7 @@ export class GlobalSelectorFrame implements Frame {
     private endkw = "end main";
     private index = 0;
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         if (key === this.kw[this.index]) {
             this.index++;
         }

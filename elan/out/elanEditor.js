@@ -85,8 +85,8 @@ class ElanEditorProvider {
                     this.newFrame();
                     updateWebview();
                     return;
-                case 'frameType':
-                    this.frameType(e.key);
+                case 'userInput':
+                    this.userInput(e.key);
                     updateWebview();
                     return;
             }
@@ -99,8 +99,8 @@ class ElanEditorProvider {
     newFrame() {
         this.frameModel.newFrame();
     }
-    frameType(key) {
-        this.frameModel.frameType(key);
+    userInput(key) {
+        this.frameModel.userInput(key);
     }
     /**
      * Get the static html used for the editor webviews.

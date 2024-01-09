@@ -24,7 +24,7 @@ export class TextSelectorFrame implements Frame {
                s === s.toUpperCase();
     }
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         if (this.textType === TextType.identifier && this.currentValue === "") {
             if (this.isUpperCase(key)){
                 return this;

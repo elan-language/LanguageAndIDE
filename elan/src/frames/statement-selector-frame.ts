@@ -14,7 +14,7 @@ export class StatementSelectorFrame implements Frame {
     private kw = "var";
     private index = 0;
 
-    frameType(key: string): Frame {
+    userInput(key: string): Frame {
         if (key === this.kw[this.index]) {
             this.index++;
         }

@@ -11,7 +11,7 @@ class StatementSelectorFrame {
     }
     kw = "var";
     index = 0;
-    frameType(key) {
+    userInput(key) {
         if (key === this.kw[this.index]) {
             this.index++;
         }

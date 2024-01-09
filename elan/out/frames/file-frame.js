@@ -15,15 +15,15 @@ class FileFrame {
             restOfCode = c;
         }
     }
-    frameType(key) {
+    userInput(key) {
         var lastFrame = this.frames[this.frames.length - 1];
         if (lastFrame instanceof global_selector_frame_1.GlobalSelectorFrame) {
-            const nf = lastFrame.frameType(key);
+            const nf = lastFrame.userInput(key);
             this.frames.pop();
             this.frames.push(nf);
             return this;
         }
-        lastFrame.frameType(key);
+        lastFrame.userInput(key);
         return this;
     }
     newFrame() {
