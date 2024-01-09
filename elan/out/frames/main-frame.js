@@ -34,9 +34,17 @@ class MainFrame {
         }
         const statements = ss.join("\n");
         const cls = `frame ${this.classes}`;
+        //     return `
+        //   <div id='main' class='${cls}'><span class='keyword'>main</span>
+        //   ${statements}<span class='keyword'>end main</span></div>`;
         return `
-      <div id='main' class='${cls}'><span class='keyword'>main</span>
-      ${statements}<span class='keyword'>end main</span></div>`;
+      <global id='main' class='${cls}'>
+        <keyword>main</keyword>
+        <statementBlock>
+        ${statements}
+        </statementBlock>
+        <keyword>end main</keyword>
+      </global>`;
     }
 }
 exports.MainFrame = MainFrame;

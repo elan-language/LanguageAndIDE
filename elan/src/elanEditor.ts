@@ -71,7 +71,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					this.click(e.id);
 					updateWebview();
 					return;
-
 				case 'newFrame':
 					this.newFrame();
 					updateWebview();
@@ -87,7 +86,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
     private click(id : string){
-		this.frameModel.applyClass(id, "highlight");
+		this.frameModel.applyClass(id, "selected");
 	}
 
 	private newFrame(){

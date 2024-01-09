@@ -1,16 +1,49 @@
-.keyword {
+* {
+    font-family: monospace;
+    color: black;
+    background-color: white;
+    border-color:white;
+}
+
+keyword {
     color: blue;
 }
 
-.string-value {
-    color: red;
+.prompt {
+    color: grey;
 }
 
-.highlight {
-    background-color: yellow;
+identifier, keyword, expression {
+    border-right-width: 1ch;
+    border-right-style: solid;
+}
+
+statementBlock {
+    display: block;
+    border-left-style: solid;
+    border-left-width: 2ch;
+}
+
+global, statement {
+    display: block;
+}
+
+global {
+    margin-bottom: 1ch;
+}
+.selected > statementBlock {
+    border-color: orange;
+}
+
+identifier.selected, expression.selected,.selected > * {
+    background-color: orange;
+    border-color: orange;
 }
 
 input {
     border: none;
-    background-color: aqua;
+}
+
+input:focus {
+    outline: none;
 }
