@@ -38,9 +38,15 @@ class PendingFrame {
             return `<input type="text">`;
         }
         else {
-            return `<div id='main' class='frame'>
-                    <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
-                    <span class='keyword'>end main</span></div>`;
+            // return `<div id='main' class='frame'>
+            //         <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
+            //         <span class='keyword'>end main</span></div>`;
+            return `<global id='main' class='frame'>
+                            <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
+                            <statementBlock>
+                            </statementBlock>
+                            <keyword>end main</keyword>
+                            </global>`;
         }
     }
 }

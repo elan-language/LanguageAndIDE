@@ -5,7 +5,7 @@
     border-color:white;
 }
 
-keyword {
+keyword, .keyword {
     color: blue;
 }
 
