@@ -26,7 +26,7 @@ function mainFrameFactory(code) {
     return [new main_frame_1.MainFrame(match[1]), match[2]];
 }
 function varFrameFactory(code) {
-    const varRegex = /var(.*)set to (.*)\r\n([\s\S]*)/;
+    const varRegex = /var (.*) set to (.*)\r\n([\s\S]*)/;
     const match = code.match(varRegex);
     return [new var_frame_1.VarFrame(match[1], match[2]), match[3]];
 }

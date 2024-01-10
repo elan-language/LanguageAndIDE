@@ -29,7 +29,7 @@ function mainFrameFactory(code : string) : [Frame, string] {
 }
 
 function varFrameFactory(code : string) : [Frame, string] {
-    const varRegex = /var(.*)set to (.*)\r\n([\s\S]*)/;
+    const varRegex = /var (.*) set to (.*)\r\n([\s\S]*)/;
     const match = code.match(varRegex);
     return [new VarFrame(match![1], match![2]), match![3]];
 }

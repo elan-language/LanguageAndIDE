@@ -22,6 +22,11 @@ export class GlobalSelectorFrame implements Frame {
         if (key === this.kw[this.index]) {
             this.index++;
         }
+
+        if ((key === "Backspace" && this.index > 0)) {
+            this.index--;
+        }
+
         if ((key === "Tab" && this.index > 0) || (this.index === this.kw.length)) {
             const mf = new MainFrame("");
             mf.addFrame(new StatementSelectorFrame()); 

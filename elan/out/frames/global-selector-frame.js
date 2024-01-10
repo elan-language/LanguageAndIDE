@@ -17,6 +17,9 @@ class GlobalSelectorFrame {
         if (key === this.kw[this.index]) {
             this.index++;
         }
+        if ((key === "Backspace" && this.index > 0)) {
+            this.index--;
+        }
         if ((key === "Tab" && this.index > 0) || (this.index === this.kw.length)) {
             const mf = new main_frame_1.MainFrame("");
             mf.addFrame(new statement_selector_frame_1.StatementSelectorFrame());

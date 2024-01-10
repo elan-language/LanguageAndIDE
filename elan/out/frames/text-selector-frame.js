@@ -30,10 +30,13 @@ class TextSelectorFrame {
                 return this;
             }
         }
+        if ((key === "Backspace" && this.value.length > 0)) {
+            this.value = this.value.slice(0, -1);
+        }
         if (key === "Tab" && this.value.length > 0) {
             return new text_frame_1.TextFrame(this.value, this.textType);
         }
-        if (key !== "Tab") {
+        if (key.length === 1) {
             this.value = this.value + key;
         }
         return this;
