@@ -8,13 +8,15 @@ class FrameModel {
         [this.frame,] = (0, frame_factory_1.frameFactory)(rawCode);
     }
     applyClass(id, cls) {
+        this.frame?.clearSelector();
         this.frame?.applyClass(id, cls);
     }
     renderAsHtml() {
         return this.frame?.renderAsHtml();
     }
-    newFrame() {
-        this.frame?.newFrame();
+    newFrame(id) {
+        this.frame?.clearSelector();
+        this.frame?.newFrame(id);
     }
     userInput(key) {
         this.frame?.userInput(key);

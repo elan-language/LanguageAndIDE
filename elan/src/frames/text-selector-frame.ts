@@ -13,8 +13,13 @@ export class TextSelectorFrame implements Frame {
 
     private classes = '';
 
+    public htmlId = "";
+
     constructor(private textType: TextType) {
         this.elementId = nextId();
+    }
+    clearSelector(): void {
+        throw new Error("Method not implemented.");
     }
 
     private currentValue = "";
@@ -42,20 +47,17 @@ export class TextSelectorFrame implements Frame {
         return this;
     }
 
-    newFrame(): void {
+    newFrame(id? : string): void {
         throw new Error("Method not implemented.");
     }
 
     private elementId: number;
 
     public applyClass(id: string, cls: string) {
-        this.classes = '';
-        if (id === `var${this.elementId}`) {
-            this.classes = cls;
-        }
+        
     }
 
     renderAsHtml(): string {
-        return `<input type="text" value="${this.currentValue}">`;
+        return `<input id="ts${this.textType}" class="live" type="text" value="${this.currentValue}">`;
     }
 }

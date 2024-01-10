@@ -11,9 +11,13 @@ var TextType;
 class TextSelectorFrame {
     textType;
     classes = '';
+    htmlId = "";
     constructor(textType) {
         this.textType = textType;
         this.elementId = (0, frame_factory_1.nextId)();
+    }
+    clearSelector() {
+        throw new Error("Method not implemented.");
     }
     currentValue = "";
     isUpperCase(s) {
@@ -34,18 +38,14 @@ class TextSelectorFrame {
         }
         return this;
     }
-    newFrame() {
+    newFrame(id) {
         throw new Error("Method not implemented.");
     }
     elementId;
     applyClass(id, cls) {
-        this.classes = '';
-        if (id === `var${this.elementId}`) {
-            this.classes = cls;
-        }
     }
     renderAsHtml() {
-        return `<input type="text" value="${this.currentValue}">`;
+        return `<input id="ts${this.textType}" class="live" type="text" value="${this.currentValue}">`;
     }
 }
 exports.TextSelectorFrame = TextSelectorFrame;

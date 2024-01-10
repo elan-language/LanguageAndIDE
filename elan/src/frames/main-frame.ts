@@ -8,6 +8,8 @@ export class MainFrame implements Frame {
 
     private classes = '';
 
+    public htmlId = "main";
+
     constructor(code: string) {
         while (code.length > 0) {
             const [f, c] = frameFactory(code);
@@ -16,26 +18,61 @@ export class MainFrame implements Frame {
             code = c;
         }
     }
+    clearSelector(): void {
+        for (var frame of this.frames) {
+            if (frame instanceof StatementSelectorFrame){
+                const index = this.frames.indexOf(frame);
+                const before = this.frames.slice(0, index);
+                const after = this.frames.slice(index + 1);
+                this.frames = [...before, ...after];
+            }
+        }
+        for (var frame of this.frames) {
+          frame.clearSelector();
+        }
+    }
 
     addFrame(frame : Frame){
         this.frames.push(frame);
     }
 
     userInput(key: string): Frame {
-        var lastFrame = this.frames[this.frames.length -1];
-        if (lastFrame instanceof StatementSelectorFrame){
-            const nf = lastFrame.userInput(key);
-            this.frames.pop();
-            this.frames.push(nf);
+        for (var frame of this.frames){
+            if (frame instanceof StatementSelectorFrame){
+                const nf = frame.userInput(key);
+                const index = this.frames.indexOf(frame);
+                this.frames[index] = nf;
+                return this;
+            }
         }
-        else {
-            lastFrame.userInput(key);
+
+        for (var frame of this.frames){
+            frame.userInput(key);
         }
+
         return this;
     }
 
-    newFrame(): void {
-        throw new Error("Method not implemented.");
+    newFrame(id? : string): void {
+        if (id === "main"){
+            var nf = new StatementSelectorFrame();
+            this.frames.unshift(nf);
+        }
+        else {
+            for (var frame of this.frames) {
+                if (frame.htmlId === id) {
+                    var nf = new StatementSelectorFrame();
+                    const index = this.frames.indexOf(frame) + 1;
+                    const before = this.frames.slice(0, index);
+                    const after = this.frames.slice(index);
+                    this.frames = [...before, nf, ...after];
+                    return;
+                }
+            }
+            for (var frame of this.frames) {
+                frame.newFrame(id);
+            }
+        }
     }
 
     public applyClass(id: string, cls: string) {
@@ -59,7 +96,7 @@ export class MainFrame implements Frame {
         const statements = ss.join("\n");
         const cls = `frame ${this.classes}`;
 
-        return `<global id='main' class='${cls}'>
+        return `<global id='main' class='${cls}' tabindex="0">
                     <keyword>main</keyword>
                     <statementBlock>
                     ${statements}

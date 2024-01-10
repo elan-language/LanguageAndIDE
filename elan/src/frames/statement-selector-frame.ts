@@ -8,8 +8,13 @@ export class StatementSelectorFrame implements Frame {
 
     private classes = '';
 
+    public htmlId = "";
+
     constructor() {
         this.elementId = nextId();
+    }
+    clearSelector(): void {
+        throw new Error("Method not implemented.");
     }
 
     private matckkeyword(key: string) {
@@ -44,7 +49,6 @@ export class StatementSelectorFrame implements Frame {
         }
     }
 
-
     private kw = "";
     private index = 0;
 
@@ -66,25 +70,24 @@ export class StatementSelectorFrame implements Frame {
         return this;
     }
 
-    newFrame(): void {
+    newFrame(id? : string): void {
         throw new Error("Method not implemented.");
     }
 
     private elementId: number;
 
     public applyClass(id: string, cls: string) {
-        this.classes = '';
-        if (id === `var${this.elementId}`) {
-            this.classes = cls;
-        }
+      
     }
 
     renderAsHtml(): string {
         if (this.index === 0) {
-            return `<input type="text">`;
+            return `<input id="ss" class="live" type="text">`;
         }
         else {
-            return `<statement id='${this.kw}${this.elementId}' class="frame"><span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}"></statement>`;
+            return `<statement id='${this.kw}${this.elementId}' class="frame">
+                    <span class='keyword'>${this.kw.substring(0, this.index)}</span><input id="ss" class="live" type="text" placeholder="${this.kw.substring(this.index)}">
+                    </statement>`;
         }
     }
 }

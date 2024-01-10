@@ -9,11 +9,21 @@ export class SetFrame implements Frame {
 
     private idFrame : Frame;
     private exprFrame : Frame;
+    public htmlId : string;
 
-    constructor(id: string, expr: string) {
-        this.elementId = nextId();
-        this.idFrame = new TextFrame(id, TextType.identifier);
+    constructor(identifier: string, expr: string) {
+        this.idFrame = new TextFrame(identifier, TextType.identifier);
         this.exprFrame = new TextFrame(expr, TextType.expression);
+        this.htmlId = `set${nextId()}`;
+    }
+
+    clearSelector(): void {
+        if (this.idFrame instanceof TextSelectorFrame) {
+            this.idFrame = new TextFrame("", TextType.identifier);
+        }
+        if (this.exprFrame instanceof TextSelectorFrame) {
+            this.exprFrame = new TextFrame("", TextType.expression);
+        }
     }
 
     addFrame(frame : Frame, textType : TextType){
@@ -44,15 +54,13 @@ export class SetFrame implements Frame {
         return this;
     }
     
-    newFrame(): void {
+    newFrame(id? : string): void {
         throw new Error("Method not implemented.");
     }
 
-    private elementId: number;
-
     public applyClass(id: string, cls: string) {
         this.classes = '';
-        if (id === `var${this.elementId}`){
+        if (id === this.htmlId){
            this.classes = cls;
         }
     }
@@ -62,6 +70,11 @@ export class SetFrame implements Frame {
         const id = this.idFrame.renderAsHtml();
         const expr = this.exprFrame.renderAsHtml();
       
-        return `<statement id='set${this.elementId}' class="${cls}"><keyword>set</keyword>${id}<keyword>to</keyword>${expr}</statement>`;
+        return `<statement id='${this.htmlId}' class="${cls}" tabindex="0">
+                <keyword>set</keyword>
+                ${id}
+                <keyword>to</keyword>
+                ${expr}
+                </statement>`;
     }
 }

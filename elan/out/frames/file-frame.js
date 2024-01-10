@@ -5,6 +5,7 @@ const frame_factory_1 = require("./frame-factory");
 const global_selector_frame_1 = require("./global-selector-frame");
 class FileFrame {
     frames = new Array();
+    htmlId = "file";
     // to do hash 
     constructor(code) {
         var nl = code.indexOf("\n");
@@ -13,6 +14,19 @@ class FileFrame {
             const [f, c] = (0, frame_factory_1.frameFactory)(restOfCode);
             this.frames.push(f);
             restOfCode = c;
+        }
+    }
+    clearSelector() {
+        for (var frame of this.frames) {
+            if (frame instanceof global_selector_frame_1.GlobalSelectorFrame) {
+                const index = this.frames.indexOf(frame);
+                const before = this.frames.slice(0, index);
+                const after = this.frames.slice(index + 1);
+                this.frames = [...before, ...after];
+            }
+        }
+        for (var frame of this.frames) {
+            frame.clearSelector();
         }
     }
     userInput(key) {
@@ -28,9 +42,16 @@ class FileFrame {
         }
         return this;
     }
-    newFrame() {
-        var pf = new global_selector_frame_1.GlobalSelectorFrame();
-        this.frames.push(pf);
+    newFrame(id) {
+        if (!id) {
+            var pf = new global_selector_frame_1.GlobalSelectorFrame();
+            this.frames.push(pf);
+        }
+        else {
+            for (var frame of this.frames) {
+                frame.newFrame(id);
+            }
+        }
     }
     applyClass(id, cls) {
         for (var frame of this.frames) {

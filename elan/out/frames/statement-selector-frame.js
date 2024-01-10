@@ -7,8 +7,12 @@ const text_selector_frame_1 = require("./text-selector-frame");
 const var_frame_1 = require("./var-frame");
 class StatementSelectorFrame {
     classes = '';
+    htmlId = "";
     constructor() {
         this.elementId = (0, frame_factory_1.nextId)();
+    }
+    clearSelector() {
+        throw new Error("Method not implemented.");
     }
     matckkeyword(key) {
         if (this.index !== 0) {
@@ -54,22 +58,20 @@ class StatementSelectorFrame {
         }
         return this;
     }
-    newFrame() {
+    newFrame(id) {
         throw new Error("Method not implemented.");
     }
     elementId;
     applyClass(id, cls) {
-        this.classes = '';
-        if (id === `var${this.elementId}`) {
-            this.classes = cls;
-        }
     }
     renderAsHtml() {
         if (this.index === 0) {
-            return `<input type="text">`;
+            return `<input id="ss" class="live" type="text">`;
         }
         else {
-            return `<statement id='${this.kw}${this.elementId}' class="frame"><span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}"></statement>`;
+            return `<statement id='${this.kw}${this.elementId}' class="frame">
+                    <span class='keyword'>${this.kw.substring(0, this.index)}</span><input id="ss" class="live" type="text" placeholder="${this.kw.substring(this.index)}">
+                    </statement>`;
         }
     }
 }

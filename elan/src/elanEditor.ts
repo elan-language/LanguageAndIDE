@@ -72,7 +72,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					updateWebview();
 					return;
 				case 'newFrame':
-					this.newFrame();
+					this.newFrame(e.id);
 					updateWebview();
 					return;
 				case 'userInput':
@@ -89,10 +89,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		this.frameModel.applyClass(id, "selected");
 	}
 
-	private newFrame(){
-		this.frameModel.newFrame();
+	private newFrame(id : string){
+		this.frameModel.newFrame(id);
 	}
-
 
 	private userInput(key: string){
 		this.frameModel.userInput(key);

@@ -6,6 +6,8 @@ export class FileFrame implements Frame {
 
     private frames: Array<Frame> = new Array<Frame>();
 
+    public htmlId = "file";
+
     // to do hash 
 
     constructor(code: string) {
@@ -17,6 +19,19 @@ export class FileFrame implements Frame {
 
             this.frames.push(f);
             restOfCode = c;
+        }
+    }
+    clearSelector(): void {
+        for (var frame of this.frames) {
+            if (frame instanceof GlobalSelectorFrame){
+                const index = this.frames.indexOf(frame);
+                const before = this.frames.slice(0, index);
+                const after = this.frames.slice(index + 1);
+                this.frames = [...before, ...after];
+            }
+        }
+        for (var frame of this.frames) {
+          frame.clearSelector();
         }
     }
 
@@ -34,9 +49,16 @@ export class FileFrame implements Frame {
         return this;
     }
 
-    newFrame(): void {
-        var pf = new GlobalSelectorFrame();
-        this.frames.push(pf);
+    newFrame(id?: string): void {
+        if (!id) {
+            var pf = new GlobalSelectorFrame();
+            this.frames.push(pf);
+        }
+        else {
+            for (var frame of this.frames) {
+                frame.newFrame(id);
+            }
+        }
     }
 
     public applyClass(id: string, cls: string) {
@@ -45,7 +67,6 @@ export class FileFrame implements Frame {
         }
     }
   
-
     public renderAsHtml() {
         const ss: Array<string> = [];
 

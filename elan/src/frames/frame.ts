@@ -3,7 +3,11 @@ export interface Frame {
 
     applyClass(id: string, cls: string): void;
 
-    newFrame(): void;
+    newFrame(id? : string): void;
 
     userInput(key : string): Frame;
+
+    htmlId: string;
+
+    clearSelector() : void;
 }

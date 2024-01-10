@@ -6,15 +6,19 @@ const text_selector_frame_1 = require("./text-selector-frame");
 class TextFrame {
     value;
     textType;
+    htmlId = "";
     constructor(value, textType) {
         this.value = value;
         this.textType = textType;
         this.elementId = (0, frame_factory_1.nextId)();
     }
+    clearSelector() {
+        throw new Error("Method not implemented.");
+    }
     userInput(key) {
         throw new Error("Method not implemented.");
     }
-    newFrame() {
+    newFrame(id) {
         throw new Error("Method not implemented.");
     }
     elementId;

@@ -46,4 +46,5 @@ input {
 
 input:focus {
     outline: none;
+    background-color: aqua;
 }

@@ -8,10 +8,19 @@ class SetFrame {
     classes = '';
     idFrame;
     exprFrame;
-    constructor(id, expr) {
-        this.elementId = (0, frame_factory_1.nextId)();
-        this.idFrame = new text_frame_1.TextFrame(id, text_selector_frame_1.TextType.identifier);
+    htmlId;
+    constructor(identifier, expr) {
+        this.idFrame = new text_frame_1.TextFrame(identifier, text_selector_frame_1.TextType.identifier);
         this.exprFrame = new text_frame_1.TextFrame(expr, text_selector_frame_1.TextType.expression);
+        this.htmlId = `set${(0, frame_factory_1.nextId)()}`;
+    }
+    clearSelector() {
+        if (this.idFrame instanceof text_selector_frame_1.TextSelectorFrame) {
+            this.idFrame = new text_frame_1.TextFrame("", text_selector_frame_1.TextType.identifier);
+        }
+        if (this.exprFrame instanceof text_selector_frame_1.TextSelectorFrame) {
+            this.exprFrame = new text_frame_1.TextFrame("", text_selector_frame_1.TextType.expression);
+        }
     }
     addFrame(frame, textType) {
         if (textType === text_selector_frame_1.TextType.identifier) {
@@ -35,13 +44,12 @@ class SetFrame {
         }
         return this;
     }
-    newFrame() {
+    newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    elementId;
     applyClass(id, cls) {
         this.classes = '';
-        if (id === `var${this.elementId}`) {
+        if (id === this.htmlId) {
             this.classes = cls;
         }
     }
@@ -49,7 +57,12 @@ class SetFrame {
         const cls = `frame ${this.classes}`;
         const id = this.idFrame.renderAsHtml();
         const expr = this.exprFrame.renderAsHtml();
-        return `<statement id='set${this.elementId}' class="${cls}"><keyword>set</keyword>${id}<keyword>to</keyword>${expr}</statement>`;
+        return `<statement id='${this.htmlId}' class="${cls}" tabindex="0">
+                <keyword>set</keyword>
+                ${id}
+                <keyword>to</keyword>
+                ${expr}
+                </statement>`;
     }
 }
 exports.SetFrame = SetFrame;

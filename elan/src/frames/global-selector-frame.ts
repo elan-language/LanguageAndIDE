@@ -8,10 +8,15 @@ export class GlobalSelectorFrame implements Frame {
     constructor() {
     
     }
+    clearSelector(): void {
+        throw new Error("Method not implemented.");
+    }
 
     private kw = "main";
     private endkw = "end main";
     private index = 0;
+
+    public htmlId = "";
 
     userInput(key: string): Frame {
         if (key === this.kw[this.index]) {
@@ -26,7 +31,7 @@ export class GlobalSelectorFrame implements Frame {
         return this;
     }
 
-    newFrame(): void {
+    newFrame(id? : string): void {
         throw new Error("Method not implemented.");
     }
 
@@ -36,11 +41,11 @@ export class GlobalSelectorFrame implements Frame {
 
     renderAsHtml(): string {
         if (this.index === 0) {
-            return `<input type="text">`;
+            return `<input id="gs" class="live" type="text">`;
         }
         else {
             return `<global id='main' class='frame'>
-                            <span class='keyword'>${this.kw.substring(0, this.index)}</span><input type="text" placeholder="${this.kw.substring(this.index)}">
+                            <span class='keyword'>${this.kw.substring(0, this.index)}</span><input id="gs" class="live" type="text" placeholder="${this.kw.substring(this.index)}">
                             <statementBlock>
                             </statementBlock>
                             <keyword>end main</keyword>

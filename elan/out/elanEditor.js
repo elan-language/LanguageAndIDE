@@ -82,7 +82,7 @@ class ElanEditorProvider {
                     updateWebview();
                     return;
                 case 'newFrame':
-                    this.newFrame();
+                    this.newFrame(e.id);
                     updateWebview();
                     return;
                 case 'userInput':
@@ -96,8 +96,8 @@ class ElanEditorProvider {
     click(id) {
         this.frameModel.applyClass(id, "selected");
     }
-    newFrame() {
-        this.frameModel.newFrame();
+    newFrame(id) {
+        this.frameModel.newFrame(id);
     }
     userInput(key) {
         this.frameModel.userInput(key);

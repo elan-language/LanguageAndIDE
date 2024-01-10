@@ -9,7 +9,6 @@
 	// @ts-ignore
 	const vscode = acquireVsCodeApi();
 
-
 	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.code'));
 	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
 
@@ -23,17 +22,27 @@
 
 		for (var frame of frames) {
 			const id = frame.id;
+		
+			frame.addEventListener('keydown', event => {
+				const msg = { type: 'newFrame', id: id };
+				debugContainer.innerText = "press" + event.key;
+				vscode.postMessage(msg);
+				event.stopPropagation();
+			});
+
 			frame.addEventListener('click', event => {
 				const msg = { type: 'click', id: id };
+				debugContainer.innerText = "click" + event.key;
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 		}
 
-		const input = /** @type {HTMLElement} */ (document.querySelector('input'));
+		const input = /** @type {HTMLElement} */ (document.querySelector('input.live'));
 
         if (input){
 			input.focus();
+			debugContainer.innerText = "focus input" + input.id;
 			input.addEventListener('keydown', event => {
                 const text = event.key;
 				if (text.length === 1 || text === "Tab" || text === "Backspace") {
@@ -45,6 +54,16 @@
 			input.addEventListener('click', event => {
 				event.stopPropagation();
 			});
+		}
+		else {
+			const selected = document.querySelector('.selected');
+			if (selected) {
+				selected.focus();
+				debugContainer.innerText = "focus selected" + selected.id;
+			}
+			else {
+				debugContainer.innerText = "no focus";
+			}
 		}
 
 	}
@@ -81,8 +100,7 @@
 	}
 
     window.addEventListener('keydown', event => {
-		
-        
+	
 		if (event.ctrlKey && isArrowKey(event.key)){
 			handleCtrlArrow(event.key);
 		}

@@ -4,15 +4,20 @@ import { TextType } from "./text-selector-frame";
 
 export class TextFrame implements Frame {
 
+    public htmlId = "";
+
     constructor(public readonly value: string, private textType: TextType) {
         this.elementId = nextId();
+    }
+    clearSelector(): void {
+        throw new Error("Method not implemented.");
     }
 
     userInput(key: string): Frame {
         throw new Error("Method not implemented.");
     }
     
-    newFrame(): void {
+    newFrame(id? : string): void {
         throw new Error("Method not implemented.");
     }
 

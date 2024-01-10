@@ -10,6 +10,7 @@ export class FrameModel {
   }
 
   public applyClass(id: string, cls: string) {
+    this.frame?.clearSelector();
     this.frame?.applyClass(id, cls);
   }
 
@@ -17,8 +18,9 @@ export class FrameModel {
     return this.frame?.renderAsHtml();
   }
 
-  public newFrame() {
-    this.frame?.newFrame();
+  public newFrame(id : string) {
+    this.frame?.clearSelector();
+    this.frame?.newFrame(id);
   }
 
   public userInput(key: string): void {
