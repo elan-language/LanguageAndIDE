@@ -82,7 +82,9 @@ export class StatementSelectorFrame implements Frame {
 
     renderAsHtml(): string {
         if (this.index === 0) {
-            return `<input id="ss" class="live" type="text">`;
+            return `<statement id='${this.kw}${this.elementId}' class="frame">
+                    <input id="ss" class="live" type="text">
+                    </statement>`;
         }
         else {
             return `<statement id='${this.kw}${this.elementId}' class="frame">
