@@ -52,6 +52,12 @@ class SetFrame {
         if (id === this.htmlId) {
             this.classes = cls;
         }
+        if (this.idFrame.htmlId === id) {
+            this.idFrame = new text_selector_frame_1.TextSelectorFrame(text_selector_frame_1.TextType.identifier, this.idFrame.value);
+        }
+        if (this.exprFrame.htmlId === id) {
+            this.exprFrame = new text_selector_frame_1.TextSelectorFrame(text_selector_frame_1.TextType.expression, this.exprFrame.value);
+        }
     }
     renderAsHtml() {
         const cls = `frame ${this.classes}`;

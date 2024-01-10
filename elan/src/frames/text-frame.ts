@@ -7,8 +7,10 @@ export class TextFrame implements Frame {
     public htmlId = "";
 
     constructor(public readonly value: string, private textType: TextType) {
-        this.elementId = nextId();
+        const type = textType === TextType.identifier ? "identifier" : "expression";
+        this.htmlId = `${type}${nextId()}`;
     }
+
     clearSelector(): void {
         throw new Error("Method not implemented.");
     }
@@ -16,18 +18,16 @@ export class TextFrame implements Frame {
     userInput(key: string): Frame {
         throw new Error("Method not implemented.");
     }
-    
-    newFrame(id? : string): void {
+
+    newFrame(id?: string): void {
         throw new Error("Method not implemented.");
     }
 
-    private elementId: number;
-
     public applyClass(id: string, cls: string) {
-      
+
     }
 
     renderAsHtml(): string {
-        return this.textType === TextType.identifier ?   `<identifier>${this.value}</identifier>` : `<expression>${this.value}</expression>`;
+        return this.textType === TextType.identifier ? `<identifier class="frame" id ='${this.htmlId}'>${this.value}</identifier>` : `<expression class='frame' id ='${this.htmlId}'>${this.value}</expression>`;
     }
 }

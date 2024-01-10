@@ -10,11 +10,11 @@ var TextType;
 })(TextType || (exports.TextType = TextType = {}));
 class TextSelectorFrame {
     textType;
-    classes = '';
     htmlId = "";
-    constructor(textType) {
+    constructor(textType, v) {
         this.textType = textType;
         this.elementId = (0, frame_factory_1.nextId)();
+        this.currentValue = v ? v : "";
     }
     clearSelector() {
         throw new Error("Method not implemented.");
@@ -45,7 +45,7 @@ class TextSelectorFrame {
     applyClass(id, cls) {
     }
     renderAsHtml() {
-        return `<input id="ts${this.textType}" class="live" type="text" value="${this.currentValue}">`;
+        return `<input id='ts${this.textType}' class='live' type='text' value='${this.currentValue}'>`;
     }
 }
 exports.TextSelectorFrame = TextSelectorFrame;

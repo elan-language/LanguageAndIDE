@@ -35,14 +35,14 @@
 		
 			frame.addEventListener('keydown', event => {
 				const msg = { type: 'newFrame', id: id };
-				debug("frame keydown " + event.key);
+				debug(`frame ${id } keydown ${event.key}`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 
 			frame.addEventListener('click', event => {
 				const msg = { type: 'click', id: id };
-				debug("frame click " + event.key);
+				debug(`frame ${id } click ${event.key}`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -52,6 +52,8 @@
 
         if (input){
 			input.focus();
+			input.selectionStart = input.selectionEnd = input.value.length;
+
 			debug("focus input" + input.id);
 			input.addEventListener('keydown', event => {
                 const text = event.key;

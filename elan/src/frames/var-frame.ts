@@ -63,6 +63,14 @@ export class VarFrame implements Frame {
         if (id === this.htmlId){
            this.classes = cls;
         }
+
+        if (this.idFrame.htmlId === id){
+            this.idFrame = new TextSelectorFrame(TextType.identifier, (<TextFrame> this.idFrame).value);
+        }
+
+        if (this.exprFrame.htmlId === id){
+            this.exprFrame = new TextSelectorFrame(TextType.expression, (<TextFrame> this.exprFrame).value);
+        }
     }
 
     renderAsHtml(): string {

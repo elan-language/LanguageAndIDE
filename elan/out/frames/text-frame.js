@@ -10,7 +10,8 @@ class TextFrame {
     constructor(value, textType) {
         this.value = value;
         this.textType = textType;
-        this.elementId = (0, frame_factory_1.nextId)();
+        const type = textType === text_selector_frame_1.TextType.identifier ? "identifier" : "expression";
+        this.htmlId = `${type}${(0, frame_factory_1.nextId)()}`;
     }
     clearSelector() {
         throw new Error("Method not implemented.");
@@ -21,11 +22,10 @@ class TextFrame {
     newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    elementId;
     applyClass(id, cls) {
     }
     renderAsHtml() {
-        return this.textType === text_selector_frame_1.TextType.identifier ? `<identifier>${this.value}</identifier>` : `<expression>${this.value}</expression>`;
+        return this.textType === text_selector_frame_1.TextType.identifier ? `<identifier class="frame" id ='${this.htmlId}'>${this.value}</identifier>` : `<expression class='frame' id ='${this.htmlId}'>${this.value}</expression>`;
     }
 }
 exports.TextFrame = TextFrame;

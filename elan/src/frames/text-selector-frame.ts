@@ -11,12 +11,11 @@ export enum TextType {
 
 export class TextSelectorFrame implements Frame {
 
-    private classes = '';
-
     public htmlId = "";
 
-    constructor(private textType: TextType) {
+    constructor(private textType: TextType, v? : string) {
         this.elementId = nextId();
+        this.currentValue = v ? v : "";
     }
     clearSelector(): void {
         throw new Error("Method not implemented.");
@@ -58,6 +57,6 @@ export class TextSelectorFrame implements Frame {
     }
 
     renderAsHtml(): string {
-        return `<input id="ts${this.textType}" class="live" type="text" value="${this.currentValue}">`;
+        return `<input id='ts${this.textType}' class='live' type='text' value='${this.currentValue}'>`;
     }
 }
