@@ -36,7 +36,7 @@
 			input.focus();
 			input.addEventListener('keydown', event => {
                 const text = event.key;
-				if (text.length === 1 || text === "Tab") {
+				if (text.length === 1 || text === "Tab" || text === "Backspace") {
 					const msg = { type: 'userInput', key: text };
 					vscode.postMessage(msg);
 				}

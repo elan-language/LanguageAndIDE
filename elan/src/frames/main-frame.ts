@@ -28,7 +28,9 @@ export class MainFrame implements Frame {
             this.frames.pop();
             this.frames.push(nf);
         }
-        lastFrame.userInput(key);
+        else {
+            lastFrame.userInput(key);
+        }
         return this;
     }
 

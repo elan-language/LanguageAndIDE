@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VarFrame = void 0;
+exports.SetFrame = void 0;
 const frame_factory_1 = require("./frame-factory");
 const text_frame_1 = require("./text-frame");
 const text_selector_frame_1 = require("./text-selector-frame");
-class VarFrame {
+class SetFrame {
     classes = '';
     idFrame;
     exprFrame;
@@ -49,8 +49,8 @@ class VarFrame {
         const cls = `frame ${this.classes}`;
         const id = this.idFrame.renderAsHtml();
         const expr = this.exprFrame.renderAsHtml();
-        return `<statement id='var${this.elementId}' class="${cls}"><keyword>var</keyword>${id}<keyword>set to</keyword>${expr}</statement>`;
+        return `<statement id='set${this.elementId}' class="${cls}"><keyword>set</keyword>${id}<keyword>to</keyword>${expr}</statement>`;
     }
 }
-exports.VarFrame = VarFrame;
-//# sourceMappingURL=var-frame%20copy.js.map
+exports.SetFrame = SetFrame;
+//# sourceMappingURL=set-frame.js.map

@@ -28,7 +28,9 @@ export class FileFrame implements Frame {
             this.frames.push(nf);
             return this;
         }
-        lastFrame.userInput(key);
+        else {
+            lastFrame.userInput(key);
+        }
         return this;
     }
 
