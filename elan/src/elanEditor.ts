@@ -86,7 +86,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
     private click(id : string){
-		this.frameModel.applyClass(id, "selected");
+		this.frameModel.select(id);
 	}
 
 	private newFrame(id : string){

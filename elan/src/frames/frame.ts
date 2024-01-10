@@ -1,7 +1,7 @@
 export interface Frame {
     renderAsHtml(): string;
 
-    applyClass(id: string, cls: string): void;
+    select(id: string, cls: string): void;
 
     newFrame(id? : string): void;
 

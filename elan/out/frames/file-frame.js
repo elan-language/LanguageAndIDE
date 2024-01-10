@@ -53,9 +53,9 @@ class FileFrame {
             }
         }
     }
-    applyClass(id, cls) {
+    select(id, cls) {
         for (var frame of this.frames) {
-            frame.applyClass(id, cls);
+            frame.select(id, cls);
         }
     }
     renderAsHtml() {

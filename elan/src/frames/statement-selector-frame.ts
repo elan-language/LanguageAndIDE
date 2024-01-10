@@ -81,7 +81,7 @@ export class StatementSelectorFrame implements Frame {
 
     private elementId: number;
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
       
     }
 

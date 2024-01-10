@@ -22,7 +22,7 @@ class TextFrame {
     newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    applyClass(id, cls) {
+    select(id, cls) {
     }
     renderAsHtml() {
         return this.textType === text_selector_frame_1.TextType.identifier ? `<identifier class="frame" id ='${this.htmlId}'>${this.value}</identifier>` : `<expression class='frame' id ='${this.htmlId}'>${this.value}</expression>`;

@@ -65,13 +65,13 @@ class MainFrame {
             }
         }
     }
-    applyClass(id, cls) {
+    select(id, cls) {
         this.classes = '';
         if (id === "main") {
             this.classes = cls;
         }
         for (var frame of this.frames) {
-            frame.applyClass(id, cls);
+            frame.select(id, cls);
         }
     }
     renderAsHtml() {

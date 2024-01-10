@@ -16,10 +16,10 @@ class VarFrame {
     }
     clearSelector() {
         if (this.idFrame instanceof text_selector_frame_1.TextSelectorFrame) {
-            this.idFrame = new text_frame_1.TextFrame("", text_selector_frame_1.TextType.identifier);
+            this.idFrame = new text_frame_1.TextFrame(this.idFrame.value, text_selector_frame_1.TextType.identifier);
         }
         if (this.exprFrame instanceof text_selector_frame_1.TextSelectorFrame) {
-            this.exprFrame = new text_frame_1.TextFrame("", text_selector_frame_1.TextType.expression);
+            this.exprFrame = new text_frame_1.TextFrame(this.exprFrame.value, text_selector_frame_1.TextType.expression);
         }
     }
     addFrame(frame, textType) {
@@ -47,7 +47,7 @@ class VarFrame {
     newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    applyClass(id, cls) {
+    select(id, cls) {
         this.classes = '';
         if (id === this.htmlId) {
             this.classes = cls;

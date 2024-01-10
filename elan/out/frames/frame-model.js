@@ -7,9 +7,9 @@ class FrameModel {
     load(rawCode) {
         [this.frame,] = (0, frame_factory_1.frameFactory)(rawCode);
     }
-    applyClass(id, cls) {
+    select(id) {
         this.frame?.clearSelector();
-        this.frame?.applyClass(id, cls);
+        this.frame?.select(id, "selected");
     }
     renderAsHtml() {
         return this.frame?.renderAsHtml();

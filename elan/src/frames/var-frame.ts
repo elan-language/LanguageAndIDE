@@ -17,12 +17,13 @@ export class VarFrame implements Frame {
         this.exprFrame = new TextFrame(expr, TextType.expression);
         this.htmlId = `var${nextId()}`;
     }
+
     clearSelector(): void {
         if (this.idFrame instanceof TextSelectorFrame) {
-            this.idFrame = new TextFrame("", TextType.identifier);
+            this.idFrame = new TextFrame(this.idFrame.value, TextType.identifier);
         }
         if (this.exprFrame instanceof TextSelectorFrame) {
-            this.exprFrame = new TextFrame("", TextType.expression);
+            this.exprFrame = new TextFrame(this.exprFrame.value, TextType.expression);
         }
     }
 
@@ -58,7 +59,7 @@ export class VarFrame implements Frame {
         throw new Error("Method not implemented.");
     }
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
         this.classes = '';
         if (id === this.htmlId){
            this.classes = cls;

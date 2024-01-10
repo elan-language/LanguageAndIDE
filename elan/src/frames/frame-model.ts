@@ -9,9 +9,9 @@ export class FrameModel {
     [this.frame,] = frameFactory(rawCode);
   }
 
-  public applyClass(id: string, cls: string) {
+  public select(id: string) {
     this.frame?.clearSelector();
-    this.frame?.applyClass(id, cls);
+    this.frame?.select(id, "selected");
   }
 
   public renderAsHtml() {

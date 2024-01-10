@@ -61,9 +61,9 @@ export class FileFrame implements Frame {
         }
     }
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
         for (var frame of this.frames) {
-            frame.applyClass(id, cls);
+            frame.select(id, cls);
         }
     }
   

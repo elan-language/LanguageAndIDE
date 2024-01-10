@@ -35,7 +35,7 @@ export class GlobalSelectorFrame implements Frame {
         throw new Error("Method not implemented.");
     }
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
       
     }
 

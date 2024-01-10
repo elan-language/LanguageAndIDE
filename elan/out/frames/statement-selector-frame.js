@@ -66,7 +66,7 @@ class StatementSelectorFrame {
         throw new Error("Method not implemented.");
     }
     elementId;
-    applyClass(id, cls) {
+    select(id, cls) {
     }
     renderAsHtml() {
         if (this.index === 0) {

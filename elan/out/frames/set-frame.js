@@ -47,7 +47,7 @@ class SetFrame {
     newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    applyClass(id, cls) {
+    select(id, cls) {
         this.classes = '';
         if (id === this.htmlId) {
             this.classes = cls;

@@ -58,7 +58,7 @@ export class SetFrame implements Frame {
         throw new Error("Method not implemented.");
     }
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
         this.classes = '';
         if (id === this.htmlId){
            this.classes = cls;

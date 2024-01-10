@@ -75,14 +75,14 @@ export class MainFrame implements Frame {
         }
     }
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
         this.classes = '';
         if (id === "main") {
             this.classes = cls;
         }
 
         for (var frame of this.frames) {
-            frame.applyClass(id, cls);
+            frame.select(id, cls);
         }
     }
 

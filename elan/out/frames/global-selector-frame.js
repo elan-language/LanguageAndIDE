@@ -27,7 +27,7 @@ class GlobalSelectorFrame {
     newFrame(id) {
         throw new Error("Method not implemented.");
     }
-    applyClass(id, cls) {
+    select(id, cls) {
     }
     renderAsHtml() {
         if (this.index === 0) {

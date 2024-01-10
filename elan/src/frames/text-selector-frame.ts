@@ -15,13 +15,13 @@ export class TextSelectorFrame implements Frame {
 
     constructor(private textType: TextType, v? : string) {
         this.elementId = nextId();
-        this.currentValue = v ? v : "";
+        this.value = v ? v : "";
     }
     clearSelector(): void {
         throw new Error("Method not implemented.");
     }
 
-    private currentValue = "";
+    public value = "";
 
     isUpperCase(s : string) : boolean {
         return s !== s.toLowerCase() &&
@@ -29,18 +29,18 @@ export class TextSelectorFrame implements Frame {
     }
 
     userInput(key: string): Frame {
-        if (this.textType === TextType.identifier && this.currentValue === "") {
+        if (this.textType === TextType.identifier && this.value === "") {
             if (this.isUpperCase(key)){
                 return this;
             }
         }
 
-        if (key === "Tab" && this.currentValue.length > 0) {
-            return new TextFrame(this.currentValue, this.textType);
+        if (key === "Tab" && this.value.length > 0) {
+            return new TextFrame(this.value, this.textType);
         }
 
         if (key !== "Tab") {
-            this.currentValue = this.currentValue + key;
+            this.value = this.value + key;
         }
 
         return this;
@@ -52,11 +52,11 @@ export class TextSelectorFrame implements Frame {
 
     private elementId: number;
 
-    public applyClass(id: string, cls: string) {
+    public select(id: string, cls: string) {
         
     }
 
     renderAsHtml(): string {
-        return `<input id='ts${this.textType}' class='live' type='text' value='${this.currentValue}'>`;
+        return `<input id='ts${this.textType}' class='live' type='text' value='${this.value}'>`;
     }
 }

@@ -94,7 +94,7 @@ class ElanEditorProvider {
         updateWebview();
     }
     click(id) {
-        this.frameModel.applyClass(id, "selected");
+        this.frameModel.select(id);
     }
     newFrame(id) {
         this.frameModel.newFrame(id);
