@@ -46,7 +46,12 @@ export class StatementSelectorFrame implements Frame {
                 sf.addFrame(f, TextType.identifier);
                 return sf;
             }
+            default: {
+                console.warn("unexpeced keyword: " + this.kw);
+                return this;
+            }
         }
+
     }
 
     private kw = "";
