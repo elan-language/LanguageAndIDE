@@ -12,6 +12,16 @@
 	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.code'));
 	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
 
+	const showDebug = false;
+
+	debug("Debug: ");
+
+	function debug (s){
+		if (showDebug) {
+			debugContainer.innerText = `${debugContainer.innerText}\n${s}`;
+		}
+	}
+
 	/**
 	 * Render the document in the webview.
 	 */
@@ -25,14 +35,14 @@
 		
 			frame.addEventListener('keydown', event => {
 				const msg = { type: 'newFrame', id: id };
-				debugContainer.innerText = "press" + event.key;
+				debug("frame keydown " + event.key);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 
 			frame.addEventListener('click', event => {
 				const msg = { type: 'click', id: id };
-				debugContainer.innerText = "click" + event.key;
+				debug("frame click " + event.key);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -42,9 +52,10 @@
 
         if (input){
 			input.focus();
-			debugContainer.innerText = "focus input" + input.id;
+			debug("focus input" + input.id);
 			input.addEventListener('keydown', event => {
                 const text = event.key;
+				debug("input keydown " + text);
 				if (text.length === 1 || text === "Tab" || text === "Backspace") {
 					const msg = { type: 'userInput', key: text };
 					vscode.postMessage(msg);
@@ -52,6 +63,7 @@
 				event.stopPropagation();
 			});
 			input.addEventListener('click', event => {
+				debug("input click");
 				event.stopPropagation();
 			});
 		}
@@ -59,10 +71,10 @@
 			const selected = document.querySelector('.selected');
 			if (selected) {
 				selected.focus();
-				debugContainer.innerText = "focus selected" + selected.id;
+				debug("focus selected" + selected.id);
 			}
 			else {
-				debugContainer.innerText = "no focus";
+				debug("no focus");
 			}
 		}
 
@@ -73,6 +85,7 @@
 		const message = event.data; // The json data that the extension sent
 		switch (message.type) {
 			case 'update':
+				debug("update content");
 				const text = message.text;
 
 				// Update our webview's content
@@ -89,6 +102,7 @@
 	// spike new frames
 	window.addEventListener('click', event => {
 		const msg = { type: 'newFrame' };
+		debug("window click " + event.key);
 		vscode.postMessage(msg);
 		event.stopPropagation();
 	});
