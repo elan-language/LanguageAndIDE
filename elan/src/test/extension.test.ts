@@ -31,11 +31,11 @@ suite('Extension Test Suite', () => {
 	});
 
 	test('Test file', (done) => {
-        vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\test0.elan").then((fe) => {
-			vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\test0.html").then((fh) => {
-				var model = new FileFrame(fe.getText());
-				var actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-				var expectedHtml = fh.getText().replaceAll("\r", "");
+        vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\testFiles\\test0.elan").then((fe) => {
+			vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\testFiles\\test0.html").then((fh) => {
+				const model = new FileFrame(fe.getText());
+				const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
+				const expectedHtml = fh.getText().replaceAll("\r", "");
 
 				done(assert.strictEqual(actualHtml, expectedHtml));
 			} );

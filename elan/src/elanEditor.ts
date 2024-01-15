@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
-import {FrameModel} from './frames/frame-model';
+import { FrameModel } from './frames/frame-model';
 
 interface editorEvent {
-   type: "click" | "keyOnInput" | "keyOnFrame",
-   key? : string,
-   id? : string
+	type: "click" | "keyOnInput" | "keyOnFrame",
+	key?: string,
+	id?: string
 }
 
 
@@ -20,7 +20,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-    private frameModel = new FrameModel();
+	private frameModel = new FrameModel();
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -72,7 +72,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		// Receive message from the webview.
-		webviewPanel.webview.onDidReceiveMessage((e : editorEvent) => {
+		webviewPanel.webview.onDidReceiveMessage((e: editorEvent) => {
 			switch (e.type) {
 				case 'click':
 					if (e.id) {
@@ -97,15 +97,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		updateWebview();
 	}
 
-    private click(id : string){
+	private click(id: string) {
 		this.frameModel.select(id);
 	}
 
-	private newFrame(id? : string){
+	private newFrame(id?: string) {
 		this.frameModel.newFrame(id);
 	}
 
-	private userInput(key: string){
+	private userInput(key: string) {
 		this.frameModel.userInput(key);
 	}
 
@@ -148,6 +148,4 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			</body>
 			</html>`;
 	}
-
-	
 }
