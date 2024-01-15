@@ -10,15 +10,17 @@ export class FileFrame implements Frame {
 
     // to do hash 
 
-    constructor(code: string) {
-        var nl = code.indexOf("\n");
-        var restOfCode = code.substring(nl + 1);
+    constructor(code?: string) {
+        if (code) {
+            var nl = code.indexOf("\n");
+            var restOfCode = code.substring(nl + 1);
 
-        while (restOfCode.length > 0) {
-            const [f, c] = frameFactory(restOfCode);
+            while (restOfCode.length > 0) {
+                const [f, c] = frameFactory(restOfCode);
 
-            this.frames.push(f);
-            restOfCode = c;
+                this.frames.push(f);
+                restOfCode = c;
+            }
         }
     }
     clearSelector(): void {

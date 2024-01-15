@@ -10,8 +10,8 @@ export class MainFrame implements Frame {
 
     public htmlId = "main";
 
-    constructor(code: string) {
-        while (code.length > 0) {
+    constructor(code?: string) {
+        while (code && code.length > 0) {
             const [f, c] = frameFactory(code);
 
             this.frames.push(f);
@@ -97,11 +97,11 @@ export class MainFrame implements Frame {
         const cls = `frame ${this.classes}`;
 
         return `<global id='main' class='${cls}' tabindex="0">
-                    <keyword>main</keyword>
-                    <statementBlock>
-                    ${statements}
-                    </statementBlock>
-                    <keyword>end main</keyword>
-                </global>`;
+<keyword>main</keyword>
+<statementBlock>
+${statements}
+</statementBlock>
+<keyword>end main</keyword>
+</global>`;
     }
 }
