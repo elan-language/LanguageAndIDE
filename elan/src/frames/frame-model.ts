@@ -18,7 +18,7 @@ export class FrameModel {
     return this.frame?.renderAsHtml();
   }
 
-  public newFrame(id : string) {
+  public newFrame(id? : string) {
     this.frame?.clearSelector();
     this.frame?.newFrame(id);
   }

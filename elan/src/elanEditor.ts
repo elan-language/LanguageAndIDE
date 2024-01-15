@@ -2,6 +2,13 @@ import * as vscode from 'vscode';
 import { getNonce } from './util';
 import {FrameModel} from './frames/frame-model';
 
+interface editorEvent {
+   type: "click" | "keyOnInput" | "keyOnFrame",
+   key? : string,
+   id? : string
+}
+
+
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -65,18 +72,23 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		// Receive message from the webview.
-		webviewPanel.webview.onDidReceiveMessage(e => {
+		webviewPanel.webview.onDidReceiveMessage((e : editorEvent) => {
 			switch (e.type) {
 				case 'click':
-					this.click(e.id);
+					if (e.id) {
+						this.click(e.id);
+					}
+					else {
+						this.newFrame();
+					}
 					updateWebview();
 					return;
-				case 'newFrame':
+				case 'keyOnFrame':
 					this.newFrame(e.id);
 					updateWebview();
 					return;
-				case 'userInput':
-					this.userInput(e.key);
+				case 'keyOnInput':
+					this.userInput(e.key!);
 					updateWebview();
 					return;
 			}
@@ -89,7 +101,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		this.frameModel.select(id);
 	}
 
-	private newFrame(id : string){
+	private newFrame(id? : string){
 		this.frameModel.newFrame(id);
 	}
 

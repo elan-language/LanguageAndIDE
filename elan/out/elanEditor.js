@@ -75,17 +75,22 @@ class ElanEditorProvider {
             changeDocumentSubscription.dispose();
         });
         // Receive message from the webview.
-        webviewPanel.webview.onDidReceiveMessage(e => {
+        webviewPanel.webview.onDidReceiveMessage((e) => {
             switch (e.type) {
                 case 'click':
-                    this.click(e.id);
+                    if (e.id) {
+                        this.click(e.id);
+                    }
+                    else {
+                        this.newFrame();
+                    }
                     updateWebview();
                     return;
-                case 'newFrame':
+                case 'keyOnFrame':
                     this.newFrame(e.id);
                     updateWebview();
                     return;
-                case 'userInput':
+                case 'keyOnInput':
                     this.userInput(e.key);
                     updateWebview();
                     return;

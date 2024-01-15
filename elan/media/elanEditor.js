@@ -34,7 +34,7 @@
 			const id = frame.id;
 		
 			frame.addEventListener('keydown', event => {
-				const msg = { type: 'newFrame', id: id };
+				const msg = { type: 'keyOnFrame', id: id, key: event.key };
 				debug(`frame ${id } keydown ${event.key}`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
@@ -42,7 +42,7 @@
 
 			frame.addEventListener('click', event => {
 				const msg = { type: 'click', id: id };
-				debug(`frame ${id } click ${event.key}`);
+				debug(`frame ${id } click`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -57,15 +57,13 @@
 			debug("focus input" + input.id);
 			input.addEventListener('keydown', event => {
                 const text = event.key;
-				debug("input keydown " + text);
-				if (text.length === 1 || text === "Tab" || text === "Backspace") {
-					const msg = { type: 'userInput', key: text };
-					vscode.postMessage(msg);
-				}
+				debug("input ${id } keydown " + text);
+				const msg = { type: 'keyOnInput', key: text };
+				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 			input.addEventListener('click', event => {
-				debug("input click");
+				debug("input ${id } click");
 				event.stopPropagation();
 			});
 		}
@@ -79,7 +77,6 @@
 				debug("no focus");
 			}
 		}
-
 	}
 
 	// Handle messages sent from the extension to the webview
@@ -103,13 +100,11 @@
 
 	// spike new frames
 	window.addEventListener('click', event => {
-		const msg = { type: 'newFrame' };
-		debug("window click " + event.key);
+		const msg = { type: 'click' };
+		debug("window click ");
 		vscode.postMessage(msg);
 		event.stopPropagation();
 	});
-
-
 
 	function isArrowKey(k) {
 		return k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight";
