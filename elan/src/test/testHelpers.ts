@@ -17,31 +17,29 @@ export function wrap(html: string) {
 </html>`;
 }
 
-export function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile: string, frame: () => T) {
-    var ws = vscode.workspace.workspaceFolders![0].uri;
-    var htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+export async function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile: string, frame: () => T) {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
 
-    vscode.workspace.openTextDocument(htmlUri).then((fh) => {
-        const model = frame();
-        const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-        const expectedHtml = fh.getText().replaceAll("\r", "");
+    const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+    const fh = await vscode.workspace.openTextDocument(htmlUri);
+    const model = frame();
+    const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
+    const expectedHtml = fh.getText().replaceAll("\r", "");
 
-        done(assert.strictEqual(actualHtml, expectedHtml));
-    });
+    done(assert.strictEqual(actualHtml, expectedHtml));
 }
 
-export function assertAreEqualByFile<T extends Frame>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
-    var ws = vscode.workspace.workspaceFolders![0].uri;
-    var elanUri = vscode.Uri.joinPath(ws, elanFile);
-    var htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+export async function assertAreEqualByFile<T extends Frame>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
 
-    vscode.workspace.openTextDocument(elanUri).then((fe) => {
-        vscode.workspace.openTextDocument(htmlUri).then((fh) => {
-            const model = frame(fe.getText());
-            const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-            const expectedHtml = fh.getText().replaceAll("\r", "");
+    const elanUri = vscode.Uri.joinPath(ws, elanFile);
+    const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+    const fe = await vscode.workspace.openTextDocument(elanUri);
+    const fh = await vscode.workspace.openTextDocument(htmlUri);
+    const model = frame(fe.getText());
+    const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
+    const expectedHtml = fh.getText().replaceAll("\r", "");
 
-            done(assert.strictEqual(actualHtml, expectedHtml));
-        });
-    });
+    done(assert.strictEqual(actualHtml, expectedHtml));
+
 }
