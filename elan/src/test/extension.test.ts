@@ -31,8 +31,14 @@ suite('Extension Test Suite', () => {
 	});
 
 	test('Test file', (done) => {
-        vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\testFiles\\test0.elan").then((fe) => {
-			vscode.workspace.openTextDocument("C:\\GitHub\\IDE\\elan\\src\\test\\testFiles\\test0.html").then((fh) => {
+        
+		var ws = vscode.workspace.workspaceFolders![0].uri;
+
+		var elanUri = vscode.Uri.joinPath(ws, 'test0.elan');
+		var htmlUri = vscode.Uri.joinPath(ws, 'test0.html');
+
+		vscode.workspace.openTextDocument(elanUri).then((fe) => {
+			vscode.workspace.openTextDocument(htmlUri).then((fh) => {
 				const model = new FileFrame(fe.getText());
 				const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
 				const expectedHtml = fh.getText().replaceAll("\r", "");
