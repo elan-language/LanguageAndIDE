@@ -79,11 +79,6 @@ export class VarFrame implements Frame {
         const id = this.idFrame.renderAsHtml();
         const expr = this.exprFrame.renderAsHtml();
       
-        return `<statement id='${this.htmlId}' class="${cls}" tabindex="0">
-                <keyword>var</keyword>
-                ${id}
-                <keyword>set to</keyword>
-                ${expr}
-                </statement>`;
+        return `<statement id='${this.htmlId}' class="${cls}" tabindex="0"><keyword>var</keyword>${id}<keyword>set to</keyword>${expr}</statement>`;
     }
 }
