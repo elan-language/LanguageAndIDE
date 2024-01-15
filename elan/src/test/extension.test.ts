@@ -30,7 +30,7 @@ suite('Extension Test Suite', () => {
 		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
 	});
 
-	test('Test file', (done) => {
+	test('Test file model ', (done) => {
         
 		var ws = vscode.workspace.workspaceFolders![0].uri;
 
@@ -45,6 +45,19 @@ suite('Extension Test Suite', () => {
 
 				done(assert.strictEqual(actualHtml, expectedHtml));
 			} );
+		} );
+	});
+
+	test('Open file in editor', (done) => {
+        
+		var ws = vscode.workspace.workspaceFolders![0].uri;
+
+		var elanUri = vscode.Uri.joinPath(ws, 'test1.elan');
+		
+		vscode.workspace.openTextDocument(elanUri).then((fe) => {
+			vscode.commands.executeCommand('vscode.openWith', elanUri, 'elan.elanEditor', 1).then(e => {
+				done();
+			});
 		} );
 	});
 });
