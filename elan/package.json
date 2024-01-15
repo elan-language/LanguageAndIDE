@@ -1,7 +1,7 @@
 {
   "name": "elan",
-  "displayName": "Elan",
-  "description": "Elan IDE",
+  "displayName": "elan",
+  "description": "elan",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"
