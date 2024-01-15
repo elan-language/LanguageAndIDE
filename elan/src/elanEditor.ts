@@ -115,10 +115,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private getHtmlForWebview(webview: vscode.Webview): string {
 		// Local path to script and css for the webview
 		const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(
-			this.context.extensionUri, 'media', 'elanEditor.js'));
+			this.context.extensionUri, 'media', 'elanScripts.js'));
 
 		const styleMainUri = webview.asWebviewUri(vscode.Uri.joinPath(
-			this.context.extensionUri, 'media', 'elanEditor.css'));
+			this.context.extensionUri, 'media', 'elanStyle.css'));
 
 		// Use a nonce to whitelist which scripts can be run
 		const nonce = getNonce();
