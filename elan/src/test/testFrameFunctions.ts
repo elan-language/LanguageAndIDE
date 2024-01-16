@@ -1,10 +1,12 @@
 import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
+import { resetId } from "../frames/helpers";
 import { MainFrame } from "../frames/main-frame";
 import { SetStatement } from "../frames/set-statement";
 import { Variable } from "../frames/variable";
 
 export function T00_emptyFile() {
+	resetId();
 	return new FileFrame();
 }
 

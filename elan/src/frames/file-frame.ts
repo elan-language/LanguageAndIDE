@@ -1,11 +1,16 @@
 import { Frame } from "./frame";
 import { Global } from "./global";
+import { resetId } from "./helpers";
 
 export class FileFrame implements Frame {
 
     private globals: Array<Global> = new Array<Global>();
 
     public htmlId = "file";
+
+    constructor() {
+        resetId();
+    }
 
      public renderAsHtml() : string {
         const ss: Array<string> = [];
