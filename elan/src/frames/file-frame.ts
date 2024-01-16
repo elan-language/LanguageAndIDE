@@ -11,7 +11,16 @@ export class FileFrame implements Frame {
     constructor(code?: string) {
     }
 
-     public renderAsHtml() {
-        return `<comment># Elan v0.1</comment>`;
+     public renderAsHtml() : string {
+        const ss: Array<string> = [];
+        for (var frame of this.frames) {
+            ss.push(frame.renderAsHtml());
+        }
+        const globals = ss.join("\n");
+        return `<comment># Elan v0.1</comment>\r\n${globals}`;
+    }
+
+    public AddChild(g : Frame) {
+        this.frames.push(g);
     }
 }

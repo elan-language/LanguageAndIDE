@@ -1,54 +1,62 @@
 * {
     font-family: monospace;
-    color: black;
     background-color: white;
-    border-color:white;
+    border-color: white;
 }
 
-keyword, .keyword {
+span {
+    background-color: inherit;
+}
+
+keyword {
     color: blue;
 }
 
-.prompt {
-    color: grey;
+comment {
+    color: green;
 }
 
-identifier, keyword, expression {
-    border-right-width: 1ch;
-    border-right-style: solid;
+.string {
+    color: rgb(165, 2, 2);
 }
 
-statementBlock {
+statement {
     display: block;
+    background-color: white;
     border-left-style: solid;
     border-left-width: 2ch;
 }
 
-global, statement {
+statement {
     display: block;
 }
 
 global {
+    display: block;
     margin-bottom: 1ch;
 }
-.selected > statementBlock {
-    border-color: orange;
+
+.selected > * , .selected clause *{
+    border-left-color: rgb(174, 216, 250);
 }
 
-identifier.selected, expression.selected,.selected > * {
-    background-color: orange;
-    border-color: orange;
+.selected > :not(statement) {
+    background-color: rgb(174, 216, 250);
+    border-right-color: rgb(174, 216, 250);
 }
 
-input {
-    border: none;
+textEntry.selected {
+    background-color: rgb(174, 216, 250);
 }
-
-input:focus {
-    outline: none;
-    background-color: aqua;
+textEntry.empty {
+      color: rgb(196, 193, 193);
 }
-
-.selected:focus {
-    outline: none;
+textEntry.incomplete {
+    color:rgb(223, 145, 0);
+}
+textEntry.invalid {
+    color:red;
+}
+textEntry.valid {
+  color:rgb(0, 187, 0);
 }

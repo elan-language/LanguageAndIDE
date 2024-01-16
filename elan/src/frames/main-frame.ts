@@ -1,8 +1,9 @@
 import { Frame } from "./frame";
+import { GlobalFrame } from "./global";
 import { nextId } from "./helpers";
 
 
-export class MainFrame implements Frame {
+export class MainFrame implements GlobalFrame {
 
     private frames: Array<Frame> = new Array<Frame>();
     public htmlId : string ="";
@@ -12,7 +13,7 @@ export class MainFrame implements Frame {
         this.htmlId = `main${nextId()}`;
     }
 
-    public renderAsHtml() {
+    public renderAsHtml() : string {
         return `<global id='${this.htmlId}' tabindex="0">
 <keyword>main</keyword>
 <keyword>end main</keyword>

@@ -10,6 +10,14 @@ export function T01_mainOnly() {
 	return new MainFrame();
 }
 
+export function T02_mainInFile() {
+	var file = new FileFrame();
+	var main = new MainFrame();
+	file.AddChild(main);
+	return file;
+}
+
+
 export function getTestFrame(fn : string) : Frame {
     return eval(`${fn}()`);
 }
