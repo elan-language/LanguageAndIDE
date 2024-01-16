@@ -31,4 +31,8 @@ export class Identifier implements TextEntry {
     renderAsHtml(): string {
         return `<textEntry id="${this.htmlId}" class="${this.class()}" tabIndex=0>${this.content()}</textEntry>`;
     }
+
+    enterText(text: string): void {
+		this.text = text;
+	}
 }
