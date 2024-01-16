@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
-import { newFileFrame } from './frames/frame-factory';
+import { FileFrame } from './frames/file-frame';
 
 interface editorEvent {
 	type: "click" | "keyOnInput" | "keyOnFrame",
@@ -19,7 +19,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private static readonly viewType = 'elan.elanEditor';
 
 	// first pass just display a FileFrame
-	private frameModel = newFileFrame();
+	private frameModel = new FileFrame();
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -96,15 +96,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private click(id: string) {
-		this.frameModel.select(id, "");
+		//this.frameModel.select(id, "");
 	}
 
 	private newFrame(id?: string) {
-		this.frameModel.newFrame(id);
+		//this.frameModel.newFrame(id);
 	}
 
 	private userInput(key: string) {
-		this.frameModel.userInput(key);
+		//this.frameModel.userInput(key);
 	}
 
 	/**

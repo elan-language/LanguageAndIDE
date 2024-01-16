@@ -49,5 +49,23 @@
     "typescript": "^5.3.3",
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.8"
-  }
+  },
+  "runtimeDependencies": [
+    {
+      "id": "OmniSharp",
+      "description": "OmniSharp for Windows (.NET 4.7.2 / x86)",
+      "url": "https://roslynomnisharp.blob.core.windows.net/releases/1.39.11/omnisharp-win-x86-1.39.11.zip",
+      "installPath": ".omnisharp/1.39.11",
+      "platforms": [
+        "win32"
+      ],
+      "architectures": [
+        "x86"
+      ],
+      "installTestPath": "./.omnisharp/1.39.11/OmniSharp.exe",
+      "platformId": "win-x86",
+      "isFramework": true,
+      "integrity": "DF52F6BCEEF14033E8A8C374EF1B81D223FFD17BA9D7E297CFCF0C4BEBF0A22F"
+    }
+  ]
 }

@@ -12,7 +12,9 @@ export function wrap(html: string) {
 <title>Elan Editor</title>
 </head>
 <body>
-<elan-code>${html}</elan-code>
+<elan-code>
+${html}
+</elan-code>
 </body>
 </html>`;
 }
@@ -25,7 +27,6 @@ export async function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile
     const model = frame();
     const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
     const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-
     done(assert.strictEqual(actualHtml, expectedHtml));
 }
 
