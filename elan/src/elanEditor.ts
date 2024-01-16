@@ -3,6 +3,7 @@ import { getNonce } from './util';
 import { getTestFrame } from './test/testFrameFunctions';
 import { FileFrame } from './frames/file-frame';
 import { Frame } from './frames/frame';
+import { setCurrentElanFile } from './extension';
 
 
 interface editorEvent {
@@ -37,6 +38,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel: vscode.WebviewPanel,
 		_token: vscode.CancellationToken
 	): Promise<void> {
+
+		setCurrentElanFile(document);
+
 		// Setup initial content for the webview
 		webviewPanel.webview.options = {
 			enableScripts: true,

@@ -9,6 +9,12 @@ import * as path from 'path';
 import { mkdirp } from 'async-file';
 import * as fs from 'fs';
 
+var currentDoc : vscode.TextDocument | undefined;
+
+export function setCurrentElanFile(d : vscode.TextDocument){
+	currentDoc = d;
+}
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
@@ -20,13 +26,23 @@ export async function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('elan.helloWorld', () => {
+	let disposable = vscode.commands.registerCommand('elan.compile', () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World from Elan!');
-	});
 
-	context.subscriptions.push(disposable);
+	
+		const document = currentDoc;
+		if (!document || !document.fileName.endsWith(".elan")){
+			return;
+		}
+
+		const code = document.getText();
+
+
+
+
+	});
 
 	context.subscriptions.push(disposable);
 
