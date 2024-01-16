@@ -6,11 +6,7 @@ export function T00_emptyFile() {
 	return new FileFrame();
 }
 
-export function T01_mainOnly() {
-	return new MainFrame();
-}
-
-export function T02_mainInFile() {
+export function T01_mainInFile() {
 	var file = new FileFrame();
 	var main = new MainFrame();
 	file.AddChild(main);
