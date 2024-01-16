@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
-import { FileFrame } from './frames/file-frame';
+import { getTestFrame } from './test/testFrameFunctions';
+
 
 interface editorEvent {
 	type: "click" | "keyOnInput" | "keyOnFrame",
@@ -17,9 +18,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private static readonly viewType = 'elan.elanEditor';
-
-	// first pass just display a FileFrame
-	private frameModel = new FileFrame();
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -41,7 +39,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		let fm = this.frameModel;
+		const name = document.fileName;
+		const arr = name.split("\\");
+		const fn = arr[arr.length -1].split(".")[0];
+
+		const fm = getTestFrame(fn);
 
 		function updateWebview() {
 			webviewPanel.webview.postMessage({

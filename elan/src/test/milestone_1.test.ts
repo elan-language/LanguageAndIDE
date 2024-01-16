@@ -1,11 +1,6 @@
 import * as vscode from 'vscode';
-import { FileFrame } from '../frames/file-frame';
-import { assertAreEqual, assertAreEqualByFile, wrap } from './testHelpers';
-import { MainFrame } from '../frames/main-frame';
-
-function T00_emptyFile() {
-	return new FileFrame();
-}
+import { assertAreEqual } from './testHelpers';
+import { T00_emptyFile, T01_mainOnly } from './testFrameFunctions';
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -15,6 +10,6 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	});
 
 	test('Test Main Only', (done) => {
-		assertAreEqual(done, "01_mainOnly.html", () => new MainFrame());
+		assertAreEqual(done, "01_mainOnly.html", T01_mainOnly);
 	});
 });

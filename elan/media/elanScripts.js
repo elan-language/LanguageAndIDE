@@ -9,7 +9,7 @@
 	// @ts-ignore
 	const vscode = acquireVsCodeApi();
 
-	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.code'));
+	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('code'));
 	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
 
 	const showDebug = false;
