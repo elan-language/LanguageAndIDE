@@ -1,3 +1,4 @@
+import { Constant } from "../frames/constant";
 import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
 import { resetId } from "../frames/helpers";
@@ -36,6 +37,17 @@ export function T03_mainWithVarAndSet() {
 	s.name.enterText("a");
 	s.expr.enterText("3 + 4");
 	main.addStatement(s);
+	return file;
+}
+
+export function T04_mainAndConstant() {
+	var file = new FileFrame();
+	var c = new Constant();
+	c.name.enterText("phi");
+	c.expr.enterText("1.618");
+	file.addGlobal(c);
+	var main = new MainFrame();
+	file.addGlobal(main);
 	return file;
 }
 
