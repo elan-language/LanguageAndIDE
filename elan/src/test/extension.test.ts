@@ -4,14 +4,14 @@ import { assertAreEqual, assertAreEqualByFile, wrap } from './testHelpers';
 import { MainFrame } from '../frames/main-frame';
 
 
-suite('Elan Extension Frame Tests', () => {
+suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('Test File Frame', (done) => {
-		assertAreEqual(done, "test0.html", () => new FileFrame());
+	test('Test Empty File', (done) => {
+		assertAreEqual(done, "00_emptyFile.html", () => new FileFrame());
 	});
 
-	test('Test Main Frame', (done) => {
-		assertAreEqual(done, "test1.html", () => new MainFrame());
+	test('Test Main Only', (done) => {
+		assertAreEqual(done, "01_mainOnly.html", () => new MainFrame());
 	});
 });

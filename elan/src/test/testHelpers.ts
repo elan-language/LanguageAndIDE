@@ -12,7 +12,7 @@ export function wrap(html: string) {
 <title>Elan Editor</title>
 </head>
 <body>
-<div class="code">${html}</div>
+<elan-code>${html}</elan-code>
 </body>
 </html>`;
 }

@@ -78,6 +78,6 @@ export class FileFrame implements Frame {
 
         const body = ss.join("\n");
 
-        return `<div class='header'># Elan v0.1</div>\r\n${body}`;
+        return `<comment class="uneditable"># Elan v0.1</comment>\r\n${body}`;
     }
 }
