@@ -1,6 +1,7 @@
 import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
 import { MainFrame } from "../frames/main-frame";
+import { Variable } from "../frames/variable";
 
 export function T00_emptyFile() {
 	return new FileFrame();
@@ -9,7 +10,16 @@ export function T00_emptyFile() {
 export function T01_mainInFile() {
 	var file = new FileFrame();
 	var main = new MainFrame();
-	file.AddChild(main);
+	file.addGlobal(main);
+	return file;
+}
+
+export function T02_mainWithVar() {
+	var file = new FileFrame();
+	var main = new MainFrame();
+	file.addGlobal(main);
+	var v = new Variable();
+	main.addStatement(v);
 	return file;
 }
 
