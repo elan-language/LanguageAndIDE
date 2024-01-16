@@ -1,10 +1,7 @@
 * {
     font-family: monospace;
-    color: black;
     background-color: white;
-    border-color:white;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    border-color: white;
 }
 
 span {
@@ -23,17 +20,10 @@ comment {
     color: rgb(165, 2, 2);
 }
 
-keyword {
-    border-right-width: 1ch;
-    border-right-style: solid;
-}
-
 statement {
     display: block;
     background-color: white;
     border-left-style: solid;
-    border-style:solid;
-    border-width: 1px;
     border-left-width: 2ch;
 }
 
@@ -46,7 +36,7 @@ global {
     margin-bottom: 1ch;
 }
 
-.selected > * {
+.selected > * , .selected clause *{
     border-left-color: rgb(174, 216, 250);
 }
 
@@ -56,8 +46,7 @@ global {
 }
 
 textEntry.selected {
-    border-style: solid ;
-    border-color: black;
+    background-color: rgb(174, 216, 250);
 }
 textEntry.empty {
       color: rgb(196, 193, 193);
@@ -68,16 +57,6 @@ textEntry.incomplete {
 textEntry.invalid {
     color:red;
 }
-textEntry.selected.empty {
-    border-color: grey;
-}
-textEntry.selected.valid {
-  border-color: rgb(3, 212, 3);
-  color:rgb(3, 212, 3);
-}
-textEntry.selected.incomplete {
-  border-color: rgb(223, 145, 0);
-}
-textEntry.selected.invalid {
-  border-color: red;
+textEntry.valid {
+  color:rgb(0, 187, 0);
 }
