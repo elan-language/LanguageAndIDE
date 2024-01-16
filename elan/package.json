@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "elan.helloWorld",
-        "title": "Hello World"
+        "command": "elan.compile",
+        "title": "Elan: Compile"
       }
     ],
     "customEditors": [
