@@ -8,7 +8,7 @@ export function wrap(html: string) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="..\\..\\media\\elanStyle.css" rel="stylesheet" />
+<link href="..\\..\\..\\media\\elanStyle.css" rel="stylesheet" />
 <title>Elan Editor</title>
 </head>
 <body>
