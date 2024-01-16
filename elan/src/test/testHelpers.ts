@@ -27,7 +27,15 @@ export async function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile
     const model = frame();
     const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
     const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-    done(assert.strictEqual(actualHtml, expectedHtml));
+
+    try {
+        assert.strictEqual(actualHtml, expectedHtml);
+        done();
+    }
+    catch (e) {
+        done(e);
+        throw e;
+    }
 }
 
 export async function assertAreEqualByFile<T extends Frame>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
@@ -41,5 +49,12 @@ export async function assertAreEqualByFile<T extends Frame>(done: Mocha.Done, ht
     const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
     const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
 
-    done(assert.strictEqual(actualHtml, expectedHtml));
+    try {
+        assert.strictEqual(actualHtml, expectedHtml);
+        done();
+    }
+    catch (e) {
+        done(e);
+        throw e;
+    }
 }
