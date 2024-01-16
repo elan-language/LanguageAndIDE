@@ -1,17 +1,16 @@
 import * as vscode from 'vscode';
-import { FileFrame } from '../frames/file-frame';
-import { assertAreEqual, assertAreEqualByFile, wrap } from './testHelpers';
-import { MainFrame } from '../frames/main-frame';
+import { assertAreEqual, } from './testHelpers';
+import { newFileFrame, newMainFrame } from '../frames/frame-factory';
 
 
 suite('Elan Extension Frame Tests', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
 	test('Test File Frame', (done) => {
-		assertAreEqual(done, "test0.html", () => new FileFrame());
+		assertAreEqual(done, "test0.html", newFileFrame);
 	});
 
 	test('Test Main Frame', (done) => {
-		assertAreEqual(done, "test1.html", () => new MainFrame());
+		assertAreEqual(done, "test1.html", newMainFrame);
 	});
 });

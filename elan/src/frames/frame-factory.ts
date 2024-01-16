@@ -33,3 +33,7 @@ function varFrameFactory(code : string) : [Frame, string] {
     const match = code.match(varRegex);
     return [new VarFrame(match![1], match![2]), match![3]];
 }
+
+export function newFileFrame() { return new FileFrame(); };
+export function newMainFrame() { return new MainFrame(); };
+
