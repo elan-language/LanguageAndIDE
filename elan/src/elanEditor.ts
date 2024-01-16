@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { getTestFrame } from './test/testFrameFunctions';
+import { FileFrame } from './frames/file-frame';
+import { Frame } from './frames/frame';
 
 
 interface editorEvent {
@@ -18,6 +20,8 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private static readonly viewType = 'elan.elanEditor';
+
+	private frameModel : Frame = new FileFrame();
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -39,13 +43,17 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		const name = document.fileName;
-		const arr = name.split("\\");
-		const fn = arr[arr.length -1].split(".")[0];
+		if (!document.getText()){
+			const name = document.fileName;
+			const arr = name.split("\\");
+			const fn = arr[arr.length -1].split(".")[0];
+	
+			this.frameModel = getTestFrame(fn);
+		}
 
-		const fm = getTestFrame(fn);
+		
 
-		function updateWebview() {
+		function updateWebview(fm : Frame) {
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: fm.renderAsHtml(),
@@ -62,7 +70,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
 			if (e.document.uri.toString() === document.uri.toString()) {
-				updateWebview();
+				updateWebview(this.frameModel);
 			}
 		});
 
@@ -81,20 +89,20 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					else {
 						this.newFrame();
 					}
-					updateWebview();
+					updateWebview(this.frameModel);
 					return;
 				case 'keyOnFrame':
 					this.newFrame(e.id);
-					updateWebview();
+					updateWebview(this.frameModel);
 					return;
 				case 'keyOnInput':
 					this.userInput(e.key!);
-					updateWebview();
+					updateWebview(this.frameModel);
 					return;
 			}
 		});
 
-		updateWebview();
+		updateWebview(this.frameModel);
 	}
 
 	private click(id: string) {
