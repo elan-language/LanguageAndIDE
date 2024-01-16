@@ -22,6 +22,7 @@ export function T02_mainWithVar() {
 	var file = new FileFrame();
 	var main = new MainFrame();
 	file.addGlobal(main);
+	main.removeStatementSelector();
 	var v = new Variable();
 	main.addStatement(v);
 	return file;
@@ -31,6 +32,7 @@ export function T03_mainWithVarAndSet() {
 	var file = new FileFrame();
 	var main = new MainFrame();
 	file.addGlobal(main);
+	main.removeStatementSelector();
 	var v = new Variable();
 	main.addStatement(v);
 	var s = new SetStatement();
@@ -50,7 +52,6 @@ export function T04_mainAndConstant() {
 	file.addGlobal(main);
 	return file;
 }
-
 
 export function getTestFrame(fn : string) : Frame {
     return eval(`${fn}()`);
