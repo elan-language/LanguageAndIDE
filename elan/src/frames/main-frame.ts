@@ -6,7 +6,7 @@ export class MainFrame implements Frame {
 
     private frames: Array<Frame> = new Array<Frame>();
     public htmlId : string ="";
-    private classes = '';
+   
 
     constructor() {
         this.htmlId = `main${nextId()}`;
