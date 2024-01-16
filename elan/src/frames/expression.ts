@@ -2,6 +2,7 @@ import { TextEntry } from "./textEntry";
 import { nextId } from "./helpers";
 
 export class Expression implements TextEntry {
+
     htmlId: string = "";
     text: string = "";
     prompt: string = "";
@@ -30,4 +31,8 @@ export class Expression implements TextEntry {
     renderAsHtml(): string {
         return `<textEntry id="${this.htmlId}" class="${this.class()}" tabIndex=0>${this.content()}</textEntry>`;
     }
+
+    enterText(text: string): void {
+		this.text = text;
+	}
 }

@@ -1,6 +1,7 @@
 import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
 import { MainFrame } from "../frames/main-frame";
+import { SetStatement } from "../frames/set-statement";
 import { Variable } from "../frames/variable";
 
 export function T00_emptyFile() {
@@ -20,6 +21,19 @@ export function T02_mainWithVar() {
 	file.addGlobal(main);
 	var v = new Variable();
 	main.addStatement(v);
+	return file;
+}
+
+export function T03_mainWithVarAndSet() {
+	var file = new FileFrame();
+	var main = new MainFrame();
+	file.addGlobal(main);
+	var v = new Variable();
+	main.addStatement(v);
+	var s = new SetStatement();
+	s.name.enterText("a");
+	s.expr.enterText("3 + 4");
+	main.addStatement(s);
 	return file;
 }
 
