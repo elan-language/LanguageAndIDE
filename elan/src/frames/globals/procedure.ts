@@ -1,13 +1,13 @@
-import { Frame } from "../frame";
 import { Global } from "./global";
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { Identifier } from "../text-entry-fields/identifier";
 import { ParamList } from "../text-entry-fields/param-list";
+import { Member } from "../members/member";
 
 
-export class Procedure implements Global {
+export class Procedure implements Global, Member {
 
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";

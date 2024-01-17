@@ -70,7 +70,7 @@ export function T04_allGlobals() {
 	var cl = new Class();
 	file.addGlobal(cl);
 	cl.name.enterText("Player");
-	cl.asString.returnExpr.enterText("a Player");
+	cl.asString.returnStatement.expr.enterText("a Player");
 	var p1 = new Property();
 	p1.name.enterText("score");
 	p1.type.enterText("Int");
