@@ -31,7 +31,7 @@ export class AsString implements Member {
         return `<member id='${this.htmlId}' tabindex="0">
 <keyword>function</keyword>${this.name.renderAsHtml()}()<keyword> as </keyword>String
 ${statements}
-<statement><keyword>return <keyword>${this.returnExpr}</statement>
+<statement><keyword>return <keyword>${this.returnExpr.renderAsHtml()}</statement>
 <keyword>end function</keyword>
 </member>`;
     }
