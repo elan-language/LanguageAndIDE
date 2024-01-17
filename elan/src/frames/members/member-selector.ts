@@ -11,6 +11,6 @@ export class MemberSelector implements Member {
     }
 
     renderAsHtml(): string {
-        return `<member id='${this.htmlId}' tabindex="0"><keyword>${this.text.renderAsHtml()}</keyword></statement>`;
+        return `<member id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</member>`;
     }
 } 
