@@ -28,7 +28,7 @@ export abstract class Text implements Frame {
     }
 
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" class="${this.class()}" tabIndex=0>${this.content()}</text>`;
+        return `<text id="${this.htmlId}" class="${this.class()}" tabindex=0>${this.content()}</text>`;
     }
 
     enterText(text: string): void {
