@@ -11,7 +11,7 @@ export class Procedure implements Global, Member {
 
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";
-    public name : Identifier = new Identifier();
+    public name : Identifier = new Identifier("name");
     public params: ParamList = new ParamList();
     private cls() : string {
         return "";

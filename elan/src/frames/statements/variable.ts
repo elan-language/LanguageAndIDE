@@ -5,7 +5,7 @@ import { Expression } from "../text-entry-fields/expression";
 
 export class Variable implements Statement {
     htmlId: string = "";
-    name: Identifier = new Identifier();
+    name: Identifier = new Identifier("name");
     expr: Expression = new Expression("expression");
 
     constructor() {
