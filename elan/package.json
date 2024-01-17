@@ -29,6 +29,11 @@
         ],
         "priority": "default"
       }
+    ],
+    "taskDefinitions": [
+      {
+          "type": "elanCompileTask"
+      }
     ]
   },
   "scripts": {

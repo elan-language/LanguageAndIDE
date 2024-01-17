@@ -15,6 +15,14 @@ export function setCurrentElanFile(d : vscode.TextDocument){
 	currentDoc = d;
 }
 
+const task = new vscode.Task (
+    {type: 'process'}, // this is the same type as in tasks.json
+	vscode.TaskScope.Workspace,
+    'Elan Compile', // how you name the task
+    'Elan: Compile', // Shows up as MyTask: name 
+    new vscode.ProcessExecution(".\\.elanCompiler\\bc.exe", ["${fileDirname}\\${fileBasename}"]),
+);
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
@@ -23,32 +31,18 @@ export async function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "elan" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('elan.compile', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Elan!');
-
-	
-		const document = currentDoc;
-		if (!document || !document.fileName.endsWith(".elan")){
-			return;
+	vscode.tasks.registerTaskProvider('elanCompilerTask', {
+		provideTasks: () => {
+			return [task];
+		},
+		resolveTask(_task: vscode.Task): vscode.Task | undefined {
+			return undefined;
 		}
-
-		const code = document.getText();
-
-
-
-
 	});
-
-	context.subscriptions.push(disposable);
-
+	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/n92p586rw7dddsg6/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/m7f0ne92lx97irqu/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff, "elan compiler", context.extensionPath + "\\.elanCompiler\\", []);
 }
 
