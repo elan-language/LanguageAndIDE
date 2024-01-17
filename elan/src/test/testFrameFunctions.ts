@@ -6,6 +6,7 @@ import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set";
 import { Variable } from "../frames/statements/variable";
 import { Procedure } from "../frames/globals/procedure";
+import { Function } from "../frames/globals/function";
 
 export function T00_emptyFile() {
 	resetId();
@@ -51,9 +52,14 @@ export function T04_allGlobals() {
 	file.addGlobal(c);
 	var main = new MainFrame();
 	file.addGlobal(main);
-	var proc = new Procedure();
-	proc.name.enterText("signIn");
-	file.addGlobal(proc);
+	var p = new Procedure();
+	p.name.enterText("signIn");
+	file.addGlobal(p);
+	var f = new Function();
+	f.name.enterText("hypotenuse");
+	f.params.enterText("sideB Float, sideC Float");
+	f.returnType.enterText("Float");
+	file.addGlobal(f);
 	return file;
 }
 

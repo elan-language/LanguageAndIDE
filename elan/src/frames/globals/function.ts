@@ -17,7 +17,7 @@ export class Function implements Global {
     public returnType: Type = new Type("return type");
    
     constructor() {
-        this.htmlId = `proc${nextId()}`;
+        this.htmlId = `func${nextId()}`;
         this.addStatement(new StatementSelector());
     }
 
@@ -28,7 +28,7 @@ export class Function implements Global {
         }
         const statements = ss.join("\n");
         return `<global id='${this.htmlId}' tabindex="0">
-<keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType}
+<keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
 ${statements}
 <keyword>end function</keyword>
 </global>`;
