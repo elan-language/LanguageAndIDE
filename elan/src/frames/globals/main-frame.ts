@@ -21,11 +21,11 @@ export class MainFrame implements Global {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<global id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>main</keyword>
 ${statements}
 <keyword>end main</keyword>
-</global>`;
+</div>`;
     }
 
     public addStatement(s : Statement) {

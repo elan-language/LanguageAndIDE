@@ -29,12 +29,12 @@ export class Function implements Global, Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<global id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
 ${statements}
 ${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
-</global>`;
+</div>`;
     }
 
     public addStatement(s : Statement) {

@@ -29,13 +29,13 @@ export class Class implements Global {
             ss.push(m.renderAsHtml());
         }
         const members = ss.join("\n");
-        return `<global id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>class</keyword>${this.name.renderAsHtml()}
 ${this.cons.renderAsHtml()}
 ${members}
 ${this.asString.renderAsHtml()}
 <keyword>end class</keyword>
-</global>`;
+</div>`;
     }
 
     public addMember(m : Member) {

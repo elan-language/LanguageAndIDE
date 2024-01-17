@@ -14,10 +14,10 @@ export class Enum implements Global {
     }
 
     renderAsHtml(): string {
-        return `<global id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>enum </keyword>${this.name.renderAsHtml()}
 <statement>${this.values.renderAsHtml()}</statement>       
 <keyword>end enum</keyword>
-</global>`;
+</div>`;
     }
 } 

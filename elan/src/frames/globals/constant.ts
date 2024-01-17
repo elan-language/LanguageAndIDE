@@ -13,6 +13,6 @@ export class Constant implements Global {
     }
 
     renderAsHtml(): string {
-        return `<global id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</global>`;
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</div>`;
     }
 } 

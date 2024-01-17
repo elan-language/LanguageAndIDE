@@ -25,11 +25,11 @@ export class Procedure implements Global, Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<global id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end procedure</keyword>
-</global>`;
+</div>`;
     }
 
     public addStatement(s : Statement) {

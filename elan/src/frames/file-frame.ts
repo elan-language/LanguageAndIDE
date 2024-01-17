@@ -18,7 +18,7 @@ export class FileFrame implements Frame {
             ss.push(frame.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<global><comment># Elan v0.1</comment></global>\r\n${globals}`;
+        return `<comment># Elan v0.1</comment>\r\n${globals}`;
     }
 
     public addGlobal(g : Global) {

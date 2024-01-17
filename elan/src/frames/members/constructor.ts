@@ -23,11 +23,11 @@ export class Constructor implements Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<member id='${this.htmlId}' tabindex="0">
+        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
 <keyword>constructor</keyword>(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end constructor</keyword>
-</member>`;
+</div>`;
     }
 
     public addStatement(s : Statement) {
