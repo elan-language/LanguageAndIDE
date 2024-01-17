@@ -30,7 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		vscode.TaskScope.Workspace,
 		'Compile', 
 		'Elan',  
-		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${fileWorkspaceFolder}"]),
+		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${workspaceFolder}"]),
 	);
 
 	task.group = vscode.TaskGroup.Build;
@@ -84,22 +84,11 @@ async function downloadCompiler(urlString: string): Promise<Buffer> {
 			}
 
 			// Downloading - hook up events
-			const packageSize = parseInt(response.headers['content-length'], 10);
 			let downloadedBytes = 0;
-			let downloadPercentage = 0;
-
-			//eventStream.post(new DownloadSizeObtained(packageSize));
 
 			response.on('data', (data) => {
 				downloadedBytes += data.length;
 				buffers.push(data);
-
-				// Update status bar item with percentage
-				// const newPercentage = Math.ceil(100 * (downloadedBytes / packageSize));
-				// if (newPercentage !== downloadPercentage) {
-				// 	downloadPercentage = newPercentage;
-				// 	//eventStream.post(new DownloadProgress(downloadPercentage, description));
-				// }
 			});
 
 			response.on('end', () => {
@@ -133,7 +122,6 @@ export async function InstallZip(
             if (err !== null) {
                 const message =
                     'C# Extension was unable to download its dependencies. Please check your internet connection. If you use a proxy server, please visit https://aka.ms/VsCodeCsharpNetworking';
-                //eventStream.post(new ZipError(message));
 				console.warn(message);
                 return reject();
             }
