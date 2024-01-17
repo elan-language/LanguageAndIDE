@@ -16,7 +16,7 @@ type {
     color: turquoise;
 }
 
-comment {
+comment, header {
     color: green;
 }
 
@@ -49,18 +49,18 @@ constant, main, procedure, function, enum, class, constructor, property, memberS
     border-right-color: rgb(174, 216, 250);
 }
 
-textEntry.selected {
+text.selected {
     background-color: rgb(174, 216, 250);
 }
-textEntry.empty {
+text.empty, type.empty {
       color: rgb(196, 193, 193);
 }
-textEntry.incomplete {
+text.incomplete {
     color:rgb(223, 145, 0);
 }
-textEntry.invalid {
+text.invalid, type.invalid {
     color:red;
 }
-textEntry.valid {
+text.valid, type.valid {
   color:rgb(0, 187, 0);
 }
