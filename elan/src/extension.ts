@@ -15,14 +15,6 @@ export function setCurrentElanFile(d : vscode.TextDocument){
 	currentDoc = d;
 }
 
-const task = new vscode.Task (
-    {type: 'process'}, // this is the same type as in tasks.json
-	vscode.TaskScope.Workspace,
-    'Elan Compile', // how you name the task
-    'Elan: Compile', // Shows up as MyTask: name 
-    new vscode.ProcessExecution(".\\.elanCompiler\\bc.exe", ["${fileDirname}\\${fileBasename}"]),
-);
-
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
@@ -31,7 +23,17 @@ export async function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "elan" is now active!');
 
-	vscode.tasks.registerTaskProvider('elanCompilerTask', {
+	const compilerPath = `${context.extensionPath}\\.elanCompiler\\`;
+
+	const task = new vscode.Task(
+		{ type: 'process' }, // this is the same type as in tasks.json
+		vscode.TaskScope.Workspace,
+		'Compile', // how you name the task
+		'Elan', // Shows up as MyTask: name 
+		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${fileWorkspaceFolder}"]),
+	);
+
+	vscode.tasks.registerTaskProvider('elan', {
 		provideTasks: () => {
 			return [task];
 		},
@@ -43,7 +45,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
 	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/m7f0ne92lx97irqu/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
-	await InstallZip(buff, "elan compiler", context.extensionPath + "\\.elanCompiler\\", []);
+	await InstallZip(buff, "elan compiler", compilerPath, []);
 }
 
 // This method is called when your extension is deactivated

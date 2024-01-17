@@ -32,7 +32,7 @@
     ],
     "taskDefinitions": [
       {
-          "type": "elanCompileTask"
+          "type": "elan"
       }
     ]
   },
