@@ -2,9 +2,8 @@ import { Text } from "./text";
 import { nextId } from "../helpers";
 
 export class Identifier extends Text {
-    constructor() {
-        super("name");
+    constructor(prompt: string) {
+        super(prompt);
         this.htmlId = `ident${nextId()}`;
     }
-
 }

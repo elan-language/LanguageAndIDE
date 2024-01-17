@@ -6,7 +6,7 @@ import { Member } from "./member";
 
 export class Property implements Member {
     htmlId: string = "";
-    name: Identifier = new Identifier();
+    name: Identifier = new Identifier("name");
     type: Type = new Type("Type");
 
     constructor() {

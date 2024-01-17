@@ -14,7 +14,7 @@ export class Function implements Global, Member {
     private statements: Array<Statement> = new Array<Statement>();
     public returnStatement: ReturnStatement = new ReturnStatement();
     public htmlId : string ="";
-    public name : Identifier = new Identifier();
+    public name : Identifier = new Identifier("name");
     public params: ParamList = new ParamList();
     public returnType: Type = new Type("return type");
     protected cls() : string {
