@@ -12,7 +12,7 @@ export class Procedure implements Global {
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";
     public name : Identifier = new Identifier();
-    public argList: ParamList = new ParamList();
+    public params: ParamList = new ParamList();
    
     constructor() {
         this.htmlId = `proc${nextId()}`;
@@ -26,7 +26,7 @@ export class Procedure implements Global {
         }
         const statements = ss.join("\n");
         return `<global id='${this.htmlId}' tabindex="0">
-<keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.argList.renderAsHtml()})
+<keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end procedure</keyword>
 </global>`;

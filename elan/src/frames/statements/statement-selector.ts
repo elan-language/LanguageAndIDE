@@ -11,6 +11,6 @@ export class StatementSelector implements Statement {
     }
 
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0"><keyword><text>${this.text.renderAsHtml()}</text></keyword></statement>`;
+        return `<statement id='${this.htmlId}' tabindex="0"><keyword>${this.text.renderAsHtml()}</keyword></statement>`;
     }
 } 
