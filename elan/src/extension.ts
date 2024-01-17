@@ -33,6 +33,8 @@ export async function activate(context: vscode.ExtensionContext) {
 		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${fileWorkspaceFolder}"]),
 	);
 
+	task.group = vscode.TaskGroup.Build;
+
 	vscode.tasks.registerTaskProvider('elan', {
 		provideTasks: () => {
 			return [task];
