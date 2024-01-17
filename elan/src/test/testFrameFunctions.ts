@@ -8,6 +8,7 @@ import { Variable } from "../frames/statements/variable";
 import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
 import { Enum } from "../frames/globals/enum";
+import { Class } from "../frames/globals/class";
 
 export function T00_emptyFile() {
 	resetId();
@@ -47,10 +48,10 @@ export function T03_mainWithVarAndSet() {
 
 export function T04_allGlobals() {
 	var file = new FileFrame();
-	var c = new Constant();
-	c.name.enterText("phi");
-	c.expr.enterText("1.618");
-	file.addGlobal(c);
+	var con = new Constant();
+	con.name.enterText("phi");
+	con.expr.enterText("1.618");
+	file.addGlobal(con);
 	var main = new MainFrame();
 	file.addGlobal(main);
 	var p = new Procedure();
@@ -65,6 +66,10 @@ export function T04_allGlobals() {
 	e.name.enterText("Fruit");
 	e.values.enterText("apple, orange, pear");
 	file.addGlobal(e);
+	var cl = new Class();
+	cl.name.enterText("Player");
+	cl.asString.returnExpr.enterText("a Player");
+	file.addGlobal(cl);
 	return file;
 }
 
