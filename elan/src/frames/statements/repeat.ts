@@ -9,7 +9,7 @@ export class Repeat extends FrameWithStatements implements Statement {
 
     constructor() {
         super();
-        this.htmlId = `while${nextId()}`;
+        this.htmlId = `repeat${nextId()}`;
     }
 
     renderAsHtml(): string {

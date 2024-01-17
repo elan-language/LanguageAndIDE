@@ -15,6 +15,7 @@ import { Call } from "../frames/statements/call";
 import { Print } from "../frames/statements/print";
 import { While } from "../frames/statements/while";
 import { Repeat } from "../frames/statements/repeat";
+import { For } from "../frames/statements/for";
 
 export function T00_emptyFile() {
 	resetId();
@@ -43,10 +44,15 @@ export function T03_mainWithAllStatements() {
 	main.addStatement(pr);
 	var w = new While();
 	w.condition.enterText("newGame");
-	main.addStatement(w);;
+	main.addStatement(w);
 	var r = new Repeat();
 	r.condition.enterText("score > 20");
-	main.addStatement(r);;
+	main.addStatement(r);
+	var for1 = new For();
+	for1.variable.enterText("i");
+	for1.from.enterText("1");
+	for1.to.enterText("10");
+	main.addStatement(for1);
 	return file;
 }
 
