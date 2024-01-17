@@ -7,6 +7,7 @@ import { SetStatement } from "../frames/statements/set";
 import { Variable } from "../frames/statements/variable";
 import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
+import { Enum } from "../frames/globals/enum";
 
 export function T00_emptyFile() {
 	resetId();
@@ -60,6 +61,10 @@ export function T04_allGlobals() {
 	f.params.enterText("sideB Float, sideC Float");
 	f.returnType.enterText("Float");
 	file.addGlobal(f);
+	var e = new Enum();
+	e.name.enterText("Fruit");
+	e.values.enterText("apple, orange, pear");
+	file.addGlobal(e);
 	return file;
 }
 
