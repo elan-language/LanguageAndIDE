@@ -13,6 +13,7 @@ import { Property } from "../frames/members/property";
 import { Throw } from "../frames/statements/throw";
 import { Call } from "../frames/statements/call";
 import { Print } from "../frames/statements/print";
+import { While } from "../frames/statements/while";
 
 export function T00_emptyFile() {
 	resetId();
@@ -39,6 +40,9 @@ export function T03_mainWithAllStatements() {
 	var pr = new Print();
 	pr.expr.enterText(`"Hello World!"`);
 	main.addStatement(pr);
+	var w = new While();
+	w.condition.enterText("newGame");
+	main.addStatement(w);;
 	return file;
 }
 
