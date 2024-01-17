@@ -12,6 +12,10 @@ keyword {
     color: blue;
 }
 
+type {
+    color: turquoise;
+}
+
 comment {
     color: green;
 }

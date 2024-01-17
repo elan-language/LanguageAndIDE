@@ -1,20 +1,22 @@
-import { Frame } from "../frame";
-import { Global } from "./global";
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
+import { Identifier } from "../text-entry-fields/identifier";
+import { ParamList } from "../text-entry-fields/param-list";
+import { Member } from "./member";
 
 
-export class MainFrame implements Global {
+export class Constructor implements Member {
 
     private statements: Array<Statement> = new Array<Statement>();
+    public params: ParamList = new ParamList();
     public htmlId : string ="";
     private cls() : string {
         return "";
     };
    
     constructor() {
-        this.htmlId = `main${nextId()}`;
+        this.htmlId = `constructor${nextId()}`;
         this.addStatement(new StatementSelector());
     }
 
@@ -24,11 +26,11 @@ export class MainFrame implements Global {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>main</keyword>
+        return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+<keyword>constructor</keyword>(${this.params.renderAsHtml()})
 ${statements}
-<keyword>end main</keyword>
-</main>`;
+<keyword>end constructor</keyword>
+</constructor>`;
     }
 
     public addStatement(s : Statement) {

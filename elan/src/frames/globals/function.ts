@@ -4,21 +4,25 @@ import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { Identifier } from "../text-entry-fields/identifier";
 import { ParamList } from "../text-entry-fields/param-list";
+import { Type } from "../text-entry-fields/type";
 import { Member } from "../members/member";
+import { ReturnStatement } from "../statements/return-statement";
 
 
-export class Procedure implements Global, Member {
+export class Function implements Global, Member {
 
     private statements: Array<Statement> = new Array<Statement>();
+    public returnStatement: ReturnStatement = new ReturnStatement();
     public htmlId : string ="";
     public name : Identifier = new Identifier();
     public params: ParamList = new ParamList();
+    public returnType: Type = new Type("return type");
     private cls() : string {
         return "";
     };
    
     constructor() {
-        this.htmlId = `proc${nextId()}`;
+        this.htmlId = `func${nextId()}`;
         this.addStatement(new StatementSelector());
     }
 
@@ -28,11 +32,12 @@ export class Procedure implements Global, Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
+        return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+<keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
 ${statements}
-<keyword>end procedure</keyword>
-</procedure>`;
+${this.returnStatement.renderAsHtml()}
+<keyword>end function</keyword>
+</function>`;
     }
 
     public addStatement(s : Statement) {

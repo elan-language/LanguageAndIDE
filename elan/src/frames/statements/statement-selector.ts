@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { PlainText } from "../text-entries/plainText";
+import { PlainText } from "../text-entry-fields/plain_text";
 
 export class StatementSelector implements Statement {
     htmlId: string = "";
@@ -10,7 +10,11 @@ export class StatementSelector implements Statement {
         this.htmlId = `statementSelect${nextId()}`;
     }
 
+    private cls() : string {
+        return "";
+    };
+
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0"><keyword><textEntry>${this.text.renderAsHtml()}</textEntry></keyword></statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;
     }
 } 

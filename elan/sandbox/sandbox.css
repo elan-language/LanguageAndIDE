@@ -45,18 +45,18 @@ global {
     border-right-color: rgb(174, 216, 250);
 }
 
-textEntry.selected {
+text.selected {
     background-color: rgb(174, 216, 250);
 }
-textEntry.empty {
+text.empty {
       color: rgb(196, 193, 193);
 }
-textEntry.incomplete {
+text.incomplete {
     color:rgb(223, 145, 0);
 }
-textEntry.invalid {
+text.invalid {
     color:red;
 }
-textEntry.valid {
+text.valid {
   color:rgb(0, 187, 0);
 }
