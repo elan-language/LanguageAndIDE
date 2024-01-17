@@ -5,6 +5,7 @@ import { resetId } from "../frames/helpers";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set";
 import { Variable } from "../frames/statements/variable";
+import { Procedure } from "../frames/globals/procedure";
 
 export function T00_emptyFile() {
 	resetId();
@@ -50,6 +51,10 @@ export function T04_allGlobals() {
 	file.addGlobal(c);
 	var main = new MainFrame();
 	file.addGlobal(main);
+	var proc = new Procedure();
+	proc.name.enterText("hypotenuse");
+	proc.argList.enterText("3, 4");
+	file.addGlobal(proc);
 	return file;
 }
 
