@@ -52,8 +52,7 @@ export function T04_allGlobals() {
 	var main = new MainFrame();
 	file.addGlobal(main);
 	var proc = new Procedure();
-	proc.name.enterText("hypotenuse");
-	proc.argList.enterText("3, 4");
+	proc.name.enterText("signIn");
 	file.addGlobal(proc);
 	return file;
 }

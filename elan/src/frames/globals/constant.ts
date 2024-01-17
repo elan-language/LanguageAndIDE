@@ -6,7 +6,7 @@ import { Global } from "./global";
 
 export class Constant implements Global {
     htmlId: string = "";
-    name: Identifier = new Identifier("name");
+    name: Identifier = new Identifier();
     expr: Expression = new Expression("literal value");
 
     constructor() {

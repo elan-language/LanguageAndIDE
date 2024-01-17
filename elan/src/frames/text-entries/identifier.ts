@@ -2,8 +2,8 @@ import { TextEntry } from "./text-entry";
 import { nextId } from "../helpers";
 
 export class Identifier extends TextEntry {
-    constructor(prompt: string) {
-        super(prompt);
+    constructor() {
+        super("name");
         this.htmlId = `ident${nextId()}`;
     }
 

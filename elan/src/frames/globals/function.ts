@@ -5,14 +5,16 @@ import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { Identifier } from "../text-entries/identifier";
 import { ParamList } from "../text-entries/param-list";
+import { Type } from "../text-entries/type";
 
 
-export class Procedure implements Global {
+export class Function implements Global {
 
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";
     public name : Identifier = new Identifier();
-    public argList: ParamList = new ParamList();
+    public params: ParamList = new ParamList();
+    public returnType: Type = new Type("return type");
    
     constructor() {
         this.htmlId = `proc${nextId()}`;
@@ -26,9 +28,9 @@ export class Procedure implements Global {
         }
         const statements = ss.join("\n");
         return `<global id='${this.htmlId}' tabindex="0">
-<keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.argList.renderAsHtml()})
+<keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType}
 ${statements}
-<keyword>end procedure</keyword>
+<keyword>end function</keyword>
 </global>`;
     }
 

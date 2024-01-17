@@ -5,7 +5,7 @@ import { Expression } from "../text-entries/expression";
 
 export class Variable implements Statement {
     htmlId: string = "";
-    name: Identifier = new Identifier("name");
+    name: Identifier = new Identifier();
     expr: Expression = new Expression("expression");
 
     constructor() {
