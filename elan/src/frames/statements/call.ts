@@ -1,7 +1,5 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { PlainText } from "../text-entry-fields/plain_text";
-import { ExceptionMessage } from "../text-entry-fields/exception-message";
 import { Identifier } from "../text-entry-fields/identifier";
 import { ArgList } from "../text-entry-fields/arg-list";
 

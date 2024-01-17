@@ -12,6 +12,7 @@ import { Class } from "../frames/globals/class";
 import { Property } from "../frames/members/property";
 import { Throw } from "../frames/statements/throw";
 import { Call } from "../frames/statements/call";
+import { Print } from "../frames/statements/print";
 
 export function T00_emptyFile() {
 	resetId();
@@ -35,6 +36,9 @@ export function T03_mainWithAllStatements() {
 	ca.proc.enterText("signIn");
 	ca.args.enterText(`rwp, password`);
 	main.addStatement(ca);
+	var pr = new Print();
+	pr.expr.enterText(`"Hello World!"`);
+	main.addStatement(pr);
 	return file;
 }
 
