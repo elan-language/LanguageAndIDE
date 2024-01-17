@@ -16,6 +16,7 @@ import { Print } from "../frames/statements/print";
 import { While } from "../frames/statements/while";
 import { Repeat } from "../frames/statements/repeat";
 import { For } from "../frames/statements/for";
+import { Each } from "../frames/statements/each";
 
 export function T00_emptyFile() {
 	resetId();
@@ -53,6 +54,10 @@ export function T03_mainWithAllStatements() {
 	for1.from.enterText("1");
 	for1.to.enterText("10");
 	main.addStatement(for1);
+	var ea = new Each();
+	ea.variable.enterText("letter");
+	ea.iter.enterText("Charlie Duke");
+	main.addStatement(ea);
 	return file;
 }
 
