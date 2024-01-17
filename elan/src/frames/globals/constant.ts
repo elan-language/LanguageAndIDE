@@ -1,8 +1,7 @@
-import { Statement } from "./statement";
-import { nextId } from "./helpers";
-import { TextEntry } from "./textEntry";
-import { Identifier } from "./identifier";
-import { Expression } from "./expression";
+import { Statement } from "../statements/statement";
+import { nextId } from "../helpers";
+import { Identifier } from "../text-entries/identifier";
+import { Expression } from "../text-entries/expression";
 import { Global } from "./global";
 
 export class Constant implements Global {

@@ -1,10 +1,10 @@
-import { Constant } from "../frames/constant";
+import { Constant } from "../frames/globals/constant";
 import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
 import { resetId } from "../frames/helpers";
-import { MainFrame } from "../frames/main-frame";
-import { SetStatement } from "../frames/set-statement";
-import { Variable } from "../frames/variable";
+import { MainFrame } from "../frames/globals/main-frame";
+import { SetStatement } from "../frames/statements/set";
+import { Variable } from "../frames/statements/variable";
 
 export function T00_emptyFile() {
 	resetId();
@@ -42,7 +42,7 @@ export function T03_mainWithVarAndSet() {
 	return file;
 }
 
-export function T04_mainAndConstant() {
+export function T04_allGlobals() {
 	var file = new FileFrame();
 	var c = new Constant();
 	c.name.enterText("phi");

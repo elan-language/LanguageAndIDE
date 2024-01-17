@@ -1,8 +1,8 @@
-import { Frame } from "./frame";
+import { Frame } from "../frame";
 import { Global } from "./global";
-import { nextId } from "./helpers";
-import { Statement } from "./statement";
-import { StatementSelector } from "./statement-selector";
+import { nextId } from "../helpers";
+import { Statement } from "../statements/statement";
+import { StatementSelector } from "../statements/statement-selector";
 
 
 export class MainFrame implements Global {

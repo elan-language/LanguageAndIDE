@@ -1,13 +1,10 @@
 import { Statement } from "./statement";
-import { nextId } from "./helpers";
-import { TextEntry } from "./textEntry";
-import { Identifier } from "./identifier";
-import { Expression } from "./expression";
-import { RawText } from "./raw-text";
+import { nextId } from "../helpers";
+import { PlainText } from "../text-entries/plainText";
 
 export class StatementSelector implements Statement {
     htmlId: string = "";
-    text: TextEntry = new RawText("statement");
+    text: PlainText = new PlainText("statement");
 
     constructor() {
         this.htmlId = `statementSelect${nextId()}`;

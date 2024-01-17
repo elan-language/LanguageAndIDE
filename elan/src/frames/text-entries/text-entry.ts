@@ -1,13 +1,12 @@
-import { TextEntry } from "./textEntry";
-import { nextId } from "./helpers";
+import { Frame } from "../frame";
+import { nextId } from "../helpers";
 
-export class Identifier implements TextEntry {
-    htmlId: string = "";
-    text: string = "";
-    prompt: string = "";
+export abstract class TextEntry implements Frame {
+    public htmlId: string = "";
+    protected text: string = "";
+    protected prompt: string = "";
 
     constructor(prompt: string) {
-        this.htmlId = `ident${nextId()}`;
         this.prompt = prompt;
     }
 

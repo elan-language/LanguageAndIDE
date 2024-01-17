@@ -1,5 +1,5 @@
 import { Frame } from "./frame";
-import { Global } from "./global";
+import { Global } from "./globals/global";
 import { resetId } from "./helpers";
 
 export class FileFrame implements Frame {
