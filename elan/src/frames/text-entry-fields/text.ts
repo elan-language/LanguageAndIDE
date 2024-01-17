@@ -10,8 +10,7 @@ export abstract class Text implements Frame {
         this.prompt = prompt;
     }
 
-
-    private content() : String {
+    protected content() : String {
        if (this.text) {
         return this.text;
        } else {
@@ -19,7 +18,7 @@ export abstract class Text implements Frame {
        }
     }
 
-    private class() : String {
+    protected class() : String {
         if (this.text) {
             return "";
            } else {

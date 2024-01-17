@@ -24,7 +24,7 @@ comment {
     color: rgb(165, 2, 2);
 }
 
-statement {
+statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector {
     display: block;
     background-color: white;
     border-left-style: solid;
@@ -35,7 +35,7 @@ statement {
     display: block;
 }
 
-global {
+constant, main, procedure, function, enum, class, constructor, property, memberSelector {
     display: block;
     margin-bottom: 1ch;
 }

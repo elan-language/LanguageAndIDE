@@ -6,7 +6,14 @@ export class AsString extends Function {
 
     constructor() {
         super();
-        this.name.enterText("asString");
-        this.returnType.enterText("String");
+    }
+
+    public renderAsHtml() : string {
+        return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+<keyword>function </keyword>asString()<keyword> as </keyword><type>String</type>
+${this.statementsRenderedAsHtml()}
+${this.returnStatement.renderAsHtml()}
+<keyword>end function</keyword>
+</function>`;
     }
 }
