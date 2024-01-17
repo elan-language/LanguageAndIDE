@@ -11,6 +11,7 @@ export class Constructor implements Member {
     private statements: Array<Statement> = new Array<Statement>();
     public params: ParamList = new ParamList();
     public htmlId : string ="";
+    private cls : string ="";
    
     constructor() {
         this.htmlId = `constructor${nextId()}`;
@@ -23,11 +24,11 @@ export class Constructor implements Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
+        return `<constructor class="${this.cls}" id='${this.htmlId}' tabindex="0">
 <keyword>constructor</keyword>(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end constructor</keyword>
-</div>`;
+</constructor>`;
     }
 
     public addStatement(s : Statement) {

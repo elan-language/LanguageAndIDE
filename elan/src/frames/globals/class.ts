@@ -16,7 +16,8 @@ export class Class implements Global {
     private cons: Constructor = new Constructor();
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
-    public htmlId : string ="";
+    public htmlId: string ="";
+    public cls: string ="";
 
     constructor() {
         this.htmlId = `class${nextId()}`;
@@ -29,13 +30,13 @@ export class Class implements Global {
             ss.push(m.renderAsHtml());
         }
         const members = ss.join("\n");
-        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
+        return `<classDef class="${this.cls}" id='${this.htmlId}' tabindex="0">
 <keyword>class</keyword>${this.name.renderAsHtml()}
 ${this.cons.renderAsHtml()}
 ${members}
 ${this.asString.renderAsHtml()}
 <keyword>end class</keyword>
-</div>`;
+</classDef>`;
     }
 
     public addMember(m : Member) {

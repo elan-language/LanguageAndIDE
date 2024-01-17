@@ -5,12 +5,13 @@ import { Member } from "./member";
 export class MemberSelector implements Member {
     htmlId: string = "";
     text: PlainText = new PlainText("member");
+    private cls : string ="";
 
     constructor() {
         this.htmlId = `memberSelect${nextId()}`;
     }
 
     renderAsHtml(): string {
-        return `<div class="vspace" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</div>`;
+        return `<memberSelector class="${this.cls}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</memberSelector>`;
     }
 } 

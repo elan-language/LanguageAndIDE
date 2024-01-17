@@ -9,6 +9,7 @@ export class MainFrame implements Global {
 
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";
+    private cls : string ="";
    
     constructor() {
         this.htmlId = `main${nextId()}`;
@@ -21,11 +22,11 @@ export class MainFrame implements Global {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<div class="vspace" id='${this.htmlId}' tabindex="0">
+        return `<main class="${this.cls}" id='${this.htmlId}' tabindex="0">
 <keyword>main</keyword>
 ${statements}
 <keyword>end main</keyword>
-</div>`;
+</main>`;
     }
 
     public addStatement(s : Statement) {
