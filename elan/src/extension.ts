@@ -26,10 +26,10 @@ export async function activate(context: vscode.ExtensionContext) {
 	const compilerPath = `${context.extensionPath}\\.elanCompiler\\`;
 
 	const task = new vscode.Task(
-		{ type: 'process' }, // this is the same type as in tasks.json
+		{ type: 'process' },
 		vscode.TaskScope.Workspace,
-		'Compile', // how you name the task
-		'Elan', // Shows up as MyTask: name 
+		'Compile', 
+		'Elan',  
 		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${fileWorkspaceFolder}"]),
 	);
 
@@ -44,7 +44,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/m7f0ne92lx97irqu/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/jvha52mtx4lx69mk/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff, "elan compiler", compilerPath, []);
 }
 
