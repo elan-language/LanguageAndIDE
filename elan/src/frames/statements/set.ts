@@ -12,7 +12,11 @@ export class SetStatement implements Statement {
         this.htmlId = `set${nextId()}`;
     }
 
+    private cls() : string {
+        return "";
+    };
+    
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.name.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.name.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
 } 

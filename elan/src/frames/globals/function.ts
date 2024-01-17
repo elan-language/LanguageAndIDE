@@ -17,7 +17,9 @@ export class Function implements Global, Member {
     public name : Identifier = new Identifier();
     public params: ParamList = new ParamList();
     public returnType: Type = new Type("return type");
-    private cls : string ="";
+    private cls() : string {
+        return "";
+    };
    
     constructor() {
         this.htmlId = `func${nextId()}`;
@@ -30,7 +32,7 @@ export class Function implements Global, Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<function class="${this.cls}" id='${this.htmlId}' tabindex="0">
+        return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
 ${statements}
 ${this.returnStatement.renderAsHtml()}

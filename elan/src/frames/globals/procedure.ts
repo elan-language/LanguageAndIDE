@@ -13,7 +13,9 @@ export class Procedure implements Global, Member {
     public htmlId : string ="";
     public name : Identifier = new Identifier();
     public params: ParamList = new ParamList();
-    private cls : string ="";
+    private cls() : string {
+        return "";
+    };
    
     constructor() {
         this.htmlId = `proc${nextId()}`;
@@ -26,7 +28,7 @@ export class Procedure implements Global, Member {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<procedure class="${this.cls}" id='${this.htmlId}' tabindex="0">
+        return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end procedure</keyword>

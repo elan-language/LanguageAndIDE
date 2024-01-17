@@ -17,12 +17,15 @@ export class Class implements Global {
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
     public htmlId: string ="";
-    public cls: string ="";
 
     constructor() {
         this.htmlId = `class${nextId()}`;
         this.addMember(new MemberSelector());
     }
+
+    private cls() : string {
+        return "";
+    };
 
     public renderAsHtml() : string {
         const ss: Array<string> = [];
@@ -30,7 +33,7 @@ export class Class implements Global {
             ss.push(m.renderAsHtml());
         }
         const members = ss.join("\n");
-        return `<classDef class="${this.cls}" id='${this.htmlId}' tabindex="0">
+        return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>class</keyword>${this.name.renderAsHtml()}
 ${this.cons.renderAsHtml()}
 ${members}

@@ -9,7 +9,9 @@ export class MainFrame implements Global {
 
     private statements: Array<Statement> = new Array<Statement>();
     public htmlId : string ="";
-    private cls : string ="";
+    private cls() : string {
+        return "";
+    };
    
     constructor() {
         this.htmlId = `main${nextId()}`;
@@ -22,7 +24,7 @@ export class MainFrame implements Global {
             ss.push(frame.renderAsHtml());
         }
         const statements = ss.join("\n");
-        return `<main class="${this.cls}" id='${this.htmlId}' tabindex="0">
+        return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>main</keyword>
 ${statements}
 <keyword>end main</keyword>

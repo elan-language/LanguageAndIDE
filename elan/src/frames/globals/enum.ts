@@ -8,14 +8,16 @@ export class Enum implements Global {
     htmlId: string = "";
     name: Type = new Type("Name");
     values: EnumValues = new EnumValues();
-    private cls : string ="";
+    private cls() : string {
+        return "";
+    };
 
     constructor() {
         this.htmlId = `enum${nextId()}`;
     }
 
     renderAsHtml(): string {
-        return `<enum class="${this.cls}" id='${this.htmlId}' tabindex="0">
+        return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>enum </keyword>${this.name.renderAsHtml()}
 <statement>${this.values.renderAsHtml()}</statement>       
 <keyword>end enum</keyword>

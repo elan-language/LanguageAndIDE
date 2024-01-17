@@ -16,23 +16,6 @@ export function T00_emptyFile() {
 	return new FileFrame();
 }
 
-export function T01_mainInFile() {
-	var file = new FileFrame();
-	var main = new MainFrame();
-	file.addGlobal(main);
-	return file;
-}
-
-export function T02_mainWithVar() {
-	var file = new FileFrame();
-	var main = new MainFrame();
-	file.addGlobal(main);
-	main.removeStatementSelector();
-	var v = new Variable();
-	main.addStatement(v);
-	return file;
-}
-
 export function T03_mainWithVarAndSet() {
 	var file = new FileFrame();
 	var main = new MainFrame();

@@ -12,7 +12,11 @@ export class Variable implements Statement {
         this.htmlId = `var${nextId()}`;
     }
 
+    private cls() : string {
+        return "";
+    };
+
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
 } 

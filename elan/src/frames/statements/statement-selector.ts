@@ -10,7 +10,11 @@ export class StatementSelector implements Statement {
         this.htmlId = `statementSelect${nextId()}`;
     }
 
+    private cls() : string {
+        return "";
+    };
+
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;
     }
 } 

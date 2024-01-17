@@ -10,7 +10,11 @@ export class ReturnStatement implements Statement {
         this.htmlId = `return${nextId()}`;
     }
 
+    private cls() : string {
+        return "";
+    };
+
     renderAsHtml(): string {
-        return `<statement id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
 } 
