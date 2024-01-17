@@ -1,7 +1,7 @@
 import { Frame } from "../frame";
 import { nextId } from "../helpers";
 
-export abstract class TextEntry implements Frame {
+export abstract class Text implements Frame {
     public htmlId: string = "";
     protected text: string = "";
     protected prompt: string = "";
@@ -28,7 +28,7 @@ export abstract class TextEntry implements Frame {
     }
 
     renderAsHtml(): string {
-        return `<textEntry id="${this.htmlId}" class="${this.class()}" tabIndex=0>${this.content()}</textEntry>`;
+        return `<text id="${this.htmlId}" class="${this.class()}" tabIndex=0>${this.content()}</text>`;
     }
 
     enterText(text: string): void {

@@ -1,7 +1,7 @@
 import { Statement } from "../statements/statement";
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entries/identifier";
-import { Expression } from "../text-entries/expression";
+import { Identifier } from "../text-entry-fields/identifier";
+import { Expression } from "../text-entry-fields/expression";
 import { Global } from "./global";
 
 export class Constant implements Global {

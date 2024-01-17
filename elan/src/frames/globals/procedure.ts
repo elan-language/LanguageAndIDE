@@ -3,8 +3,8 @@ import { Global } from "./global";
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
-import { Identifier } from "../text-entries/identifier";
-import { ParamList } from "../text-entries/param-list";
+import { Identifier } from "../text-entry-fields/identifier";
+import { ParamList } from "../text-entry-fields/param-list";
 
 
 export class Procedure implements Global {

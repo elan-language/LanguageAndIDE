@@ -3,9 +3,9 @@ import { Global } from "./global";
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
-import { Identifier } from "../text-entries/identifier";
-import { ParamList } from "../text-entries/param-list";
-import { Type } from "../text-entries/type";
+import { Identifier } from "../text-entry-fields/identifier";
+import { ParamList } from "../text-entry-fields/param-list";
+import { Type } from "../text-entry-fields/type";
 
 
 export class Function implements Global {
