@@ -17,7 +17,7 @@ export class Function implements Global, Member {
     public name : Identifier = new Identifier();
     public params: ParamList = new ParamList();
     public returnType: Type = new Type("return type");
-    private cls() : string {
+    protected cls() : string {
         return "";
     };
    
@@ -26,15 +26,18 @@ export class Function implements Global, Member {
         this.addStatement(new StatementSelector());
     }
 
-    public renderAsHtml() : string {
+    protected statementsRenderedAsHtml(): string {
         const ss: Array<string> = [];
         for (var frame of this.statements) {
             ss.push(frame.renderAsHtml());
         }
-        const statements = ss.join("\n");
+        return ss.join("\n");
+    }
+
+    public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>function</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
-${statements}
+<keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}
+${this.statementsRenderedAsHtml()}
 ${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
 </function>`;

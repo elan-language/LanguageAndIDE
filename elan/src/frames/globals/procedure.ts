@@ -29,7 +29,7 @@ export class Procedure implements Global, Member {
         }
         const statements = ss.join("\n");
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>procedure</keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
+<keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
 ${statements}
 <keyword>end procedure</keyword>
 </procedure>`;

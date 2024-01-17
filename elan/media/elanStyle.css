@@ -16,7 +16,7 @@ type {
     color: turquoise;
 }
 
-comment {
+comment, header {
     color: green;
 }
 
@@ -24,7 +24,7 @@ comment {
     color: rgb(165, 2, 2);
 }
 
-statement {
+statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector {
     display: block;
     background-color: white;
     border-left-style: solid;
@@ -35,7 +35,7 @@ statement {
     display: block;
 }
 
-global {
+constant, main, procedure, function, enum, class, constructor, property, memberSelector {
     display: block;
     margin-bottom: 1ch;
 }
@@ -49,18 +49,18 @@ global {
     border-right-color: rgb(174, 216, 250);
 }
 
-textEntry.selected {
+text.selected {
     background-color: rgb(174, 216, 250);
 }
-textEntry.empty {
+text.empty, type.empty {
       color: rgb(196, 193, 193);
 }
-textEntry.incomplete {
+text.incomplete {
     color:rgb(223, 145, 0);
 }
-textEntry.invalid {
+text.invalid, type.invalid {
     color:red;
 }
-textEntry.valid {
+text.valid, type.valid {
   color:rgb(0, 187, 0);
 }

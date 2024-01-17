@@ -34,7 +34,7 @@ export class Class implements Global {
         }
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>class</keyword>${this.name.renderAsHtml()}
+<keyword>class </keyword>${this.name.renderAsHtml()}
 ${this.cons.renderAsHtml()}
 ${members}
 ${this.asString.renderAsHtml()}

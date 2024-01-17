@@ -14,6 +14,6 @@ export class Property implements Member {
     }
 
     renderAsHtml(): string {
-        return `<property class="" id='${this.htmlId}' tabindex="0"><keyword>property</keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
+        return `<property class="" id='${this.htmlId}' tabindex="0"><keyword>property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
     }
 } 

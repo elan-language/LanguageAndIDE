@@ -10,13 +10,14 @@ import { Function } from "../frames/globals/function";
 import { Enum } from "../frames/globals/enum";
 import { Class } from "../frames/globals/class";
 import { Property } from "../frames/members/property";
+import { Throw } from "../frames/statements/throw";
 
 export function T00_emptyFile() {
 	resetId();
 	return new FileFrame();
 }
 
-export function T03_mainWithVarAndSet() {
+export function T03_mainWithAllStatements() {
 	var file = new FileFrame();
 	var main = new MainFrame();
 	file.addGlobal(main);
@@ -27,6 +28,8 @@ export function T03_mainWithVarAndSet() {
 	s.name.enterText("a");
 	s.expr.enterText("3 + 4");
 	main.addStatement(s);
+	var t = new Throw();
+	main.addStatement(t);
 	return file;
 }
 
