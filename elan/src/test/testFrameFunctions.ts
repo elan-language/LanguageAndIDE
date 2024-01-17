@@ -9,6 +9,7 @@ import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
 import { Enum } from "../frames/globals/enum";
 import { Class } from "../frames/globals/class";
+import { Property } from "../frames/members/property";
 
 export function T00_emptyFile() {
 	resetId();
@@ -67,9 +68,13 @@ export function T04_allGlobals() {
 	e.values.enterText("apple, orange, pear");
 	file.addGlobal(e);
 	var cl = new Class();
+	file.addGlobal(cl);
 	cl.name.enterText("Player");
 	cl.asString.returnExpr.enterText("a Player");
-	file.addGlobal(cl);
+	var p1 = new Property();
+	p1.name.enterText("score");
+	p1.type.enterText("Int");
+	cl.addMember(p1);
 	return file;
 }
 
