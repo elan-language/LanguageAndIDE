@@ -20,6 +20,7 @@ import { Each } from "../frames/statements/each";
 import { IfThen } from "../frames/statements/if-then";
 import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
+import { TryCatch } from "../frames/statements/try-catch";
 
 export function T00_emptyFile() {
 	resetId();
@@ -79,6 +80,8 @@ export function T03_mainWithAllStatements() {
 	if3.addStatement(new Else());
 	if3.addStatement(new StatementSelector());
 	main.addStatement(if3);
+	var tr = new TryCatch();
+	main.addStatement(tr);
 	return file;
 }
 

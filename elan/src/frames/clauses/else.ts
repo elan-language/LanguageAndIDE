@@ -16,7 +16,7 @@ export class Else implements Statement {
     };
 
     private ifClause() : string {
-        return this.hasIf ? `<keyword> if </keyword>${this.condition}<keyword> then</keyword>`:"";
+        return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:"";
     }
 
     renderAsHtml(): string {
