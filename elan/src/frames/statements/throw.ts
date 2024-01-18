@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { ExceptionMessage } from "../text-entry-fields/exception-message";
+import { ExceptionMessage } from "../text-entry/exception-message";
 
 export class Throw implements Statement {
     htmlId: string = "";

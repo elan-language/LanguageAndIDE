@@ -1,5 +1,5 @@
 import { nextId } from "../helpers";
-import { PlainText } from "../text-entry-fields/plain_text";
+import { PlainText } from "../text-entry/plain_text";
 import { Member } from "./member";
 
 export class MemberSelector implements Member {

@@ -3,7 +3,7 @@ import { Global } from "./global";
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
-import { Type } from "../text-entry-fields/type";
+import { Type } from "../text-entry/type";
 import { Constructor } from "../members/constructor";
 import { Member } from "../members/member";
 import { AsString } from "../members/as-string";
@@ -17,6 +17,8 @@ export class Class implements Global {
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
     public htmlId: string ="";
+    public abstract: boolean = false;
+    public immutable: boolean = false;
 
     constructor() {
         this.htmlId = `class${nextId()}`;
@@ -27,6 +29,10 @@ export class Class implements Global {
         return "";
     };
 
+    private modifiers() : string {
+        return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
+    }
+
     public renderAsHtml() : string {
         const ss: Array<string> = [];
         for (var m of this.members) {
@@ -34,7 +40,7 @@ export class Class implements Global {
         }
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>class </keyword>${this.name.renderAsHtml()}
+${this.modifiers()}<keyword>class </keyword>${this.name.renderAsHtml()}
 ${this.cons.renderAsHtml()}
 ${members}
 ${this.asString.renderAsHtml()}

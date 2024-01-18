@@ -1,6 +1,6 @@
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entry-fields/identifier";
-import { Expression } from "../text-entry-fields/expression";
+import { Identifier } from "../text-entry/identifier";
+import { Expression } from "../text-entry/expression";
 import { Global } from "./global";
 
 export class Constant implements Global {

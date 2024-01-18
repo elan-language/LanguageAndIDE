@@ -1,6 +1,6 @@
 import { nextId } from "../helpers";
 import { Statement } from "../statements/statement";
-import { Identifier } from "../text-entry-fields/identifier";
+import { Identifier } from "../text-entry/identifier";
 
 export class Catch implements Statement {
     htmlId: string = "";

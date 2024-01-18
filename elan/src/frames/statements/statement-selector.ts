@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { PlainText } from "../text-entry-fields/plain_text";
+import { PlainText } from "../text-entry/plain_text";
 
 export class StatementSelector implements Statement {
     htmlId: string = "";

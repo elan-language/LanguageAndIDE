@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entry-fields/identifier";
-import { Expression } from "../text-entry-fields/expression";
+import { Identifier } from "../text-entry/identifier";
+import { Expression } from "../text-entry/expression";
 
 export class SetStatement implements Statement {
     htmlId: string = "";

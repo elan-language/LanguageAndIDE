@@ -1,6 +1,6 @@
 import { FrameWithStatements } from "../frame-with-statements";
 import { nextId } from "../helpers";
-import { ParamList } from "../text-entry-fields/param-list";
+import { ParamList } from "../text-entry/param-list";
 import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {

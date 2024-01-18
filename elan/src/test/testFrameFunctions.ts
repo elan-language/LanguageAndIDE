@@ -105,14 +105,29 @@ export function T04_allGlobals() {
 	e.name.enterText("Fruit");
 	e.values.enterText("apple, orange, pear");
 	file.addGlobal(e);
-	var cl = new Class();
-	file.addGlobal(cl);
-	cl.name.enterText("Player");
-	cl.asString.returnStatement.expr.enterText("a Player");
+	var cl1 = new Class();
+	file.addGlobal(cl1);
+	cl1.name.enterText("Player");
+	cl1.asString.returnStatement.expr.enterText("a Player");
 	var p1 = new Property();
 	p1.name.enterText("score");
 	p1.type.enterText("Int");
-	cl.addMember(p1);
+	cl1.addMember(p1);
+	var cl2 = new Class();
+	file.addGlobal(cl2);
+	cl2.name.enterText("Card");
+	cl2.immutable = true;
+	cl2.asString.returnStatement.expr.enterText("a Card");
+	var p1 = new Property();
+	p1.name.enterText("value");
+	p1.type.enterText("Int");
+	p1.private = true;
+	cl2.addMember(p1);
+	var m1 = new Function();
+	m1.name.enterText("reset");
+	m1.params.enterText("");
+	m1.returnType.enterText("Player");
+	cl2.addMember(m1);
 	return file;
 }
 

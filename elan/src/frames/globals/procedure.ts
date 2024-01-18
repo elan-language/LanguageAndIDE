@@ -1,7 +1,7 @@
 import { Global } from "./global";
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entry-fields/identifier";
-import { ParamList } from "../text-entry-fields/param-list";
+import { Identifier } from "../text-entry/identifier";
+import { ParamList } from "../text-entry/param-list";
 import { Member } from "../members/member";
 import { FrameWithStatements } from "../frame-with-statements";
 

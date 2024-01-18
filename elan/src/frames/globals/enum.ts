@@ -1,8 +1,8 @@
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entry-fields/identifier";
+import { Identifier } from "../text-entry/identifier";
 import { Global } from "./global";
-import { EnumValues } from "../text-entry-fields/enum-values";
-import { Type } from "../text-entry-fields/type";
+import { EnumValues } from "../text-entry/enum-values";
+import { Type } from "../text-entry/type";
 
 export class Enum implements Global {
     htmlId: string = "";

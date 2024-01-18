@@ -1,9 +1,9 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { Expression } from "../text-entry-fields/expression";
+import { Expression } from "../text-entry/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Identifier } from "../text-entry-fields/identifier";
-import { Integer } from "../text-entry-fields/integer";
+import { Identifier } from "../text-entry/identifier";
+import { Integer } from "../text-entry/integer";
 
 export class For extends FrameWithStatements implements Statement {
     htmlId: string = "";

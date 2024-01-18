@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { Expression } from "../text-entry-fields/expression";
+import { Expression } from "../text-entry/expression";
 
 export class Print implements Statement {
     htmlId: string = "";

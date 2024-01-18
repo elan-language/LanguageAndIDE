@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { nextId } from "../helpers";
-import { Identifier } from "../text-entry-fields/identifier";
-import { ArgList } from "../text-entry-fields/arg-list";
+import { Identifier } from "../text-entry/identifier";
+import { ArgList } from "../text-entry/arg-list";
 
 export class Call implements Statement {
     htmlId: string = "";
