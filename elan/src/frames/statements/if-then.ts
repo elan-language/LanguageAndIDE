@@ -2,23 +2,21 @@ import { Statement } from "./statement";
 import { nextId } from "../helpers";
 import { Expression } from "../text-entry-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Identifier } from "../text-entry-fields/identifier";
 
-export class Each extends FrameWithStatements implements Statement {
+export class IfThen extends FrameWithStatements implements Statement {
     htmlId: string = "";
-    variable: Identifier = new Identifier("variableName");
-    iter: Expression = new Expression("iterable value or expression");
+    condition: Expression = new Expression("iterable value or expression");
 
     constructor() {
         super();
-        this.htmlId = `each${nextId()}`;
+        this.htmlId = `if${nextId()}`;
     }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}
+<keyword>if </keyword>${this.condition.renderAsHtml()}<keyword> then </keyword>
 ${this.renderStatementsAsHtml()}
-<keyword>end each</keyword>
+<keyword>end if</keyword>
 </statement>`;
     }
 } 

@@ -17,6 +17,9 @@ import { While } from "../frames/statements/while";
 import { Repeat } from "../frames/statements/repeat";
 import { For } from "../frames/statements/for";
 import { Each } from "../frames/statements/each";
+import { IfThen } from "../frames/statements/if-then";
+import { Else } from "../frames/clauses/else";
+import { StatementSelector } from "../frames/statements/statement-selector";
 
 export function T00_emptyFile() {
 	resetId();
@@ -58,6 +61,24 @@ export function T03_mainWithAllStatements() {
 	ea.variable.enterText("letter");
 	ea.iter.enterText("Charlie Duke");
 	main.addStatement(ea);
+	var if1 = new IfThen();
+    if1.condition.enterText("y > 4");
+	main.addStatement(if1);
+	var if2 = new IfThen();
+    if2.condition.enterText("y > 4");
+	if2.addStatement(new Else());
+	if2.addStatement(new StatementSelector());
+	main.addStatement(if2);
+	var if3 = new IfThen();
+    if3.condition.enterText("y > 4");
+	var el = new Else();
+	el.hasIf = true;
+	el.condition.enterText("y > 10");
+	if3.addStatement(el);
+	if3.addStatement(new StatementSelector());
+	if3.addStatement(new Else());
+	if3.addStatement(new StatementSelector());
+	main.addStatement(if3);
 	return file;
 }
 
