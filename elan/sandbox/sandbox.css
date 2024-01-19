@@ -40,7 +40,7 @@ global {
     border-left-color: rgb(174, 216, 250);
 }
 
-.selected > :not(statement) {
+.selected > :not(statement), .selected top * {
     background-color: rgb(174, 216, 250);
     border-right-color: rgb(174, 216, 250);
 }
@@ -59,4 +59,18 @@ text.invalid {
 }
 text.valid {
   color:rgb(0, 187, 0);
+}
+
+expand {
+    display: none;
+}
+.collapse expand {
+    display:inline;
+    font-weight: bold;
+    color: white;
+    background-color: darkslategrey;
+    margin-right: 1ch;
+}
+.collapse > :not(top) {
+    display: none;
 }

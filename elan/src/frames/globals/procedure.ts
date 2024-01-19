@@ -18,7 +18,7 @@ export class Procedure extends FrameWithStatements implements Global, Member {
 
     public renderAsHtml() : string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})
+<top><expand>+</expand><keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;

@@ -35,7 +35,7 @@ statement {
     display: block;
 }
 
-constant, main, procedure, function, enum, class, constructor, property, memberSelector {
+constant, main, procedure, function, enum, class, constructor, property, memberSelector, globalSelector, header {
     display: block;
     margin-bottom: 1ch;
 }
@@ -44,7 +44,7 @@ constant, main, procedure, function, enum, class, constructor, property, memberS
     border-left-color: rgb(174, 216, 250);
 }
 
-.selected > :not(statement) {
+.selected > :not(statement), .selected top * {
     background-color: rgb(174, 216, 250);
     border-right-color: rgb(174, 216, 250);
 }
@@ -63,4 +63,18 @@ text.invalid, type.invalid {
 }
 text.valid, type.valid {
   color:rgb(0, 187, 0);
+}
+
+expand {
+    display: none;
+}
+.collapse expand {
+    display:inline;
+    font-weight: bold;
+    color: white;
+    background-color: darkslategrey;
+    margin-right: 1ch;
+}
+.collapse > :not(top) {
+    display: none;
 }

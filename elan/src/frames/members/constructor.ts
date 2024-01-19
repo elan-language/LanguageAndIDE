@@ -14,7 +14,7 @@ export class Constructor extends FrameWithStatements implements Member {
 
     public renderAsHtml() : string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>constructor</keyword>(${this.params.renderAsHtml()})
+<top><expand>+</expand><keyword>constructor</keyword>(${this.params.renderAsHtml()})</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end constructor</keyword>
 </constructor>`;

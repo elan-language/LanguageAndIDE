@@ -14,7 +14,7 @@ export class While extends FrameWithStatements implements Statement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>while </keyword>${this.condition.renderAsHtml()}
+<top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end while</keyword>
 </statement>`;

@@ -15,7 +15,7 @@ export class MainFrame extends FrameWithStatements implements Global {
 
     public renderAsHtml() : string {
         return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>main</keyword>
+<top><expand>+</expand><keyword>main</keyword></top>
 ${this.renderStatementsAsHtml()}
 <keyword>end main</keyword>
 </main>`;

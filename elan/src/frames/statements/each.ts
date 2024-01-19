@@ -16,7 +16,7 @@ export class Each extends FrameWithStatements implements Statement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}
+<top><expand>+</expand><keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end each</keyword>
 </statement>`;

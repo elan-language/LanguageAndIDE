@@ -14,7 +14,7 @@ export class Repeat extends FrameWithStatements implements Statement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>repeat</keyword>
+<top><expand>+</expand><keyword>repeat</keyword></top>
 ${this.renderStatementsAsHtml()}
 <keyword>until </keyword>${this.condition.renderAsHtml()}
 </statement>`;

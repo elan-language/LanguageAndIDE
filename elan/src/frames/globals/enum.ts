@@ -16,7 +16,7 @@ export class Enum extends AbstractFrame implements Global {
 
     renderAsHtml(): string {
         return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>enum </keyword>${this.name.renderAsHtml()}
+<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>
 <statement>${this.values.renderAsHtml()}</statement>       
 <keyword>end enum</keyword>
 </enum>`;

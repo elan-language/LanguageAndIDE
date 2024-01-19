@@ -16,7 +16,7 @@ export class TryCatch extends FrameWithStatements implements Statement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>try </keyword>
+<top><expand>+</expand><keyword>try </keyword></top>
 ${this.renderStatementsAsHtml()}
 <keyword>end try</keyword>
 </statement>`;

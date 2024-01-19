@@ -21,10 +21,13 @@ import { IfThen } from "../frames/statements/if-then";
 import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { TryCatch } from "../frames/statements/try-catch";
+import { GlobalSelector } from "../frames/globals/global-selector";
 
 export function T00_emptyFile() {
 	resetId();
-	return new FileFrame();
+	var f = new FileFrame();
+	f.addGlobal(new GlobalSelector());
+	return f;
 }
 
 export function T03_mainWithAllStatements() {

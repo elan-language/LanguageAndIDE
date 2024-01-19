@@ -13,7 +13,7 @@ import { MemberSelector } from "../members/member-selector";
 export class Class extends AbstractFrame implements Global {
 
     public name : Type = new Type("class name");
-    private cons: Constructor = new Constructor();
+    private constr: Constructor = new Constructor();
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
     public abstract: boolean = false;
@@ -36,8 +36,8 @@ export class Class extends AbstractFrame implements Global {
         }
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-${this.modifiers()}<keyword>class </keyword>${this.name.renderAsHtml()}
-${this.cons.renderAsHtml()}
+<top><expand>+</expand>${this.modifiers()}<keyword>class </keyword>${this.name.renderAsHtml()}</top>
+${this.constr.renderAsHtml()}
 ${members}
 ${this.asString.renderAsHtml()}
 <keyword>end class</keyword>
