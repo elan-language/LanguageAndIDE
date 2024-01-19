@@ -1,12 +1,13 @@
-import { Frame } from "../frame";
-import { nextId } from "../helpers";
+import { AbstractFrame } from "../abstract-frame";
 
-export abstract class Text implements Frame {
+
+export abstract class Text extends AbstractFrame {
     public htmlId: string = "";
     protected text: string = "";
     protected prompt: string = "";
 
     constructor(prompt: string) {
+        super();
         this.prompt = prompt;
     }
 

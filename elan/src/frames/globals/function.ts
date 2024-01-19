@@ -1,5 +1,5 @@
 import { Global } from "./global";
-import { nextId } from "../helpers";
+
 import { Identifier } from "../text-entry/identifier";
 import { ParamList } from "../text-entry/param-list";
 import { Type } from "../text-entry/type";
@@ -17,7 +17,7 @@ export class Function extends FrameWithStatements implements Global, Member {
 
     constructor() {
         super();
-        this.htmlId = `func${nextId()}`;
+        this.htmlId = `func${this.nextId()}`;
     }
 
     public renderAsHtml() : string {

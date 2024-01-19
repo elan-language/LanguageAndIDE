@@ -1,5 +1,5 @@
-import { Frame } from "../frame";
+import { AbstractFrame } from "../abstract-frame";
 
-export interface Member extends Frame {
+export interface Member extends AbstractFrame {
 
 }

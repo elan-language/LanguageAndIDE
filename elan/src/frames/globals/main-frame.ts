@@ -1,6 +1,6 @@
-import { Frame } from "../frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
-import { nextId } from "../helpers";
+
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -8,11 +8,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 
 export class MainFrame extends FrameWithStatements implements Global {
 
-    public htmlId : string ="";
-
     constructor() {
         super();
-        this.htmlId = `main${nextId()}`;
+        this.htmlId = `main${this.nextId()}`;
     }
 
     public renderAsHtml() : string {

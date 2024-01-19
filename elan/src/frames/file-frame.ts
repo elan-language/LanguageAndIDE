@@ -1,14 +1,15 @@
-import { Frame } from "./frame";
+import { AbstractFrame } from "./abstract-frame";
 import { Global } from "./globals/global";
 import { resetId } from "./helpers";
 
-export class FileFrame implements Frame {
+export class FileFrame extends AbstractFrame {
 
     private globals: Array<Global> = new Array<Global>();
 
     public htmlId = "file";
 
     constructor() {
+        super();
         resetId();
     }
 

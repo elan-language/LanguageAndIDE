@@ -1,16 +1,14 @@
-import { nextId } from "../helpers";
+import { AbstractFrame } from "../abstract-frame";
+
 import { PlainText } from "../text-entry/plain_text";
 import { Member } from "./member";
 
-export class MemberSelector implements Member {
-    htmlId: string = "";
+export class MemberSelector extends AbstractFrame implements Member {
     text: PlainText = new PlainText("member");
-    private cls() : string {
-        return "";
-    };
 
     constructor() {
-        this.htmlId = `memberSelect${nextId()}`;
+        super();
+        this.htmlId = `memberSelect${this.nextId()}`;
     }
 
     renderAsHtml(): string {

@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
+
 import { Expression } from "../text-entry/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-entry/identifier";
@@ -11,7 +11,7 @@ export class Each extends FrameWithStatements implements Statement {
 
     constructor() {
         super();
-        this.htmlId = `each${nextId()}`;
+        this.htmlId = `each${this.nextId()}`;
     }
 
     renderAsHtml(): string {

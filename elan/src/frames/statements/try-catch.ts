@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
+
 import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "./statement-selector";
 import { Catch } from "../clauses/catch";
@@ -9,7 +9,7 @@ export class TryCatch extends FrameWithStatements implements Statement {
 
     constructor() {
         super();
-        this.htmlId = `try${nextId()}`;
+        this.htmlId = `try${this.nextId()}`;
         this.addStatement(new Catch());
         this.addStatement(new StatementSelector());
     }

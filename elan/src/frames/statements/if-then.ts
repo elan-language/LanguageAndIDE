@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
+
 import { Expression } from "../text-entry/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 
@@ -9,7 +9,7 @@ export class IfThen extends FrameWithStatements implements Statement {
 
     constructor() {
         super();
-        this.htmlId = `if${nextId()}`;
+        this.htmlId = `if${this.nextId()}`;
     }
 
     renderAsHtml(): string {

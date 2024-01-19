@@ -1,19 +1,17 @@
-import { nextId } from "../helpers";
+
 import { Identifier } from "../text-entry/identifier";
 import { Global } from "./global";
 import { EnumValues } from "../text-entry/enum-values";
 import { Type } from "../text-entry/type";
+import { AbstractFrame } from "../abstract-frame";
 
-export class Enum implements Global {
-    htmlId: string = "";
-    name: Type = new Type("Name");
+export class Enum extends AbstractFrame implements Global {
+     name: Type = new Type("Name");
     values: EnumValues = new EnumValues();
-    private cls() : string {
-        return "";
-    };
 
     constructor() {
-        this.htmlId = `enum${nextId()}`;
+        super();
+        this.htmlId = `enum${this.nextId()}`;
     }
 
     renderAsHtml(): string {

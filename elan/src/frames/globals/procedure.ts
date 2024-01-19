@@ -1,5 +1,5 @@
 import { Global } from "./global";
-import { nextId } from "../helpers";
+
 import { Identifier } from "../text-entry/identifier";
 import { ParamList } from "../text-entry/param-list";
 import { Member } from "../members/member";
@@ -13,7 +13,7 @@ export class Procedure extends FrameWithStatements implements Global, Member {
 
     constructor() {
         super();
-        this.htmlId = `proc${nextId()}`;
+        this.htmlId = `proc${this.nextId()}`;
     }
 
     public renderAsHtml() : string {

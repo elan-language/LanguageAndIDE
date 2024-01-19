@@ -1,6 +1,6 @@
-import { Frame } from "../frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
-import { nextId } from "../helpers";
+
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { Type } from "../text-entry/type";
@@ -10,24 +10,20 @@ import { AsString } from "../members/as-string";
 import { MemberSelector } from "../members/member-selector";
 
 
-export class Class implements Global {
+export class Class extends AbstractFrame implements Global {
 
     public name : Type = new Type("class name");
     private cons: Constructor = new Constructor();
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
-    public htmlId: string ="";
     public abstract: boolean = false;
     public immutable: boolean = false;
 
     constructor() {
-        this.htmlId = `class${nextId()}`;
+        super();
+        this.htmlId = `class${this.nextId()}`;
         this.addMember(new MemberSelector());
     }
-
-    private cls() : string {
-        return "";
-    };
 
     private modifiers() : string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;

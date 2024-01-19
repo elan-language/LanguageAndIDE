@@ -1,18 +1,14 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
 import { Expression } from "../text-entry/expression";
+import { AbstractFrame } from "../abstract-frame";
 
-export class ReturnStatement implements Statement {
-    htmlId: string = "";
+export class ReturnStatement extends AbstractFrame implements Statement {
     expr: Expression = new Expression("expression");
 
     constructor() {
-        this.htmlId = `return${nextId()}`;
+        super();
+        this.htmlId = `return${this.nextId()}`;
     }
-
-    private cls() : string {
-        return "";
-    };
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;

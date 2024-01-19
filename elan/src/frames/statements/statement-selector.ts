@@ -1,18 +1,14 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
 import { PlainText } from "../text-entry/plain_text";
+import { AbstractFrame } from "../abstract-frame";
 
-export class StatementSelector implements Statement {
-    htmlId: string = "";
+export class StatementSelector extends AbstractFrame implements Statement {
     text: PlainText = new PlainText("statement");
 
     constructor() {
-        this.htmlId = `statementSelect${nextId()}`;
+        super();
+        this.htmlId = `statementSelect${this.nextId()}`;
     }
-
-    private cls() : string {
-        return "";
-    };
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;

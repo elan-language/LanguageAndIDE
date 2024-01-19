@@ -1,16 +1,17 @@
-import { nextId } from "../helpers";
+import { AbstractFrame } from "../abstract-frame";
+
 import { Identifier } from "../text-entry/identifier";
 import { Type } from "../text-entry/type";
 import { Member } from "./member";
 
-export class Property implements Member {
-    htmlId: string = "";
+export class Property extends AbstractFrame implements Member {
     name: Identifier = new Identifier("name");
     type: Type = new Type("Type");
     public private: boolean = false;
 
     constructor() {
-        this.htmlId = `prop${nextId()}`;
+        super();
+        this.htmlId = `prop${this.nextId()}`;
     }
 
     private modifier(): string {

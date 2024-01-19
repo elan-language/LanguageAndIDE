@@ -1,18 +1,17 @@
-import { nextId } from "../helpers";
+
 import { Identifier } from "../text-entry/identifier";
 import { Expression } from "../text-entry/expression";
 import { Global } from "./global";
+import { AbstractFrame } from "../abstract-frame";
 
-export class Constant implements Global {
-    htmlId: string = "";
+export class Constant extends AbstractFrame implements Global {
+
     name: Identifier = new Identifier("name");
     expr: Expression = new Expression("literal value");
-    private cls() : string {
-        return "";
-    };
 
     constructor() {
-        this.htmlId = `const${nextId()}`;
+        super();
+        this.htmlId = `const${this.nextId()}`;
     }
 
     renderAsHtml(): string {

@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { nextId } from "../helpers";
+
 import { Expression } from "../text-entry/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-entry/identifier";
@@ -14,7 +14,7 @@ export class For extends FrameWithStatements implements Statement {
 
     constructor() {
         super();
-        this.htmlId = `for${nextId()}`;
+        this.htmlId = `for${this.nextId()}`;
         this.step.enterText("1");
     }
 

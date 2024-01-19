@@ -1,19 +1,15 @@
-import { Frame } from "./frame";
+import { AbstractFrame } from "./abstract-frame";
 import { nextId } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
-export abstract class FrameWithStatements implements Frame {
+export abstract class FrameWithStatements extends AbstractFrame {
     private statements: Array<Statement> = new Array<Statement>();
-    public htmlId : string ="";
 
     constructor() {
+        super();
         this.addStatement(new StatementSelector());
     }
-
-    protected cls() : string {
-        return "";
-    };
 
     protected renderStatementsAsHtml() : string {
         const ss: Array<string> = [];
@@ -22,8 +18,6 @@ export abstract class FrameWithStatements implements Frame {
         }
         return ss.join("\n");
     }
-
-    abstract renderAsHtml(): string;
 
     public addStatement(s : Statement) {
         this.statements.push(s);
