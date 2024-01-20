@@ -7,8 +7,8 @@ export class Type extends Text {
         this.htmlId = `type${this.nextId()}`;
     }
 
-    renderAsHtml(): string {
-        return `<type id="${this.htmlId}" class="${this.class()}" tabindex=0>${this.content()}</type>`;
+    renderAsHtml(): string {  
+        return `<text id="${this.htmlId}" class="${this.class()}" tabindex=0><type>${this.content()}</type></text>`;
     }
 
 }
