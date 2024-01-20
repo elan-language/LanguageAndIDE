@@ -3,7 +3,7 @@ import { FileFrame } from "../frames/file-frame";
 import { Frame } from "../frames/frame";
 import { resetId } from "../frames/helpers";
 import { MainFrame } from "../frames/globals/main-frame";
-import { SetStatement } from "../frames/statements/set";
+import { SetStatement } from "../frames/statements/set-statement";
 import { Variable } from "../frames/statements/variable";
 import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
@@ -22,6 +22,7 @@ import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalSelector } from "../frames/globals/global-selector";
+import { InputBoxValidationSeverity } from "vscode";
 
 export function T00_emptyFile() {
 	resetId();
@@ -133,6 +134,124 @@ export function T04_allGlobals() {
 	cl2.addMember(m1);
 	return file;
 }
+
+export function T05_snake() {
+	resetId();
+	var file = new FileFrame();
+	var main = new MainFrame();
+	file.addGlobal(main);
+	return file;
+}
+/*
+main
+  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
+  print mergeSort(li)
+end main */
+
+export function T06_mergeSort() {
+	resetId();
+	var file = new FileFrame();
+		var main = new MainFrame();
+		    main.removeStatementSelector();
+			var li = new Variable();
+				li.name.enterText("li");
+				li.expr.enterText(`{"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}`);
+			main.addStatement(li);
+			var pr = new Print();
+				pr.expr.enterText("mergeSort(li)");
+			main.addStatement(pr);
+		file.addGlobal(main);
+
+		var mergeSort = new Function();
+			mergeSort.removeStatementSelector();
+			mergeSort.name.enterText("mergeSort");
+			mergeSort.params.enterText(`list List<of String>`);
+			mergeSort.returnType.enterText(`List<of String>`);
+			var result = new Variable();
+				mergeSort.addStatement(result);
+				result.name.enterText(`result`);
+				result.expr.enterText(`list`);
+
+			var if1 = new IfThen();
+			    if1.removeStatementSelector();
+				if1.condition.enterText(`list.length() > 1`);
+				var mid = new Variable();
+					if1.addStatement(mid);
+					mid.name.enterText(`mid`);
+					mid.expr.enterText(`list.length() div 2`);
+				var setMid = new SetStatement();
+					if1.addStatement(setMid);
+					setMid.name.enterText(`result`);
+					setMid.expr.enterText(`merge(mergeSort(list[..mid]), mergeSort(list[mid..]))`);
+			mergeSort.addStatement(if1);	
+			mergeSort.returnStatement.expr.enterText(`result`);
+		file.addGlobal(mergeSort);
+
+		/*
+function mergeSort(list List<of String>) as List<of String> 
+    var result set to list
+    if list.length() > 1 then
+      var mid set to list.length() div 2 
+      set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
+    end if
+    return result
+end function */
+
+		var merge = new Function();
+		    merge.removeStatementSelector();
+			merge.name.enterText(`merge`);
+			merge.params.enterText(`a List<of String>, b List<of String>`);
+			merge.returnType.enterText(`List<of String>`);
+			var result = new Variable();
+				result.name.enterText(`name`);
+				result.expr.enterText(`new List<of String>()`);
+			merge.addStatement(result);
+			var if2 = new IfThen();
+			    if2.removeStatementSelector();
+				if2.condition.enterText(`a.isEmpty()`);
+				var setResult = new SetStatement();
+					setResult.name.enterText(`result`);
+					setResult.expr.enterText(`b`);
+				if2.addStatement(setResult);
+			var elif1 = new Else();
+				elif1.condition.enterText(`b.isEmpty()`);
+			if2.addStatement(elif1);	
+			var setResult = new SetStatement();
+				setResult.name.enterText(`result`);
+				setResult.expr.enterText(`b`);
+			if2.addStatement(setResult);
+			var elif2 = new Else();
+			elif2.condition.enterText(`b.isEmpty()`);
+			if2.addStatement(elif2);	
+			var setResult = new SetStatement();
+				setResult.name.enterText(`result`);
+				setResult.expr.enterText(`a[0] + merge(a[1..], b)`);
+			if2.addStatement(setResult);
+            var els = new Else();
+			if2.addStatement(els);
+			var setResult = new SetStatement();
+				setResult.name.enterText(`result`);
+				setResult.expr.enterText(`b[0] + merge(a, b[1..])`);
+			merge.addStatement(setResult);
+		merge.addStatement(if2);
+		merge.returnStatement.expr.enterText(`result`);
+	file.addGlobal(merge);
+	return file;
+}
+/*function merge(a List<of String>, b List<of String>) as List<of String>
+    var result set to new List<of String>()
+    if a.isEmpty() then 
+      set result to b 
+    else if b.isEmpty() then
+      set result to a
+    else if a[0].isBefore(b[0]) then 
+      set result to a[0] + merge(a[1..], b) 
+    else 
+      set result to b[0] + merge(a, b[1..])
+    end if
+    return result
+end function
+*/
 
 export function getTestFrame(fn : string) : Frame {
     return eval(`${fn}()`);
