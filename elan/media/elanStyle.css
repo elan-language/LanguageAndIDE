@@ -26,14 +26,14 @@ comment, header {
 }
 
 /* Horizontal and vertical layout */
-statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector {
+statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector, indent {
     display: block;
     background-color: white;
     border-left-style: solid;
     border-left-width: 2ch;
 }
 
-constant, main, procedure, function, enum, classDef, constructor, property, memberSelector, globalSelector, header {
+header, constant, main, procedure, function, enum, classDef, constructor, property, memberSelector, globalSelector {
     display: block;
     margin-bottom: 1ch;
 }

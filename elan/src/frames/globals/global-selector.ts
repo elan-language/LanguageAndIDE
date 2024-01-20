@@ -10,7 +10,8 @@ export class GlobalSelector extends AbstractFrame implements Global {
         this.htmlId = `globalSelect${this.nextId()}`;
     }
 
+    //TODO: include Comment option
     renderAsHtml(): string {
-        return `<global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;
+        return `<globalSelector class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</globalSelector>`;
     }
 } 

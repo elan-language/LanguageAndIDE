@@ -11,7 +11,7 @@ export abstract class Text extends AbstractFrame {
         this.prompt = prompt;
     }
 
-    protected content() : String {
+    public content() : String {
        if (this.text) {
         return this.text;
        } else {

@@ -22,13 +22,28 @@ import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalSelector } from "../frames/globals/global-selector";
-import { InputBoxValidationSeverity } from "vscode";
+import { Comment } from "../frames/clauses/comment";
 
 export function T00_emptyFile() {
 	resetId();
 	var f = new FileFrame();
 	f.addGlobal(new GlobalSelector());
 	return f;
+}
+
+export function T02_comments() {
+	var file = new FileFrame();
+	var sc1 = new Comment();
+	sc1.text.enterText("Comment 1");
+	file.addGlobal(sc1);
+	var main = new MainFrame();
+	file.addGlobal(main);
+	main.removeStatementSelector();
+	var sc2 = new Comment();
+	sc2.text.enterText("Comment 2");
+	sc2.indent = true;
+	main.addStatement(sc2);
+	return file;
 }
 
 export function T03_mainWithAllStatements() {
