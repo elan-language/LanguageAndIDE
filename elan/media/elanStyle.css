@@ -4,6 +4,7 @@
     border-color: white;
 }
 
+/* Basic Colour scheme */
 span {
     background-color: inherit;
 }
@@ -24,6 +25,7 @@ comment, header {
     color: rgb(165, 2, 2);
 }
 
+/* Horizontal and vertical layout */
 statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector {
     display: block;
     background-color: white;
@@ -31,15 +33,12 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
     border-left-width: 2ch;
 }
 
-statement {
-    display: block;
-}
-
-constant, main, procedure, function, enum, class, constructor, property, memberSelector, globalSelector, header {
+constant, main, procedure, function, enum, classDef, constructor, property, memberSelector, globalSelector, header {
     display: block;
     margin-bottom: 1ch;
 }
 
+/* Frame selection */
 .selected > * , .selected clause *{
     border-left-color: rgb(174, 216, 250);
 }
@@ -52,6 +51,8 @@ constant, main, procedure, function, enum, class, constructor, property, memberS
 text.selected {
     background-color: rgb(174, 216, 250);
 }
+
+/* Text entry validation */
 text.empty, type.empty {
       color: rgb(196, 193, 193);
 }
@@ -65,16 +66,20 @@ text.valid, type.valid {
   color:rgb(0, 187, 0);
 }
 
+/* Collapse / Expand */
 expand {
     display: none;
 }
-.collapse expand {
+
+.multiline.collapse expand {
     display:inline;
     font-weight: bold;
     color: white;
     background-color: darkslategrey;
     margin-right: 1ch;
 }
-.collapse > :not(top) {
+
+.multiline.collapse > :not(top)
+{
     display: none;
 }

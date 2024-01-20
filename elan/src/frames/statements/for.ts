@@ -15,6 +15,7 @@ export class For extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `for${this.nextId()}`;
+        this.isMultiLine = true;
         this.step.enterText("1");
     }
 

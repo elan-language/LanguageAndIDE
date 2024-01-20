@@ -10,6 +10,7 @@ export class IfThen extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `if${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     renderAsHtml(): string {

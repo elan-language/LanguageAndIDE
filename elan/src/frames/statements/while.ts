@@ -10,6 +10,7 @@ export class While extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `while${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     renderAsHtml(): string {

@@ -12,6 +12,7 @@ export class Enum extends AbstractFrame implements Global {
     constructor() {
         super();
         this.htmlId = `enum${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     renderAsHtml(): string {

@@ -10,6 +10,7 @@ export class Repeat extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `repeat${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     renderAsHtml(): string {

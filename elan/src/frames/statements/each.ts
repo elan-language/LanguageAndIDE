@@ -12,6 +12,7 @@ export class Each extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `each${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     renderAsHtml(): string {

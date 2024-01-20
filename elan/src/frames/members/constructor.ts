@@ -10,6 +10,7 @@ export class Constructor extends FrameWithStatements implements Member {
     constructor() {
         super();
         this.htmlId = `constructor${this.nextId()}`;
+        this.isMultiLine = true;
     }
 
     public renderAsHtml() : string {
