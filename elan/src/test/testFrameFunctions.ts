@@ -180,8 +180,8 @@ export function T06_mergeSort() {
 		var mergeSort = new Function();
 			mergeSort.removeStatementSelector();
 			mergeSort.name.enterText("mergeSort");
-			mergeSort.params.enterText(`list List&lt;of String&gt;`);
-			mergeSort.returnType.enterText(`List&lt;of String&gt;`);
+			mergeSort.params.enterText(`list List<of String>`);
+			mergeSort.returnType.enterText(`List<of String>`);
 			var result = new Variable();
 				mergeSort.addStatement(result);
 				result.name.enterText(`result`);
@@ -215,11 +215,11 @@ end function */
 		var merge = new Function();
 		    merge.removeStatementSelector();
 			merge.name.enterText(`merge`);
-			merge.params.enterText(`a List&lt;of String&gt;, b List&lt;of String&gt;`);
-			merge.returnType.enterText(`List&lt;of String&gt;`);
+			merge.params.enterText(`a List<of String>, b List<of String>`);
+			merge.returnType.enterText(`List<of String>`);
 			var result = new Variable();
 				result.name.enterText(`name`);
-				result.expr.enterText(`new List&lt;of String&gt;()`);
+				result.expr.enterText(`new List<of String>()`);
 			merge.addStatement(result);
 			var if2 = new IfThen();
 			    if2.removeStatementSelector();

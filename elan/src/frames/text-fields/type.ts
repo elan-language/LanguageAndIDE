@@ -8,7 +8,6 @@ export class Type extends Text {
     }
 
     renderAsHtml(): string {  
-        return `<text id="${this.htmlId}" class="${this.class()}" tabindex=0><type>${this.content()}</type></text>`;
+        return `<text id="${this.htmlId}" class="${this.class()}" tabindex=0>${this.formattedContent()}</text>`;
     }
-
 }

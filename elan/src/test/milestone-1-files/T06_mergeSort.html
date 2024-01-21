@@ -16,10 +16,10 @@
 <keyword>end main</keyword>
 </main>
 <function class="multiline " id='func15' tabindex="0">
-<top><expand>+</expand><keyword>function </keyword><text id="ident12" class="" tabindex=0>mergeSort</text>(<text id="params13" class="" tabindex=0>list List&lt;of String&gt;</text>)<keyword> as </keyword><text id="type14" class="" tabindex=0><type>List&lt;of String&gt;</type></text></top>
+<top><expand>+</expand><keyword>function </keyword><text id="ident12" class="" tabindex=0>mergeSort</text>(<text id="params13" class="" tabindex=0>list <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type14" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
 <statement class="" id='var18' tabindex="0"><keyword>var </keyword><text id="ident16" class="" tabindex=0>result</text><keyword> set to </keyword><text id="expr17" class="" tabindex=0>list</text></statement>
 <statement class="multiline " id='if22' tabindex="0">
-<top><expand>+</expand><keyword>if </keyword><text id="expr21" class="" tabindex=0>list.length() > 1</text><keyword> then </keyword></top>
+<top><expand>+</expand><keyword>if </keyword><text id="expr21" class="" tabindex=0>list.length() &gt; 1</text><keyword> then </keyword></top>
 <statement class="" id='var25' tabindex="0"><keyword>var </keyword><text id="ident23" class="" tabindex=0>mid</text><keyword> set to </keyword><text id="expr24" class="" tabindex=0>list.length() div 2</text></statement>
 <statement class="" id='set28' tabindex="0"><keyword>set </keyword><text id="ident26" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr27" class="" tabindex=0>merge(mergeSort(list[..mid]), mergeSort(list[mid..]))</text></statement>
 <keyword>end if</keyword>
@@ -28,7 +28,7 @@
 <keyword>end function</keyword>
 </function>
 <function class="multiline " id='func36' tabindex="0">
-<top><expand>+</expand><keyword>function </keyword><text id="ident33" class="" tabindex=0>merge</text>(<text id="params34" class="" tabindex=0>a List&lt;of String&gt;, b List&lt;of String&gt;</text>)<keyword> as </keyword><text id="type35" class="" tabindex=0><type>List&lt;of String&gt;</type></text></top>
+<top><expand>+</expand><keyword>function </keyword><text id="ident33" class="" tabindex=0>merge</text>(<text id="params34" class="" tabindex=0>a <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;, b <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type35" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
 <statement class="" id='var39' tabindex="0"><keyword>var </keyword><text id="ident37" class="" tabindex=0>name</text><keyword> set to </keyword><text id="expr38" class="" tabindex=0>new List&lt;of String&gt;()</text></statement>
 <statement class="multiline " id='if43' tabindex="0">
 <top><expand>+</expand><keyword>if </keyword><text id="expr42" class="" tabindex=0>a.isEmpty()</text><keyword> then </keyword></top>

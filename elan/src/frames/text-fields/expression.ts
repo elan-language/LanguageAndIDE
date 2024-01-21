@@ -6,5 +6,4 @@ export class Expression extends Text {
         super(prompt);
         this.htmlId = `expr${this.nextId()}`;
     }
-
 }
