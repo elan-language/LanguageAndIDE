@@ -5,23 +5,40 @@ export abstract class Text extends AbstractFrame {
     public htmlId: string = "";
     protected text: string = "";
     protected prompt: string = "";
+    protected useHtmlTags: boolean = false;
 
     constructor(prompt: string) {
         super();
         this.prompt = prompt;
     }
 
-    public content() : String {
+    public content() : string {
        if (this.text) {
-        //TODO factor this out
-        return this.text.replaceAll("<","&lt;").replaceAll(">","&gt;");
+        var c = this.replaceAngleBrackets(this.text);
+        if (this.useHtmlTags) {
+            c = this.tagTypeNames(c);
+            c = this.tagKeywords(c);
+        }
+        return c;
        } else {
         return this.prompt;
        }
     }
 
-    public formattedContent() : String {
-        return this.content().replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>').replaceAll("of ","<keyword>of </keyword>").replaceAll("new ","<keyword>new </keyword>");
+    private replaceAngleBrackets(c: string) : string {
+        return c.replaceAll("<","&lt;").replaceAll(">","&gt;");
+    }
+
+    private tagTypeNames(c: string) : string {
+        return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');
+    } 
+
+    private tagKeywords(c: string) : string {
+        var keywords = ["new ", "of ", "with "];
+        keywords.forEach(kw => {
+            c = c.replaceAll(kw,`<keyword>${kw}</keyword>`);
+        });
+        return c;
     }
 
     protected class() : String {
