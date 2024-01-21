@@ -26,7 +26,7 @@ comment, header {
 }
 
 /* Horizontal and vertical layout */
-statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector, indent {
+statement, constructor, property, classDef > function, classDef > procedure, classDef > memberSelector {
     display: block;
     background-color: white;
     border-left-style: solid;

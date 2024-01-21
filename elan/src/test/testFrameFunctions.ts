@@ -22,7 +22,8 @@ import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalSelector } from "../frames/globals/global-selector";
-import { Comment } from "../frames/clauses/comment";
+import { Comment } from "../frames/globals/comment";
+import {CommentStatement} from "../frames/statements/comment-statement";
 
 export function T00_emptyFile() {
 	resetId();
@@ -39,9 +40,8 @@ export function T02_comments() {
 	var main = new MainFrame();
 	file.addGlobal(main);
 	main.removeStatementSelector();
-	var sc2 = new Comment();
+	var sc2 = new CommentStatement();
 	sc2.text.enterText("Comment 2");
-	sc2.indent = true;
 	main.addStatement(sc2);
 	return file;
 }

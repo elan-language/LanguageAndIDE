@@ -1,6 +1,6 @@
 import { Frame } from "./frame";
 import { nextId } from "./helpers";
-import { Comment } from "./clauses/comment";
+import { Comment } from "./globals/comment";
 
 export abstract class AbstractFrame implements Frame {
 
