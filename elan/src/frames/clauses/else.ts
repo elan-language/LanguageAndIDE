@@ -1,7 +1,7 @@
 
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../statements/statement";
-import { Expression } from "../text-entry/expression";
+import { Expression } from "../text-fields/expression";
 
 export class Else extends AbstractFrame implements Statement {
     hasIf: boolean = false;

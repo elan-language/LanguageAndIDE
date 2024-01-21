@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import {Comment} from "../globals/comment";
-import { Member } from "../members/member";
+import { Member } from "../class-members/member";
 
 export class CommentStatement extends Comment implements Statement, Member {
 

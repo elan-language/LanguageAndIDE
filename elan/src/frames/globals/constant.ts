@@ -1,6 +1,6 @@
 
-import { Identifier } from "../text-entry/identifier";
-import { Expression } from "../text-entry/expression";
+import { Identifier } from "../text-fields/identifier";
+import { Expression } from "../text-fields/expression";
 import { Global } from "./global";
 import { AbstractFrame } from "../abstract-frame";
 

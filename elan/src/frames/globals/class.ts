@@ -3,11 +3,11 @@ import { Global } from "./global";
 
 import { Statement } from "../statements/statement";
 import { StatementSelector } from "../statements/statement-selector";
-import { Type } from "../text-entry/type";
-import { Constructor } from "../members/constructor";
-import { Member } from "../members/member";
-import { AsString } from "../members/as-string";
-import { MemberSelector } from "../members/member-selector";
+import { Type } from "../text-fields/type";
+import { Constructor } from "../class-members/constructor";
+import { Member } from "../class-members/member";
+import { AsString } from "../class-members/as-string";
+import { MemberSelector } from "../class-members/member-selector";
 
 
 export class Class extends AbstractFrame implements Global {

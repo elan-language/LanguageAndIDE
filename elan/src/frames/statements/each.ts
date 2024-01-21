@@ -1,8 +1,8 @@
 import { Statement } from "./statement";
 
-import { Expression } from "../text-entry/expression";
+import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Identifier } from "../text-entry/identifier";
+import { Identifier } from "../text-fields/identifier";
 
 export class Each extends FrameWithStatements implements Statement {
     htmlId: string = "";

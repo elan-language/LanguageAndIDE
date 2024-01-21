@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { PlainText } from "../text-entry/plain_text";
+import { PlainText } from "../text-fields/plain_text";
 import { AbstractFrame } from "../abstract-frame";
 
 export class StatementSelector extends AbstractFrame implements Statement {

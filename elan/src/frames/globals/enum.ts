@@ -1,8 +1,8 @@
 
-import { Identifier } from "../text-entry/identifier";
+import { Identifier } from "../text-fields/identifier";
 import { Global } from "./global";
-import { EnumValues } from "../text-entry/enum-values";
-import { Type } from "../text-entry/type";
+import { EnumValues } from "../text-fields/enum-values";
+import { Type } from "../text-fields/type";
 import { AbstractFrame } from "../abstract-frame";
 
 export class Enum extends AbstractFrame implements Global {

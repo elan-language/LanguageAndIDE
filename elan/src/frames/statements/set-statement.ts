@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
-import { Identifier } from "../text-entry/identifier";
-import { Expression } from "../text-entry/expression";
+import { Identifier } from "../text-fields/identifier";
+import { Expression } from "../text-fields/expression";
 import { AbstractFrame } from "../abstract-frame";
 
 export class SetStatement extends AbstractFrame implements Statement {

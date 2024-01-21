@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { ExceptionMessage } from "../text-entry/exception-message";
+import { ExceptionMessage } from "../text-fields/exception-message";
 import { AbstractFrame } from "../abstract-frame";
 
 export class Throw extends AbstractFrame implements Statement {

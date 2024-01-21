@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { Expression } from "../text-entry/expression";
+import { Expression } from "../text-fields/expression";
 import { AbstractFrame } from "../abstract-frame";
 
 export class ReturnStatement extends AbstractFrame implements Statement {

@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 
-import { Expression } from "../text-entry/expression";
+import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class Repeat extends FrameWithStatements implements Statement {

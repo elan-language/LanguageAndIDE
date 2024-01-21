@@ -9,7 +9,7 @@ import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
 import { Enum } from "../frames/globals/enum";
 import { Class } from "../frames/globals/class";
-import { Property } from "../frames/members/property";
+import { Property } from "../frames/class-members/property";
 import { Throw } from "../frames/statements/throw";
 import { Call } from "../frames/statements/call";
 import { Print } from "../frames/statements/print";

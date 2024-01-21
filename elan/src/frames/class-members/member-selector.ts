@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 
-import { PlainText } from "../text-entry/plain_text";
+import { PlainText } from "../text-fields/plain_text";
 import { Member } from "./member";
 
 export class MemberSelector extends AbstractFrame implements Member {

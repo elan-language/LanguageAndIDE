@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../statements/statement";
-import { Identifier } from "../text-entry/identifier";
+import { Identifier } from "../text-fields/identifier";
 
 export class Catch extends AbstractFrame implements Statement {
     variable: Identifier = new Identifier("variableName");

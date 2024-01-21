@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
-import { Identifier } from "../text-entry/identifier";
-import { ArgList } from "../text-entry/arg-list";
+import { Identifier } from "../text-fields/identifier";
+import { ArgList } from "../text-fields/arg-list";
 import { AbstractFrame } from "../abstract-frame";
 
 export class Call extends AbstractFrame implements Statement {

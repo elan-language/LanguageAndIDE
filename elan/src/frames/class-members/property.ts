@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 
-import { Identifier } from "../text-entry/identifier";
-import { Type } from "../text-entry/type";
+import { Identifier } from "../text-fields/identifier";
+import { Type } from "../text-fields/type";
 import { Member } from "./member";
 
 export class Property extends AbstractFrame implements Member {
