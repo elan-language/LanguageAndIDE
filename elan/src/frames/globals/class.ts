@@ -22,7 +22,7 @@ export class Class extends AbstractFrame implements Global {
     constructor() {
         super();
         this.htmlId = `class${this.nextId()}`;
-        this.isMultiLine = true;
+        this.multiline = true;
         this.addMember(new MemberSelector());
     }
 

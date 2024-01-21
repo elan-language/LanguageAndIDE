@@ -1,14 +1,32 @@
 import { AbstractFrame } from "./abstract-frame";
+import { Frame } from "./frame";
+import { HasChildren } from "./has-children";
 import { nextId } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
-export abstract class FrameWithStatements extends AbstractFrame {
+export abstract class FrameWithStatements extends AbstractFrame implements HasChildren {
     private statements: Array<Statement> = new Array<Statement>();
 
     constructor() {
         super();
         this.addStatement(new StatementSelector());
+    }
+
+    hasChildren(): boolean {
+        return true;
+    }
+    selectFirstChild(): void {
+        this.statements[0].select();
+    }   
+    selectLastChild(): void {
+        this.statements[this.statements.length - 1].select();
+    }
+    selectChildAfter(child: Frame): void {
+        throw new Error("Method not implemented");
+    }
+    selectChildBefore(child: Frame): void {
+        throw new Error("Method not implemented");
     }
 
     protected renderStatementsAsHtml() : string {

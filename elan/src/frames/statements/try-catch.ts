@@ -10,7 +10,7 @@ export class TryCatch extends FrameWithStatements implements Statement {
     constructor() {
         super();
         this.htmlId = `try${this.nextId()}`;
-        this.isMultiLine = true;
+        this.multiline = true;
         this.addStatement(new Catch());
         this.addStatement(new StatementSelector());
     }

@@ -17,7 +17,7 @@ export class Function extends FrameWithStatements implements Global, Member {
     constructor() {
         super();
         this.htmlId = `func${this.nextId()}`;
-        this.isMultiLine = true;
+        this.multiline = true;
     }
 
     public renderAsHtml() : string {

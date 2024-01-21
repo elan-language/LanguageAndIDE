@@ -11,7 +11,7 @@ export class MainFrame extends FrameWithStatements implements Global {
     constructor() {
         super();
         this.htmlId = `main${this.nextId()}`;
-        this.isMultiLine = true;
+        this.multiline = true;
     }
 
     public renderAsHtml() : string {

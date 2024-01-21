@@ -71,7 +71,7 @@ expand {
     display: none;
 }
 
-.multiline.collapse expand {
+.multiline.collapsed expand {
     display:inline;
     font-weight: bold;
     color: white;
@@ -79,7 +79,7 @@ expand {
     margin-right: 1ch;
 }
 
-.multiline.collapse > :not(top)
+.multiline.collapsed > :not(top)
 {
     display: none;
 }

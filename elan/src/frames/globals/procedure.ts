@@ -14,7 +14,7 @@ export class Procedure extends FrameWithStatements implements Global, Member {
     constructor() {
         super();
         this.htmlId = `proc${this.nextId()}`;
-        this.isMultiLine = true;
+        this.multiline = true;
     }
 
     public renderAsHtml() : string {

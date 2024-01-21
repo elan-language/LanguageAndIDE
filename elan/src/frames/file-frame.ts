@@ -1,8 +1,10 @@
 import { AbstractFrame } from "./abstract-frame";
+import { Frame } from "./frame";
 import { Global } from "./globals/global";
+import { HasChildren } from "./has-children";
 import { resetId } from "./helpers";
 
-export class FileFrame extends AbstractFrame {
+export class FileFrame extends AbstractFrame implements HasChildren {
 
     private globals: Array<Global> = new Array<Global>();
 
@@ -13,7 +15,7 @@ export class FileFrame extends AbstractFrame {
         resetId();
     }
 
-     public renderAsHtml() : string {
+    public renderAsHtml() : string {
         const ss: Array<string> = [];
         for (var frame of this.globals) {
             ss.push(frame.renderAsHtml());
@@ -25,4 +27,22 @@ export class FileFrame extends AbstractFrame {
     public addGlobal(g : Global) {
         this.globals.push(g);
     }
+
+    hasChildren(): boolean {
+        return true;
+    }
+    selectFirstChild(): void {
+        this.globals[0].select();
+    }   
+    selectLastChild(): void {
+        this.globals[this.globals.length - 1].select();
+    }
+    selectChildAfter(child: Frame): void {
+        throw new Error("Method not implemented");
+    }
+    selectChildBefore(child: Frame): void {
+        throw new Error("Method not implemented");
+    }
+
+
 }
