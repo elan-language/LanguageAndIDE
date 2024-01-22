@@ -6,7 +6,7 @@ export class AsString extends Function {
         super();
     }
 
-    public renderAsHtml() : string {
+    public renderAsHtml(): string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>asString()<keyword> as </keyword><type>String</type></top>
 ${this.renderStatementsAsHtml()}

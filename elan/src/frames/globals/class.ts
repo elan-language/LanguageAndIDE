@@ -10,7 +10,7 @@ import { Frame } from "../frame";
 
 export class Class extends AbstractFrame implements Global {
 
-    public name : Type = new Type("class name");
+    public name: Type = new Type("class name");
     private constr: Constructor = new Constructor();
     private members: Array<Member> = new Array<Member>();
     public asString: AsString = new AsString();
@@ -22,7 +22,7 @@ export class Class extends AbstractFrame implements Global {
         this.htmlId = `class${this.nextId()}`;
         this.multiline = true;
     }
-    
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.addMember(new MemberSelector());
@@ -31,11 +31,11 @@ export class Class extends AbstractFrame implements Global {
         this.asString.initialize(frameMap, this);
     }
 
-    private modifiers() : string {
+    private modifiers(): string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
     }
 
-    public renderAsHtml() : string {
+    public renderAsHtml(): string {
         const ss: Array<string> = [];
         for (var m of this.members) {
             ss.push(m.renderAsHtml());
@@ -50,7 +50,7 @@ ${this.asString.renderAsHtml()}
 </classDef>`;
     }
 
-    public addMember(m : Member) {
+    public addMember(m: Member) {
         m.initialize(this.frameMap, this);
         this.members.push(m);
     }

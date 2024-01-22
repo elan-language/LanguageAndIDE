@@ -3,13 +3,13 @@ import { HasChildren } from "./has-children";
 import { nextId } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
-    private _frameMap? : Map<string, Frame>;
-    private parent? : Frame;
+    private _frameMap?: Map<string, Frame>;
+    private parent?: Frame;
 
-    initialize(frameMap: Map<string, Frame>, parent?: Frame, ): void {
+    initialize(frameMap: Map<string, Frame>, parent?: Frame,): void {
         this.parent = parent;
         this._frameMap = frameMap;
-        if (!this.htmlId){
+        if (!this.htmlId) {
             throw new Error(`Frame htmlId not set ${typeof this}`);
         }
         this.frameMap.set(this.htmlId, this);
@@ -23,18 +23,18 @@ export abstract class AbstractFrame implements Frame {
     }
 
     protected htmlId: string = "";
-    protected multiline: boolean = false; 
+    protected multiline: boolean = false;
     private selected: boolean = false;
     private collapsed: boolean = false;
-    
-    protected cls() : string {
-        return `${this.multiline? "multiline " : ""}${this.collapsed? "collapsed ":""}${this.selected? "selected ":""}`;
+
+    protected cls(): string {
+        return `${this.multiline ? "multiline " : ""}${this.collapsed ? "collapsed " : ""}${this.selected ? "selected " : ""}`;
     };
 
-    protected nextId() : number {
+    protected nextId(): number {
         return nextId();
     }
-    
+
     abstract renderAsHtml(): string;
 
     hasParent(): boolean {
