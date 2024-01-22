@@ -3,6 +3,7 @@ import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { Member } from "../class-members/member";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Frame } from "../frame";
 
 export class Procedure extends FrameWithStatements implements Global, Member {
 
@@ -14,6 +15,12 @@ export class Procedure extends FrameWithStatements implements Global, Member {
         super();
         this.htmlId = `proc${this.nextId()}`;
         this.multiline = true;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.name.initialize(frameMap, this);
+        this.params.initialize(frameMap, this);
     }
 
     public renderAsHtml() : string {

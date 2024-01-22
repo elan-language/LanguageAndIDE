@@ -73,10 +73,11 @@ export function T03_mainWithAllStatements() {
 	r.condition.enterText("score > 20");
 	main.addStatement(r);
 	const for1 = new For();
+	main.addStatement(for1);
 	for1.variable.enterText("i");
 	for1.from.enterText("1");
 	for1.to.enterText("10");
-	main.addStatement(for1);
+	
 	const ea = new Each();
 	ea.variable.enterText("letter");
 	ea.iter.enterText("Charlie Duke");

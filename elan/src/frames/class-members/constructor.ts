@@ -1,3 +1,4 @@
+import { Frame } from "../frame";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
@@ -10,6 +11,11 @@ export class Constructor extends FrameWithStatements implements Member {
         super();
         this.htmlId = `constructor${this.nextId()}`;
         this.multiline = true;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.params.initialize(frameMap, this);
     }
 
     public renderAsHtml() : string {

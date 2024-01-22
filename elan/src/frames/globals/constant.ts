@@ -3,6 +3,7 @@ import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
 import { Global } from "./global";
 import { AbstractFrame } from "../abstract-frame";
+import { Frame } from "../frame";
 
 export class Constant extends AbstractFrame implements Global {
 
@@ -12,6 +13,12 @@ export class Constant extends AbstractFrame implements Global {
     constructor() {
         super();
         this.htmlId = `const${this.nextId()}`;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.name.initialize(frameMap, this);
+        this.expr.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

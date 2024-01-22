@@ -2,6 +2,7 @@ import { Global } from "./global";
 import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
 import { AbstractFrame } from "../abstract-frame";
+import { Frame } from "../frame";
 
 export class Enum extends AbstractFrame implements Global {
     name: Type = new Type("Name");
@@ -11,6 +12,12 @@ export class Enum extends AbstractFrame implements Global {
         super();
         this.htmlId = `enum${this.nextId()}`;
         this.multiline = true;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.name.initialize(frameMap, this);
+        this.values.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

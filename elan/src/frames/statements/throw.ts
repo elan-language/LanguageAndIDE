@@ -1,6 +1,7 @@
 import { Statement } from "./statement";
 import { ExceptionMessage } from "../text-fields/exception-message";
 import { AbstractFrame } from "../abstract-frame";
+import { Frame } from "../frame";
 
 export class Throw extends AbstractFrame implements Statement {
     text: ExceptionMessage = new ExceptionMessage();
@@ -8,6 +9,12 @@ export class Throw extends AbstractFrame implements Statement {
     constructor() {
         super();
         this.htmlId = `throw${this.nextId()}`;
+    }
+
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.text.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

@@ -3,6 +3,7 @@ import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
 import { Integer } from "../text-fields/integer";
+import { Frame } from "../frame";
 
 export class For extends FrameWithStatements implements Statement {
     htmlId: string = "";
@@ -16,6 +17,14 @@ export class For extends FrameWithStatements implements Statement {
         this.htmlId = `for${this.nextId()}`;
         this.multiline = true;
         this.step.enterText("1");
+    }
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.variable.initialize(frameMap, this);
+        this.from.initialize(frameMap, this);
+        this.to.initialize(frameMap, this);
+        this.step.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

@@ -1,4 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
+import { Frame } from "../frame";
 
 
 export abstract class Text extends AbstractFrame {

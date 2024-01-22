@@ -26,6 +26,7 @@ export class Function extends FrameWithStatements implements Global, Member {
         this.returnStatement.initialize(frameMap, this);
         this.name.initialize(frameMap, this);
         this.params.initialize(frameMap, this);
+        this.returnType.initialize(frameMap, this);
     }
 
     public renderAsHtml() : string {

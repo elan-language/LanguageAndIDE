@@ -2,6 +2,7 @@ import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { ArgList } from "../text-fields/arg-list";
 import { AbstractFrame } from "../abstract-frame";
+import { Frame } from "../frame";
 
 export class Call extends AbstractFrame implements Statement {
     proc: Identifier = new Identifier("procedureName");
@@ -10,6 +11,12 @@ export class Call extends AbstractFrame implements Statement {
     constructor() {
         super();
         this.htmlId = `call${this.nextId()}`;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.proc.initialize(frameMap, this);
+        this.args.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

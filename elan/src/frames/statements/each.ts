@@ -2,6 +2,7 @@ import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
+import { Frame } from "../frame";
 
 export class Each extends FrameWithStatements implements Statement {
     htmlId: string = "";
@@ -12,6 +13,13 @@ export class Each extends FrameWithStatements implements Statement {
         super();
         this.htmlId = `each${this.nextId()}`;
         this.multiline = true;
+    }
+
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.variable.initialize(frameMap, this);
+        this.iter.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

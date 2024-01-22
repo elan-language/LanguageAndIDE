@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-
+import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
 import { Member } from "./member";
@@ -12,6 +12,12 @@ export class Property extends AbstractFrame implements Member {
     constructor() {
         super();
         this.htmlId = `prop${this.nextId()}`;
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.name.initialize(frameMap, this);
+        this.type.initialize(frameMap, this);
     }
 
     private modifier(): string {
