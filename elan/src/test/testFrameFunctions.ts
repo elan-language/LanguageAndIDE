@@ -115,6 +115,16 @@ export function T07_mainWithAllStatementsSelectStatementById(f : FileFrame) {
 	return () => f;
 }
 
+export function T08_expandAll(f : FileFrame) {
+	f.expandAll();
+	return () => f;
+}
+
+export function T08_collapseAll(f : FileFrame) {
+	f.collapseAll();
+	return () => f;
+}
+
 export function T04_allGlobals() {
 	const file = new FileFrame();
 	const con = new Constant();
