@@ -47,14 +47,26 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     deselectAll() {
-        for (const f of this.frameMap.values()){
-            if (f.isSelected()){
+        for (const f of this.frameMap.values()) {
+            if (f.isSelected()) {
                 f.deselect();
             }
         }
     }
 
-    selectByID(id : string){
+    expandAll() {
+        for (const f of this.frameMap.values()) {
+            f.expand();
+        }
+    }
+
+    collapseAll() {
+        for (const f of this.frameMap.values()) {
+            f.collapse();
+        }
+    }
+
+    selectByID(id: string) {
         this.deselectAll();
         const toSelect = this.frameMap.get(id);
         toSelect?.select();
