@@ -1,7 +1,6 @@
 import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
-import { nextId } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -9,7 +8,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
     private statements: Array<Statement> = new Array<Statement>();
 
     constructor() {
-        super();
+        super();   
+    }
+
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
         this.addStatement(new StatementSelector());
     }
 
@@ -38,6 +41,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
     }
 
     public addStatement(s : Statement) {
+        s.initialize(this.frameMap, this);
         this.statements.push(s);
     }
 

@@ -1,10 +1,5 @@
-import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
-
-import { Statement } from "../statements/statement";
-import { StatementSelector } from "../statements/statement-selector";
 import { FrameWithStatements } from "../frame-with-statements";
-
 
 export class MainFrame extends FrameWithStatements implements Global {
 

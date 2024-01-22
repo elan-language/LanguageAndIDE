@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { assertAreEqual } from './testHelpers';
-import { T00_emptyFile, T02_comments, T03_mainWithAllStatements, T04_allGlobals, T05_snake, T06_mergeSort } from './testFrameFunctions';
+import { T00_emptyFile, T02_comments, T03_mainWithAllStatements, T03_mainWithAllStatementsSelectMainById, T04_allGlobals, T05_snake, T06_mergeSort } from './testFrameFunctions';
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -23,4 +23,8 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test Merge Sort', (done) => {
 		assertAreEqual(done, "T06_mergeSort.html", T06_mergeSort);
 	});
+
+	// test('Test Select Main By Id', (done) => {
+	// 	assertAreEqual(done, "T06_mergeSort.html", T03_mainWithAllStatementsSelectMainById);
+	// });
 });

@@ -1,13 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
-
-import { Statement } from "../statements/statement";
-import { StatementSelector } from "../statements/statement-selector";
 import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
 import { MemberSelector } from "../class-members/member-selector";
+import { Frame } from "../frame";
 
 
 export class Class extends AbstractFrame implements Global {
@@ -23,7 +21,14 @@ export class Class extends AbstractFrame implements Global {
         super();
         this.htmlId = `class${this.nextId()}`;
         this.multiline = true;
+    }
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
         this.addMember(new MemberSelector());
+        this.constr.initialize(frameMap, this);
+        this.name.initialize(frameMap, this);
+        this.asString.initialize(frameMap, this);
     }
 
     private modifiers() : string {
@@ -46,6 +51,7 @@ ${this.asString.renderAsHtml()}
     }
 
     public addMember(m : Member) {
+        m.initialize(this.frameMap, this);
         this.members.push(m);
     }
 }

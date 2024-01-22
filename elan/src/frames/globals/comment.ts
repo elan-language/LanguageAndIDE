@@ -1,8 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../statements/statement";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
-import { Member } from "../class-members/member";
 
 export class Comment extends AbstractFrame implements Global {
 

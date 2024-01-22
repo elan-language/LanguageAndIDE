@@ -1,9 +1,11 @@
 export interface Frame {
     renderAsHtml(): string;
 
+    initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
+
     hasParent(): boolean;
     setParent(parent: Frame) : void;
-    getParent() : Frame;
+    getParent() : Frame | undefined;
     selectParent(): void; //Cursor left
 
     hasChildren(): boolean;

@@ -1,12 +1,10 @@
-
-import { Identifier } from "../text-fields/identifier";
 import { Global } from "./global";
 import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
 import { AbstractFrame } from "../abstract-frame";
 
 export class Enum extends AbstractFrame implements Global {
-     name: Type = new Type("Name");
+    name: Type = new Type("Name");
     values: EnumValues = new EnumValues();
 
     constructor() {

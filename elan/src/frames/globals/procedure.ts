@@ -1,5 +1,4 @@
 import { Global } from "./global";
-
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { Member } from "../class-members/member";

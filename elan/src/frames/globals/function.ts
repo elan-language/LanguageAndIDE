@@ -5,6 +5,7 @@ import { Type } from "../text-fields/type";
 import { Member } from "../class-members/member";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Frame } from "../frame";
 
 export class Function extends FrameWithStatements implements Global, Member {
 
@@ -18,6 +19,13 @@ export class Function extends FrameWithStatements implements Global, Member {
         super();
         this.htmlId = `func${this.nextId()}`;
         this.multiline = true;
+    }
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
+        this.returnStatement.initialize(frameMap, this);
+        this.name.initialize(frameMap, this);
+        this.params.initialize(frameMap, this);
     }
 
     public renderAsHtml() : string {

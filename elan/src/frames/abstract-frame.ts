@@ -3,9 +3,23 @@ import { HasChildren } from "./has-children";
 import { nextId } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
+    private _frameMap? : Map<string, Frame>;
+    private parent? : Frame;
+
+    initialize(frameMap: Map<string, Frame>, parent?: Frame, ): void {
+        this.parent = parent;
+        this._frameMap = frameMap;
+    }
+
+    get frameMap() {
+        if (this._frameMap) {
+            return this._frameMap;
+        }
+        throw new Error(`Frame : ${this.htmlId} not initialised`);
+    }
+
     protected htmlId: string = "";
-    protected multiline: boolean = false;
-    private parent: Frame = this; 
+    protected multiline: boolean = false; 
     private selected: boolean = false;
     private collapsed: boolean = false;
     
@@ -20,14 +34,17 @@ export abstract class AbstractFrame implements Frame {
     abstract renderAsHtml(): string;
 
     hasParent(): boolean {
-        return this.parent !== this;
+        return !!this.parent;
     }
+
     setParent(parent: Frame): void {
         this.parent = parent;
     }
-    getParent(): Frame {
+
+    getParent(): Frame | undefined {
         return this.parent;
     }
+
     hasChildren(): boolean {
         return false;
     }
@@ -44,7 +61,7 @@ export abstract class AbstractFrame implements Frame {
     selectParent(): void {
         if (this.hasParent()) {
             this.deselect();
-            this.parent.select();
+            this.parent!.select();
         }
     }
 

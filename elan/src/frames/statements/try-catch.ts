@@ -1,8 +1,8 @@
 import { Statement } from "./statement";
-
 import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "./statement-selector";
 import { Catch } from "../clauses/catch";
+import { Frame } from "../frame";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     htmlId: string = "";
@@ -11,6 +11,10 @@ export class TryCatch extends FrameWithStatements implements Statement {
         super();
         this.htmlId = `try${this.nextId()}`;
         this.multiline = true;
+    }
+    
+    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
+        super.initialize(frameMap, parent);
         this.addStatement(new Catch());
         this.addStatement(new StatementSelector());
     }

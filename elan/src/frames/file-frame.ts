@@ -13,9 +13,10 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     constructor() {
         super();
         resetId();
+        this.initialize(new Map<string, Frame>());
     }
 
-    public renderAsHtml() : string {
+    public renderAsHtml(): string {
         const ss: Array<string> = [];
         for (var frame of this.globals) {
             ss.push(frame.renderAsHtml());
@@ -24,7 +25,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         return `<header># Elan v0.1</header>\r\n${globals}`;
     }
 
-    public addGlobal(g : Global) {
+    public addGlobal(g: Global) {
+        g.initialize(this.frameMap, this);
         this.globals.push(g);
     }
 
@@ -33,7 +35,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
     selectFirstChild(): void {
         this.globals[0].select();
-    }   
+    }
     selectLastChild(): void {
         this.globals[this.globals.length - 1].select();
     }
@@ -44,5 +46,17 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         throw new Error("Method not implemented");
     }
 
+    deselectAll() {
+        for (const f of this.frameMap.values()){
+            if (f.isSelected()){
+                f.deselect();
+            }
+        }
+    }
 
+    selectByID(id : string){
+        this.deselectAll();
+        const toSelect = this.frameMap.get(id);
+        toSelect?.select();
+    }
 }

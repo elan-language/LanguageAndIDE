@@ -1,5 +1,4 @@
 import { FrameWithStatements } from "../frame-with-statements";
-
 import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
 
