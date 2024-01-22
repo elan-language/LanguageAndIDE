@@ -43,7 +43,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: rgb(174, 216, 250);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * {
     background-color: rgb(174, 216, 250);
     border-right-color: rgb(174, 216, 250);
 }
