@@ -1,7 +1,12 @@
+
 export interface Frame {
     renderAsHtml(): string;
 
     initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
+
+    isSelected() : boolean;
+    select(): void;
+    deselect(): void;
 
     hasParent(): boolean;
     setParent(parent: Frame) : void;
@@ -9,10 +14,7 @@ export interface Frame {
     selectParent(): void; //Cursor left
 
     hasChildren(): boolean;
-
-    isSelected() : boolean;
-    select(): void;
-    deselect(): void;
+    selectFirstChild(): void;
 
     //For methods below, if the operation is not valid in context, the current frame is returned
     selectNextPeer(): void;
