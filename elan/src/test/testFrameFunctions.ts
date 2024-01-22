@@ -104,10 +104,14 @@ export function T03_mainWithAllStatements() {
 	return file;
 }
 
-export function T03_mainWithAllStatementsSelectMainById() {
-	const f = T03_mainWithAllStatements();
-	f.selectByID("main");
-	return f;
+export function T07_mainWithAllStatementsSelectMainById(f : FileFrame) {
+	f.selectByID("main0");
+	return () => f;
+}
+
+export function T07_mainWithAllStatementsSelectStatementById(f : FileFrame) {
+	f.selectByID("for28");
+	return () => f;
 }
 
 export function T04_allGlobals() {

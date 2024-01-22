@@ -9,6 +9,10 @@ export abstract class AbstractFrame implements Frame {
     initialize(frameMap: Map<string, Frame>, parent?: Frame, ): void {
         this.parent = parent;
         this._frameMap = frameMap;
+        if (!this.htmlId){
+            throw new Error(`Frame htmlId not set ${typeof this}`);
+        }
+        this.frameMap.set(this.htmlId, this);
     }
 
     get frameMap() {
