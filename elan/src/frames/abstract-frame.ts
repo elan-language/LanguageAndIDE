@@ -27,8 +27,20 @@ export abstract class AbstractFrame implements Frame {
     private selected: boolean = false;
     private collapsed: boolean = false;
 
+    private pushClass(classes : Array<string>, flag: boolean, cls : string){
+        if (flag){
+            classes.push(cls);
+        }
+    }
+
+
     protected cls(): string {
-        return `${this.multiline ? "multiline " : ""}${this.collapsed ? "collapsed " : ""}${this.selected ? "selected " : ""}`;
+        const classes = new Array<string>;
+        this.pushClass(classes, this.multiline, "multiline");
+        this.pushClass(classes, this.collapsed, "collapsed");
+        this.pushClass(classes, this.selected, "selected");
+
+        return classes.join(" ");
     };
 
     protected nextId(): number {
