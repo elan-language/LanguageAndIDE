@@ -46,6 +46,26 @@
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
+
+			frame.addEventListener('dblclick', event => {
+				const msg = { type: 'dblclick', id: id };
+				debug(`frame ${id } dblclick`);
+				vscode.postMessage(msg);
+				event.stopPropagation();
+			});
+		}
+
+		const pluses = document.getElementsByTagName('expand');
+
+		for (var plus of pluses) {
+			const id = plus.parentElement.parentElement.id;
+		
+			plus.addEventListener('click', event => {
+				const msg = { type: 'topclick', id: id };
+				debug(`frame ${id } click`);
+				vscode.postMessage(msg);
+				event.stopPropagation();
+			});
 		}
 
 		const input = /** @type {HTMLElement} */ (document.querySelector('input.live'));
@@ -112,7 +132,7 @@
 
 	window.addEventListener('keydown', event => {
 
-		const msg = { type: 'keyOnWindow', id: id, key: event.key};
+		const msg = { type: 'keyOnWindow', key: event.key};
 		debug(`window keydown ${event.key}`);
 		vscode.postMessage(msg);
 		event.stopPropagation();

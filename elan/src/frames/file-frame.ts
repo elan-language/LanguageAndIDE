@@ -71,4 +71,24 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         const toSelect = this.frameMap.get(id);
         toSelect?.select();
     }
+
+    expandCollapseByID(id: string) {
+        const toToggle = this.frameMap.get(id);
+        if (toToggle?.isCollapsed()) {
+            toToggle.expand();
+        }
+        else {
+            toToggle?.collapse();
+        }
+    }
+
+    collapseByID(id: string) {
+        const toCollapse = this.frameMap.get(id);
+        toCollapse?.collapse();
+    }
+
+    expandByID(id: string) {
+        const toExpand = this.frameMap.get(id);
+        toExpand?.expand();
+    }
 }

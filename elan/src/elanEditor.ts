@@ -7,7 +7,7 @@ import { setCurrentElanFile } from './extension';
 
 
 interface editorEvent {
-	type: "click" | "keyOnInput" | "keyOnFrame" | "keyOnWindow"
+	type: "click" | "dblclick" | "topclick" | "keyOnInput" | "keyOnFrame" | "keyOnWindow"
 	key?: string,
 	id?: string
 }
@@ -90,6 +90,18 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					}
 					updateWebview(this.frameModel!);
 					return;
+				case 'dblclick':
+					if (e.id) {
+						this.dblclick(e.id);
+					}
+					updateWebview(this.frameModel!);
+					return;
+				case 'topclick':
+					if (e.id) {
+						this.topclick(e.id);
+					}
+					updateWebview(this.frameModel!);
+					return;
 				case 'keyOnFrame':
 					if (e.key === "Escape") {
 						this.frameModel?.deselectAll();
@@ -114,6 +126,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private click(id: string) {
 		this.frameModel?.selectByID(id);
+	}
+
+	private dblclick(id: string) {
+		this.frameModel?.expandCollapseByID(id);
+	}
+
+	private topclick(id: string) {
+		this.frameModel?.expandByID(id);
 	}
 
 	private newFrame(id?: string) {
