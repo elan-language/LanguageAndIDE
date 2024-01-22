@@ -1,6 +1,4 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
-
 
 export abstract class Text extends AbstractFrame {
     public htmlId: string = "";
@@ -42,16 +40,14 @@ export abstract class Text extends AbstractFrame {
         return c;
     }
 
-    protected class() : String {
-        if (this.text) {
-            return "";
-           } else {
-            return "empty";
-           }
+    protected override setClasses() {
+        super.setClasses();
+        this.pushClass(!this.text, "empty");
     }
 
+
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" class="${this.class()}" tabindex=0>${this.content()}</text>`;
+        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.content()}</text>`;
     }
 
     enterText(text: string): void {

@@ -26,21 +26,25 @@ export abstract class AbstractFrame implements Frame {
     protected multiline: boolean = false;
     private selected: boolean = false;
     private collapsed: boolean = false;
+    private _classes = new Array<string>;
 
-    private pushClass(classes : Array<string>, flag: boolean, cls : string){
+    protected pushClass(flag: boolean, cls : string){
         if (flag){
-            classes.push(cls);
+            this._classes.push(cls);
         }
     }
 
+    protected setClasses() {
+        this._classes = new Array<string>();
+        this.pushClass(this.multiline, "multiline");
+        this.pushClass(this.collapsed, "collapsed");
+        this.pushClass(this.selected, "selected");
+    };
+
 
     protected cls(): string {
-        const classes = new Array<string>;
-        this.pushClass(classes, this.multiline, "multiline");
-        this.pushClass(classes, this.collapsed, "collapsed");
-        this.pushClass(classes, this.selected, "selected");
-
-        return classes.join(" ");
+        this.setClasses();
+        return this._classes.join(" ");
     };
 
     protected nextId(): number {
