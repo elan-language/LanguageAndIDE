@@ -301,6 +301,6 @@ end function */
 end function
 */
 
-export function getTestFrame(fn : string) : Frame {
+export function getTestFrame(fn : string) : FileFrame {
     return eval(`${fn}()`);
 }

@@ -7,7 +7,7 @@ import { setCurrentElanFile } from './extension';
 
 
 interface editorEvent {
-	type: "click" | "keyOnInput" | "keyOnFrame",
+	type: "click" | "keyOnInput" | "keyOnFrame" | "keyOnWindow"
 	key?: string,
 	id?: string
 }
@@ -22,7 +22,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-	private frameModel : Frame = new FileFrame();
+	private frameModel? : FileFrame;
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -47,15 +47,13 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (!document.getText()){
+		if (!document.getText() && !this.frameModel){
 			const name = document.fileName;
 			const arr = name.split("\\");
 			const fn = arr[arr.length -1].split(".")[0];
 	
 			this.frameModel = getTestFrame(fn);
 		}
-
-		
 
 		function updateWebview(fm : Frame) {
 			webviewPanel.webview.postMessage({
@@ -74,7 +72,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
 			if (e.document.uri.toString() === document.uri.toString()) {
-				updateWebview(this.frameModel);
+				updateWebview(this.frameModel!);
 			}
 		});
 
@@ -90,27 +88,32 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					if (e.id) {
 						this.click(e.id);
 					}
-					else {
-						this.newFrame();
-					}
-					updateWebview(this.frameModel);
+					updateWebview(this.frameModel!);
 					return;
 				case 'keyOnFrame':
-					this.newFrame(e.id);
-					updateWebview(this.frameModel);
+					if (e.key === "Escape") {
+						this.frameModel?.deselectAll();
+					}
+					updateWebview(this.frameModel!);
+					return;
+				case 'keyOnWindow':
+					if (e.key === "Escape") {
+						this.frameModel?.deselectAll();
+					}
+					updateWebview(this.frameModel!);
 					return;
 				case 'keyOnInput':
 					this.userInput(e.key!);
-					updateWebview(this.frameModel);
+					updateWebview(this.frameModel!);
 					return;
 			}
 		});
 
-		updateWebview(this.frameModel);
+		updateWebview(this.frameModel!);
 	}
 
 	private click(id: string) {
-		//this.frameModel.select(id, "");
+		this.frameModel?.selectByID(id);
 	}
 
 	private newFrame(id?: string) {

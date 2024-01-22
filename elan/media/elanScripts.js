@@ -28,7 +28,7 @@
 	function updateContent(/** @type {string} */ text) {
         codeContainer.innerHTML = text;
 
-		const frames = document.getElementsByClassName('frame');
+		const frames = document.querySelectorAll('[id]');
 
 		for (var frame of frames) {
 			const id = frame.id;
@@ -110,9 +110,14 @@
 		return k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight";
 	}
 
-    window.addEventListener('keydown', event => {
-	
-		if (event.ctrlKey && isArrowKey(event.key)){
+	window.addEventListener('keydown', event => {
+
+		const msg = { type: 'keyOnWindow', id: id, key: event.key};
+		debug(`window keydown ${event.key}`);
+		vscode.postMessage(msg);
+		event.stopPropagation();
+
+		if (event.ctrlKey && isArrowKey(event.key)) {
 			handleCtrlArrow(event.key);
 		}
 	});
