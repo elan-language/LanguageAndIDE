@@ -34,22 +34,35 @@
 			const id = frame.id;
 		
 			frame.addEventListener('keydown', event => {
-				const msg = { type: 'keyOnFrame', id: id, key: event.key };
-				debug(`frame ${id } keydown ${event.key}`);
+				const msg = {
+					type: 'key',
+					target: "frame",
+					id: id,
+					key: event.key
+				};
+				debug(`frame ${id} keydown ${event.key}`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 
 			frame.addEventListener('click', event => {
-				const msg = { type: 'click', id: id };
-				debug(`frame ${id } click`);
+				const msg = {
+					type: 'click',
+					target: "frame",
+					id: id
+				};
+				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
 
 			frame.addEventListener('dblclick', event => {
-				const msg = { type: 'dblclick', id: id };
-				debug(`frame ${id } dblclick`);
+				const msg = {
+					type: 'dblclick',
+					target: "frame",
+					id: id
+				};
+				debug(`frame ${id} dblclick`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -59,10 +72,14 @@
 
 		for (var plus of pluses) {
 			const id = plus.parentElement.parentElement.id;
-		
+
 			plus.addEventListener('click', event => {
-				const msg = { type: 'topclick', id: id };
-				debug(`frame ${id } click`);
+				const msg = {
+					type: 'click',
+					target: "expand",
+					id: id
+				};
+				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -76,9 +93,13 @@
 
 			debug("focus input" + input.id);
 			input.addEventListener('keydown', event => {
-                const text = event.key;
+				const text = event.key;
 				debug("input ${id } keydown " + text);
-				const msg = { type: 'keyOnInput', key: text };
+				const msg = {
+					type: 'key',
+					target: "input",
+					key: text
+				};
 				vscode.postMessage(msg);
 				event.stopPropagation();
 			});
@@ -120,7 +141,10 @@
 
 	// spike new frames
 	window.addEventListener('click', event => {
-		const msg = { type: 'click' };
+		const msg = {
+			type: 'click',
+			target: "window"
+		};
 		debug("window click ");
 		vscode.postMessage(msg);
 		event.stopPropagation();
@@ -132,7 +156,11 @@
 
 	window.addEventListener('keydown', event => {
 
-		const msg = { type: 'keyOnWindow', key: event.key};
+		const msg = {
+			type: 'key',
+			target: "window",
+			key: event.key
+		};
 		debug(`window keydown ${event.key}`);
 		vscode.postMessage(msg);
 		event.stopPropagation();

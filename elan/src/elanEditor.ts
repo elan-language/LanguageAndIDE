@@ -7,8 +7,10 @@ import { setCurrentElanFile } from './extension';
 
 
 interface editorEvent {
-	type: "click" | "dblclick" | "topclick" | "keyOnInput" | "keyOnFrame" | "keyOnWindow"
+	type: "click" | "dblclick" | "key"
+	target: "frame" | "window" | "input" | "expand"
 	key?: string,
+	modKey? : string,
 	id?: string
 }
 
@@ -85,37 +87,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.onDidReceiveMessage((e: editorEvent) => {
 			switch (e.type) {
 				case 'click':
-					if (e.id) {
-						this.click(e.id);
-					}
+					this.handleClick(e);
 					updateWebview(this.frameModel!);
 					return;
 				case 'dblclick':
-					if (e.id) {
-						this.dblclick(e.id);
-					}
-					updateWebview(this.frameModel!);
-					return;
-				case 'topclick':
-					if (e.id) {
-						this.topclick(e.id);
-					}
-					updateWebview(this.frameModel!);
-					return;
-				case 'keyOnFrame':
-					if (e.key === "Escape") {
-						this.frameModel?.deselectAll();
-					}
-					updateWebview(this.frameModel!);
-					return;
-				case 'keyOnWindow':
-					if (e.key === "Escape") {
-						this.frameModel?.deselectAll();
-					}
-					updateWebview(this.frameModel!);
-					return;
-				case 'keyOnInput':
-					this.userInput(e.key!);
+					this.handleDblClick(e);
 					updateWebview(this.frameModel!);
 					return;
 			}
@@ -124,24 +100,26 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		updateWebview(this.frameModel!);
 	}
 
-	private click(id: string) {
-		this.frameModel?.selectByID(id);
+	private handleClick(e : editorEvent) {
+		switch (e.target) {
+			case 'frame' : {
+				this.frameModel?.selectByID(e.id!);
+				break;
+			}
+			case 'expand' : {
+				this.frameModel?.expandByID(e.id!);
+				break;
+			}
+		}
 	}
 
-	private dblclick(id: string) {
-		this.frameModel?.expandCollapseByID(id);
-	}
-
-	private topclick(id: string) {
-		this.frameModel?.expandByID(id);
-	}
-
-	private newFrame(id?: string) {
-		//this.frameModel.newFrame(id);
-	}
-
-	private userInput(key: string) {
-		//this.frameModel.userInput(key);
+	private handleDblClick(e : editorEvent) {
+		switch (e.target) {
+			case 'frame' : {
+				this.frameModel?.expandCollapseByID(e.id!);
+				break;
+			}
+		}
 	}
 
 	/**
