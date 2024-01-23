@@ -168,7 +168,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
         else {
             // text field
-            frame?.selectFirstPeer();
+            frame?.getParent()?.selectFirstPeer();
         }
     }
 
@@ -186,7 +186,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
         else {
             // text field
-            frame?.selectLastPeer();
+            frame?.getParent()?.selectLastPeer();
         }
     }
 }
