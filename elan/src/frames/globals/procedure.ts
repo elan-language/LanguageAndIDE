@@ -23,6 +23,9 @@ export class Procedure extends FrameWithStatements implements Global, Member {
         this.params.initialize(frameMap, this);
     }
 
+    isGlobal = true;
+    isMember = true;
+
     public renderAsHtml() : string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})</top>

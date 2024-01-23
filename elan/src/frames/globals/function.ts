@@ -28,6 +28,9 @@ export class Function extends FrameWithStatements implements Global, Member {
         this.params.initialize(frameMap, this);
         this.returnType.initialize(frameMap, this);
     }
+    
+    isGlobal = true;
+    isMember = true;
 
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">

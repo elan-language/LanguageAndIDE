@@ -20,6 +20,8 @@ export class Property extends AbstractFrame implements Member {
         this.type.initialize(frameMap, this);
     }
 
+    isMember = true;
+
     private modifier(): string {
         return this.private ? `<keyword>private </keyword>`: "";
     }

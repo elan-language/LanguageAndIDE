@@ -2,7 +2,7 @@ import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { resetId } from "./helpers";
+import { isGlobal, isStatement, resetId } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
@@ -39,11 +39,22 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     selectLastChild(): void {
         this.globals[this.globals.length - 1].select();
     }
+
     selectChildAfter(child: Frame): void {
-        throw new Error("Method not implemented");
+        if (isGlobal(child)) {
+            const index = this.globals.indexOf(child);
+            if (index >=0 && index < this.globals.length - 1) {
+                this.globals[index + 1].select();
+            }
+        }
     }
     selectChildBefore(child: Frame): void {
-        throw new Error("Method not implemented");
+        if (isGlobal(child)) {
+            const index = this.globals.indexOf(child);
+            if (index > 0) {
+                this.globals[index - 1].select();
+            }
+        }
     }
 
     deselectAll() {
@@ -90,5 +101,63 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     expandByID(id: string) {
         const toExpand = this.frameMap.get(id);
         toExpand?.expand();
+    }
+
+    selectNextPeerByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectNextPeer();
+    }
+
+    selectPreviousPeerByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectPreviousPeer();
+    }
+
+    selectFirstPeerByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectFirstPeer();
+    }
+
+    selectLastPeerByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectLastPeer();
+    }
+
+    selectParentByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectParent();
+    }
+
+    selectFirstChildByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        frame?.selectFirstChild();
+    }
+
+    selectFirstByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        if (isStatement(frame)) {
+            frame.selectFirstPeer();
+        }
+        else{
+            this.selectFirstChild();
+        }
+    }
+
+    selectLastByID(id: string) {
+        this.deselectAll();
+        const frame = this.frameMap.get(id);
+        if (isStatement(frame)) {
+            frame.selectLastPeer();
+        }
+        else {
+            this.selectLastChild();
+        }
     }
 }

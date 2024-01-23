@@ -17,6 +17,8 @@ export class ReturnStatement extends AbstractFrame implements Statement {
         this.expr.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
     }

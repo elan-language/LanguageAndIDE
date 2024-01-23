@@ -18,6 +18,8 @@ export class Constructor extends FrameWithStatements implements Member {
         this.params.initialize(frameMap, this);
     }
 
+    isMember = true;
+
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>constructor</keyword>(${this.params.renderAsHtml()})</top>

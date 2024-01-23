@@ -17,6 +17,8 @@ export class Catch extends AbstractFrame implements Statement {
         this.variable.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;
     }

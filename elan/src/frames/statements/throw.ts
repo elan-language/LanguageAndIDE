@@ -17,6 +17,8 @@ export class Throw extends AbstractFrame implements Statement {
         this.text.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>throw </keyword>${this.text.renderAsHtml()}</statement>`;
     }

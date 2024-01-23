@@ -22,6 +22,8 @@ export class Else extends AbstractFrame implements Statement {
         return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:"";
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClause()}</clause>`;
     }

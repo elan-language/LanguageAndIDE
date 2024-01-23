@@ -19,6 +19,8 @@ export class IfThen extends FrameWithStatements implements Statement {
         this.condition.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}<keyword> then </keyword></top>

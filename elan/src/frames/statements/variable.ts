@@ -21,6 +21,8 @@ export class Variable extends AbstractFrame implements Statement {
         this.expr.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }

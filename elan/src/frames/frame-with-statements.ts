@@ -1,6 +1,7 @@
 import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
+import { isStatement } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -26,10 +27,20 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
         this.statements[this.statements.length - 1].select();
     }
     selectChildAfter(child: Frame): void {
-        throw new Error("Method not implemented");
+        if (isStatement(child)) {
+            const index = this.statements.indexOf(child);
+            if (index >=0 && index < this.statements.length - 1) {
+                this.statements[index + 1].select();
+            }
+        }
     }
     selectChildBefore(child: Frame): void {
-        throw new Error("Method not implemented");
+        if (isStatement(child)) {
+            const index = this.statements.indexOf(child);
+            if (index > 0) {
+                this.statements[index - 1].select();
+            }
+        }
     }
 
     protected renderStatementsAsHtml() : string {

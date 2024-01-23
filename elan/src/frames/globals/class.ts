@@ -6,14 +6,14 @@ import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
 import { MemberSelector } from "../class-members/member-selector";
 import { Frame } from "../frame";
+import { HasChildren } from "../has-children";
+import { isMember } from "../helpers";
 
 
-export class Class extends AbstractFrame implements Global {
+export class Class extends AbstractFrame implements Global, HasChildren {
 
     public name: Type = new Type("class name");
-    private constr: Constructor = new Constructor();
     private members: Array<Member> = new Array<Member>();
-    public asString: AsString = new AsString();
     public abstract: boolean = false;
     public immutable: boolean = false;
 
@@ -23,13 +23,48 @@ export class Class extends AbstractFrame implements Global {
         this.multiline = true;
     }
 
+    private get constr() {
+        return this.members[0] as Constructor;
+    }
+
+    get asString() {
+        return this.members[this.members.length -1] as AsString;
+    }
+
+    selectFirstChild(): void {
+        this.members[0].select();
+    }
+
+    selectLastChild(): void {
+        this.members[this.members.length - 1].select();
+    }
+
+    selectChildAfter(child: Frame): void {
+        if (isMember(child)) {
+            const index = this.members.indexOf(child);
+            if (index >=0 && index < this.members.length - 1) {
+                this.members[index + 1].select();
+            }
+        }
+    }
+    selectChildBefore(child: Frame): void {
+        if (isMember(child)) {
+            const index = this.members.indexOf(child);
+            if (index > 0) {
+                this.members[index - 1].select();
+            }
+        }
+    }
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
-        this.addMember(new MemberSelector());
-        this.constr.initialize(frameMap, this);
+        this.addFixedMember(new Constructor());
+        this.addFixedMember(new MemberSelector());
+        this.addFixedMember(new AsString());
         this.name.initialize(frameMap, this);
-        this.asString.initialize(frameMap, this);
     }
+
+    isGlobal = true;
 
     private modifiers(): string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
@@ -43,15 +78,20 @@ export class Class extends AbstractFrame implements Global {
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand>${this.modifiers()}<keyword>class </keyword>${this.name.renderAsHtml()}</top>
-${this.constr.renderAsHtml()}
 ${members}
-${this.asString.renderAsHtml()}
 <keyword>end class</keyword>
 </classDef>`;
     }
 
-    public addMember(m: Member) {
+    private addFixedMember(m: Member) {
         m.initialize(this.frameMap, this);
         this.members.push(m);
+    }
+
+    public addMember(m: Member) {
+        m.initialize(this.frameMap, this);
+        const asString = this.members.pop();
+        this.members.push(m);
+        this.members.push(asString!);
     }
 }

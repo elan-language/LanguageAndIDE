@@ -15,6 +15,7 @@ export class Each extends FrameWithStatements implements Statement {
         this.multiline = true;
     }
 
+    isStatement = true;
     
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);

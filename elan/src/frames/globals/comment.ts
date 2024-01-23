@@ -12,6 +12,8 @@ export class Comment extends AbstractFrame implements Global {
         this.htmlId = `com${this.nextId()}`;
     }
 
+    isGlobal = true;
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.text.initialize(frameMap, this);

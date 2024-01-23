@@ -9,6 +9,8 @@ export class MainFrame extends FrameWithStatements implements Global {
         this.multiline = true;
     }
 
+    isGlobal = true;
+
     public renderAsHtml() : string {
         return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>main</keyword></top>

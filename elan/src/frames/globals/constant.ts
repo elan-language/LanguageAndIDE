@@ -15,6 +15,8 @@ export class Constant extends AbstractFrame implements Global {
         this.htmlId = `const${this.nextId()}`;
     }
 
+    isGlobal = true;
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.name.initialize(frameMap, this);

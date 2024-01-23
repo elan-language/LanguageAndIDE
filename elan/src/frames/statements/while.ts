@@ -19,6 +19,8 @@ export class While extends FrameWithStatements implements Statement {
         this.condition.initialize(frameMap, this);
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}</top>

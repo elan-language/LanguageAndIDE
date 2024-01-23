@@ -16,6 +16,8 @@ export class MemberSelector extends AbstractFrame implements Member {
         this.text.initialize(frameMap, this);
     }
 
+    isMember = true;
+
     renderAsHtml(): string {
         return `<memberSelector class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</memberSelector>`;
     }

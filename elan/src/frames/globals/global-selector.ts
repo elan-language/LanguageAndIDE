@@ -16,6 +16,8 @@ export class GlobalSelector extends AbstractFrame implements Global {
         this.text.initialize(frameMap, this);
     }
 
+    isGlobal = true;
+
     //TODO: include Comment option
     renderAsHtml(): string {
         return `<globalSelector class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</globalSelector>`;

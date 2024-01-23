@@ -19,6 +19,8 @@ export class TryCatch extends FrameWithStatements implements Statement {
         this.addStatement(new StatementSelector());
     }
 
+    isStatement = true;
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>try </keyword></top>

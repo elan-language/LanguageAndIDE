@@ -10,7 +10,7 @@ interface editorEvent {
 	type: "click" | "dblclick" | "key"
 	target: "frame" | "window" | "input" | "expand"
 	key?: string,
-	modKey? : string,
+	modKey?: "Control" | undefined,
 	id?: string
 }
 
@@ -24,7 +24,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-	private frameModel? : FileFrame;
+	private frameModel?: FileFrame;
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -49,15 +49,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (!document.getText() && !this.frameModel){
+		if (!document.getText() && !this.frameModel) {
 			const name = document.fileName;
 			const arr = name.split("\\");
-			const fn = arr[arr.length -1].split(".")[0];
-	
+			const fn = arr[arr.length - 1].split(".")[0];
+
 			this.frameModel = getTestFrame(fn);
 		}
 
-		function updateWebview(fm : Frame) {
+		function updateWebview(fm: Frame) {
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: fm.renderAsHtml(),
@@ -104,41 +104,65 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		updateWebview(this.frameModel!);
 	}
 
-	private handleClick(e : editorEvent) {
+	private handleClick(e: editorEvent) {
 		switch (e.target) {
-			case 'frame' : {
+			case 'frame': {
 				this.frameModel?.selectByID(e.id!);
 				break;
 			}
-			case 'expand' : {
+			case 'expand': {
 				this.frameModel?.expandByID(e.id!);
 				break;
 			}
 		}
 	}
 
-	private handleDblClick(e : editorEvent) {
+	private handleDblClick(e: editorEvent) {
 		switch (e.target) {
-			case 'frame' : {
+			case 'frame': {
 				this.frameModel?.expandCollapseByID(e.id!);
 				break;
 			}
 		}
 	}
 
-	private handleKey(e : editorEvent) {
+	private handleKey(e: editorEvent) {
 		switch (e.target) {
-			case 'frame' : {
+			case 'frame': {
 				this.handleFrameKey(e);
 				break;
 			}
 		}
 	}
 
-	private handleFrameKey(e : editorEvent) {
+	private handleFrameKey(e: editorEvent) {
 		switch (e.key) {
-			case 'Escape' : {
+			case 'Escape': {
 				this.frameModel?.deselectAll();
+				break;
+			}
+			case 'ArrowUp': {
+				this.frameModel?.selectPreviousPeerByID(e.id!);
+				break;
+			}
+			case 'ArrowDown': {
+				this.frameModel?.selectNextPeerByID(e.id!);
+				break;
+			}
+			case 'ArrowLeft': {
+				this.frameModel?.selectParentByID(e.id!);
+				break;
+			}
+			case 'ArrowRight': {
+				this.frameModel?.selectFirstChildByID(e.id!);
+				break;
+			}
+			case 'Home': {
+				this.frameModel?.selectFirstByID(e.id!);
+				break;
+			}
+			case 'End': {
+				this.frameModel?.selectLastByID(e.id!);
 				break;
 			}
 			case '-': {
