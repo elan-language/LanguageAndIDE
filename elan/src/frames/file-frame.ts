@@ -2,7 +2,7 @@ import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isStatement, resetId } from "./helpers";
+import { isGlobal, isStatement, resetId, safeSelectAfter, safeSelectBefore } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
@@ -43,17 +43,13 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     selectChildAfter(child: Frame): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
-            if (index >=0 && index < this.globals.length - 1) {
-                this.globals[index + 1].select();
-            }
+            safeSelectAfter(this.globals, index);
         }
     }
     selectChildBefore(child: Frame): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
-            if (index > 0) {
-                this.globals[index - 1].select();
-            }
+            safeSelectBefore(this.globals, index);
         }
     }
 

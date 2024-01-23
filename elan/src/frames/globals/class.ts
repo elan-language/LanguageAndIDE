@@ -7,7 +7,7 @@ import { AsString } from "../class-members/as-string";
 import { MemberSelector } from "../class-members/member-selector";
 import { Frame } from "../frame";
 import { HasChildren } from "../has-children";
-import { isMember } from "../helpers";
+import { isMember, safeSelectAfter, safeSelectBefore } from "../helpers";
 
 
 export class Class extends AbstractFrame implements Global, HasChildren {
@@ -42,17 +42,13 @@ export class Class extends AbstractFrame implements Global, HasChildren {
     selectChildAfter(child: Frame): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
-            if (index >=0 && index < this.members.length - 1) {
-                this.members[index + 1].select();
-            }
+            safeSelectAfter(this.members, index);
         }
     }
     selectChildBefore(child: Frame): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
-            if (index > 0) {
-                this.members[index - 1].select();
-            }
+            safeSelectBefore(this.members, index);
         }
     }
 

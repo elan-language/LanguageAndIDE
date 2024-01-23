@@ -18,8 +18,32 @@ export function isGlobal(f?: Frame): f is Global {
 
 export function isStatement(f?: Frame): f is Statement {
     return !!f && 'isStatement' in f;
-} 
+}
 
 export function isMember(f?: Frame): f is Member {
     return !!f && 'isMember' in f;
-} 
+}
+
+export function safeSelectAfter(toSelect: Array<{ select: () => void }>, index: number) {
+    if (index === -1) {
+        return;
+    }
+    if (index < toSelect.length - 1) {
+        toSelect[index + 1].select();
+    }
+    else {
+        toSelect[toSelect.length - 1].select();
+    }
+}
+
+export function safeSelectBefore(toSelect: Array<{ select: () => void }>, index: number) {
+    if (index === -1) {
+        return;
+    }
+    if (index > 0) {
+        toSelect[index - 1].select();
+    }
+    else {
+        toSelect[0].select();
+    }
+}
