@@ -3,6 +3,9 @@ import { HasChildren } from "./has-children";
 import { nextId } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
+    renderAsSource(): string {
+        return "";
+    }
 
     private _frameMap?: Map<string, Frame>;
     private parent?: Frame;

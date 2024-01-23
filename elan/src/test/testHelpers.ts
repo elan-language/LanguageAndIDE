@@ -19,7 +19,7 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile: string, frame: () => T) {
+export async function assertAreEqualByHtml<T extends Frame>(done: Mocha.Done, htmlFile: string, frame: () => T) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -30,6 +30,25 @@ export async function assertAreEqual<T extends Frame>(done: Mocha.Done, htmlFile
 
     try {
         assert.strictEqual(actualHtml, expectedHtml);
+        done();
+    }
+    catch (e) {
+        done(e);
+        throw e;
+    }
+}
+
+export async function assertAreEqualBySource<T extends Frame>(done: Mocha.Done, sourceFile: string, frame: () => T) {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
+
+    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+    const model = frame();
+    const actualSource = model.renderAsSource();
+    const expectedSource = sourceDoc.getText();
+
+    try {
+        assert.strictEqual(actualSource, expectedSource);
         done();
     }
     catch (e) {

@@ -1,6 +1,8 @@
 
 export interface Frame {
     renderAsHtml(): string;
+    
+    renderAsSource(): string;
 
     initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
 
