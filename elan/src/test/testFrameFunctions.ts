@@ -37,6 +37,9 @@ export function T01_helloWorld() {
 	const main = new MainFrame();
 	file.addGlobal(main);
 	main.removeStatementSelector();
+	const comment = new CommentStatement();
+	comment.text.enterText(`My first program`);
+	main.addStatement(comment);
 	const pr = new Print();
 	pr.expr.enterText(`"Hello World!"`);
 	main.addStatement(pr);

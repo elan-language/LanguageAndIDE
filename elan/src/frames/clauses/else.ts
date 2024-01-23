@@ -32,9 +32,12 @@ export class Else extends AbstractFrame implements Statement {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClauseAsHtml()}</clause>`;
     }
 
+    indent(): string {
+        return this.getParent()?.indent()+""; //No additonal indent for an else clause
+    }
+
     renderAsSource(): string {
-        return `
-${this.indent()}else ${this.ifClauseAsSource()}`;
+        return `${this.indent()}else${this.ifClauseAsSource()}`;
     }
 
 } 

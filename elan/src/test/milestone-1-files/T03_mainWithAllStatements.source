@@ -1,0 +1,41 @@
+# Elan v0.1
+
+main
+  var name set to expression
+  set a to 3 + 4
+  throw message
+  call signIn(rwp, password)
+  print "Hello World!"
+  while newGame
+    
+  end while
+  repeat
+    
+  until score > 20
+  for i from 1 to 10 step 1
+    
+  end for
+  each letter in Charlie Duke
+    
+  end each
+  if y > 4 then
+    
+  end if
+  if y > 4 then
+    
+  else
+    
+  end if
+  if y > 4 then
+    
+  else if y > 10 then
+    
+  else
+    
+  end if
+  try
+    
+  catch e
+    
+  end try
+end main

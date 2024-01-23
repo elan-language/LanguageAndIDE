@@ -24,7 +24,6 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}return ${this.expr.renderAsSource()}`;
+        return `${this.indent()}return ${this.expr.renderAsSource()}`;
     }
 } 

@@ -30,9 +30,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}while ${this.condition.renderAsSource()}
-${this.renderStatementsAsSource()}
+        return `${this.indent()}while ${this.condition.renderAsSource()}\r
+${this.renderStatementsAsSource()}\r
 ${this.indent()}end while`;
     }
 } 

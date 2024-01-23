@@ -30,9 +30,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-    return `
-${this.indent()}if ${this.condition.renderAsSource()} then }
-${this.renderStatementsAsSource()}
+    return `${this.indent()}if ${this.condition.renderAsSource()} then\r
+${this.renderStatementsAsSource()}\r
 ${this.indent()}end if`;
     }
 } 

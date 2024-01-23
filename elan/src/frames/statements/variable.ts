@@ -28,7 +28,6 @@ export class Variable extends AbstractFrame implements Statement {
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}var ${this.name.renderAsSource()} set to ${this.expr.renderAsSource()}`;
+        return `${this.indent()}var ${this.name.renderAsSource()} set to ${this.expr.renderAsSource()}`;
     }
 } 

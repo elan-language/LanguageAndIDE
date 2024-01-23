@@ -23,7 +23,11 @@ export class Catch extends AbstractFrame implements Statement {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;
     }
 
+    indent(): string {
+        return this.getParent()?.indent()+""; //No additonal indent for a catch clause
+    }
+
     renderAsSource(): string {
-        return `${this.indent()}catch com${this.variable.renderAsSource()}`;
+        return `${this.indent()}catch ${this.variable.renderAsSource()}`;
     }
 } 
