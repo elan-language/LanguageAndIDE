@@ -94,6 +94,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					this.handleDblClick(e);
 					updateWebview(this.frameModel!);
 					return;
+				case 'key':
+					this.handleKey(e);
+					updateWebview(this.frameModel!);
+					return;
 			}
 		});
 
@@ -117,6 +121,36 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		switch (e.target) {
 			case 'frame' : {
 				this.frameModel?.expandCollapseByID(e.id!);
+				break;
+			}
+		}
+	}
+
+	private handleKey(e : editorEvent) {
+		switch (e.target) {
+			case 'frame' : {
+				this.handleFrameKey(e);
+				break;
+			}
+		}
+	}
+
+	private handleFrameKey(e : editorEvent) {
+		switch (e.key) {
+			case 'Escape' : {
+				this.frameModel?.deselectAll();
+				break;
+			}
+			case '-': {
+				if (e.modKey === "Control") {
+					this.frameModel?.collapseByID(e.id!);
+				}
+				break;
+			}
+			case '+': {
+				if (e.modKey === "Control") {
+					this.frameModel?.expandByID(e.id!);
+				}
 				break;
 			}
 		}

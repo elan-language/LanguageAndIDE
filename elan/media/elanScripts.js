@@ -22,6 +22,13 @@
 		}
 	}
 
+	function getModKey(e){
+		if (e.ctrlKey){
+			return "Control";
+		}
+		return undefined;
+	}
+
 	/**
 	 * Render the document in the webview.
 	 */
@@ -38,7 +45,8 @@
 					type: 'key',
 					target: "frame",
 					id: id,
-					key: event.key
+					key: event.key,
+					modKey: getModKey(event)
 				};
 				debug(`frame ${id} keydown ${event.key}`);
 				vscode.postMessage(msg);
