@@ -1,4 +1,5 @@
 import { Function } from "../globals/function";
+import { singleIndent } from "../helpers";
 
 export class AsString extends Function {
 
@@ -15,10 +16,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     public renderAsSource(): string {
-        return `
-function asString() as String
-${this.renderStatementsAsSource()}
-${this.returnStatement.renderAsSource()}
-end function`;
+        return `${singleIndent()}function asString() as String\r
+${this.renderStatementsAsSource()}\r
+${singleIndent()}end function`;  // No new line as this is always last global before 'end class'
     }
 }

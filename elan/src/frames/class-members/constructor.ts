@@ -33,9 +33,9 @@ ${this.renderStatementsAsHtml()}
     }
 
     public renderAsSource(): string {
-        return `
-constructor(${this.params.renderAsSource()})
-${this.renderStatementsAsSource()}
-end constructor`;
+        return `${this.indent()}constructor(${this.params.renderAsSource()})\r
+${this.renderStatementsAsSource()}\r
+${this.indent()}end constructor\r
+`;
     }
 }

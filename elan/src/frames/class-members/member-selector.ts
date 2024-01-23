@@ -1,5 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
+import { singleIndent } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
 import { Member, Role } from "./member";
 
@@ -27,6 +28,6 @@ export class MemberSelector extends AbstractFrame implements Member {
     }
 
     renderAsSource(): string {
-        return ``;
+        return `${singleIndent()}`;
     }
 } 

@@ -88,11 +88,11 @@ ${members}
         for (var m of this.members) {
             ss.push(m.renderAsSource());
         }
-        const members = ss.join("\n");
-        return `
-class ${this.name.renderAsSource()}
-${members}
-end class`;
+        const members = ss.join("\r\n");
+        return `class ${this.name.renderAsSource()}\r
+${members}\r
+end class\r
+`;
     }
 
     private addFixedMember(m: Member) {

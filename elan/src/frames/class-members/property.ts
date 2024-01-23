@@ -35,7 +35,7 @@ export class Property extends AbstractFrame implements Member {
     }
 
     renderAsSource(): string {
-        return `
-property ${this.name.renderAsSource()} ${this.type.renderAsSource()}`;
+        return `${this.indent()}property ${this.name.renderAsSource()} ${this.type.renderAsSource()}\r
+        `;
     }
 } 

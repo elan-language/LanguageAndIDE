@@ -1,29 +1,11 @@
 # Elan v0.1
 
-constant phi set to 1.618
-
-main
-  
-end main
-
-procedure signIn(parameter definitions)
-  
-end procedure
-
-function hypotenuse(sideB Float, sideC Float) as Float
-  
-  return expression
-end function
-
-enum Fruit
-  apple, orange, pear
-end enum
-
 class Player
   constructor(parameter definitions)
     
   end constructor
 
+  
   property score Int
 
   function asString() as String
@@ -36,8 +18,6 @@ immutable class Card
   constructor(parameter definitions)
     
   end constructor
-
-  
 
   private property value Int
 

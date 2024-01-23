@@ -35,11 +35,11 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test All Globals Except Class Source', (done) => {
 		assertAreEqualBySource(done, "T04_allGlobalsExceptClass.source", T04_allGlobalsExceptClass);
 	});
-/*	test('Test Classes', (done) => {
+	test('Test Classes', (done) => {
 		assertAreEqualByHtml(done, "T05_classes.html", T05_classes);
 	});
-	test('Test Classes Source', (done) => {
-		assertAreEqualByHtml(done, "T05_classes.source", T05_classes);
+	/*test('Test Classes Source', (done) => {
+		assertAreEqualBySource(done, "T05_classes.source", T05_classes);
 	});*/
 	test('Test Merge Sort', (done) => {
 		assertAreEqualByHtml(done, "T06_mergeSort.html", T06_mergeSort);
