@@ -23,10 +23,14 @@ export function isStatement(f?: Frame): f is Statement {
 export function isMember(f?: Frame): f is Member {
     return !!f && 'isMember' in f;
 } 
-export function newLine() {
+//newLine for Source
+export function nlS(): string {
     return "\r\n"; //TODO: check this is correct for newLine
 }
-
+//newLine for Html
+export function nlH(): string {
+    return "\r\n"; //TODO: check this is correct for newLine
+}
 export function singleIndent() {
     return "  ";
 }

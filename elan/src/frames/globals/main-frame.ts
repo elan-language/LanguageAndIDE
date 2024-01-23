@@ -24,9 +24,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     public renderAsSource() : string {
-        return `
-main
-${this.renderStatementsAsSource()}
+        return `main\r
+${this.renderStatementsAsSource()}\r
 end main`;
     }
 

@@ -3,7 +3,7 @@ import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
-import { newLine } from "../helpers";
+import { nlS } from "../helpers";
 
 export class Each extends FrameWithStatements implements Statement {
     htmlId: string = "";

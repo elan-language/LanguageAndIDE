@@ -3,7 +3,7 @@ import { Identifier } from "../text-fields/identifier";
 import { ArgList } from "../text-fields/arg-list";
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
-import { newLine, singleIndent } from "../helpers";
+import { nlS, singleIndent } from "../helpers";
 
 export class Call extends AbstractFrame implements Statement {
     proc: Identifier = new Identifier("procedureName");

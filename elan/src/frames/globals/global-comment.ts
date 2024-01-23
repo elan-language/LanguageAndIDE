@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
-import { newLine } from "../helpers";
+import { nlS } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 
@@ -29,7 +29,6 @@ export class GlobalComment extends AbstractFrame implements Global {
     }
 
     renderAsSource(): string {
-        return `
-# ${this.text.renderAsSource()}`;
+        return `# ${this.text.renderAsSource()}`;
     }
 } 

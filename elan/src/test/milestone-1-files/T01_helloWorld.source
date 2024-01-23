@@ -1,0 +1,5 @@
+# Elan v0.1
+
+main
+  print "Hello World!"
+end main

@@ -3,7 +3,7 @@ import { Role } from "./class-members/member";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isMember, isStatement, newLine, resetId, safeSelectAfter, safeSelectBefore } from "./helpers";
+import { isGlobal, isMember, isStatement, nlS, resetId, safeSelectAfter, safeSelectBefore } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
@@ -40,8 +40,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         for (var frame of this.globals) {
             ss.push(frame.renderAsSource());
         }
-        const globals = ss.join("\n");
-        return `${this.getHeaderInfo()}${newLine()}${globals}`; 
+        const globals = ss.join(nlS());
+        return `${this.getHeaderInfo()}${nlS()}${nlS()}${globals}`; 
     }
 
     public addGlobal(g: Global) {

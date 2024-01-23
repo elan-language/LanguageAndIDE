@@ -25,8 +25,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     }
 
     renderAsSource(): string {
-        return `
-  ${this.indent()}${this.text.renderAsSource()}`;
+        return `${this.indent()}${this.text.renderAsSource()}`;
     }
  
     currentRole(): Role {
