@@ -1,9 +1,10 @@
 import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
-import { Member } from "../class-members/member";
+import { Member, Role } from "../class-members/member";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
+import { FileFrame } from "../file-frame";
 
 export class Procedure extends FrameWithStatements implements Global, Member {
 
@@ -25,6 +26,10 @@ export class Procedure extends FrameWithStatements implements Global, Member {
 
     isGlobal = true;
     isMember = true;
+
+    currentRole(): Role {
+        return this.getParent() instanceof FileFrame ? Role.global : Role.member;
+    }
 
     public renderAsHtml() : string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
