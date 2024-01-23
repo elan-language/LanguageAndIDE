@@ -52,7 +52,6 @@
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
-
 			});
 
 			frame.addEventListener('click', event => {
@@ -98,8 +97,13 @@
 			});
 		}
 
-		const textFields = [...document.querySelectorAll('text[tabindex]')];
-       
+		function isHidden(el) {
+		    return (el.offsetParent === null);
+		}
+		
+		var textFields = [...document.querySelectorAll(':not(.collapsed) text[tabindex]')];
+		textFields = textFields.filter(e => !isHidden(e));
+
 		for (var field of textFields) {
 			const index = textFields.indexOf(field);
 			const nextIndex =  index === textFields.length - 1 ? index :  index + 1;
