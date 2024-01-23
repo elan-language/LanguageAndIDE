@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
 import { Member } from "../class-members/member";
-import { newLine } from "../helpers";
+import { nlS } from "../helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Frame } from "../frame";
@@ -26,7 +26,6 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     }
 
     renderAsSource(): string {
-        return `
-  ${this.indent()}${this.text.renderAsSource()}`;
+        return `${this.indent()}${this.text.renderAsSource()}`;
     }
 } 

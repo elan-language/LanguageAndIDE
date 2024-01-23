@@ -32,6 +32,17 @@ export function T00_emptyFile() {
 	return f;
 }
 
+export function T01_helloWorld() {
+	const file = new FileFrame();
+	const main = new MainFrame();
+	file.addGlobal(main);
+	main.removeStatementSelector();
+	const pr = new Print();
+	pr.expr.enterText(`"Hello World!"`);
+	main.addStatement(pr);
+	return file;
+}
+
 export function T02_comments() {
 	const file = new FileFrame();
 	const sc1 = new GlobalComment();
