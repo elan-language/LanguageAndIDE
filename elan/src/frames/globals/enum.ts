@@ -38,6 +38,7 @@ export class Enum extends AbstractFrame implements Global {
         return `
 enum ${this.name.renderAsHtml()}
 ${this.values.renderAsSource()}      
-end enum`;
+end enum\r
+`;
     }
 } 

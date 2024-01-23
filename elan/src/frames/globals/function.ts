@@ -68,11 +68,9 @@ ${this.renderStatementsAsHtml()}
     }
 
     public renderAsSource() : string {
-        return `
-function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsHtml()}
-${this.renderStatementsAsSource()}
-${this.returnStatement.renderAsSource()}
-end function`;
+        return `function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
+${this.renderStatementsAsSource()}\r
+end function\r
+`;
     }
-
 }

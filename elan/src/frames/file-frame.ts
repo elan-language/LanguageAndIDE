@@ -40,8 +40,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         for (var frame of this.globals) {
             ss.push(frame.renderAsSource());
         }
-        const globals = ss.join(nlS());
-        return `${this.getHeaderInfo()}${nlS()}${nlS()}${globals}`; 
+        const globals = ss.join("\r\n");
+        return `${this.getHeaderInfo()}\r\n\r\n${globals}`; 
     }
 
     public addGlobal(g: Global) {

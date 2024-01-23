@@ -23,7 +23,7 @@ export class Else extends AbstractFrame implements Statement {
     }
 
     private ifClauseAsSource() : string {
-        return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:"";
+        return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:``;
     }
 
     isStatement = true;

@@ -39,9 +39,9 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test Merge Sort', (done) => {
 		assertAreEqualByHtml(done, "T06_mergeSort.html", T06_mergeSort);
 	});
-	/*test('Test Merge Sort Source', (done) => {
+	test('Test Merge Sort Source', (done) => {
 		assertAreEqualBySource(done, "T06_mergeSort.source", T06_mergeSort);
-	});*/
+	});
 	test('Test Select Main By Id', (done) => {
 		const ff = T03_mainWithAllStatements();
 		assertAreEqualByHtml(done, "T07_mainSelected.html", T07_mainWithAllStatementsSelectMainById(ff));
