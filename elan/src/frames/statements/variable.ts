@@ -26,4 +26,9 @@ export class Variable extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}var ${this.name.renderAsSource()} set to ${this.expr.renderAsSource()}`;
+    }
 } 

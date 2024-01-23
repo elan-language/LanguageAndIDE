@@ -18,13 +18,23 @@ export class Else extends AbstractFrame implements Statement {
         this.condition.initialize(frameMap, this);
     }
 
-    private ifClause() : string {
+    private ifClauseAsHtml() : string {
         return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:"";
+    }
+
+    private ifClauseAsSource() : string {
+        return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:"";
     }
 
     isStatement = true;
 
     renderAsHtml(): string {
-        return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClause()}</clause>`;
+        return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClauseAsHtml()}</clause>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}else ${this.ifClauseAsSource()}`;
+    }
+
 } 

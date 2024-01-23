@@ -22,4 +22,12 @@ export class GlobalSelector extends AbstractFrame implements Global {
     renderAsHtml(): string {
         return `<globalSelector class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</globalSelector>`;
     }
-} 
+
+    indent(): string {
+        return "";
+    }
+
+    renderAsSource(): string {
+        return ``;
+    } 
+}

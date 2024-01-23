@@ -25,4 +25,9 @@ export class SetStatement extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.name.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}set ${this.name.renderAsSource()} to ${this.expr.renderAsSource()}`;
+    }
 } 

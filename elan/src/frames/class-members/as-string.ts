@@ -14,4 +14,12 @@ ${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }
+
+    public renderAsSource(): string {
+        return `
+function asString() as String
+${this.renderStatementsAsSource()}
+${this.returnStatement.renderAsSource()}
+end function`;
+    }
 }

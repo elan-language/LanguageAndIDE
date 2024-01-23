@@ -51,6 +51,14 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
         return ss.join("\n");
     }
 
+    protected renderStatementsAsSource() : string {
+        const ss: Array<string> = [];
+        for (var frame of this.statements) {
+            ss.push(frame.renderAsSource());
+        }
+        return ss.join("\n");
+    }
+
     public addStatement(s : Statement) {
         s.initialize(this.frameMap, this);
         this.statements.push(s);

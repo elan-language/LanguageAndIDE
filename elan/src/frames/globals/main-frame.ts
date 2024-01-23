@@ -18,4 +18,16 @@ ${this.renderStatementsAsHtml()}
 <keyword>end main</keyword>
 </main>`;
     }
+
+    indent(): string {
+        return "";
+    }
+
+    public renderAsSource() : string {
+        return `
+main
+${this.renderStatementsAsSource()}
+end main`;
+    }
+
 }

@@ -22,4 +22,9 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}return ${this.expr.renderAsSource()}`;
+    }
 } 

@@ -50,6 +50,14 @@ export abstract class Text extends AbstractFrame {
         return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.content()}</text>`;
     }
 
+    indent(): string {
+        return "";
+    }
+
+    renderAsSource(): string {
+        return this.content();
+    }
+
     enterText(text: string): void {
 		this.text = text;
 	}

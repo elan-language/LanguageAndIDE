@@ -27,4 +27,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>end constructor</keyword>
 </constructor>`;
     }
+
+    public renderAsSource(): string {
+        return `
+constructor(${this.params.renderAsSource()})
+${this.renderStatementsAsSource()}
+end constructor`;
+    }
 }

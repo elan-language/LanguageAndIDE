@@ -22,4 +22,9 @@ export class Throw extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>throw </keyword>${this.text.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}trhow ${this.text.renderAsSource()}`;
+    }
 } 

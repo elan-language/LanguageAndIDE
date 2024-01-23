@@ -2,9 +2,10 @@ import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isStatement, resetId } from "./helpers";
+import { isGlobal, isStatement, resetId, newLine } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
+
 
     private globals: Array<Global> = new Array<Global>();
 
@@ -22,7 +23,24 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             ss.push(frame.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># Elan v0.1</header>\r\n${globals}`;
+        return `<header>${this.getHeaderInfo()}</header>\r\n${globals}`;
+    }
+
+    public indent(): string {
+        return "";
+    }
+
+    private getHeaderInfo(): string {
+        return `# Elan v0.1`;
+    }
+
+    renderAsSource(): string {
+        const ss: Array<string> = [];
+        for (var frame of this.globals) {
+            ss.push(frame.renderAsSource());
+        }
+        const globals = ss.join("\n");
+        return `${this.getHeaderInfo()}${newLine()}${globals}`; 
     }
 
     public addGlobal(g: Global) {

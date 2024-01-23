@@ -28,4 +28,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>end try</keyword>
 </statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}try
+${this.renderStatementsAsSource()}
+${this.indent()}end try`;
+    }
 } 

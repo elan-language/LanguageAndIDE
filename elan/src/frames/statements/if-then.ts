@@ -28,4 +28,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>end if</keyword>
 </statement>`;
     }
+
+    renderAsSource(): string {
+    return `
+${this.indent()}if ${this.condition.renderAsSource()} then }
+${this.renderStatementsAsSource()}
+${this.indent()}end if`;
+    }
 } 

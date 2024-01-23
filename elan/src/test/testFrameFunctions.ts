@@ -22,7 +22,7 @@ import { Else } from "../frames/clauses/else";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalSelector } from "../frames/globals/global-selector";
-import { Comment } from "../frames/globals/comment";
+import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 
 export function T00_emptyFile() {
@@ -34,7 +34,7 @@ export function T00_emptyFile() {
 
 export function T02_comments() {
 	const file = new FileFrame();
-	const sc1 = new Comment();
+	const sc1 = new GlobalComment();
 	sc1.text.enterText("Comment 1");
 	file.addGlobal(sc1);
 	const main = new MainFrame();

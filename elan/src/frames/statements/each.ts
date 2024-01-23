@@ -3,6 +3,7 @@ import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
+import { newLine } from "../helpers";
 
 export class Each extends FrameWithStatements implements Statement {
     htmlId: string = "";
@@ -29,5 +30,12 @@ export class Each extends FrameWithStatements implements Statement {
 ${this.renderStatementsAsHtml()}
 <keyword>end each</keyword>
 </statement>`;
+    }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}
+${this.renderStatementsAsSource()}
+${this.indent()}end each`;
     }
 } 

@@ -83,6 +83,22 @@ ${members}
 </classDef>`;
     }
 
+    indent(): string {
+        return "";
+    }
+
+    public renderAsSource(): string {
+        const ss: Array<string> = [];
+        for (var m of this.members) {
+            ss.push(m.renderAsSource());
+        }
+        const members = ss.join("\n");
+        return `
+class ${this.name.renderAsSource()}
+${members}
+end class`;
+    }
+
     private addFixedMember(m: Member) {
         m.initialize(this.frameMap, this);
         this.members.push(m);

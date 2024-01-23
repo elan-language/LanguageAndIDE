@@ -36,4 +36,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>end for</keyword>
 </statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}
+${this.renderStatementsAsSource()}
+${this.indent()}end for`;
+    }
 } 

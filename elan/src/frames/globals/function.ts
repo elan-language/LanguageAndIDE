@@ -40,4 +40,17 @@ ${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }
+
+    indent(): string {
+        return "";
+    }
+
+    public renderAsSource() : string {
+        return `
+function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsHtml()}
+${this.renderStatementsAsSource()}
+${this.returnStatement.renderAsSource()}
+end function`;
+    }
+
 }

@@ -1,9 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
+import { newLine } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 
-export class Comment extends AbstractFrame implements Global {
+export class GlobalComment extends AbstractFrame implements Global {
 
     public text: PlainText = new PlainText("");
 
@@ -21,5 +22,14 @@ export class Comment extends AbstractFrame implements Global {
 
     renderAsHtml(): string {
         return `<comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"># ${this.text.renderAsHtml()}</comment>`;
+    }
+
+    indent(): string {
+        return "";
+    }
+
+    renderAsSource(): string {
+        return `
+# ${this.text.renderAsSource()}`;
     }
 } 

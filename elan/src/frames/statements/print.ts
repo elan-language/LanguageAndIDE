@@ -22,4 +22,9 @@ export class Print extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>print </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}print ${this.expr.renderAsSource()}`;
+    }
 } 

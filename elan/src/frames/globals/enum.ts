@@ -29,4 +29,15 @@ export class Enum extends AbstractFrame implements Global {
 <keyword>end enum</keyword>
 </enum>`;
     }
+
+    indent(): string {
+        return "";
+    }
+
+    renderAsSource(): string {
+        return `
+enum ${this.name.renderAsHtml()}
+${this.values.renderAsSource()}      
+end enum`;
+    }
 } 

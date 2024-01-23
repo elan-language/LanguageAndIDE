@@ -1,6 +1,6 @@
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
-import { nextId } from "./helpers";
+import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
 
@@ -52,6 +52,16 @@ export abstract class AbstractFrame implements Frame {
     }
 
     abstract renderAsHtml(): string;
+
+    indent(): string {
+        if (this.hasParent()) {
+            return this.getParent()?.indent()+singleIndent();
+        } else {
+            return singleIndent();
+        }
+    }
+
+    abstract renderAsSource(): string ;
 
     isSelected(): boolean {
         return this.selected;

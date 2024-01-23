@@ -22,4 +22,8 @@ export class StatementSelector extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;
     }
+
+    renderAsSource(): string {
+        return ``;
+    }
 } 

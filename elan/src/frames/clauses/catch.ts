@@ -22,4 +22,8 @@ export class Catch extends AbstractFrame implements Statement {
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;
     }
+
+    renderAsSource(): string {
+        return `${this.indent()}catch com${this.variable.renderAsSource()}`;
+    }
 } 

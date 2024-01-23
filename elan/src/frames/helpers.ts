@@ -23,3 +23,10 @@ export function isStatement(f?: Frame): f is Statement {
 export function isMember(f?: Frame): f is Member {
     return !!f && 'isMember' in f;
 } 
+export function newLine() {
+    return "\r\n"; //TODO: check this is correct for newLine
+}
+
+export function singleIndent() {
+    return "  ";
+}

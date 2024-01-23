@@ -33,4 +33,15 @@ ${this.renderStatementsAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
     }
+
+    indent(): string {
+        return "";
+    }
+
+    public renderAsSource() : string {
+        return `
+procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})
+${this.renderStatementsAsSource()}
+end procedure`;
+    }
 }

@@ -28,4 +28,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>end while</keyword>
 </statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}while ${this.condition.renderAsSource()}
+${this.renderStatementsAsSource()}
+${this.indent()}end while`;
+    }
 } 

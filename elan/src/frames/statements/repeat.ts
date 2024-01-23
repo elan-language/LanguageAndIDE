@@ -28,4 +28,11 @@ ${this.renderStatementsAsHtml()}
 <keyword>until </keyword>${this.condition.renderAsHtml()}
 </statement>`;
     }
+
+    renderAsSource(): string {
+        return `
+${this.indent()}repeat
+${this.renderStatementsAsSource()}
+${this.indent()}until ${this.condition.renderAsSource()}`;
+    }
 } 
