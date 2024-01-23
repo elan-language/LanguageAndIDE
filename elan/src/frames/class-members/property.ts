@@ -2,7 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
-import { Member } from "./member";
+import { Member, Role } from "./member";
 
 export class Property extends AbstractFrame implements Member {
     name: Identifier = new Identifier("name");
@@ -21,6 +21,10 @@ export class Property extends AbstractFrame implements Member {
     }
 
     isMember = true;
+
+    currentRole(): Role {
+        return Role.member;
+    }
 
     private modifier(): string {
         return this.private ? `<keyword>private </keyword>`: "";

@@ -2,11 +2,12 @@ import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { Type } from "../text-fields/type";
-import { Member } from "../class-members/member";
+import { Member, Role } from "../class-members/member";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
+import { FileFrame } from "../file-frame";
 
 export class Function extends FrameWithStatements implements Global, Member {
 
@@ -35,6 +36,10 @@ export class Function extends FrameWithStatements implements Global, Member {
     
     isGlobal = true;
     isMember = true;
+
+    currentRole(): Role {
+        return this.getParent() instanceof FileFrame ? Role.global : Role.member;
+    }
 
     public override addStatement(s: Statement): void {
         s.initialize(this.frameMap, this);

@@ -1,8 +1,9 @@
 import { AbstractFrame } from "./abstract-frame";
+import { Role } from "./class-members/member";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isStatement, resetId, safeSelectAfter, safeSelectBefore, newLine } from "./helpers";
+import { isGlobal, isMember, isStatement, newLine, resetId, safeSelectAfter, safeSelectBefore } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
@@ -159,8 +160,15 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         if (isStatement(frame)) {
             frame.selectFirstPeer();
         }
-        else{
+        else if (isMember(frame) && frame.currentRole() === Role.member) {
+            frame.selectFirstPeer();
+        }
+        else if (isGlobal(frame)){
             this.selectFirstChild();
+        }
+        else {
+            // text field
+            frame?.selectFirstPeer();
         }
     }
 
@@ -170,8 +178,15 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         if (isStatement(frame)) {
             frame.selectLastPeer();
         }
-        else {
+        else if (isMember(frame) && frame.currentRole() === Role.member) {
+            frame.selectLastPeer();
+        }
+        else if (isGlobal(frame)){
             this.selectLastChild();
+        }
+        else {
+            // text field
+            frame?.selectLastPeer();
         }
     }
 }
