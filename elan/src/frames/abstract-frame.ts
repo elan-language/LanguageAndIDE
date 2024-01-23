@@ -3,6 +3,7 @@ import { HasChildren } from "./has-children";
 import { nextId } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
+
     private _frameMap?: Map<string, Frame>;
     private parent?: Frame;
 
@@ -41,7 +42,6 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.selected, "selected");
     };
 
-
     protected cls(): string {
         this.setClasses();
         return this._classes.join(" ");
@@ -53,6 +53,15 @@ export abstract class AbstractFrame implements Frame {
 
     abstract renderAsHtml(): string;
 
+    isSelected(): boolean {
+        return this.selected;
+    }
+    select(): void {
+        this.selected = true; //TODO: is deselection to be handled externally, or here?
+    }
+    deselect(): void {
+        this.selected = false;
+    }
     hasParent(): boolean {
         return !!this.parent;
     }
@@ -64,27 +73,18 @@ export abstract class AbstractFrame implements Frame {
     getParent(): Frame | undefined {
         return this.parent;
     }
-
-    hasChildren(): boolean {
-        return false;
-    }
-
-    isSelected(): boolean {
-        return this.selected;
-    }
-    select(): void {
-        this.selected = true; //TODO: is deselection to be handled externally, or here?
-    }
-    deselect(): void {
-        this.selected = false;
-    }
     selectParent(): void {
         if (this.hasParent()) {
             this.deselect();
             this.parent!.select();
         }
     }
-
+    hasChildren(): boolean {
+        return false;
+    }
+    selectFirstChild(): void {
+        //Do nothing, but overridden by anything implementing hasChildren
+    }
     selectNextPeer(): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
