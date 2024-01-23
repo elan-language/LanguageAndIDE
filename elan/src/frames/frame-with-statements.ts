@@ -52,7 +52,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
         for (var frame of this.statements) {
             ss.push(frame.renderAsSource());
         }
-        return ss.join("\n");
+        return ss.join("\r\n");
     }
 
     public addStatement(s : Statement) {

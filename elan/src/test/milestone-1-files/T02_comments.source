@@ -2,5 +2,5 @@
 
 # Comment 1
 main
-  Comment 2
+  # Comment 2
 end main

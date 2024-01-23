@@ -30,9 +30,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}try
-${this.renderStatementsAsSource()}
+        return `${this.indent()}try\r
+${this.renderStatementsAsSource()}\r
 ${this.indent()}end try`;
     }
 } 

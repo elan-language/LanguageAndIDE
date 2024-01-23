@@ -47,6 +47,7 @@ ${this.renderStatementsAsHtml()}
         return `
 procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})
 ${this.renderStatementsAsSource()}
-end procedure`;
+end procedure\r
+`;
     }
 }

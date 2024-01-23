@@ -26,7 +26,8 @@ ${this.renderStatementsAsHtml()}
     public renderAsSource() : string {
         return `main\r
 ${this.renderStatementsAsSource()}\r
-end main`;
+end main\r
+`;
     }
 
 }

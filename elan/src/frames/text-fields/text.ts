@@ -11,7 +11,7 @@ export abstract class Text extends AbstractFrame {
         this.prompt = prompt;
     }
 
-    public content() : string {
+    public contentAsHtml() : string {
        if (this.text) {
         var c = this.replaceAngleBrackets(this.text);
         if (this.useHtmlTags) {
@@ -23,6 +23,14 @@ export abstract class Text extends AbstractFrame {
         return this.prompt;
        }
     }
+
+    public contentAsSource() : string {
+        if (this.text) {
+         return this.text;
+        } else {
+         return this.prompt;
+        }
+     }
 
     private replaceAngleBrackets(c: string) : string {
         return c.replaceAll("<","&lt;").replaceAll(">","&gt;");
@@ -47,7 +55,7 @@ export abstract class Text extends AbstractFrame {
 
 
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.content()}</text>`;
+        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
     }
 
     indent(): string {
@@ -55,7 +63,7 @@ export abstract class Text extends AbstractFrame {
     }
 
     renderAsSource(): string {
-        return this.content();
+        return this.contentAsSource();
     }
 
     enterText(text: string): void {

@@ -33,9 +33,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}
-${this.renderStatementsAsSource()}
+        return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
+${this.renderStatementsAsSource()}\r
 ${this.indent()}end each`;
     }
 } 

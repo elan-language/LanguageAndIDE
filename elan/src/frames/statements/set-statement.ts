@@ -27,7 +27,6 @@ export class SetStatement extends AbstractFrame implements Statement {
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}set ${this.name.renderAsSource()} to ${this.expr.renderAsSource()}`;
+        return `${this.indent()}set ${this.name.renderAsSource()} to ${this.expr.renderAsSource()}`;
     }
 } 

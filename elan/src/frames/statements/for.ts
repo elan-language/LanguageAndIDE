@@ -38,9 +38,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-        return `
-${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}
-${this.renderStatementsAsSource()}
+        return `${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
+${this.renderStatementsAsSource()}\r
 ${this.indent()}end for`;
     }
 } 

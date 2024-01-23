@@ -1,5 +1,6 @@
 # Elan v0.1
 
 main
+  # My first program
   print "Hello World!"
 end main

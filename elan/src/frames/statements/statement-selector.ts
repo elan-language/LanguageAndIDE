@@ -24,6 +24,6 @@ export class StatementSelector extends AbstractFrame implements Statement {
     }
 
     renderAsSource(): string {
-        return ``;
+        return `${this.indent()}`;
     }
 } 

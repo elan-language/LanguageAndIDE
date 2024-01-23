@@ -37,6 +37,9 @@ export function T01_helloWorld() {
 	const main = new MainFrame();
 	file.addGlobal(main);
 	main.removeStatementSelector();
+	const comment = new CommentStatement();
+	comment.text.enterText(`My first program`);
+	main.addStatement(comment);
 	const pr = new Print();
 	pr.expr.enterText(`"Hello World!"`);
 	main.addStatement(pr);
@@ -279,8 +282,8 @@ end function */
 				setResult2.expr.enterText(`a`);
 			if2.addStatement(setResult2);
 			const elif2 = new Else();
-				elif1.hasIf = true;
-				elif2.condition.enterText(`b.isEmpty()`);
+				elif2.hasIf = true;
+				elif2.condition.enterText(`a[0].isBefore(b[0])`);
 			if2.addStatement(elif2);	
 			const setResult3 = new SetStatement();
 				setResult3.name.enterText(`result`);
