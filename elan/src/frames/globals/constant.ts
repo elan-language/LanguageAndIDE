@@ -32,7 +32,7 @@ export class Constant extends AbstractFrame implements Global {
     }
 
     renderAsSource(): string {
-        return `
-    constant ${this.name.renderAsSource()} set to ${this.expr.renderAsHtml()}`;
+        return `constant ${this.name.renderAsSource()} set to ${this.expr.renderAsSource()}\r
+`;
     }
 } 

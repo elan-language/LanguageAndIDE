@@ -3,6 +3,7 @@ import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
+import { singleIndent } from "../helpers";
 
 export class Enum extends AbstractFrame implements Global {
     name: Type = new Type("Name");
@@ -35,9 +36,8 @@ export class Enum extends AbstractFrame implements Global {
     }
 
     renderAsSource(): string {
-        return `
-enum ${this.name.renderAsHtml()}
-${this.values.renderAsSource()}      
+        return `enum ${this.name.renderAsSource()}\r
+${singleIndent()}${this.values.renderAsSource()}\r
 end enum\r
 `;
     }

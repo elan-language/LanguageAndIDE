@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { assertAreEqualByHtml, assertAreEqualBySource } from './testHelpers';
-import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobals, T05_snake, T06_mergeSort, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll } from './testFrameFunctions';
+import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T06_mergeSort, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll } from './testFrameFunctions';
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -29,12 +29,17 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test Main With All Statements Source', (done) => {
 		assertAreEqualBySource(done, "T03_mainWithAllStatements.source", T03_mainWithAllStatements);
 	});
-	test('Test All Globals', (done) => {
-		assertAreEqualByHtml(done, "T04_allGlobals.html", T04_allGlobals);
+	test('Test All Globals Except Class', (done) => {
+		assertAreEqualByHtml(done, "T04_allGlobalsExceptClass.html", T04_allGlobalsExceptClass);
 	});
-/*
-	test('Test Snake', (done) => {
-		assertAreEqualByHtml(done, "T05_snake.html", T05_snake);
+	test('Test All Globals Except Class Source', (done) => {
+		assertAreEqualBySource(done, "T04_allGlobalsExceptClass.source", T04_allGlobalsExceptClass);
+	});
+/*	test('Test Classes', (done) => {
+		assertAreEqualByHtml(done, "T05_classes.html", T05_classes);
+	});
+	test('Test Classes Source', (done) => {
+		assertAreEqualByHtml(done, "T05_classes.source", T05_classes);
 	});*/
 	test('Test Merge Sort', (done) => {
 		assertAreEqualByHtml(done, "T06_mergeSort.html", T06_mergeSort);

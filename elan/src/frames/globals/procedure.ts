@@ -44,9 +44,8 @@ ${this.renderStatementsAsHtml()}
     }
 
     public renderAsSource() : string {
-        return `
-procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})
-${this.renderStatementsAsSource()}
+        return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+${this.renderStatementsAsSource()}\r
 end procedure\r
 `;
     }

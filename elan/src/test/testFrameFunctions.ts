@@ -139,7 +139,7 @@ export function T08_collapseAll(f : FileFrame) {
 	return () => f;
 }
 
-export function T04_allGlobals() {
+export function T04_allGlobalsExceptClass() {
 	const file = new FileFrame();
 	const con = new Constant();
 	con.name.enterText("phi");
@@ -159,6 +159,11 @@ export function T04_allGlobals() {
 	e.name.enterText("Fruit");
 	e.values.enterText("apple, orange, pear");
 	file.addGlobal(e);
+	return file;
+}
+
+export function T05_classes() {
+	const file = new FileFrame();
 	const cl1 = new Class();
 	file.addGlobal(cl1);
 	cl1.name.enterText("Player");
@@ -182,17 +187,9 @@ export function T04_allGlobals() {
 	m1.name.enterText("reset");
 	m1.params.enterText("");
 	m1.returnType.enterText("Player");
-	
 	return file;
 }
 
-export function T05_snake() {
-	resetId();
-	const file = new FileFrame();
-	const main = new MainFrame();
-	file.addGlobal(main);
-	return file;
-}
 /*
 main
   var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
