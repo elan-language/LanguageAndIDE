@@ -6,7 +6,7 @@ import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
 export abstract class FrameWithStatements extends AbstractFrame implements HasChildren {
-    private statements: Array<Statement> = new Array<Statement>();
+    protected statements: Array<Statement> = new Array<Statement>();
 
     constructor() {
         super();   

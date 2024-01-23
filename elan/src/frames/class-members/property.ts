@@ -27,7 +27,7 @@ export class Property extends AbstractFrame implements Member {
     }
 
     renderAsHtml(): string {
-        return `<property class="" id='${this.htmlId}' tabindex="0">${this.modifier()}<keyword>property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
+        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifier()}<keyword>property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
     }
 
     renderAsSource(): string {

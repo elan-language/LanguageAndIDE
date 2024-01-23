@@ -10,7 +10,6 @@ export class AsString extends Function {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>asString()<keyword> as </keyword><type>String</type></top>
 ${this.renderStatementsAsHtml()}
-${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }

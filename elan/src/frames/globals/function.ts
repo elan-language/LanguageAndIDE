@@ -6,10 +6,10 @@ import { Member } from "../class-members/member";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
+import { Statement } from "../statements/statement";
 
 export class Function extends FrameWithStatements implements Global, Member {
 
-    public returnStatement: ReturnStatement = new ReturnStatement();
     public htmlId : string ="";
     public name : Identifier = new Identifier("name");
     public params: ParamList = new ParamList();
@@ -20,10 +20,14 @@ export class Function extends FrameWithStatements implements Global, Member {
         this.htmlId = `func${this.nextId()}`;
         this.multiline = true;
     }
-    
+
+    get returnStatement() {
+        return this.statements[this.statements.length -1] as ReturnStatement;
+    }
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
-        this.returnStatement.initialize(frameMap, this);
+        this.addFixedStatement(new ReturnStatement);
         this.name.initialize(frameMap, this);
         this.params.initialize(frameMap, this);
         this.returnType.initialize(frameMap, this);
@@ -32,11 +36,24 @@ export class Function extends FrameWithStatements implements Global, Member {
     isGlobal = true;
     isMember = true;
 
+    public override addStatement(s: Statement): void {
+        s.initialize(this.frameMap, this);
+        const rs = this.statements.pop();
+        this.statements.push(s);
+        if (rs) {
+            this.statements.push(rs);
+        }
+    }
+
+    public addFixedStatement(s: Statement): void {
+        s.initialize(this.frameMap, this);
+        this.statements.push(s);
+    }
+
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}</top>
 ${this.renderStatementsAsHtml()}
-${this.returnStatement.renderAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }
