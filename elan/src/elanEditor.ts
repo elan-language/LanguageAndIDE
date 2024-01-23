@@ -8,7 +8,7 @@ import { setCurrentElanFile } from './extension';
 
 interface editorEvent {
 	type: "click" | "dblclick" | "key"
-	target: "frame" | "window" | "input" | "expand"
+	target: "frame" | "window" | "input" | "expand" | "text"
 	key?: string,
 	modKey?: "Control" | undefined,
 	id?: string
@@ -132,6 +132,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.handleFrameKey(e);
 				break;
 			}
+			case 'text': {
+				this.	handleTextKey(e);
+				break;
+			}
 		}
 	}
 
@@ -175,6 +179,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				if (e.modKey === "Control") {
 					this.frameModel?.expandByID(e.id!);
 				}
+				break;
+			}
+		}
+	}
+
+	private handleTextKey(e: editorEvent) {
+		switch (e.key) {
+			case 'Tab': {
+				this.	frameModel?.selectByID(e.id!);
 				break;
 			}
 		}

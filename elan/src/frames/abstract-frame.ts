@@ -3,6 +3,7 @@ import { HasChildren } from "./has-children";
 import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
+   
     private _frameMap?: Map<string, Frame>;
     private parent?: Frame;
 
@@ -129,4 +130,6 @@ export abstract class AbstractFrame implements Frame {
     expand(): void {
         this.collapsed = false;
     }
+
+   
 }

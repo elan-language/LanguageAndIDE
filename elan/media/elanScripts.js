@@ -50,7 +50,9 @@
 				};
 				debug(`frame ${id} keydown ${event.key}`);
 				vscode.postMessage(msg);
+				event.preventDefault();
 				event.stopPropagation();
+
 			});
 
 			frame.addEventListener('click', event => {
@@ -61,6 +63,7 @@
 				};
 				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
+				event.preventDefault();
 				event.stopPropagation();
 			});
 
@@ -72,16 +75,17 @@
 				};
 				debug(`frame ${id} dblclick`);
 				vscode.postMessage(msg);
+				event.preventDefault();
 				event.stopPropagation();
 			});
 		}
 
 		const pluses = document.getElementsByTagName('expand');
 
-		for (var plus of pluses) {
-			const id = plus.parentElement.parentElement.id;
+		for (var field of pluses) {
+			const id = field.parentElement.parentElement.id;
 
-			plus.addEventListener('click', event => {
+			field.addEventListener('click', event => {
 				const msg = {
 					type: 'click',
 					target: "expand",
@@ -89,7 +93,33 @@
 				};
 				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
+				event.preventDefault();
 				event.stopPropagation();
+			});
+		}
+
+		const textFields = [...document.querySelectorAll('text[tabindex]')];
+       
+		for (var field of textFields) {
+			const index = textFields.indexOf(field);
+			const nextIndex =  index === textFields.length - 1 ? index :  index + 1;
+			const previousIndex =  index === 0 ? index :  index - 1;
+			const nextId = textFields[nextIndex].id;
+			const previousId = textFields[previousIndex].id;
+			
+			field.addEventListener('keydown', event => {
+				if (event.key === "Tab") {
+					const msg = {
+						type: 'key',
+						target: "text",
+						key: event.key,
+						id: event.shiftKey ? previousId : nextId
+					};
+					debug(`frame ${nextId} tab`);
+					vscode.postMessage(msg);
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 		}
 
