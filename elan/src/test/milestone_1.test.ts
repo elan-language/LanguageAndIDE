@@ -7,7 +7,7 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 
 	test('Test Empty File', (done) => {
 		assertAreEqualByHtml(done, "T00_emptyFile.html", T00_emptyFile);
-	});
+	}); 
 	test('Test Comments', (done) => {
 		assertAreEqualByHtml(done, "T02_comments.html", T02_comments);
 	});
