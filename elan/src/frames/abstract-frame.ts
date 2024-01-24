@@ -70,6 +70,10 @@ export abstract class AbstractFrame implements Frame {
         return this.selected;
     }
 
+    isMultiline(): boolean {
+        return this.multiline;
+    }
+
     select(withFocus : boolean,  multiSelect?: boolean): void {
         this.selected = true; //TODO: is deselection to be handled externally, or here?
         this.focused = withFocus;
