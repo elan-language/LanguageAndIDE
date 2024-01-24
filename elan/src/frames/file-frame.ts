@@ -92,8 +92,10 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
-    selectByID(id: string) {
-        this.deselectAll();
+    selectByID(id: string, multiSelect?: boolean) {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
         const toSelect = this.frameMap.get(id);
         toSelect?.select();
     }

@@ -26,6 +26,9 @@
 		if (e.ctrlKey){
 			return "Control";
 		}
+		if (e.shiftKey){
+			return "Shift";
+		}
 		return undefined;
 	}
 
@@ -64,6 +67,21 @@
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
+			});
+
+			frame.addEventListener('mousedown', event => {
+				// mousedown rather than click as click does not seem to pick up shift/ctrl click
+				if (event.button === 0 && event.shiftKey) { // left button only
+					const msg = {
+						type: 'click',
+						target: "frame",
+						id: id,
+						modKey: getModKey(event)
+					};
+					vscode.postMessage(msg);
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 
 			frame.addEventListener('dblclick', event => {
