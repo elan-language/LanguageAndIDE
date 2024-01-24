@@ -3,10 +3,11 @@ code {
 }
 
 * {
-    font-family: monospace;
+    color: black;
+    font-family: consolas;
+    font-size: 11pt;
     background-color: white;
     border-color: white;
-    color: black;
 }
 
 *:focus {
@@ -23,7 +24,7 @@ keyword {
 }
 
 type {
-    color: turquoise;
+    color: purple;
 }
 
 comment, header {
