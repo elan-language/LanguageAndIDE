@@ -7,7 +7,7 @@ export interface Frame {
     initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
 
     isSelected() : boolean;
-    select(): void;
+    select(multiSelect?: boolean): void;
     deselect(): void;
 
     hasParent(): boolean;

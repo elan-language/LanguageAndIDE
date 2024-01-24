@@ -5,4 +5,5 @@ export interface HasChildren extends Frame {
     selectLastChild(): void; //Cursor right
     selectChildAfter(child: Frame): void;
     selectChildBefore(child: Frame): void;
+    selectChildRange(): void;
 }
