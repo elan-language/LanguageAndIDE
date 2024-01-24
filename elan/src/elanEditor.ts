@@ -136,6 +136,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.handleTextKey(e);
 				break;
 			}
+			case 'window': {
+				this.handleWindowKey(e);
+				break;
+			}
 		}
 	}
 
@@ -188,6 +192,27 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		switch (e.key) {
 			case 'Tab': {
 				this.frameModel?.selectByID(e.id!);
+				break;
+			}
+		}
+	}
+
+	private handleWindowKey(e: editorEvent) {
+		switch (e.key) {
+			case 'Home': {
+				this.frameModel?.selectFirst();
+				break;
+			}
+			case 'ArrowDown': {
+				this.frameModel?.selectFirst();
+				break;
+			}
+			case 'ArrowRight': {
+				this.frameModel?.selectFirst();
+				break;
+			}
+			case 'End': {
+				this.frameModel?.selectLast();
 				break;
 			}
 		}

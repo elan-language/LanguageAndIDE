@@ -213,4 +213,12 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         const frame = this.frameMap.get(id);
         frame?.selectNextPeer();
     }
+
+    selectFirst(){
+        this.globals[0].select();
+    }
+
+    selectLast() {
+        this.globals[this.globals.length - 1].select();
+    }
 }
