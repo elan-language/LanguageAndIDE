@@ -18,7 +18,7 @@ export class Throw extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select();
+        this.text.select(true);
         return true;
     }
 

@@ -35,27 +35,27 @@ export function singleIndent() {
     return "  ";
 }
 
-export function safeSelectAfter(toSelect: Array<{ select: () => void }>, index: number) {
+export function safeSelectAfter(toSelect: Array<{ select: (withFocus: boolean) => void }>, index: number) {
     if (index === -1) {
         return;
     }
     if (index < toSelect.length - 1) {
-        toSelect[index + 1].select();
+        toSelect[index + 1].select(true);
     }
     else {
-        toSelect[toSelect.length - 1].select();
+        toSelect[toSelect.length - 1].select(true);
     }
 }
 
-export function safeSelectBefore(toSelect: Array<{ select: () => void }>, index: number) {
+export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean) => void }>, index: number) {
     if (index === -1) {
         return;
     }
     if (index > 0) {
-        toSelect[index - 1].select();
+        toSelect[index - 1].select(true);
     }
     else {
-        toSelect[0].select();
+        toSelect[0].select(true);
     }
 }
 
@@ -66,7 +66,7 @@ export function selectChildRange(ff: Array<Frame>): void {
         const lastSelectedIndex = ff.indexOf(selected[selected.length - 1]);
 
         for (var i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
-            ff[i].select();
+            ff[i].select(false);
         }
     }
 }

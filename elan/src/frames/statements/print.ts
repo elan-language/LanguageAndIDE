@@ -18,7 +18,7 @@ export class Print extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.expr.select();
+        this.expr.select(true);
         return true;
     }
 

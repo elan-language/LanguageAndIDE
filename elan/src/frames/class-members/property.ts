@@ -23,7 +23,7 @@ export class Property extends AbstractFrame implements Member {
     isMember = true;
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
 

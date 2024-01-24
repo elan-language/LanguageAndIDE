@@ -15,7 +15,7 @@ export class Call extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.proc.select();
+        this.proc.select(true);
         return true;
     }
 

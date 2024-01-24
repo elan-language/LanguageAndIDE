@@ -7,8 +7,12 @@ export interface Frame {
     initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
 
     isSelected() : boolean;
-    select(multiSelect?: boolean): void;
+    select(withFocus: boolean, multiSelect?: boolean): void;
     deselect(): void;
+
+    isFocused() : boolean;
+    focus(): void;
+    defocus(): void;
 
     hasParent(): boolean;
     setParent(parent: Frame) : void;

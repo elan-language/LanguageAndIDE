@@ -22,22 +22,24 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
     }
     selectFirstChild(): boolean {
         if (this.statements.length > 0){
-            this.statements[0].select();
+            this.statements[0].select(true);
             return true;
         }
         return false;
     } 
     selectLastChild(): void {
-        this.statements[this.statements.length - 1].select();
+        this.statements[this.statements.length - 1].select(true);
     }
     selectChildAfter(child: Frame): void {
         if (isStatement(child)) {
+            child.defocus();
             const index = this.statements.indexOf(child);
             safeSelectAfter(this.statements, index);
         }
     }
     selectChildBefore(child: Frame): void {
         if (isStatement(child)) {
+            child.defocus();
             const index = this.statements.indexOf(child);
             safeSelectBefore(this.statements, index);
         }

@@ -3,6 +3,7 @@ import { HasChildren } from "./has-children";
 import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
+    
 
     private _frameMap?: Map<string, Frame>;
     private parent?: Frame;
@@ -26,6 +27,7 @@ export abstract class AbstractFrame implements Frame {
     protected htmlId: string = "";
     protected multiline: boolean = false;
     private selected: boolean = false;
+    private focused: boolean = false;
     private collapsed: boolean = false;
     private _classes = new Array<string>;
 
@@ -40,6 +42,7 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.multiline, "multiline");
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
+        this.pushClass(this.focused, "focused");
     };
 
     protected cls(): string {
@@ -67,8 +70,9 @@ export abstract class AbstractFrame implements Frame {
         return this.selected;
     }
 
-    select(multiSelect?: boolean): void {
+    select(withFocus : boolean,  multiSelect?: boolean): void {
         this.selected = true; //TODO: is deselection to be handled externally, or here?
+        this.focused = withFocus;
         if (multiSelect) {
             if (this.hasParent()) {
                 var p = this.parent as HasChildren;
@@ -79,6 +83,7 @@ export abstract class AbstractFrame implements Frame {
 
     deselect(): void {
         this.selected = false;
+        this.focused = false;
     }
 
     hasParent(): boolean {
@@ -96,7 +101,7 @@ export abstract class AbstractFrame implements Frame {
     selectParent(): void {
         if (this.hasParent()) {
             this.deselect();
-            this.parent!.select();
+            this.parent!.select(true);
         }
     }
 
@@ -153,5 +158,17 @@ export abstract class AbstractFrame implements Frame {
 
     selectFirstText(): boolean {
         return false;
+    }
+
+    isFocused(): boolean {
+        return this.focused;
+    }
+
+    focus(): void {
+        this.focused = true;
+    }
+
+    defocus(): void {
+        this.focused = false;
     }
 }

@@ -32,20 +32,20 @@ export class Class extends AbstractFrame implements Global, HasChildren {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
 
     selectFirstChild(): boolean {
         if (this.members.length > 0){
-            this.members[0].select();
+            this.members[0].select(true);
             return true;
         }
         return false;
     }
 
     selectLastChild(): void {
-        this.members[this.members.length - 1].select();
+        this.members[this.members.length - 1].select(true);
     }
 
     selectChildAfter(child: Frame): void {

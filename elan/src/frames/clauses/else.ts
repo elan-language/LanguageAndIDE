@@ -19,7 +19,7 @@ export class Else extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select();
+        this.condition.select(true);
         return true;
     }
 

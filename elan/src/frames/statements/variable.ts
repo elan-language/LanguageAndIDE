@@ -22,7 +22,7 @@ export class Variable extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
 
