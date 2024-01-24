@@ -175,6 +175,8 @@ export function T05_classes() {
 	p1.type.enterText("Int");
 
 	const cl2 = new Class();
+	cl2.inherits = true;
+	cl2.superClasses.enterText("Foo, Bar");
 	file.addGlobal(cl2);
 	cl2.name.enterText("Card");
 	cl2.immutable = true;

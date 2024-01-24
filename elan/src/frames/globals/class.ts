@@ -85,10 +85,10 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         return `${this.abstract ? "abstract " : ""}${this.immutable ? "immutable " : ""}`;
     }
     private inhertanceAsHtml(): string {
-        return `${this.inherits ? " inherits " + this.superClasses.contentAsHtml() : ""}`;
+        return `${this.inherits ? " inherits " + this.superClasses.renderAsHtml() : ""}`;
     }
     private inhertanceAsSource(): string {
-        return `${this.inherits ? " inherits " + this.superClasses.contentAsSource() : ""}`;
+        return `${this.inherits ? " inherits " + this.superClasses.renderAsSource() : ""}`;
     }
 
     public renderAsHtml(): string {

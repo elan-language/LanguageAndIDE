@@ -15,7 +15,7 @@ class Player
   end function
 end class
 
-immutable class Card
+immutable class Card inherits Foo, Bar
   constructor(parameter definitions)
     
   end constructor
