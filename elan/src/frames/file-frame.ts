@@ -3,7 +3,7 @@ import { Role } from "./class-members/member";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isMember, isStatement, nlS, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
+import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
