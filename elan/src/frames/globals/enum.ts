@@ -23,6 +23,11 @@ export class Enum extends AbstractFrame implements Global {
         this.values.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
+
     renderAsHtml(): string {
         return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>

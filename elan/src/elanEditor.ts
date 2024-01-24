@@ -173,6 +173,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.frameModel?.selectLastByID(e.id!);
 				break;
 			}
+			case 'Tab': {
+				this.frameModel?.selectNextTextByID(e.id!);
+				break;
+			}
 			case 'o': {
 				if (e.modKey === "Control") {
 					this.frameModel?.expandCollapseByID(e.id!);

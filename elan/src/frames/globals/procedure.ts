@@ -27,6 +27,11 @@ export class Procedure extends FrameWithStatements implements Global, Member {
     isGlobal = true;
     isMember = true;
 
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
+
     currentRole(): Role {
         return this.getParent() instanceof FileFrame ? Role.global : Role.member;
     }

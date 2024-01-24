@@ -53,8 +53,12 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         return true;
     }
     
-    selectFirstChild(): void {
-        this.globals[0].select();
+    selectFirstChild(): boolean {
+        if (this.globals.length > 0){
+            this.globals[0].select();
+            return true;
+        }
+        return false;
     }
 
     selectLastChild(): void {
@@ -161,15 +165,21 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectParentByID(id: string) {
-        this.deselectAll();
         const frame = this.frameMap.get(id);
-        frame?.selectParent();
+        const parent = frame?.getParent();
+        if (parent !== this){
+            this.deselectAll();
+            parent?.select();
+        }
+        // leave selection as is
     }
 
     selectFirstChildByID(id: string) {
         this.deselectAll();
         const frame = this.frameMap.get(id);
-        frame?.selectFirstChild();
+        if (!frame?.selectFirstChild()) {
+            frame?.select();
+        }
     }
 
     selectFirstByID(id: string) {
@@ -211,7 +221,9 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     selectNextTextByID(id: string) {
         this.deselectAll();
         const frame = this.frameMap.get(id);
-        frame?.selectNextPeer();
+        if (!frame?.selectFirstText()){
+            frame?.select();
+        }
     }
 
     selectFirst(){

@@ -17,6 +17,11 @@ export class Catch extends AbstractFrame implements Statement {
         this.variable.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.variable.select();
+        return true;
+    }
+
     isStatement = true;
 
     renderAsHtml(): string {

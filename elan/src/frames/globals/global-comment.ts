@@ -19,6 +19,11 @@ export class GlobalComment extends AbstractFrame implements Global {
         this.text.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.text.select();
+        return true;
+    }
+
     renderAsHtml(): string {
         return `<comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"># ${this.text.renderAsHtml()}</comment>`;
     }

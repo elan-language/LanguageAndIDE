@@ -17,6 +17,11 @@ export class Constant extends AbstractFrame implements Global {
 
     isGlobal = true;
 
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.name.initialize(frameMap, this);

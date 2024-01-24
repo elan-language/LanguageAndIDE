@@ -18,6 +18,11 @@ export class Constructor extends FrameWithStatements implements Member {
         this.params.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.params.select();
+        return true;
+    }
+
     isMember = true;
 
     currentRole(): Role {

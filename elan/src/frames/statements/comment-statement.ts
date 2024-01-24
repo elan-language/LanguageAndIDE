@@ -15,6 +15,11 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     isStatement = true;
     isMember = true;
 
+    public override selectFirstText(): boolean {
+        this.text.select();
+        return true;
+    }
+
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.text.initialize(frameMap, this);
