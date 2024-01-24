@@ -5,7 +5,6 @@ export enum Role {
     member
 }
 
-
 export interface Member extends AbstractFrame {
     isMember : boolean;
     currentRole() : Role;

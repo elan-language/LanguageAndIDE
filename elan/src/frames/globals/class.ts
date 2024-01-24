@@ -66,8 +66,11 @@ export class Class extends AbstractFrame implements Global, HasChildren {
 
     isGlobal = true;
 
-    private modifiers(): string {
+    private modifiersAsHtml(): string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
+    }
+    private modifiersAsSource(): string {
+        return `${this.abstract ? "abstract " : ""}${this.immutable ? "immutable " : ""}`;
     }
 
     public renderAsHtml(): string {
@@ -77,7 +80,7 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         }
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiers()}<keyword>class </keyword>${this.name.renderAsHtml()}</top>
+<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}</top>
 ${members}
 <keyword>end class</keyword>
 </classDef>`;
@@ -90,13 +93,13 @@ ${members}
     public renderAsSource(): string {
         const ss: Array<string> = [];
         for (var m of this.members) {
-            ss.push(m.renderAsSource());
+            var s = m.renderAsSource();
+            ss.push(s);
         }
         const members = ss.join("\r\n");
-        return `class ${this.name.renderAsSource()}\r
+        return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}\r
 ${members}\r
-end class\r
-`;
+end class\r\n`;
     }
 
     private addFixedMember(m: Member) {

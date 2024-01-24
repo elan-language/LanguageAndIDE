@@ -1,12 +1,12 @@
 import { Constant } from "../frames/globals/constant";
 import { FileFrame } from "../frames/file-frame";
-import { Frame } from "../frames/frame";
 import { resetId } from "../frames/helpers";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
 import { Variable } from "../frames/statements/variable";
 import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
+import { FunctionMethod } from "../frames/class-members/function-method";
 import { Enum } from "../frames/globals/enum";
 import { Class } from "../frames/globals/class";
 import { Property } from "../frames/class-members/property";
@@ -164,6 +164,7 @@ export function T04_allGlobalsExceptClass() {
 
 export function T05_classes() {
 	const file = new FileFrame();
+
 	const cl1 = new Class();
 	file.addGlobal(cl1);
 	cl1.name.enterText("Player");
@@ -172,6 +173,7 @@ export function T05_classes() {
 	cl1.addMember(p1);
 	p1.name.enterText("score");
 	p1.type.enterText("Int");
+
 	const cl2 = new Class();
 	file.addGlobal(cl2);
 	cl2.name.enterText("Card");
@@ -182,7 +184,7 @@ export function T05_classes() {
 	p2.name.enterText("value");
 	p2.type.enterText("Int");
 	p2.private = true;
-	const m1 = new Function();
+	const m1 = new FunctionMethod();
 	cl2.addMember(m1);
 	m1.name.enterText("reset");
 	m1.params.enterText("");

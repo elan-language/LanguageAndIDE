@@ -26,16 +26,18 @@ export class Property extends AbstractFrame implements Member {
         return Role.member;
     }
 
-    private modifier(): string {
+    private modifierAsHtml(): string {
         return this.private ? `<keyword>private </keyword>`: "";
+    }
+    private modifierAsSource(): string {
+        return this.private ? `private `: "";
     }
 
     renderAsHtml(): string {
-        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifier()}<keyword>property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
+        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
     }
 
     renderAsSource(): string {
-        return `${this.indent()}property ${this.name.renderAsSource()} ${this.type.renderAsSource()}\r
-        `;
+        return `${this.indent()}${this.modifierAsSource()}property ${this.name.renderAsSource()} ${this.type.renderAsSource()}\r\n`;
     }
 } 

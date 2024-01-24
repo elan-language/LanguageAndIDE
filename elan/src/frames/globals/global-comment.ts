@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
-import { nlS } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 

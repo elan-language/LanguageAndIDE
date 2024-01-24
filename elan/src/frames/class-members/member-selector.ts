@@ -28,6 +28,6 @@ export class MemberSelector extends AbstractFrame implements Member {
     }
 
     renderAsSource(): string {
-        return `${singleIndent()}`;
+        return `${singleIndent()}member\r\n`;
     }
 } 

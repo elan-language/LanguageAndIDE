@@ -1,7 +1,6 @@
-import { Function } from "../globals/function";
-import { singleIndent } from "../helpers";
+import { FunctionMethod } from "./function-method";
 
-export class AsString extends Function {
+export class AsString extends FunctionMethod {
 
     constructor() {
         super();
@@ -15,9 +14,9 @@ ${this.renderStatementsAsHtml()}
 </function>`;
     }
 
-    public renderAsSource(): string {
-        return `${singleIndent()}function asString() as String\r
+    public renderAsSource() : string {
+        return `${this.indent()}function asString() as String\r
 ${this.renderStatementsAsSource()}\r
-${singleIndent()}end function`;  // No new line as this is always last global before 'end class'
+${this.indent()}end function`;// No new line as 'asString' is always last global before 'end class'
     }
 }
