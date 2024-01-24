@@ -129,31 +129,10 @@
 			});
 		}
 
-		const input = /** @type {HTMLElement} */ (document.querySelector('input.live'));
 
-        if (input){
-			input.focus();
-			input.selectionStart = input.selectionEnd = input.value.length;
-
-			input.addEventListener('keydown', event => {
-				const text = event.key;
-				const msg = {
-					type: 'key',
-					target: "input",
-					key: text
-				};
-				vscode.postMessage(msg);
-				event.stopPropagation();
-			});
-			input.addEventListener('click', event => {
-				event.stopPropagation();
-			});
-		}
-		else {
-			const selected = document.querySelector('.selected');
-			if (selected) {
-				selected.focus();
-			}
+		const selected = document.querySelector('.selected');
+		if (selected) {
+			selected.focus();
 		}
 	}
 
@@ -175,20 +154,6 @@
 		}
 	});
 
-	// spike new frames
-	window.addEventListener('click', event => {
-		const msg = {
-			type: 'click',
-			target: "window"
-		};
-		vscode.postMessage(msg);
-		event.stopPropagation();
-	});
-
-	function isArrowKey(k) {
-		return k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight";
-	}
-
 	window.addEventListener('keydown', event => {
 
 		const msg = {
@@ -198,10 +163,6 @@
 		};
 		vscode.postMessage(msg);
 		event.stopPropagation();
-
-		if (event.ctrlKey && isArrowKey(event.key)) {
-			handleCtrlArrow(event.key);
-		}
 	});
 
 
