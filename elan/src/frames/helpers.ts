@@ -58,3 +58,16 @@ export function safeSelectBefore(toSelect: Array<{ select: () => void }>, index:
         toSelect[0].select();
     }
 }
+
+export function selectChildRange(ff: Array<Frame>): void {
+    const selected = ff.filter(f => f.isSelected());
+    if (selected.length > 1) {
+        const firstSelectedIndex = ff.indexOf(selected[0]);
+        const lastSelectedIndex = ff.indexOf(selected[selected.length - 1]);
+
+        for (var i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
+            ff[i].select();
+        }
+    }
+}
+

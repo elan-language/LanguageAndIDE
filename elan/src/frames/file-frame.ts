@@ -3,7 +3,7 @@ import { Role } from "./class-members/member";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isMember, isStatement, nlS, resetId, safeSelectAfter, safeSelectBefore } from "./helpers";
+import { isGlobal, isMember, isStatement, nlS, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
 
@@ -52,9 +52,11 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     hasChildren(): boolean {
         return true;
     }
+    
     selectFirstChild(): void {
         this.globals[0].select();
     }
+
     selectLastChild(): void {
         this.globals[this.globals.length - 1].select();
     }
@@ -70,6 +72,10 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             const index = this.globals.indexOf(child);
             safeSelectBefore(this.globals, index);
         }
+    }
+
+    selectChildRange(): void {
+        selectChildRange(this.globals);
     }
 
     deselectAll() {
@@ -97,7 +103,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             this.deselectAll();
         }
         const toSelect = this.frameMap.get(id);
-        toSelect?.select();
+        toSelect?.select(multiSelect);
     }
 
     expandCollapseByID(id: string) {

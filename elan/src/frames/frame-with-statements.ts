@@ -1,7 +1,7 @@
 import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
-import { isStatement, safeSelectAfter, safeSelectBefore } from "./helpers";
+import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -37,6 +37,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
             const index = this.statements.indexOf(child);
             safeSelectBefore(this.statements, index);
         }
+    }
+
+    selectChildRange(): void {
+        selectChildRange(this.statements);
     }
 
     protected renderStatementsAsHtml() : string {

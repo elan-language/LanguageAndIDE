@@ -3,7 +3,7 @@ import { HasChildren } from "./has-children";
 import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
-   
+
     private _frameMap?: Map<string, Frame>;
     private parent?: Frame;
 
@@ -29,8 +29,8 @@ export abstract class AbstractFrame implements Frame {
     private collapsed: boolean = false;
     private _classes = new Array<string>;
 
-    protected pushClass(flag: boolean, cls : string){
-        if (flag){
+    protected pushClass(flag: boolean, cls: string) {
+        if (flag) {
             this._classes.push(cls);
         }
     }
@@ -55,23 +55,32 @@ export abstract class AbstractFrame implements Frame {
 
     indent(): string {
         if (this.hasParent()) {
-            return this.getParent()?.indent()+singleIndent();
+            return this.getParent()?.indent() + singleIndent();
         } else {
             return singleIndent();
         }
     }
 
-    abstract renderAsSource(): string ;
+    abstract renderAsSource(): string;
 
     isSelected(): boolean {
         return this.selected;
     }
-    select(): void {
+
+    select(multiSelect?: boolean): void {
         this.selected = true; //TODO: is deselection to be handled externally, or here?
+        if (multiSelect) {
+            if (this.hasParent()) {
+                var p = this.parent as HasChildren;
+                p.selectChildRange();
+            }
+        }
     }
+
     deselect(): void {
         this.selected = false;
     }
+
     hasParent(): boolean {
         return !!this.parent;
     }
@@ -83,53 +92,61 @@ export abstract class AbstractFrame implements Frame {
     getParent(): Frame | undefined {
         return this.parent;
     }
+
     selectParent(): void {
         if (this.hasParent()) {
             this.deselect();
             this.parent!.select();
         }
     }
+
     hasChildren(): boolean {
         return false;
     }
+
     selectFirstChild(): void {
         //Do nothing, but overridden by anything implementing hasChildren
     }
+
     selectNextPeer(): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
             p.selectChildAfter(this);
         }
     }
+
     selectPreviousPeer(): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
             p.selectChildBefore(this);
         }
     }
+
     selectFirstPeer(): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
             p.selectFirstChild();
         }
     }
+
     selectLastPeer(): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
             p.selectLastChild();
         }
     }
+
     isCollapsed(): boolean {
         return this.collapsed;
     }
+
     collapse(): void {
         if (this.multiline) {
             this.collapsed = true;
         }
     }
+
     expand(): void {
         this.collapsed = false;
     }
-
-   
 }

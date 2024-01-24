@@ -7,7 +7,7 @@ import { AsString } from "../class-members/as-string";
 import { MemberSelector } from "../class-members/member-selector";
 import { Frame } from "../frame";
 import { HasChildren } from "../has-children";
-import { isMember, safeSelectAfter, safeSelectBefore } from "../helpers";
+import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 
 
 export class Class extends AbstractFrame implements Global, HasChildren {
@@ -50,6 +50,10 @@ export class Class extends AbstractFrame implements Global, HasChildren {
             const index = this.members.indexOf(child);
             safeSelectBefore(this.members, index);
         }
+    }
+
+    selectChildRange(): void {
+        selectChildRange(this.members);
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
