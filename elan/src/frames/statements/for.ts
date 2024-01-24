@@ -30,7 +30,7 @@ export class For extends FrameWithStatements implements Statement {
     isStatement = true;
 
     public override selectFirstText(): boolean {
-        this.variable.select();
+        this.variable.select(true);
         return true;
     }
 

@@ -55,14 +55,14 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     
     selectFirstChild(): boolean {
         if (this.globals.length > 0){
-            this.globals[0].select();
+            this.globals[0].select(true);
             return true;
         }
         return false;
     }
 
     selectLastChild(): void {
-        this.globals[this.globals.length - 1].select();
+        this.globals[this.globals.length - 1].select(true);
     }
 
     selectChildAfter(child: Frame): void {
@@ -90,6 +90,14 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
+    defocusAll() {
+        for (const f of this.frameMap.values()) {
+            if (f.isFocused()) {
+                f.defocus();
+            }
+        }
+    }
+
     expandAll() {
         for (const f of this.frameMap.values()) {
             f.expand();
@@ -106,8 +114,11 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         if (!multiSelect) {
             this.deselectAll();
         }
+        else {
+            this.defocusAll();
+        }
         const toSelect = this.frameMap.get(id);
-        toSelect?.select(multiSelect);
+        toSelect?.select(true, multiSelect);
     }
 
     expandCollapseByID(id: string) {
@@ -140,14 +151,24 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         toExpand?.expand();
     }
 
-    selectNextPeerByID(id: string) {
-        this.deselectAll();
+    selectNextPeerByID(id: string, multiSelect? : boolean) {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
+        else {
+            this.defocusAll();
+        }
         const frame = this.frameMap.get(id);
         frame?.selectNextPeer();
     }
 
-    selectPreviousPeerByID(id: string) {
-        this.deselectAll();
+    selectPreviousPeerByID(id: string, multiSelect? : boolean) {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
+        else {
+            this.defocusAll();
+        }
         const frame = this.frameMap.get(id);
         frame?.selectPreviousPeer();
     }
@@ -169,7 +190,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         const parent = frame?.getParent();
         if (parent !== this){
             this.deselectAll();
-            parent?.select();
+            parent?.select(true);
         }
         // leave selection as is
     }
@@ -178,7 +199,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.deselectAll();
         const frame = this.frameMap.get(id);
         if (!frame?.selectFirstChild()) {
-            frame?.select();
+            frame?.select(true);
         }
     }
 
@@ -222,15 +243,15 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.deselectAll();
         const frame = this.frameMap.get(id);
         if (!frame?.selectFirstText()){
-            frame?.select();
+            frame?.select(true);
         }
     }
 
     selectFirst(){
-        this.globals[0].select();
+        this.globals[0].select(true);
     }
 
     selectLast() {
-        this.globals[this.globals.length - 1].select();
+        this.globals[this.globals.length - 1].select(true);
     }
 }

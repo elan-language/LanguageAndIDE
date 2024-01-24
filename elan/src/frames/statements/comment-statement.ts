@@ -16,7 +16,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     isMember = true;
 
     public override selectFirstText(): boolean {
-        this.text.select();
+        this.text.select(true);
         return true;
     }
 

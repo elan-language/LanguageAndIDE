@@ -18,7 +18,7 @@ export class MemberSelector extends AbstractFrame implements Member {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select();
+        this.text.select(true);
         return true;
     }
 

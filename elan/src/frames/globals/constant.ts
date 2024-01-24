@@ -18,7 +18,7 @@ export class Constant extends AbstractFrame implements Global {
     isGlobal = true;
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
 

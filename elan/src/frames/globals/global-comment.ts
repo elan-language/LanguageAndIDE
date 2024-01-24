@@ -20,7 +20,7 @@ export class GlobalComment extends AbstractFrame implements Global {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select();
+        this.text.select(true);
         return true;
     }
 

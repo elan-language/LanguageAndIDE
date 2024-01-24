@@ -18,7 +18,7 @@ export class Catch extends AbstractFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.variable.select();
+        this.variable.select(true);
         return true;
     }
 

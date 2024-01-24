@@ -20,7 +20,7 @@ export class IfThen extends FrameWithStatements implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select();
+        this.condition.select(true);
         return true;
     }
 

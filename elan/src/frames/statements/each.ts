@@ -24,7 +24,7 @@ export class Each extends FrameWithStatements implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.variable.select();
+        this.variable.select(true);
         return true;
     }
 

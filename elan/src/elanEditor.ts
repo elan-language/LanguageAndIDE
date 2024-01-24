@@ -150,11 +150,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'ArrowUp': {
-				this.frameModel?.selectPreviousPeerByID(e.id!);
+				this.frameModel?.selectPreviousPeerByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 			case 'ArrowDown': {
-				this.frameModel?.selectNextPeerByID(e.id!);
+				this.frameModel?.selectNextPeerByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 			case 'ArrowLeft': {

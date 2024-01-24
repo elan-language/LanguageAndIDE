@@ -24,7 +24,7 @@ export class Enum extends AbstractFrame implements Global {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
 

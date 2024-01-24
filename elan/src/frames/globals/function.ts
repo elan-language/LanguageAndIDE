@@ -35,7 +35,7 @@ export class Function extends FrameWithStatements implements Global, Member {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select();
+        this.name.select(true);
         return true;
     }
     

@@ -130,9 +130,9 @@
 		}
 
 
-		const selected = document.querySelector('.selected');
-		if (selected) {
-			selected.focus();
+		const focused = document.querySelector('.focused');
+		if (focused) {
+			focused.focus();
 		}
 	}
 
