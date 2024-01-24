@@ -14,6 +14,8 @@ export interface Frame {
     focus(): void;
     defocus(): void;
 
+    isMultiline() : boolean;
+
     hasParent(): boolean;
     setParent(parent: Frame) : void;
     getParent() : Frame | undefined;

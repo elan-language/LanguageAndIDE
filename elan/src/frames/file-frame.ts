@@ -131,9 +131,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
-    expandCollapseAllByID(id: string) {
-        const currentFrame = this.frameMap.get(id);
-        if (currentFrame?.isCollapsed()) {
+    expandCollapseAllByFrame(f?: Frame) {
+        if (f?.isCollapsed()) {
             this.expandAll();
         }
         else {
@@ -141,14 +140,20 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
-    expandCollapseAll() {
-        const firstFrame = this.globals[0];
-        if (firstFrame?.isCollapsed()) {
-            this.expandAll();
+    expandCollapseAllByID(id: string) {
+        const currentFrame = this.frameMap.get(id);
+        if (currentFrame?.isMultiline()) {
+            this.expandCollapseAllByFrame(currentFrame);
         }
         else {
-            this.collapseAll();
+            this.expandCollapseAll();
         }
+    }
+
+    expandCollapseAll() {
+        const allMultilines = this.globals.filter(g => g.isMultiline());
+        const firstFrame = allMultilines[0];
+        this.expandCollapseAllByFrame(firstFrame);
     }
 
     collapseByID(id: string) {
