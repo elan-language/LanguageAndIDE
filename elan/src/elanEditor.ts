@@ -226,7 +226,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				<title>Elan Editor</title>
 			</head>
 			<body>
-				<code></code>
+	            <div class="elan-code"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

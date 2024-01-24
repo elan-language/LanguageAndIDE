@@ -9,19 +9,8 @@
 	// @ts-ignore
 	const vscode = acquireVsCodeApi();
 
-	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('code'));
-	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
-
-	const showDebug = false;
-
-	debug("Debug: ");
-
-	function debug (s){
-		if (showDebug) {
-			debugContainer.innerText = `${debugContainer.innerText}\n${s}`;
-		}
-	}
-
+	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
+	
 	function getModKey(e){
 		if (e.ctrlKey){
 			return "Control";
@@ -51,7 +40,6 @@
 					key: event.key,
 					modKey: getModKey(event)
 				};
-				debug(`frame ${id} keydown ${event.key}`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -63,7 +51,6 @@
 					target: "frame",
 					id: id
 				};
-				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -90,7 +77,6 @@
 					target: "frame",
 					id: id
 				};
-				debug(`frame ${id} dblclick`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -108,7 +94,6 @@
 					target: "expand",
 					id: id
 				};
-				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -119,7 +104,7 @@
 		    return (el.offsetParent === null);
 		}
 		
-		var textFields = [...document.querySelectorAll(':not(.collapsed) text[tabindex]')];
+		var textFields = [...document.querySelectorAll('text[tabindex]')];
 		textFields = textFields.filter(e => !isHidden(e));
 
 		for (var field of textFields) {
@@ -137,7 +122,6 @@
 						key: event.key,
 						id: event.shiftKey ? previousId : nextId
 					};
-					debug(`frame ${nextId} tab`);
 					vscode.postMessage(msg);
 					event.preventDefault();
 					event.stopPropagation();
@@ -151,10 +135,8 @@
 			input.focus();
 			input.selectionStart = input.selectionEnd = input.value.length;
 
-			debug("focus input" + input.id);
 			input.addEventListener('keydown', event => {
 				const text = event.key;
-				debug("input ${id } keydown " + text);
 				const msg = {
 					type: 'key',
 					target: "input",
@@ -164,7 +146,6 @@
 				event.stopPropagation();
 			});
 			input.addEventListener('click', event => {
-				debug("input ${id } click");
 				event.stopPropagation();
 			});
 		}
@@ -172,10 +153,6 @@
 			const selected = document.querySelector('.selected');
 			if (selected) {
 				selected.focus();
-				debug("focus selected" + selected.id);
-			}
-			else {
-				debug("no focus");
 			}
 		}
 	}
@@ -185,7 +162,6 @@
 		const message = event.data; // The json data that the extension sent
 		switch (message.type) {
 			case 'update':
-				debug("update content");
 				const text = message.text;
 
 				// Update our webview's content
@@ -205,7 +181,6 @@
 			type: 'click',
 			target: "window"
 		};
-		debug("window click ");
 		vscode.postMessage(msg);
 		event.stopPropagation();
 	});
@@ -221,7 +196,6 @@
 			target: "window",
 			key: event.key
 		};
-		debug(`window keydown ${event.key}`);
 		vscode.postMessage(msg);
 		event.stopPropagation();
 
