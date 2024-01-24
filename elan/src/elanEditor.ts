@@ -10,7 +10,7 @@ interface editorEvent {
 	type: "click" | "dblclick" | "key"
 	target: "frame" | "window" | "input" | "expand" | "text"
 	key?: string,
-	modKey?: "Control" | undefined,
+	modKey?: "Control" | "Shift",
 	id?: string
 }
 
@@ -107,7 +107,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleClick(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.frameModel?.selectByID(e.id!);
+				this.frameModel?.selectByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 			case 'expand': {
@@ -133,7 +133,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'text': {
-				this.	handleTextKey(e);
+				this.handleTextKey(e);
 				break;
 			}
 		}
@@ -187,7 +187,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleTextKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Tab': {
-				this.	frameModel?.selectByID(e.id!);
+				this.frameModel?.selectByID(e.id!);
 				break;
 			}
 		}
@@ -226,8 +226,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				<title>Elan Editor</title>
 			</head>
 			<body>
-				<code></code>
-				<div class="debug"></div>
+	            <div class="elan-code"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

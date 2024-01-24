@@ -9,22 +9,14 @@
 	// @ts-ignore
 	const vscode = acquireVsCodeApi();
 
-	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('code'));
-	const debugContainer = /** @type {HTMLElement} */ (document.querySelector('.debug'));
-
-	const showDebug = false;
-
-	debug("Debug: ");
-
-	function debug (s){
-		if (showDebug) {
-			debugContainer.innerText = `${debugContainer.innerText}\n${s}`;
-		}
-	}
-
+	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
+	
 	function getModKey(e){
 		if (e.ctrlKey){
 			return "Control";
+		}
+		if (e.shiftKey){
+			return "Shift";
 		}
 		return undefined;
 	}
@@ -48,7 +40,6 @@
 					key: event.key,
 					modKey: getModKey(event)
 				};
-				debug(`frame ${id} keydown ${event.key}`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -60,10 +51,24 @@
 					target: "frame",
 					id: id
 				};
-				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
+			});
+
+			frame.addEventListener('mousedown', event => {
+				// mousedown rather than click as click does not seem to pick up shift/ctrl click
+				if (event.button === 0 && event.shiftKey) { // left button only
+					const msg = {
+						type: 'click',
+						target: "frame",
+						id: id,
+						modKey: getModKey(event)
+					};
+					vscode.postMessage(msg);
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 
 			frame.addEventListener('dblclick', event => {
@@ -72,7 +77,6 @@
 					target: "frame",
 					id: id
 				};
-				debug(`frame ${id} dblclick`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -90,7 +94,6 @@
 					target: "expand",
 					id: id
 				};
-				debug(`frame ${id} click`);
 				vscode.postMessage(msg);
 				event.preventDefault();
 				event.stopPropagation();
@@ -101,7 +104,7 @@
 		    return (el.offsetParent === null);
 		}
 		
-		var textFields = [...document.querySelectorAll(':not(.collapsed) text[tabindex]')];
+		var textFields = [...document.querySelectorAll('text[tabindex]')];
 		textFields = textFields.filter(e => !isHidden(e));
 
 		for (var field of textFields) {
@@ -119,7 +122,6 @@
 						key: event.key,
 						id: event.shiftKey ? previousId : nextId
 					};
-					debug(`frame ${nextId} tab`);
 					vscode.postMessage(msg);
 					event.preventDefault();
 					event.stopPropagation();
@@ -127,38 +129,10 @@
 			});
 		}
 
-		const input = /** @type {HTMLElement} */ (document.querySelector('input.live'));
 
-        if (input){
-			input.focus();
-			input.selectionStart = input.selectionEnd = input.value.length;
-
-			debug("focus input" + input.id);
-			input.addEventListener('keydown', event => {
-				const text = event.key;
-				debug("input ${id } keydown " + text);
-				const msg = {
-					type: 'key',
-					target: "input",
-					key: text
-				};
-				vscode.postMessage(msg);
-				event.stopPropagation();
-			});
-			input.addEventListener('click', event => {
-				debug("input ${id } click");
-				event.stopPropagation();
-			});
-		}
-		else {
-			const selected = document.querySelector('.selected');
-			if (selected) {
-				selected.focus();
-				debug("focus selected" + selected.id);
-			}
-			else {
-				debug("no focus");
-			}
+		const selected = document.querySelector('.selected');
+		if (selected) {
+			selected.focus();
 		}
 	}
 
@@ -167,7 +141,6 @@
 		const message = event.data; // The json data that the extension sent
 		switch (message.type) {
 			case 'update':
-				debug("update content");
 				const text = message.text;
 
 				// Update our webview's content
@@ -181,21 +154,6 @@
 		}
 	});
 
-	// spike new frames
-	window.addEventListener('click', event => {
-		const msg = {
-			type: 'click',
-			target: "window"
-		};
-		debug("window click ");
-		vscode.postMessage(msg);
-		event.stopPropagation();
-	});
-
-	function isArrowKey(k) {
-		return k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight";
-	}
-
 	window.addEventListener('keydown', event => {
 
 		const msg = {
@@ -203,13 +161,8 @@
 			target: "window",
 			key: event.key
 		};
-		debug(`window keydown ${event.key}`);
 		vscode.postMessage(msg);
 		event.stopPropagation();
-
-		if (event.ctrlKey && isArrowKey(event.key)) {
-			handleCtrlArrow(event.key);
-		}
 	});
 
 
