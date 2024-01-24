@@ -219,6 +219,12 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.frameModel?.selectLast();
 				break;
 			}
+			case 'O': {
+				if (e.modKey === "Control") {
+					this.frameModel?.expandCollapseAll();
+				}
+				break;
+			}
 		}
 	}
 
@@ -255,7 +261,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				<title>Elan Editor</title>
 			</head>
 			<body>
-	            <div class="elan-code"></div>
+	            <div class="elan-code" tabindex="0"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

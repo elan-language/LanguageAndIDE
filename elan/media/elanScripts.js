@@ -10,6 +10,8 @@
 	const vscode = acquireVsCodeApi();
 
 	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
+
+	var doOnce = true;
 	
 	function getModKey(e){
 		if (e.ctrlKey){
@@ -129,10 +131,29 @@
 			});
 		}
 
-
 		const focused = document.querySelector('.focused');
+		const elanCode = document.querySelector('.elan-code');
+
+		if (doOnce) {
+			doOnce = false;
+			elanCode.addEventListener('keydown', event => {
+				const msg = {
+					type: 'key',
+					target: "window",
+					key: event.key,
+					modKey: getModKey(event)
+				};
+				vscode.postMessage(msg);
+				event.preventDefault();
+				event.stopPropagation();
+			});
+		}
+
 		if (focused) {
 			focused.focus();
+		}
+		else {
+			elanCode.focus();
 		}
 	}
 
@@ -153,18 +174,6 @@
 				return;
 		}
 	});
-
-	window.addEventListener('keydown', event => {
-
-		const msg = {
-			type: 'key',
-			target: "window",
-			key: event.key
-		};
-		vscode.postMessage(msg);
-		event.stopPropagation();
-	});
-
 
 	// Webviews are normally torn down when not visible and re-created when they become visible again.
 	// State lets us save information across these re-loads
