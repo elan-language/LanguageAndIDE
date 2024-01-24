@@ -150,4 +150,8 @@ export abstract class AbstractFrame implements Frame {
     expand(): void {
         this.collapsed = false;
     }
+
+    selectFirstText(): boolean {
+        return false;
+    }
 }

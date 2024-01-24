@@ -17,6 +17,11 @@ export class MemberSelector extends AbstractFrame implements Member {
         this.text.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.text.select();
+        return true;
+    }
+
     isMember = true;
 
     currentRole(): Role {

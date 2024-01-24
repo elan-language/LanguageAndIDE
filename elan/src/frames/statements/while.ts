@@ -19,6 +19,11 @@ export class While extends FrameWithStatements implements Statement {
         this.condition.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.condition.select();
+        return true;
+    }
+
     isStatement = true;
 
     renderAsHtml(): string {

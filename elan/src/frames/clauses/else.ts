@@ -18,6 +18,11 @@ export class Else extends AbstractFrame implements Statement {
         this.condition.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.condition.select();
+        return true;
+    }
+
     private ifClauseAsHtml() : string {
         return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:"";
     }

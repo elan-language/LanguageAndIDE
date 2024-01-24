@@ -17,6 +17,11 @@ export class Throw extends AbstractFrame implements Statement {
         this.text.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.text.select();
+        return true;
+    }
+
     isStatement = true;
 
     renderAsHtml(): string {

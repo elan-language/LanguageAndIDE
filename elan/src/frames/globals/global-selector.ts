@@ -16,6 +16,11 @@ export class GlobalSelector extends AbstractFrame implements Global {
         this.text.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.text.select();
+        return true;
+    }
+
     isGlobal = true;
 
     //TODO: include Comment option

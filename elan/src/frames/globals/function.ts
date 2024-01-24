@@ -33,6 +33,11 @@ export class Function extends FrameWithStatements implements Global, Member {
         this.params.initialize(frameMap, this);
         this.returnType.initialize(frameMap, this);
     }
+
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
     
     isGlobal = true;
     isMember = true;

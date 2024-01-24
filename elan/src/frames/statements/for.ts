@@ -29,6 +29,11 @@ export class For extends FrameWithStatements implements Statement {
 
     isStatement = true;
 
+    public override selectFirstText(): boolean {
+        this.variable.select();
+        return true;
+    }
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>for </keyword>${this.variable.renderAsHtml()}<keyword> from </keyword>${this.from.renderAsHtml()}<keyword> to </keyword>${this.to.renderAsHtml()}<keyword> step </keyword>${this.step.renderAsHtml()}</top>

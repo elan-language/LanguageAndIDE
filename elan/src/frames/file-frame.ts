@@ -221,7 +221,9 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     selectNextTextByID(id: string) {
         this.deselectAll();
         const frame = this.frameMap.get(id);
-        frame?.selectNextPeer();
+        if (!frame?.selectFirstText()){
+            frame?.select();
+        }
     }
 
     selectFirst(){

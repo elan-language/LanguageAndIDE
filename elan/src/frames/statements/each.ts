@@ -24,6 +24,11 @@ export class Each extends FrameWithStatements implements Statement {
         this.iter.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.variable.select();
+        return true;
+    }
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}</top>

@@ -22,6 +22,11 @@ export class Property extends AbstractFrame implements Member {
 
     isMember = true;
 
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
+
     currentRole(): Role {
         return Role.member;
     }

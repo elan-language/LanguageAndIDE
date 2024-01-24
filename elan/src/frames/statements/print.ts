@@ -17,6 +17,11 @@ export class Print extends AbstractFrame implements Statement {
         this.expr.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.expr.select();
+        return true;
+    }
+
     isStatement = true;
 
     renderAsHtml(): string {

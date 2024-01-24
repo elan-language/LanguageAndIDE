@@ -21,6 +21,11 @@ export class Variable extends AbstractFrame implements Statement {
         this.expr.initialize(frameMap, this);
     }
 
+    public override selectFirstText(): boolean {
+        this.name.select();
+        return true;
+    }
+
     isStatement = true;
 
     renderAsHtml(): string {

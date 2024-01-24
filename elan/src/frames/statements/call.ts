@@ -14,6 +14,11 @@ export class Call extends AbstractFrame implements Statement {
         this.htmlId = `call${this.nextId()}`;
     }
 
+    public override selectFirstText(): boolean {
+        this.proc.select();
+        return true;
+    }
+
     isStatement = true;
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
