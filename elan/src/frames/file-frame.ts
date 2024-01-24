@@ -140,14 +140,18 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         toExpand?.expand();
     }
 
-    selectNextPeerByID(id: string) {
-        this.deselectAll();
+    selectNextPeerByID(id: string, multiSelect? : boolean) {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
         const frame = this.frameMap.get(id);
         frame?.selectNextPeer();
     }
 
-    selectPreviousPeerByID(id: string) {
-        this.deselectAll();
+    selectPreviousPeerByID(id: string, multiSelect? : boolean) {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
         const frame = this.frameMap.get(id);
         frame?.selectPreviousPeer();
     }
