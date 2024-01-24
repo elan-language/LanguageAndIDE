@@ -8,6 +8,7 @@ import { MemberSelector } from "../class-members/member-selector";
 import { Frame } from "../frame";
 import { HasChildren } from "../has-children";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
+import { TypeList } from "../text-fields/type-list";
 
 
 export class Class extends AbstractFrame implements Global, HasChildren {
@@ -16,6 +17,8 @@ export class Class extends AbstractFrame implements Global, HasChildren {
     private members: Array<Member> = new Array<Member>();
     public abstract: boolean = false;
     public immutable: boolean = false;
+    public inherits: boolean = false;
+    public superClasses: TypeList = new TypeList();
 
     constructor() {
         super();
@@ -81,6 +84,12 @@ export class Class extends AbstractFrame implements Global, HasChildren {
     private modifiersAsSource(): string {
         return `${this.abstract ? "abstract " : ""}${this.immutable ? "immutable " : ""}`;
     }
+    private inhertanceAsHtml(): string {
+        return `${this.inherits ? " inherits " + this.superClasses.renderAsHtml() : ""}`;
+    }
+    private inhertanceAsSource(): string {
+        return `${this.inherits ? " inherits " + this.superClasses.renderAsSource() : ""}`;
+    }
 
     public renderAsHtml(): string {
         const ss: Array<string> = [];
@@ -89,7 +98,7 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         }
         const members = ss.join("\n");
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}</top>
+<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inhertanceAsHtml()}</top>
 ${members}
 <keyword>end class</keyword>
 </classDef>`;
@@ -106,7 +115,7 @@ ${members}
             ss.push(s);
         }
         const members = ss.join("\r\n");
-        return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}\r
+        return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
 ${members}\r
 end class\r\n`;
     }
