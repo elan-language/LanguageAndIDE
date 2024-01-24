@@ -104,8 +104,9 @@ export abstract class AbstractFrame implements Frame {
         return false;
     }
 
-    selectFirstChild(): void {
+    selectFirstChild(): boolean {
         //Do nothing, but overridden by anything implementing hasChildren
+        return false;
     }
 
     selectNextPeer(): void {

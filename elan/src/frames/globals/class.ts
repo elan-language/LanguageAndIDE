@@ -31,8 +31,12 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         return this.members[this.members.length -1] as AsString;
     }
 
-    selectFirstChild(): void {
-        this.members[0].select();
+    selectFirstChild(): boolean {
+        if (this.members.length > 0){
+            this.members[0].select();
+            return true;
+        }
+        return false;
     }
 
     selectLastChild(): void {

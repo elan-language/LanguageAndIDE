@@ -20,9 +20,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
     hasChildren(): boolean {
         return true;
     }
-    selectFirstChild(): void {
-        this.statements[0].select();
-    }   
+    selectFirstChild(): boolean {
+        if (this.statements.length > 0){
+            this.statements[0].select();
+            return true;
+        }
+        return false;
+    } 
     selectLastChild(): void {
         this.statements[this.statements.length - 1].select();
     }
