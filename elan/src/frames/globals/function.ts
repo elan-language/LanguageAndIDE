@@ -9,7 +9,7 @@ import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { FileFrame } from "../file-frame";
 
-export class Function extends FrameWithStatements implements Global, Member {
+export class Function extends FrameWithStatements implements Global {
 
     public htmlId : string ="";
     public name : Identifier = new Identifier("name");
@@ -40,11 +40,6 @@ export class Function extends FrameWithStatements implements Global, Member {
     }
     
     isGlobal = true;
-    isMember = true;
-
-    currentRole(): Role {
-        return this.getParent() instanceof FileFrame ? Role.global : Role.member;
-    }
 
     public override addStatement(s: Statement): void {
         s.initialize(this.frameMap, this);

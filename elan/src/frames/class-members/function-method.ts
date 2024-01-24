@@ -1,8 +1,10 @@
 import { Function } from "../globals/function";
 import { singleIndent } from "../helpers";
+import { Member } from "./member";
 
-export class FunctionMethod extends Function {
-
+export class FunctionMethod extends Function implements Member {
+    isMember: boolean = true;
+    
     public override indent(): string {
         return singleIndent();
     }

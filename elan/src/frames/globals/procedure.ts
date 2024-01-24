@@ -6,7 +6,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 import { FileFrame } from "../file-frame";
 
-export class Procedure extends FrameWithStatements implements Global, Member {
+export class Procedure extends FrameWithStatements implements Global {
 
     public htmlId : string ="";
     public name : Identifier = new Identifier("name");
@@ -25,15 +25,10 @@ export class Procedure extends FrameWithStatements implements Global, Member {
     }
 
     isGlobal = true;
-    isMember = true;
 
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
-    }
-
-    currentRole(): Role {
-        return this.getParent() instanceof FileFrame ? Role.global : Role.member;
     }
 
     public renderAsHtml() : string {

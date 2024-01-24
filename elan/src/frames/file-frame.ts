@@ -209,7 +209,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         if (isStatement(frame)) {
             frame.selectFirstPeer();
         }
-        else if (isMember(frame) && frame.currentRole() === Role.member) {
+        else if (isMember(frame)) {
             frame.selectFirstPeer();
         }
         else if (isGlobal(frame)){
@@ -227,7 +227,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         if (isStatement(frame)) {
             frame.selectLastPeer();
         }
-        else if (isMember(frame) && frame.currentRole() === Role.member) {
+        else if (isMember(frame)) {
             frame.selectLastPeer();
         }
         else if (isGlobal(frame)){
