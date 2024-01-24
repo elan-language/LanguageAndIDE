@@ -169,15 +169,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.frameModel?.selectLastByID(e.id!);
 				break;
 			}
-			case '-': {
+			case 'o': {
 				if (e.modKey === "Control") {
-					this.frameModel?.collapseByID(e.id!);
+					this.frameModel?.expandCollapseByID(e.id!);
 				}
 				break;
 			}
-			case '+': {
+			case 'O': {
 				if (e.modKey === "Control") {
-					this.frameModel?.expandByID(e.id!);
+					this.frameModel?.expandCollapseAllByID(e.id!);
 				}
 				break;
 			}

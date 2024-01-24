@@ -116,6 +116,16 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
+    expandCollapseAllByID(id: string) {
+        const currentFrame = this.frameMap.get(id);
+        if (currentFrame?.isCollapsed()) {
+            this.expandAll();
+        }
+        else {
+            this.collapseAll();
+        }
+    }
+
     collapseByID(id: string) {
         const toCollapse = this.frameMap.get(id);
         toCollapse?.collapse();
