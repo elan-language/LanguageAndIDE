@@ -3,6 +3,12 @@ import { T03_mainWithAllStatements, T04_allGlobalsExceptClass } from './testFram
 import * as jsdom from 'jsdom';
 import assert from 'assert';
 
+function assertElementsById(dom : jsdom.JSDOM, id: string, expected: string){
+	const e = dom.window.document.getElementById(id);
+	const c = e?.className;
+	assert.strictEqual(c, expected);
+}
+
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
@@ -12,14 +18,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectFirst();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		const g1 = preDom.window.document.getElementById("const2");
-		const g2 = postDom.window.document.getElementById("const2");
-
-		var c1 = g1?.className;
-		var c2 = g2?.className;
-
-		assert.strictEqual(c1, '');
-		assert.strictEqual(c2, 'selected focused');
+		assertElementsById(preDom, "const2", '');
+		assertElementsById(postDom, "const2", 'selected focused');
 	});
 
 	test('SelectLast', () => {
@@ -28,14 +28,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectLast();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		const g1 = preDom.window.document.getElementById("enum21");
-		const g2 = postDom.window.document.getElementById("enum21");
-
-		var c1 = g1?.className;
-		var c2 = g2?.className;
-
-		assert.strictEqual(c1, 'multiline');
-		assert.strictEqual(c2, 'multiline selected focused');
+		assertElementsById(preDom, "enum21", 'multiline');
+		assertElementsById(postDom, "enum21", 'multiline selected focused');
 	});
 
 	test('SelectFirstChild', () => {
@@ -44,13 +38,7 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectFirstChild();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		const g1 = preDom.window.document.getElementById("main0");
-		const g2 = postDom.window.document.getElementById("main0");
-
-		var c1 = g1?.className;
-		var c2 = g2?.className;
-
-		assert.strictEqual(c1, 'multiline');
-		assert.strictEqual(c2, 'multiline selected focused');
+		assertElementsById(preDom, "main0", 'multiline');
+		assertElementsById(postDom, "main0", 'multiline selected focused');
 	});
 });
