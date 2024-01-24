@@ -1,7 +1,16 @@
+code { 
+    padding: 0px;
+}
+
 * {
     font-family: monospace;
     background-color: white;
     border-color: white;
+    color: black;
+}
+
+*:focus {
+    outline: none;
 }
 
 /* Basic Colour scheme */
@@ -48,7 +57,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-right-color: rgb(174, 216, 250);
 }
 
-text.selected {
+text.selected, text.selected * {
     background-color: rgb(174, 216, 250);
 }
 
