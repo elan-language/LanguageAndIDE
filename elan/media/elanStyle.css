@@ -1,5 +1,6 @@
 :root {
     --selection:rgb(173, 214, 255);
+    /* --unused: rgb(175,0,219); */
 }
 code { 
     padding: 0px;
@@ -63,7 +64,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
 }
 
 text.selected, text.selected * {
-    background-color: var(--selection);
+    background-color: rgb(146, 236, 146);
 }
 
 /* Text entry validation */
