@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { assertAreEqualByHtml, assertAreEqualBySource } from './testHelpers';
-import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T06_mergeSort, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll } from './testFrameFunctions';
+import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T06_mergeSort, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll } from './milestone_1.functions.';
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from './testFrameFunctions';
+import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from './milestone_1.functions.';
 import * as jsdom from 'jsdom';
 import assert from 'assert';
 

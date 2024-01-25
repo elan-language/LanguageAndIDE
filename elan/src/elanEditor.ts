@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
-import { getTestFrame } from './test/testFrameFunctions';
+import { getTestFrame } from './test/milestone_1.functions.';
 import { FileFrame } from './frames/file-frame';
 import { Frame } from './frames/frame';
 import { setCurrentElanFile } from './extension';
