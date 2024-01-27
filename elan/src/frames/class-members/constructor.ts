@@ -1,7 +1,7 @@
 import { Frame } from "../frame";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../text-fields/param-list";
-import { Member, Role } from "./member";
+import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {
     public params: ParamList = new ParamList();
@@ -24,10 +24,6 @@ export class Constructor extends FrameWithStatements implements Member {
     }
 
     isMember = true;
-
-    currentRole(): Role {
-        return Role.member;
-    }
 
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">

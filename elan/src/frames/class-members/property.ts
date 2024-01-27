@@ -2,7 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
-import { Member, Role } from "./member";
+import { Member } from "./member";
 
 export class Property extends AbstractFrame implements Member {
     name: Identifier = new Identifier("name");
@@ -25,10 +25,6 @@ export class Property extends AbstractFrame implements Member {
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
-    }
-
-    currentRole(): Role {
-        return Role.member;
     }
 
     private modifierAsHtml(): string {

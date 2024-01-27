@@ -1,10 +1,8 @@
 import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
-import { Member, Role } from "../class-members/member";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
-import { FileFrame } from "../file-frame";
 
 export class Procedure extends FrameWithStatements implements Global {
 

@@ -2,12 +2,10 @@ import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { Type } from "../text-fields/type";
-import { Member, Role } from "../class-members/member";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
-import { FileFrame } from "../file-frame";
 
 export class Function extends FrameWithStatements implements Global {
 

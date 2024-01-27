@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { AbstractFrame } from "../abstract-frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Frame } from "../frame";
-import { Member, Role } from "../class-members/member";
+import { Member} from "../class-members/member";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
 
@@ -31,9 +31,5 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
 
     renderAsSource(): string {
         return `${this.indent()}# ${this.text.renderAsSource()}`;
-    }
- 
-    currentRole(): Role {
-        return Role.member;
     }
 }

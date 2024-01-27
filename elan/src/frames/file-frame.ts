@@ -1,5 +1,4 @@
 import { AbstractFrame } from "./abstract-frame";
-import { Role } from "./class-members/member";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
