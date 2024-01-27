@@ -5,23 +5,18 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class Procedure extends FrameWithStatements implements Global {
-
-    public htmlId : string ="";
+    getPrefix(): string {
+        return 'proc';
+    }
+    
     public name : Identifier;
     public params: ParamList;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `proc${this.nextId()}`;
         this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.params.initialize(frameMap, this);
     }
 
     isGlobal = true;

@@ -5,22 +5,18 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Variable extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'var';
+    }
+    
     name: Identifier;
     expr: Expression;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `var${this.nextId()}`;
         this.name = new Identifier(this);
         this.expr = new Expression(this);
 
-    }
-
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.expr.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

@@ -12,6 +12,9 @@ import { TypeList } from "../text-fields/type-list";
 
 
 export class Class extends AbstractFrame implements Global, HasChildren {
+    getPrefix(): string {
+       return 'class';
+    }
 
     public name: Type;
     private members: Array<Member> = new Array<Member>();
@@ -22,11 +25,13 @@ export class Class extends AbstractFrame implements Global, HasChildren {
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `class${this.nextId()}`;
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
+        this.addFixedMember(new Constructor(this.getParent()));
+        this.addFixedMember(new MemberSelector(this.getParent()));
+        this.addFixedMember(new AsString(this.getParent()));
     }
 
     private get constr() {
@@ -69,14 +74,6 @@ export class Class extends AbstractFrame implements Global, HasChildren {
 
     selectChildRange(): void {
         selectChildRange(this.members);
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.addFixedMember(new Constructor(this.getParent()));
-        this.addFixedMember(new MemberSelector(this.getParent()));
-        this.addFixedMember(new AsString(this.getParent()));
-        this.name.initialize(frameMap, this);
     }
 
     isGlobal = true;
@@ -124,12 +121,10 @@ end class\r\n`;
     }
 
     private addFixedMember(m: Member) {
-        m.initialize(this.frameMap, this);
         this.members.push(m);
     }
 
     public addMember(m: Member) {
-        m.initialize(this.frameMap, this);
         const asString = this.members.pop();
         this.members.push(m);
         this.members.push(asString!);

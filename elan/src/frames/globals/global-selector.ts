@@ -4,18 +4,15 @@ import { Global } from "./global";
 import { Frame } from "../frame";
 
 export class GlobalSelector extends AbstractFrame implements Global {
+    getPrefix(): string {
+        return 'globalSelect';
+    }
     text: PlainText;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `globalSelect${this.nextId()}`;
         this.text = new PlainText(this);
         this.text.setPrompt("main, procedure, function, constant ...");
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

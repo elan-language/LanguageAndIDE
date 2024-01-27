@@ -4,17 +4,14 @@ import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {
+    getPrefix(): string {
+        return 'constructor';
+    }
     public params: ParamList = new ParamList(this.getParent());
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `constructor${this.nextId()}`;
         this.multiline = true;
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.params.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

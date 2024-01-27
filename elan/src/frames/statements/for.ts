@@ -6,6 +6,9 @@ import { Integer } from "../text-fields/integer";
 import { Frame } from "../frame";
 
 export class For extends FrameWithStatements implements Statement {
+    getPrefix(): string {
+       return 'for';
+    }
     variable: Identifier;
     from: Expression;
     to: Expression;
@@ -13,7 +16,6 @@ export class For extends FrameWithStatements implements Statement {
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `for${this.nextId()}`;
         this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPrompt("variableName");
@@ -23,14 +25,6 @@ export class For extends FrameWithStatements implements Statement {
         this.to.setPrompt("integer value or expression");
         this.step = new Integer(this);
         this.step.enterText("1");
-    }
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
-        this.from.initialize(frameMap, this);
-        this.to.initialize(frameMap, this);
-        this.step.initialize(frameMap, this);
     }
 
     isStatement = true;

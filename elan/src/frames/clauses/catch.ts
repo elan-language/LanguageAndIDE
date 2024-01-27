@@ -4,19 +4,16 @@ import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 
 export class Catch extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'catch';
+    }
     variable: Identifier;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `catch${this.nextId()}`;
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");
         this.variable.enterText("e");
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

@@ -5,12 +5,14 @@ import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
 
 export class Each extends FrameWithStatements implements Statement {
+    getPrefix(): string {
+        return 'each';
+    }
     variable: Identifier;
     iter: Expression;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `each${this.nextId()}`;
         this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPrompt("variableName");
@@ -19,12 +21,6 @@ export class Each extends FrameWithStatements implements Statement {
     }
 
     isStatement = true;
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
-        this.iter.initialize(frameMap, this);
-    }
 
     public override selectFirstText(): boolean {
         this.variable.select(true);

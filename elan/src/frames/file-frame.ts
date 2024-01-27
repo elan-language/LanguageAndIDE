@@ -5,20 +5,20 @@ import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
 export class FileFrame extends CommonFrame implements HasChildren {
+    getPrefix(): string {
+        return 'file';
+    }
 
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 
-    public htmlId = "file";
-
     constructor() {
         super();
         resetId();
-        this._frameMap =new Map<string, Frame>();
-        this.parent = this;
-    }
-
-    initialize(frameMap: Map<string, Frame>, parent?: Frame): void {
+        this.parent = this; //no parent
+        var frameMap = new Map<string, Frame>();
+        frameMap.set(this.getPrefix(), this); //No Id because it is always 0
+        this.setFrameMap(frameMap);
     }
 
     public renderAsHtml(): string {
@@ -48,7 +48,6 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     public addGlobal(g: Global) {
-        g.initialize(this.frameMap, this);
         this.globals.push(g);
     }
 
@@ -86,7 +85,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     deselectAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.getFrameMap().values()) {
             if (f.isSelected()) {
                 f.deselect();
             }
@@ -94,7 +93,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     defocusAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.getFrameMap().values()) {
             if (f.isFocused()) {
                 f.defocus();
             }
@@ -102,13 +101,13 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     expandAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.getFrameMap().values()) {
             f.expand();
         }
     }
 
     collapseAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.getFrameMap().values()) {
             f.collapse();
         }
     }
@@ -120,12 +119,12 @@ export class FileFrame extends CommonFrame implements HasChildren {
         else {
             this.defocusAll();
         }
-        const toSelect = this.frameMap.get(id);
+        const toSelect = this.getFrameMap().get(id);
         toSelect?.select(true, multiSelect);
     }
 
     expandCollapseByID(id: string) {
-        const toToggle = this.frameMap.get(id);
+        const toToggle = this.getFrameMap().get(id);
         if (toToggle?.isCollapsed()) {
             toToggle.expand();
         }
@@ -144,7 +143,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     expandCollapseAllByID(id: string) {
-        const currentFrame = this.frameMap.get(id);
+        const currentFrame = this.getFrameMap().get(id);
         if (currentFrame?.isMultiline()) {
             this.expandCollapseAllByFrame(currentFrame);
         }
@@ -160,12 +159,12 @@ export class FileFrame extends CommonFrame implements HasChildren {
     }
 
     collapseByID(id: string) {
-        const toCollapse = this.frameMap.get(id);
+        const toCollapse = this.getFrameMap().get(id);
         toCollapse?.collapse();
     }
 
     expandByID(id: string) {
-        const toExpand = this.frameMap.get(id);
+        const toExpand = this.getFrameMap().get(id);
         toExpand?.expand();
     }
 
@@ -176,7 +175,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
         else {
             this.defocusAll();
         }
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         frame?.selectNextPeer();
     }
 
@@ -187,24 +186,24 @@ export class FileFrame extends CommonFrame implements HasChildren {
         else {
             this.defocusAll();
         }
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         frame?.selectPreviousPeer();
     }
 
     selectFirstPeerByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         frame?.selectFirstPeer();
     }
 
     selectLastPeerByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         frame?.selectLastPeer();
     }
 
     selectParentByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         const parent = frame?.getParent();
         if (parent !== this){
             this.deselectAll();
@@ -215,7 +214,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
 
     selectFirstChildByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         if (!frame?.selectFirstChild()) {
             frame?.select(true);
         }
@@ -223,7 +222,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
 
     selectFirstByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
             frame.selectFirstPeer();
         }
@@ -241,7 +240,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
 
     selectLastByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
             frame.selectLastPeer();
         }
@@ -259,7 +258,7 @@ export class FileFrame extends CommonFrame implements HasChildren {
 
     selectNextTextByID(id: string) {
         this.deselectAll();
-        const frame = this.frameMap.get(id);
+        const frame = this.getFrameMap().get(id);
         if (!frame?.selectFirstText()){
             frame?.select(true);
         }

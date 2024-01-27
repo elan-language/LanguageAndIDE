@@ -5,21 +5,18 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class SetStatement extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'set';
+    }
+    
     name: Identifier;;
     expr: Expression;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `set${this.nextId()}`;
         this.name = new Identifier(this);
         this.name.setPrompt("variableName");
         this.expr = new Expression(this);
-    }
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.expr.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

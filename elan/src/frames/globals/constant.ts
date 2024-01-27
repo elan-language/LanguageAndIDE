@@ -6,13 +6,16 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Constant extends AbstractFrame implements Global {
+    getPrefix(): string {
+        return 'const';
+    }
 
     name: Identifier;
     expr: Expression;
 
+
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `const${this.nextId()}`;
         this.name  = new Identifier(this);
         this.expr = new Expression(this);
         this.expr.setPrompt("literal value");
@@ -23,12 +26,6 @@ export class Constant extends AbstractFrame implements Global {
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.expr.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

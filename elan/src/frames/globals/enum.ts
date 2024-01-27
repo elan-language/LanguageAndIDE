@@ -6,12 +6,14 @@ import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 
 export class Enum extends AbstractFrame implements Global {
+    getPrefix(): string {
+        return 'enum';
+    }
     name: Type;
     values: EnumValues;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `enum${this.nextId()}`;
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPrompt("Name");
@@ -19,12 +21,6 @@ export class Enum extends AbstractFrame implements Global {
     }
 
     isGlobal = true;
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.values.initialize(frameMap, this);
-    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);

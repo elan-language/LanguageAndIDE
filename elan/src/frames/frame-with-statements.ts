@@ -10,13 +10,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
 
     constructor(parent: Frame) {
         super(parent);   
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
         this.addStatement(new StatementSelector(this));
     }
-
     hasChildren(): boolean {
         return true;
     }
@@ -66,7 +61,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
     }
 
     public addStatement(s : Statement) {
-        s.initialize(this.frameMap, this);
         this.statements.push(s);
     }
 

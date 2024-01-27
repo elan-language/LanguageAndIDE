@@ -4,17 +4,15 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Throw extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'throw';
+    }
+    
     text: ExceptionMessage;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `throw${this.nextId()}`;
         this.text = new ExceptionMessage(this);
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

@@ -5,12 +5,14 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Call extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'call';
+    }
     proc: Identifier;
     args: ArgList;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `call${this.nextId()}`;
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");
         this.args = new ArgList(this);
@@ -22,12 +24,6 @@ export class Call extends AbstractFrame implements Statement {
     }
 
     isStatement = true;
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.proc.initialize(frameMap, this);
-        this.args.initialize(frameMap, this);
-    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})</statement>`;

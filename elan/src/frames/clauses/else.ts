@@ -5,19 +5,16 @@ import { Statement } from "../statements/statement";
 import { Expression } from "../text-fields/expression";
 
 export class Else extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'else';
+    }
     hasIf: boolean = false;
     condition: Expression;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `else${this.nextId()}`;
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.condition.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

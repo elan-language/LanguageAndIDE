@@ -4,18 +4,16 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class StatementSelector extends AbstractFrame implements Statement {
+    getPrefix(): string {
+        return 'statementSelect';
+    }
+    
     text: PlainText;
 
     constructor(parent: Frame) {
         super(parent);
-        this.htmlId = `statementSelect${this.nextId()}`;
         this.text = new PlainText(this);
         this.text.setPrompt("statement");
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
     }
 
     public override selectFirstText(): boolean {

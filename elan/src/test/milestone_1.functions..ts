@@ -102,25 +102,25 @@ export function T03_mainWithAllStatements() {
 	const if2 = new IfThen(m);
 	m.addStatement(if2);
     if2.condition.enterText("y > 4");
-	if2.addStatement(new Else(m));
-	if2.addStatement(new StatementSelector(m));
+	if2.addStatement(new Else(if2));
+	if2.addStatement(new StatementSelector(if2));
 	const if3 = new IfThen(m);
 	m.addStatement(if3);
     if3.condition.enterText("y > 4");
-	const el = new Else(m);
+	const el = new Else(if3);
 	el.hasIf = true;
 	el.condition.enterText("y > 10");
 	if3.addStatement(el);
-	if3.addStatement(new StatementSelector(m));
-	if3.addStatement(new Else(m));
-	if3.addStatement(new StatementSelector(m));
+	if3.addStatement(new StatementSelector(if3));
+	if3.addStatement(new Else(if3));
+	if3.addStatement(new StatementSelector(if3));
 	const tr = new TryCatch(m);
 	m.addStatement(tr);
 	return f;
 }
 
 export function T07_mainWithAllStatementsSelectMainById(f : FileFrame) {
-	f.selectByID("main0");
+	f.selectByID("main2");
 	return () => f;
 }
 

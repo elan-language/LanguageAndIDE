@@ -65,7 +65,7 @@ suite('Milestone 1 - Unit tests', () => {
 	test('SelectLastByID Statement', () => {
 		const ff = T04_allGlobalsExceptClass();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectLastByID("statementSelect15");
+		ff.selectLastByID("statementSelect12");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
 		assertElementsById(preDom, "return17", '');
