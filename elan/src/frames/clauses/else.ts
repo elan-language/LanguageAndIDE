@@ -6,11 +6,13 @@ import { Expression } from "../text-fields/expression";
 
 export class Else extends AbstractFrame implements Statement {
     hasIf: boolean = false;
-    condition: Expression = new Expression("condition");
+    condition: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `else${this.nextId()}`;
+        this.condition = new Expression(this);
+        this.condition.setPrompt("condition");
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {

@@ -5,17 +5,19 @@ import { Type } from "../text-fields/type";
 import { Member } from "./member";
 
 export class Property extends AbstractFrame implements Member {
-    name: Identifier = new Identifier("name");
-    type: Type = new Type("Type");
+    name: Identifier;
+    type: Type;
     public private: boolean = false;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `prop${this.nextId()}`;
+        this.name = new Identifier(this);
+        this.type = new Type(this);
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
+        super.initialize(frameMap, parent as Frame);
         this.name.initialize(frameMap, this);
         this.type.initialize(frameMap, this);
     }

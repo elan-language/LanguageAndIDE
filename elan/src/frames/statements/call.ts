@@ -5,12 +5,15 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Call extends AbstractFrame implements Statement {
-    proc: Identifier = new Identifier("procedureName");
-    args: ArgList = new ArgList();
+    proc: Identifier;
+    args: ArgList;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `call${this.nextId()}`;
+        this.proc = new Identifier(this);
+        this.proc.setPrompt("procedureName");
+        this.args = new ArgList(this);
     }
 
     public override selectFirstText(): boolean {

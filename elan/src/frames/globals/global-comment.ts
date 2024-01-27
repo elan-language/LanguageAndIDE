@@ -5,11 +5,12 @@ import { Global } from "./global";
 
 export class GlobalComment extends AbstractFrame implements Global {
 
-    public text: PlainText = new PlainText("");
+    public text: PlainText;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `com${this.nextId()}`;
+        this.text = new PlainText(this);
     }
 
     isGlobal = true;

@@ -8,13 +8,13 @@ import { StatementSelector } from "./statements/statement-selector";
 export abstract class FrameWithStatements extends AbstractFrame implements HasChildren {
     protected statements: Array<Statement> = new Array<Statement>();
 
-    constructor() {
-        super();   
+    constructor(parent: Frame) {
+        super(parent);   
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
-        this.addStatement(new StatementSelector());
+        this.addStatement(new StatementSelector(this));
     }
 
     hasChildren(): boolean {

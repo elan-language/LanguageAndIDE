@@ -4,16 +4,16 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class While extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    condition: Expression = new Expression("expression");
+    condition: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `while${this.nextId()}`;
         this.multiline = true;
+        this.condition = new Expression(this);
+        this.condition.setPrompt("condition");
     }
 
-    
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.condition.initialize(frameMap, this);

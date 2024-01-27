@@ -4,14 +4,14 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Throw extends AbstractFrame implements Statement {
-    text: ExceptionMessage = new ExceptionMessage();
+    text: ExceptionMessage;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `throw${this.nextId()}`;
+        this.text = new ExceptionMessage(this);
     }
 
-    
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
         this.text.initialize(frameMap, this);

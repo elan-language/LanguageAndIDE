@@ -5,13 +5,15 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Variable extends AbstractFrame implements Statement {
-    htmlId: string = "";
-    name: Identifier = new Identifier("name");
-    expr: Expression = new Expression("expression");
+    name: Identifier;
+    expr: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `var${this.nextId()}`;
+        this.name = new Identifier(this);
+        this.expr = new Expression(this);
+
     }
 
     

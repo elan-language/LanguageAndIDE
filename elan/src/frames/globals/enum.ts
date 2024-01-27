@@ -6,13 +6,16 @@ import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 
 export class Enum extends AbstractFrame implements Global {
-    name: Type = new Type("Name");
-    values: EnumValues = new EnumValues();
+    name: Type;
+    values: EnumValues;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `enum${this.nextId()}`;
         this.multiline = true;
+        this.name = new Type(this);
+        this.name.setPrompt("Name");
+        this.values = new EnumValues(this);
     }
 
     isGlobal = true;

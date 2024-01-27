@@ -5,11 +5,13 @@ import { PlainText } from "../text-fields/plain_text";
 import { Member} from "./member";
 
 export class MemberSelector extends AbstractFrame implements Member {
-    text: PlainText = new PlainText("member");
+    text: PlainText;;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `memberSelect${this.nextId()}`;
+        this.text = new PlainText(this);
+        this.text.setPrompt("member");
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {

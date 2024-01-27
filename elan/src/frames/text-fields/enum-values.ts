@@ -1,9 +1,10 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
-
 export class EnumValues extends Text {
-    constructor() {
-        super("values");
+    constructor(parent: Frame) {
+        super(parent);
+        this.setPrompt("values");
         this.htmlId = `enumVals${this.nextId()}`;
     }
 }

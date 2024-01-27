@@ -1,10 +1,11 @@
 import { Global } from "./global";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Frame } from "../frame";
 
 export class MainFrame extends FrameWithStatements implements Global {
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `main${this.nextId()}`;
         this.multiline = true;
     }

@@ -13,17 +13,20 @@ import { TypeList } from "../text-fields/type-list";
 
 export class Class extends AbstractFrame implements Global, HasChildren {
 
-    public name: Type = new Type("class name");
+    public name: Type;
     private members: Array<Member> = new Array<Member>();
     public abstract: boolean = false;
     public immutable: boolean = false;
     public inherits: boolean = false;
-    public superClasses: TypeList = new TypeList();
+    public superClasses: TypeList;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `class${this.nextId()}`;
         this.multiline = true;
+        this.name = new Type(this);
+        this.name.setPrompt("class name");
+        this.superClasses  = new TypeList(this);
     }
 
     private get constr() {
@@ -70,9 +73,9 @@ export class Class extends AbstractFrame implements Global, HasChildren {
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
-        this.addFixedMember(new Constructor());
-        this.addFixedMember(new MemberSelector());
-        this.addFixedMember(new AsString());
+        this.addFixedMember(new Constructor(this.getParent()));
+        this.addFixedMember(new MemberSelector(this.getParent()));
+        this.addFixedMember(new AsString(this.getParent()));
         this.name.initialize(frameMap, this);
     }
 

@@ -4,11 +4,10 @@ import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {
-    public params: ParamList = new ParamList();
-    public htmlId: string = "";
+    public params: ParamList = new ParamList(this.getParent());
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `constructor${this.nextId()}`;
         this.multiline = true;
     }

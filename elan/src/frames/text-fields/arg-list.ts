@@ -1,9 +1,10 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
-
 export class ArgList extends Text {
-    constructor() {
-        super("arguments");
+    constructor(parent: Frame) {
+        super(parent);
+        this.setPrompt("arguments");
         this.htmlId = `args${this.nextId()}`;
     }
 }

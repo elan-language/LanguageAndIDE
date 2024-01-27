@@ -6,11 +6,12 @@ import { Member} from "../class-members/member";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
 
-    public text: PlainText = new PlainText("");
+    public text: PlainText;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `com${this.nextId()}`;
+        this.text= new PlainText(this);
     }
     isStatement = true;
     isMember = true;

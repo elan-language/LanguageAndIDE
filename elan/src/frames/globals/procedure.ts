@@ -7,13 +7,15 @@ import { Frame } from "../frame";
 export class Procedure extends FrameWithStatements implements Global {
 
     public htmlId : string ="";
-    public name : Identifier = new Identifier("name");
-    public params: ParamList = new ParamList();
+    public name : Identifier;
+    public params: ParamList;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `proc${this.nextId()}`;
         this.multiline = true;
+        this.name = new Identifier(this);
+        this.params = new ParamList(this);
     }
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {

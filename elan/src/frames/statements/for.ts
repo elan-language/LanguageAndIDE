@@ -6,16 +6,22 @@ import { Integer } from "../text-fields/integer";
 import { Frame } from "../frame";
 
 export class For extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    variable: Identifier = new Identifier("variableName");
-    from: Expression = new Expression("integer value or expression");
-    to: Expression = new Expression("integer value or expression");
-    step: Integer = new Integer("");
+    variable: Identifier;
+    from: Expression;
+    to: Expression;
+    step: Integer;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `for${this.nextId()}`;
         this.multiline = true;
+        this.variable = new Identifier(this);
+        this.variable.setPrompt("variableName");
+        this.from = new Expression(this);
+        this.from.setPrompt("integer value or expression");
+        this.to = new Expression(this);
+        this.to.setPrompt("integer value or expression");
+        this.step = new Integer(this);
         this.step.enterText("1");
     }
     

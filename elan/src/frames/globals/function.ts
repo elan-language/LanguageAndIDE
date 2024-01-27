@@ -10,14 +10,18 @@ import { Statement } from "../statements/statement";
 export class Function extends FrameWithStatements implements Global {
 
     public htmlId : string ="";
-    public name : Identifier = new Identifier("name");
-    public params: ParamList = new ParamList();
-    public returnType: Type = new Type("return type");
+    public name : Identifier;
+    public params: ParamList;
+    public returnType: Type;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `func${this.nextId()}`;
         this.multiline = true;
+        this.name = new Identifier(this);
+        this.params = new ParamList(this);
+        this.returnType = new Type(this);
+        this.returnType.setPrompt("return type");
     }
 
     get returnStatement() {
@@ -26,7 +30,7 @@ export class Function extends FrameWithStatements implements Global {
 
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);
-        this.addFixedStatement(new ReturnStatement);
+        this.addFixedStatement(new ReturnStatement(this.getParent()));
         this.name.initialize(frameMap, this);
         this.params.initialize(frameMap, this);
         this.returnType.initialize(frameMap, this);

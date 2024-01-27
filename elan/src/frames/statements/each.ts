@@ -5,14 +5,17 @@ import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
 
 export class Each extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    variable: Identifier = new Identifier("variableName");
-    iter: Expression = new Expression("iterable value or expression");
+    variable: Identifier;
+    iter: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `each${this.nextId()}`;
         this.multiline = true;
+        this.variable = new Identifier(this);
+        this.variable.setPrompt("variableName");
+        this.iter = new Expression(this);
+        this.iter.setPrompt("iterable value or expression");
     }
 
     isStatement = true;

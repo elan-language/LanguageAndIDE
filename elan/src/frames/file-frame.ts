@@ -1,12 +1,12 @@
-import { AbstractFrame } from "./abstract-frame";
+import { CommonFrame } from "./common-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
-export class FileFrame extends AbstractFrame implements HasChildren {
+export class FileFrame extends CommonFrame implements HasChildren {
 
-
+    parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 
     public htmlId = "file";
@@ -14,7 +14,11 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     constructor() {
         super();
         resetId();
-        this.initialize(new Map<string, Frame>());
+        this._frameMap =new Map<string, Frame>();
+        this.parent = this;
+    }
+
+    initialize(frameMap: Map<string, Frame>, parent?: Frame): void {
     }
 
     public renderAsHtml(): string {

@@ -1,9 +1,10 @@
+import { Frame } from "../frame";
 import { FunctionMethod } from "./function-method";
 
 export class AsString extends FunctionMethod {
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
     }
 
     public renderAsHtml(): string {

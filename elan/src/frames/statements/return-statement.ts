@@ -4,13 +4,13 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class ReturnStatement extends AbstractFrame implements Statement {
-    expr: Expression = new Expression("expression");
+    expr: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `return${this.nextId()}`;
+        this.expr = new Expression(this);
     }
-
     
     public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
         super.initialize(frameMap, parent);

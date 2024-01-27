@@ -7,12 +7,15 @@ import { Frame } from "../frame";
 
 export class Constant extends AbstractFrame implements Global {
 
-    name: Identifier = new Identifier("name");
-    expr: Expression = new Expression("literal value");
+    name: Identifier;
+    expr: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `const${this.nextId()}`;
+        this.name  = new Identifier(this);
+        this.expr = new Expression(this);
+        this.expr.setPrompt("literal value");
     }
 
     isGlobal = true;

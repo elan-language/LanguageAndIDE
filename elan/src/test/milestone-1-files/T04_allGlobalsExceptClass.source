@@ -12,7 +12,7 @@ end procedure
 
 function hypotenuse(sideB Float, sideC Float) as Float
   
-  return expression
+  return value or expression
 end function
 
 enum Fruit

@@ -4,11 +4,13 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Print extends AbstractFrame implements Statement {
-    expr: Expression = new Expression("expression");
+    expr: Expression;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `print${this.nextId()}`;
+        this.expr = new Expression(this);
+        this.expr.setPrompt("expression");
     }
 
     

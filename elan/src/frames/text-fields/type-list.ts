@@ -1,9 +1,10 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
-
 export class TypeList extends Text {
-    constructor() {
-        super("type(s)");
+    constructor(parent: Frame) {
+        super(parent);
+        this.setPrompt("type(s)");
         this.htmlId = `args${this.nextId()}`;
     }
 }

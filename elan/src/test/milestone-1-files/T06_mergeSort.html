@@ -11,37 +11,37 @@
 <header># Elan v0.1</header>
 <main class="multiline" id='main0' tabindex="0">
 <top><expand>+</expand><keyword>main</keyword></top>
-<statement class="" id='var5' tabindex="0"><keyword>var </keyword><text id="ident3" class="" tabindex=0>li</text><keyword> set to </keyword><text id="expr4" class="" tabindex=0>{"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}</text></statement>
-<statement class="" id='print7' tabindex="0"><keyword>print </keyword><text id="expr6" class="" tabindex=0>mergeSort(li)</text></statement>
+<statement class="" id='var3' tabindex="0"><keyword>var </keyword><text id="ident4" class="" tabindex=0>li</text><keyword> set to </keyword><text id="expr5" class="" tabindex=0>{"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}</text></statement>
+<statement class="" id='print6' tabindex="0"><keyword>print </keyword><text id="expr7" class="" tabindex=0>mergeSort(li)</text></statement>
 <keyword>end main</keyword>
 </main>
-<function class="multiline" id='func11' tabindex="0">
-<top><expand>+</expand><keyword>function </keyword><text id="ident8" class="" tabindex=0>mergeSort</text>(<text id="params9" class="" tabindex=0>list <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type10" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
-<statement class="" id='var18' tabindex="0"><keyword>var </keyword><text id="ident16" class="" tabindex=0>result</text><keyword> set to </keyword><text id="expr17" class="" tabindex=0>list</text></statement>
-<statement class="multiline" id='if20' tabindex="0">
-<top><expand>+</expand><keyword>if </keyword><text id="expr19" class="" tabindex=0>list.length() &gt; 1</text><keyword> then </keyword></top>
-<statement class="" id='var25' tabindex="0"><keyword>var </keyword><text id="ident23" class="" tabindex=0>mid</text><keyword> set to </keyword><text id="expr24" class="" tabindex=0>list.length() div 2</text></statement>
-<statement class="" id='set28' tabindex="0"><keyword>set </keyword><text id="ident26" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr27" class="" tabindex=0>merge(mergeSort(list[..mid]), mergeSort(list[mid..]))</text></statement>
+<function class="multiline" id='func8' tabindex="0">
+<top><expand>+</expand><keyword>function </keyword><text id="ident9" class="" tabindex=0>mergeSort</text>(<text id="params10" class="" tabindex=0>list <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type11" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
+<statement class="" id='var16' tabindex="0"><keyword>var </keyword><text id="ident17" class="" tabindex=0>result</text><keyword> set to </keyword><text id="expr18" class="" tabindex=0>list</text></statement>
+<statement class="multiline" id='if19' tabindex="0">
+<top><expand>+</expand><keyword>if </keyword><text id="expr20" class="" tabindex=0>list.length() &gt; 1</text><keyword> then </keyword></top>
+<statement class="" id='var23' tabindex="0"><keyword>var </keyword><text id="ident24" class="" tabindex=0>mid</text><keyword> set to </keyword><text id="expr25" class="" tabindex=0>list.length() div 2</text></statement>
+<statement class="" id='set26' tabindex="0"><keyword>set </keyword><text id="ident27" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr28" class="" tabindex=0>merge(mergeSort(list[..mid]), mergeSort(list[mid..]))</text></statement>
 <keyword>end if</keyword>
 </statement>
-<statement class="" id='return15' tabindex="0"><keyword>return </keyword><text id="expr14" class="" tabindex=0>result</text></statement>
+<statement class="" id='return14' tabindex="0"><keyword>return </keyword><text id="expr15" class="" tabindex=0>result</text></statement>
 <keyword>end function</keyword>
 </function>
-<function class="multiline" id='func32' tabindex="0">
-<top><expand>+</expand><keyword>function </keyword><text id="ident29" class="" tabindex=0>merge</text>(<text id="params30" class="" tabindex=0>a <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;, b <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type31" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
-<statement class="" id='var39' tabindex="0"><keyword>var </keyword><text id="ident37" class="" tabindex=0>name</text><keyword> set to </keyword><text id="expr38" class="" tabindex=0>new List&lt;of String&gt;()</text></statement>
-<statement class="multiline" id='if41' tabindex="0">
-<top><expand>+</expand><keyword>if </keyword><text id="expr40" class="" tabindex=0>a.isEmpty()</text><keyword> then </keyword></top>
-<statement class="" id='set46' tabindex="0"><keyword>set </keyword><text id="ident44" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr45" class="" tabindex=0>b</text></statement>
-<clause class="" id='else48' tabindex="0"><keyword>else</keyword><keyword> if </keyword><text id="expr47" class="" tabindex=0>b.isEmpty()</text><keyword> then</keyword></clause>
-<statement class="" id='set51' tabindex="0"><keyword>set </keyword><text id="ident49" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr50" class="" tabindex=0>a</text></statement>
-<clause class="" id='else53' tabindex="0"><keyword>else</keyword><keyword> if </keyword><text id="expr52" class="" tabindex=0>a[0].isBefore(b[0])</text><keyword> then</keyword></clause>
-<statement class="" id='set56' tabindex="0"><keyword>set </keyword><text id="ident54" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr55" class="" tabindex=0>a[0] + merge(a[1..], b)</text></statement>
-<clause class="" id='else58' tabindex="0"><keyword>else</keyword></clause>
-<statement class="" id='set61' tabindex="0"><keyword>set </keyword><text id="ident59" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr60" class="" tabindex=0>b[0] + merge(a, b[1..])</text></statement>
+<function class="multiline" id='func29' tabindex="0">
+<top><expand>+</expand><keyword>function </keyword><text id="ident30" class="" tabindex=0>merge</text>(<text id="params31" class="" tabindex=0>a <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;, b <type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text>)<keyword> as </keyword><text id="type32" class="" tabindex=0><type>List</type>&lt;<keyword>of </keyword><type>String</type>&gt;</text></top>
+<statement class="" id='var37' tabindex="0"><keyword>var </keyword><text id="ident38" class="" tabindex=0>name</text><keyword> set to </keyword><text id="expr39" class="" tabindex=0>new List&lt;of String&gt;()</text></statement>
+<statement class="multiline" id='if40' tabindex="0">
+<top><expand>+</expand><keyword>if </keyword><text id="expr41" class="" tabindex=0>a.isEmpty()</text><keyword> then </keyword></top>
+<statement class="" id='set44' tabindex="0"><keyword>set </keyword><text id="ident45" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr46" class="" tabindex=0>b</text></statement>
+<clause class="" id='else47' tabindex="0"><keyword>else</keyword><keyword> if </keyword><text id="expr48" class="" tabindex=0>b.isEmpty()</text><keyword> then</keyword></clause>
+<statement class="" id='set49' tabindex="0"><keyword>set </keyword><text id="ident50" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr51" class="" tabindex=0>a</text></statement>
+<clause class="" id='else52' tabindex="0"><keyword>else</keyword><keyword> if </keyword><text id="expr53" class="" tabindex=0>a[0].isBefore(b[0])</text><keyword> then</keyword></clause>
+<statement class="" id='set54' tabindex="0"><keyword>set </keyword><text id="ident55" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr56" class="" tabindex=0>a[0] + merge(a[1..], b)</text></statement>
+<clause class="" id='else57' tabindex="0"><keyword>else</keyword></clause>
+<statement class="" id='set59' tabindex="0"><keyword>set </keyword><text id="ident60" class="" tabindex=0>result</text><keyword> to </keyword><text id="expr61" class="" tabindex=0>b[0] + merge(a, b[1..])</text></statement>
 <keyword>end if</keyword>
 </statement>
-<statement class="" id='return36' tabindex="0"><keyword>return </keyword><text id="expr35" class="" tabindex=0>result</text></statement>
+<statement class="" id='return35' tabindex="0"><keyword>return </keyword><text id="expr36" class="" tabindex=0>result</text></statement>
 <keyword>end function</keyword>
 </function>
 </elan-code>

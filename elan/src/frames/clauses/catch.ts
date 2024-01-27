@@ -4,11 +4,13 @@ import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 
 export class Catch extends AbstractFrame implements Statement {
-    variable: Identifier = new Identifier("variableName");
+    variable: Identifier;
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
         this.htmlId = `catch${this.nextId()}`;
+        this.variable  = new Identifier(this);
+        this.variable.setPrompt("variableName");
         this.variable.enterText("e");
     }
 
