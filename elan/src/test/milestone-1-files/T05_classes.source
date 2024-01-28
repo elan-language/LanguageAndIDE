@@ -10,7 +10,6 @@ class Player
   property score Int
 
   function asString() as String
-    
     return a Player
   end function
 end class
@@ -30,7 +29,6 @@ immutable class Card inherits Foo, Bar
   end function
 
   function asString() as String
-    
     return a Card
   end function
 end class

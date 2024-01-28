@@ -5,6 +5,7 @@ export class AsString extends FunctionMethod {
 
     constructor(parent: Frame) {
         super(parent);
+        this.statements.splice(0,1);
     }
 
     public renderAsHtml(): string {
