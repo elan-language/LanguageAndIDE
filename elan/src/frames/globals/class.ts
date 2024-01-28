@@ -29,9 +29,9 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         this.name = new Type(this);
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
-        this.addFixedMember(new Constructor(this.getParent()));
-        this.addFixedMember(new MemberSelector(this.getParent()));
-        this.addFixedMember(new AsString(this.getParent()));
+        this.addMemberAtEnd(new Constructor(this.getParent()));
+        this.addMemberAtEnd(new MemberSelector(this.getParent()));
+        this.addMemberAtEnd(new AsString(this.getParent()));
     }
 
     private get constr() {
@@ -120,13 +120,27 @@ ${members}\r
 end class\r\n`;
     }
 
-    private addFixedMember(m: Member) {
+    private addMemberAtEnd(m: Member) {
         this.members.push(m);
     }
 
-    public addMember(m: Member) {
-        const asString = this.members.pop();
-        this.members.push(m);
-        this.members.push(asString!);
+    public addMemberBeforeAsString(m: Member) {
+        var i = this.members.length - 1;
+        this.members.splice(i,0,m);
+    }
+
+    public addMemberBefore(m: Member, before: Member) {
+        var i = this.members.indexOf(before);
+        this.members.splice(i,0,m);
+    }
+
+    public addMemberAfter(m: Member, after: Member) {
+        var i = this.members.indexOf(after) + 1;
+        this.members.splice(i,0,m);      
+    }
+
+    public removeMember(m: Member) {
+        var i = this.members.indexOf(m);
+        this.members.splice(i,1);    
     }
 }

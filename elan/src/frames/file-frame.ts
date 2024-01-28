@@ -47,8 +47,23 @@ export class FileFrame extends CommonFrame implements HasChildren {
         return `${this.getHeaderInfo()}\r\n\r\n${globals}`; 
     }
 
-    public addGlobal(g: Global) {
+    public addGlobalToEnd(g: Global) {
         this.globals.push(g);
+    }
+
+    public addGlobalBefore(g: Global, before: Global) {
+        var i = this.globals.indexOf(g);
+        this.globals.splice(i,0,g);
+    }
+
+    public addGlobalAfter(g: Global, after: Global) {
+        var i = this.globals.indexOf(g)+1;
+        this.globals.splice(i,0,g);     
+    }
+
+    public removeGlobal(g: Global) {
+        var i = this.globals.indexOf(g);
+        this.globals.splice(i,1);    
     }
 
     hasChildren(): boolean {

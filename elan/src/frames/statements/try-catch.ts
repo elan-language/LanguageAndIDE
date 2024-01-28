@@ -12,8 +12,8 @@ export class TryCatch extends FrameWithStatements implements Statement {
     constructor(parent: Frame) {
         super(parent);
         this.multiline = true;
-        this.addStatement(new Catch(this));
-        this.addStatement(new StatementSelector(this));
+        this.statements.push(new Catch(this));
+        this.statements.push(new StatementSelector(this));
     }
     
     isStatement = true;

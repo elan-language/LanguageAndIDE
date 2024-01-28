@@ -23,7 +23,7 @@ export class Function extends FrameWithStatements implements Global {
         this.params = new ParamList(this);
         this.returnType = new Type(this);
         this.returnType.setPrompt("return type");
-        this.addFixedStatement(new ReturnStatement(this));
+        this.statements.push(new ReturnStatement(this));
     }
 
     get returnStatement() {
@@ -37,16 +37,9 @@ export class Function extends FrameWithStatements implements Global {
     
     isGlobal = true;
 
-    public override addStatement(s: Statement): void {
-        const rs = this.statements.pop();
-        this.statements.push(s);
-        if (rs) {
-            this.statements.push(rs);
-        }
-    }
-
-    public addFixedStatement(s: Statement): void {
-        this.statements.push(s);
+    public addStatementBeforeReturn(s: Statement): void {
+        var i = this.statements.length -1;
+        this.statements.splice(i,0,s);
     }
 
     public renderAsHtml() : string {
