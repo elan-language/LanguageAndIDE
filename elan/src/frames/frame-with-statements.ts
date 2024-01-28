@@ -1,11 +1,11 @@
-import { AbstractFrame } from "./abstract-frame";
+import { CodeFrame } from "./code-frame";
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
-export abstract class FrameWithStatements extends AbstractFrame implements HasChildren {
+export abstract class FrameWithStatements extends CodeFrame implements HasChildren {
     protected statements: Array<Statement> = new Array<Statement>();
 
     constructor(parent: Frame) {

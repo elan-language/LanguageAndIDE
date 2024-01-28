@@ -1,10 +1,10 @@
 
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Expression } from "../text-fields/expression";
 
-export class Else extends AbstractFrame implements Statement {
+export class Else extends CodeFrame implements Statement {
     isStatement = true;
     hasIf: boolean = false;
     condition: Expression;

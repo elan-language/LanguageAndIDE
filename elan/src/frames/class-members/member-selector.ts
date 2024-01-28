@@ -1,10 +1,10 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
 import { Member} from "./member";
 
-export class MemberSelector extends AbstractFrame implements Member {
+export class MemberSelector extends CodeFrame implements Member {
     isMember = true;
     text: PlainText;
     

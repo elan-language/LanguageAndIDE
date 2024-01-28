@@ -2,10 +2,10 @@
 import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
 import { Global } from "./global";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class Constant extends AbstractFrame implements Global {
+export class Constant extends CodeFrame implements Global {
     isGlobal = true;
     name: Identifier;
     expr: Expression;

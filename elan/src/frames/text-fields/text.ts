@@ -1,7 +1,7 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export abstract class Text extends AbstractFrame {
+export abstract class Text extends CodeFrame {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;

@@ -1,10 +1,10 @@
-import { CommonFrame } from "./common-frame";
+import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
-export class FileFrame extends CommonFrame implements HasChildren {
+export class FileFrame extends AbstractFrame implements HasChildren {
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 

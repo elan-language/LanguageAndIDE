@@ -1,10 +1,10 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
 import { Member } from "./member";
 
-export class Property extends AbstractFrame implements Member {
+export class Property extends CodeFrame implements Member {
     isMember = true;
     name: Identifier;
     type: Type;

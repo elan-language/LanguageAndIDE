@@ -1,9 +1,9 @@
 import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class ReturnStatement extends AbstractFrame implements Statement {   
+export class ReturnStatement extends CodeFrame implements Statement {   
     isStatement = true;
     expr: Expression;
 

@@ -1,9 +1,9 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 
-export class Catch extends AbstractFrame implements Statement {
+export class Catch extends CodeFrame implements Statement {
     isStatement = true;
     variable: Identifier;
 

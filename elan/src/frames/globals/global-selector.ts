@@ -1,9 +1,9 @@
 import { PlainText } from "../text-fields/plain_text";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Global } from "./global";
 import { Frame } from "../frame";
 
-export class GlobalSelector extends AbstractFrame implements Global {
+export class GlobalSelector extends CodeFrame implements Global {
     isGlobal = true;
     text: PlainText;
 

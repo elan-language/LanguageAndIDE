@@ -1,4 +1,4 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Global } from "./global";
 import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
@@ -11,7 +11,7 @@ import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from ".
 import { TypeList } from "../text-fields/type-list";
 
 
-export class Class extends AbstractFrame implements Global, HasChildren {
+export class Class extends CodeFrame implements Global, HasChildren {
     isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();
