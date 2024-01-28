@@ -4,9 +4,7 @@ import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 
 export class Catch extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'catch';
-    }
+    isStatement = true;
     variable: Identifier;
 
     constructor(parent: Frame) {
@@ -16,12 +14,14 @@ export class Catch extends AbstractFrame implements Statement {
         this.variable.enterText("e");
     }
 
+    getPrefix(): string {
+        return 'catch';
+    }
+
     public override selectFirstText(): boolean {
         this.variable.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;

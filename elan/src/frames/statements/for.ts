@@ -6,9 +6,7 @@ import { Integer } from "../text-fields/integer";
 import { Frame } from "../frame";
 
 export class For extends FrameWithStatements implements Statement {
-    getPrefix(): string {
-       return 'for';
-    }
+    isStatement = true;
     variable: Identifier;
     from: Expression;
     to: Expression;
@@ -27,7 +25,9 @@ export class For extends FrameWithStatements implements Statement {
         this.step.enterText("1");
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'for';
+     }
 
     public override selectFirstText(): boolean {
         this.variable.select(true);

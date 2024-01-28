@@ -3,12 +3,9 @@ import { PlainText } from "../text-fields/plain_text";
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
-export class StatementSelector extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'statementSelect';
-    }
-    
+export class StatementSelector extends AbstractFrame implements Statement {  
     text: PlainText;
+    isStatement = true;
 
     constructor(parent: Frame) {
         super(parent);
@@ -16,12 +13,14 @@ export class StatementSelector extends AbstractFrame implements Statement {
         this.text.setPrompt("statement");
     }
 
+    getPrefix(): string {
+        return 'statementSelect';
+    }
+
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.text.renderAsHtml()}</statement>`;

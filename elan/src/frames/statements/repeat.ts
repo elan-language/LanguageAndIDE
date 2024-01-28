@@ -4,10 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class Repeat extends FrameWithStatements implements Statement {
-    getPrefix(): string {
-        return 'repeat';
-    }
-    
+    isStatement = true;
     condition: Expression;
 
     constructor(parent: Frame) {
@@ -17,12 +14,14 @@ export class Repeat extends FrameWithStatements implements Statement {
         this.condition.setPrompt("condition");
     }
 
+    getPrefix(): string {
+        return 'repeat';
+    }
+
     public override selectFirstText(): boolean {
         this.condition.select(true);
         return true;
     }
-
-    isStatement = true;
     
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

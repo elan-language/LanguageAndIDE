@@ -3,11 +3,8 @@ import { Expression } from "../text-fields/expression";
 import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
-export class ReturnStatement extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'return';
-    }
-    
+export class ReturnStatement extends AbstractFrame implements Statement {   
+    isStatement = true;
     expr: Expression;
 
     constructor(parent: Frame) {
@@ -15,12 +12,14 @@ export class ReturnStatement extends AbstractFrame implements Statement {
         this.expr = new Expression(this);
     }
 
+    getPrefix(): string {
+        return 'return';
+    }
+
     public override selectFirstText(): boolean {
         this.expr.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;

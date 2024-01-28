@@ -5,18 +5,18 @@ import { Frame } from "../frame";
 import { Member} from "../class-members/member";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
-    getPrefix(): string {
-        return 'com';
-    }
-
+    isStatement = true;
+    isMember = true;
     public text: PlainText;
 
     constructor(parent: Frame) {
         super(parent);
         this.text= new PlainText(this);
     }
-    isStatement = true;
-    isMember = true;
+
+    getPrefix(): string {
+        return 'com';
+    }
 
     public override selectFirstText(): boolean {
         this.text.select(true);

@@ -4,9 +4,7 @@ import { Global } from "./global";
 import { Frame } from "../frame";
 
 export class GlobalSelector extends AbstractFrame implements Global {
-    getPrefix(): string {
-        return 'globalSelect';
-    }
+    isGlobal = true;
     text: PlainText;
 
     constructor(parent: Frame) {
@@ -15,12 +13,14 @@ export class GlobalSelector extends AbstractFrame implements Global {
         this.text.setPrompt("main, procedure, function, constant ...");
     }
 
+    getPrefix(): string {
+        return 'globalSelect';
+    }
+
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
     }
-
-    isGlobal = true;
 
     //TODO: include Comment option
     renderAsHtml(): string {

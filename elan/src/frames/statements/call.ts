@@ -5,9 +5,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Call extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'call';
-    }
+    isStatement = true;
     proc: Identifier;
     args: ArgList;
 
@@ -23,7 +21,9 @@ export class Call extends AbstractFrame implements Statement {
         return true;
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'call';
+    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})</statement>`;

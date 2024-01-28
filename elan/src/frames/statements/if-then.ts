@@ -4,9 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class IfThen extends FrameWithStatements implements Statement {
-    getPrefix(): string {
-        return 'if';
-    }
+    isStatement = true;
     condition: Expression;
 
     constructor(parent: Frame) {
@@ -21,7 +19,9 @@ export class IfThen extends FrameWithStatements implements Statement {
         return true;
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'if';
+    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

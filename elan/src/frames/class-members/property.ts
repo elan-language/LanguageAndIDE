@@ -5,9 +5,7 @@ import { Type } from "../text-fields/type";
 import { Member } from "./member";
 
 export class Property extends AbstractFrame implements Member {
-    getPrefix(): string {
-        return 'prop';
-    }
+    isMember = true;
     name: Identifier;
     type: Type;
     public private: boolean = false;
@@ -18,7 +16,9 @@ export class Property extends AbstractFrame implements Member {
         this.type = new Type(this);
     }
 
-    isMember = true;
+    getPrefix(): string {
+        return 'prop';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);

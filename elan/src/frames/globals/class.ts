@@ -12,10 +12,7 @@ import { TypeList } from "../text-fields/type-list";
 
 
 export class Class extends AbstractFrame implements Global, HasChildren {
-    getPrefix(): string {
-       return 'class';
-    }
-
+    isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();
     public abstract: boolean = false;
@@ -32,6 +29,10 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         this.addMemberAtEnd(new Constructor(this.getParent()));
         this.addMemberAtEnd(new MemberSelector(this.getParent()));
         this.addMemberAtEnd(new AsString(this.getParent()));
+    }
+
+    getPrefix(): string {
+        return 'class';
     }
 
     private get constr() {
@@ -75,8 +76,6 @@ export class Class extends AbstractFrame implements Global, HasChildren {
     selectChildRange(): void {
         selectChildRange(this.members);
     }
-
-    isGlobal = true;
 
     private modifiersAsHtml(): string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;

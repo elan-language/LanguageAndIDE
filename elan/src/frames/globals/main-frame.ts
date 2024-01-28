@@ -3,16 +3,16 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class MainFrame extends FrameWithStatements implements Global {
-    getPrefix(): string {
-        return 'main';
-    }
-
+    isGlobal = true;
+    
     constructor(parent: Frame) {
         super(parent);
         this.multiline = true;
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'main';
+    }
 
     public renderAsHtml() : string {
         return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">

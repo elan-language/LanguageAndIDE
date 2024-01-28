@@ -5,9 +5,7 @@ import { Catch } from "../clauses/catch";
 import { Frame } from "../frame";
 
 export class TryCatch extends FrameWithStatements implements Statement {
-    getPrefix(): string {
-        return 'try';
-    }
+    isStatement = true;
     
     constructor(parent: Frame) {
         super(parent);
@@ -16,7 +14,9 @@ export class TryCatch extends FrameWithStatements implements Statement {
         this.statements.push(new StatementSelector(this));
     }
     
-    isStatement = true;
+    getPrefix(): string {
+        return 'try';
+    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

@@ -5,10 +5,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Variable extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'var';
-    }
-    
+    isStatement = true;
     name: Identifier;
     expr: Expression;
 
@@ -18,13 +15,15 @@ export class Variable extends AbstractFrame implements Statement {
         this.expr = new Expression(this);
 
     }
+    
+    getPrefix(): string {
+        return 'var';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;

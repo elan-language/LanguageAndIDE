@@ -4,9 +4,7 @@ import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {
-    getPrefix(): string {
-        return 'constructor';
-    }
+    isMember = true;
     public params: ParamList = new ParamList(this.getParent());
 
     constructor(parent: Frame) {
@@ -14,12 +12,15 @@ export class Constructor extends FrameWithStatements implements Member {
         this.multiline = true;
     }
 
+    getPrefix(): string {
+        return 'constructor';
+    }
+
     public override selectFirstText(): boolean {
         this.params.select(true);
         return true;
     }
 
-    isMember = true;
 
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">

@@ -8,10 +8,7 @@ import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 
 export class Function extends FrameWithStatements implements Global {
-    getPrefix(): string {
-        return 'func';
-    }
-
+    isGlobal = true;
     public name : Identifier;
     public params: ParamList;
     public returnType: Type;
@@ -26,6 +23,10 @@ export class Function extends FrameWithStatements implements Global {
         this.statements.push(new ReturnStatement(this));
     }
 
+    getPrefix(): string {
+        return 'func';
+    }
+
     get returnStatement() {
         return this.statements[this.statements.length -1] as ReturnStatement;
     }
@@ -34,8 +35,6 @@ export class Function extends FrameWithStatements implements Global {
         this.name.select(true);
         return true;
     }
-    
-    isGlobal = true;
 
     public addStatementBeforeReturn(s: Statement): void {
         var i = this.statements.length -1;

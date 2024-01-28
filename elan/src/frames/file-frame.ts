@@ -5,10 +5,6 @@ import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
 export class FileFrame extends CommonFrame implements HasChildren {
-    getPrefix(): string {
-        return 'file';
-    }
-
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 
@@ -19,6 +15,10 @@ export class FileFrame extends CommonFrame implements HasChildren {
         var frameMap = new Map<string, Frame>();
         frameMap.set(this.getPrefix(), this); //No Id because it is always 0
         this.setFrameMap(frameMap);
+    }
+
+    getPrefix(): string {
+        return 'file';
     }
 
     public renderAsHtml(): string {

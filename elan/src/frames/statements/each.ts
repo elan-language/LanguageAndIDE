@@ -5,9 +5,7 @@ import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
 
 export class Each extends FrameWithStatements implements Statement {
-    getPrefix(): string {
-        return 'each';
-    }
+    isStatement = true;
     variable: Identifier;
     iter: Expression;
 
@@ -20,7 +18,9 @@ export class Each extends FrameWithStatements implements Statement {
         this.iter.setPrompt("iterable value or expression");
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'each';
+    }
 
     public override selectFirstText(): boolean {
         this.variable.select(true);

@@ -6,9 +6,7 @@ import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 
 export class Enum extends AbstractFrame implements Global {
-    getPrefix(): string {
-        return 'enum';
-    }
+    isGlobal = true;
     name: Type;
     values: EnumValues;
 
@@ -20,7 +18,9 @@ export class Enum extends AbstractFrame implements Global {
         this.values = new EnumValues(this);
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'enum';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);

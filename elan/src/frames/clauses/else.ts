@@ -5,9 +5,7 @@ import { Statement } from "../statements/statement";
 import { Expression } from "../text-fields/expression";
 
 export class Else extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'else';
-    }
+    isStatement = true;
     hasIf: boolean = false;
     condition: Expression;
 
@@ -15,6 +13,10 @@ export class Else extends AbstractFrame implements Statement {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+
+    getPrefix(): string {
+        return 'else';
     }
 
     public override selectFirstText(): boolean {
@@ -29,8 +31,6 @@ export class Else extends AbstractFrame implements Statement {
     private ifClauseAsSource() : string {
         return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:``;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClauseAsHtml()}</clause>`;

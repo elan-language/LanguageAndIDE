@@ -4,10 +4,7 @@ import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 
 export class GlobalComment extends AbstractFrame implements Global {
-    getPrefix(): string {
-        return 'com';
-    }
-
+    isGlobal = true;
     public text: PlainText;
 
     constructor(parent: Frame) {
@@ -15,7 +12,9 @@ export class GlobalComment extends AbstractFrame implements Global {
         this.text = new PlainText(this);
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'com';
+    }
 
     public override selectFirstText(): boolean {
         this.text.select(true);

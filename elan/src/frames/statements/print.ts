@@ -4,9 +4,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Print extends AbstractFrame implements Statement {
-    getPrefix(): string {
-        return 'print';
-    }
+    isStatement = true;
     expr: Expression;
 
     constructor(parent: Frame) {
@@ -20,7 +18,9 @@ export class Print extends AbstractFrame implements Statement {
         return true;
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'print';
+    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>print </keyword>${this.expr.renderAsHtml()}</statement>`;

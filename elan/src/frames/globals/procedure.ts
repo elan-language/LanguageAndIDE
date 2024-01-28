@@ -5,10 +5,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class Procedure extends FrameWithStatements implements Global {
-    getPrefix(): string {
-        return 'proc';
-    }
-    
+    isGlobal = true;
     public name : Identifier;
     public params: ParamList;
 
@@ -19,7 +16,9 @@ export class Procedure extends FrameWithStatements implements Global {
         this.params = new ParamList(this);
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'proc';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);

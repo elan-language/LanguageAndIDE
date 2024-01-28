@@ -6,10 +6,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 
 export class Constant extends AbstractFrame implements Global {
-    getPrefix(): string {
-        return 'const';
-    }
-
+    isGlobal = true;
     name: Identifier;
     expr: Expression;
 
@@ -21,7 +18,9 @@ export class Constant extends AbstractFrame implements Global {
         this.expr.setPrompt("literal value");
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'const';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);
