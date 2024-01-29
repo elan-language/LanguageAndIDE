@@ -89,6 +89,7 @@
 
 		if (input) {
 			const id = input.parentElement.id;
+			input.selectionStart = input.selectionEnd = input.value.length;
 		
 			input.addEventListener('keydown', event => {
 				if (event.key !== "Tab") {
