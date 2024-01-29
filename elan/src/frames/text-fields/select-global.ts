@@ -1,15 +1,21 @@
 import { Global } from "../globals/global";
 import { Frame } from "../frame";
 import { Text } from "./text";
-import { MainFrame } from "../globals/main-frame";
 import { FileFrame } from "../file-frame";
+import { MainFrame } from "../globals/main-frame";
+import { Function } from "../globals/function";
+import { Procedure } from "../globals/procedure";
+import { Enum } from "../globals/enum";
+import { GlobalComment } from "../globals/global-comment";
+import { Class } from "../globals/class";
+import { Constant } from "../globals/constant";
 
 export class SelectGlobal extends Text implements Global {
     isGlobal = true;
 
     constructor(parent: Frame) {
         super(parent);
-        this.setPrompt("main, procedure, function, constant ...");
+        this.setPrompt("class constant enum function main procedure #");
     }
 
     getPrefix(): string {
@@ -28,37 +34,49 @@ export class SelectGlobal extends Text implements Global {
         return ``;
     } 
 
+    private addBeforeAndSelect(global: Global) {
+        (this.parent as FileFrame).addGlobalBefore(global, this);
+        this.deselectAll(); //TODO should happen automatically
+        global.select(true);
+    }
+
     enterText(char: string): void {
         var empty = this.text ==="";
         if (empty && (char ==='m')) {
-            //main & exit
-            var main = new MainFrame(this.parent);
-            (this.parent as FileFrame).addGlobalBefore(main, this);
-            main.select(true);
+            var m = new MainFrame(this.parent);
+            this.addBeforeAndSelect(m);
             return;
         }
         if (empty && (char ==='f')) {
-            //function & exit
+            var f = new Function(this.parent);
+            this.addBeforeAndSelect(f);
             return;
         }
         if (empty && (char ==='p')) {
-            //procedure & exit
+            var p = new Procedure(this.parent);
+            this.addBeforeAndSelect(p);
             return;
         }
         if (empty && (char ==='e')) {
-            //enum & exit
+            var e = new Enum(this.parent);
+            this.addBeforeAndSelect(e);
             return;
         }
         if (empty && (char ==='#')) {
-            //comment & exit
+            var com = new GlobalComment(this.parent);
+            this.addBeforeAndSelect(com);
             return;
         }     
         if (this.text === "c" && char ==="o") {
-            //constant & exit
+            var con= new Constant(this.parent);
+            this.text = "";
+            this.addBeforeAndSelect(con);
             return;
         }
         if (this.text === "c" && char ==="l") {
-            //class & exit
+            var cl= new Class(this.parent);
+            this.text = "";
+            this.addBeforeAndSelect(cl);
             return;
         }
         super.enterText(char);

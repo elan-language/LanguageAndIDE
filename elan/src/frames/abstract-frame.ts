@@ -71,7 +71,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     select(withFocus : boolean,  multiSelect?: boolean): void {
-        this.selected = true; //TODO: is deselection to be handled externally, or here?
+        this.selected = true; 
         this.focused = withFocus;
         if (multiSelect) {
             if (this.hasParent()) {
@@ -84,6 +84,14 @@ export abstract class AbstractFrame implements Frame {
     deselect(): void {
         this.selected = false;
         this.focused = false;
+    }
+
+    deselectAll() {
+        for (const f of this.getFrameMap().values()) {
+            if (f.isSelected()) {
+                f.deselect();
+            }
+        }
     }
 
     hasParent(): boolean {
