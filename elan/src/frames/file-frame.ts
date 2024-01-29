@@ -3,11 +3,14 @@ import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
+import { createHash } from "node:crypto";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 
+    public status = "status-placeholder";
+   
     constructor() {
         super();
         resetId();
@@ -34,17 +37,26 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         return "";
     }
 
-    private getHeaderInfo(): string {
-        return `# Elan v0.1`;
+    private getHeaderInfo(body? : string): string {
+        body = body || this.bodyAsSource();
+
+        const hash = createHash('sha256');
+        hash.update(body);
+
+        return `# Elan v0.1 ${this.status} ${hash.digest('hex')}`;
     }
 
-    renderAsSource(): string {
+    bodyAsSource() : string{
         const ss: Array<string> = [];
         for (var frame of this.globals) {
             ss.push(frame.renderAsSource());
         }
-        const globals = ss.join("\r\n");
-        return `${this.getHeaderInfo()}\r\n\r\n${globals}`; 
+        return ss.join("\r\n");
+    }
+
+    renderAsSource(): string {
+        const globals = this.bodyAsSource();
+        return `${this.getHeaderInfo(globals)}\r\n\r\n${globals}`; 
     }
 
     public addGlobalToEnd(g: Global) {
