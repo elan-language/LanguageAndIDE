@@ -29,7 +29,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		{ type: 'process' },
 		vscode.TaskScope.Workspace,
 		'Compile', 
-		'Elan',  
+		'elan',  
 		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${workspaceFolder}"]),
 	);
 
@@ -39,8 +39,8 @@ export async function activate(context: vscode.ExtensionContext) {
 		{ type: 'process' },
 		vscode.TaskScope.Workspace,
 		'Run', 
-		'Elan',  
-		new vscode.ProcessExecution("${workspaceFolder}\\obj\\bin\\Debug\\net7.0\\${fileBasenameNoExtension}.exe"),
+		'elan',  
+		new vscode.ProcessExecution("${workspaceFolder}\\obj\\bin\\Debug\\net7.0\\${fileBasenameNoExtension}.exe", []),
 	);
 
 	vscode.tasks.registerTaskProvider('elan', {
