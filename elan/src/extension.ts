@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	const compilerPath = `${context.extensionPath}\\.elanCompiler\\`;
 
-	const task = new vscode.Task(
+	const buildTask = new vscode.Task(
 		{ type: 'process' },
 		vscode.TaskScope.Workspace,
 		'Compile', 
@@ -33,11 +33,19 @@ export async function activate(context: vscode.ExtensionContext) {
 		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${workspaceFolder}"]),
 	);
 
-	task.group = vscode.TaskGroup.Build;
+	buildTask.group = {id: vscode.TaskGroup.Build.id, isDefault : true}; //   vscode.TaskGroup.Build;
+
+	const runTask = new vscode.Task(
+		{ type: 'process' },
+		vscode.TaskScope.Workspace,
+		'Run', 
+		'Elan',  
+		new vscode.ProcessExecution("${workspaceFolder}\\obj\\bin\\Debug\\net7.0\\${fileBasenameNoExtension}.exe"),
+	);
 
 	vscode.tasks.registerTaskProvider('elan', {
 		provideTasks: () => {
-			return [task];
+			return [buildTask, runTask];
 		},
 		resolveTask(_task: vscode.Task): vscode.Task | undefined {
 			return undefined;

@@ -24,12 +24,6 @@
     }
   ],
   "contributes": {
-    "commands": [
-      {
-        "command": "elan.compile",
-        "title": "Elan: Compile"
-      }
-    ],
     "customEditors": [
       {
         "viewType": "elan.elanEditor",
