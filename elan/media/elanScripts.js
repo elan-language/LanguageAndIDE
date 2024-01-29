@@ -156,18 +156,34 @@
 		const focused = document.querySelector('.focused');
 		const elanCode = document.querySelector('.elan-code');
 
+		function isVsCodeTaskOrCommand(event){
+			if (event.altKey && event.key === "B" ){
+				return true;
+			}
+			if (event.ctrlKey && event.key === "B" ){
+				return true;
+			}
+			if (event.ctrlKey && event.key === "P" ){
+				return true;
+			}
+			return false;
+		}
+
+
 		if (doOnce) {
 			doOnce = false;
 			elanCode.addEventListener('keydown', event => {
-				const msg = {
-					type: 'key',
-					target: "window",
-					key: event.key,
-					modKey: getModKey(event)
-				};
-				vscode.postMessage(msg);
-				event.preventDefault();
-				event.stopPropagation();
+				if (!isVsCodeTaskOrCommand(event)) {
+					const msg = {
+						type: 'key',
+						target: "window",
+						key: event.key,
+						modKey: getModKey(event)
+					};
+					vscode.postMessage(msg);
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 		}
 

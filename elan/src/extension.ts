@@ -33,7 +33,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		new vscode.ProcessExecution(`${compilerPath}bc.exe`, ["${fileDirname}\\${fileBasename}", "${workspaceFolder}"]),
 	);
 
-	buildTask.group = {id: vscode.TaskGroup.Build.id, isDefault : true}; //   vscode.TaskGroup.Build;
+	buildTask.group = {id: vscode.TaskGroup.Build.id, isDefault : true}; 
 
 	const runTask = new vscode.Task(
 		{ type: 'process' },
@@ -42,6 +42,8 @@ export async function activate(context: vscode.ExtensionContext) {
 		'elan',  
 		new vscode.ProcessExecution("${workspaceFolder}\\obj\\bin\\Debug\\net7.0\\${fileBasenameNoExtension}.exe", []),
 	);
+
+	runTask.group = vscode.TaskGroup.Test;
 
 	vscode.tasks.registerTaskProvider('elan', {
 		provideTasks: () => {
