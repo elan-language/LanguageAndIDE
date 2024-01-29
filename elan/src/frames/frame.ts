@@ -35,4 +35,6 @@ export interface Frame {
     isCollapsed() : boolean;
     collapse() : void;
     expand() : void;
+
+    isComplete() : boolean;
 }

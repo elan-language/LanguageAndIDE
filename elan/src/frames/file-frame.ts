@@ -305,4 +305,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             frame.enterText(key);
         }
     }
+
+    override isComplete(): boolean {
+        return this.globals.map(g => g.isComplete()).reduce((p, c) => p && c);
+    }
 }

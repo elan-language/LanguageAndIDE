@@ -171,4 +171,8 @@ export abstract class AbstractFrame implements Frame {
     defocus(): void {
         this.focused = false;
     }
+
+    isComplete(): boolean {
+        return true;
+    }
 }
