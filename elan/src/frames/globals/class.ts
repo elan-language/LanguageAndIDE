@@ -4,7 +4,7 @@ import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
-import { MemberSelector } from "../class-members/member-selector";
+import { SelectMember } from "../text-fields/select-member";
 import { Frame } from "../frame";
 import { HasChildren } from "../has-children";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
@@ -27,7 +27,7 @@ export class Class extends CodeFrame implements Global, HasChildren {
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
         this.addMemberAtEnd(new Constructor(this.getParent()));
-        this.addMemberAtEnd(new MemberSelector(this.getParent()));
+        this.addMemberAtEnd(new SelectMember(this.getParent()));
         this.addMemberAtEnd(new AsString(this.getParent()));
     }
 
