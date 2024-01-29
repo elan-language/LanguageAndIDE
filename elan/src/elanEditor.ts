@@ -25,6 +25,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private static readonly viewType = 'elan.elanEditor';
 
 	private frameModel?: FileFrame;
+	private currentSource = "";
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -49,12 +50,13 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (!document.getText() && !this.frameModel) {
+		if (!this.frameModel) {
 			const name = document.fileName;
 			const arr = name.split("\\");
 			const fn = arr[arr.length - 1].split(".")[0];
 
 			this.frameModel = getTestFrame(fn);
+			this.currentSource = this.frameModel?.renderAsSource();
 		}
 
 		function updateWebview(fm: Frame) {
@@ -62,6 +64,24 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				type: 'update',
 				text: fm.renderAsHtml(),
 			});
+		}
+
+		function updateSource(fm: Frame, currentSource: string) {
+
+			const source = fm.renderAsSource();
+			if (currentSource !== source) {
+
+				const edit = new vscode.WorkspaceEdit();
+
+				// Just replace the entire document every time for this example extension.
+				// A more complete extension should compute minimal edits instead.
+				edit.replace(
+					document.uri,
+					new vscode.Range(0, 0, document.lineCount, 0),
+					source);
+
+				vscode.workspace.applyEdit(edit);
+			}
 		}
 
 		// Hook up event handlers so that we can synchronize the webview with the text document.
@@ -81,6 +101,8 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		// Make sure we get rid of the listener when our editor is closed.
 		webviewPanel.onDidDispose(() => {
 			changeDocumentSubscription.dispose();
+			this.frameModel = undefined;
+			this.currentSource = "";
 		});
 
 		// Receive message from the webview.
@@ -97,6 +119,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				case 'key':
 					this.handleKey(e);
 					updateWebview(this.frameModel!);
+					updateSource(this.frameModel!, this.currentSource);
 					return;
 			}
 		});

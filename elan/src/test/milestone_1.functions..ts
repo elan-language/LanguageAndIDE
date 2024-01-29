@@ -317,5 +317,10 @@ end function
 */
 
 export function getTestFrame(fn : string) : FileFrame {
-    return eval(`${fn}()`);
+	try {
+    	return eval(`${fn}()`);
+	}
+	catch (e){
+		return new FileFrame();
+	}
 }
