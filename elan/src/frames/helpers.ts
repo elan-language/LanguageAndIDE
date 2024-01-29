@@ -2,6 +2,7 @@ import { Frame } from "./frame";
 import { Statement } from "./statements/statement";
 import { Global } from "./globals/global";
 import { Member } from "./class-members/member";
+import { Text } from "./text-fields/text"; 
 
 var id = 0;
 export function nextId() {
@@ -23,6 +24,11 @@ export function isStatement(f?: Frame): f is Statement {
 export function isMember(f?: Frame): f is Member {
     return !!f && 'isMember' in f;
 } 
+
+export function isText(f?: Frame): f is Text {
+    return !!f && 'enterText' in f;
+} 
+
 export function singleIndent() {
     return "  ";
 }

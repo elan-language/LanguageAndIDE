@@ -198,8 +198,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.frameModel?.selectByID(e.id!);
 				break;
 			}
+			default:
+				this.frameModel?.handleInput(e.id!, e.key!);
 		}
-	}
+	}	
 
 	private handleWindowKey(e: editorEvent) {
 		switch (e.key) {

@@ -2,7 +2,7 @@ import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { HasChildren } from "./has-children";
-import { isGlobal, isMember, isStatement, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
+import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 
 export class FileFrame extends AbstractFrame implements HasChildren {
     parent: Frame;
@@ -285,5 +285,12 @@ export class FileFrame extends AbstractFrame implements HasChildren {
 
     selectLast() {
         this.globals[this.globals.length - 1].select(true);
+    }
+
+    handleInput(id: string, key: string) {
+        const frame = this.getFrameMap().get(id);
+        if (isText(frame)){
+            frame.enterText(key);
+        }
     }
 }

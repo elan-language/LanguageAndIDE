@@ -85,6 +85,25 @@
 			});
 		}
 
+		const input = document.querySelector('input');
+
+		if (input) {
+			const id = input.parentElement.id;
+		
+			input.addEventListener('keydown', event => {
+				const msg = {
+					type: 'key',
+					target: "text",
+					id: id,
+					key: event.key,
+					modKey: getModKey(event)
+				};
+				vscode.postMessage(msg);
+				event.preventDefault();
+				event.stopPropagation();
+			});
+		}
+
 		const pluses = document.getElementsByTagName('expand');
 
 		for (var field of pluses) {
@@ -149,7 +168,10 @@
 			});
 		}
 
-		if (focused) {
+		if (input) {
+			input.focus();
+		}
+		else if (focused) {
 			focused.focus();
 		}
 		else {

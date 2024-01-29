@@ -14,17 +14,20 @@ export abstract class Text extends CodeFrame {
         this.prompt = prompt;
     }
 
-    public contentAsHtml() : string {
-       if (this.text) {
-        var c = this.replaceAngleBrackets(this.text);
-        if (this.useHtmlTags) {
-            c = this.tagTypeNames(c);
-            c = this.tagKeywords(c);
+    public contentAsHtml(): string {
+        if (this.isSelected()) {
+            return `<input value="${this.text || this.prompt}">`;
         }
-        return c;
-       } else {
-        return this.prompt;
-       }
+        if (this.text) {
+            var c = this.replaceAngleBrackets(this.text);
+            if (this.useHtmlTags) {
+                c = this.tagTypeNames(c);
+                c = this.tagKeywords(c);
+            }
+            return c;
+        } else {
+            return this.prompt;
+        }
     }
 
     public contentAsSource() : string {
