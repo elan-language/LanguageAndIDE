@@ -91,16 +91,18 @@
 			const id = input.parentElement.id;
 		
 			input.addEventListener('keydown', event => {
-				const msg = {
-					type: 'key',
-					target: "text",
-					id: id,
-					key: event.key,
-					modKey: getModKey(event)
-				};
-				vscode.postMessage(msg);
-				event.preventDefault();
-				event.stopPropagation();
+				if (event.key !== "Tab") {
+					const msg = {
+						type: 'key',
+						target: "text",
+						id: id,
+						key: event.key,
+						modKey: getModKey(event)
+					};
+					vscode.postMessage(msg);
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 		}
 
