@@ -1,27 +1,26 @@
 import { PlainText } from "../text-fields/plain_text";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Global } from "./global";
 import { Frame } from "../frame";
 
-export class GlobalSelector extends AbstractFrame implements Global {
-    text: PlainText = new PlainText("main, procedure, function, constant ...");
+export class GlobalSelector extends CodeFrame implements Global {
+    isGlobal = true;
+    text: PlainText;
 
-    constructor() {
-        super();
-        this.htmlId = `globalSelect${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.text = new PlainText(this);
+        this.text.setPrompt("main, procedure, function, constant ...");
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'globalSelect';
     }
 
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
     }
-
-    isGlobal = true;
 
     //TODO: include Comment option
     renderAsHtml(): string {

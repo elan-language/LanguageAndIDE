@@ -1,22 +1,19 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 
-export class GlobalComment extends AbstractFrame implements Global {
+export class GlobalComment extends CodeFrame implements Global {
+    isGlobal = true;
+    public text: PlainText;
 
-    public text: PlainText = new PlainText("");
-
-    constructor() {
-        super();
-        this.htmlId = `com${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.text = new PlainText(this);
     }
 
-    isGlobal = true;
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'com';
     }
 
     public override selectFirstText(): boolean {

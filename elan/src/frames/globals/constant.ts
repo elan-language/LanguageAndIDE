@@ -2,30 +2,29 @@
 import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
 import { Global } from "./global";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class Constant extends AbstractFrame implements Global {
+export class Constant extends CodeFrame implements Global {
+    isGlobal = true;
+    name: Identifier;
+    expr: Expression;
 
-    name: Identifier = new Identifier("name");
-    expr: Expression = new Expression("literal value");
 
-    constructor() {
-        super();
-        this.htmlId = `const${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.name  = new Identifier(this);
+        this.expr = new Expression(this);
+        this.expr.setPrompt("literal value");
     }
 
-    isGlobal = true;
+    getPrefix(): string {
+        return 'const';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.expr.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {

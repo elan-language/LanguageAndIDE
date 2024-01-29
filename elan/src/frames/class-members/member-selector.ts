@@ -1,31 +1,26 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 import { PlainText } from "../text-fields/plain_text";
-import { Member, Role } from "./member";
+import { Member} from "./member";
 
-export class MemberSelector extends AbstractFrame implements Member {
-    text: PlainText = new PlainText("member");
-
-    constructor() {
-        super();
-        this.htmlId = `memberSelect${this.nextId()}`;
+export class MemberSelector extends CodeFrame implements Member {
+    isMember = true;
+    text: PlainText;
+    
+    constructor(parent: Frame) {
+        super(parent);
+        this.text = new PlainText(this);
+        this.text.setPrompt("member");
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'memberSelect';
     }
 
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
-    }
-
-    isMember = true;
-
-    currentRole(): Role {
-        return Role.member;
     }
 
     renderAsHtml(): string {

@@ -5,21 +5,18 @@ import { Catch } from "../clauses/catch";
 import { Frame } from "../frame";
 
 export class TryCatch extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-
-    constructor() {
-        super();
-        this.htmlId = `try${this.nextId()}`;
+    isStatement = true;
+    
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.statements.push(new Catch(this));
+        this.statements.push(new StatementSelector(this));
     }
     
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.addStatement(new Catch());
-        this.addStatement(new StatementSelector());
+    getPrefix(): string {
+        return 'try';
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

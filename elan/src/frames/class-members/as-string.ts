@@ -1,9 +1,11 @@
+import { Frame } from "../frame";
 import { FunctionMethod } from "./function-method";
 
 export class AsString extends FunctionMethod {
 
-    constructor() {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
+        this.statements.splice(0,1);
     }
 
     public renderAsHtml(): string {

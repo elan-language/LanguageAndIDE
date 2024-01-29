@@ -6,28 +6,28 @@ import { Integer } from "../text-fields/integer";
 import { Frame } from "../frame";
 
 export class For extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    variable: Identifier = new Identifier("variableName");
-    from: Expression = new Expression("integer value or expression");
-    to: Expression = new Expression("integer value or expression");
-    step: Integer = new Integer("");
+    isStatement = true;
+    variable: Identifier;
+    from: Expression;
+    to: Expression;
+    step: Integer;
 
-    constructor() {
-        super();
-        this.htmlId = `for${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.variable = new Identifier(this);
+        this.variable.setPrompt("variableName");
+        this.from = new Expression(this);
+        this.from.setPrompt("integer value or expression");
+        this.to = new Expression(this);
+        this.to.setPrompt("integer value or expression");
+        this.step = new Integer(this);
         this.step.enterText("1");
     }
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
-        this.from.initialize(frameMap, this);
-        this.to.initialize(frameMap, this);
-        this.step.initialize(frameMap, this);
-    }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'for';
+     }
 
     public override selectFirstText(): boolean {
         this.variable.select(true);

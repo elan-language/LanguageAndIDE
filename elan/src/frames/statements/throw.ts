@@ -1,28 +1,24 @@
 import { Statement } from "./statement";
 import { ExceptionMessage } from "../text-fields/exception-message";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class Throw extends AbstractFrame implements Statement {
-    text: ExceptionMessage = new ExceptionMessage();
+export class Throw extends CodeFrame implements Statement {
+    isStatement = true;
+    text: ExceptionMessage;
 
-    constructor() {
-        super();
-        this.htmlId = `throw${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.text = new ExceptionMessage(this);
     }
-
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'throw';
     }
 
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>throw </keyword>${this.text.renderAsHtml()}</statement>`;

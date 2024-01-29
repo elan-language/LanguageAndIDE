@@ -1,4 +1,4 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Global } from "./global";
 import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
@@ -11,19 +11,28 @@ import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from ".
 import { TypeList } from "../text-fields/type-list";
 
 
-export class Class extends AbstractFrame implements Global, HasChildren {
-
-    public name: Type = new Type("class name");
+export class Class extends CodeFrame implements Global, HasChildren {
+    isGlobal = true;
+    public name: Type;
     private members: Array<Member> = new Array<Member>();
     public abstract: boolean = false;
     public immutable: boolean = false;
     public inherits: boolean = false;
-    public superClasses: TypeList = new TypeList();
+    public superClasses: TypeList;
 
-    constructor() {
-        super();
-        this.htmlId = `class${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.name = new Type(this);
+        this.name.setPrompt("class name");
+        this.superClasses  = new TypeList(this);
+        this.addMemberAtEnd(new Constructor(this.getParent()));
+        this.addMemberAtEnd(new MemberSelector(this.getParent()));
+        this.addMemberAtEnd(new AsString(this.getParent()));
+    }
+
+    getPrefix(): string {
+        return 'class';
     }
 
     private get constr() {
@@ -68,16 +77,6 @@ export class Class extends AbstractFrame implements Global, HasChildren {
         selectChildRange(this.members);
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.addFixedMember(new Constructor());
-        this.addFixedMember(new MemberSelector());
-        this.addFixedMember(new AsString());
-        this.name.initialize(frameMap, this);
-    }
-
-    isGlobal = true;
-
     private modifiersAsHtml(): string {
         return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
     }
@@ -120,15 +119,27 @@ ${members}\r
 end class\r\n`;
     }
 
-    private addFixedMember(m: Member) {
-        m.initialize(this.frameMap, this);
+    private addMemberAtEnd(m: Member) {
         this.members.push(m);
     }
 
-    public addMember(m: Member) {
-        m.initialize(this.frameMap, this);
-        const asString = this.members.pop();
-        this.members.push(m);
-        this.members.push(asString!);
+    public addMemberBeforeAsString(m: Member) {
+        var i = this.members.length - 1;
+        this.members.splice(i,0,m);
+    }
+
+    public addMemberBefore(m: Member, before: Member) {
+        var i = this.members.indexOf(before);
+        this.members.splice(i,0,m);
+    }
+
+    public addMemberAfter(m: Member, after: Member) {
+        var i = this.members.indexOf(after) + 1;
+        this.members.splice(i,0,m);      
+    }
+
+    public removeMember(m: Member) {
+        var i = this.members.indexOf(m);
+        this.members.splice(i,1);    
     }
 }

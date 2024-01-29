@@ -1,13 +1,16 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
+import { Frame } from "../frame";
 
-export abstract class Text extends AbstractFrame {
-    public htmlId: string = "";
+export abstract class Text extends CodeFrame {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
 
-    constructor(prompt: string) {
-        super();
+    constructor(parent: Frame) {
+        super(parent);
+    }
+
+    setPrompt(prompt: string): void {
         this.prompt = prompt;
     }
 

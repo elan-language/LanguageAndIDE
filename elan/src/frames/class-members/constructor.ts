@@ -1,21 +1,19 @@
 import { Frame } from "../frame";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../text-fields/param-list";
-import { Member, Role } from "./member";
+import { Member } from "./member";
 
 export class Constructor extends FrameWithStatements implements Member {
-    public params: ParamList = new ParamList();
-    public htmlId: string = "";
+    isMember = true;
+    public params: ParamList = new ParamList(this.getParent());
 
-    constructor() {
-        super();
-        this.htmlId = `constructor${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.params.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'constructor';
     }
 
     public override selectFirstText(): boolean {
@@ -23,11 +21,6 @@ export class Constructor extends FrameWithStatements implements Member {
         return true;
     }
 
-    isMember = true;
-
-    currentRole(): Role {
-        return Role.member;
-    }
 
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">

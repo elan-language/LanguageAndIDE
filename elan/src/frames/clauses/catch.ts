@@ -1,28 +1,27 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 
-export class Catch extends AbstractFrame implements Statement {
-    variable: Identifier = new Identifier("variableName");
+export class Catch extends CodeFrame implements Statement {
+    isStatement = true;
+    variable: Identifier;
 
-    constructor() {
-        super();
-        this.htmlId = `catch${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.variable  = new Identifier(this);
+        this.variable.setPrompt("variableName");
         this.variable.enterText("e");
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'catch';
     }
 
     public override selectFirstText(): boolean {
         this.variable.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;

@@ -1,28 +1,25 @@
 import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class ReturnStatement extends AbstractFrame implements Statement {
-    expr: Expression = new Expression("expression");
+export class ReturnStatement extends CodeFrame implements Statement {   
+    isStatement = true;
+    expr: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `return${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.expr = new Expression(this);
     }
 
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.expr.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'return';
     }
 
     public override selectFirstText(): boolean {
         this.expr.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;

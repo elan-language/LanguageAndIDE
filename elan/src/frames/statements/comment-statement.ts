@@ -1,28 +1,26 @@
 import { Statement } from "./statement";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Frame } from "../frame";
-import { Member, Role } from "../class-members/member";
+import { Member} from "../class-members/member";
 
-export class CommentStatement extends AbstractFrame implements Statement, Member {
-
-    public text: PlainText = new PlainText("");
-
-    constructor() {
-        super();
-        this.htmlId = `com${this.nextId()}`;
-    }
+export class CommentStatement extends CodeFrame implements Statement, Member {
     isStatement = true;
     isMember = true;
+    public text: PlainText;
+
+    constructor(parent: Frame) {
+        super(parent);
+        this.text= new PlainText(this);
+    }
+
+    getPrefix(): string {
+        return 'com';
+    }
 
     public override selectFirstText(): boolean {
         this.text.select(true);
         return true;
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.text.initialize(frameMap, this);
     }
 
     renderAsHtml(): string {
@@ -31,9 +29,5 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
 
     renderAsSource(): string {
         return `${this.indent()}# ${this.text.renderAsSource()}`;
-    }
- 
-    currentRole(): Role {
-        return Role.member;
     }
 }

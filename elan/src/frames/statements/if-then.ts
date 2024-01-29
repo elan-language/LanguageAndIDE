@@ -4,19 +4,14 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
 export class IfThen extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    condition: Expression = new Expression("iterable value or expression");
+    isStatement = true;
+    condition: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `if${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
-    }
-
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.condition.initialize(frameMap, this);
+        this.condition = new Expression(this);
+        this.condition.setPrompt("condition");
     }
 
     public override selectFirstText(): boolean {
@@ -24,7 +19,9 @@ export class IfThen extends FrameWithStatements implements Statement {
         return true;
     }
 
-    isStatement = true;
+    getPrefix(): string {
+        return 'if';
+    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

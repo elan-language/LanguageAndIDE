@@ -1,26 +1,25 @@
 import { Global } from "./global";
 import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 
-export class Enum extends AbstractFrame implements Global {
-    name: Type = new Type("Name");
-    values: EnumValues = new EnumValues();
+export class Enum extends CodeFrame implements Global {
+    isGlobal = true;
+    name: Type;
+    values: EnumValues;
 
-    constructor() {
-        super();
-        this.htmlId = `enum${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.name = new Type(this);
+        this.name.setPrompt("Name");
+        this.values = new EnumValues(this);
     }
 
-    isGlobal = true;
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.values.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'enum';
     }
 
     public override selectFirstText(): boolean {

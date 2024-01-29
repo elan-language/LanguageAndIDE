@@ -4,27 +4,23 @@ import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
     
-
     private _frameMap?: Map<string, Frame>;
-    private parent?: Frame;
+    abstract parent: Frame;
+    protected htmlId: string = "";
 
-    initialize(frameMap: Map<string, Frame>, parent?: Frame,): void {
-        this.parent = parent;
-        this._frameMap = frameMap;
-        if (!this.htmlId) {
-            throw new Error(`Frame htmlId not set ${typeof this}`);
-        }
-        this.frameMap.set(this.htmlId, this);
-    }
-
-    get frameMap() {
+    getFrameMap(): Map<string, Frame> {
         if (this._frameMap) {
             return this._frameMap;
         }
         throw new Error(`Frame : ${this.htmlId} not initialised`);
     }
 
-    protected htmlId: string = "";
+    setFrameMap(frameMap: Map<string, Frame>) {
+        this._frameMap = frameMap;
+    }
+
+    abstract getPrefix(): string;
+
     protected multiline: boolean = false;
     private selected: boolean = false;
     private focused: boolean = false;
@@ -98,7 +94,7 @@ export abstract class AbstractFrame implements Frame {
         this.parent = parent;
     }
 
-    getParent(): Frame | undefined {
+    getParent(): Frame {
         return this.parent;
     }
 

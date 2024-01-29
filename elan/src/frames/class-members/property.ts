@@ -1,34 +1,28 @@
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
-import { Member, Role } from "./member";
+import { Member } from "./member";
 
-export class Property extends AbstractFrame implements Member {
-    name: Identifier = new Identifier("name");
-    type: Type = new Type("Type");
+export class Property extends CodeFrame implements Member {
+    isMember = true;
+    name: Identifier;
+    type: Type;
     public private: boolean = false;
 
-    constructor() {
-        super();
-        this.htmlId = `prop${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.name = new Identifier(this);
+        this.type = new Type(this);
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.type.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'prop';
     }
-
-    isMember = true;
 
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
-    }
-
-    currentRole(): Role {
-        return Role.member;
     }
 
     private modifierAsHtml(): string {

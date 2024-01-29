@@ -1,22 +1,17 @@
-import { AbstractFrame } from "./abstract-frame";
+import { CodeFrame } from "./code-frame";
 import { Frame } from "./frame";
 import { HasChildren } from "./has-children";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
 import { StatementSelector } from "./statements/statement-selector";
 
-export abstract class FrameWithStatements extends AbstractFrame implements HasChildren {
+export abstract class FrameWithStatements extends CodeFrame implements HasChildren {
     protected statements: Array<Statement> = new Array<Statement>();
 
-    constructor() {
-        super();   
+    constructor(parent: Frame) {
+        super(parent);   
+        this.statements.push(new StatementSelector(this));
     }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.addStatement(new StatementSelector());
-    }
-
     hasChildren(): boolean {
         return true;
     }
@@ -65,11 +60,26 @@ export abstract class FrameWithStatements extends AbstractFrame implements HasCh
         return ss.join("\r\n");
     }
 
-    public addStatement(s : Statement) {
-        s.initialize(this.frameMap, this);
+    public addStatementAtEnd(s: Statement) {
         this.statements.push(s);
     }
 
+    public addStatementBefore(s: Statement, before: Statement) {
+        var i = this.statements.indexOf(before);
+        this.statements.splice(i, 0, s);
+    }
+
+    public addStatementAfter(s: Statement, after: Statement) {
+        var i = this.statements.indexOf(after) + 1;
+        this.statements.splice(i, 0, s);   
+    }
+
+    public removeStatement(s: Statement) {
+        var i = this.statements.indexOf(s);
+        this.statements.splice(i, 1);   
+    }
+
+    //TODO: This is a kludge method, since all selectors should be removed automatically once frame has exited provided there is at least one statement
     public removeStatementSelector(): void {
         this.statements.splice(0,1);
     }

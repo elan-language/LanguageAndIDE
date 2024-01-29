@@ -1,9 +1,13 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
+export class EnumValues extends Text {   
+    constructor(parent: Frame) {
+        super(parent);
+        this.setPrompt("values");
+    }
 
-export class EnumValues extends Text {
-    constructor() {
-        super("values");
-        this.htmlId = `enumVals${this.nextId()}`;
+    getPrefix(): string {
+        return 'enumVals';
     }
 }

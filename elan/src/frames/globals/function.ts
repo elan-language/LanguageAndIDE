@@ -2,57 +2,43 @@ import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { Type } from "../text-fields/type";
-import { Member, Role } from "../class-members/member";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
-import { FileFrame } from "../file-frame";
 
 export class Function extends FrameWithStatements implements Global {
+    isGlobal = true;
+    public name : Identifier;
+    public params: ParamList;
+    public returnType: Type;
 
-    public htmlId : string ="";
-    public name : Identifier = new Identifier("name");
-    public params: ParamList = new ParamList();
-    public returnType: Type = new Type("return type");
-
-    constructor() {
-        super();
-        this.htmlId = `func${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.name = new Identifier(this);
+        this.params = new ParamList(this);
+        this.returnType = new Type(this);
+        this.returnType.setPrompt("return type");
+        this.statements.push(new ReturnStatement(this));
+    }
+
+    getPrefix(): string {
+        return 'func';
     }
 
     get returnStatement() {
         return this.statements[this.statements.length -1] as ReturnStatement;
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.addFixedStatement(new ReturnStatement);
-        this.name.initialize(frameMap, this);
-        this.params.initialize(frameMap, this);
-        this.returnType.initialize(frameMap, this);
-    }
-
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
     }
-    
-    isGlobal = true;
 
-    public override addStatement(s: Statement): void {
-        s.initialize(this.frameMap, this);
-        const rs = this.statements.pop();
-        this.statements.push(s);
-        if (rs) {
-            this.statements.push(rs);
-        }
-    }
-
-    public addFixedStatement(s: Statement): void {
-        s.initialize(this.frameMap, this);
-        this.statements.push(s);
+    public addStatementBeforeReturn(s: Statement): void {
+        var i = this.statements.length -1;
+        this.statements.splice(i,0,s);
     }
 
     public renderAsHtml() : string {

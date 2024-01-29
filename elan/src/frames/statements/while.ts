@@ -3,28 +3,25 @@ import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 
-export class While extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    condition: Expression = new Expression("expression");
+export class While extends FrameWithStatements implements Statement { 
+    isStatement = true;
+    condition: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `while${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.condition = new Expression(this);
+        this.condition.setPrompt("condition");
     }
 
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.condition.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'while';
     }
 
     public override selectFirstText(): boolean {
         this.condition.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">

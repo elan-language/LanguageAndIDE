@@ -1,21 +1,22 @@
 
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Expression } from "../text-fields/expression";
 
-export class Else extends AbstractFrame implements Statement {
+export class Else extends CodeFrame implements Statement {
+    isStatement = true;
     hasIf: boolean = false;
-    condition: Expression = new Expression("condition");
+    condition: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `else${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.condition = new Expression(this);
+        this.condition.setPrompt("condition");
     }
 
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.condition.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'else';
     }
 
     public override selectFirstText(): boolean {
@@ -30,8 +31,6 @@ export class Else extends AbstractFrame implements Statement {
     private ifClauseAsSource() : string {
         return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:``;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else</keyword>${this.ifClauseAsHtml()}</clause>`;

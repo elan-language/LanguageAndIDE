@@ -18,8 +18,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectFirst();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "const2", '');
-		assertElementsById(postDom, "const2", 'selected focused');
+		assertElementsById(preDom, "const0", '');
+		assertElementsById(postDom, "const0", 'selected focused');
 	});
 
 	test('SelectLast', () => {
@@ -28,8 +28,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectLast();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "enum21", 'multiline');
-		assertElementsById(postDom, "enum21", 'multiline selected focused');
+		assertElementsById(preDom, "enum19", 'multiline');
+		assertElementsById(postDom, "enum19", 'multiline selected focused');
 	});
 
 	test('SelectFirstChild', () => {
@@ -45,31 +45,31 @@ suite('Milestone 1 - Unit tests', () => {
 	test('SelectNextTextByID', () => {
 		const ff = T03_mainWithAllStatements();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectNextTextByID("var5");
+		ff.selectNextTextByID("var3");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "ident3", 'empty');
-		assertElementsById(postDom, "ident3", 'selected focused empty');
+		assertElementsById(preDom, "ident4", 'empty');
+		assertElementsById(postDom, "ident4", 'selected focused empty');
 	});
 
 	test('SelectLastByID Global', () => {
 		const ff = T04_allGlobalsExceptClass();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectLastByID("const2");
+		ff.selectLastByID("const0");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "enum21", 'multiline');
-		assertElementsById(postDom, "enum21", 'multiline selected focused');
+		assertElementsById(preDom, "enum19", 'multiline');
+		assertElementsById(postDom, "enum19", 'multiline selected focused');
 	});
 
 	test('SelectLastByID Statement', () => {
 		const ff = T04_allGlobalsExceptClass();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectLastByID("statementSelect16");
+		ff.selectLastByID("statementSelect12");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "return18", '');
-		assertElementsById(postDom, "return18", 'selected focused');
+		assertElementsById(preDom, "return17", '');
+		assertElementsById(postDom, "return17", 'selected focused');
 	});
 
 	// test('SelectLastByID Member', () => {

@@ -1,9 +1,13 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
-
 export class Identifier extends Text {
-    constructor(prompt: string) {
-        super(prompt);
-        this.htmlId = `ident${this.nextId()}`;
+    getPrefix(): string {
+        return 'ident';
+    }
+    
+    constructor(parent: Frame) {
+        super(parent);
+        this.setPrompt("name");
     }
 }

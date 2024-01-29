@@ -1,30 +1,24 @@
 import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
-import { Member, Role } from "../class-members/member";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
-import { FileFrame } from "../file-frame";
 
 export class Procedure extends FrameWithStatements implements Global {
-
-    public htmlId : string ="";
-    public name : Identifier = new Identifier("name");
-    public params: ParamList = new ParamList();
-
-    constructor() {
-        super();
-        this.htmlId = `proc${this.nextId()}`;
-        this.multiline = true;
-    }
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.params.initialize(frameMap, this);
-    }
-
     isGlobal = true;
+    public name : Identifier;
+    public params: ParamList;
+
+    constructor(parent: Frame) {
+        super(parent);
+        this.multiline = true;
+        this.name = new Identifier(this);
+        this.params = new ParamList(this);
+    }
+
+    getPrefix(): string {
+        return 'proc';
+    }
 
     public override selectFirstText(): boolean {
         this.name.select(true);

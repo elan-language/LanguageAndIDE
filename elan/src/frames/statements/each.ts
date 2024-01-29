@@ -5,22 +5,21 @@ import { Identifier } from "../text-fields/identifier";
 import { Frame } from "../frame";
 
 export class Each extends FrameWithStatements implements Statement {
-    htmlId: string = "";
-    variable: Identifier = new Identifier("variableName");
-    iter: Expression = new Expression("iterable value or expression");
+    isStatement = true;
+    variable: Identifier;
+    iter: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `each${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
         this.multiline = true;
+        this.variable = new Identifier(this);
+        this.variable.setPrompt("variableName");
+        this.iter = new Expression(this);
+        this.iter.setPrompt("iterable value or expression");
     }
 
-    isStatement = true;
-    
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.variable.initialize(frameMap, this);
-        this.iter.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'each';
     }
 
     public override selectFirstText(): boolean {

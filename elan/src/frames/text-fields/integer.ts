@@ -1,9 +1,8 @@
+import { Frame } from "../frame";
 import { Text } from "./text";
 
-
 export class Integer extends Text {
-    constructor(prompt: string) {
-        super(prompt);
-        this.htmlId = `int${this.nextId()}`;
+    getPrefix(): string {
+        return `int`;
     }
 }

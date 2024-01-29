@@ -1,31 +1,29 @@
 import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class SetStatement extends AbstractFrame implements Statement {
-    name: Identifier = new Identifier("variableName");
-    expr: Expression = new Expression("expression");
+export class SetStatement extends CodeFrame implements Statement {
+    isStatement = true;
+    name: Identifier;;
+    expr: Expression;
 
-    constructor() {
-        super();
-        this.htmlId = `set${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.name = new Identifier(this);
+        this.name.setPrompt("variableName");
+        this.expr = new Expression(this);
     }
     
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.name.initialize(frameMap, this);
-        this.expr.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'set';
     }
 
     public override selectFirstText(): boolean {
         this.name.select(true);
         return true;
     }
-
-    isStatement = true;
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.name.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;

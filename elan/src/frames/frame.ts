@@ -1,10 +1,10 @@
 
 export interface Frame {
+    getFrameMap(): Map<string, Frame>;
+    
     renderAsHtml(): string;
     indent(): string;
     renderAsSource(): string;
-
-    initialize(frameMap : Map<string, Frame>, parent?: Frame) : void;
 
     isSelected() : boolean;
     select(withFocus: boolean, multiSelect?: boolean): void;

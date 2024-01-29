@@ -1,16 +1,19 @@
 import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { ArgList } from "../text-fields/arg-list";
-import { AbstractFrame } from "../abstract-frame";
+import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 
-export class Call extends AbstractFrame implements Statement {
-    proc: Identifier = new Identifier("procedureName");
-    args: ArgList = new ArgList();
+export class Call extends CodeFrame implements Statement {
+    isStatement = true;
+    proc: Identifier;
+    args: ArgList;
 
-    constructor() {
-        super();
-        this.htmlId = `call${this.nextId()}`;
+    constructor(parent: Frame) {
+        super(parent);
+        this.proc = new Identifier(this);
+        this.proc.setPrompt("procedureName");
+        this.args = new ArgList(this);
     }
 
     public override selectFirstText(): boolean {
@@ -18,12 +21,8 @@ export class Call extends AbstractFrame implements Statement {
         return true;
     }
 
-    isStatement = true;
-
-    public override initialize(frameMap: Map<string, Frame>, parent?: Frame | undefined): void {
-        super.initialize(frameMap, parent);
-        this.proc.initialize(frameMap, this);
-        this.args.initialize(frameMap, this);
+    getPrefix(): string {
+        return 'call';
     }
 
     renderAsHtml(): string {
