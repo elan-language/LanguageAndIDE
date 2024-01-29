@@ -26,6 +26,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private frameModel?: FileFrame;
 	private currentSource = "";
+	private currentFile = "";
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -50,13 +51,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (!this.frameModel) {
+		if (this.currentFile !== document.fileName || !this.frameModel) {
 			const name = document.fileName;
 			const arr = name.split("\\");
 			const fn = arr[arr.length - 1].split(".")[0];
 
 			this.frameModel = getTestFrame(fn);
 			this.currentSource = this.frameModel?.renderAsSource();
+			this.currentFile = document.fileName;
 		}
 
 		function updateWebview(fm: Frame) {
