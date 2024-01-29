@@ -90,9 +90,9 @@
 		for (var field of pluses) {
 			const id = field.parentElement.parentElement.id;
 
-			field.addEventListener('click', event => {
+			field.addEventListener('dblclick', event => {
 				const msg = {
-					type: 'click',
+					type: 'dblclick',
 					target: "expand",
 					id: id
 				};

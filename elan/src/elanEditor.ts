@@ -110,10 +110,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.frameModel?.selectByID(e.id!, e.modKey === "Shift");
 				break;
 			}
-			case 'expand': {
-				this.frameModel?.expandByID(e.id!);
-				break;
-			}
 		}
 	}
 
@@ -121,6 +117,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		switch (e.target) {
 			case 'frame': {
 				this.frameModel?.expandCollapseByID(e.id!);
+				break;
+			}
+			case 'expand': {
+				this.frameModel?.expandByID(e.id!);
 				break;
 			}
 		}
