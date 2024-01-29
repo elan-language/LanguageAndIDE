@@ -84,7 +84,7 @@ export abstract class Text extends CodeFrame {
     enterText(char: string): void {
         switch (char) {
             case 'Shift': {
-                break; //Do nothing
+                break;
             }
             case 'Backspace': {
                 this.text = this.text.substring(0, this.text.length-1);
