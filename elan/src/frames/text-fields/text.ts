@@ -16,10 +16,10 @@ export abstract class Text extends CodeFrame {
 
     public contentAsHtml(): string {
         if (this.isSelected()) {
-            return `<input value="${this.text || this.prompt}">`;
+            return `<input value="${this.escapeDoubleQuotes(this.text)}" placeholder="${this.prompt}">`;
         }
-        if (this.text) {
-            var c = this.replaceAngleBrackets(this.text);
+        if (this.text) { 
+            var c = this.escapeAngleBrackets(this.text);
             if (this.useHtmlTags) {
                 c = this.tagTypeNames(c);
                 c = this.tagKeywords(c);
@@ -30,6 +30,17 @@ export abstract class Text extends CodeFrame {
         }
     }
 
+    private escapeDoubleQuotes(str: string): string {
+        return str
+            .replace(/"/g, '&quot;');
+    }
+
+    private escapeAngleBrackets(str: string) : string {
+        return str
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
     public contentAsSource() : string {
         if (this.text) {
          return this.text;
@@ -38,9 +49,7 @@ export abstract class Text extends CodeFrame {
         }
      }
 
-    private replaceAngleBrackets(c: string) : string {
-        return c.replaceAll("<","&lt;").replaceAll(">","&gt;");
-    }
+
 
     private tagTypeNames(c: string) : string {
         return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');
@@ -72,7 +81,19 @@ export abstract class Text extends CodeFrame {
         return this.contentAsSource();
     }
 
-    enterText(text: string): void {
-		this.text = text;
+    enterText(char: string): void {
+        switch (char) {
+            case 'Shift': {
+                break; //Do nothing
+            }
+            case 'Backspace': {
+                this.text = this.text.substring(0, this.text.length-1);
+                break;
+            }
+            default :
+            {
+                this.text += char;
+            }
+        }
 	}
 }
