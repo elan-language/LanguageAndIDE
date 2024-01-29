@@ -39,10 +39,10 @@ export class SelectStatement extends Text implements Statement {
         return `${this.indent()}`;
     }
 
-    private addBeforeAndSelect(member: Statement) {
-        (this.parent as FrameWithStatements).addStatementBefore(member, this);
+    private addBeforeAndSelect(statement: Statement) {
+        (this.parent as FrameWithStatements).addStatementBefore(statement, this);
         this.deselectAll(); //TODO should happen automatically
-        member.select(true);
+        statement.select(true);
     }
 
     //call each for if print repeat set switch throw try var while
