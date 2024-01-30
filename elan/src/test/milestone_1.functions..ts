@@ -1,5 +1,5 @@
 import { Constant } from "../frames/globals/constant";
-import { FileFrame } from "../frames/file-frame";
+import { File } from "../frames/file";
 import { resetId } from "../frames/helpers";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
@@ -27,13 +27,13 @@ import {CommentStatement} from "../frames/statements/comment-statement";
 
 export function T00_emptyFile() {
 	resetId();
-	const f = new FileFrame();
+	const f = new File();
 	f.addGlobalToEnd(new SelectGlobal(f));
 	return f;
 }
 
 export function T01_helloWorld() {
-	const f = new FileFrame();
+	const f = new File();
 	const m = new MainFrame(f);
 	f.addGlobalToEnd(m);
 	m.removeStatementSelector();
@@ -47,7 +47,7 @@ export function T01_helloWorld() {
 }
 
 export function T02_comments() {
-	const f = new FileFrame();
+	const f = new File();
 	const sc1 = new GlobalComment(f);
 	sc1.text.enterText("Comment 1");
 	f.addGlobalToEnd(sc1);
@@ -61,7 +61,7 @@ export function T02_comments() {
 }
 
 export function T03_mainWithAllStatements() {
-	const f = new FileFrame();
+	const f = new File();
 	const m = new MainFrame(f);
 	f.addGlobalToEnd(m);
 	m.removeStatementSelector();
@@ -119,28 +119,28 @@ export function T03_mainWithAllStatements() {
 	return f;
 }
 
-export function T07_mainWithAllStatementsSelectMainById(f : FileFrame) {
+export function T07_mainWithAllStatementsSelectMainById(f : File) {
 	f.selectByID("main2", false);
 	return () => f;
 }
 
-export function T07_mainWithAllStatementsSelectStatementById(f : FileFrame) {
+export function T07_mainWithAllStatementsSelectStatementById(f : File) {
 	f.selectByID("for28", false);
 	return () => f;
 }
 
-export function T08_expandAll(f : FileFrame) {
+export function T08_expandAll(f : File) {
 	f.expandAll();
 	return () => f;
 }
 
-export function T08_collapseAll(f : FileFrame) {
+export function T08_collapseAll(f : File) {
 	f.collapseAll();
 	return () => f;
 }
 
 export function T04_allGlobalsExceptClass() {
-	const f = new FileFrame();
+	const f = new File();
 	const con = new Constant(f);
 	con.name.enterText("phi");
 	con.expr.enterText("1.618");
@@ -163,7 +163,7 @@ export function T04_allGlobalsExceptClass() {
 }
 
 export function T05_classes() {
-	const f = new FileFrame();
+	const f = new File();
 
 	const cl1 = new Class(f);
 	f.addGlobalToEnd(cl1);
@@ -202,7 +202,7 @@ end main */
 
 export function T06_mergeSort() {
 	resetId();
-	const f = new FileFrame();
+	const f = new File();
 		const main = new MainFrame(f);
 		f.addGlobalToEnd(main);
 		    main.removeStatementSelector();
@@ -316,11 +316,11 @@ end function */
 end function
 */
 
-export function getTestFrame(fn : string) : FileFrame {
+export function getTestFrame(fn : string) : File {
 	try {
     	return eval(`${fn}()`);
 	}
 	catch (e){
-		return new FileFrame();
+		return new File();
 	}
 }

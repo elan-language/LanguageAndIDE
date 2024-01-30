@@ -1,7 +1,7 @@
 import { Global } from "../globals/global";
 import { Frame } from "../frame";
 import { Text } from "./text";
-import { FileFrame } from "../file-frame";
+import { File } from "../file";
 import { MainFrame } from "../globals/main-frame";
 import { Function } from "../globals/function";
 import { Procedure } from "../globals/procedure";
@@ -35,7 +35,7 @@ export class SelectGlobal extends Text implements Global {
     } 
 
     private addBeforeAndSelect(global: Global) {
-        (this.parent as FileFrame).addGlobalBefore(global, this);
+        (this.parent as File).addGlobalBefore(global, this);
         this.deselectAll(); //TODO should happen automatically
         global.select(true, false);
     }

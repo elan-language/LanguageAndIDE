@@ -5,7 +5,7 @@ import { HasChildren } from "./has-children";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
 
-export class FileFrame extends AbstractFrame implements HasChildren {
+export class File extends AbstractFrame implements HasChildren {
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 

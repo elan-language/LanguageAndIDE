@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { getTestFrame } from './test/milestone_1.functions.';
-import { FileFrame } from './frames/file-frame';
+import { File } from './frames/file';
 import { Frame } from './frames/frame';
 import { setCurrentElanFile } from './extension';
 
@@ -24,7 +24,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-	private frameModel?: FileFrame;
+	private file?: File;
 	private currentSource = "";
 	private currentFile = "";
 
@@ -51,13 +51,13 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (this.currentFile !== document.fileName || !this.frameModel) {
+		if (this.currentFile !== document.fileName || !this.file) {
 			const name = document.fileName;
 			const arr = name.split("\\");
 			const fn = arr[arr.length - 1].split(".")[0];
 
-			this.frameModel = getTestFrame(fn);
-			this.currentSource = this.frameModel?.renderAsSource();
+			this.file = getTestFrame(fn);
+			this.currentSource = this.file?.renderAsSource();
 			this.currentFile = document.fileName;
 		}
 
@@ -96,14 +96,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
 			if (e.document.uri.toString() === document.uri.toString()) {
-				updateWebview(this.frameModel!);
+				updateWebview(this.file!);
 			}
 		});
 
 		// Make sure we get rid of the listener when our editor is closed.
 		webviewPanel.onDidDispose(() => {
 			changeDocumentSubscription.dispose();
-			this.frameModel = undefined;
+			this.file = undefined;
 			this.currentSource = "";
 		});
 
@@ -112,27 +112,27 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			switch (e.type) {
 				case 'click':
 					this.handleClick(e);
-					updateWebview(this.frameModel!);
+					updateWebview(this.file!);
 					return;
 				case 'dblclick':
 					this.handleDblClick(e);
-					updateWebview(this.frameModel!);
+					updateWebview(this.file!);
 					return;
 				case 'key':
 					this.handleKey(e);
-					updateWebview(this.frameModel!);
-					updateSource(this.frameModel!, this.currentSource);
+					updateWebview(this.file!);
+					updateSource(this.file!, this.currentSource);
 					return;
 			}
 		});
 
-		updateWebview(this.frameModel!);
+		updateWebview(this.file!);
 	}
 
 	private handleClick(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.frameModel?.selectByID(e.id!, e.modKey === "Shift");
+				this.file?.selectByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 		}
@@ -141,11 +141,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleDblClick(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.frameModel?.expandCollapseByID(e.id!);
+				this.file?.expandCollapseByID(e.id!);
 				break;
 			}
 			case 'expand': {
-				this.frameModel?.expandByID(e.id!);
+				this.file?.expandByID(e.id!);
 				break;
 			}
 		}
@@ -171,46 +171,46 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleFrameKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Escape': {
-				this.frameModel?.deselectAll();
+				this.file?.deselectAll();
 				break;
 			}
 			case 'ArrowUp': {
-				this.frameModel?.selectPreviousPeerByID(e.id!, e.modKey === "Shift");
+				this.file?.selectPreviousPeerByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 			case 'ArrowDown': {
-				this.frameModel?.selectNextPeerByID(e.id!, e.modKey === "Shift");
+				this.file?.selectNextPeerByID(e.id!, e.modKey === "Shift");
 				break;
 			}
 			case 'ArrowLeft': {
-				this.frameModel?.selectParentByID(e.id!);
+				this.file?.selectParentByID(e.id!);
 				break;
 			}
 			case 'ArrowRight': {
-				this.frameModel?.selectFirstChildByID(e.id!);
+				this.file?.selectFirstChildByID(e.id!);
 				break;
 			}
 			case 'Home': {
-				this.frameModel?.selectFirstByID(e.id!);
+				this.file?.selectFirstByID(e.id!);
 				break;
 			}
 			case 'End': {
-				this.frameModel?.selectLastByID(e.id!);
+				this.file?.selectLastByID(e.id!);
 				break;
 			}
 			case 'Tab': {
-				this.frameModel?.selectNextTextByID(e.id!);
+				this.file?.selectNextTextByID(e.id!);
 				break;
 			}
 			case 'o': {
 				if (e.modKey === "Control") {
-					this.frameModel?.expandCollapseByID(e.id!);
+					this.file?.expandCollapseByID(e.id!);
 				}
 				break;
 			}
 			case 'O': {
 				if (e.modKey === "Control") {
-					this.frameModel?.expandCollapseAllByID(e.id!);
+					this.file?.expandCollapseAllByID(e.id!);
 				}
 				break;
 			}
@@ -220,35 +220,35 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleTextKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Tab': {
-				this.frameModel?.selectByID(e.id!, false);
+				this.file?.selectByID(e.id!, false);
 				break;
 			}
 			default:
-				this.frameModel?.handleInput(e.id!, e.key!);
+				this.file?.handleInput(e.id!, e.key!);
 		}
 	}	
 
 	private handleWindowKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Home': {
-				this.frameModel?.selectFirst();
+				this.file?.selectFirst();
 				break;
 			}
 			case 'ArrowDown': {
-				this.frameModel?.selectFirst();
+				this.file?.selectFirst();
 				break;
 			}
 			case 'ArrowRight': {
-				this.frameModel?.selectFirst();
+				this.file?.selectFirst();
 				break;
 			}
 			case 'End': {
-				this.frameModel?.selectLast();
+				this.file?.selectLast();
 				break;
 			}
 			case 'O': {
 				if (e.modKey === "Control") {
-					this.frameModel?.expandCollapseAll();
+					this.file?.expandCollapseAll();
 				}
 				break;
 			}
