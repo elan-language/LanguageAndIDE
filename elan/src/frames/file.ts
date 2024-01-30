@@ -1,11 +1,11 @@
 import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
-import { HasChildren } from "./has-children";
+import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
 
-export class File extends AbstractFrame implements HasChildren {
+export class File extends AbstractFrame implements Parent {
     parent: Frame;
     private globals: Array<Global> = new Array<Global>();
 
@@ -83,7 +83,7 @@ export class File extends AbstractFrame implements HasChildren {
         this.globals.splice(i,1);    
     }
 
-    hasChildren(): boolean {
+    isParent(): boolean {
         return true;
     }
     

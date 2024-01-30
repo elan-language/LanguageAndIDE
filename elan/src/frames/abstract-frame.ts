@@ -1,5 +1,5 @@
 import { Frame } from "./frame";
-import { HasChildren } from "./has-children";
+import { Parent } from "./parent";
 import { nextId, singleIndent } from "./helpers";
 
 export abstract class AbstractFrame implements Frame {
@@ -75,7 +75,7 @@ export abstract class AbstractFrame implements Frame {
         this.focused = withFocus;
         if (multiSelect) {
             if (this.hasParent()) {
-                var p = this.parent as HasChildren;
+                var p = this.parent as Parent;
                 if (!p.isRangeSelecting()){
                     p.selectChildRange(multiSelect);
                 }
@@ -115,7 +115,7 @@ export abstract class AbstractFrame implements Frame {
         }
     }
 
-    hasChildren(): boolean {
+    isParent(): boolean {
         return false;
     }
 
@@ -126,28 +126,28 @@ export abstract class AbstractFrame implements Frame {
 
     selectNextPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as HasChildren;
+            var p = this.parent as Parent;
             p.selectChildAfter(this, multiSelect);
         }
     }
 
     selectPreviousPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as HasChildren;
+            var p = this.parent as Parent;
             p.selectChildBefore(this, multiSelect);
         }
     }
 
     selectFirstPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as HasChildren;
+            var p = this.parent as Parent;
             p.selectFirstChild(multiSelect);
         }
     }
 
     selectLastPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as HasChildren;
+            var p = this.parent as Parent;
             p.selectLastChild(multiSelect);
         }
     }

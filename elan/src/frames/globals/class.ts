@@ -6,12 +6,12 @@ import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
 import { SelectMember } from "../text-fields/select-member";
 import { Frame } from "../frame";
-import { HasChildren } from "../has-children";
+import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../text-fields/type-list";
 
 
-export class Class extends CodeFrame implements Global, HasChildren {
+export class Class extends CodeFrame implements Global, Parent {
     isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();

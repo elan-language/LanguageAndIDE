@@ -21,7 +21,7 @@ export interface Frame {
     getParent() : Frame | undefined;
     selectParent(multiSelect: boolean): void; //Cursor left
 
-    hasChildren(): boolean;
+    isParent(): boolean;
     selectFirstChild(multiSelect: boolean): boolean;
 
     //For methods below, if the operation is not valid in context, the current frame is returned
