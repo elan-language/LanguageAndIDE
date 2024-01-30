@@ -14,7 +14,9 @@ code {
     border-color: white;
 }
 
-
+*:focus {
+    outline: none;
+}
 
 /* Basic Colour scheme */
 span {
