@@ -16,7 +16,6 @@ export class File extends AbstractFrame implements Parent {
         resetId();
         this.parent = this; //no parent
         var frameMap = new Map<string, Frame>();
-        frameMap.set(this.getPrefix(), this); //No Id because it is always 0
         this.setFrameMap(frameMap);
     }
 
