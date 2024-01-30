@@ -6,6 +6,7 @@ import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
+import {Parent} from "../parent";
 
 export class Function extends FrameWithStatements implements Global {
     isGlobal = true;
@@ -13,7 +14,7 @@ export class Function extends FrameWithStatements implements Global {
     public params: ParamList;
     public returnType: Type;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);

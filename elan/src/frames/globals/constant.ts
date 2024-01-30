@@ -4,6 +4,7 @@ import { Expression } from "../text-fields/expression";
 import { Global } from "./global";
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class Constant extends CodeFrame implements Global {
     isGlobal = true;
@@ -11,7 +12,7 @@ export class Constant extends CodeFrame implements Global {
     expr: Expression;
 
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.name  = new Identifier(this);
         this.expr = new Expression(this);

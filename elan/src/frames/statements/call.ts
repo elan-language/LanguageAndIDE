@@ -3,13 +3,15 @@ import { Identifier } from "../text-fields/identifier";
 import { ArgList } from "../text-fields/arg-list";
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Call extends CodeFrame implements Statement {
+export class Call extends CodeFrame implements Statement, TextFieldHolder {
     isStatement = true;
     proc: Identifier;
     args: ArgList;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");

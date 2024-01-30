@@ -1,13 +1,14 @@
 import { CodeFrame } from "../code-frame";
-import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Catch extends CodeFrame implements Statement {
+export class Catch extends CodeFrame implements Statement, TextFieldHolder {
     isStatement = true;
     variable: Identifier;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");

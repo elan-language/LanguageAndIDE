@@ -1,14 +1,25 @@
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
-import { Integer } from "./integer";
+import { Parent } from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export abstract class Text extends CodeFrame {
+
+export abstract class Text extends AbstractFrame {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
 
-    constructor(parent: Frame) {
-        super(parent);
+    holder: TextFieldHolder;
+    
+    constructor(holder: TextFieldHolder) {
+        super();
+        this.holder = holder;
+        var frameMap = holder.getFrameMap();
+        this.htmlId = `${this.getPrefix()}${this.nextId()}`;
+        frameMap.set(this.htmlId, this);
+        this.setFrameMap(frameMap);
+        var factory = holder.getFactory();
+        this.setFactory(factory);
     }
 
     setPrompt(prompt: string): void {

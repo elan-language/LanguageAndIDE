@@ -1,5 +1,5 @@
-import { Frame } from "../frame";
 import { Text } from "./text";
+import { TextFieldHolder } from "../TextFieldHolder";
 
 
 //Must be a literal string or an identifier 
@@ -8,8 +8,8 @@ export class ExceptionMessage extends Text {
         return 'msg';
     }
     
-    constructor(parent: Frame) {
-        super(parent);
+    constructor(holder: TextFieldHolder) {
+        super(holder);
         this.setPrompt("message");
     }
 }

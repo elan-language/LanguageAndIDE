@@ -1,9 +1,9 @@
-import { Frame } from "../frame";
 import { Text } from "./text";
+import { TextFieldHolder } from "../TextFieldHolder";
 
 export class EnumValues extends Text {   
-    constructor(parent: Frame) {
-        super(parent);
+    constructor(holder: TextFieldHolder) {
+        super(holder);
         this.setPrompt("values");
     }
 

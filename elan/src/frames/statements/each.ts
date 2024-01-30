@@ -2,14 +2,14 @@ import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
-import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
     variable: Identifier;
     iter: Expression;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);

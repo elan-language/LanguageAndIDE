@@ -4,6 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
 import { Integer } from "../text-fields/integer";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class For extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -12,7 +13,7 @@ export class For extends FrameWithStatements implements Statement {
     to: Expression;
     step: Integer;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);

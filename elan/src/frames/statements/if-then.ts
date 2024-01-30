@@ -2,12 +2,13 @@ import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class IfThen extends FrameWithStatements implements Statement {
     isStatement = true;
     condition: Expression;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.condition = new Expression(this);

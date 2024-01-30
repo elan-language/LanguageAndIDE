@@ -1,11 +1,12 @@
 import { Global } from "./global";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class MainFrame extends FrameWithStatements implements Global {
     isGlobal = true;
     
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
     }

@@ -2,12 +2,13 @@ import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class Print extends CodeFrame implements Statement {
     isStatement = true;
     expr: Expression;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
         this.expr.setPrompt("expression");

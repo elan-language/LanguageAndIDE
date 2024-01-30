@@ -19,11 +19,11 @@ import { For } from "../frames/statements/for";
 import { Each } from "../frames/statements/each";
 import { IfThen } from "../frames/statements/if-then";
 import { Else } from "../frames/clauses/else";
-import { SelectStatement } from "../frames/text-fields/select-statement";
 import { TryCatch } from "../frames/statements/try-catch";
-import { SelectGlobal } from "../frames/text-fields/select-global";
 import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
+import { SelectGlobal } from "../frames/globals/select-global";
+import { SelectStatement } from "../frames/statements/select-statement";
 
 export function T00_emptyFile() {
 	resetId();

@@ -4,11 +4,12 @@ import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
-import { SelectMember } from "../text-fields/select-member";
+import { SelectMember } from "../class-members/select-member";
 import { Frame } from "../frame";
 import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../text-fields/type-list";
+import { runInThisContext } from "vm";
 
 
 export class Class extends CodeFrame implements Global, Parent {
@@ -20,15 +21,15 @@ export class Class extends CodeFrame implements Global, Parent {
     public inherits: boolean = false;
     public superClasses: TypeList;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
-        this.addMemberAtEnd(new Constructor(this.getParent()));
-        this.addMemberAtEnd(new SelectMember(this.getParent()));
-        this.addMemberAtEnd(new AsString(this.getParent()));
+        this.addMemberAtEnd(new Constructor(this));
+        this.addMemberAtEnd(new SelectMember(this));
+        this.addMemberAtEnd(new AsString(this));
     }
 
     getPrefix(): string {
@@ -136,7 +137,7 @@ end class\r\n`;
     }
 
     public addMemberBefore(m: Member, before: Member) {
-        var i = this.members.indexOf(before);
+        var i = this.   members.indexOf(before);
         this.members.splice(i,0,m);
     }
 

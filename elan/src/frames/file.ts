@@ -4,9 +4,11 @@ import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
+import { GlobalHolder } from "./globalHolder";
+import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
 
-export class File extends AbstractFrame implements Parent {
-    parent: Frame;
+export class File extends AbstractFrame implements Parent, GlobalHolder {
+    parent: Parent;
     private globals: Array<Global> = new Array<Global>();
 
     public status = "status-placeholder";
@@ -17,6 +19,8 @@ export class File extends AbstractFrame implements Parent {
         this.parent = this; //no parent
         var frameMap = new Map<string, Frame>();
         this.setFrameMap(frameMap);
+        var factory = new FrameFactoryImpl();
+        this.setFactory(factory);
     }
 
     private rangeSelecting = false;
@@ -68,12 +72,12 @@ export class File extends AbstractFrame implements Parent {
     }
 
     public addGlobalBefore(g: Global, before: Global) {
-        var i = this.globals.indexOf(g);
+        var i = this.globals.indexOf(before);
         this.globals.splice(i,0,g);
     }
 
     public addGlobalAfter(g: Global, after: Global) {
-        var i = this.globals.indexOf(g)+1;
+        var i = this.globals.indexOf(after)+1;
         this.globals.splice(i,0,g);     
     }
 

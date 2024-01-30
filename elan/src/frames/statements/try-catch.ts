@@ -1,13 +1,13 @@
 import { Statement } from "./statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { SelectStatement } from "../text-fields/select-statement";
 import { Catch } from "../clauses/catch";
-import { Frame } from "../frame";
+import {Parent} from "../parent";
+import { SelectStatement } from "./select-statement";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;
     
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.statements.push(new Catch(this));

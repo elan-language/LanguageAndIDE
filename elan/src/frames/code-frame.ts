@@ -1,15 +1,16 @@
 import { AbstractFrame } from "./abstract-frame";
-import { Frame } from "./frame";
+import {Parent} from "./parent";
 
 export abstract class CodeFrame extends AbstractFrame {
-     parent: Frame;
     
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super();
-        this.parent = parent;
+        this.setParent(parent);
         var frameMap = parent.getFrameMap();
         this.htmlId = `${this.getPrefix()}${this.nextId()}`;
         frameMap.set(this.htmlId, this);
         this.setFrameMap(frameMap);
+        var factory = parent.getFactory();
+        this.setFactory(factory);
     }
 }

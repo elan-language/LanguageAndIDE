@@ -2,12 +2,13 @@ import { Frame } from "../frame";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../text-fields/param-list";
 import { Member } from "./member";
+import {Parent} from "../parent";
 
-export class Constructor extends FrameWithStatements implements Member {
+export class Constructor extends FrameWithStatements implements Member, Parent {
     isMember = true;
     public params: ParamList = new ParamList(this.getParent());
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
     }
