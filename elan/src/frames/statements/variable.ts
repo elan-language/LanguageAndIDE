@@ -21,7 +21,7 @@ export class Variable extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true);
+        this.name.select(true, false);
         return true;
     }
 

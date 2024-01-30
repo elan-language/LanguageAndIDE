@@ -70,13 +70,15 @@ export abstract class AbstractFrame implements Frame {
         return this.multiline;
     }
 
-    select(withFocus : boolean,  multiSelect?: boolean): void {
+    select(withFocus : boolean,  multiSelect: boolean): void {
         this.selected = true; 
         this.focused = withFocus;
         if (multiSelect) {
             if (this.hasParent()) {
                 var p = this.parent as HasChildren;
-                p.selectChildRange();
+                if (!p.isRangeSelecting()){
+                    p.selectChildRange(multiSelect);
+                }
             }
         }
     }
@@ -106,10 +108,10 @@ export abstract class AbstractFrame implements Frame {
         return this.parent;
     }
 
-    selectParent(): void {
+    selectParent(multiSelect : boolean): void {
         if (this.hasParent()) {
             this.deselect();
-            this.parent!.select(true);
+            this.parent!.select(true, multiSelect);
         }
     }
 
@@ -117,36 +119,36 @@ export abstract class AbstractFrame implements Frame {
         return false;
     }
 
-    selectFirstChild(): boolean {
+    selectFirstChild(multiSelect: boolean): boolean {
         //Do nothing, but overridden by anything implementing hasChildren
         return false;
     }
 
-    selectNextPeer(): void {
+    selectNextPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
-            p.selectChildAfter(this);
+            p.selectChildAfter(this, multiSelect);
         }
     }
 
-    selectPreviousPeer(): void {
+    selectPreviousPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
-            p.selectChildBefore(this);
+            p.selectChildBefore(this, multiSelect);
         }
     }
 
-    selectFirstPeer(): void {
+    selectFirstPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
-            p.selectFirstChild();
+            p.selectFirstChild(multiSelect);
         }
     }
 
-    selectLastPeer(): void {
+    selectLastPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
             var p = this.parent as HasChildren;
-            p.selectLastChild();
+            p.selectLastChild(multiSelect);
         }
     }
 

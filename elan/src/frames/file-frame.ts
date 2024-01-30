@@ -20,6 +20,11 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.setFrameMap(frameMap);
     }
 
+    private rangeSelecting = false;
+    isRangeSelecting(): boolean {
+        return this.rangeSelecting;
+    }
+
     getPrefix(): string {
         return 'file';
     }
@@ -82,33 +87,35 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         return true;
     }
     
-    selectFirstChild(): boolean {
+    selectFirstChild(multiSelect: boolean): boolean {
         if (this.globals.length > 0){
-            this.globals[0].select(true);
+            this.globals[0].select(true, multiSelect);
             return true;
         }
         return false;
     }
 
-    selectLastChild(): void {
-        this.globals[this.globals.length - 1].select(true);
+    selectLastChild(multiSelect: boolean): void {
+        this.globals[this.globals.length - 1].select(true, multiSelect);
     }
 
-    selectChildAfter(child: Frame): void {
+    selectChildAfter(child: Frame, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
-            safeSelectAfter(this.globals, index);
+            safeSelectAfter(this.globals, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame): void {
+    selectChildBefore(child: Frame, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
-            safeSelectBefore(this.globals, index);
+            safeSelectBefore(this.globals, index, multiSelect);
         }
     }
 
-    selectChildRange(): void {
-        selectChildRange(this.globals);
+    selectChildRange(multiSelect: boolean): void {
+        this.rangeSelecting = true;
+        selectChildRange(this.globals, multiSelect);
+        this.rangeSelecting = false;
     }
 
     deselectAll() {
@@ -139,7 +146,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         }
     }
 
-    selectByID(id: string, multiSelect?: boolean) {
+    selectByID(id: string, multiSelect: boolean) {
         if (!multiSelect) {
             this.deselectAll();
         }
@@ -195,7 +202,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         toExpand?.expand();
     }
 
-    selectNextPeerByID(id: string, multiSelect? : boolean) {
+    selectNextPeerByID(id: string, multiSelect: boolean) {
         if (!multiSelect) {
             this.deselectAll();
         }
@@ -203,10 +210,10 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             this.defocusAll();
         }
         const frame = this.getFrameMap().get(id);
-        frame?.selectNextPeer();
+        frame?.selectNextPeer(multiSelect);
     }
 
-    selectPreviousPeerByID(id: string, multiSelect? : boolean) {
+    selectPreviousPeerByID(id: string, multiSelect: boolean) {
         if (!multiSelect) {
             this.deselectAll();
         }
@@ -214,19 +221,19 @@ export class FileFrame extends AbstractFrame implements HasChildren {
             this.defocusAll();
         }
         const frame = this.getFrameMap().get(id);
-        frame?.selectPreviousPeer();
+        frame?.selectPreviousPeer(multiSelect);
     }
 
     selectFirstPeerByID(id: string) {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
-        frame?.selectFirstPeer();
+        frame?.selectFirstPeer(false);
     }
 
     selectLastPeerByID(id: string) {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
-        frame?.selectLastPeer();
+        frame?.selectLastPeer(false);
     }
 
     selectParentByID(id: string) {
@@ -234,7 +241,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         const parent = frame?.getParent();
         if (parent !== this){
             this.deselectAll();
-            parent?.select(true);
+            parent?.select(true, false);
         }
         // leave selection as is
     }
@@ -242,8 +249,8 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     selectFirstChildByID(id: string) {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
-        if (!frame?.selectFirstChild()) {
-            frame?.select(true);
+        if (!frame?.selectFirstChild(false)) {
+            frame?.select(true, false);
         }
     }
 
@@ -251,17 +258,17 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
-            frame.selectFirstPeer();
+            frame.selectFirstPeer(false);
         }
         else if (isMember(frame)) {
-            frame.selectFirstPeer();
+            frame.selectFirstPeer(false);
         }
         else if (isGlobal(frame)){
-            this.selectFirstChild();
+            this.selectFirstChild(false);
         }
         else {
             // text field
-            frame?.getParent()?.selectFirstPeer();
+            frame?.getParent()?.selectFirstPeer(false);
         }
     }
 
@@ -269,17 +276,17 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
-            frame.selectLastPeer();
+            frame.selectLastPeer(false);
         }
         else if (isMember(frame)) {
-            frame.selectLastPeer();
+            frame.selectLastPeer(false);
         }
         else if (isGlobal(frame)){
-            this.selectLastChild();
+            this.selectLastChild(false);
         }
         else {
             // text field
-            frame?.getParent()?.selectLastPeer();
+            frame?.getParent()?.selectLastPeer(false);
         }
     }
 
@@ -287,16 +294,16 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (!frame?.selectFirstText()){
-            frame?.select(true);
+            frame?.select(true, false);
         }
     }
 
     selectFirst(){
-        this.globals[0].select(true);
+        this.globals[0].select(true, false);
     }
 
     selectLast() {
-        this.globals[this.globals.length - 1].select(true);
+        this.globals[this.globals.length - 1].select(true, false);
     }
 
     handleInput(id: string, key: string) {

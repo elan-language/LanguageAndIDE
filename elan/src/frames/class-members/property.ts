@@ -21,7 +21,7 @@ export class Property extends CodeFrame implements Member {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true);
+        this.name.select(true, false);
         return true;
     }
 

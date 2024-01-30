@@ -220,7 +220,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleTextKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Tab': {
-				this.frameModel?.selectByID(e.id!);
+				this.frameModel?.selectByID(e.id!, false);
 				break;
 			}
 			default:

@@ -20,7 +20,7 @@ export class Else extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select(true);
+        this.condition.select(true, false);
         return true;
     }
 

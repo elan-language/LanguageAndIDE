@@ -19,7 +19,7 @@ export class CommentStatement extends CodeFrame implements Statement, Member {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select(true);
+        this.text.select(true, false);
         return true;
     }
 

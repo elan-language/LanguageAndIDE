@@ -1,9 +1,10 @@
 import { Frame } from "./frame";
 
 export interface HasChildren extends Frame {
-    selectFirstChild(): boolean; //Cursor right
-    selectLastChild(): void; //Cursor right
-    selectChildAfter(child: Frame): void;
-    selectChildBefore(child: Frame): void;
-    selectChildRange(): void;
+    selectFirstChild(multiSelect: boolean): boolean; //Cursor right
+    selectLastChild(multiSelect: boolean): void; //Cursor right
+    selectChildAfter(child: Frame, multiSelect: boolean): void;
+    selectChildBefore(child: Frame, multiSelect: boolean): void;
+    selectChildRange(multiSelect: boolean): void;
+    isRangeSelecting() : boolean; 
 }

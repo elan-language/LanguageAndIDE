@@ -43,38 +43,45 @@ export class Class extends CodeFrame implements Global, HasChildren {
         return this.members[this.members.length -1] as AsString;
     }
 
+    private rangeSelecting = false;
+    isRangeSelecting(): boolean {
+        return this.rangeSelecting;
+    }
+
     public override selectFirstText(): boolean {
-        this.name.select(true);
+        this.name.select(true, false);
         return true;
     }
 
-    selectFirstChild(): boolean {
+    selectFirstChild(multiSelect: boolean): boolean {
         if (this.members.length > 0){
-            this.members[0].select(true);
+            this.members[0].select(true, multiSelect);
             return true;
         }
         return false;
     }
 
-    selectLastChild(): void {
-        this.members[this.members.length - 1].select(true);
+    selectLastChild(multiSelect: boolean): void {
+        this.members[this.members.length - 1].select(true, multiSelect);
     }
 
-    selectChildAfter(child: Frame): void {
+    selectChildAfter(child: Frame, multiSelect: boolean): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
-            safeSelectAfter(this.members, index);
+            safeSelectAfter(this.members, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame): void {
+    selectChildBefore(child: Frame, multiSelect: boolean): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
-            safeSelectBefore(this.members, index);
+            safeSelectBefore(this.members, index, multiSelect);
         }
     }
 
-    selectChildRange(): void {
-        selectChildRange(this.members);
+    selectChildRange(multiSelect: boolean): void {
+        this.rangeSelecting = true;
+        selectChildRange(this.members, multiSelect);
+        this.rangeSelecting = false;
     }
 
     private modifiersAsHtml(): string {

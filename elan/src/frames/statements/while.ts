@@ -19,7 +19,7 @@ export class While extends FrameWithStatements implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select(true);
+        this.condition.select(true, false);
         return true;
     }
 

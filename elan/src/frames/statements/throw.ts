@@ -16,7 +16,7 @@ export class Throw extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select(true);
+        this.text.select(true, false);
         return true;
     }
 

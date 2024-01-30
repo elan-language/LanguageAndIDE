@@ -7,7 +7,7 @@ export interface Frame {
     renderAsSource(): string;
 
     isSelected() : boolean;
-    select(withFocus: boolean, multiSelect?: boolean): void;
+    select(withFocus: boolean, multiSelect: boolean): void;
     deselect(): void;
 
     isFocused() : boolean;
@@ -19,16 +19,16 @@ export interface Frame {
     hasParent(): boolean;
     setParent(parent: Frame) : void;
     getParent() : Frame | undefined;
-    selectParent(): void; //Cursor left
+    selectParent(multiSelect: boolean): void; //Cursor left
 
     hasChildren(): boolean;
-    selectFirstChild(): boolean;
+    selectFirstChild(multiSelect: boolean): boolean;
 
     //For methods below, if the operation is not valid in context, the current frame is returned
-    selectNextPeer(): void;
-    selectPreviousPeer(): void;
-    selectFirstPeer(): void; //Home
-    selectLastPeer(): void; //End
+    selectNextPeer(multiSelect: boolean): void;
+    selectPreviousPeer(multiSelect: boolean): void;
+    selectFirstPeer(multiSelect: boolean): void; //Home
+    selectLastPeer(multiSelect: boolean): void; //End
 
     selectFirstText(): boolean;
 

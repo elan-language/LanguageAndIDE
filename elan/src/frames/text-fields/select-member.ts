@@ -31,7 +31,7 @@ export class SelectMember extends Text implements Member {
     private addBeforeAndSelect(member: Member) {
         (this.parent as Class).addMemberBefore(member, this);
         this.deselectAll(); //TODO should happen automatically
-        member.select(true);
+        member.select(true, false);
     }
 
     enterText(char: string): void {

@@ -33,38 +33,38 @@ export function singleIndent() {
     return "  ";
 }
 
-export function safeSelectAfter(toSelect: Array<{ select: (withFocus: boolean) => void }>, index: number) {
+export function safeSelectAfter(toSelect: Array<{ select: (withFocus: boolean, multiSelect: boolean) => void }>, index: number, multiSelect: boolean) {
     if (index === -1) {
         return;
     }
     if (index < toSelect.length - 1) {
-        toSelect[index + 1].select(true);
+        toSelect[index + 1].select(true, multiSelect);
     }
     else {
-        toSelect[toSelect.length - 1].select(true);
+        toSelect[toSelect.length - 1].select(true, multiSelect);
     }
 }
 
-export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean) => void }>, index: number) {
+export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean, multiSelect: boolean) => void }>, index: number, multiSelect: boolean) {
     if (index === -1) {
         return;
     }
     if (index > 0) {
-        toSelect[index - 1].select(true);
+        toSelect[index - 1].select(true, multiSelect);
     }
     else {
-        toSelect[0].select(true);
+        toSelect[0].select(true, multiSelect);
     }
 }
 
-export function selectChildRange(ff: Array<Frame>): void {
+export function selectChildRange(ff: Array<Frame>, multiSelect: boolean): void {
     const selected = ff.filter(f => f.isSelected());
     if (selected.length > 1) {
         const firstSelectedIndex = ff.indexOf(selected[0]);
         const lastSelectedIndex = ff.indexOf(selected[selected.length - 1]);
 
         for (var i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
-            ff[i].select(false);
+            ff[i].select(false, multiSelect);
         }
     }
 }

@@ -21,7 +21,7 @@ export class Procedure extends FrameWithStatements implements Global {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true);
+        this.name.select(true, false);
         return true;
     }
 

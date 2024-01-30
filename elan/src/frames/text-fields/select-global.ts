@@ -37,7 +37,7 @@ export class SelectGlobal extends Text implements Global {
     private addBeforeAndSelect(global: Global) {
         (this.parent as FileFrame).addGlobalBefore(global, this);
         this.deselectAll(); //TODO should happen automatically
-        global.select(true);
+        global.select(true, false);
     }
 
     enterText(char: string): void {

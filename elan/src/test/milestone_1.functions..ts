@@ -120,12 +120,12 @@ export function T03_mainWithAllStatements() {
 }
 
 export function T07_mainWithAllStatementsSelectMainById(f : FileFrame) {
-	f.selectByID("main2");
+	f.selectByID("main2", false);
 	return () => f;
 }
 
 export function T07_mainWithAllStatementsSelectStatementById(f : FileFrame) {
-	f.selectByID("for28");
+	f.selectByID("for28", false);
 	return () => f;
 }
 

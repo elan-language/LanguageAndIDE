@@ -15,33 +15,41 @@ export abstract class FrameWithStatements extends CodeFrame implements HasChildr
     hasChildren(): boolean {
         return true;
     }
-    selectFirstChild(): boolean {
+
+    private rangeSelecting = false;
+    isRangeSelecting(): boolean {
+        return this.rangeSelecting;
+    }
+
+    selectFirstChild(multiSelect: boolean): boolean {
         if (this.statements.length > 0){
-            this.statements[0].select(true);
+            this.statements[0].select(true, multiSelect);
             return true;
         }
         return false;
     } 
-    selectLastChild(): void {
-        this.statements[this.statements.length - 1].select(true);
+    selectLastChild(multiSelect: boolean): void {
+        this.statements[this.statements.length - 1].select(true, multiSelect);
     }
-    selectChildAfter(child: Frame): void {
+    selectChildAfter(child: Frame, multiSelect: boolean): void {
         if (isStatement(child)) {
             child.defocus();
             const index = this.statements.indexOf(child);
-            safeSelectAfter(this.statements, index);
+            safeSelectAfter(this.statements, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame): void {
+    selectChildBefore(child: Frame, multiSelect: boolean): void {
         if (isStatement(child)) {
             child.defocus();
             const index = this.statements.indexOf(child);
-            safeSelectBefore(this.statements, index);
+            safeSelectBefore(this.statements, index, multiSelect);
         }
     }
 
-    selectChildRange(): void {
-        selectChildRange(this.statements);
+    selectChildRange(multiSelect: boolean): void {
+        this.rangeSelecting = true;
+        selectChildRange(this.statements, multiSelect);
+        this.rangeSelecting = false;
     }
 
     protected renderStatementsAsHtml() : string {

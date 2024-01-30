@@ -42,7 +42,7 @@ export class SelectStatement extends Text implements Statement {
     private addBeforeAndSelect(statement: Statement) {
         (this.parent as FrameWithStatements).addStatementBefore(statement, this);
         this.deselectAll(); //TODO should happen automatically
-        statement.select(true);
+        statement.select(true, false);
     }
 
     //call each for if print repeat set switch throw try var while

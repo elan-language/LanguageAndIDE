@@ -35,7 +35,7 @@ suite('Milestone 1 - Unit tests', () => {
 	test('SelectFirstChild', () => {
 		const ff = T03_mainWithAllStatements();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectFirstChild();
+		ff.selectFirstChild(false);
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
 		assertElementsById(preDom, "main0", 'multiline');

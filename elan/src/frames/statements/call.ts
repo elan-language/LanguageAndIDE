@@ -17,7 +17,7 @@ export class Call extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.proc.select(true);
+        this.proc.select(true, false);
         return true;
     }
 

@@ -14,7 +14,7 @@ export class Print extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.expr.select(true);
+        this.expr.select(true, false);
         return true;
     }
 
