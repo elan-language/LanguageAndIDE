@@ -63,8 +63,15 @@ export function selectChildRange(ff: Array<Frame>, multiSelect: boolean): void {
         const firstSelectedIndex = ff.indexOf(selected[0]);
         const lastSelectedIndex = ff.indexOf(selected[selected.length - 1]);
 
-        for (var i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
-            ff[i].select(false, multiSelect);
+        if (lastSelectedIndex > firstSelectedIndex + 1) {
+            for (var i = firstSelectedIndex + 1; i <= lastSelectedIndex - 1; i++) {
+                ff[i].select(false, multiSelect);
+            }
+        }
+        else if (firstSelectedIndex > lastSelectedIndex + 1) {
+            for (var i = lastSelectedIndex + 1; i <= firstSelectedIndex - 1; i++) {
+                ff[i].select(false, multiSelect);
+            }
         }
     }
 }

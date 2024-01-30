@@ -33,14 +33,12 @@ export abstract class FrameWithStatements extends CodeFrame implements HasChildr
     }
     selectChildAfter(child: Frame, multiSelect: boolean): void {
         if (isStatement(child)) {
-            child.defocus();
             const index = this.statements.indexOf(child);
             safeSelectAfter(this.statements, index, multiSelect);
         }
     }
     selectChildBefore(child: Frame, multiSelect: boolean): void {
         if (isStatement(child)) {
-            child.defocus();
             const index = this.statements.indexOf(child);
             safeSelectBefore(this.statements, index, multiSelect);
         }

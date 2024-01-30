@@ -41,7 +41,6 @@ export class SelectStatement extends Text implements Statement {
 
     private addBeforeAndSelect(statement: Statement) {
         (this.parent as FrameWithStatements).addStatementBefore(statement, this);
-        this.deselectAll(); //TODO should happen automatically
         statement.select(true, false);
     }
 

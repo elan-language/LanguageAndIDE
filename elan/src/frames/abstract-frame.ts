@@ -71,8 +71,10 @@ export abstract class AbstractFrame implements Frame {
     }
 
     select(withFocus : boolean,  multiSelect: boolean): void {
+        if (!multiSelect) {
+            this.deselectAll();
+        }
         this.selected = true; 
-        this.focused = withFocus;
         if (multiSelect) {
             if (this.hasParent()) {
                 var p = this.parent as HasChildren;
@@ -81,6 +83,7 @@ export abstract class AbstractFrame implements Frame {
                 }
             }
         }
+        this.focused = withFocus;
     }
 
     deselect(): void {
@@ -110,7 +113,6 @@ export abstract class AbstractFrame implements Frame {
 
     selectParent(multiSelect : boolean): void {
         if (this.hasParent()) {
-            this.deselect();
             this.parent!.select(true, multiSelect);
         }
     }

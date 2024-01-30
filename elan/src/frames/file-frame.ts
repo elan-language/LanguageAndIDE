@@ -118,14 +118,6 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         this.rangeSelecting = false;
     }
 
-    deselectAll() {
-        for (const f of this.getFrameMap().values()) {
-            if (f.isSelected()) {
-                f.deselect();
-            }
-        }
-    }
-
     defocusAll() {
         for (const f of this.getFrameMap().values()) {
             if (f.isFocused()) {
@@ -147,10 +139,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectByID(id: string, multiSelect: boolean) {
-        if (!multiSelect) {
-            this.deselectAll();
-        }
-        else {
+        if (multiSelect) {
             this.defocusAll();
         }
         const toSelect = this.getFrameMap().get(id);
@@ -203,10 +192,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectNextPeerByID(id: string, multiSelect: boolean) {
-        if (!multiSelect) {
-            this.deselectAll();
-        }
-        else {
+        if (multiSelect) {
             this.defocusAll();
         }
         const frame = this.getFrameMap().get(id);
@@ -214,10 +200,7 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectPreviousPeerByID(id: string, multiSelect: boolean) {
-        if (!multiSelect) {
-            this.deselectAll();
-        }
-        else {
+        if (multiSelect) {
             this.defocusAll();
         }
         const frame = this.getFrameMap().get(id);
@@ -225,13 +208,11 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectFirstPeerByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         frame?.selectFirstPeer(false);
     }
 
     selectLastPeerByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         frame?.selectLastPeer(false);
     }
@@ -240,14 +221,12 @@ export class FileFrame extends AbstractFrame implements HasChildren {
         const frame = this.getFrameMap().get(id);
         const parent = frame?.getParent();
         if (parent !== this){
-            this.deselectAll();
             parent?.select(true, false);
         }
         // leave selection as is
     }
 
     selectFirstChildByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (!frame?.selectFirstChild(false)) {
             frame?.select(true, false);
@@ -255,7 +234,6 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectFirstByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
             frame.selectFirstPeer(false);
@@ -273,7 +251,6 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectLastByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (isStatement(frame)) {
             frame.selectLastPeer(false);
@@ -291,7 +268,6 @@ export class FileFrame extends AbstractFrame implements HasChildren {
     }
 
     selectNextTextByID(id: string) {
-        this.deselectAll();
         const frame = this.getFrameMap().get(id);
         if (!frame?.selectFirstText()){
             frame?.select(true, false);
