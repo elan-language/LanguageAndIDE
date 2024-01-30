@@ -1,18 +1,18 @@
 import { CodeFrame } from "./code-frame";
 import { Frame } from "./frame";
-import { HasChildren } from "./has-children";
+import { Parent } from "./parent";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
 import { SelectStatement } from "./text-fields/select-statement";
 
-export abstract class FrameWithStatements extends CodeFrame implements HasChildren {
+export abstract class FrameWithStatements extends CodeFrame implements Parent {
     protected statements: Array<Statement> = new Array<Statement>();
 
     constructor(parent: Frame) {
         super(parent);   
         this.statements.push(new SelectStatement(this));
     }
-    hasChildren(): boolean {
+    isParent(): boolean {
         return true;
     }
 
