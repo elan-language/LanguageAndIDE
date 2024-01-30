@@ -28,7 +28,7 @@ export abstract class Text extends AbstractFrame {
 
     public contentAsHtml(): string {
         if (this.isSelected()) {
-            return `<input value="${this.escapeDoubleQuotes(this.text)}" placeholder="${this.prompt}">`;
+            return `<input size="${this.width()}"  value="${this.escapeDoubleQuotes(this.text)}" placeholder="${this.prompt}">`;
         }
         if (this.text) { 
             var c = this.escapeAngleBrackets(this.text);

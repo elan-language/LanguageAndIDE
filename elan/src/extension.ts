@@ -56,7 +56,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/jvha52mtx4lx69mk/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/9aemotr1bdwd0euv/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff, "elan compiler", compilerPath, []);
 }
 
