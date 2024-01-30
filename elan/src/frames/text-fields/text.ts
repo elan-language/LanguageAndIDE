@@ -1,5 +1,6 @@
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
+import { Integer } from "./integer";
 
 export abstract class Text extends CodeFrame {
     protected text: string = "";
@@ -28,6 +29,10 @@ export abstract class Text extends CodeFrame {
         } else {
             return this.prompt;
         }
+    }
+
+    public width(): number {
+        return this.text ? this.text.length : this.prompt.length;
     }
 
     private escapeDoubleQuotes(str: string): string {
