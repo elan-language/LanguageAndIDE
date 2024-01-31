@@ -1,4 +1,5 @@
 import { Parent } from "./parent";
+import { ParsingStatus } from "./parsing-status";
 
 export interface Frame {
     getFrameMap(): Map<string, Frame>;
@@ -37,5 +38,5 @@ export interface Frame {
     collapse() : void;
     expand() : void;
 
-    isComplete() : boolean;
+    status() : ParsingStatus;
 }

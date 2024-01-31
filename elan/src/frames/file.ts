@@ -6,12 +6,11 @@ import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safe
 import { createHash } from "node:crypto";
 import { GlobalHolder } from "./globalHolder";
 import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
+import { ParsingStatus } from "./parsing-status";
 
 export class File extends AbstractFrame implements Parent, GlobalHolder {
     parent: Parent;
     private globals: Array<Global> = new Array<Global>();
-
-    public status = "status-placeholder";
    
     constructor() {
         super();
@@ -53,7 +52,7 @@ export class File extends AbstractFrame implements Parent, GlobalHolder {
         const sHash = hash.digest('hex');
         const truncatedHash = sHash.slice(0, 16);
 
-        return `# Elan v0.1 ${this.status} ${truncatedHash}`;
+        return `# Elan v0.1 ${ParsingStatus[this.status()]} ${truncatedHash}`;
     }
 
     bodyAsSource() : string{
@@ -294,7 +293,7 @@ export class File extends AbstractFrame implements Parent, GlobalHolder {
         }
     }
 
-    override isComplete(): boolean {
-        return this.globals.map(g => g.isComplete()).reduce((p, c) => p && c);
+    override status() {
+        return this.globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
     }
 }

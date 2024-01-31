@@ -2,8 +2,10 @@ import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { nextId, singleIndent } from "./helpers";
 import { FrameFactory } from "./frame-factory";
+import { ParsingStatus } from "./parsing-status";
 
 export abstract class AbstractFrame implements Frame {
+  
     private _parent?: Parent;
     private _frameMap?: Map<string, Frame>;
     private _factory?: FrameFactory;
@@ -203,5 +205,9 @@ export abstract class AbstractFrame implements Frame {
 
     isComplete(): boolean {
         return true;
+    }
+
+    status(): ParsingStatus {
+        return ParsingStatus.valid;
     }
 }
