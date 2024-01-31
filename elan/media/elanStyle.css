@@ -18,8 +18,11 @@ code {
     outline: none;
 }
 
-input:focus {
+input, input:focus , input:active{
+    border: none;
     outline: none;
+    padding: 0px;
+    margin: 0px;
 }
 
 /* Basic Colour scheme */
@@ -83,9 +86,6 @@ text.invalid, type.invalid {
 }
 text.valid, type.valid {
   color:rgb(0, 187, 0);
-}
-input {
-    border: none;
 }
 /* Collapse / Expand */
 expand {
