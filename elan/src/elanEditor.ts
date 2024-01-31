@@ -4,6 +4,7 @@ import { getTestFrame } from './test/milestone_1.functions.';
 import { File } from './frames/file';
 import { Frame } from './frames/frame';
 import { setCurrentElanFile } from './extension';
+import { ParsingStatus } from './frames/parsing-status';
 
 
 interface editorEvent {
@@ -70,19 +71,21 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		function updateSource(fm: Frame, currentSource: string) {
 
-			const source = fm.renderAsSource();
-			if (currentSource !== source) {
+			if (fm.status() === ParsingStatus.valid) {
+				const source = fm.renderAsSource();
+				if (currentSource !== source) {
 
-				const edit = new vscode.WorkspaceEdit();
+					const edit = new vscode.WorkspaceEdit();
 
-				// Just replace the entire document every time for this example extension.
-				// A more complete extension should compute minimal edits instead.
-				edit.replace(
-					document.uri,
-					new vscode.Range(0, 0, document.lineCount, 0),
-					source);
+					// Just replace the entire document every time for this example extension.
+					// A more complete extension should compute minimal edits instead.
+					edit.replace(
+						document.uri,
+						new vscode.Range(0, 0, document.lineCount, 0),
+						source);
 
-				vscode.workspace.applyEdit(edit);
+					vscode.workspace.applyEdit(edit);
+				}
 			}
 		}
 
