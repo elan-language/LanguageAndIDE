@@ -1,15 +1,16 @@
 
 import { CodeFrame } from "../code-frame";
-import { Frame } from "../frame";
 import { Statement } from "../statements/statement";
 import { Expression } from "../text-fields/expression";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Else extends CodeFrame implements Statement {
+export class Else extends CodeFrame implements Statement, TextFieldHolder {
     isStatement = true;
     hasIf: boolean = false;
     condition: Expression;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");

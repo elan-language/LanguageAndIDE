@@ -3,14 +3,16 @@ import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
 import { Member } from "./member";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Property extends CodeFrame implements Member {
+export class Property extends CodeFrame implements Member, TextFieldHolder {
     isMember = true;
     name: Identifier;
     type: Type;
     public private: boolean = false;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.name = new Identifier(this);
         this.type = new Type(this);

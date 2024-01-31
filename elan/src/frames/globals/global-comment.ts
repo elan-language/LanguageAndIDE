@@ -2,12 +2,13 @@ import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
+import {Parent} from "../parent";
 
 export class GlobalComment extends CodeFrame implements Global {
     isGlobal = true;
     public text: PlainText;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.text = new PlainText(this);
     }

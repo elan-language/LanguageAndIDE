@@ -1,22 +1,35 @@
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { nextId, singleIndent } from "./helpers";
+import { FrameFactory } from "./frame-factory";
 
 export abstract class AbstractFrame implements Frame {
-    
+    private _parent?: Parent;
     private _frameMap?: Map<string, Frame>;
-    abstract parent: Frame;
+    private _factory?: FrameFactory;
+
     protected htmlId: string = "";
 
     getFrameMap(): Map<string, Frame> {
         if (this._frameMap) {
             return this._frameMap;
         }
-        throw new Error(`Frame : ${this.htmlId} not initialised`);
+        throw new Error(`Frame : ${this.htmlId} has no FrameMap`);
+    }
+
+    getFactory(): FrameFactory {
+        if (this._factory) {
+            return this._factory;
+        }
+        throw new Error(`Frame : ${this.htmlId} has no FrameFactory`);
     }
 
     setFrameMap(frameMap: Map<string, Frame>) {
         this._frameMap = frameMap;
+    }
+
+    setFactory(factory: FrameFactory) {
+        this._factory = factory;
     }
 
     abstract getPrefix(): string;
@@ -77,7 +90,7 @@ export abstract class AbstractFrame implements Frame {
         this.selected = true; 
         if (multiSelect) {
             if (this.hasParent()) {
-                var p = this.parent as Parent;
+                var p = this._parent as Parent;
                 if (!p.isRangeSelecting()){
                     p.selectChildRange(multiSelect);
                 }
@@ -100,20 +113,24 @@ export abstract class AbstractFrame implements Frame {
     }
 
     hasParent(): boolean {
-        return !!this.parent;
+        return !!this._parent;
     }
 
-    setParent(parent: Frame): void {
-        this.parent = parent;
+    setParent(parent: Parent): void {
+        this._parent = parent;
     }
 
-    getParent(): Frame {
-        return this.parent;
+    getParent(): Parent {
+        if (this._parent) {
+            return this._parent;
+        }
+        throw new Error(`Frame : ${this.htmlId} has no Parent`);
     }
+
 
     selectParent(multiSelect : boolean): void {
         if (this.hasParent()) {
-            this.parent!.select(true, multiSelect);
+            this._parent!.select(true, multiSelect);
         }
     }
 
@@ -128,28 +145,28 @@ export abstract class AbstractFrame implements Frame {
 
     selectNextPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as Parent;
+            var p = this._parent as Parent;
             p.selectChildAfter(this, multiSelect);
         }
     }
 
     selectPreviousPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as Parent;
+            var p = this._parent as Parent;
             p.selectChildBefore(this, multiSelect);
         }
     }
 
     selectFirstPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as Parent;
+            var p = this._parent as Parent;
             p.selectFirstChild(multiSelect);
         }
     }
 
     selectLastPeer(multiSelect: boolean): void {
         if (this.hasParent()) {
-            var p = this.parent as Parent;
+            var p = this._parent as Parent;
             p.selectLastChild(multiSelect);
         }
     }

@@ -2,12 +2,14 @@ import { Statement } from "./statement";
 import { ExceptionMessage } from "../text-fields/exception-message";
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Throw extends CodeFrame implements Statement {
+export class Throw extends CodeFrame implements Statement, TextFieldHolder {
     isStatement = true;
     text: ExceptionMessage;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.text = new ExceptionMessage(this);
     }

@@ -3,13 +3,14 @@ import { CodeFrame } from "../code-frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Frame } from "../frame";
 import { Member} from "../class-members/member";
+import {Parent} from "../parent";
 
 export class CommentStatement extends CodeFrame implements Statement, Member {
     isStatement = true;
     isMember = true;
     public text: PlainText;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.text= new PlainText(this);
     }

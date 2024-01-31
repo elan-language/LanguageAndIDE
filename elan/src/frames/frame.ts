@@ -1,3 +1,4 @@
+import { Parent } from "./parent";
 
 export interface Frame {
     getFrameMap(): Map<string, Frame>;
@@ -17,8 +18,8 @@ export interface Frame {
     isMultiline() : boolean;
 
     hasParent(): boolean;
-    setParent(parent: Frame) : void;
-    getParent() : Frame | undefined;
+    setParent(parent: Parent) : void;
+    getParent() : Parent;
     selectParent(multiSelect: boolean): void; //Cursor left
 
     isParent(): boolean;

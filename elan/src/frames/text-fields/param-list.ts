@@ -1,9 +1,9 @@
-import { Frame } from "../frame";
 import { Text } from "./text";
+import { TextFieldHolder } from "../TextFieldHolder";
 
 export class ParamList extends Text {   
-    constructor(parent: Frame) {
-        super(parent);
+    constructor(holder: TextFieldHolder) {
+        super(holder);
         this.setPrompt("parameter definitions");
         this.useHtmlTags = true;
     }

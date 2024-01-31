@@ -3,13 +3,14 @@ import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../frame";
+import {Parent} from "../parent";
 
 export class Procedure extends FrameWithStatements implements Global {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);

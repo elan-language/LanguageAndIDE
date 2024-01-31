@@ -1,9 +1,10 @@
 import { Frame } from "../frame";
 import { FunctionMethod } from "./function-method";
+import {Parent} from "../parent";
 
 export class AsString extends FunctionMethod {
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.statements.splice(0,1);
     }

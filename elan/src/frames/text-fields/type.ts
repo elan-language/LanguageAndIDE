@@ -1,9 +1,11 @@
 import { Frame } from "../frame";
 import { Text } from "./text";
+import {Parent} from "../parent";
+import { TextFieldHolder } from "../TextFieldHolder";
 
 export class Type extends Text {   
-    constructor(parent: Frame) {
-        super(parent);
+    constructor(holder: TextFieldHolder) {
+        super(holder);
         this.useHtmlTags = true;
         this.prompt = "Type";
     }

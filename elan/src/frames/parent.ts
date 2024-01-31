@@ -1,4 +1,5 @@
 import { Frame } from "./frame";
+import { FrameFactory } from "./frame-factory";
 
 export interface Parent extends Frame {
     isParent(): boolean;
@@ -8,4 +9,6 @@ export interface Parent extends Frame {
     selectChildBefore(child: Frame, multiSelect: boolean): void;
     selectChildRange(multiSelect: boolean): void;
     isRangeSelecting() : boolean; 
+    getFrameMap(): Map<string, Frame>;
+    getFactory(): FrameFactory;
 }

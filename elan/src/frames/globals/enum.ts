@@ -4,13 +4,14 @@ import { Type } from "../text-fields/type";
 import { CodeFrame } from "../code-frame";
 import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
+import {Parent} from "../parent";
 
 export class Enum extends CodeFrame implements Global {
     isGlobal = true;
     name: Type;
     values: EnumValues;
 
-    constructor(parent: Frame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);

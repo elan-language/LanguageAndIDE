@@ -50,7 +50,7 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
 
 header, constant, main, procedure, function, enum, classDef, constructor, property, member, global {
     display: block;
-    margin-bottom: 1ch;
+    padding-bottom: 1ch;
 }
 
 /* Frame selection */
@@ -80,7 +80,9 @@ text.invalid, type.invalid {
 text.valid, type.valid {
   color:rgb(0, 187, 0);
 }
-
+input {
+    border: none;
+}
 /* Collapse / Expand */
 expand {
     display: none;
