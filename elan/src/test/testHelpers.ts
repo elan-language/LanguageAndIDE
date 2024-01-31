@@ -5,7 +5,7 @@ import assert from 'assert';
 // flag to update test file 
 var updateTestFiles = false;
 
-function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
+function updateTestFile(testDoc: vscode.TextDocument, newContent: string, done: Mocha.Done,) {
     const edit = new vscode.WorkspaceEdit();
 
     edit.replace(
@@ -13,8 +13,20 @@ function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
         new vscode.Range(0, 0, testDoc.lineCount, 0),
         newContent);
 
-    vscode.workspace.applyEdit(edit);
-    testDoc.save();
+    vscode.workspace.applyEdit(edit).then(ok => {
+        if (ok) {
+            testDoc.save().then(b => {
+                if (!b) {
+                    console.warn("Save failed: " + testDoc.fileName);
+                }
+                done();
+            });
+        }
+        else {
+            console.warn("Edit failed: " + testDoc.fileName);
+            done();
+        }
+    });  
 }
 
 export function wrap(html: string) {
@@ -49,10 +61,11 @@ export async function assertAreEqualByHtml<T extends Frame>(done: Mocha.Done, ht
     }
     catch (e) {
         if (updateTestFiles) {
-            updateTestFile(htmlDoc, actualHtml);
+            updateTestFile(htmlDoc, actualHtml, done);
         }
-
-        done(e);
+        else {
+            done();
+        }
         throw e;
     }
 }
