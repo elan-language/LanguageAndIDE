@@ -18,6 +18,10 @@ code {
     outline: none;
 }
 
+input:focus {
+    outline: none;
+}
+
 /* Basic Colour scheme */
 span {
     background-color: inherit;
