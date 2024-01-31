@@ -50,8 +50,10 @@ export class File extends AbstractFrame implements Parent, GlobalHolder {
 
         const hash = createHash('sha256');
         hash.update(body);
+        const sHash = hash.digest('hex');
+        const truncatedHash = sHash.slice(0, 16);
 
-        return `# Elan v0.1 ${this.status} ${hash.digest('hex')}`;
+        return `# Elan v0.1 ${this.status} ${truncatedHash}`;
     }
 
     bodyAsSource() : string{
