@@ -2,6 +2,21 @@ import * as vscode from 'vscode';
 import { Frame } from '../frames/frame';
 import assert from 'assert';
 
+// flag to update test file 
+var updateTestFiles = false;
+
+function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
+    const edit = new vscode.WorkspaceEdit();
+
+    edit.replace(
+        testDoc.uri,
+        new vscode.Range(0, 0, testDoc.lineCount, 0),
+        newContent);
+
+    vscode.workspace.applyEdit(edit);
+    testDoc.save();
+}
+
 export function wrap(html: string) {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -33,6 +48,10 @@ export async function assertAreEqualByHtml<T extends Frame>(done: Mocha.Done, ht
         done();
     }
     catch (e) {
+        if (updateTestFiles) {
+            updateTestFile(htmlDoc, actualHtml);
+        }
+
         done(e);
         throw e;
     }
