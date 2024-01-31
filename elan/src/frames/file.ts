@@ -45,7 +45,8 @@ export class File extends AbstractFrame implements Parent, GlobalHolder {
     }
 
     private getHeaderInfo(body? : string): string {
-        body = body || this.bodyAsSource();
+        // normalize
+        body = (body || this.bodyAsSource()).trim().replaceAll("\r", "");
 
         const hash = createHash('sha256');
         hash.update(body);

@@ -3,7 +3,7 @@ import { Frame } from '../frames/frame';
 import assert from 'assert';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string, done: Mocha.Done,) {
     const edit = new vscode.WorkspaceEdit();
