@@ -28,8 +28,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectLast();
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "enum19", 'multiline');
-		assertElementsById(postDom, "enum19", 'multiline selected focused');
+		assertElementsById(preDom, "enum16", 'multiline');
+		assertElementsById(postDom, "enum16", 'multiline selected focused');
 	});
 
 	test('SelectFirstChild', () => {
@@ -45,11 +45,11 @@ suite('Milestone 1 - Unit tests', () => {
 	test('SelectNextTextByID', () => {
 		const ff = T03_mainWithAllStatements();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectNextTextByID("var3");
+		ff.selectNextTextByID("var2");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "ident4", 'empty');
-		assertElementsById(postDom, "ident4", 'selected focused empty');
+		assertElementsById(preDom, "ident3", 'empty');
+		assertElementsById(postDom, "ident3", 'selected focused empty');
 	});
 
 	test('SelectLastByID Global', () => {
@@ -58,8 +58,8 @@ suite('Milestone 1 - Unit tests', () => {
 		ff.selectLastByID("const0");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
-		assertElementsById(preDom, "enum19", 'multiline');
-		assertElementsById(postDom, "enum19", 'multiline selected focused');
+		assertElementsById(preDom, "enum16", 'multiline');
+		assertElementsById(postDom, "enum16", 'multiline selected focused');
 	});
 
 	// test('SelectLastByID Statement', () => {

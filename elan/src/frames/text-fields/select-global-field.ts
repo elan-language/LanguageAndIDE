@@ -2,8 +2,9 @@ import { Text } from "./text";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Global } from "../globals/global";
 
-export class SelectGlobalField extends Text {
-    global: Global;
+export class SelectGlobalField extends Text implements Global {
+    isGlobal: boolean = true;
+    global: Global ;
 
     constructor(holder: TextFieldHolder ) {
         super(holder);

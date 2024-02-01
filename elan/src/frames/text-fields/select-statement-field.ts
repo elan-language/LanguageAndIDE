@@ -3,7 +3,8 @@ import { singleIndent } from "../helpers";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Statement } from "../statements/statement";
 
-export class SelectStatementField extends Text {  
+export class SelectStatementField extends Text implements Statement {  
+    isStatement: boolean = true;
     statement: Statement;
     
     constructor(holder: TextFieldHolder) {
@@ -11,6 +12,7 @@ export class SelectStatementField extends Text {
         this.statement = holder as Statement;
         this.setPrompt("call each for if print repeat set switch throw try var while #");
     }
+    
 
     getPrefix(): string {
         return 'statementSelect';
@@ -18,6 +20,10 @@ export class SelectStatementField extends Text {
 
     renderAsSource(): string {
         return `${this.indent()}`;
+    }
+
+    indent(): string {
+        return this.holder.indent() + singleIndent();
     }
 
     enterText(char: string): void {

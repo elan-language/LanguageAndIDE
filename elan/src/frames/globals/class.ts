@@ -4,13 +4,11 @@ import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
-import { SelectMember } from "../class-members/select-member";
 import { Frame } from "../frame";
 import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../text-fields/type-list";
-import { runInThisContext } from "vm";
-
+import { SelectMemberField } from "../text-fields/select-member-field";
 
 export class Class extends AbstractFrame implements Global, Parent {
     isGlobal = true;
@@ -28,7 +26,7 @@ export class Class extends AbstractFrame implements Global, Parent {
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
         this.addMemberAtEnd(new Constructor(this));
-        this.addMemberAtEnd(new SelectMember(this));
+        this.addMemberAtEnd(new SelectMemberField(this));
         this.addMemberAtEnd(new AsString(this));
     }
 

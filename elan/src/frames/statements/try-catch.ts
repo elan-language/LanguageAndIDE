@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "../clauses/catch";
 import {Parent} from "../parent";
-import { SelectStatement } from "./select-statement";
+import { SelectStatementField } from "../text-fields/select-statement-field";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -11,7 +11,7 @@ export class TryCatch extends FrameWithStatements implements Statement {
         super(parent);
         this.multiline = true;
         this.statements.push(new Catch(this));
-        this.statements.push(new SelectStatement(this));
+        this.statements.push(new SelectStatementField(this));
     }
     
     getPrefix(): string {

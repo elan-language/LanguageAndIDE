@@ -1,10 +1,10 @@
 import { singleIndent } from "../helpers";
 import { Text } from "./text";
 import { TextFieldHolder } from "../TextFieldHolder";
-
 import { Member } from "../class-members/member";
 
-export class SelectMemberField extends Text {
+export class SelectMemberField extends Text implements Member {
+    isMember: boolean = true;
     member: Member;
 
     constructor(holder: TextFieldHolder ) {
@@ -12,8 +12,6 @@ export class SelectMemberField extends Text {
         this.member = holder as Member;
         this.setPrompt("function procedure property");
     }
-
-
     getPrefix(): string {
         return 'memberSelect';
     }

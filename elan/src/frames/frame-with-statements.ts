@@ -3,14 +3,14 @@ import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
-import { SelectStatement } from "./statements/select-statement";
+import { SelectStatementField } from "./text-fields/select-statement-field";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent {
     protected statements: Array<Statement> = new Array<Statement>();
 
     constructor(parent: Parent) {
         super(parent);   
-        this.statements.push(new SelectStatement(this));
+        this.statements.push(new SelectStatementField(this));
     }
     isParent(): boolean {
         return true;
