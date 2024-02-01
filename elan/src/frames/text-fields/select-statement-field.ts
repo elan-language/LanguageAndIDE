@@ -10,7 +10,7 @@ export class SelectStatementField extends Text {
     constructor(holder: TextFieldHolder) {
         super(holder);
         this.statement = holder as Statement;
-        this.setPrompt("call each for if print repeat set switch throw try var while");
+        this.setPrompt("call each for if print repeat set switch throw try var while #");
     }
 
     getPrefix(): string {
