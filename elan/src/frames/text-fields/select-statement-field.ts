@@ -1,7 +1,6 @@
 import { Text } from "./text";
 import { singleIndent } from "../helpers";
 import { TextFieldHolder } from "../TextFieldHolder";
-import { FrameFactory } from "../frame-factory";
 import { Statement } from "../statements/statement";
 
 export class SelectStatementField extends Text {  
