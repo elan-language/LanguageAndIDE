@@ -1,7 +1,7 @@
 import { Frame } from "./frame";
 import { FrameFactory } from "./frame-factory";
 
-export interface Parent extends Frame {
+export interface Parent {
     isParent(): boolean;
     selectFirstChild(multiSelect: boolean): boolean; //Cursor right
     selectLastChild(multiSelect: boolean): void; //Cursor right
@@ -11,4 +11,8 @@ export interface Parent extends Frame {
     isRangeSelecting() : boolean; 
     getFrameMap(): Map<string, Frame>;
     getFactory(): FrameFactory;
+    indent(): string;
+    select(withFocus: boolean, multiSelect: boolean): void;
+    selectFirstPeer(multiSelect: boolean): void;
+    selectLastPeer(multiSelect: boolean): void;
 }
