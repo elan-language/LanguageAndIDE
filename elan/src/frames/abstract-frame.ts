@@ -129,7 +129,6 @@ export abstract class AbstractFrame implements Frame {
         throw new Error(`Frame : ${this.htmlId} has no Parent`);
     }
 
-
     selectParent(multiSelect : boolean): void {
         if (this.hasParent()) {
             this._parent!.select(true, multiSelect);

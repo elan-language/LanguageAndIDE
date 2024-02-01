@@ -13,6 +13,4 @@ export interface Parent {
     getFactory(): FrameFactory;
     indent(): string;
     select(withFocus: boolean, multiSelect: boolean): void;
-    selectFirstPeer(multiSelect: boolean): void;
-    selectLastPeer(multiSelect: boolean): void;
 }

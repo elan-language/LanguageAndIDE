@@ -245,8 +245,9 @@ export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
             this.selectFirstChild(false);
         }
         else {
-            // text field
-            frame?.getParent()?.selectFirstPeer(false);
+            throw new Error("Unexpected option");
+            // previous impl: text field
+            //frame?.getParent()?.selectFirstPeer(false);
         }
     }
 
@@ -262,8 +263,9 @@ export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
             this.selectLastChild(false);
         }
         else {
-            // text field
-            frame?.getParent()?.selectLastPeer(false);
+            throw new Error("Unexpected option");
+            // previous: impl
+            //frame?.getParent()?.selectLastPeer(false);
         }
     }
 
@@ -309,39 +311,7 @@ export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
     }
 
     select(withFocus : boolean,  multiSelect: boolean): void {
-        throw new Error("Not implemented");
-        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
-   /*     if (!multiSelect) {
-            this.deselectAll();
-        }
-        this.selected = true; 
-        if (multiSelect) {
-            if (this.hasParent()) {
-                var p = this._parent as Parent;
-                if (!p.isRangeSelecting()){
-                    p.selectChildRange(multiSelect);
-                }
-            }
-        }
-        this.focused = withFocus;    */
-    }
-
-    selectFirstPeer(multiSelect: boolean): void {
-        throw new Error("Not implemented");
-        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
-        /* if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectFirstChild(multiSelect);
-        } */
-    }
-
-    selectLastPeer(multiSelect: boolean): void {
-        throw new Error("Not implemented");
-        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
-        /* if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectFirstChild(multiSelect);
-        } */
+        //TODO - method not relevant so does nothing. Review whether this is defined on Parent?
     }
 
 }
