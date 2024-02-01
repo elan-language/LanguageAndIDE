@@ -3,13 +3,12 @@ import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
-import { GlobalHolder } from "./globalHolder";
 import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
 import { ParsingStatus } from "./parsing-status";
 import { FileAPI } from "./file-api";
 import {File} from "./file";
 
-export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
+export class FileImpl implements FileAPI, File, Parent {
     private globals: Array<Global> = new Array<Global>();
     private frameMap: Map<string, Frame>;
     private factory: FrameFactory;
