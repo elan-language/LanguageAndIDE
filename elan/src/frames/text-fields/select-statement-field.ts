@@ -2,14 +2,18 @@ import { Text } from "./text";
 import { singleIndent } from "../helpers";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Statement } from "../statements/statement";
+import { StatementFactory } from "../statement-factory";
+import { FrameWithStatements } from "../frame-with-statements";
 
 export class SelectStatementField extends Text implements Statement {  
     isStatement: boolean = true;
-    statement: Statement;
+    holder: FrameWithStatements;
+    factory: StatementFactory;
     
     constructor(holder: TextFieldHolder) {
         super(holder);
-        this.statement = holder as Statement;
+        this.holder = holder as FrameWithStatements;
+        this.factory = this.holder.getFactory();
         this.setPrompt("call each for if print repeat set switch throw try var while #");
     }
     
@@ -29,55 +33,55 @@ export class SelectStatementField extends Text implements Statement {
     enterText(char: string): void {
         var empty = this.text ==="";
         if (empty && (char ==='c')) {
-            this.getFactory().addCallBefore(this.statement);
+            this.factory.addCallBefore(this);
             return;
         }
         if (empty && (char ==='e')) {
-            this.getFactory().addEachBefore(this.statement);
+            this.factory.addEachBefore(this);
             return;
         } 
         if (empty && (char ==='f')) {
-            this.getFactory().addForBefore(this.statement);
+            this.factory.addForBefore(this);
             return;
         }
         if (empty && (char ==='i')) {
-            this.getFactory().addIfThenBefore(this.statement);
+            this.factory.addIfThenBefore(this);
             return;
         }
         if (empty && (char ==='p')) {
-            this.getFactory().addPrintBefore(this.statement);
+            this.factory.addPrintBefore(this);
             return;
         }
         if (empty && (char ==='r')) {
-            this.getFactory().addRepeatBefore(this.statement);
+            this.factory.addRepeatBefore(this);
             return;
         }
         if (this.text ==="s" && (char ==='e')) {
-            this.getFactory().addSetBefore(this.statement);
+            this.factory.addSetBefore(this);
             this.text = "";
             return;
         }
         if (this.text ==="s" && (char ==='w')) {
-            this.getFactory().addSwitchBefore(this.statement);
+            this.factory.addSwitchBefore(this);
             this.text = "";
             return;
         }
         if (this.text ==="t" && (char ==='h')) {
-            this.getFactory().addThrowBefore(this.statement);
+            this.factory.addThrowBefore(this);
             this.text = "";
             return;
         }
         if (this.text ==="t" && (char ==='r')) {
-            this.getFactory().addTryBefore(this.statement);
+            this.factory.addTryBefore(this);
             this.text = "";
             return;
         }
         if (empty && (char ==='v')) {
-            this.getFactory().addVarBefore(this.statement);
+            this.factory.addVarBefore(this);
             return;
         }
         if (empty && (char ==='w')) {
-            this.getFactory().addWhileBefore(this.statement);
+            this.factory.addWhileBefore(this);
             return;
         }
         super.enterText(char);

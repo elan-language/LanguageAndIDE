@@ -3,7 +3,7 @@ import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
-import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
+import { StatementFactory, StatementFactoryImpl } from "./statement-factory";
 import { ParsingStatus } from "./parsing-status";
 import { FileAPI } from "./file-api";
 import {File} from "./file";
@@ -18,12 +18,12 @@ import { Constant } from "./globals/constant";
 export class FileImpl implements FileAPI, File, Parent {
     private globals: Array<Global> = new Array<Global>();
     private frameMap: Map<string, Frame>;
-    private factory: FrameFactory;
+    private factory: StatementFactory;
    
     constructor() {
         resetId();
         this.frameMap = new Map<string, Frame>();
-        this.factory = new FrameFactoryImpl();
+        this.factory = new StatementFactoryImpl();
     }
 
     private rangeSelecting = false;
@@ -312,7 +312,7 @@ export class FileImpl implements FileAPI, File, Parent {
     getFrameMap(): Map<string, Frame> {
         return this.frameMap;
     }
-    getFactory(): FrameFactory {
+    getFactory(): StatementFactory {
         return this.factory;
     }
 

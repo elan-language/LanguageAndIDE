@@ -12,7 +12,7 @@ import { TryCatch } from "./statements/try-catch";
 import { Variable } from "./statements/variable";
 import { SetStatement } from "./statements/set-statement";
 
-export interface FrameFactory {
+export interface StatementFactory {
     addCallBefore(s: Statement): void;
     addEachBefore(s: Statement): void;
     addForBefore(s: Statement): void;
@@ -27,7 +27,7 @@ export interface FrameFactory {
     addWhileBefore(s: Statement): void;
 }
 
-export class FrameFactoryImpl implements FrameFactory {
+export class StatementFactoryImpl implements StatementFactory {
 
     addCallBefore(s: Statement): void {
         var newS = new Call(s.getParent());

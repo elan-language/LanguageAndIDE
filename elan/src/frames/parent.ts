@@ -1,5 +1,5 @@
 import { Frame } from "./frame";
-import { FrameFactory } from "./frame-factory";
+import { StatementFactory } from "./statement-factory";
 
 export interface Parent {
     isParent(): boolean;
@@ -10,7 +10,7 @@ export interface Parent {
     selectChildRange(multiSelect: boolean): void;
     isRangeSelecting() : boolean; 
     getFrameMap(): Map<string, Frame>;
-    getFactory(): FrameFactory;
+    getFactory(): StatementFactory;
     indent(): string;
     select(withFocus: boolean, multiSelect: boolean): void;
 }

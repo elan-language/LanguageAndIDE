@@ -1,14 +1,14 @@
 import {Parent} from "./parent";
 import { Frame } from "./frame";
 import { nextId, singleIndent } from "./helpers";
-import { FrameFactory } from "./frame-factory";
+import { StatementFactory } from "./statement-factory";
 import { ParsingStatus } from "./parsing-status";
 
 export abstract class AbstractFrame {
          
     private _parent?: Parent;
     private _frameMap?: Map<string, Frame>;
-    private _factory?: FrameFactory;
+    private _factory?: StatementFactory;
     protected multiline: boolean = false;
     private selected: boolean = false;
     private focused: boolean = false;
@@ -33,7 +33,7 @@ export abstract class AbstractFrame {
         throw new Error(`Frame : ${this.htmlId} has no FrameMap`);
     }
 
-    getFactory(): FrameFactory {
+    getFactory(): StatementFactory {
         if (this._factory) {
             return this._factory;
         }
@@ -44,7 +44,7 @@ export abstract class AbstractFrame {
         this._frameMap = frameMap;
     }
 
-    setFactory(factory: FrameFactory) {
+    setFactory(factory: StatementFactory) {
         this._factory = factory;
     }
 

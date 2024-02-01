@@ -1,6 +1,6 @@
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Frame } from "../frame";
-import { FrameFactory } from "../frame-factory";
+import { StatementFactory } from "../statement-factory";
 import { nextId } from "../helpers";
 import { Parent } from "../parent";
 import { ParsingStatus } from "../parsing-status";
@@ -12,7 +12,6 @@ export abstract class Text implements Frame {
     protected htmlId: string = "";
     private selected: boolean = false;
     private focused: boolean = false;
-    private _factory: FrameFactory;
     private _classes = new Array<string>;
 
     holder: TextFieldHolder;
@@ -22,7 +21,6 @@ export abstract class Text implements Frame {
         var frameMap = holder.getFrameMap();
         this.htmlId = `${this.getPrefix()}${nextId()}`;
         frameMap.set(this.htmlId, this);
-        this._factory = holder.getFactory();
     }
 
     getPrefix(): string {
@@ -85,10 +83,6 @@ export abstract class Text implements Frame {
 
     status(): ParsingStatus {
         throw new Error("Method not implemented.");
-    }
-
-    getFactory(): FrameFactory {
-        return this._factory;
     }
 
     select(): void {
