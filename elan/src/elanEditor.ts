@@ -57,7 +57,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			const fn = arr[arr.length - 1].split(".")[0];
 
 			this.file = getTestFrame(fn);
-			this.currentSource = this.file?.renderAsSource();
+			this.currentSource = this.file!.renderAsSource();
 			this.currentFile = document.fileName;
 		}
 

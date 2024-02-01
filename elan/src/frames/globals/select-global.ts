@@ -1,5 +1,4 @@
 import { Global } from "../globals/global";
-import { File } from "../file";
 import {Parent} from "../parent";
 import { CodeFrame } from "../code-frame";
 import { SelectGlobalField } from "../text-fields/select-global-field";
