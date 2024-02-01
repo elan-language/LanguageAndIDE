@@ -1,4 +1,4 @@
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import { Identifier } from "../text-fields/identifier";
 import { Type } from "../text-fields/type";
@@ -6,7 +6,7 @@ import { Member } from "./member";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Property extends CodeFrame implements Member, TextFieldHolder {
+export class Property extends AbstractFrame implements Member, TextFieldHolder {
     isMember = true;
     name: Identifier;
     type: Type;

@@ -1,10 +1,10 @@
 import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import {Parent} from "../parent";
 
-export class Print extends CodeFrame implements Statement {
+export class Print extends AbstractFrame implements Statement {
     isStatement = true;
     expr: Expression;
 

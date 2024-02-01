@@ -2,12 +2,12 @@ import { Statement } from "../statements/statement";
 import { singleIndent } from "../helpers";
 import {FrameWithStatements} from "../frame-with-statements";
 import {Parent} from "../parent";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { SelectStatementField } from "../text-fields/select-statement-field";
 import { TextFieldHolder } from "../TextFieldHolder";
 
 
-export class SelectStatement extends CodeFrame implements Statement, TextFieldHolder {  
+export class SelectStatement extends AbstractFrame implements Statement, TextFieldHolder {  
     isStatement = true;
     field: SelectStatementField;
 

@@ -1,10 +1,10 @@
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 import {Parent} from "../parent";
 
-export class GlobalComment extends CodeFrame implements Global {
+export class GlobalComment extends AbstractFrame implements Global {
     isGlobal = true;
     public text: PlainText;
 

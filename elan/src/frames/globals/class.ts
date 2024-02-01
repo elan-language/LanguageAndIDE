@@ -1,4 +1,4 @@
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
 import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
@@ -12,7 +12,7 @@ import { TypeList } from "../text-fields/type-list";
 import { runInThisContext } from "vm";
 
 
-export class Class extends CodeFrame implements Global, Parent {
+export class Class extends AbstractFrame implements Global, Parent {
     isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();

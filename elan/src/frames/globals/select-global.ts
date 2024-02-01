@@ -1,9 +1,9 @@
 import { Global } from "../globals/global";
 import {Parent} from "../parent";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { SelectGlobalField } from "../text-fields/select-global-field";
 
-export class SelectGlobal extends CodeFrame implements Global {
+export class SelectGlobal extends AbstractFrame implements Global {
     isGlobal = true;
     field: SelectGlobalField;
 

@@ -1,11 +1,11 @@
+import {Parent} from "./parent";
 import { Frame } from "./frame";
-import { Parent } from "./parent";
 import { nextId, singleIndent } from "./helpers";
 import { FrameFactory } from "./frame-factory";
 import { ParsingStatus } from "./parsing-status";
 
-export abstract class AbstractFrame implements Frame {
-  
+export abstract class AbstractFrame {
+         
     private _parent?: Parent;
     private _frameMap?: Map<string, Frame>;
     private _factory?: FrameFactory;
@@ -15,6 +15,16 @@ export abstract class AbstractFrame implements Frame {
     private collapsed: boolean = false;
     private _classes = new Array<string>;
     protected htmlId: string = "";
+
+    constructor(parent: Parent) {
+        this.setParent(parent);
+        var frameMap = parent.getFrameMap();
+        this.htmlId = `${this.getPrefix()}${this.nextId()}`;
+        frameMap.set(this.htmlId, this);
+        this.setFrameMap(frameMap);
+        var factory = parent.getFactory();
+        this.setFactory(factory);
+    }
 
     getFrameMap(): Map<string, Frame> {
         if (this._frameMap) {

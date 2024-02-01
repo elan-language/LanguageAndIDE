@@ -1,11 +1,11 @@
 import { Statement } from "./statement";
 import { ExceptionMessage } from "../text-fields/exception-message";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Throw extends CodeFrame implements Statement, TextFieldHolder {
+export class Throw extends AbstractFrame implements Statement, TextFieldHolder {
     isStatement = true;
     text: ExceptionMessage;
 

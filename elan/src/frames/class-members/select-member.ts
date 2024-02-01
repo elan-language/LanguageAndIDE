@@ -2,10 +2,10 @@ import { singleIndent } from "../helpers";
 import { Member } from "./member";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { SelectMemberField } from "../text-fields/select-member-field";
 
-export class SelectMember extends CodeFrame implements Member, TextFieldHolder {
+export class SelectMember extends AbstractFrame implements Member, TextFieldHolder {
     isMember = true;
     field: SelectMemberField;
     

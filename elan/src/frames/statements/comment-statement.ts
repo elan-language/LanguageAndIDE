@@ -1,11 +1,11 @@
 import { Statement } from "./statement";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Frame } from "../frame";
 import { Member} from "../class-members/member";
 import {Parent} from "../parent";
 
-export class CommentStatement extends CodeFrame implements Statement, Member {
+export class CommentStatement extends AbstractFrame implements Statement, Member {
     isStatement = true;
     isMember = true;
     public text: PlainText;

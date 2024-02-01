@@ -1,12 +1,12 @@
 import { Global } from "./global";
 import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import { singleIndent } from "../helpers";
 import {Parent} from "../parent";
 
-export class Enum extends CodeFrame implements Global {
+export class Enum extends AbstractFrame implements Global {
     isGlobal = true;
     name: Type;
     values: EnumValues;

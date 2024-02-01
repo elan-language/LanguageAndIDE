@@ -1,11 +1,11 @@
 import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Frame } from "../frame";
 import {Parent} from "../parent";
 
-export class Variable extends CodeFrame implements Statement {
+export class Variable extends AbstractFrame implements Statement {
     isStatement = true;
     name: Identifier;
     expr: Expression;

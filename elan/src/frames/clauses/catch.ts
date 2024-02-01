@@ -1,10 +1,10 @@
-import { CodeFrame } from "../code-frame";
+import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../statements/statement";
 import { Identifier } from "../text-fields/identifier";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class Catch extends CodeFrame implements Statement, TextFieldHolder {
+export class Catch extends AbstractFrame implements Statement, TextFieldHolder {
     isStatement = true;
     variable: Identifier;
 
