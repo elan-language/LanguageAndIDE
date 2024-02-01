@@ -74,6 +74,10 @@ text.selected, text.selected * {
     background-color: rgb(146, 236, 146);
 }
 
+::placeholder {
+    color: white;
+}
+
 /* Text entry validation */
 text.empty, type.empty {
       color: rgb(196, 193, 193);
