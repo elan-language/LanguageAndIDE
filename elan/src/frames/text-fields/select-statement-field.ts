@@ -22,6 +22,10 @@ export class SelectStatementField extends Text implements Statement {
         return 'statementSelect';
     }
 
+    renderAsHtml(): string {
+        return `<statement>${super.renderAsHtml()}</statement>`;
+    }
+
     renderAsSource(): string {
         return `${this.indent()}`;
     }
