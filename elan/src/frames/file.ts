@@ -5,10 +5,11 @@ import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
 import { GlobalHolder } from "./globalHolder";
-import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
+import { FrameFactoryImpl } from "./frame-factory";
 import { ParsingStatus } from "./parsing-status";
+import { FileAPI } from "./file-api";
 
-export class File extends AbstractFrame implements Parent, GlobalHolder {
+export class File extends AbstractFrame implements FileAPI, Parent, GlobalHolder {
     parent: Parent;
     private globals: Array<Global> = new Array<Global>();
    

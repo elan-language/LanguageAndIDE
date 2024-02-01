@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { getTestFrame } from './test/milestone_1.functions.';
-import { File } from './frames/file';
-import { Frame } from './frames/frame';
+import { FileAPI } from './frames/file-api';
 import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
 
@@ -25,7 +24,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-	private file?: File;
+	private file?: FileAPI;
 	private currentSource = "";
 	private currentFile = "";
 
@@ -62,14 +61,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			this.currentFile = document.fileName;
 		}
 
-		function updateWebview(fm: Frame) {
+		function updateWebview(fm: FileAPI) {
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: fm.renderAsHtml(),
 			});
 		}
 
-		function updateSource(fm: Frame, currentSource: string) {
+		function updateSource(fm: FileAPI, currentSource: string) {
 
 			if (fm.status() === ParsingStatus.valid) {
 				const source = fm.renderAsSource();
