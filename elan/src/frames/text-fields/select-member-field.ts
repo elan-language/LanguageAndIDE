@@ -2,14 +2,15 @@ import { singleIndent } from "../helpers";
 import { Text } from "./text";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Member } from "../class-members/member";
+import { Class } from "../globals/class";
 
 export class SelectMemberField extends Text implements Member {
     isMember: boolean = true;
-    member: Member;
+    class: Class;
 
     constructor(holder: TextFieldHolder ) {
         super(holder);
-        this.member = holder as Member;
+        this.class = holder as Class;
         this.setPrompt("function procedure property");
     }
     getPrefix(): string {
@@ -27,16 +28,16 @@ export class SelectMemberField extends Text implements Member {
     enterText(char: string): void {
         var empty = this.text ==="";
         if (empty && (char ==='f')) {
-            this.getFactory().addFunctionMethodBefore(this.member);
+            this.class.addFunctionMethodBefore(this);
             return;
         }
         if (this.text === "pro" && char ==="c") {
-            this.getFactory().addProcedureMethodBefore(this.member);
+            this.class.addProcedureMethodBefore(this);
             this.text = "";
             return;
         }
         if (this.text === "pro" && char ==="p") {
-            this.getFactory().addPropertyBefore(this.member);
+            this.class.addPropertyBefore(this);
             this.text = "";
             return;
         }

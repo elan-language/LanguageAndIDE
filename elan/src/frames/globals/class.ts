@@ -9,8 +9,12 @@ import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../text-fields/type-list";
 import { SelectMemberField } from "../text-fields/select-member-field";
+import { TextFieldHolder } from "../TextFieldHolder";
+import { FunctionMethod } from "../class-members/function-method";
+import { Property } from "../class-members/property";
+import { ProcedureMethod } from "../class-members/procedure-method";
 
-export class Class extends AbstractFrame implements Global, Parent {
+export class Class extends AbstractFrame implements Global, Parent, TextFieldHolder {
     isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();
@@ -147,5 +151,21 @@ end class\r\n`;
     public removeMember(m: Member) {
         var i = this.members.indexOf(m);
         this.members.splice(i,1);    
+    }
+
+    addFunctionMethodBefore(member: Member): void {
+        var p = new FunctionMethod(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+    }
+    addPropertyBefore(member: Member): void {
+        var p = new Property(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+    }
+    addProcedureMethodBefore(member: Member): void {
+        var p = new ProcedureMethod(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
     }
 }
