@@ -7,6 +7,13 @@ import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
 import { ParsingStatus } from "./parsing-status";
 import { FileAPI } from "./file-api";
 import {File} from "./file";
+import { MainFrame } from "./globals/main-frame";
+import { Function } from "./globals/function";
+import { Procedure } from "./globals/procedure";
+import { Enum } from "./globals/enum";
+import { Class } from "./globals/class";
+import { GlobalComment } from "./globals/global-comment";
+import { Constant } from "./globals/constant";
 
 export class FileImpl implements FileAPI, File, Parent {
     private globals: Array<Global> = new Array<Global>();
@@ -313,4 +320,36 @@ export class FileImpl implements FileAPI, File, Parent {
         //TODO - method not relevant so does nothing. Review whether this is defined on Parent?
     }
 
+    addMainBefore(g: Global): void {
+        var m = new MainFrame(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addFunctionBefore(g: Global): void {
+        var m = new Function(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addProcedureBefore(g: Global): void {
+        var m = new Procedure(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addEnumBefore(g: Global): void {
+        var m = new Enum(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addClassBefore(g: Global): void {
+        var m = new Class(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addGlobalCommentBefore(g: Global): void {
+        var m = new GlobalComment(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    addConstantBefore(g: Global): void {
+        var m = new Constant(this);
+        this.addGlobalBeforeAndSelect(m,g);
+    }
+    private addGlobalBeforeAndSelect(g: Global, before: Global) {
+        ((before.getParent() as unknown) as File).addGlobalBefore(g, before);
+        g.select(true, false);
+    }
 }

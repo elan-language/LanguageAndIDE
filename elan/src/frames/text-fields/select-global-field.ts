@@ -1,14 +1,15 @@
 import { Text } from "./text";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Global } from "../globals/global";
+import {File} from "../file";
 
 export class SelectGlobalField extends Text implements Global {
     isGlobal: boolean = true;
-    global: Global ;
+    file: File ;
 
     constructor(holder: TextFieldHolder ) {
         super(holder);
-        this.global = holder as Global;
+        this.file = holder as File;
         this.setPrompt("class constant enum function main procedure #");
     }
 
@@ -31,32 +32,32 @@ export class SelectGlobalField extends Text implements Global {
     enterText(char: string): void {
         var empty = this.text ==="";
         if (empty && (char ==='m')) {
-            this.getFactory().addMainBefore(this.global);
+            this.file.addMainBefore(this);
             return;
         }
         if (empty && (char ==='f')) {
-            this.getFactory().addFunctionBefore(this.global);
+            this.file.addFunctionBefore(this);
             return;
         }
         if (empty && (char ==='p')) {
-            this.getFactory().addProcedureBefore(this.global);
+            this.file.addProcedureBefore(this);
             return;
         }
         if (empty && (char ==='e')) {
-            this.getFactory().addEnumBefore(this.global);
+            this.file.addEnumBefore(this);
             return;
         }
         if (empty && (char ==='#')) {
-            this.getFactory().addGlobalCommentBefore(this.global);
+            this.file.addGlobalCommentBefore(this);
             return;
         }     
         if (this.text === "c" && char ==="o") {
-            this.getFactory().addConstantBefore(this.global);
+            this.file.addConstantBefore(this);
             this.text = "";
             return;
         }
         if (this.text === "c" && char ==="l") {
-            this.getFactory().addClassBefore(this.global);
+            this.file.addClassBefore(this);
             this.text = "";
             return;
         }
