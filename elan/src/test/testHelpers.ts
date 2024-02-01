@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Frame } from '../frames/frame';
 import assert from 'assert';
+import { FileImpl } from '../frames/file-impl';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -46,7 +47,7 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml<T extends Frame>(done: Mocha.Done, htmlFile: string, frame: () => T) {
+export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => FileImpl) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -70,7 +71,7 @@ export async function assertAreEqualByHtml<T extends Frame>(done: Mocha.Done, ht
     }
 }
 
-export async function assertAreEqualBySource<T extends Frame>(done: Mocha.Done, sourceFile: string, frame: () => T) {
+export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => FileImpl) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);

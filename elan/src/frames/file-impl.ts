@@ -1,27 +1,23 @@
-import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame";
 import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { createHash } from "node:crypto";
 import { GlobalHolder } from "./globalHolder";
-import { FrameFactoryImpl } from "./frame-factory";
+import { FrameFactory, FrameFactoryImpl } from "./frame-factory";
 import { ParsingStatus } from "./parsing-status";
 import { FileAPI } from "./file-api";
 import {File} from "./file";
 
-export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, GlobalHolder {
-    parent: Parent;
+export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
     private globals: Array<Global> = new Array<Global>();
+    private frameMap: Map<string, Frame>;
+    private factory: FrameFactory;
    
     constructor() {
-        super();
         resetId();
-        this.parent = this; //no parent
-        var frameMap = new Map<string, Frame>();
-        this.setFrameMap(frameMap);
-        var factory = new FrameFactoryImpl();
-        this.setFactory(factory);
+        this.frameMap = new Map<string, Frame>();
+        this.factory = new FrameFactoryImpl();
     }
 
     private rangeSelecting = false;
@@ -126,7 +122,7 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     defocusAll() {
-        for (const f of this.getFrameMap().values()) {
+        for (const f of this.frameMap.values()) {
             if (f.isFocused()) {
                 f.defocus();
             }
@@ -134,13 +130,13 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     expandAll() {
-        for (const f of this.getFrameMap().values()) {
+        for (const f of this.frameMap.values()) {
             f.expand();
         }
     }
 
     collapseAll() {
-        for (const f of this.getFrameMap().values()) {
+        for (const f of this.frameMap.values()) {
             f.collapse();
         }
     }
@@ -149,12 +145,12 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
         if (multiSelect) {
             this.defocusAll();
         }
-        const toSelect = this.getFrameMap().get(id);
+        const toSelect = this.frameMap.get(id);
         toSelect?.select(true, multiSelect);
     }
 
     expandCollapseByID(id: string) {
-        const toToggle = this.getFrameMap().get(id);
+        const toToggle = this.frameMap.get(id);
         if (toToggle?.isCollapsed()) {
             toToggle.expand();
         }
@@ -173,7 +169,7 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     expandCollapseAllByID(id: string) {
-        const currentFrame = this.getFrameMap().get(id);
+        const currentFrame = this.frameMap.get(id);
         if (currentFrame?.isMultiline()) {
             this.expandCollapseAllByFrame(currentFrame);
         }
@@ -189,12 +185,12 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     collapseByID(id: string) {
-        const toCollapse = this.getFrameMap().get(id);
+        const toCollapse = this.frameMap.get(id);
         toCollapse?.collapse();
     }
 
     expandByID(id: string) {
-        const toExpand = this.getFrameMap().get(id);
+        const toExpand = this.frameMap.get(id);
         toExpand?.expand();
     }
 
@@ -202,7 +198,7 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
         if (multiSelect) {
             this.defocusAll();
         }
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         frame?.selectNextPeer(multiSelect);
     }
 
@@ -210,38 +206,35 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
         if (multiSelect) {
             this.defocusAll();
         }
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         frame?.selectPreviousPeer(multiSelect);
     }
 
     selectFirstPeerByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         frame?.selectFirstPeer(false);
     }
 
     selectLastPeerByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         frame?.selectLastPeer(false);
     }
 
     selectParentByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         const parent = frame?.getParent();
-        if (parent !== this){
-            parent?.select(true, false);
-        }
         // leave selection as is
     }
 
     selectFirstChildByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         if (!frame?.selectFirstChild(false)) {
             frame?.select(true, false);
         }
     }
 
     selectFirstByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         if (isStatement(frame)) {
             frame.selectFirstPeer(false);
         }
@@ -258,7 +251,7 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     selectLastByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         if (isStatement(frame)) {
             frame.selectLastPeer(false);
         }
@@ -275,7 +268,7 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     selectNextTextByID(id: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         if (!frame?.selectFirstText()){
             frame?.select(true, false);
         }
@@ -290,13 +283,65 @@ export class FileImpl extends AbstractFrame implements FileAPI, File, Parent, Gl
     }
 
     handleInput(id: string, key: string) {
-        const frame = this.getFrameMap().get(id);
+        const frame = this.frameMap.get(id);
         if (isText(frame)){
             frame.enterText(key);
         }
     }
 
-    override status() {
+    status(): ParsingStatus {
         return this.globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
     }
+
+    deselectAll() {
+        for (const f of this.frameMap.values()) {
+            if (f.isSelected()) {
+                f.deselect();
+            }
+        }
+    }
+
+    getFrameMap(): Map<string, Frame> {
+        return this.frameMap;
+    }
+    getFactory(): FrameFactory {
+        return this.factory;
+    }
+
+    select(withFocus : boolean,  multiSelect: boolean): void {
+        throw new Error("Not implemented");
+        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
+   /*     if (!multiSelect) {
+            this.deselectAll();
+        }
+        this.selected = true; 
+        if (multiSelect) {
+            if (this.hasParent()) {
+                var p = this._parent as Parent;
+                if (!p.isRangeSelecting()){
+                    p.selectChildRange(multiSelect);
+                }
+            }
+        }
+        this.focused = withFocus;    */
+    }
+
+    selectFirstPeer(multiSelect: boolean): void {
+        throw new Error("Not implemented");
+        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
+        /* if (this.hasParent()) {
+            var p = this._parent as Parent;
+            p.selectFirstChild(multiSelect);
+        } */
+    }
+
+    selectLastPeer(multiSelect: boolean): void {
+        throw new Error("Not implemented");
+        //TODO - method not relevant so does nothing. Original inherited version below. Review why this is defined on Parent
+        /* if (this.hasParent()) {
+            var p = this._parent as Parent;
+            p.selectFirstChild(multiSelect);
+        } */
+    }
+
 }

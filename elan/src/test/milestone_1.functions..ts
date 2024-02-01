@@ -23,7 +23,6 @@ import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 import { SelectGlobal } from "../frames/globals/select-global";
 import { SelectStatement } from "../frames/statements/select-statement";
-import { FileAPI } from "../frames/file-api";
 import { FileImpl } from "../frames/file-impl";
 
 export function T00_emptyFile() {
