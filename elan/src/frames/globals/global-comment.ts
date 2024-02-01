@@ -11,6 +11,7 @@ export class GlobalComment extends CodeFrame implements Global {
     constructor(parent: Parent) {
         super(parent);
         this.text = new PlainText(this);
+        this.text.setPrompt("comment");
     }
 
     getPrefix(): string {
