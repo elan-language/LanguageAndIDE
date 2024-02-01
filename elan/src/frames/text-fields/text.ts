@@ -200,6 +200,14 @@ export abstract class Text implements Frame {
                 this.text = this.text.substring(0, this.text.length-1);
                 break;
             }
+            case 'ArrowUp': {
+                this.holder.select(true, false);
+                break;
+            }
+            case 'Down': {
+                this.holder.select(true, false);
+                break;
+            }
             default :
             {
                 this.text += char;
