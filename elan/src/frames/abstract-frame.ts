@@ -9,7 +9,11 @@ export abstract class AbstractFrame implements Frame {
     private _parent?: Parent;
     private _frameMap?: Map<string, Frame>;
     private _factory?: FrameFactory;
-
+    protected multiline: boolean = false;
+    private selected: boolean = false;
+    private focused: boolean = false;
+    private collapsed: boolean = false;
+    private _classes = new Array<string>;
     protected htmlId: string = "";
 
     getFrameMap(): Map<string, Frame> {
@@ -35,12 +39,6 @@ export abstract class AbstractFrame implements Frame {
     }
 
     abstract getPrefix(): string;
-
-    protected multiline: boolean = false;
-    private selected: boolean = false;
-    private focused: boolean = false;
-    private collapsed: boolean = false;
-    private _classes = new Array<string>;
 
     protected pushClass(flag: boolean, cls: string) {
         if (flag) {

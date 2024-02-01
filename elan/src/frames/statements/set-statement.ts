@@ -22,7 +22,7 @@ export class SetStatement extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true, false);
+        this.name.select();
         return true;
     }
 

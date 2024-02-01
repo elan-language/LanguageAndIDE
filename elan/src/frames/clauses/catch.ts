@@ -20,7 +20,7 @@ export class Catch extends CodeFrame implements Statement, TextFieldHolder {
     }
 
     public override selectFirstText(): boolean {
-        this.variable.select(true, false);
+        this.variable.select();
         return true;
     }
 

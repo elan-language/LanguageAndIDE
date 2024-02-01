@@ -16,10 +16,6 @@ export class SelectStatementField extends Text {
         return 'statementSelect';
     }
 
-    indent(): string {
-        return this.getParent()?.indent() + singleIndent();
-    }
-
     renderAsSource(): string {
         return `${this.indent()}`;
     }

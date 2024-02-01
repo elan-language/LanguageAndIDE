@@ -19,7 +19,7 @@ export class GlobalComment extends CodeFrame implements Global {
     }
 
     public override selectFirstText(): boolean {
-        this.text.select(true, false);
+        this.text.select();
         return true;
     }
 

@@ -1,25 +1,107 @@
-import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
-import { Parent } from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
+import { Frame } from "../frame";
+import { FrameFactory } from "../frame-factory";
+import { nextId } from "../helpers";
+import { Parent } from "../parent";
+import { ParsingStatus } from "../parsing-status";
 
-
-export abstract class Text extends AbstractFrame {
+export abstract class Text implements Frame {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
+    protected htmlId: string = "";
+    private selected: boolean = false;
+    private focused: boolean = false;
+    private _factory: FrameFactory;
+    private _classes = new Array<string>;
 
     holder: TextFieldHolder;
     
     constructor(holder: TextFieldHolder) {
-        super();
         this.holder = holder;
         var frameMap = holder.getFrameMap();
-        this.htmlId = `${this.getPrefix()}${this.nextId()}`;
+        this.htmlId = `${this.getPrefix()}${nextId()}`;
         frameMap.set(this.htmlId, this);
-        this.setFrameMap(frameMap);
-        var factory = holder.getFactory();
-        this.setFactory(factory);
+        this._factory = holder.getFactory();
+    }
+
+    getPrefix(): string {
+        return 'text';
+    }
+
+    getFrameMap(): Map<string, Frame> {
+        throw new Error("Method not implemented.");
+    }
+    isFocused(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    focus(): void {
+        throw new Error("Method not implemented.");
+    }
+    defocus(): void {
+        throw new Error("Method not implemented.");
+    }
+    isMultiline(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    hasParent(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    setParent(parent: Parent): void {
+        throw new Error("Method not implemented.");
+    }
+    getParent(): Parent {
+        throw new Error("Method not implemented.");
+    }
+    selectParent(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    isParent(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    selectFirstChild(multiSelect: boolean): boolean {
+        throw new Error("Method not implemented.");
+    }
+    selectNextPeer(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    selectPreviousPeer(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    selectFirstPeer(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    selectLastPeer(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    selectFirstText(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    isCollapsed(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    collapse(): void {} //Nothing to do
+    expand(): void {}//Nothing to do
+
+    status(): ParsingStatus {
+        throw new Error("Method not implemented.");
+    }
+
+    getFactory(): FrameFactory {
+        return this._factory;
+    }
+
+    select(): void {
+        this.selected = true;
+        this.focused = true;
+    }
+
+    isSelected() : boolean {
+        return this.selected === true;
+    }
+
+    deselect(): void {
+        this.selected = false;
     }
 
     setPrompt(prompt: string): void {
@@ -27,7 +109,7 @@ export abstract class Text extends AbstractFrame {
     }
 
     public contentAsHtml(): string {
-        if (this.isSelected()) {
+        if (this.selected) {
             return `<input size="${this.width()}"  value="${this.escapeDoubleQuotes(this.text)}" placeholder="${this.prompt}">`;
         }
         if (this.text) { 
@@ -79,11 +161,23 @@ export abstract class Text extends AbstractFrame {
         return c;
     }
 
-    protected override setClasses() {
-        super.setClasses();
+    protected setClasses() {
+        this._classes = new Array<string>();
+        this.pushClass(this.selected, "selected");
+        this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
     }
 
+    protected pushClass(flag: boolean, cls: string) {
+        if (flag) {
+            this._classes.push(cls);
+        }
+    }
+
+    protected cls(): string {
+        this.setClasses();
+        return this._classes.join(" ");
+    };
 
     renderAsHtml(): string {
         return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;

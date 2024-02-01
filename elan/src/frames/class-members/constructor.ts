@@ -18,7 +18,7 @@ export class Constructor extends FrameWithStatements implements Member, Parent {
     }
 
     public override selectFirstText(): boolean {
-        this.params.select(true, false);
+        this.params.select();
         return true;
     }
 

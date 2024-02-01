@@ -1,7 +1,7 @@
 import { Parent } from "./parent";
 import { ParsingStatus } from "./parsing-status";
 
-export interface Frame {
+export interface Frame  {
     getFrameMap(): Map<string, Frame>;
     
     renderAsHtml(): string;

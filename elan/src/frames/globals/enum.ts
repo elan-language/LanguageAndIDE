@@ -24,7 +24,7 @@ export class Enum extends CodeFrame implements Global {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true, false);
+        this.name.select();
         return true;
     }
 

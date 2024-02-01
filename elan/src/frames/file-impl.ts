@@ -252,14 +252,14 @@ export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
     }
 
     selectLastByID(id: string) {
-        const frame = this.frameMap.get(id);
-        if (isStatement(frame)) {
-            frame.selectLastPeer(false);
+        const component = this.frameMap.get(id);
+        if (isStatement(component)) {
+            component.selectLastPeer(false);
         }
-        else if (isMember(frame)) {
-            frame.selectLastPeer(false);
+        else if (isMember(component)) {
+            component.selectLastPeer(false);
         }
-        else if (isGlobal(frame)){
+        else if (isGlobal(component)){
             this.selectLastChild(false);
         }
         else {
@@ -285,9 +285,9 @@ export class FileImpl implements FileAPI, File, Parent, GlobalHolder {
     }
 
     handleInput(id: string, key: string) {
-        const frame = this.frameMap.get(id);
-        if (isText(frame)){
-            frame.enterText(key);
+        const component = this.frameMap.get(id);
+        if (isText(component)){
+            component.enterText(key);
         }
     }
 

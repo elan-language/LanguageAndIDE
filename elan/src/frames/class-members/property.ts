@@ -23,7 +23,7 @@ export class Property extends CodeFrame implements Member, TextFieldHolder {
     }
 
     public override selectFirstText(): boolean {
-        this.name.select(true, false);
+        this.name.select();
         return true;
     }
 

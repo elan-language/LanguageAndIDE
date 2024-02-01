@@ -18,7 +18,7 @@ export class ReturnStatement extends CodeFrame implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.expr.select(true, false);
+        this.expr.select();
         return true;
     }
 

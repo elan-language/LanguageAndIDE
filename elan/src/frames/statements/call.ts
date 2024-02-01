@@ -19,7 +19,7 @@ export class Call extends CodeFrame implements Statement, TextFieldHolder {
     }
 
     public override selectFirstText(): boolean {
-        this.proc.select(true, false);
+        this.proc.select();
         return true;
     }
 

@@ -21,7 +21,7 @@ export class Else extends CodeFrame implements Statement, TextFieldHolder {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select(true, false);
+        this.condition.select();
         return true;
     }
 

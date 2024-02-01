@@ -20,7 +20,7 @@ export class Repeat extends FrameWithStatements implements Statement {
     }
 
     public override selectFirstText(): boolean {
-        this.condition.select(true, false);
+        this.condition.select();
         return true;
     }
     
