@@ -81,7 +81,7 @@ export abstract class Text implements Frame {
     expand(): void {}//Nothing to do
 
     status(): ParsingStatus {
-        throw new Error("Method not implemented.");
+        return ParsingStatus.valid;
     }
 
     select(): void {

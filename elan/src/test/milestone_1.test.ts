@@ -5,12 +5,12 @@ import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements,
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-/* 	test('Test Empty File', (done) => {
+ 	test('Test Empty File', (done) => {
 		assertAreEqualByHtml(done, "T00_emptyFile.html", T00_emptyFile);
 	}); 
 	test('Test Empty File Source', (done) => {
 		assertAreEqualBySource(done, "T00_emptyFile.source", T00_emptyFile);
-	}); */
+	}); 
 	test('Test Hello World', (done) => {
 		assertAreEqualByHtml(done, "T01_helloWorld.html", T01_helloWorld);
 	});

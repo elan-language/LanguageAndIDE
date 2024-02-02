@@ -4,7 +4,7 @@ import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string, done: Mocha.Done,) {
     const edit = new vscode.WorkspaceEdit();
