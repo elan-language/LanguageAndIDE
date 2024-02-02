@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
-import { Identifier } from "../text-fields/identifier";
-import { ArgList } from "../text-fields/arg-list";
+import { Identifier } from "../fields/identifier";
+import { ArgList } from "../fields/arg-list";
 import { AbstractFrame } from "../abstract-frame";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";
@@ -28,7 +28,7 @@ export class Call extends AbstractFrame implements Statement, TextFieldHolder {
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})</top></statement>`;
     }
    
     renderAsSource(): string {

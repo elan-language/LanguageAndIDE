@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { ExceptionMessage } from "../text-fields/exception-message";
+import { ExceptionMessage } from "../fields/exception-message";
 import { AbstractFrame } from "../abstract-frame";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";

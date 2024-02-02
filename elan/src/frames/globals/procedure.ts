@@ -1,6 +1,6 @@
 import { Global } from "./global";
-import { Identifier } from "../text-fields/identifier";
-import { ParamList } from "../text-fields/param-list";
+import { Identifier } from "../fields/identifier";
+import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";

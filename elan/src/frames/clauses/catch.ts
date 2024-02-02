@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../statements/statement";
-import { Identifier } from "../text-fields/identifier";
+import { Identifier } from "../fields/identifier";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 

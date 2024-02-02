@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "../clauses/catch";
 import {Parent} from "../parent";
-import { SelectStatementField } from "../text-fields/select-statement-field";
+import { SelectStatementField } from "../fields/select-statement-field";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;

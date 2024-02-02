@@ -1,6 +1,6 @@
 import { Statement } from "./statement";
-import { Identifier } from "../text-fields/identifier";
-import { Expression } from "../text-fields/expression";
+import { Identifier } from "../fields/identifier";
+import { Expression } from "../fields/expression";
 import { AbstractFrame } from "../abstract-frame";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";

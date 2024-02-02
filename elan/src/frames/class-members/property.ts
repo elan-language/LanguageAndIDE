@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Renderable } from "../frame";
-import { Identifier } from "../text-fields/identifier";
-import { Type } from "../text-fields/type";
+import { Identifier } from "../fields/identifier";
+import { Type } from "../fields/type";
 import { Member } from "./member";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";

@@ -1,8 +1,8 @@
 import { Statement } from "./statement";
-import { Expression } from "../text-fields/expression";
+import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Identifier } from "../text-fields/identifier";
-import { Integer } from "../text-fields/integer";
+import { Identifier } from "../fields/identifier";
+import { Integer } from "../fields/integer";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";
 

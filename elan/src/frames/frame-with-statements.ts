@@ -3,7 +3,7 @@ import { Renderable } from "./frame";
 import { Parent } from "./parent";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
-import { SelectStatementField } from "./text-fields/select-statement-field";
+import { SelectStatementField } from "./fields/select-statement-field";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent {
     protected statements: Array<Statement> = new Array<Statement>();

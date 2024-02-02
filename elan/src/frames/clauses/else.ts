@@ -1,7 +1,7 @@
 
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../statements/statement";
-import { Expression } from "../text-fields/expression";
+import { Expression } from "../fields/expression";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 

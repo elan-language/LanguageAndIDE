@@ -1,14 +1,14 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Global } from "./global";
-import { Type } from "../text-fields/type";
+import { Type } from "../fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
 import { Renderable } from "../frame";
 import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
-import { TypeList } from "../text-fields/type-list";
-import { SelectMemberField } from "../text-fields/select-member-field";
+import { TypeList } from "../fields/type-list";
+import { SelectMemberField } from "../fields/select-member-field";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";

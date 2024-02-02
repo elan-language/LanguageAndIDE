@@ -118,7 +118,7 @@ export abstract class Field implements Renderable {
     }
 
     public width(): number {
-        return this.text ? this.text.length-1 : this.prompt.length-1;
+        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.prompt.length-1;
     }
 
     private escapeDoubleQuotes(str: string): string {

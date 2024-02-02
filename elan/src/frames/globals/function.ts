@@ -1,7 +1,7 @@
 import { Global } from "./global";
-import { Identifier } from "../text-fields/identifier";
-import { ParamList } from "../text-fields/param-list";
-import { Type } from "../text-fields/type";
+import { Identifier } from "../fields/identifier";
+import { ParamList } from "../fields/param-list";
+import { Type } from "../fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Renderable } from "../frame";

@@ -1,5 +1,5 @@
 import { Statement } from "./statement";
-import { Expression } from "../text-fields/expression";
+import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Renderable } from "../frame";
 import {Parent} from "../parent";

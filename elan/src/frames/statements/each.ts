@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
-import { Expression } from "../text-fields/expression";
+import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Identifier } from "../text-fields/identifier";
+import { Identifier } from "../fields/identifier";
 import {Parent} from "../parent";
 
 export class Each extends FrameWithStatements implements Statement {

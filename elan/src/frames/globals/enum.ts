@@ -1,6 +1,6 @@
 import { Global } from "./global";
-import { EnumValues } from "../text-fields/enum-values";
-import { Type } from "../text-fields/type";
+import { EnumValues } from "../fields/enum-values";
+import { Type } from "../fields/type";
 import { AbstractFrame } from "../abstract-frame";
 import { Renderable } from "../frame";
 import { singleIndent } from "../helpers";

@@ -2,7 +2,7 @@ import { Renderable } from "./frame";
 import { Statement } from "./statements/statement";
 import { Global } from "./globals/global";
 import { Member } from "./class-members/member";
-import { Field } from "./text-fields/field"; 
+import { Field } from "./fields/field"; 
 
 var id = 0;
 export function nextId() {

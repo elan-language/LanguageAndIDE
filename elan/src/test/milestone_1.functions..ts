@@ -22,8 +22,8 @@ import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
-import { SelectGlobalField } from "../frames/text-fields/select-global-field";
-import { SelectStatementField } from "../frames/text-fields/select-statement-field";
+import { SelectGlobalField } from "../frames/fields/select-global-field";
+import { SelectStatementField } from "../frames/fields/select-statement-field";
 
 export function T00_emptyFile() {
 	resetId();
