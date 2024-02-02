@@ -65,7 +65,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * {
+statement.selected, statement.selected *, .selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }

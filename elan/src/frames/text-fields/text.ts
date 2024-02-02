@@ -48,7 +48,7 @@ export abstract class Text implements Frame {
         throw new Error("Method not implemented.");
     }
     getParent(): Parent {
-        throw new Error("Method not implemented.");
+        return this.holder as Parent;
     }
     selectParent(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
@@ -118,7 +118,7 @@ export abstract class Text implements Frame {
     }
 
     public width(): number {
-        return this.text ? this.text.length : this.prompt.length;
+        return this.text ? this.text.length-1 : this.prompt.length-1;
     }
 
     private escapeDoubleQuotes(str: string): string {

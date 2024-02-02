@@ -349,7 +349,7 @@ export class FileImpl implements FileAPI, File, Parent {
         this.addGlobalBeforeAndSelect(m,g);
     }
     private addGlobalBeforeAndSelect(g: Global, before: Global) {
-        ((before.getParent() as unknown) as File).addGlobalBefore(g, before);
+        this.addGlobalBefore(g, before);
         g.select(true, false);
     }
 }
