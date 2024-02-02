@@ -1,6 +1,7 @@
 :root {
     --selection:rgb(173, 214, 255);
     /* --unused: rgb(175,0,219); */
+    --valid: rgb(146, 236, 146); 
 }
 code { 
     padding: 0px;
@@ -50,6 +51,10 @@ comment, header {
 .string {
     color: rgb(165, 2, 2);
 }
+/* Status colouring*/
+.valid {
+    background-color: var(--valid);
+}
 
 /* Horizontal and vertical layout */
 statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
@@ -75,7 +80,7 @@ statement.selected, statement.selected *, .selected > clause *, .selected > top,
 }
 
 text.selected, text.selected * {
-    background-color: rgb(146, 236, 146);
+    background-color: lightgrey;
 }
 
 ::placeholder {

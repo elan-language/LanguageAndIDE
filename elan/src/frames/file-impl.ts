@@ -41,7 +41,7 @@ export class FileImpl implements FileAPI, File, Parent {
             ss.push(frame.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># ${this.getVersion()} ${this.getStatus()} <hash>${this.getHash()}</hash></header>\r\n${globals}`;
+        return `<header># ${this.getVersion()} <span class="${this.getStatus()}">${this.getStatus()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
     }
 
     public indent(): string {
