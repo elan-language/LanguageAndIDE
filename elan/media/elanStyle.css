@@ -18,6 +18,10 @@ code {
     outline: none;
 }
 
+hash {
+    display: none;
+}
+
 input, input:focus , input:active{
     border: none;
     outline: none;

@@ -41,14 +41,14 @@ export class FileImpl implements FileAPI, File, Parent {
             ss.push(frame.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header>${this.getHeaderInfo()}</header>\r\n${globals}`;
+        return `<header># ${this.getVersion()} ${this.getStatus()} <hash>${this.getHash()}</hash></header>\r\n${globals}`;
     }
 
     public indent(): string {
         return "";
     }
 
-    private getHeaderInfo(body? : string): string {
+    private getHash(body? : string): string {
         // normalize
         body = (body || this.bodyAsSource()).trim().replaceAll("\r", "");
 
@@ -56,8 +56,15 @@ export class FileImpl implements FileAPI, File, Parent {
         hash.update(body);
         const sHash = hash.digest('hex');
         const truncatedHash = sHash.slice(0, 16);
+        return truncatedHash;
+    }
 
-        return `# Elan v0.1 ${ParsingStatus[this.status()]} ${truncatedHash}`;
+    private getStatus(body? : string): string {
+        return ParsingStatus[this.status()];
+    }
+
+    private getVersion() {
+        return "Elan v0.1";
     }
 
     bodyAsSource() : string{
@@ -70,7 +77,7 @@ export class FileImpl implements FileAPI, File, Parent {
 
     renderAsSource(): string {
         const globals = this.bodyAsSource();
-        return `${this.getHeaderInfo(globals)}\r\n\r\n${globals}`; 
+        return `# ${this.getVersion()} ${this.getStatus()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
     public addGlobalToEnd(g: Global) {
