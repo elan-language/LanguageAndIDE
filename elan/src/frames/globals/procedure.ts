@@ -2,7 +2,7 @@ import { Global } from "./global";
 import { Identifier } from "../text-fields/identifier";
 import { ParamList } from "../text-fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import {Parent} from "../parent";
 
 export class Procedure extends FrameWithStatements implements Global {

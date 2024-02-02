@@ -1,8 +1,9 @@
 import { Parent } from "./parent";
 import { ParsingStatus } from "./parsing-status";
 
-export interface Frame  {
-    getFrameMap(): Map<string, Frame>;
+// The interface that may be rendered in the UI (and hence selected)
+export interface Renderable  {
+    getMap(): Map<string, Renderable>;
     
     renderAsHtml(): string;
     indent(): string;

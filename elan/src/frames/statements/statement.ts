@@ -1,6 +1,6 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 
-export interface Statement extends Frame, TextFieldHolder {
+export interface Statement extends Renderable, TextFieldHolder {
     isStatement : boolean;
 }

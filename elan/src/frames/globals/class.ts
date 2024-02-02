@@ -4,7 +4,7 @@ import { Type } from "../text-fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../class-members/member";
 import { AsString } from "../class-members/as-string";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { Parent } from "../parent";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../text-fields/type-list";
@@ -68,13 +68,13 @@ export class Class extends AbstractFrame implements Global, Parent, TextFieldHol
         this.members[this.members.length - 1].select(true, multiSelect);
     }
 
-    selectChildAfter(child: Frame, multiSelect: boolean): void {
+    selectChildAfter(child: Renderable, multiSelect: boolean): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
             safeSelectAfter(this.members, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame, multiSelect: boolean): void {
+    selectChildBefore(child: Renderable, multiSelect: boolean): void {
         if (isMember(child)) {
             const index = this.members.indexOf(child);
             safeSelectBefore(this.members, index, multiSelect);

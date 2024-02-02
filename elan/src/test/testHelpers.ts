@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Frame } from '../frames/frame';
+import { Renderable } from '../frames/frame';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 
@@ -90,7 +90,7 @@ export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: strin
     }
 }
 
-export async function assertAreEqualByFile<T extends Frame>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
+export async function assertAreEqualByFile<T extends Renderable>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const elanUri = vscode.Uri.joinPath(ws, elanFile);

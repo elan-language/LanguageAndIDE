@@ -1,11 +1,11 @@
-import { Text } from "./text";
+import { Field } from "./field";
 import { singleIndent } from "../helpers";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Statement } from "../statements/statement";
 import { StatementFactory } from "../statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class SelectStatementField extends Text implements Statement {  
+export class SelectStatementField extends Field implements Statement {  
     isStatement: boolean = true;
     holder: FrameWithStatements;
     factory: StatementFactory;

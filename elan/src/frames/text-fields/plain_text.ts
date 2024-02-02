@@ -1,6 +1,6 @@
-import { Text } from "./text";
+import { Field } from "./field";
 
-export class PlainText extends Text {
+export class PlainText extends Field {
 
     getPrefix(): string {
         return 'text';

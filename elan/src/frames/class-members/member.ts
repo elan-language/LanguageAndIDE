@@ -1,7 +1,7 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 
-export interface Member extends Frame, TextFieldHolder {
+export interface Member extends Renderable, TextFieldHolder {
     isMember : boolean;
     select(withFocus : boolean,  multiSelect: boolean): void ;
 }

@@ -1,4 +1,4 @@
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { FunctionMethod } from "./function-method";
 import {Parent} from "../parent";
 

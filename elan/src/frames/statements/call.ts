@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { ArgList } from "../text-fields/arg-list";
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 

@@ -2,7 +2,7 @@ import { Global } from "./global";
 import { EnumValues } from "../text-fields/enum-values";
 import { Type } from "../text-fields/type";
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { singleIndent } from "../helpers";
 import {Parent} from "../parent";
 

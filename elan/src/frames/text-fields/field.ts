@@ -1,10 +1,10 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { nextId } from "../helpers";
 import { Parent } from "../parent";
 import { ParsingStatus } from "../parsing-status";
 
-export abstract class Text implements Frame {
+export abstract class Field implements Renderable {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
@@ -17,16 +17,16 @@ export abstract class Text implements Frame {
     
     constructor(holder: TextFieldHolder) {
         this.holder = holder;
-        var frameMap = holder.getFrameMap();
+        var Map = holder.getMap();
         this.htmlId = `${this.getPrefix()}${nextId()}`;
-        frameMap.set(this.htmlId, this);
+        Map.set(this.htmlId, this);
     }
 
     getPrefix(): string {
         return 'text';
     }
 
-    getFrameMap(): Map<string, Frame> {
+    getMap(): Map<string, Renderable> {
         throw new Error("Method not implemented.");
     }
     isFocused(): boolean {

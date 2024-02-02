@@ -1,9 +1,9 @@
-import { Frame } from "../frame";
-import { Text } from "./text";
+import { Renderable } from "../frame";
+import { Field } from "./field";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class ArgList extends Text {
+export class ArgList extends Field {
     getPrefix(): string {
         return 'args';
     }

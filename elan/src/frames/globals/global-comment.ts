@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { PlainText } from "../text-fields/plain_text";
 import { Global } from "./global";
 import {Parent} from "../parent";

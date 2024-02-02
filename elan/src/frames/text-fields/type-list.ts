@@ -1,7 +1,7 @@
-import { Text } from "./text";
+import { Field } from "./field";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class TypeList extends Text {   
+export class TypeList extends Field {   
     constructor(holder: TextFieldHolder) {
         super(holder);
         this.setPrompt("type(s)");

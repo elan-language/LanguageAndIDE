@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { Identifier } from "../text-fields/identifier";
 import { Expression } from "../text-fields/expression";
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import {Parent} from "../parent";
 
 export class SetStatement extends AbstractFrame implements Statement {

@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { AbstractFrame } from "../abstract-frame";
 import { PlainText } from "../text-fields/plain_text";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { Member} from "../class-members/member";
 import {Parent} from "../parent";
 

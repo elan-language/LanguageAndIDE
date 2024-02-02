@@ -1,7 +1,7 @@
-import { Text } from "./text";
+import { Field } from "./field";
 import { TextFieldHolder } from "../TextFieldHolder";
 
-export class ParamList extends Text {   
+export class ParamList extends Field {   
     constructor(holder: TextFieldHolder) {
         super(holder);
         this.setPrompt("parameter definitions");

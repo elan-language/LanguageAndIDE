@@ -4,7 +4,7 @@ import { ParamList } from "../text-fields/param-list";
 import { Type } from "../text-fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import { Statement } from "../statements/statement";
 import {Parent} from "../parent";
 

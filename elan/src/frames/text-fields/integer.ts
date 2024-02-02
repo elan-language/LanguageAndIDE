@@ -1,7 +1,7 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Text } from "./text";
+import { Field } from "./field";
 
-export class Integer extends Text {   
+export class Integer extends Field {   
     getPrefix(): string {
         return `int`;
     }

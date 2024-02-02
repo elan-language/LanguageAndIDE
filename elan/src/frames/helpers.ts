@@ -1,8 +1,8 @@
-import { Frame } from "./frame";
+import { Renderable } from "./frame";
 import { Statement } from "./statements/statement";
 import { Global } from "./globals/global";
 import { Member } from "./class-members/member";
-import { Text } from "./text-fields/text"; 
+import { Field } from "./text-fields/field"; 
 
 var id = 0;
 export function nextId() {
@@ -13,19 +13,19 @@ export function resetId() {
     id = 0;
 }
 
-export function isGlobal(f?: Frame): f is Global {
+export function isGlobal(f?: Renderable): f is Global {
     return !!f && 'isGlobal' in f;
 }
 
-export function isStatement(f?: Frame): f is Statement {
+export function isStatement(f?: Renderable): f is Statement {
     return !!f && 'isStatement' in f;
 }
 
-export function isMember(f?: Frame): f is Member {
+export function isMember(f?: Renderable): f is Member {
     return !!f && 'isMember' in f;
 } 
 
-export function isText(f?: Frame): f is Text {
+export function isText(f?: Renderable): f is Field {
     return !!f && 'enterText' in f;
 } 
 
@@ -57,7 +57,7 @@ export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean, 
     }
 }
 
-export function selectChildRange(ff: Array<Frame>, multiSelect: boolean): void {
+export function selectChildRange(ff: Array<Renderable>, multiSelect: boolean): void {
     const selected = ff.filter(f => f.isSelected());
     if (selected.length > 1) {
         const firstSelectedIndex = ff.indexOf(selected[0]);

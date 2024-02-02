@@ -1,13 +1,13 @@
 import {Parent} from "./parent";
-import { Frame } from "./frame";
+import { Renderable } from "./frame";
 import { nextId, singleIndent } from "./helpers";
 import { StatementFactory } from "./statement-factory";
 import { ParsingStatus } from "./parsing-status";
 
-export abstract class AbstractFrame {
+export abstract class AbstractFrame implements Renderable {
          
     private _parent?: Parent;
-    private _frameMap?: Map<string, Frame>;
+    private _map?: Map<string, Renderable>;
     private _factory?: StatementFactory;
     protected multiline: boolean = false;
     private selected: boolean = false;
@@ -18,19 +18,19 @@ export abstract class AbstractFrame {
 
     constructor(parent: Parent) {
         this.setParent(parent);
-        var frameMap = parent.getFrameMap();
+        var map = parent.getMap();
         this.htmlId = `${this.getPrefix()}${this.nextId()}`;
-        frameMap.set(this.htmlId, this);
-        this.setFrameMap(frameMap);
+        map.set(this.htmlId, this);
+        this.setMap(map);
         var factory = parent.getFactory();
         this.setFactory(factory);
     }
 
-    getFrameMap(): Map<string, Frame> {
-        if (this._frameMap) {
-            return this._frameMap;
+    getMap(): Map<string, Renderable> {
+        if (this._map) {
+            return this._map;
         }
-        throw new Error(`Frame : ${this.htmlId} has no FrameMap`);
+        throw new Error(`Frame : ${this.htmlId} has no Map`);
     }
 
     getFactory(): StatementFactory {
@@ -40,8 +40,8 @@ export abstract class AbstractFrame {
         throw new Error(`Frame : ${this.htmlId} has no FrameFactory`);
     }
 
-    setFrameMap(frameMap: Map<string, Frame>) {
-        this._frameMap = frameMap;
+    setMap(Map: Map<string, Renderable>) {
+        this._map = Map;
     }
 
     setFactory(factory: StatementFactory) {
@@ -115,7 +115,7 @@ export abstract class AbstractFrame {
     }
 
     deselectAll() {
-        for (const f of this.getFrameMap().values()) {
+        for (const f of this.getMap().values()) {
             if (f.isSelected()) {
                 f.deselect();
             }

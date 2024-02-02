@@ -1,5 +1,5 @@
 import { AbstractFrame } from "./abstract-frame";
-import { Frame } from "./frame";
+import { Renderable } from "./frame";
 import { Parent } from "./parent";
 import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
 import { Statement } from "./statements/statement";
@@ -31,13 +31,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     selectLastChild(multiSelect: boolean): void {
         this.statements[this.statements.length - 1].select(true, multiSelect);
     }
-    selectChildAfter(child: Frame, multiSelect: boolean): void {
+    selectChildAfter(child: Renderable, multiSelect: boolean): void {
         if (isStatement(child)) {
             const index = this.statements.indexOf(child);
             safeSelectAfter(this.statements, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame, multiSelect: boolean): void {
+    selectChildBefore(child: Renderable, multiSelect: boolean): void {
         if (isStatement(child)) {
             const index = this.statements.indexOf(child);
             safeSelectBefore(this.statements, index, multiSelect);

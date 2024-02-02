@@ -1,4 +1,4 @@
-import { Frame } from "./frame";
+import { Renderable } from "./frame";
 import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
@@ -17,12 +17,12 @@ import { Constant } from "./globals/constant";
 
 export class FileImpl implements FileAPI, File, Parent {
     private globals: Array<Global> = new Array<Global>();
-    private frameMap: Map<string, Frame>;
+    private Map: Map<string, Renderable>;
     private factory: StatementFactory;
    
     constructor() {
         resetId();
-        this.frameMap = new Map<string, Frame>();
+        this.Map = new Map<string, Renderable>();
         this.factory = new StatementFactoryImpl();
     }
 
@@ -108,13 +108,13 @@ export class FileImpl implements FileAPI, File, Parent {
         this.globals[this.globals.length - 1].select(true, multiSelect);
     }
 
-    selectChildAfter(child: Frame, multiSelect: boolean): void {
+    selectChildAfter(child: Renderable, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
             safeSelectAfter(this.globals, index, multiSelect);
         }
     }
-    selectChildBefore(child: Frame, multiSelect: boolean): void {
+    selectChildBefore(child: Renderable, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
             safeSelectBefore(this.globals, index, multiSelect);
@@ -128,7 +128,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     defocusAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.Map.values()) {
             if (f.isFocused()) {
                 f.defocus();
             }
@@ -136,13 +136,13 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     expandAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.Map.values()) {
             f.expand();
         }
     }
 
     collapseAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.Map.values()) {
             f.collapse();
         }
     }
@@ -151,12 +151,12 @@ export class FileImpl implements FileAPI, File, Parent {
         if (multiSelect) {
             this.defocusAll();
         }
-        const toSelect = this.frameMap.get(id);
+        const toSelect = this.Map.get(id);
         toSelect?.select(true, multiSelect);
     }
 
     expandCollapseByID(id: string) {
-        const toToggle = this.frameMap.get(id);
+        const toToggle = this.Map.get(id);
         if (toToggle?.isCollapsed()) {
             toToggle.expand();
         }
@@ -165,7 +165,7 @@ export class FileImpl implements FileAPI, File, Parent {
         }
     }
 
-    expandCollapseAllByFrame(f?: Frame) {
+    expandCollapseAllByFrame(f?: Renderable) {
         if (f?.isCollapsed()) {
             this.expandAll();
         }
@@ -175,7 +175,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     expandCollapseAllByID(id: string) {
-        const currentFrame = this.frameMap.get(id);
+        const currentFrame = this.Map.get(id);
         if (currentFrame?.isMultiline()) {
             this.expandCollapseAllByFrame(currentFrame);
         }
@@ -191,12 +191,12 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     collapseByID(id: string) {
-        const toCollapse = this.frameMap.get(id);
+        const toCollapse = this.Map.get(id);
         toCollapse?.collapse();
     }
 
     expandByID(id: string) {
-        const toExpand = this.frameMap.get(id);
+        const toExpand = this.Map.get(id);
         toExpand?.expand();
     }
 
@@ -204,7 +204,7 @@ export class FileImpl implements FileAPI, File, Parent {
         if (multiSelect) {
             this.defocusAll();
         }
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         frame?.selectNextPeer(multiSelect);
     }
 
@@ -212,35 +212,35 @@ export class FileImpl implements FileAPI, File, Parent {
         if (multiSelect) {
             this.defocusAll();
         }
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         frame?.selectPreviousPeer(multiSelect);
     }
 
     selectFirstPeerByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         frame?.selectFirstPeer(false);
     }
 
     selectLastPeerByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         frame?.selectLastPeer(false);
     }
 
     selectParentByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         const parent = frame?.getParent();
         // leave selection as is
     }
 
     selectFirstChildByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         if (!frame?.selectFirstChild(false)) {
             frame?.select(true, false);
         }
     }
 
     selectFirstByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         if (isStatement(frame)) {
             frame.selectFirstPeer(false);
         }
@@ -258,7 +258,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     selectLastByID(id: string) {
-        const component = this.frameMap.get(id);
+        const component = this.Map.get(id);
         if (isStatement(component)) {
             component.selectLastPeer(false);
         }
@@ -276,7 +276,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     selectNextTextByID(id: string) {
-        const frame = this.frameMap.get(id);
+        const frame = this.Map.get(id);
         if (!frame?.selectFirstText()){
             frame?.select(true, false);
         }
@@ -291,7 +291,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     handleInput(id: string, key: string) {
-        const component = this.frameMap.get(id);
+        const component = this.Map.get(id);
         if (isText(component)){
             component.enterText(key);
         }
@@ -302,15 +302,15 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     deselectAll() {
-        for (const f of this.frameMap.values()) {
+        for (const f of this.Map.values()) {
             if (f.isSelected()) {
                 f.deselect();
             }
         }
     }
 
-    getFrameMap(): Map<string, Frame> {
-        return this.frameMap;
+    getMap(): Map<string, Renderable> {
+        return this.Map;
     }
     getFactory(): StatementFactory {
         return this.factory;

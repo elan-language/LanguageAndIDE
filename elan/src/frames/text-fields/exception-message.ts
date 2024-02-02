@@ -1,9 +1,9 @@
-import { Text } from "./text";
+import { Field } from "./field";
 import { TextFieldHolder } from "../TextFieldHolder";
 
 
 //Must be a literal string or an identifier 
-export class ExceptionMessage extends Text {
+export class ExceptionMessage extends Field {
     getPrefix(): string {
         return 'msg';
     }

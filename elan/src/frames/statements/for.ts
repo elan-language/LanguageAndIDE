@@ -3,7 +3,7 @@ import { Expression } from "../text-fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../text-fields/identifier";
 import { Integer } from "../text-fields/integer";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import {Parent} from "../parent";
 
 export class For extends FrameWithStatements implements Statement {

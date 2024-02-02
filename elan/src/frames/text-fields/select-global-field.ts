@@ -1,9 +1,9 @@
-import { Text } from "./text";
+import { Field } from "./field";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Global } from "../globals/global";
 import {File} from "../file";
 
-export class SelectGlobalField extends Text implements Global {
+export class SelectGlobalField extends Field implements Global {
     isGlobal: boolean = true;
     file: File ;
 

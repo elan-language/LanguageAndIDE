@@ -1,10 +1,10 @@
 import { singleIndent } from "../helpers";
-import { Text } from "./text";
+import { Field } from "./field";
 import { TextFieldHolder } from "../TextFieldHolder";
 import { Member } from "../class-members/member";
 import { Class } from "../globals/class";
 
-export class SelectMemberField extends Text implements Member {
+export class SelectMemberField extends Field implements Member {
     isMember: boolean = true;
     class: Class;
 

@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { Expression } from "../text-fields/expression";
 import { AbstractFrame } from "../abstract-frame";
-import { Frame } from "../frame";
+import { Renderable } from "../frame";
 import {Parent} from "../parent";
 
 export class ReturnStatement extends AbstractFrame implements Statement {   
