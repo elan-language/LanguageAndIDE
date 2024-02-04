@@ -1,6 +1,6 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 
-export interface Statement extends Renderable, TextFieldHolder {
+export interface Statement extends Selectable, TextFieldHolder {
     isStatement : boolean;
 }

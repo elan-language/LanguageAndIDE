@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class Repeat extends FrameWithStatements implements Statement {

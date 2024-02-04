@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { Expression } from "../fields/expression";
 import { AbstractFrame } from "../abstract-frame";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class Print extends AbstractFrame implements Statement {

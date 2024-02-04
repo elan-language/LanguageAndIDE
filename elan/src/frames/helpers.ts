@@ -1,4 +1,4 @@
-import { Renderable } from "./frame";
+import { Selectable } from "./selectable";
 import { Statement } from "./statements/statement";
 import { Global } from "./globals/global";
 import { Member } from "./class-members/member";
@@ -13,19 +13,19 @@ export function resetId() {
     id = 0;
 }
 
-export function isGlobal(f?: Renderable): f is Global {
+export function isGlobal(f?: Selectable): f is Global {
     return !!f && 'isGlobal' in f;
 }
 
-export function isStatement(f?: Renderable): f is Statement {
+export function isStatement(f?: Selectable): f is Statement {
     return !!f && 'isStatement' in f;
 }
 
-export function isMember(f?: Renderable): f is Member {
+export function isMember(f?: Selectable): f is Member {
     return !!f && 'isMember' in f;
 } 
 
-export function isText(f?: Renderable): f is Field {
+export function isText(f?: Selectable): f is Field {
     return !!f && 'enterText' in f;
 } 
 
@@ -57,7 +57,7 @@ export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean, 
     }
 }
 
-export function selectChildRange(ff: Array<Renderable>, multiSelect: boolean): void {
+export function selectChildRange(ff: Array<Selectable>, multiSelect: boolean): void {
     const selected = ff.filter(f => f.isSelected());
     if (selected.length > 1) {
         const firstSelectedIndex = ff.indexOf(selected[0]);

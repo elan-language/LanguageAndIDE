@@ -1,6 +1,6 @@
 import { Global } from "./global";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class MainFrame extends FrameWithStatements implements Global {

@@ -3,7 +3,7 @@ import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
 import { Global } from "./global";
 import { AbstractFrame } from "../abstract-frame";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class Constant extends AbstractFrame implements Global {

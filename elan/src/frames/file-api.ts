@@ -1,4 +1,4 @@
-import { Renderable } from "./frame";
+import { Selectable } from "./selectable";
 import { ParsingStatus } from "./parsing-status";
 
 export interface FileAPI {
@@ -15,7 +15,7 @@ export interface FileAPI {
 
     expandCollapseByID(id: string): void;
 
-    expandCollapseAllByFrame(f?: Renderable): void;
+    expandCollapseAllByFrame(f?: Selectable): void;
 
     expandCollapseAllByID(id: string): void;
 

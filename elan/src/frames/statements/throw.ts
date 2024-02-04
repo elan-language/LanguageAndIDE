@@ -1,7 +1,7 @@
 import { Statement } from "./statement";
 import { ExceptionMessage } from "../fields/exception-message";
 import { AbstractFrame } from "../abstract-frame";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";
 

@@ -1,4 +1,4 @@
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../fields/param-list";
 import { Member } from "./member";

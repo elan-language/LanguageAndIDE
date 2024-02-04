@@ -1,6 +1,6 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 
-export interface Global extends Renderable, TextFieldHolder {
+export interface Global extends Selectable, TextFieldHolder {
     isGlobal : boolean;
 }

@@ -3,7 +3,7 @@ import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class For extends FrameWithStatements implements Statement {

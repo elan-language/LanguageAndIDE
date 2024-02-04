@@ -1,4 +1,4 @@
-import { Renderable } from "./frame";
+import { Selectable } from "./selectable";
 import { Global } from "./globals/global";
 import { Parent } from "./parent";
 import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
@@ -17,12 +17,12 @@ import { Constant } from "./globals/constant";
 
 export class FileImpl implements FileAPI, File, Parent {
     private globals: Array<Global> = new Array<Global>();
-    private Map: Map<string, Renderable>;
+    private Map: Map<string, Selectable>;
     private factory: StatementFactory;
    
     constructor() {
         resetId();
-        this.Map = new Map<string, Renderable>();
+        this.Map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
     }
 
@@ -115,13 +115,13 @@ export class FileImpl implements FileAPI, File, Parent {
         this.globals[this.globals.length - 1].select(true, multiSelect);
     }
 
-    selectChildAfter(child: Renderable, multiSelect: boolean): void {
+    selectChildAfter(child: Selectable, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
             safeSelectAfter(this.globals, index, multiSelect);
         }
     }
-    selectChildBefore(child: Renderable, multiSelect: boolean): void {
+    selectChildBefore(child: Selectable, multiSelect: boolean): void {
         if (isGlobal(child)) {
             const index = this.globals.indexOf(child);
             safeSelectBefore(this.globals, index, multiSelect);
@@ -172,7 +172,7 @@ export class FileImpl implements FileAPI, File, Parent {
         }
     }
 
-    expandCollapseAllByFrame(f?: Renderable) {
+    expandCollapseAllByFrame(f?: Selectable) {
         if (f?.isCollapsed()) {
             this.expandAll();
         }
@@ -316,7 +316,7 @@ export class FileImpl implements FileAPI, File, Parent {
         }
     }
 
-    getMap(): Map<string, Renderable> {
+    getMap(): Map<string, Selectable> {
         return this.Map;
     }
     getFactory(): StatementFactory {

@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { Identifier } from "../fields/identifier";
 import { Type } from "../fields/type";
 import { Member } from "./member";

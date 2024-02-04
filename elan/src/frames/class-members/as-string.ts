@@ -1,4 +1,4 @@
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { FunctionMethod } from "./function-method";
 import {Parent} from "../parent";
 

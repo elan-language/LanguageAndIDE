@@ -2,7 +2,7 @@ import { Statement } from "./statement";
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
 import { AbstractFrame } from "../abstract-frame";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import {Parent} from "../parent";
 
 export class Variable extends AbstractFrame implements Statement {

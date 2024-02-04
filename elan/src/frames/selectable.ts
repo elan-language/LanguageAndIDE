@@ -2,8 +2,8 @@ import { Parent } from "./parent";
 import { ParsingStatus } from "./parsing-status";
 
 // The interface that may be rendered in the UI (and hence selected)
-export interface Renderable  {
-    getMap(): Map<string, Renderable>;
+export interface Selectable  {
+    getMap(): Map<string, Selectable>;
     
     renderAsHtml(): string;
     indent(): string;

@@ -4,7 +4,7 @@ import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { Statement } from "../statements/statement";
 import {Parent} from "../parent";
 

@@ -1,10 +1,10 @@
 import { TextFieldHolder } from "../TextFieldHolder";
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { nextId } from "../helpers";
 import { Parent } from "../parent";
 import { ParsingStatus } from "../parsing-status";
 
-export abstract class Field implements Renderable {
+export abstract class Field implements Selectable {
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
@@ -26,7 +26,7 @@ export abstract class Field implements Renderable {
         return 'text';
     }
 
-    getMap(): Map<string, Renderable> {
+    getMap(): Map<string, Selectable> {
         throw new Error("Method not implemented.");
     }
     isFocused(): boolean {

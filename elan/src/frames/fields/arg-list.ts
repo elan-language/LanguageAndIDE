@@ -1,4 +1,4 @@
-import { Renderable } from "../frame";
+import { Selectable } from "../selectable";
 import { Field } from "./field";
 import {Parent} from "../parent";
 import { TextFieldHolder } from "../TextFieldHolder";

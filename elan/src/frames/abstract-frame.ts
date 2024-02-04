@@ -1,13 +1,13 @@
 import {Parent} from "./parent";
-import { Renderable } from "./frame";
+import { Selectable } from "./selectable";
 import { nextId, singleIndent } from "./helpers";
 import { StatementFactory } from "./statement-factory";
 import { ParsingStatus } from "./parsing-status";
 
-export abstract class AbstractFrame implements Renderable {
+export abstract class AbstractFrame implements Selectable {
          
     private _parent?: Parent;
-    private _map?: Map<string, Renderable>;
+    private _map?: Map<string, Selectable>;
     private _factory?: StatementFactory;
     protected multiline: boolean = false;
     private selected: boolean = false;
@@ -26,7 +26,7 @@ export abstract class AbstractFrame implements Renderable {
         this.setFactory(factory);
     }
 
-    getMap(): Map<string, Renderable> {
+    getMap(): Map<string, Selectable> {
         if (this._map) {
             return this._map;
         }
@@ -40,7 +40,7 @@ export abstract class AbstractFrame implements Renderable {
         throw new Error(`Frame : ${this.htmlId} has no FrameFactory`);
     }
 
-    setMap(Map: Map<string, Renderable>) {
+    setMap(Map: Map<string, Selectable>) {
         this._map = Map;
     }
 
