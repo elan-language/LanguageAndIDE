@@ -26,7 +26,7 @@ export class FileImpl implements File {
         this.map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
     }
-    selectChildRange(multiSelect: boolean): void {
+    selectRange(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
     }
     getById(id: string): Selectable {
@@ -157,7 +157,7 @@ export class FileImpl implements File {
     }
 
     statusAsString() : string {
-        return ParsingStatus[this.status()]
+        return ParsingStatus[this.status()];
     }
 
     deselectAll() {

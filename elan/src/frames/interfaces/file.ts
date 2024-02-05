@@ -17,6 +17,20 @@ export interface File {
 
     addGlobalBefore(g: Global, before: Global): void;
     addGlobalAfter(g: Global, after: Global): void;
+
+    getFirstField(): Field;
+    getMap(): Map<string, Selectable>;
+    getFactory(): StatementFactory;
+
+    isRangeSelecting(): boolean
+    selectRange(multiSelect: boolean): void;
+
+    indent(): string;
+    expandCollapseAll(): void;
+
+    status(): ParsingStatus;
+
+    //Internal use only
     addMainBefore(global: Global): void;
     addFunctionBefore(global: Global): void;
     addProcedureBefore(global: Global): void;
@@ -24,16 +38,4 @@ export interface File {
     addClassBefore(global: Global): void;
     addGlobalCommentBefore(global: Global): void;
     addConstantBefore(global: Global): void;
-
-    getFirstField(): Field;
-    getMap(): Map<string, Selectable>;
-    getFactory(): StatementFactory;
-
-    isRangeSelecting(): boolean
-    selectChildRange(multiSelect: boolean): void;
-
-    indent(): string;
-    expandCollapseAll(): void;
-
-    status(): ParsingStatus;
 }

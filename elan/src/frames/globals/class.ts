@@ -105,7 +105,7 @@ export class Class extends AbstractFrame implements Global, ParentFrame {
         }
     }
 
-    selectChildRange(multiSelect: boolean): void {
+    selectRange(multiSelect: boolean): void {
         this.rangeSelecting = true;
         selectChildRange(this.members, multiSelect);
         this.rangeSelecting = false;

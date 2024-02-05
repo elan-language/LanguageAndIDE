@@ -18,6 +18,6 @@ export interface ParentFrame extends Frame {
     indent(): string;
 
     isRangeSelecting(): boolean
-    selectChildRange(multiSelect: boolean): void;
+    selectRange(multiSelect: boolean): void;
 }
 

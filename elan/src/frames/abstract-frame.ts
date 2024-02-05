@@ -120,7 +120,7 @@ export abstract class AbstractFrame implements Frame {
             if (this.hasParent()) {
                 var p = this._parent as ParentFrame;
                 if (!p.isRangeSelecting()){
-                    p.selectChildRange(multiSelect);
+                    p.selectRange(multiSelect);
                 }
             }
         }
