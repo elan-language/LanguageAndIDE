@@ -34,7 +34,6 @@ export abstract class AbstractFrame implements Frame {
     
     worstStatusOfFields(): ParsingStatus {
         return this.getFields().map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
-
     }
     getFirstPeerFrame(): Frame {
         throw new Error("Method not implemented.");
@@ -194,8 +193,6 @@ export abstract class AbstractFrame implements Frame {
     }
 
     status(): ParsingStatus {
-        // Get worst status of all fields
-
-        return ParsingStatus.valid;
+        return this.worstStatusOfFields();
     }
 }

@@ -56,7 +56,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
  
      status(): ParsingStatus {
-        return ParsingStatus.valid;
+        return ParsingStatus.valid; //TODO: base on validation
     }
 
     select(): void {

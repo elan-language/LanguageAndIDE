@@ -6,6 +6,7 @@ import { SelectStatement } from "./fields/select-statement";
 import { Frame } from "./interfaces/frame";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Collapsible } from "./interfaces/collapsible";
+import { ParsingStatus } from "./parsing-status";
 
 export abstract class FrameWithStatements extends AbstractFrame implements ParentFrame, Collapsible{
     isCollapsible: boolean = true;
@@ -16,6 +17,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         super(parent);   
         this.statements.push(new SelectStatement(this));
     }
+
+    status(): ParsingStatus {
+        var fieldStatus = this.worstStatusOfFields();
+        var statementsStatus = this.statements.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+        return fieldStatus > statementsStatus ? fieldStatus : statementsStatus;
+    }
+
     expandCollapse(): void {
         if (this.isCollapsed()) {
             this.expand();

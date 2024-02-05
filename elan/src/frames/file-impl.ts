@@ -26,9 +26,7 @@ export class FileImpl implements File {
         this.map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
     }
-    worstStatusOfFields(): ParsingStatus {
-        throw new Error("Method not implemented.");
-    }
+    
     selectRange(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
     }
