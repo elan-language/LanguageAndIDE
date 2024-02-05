@@ -3,6 +3,7 @@ import { Member} from "../interfaces/member";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
     isStatement = true;
@@ -12,6 +13,10 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
     constructor(parent: ParentFrame) {
         super(parent);
         this.text= new PlainText(this);
+    }
+
+    getFields(): Field[] {
+        return [this.text];
     }
     
     getParentFrame(): ParentFrame {

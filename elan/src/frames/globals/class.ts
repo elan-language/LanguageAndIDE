@@ -15,6 +15,7 @@ import { ProcedureMethod } from "../class-members/procedure-method";
 import { ParentFrame } from "../interfaces/parent-frame";
 import { Frame } from "../interfaces/frame";
 import { StatementFactory } from "../interfaces/statement-factory";
+import { Field } from "../interfaces/field";
 
 export class Class extends AbstractFrame implements Global, ParentFrame {
     isParent: boolean = true;
@@ -35,6 +36,10 @@ export class Class extends AbstractFrame implements Global, ParentFrame {
         this.addMemberAtEnd(new Constructor(this));
         this.addMemberAtEnd(new SelectMember(this));
         this.addMemberAtEnd(new AsString(this));
+    }
+
+    getFields(): Field[] {
+        return this.inherits? [this.name, this.superClasses] : [this.name]; //TODO: Immutable, Abstract?
     }
 
     getFirstChild(): Frame {

@@ -17,6 +17,7 @@ export class SelectStatement extends AbstractField implements Statement {
         this.factory = holder.getFactory();
         this._help ="call each for if print repeat set switch throw try var while #";
         this.setPrompt("new statement");
+        this.setOptional(true);
     }
     
     getParentFrame(): ParentFrame {

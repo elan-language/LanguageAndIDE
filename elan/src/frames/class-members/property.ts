@@ -2,8 +2,8 @@ import { AbstractFrame } from "../abstract-frame";
 import { Identifier } from "../fields/identifier";
 import { Type } from "../fields/type";
 import { Class } from "../globals/class";
+import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
-import {ParentFrame} from "../interfaces/parent-frame";
 
 export class Property extends AbstractFrame implements Member {
     isMember = true;
@@ -15,6 +15,10 @@ export class Property extends AbstractFrame implements Member {
         super(parent);
         this.name = new Identifier(this);
         this.type = new Type(this);
+    }
+
+    getFields(): Field[] {
+        return [this.name, this.type];
     }
 
     getPrefix(): string {

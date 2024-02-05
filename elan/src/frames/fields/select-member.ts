@@ -13,6 +13,7 @@ export class SelectMember extends AbstractField implements Member {
         this.class = holder;
         this._help = "function procedure property";
         this.setPrompt("new member");
+        this.setOptional(true);
     }
 
     getPrefix(): string {

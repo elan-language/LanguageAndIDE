@@ -12,6 +12,7 @@ export class SelectIfClause extends AbstractField {
         this.else = holder;
         this._help = "Type 'i' to create an if clause for this 'else'";
         this.setPrompt("if...");
+        this.setOptional(true);
     }
 
     getPrefix(): string {

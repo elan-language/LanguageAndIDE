@@ -4,6 +4,7 @@ import { Type } from "../fields/type";
 import { AbstractFrame } from "../abstract-frame";
 import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
+import { Field } from "../interfaces/field";
 
 export class Enum extends AbstractFrame implements Global {
     isGlobal = true;
@@ -16,6 +17,10 @@ export class Enum extends AbstractFrame implements Global {
         this.name = new Type(this);
         this.name.setPrompt("Name");
         this.values = new EnumValues(this);
+    }
+
+    getFields(): Field[] {
+        return [this.name, this.values];
     }
 
     getPrefix(): string {

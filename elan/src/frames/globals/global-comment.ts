@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { File } from "../interfaces/file";
 import { PlainText } from "../fields/plain_text";
 import { Global } from "../interfaces/global";
+import { Field } from "../interfaces/field";
 
 export class GlobalComment extends AbstractFrame implements Global {
     isGlobal = true;
@@ -11,6 +12,10 @@ export class GlobalComment extends AbstractFrame implements Global {
         super(parent);
         this.text = new PlainText(this);
         this.text.setPrompt("comment");
+    }
+
+    getFields(): Field[] {
+        return [this.text];
     }
 
     getPrefix(): string {

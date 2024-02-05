@@ -2,6 +2,7 @@ import { ExceptionMessage } from "../fields/exception-message";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class Throw extends AbstractFrame implements Statement {
     isStatement = true;
@@ -10,6 +11,10 @@ export class Throw extends AbstractFrame implements Statement {
     constructor(parent: ParentFrame) {
         super(parent);
         this.text = new ExceptionMessage(this);
+    }
+
+    getFields(): Field[] {
+        return [this.text];
     }
     
     getParentFrame(): ParentFrame {

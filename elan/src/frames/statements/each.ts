@@ -4,6 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import {ParentFrame} from "../interfaces/parent-frame";
 import {File} from "../interfaces/file";
+import { Field } from "../interfaces/field";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -17,6 +18,10 @@ export class Each extends FrameWithStatements implements Statement {
         this.variable.setPrompt("variableName");
         this.iter = new Expression(this);
         this.iter.setPrompt("iterable value or expression");
+    }
+
+    getFields(): Field[] {
+        return [this.variable, this.iter];
     }
 
     getParentFrame(): ParentFrame {

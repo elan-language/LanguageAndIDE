@@ -4,18 +4,22 @@ import { Expression } from "../fields/expression";
 import { Global } from "../interfaces/global";
 import { AbstractFrame } from "../abstract-frame";
 import {File} from "../interfaces/file";
+import { Field } from "../interfaces/field";
 
 export class Constant extends AbstractFrame implements Global {
     isGlobal = true;
     name: Identifier;
     expr: Expression;
 
-
     constructor(parent: File) {
         super(parent);
         this.name  = new Identifier(this);
         this.expr = new Expression(this);
         this.expr.setPrompt("literal value");
+    }
+
+    getFields(): Field[] {
+        return [this.name, this.expr];
     }
 
     getPrefix(): string {

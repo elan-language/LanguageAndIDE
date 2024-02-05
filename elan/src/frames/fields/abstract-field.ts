@@ -17,12 +17,21 @@ export abstract class AbstractField implements Selectable, Field {
     private _classes = new Array<string>;
     private holder: Frame | File;
     protected _help: string = "";
+    protected _optional: boolean = false;
 
     constructor(holder: Frame | File) {
         this.holder = holder;
         var map = holder.getMap();
         this.htmlId = `${this.getPrefix()}${map.size}`;
         map.set(this.htmlId, this);
+    }
+
+    setOptional(value: boolean) : void {
+        this._optional = value;
+    }
+
+    isOptional(): boolean {
+        return this._optional;
     }
 
     help(): string {
@@ -55,7 +64,11 @@ export abstract class AbstractField implements Selectable, Field {
         throw new Error("Method not implemented.");
     }
  
+    //Default implementation to be overridden
      status(): ParsingStatus {
+        if (this.text === ``)  {
+            return this.isOptional() ? ParsingStatus.valid : ParsingStatus.incomplete;
+        }
         return ParsingStatus.valid;
     }
 
@@ -132,6 +145,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
+        this._classes.push(ParsingStatus[this.status()]);
     }
 
     protected pushClass(flag: boolean, cls: string) {

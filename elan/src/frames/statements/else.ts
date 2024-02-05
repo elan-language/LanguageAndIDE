@@ -3,11 +3,12 @@ import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { SelectIfClause } from "../fields/select-ifClause";
+import { Field } from "../interfaces/field";
 
 
 export class Else extends AbstractFrame implements Statement {
     isStatement = true;
-    ifClause: SelectIfClause;
+    selectIfClause: SelectIfClause;
     hasIf: boolean = false;
     condition: Expression;
 
@@ -15,7 +16,11 @@ export class Else extends AbstractFrame implements Statement {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
-        this.ifClause = new SelectIfClause(this);
+        this.selectIfClause = new SelectIfClause(this);
+    }
+
+    getFields(): Field[] {
+        return this.hasIf ? [this.condition] : [this.selectIfClause];
     }
     
     setIfExtension(to: boolean) {
@@ -36,7 +41,7 @@ export class Else extends AbstractFrame implements Statement {
     }
 
     private ifClauseAsHtml() : string {
-        return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:`${this.ifClause}`;
+        return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:`${this.selectIfClause}`;
     }
 
     private ifClauseAsSource() : string {

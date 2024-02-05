@@ -3,8 +3,10 @@ import { ArgList } from "../fields/arg-list";
 import { ParentFrame } from "../interfaces/parent-frame";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class Call extends AbstractFrame implements Statement {
+
     isStatement = true;
     proc: Identifier;
     args: ArgList;
@@ -14,6 +16,10 @@ export class Call extends AbstractFrame implements Statement {
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");
         this.args = new ArgList(this);
+    }
+
+    getFields(): Field[] {
+        return [this.proc, this.args];
     }
 
     getParentFrame(): ParentFrame {
