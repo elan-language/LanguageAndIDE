@@ -53,6 +53,7 @@ export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, f
     const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
     const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
     const model = frame();
+    // get rid of \r for appveyor
     const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
     const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
 
@@ -77,8 +78,9 @@ export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: strin
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     const model = frame();
-    const actualSource = model.renderAsSource();
-    const expectedSource = sourceDoc.getText();
+    // get rid of \r for appveyor
+    const actualSource = model.renderAsSource().replaceAll("\r", "");
+    const expectedSource = sourceDoc.getText().replaceAll("\r", "");
 
     try {
         assert.strictEqual(actualSource, expectedSource);
