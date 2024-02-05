@@ -3,6 +3,10 @@
   "displayName": "elan",
   "description": "elan",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elan-language/IDE.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
