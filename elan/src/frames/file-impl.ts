@@ -13,6 +13,8 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { Field } from "./interfaces/field";
 import { StatementFactoryImpl } from "./statement-factory-impl";
+import { isCollapsible } from "./helpers";
+import { Collapsible } from "./interfaces/collapsible";
 
 export class FileImpl implements File {
     isFile: boolean = true;
@@ -51,7 +53,7 @@ export class FileImpl implements File {
             ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># ${this.getVersion()} <span class="${this.status()}">${this.status()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
+        return `<header># ${this.getVersion()} <span class="${this.statusAsString()}">${this.statusAsString()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
     }
 
     public indent(): string {
@@ -83,7 +85,7 @@ export class FileImpl implements File {
 
     renderAsSource(): string {
         const globals = this.bodyAsSource();
-        return `# ${this.getVersion()} ${this.status()} ${this.getHash()}\r\n\r\n${globals}`; 
+        return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
     public addGlobalToEnd(g: Global) {
@@ -143,13 +145,19 @@ export class FileImpl implements File {
     }
 
     expandCollapseAll() {
-        throw new Error("Not implemented");
-        //const allCollapseable = this.map.values().filter(g => g.isCollpsable);
-        //call expandCollapse() on each
+        for (const f of this.map.values()) {
+            if (isCollapsible(f)) {
+               f.expandCollapse();
+            }
+        }
     }
 
     status(): ParsingStatus {
         return this.globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+    }
+
+    statusAsString() : string {
+        return ParsingStatus[this.status()]
     }
 
     deselectAll() {

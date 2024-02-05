@@ -3,16 +3,18 @@ import { Statement } from "./interfaces/statement";
 import { Global } from "./interfaces/global";
 import { Member } from "./interfaces/member";
 import { Field } from "./interfaces/field";
+import { Collapsible } from "./interfaces/collapsible";
+import { ParentFrame } from "./interfaces/parent-frame";
+
+export function isCollapsible(f?: Selectable): f is Collapsible {
+    return !!f && 'isCollapsible' in f;
+}
 
 export function isGlobal(f?: Selectable): f is Global {
     return !!f && 'isGlobal' in f;
 }
 
-export function isFrame(f?: Selectable): f is Global {
-    return !!f && 'isFrame' in f;
-}
-
-export function isParent(f?: Selectable): f is Global {
+export function isParent(f?: Selectable): f is ParentFrame {
     return !!f && 'isParent' in f;
 }
 

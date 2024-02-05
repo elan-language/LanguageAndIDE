@@ -17,7 +17,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         this.statements.push(new SelectStatement(this));
     }
     expandCollapse(): void {
-        throw new Error("Method not implemented.");
+        if (this.isCollapsed()) {
+            this.expand();
+        } else {
+            this.collapse();
+        }
     }
     getFirstChild(): Frame {
         throw new Error("Method not implemented.");
