@@ -44,7 +44,7 @@ type {
     );
 }
 
-comment, header {
+comment, header, header *{
     color: green;
 }
 
@@ -52,7 +52,7 @@ comment, header {
     color: rgb(165, 2, 2);
 }
 /* Status colouring*/
-.valid {
+header .valid, text.valid:focus {
     background-color: var(--valid);
 }
 
@@ -97,9 +97,7 @@ text.incomplete {
 text.invalid, type.invalid {
     color:red;
 }
-text.valid, type.valid {
-  color:rgb(0, 187, 0);
-}
+
 /* Collapse / Expand */
 expand {
     display: none;
