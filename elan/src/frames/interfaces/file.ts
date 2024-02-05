@@ -12,7 +12,6 @@ export interface File {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-
     getFirstGlobal(): Global; 
     getLastGlobal(): Global;
 

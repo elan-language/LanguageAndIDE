@@ -1,8 +1,9 @@
 import { Expression } from "../fields/expression";
 import {ParentFrame} from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Else extends SingleLineStatement {
+export class Else extends AbstractFrame implements Statement {
     isStatement = true;
     hasIf: boolean = false;
     condition: Expression;
@@ -11,6 +12,10 @@ export class Else extends SingleLineStatement {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

@@ -1,8 +1,9 @@
 import { Identifier } from "../fields/identifier";
 import {ParentFrame} from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Catch extends SingleLineStatement {
+export class Catch extends AbstractFrame implements Statement {
     isStatement = true;
     variable: Identifier;
 
@@ -11,6 +12,10 @@ export class Catch extends SingleLineStatement {
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");
         this.variable.setTextWithoutParsing("e");
+    }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

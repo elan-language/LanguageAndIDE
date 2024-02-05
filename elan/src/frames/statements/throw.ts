@@ -1,8 +1,9 @@
 import { ExceptionMessage } from "../fields/exception-message";
 import {ParentFrame} from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Throw extends SingleLineStatement {
+export class Throw extends AbstractFrame implements Statement {
     isStatement = true;
     text: ExceptionMessage;
 
@@ -10,6 +11,11 @@ export class Throw extends SingleLineStatement {
         super(parent);
         this.text = new ExceptionMessage(this);
     }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
+    }
+    
     getPrefix(): string {
         return 'throw';
     }

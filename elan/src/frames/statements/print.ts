@@ -1,8 +1,9 @@
 import { Expression } from "../fields/expression";
 import {ParentFrame} from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Print extends SingleLineStatement {
+export class Print extends AbstractFrame implements Statement {
     isStatement = true;
     expr: Expression;
 
@@ -10,6 +11,10 @@ export class Print extends SingleLineStatement {
         super(parent);
         this.expr = new Expression(this);
         this.expr.setPrompt("expression");
+    }
+
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     public override selectFirstText(): boolean {

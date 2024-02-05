@@ -1,8 +1,8 @@
-import { Statement } from "../interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "./catch";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { SelectStatement } from "../fields/select-statement";
+import { Statement } from "../interfaces/statement";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;

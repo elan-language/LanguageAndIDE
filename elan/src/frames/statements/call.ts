@@ -1,9 +1,10 @@
 import { Identifier } from "../fields/identifier";
 import { ArgList } from "../fields/arg-list";
 import { ParentFrame } from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame } from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Call extends SingleLineStatement {
+export class Call extends AbstractFrame implements Statement {
     isStatement = true;
     proc: Identifier;
     args: ArgList;
@@ -13,6 +14,10 @@ export class Call extends SingleLineStatement {
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");
         this.args = new ArgList(this);
+    }
+
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     public override selectFirstText(): boolean {

@@ -1,9 +1,10 @@
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
 import {ParentFrame} from "../interfaces/parent-frame";
-import { SingleLineStatement } from "../single-line-statement";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Variable extends SingleLineStatement {
+export class Variable extends AbstractFrame implements Statement {
     isStatement = true;
     name: Identifier;
     expr: Expression;
@@ -13,6 +14,10 @@ export class Variable extends SingleLineStatement {
         this.name = new Identifier(this);
         this.expr = new Expression(this);
 
+    }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
     
     getPrefix(): string {
