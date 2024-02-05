@@ -4,6 +4,8 @@ import { getTestFrame } from './test/milestone_1.functions.';
 import { File } from './frames/interfaces/file';
 import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
+import { isFrame, isGlobal, isParent } from './frames/helpers';
+import { Selectable } from './frames/interfaces/selectable';
 
 
 interface editorEvent {
@@ -169,10 +171,10 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.handleFrameKey(e);
 				break;
 			}
-			case 'text': {
-				this.handleTextKey(e);
-				break;
-			}
+			// case 'text': {
+			// 	this.handleTextKey(e);
+			// 	break;
+			// }
 			case 'window': {
 				this.handleWindowKey(e);
 				break;
@@ -181,84 +183,107 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private handleFrameKey(e: editorEvent) {
-		throw new Error("Not implemented");
 		switch (e.key) {
-		/* 	case 'Escape': {
-				this.file?.deselectAll();
+		 	case 'Escape': {
+				//this.file?.deselectAll();
 				break;
 			}
 			case 'ArrowUp': {
-				this.file?.selectPreviousPeerByID(e.id!, e.modKey === "Shift");
+				const s = this.file?.getById(e.id!);
+				if (isFrame(s)){
+					s.getPreviousFrame().select(true, e.modKey === "Shift");
+				}
 				break;
 			}
 			case 'ArrowDown': {
-				this.file?.selectNextPeerByID(e.id!, e.modKey === "Shift");
+				const s = this.file?.getById(e.id!);
+				if (isFrame(s)){
+					s.getNextFrame().select(true, e.modKey === "Shift");
+				}
 				break;
 			}
 			case 'ArrowLeft': {
-				this.file?.selectParentByID(e.id!);
+				const s = this.file?.getById(e.id!);
+				if (isFrame(s)){
+					const p = s.getParent() as Selectable;
+					if (isFrame(p)){
+						p.select(true, false);
+					}
+				}
 				break;
 			}
 			case 'ArrowRight': {
-				this.file?.selectFirstChildByID(e.id!);
+				const s = this.file?.getById(e.id!);
+				if (isParent(s)){
+					const p = s.getFirstChild();
+					p.select(true, false);
+				}
 				break;
 			}
 			case 'Home': {
-				this.file?.selectFirstByID(e.id!);
+				const g = this.file?.getFirstGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'End': {
-				this.file?.selectLastByID(e.id!);
+				const g = this.file?.getLastGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'Tab': {
-				this.file?.selectNextTextByID(e.id!);
+				
+				//this.file?.selectNextTextByID(e.id!);
 				break;
 			}
 			case 'o': {
-				if (e.modKey === "Control") {
-					this.file?.expandCollapseByID(e.id!);
-				}
+				// if (e.modKey === "Control") {
+				// 	this.file?.expandCollapseByID(e.id!);
+				// }
 				break;
 			}
 			case 'O': {
-				if (e.modKey === "Control") {
-					this.file?.expandCollapseAllByID(e.id!);
-				}
+				// if (e.modKey === "Control") {
+				// 	this.file?.expandCollapseAllByID(e.id!);
+				// }
 				break;
-			} */
+			} 
+			default:
+				const s = this.file?.getById(e.id!);
+				s?.processKey({ key: e.key, shift: e.modKey === "Shift", control: e.modKey === "Control", alt: false });
 		}
 	}
 
-	private handleTextKey(e: editorEvent) {
-		throw new Error("Not implemented");
-/* 		switch (e.key) {
-			case 'Tab': {
-				this.file?.selectByID(e.id!, false);
-				break;
-			}
-			default:
-				this.file?.handleInput(e.id!, e.key!);
-		} */
-	}	
+	// private handleTextKey(e: editorEvent) {
+ 	// 	switch (e.key) {
+	// 		case 'Tab': {
+	// 			this.file?.selectByID(e.id!, false);
+	// 			break;
+	// 		}
+	// 		default:
+	// 			this.file?.handleInput(e.id!, e.key!);
+	// 	} 
+	// }	
 
 	private handleWindowKey(e: editorEvent) {
-		throw new Error("Not implemented");
-	/* 	switch (e.key) {
+	 	switch (e.key) {
 			case 'Home': {
-				this.file?.selectFirst();
+				const g = this.file?.getFirstGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'ArrowDown': {
-				this.file?.selectFirst();
+				const g = this.file?.getFirstGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'ArrowRight': {
-				this.file?.selectFirst();
+				const g = this.file?.getFirstGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'End': {
-				this.file?.selectLast();
+				const g = this.file?.getLastGlobal();
+				g?.select(true, false);
 				break;
 			}
 			case 'O': {
@@ -267,7 +292,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				}
 				break;
 			}
-		} */
+		} 
 	}
 
 	/**
