@@ -3,6 +3,10 @@
   "displayName": "elan",
   "description": "elan",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elan-language/IDE.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -10,7 +14,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./out/extension.js",
+  "main": "./dist/main.js",
   "languages": [
     {
       "id": "elan",
@@ -38,13 +42,17 @@
     ],
     "taskDefinitions": [
       {
-          "type": "elan",
-          "when": "resourceExtname == .elan"
+        "type": "elan",
+        "when": "resourceExtname == .elan"
       }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
@@ -56,17 +64,18 @@
     "yauzl": "2.10.0"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
+    "@types/jsdom": "21.1.6",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
     "@types/yauzl": "2.10.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.8",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
     "jsdom": "^24.0.0",
-    "@types/jsdom": "21.1.6"
+    "typescript": "^5.3.3"
   }
 }

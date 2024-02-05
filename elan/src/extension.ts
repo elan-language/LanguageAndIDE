@@ -148,7 +148,7 @@ export async function InstallZip(
                         zipFile.readEntry();
                     } catch (err) {
                         const error = err as NodeJS.ErrnoException; // Hack for TypeScript to type err correctly
-                        console.warn('Error creating directory for zip directory entry:' + error.code ?? '');
+                        console.warn('Error creating directory for zip directory entry:' + (error.code ?? ''));
 						return reject();
                     }
                 } else {
