@@ -1,7 +1,7 @@
 import { Global } from "../interfaces/global";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../interfaces/selectable";
 import {File} from "../interfaces/file";
+import { Field } from "../interfaces/field";
 
 export class MainFrame extends FrameWithStatements implements Global {
     isGlobal = true;
@@ -9,6 +9,10 @@ export class MainFrame extends FrameWithStatements implements Global {
     constructor(parent: File) {
         super(parent);
         this.multiline = true;
+    }
+
+    getFields(): Field[] {
+        return []; //no direct fields
     }
 
     getPrefix(): string {

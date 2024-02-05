@@ -29,6 +29,13 @@ export abstract class AbstractFrame implements Frame {
         var factory = parent.getFactory();
         this.setFactory(factory);
     }
+
+    abstract getFields(): Field[];
+    
+    worstStatusOfFields(): ParsingStatus {
+        return this.getFields().map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+
+    }
     getFirstPeerFrame(): Frame {
         throw new Error("Method not implemented.");
     }
@@ -39,9 +46,6 @@ export abstract class AbstractFrame implements Frame {
         throw new Error("Method not implemented.");
     }
     getNextFrame(): Frame {
-        throw new Error("Method not implemented.");
-    }
-    getFirstField(): Field {
         throw new Error("Method not implemented.");
     }
     processKey(keyEvent: KeyEvent): void {
@@ -84,6 +88,7 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
+        this._classes.push(ParsingStatus[this.status()]);
     };
 
     protected cls(): string {
@@ -189,6 +194,8 @@ export abstract class AbstractFrame implements Frame {
     }
 
     status(): ParsingStatus {
+        // Get worst status of all fields
+
         return ParsingStatus.valid;
     }
 }

@@ -4,6 +4,7 @@ import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { File } from "../interfaces/file";
 import { Class } from "./class";
+import { Field } from "../interfaces/field";
 
 export class Procedure extends FrameWithStatements implements Global {
     isGlobal = true;
@@ -15,6 +16,10 @@ export class Procedure extends FrameWithStatements implements Global {
         this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
+    }
+
+    getFields(): Field[] {
+        return [this.name, this.params];
     }
 
     getPrefix(): string {

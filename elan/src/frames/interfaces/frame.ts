@@ -2,6 +2,7 @@ import { File } from "./file";
 import { Field } from "./field";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
+import { ParsingStatus } from "../parsing-status";
 
 export interface Frame extends Selectable {
     // external use
@@ -13,7 +14,6 @@ export interface Frame extends Selectable {
     getNextFrame(): Frame;
 
     getParent(): Frame | File;
-    getFirstField(): Field;
     getMap(): Map<string, Selectable>;
 
     renderAsHtml(): string;
@@ -21,4 +21,7 @@ export interface Frame extends Selectable {
 
     getFactory(): StatementFactory;
     indent(): string;
+
+    getFields(): Field[];
+    worstStatusOfFields(): ParsingStatus;
 }

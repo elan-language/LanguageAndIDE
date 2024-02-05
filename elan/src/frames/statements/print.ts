@@ -2,6 +2,7 @@ import { Expression } from "../fields/expression";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class Print extends AbstractFrame implements Statement {
     isStatement = true;
@@ -11,6 +12,10 @@ export class Print extends AbstractFrame implements Statement {
         super(parent);
         this.expr = new Expression(this);
         this.expr.setPrompt("expression");
+    }
+
+    getFields(): Field[] {
+        return [this.expr];
     }
 
     getParentFrame(): ParentFrame {

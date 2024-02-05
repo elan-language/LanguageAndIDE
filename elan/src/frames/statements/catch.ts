@@ -2,6 +2,7 @@ import { Identifier } from "../fields/identifier";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class Catch extends AbstractFrame implements Statement {
     isStatement = true;
@@ -12,6 +13,10 @@ export class Catch extends AbstractFrame implements Statement {
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");
         this.variable.setTextWithoutParsing("e");
+    }
+
+    getFields(): Field[] {
+        return [this.variable];
     }
     
     getParentFrame(): ParentFrame {

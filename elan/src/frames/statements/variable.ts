@@ -3,6 +3,7 @@ import { Expression } from "../fields/expression";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { AbstractFrame} from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class Variable extends AbstractFrame implements Statement {
     isStatement = true;
@@ -13,7 +14,10 @@ export class Variable extends AbstractFrame implements Statement {
         super(parent);
         this.name = new Identifier(this);
         this.expr = new Expression(this);
+    }
 
+    getFields(): Field[] {
+        return [this.name, this.expr];
     }
     
     getParentFrame(): ParentFrame {

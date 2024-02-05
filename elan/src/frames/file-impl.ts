@@ -14,9 +14,9 @@ import { Constant } from "./globals/constant";
 import { Field } from "./interfaces/field";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
-import { Collapsible } from "./interfaces/collapsible";
 
 export class FileImpl implements File {
+    hasFields: boolean = true;
     isFile: boolean = true;
     private globals: Array<Global> = new Array<Global>();
     private map: Map<string, Selectable>;
@@ -26,16 +26,14 @@ export class FileImpl implements File {
         this.map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
     }
+    worstStatusOfFields(): ParsingStatus {
+        throw new Error("Method not implemented.");
+    }
     selectRange(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
     }
     getById(id: string): Selectable {
         return this.map.get(id) as Selectable;
-    }
-
-    getFirstField(): Field {
-        //Return SelectGlobal if any
-        throw new Error("Method not implemented.");
     }
 
     private rangeSelecting = false;

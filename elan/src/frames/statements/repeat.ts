@@ -1,8 +1,8 @@
 import { Statement } from "../interfaces/statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../interfaces/selectable";
 import {ParentFrame} from "../interfaces/parent-frame";
+import { Field } from "../interfaces/field";
 
 export class Repeat extends FrameWithStatements implements Statement, ParentFrame {
     isStatement = true;
@@ -13,6 +13,10 @@ export class Repeat extends FrameWithStatements implements Statement, ParentFram
         this.multiline = true;
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+
+    getFields(): Field[] {
+        return [this.condition];
     }
 
     getParentFrame(): ParentFrame {

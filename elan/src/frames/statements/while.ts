@@ -2,6 +2,7 @@ import { Statement } from "../interfaces/statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import {ParentFrame} from "../interfaces/parent-frame";
+import { Field } from "../interfaces/field";
 
 export class While extends FrameWithStatements implements Statement, ParentFrame { 
     isStatement = true;
@@ -12,6 +13,10 @@ export class While extends FrameWithStatements implements Statement, ParentFrame
         this.multiline = true;
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+
+    getFields(): Field[] {
+        return [this.condition];
     }
 
     getParentFrame(): ParentFrame {

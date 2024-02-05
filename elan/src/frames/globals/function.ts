@@ -8,6 +8,7 @@ import { File } from "../interfaces/file";
 import { Statement } from "../interfaces/statement";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { Class } from "./class";
+import { Field } from "../interfaces/field";
 
 export class Function extends FrameWithStatements implements Global, ParentFrame {
     isGlobal = true;
@@ -23,6 +24,10 @@ export class Function extends FrameWithStatements implements Global, ParentFrame
         this.returnType = new Type(this);
         this.returnType.setPrompt("return type");
         this.statements.push(new ReturnStatement(this));
+    }
+
+    getFields(): Field[] {
+        return [this.name, this.params, this.returnType];
     }
 
     getPrefix(): string {

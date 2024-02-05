@@ -3,6 +3,7 @@ import { Catch } from "./catch";
 import {ParentFrame} from "../interfaces/parent-frame";
 import { SelectStatement } from "../fields/select-statement";
 import { Statement } from "../interfaces/statement";
+import { Field } from "../interfaces/field";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -12,6 +13,10 @@ export class TryCatch extends FrameWithStatements implements Statement {
         this.multiline = true;
         this.statements.push(new Catch(this));
         this.statements.push(new SelectStatement(this));
+    }
+
+    getFields(): Field[] {
+        return []; //TODO: Issue here is that Try Catch has no DirectFields.
     }
 
     getParentFrame(): ParentFrame {

@@ -4,6 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
 import {ParentFrame} from "../interfaces/parent-frame";
+import { Field } from "../interfaces/field";
 
 export class For extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -24,6 +25,11 @@ export class For extends FrameWithStatements implements Statement {
         this.step = new Integer(this);
         this.step.setTextWithoutParsing("1");
     }
+
+    getFields(): Field[] {
+        return [this.variable, this.from, this.to, this.step];
+    }
+    
     getParentFrame(): ParentFrame {
         return this.getParent() as ParentFrame;
     }

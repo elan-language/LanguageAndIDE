@@ -18,7 +18,6 @@ export interface File {
     addGlobalBefore(g: Global, before: Global): void;
     addGlobalAfter(g: Global, after: Global): void;
 
-    getFirstField(): Field;
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;
 

@@ -1,8 +1,8 @@
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../fields/param-list";
 import { Member } from "../interfaces/member";
-import {ParentFrame} from "../interfaces/parent-frame";
 import { Class } from "../globals/class";
+import { Field } from "../interfaces/field";
 
 export class Constructor extends FrameWithStatements implements Member {
     isMember = true;
@@ -12,6 +12,10 @@ export class Constructor extends FrameWithStatements implements Member {
         super(parent);
         this.multiline = true;
         this.params = new ParamList(parent);
+    }
+
+    getFields(): Field[] {
+        return [this.params];
     }
 
     getPrefix(): string {
