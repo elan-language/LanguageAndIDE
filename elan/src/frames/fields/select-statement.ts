@@ -15,8 +15,10 @@ export class SelectStatement extends AbstractField implements Statement {
         super(holder);
         this.statementHolder = holder;
         this.factory = holder.getFactory();
-        this.setPrompt("call each for if print repeat set switch throw try var while #");
+        this._help ="call each for if print repeat set switch throw try var while #";
+        this.setPrompt("new statement");
     }
+    
     getParentFrame(): ParentFrame {
         throw new Error("Method not implemented.");
     }

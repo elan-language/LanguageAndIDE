@@ -10,7 +10,8 @@ export class SelectGlobal extends AbstractField implements Global {
     constructor(holder: File) {
         super(holder);
         this.file = holder;
-        this.setPrompt("class constant enum function main procedure #");
+        this._help = "class constant enum function main procedure #";
+        this.setPrompt("new code");
     }
 
     getPrefix(): string {

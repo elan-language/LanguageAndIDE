@@ -118,12 +118,12 @@ export function T03_mainWithAllStatements(): FileImpl {
 }
 
 export function T07_mainWithAllStatementsSelectMainById(f : FileImpl) {
-	f.getById("main2").select(true, false);
+	f.getById("main0").select(true, false);
 	return () => f;
 }
 
 export function T07_mainWithAllStatementsSelectStatementById(f : FileImpl) {
-	f.getById("for28").select(true, false);
+	f.getById("for21").select(true, false);
 	return () => f;
 }
 

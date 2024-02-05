@@ -16,6 +16,7 @@ export abstract class AbstractField implements Selectable, Field {
     private focused: boolean = false;
     private _classes = new Array<string>;
     private holder: Frame | File;
+    protected _help: string = "";
 
     constructor(holder: Frame | File) {
         this.holder = holder;
@@ -23,6 +24,11 @@ export abstract class AbstractField implements Selectable, Field {
         this.htmlId = `${this.getPrefix()}${map.size}`;
         map.set(this.htmlId, this);
     }
+
+    help(): string {
+        return this._help;
+    }
+
     processKey(key: KeyEvent): void {
         throw new Error("Method not implemented.");
     }
@@ -109,8 +115,6 @@ export abstract class AbstractField implements Selectable, Field {
         }
      }
 
-
-
     private tagTypeNames(c: string) : string {
         return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');
     } 
@@ -142,7 +146,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
+        return `<text id="${this.htmlId}" title="${this.help()}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
     }
 
     indent(): string {

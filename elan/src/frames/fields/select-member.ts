@@ -11,8 +11,10 @@ export class SelectMember extends AbstractField implements Member {
     constructor(holder: Class ) {
         super(holder);
         this.class = holder;
-        this.setPrompt("function procedure property");
+        this._help = "function procedure property";
+        this.setPrompt("new member");
     }
+
     getPrefix(): string {
         return 'memberSelect';
     }
