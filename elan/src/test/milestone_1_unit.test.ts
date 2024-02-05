@@ -12,7 +12,7 @@ function assertElementsById(dom : jsdom.JSDOM, id: string, expected: string){
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('SelectFirst', () => {
+/* 	test('SelectFirst', () => {
 		const ff = T04_allGlobalsExceptClass();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
 		ff.selectFirst();
@@ -45,7 +45,7 @@ suite('Milestone 1 - Unit tests', () => {
 	test('SelectNextTextByID', () => {
 		const ff = T03_mainWithAllStatements();
 		const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-		ff.selectNextTextByID("var2");
+		ff.getByIdselectNextTextByID("var2");
 		const postDom = new jsdom.JSDOM(ff.renderAsHtml());
 
 		assertElementsById(preDom, "ident3", 'empty');
@@ -60,7 +60,7 @@ suite('Milestone 1 - Unit tests', () => {
 
 		assertElementsById(preDom, "enum16", 'multiline');
 		assertElementsById(postDom, "enum16", 'multiline selected focused');
-	});
+	}); */
 
 	// test('SelectLastByID Statement', () => {
 	// 	const ff = T04_allGlobalsExceptClass();

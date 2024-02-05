@@ -1,17 +1,16 @@
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { EnumValues } from "../fields/enum-values";
 import { Type } from "../fields/type";
 import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
+import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
-import {Parent} from "../parent";
 
 export class Enum extends AbstractFrame implements Global {
     isGlobal = true;
     name: Type;
     values: EnumValues;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);

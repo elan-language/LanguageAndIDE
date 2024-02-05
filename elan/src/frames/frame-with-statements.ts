@@ -1,53 +1,51 @@
 import { AbstractFrame } from "./abstract-frame";
-import { Selectable } from "./selectable";
-import { Parent } from "./parent";
-import { isStatement, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
-import { Statement } from "./statements/statement";
-import { SelectStatementField } from "./fields/select-statement-field";
+import { ParentFrame } from "./interfaces/parent-frame";
+import { Statement } from "./interfaces/statement";
+import { File } from "./interfaces/file";
+import { SelectStatement } from "./fields/select-statement";
+import { Frame } from "./interfaces/frame";
+import { StatementFactory } from "./interfaces/statement-factory";
+import { Collapsible } from "./interfaces/collapsible";
 
-export abstract class FrameWithStatements extends AbstractFrame implements Parent {
+export abstract class FrameWithStatements extends AbstractFrame implements ParentFrame, Collapsible{
+    isCollapsible: boolean = true;
+    isParent: boolean = true;
     protected statements: Array<Statement> = new Array<Statement>();
 
-    constructor(parent: Parent) {
+    constructor(parent: File | ParentFrame) {
         super(parent);   
-        this.statements.push(new SelectStatementField(this));
+        this.statements.push(new SelectStatement(this));
     }
-    isParent(): boolean {
-        return true;
+    expandCollapse(): void {
+        throw new Error("Method not implemented.");
+    }
+    getFirstChild(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getLastChild(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildAfter(): Frame;
+    getChildAfter(): Frame;
+    getChildAfter(): import("./interfaces/frame").Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildBefore(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildrenBetween(first: Frame, last: Frame): Frame[] {
+        throw new Error("Method not implemented.");
+    }
+    getStatementFactory(): StatementFactory {
+        throw new Error("Method not implemented.");
+    }
+    selectChildRange(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
     }
 
     private rangeSelecting = false;
     isRangeSelecting(): boolean {
         return this.rangeSelecting;
-    }
-
-    selectFirstChild(multiSelect: boolean): boolean {
-        if (this.statements.length > 0){
-            this.statements[0].select(true, multiSelect);
-            return true;
-        }
-        return false;
-    } 
-    selectLastChild(multiSelect: boolean): void {
-        this.statements[this.statements.length - 1].select(true, multiSelect);
-    }
-    selectChildAfter(child: Selectable, multiSelect: boolean): void {
-        if (isStatement(child)) {
-            const index = this.statements.indexOf(child);
-            safeSelectAfter(this.statements, index, multiSelect);
-        }
-    }
-    selectChildBefore(child: Selectable, multiSelect: boolean): void {
-        if (isStatement(child)) {
-            const index = this.statements.indexOf(child);
-            safeSelectBefore(this.statements, index, multiSelect);
-        }
-    }
-
-    selectChildRange(multiSelect: boolean): void {
-        this.rangeSelecting = true;
-        selectChildRange(this.statements, multiSelect);
-        this.rangeSelecting = false;
     }
 
     protected renderStatementsAsHtml() : string {

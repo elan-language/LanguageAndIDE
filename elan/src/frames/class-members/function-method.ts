@@ -1,9 +1,14 @@
+import { Class } from "../globals/class";
 import { Function } from "../globals/function";
 import { singleIndent } from "../helpers";
-import { Member } from "./member";
+import { Member } from "../interfaces/member";
 
 export class FunctionMethod extends Function implements Member {
     isMember: boolean = true;
+
+    constructor(parent: Class) {
+        super(parent);
+    }
     
     public override indent(): string {
         return singleIndent();

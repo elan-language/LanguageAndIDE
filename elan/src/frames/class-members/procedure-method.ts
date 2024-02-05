@@ -1,9 +1,14 @@
+import { Class } from "../globals/class";
 import { Procedure } from "../globals/procedure";
 import { singleIndent } from "../helpers";
-import { Member } from "./member";
+import { Member } from "../interfaces/member";
 
 export class ProcedureMethod extends Procedure implements Member {
     isMember: boolean = true;
+
+    constructor(parent: Class) {
+        super(parent);
+    }
 
     public override indent(): string {
         return singleIndent();

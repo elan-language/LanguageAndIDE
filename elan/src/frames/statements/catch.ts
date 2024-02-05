@@ -1,18 +1,21 @@
-import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../statements/statement";
 import { Identifier } from "../fields/identifier";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Catch extends AbstractFrame implements Statement, TextFieldHolder {
+export class Catch extends AbstractFrame implements Statement {
     isStatement = true;
     variable: Identifier;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");
-        this.variable.enterText("e");
+        this.variable.setTextWithoutParsing("e");
+    }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

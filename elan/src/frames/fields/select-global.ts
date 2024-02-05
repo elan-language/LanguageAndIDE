@@ -1,15 +1,15 @@
-import { Field } from "./field";
-import { TextFieldHolder } from "../TextFieldHolder";
-import { Global } from "../globals/global";
-import {File} from "../file";
+import { AbstractField } from "./abstract-field";
+import { Global } from "../interfaces/global";
+import {File} from "../interfaces/file";
+import { KeyEvent } from "../interfaces/key-event";
 
-export class SelectGlobalField extends Field implements Global {
+export class SelectGlobal extends AbstractField implements Global {
     isGlobal: boolean = true;
-    file: File ;
+    private file: File;
 
-    constructor(holder: TextFieldHolder ) {
+    constructor(holder: File) {
         super(holder);
-        this.file = holder as File;
+        this.file = holder;
         this.setPrompt("class constant enum function main procedure #");
     }
 
@@ -29,7 +29,8 @@ export class SelectGlobalField extends Field implements Global {
         return ``;
     } 
 
-    enterText(char: string): void {
+    processKey(keyEvent: KeyEvent): void {
+        var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='m')) {
             this.file.addMainBefore(this);
@@ -61,6 +62,6 @@ export class SelectGlobalField extends Field implements Global {
             this.text = "";
             return;
         }
-        super.enterText(char);
+        super.processKey(keyEvent);
     }
 }

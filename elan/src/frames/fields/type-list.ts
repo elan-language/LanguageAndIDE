@@ -1,8 +1,8 @@
-import { Field } from "./field";
-import { TextFieldHolder } from "../TextFieldHolder";
+import { Frame } from "../interfaces/frame";
+import { AbstractField } from "./abstract-field";
 
-export class TypeList extends Field {   
-    constructor(holder: TextFieldHolder) {
+export class TypeList extends AbstractField {   
+    constructor(holder: Frame) {
         super(holder);
         this.setPrompt("type(s)");
     }

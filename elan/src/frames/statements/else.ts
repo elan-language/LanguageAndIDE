@@ -1,19 +1,21 @@
-
-import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../statements/statement";
 import { Expression } from "../fields/expression";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Else extends AbstractFrame implements Statement, TextFieldHolder {
+export class Else extends AbstractFrame implements Statement {
     isStatement = true;
     hasIf: boolean = false;
     condition: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

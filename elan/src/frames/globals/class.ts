@@ -1,20 +1,23 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { Type } from "../fields/type";
 import { Constructor } from "../class-members/constructor";
-import { Member } from "../class-members/member";
+import { Member } from "../interfaces/member";
 import { AsString } from "../class-members/as-string";
-import { Selectable } from "../selectable";
-import { Parent } from "../parent";
+import { Selectable } from "../interfaces/selectable";
 import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
 import { TypeList } from "../fields/type-list";
-import { SelectMemberField } from "../fields/select-member-field";
-import { TextFieldHolder } from "../TextFieldHolder";
+import { SelectMember } from "../fields/select-member";
+import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
+import { ParentFrame } from "../interfaces/parent-frame";
+import { Frame } from "../interfaces/frame";
+import { StatementFactory } from "../interfaces/statement-factory";
 
-export class Class extends AbstractFrame implements Global, Parent, TextFieldHolder {
+export class Class extends AbstractFrame implements Global, ParentFrame {
+    isParent: boolean = true;
     isGlobal = true;
     public name: Type;
     private members: Array<Member> = new Array<Member>();
@@ -23,15 +26,36 @@ export class Class extends AbstractFrame implements Global, Parent, TextFieldHol
     public inherits: boolean = false;
     public superClasses: TypeList;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
         this.addMemberAtEnd(new Constructor(this));
-        this.addMemberAtEnd(new SelectMemberField(this));
+        this.addMemberAtEnd(new SelectMember(this));
         this.addMemberAtEnd(new AsString(this));
+    }
+
+    getFirstChild(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getLastChild(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildAfter(): Frame;
+    getChildAfter(): Frame;
+    getChildAfter(): import("../interfaces/frame").Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildBefore(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getChildrenBetween(first: Frame, last: Frame): Frame[] {
+        throw new Error("Method not implemented.");
+    }
+    getStatementFactory(): StatementFactory {
+        throw new Error("Method not implemented.");
     }
 
     getPrefix(): string {

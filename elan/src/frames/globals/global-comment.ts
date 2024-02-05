@@ -1,14 +1,13 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
+import { File } from "../interfaces/file";
 import { PlainText } from "../fields/plain_text";
-import { Global } from "./global";
-import {Parent} from "../parent";
+import { Global } from "../interfaces/global";
 
 export class GlobalComment extends AbstractFrame implements Global {
     isGlobal = true;
     public text: PlainText;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
         this.text = new PlainText(this);
         this.text.setPrompt("comment");

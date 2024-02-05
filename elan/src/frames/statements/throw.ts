@@ -1,18 +1,21 @@
-import { Statement } from "./statement";
 import { ExceptionMessage } from "../fields/exception-message";
-import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { AbstractFrame} from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Throw extends AbstractFrame implements Statement, TextFieldHolder {
+export class Throw extends AbstractFrame implements Statement {
     isStatement = true;
     text: ExceptionMessage;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.text = new ExceptionMessage(this);
     }
+    
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
+    }
+    
     getPrefix(): string {
         return 'throw';
     }

@@ -1,20 +1,19 @@
-import { Selectable } from "./selectable";
-import { Statement } from "./statements/statement";
-import { Global } from "./globals/global";
-import { Member } from "./class-members/member";
-import { Field } from "./fields/field"; 
-
-var id = 0;
-export function nextId() {
-    return id++;
-}
-
-export function resetId() {
-    id = 0;
-}
+import { Selectable } from "./interfaces/selectable";
+import { Statement } from "./interfaces/statement";
+import { Global } from "./interfaces/global";
+import { Member } from "./interfaces/member";
+import { Field } from "./interfaces/field";
 
 export function isGlobal(f?: Selectable): f is Global {
     return !!f && 'isGlobal' in f;
+}
+
+export function isFrame(f?: Selectable): f is Global {
+    return !!f && 'isFrame' in f;
+}
+
+export function isParent(f?: Selectable): f is Global {
+    return !!f && 'isParent' in f;
 }
 
 export function isStatement(f?: Selectable): f is Statement {
@@ -25,8 +24,8 @@ export function isMember(f?: Selectable): f is Member {
     return !!f && 'isMember' in f;
 } 
 
-export function isText(f?: Selectable): f is Field {
-    return !!f && 'enterText' in f;
+export function isField(f?: Selectable): f is Field {
+    return !!f && 'isField' in f;
 } 
 
 export function singleIndent() {

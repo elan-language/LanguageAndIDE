@@ -1,20 +1,21 @@
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../selectable";
-import { Statement } from "../statements/statement";
-import {Parent} from "../parent";
+import { File } from "../interfaces/file";
+import { Statement } from "../interfaces/statement";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { Class } from "./class";
 
-export class Function extends FrameWithStatements implements Global {
+export class Function extends FrameWithStatements implements Global, ParentFrame {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
     public returnType: Type;
 
-    constructor(parent: Parent) {
+    constructor(parent: File | Class) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);

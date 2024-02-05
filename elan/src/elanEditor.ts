@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { getTestFrame } from './test/milestone_1.functions.';
-import { FileAPI } from './frames/file-api';
+import { File } from './frames/interfaces/file';
 import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
 
@@ -14,6 +14,15 @@ interface editorEvent {
 	id?: string
 }
 
+interface editorEvent {
+	type: "click" | "dblclick" | "key"
+	target: "frame" | "window" | "input" | "expand" | "text"
+	key?: string,
+	modKey?: "Control" | "Shift",
+	id?: string
+}
+
+
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -24,7 +33,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	private static readonly viewType = 'elan.elanEditor';
 
-	private file?: FileAPI;
+	private file?: File;
 	private currentSource = "";
 	private currentFile = "";
 
@@ -61,14 +70,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			this.currentFile = document.fileName;
 		}
 
-		function updateWebview(fm: FileAPI) {
+		function updateWebview(fm: File) {
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: fm.renderAsHtml(),
 			});
 		}
 
-		function updateSource(fm: FileAPI, currentSource: string) {
+		function updateSource(fm: File, currentSource: string) {
 
 			if (fm.status() === ParsingStatus.valid) {
 				const source = fm.renderAsSource();
@@ -134,22 +143,23 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleClick(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.file?.selectByID(e.id!, e.modKey === "Shift");
+				this.file?.getById(e.id!).select(true, e.modKey === "Shift");
 				break;
 			}
 		}
 	}
 
 	private handleDblClick(e: editorEvent) {
+		throw new Error("Not implemented");
 		switch (e.target) {
-			case 'frame': {
-				this.file?.expandCollapseByID(e.id!);
+/* 			case 'frame': {
+				this.file?.expand{CollapseByID(e.id!)};
 				break;
 			}
 			case 'expand': {
 				this.file?.expandByID(e.id!);
 				break;
-			}
+			} */
 		}
 	}
 
@@ -171,8 +181,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private handleFrameKey(e: editorEvent) {
+		throw new Error("Not implemented");
 		switch (e.key) {
-			case 'Escape': {
+		/* 	case 'Escape': {
 				this.file?.deselectAll();
 				break;
 			}
@@ -215,23 +226,25 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					this.file?.expandCollapseAllByID(e.id!);
 				}
 				break;
-			}
+			} */
 		}
 	}
 
 	private handleTextKey(e: editorEvent) {
-		switch (e.key) {
+		throw new Error("Not implemented");
+/* 		switch (e.key) {
 			case 'Tab': {
 				this.file?.selectByID(e.id!, false);
 				break;
 			}
 			default:
 				this.file?.handleInput(e.id!, e.key!);
-		}
+		} */
 	}	
 
 	private handleWindowKey(e: editorEvent) {
-		switch (e.key) {
+		throw new Error("Not implemented");
+	/* 	switch (e.key) {
 			case 'Home': {
 				this.file?.selectFirst();
 				break;
@@ -254,7 +267,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				}
 				break;
 			}
-		}
+		} */
 	}
 
 	/**

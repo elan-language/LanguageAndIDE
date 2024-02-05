@@ -1,12 +1,9 @@
-import { Selectable } from "./selectable";
-import { Global } from "./globals/global";
-import { Parent } from "./parent";
-import { isGlobal, isMember, isStatement, isText, resetId, safeSelectAfter, safeSelectBefore, selectChildRange } from "./helpers";
+import { Selectable } from "./interfaces/selectable";
+import { Global } from "./interfaces/global";
 import { createHash } from "node:crypto";
-import { StatementFactory, StatementFactoryImpl } from "./statement-factory";
+import { StatementFactory } from "./interfaces/statement-factory";
 import { ParsingStatus } from "./parsing-status";
-import { FileAPI } from "./file-api";
-import {File} from "./file";
+import {File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { Function } from "./globals/function";
 import { Procedure } from "./globals/procedure";
@@ -14,16 +11,29 @@ import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
+import { Field } from "./interfaces/field";
+import { StatementFactoryImpl } from "./statement-factory-impl";
 
-export class FileImpl implements FileAPI, File, Parent {
+export class FileImpl implements File {
+    isFile: boolean = true;
     private globals: Array<Global> = new Array<Global>();
-    private Map: Map<string, Selectable>;
+    private map: Map<string, Selectable>;
     private factory: StatementFactory;
    
     constructor() {
-        resetId();
-        this.Map = new Map<string, Selectable>();
+        this.map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
+    }
+    selectChildRange(multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    getById(id: string): Selectable {
+        return this.map.get(id) as Selectable;
+    }
+
+    getFirstField(): Field {
+        //Return SelectGlobal if any
+        throw new Error("Method not implemented.");
     }
 
     private rangeSelecting = false;
@@ -37,11 +47,11 @@ export class FileImpl implements FileAPI, File, Parent {
 
     public renderAsHtml(): string {
         const ss: Array<string> = [];
-        for (var frame of this.globals) {
-            ss.push(frame.renderAsHtml());
+        for (var global of this.globals) {
+            ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># ${this.getVersion()} <span class="${this.getStatus()}">${this.getStatus()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
+        return `<header># ${this.getVersion()} <span class="${this.status()}">${this.status()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
     }
 
     public indent(): string {
@@ -59,10 +69,6 @@ export class FileImpl implements FileAPI, File, Parent {
         return truncatedHash;
     }
 
-    private getStatus(body? : string): string {
-        return ParsingStatus[this.status()];
-    }
-
     private getVersion() {
         return "Elan v0.1";
     }
@@ -77,7 +83,7 @@ export class FileImpl implements FileAPI, File, Parent {
 
     renderAsSource(): string {
         const globals = this.bodyAsSource();
-        return `# ${this.getVersion()} ${this.getStatus()} ${this.getHash()}\r\n\r\n${globals}`; 
+        return `# ${this.getVersion()} ${this.status()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
     public addGlobalToEnd(g: Global) {
@@ -103,205 +109,43 @@ export class FileImpl implements FileAPI, File, Parent {
         return true;
     }
     
-    selectFirstChild(multiSelect: boolean): boolean {
-        if (this.globals.length > 0){
-            this.globals[0].select(true, multiSelect);
-            return true;
-        }
-        return false;
+    getFirstGlobal(): Global {
+        return this.globals[0]; //Should always be one - at minimum a SelectGlobal
     }
 
-    selectLastChild(multiSelect: boolean): void {
-        this.globals[this.globals.length - 1].select(true, multiSelect);
+    getLastGlobal(): Global {
+        return this.globals[this.globals.length - 1];
     }
 
-    selectChildAfter(child: Selectable, multiSelect: boolean): void {
-        if (isGlobal(child)) {
-            const index = this.globals.indexOf(child);
-            safeSelectAfter(this.globals, index, multiSelect);
-        }
-    }
-    selectChildBefore(child: Selectable, multiSelect: boolean): void {
-        if (isGlobal(child)) {
-            const index = this.globals.indexOf(child);
-            safeSelectBefore(this.globals, index, multiSelect);
-        }
+    getGlobalAfter(g: Global): Global {
+        const index = this.globals.indexOf(g);
+        return index < this.globals.length -2 ? this.globals[index +1] : g;
     }
 
-    selectChildRange(multiSelect: boolean): void {
-        this.rangeSelecting = true;
+    getGlobalBefore(g: Global): Global {
+        const index = this.globals.indexOf(g);
+        return index > 0 ? this.globals[index -1] : g;
+    }
+
+    getGlobalRange(multiSelect: boolean): void {
+        throw new Error("Not implemented");
+/*         this.rangeSelecting = true;
         selectChildRange(this.globals, multiSelect);
-        this.rangeSelecting = false;
+        this.rangeSelecting = false; */
     }
 
     defocusAll() {
-        for (const f of this.Map.values()) {
+        for (const f of this.map.values()) {
             if (f.isFocused()) {
                 f.defocus();
             }
         }
     }
 
-    expandAll() {
-        for (const f of this.Map.values()) {
-            f.expand();
-        }
-    }
-
-    collapseAll() {
-        for (const f of this.Map.values()) {
-            f.collapse();
-        }
-    }
-
-    selectByID(id: string, multiSelect: boolean) {
-        if (multiSelect) {
-            this.defocusAll();
-        }
-        const toSelect = this.Map.get(id);
-        toSelect?.select(true, multiSelect);
-    }
-
-    expandCollapseByID(id: string) {
-        const toToggle = this.Map.get(id);
-        if (toToggle?.isCollapsed()) {
-            toToggle.expand();
-        }
-        else {
-            toToggle?.collapse();
-        }
-    }
-
-    expandCollapseAllByFrame(f?: Selectable) {
-        if (f?.isCollapsed()) {
-            this.expandAll();
-        }
-        else {
-            this.collapseAll();
-        }
-    }
-
-    expandCollapseAllByID(id: string) {
-        const currentFrame = this.Map.get(id);
-        if (currentFrame?.isMultiline()) {
-            this.expandCollapseAllByFrame(currentFrame);
-        }
-        else {
-            this.expandCollapseAll();
-        }
-    }
-
     expandCollapseAll() {
-        const allMultilines = this.globals.filter(g => g.isMultiline());
-        const firstFrame = allMultilines[0];
-        this.expandCollapseAllByFrame(firstFrame);
-    }
-
-    collapseByID(id: string) {
-        const toCollapse = this.Map.get(id);
-        toCollapse?.collapse();
-    }
-
-    expandByID(id: string) {
-        const toExpand = this.Map.get(id);
-        toExpand?.expand();
-    }
-
-    selectNextPeerByID(id: string, multiSelect: boolean) {
-        if (multiSelect) {
-            this.defocusAll();
-        }
-        const frame = this.Map.get(id);
-        frame?.selectNextPeer(multiSelect);
-    }
-
-    selectPreviousPeerByID(id: string, multiSelect: boolean) {
-        if (multiSelect) {
-            this.defocusAll();
-        }
-        const frame = this.Map.get(id);
-        frame?.selectPreviousPeer(multiSelect);
-    }
-
-    selectFirstPeerByID(id: string) {
-        const frame = this.Map.get(id);
-        frame?.selectFirstPeer(false);
-    }
-
-    selectLastPeerByID(id: string) {
-        const frame = this.Map.get(id);
-        frame?.selectLastPeer(false);
-    }
-
-    selectParentByID(id: string) {
-        const frame = this.Map.get(id);
-        const parent = frame?.getParent();
-        // leave selection as is
-    }
-
-    selectFirstChildByID(id: string) {
-        const frame = this.Map.get(id);
-        if (!frame?.selectFirstChild(false)) {
-            frame?.select(true, false);
-        }
-    }
-
-    selectFirstByID(id: string) {
-        const frame = this.Map.get(id);
-        if (isStatement(frame)) {
-            frame.selectFirstPeer(false);
-        }
-        else if (isMember(frame)) {
-            frame.selectFirstPeer(false);
-        }
-        else if (isGlobal(frame)){
-            this.selectFirstChild(false);
-        }
-        else {
-            throw new Error("Unexpected option");
-            // previous impl: text field
-            //frame?.getParent()?.selectFirstPeer(false);
-        }
-    }
-
-    selectLastByID(id: string) {
-        const component = this.Map.get(id);
-        if (isStatement(component)) {
-            component.selectLastPeer(false);
-        }
-        else if (isMember(component)) {
-            component.selectLastPeer(false);
-        }
-        else if (isGlobal(component)){
-            this.selectLastChild(false);
-        }
-        else {
-            throw new Error("Unexpected option");
-            // previous: impl
-            //frame?.getParent()?.selectLastPeer(false);
-        }
-    }
-
-    selectNextTextByID(id: string) {
-        const frame = this.Map.get(id);
-        if (!frame?.selectFirstText()){
-            frame?.select(true, false);
-        }
-    }
-
-    selectFirst(){
-        this.globals[0].select(true, false);
-    }
-
-    selectLast() {
-        this.globals[this.globals.length - 1].select(true, false);
-    }
-
-    handleInput(id: string, key: string) {
-        const component = this.Map.get(id);
-        if (isText(component)){
-            component.enterText(key);
-        }
+        throw new Error("Not implemented");
+        //const allCollapseable = this.map.values().filter(g => g.isCollpsable);
+        //call expandCollapse() on each
     }
 
     status(): ParsingStatus {
@@ -309,7 +153,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     deselectAll() {
-        for (const f of this.Map.values()) {
+        for (const f of this.map.values()) {
             if (f.isSelected()) {
                 f.deselect();
             }
@@ -317,7 +161,7 @@ export class FileImpl implements FileAPI, File, Parent {
     }
 
     getMap(): Map<string, Selectable> {
-        return this.Map;
+        return this.map;
     }
     getFactory(): StatementFactory {
         return this.factory;

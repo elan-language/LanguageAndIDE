@@ -1,12 +1,12 @@
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import { Selectable } from "../interfaces/selectable";
+import {File} from "../interfaces/file";
 
 export class MainFrame extends FrameWithStatements implements Global {
     isGlobal = true;
     
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
         this.multiline = true;
     }
