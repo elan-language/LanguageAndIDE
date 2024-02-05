@@ -1,17 +1,21 @@
-import { Statement } from "./statement";
+import { Statement } from "../interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Catch } from "../clauses/catch";
-import {Parent} from "../parent";
-import { SelectStatementField } from "../fields/select-statement-field";
+import { Catch } from "./catch";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { SelectStatement } from "../fields/select-statement";
 
 export class TryCatch extends FrameWithStatements implements Statement {
     isStatement = true;
     
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.multiline = true;
         this.statements.push(new Catch(this));
-        this.statements.push(new SelectStatementField(this));
+        this.statements.push(new SelectStatement(this));
+    }
+
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
     
     getPrefix(): string {

@@ -1,12 +1,16 @@
-import {Parent} from "./parent";
-import { Selectable } from "./selectable";
-import { nextId, singleIndent } from "./helpers";
-import { StatementFactory } from "./statement-factory";
+import {ParentFrame} from "./interfaces/parent-frame";
+import { Selectable } from "./interfaces/selectable";
+import { singleIndent } from "./helpers";
+import { StatementFactory } from "./interfaces/statement-factory";
 import { ParsingStatus } from "./parsing-status";
+import { Frame } from "./interfaces/frame";
+import { File } from "./interfaces/file";
+import { Field } from "./interfaces/field";
+import { KeyEvent } from "./interfaces/key-event";
 
-export abstract class AbstractFrame implements Selectable {
-         
-    private _parent?: Parent;
+export abstract class AbstractFrame implements Frame {  
+    isFrame = true;
+    private _parent: File | ParentFrame;
     private _map?: Map<string, Selectable>;
     private _factory?: StatementFactory;
     protected multiline: boolean = false;
@@ -16,14 +20,32 @@ export abstract class AbstractFrame implements Selectable {
     private _classes = new Array<string>;
     protected htmlId: string = "";
 
-    constructor(parent: Parent) {
-        this.setParent(parent);
+    constructor(parent: File | ParentFrame) {
+        this._parent = parent;
         var map = parent.getMap();
-        this.htmlId = `${this.getPrefix()}${this.nextId()}`;
+        this.htmlId = `${this.getPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
         var factory = parent.getFactory();
         this.setFactory(factory);
+    }
+    getFirstPeerFrame(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getLastPeerFrame(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getPreviousFrame(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getNextFrame(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getFirstField(): Field {
+        throw new Error("Method not implemented.");
+    }
+    processKey(keyEvent: KeyEvent): void {
+        throw new Error("Method not implemented.");
     }
 
     getMap(): Map<string, Selectable> {
@@ -69,10 +91,6 @@ export abstract class AbstractFrame implements Selectable {
         return this._classes.join(" ");
     };
 
-    protected nextId(): number {
-        return nextId();
-    }
-
     abstract renderAsHtml(): string;
 
     indent(): string {
@@ -100,7 +118,7 @@ export abstract class AbstractFrame implements Selectable {
         this.selected = true; 
         if (multiSelect) {
             if (this.hasParent()) {
-                var p = this._parent as Parent;
+                var p = this._parent as ParentFrame;
                 if (!p.isRangeSelecting()){
                     p.selectChildRange(multiSelect);
                 }
@@ -126,60 +144,16 @@ export abstract class AbstractFrame implements Selectable {
         return !!this._parent;
     }
 
-    setParent(parent: Parent): void {
+    setParent(parent: ParentFrame): void {
         this._parent = parent;
     }
 
-    getParent(): Parent {
+    getParent(): ParentFrame | File {
         if (this._parent) {
             return this._parent;
         }
         throw new Error(`Frame : ${this.htmlId} has no Parent`);
     }
-
-    selectParent(multiSelect : boolean): void {
-        if (this.hasParent()) {
-            this._parent!.select(true, multiSelect);
-        }
-    }
-
-    isParent(): boolean {
-        return false;
-    }
-
-    selectFirstChild(multiSelect: boolean): boolean {
-        //Do nothing, but overridden by anything implementing hasChildren
-        return false;
-    }
-
-    selectNextPeer(multiSelect: boolean): void {
-        if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectChildAfter(this, multiSelect);
-        }
-    }
-
-    selectPreviousPeer(multiSelect: boolean): void {
-        if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectChildBefore(this, multiSelect);
-        }
-    }
-
-    selectFirstPeer(multiSelect: boolean): void {
-        if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectFirstChild(multiSelect);
-        }
-    }
-
-    selectLastPeer(multiSelect: boolean): void {
-        if (this.hasParent()) {
-            var p = this._parent as Parent;
-            p.selectLastChild(multiSelect);
-        }
-    }
-
     isCollapsed(): boolean {
         return this.collapsed;
     }

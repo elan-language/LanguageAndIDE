@@ -1,16 +1,13 @@
-
-import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../statements/statement";
 import { Expression } from "../fields/expression";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class Else extends AbstractFrame implements Statement, TextFieldHolder {
+export class Else extends SingleLineStatement {
     isStatement = true;
     hasIf: boolean = false;
     condition: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");

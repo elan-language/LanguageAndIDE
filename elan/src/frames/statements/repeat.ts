@@ -1,18 +1,22 @@
-import { Statement } from "./statement";
+import { Statement } from "../interfaces/statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import { Selectable } from "../interfaces/selectable";
+import {ParentFrame} from "../interfaces/parent-frame";
 
-export class Repeat extends FrameWithStatements implements Statement {
+export class Repeat extends FrameWithStatements implements Statement, ParentFrame {
     isStatement = true;
     condition: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.multiline = true;
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
+    }
+
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

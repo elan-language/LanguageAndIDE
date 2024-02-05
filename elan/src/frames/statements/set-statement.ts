@@ -1,16 +1,14 @@
-import { Statement } from "./statement";
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
-import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class SetStatement extends AbstractFrame implements Statement {
+export class SetStatement extends SingleLineStatement {
     isStatement = true;
     name: Identifier;;
     expr: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.name = new Identifier(this);
         this.name.setPrompt("variableName");

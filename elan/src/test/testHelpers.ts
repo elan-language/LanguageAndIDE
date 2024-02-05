@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Selectable } from '../frames/selectable';
+import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 

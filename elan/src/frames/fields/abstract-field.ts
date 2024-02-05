@@ -1,10 +1,13 @@
-import { TextFieldHolder } from "../TextFieldHolder";
-import { Selectable } from "../selectable";
-import { nextId } from "../helpers";
-import { Parent } from "../parent";
-import { ParsingStatus } from "../parsing-status";
 
-export abstract class Field implements Selectable {
+import { Selectable } from "../interfaces/selectable";
+import { ParsingStatus } from "../parsing-status";
+import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
+import {File} from "../interfaces/file";
+import { KeyEvent } from "../interfaces/key-event";
+
+export abstract class AbstractField implements Selectable, Field {
+    public isField: boolean = true;
     protected text: string = "";
     protected prompt: string = "";
     protected useHtmlTags: boolean = false;
@@ -12,25 +15,32 @@ export abstract class Field implements Selectable {
     private selected: boolean = false;
     private focused: boolean = false;
     private _classes = new Array<string>;
+    private holder: Frame | File;
 
-    holder: TextFieldHolder;
-    
-    constructor(holder: TextFieldHolder) {
+    constructor(holder: Frame | File) {
         this.holder = holder;
-        var Map = holder.getMap();
-        this.htmlId = `${this.getPrefix()}${nextId()}`;
-        Map.set(this.htmlId, this);
+        var map = holder.getMap();
+        this.htmlId = `${this.getPrefix()}${map.size}`;
+        map.set(this.htmlId, this);
     }
-
-    getPrefix(): string {
-        return 'text';
-    }
-
-    getMap(): Map<string, Selectable> {
+    processKey(key: KeyEvent): void {
         throw new Error("Method not implemented.");
     }
     isFocused(): boolean {
         throw new Error("Method not implemented.");
+    }
+    getHolder(): Frame | File {
+        return this.holder;
+    }
+    getPreviousField(): Field {
+        throw new Error("Method not implemented.");
+    }
+    getNextField(): Field {
+        throw new Error("Method not implemented.");
+    }
+
+    getPrefix(): string {
+        return 'text';
     }
     focus(): void {
         throw new Error("Method not implemented.");
@@ -38,49 +48,8 @@ export abstract class Field implements Selectable {
     defocus(): void {
         throw new Error("Method not implemented.");
     }
-    isMultiline(): boolean {
-        throw new Error("Method not implemented.");
-    }
-    hasParent(): boolean {
-        throw new Error("Method not implemented.");
-    }
-    setParent(parent: Parent): void {
-        throw new Error("Method not implemented.");
-    }
-    getParent(): Parent {
-        return this.holder as Parent;
-    }
-    selectParent(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-    isParent(): boolean {
-        throw new Error("Method not implemented.");
-    }
-    selectFirstChild(multiSelect: boolean): boolean {
-        throw new Error("Method not implemented.");
-    }
-    selectNextPeer(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-    selectPreviousPeer(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-    selectFirstPeer(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-    selectLastPeer(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-    selectFirstText(): boolean {
-        throw new Error("Method not implemented.");
-    }
-    isCollapsed(): boolean {
-        throw new Error("Method not implemented.");
-    }
-    collapse(): void {} //Nothing to do
-    expand(): void {}//Nothing to do
-
-    status(): ParsingStatus {
+ 
+     status(): ParsingStatus {
         return ParsingStatus.valid;
     }
 
@@ -184,27 +153,7 @@ export abstract class Field implements Selectable {
         return this.contentAsSource();
     }
 
-    enterText(char: string): void {
-        switch (char) {
-            case 'Shift': {
-                break;
-            }
-            case 'Backspace': {
-                this.text = this.text.substring(0, this.text.length-1);
-                break;
-            }
-            case 'ArrowUp': {
-                this.holder.select(true, false);
-                break;
-            }
-            case 'Down': {
-                this.holder.select(true, false);
-                break;
-            }
-            default :
-            {
-                this.text += char;
-            }
-        }
-	}
+    setTextWithoutParsing(text: string) {
+        this.text = text;
+    }
 }

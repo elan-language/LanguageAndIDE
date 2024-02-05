@@ -1,10 +1,9 @@
 
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import {File} from "../interfaces/file";
 
 export class Constant extends AbstractFrame implements Global {
     isGlobal = true;
@@ -12,7 +11,7 @@ export class Constant extends AbstractFrame implements Global {
     expr: Expression;
 
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
         this.name  = new Identifier(this);
         this.expr = new Expression(this);

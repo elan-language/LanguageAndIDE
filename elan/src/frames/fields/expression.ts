@@ -1,8 +1,8 @@
-import { Field } from "./field";
-import { TextFieldHolder } from "../TextFieldHolder";
+import { Frame } from "../interfaces/frame";
+import { AbstractField } from "./abstract-field";
 
-export class Expression extends Field {   
-    constructor(holder: TextFieldHolder) {
+export class Expression extends AbstractField {   
+    constructor(holder: Frame) {
         super(holder);
         this.setPrompt("value or expression");
     }

@@ -1,22 +1,25 @@
-import { Field } from "./field";
+import { AbstractField } from "./abstract-field";
 import { singleIndent } from "../helpers";
-import { TextFieldHolder } from "../TextFieldHolder";
-import { Statement } from "../statements/statement";
-import { StatementFactory } from "../statement-factory";
+import { Statement } from "../interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
+import { KeyEvent } from "../interfaces/key-event";
+import { StatementFactory } from "../interfaces/statement-factory";
+import { ParentFrame } from "../interfaces/parent-frame";
 
-export class SelectStatementField extends Field implements Statement {  
+export class SelectStatement extends AbstractField implements Statement {  
     isStatement: boolean = true;
-    holder: FrameWithStatements;
+    statementHolder: FrameWithStatements;
     factory: StatementFactory;
     
-    constructor(holder: TextFieldHolder) {
+    constructor(holder: FrameWithStatements) {
         super(holder);
-        this.holder = holder as FrameWithStatements;
-        this.factory = this.holder.getFactory();
+        this.statementHolder = holder;
+        this.factory = holder.getFactory();
         this.setPrompt("call each for if print repeat set switch throw try var while #");
     }
-    
+    getParentFrame(): ParentFrame {
+        throw new Error("Method not implemented.");
+    }
 
     getPrefix(): string {
         return 'statementSelect';
@@ -31,10 +34,11 @@ export class SelectStatementField extends Field implements Statement {
     }
 
     indent(): string {
-        return this.holder.indent() + singleIndent();
+        return this.statementHolder.indent() + singleIndent();
     }
 
-    enterText(char: string): void {
+    processKey(keyEvent: KeyEvent): void {
+        var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='c')) {
             this.factory.addCallBefore(this);
@@ -88,6 +92,6 @@ export class SelectStatementField extends Field implements Statement {
             this.factory.addWhileBefore(this);
             return;
         }
-        super.enterText(char);
+        super.processKey(keyEvent);
     }
 } 

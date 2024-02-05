@@ -1,18 +1,17 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
 import { Identifier } from "../fields/identifier";
 import { Type } from "../fields/type";
-import { Member } from "./member";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import { Class } from "../globals/class";
+import { Member } from "../interfaces/member";
+import {ParentFrame} from "../interfaces/parent-frame";
 
-export class Property extends AbstractFrame implements Member, TextFieldHolder {
+export class Property extends AbstractFrame implements Member {
     isMember = true;
     name: Identifier;
     type: Type;
     public private: boolean = false;
 
-    constructor(parent: Parent) {
+    constructor(parent: Class) {
         super(parent);
         this.name = new Identifier(this);
         this.type = new Type(this);

@@ -1,21 +1,26 @@
-import { Statement } from "./statement";
+import { Statement } from "../interfaces/statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
-import {Parent} from "../parent";
+import {ParentFrame} from "../interfaces/parent-frame";
+import {File} from "../interfaces/file";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
     variable: Identifier;
     iter: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: File | ParentFrame) {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPrompt("variableName");
         this.iter = new Expression(this);
         this.iter.setPrompt("iterable value or expression");
+    }
+
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

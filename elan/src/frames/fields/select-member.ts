@@ -1,16 +1,16 @@
 import { singleIndent } from "../helpers";
-import { Field } from "./field";
-import { TextFieldHolder } from "../TextFieldHolder";
-import { Member } from "../class-members/member";
+import { AbstractField } from "./abstract-field";
+import { Member } from "../interfaces/member";
 import { Class } from "../globals/class";
+import { KeyEvent } from "../interfaces/key-event";
 
-export class SelectMemberField extends Field implements Member {
+export class SelectMember extends AbstractField implements Member {
     isMember: boolean = true;
     class: Class;
 
-    constructor(holder: TextFieldHolder ) {
+    constructor(holder: Class ) {
         super(holder);
-        this.class = holder as Class;
+        this.class = holder;
         this.setPrompt("function procedure property");
     }
     getPrefix(): string {
@@ -25,7 +25,8 @@ export class SelectMemberField extends Field implements Member {
         return `${singleIndent()}member\r\n`;
     }
 
-    enterText(char: string): void {
+    processKey(keyEvent: KeyEvent): void {
+        var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='f')) {
             this.class.addFunctionMethodBefore(this);
@@ -41,6 +42,6 @@ export class SelectMemberField extends Field implements Member {
             this.text = "";
             return;
         }
-        super.enterText(char);
+        super.processKey(keyEvent);
     }
 } 

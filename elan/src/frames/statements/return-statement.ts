@@ -1,14 +1,12 @@
-import { Statement } from "./statement";
 import { Expression } from "../fields/expression";
-import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class ReturnStatement extends AbstractFrame implements Statement {   
+export class ReturnStatement extends SingleLineStatement {   
     isStatement = true;
     expr: Expression;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.expr = new Expression(this);
     }
@@ -16,7 +14,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     getPrefix(): string {
         return 'return';
     }
-
+    
     public override selectFirstText(): boolean {
         this.expr.select();
         return true;

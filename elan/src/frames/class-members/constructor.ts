@@ -1,16 +1,17 @@
-import { Selectable } from "../selectable";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../fields/param-list";
-import { Member } from "./member";
-import {Parent} from "../parent";
+import { Member } from "../interfaces/member";
+import {ParentFrame} from "../interfaces/parent-frame";
+import { Class } from "../globals/class";
 
-export class Constructor extends FrameWithStatements implements Member, Parent {
+export class Constructor extends FrameWithStatements implements Member {
     isMember = true;
-    public params: ParamList = new ParamList(this.getParent());
+    public params: ParamList ;
 
-    constructor(parent: Parent) {
+    constructor(parent: Class) {
         super(parent);
         this.multiline = true;
+        this.params = new ParamList(parent);
     }
 
     getPrefix(): string {

@@ -1,10 +1,9 @@
-import { Selectable } from "../selectable";
+import { Class } from "../globals/class";
 import { FunctionMethod } from "./function-method";
-import {Parent} from "../parent";
 
 export class AsString extends FunctionMethod {
 
-    constructor(parent: Parent) {
+    constructor(parent: Class) {
         super(parent);
         this.statements.splice(0,1);
     }

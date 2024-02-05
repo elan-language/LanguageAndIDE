@@ -1,17 +1,14 @@
-import { Statement } from "./statement";
 import { Identifier } from "../fields/identifier";
 import { ArgList } from "../fields/arg-list";
-import { AbstractFrame } from "../abstract-frame";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
-import { TextFieldHolder } from "../TextFieldHolder";
+import { ParentFrame } from "../interfaces/parent-frame";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class Call extends AbstractFrame implements Statement, TextFieldHolder {
+export class Call extends SingleLineStatement {
     isStatement = true;
     proc: Identifier;
     args: ArgList;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");

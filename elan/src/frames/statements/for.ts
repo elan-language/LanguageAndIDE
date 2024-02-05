@@ -1,10 +1,9 @@
-import { Statement } from "./statement";
+import { Statement } from "../interfaces/statement";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import {ParentFrame} from "../interfaces/parent-frame";
 
 export class For extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -13,7 +12,7 @@ export class For extends FrameWithStatements implements Statement {
     to: Expression;
     step: Integer;
 
-    constructor(parent: Parent) {
+    constructor(parent: ParentFrame) {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);
@@ -23,7 +22,10 @@ export class For extends FrameWithStatements implements Statement {
         this.to = new Expression(this);
         this.to.setPrompt("integer value or expression");
         this.step = new Integer(this);
-        this.step.enterText("1");
+        this.step.setTextWithoutParsing("1");
+    }
+    getParentFrame(): ParentFrame {
+        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

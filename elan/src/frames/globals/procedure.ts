@@ -1,16 +1,16 @@
-import { Global } from "./global";
+import { Global } from "../interfaces/global";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../selectable";
-import {Parent} from "../parent";
+import { File } from "../interfaces/file";
+import { Class } from "./class";
 
 export class Procedure extends FrameWithStatements implements Global {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
 
-    constructor(parent: Parent) {
+    constructor(parent: File | Class) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);
