@@ -1,16 +1,16 @@
 
 import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
-import { SelectGlobal } from "../fields/select-global";
+import { GlobalSelectorField } from "../fields/global-selector-field";
 import { Parent } from "../interfaces/parent";
 
 export class GlobalSelector extends AbstractFrame  {
     isGlobal = true;
-    selector: SelectGlobal;
+    selector: GlobalSelectorField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.selector  = new SelectGlobal(this);
+        this.selector  = new GlobalSelectorField(this);
     }
 
     getFields(): Field[] {
