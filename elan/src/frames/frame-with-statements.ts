@@ -50,8 +50,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     getChildRange(first: Frame, last: Frame): Frame[] {
         var fst = this.statements.indexOf(first);
-        var lst = this.statements.indexOf(first);
-        return this.statements.slice(fst, lst+1);
+        var lst = this.statements.indexOf(last);
+        return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
     }
 
     protected renderStatementsAsHtml() : string {
