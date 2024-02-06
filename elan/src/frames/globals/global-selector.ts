@@ -27,7 +27,7 @@ export class GlobalSelector extends AbstractFrame  {
     }
 
     renderAsHtml(): string {
-        return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0">select: ${this.selector.renderAsHtml()}`;
+        return `<global>${this.selector.renderAsHtml()}</global>`;
     }
 
     indent(): string {

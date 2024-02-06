@@ -27,10 +27,6 @@ export class StatementSelectorField extends AbstractField  {
         return 'statementSelect';
     }
 
-    renderAsHtml(): string {
-        return `<statement>${super.renderAsHtml()}</statement>`;
-    }
-
     renderAsSource(): string {
         return `${this.indent()}`;
     }

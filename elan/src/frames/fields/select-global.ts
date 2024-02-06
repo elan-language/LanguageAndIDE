@@ -25,7 +25,7 @@ export class SelectGlobal extends AbstractField {
     }
 
     renderAsHtml(): string {
-        return `<global>${super.renderAsHtml()}</global>`;
+        return `${super.renderAsHtml()}`;
     }
 
     indent(): string {
