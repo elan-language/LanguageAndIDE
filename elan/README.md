@@ -8,7 +8,7 @@ A custom editor and compiler
 
 ## Requirements
 
-The Elan compiler is required and should down load automatically
+The Elan compiler is required and should download automatically
 
 ## Extension Settings
 
