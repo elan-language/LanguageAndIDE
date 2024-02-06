@@ -85,73 +85,10 @@
 			});
 		}
 
-		// const input = document.querySelector('input');
-
-		// if (input) {
-		// 	const id = input.parentElement.id;
-		// 	input.selectionStart = input.selectionEnd = input.value.length;
-		
-		// 	input.addEventListener('keydown', event => {
-		// 		if (event.key !== "Tab") {
-		// 			const msg = {
-		// 				type: 'key',
-		// 				target: "text",
-		// 				id: id,
-		// 				key: event.key,
-		// 				modKey: getModKey(event)
-		// 			};
-		// 			vscode.postMessage(msg);
-		// 			event.preventDefault();
-		// 			event.stopPropagation();
-		// 		}
-		// 	});
-		// }
-
-		// const pluses = document.getElementsByTagName('expand');
-
-		// for (var field of pluses) {
-		// 	const id = field.parentElement.parentElement.id;
-
-		// 	field.addEventListener('dblclick', event => {
-		// 		const msg = {
-		// 			type: 'dblclick',
-		// 			target: "expand",
-		// 			id: id
-		// 		};
-		// 		vscode.postMessage(msg);
-		// 		event.preventDefault();
-		// 		event.stopPropagation();
-		// 	});
-		// }
-
 		function isHidden(el) {
 		    return (el.offsetParent === null);
 		}
 		
-		// var textFields = [...document.querySelectorAll('text[tabindex]')];
-		// textFields = textFields.filter(e => !isHidden(e));
-
-		// for (var field of textFields) {
-		// 	const index = textFields.indexOf(field);
-		// 	const nextIndex =  index === textFields.length - 1 ? index :  index + 1;
-		// 	const previousIndex =  index === 0 ? index :  index - 1;
-		// 	const nextId = textFields[nextIndex].id;
-		// 	const previousId = textFields[previousIndex].id;
-			
-		// 	field.addEventListener('keydown', event => {
-		// 		if (event.key === "Tab") {
-		// 			const msg = {
-		// 				type: 'key',
-		// 				target: "text",
-		// 				key: event.key,
-		// 				id: event.shiftKey ? previousId : nextId
-		// 			};
-		// 			vscode.postMessage(msg);
-		// 			event.preventDefault();
-		// 			event.stopPropagation();
-		// 		}
-		// 	});
-		// }
 
 		const focused = document.querySelector('.focused');
 		const elanCode = document.querySelector('.elan-code');

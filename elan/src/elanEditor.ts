@@ -5,26 +5,16 @@ import { File } from './frames/interfaces/file';
 import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
 import { isFrame, isParent } from './frames/helpers';
-import { Selectable } from './frames/interfaces/selectable';
-import { Parent } from './frames/interfaces/parent';
+import { Collapsible } from './frames/interfaces/collapsible';
 
 
 interface editorEvent {
 	type: "click" | "dblclick" | "key"
-	target: "frame" | "window" | "input" | "expand" | "text"
+	target: "frame" | "window"
 	key?: string,
 	modKey?: "Control" | "Shift",
 	id?: string
 }
-
-interface editorEvent {
-	type: "click" | "dblclick" | "key"
-	target: "frame" | "window" | "input" | "expand" | "text"
-	key?: string,
-	modKey?: "Control" | "Shift",
-	id?: string
-}
-
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -153,16 +143,12 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	}
 
 	private handleDblClick(e: editorEvent) {
-		throw new Error("Not implemented");
 		switch (e.target) {
-/* 			case 'frame': {
-				this.file?.expand{CollapseByID(e.id!)};
+ 			case 'frame': {
+				const s = this.file?.getById(e.id!) as Collapsible;
+				s.expandCollapse();
 				break;
 			}
-			case 'expand': {
-				this.file?.expandByID(e.id!);
-				break;
-			} */
 		}
 	}
 
@@ -172,10 +158,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				this.handleFrameKey(e);
 				break;
 			}
-			// case 'text': {
-			// 	this.handleTextKey(e);
-			// 	break;
-			// }
 			case 'window': {
 				this.handleWindowKey(e);
 				break;
@@ -186,7 +168,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleFrameKey(e: editorEvent) {
 		switch (e.key) {
 		 	case 'Escape': {
-				//this.file?.deselectAll();
+				const v = this.file?.getMap().values()!;
+				const ss =  [...v].filter(s => s.isSelected());
+				ss.forEach(s => s.deselect());
 				break;
 			}
 			case 'ArrowUp': {
@@ -231,21 +215,17 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				g?.select(true, false);
 				break;
 			}
-			case 'Tab': {
-				
-				//this.file?.selectNextTextByID(e.id!);
-				break;
-			}
 			case 'o': {
-				// if (e.modKey === "Control") {
-				// 	this.file?.expandCollapseByID(e.id!);
-				// }
+				if (e.modKey === "Control") {
+					const s = this.file?.getById(e.id!) as Collapsible;
+					s.expandCollapse();
+				}
 				break;
 			}
 			case 'O': {
-				// if (e.modKey === "Control") {
-				// 	this.file?.expandCollapseAllByID(e.id!);
-				// }
+				if (e.modKey === "Control") {
+					this.file?.expandCollapseAll();
+				}
 				break;
 			} 
 			default:
@@ -253,17 +233,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				s?.processKey({ key: e.key, shift: e.modKey === "Shift", control: e.modKey === "Control", alt: false });
 		}
 	}
-
-	// private handleTextKey(e: editorEvent) {
- 	// 	switch (e.key) {
-	// 		case 'Tab': {
-	// 			this.file?.selectByID(e.id!, false);
-	// 			break;
-	// 		}
-	// 		default:
-	// 			this.file?.handleInput(e.id!, e.key!);
-	// 	} 
-	// }	
 
 	private handleWindowKey(e: editorEvent) {
 	 	switch (e.key) {
