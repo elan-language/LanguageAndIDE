@@ -71,7 +71,7 @@ export class Class extends AbstractFrame implements Parent {
     getChildRange(first: Frame, last: Frame): Frame[] {
         var fst = this.members.indexOf(first);
         var lst = this.members.indexOf(last);
-        return this.members.slice(fst, lst+1);
+        return fst < lst ? this.members.slice(fst, lst + 1) : this.members.slice(lst, fst + 1);
     }
 
     getPrefix(): string {
