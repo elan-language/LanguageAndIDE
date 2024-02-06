@@ -1,7 +1,7 @@
 {
   "name": "simple-elan",
-  "displayName": "simple-elan",
-  "description": "elan without custom editor",
+  "displayName": "Elan without editor",
+  "description": "Elan language compiler",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -13,10 +13,11 @@
   "license": "Apache-2.0",
   "icon": "images/icon.png",
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Education"
   ],
   "activationEvents": [],
-  "main": "./dist/main.js",
+  "main": "./dist/extension.js",
   "languages": [
     {
       "id": "elan",
@@ -40,11 +41,11 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
     "test-compile": "tsc -p ./",
-    "compile": "tsc -p ./",
+    "compile": "npm run test-compile && npm run esbuild",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",

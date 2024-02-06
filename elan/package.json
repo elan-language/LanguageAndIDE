@@ -1,7 +1,7 @@
 {
   "name": "elan",
-  "displayName": "elan",
-  "description": "elan",
+  "displayName": "Elan",
+  "description": "Elan language editor and compiler",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Education"
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
