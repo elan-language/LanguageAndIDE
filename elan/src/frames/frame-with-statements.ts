@@ -40,7 +40,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     getChildAfter(g: Frame): Frame {
         const index = this.statements.indexOf(g);
-        return index < this.statements.length -2 ? this.statements[index +1] : g;
+        return index < this.statements.length -1 ? this.statements[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
