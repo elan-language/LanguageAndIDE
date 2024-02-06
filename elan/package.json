@@ -8,6 +8,7 @@
     "url": "https://github.com/elan-language/IDE.git"
   },
   "license": "Apache-2.0",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
