@@ -48,15 +48,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this.holder;
     }
     getPreviousField(): Field {
-        var frame = this.getHolder();
-        var fields = frame.getFields();
-        var i = fields.indexOf(this);
-        if (i > 0) {
-            return fields[i-1];
-        } else {
-            return frame.get
-        }
-
+        throw new Error("Method not implemented.");
     }
     getNextField(): Field {
         throw new Error("Method not implemented.");
