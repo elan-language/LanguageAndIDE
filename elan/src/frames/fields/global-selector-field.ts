@@ -4,7 +4,7 @@ import { KeyEvent } from "../interfaces/key-event";
 import { GlobalSelector } from "../globals/global-selector";
 import { Frame } from "../interfaces/frame";
 
-export class SelectGlobal extends AbstractField {
+export class GlobalSelectorField extends AbstractField {
 
     constructor(holder: GlobalSelector) {
         super(holder);

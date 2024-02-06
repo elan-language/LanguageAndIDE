@@ -7,7 +7,7 @@ import { AsString } from "../class-members/as-string";
 import { Selectable } from "../interfaces/selectable";
 import { isMember, safeSelectAfter, safeSelectBefore } from "../helpers";
 import { TypeList } from "../fields/type-list";
-import { SelectMember } from "../fields/select-member";
+import { MemberSelectorField } from "../fields/member-selector-field";
 import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
@@ -102,7 +102,7 @@ export class Class extends AbstractFrame implements Parent {
         return `${this.abstract ? "abstract " : ""}${this.immutable ? "immutable " : ""}`;
     }
     private inhertanceAsHtml(): string {
-        return `${this.inherits ? " inherits " + this.superClasses.renderAsHtml() : ""}`;
+        return `${this.inherits ? "<keyword> inherits </keyword>" + this.superClasses.renderAsHtml() : ""}`;
     }
     private inhertanceAsSource(): string {
         return `${this.inherits ? " inherits " + this.superClasses.renderAsSource() : ""}`;

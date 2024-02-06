@@ -5,7 +5,7 @@ import { Class } from "../globals/class";
 import { KeyEvent } from "../interfaces/key-event";
 import { MemberSelector } from "../class-members/member-selector";
 
-export class SelectMember extends AbstractField implements Member {
+export class MemberSelectorField extends AbstractField implements Member {
     isMember: boolean = true;
     class: Class;
     memberSelector: MemberSelector;
@@ -23,12 +23,8 @@ export class SelectMember extends AbstractField implements Member {
         return 'memberSelect';
     }
 
-    renderAsHtml(): string {
-        return `<member>${super.renderAsHtml()}</member>`;
-    }
-
     renderAsSource(): string {
-        return `${singleIndent()}member\r\n`;
+        return `${singleIndent()}`;
     }
 
     processKey(keyEvent: KeyEvent): void {

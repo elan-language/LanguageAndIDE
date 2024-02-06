@@ -2,17 +2,18 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { SelectMember } from "../fields/select-member";
+import { MemberSelectorField } from "../fields/member-selector-field";
 import { Member } from "../interfaces/member";
+import { singleIndent } from "../helpers";
 
 export class MemberSelector extends AbstractFrame implements Member  {
     isMember: boolean = true;
     isGlobal: boolean  = true;
-    selector: SelectMember;
+    selector: MemberSelectorField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.selector  = new SelectMember(this);
+        this.selector  = new MemberSelectorField(this);
     }
 
     getFields(): Field[] {
@@ -29,14 +30,10 @@ export class MemberSelector extends AbstractFrame implements Member  {
     }
 
     renderAsHtml(): string {
-        return `member${this.selector.renderAsHtml()}</global>`;
-    }
-
-    indent(): string {
-        return "";
+        return `<member>${this.selector.renderAsHtml()}</member>`;
     }
 
     renderAsSource(): string {
-        return ``;
+        return `${singleIndent()}`;
     }
 } 
