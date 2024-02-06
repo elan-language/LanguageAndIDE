@@ -1,7 +1,9 @@
 obj/
 bin/
 out/
+dist/
 *.vsidx
+*.vsix
 *.v2
 *.testlog
 *.manifest
