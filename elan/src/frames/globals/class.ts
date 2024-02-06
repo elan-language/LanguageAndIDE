@@ -16,12 +16,13 @@ import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { Field } from "../interfaces/field";
+import { MemberSelector } from "../class-members/member-selector";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
-    private members: Array<Member> = new Array<Member>();
+    private members: Array<Frame> = new Array<Frame>();
     public abstract: boolean = false;
     public immutable: boolean = false;
     public inherits: boolean = false;
@@ -34,44 +35,47 @@ export class Class extends AbstractFrame implements Parent {
         this.name.setPrompt("class name");
         this.superClasses  = new TypeList(this);
         this.addMemberAtEnd(new Constructor(this));
-        this.addMemberAtEnd(new SelectMember(this));
+        this.addMemberAtEnd(new MemberSelector(this));
         this.addMemberAtEnd(new AsString(this));
-    }
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        throw new Error("Method not implemented.");
     }
 
     getFields(): Field[] {
         return this.inherits? [this.name, this.superClasses] : [this.name]; //TODO: Immutable, Abstract?
     }
 
+    expandCollapse(): void {
+        if (this.isCollapsed()) {
+            this.expand();
+        } else {
+            this.collapse();
+        }
+    }
     getFirstChild(): Frame {
-        throw new Error("Method not implemented.");
+        return this.members[0]; //Should always be one - at minimum a SelectGlobal
     }
+
     getLastChild(): Frame {
-        throw new Error("Method not implemented.");
+        return this.members[this.members.length - 1];
     }
-    getChildAfter(): Frame;
-    getChildAfter(): Frame;
-    getChildAfter(): import("../interfaces/frame").Frame {
-        throw new Error("Method not implemented.");
+
+    getChildAfter(g: Frame): Frame {
+        const index = this.members.indexOf(g);
+        return index < this.members.length -2 ? this.members[index +1] : g;
     }
-    getChildBefore(): Frame {
-        throw new Error("Method not implemented.");
+
+    getChildBefore(g: Frame): Frame {
+        const index = this.members.indexOf(g);
+        return index > 0 ? this.members[index -1] : g;
     }
-    getChildrenBetween(first: Frame, last: Frame): Frame[] {
-        throw new Error("Method not implemented.");
-    }
-    getStatementFactory(): StatementFactory {
-        throw new Error("Method not implemented.");
+
+    getChildRange(first: Frame, last: Frame): Frame[] {
+        var fst = this.members.indexOf(first);
+        var lst = this.members.indexOf(last);
+        return this.members.slice(fst, lst+1);
     }
 
     getPrefix(): string {
         return 'class';
-    }
-
-    private get constr() {
-        return this.members[0] as Constructor;
     }
 
     get asString() {
@@ -89,23 +93,6 @@ export class Class extends AbstractFrame implements Parent {
             return true;
         }
         return false;
-    }
-
-    selectLastChild(multiSelect: boolean): void {
-        this.members[this.members.length - 1].select(true, multiSelect);
-    }
-
-    selectChildAfter(child: Selectable, multiSelect: boolean): void {
-        if (isMember(child)) {
-            const index = this.members.indexOf(child);
-            safeSelectAfter(this.members, index, multiSelect);
-        }
-    }
-    selectChildBefore(child: Selectable, multiSelect: boolean): void {
-        if (isMember(child)) {
-            const index = this.members.indexOf(child);
-            safeSelectBefore(this.members, index, multiSelect);
-        }
     }
 
     private modifiersAsHtml(): string {
@@ -150,41 +137,36 @@ ${members}\r
 end class\r\n`;
     }
 
-    private addMemberAtEnd(m: Member) {
+    private addMemberAtEnd(m: Frame) {
         this.members.push(m);
     }
 
-    public addMemberBeforeAsString(m: Member) {
+    public addMemberBeforeAsString(m: Frame) {
         var i = this.members.length - 1;
         this.members.splice(i,0,m);
     }
 
-    public addMemberBefore(m: Member, before: Member) {
+    public addMemberBefore(m: Frame, before: Frame) {
         var i = this.   members.indexOf(before);
         this.members.splice(i,0,m);
     }
 
-    public addMemberAfter(m: Member, after: Member) {
-        var i = this.members.indexOf(after) + 1;
-        this.members.splice(i,0,m);      
-    }
-
-    public removeMember(m: Member) {
+    public removeMember(m: Frame) {
         var i = this.members.indexOf(m);
         this.members.splice(i,1);    
     }
 
-    addFunctionMethodBefore(member: Member): void {
+    addFunctionMethodBefore(member: Frame): void {
         var p = new FunctionMethod(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
     }
-    addPropertyBefore(member: Member): void {
+    addPropertyBefore(member: Frame): void {
         var p = new Property(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
     }
-    addProcedureMethodBefore(member: Member): void {
+    addProcedureMethodBefore(member: Frame): void {
         var p = new ProcedureMethod(this);
         this.addMemberBefore(p, member);
         p.select(true, false);

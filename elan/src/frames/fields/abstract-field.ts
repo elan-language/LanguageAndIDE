@@ -3,7 +3,6 @@ import { Selectable } from "../interfaces/selectable";
 import { ParsingStatus } from "../parsing-status";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
-import {File} from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
 
 export abstract class AbstractField implements Selectable, Field {
@@ -18,12 +17,14 @@ export abstract class AbstractField implements Selectable, Field {
     private holder: Frame;
     protected _help: string = "";
     protected _optional: boolean = false;
+    protected map: Map<string, Selectable>
 
     constructor(holder: Frame) {
         this.holder = holder;
         var map = holder.getMap();
         this.htmlId = `${this.getPrefix()}${map.size}`;
         map.set(this.htmlId, this);
+        this.map = map;
     }
 
     setOptional(value: boolean) : void {
@@ -42,7 +43,7 @@ export abstract class AbstractField implements Selectable, Field {
         throw new Error("Method not implemented.");
     }
     isFocused(): boolean {
-        throw new Error("Method not implemented.");
+        return this.focused;
     }
     getHolder(): Frame  {
         return this.holder;
@@ -58,10 +59,18 @@ export abstract class AbstractField implements Selectable, Field {
         return 'text';
     }
     focus(): void {
-        throw new Error("Method not implemented.");
+        this.focused = true;
     }
     defocus(): void {
-        throw new Error("Method not implemented.");
+        this.focused = false;
+    }
+
+    deselectAll() {
+        for (const f of this.map.values()) {
+            if (f.isSelected()) {
+                f.deselect();
+            }
+        }
     }
  
     //Default implementation to be overridden
@@ -73,8 +82,9 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     select(): void {
+        this.deselectAll();
         this.selected = true;
-        this.focused = true;
+        this.focus();
     }
 
     isSelected() : boolean {
@@ -83,6 +93,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     deselect(): void {
         this.selected = false;
+        this.defocus();
     }
 
     setPrompt(prompt: string): void {

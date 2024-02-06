@@ -1,11 +1,10 @@
-# Elan v0.1 valid 644d898f5cb319eb
+# Elan v0.1 valid 5b1fca717003b884
 
 class Player
   constructor(parameter definitions)
     
   end constructor
 
-  member
 
   property score Int
 
@@ -19,7 +18,6 @@ immutable class Card inherits Foo, Bar
     
   end constructor
 
-  member
 
   private property value Int
 

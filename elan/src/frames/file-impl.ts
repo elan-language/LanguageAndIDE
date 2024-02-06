@@ -18,20 +18,17 @@ export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
-    private globals: Array<Frame> = new Array<Frame>();
-    private map: Map<string, Selectable>;
-    private factory: StatementFactory;
+    private _globals: Array<Frame> = new Array<Frame>();
+    private _map: Map<string, Selectable>;
+    private _factory: StatementFactory;
    
     constructor() {
-        this.map = new Map<string, Selectable>();
-        this.factory = new StatementFactoryImpl();
-    }
-    getStatementFactory(): StatementFactory {
-       return this.factory;
+        this._map = new Map<string, Selectable>();
+        this._factory = new StatementFactoryImpl();
     }
     
     getById(id: string): Selectable {
-        return this.map.get(id) as Selectable;
+        return this._map.get(id) as Selectable;
     }
 
     getPrefix(): string {
@@ -40,7 +37,7 @@ export class FileImpl implements File {
 
     public renderAsHtml(): string {
         const ss: Array<string> = [];
-        for (var global of this.globals) {
+        for (var global of this._globals) {
             ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
@@ -68,7 +65,7 @@ export class FileImpl implements File {
 
     bodyAsSource() : string{
         const ss: Array<string> = [];
-        for (var frame of this.globals) {
+        for (var frame of this._globals) {
             ss.push(frame.renderAsSource());
         }
         return ss.join("\r\n");
@@ -80,50 +77,50 @@ export class FileImpl implements File {
     }
 
     public addChildToEnd(g: Frame) {
-        this.globals.push(g);
+        this._globals.push(g);
     }
 
     public addChildBefore(g: Frame, before: Frame): void {
-        var i = this.globals.indexOf(before);
-        this.globals.splice(i,0,g);
+        var i = this._globals.indexOf(before);
+        this._globals.splice(i,0,g);
     }
 
     public addChildAfter(g: Frame, after: Frame) {
-        var i = this.globals.indexOf(after)+1;
-        this.globals.splice(i,0,g);     
+        var i = this._globals.indexOf(after)+1;
+        this._globals.splice(i,0,g);     
     }
 
     public removeGlobal(g: Frame) {
-        var i = this.globals.indexOf(g);
-        this.globals.splice(i,1);    
+        var i = this._globals.indexOf(g);
+        this._globals.splice(i,1);    
     }
     
     getFirstChild(): Frame {
-        return this.globals[0]; //Should always be one - at minimum a SelectGlobal
+        return this._globals[0]; //Should always be one - at minimum a SelectGlobal
     }
 
     getLastChild(): Frame {
-        return this.globals[this.globals.length - 1];
+        return this._globals[this._globals.length - 1];
     }
 
     getChildAfter(g: Frame): Frame {
-        const index = this.globals.indexOf(g);
-        return index < this.globals.length -2 ? this.globals[index +1] : g;
+        const index = this._globals.indexOf(g);
+        return index < this._globals.length -2 ? this._globals[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
-        const index = this.globals.indexOf(g);
-        return index > 0 ? this.globals[index -1] : g;
+        const index = this._globals.indexOf(g);
+        return index > 0 ? this._globals[index -1] : g;
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.globals.indexOf(first);
-        var lst = this.globals.indexOf(first);
-        return this.globals.slice(fst, lst+1);
+        var fst = this._globals.indexOf(first);
+        var lst = this._globals.indexOf(first);
+        return this._globals.slice(fst, lst+1);
     }
 
     defocusAll() {
-        for (const f of this.map.values()) {
+        for (const f of this._map.values()) {
             if (f.isFocused()) {
                 f.defocus();
             }
@@ -131,7 +128,7 @@ export class FileImpl implements File {
     }
 
     expandCollapseAll() {
-        for (const f of this.map.values()) {
+        for (const f of this._map.values()) {
             if (isCollapsible(f)) {
                f.expandCollapse();
             }
@@ -146,7 +143,7 @@ export class FileImpl implements File {
     }
 
     status(): ParsingStatus {
-        return this.globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+        return this._globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
     }
 
     statusAsString() : string {
@@ -154,7 +151,7 @@ export class FileImpl implements File {
     }
 
     deselectAll() {
-        for (const f of this.map.values()) {
+        for (const f of this._map.values()) {
             if (f.isSelected()) {
                 f.deselect();
             }
@@ -162,10 +159,10 @@ export class FileImpl implements File {
     }
 
     getMap(): Map<string, Selectable> {
-        return this.map;
+        return this._map;
     }
     getFactory(): StatementFactory {
-        return this.factory;
+        return this._factory;
     }
 
     select(withFocus : boolean,  multiSelect: boolean): void {

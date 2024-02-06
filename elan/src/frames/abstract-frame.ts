@@ -12,7 +12,7 @@ export abstract class AbstractFrame implements Frame {
     isFrame = true;
     private _parent: File | Parent;
     private _map?: Map<string, Selectable>;
-    private _factory?: StatementFactory;
+    private _factory: StatementFactory;
     protected multiline: boolean = false;
     private selected: boolean = false;
     private focused: boolean = false;
@@ -26,8 +26,10 @@ export abstract class AbstractFrame implements Frame {
         this.htmlId = `${this.getPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
-        var factory = parent.getFactory();
-        this.setFactory(factory);
+        this._factory = parent.getFactory();
+    }
+    getFactory(): StatementFactory {
+        return this._factory;
     }
 
     abstract getFields(): Field[];
@@ -56,13 +58,6 @@ export abstract class AbstractFrame implements Frame {
             return this._map;
         }
         throw new Error(`Frame : ${this.htmlId} has no Map`);
-    }
-
-    getFactory(): StatementFactory {
-        if (this._factory) {
-            return this._factory;
-        }
-        throw new Error(`Frame : ${this.htmlId} has no FrameFactory`);
     }
 
     setMap(Map: Map<string, Selectable>) {

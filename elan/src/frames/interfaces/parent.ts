@@ -15,7 +15,7 @@ export interface Parent {
     getChildBefore(child: Frame): Frame;
     getChildRange(first: Frame, last: Frame): Frame[];
 
-    getStatementFactory() : StatementFactory;
+    getFactory() : StatementFactory;
     indent(): string;
 
     getMap(): Map<string, Selectable>;

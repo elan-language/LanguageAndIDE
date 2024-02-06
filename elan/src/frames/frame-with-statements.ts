@@ -54,10 +54,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return this.statements.slice(fst, lst+1);
     }
 
-    getStatementFactory(): StatementFactory {
-        return this.getFactory();
-    }
-
     protected renderStatementsAsHtml() : string {
         const ss: Array<string> = [];
         for (var frame of this.statements) {

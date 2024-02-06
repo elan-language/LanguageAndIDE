@@ -3,14 +3,17 @@ import { AbstractField } from "./abstract-field";
 import { Member } from "../interfaces/member";
 import { Class } from "../globals/class";
 import { KeyEvent } from "../interfaces/key-event";
+import { MemberSelector } from "../class-members/member-selector";
 
 export class SelectMember extends AbstractField implements Member {
     isMember: boolean = true;
     class: Class;
+    memberSelector: MemberSelector;
 
-    constructor(holder: Class ) {
+    constructor(holder: MemberSelector ) {
         super(holder);
-        this.class = holder;
+        this.memberSelector = holder;
+        this.class = holder.getParent() as Class;
         this._help = "function procedure property";
         this.setPrompt("new member");
         this.setOptional(true);
@@ -32,16 +35,16 @@ export class SelectMember extends AbstractField implements Member {
         var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='f')) {
-            this.class.addFunctionMethodBefore(this);
+            this.class.addFunctionMethodBefore(this.memberSelector);
             return;
         }
         if (this.text === "pro" && char ==="c") {
-            this.class.addProcedureMethodBefore(this);
+            this.class.addProcedureMethodBefore(this.memberSelector);
             this.text = "";
             return;
         }
         if (this.text === "pro" && char ==="p") {
-            this.class.addPropertyBefore(this);
+            this.class.addPropertyBefore(this.memberSelector);
             this.text = "";
             return;
         }
