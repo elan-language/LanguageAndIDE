@@ -213,23 +213,27 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			}
 			case 'ArrowUp': {
 				const s = this.file?.getById(e.id!);
-				if (e.modKey.shift && isFrame(s)){
-					s.select(false, true);
-					s?.getPreviousFrame().select(true, true);
-				}
-				else {
-					s?.select(true, false);
+				if (isFrame(s)) {
+					if (e.modKey.shift) {
+						s.select(false, true);
+						s?.getPreviousFrame().select(true, true);
+					}
+					else {
+						s?.getPreviousFrame().select(true, false);
+					}
 				}
 				break;
 			}
 			case 'ArrowDown': {
 				const s = this.file?.getById(e.id!);
-				if (e.modKey.shift && isFrame(s)){
-					s.select(false, true);
-					s?.getNextFrame().select(true, true);
-				}
-				else {
-					s?.select(true, false);
+				if (isFrame(s)) {
+					if (e.modKey.shift) {
+						s.select(false, true);
+						s?.getNextFrame().select(true, true);
+					}
+					else {
+						s?.getNextFrame().select(true, false);
+					}
 				}
 				break;
 			}
