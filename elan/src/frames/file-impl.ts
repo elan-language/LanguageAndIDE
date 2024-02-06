@@ -115,8 +115,8 @@ export class FileImpl implements File {
 
     getChildRange(first: Frame, last: Frame): Frame[] {
         var fst = this._globals.indexOf(first);
-        var lst = this._globals.indexOf(first);
-        return this._globals.slice(fst, lst+1);
+        var lst = this._globals.indexOf(last);
+        return fst < lst ? this._globals.slice(fst, lst + 1) : this._globals.slice(lst, fst + 1);
     }
 
     defocusAll() {
