@@ -18,7 +18,7 @@ export class StatementSelector extends AbstractFrame  {
     }
 
     getPrefix(): string {
-        return 'const';
+        return 'select';
     }
 
     public override selectFirstText(): boolean {
@@ -27,7 +27,7 @@ export class StatementSelector extends AbstractFrame  {
     }
 
     renderAsHtml(): string {
-        return `<statement>${this.selector.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.selector.renderAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {

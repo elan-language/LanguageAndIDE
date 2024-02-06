@@ -15,7 +15,7 @@ export class MemberSelectorField extends AbstractField implements Member {
         this.memberSelector = holder;
         this.class = holder.getParent() as Class;
         this._help = "function procedure property";
-        this.setPrompt("new member");
+        this.setPrompt("member");
         this.setOptional(true);
     }
 

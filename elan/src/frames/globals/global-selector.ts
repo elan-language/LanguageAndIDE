@@ -18,7 +18,7 @@ export class GlobalSelector extends AbstractFrame  {
     }
 
     getPrefix(): string {
-        return 'const';
+        return 'select';
     }
 
     public override selectFirstText(): boolean {
@@ -27,7 +27,7 @@ export class GlobalSelector extends AbstractFrame  {
     }
 
     renderAsHtml(): string {
-        return `<global>${this.selector.renderAsHtml()}</global>`;
+        return `<global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.selector.renderAsHtml()}</global>`;
     }
 
     indent(): string {

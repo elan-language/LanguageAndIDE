@@ -15,7 +15,7 @@ export class StatementSelectorField extends AbstractField  {
         this.statementSelector = holder;
         this.factory = holder.getFactory();
         this._help ="call each for if print repeat set switch throw try var while #";
-        this.setPrompt("new statement");
+        this.setPrompt("statement");
         this.setOptional(true);
     }
 

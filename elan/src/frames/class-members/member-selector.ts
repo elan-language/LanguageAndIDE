@@ -21,7 +21,7 @@ export class MemberSelector extends AbstractFrame implements Member  {
     }
 
     getPrefix(): string {
-        return 'const';
+        return 'select';
     }
 
     public override selectFirstText(): boolean {
@@ -30,7 +30,7 @@ export class MemberSelector extends AbstractFrame implements Member  {
     }
 
     renderAsHtml(): string {
-        return `<member>${this.selector.renderAsHtml()}</member>`;
+        return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.selector.renderAsHtml()}</member>`;
     }
 
     renderAsSource(): string {

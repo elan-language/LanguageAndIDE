@@ -9,7 +9,7 @@ export class GlobalSelectorField extends AbstractField {
     constructor(holder: GlobalSelector) {
         super(holder);
         this._help = "class constant enum function main procedure #";
-        this.setPrompt("new code");
+        this.setPrompt("code");
         this.setOptional(true);
     }
     private getFile(): File {
