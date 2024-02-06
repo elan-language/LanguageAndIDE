@@ -15,11 +15,11 @@ export abstract class AbstractField implements Selectable, Field {
     private selected: boolean = false;
     private focused: boolean = false;
     private _classes = new Array<string>;
-    private holder: Frame | File;
+    private holder: Frame;
     protected _help: string = "";
     protected _optional: boolean = false;
 
-    constructor(holder: Frame | File) {
+    constructor(holder: Frame) {
         this.holder = holder;
         var map = holder.getMap();
         this.htmlId = `${this.getPrefix()}${map.size}`;
@@ -44,11 +44,19 @@ export abstract class AbstractField implements Selectable, Field {
     isFocused(): boolean {
         throw new Error("Method not implemented.");
     }
-    getHolder(): Frame | File {
+    getHolder(): Frame  {
         return this.holder;
     }
     getPreviousField(): Field {
-        throw new Error("Method not implemented.");
+        var frame = this.getHolder();
+        var fields = frame.getFields();
+        var i = fields.indexOf(this);
+        if (i > 0) {
+            return fields[i-1];
+        } else {
+            return frame.get
+        }
+
     }
     getNextField(): Field {
         throw new Error("Method not implemented.");

@@ -56,7 +56,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     getStatementFactory(): StatementFactory {
-        throw new Error("Method not implemented.");
+        return this.getFactory();
     }
     selectRange(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
