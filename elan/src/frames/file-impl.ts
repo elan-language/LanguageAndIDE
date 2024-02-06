@@ -105,7 +105,7 @@ export class FileImpl implements File {
 
     getChildAfter(g: Frame): Frame {
         const index = this._globals.indexOf(g);
-        return index < this._globals.length -2 ? this._globals[index +1] : g;
+        return index < this._globals.length - 1 ? this._globals[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
