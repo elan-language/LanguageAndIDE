@@ -30,17 +30,8 @@ export class FileImpl implements File {
        return this.factory;
     }
     
-    selectRange(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-
     getById(id: string): Selectable {
         return this.map.get(id) as Selectable;
-    }
-
-    private rangeSelecting = false;
-    isRangeSelecting(): boolean {
-        return this.rangeSelecting;
     }
 
     getPrefix(): string {
@@ -126,7 +117,6 @@ export class FileImpl implements File {
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        this.rangeSelecting = true;
         var fst = this.globals.indexOf(first);
         var lst = this.globals.indexOf(first);
         return this.globals.slice(fst, lst+1);

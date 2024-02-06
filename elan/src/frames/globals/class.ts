@@ -5,7 +5,7 @@ import { Constructor } from "../class-members/constructor";
 import { Member } from "../interfaces/member";
 import { AsString } from "../class-members/as-string";
 import { Selectable } from "../interfaces/selectable";
-import { isMember, safeSelectAfter, safeSelectBefore, selectChildRange } from "../helpers";
+import { isMember, safeSelectAfter, safeSelectBefore } from "../helpers";
 import { TypeList } from "../fields/type-list";
 import { SelectMember } from "../fields/select-member";
 import { File } from "../interfaces/file";
@@ -78,11 +78,6 @@ export class Class extends AbstractFrame implements Parent {
         return this.members[this.members.length -1] as AsString;
     }
 
-    private rangeSelecting = false;
-    isRangeSelecting(): boolean {
-        return this.rangeSelecting;
-    }
-
     public override selectFirstText(): boolean {
         this.name.select();
         return true;
@@ -111,12 +106,6 @@ export class Class extends AbstractFrame implements Parent {
             const index = this.members.indexOf(child);
             safeSelectBefore(this.members, index, multiSelect);
         }
-    }
-
-    selectRange(multiSelect: boolean): void {
-        this.rangeSelecting = true;
-        selectChildRange(this.members, multiSelect);
-        this.rangeSelecting = false;
     }
 
     private modifiersAsHtml(): string {

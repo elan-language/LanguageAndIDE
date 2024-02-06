@@ -18,9 +18,6 @@ export interface Parent {
     getStatementFactory() : StatementFactory;
     indent(): string;
 
-    isRangeSelecting(): boolean
-    selectRange(multiSelect: boolean): void;
-
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;
 }

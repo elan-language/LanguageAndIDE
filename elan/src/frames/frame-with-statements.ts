@@ -49,7 +49,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        this.rangeSelecting = true;
         var fst = this.statements.indexOf(first);
         var lst = this.statements.indexOf(first);
         return this.statements.slice(fst, lst+1);
@@ -57,14 +56,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     getStatementFactory(): StatementFactory {
         return this.getFactory();
-    }
-    selectRange(multiSelect: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-
-    private rangeSelecting = false;
-    isRangeSelecting(): boolean {
-        return this.rangeSelecting;
     }
 
     protected renderStatementsAsHtml() : string {
