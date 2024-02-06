@@ -175,15 +175,23 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			}
 			case 'ArrowUp': {
 				const s = this.file?.getById(e.id!);
-				if (isFrame(s)){
-					s.getPreviousFrame().select(true, e.modKey.shift);
+				if (e.modKey.shift && isFrame(s)){
+					s.select(false, true);
+					s?.getPreviousFrame().select(true, true);
+				}
+				else {
+					s?.select(true, false);
 				}
 				break;
 			}
 			case 'ArrowDown': {
 				const s = this.file?.getById(e.id!);
-				if (isFrame(s)){
-					s.getNextFrame().select(true, e.modKey.shift);
+				if (e.modKey.shift && isFrame(s)){
+					s.select(false, true);
+					s?.getNextFrame().select(true, true);
+				}
+				else {
+					s?.select(true, false);
 				}
 				break;
 			}
@@ -208,14 +216,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			case 'Home': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getFirstPeerFrame().select(true, e.modKey.shift);
+					s.getFirstPeerFrame().select(true, false);
 				}
 				break;
 			}
 			case 'End': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getLastPeerFrame().select(true, e.modKey.shift);
+					s.getLastPeerFrame().select(true, false);
 				}
 				break;
 			}
