@@ -1,4 +1,4 @@
-# elan README
+# Elan Language IDE
 
 VSCode extension for the Elan language.
 
