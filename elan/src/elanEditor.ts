@@ -4,7 +4,7 @@ import { getTestFrame } from './test/milestone_1.functions.';
 import { File } from './frames/interfaces/file';
 import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
-import { isFrame, isGlobal, isParent } from './frames/helpers';
+import { isFrame, isParent } from './frames/helpers';
 import { Selectable } from './frames/interfaces/selectable';
 
 
@@ -221,12 +221,12 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'Home': {
-				const g = this.file?.getFirstGlobal();
+				const g = this.file?.getFirstChild();
 				g?.select(true, false);
 				break;
 			}
 			case 'End': {
-				const g = this.file?.getLastGlobal();
+				const g = this.file?.getLastChild();
 				g?.select(true, false);
 				break;
 			}
@@ -267,22 +267,22 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleWindowKey(e: editorEvent) {
 	 	switch (e.key) {
 			case 'Home': {
-				const g = this.file?.getFirstGlobal();
+				const g = this.file?.getFirstChild();
 				g?.select(true, false);
 				break;
 			}
 			case 'ArrowDown': {
-				const g = this.file?.getFirstGlobal();
+				const g = this.file?.getFirstChild();
 				g?.select(true, false);
 				break;
 			}
 			case 'ArrowRight': {
-				const g = this.file?.getFirstGlobal();
+				const g = this.file?.getFirstChild();
 				g?.select(true, false);
 				break;
 			}
 			case 'End': {
-				const g = this.file?.getLastGlobal();
+				const g = this.file?.getLastChild();
 				g?.select(true, false);
 				break;
 			}

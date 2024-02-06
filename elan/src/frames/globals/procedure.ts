@@ -1,4 +1,4 @@
-import { Global } from "../interfaces/global";
+
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -6,7 +6,7 @@ import { File } from "../interfaces/file";
 import { Class } from "./class";
 import { Field } from "../interfaces/field";
 
-export class Procedure extends FrameWithStatements implements Global {
+export class Procedure extends FrameWithStatements {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;

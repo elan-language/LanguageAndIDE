@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Global } from "../interfaces/global";
+
 import { Type } from "../fields/type";
 import { Constructor } from "../class-members/constructor";
 import { Member } from "../interfaces/member";
@@ -17,7 +17,7 @@ import { Frame } from "../interfaces/frame";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { Field } from "../interfaces/field";
 
-export class Class extends AbstractFrame implements Global, ParentFrame {
+export class Class extends AbstractFrame implements ParentFrame {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;

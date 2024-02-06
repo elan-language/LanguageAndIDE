@@ -1,4 +1,4 @@
-import { Global } from "../interfaces/global";
+
 import { EnumValues } from "../fields/enum-values";
 import { Type } from "../fields/type";
 import { AbstractFrame } from "../abstract-frame";
@@ -6,7 +6,7 @@ import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 
-export class Enum extends AbstractFrame implements Global {
+export class Enum extends AbstractFrame {
     isGlobal = true;
     name: Type;
     values: EnumValues;

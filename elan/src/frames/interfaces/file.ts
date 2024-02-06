@@ -1,6 +1,5 @@
 import { ParsingStatus } from "../parsing-status";
-import { Field } from "./field";
-import { Global } from "./global";
+import { Frame } from "./frame";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 
@@ -12,11 +11,11 @@ export interface File {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-    getFirstGlobal(): Global; 
-    getLastGlobal(): Global;
+    getFirstChild(): Frame; 
+    getLastChild(): Frame;
 
-    addGlobalBefore(g: Global, before: Global): void;
-    addGlobalAfter(g: Global, after: Global): void;
+    addChildBefore(g: Frame, before: Frame): void;
+    addChildAfter(g: Frame, after: Frame): void;
 
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;
@@ -30,11 +29,11 @@ export interface File {
     status(): ParsingStatus;
 
     //Internal use only
-    addMainBefore(global: Global): void;
-    addFunctionBefore(global: Global): void;
-    addProcedureBefore(global: Global): void;
-    addEnumBefore(global: Global): void;
-    addClassBefore(global: Global): void;
-    addGlobalCommentBefore(global: Global): void;
-    addConstantBefore(global: Global): void;
+    addMainBefore(global: Frame): void;
+    addFunctionBefore(global: Frame): void;
+    addProcedureBefore(global: Frame): void;
+    addEnumBefore(global: Frame): void;
+    addClassBefore(global: Frame): void;
+    addGlobalCommentBefore(global: Frame): void;
+    addConstantBefore(global: Frame): void;
 }

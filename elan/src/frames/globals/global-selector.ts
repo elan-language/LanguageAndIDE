@@ -1,13 +1,10 @@
 
-import { Identifier } from "../fields/identifier";
-import { Expression } from "../fields/expression";
-import { Global } from "../interfaces/global";
 import { AbstractFrame } from "../abstract-frame";
 import {File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { SelectGlobal } from "../fields/select-global";
 
-export class GlobalSelector extends AbstractFrame implements Global {
+export class GlobalSelector extends AbstractFrame  {
     isGlobal = true;
     selector: SelectGlobal;
 

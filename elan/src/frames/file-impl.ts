@@ -1,5 +1,4 @@
 import { Selectable } from "./interfaces/selectable";
-import { Global } from "./interfaces/global";
 import { createHash } from "node:crypto";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { ParsingStatus } from "./parsing-status";
@@ -11,14 +10,14 @@ import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
-import { Field } from "./interfaces/field";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
+import { Frame } from "./interfaces/frame";
 
 export class FileImpl implements File {
     hasFields: boolean = true;
     isFile: boolean = true;
-    private globals: Array<Global> = new Array<Global>();
+    private globals: Array<Frame> = new Array<Frame>();
     private map: Map<string, Selectable>;
     private factory: StatementFactory;
    
@@ -84,21 +83,21 @@ export class FileImpl implements File {
         return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
-    public addGlobalToEnd(g: Global) {
+    public addChildToEnd(g: Frame) {
         this.globals.push(g);
     }
 
-    public addGlobalBefore(g: Global, before: Global): void {
+    public addChildBefore(g: Frame, before: Frame): void {
         var i = this.globals.indexOf(before);
         this.globals.splice(i,0,g);
     }
 
-    public addGlobalAfter(g: Global, after: Global) {
+    public addChildAfter(g: Frame, after: Frame) {
         var i = this.globals.indexOf(after)+1;
         this.globals.splice(i,0,g);     
     }
 
-    public removeGlobal(g: Global) {
+    public removeGlobal(g: Frame) {
         var i = this.globals.indexOf(g);
         this.globals.splice(i,1);    
     }
@@ -107,20 +106,20 @@ export class FileImpl implements File {
         return true;
     }
     
-    getFirstGlobal(): Global {
+    getFirstChild(): Frame {
         return this.globals[0]; //Should always be one - at minimum a SelectGlobal
     }
 
-    getLastGlobal(): Global {
+    getLastChild(): Frame {
         return this.globals[this.globals.length - 1];
     }
 
-    getGlobalAfter(g: Global): Global {
+    getChildAfter(g: Frame): Frame {
         const index = this.globals.indexOf(g);
         return index < this.globals.length -2 ? this.globals[index +1] : g;
     }
 
-    getGlobalBefore(g: Global): Global {
+    getGlobalBefore(g: Frame): Frame {
         const index = this.globals.indexOf(g);
         return index > 0 ? this.globals[index -1] : g;
     }
@@ -175,36 +174,36 @@ export class FileImpl implements File {
         //TODO - method not relevant so does nothing. Review whether this is defined on Parent?
     }
 
-    addMainBefore(g: Global): void {
+    addMainBefore(g: Frame): void {
         var m = new MainFrame(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addFunctionBefore(g: Global): void {
+    addFunctionBefore(g: Frame): void {
         var m = new Function(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addProcedureBefore(g: Global): void {
+    addProcedureBefore(g: Frame): void {
         var m = new Procedure(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addEnumBefore(g: Global): void {
+    addEnumBefore(g: Frame): void {
         var m = new Enum(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addClassBefore(g: Global): void {
+    addClassBefore(g: Frame): void {
         var m = new Class(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addGlobalCommentBefore(g: Global): void {
+    addGlobalCommentBefore(g: Frame): void {
         var m = new GlobalComment(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    addConstantBefore(g: Global): void {
+    addConstantBefore(g: Frame): void {
         var m = new Constant(this);
         this.addGlobalBeforeAndSelect(m,g);
     }
-    private addGlobalBeforeAndSelect(g: Global, before: Global) {
-        this.addGlobalBefore(g, before);
+    private addGlobalBeforeAndSelect(g: Frame, before: Frame) {
+        this.addChildBefore(g, before);
         g.select(true, false);
     }
 }

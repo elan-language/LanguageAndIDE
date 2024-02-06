@@ -1,4 +1,4 @@
-import { Global } from "../interfaces/global";
+
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
@@ -10,7 +10,7 @@ import {ParentFrame} from "../interfaces/parent-frame";
 import { Class } from "./class";
 import { Field } from "../interfaces/field";
 
-export class Function extends FrameWithStatements implements Global, ParentFrame {
+export class Function extends FrameWithStatements implements ParentFrame {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;

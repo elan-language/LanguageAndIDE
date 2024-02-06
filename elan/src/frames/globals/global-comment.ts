@@ -1,10 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
 import { File } from "../interfaces/file";
 import { PlainText } from "../fields/plain_text";
-import { Global } from "../interfaces/global";
+
 import { Field } from "../interfaces/field";
 
-export class GlobalComment extends AbstractFrame implements Global {
+export class GlobalComment extends AbstractFrame {
     isGlobal = true;
     public text: PlainText;
 

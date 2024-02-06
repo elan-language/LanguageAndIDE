@@ -26,14 +26,14 @@ import { GlobalSelector } from "../frames/globals/global-selector";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();
-	f.addGlobalToEnd(new GlobalSelector(f));
+	f.addChildToEnd(new GlobalSelector(f));
 	return f;
 }
 
 export function T01_helloWorld() {
 	const f = new FileImpl();
 	const m = new MainFrame(f);
-	f.addGlobalToEnd(m);
+	f.addChildToEnd(m);
 	m.removeStatementSelector();
 	const comment = new CommentStatement(m);
 	comment.text.setTextWithoutParsing(`My first program`);
@@ -48,9 +48,9 @@ export function T02_comments() {
 	const f = new FileImpl();
 	const sc1 = new GlobalComment(f);
 	sc1.text.setTextWithoutParsing("Comment 1");
-	f.addGlobalToEnd(sc1);
+	f.addChildToEnd(sc1);
 	const m = new MainFrame(f);
-	f.addGlobalToEnd(m);
+	f.addChildToEnd(m);
 	m.removeStatementSelector();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setTextWithoutParsing("Comment 2");
@@ -61,7 +61,7 @@ export function T02_comments() {
 export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl();
 	const m = new MainFrame(f);
-	f.addGlobalToEnd(m);
+	f.addChildToEnd(m);
 	m.removeStatementSelector();
 	const v = new Variable(m);
 	m.addStatementAtEnd(v);
@@ -142,21 +142,21 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	const con = new Constant(f);
 	con.name.setTextWithoutParsing("phi");
 	con.expr.setTextWithoutParsing("1.618");
-	f.addGlobalToEnd(con);
+	f.addChildToEnd(con);
 	const main = new MainFrame(f);
-	f.addGlobalToEnd(main);
+	f.addChildToEnd(main);
 	const p = new Procedure(f);
 	p.name.setTextWithoutParsing("signIn");
-	f.addGlobalToEnd(p);
+	f.addChildToEnd(p);
 	const c = new Function(f);
 	c.name.setTextWithoutParsing("hypotenuse");
 	c.params.setTextWithoutParsing("sideB Float, sideC Float");
 	c.returnType.setTextWithoutParsing("Float");
-	f.addGlobalToEnd(c);
+	f.addChildToEnd(c);
 	const e = new Enum(f);
 	e.name.setTextWithoutParsing("Fruit");
 	e.values.setTextWithoutParsing("apple, orange, pear");
-	f.addGlobalToEnd(e);
+	f.addChildToEnd(e);
 	return f;
 }
 
@@ -164,7 +164,7 @@ export function T05_classes() {
 	const f = new FileImpl();
 
 	const cl1 = new Class(f);
-	f.addGlobalToEnd(cl1);
+	f.addChildToEnd(cl1);
 	cl1.name.setTextWithoutParsing("Player");
 	cl1.asString.returnStatement.expr.setTextWithoutParsing("a Player");
 	const p1 = new Property(cl1);
@@ -175,7 +175,7 @@ export function T05_classes() {
 	const cl2 = new Class(f);
 	cl2.inherits = true;
 	cl2.superClasses.setTextWithoutParsing("Foo, Bar");
-	f.addGlobalToEnd(cl2);
+	f.addChildToEnd(cl2);
 	cl2.name.setTextWithoutParsing("Card");
 	cl2.immutable = true;
 	cl2.asString.returnStatement.expr.setTextWithoutParsing("a Card");
@@ -201,7 +201,7 @@ end main */
 export function T06_mergeSort() {
 	const f = new FileImpl();
 		const main = new MainFrame(f);
-		f.addGlobalToEnd(main);
+		f.addChildToEnd(main);
 		    main.removeStatementSelector();
 			const li = new Variable(main);
 			main.addStatementAtEnd(li);
@@ -215,7 +215,7 @@ export function T06_mergeSort() {
 		
 
 		const mergeSort = new Function(f);
-		f.addGlobalToEnd(mergeSort);
+		f.addChildToEnd(mergeSort);
 			mergeSort.removeStatementSelector();
 			mergeSort.name.setTextWithoutParsing("mergeSort");
 			mergeSort.params.setTextWithoutParsing(`list List<of String>`);
@@ -252,7 +252,7 @@ function mergeSort(list List<of String>) as List<of String>
 end function */
 
 		const merge = new Function(f);
-		f.addGlobalToEnd(merge);
+		f.addChildToEnd(merge);
 		
 		    merge.removeStatementSelector();
 			merge.name.setTextWithoutParsing(`merge`);

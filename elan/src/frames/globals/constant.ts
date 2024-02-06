@@ -1,12 +1,12 @@
 
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
-import { Global } from "../interfaces/global";
+
 import { AbstractFrame } from "../abstract-frame";
 import {File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 
-export class Constant extends AbstractFrame implements Global {
+export class Constant extends AbstractFrame {
     isGlobal = true;
     name: Identifier;
     expr: Expression;

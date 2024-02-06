@@ -1,6 +1,5 @@
 import { Selectable } from "./interfaces/selectable";
 import { Statement } from "./interfaces/statement";
-import { Global } from "./interfaces/global";
 import { Member } from "./interfaces/member";
 import { Field } from "./interfaces/field";
 import { Collapsible } from "./interfaces/collapsible";
@@ -9,10 +8,6 @@ import { Frame } from "./interfaces/frame";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
     return !!f && 'isCollapsible' in f;
-}
-
-export function isGlobal(f?: Selectable): f is Global {
-    return !!f && 'isGlobal' in f;
 }
 
 export function isParent(f?: Selectable): f is ParentFrame {

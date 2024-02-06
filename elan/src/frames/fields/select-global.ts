@@ -2,9 +2,9 @@ import { AbstractField } from "./abstract-field";
 import {File} from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
 import { GlobalSelector } from "../globals/global-selector";
+import { Frame } from "../interfaces/frame";
 
 export class SelectGlobal extends AbstractField {
-    isGlobal: boolean = true;
 
     constructor(holder: GlobalSelector) {
         super(holder);
@@ -13,7 +13,11 @@ export class SelectGlobal extends AbstractField {
         this.setOptional(true);
     }
     private getFile(): File {
-        return (this.getHolder() as GlobalSelector).getParent() as unknown as File;
+        return this.getFrame().getParent() as unknown as File;
+    }
+
+    private getFrame(): Frame {
+        return (this.getHolder() as GlobalSelector);
     }
 
     getPrefix(): string {
@@ -36,32 +40,32 @@ export class SelectGlobal extends AbstractField {
         var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='m')) {
-            this.getFile().addMainBefore(this);
+            this.getFile().addMainBefore(this.getFrame());
             return;
         }
         if (empty && (char ==='f')) {
-            this.getFile().addFunctionBefore(this);
+            this.getFile().addFunctionBefore(this.getFrame());
             return;
         }
         if (empty && (char ==='p')) {
-            this.getFile().addProcedureBefore(this);
+            this.getFile().addProcedureBefore(this.getFrame());
             return;
         }
         if (empty && (char ==='e')) {
-            this.getFile().addEnumBefore(this);
+            this.getFile().addEnumBefore(this.getFrame());
             return;
         }
         if (empty && (char ==='#')) {
-            this.getFile().addGlobalCommentBefore(this);
+            this.getFile().addGlobalCommentBefore(this.getFrame());
             return;
         }     
         if (this.text === "c" && char ==="o") {
-            this.getFile().addConstantBefore(this);
+            this.getFile().addConstantBefore(this.getFrame());
             this.text = "";
             return;
         }
         if (this.text === "c" && char ==="l") {
-            this.getFile().addClassBefore(this);
+            this.getFile().addClassBefore(this.getFrame());
             this.text = "";
             return;
         }
