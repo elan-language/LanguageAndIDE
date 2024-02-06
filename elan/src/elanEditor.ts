@@ -206,13 +206,17 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'Home': {
-				const g = this.file?.getFirstChild();
-				g?.select(true, false);
+				const s = this.file?.getById(e.id!);
+				if (isFrame(s)){
+					s.getFirstPeerFrame().select(true, e.modKey === "Shift");
+				}
 				break;
 			}
 			case 'End': {
-				const g = this.file?.getLastChild();
-				g?.select(true, false);
+				const s = this.file?.getById(e.id!);
+				if (isFrame(s)){
+					s.getLastPeerFrame().select(true, e.modKey === "Shift");
+				}
 				break;
 			}
 			case 'o': {
