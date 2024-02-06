@@ -13,14 +13,8 @@
 
 	var doOnce = true;
 	
-	function getModKey(e){
-		if (e.ctrlKey){
-			return "Control";
-		}
-		if (e.shiftKey){
-			return "Shift";
-		}
-		return undefined;
+	function getModKey(e) {
+		return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 	}
 
 	/**
@@ -51,7 +45,8 @@
 				const msg = {
 					type: 'click',
 					target: "frame",
-					id: id
+					id: id,
+					modKey: getModKey(event)
 				};
 				vscode.postMessage(msg);
 				event.preventDefault();
@@ -77,7 +72,8 @@
 				const msg = {
 					type: 'dblclick',
 					target: "frame",
-					id: id
+					id: id,
+					modKey: getModKey(event)
 				};
 				vscode.postMessage(msg);
 				event.preventDefault();

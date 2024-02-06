@@ -12,7 +12,7 @@ interface editorEvent {
 	type: "click" | "dblclick" | "key"
 	target: "frame" | "window"
 	key?: string,
-	modKey?: "Control" | "Shift",
+	modKey: { control: boolean, shift: boolean, alt: boolean },
 	id?: string
 }
 
@@ -136,7 +136,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleClick(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.file?.getById(e.id!).select(true, e.modKey === "Shift");
+				this.file?.getById(e.id!).select(true, e.modKey.shift);
 				break;
 			}
 		}
@@ -176,14 +176,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			case 'ArrowUp': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getPreviousFrame().select(true, e.modKey === "Shift");
+					s.getPreviousFrame().select(true, e.modKey.shift);
 				}
 				break;
 			}
 			case 'ArrowDown': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getNextFrame().select(true, e.modKey === "Shift");
+					s.getNextFrame().select(true, e.modKey.shift);
 				}
 				break;
 			}
@@ -208,33 +208,33 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			case 'Home': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getFirstPeerFrame().select(true, e.modKey === "Shift");
+					s.getFirstPeerFrame().select(true, e.modKey.shift);
 				}
 				break;
 			}
 			case 'End': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					s.getLastPeerFrame().select(true, e.modKey === "Shift");
+					s.getLastPeerFrame().select(true, e.modKey.shift);
 				}
 				break;
 			}
 			case 'o': {
-				if (e.modKey === "Control") {
+				if (e.modKey.control) {
 					const s = this.file?.getById(e.id!) as Collapsible;
 					s.expandCollapse();
 				}
 				break;
 			}
 			case 'O': {
-				if (e.modKey === "Control") {
+				if (e.modKey.control) {
 					this.file?.expandCollapseAll();
 				}
 				break;
 			} 
 			default:
 				const s = this.file?.getById(e.id!);
-				s?.processKey({ key: e.key, shift: e.modKey === "Shift", control: e.modKey === "Control", alt: false });
+				s?.processKey({ key: e.key, shift: e.modKey.shift, control: e.modKey.control, alt: e.modKey.alt });
 		}
 	}
 
@@ -261,7 +261,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'O': {
-				if (e.modKey === "Control") {
+				if (e.modKey.control) {
 					this.file?.expandCollapseAll();
 				}
 				break;
