@@ -124,7 +124,7 @@ export function T07_mainWithAllStatementsSelectMainById(f : FileImpl) {
 }
 
 export function T07_mainWithAllStatementsSelectStatementById(f : FileImpl) {
-	f.getById("for21").select(true, false);
+	f.getById("for24").select(true, false);
 	return () => f;
 }
 

@@ -27,14 +27,10 @@ export class StatementSelector extends AbstractFrame  {
     }
 
     renderAsHtml(): string {
-        return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0">select: ${this.selector.renderAsHtml()}`;
-    }
-
-    indent(): string {
-        return "";
+        return `<statement>${this.selector.renderAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {
-        return ``;
+        return `${this.indent()}`;
     }
 } 

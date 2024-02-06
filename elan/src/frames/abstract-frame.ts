@@ -120,14 +120,6 @@ export abstract class AbstractFrame implements Frame {
             this.deselectAll();
         }
         this.selected = true; 
-        if (multiSelect) {
-            if (this.hasParent()) {
-                var p = this._parent as Parent;
-                if (!p.isRangeSelecting()){
-                    p.selectRange(multiSelect);
-                }
-            }
-        }
         this.focused = withFocus;
     }
 

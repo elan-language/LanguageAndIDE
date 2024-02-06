@@ -18,9 +18,6 @@ export interface File extends Parent {
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;
 
-    isRangeSelecting(): boolean
-    selectRange(multiSelect: boolean): void;
-
     indent(): string;
     expandCollapseAll(): void;
 

@@ -53,23 +53,3 @@ export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean, 
         toSelect[0].select(true, multiSelect);
     }
 }
-
-export function selectChildRange(ff: Array<Selectable>, multiSelect: boolean): void {
-    const selected = ff.filter(f => f.isSelected());
-    if (selected.length > 1) {
-        const firstSelectedIndex = ff.indexOf(selected[0]);
-        const lastSelectedIndex = ff.indexOf(selected[selected.length - 1]);
-
-        if (lastSelectedIndex > firstSelectedIndex + 1) {
-            for (var i = firstSelectedIndex + 1; i <= lastSelectedIndex - 1; i++) {
-                ff[i].select(false, multiSelect);
-            }
-        }
-        else if (firstSelectedIndex > lastSelectedIndex + 1) {
-            for (var i = lastSelectedIndex + 1; i <= firstSelectedIndex - 1; i++) {
-                ff[i].select(false, multiSelect);
-            }
-        }
-    }
-}
-
