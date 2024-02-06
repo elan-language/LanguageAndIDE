@@ -1,18 +1,19 @@
 import { AbstractField } from "./abstract-field";
-import { Global } from "../interfaces/global";
 import {File} from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
+import { GlobalSelector } from "../globals/global-selector";
 
-export class SelectGlobal extends AbstractField implements Global {
+export class SelectGlobal extends AbstractField {
     isGlobal: boolean = true;
-    private file: File;
 
-    constructor(holder: File) {
+    constructor(holder: GlobalSelector) {
         super(holder);
-        this.file = holder;
         this._help = "class constant enum function main procedure #";
         this.setPrompt("new code");
         this.setOptional(true);
+    }
+    private getFile(): File {
+        return (this.getHolder() as GlobalSelector).getParent() as unknown as File;
     }
 
     getPrefix(): string {
@@ -35,32 +36,32 @@ export class SelectGlobal extends AbstractField implements Global {
         var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='m')) {
-            this.file.addMainBefore(this);
+            this.getFile().addMainBefore(this);
             return;
         }
         if (empty && (char ==='f')) {
-            this.file.addFunctionBefore(this);
+            this.getFile().addFunctionBefore(this);
             return;
         }
         if (empty && (char ==='p')) {
-            this.file.addProcedureBefore(this);
+            this.getFile().addProcedureBefore(this);
             return;
         }
         if (empty && (char ==='e')) {
-            this.file.addEnumBefore(this);
+            this.getFile().addEnumBefore(this);
             return;
         }
         if (empty && (char ==='#')) {
-            this.file.addGlobalCommentBefore(this);
+            this.getFile().addGlobalCommentBefore(this);
             return;
         }     
         if (this.text === "c" && char ==="o") {
-            this.file.addConstantBefore(this);
+            this.getFile().addConstantBefore(this);
             this.text = "";
             return;
         }
         if (this.text === "c" && char ==="l") {
-            this.file.addClassBefore(this);
+            this.getFile().addClassBefore(this);
             this.text = "";
             return;
         }

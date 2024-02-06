@@ -21,12 +21,12 @@ import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
-import { SelectGlobal } from "../frames/fields/select-global";
 import { SelectStatement } from "../frames/fields/select-statement";
+import { GlobalSelector } from "../frames/globals/global-selector";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();
-	f.addGlobalToEnd(new SelectGlobal(f));
+	f.addGlobalToEnd(new GlobalSelector(f));
 	return f;
 }
 
