@@ -60,7 +60,7 @@ export class Class extends AbstractFrame implements Parent {
 
     getChildAfter(g: Frame): Frame {
         const index = this.members.indexOf(g);
-        return index < this.members.length -2 ? this.members[index +1] : g;
+        return index < this.members.length -1 ? this.members[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
