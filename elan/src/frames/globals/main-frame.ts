@@ -1,12 +1,12 @@
 
 import { FrameWithStatements } from "../frame-with-statements";
-import {File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 
 export class MainFrame extends FrameWithStatements {
     isGlobal = true;
     
-    constructor(parent: File) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
     }

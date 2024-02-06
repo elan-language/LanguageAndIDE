@@ -1,17 +1,17 @@
 import { Identifier } from "../fields/identifier";
 import { ArgList } from "../fields/arg-list";
-import { ParentFrame } from "../interfaces/parent-frame";
+import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class Call extends AbstractFrame implements Statement {
+export class Call extends AbstractFrame {
 
     isStatement = true;
     proc: Identifier;
     args: ArgList;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.proc = new Identifier(this);
         this.proc.setPrompt("procedureName");
@@ -20,10 +20,6 @@ export class Call extends AbstractFrame implements Statement {
 
     getFields(): Field[] {
         return [this.proc, this.args];
-    }
-
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     public override selectFirstText(): boolean {

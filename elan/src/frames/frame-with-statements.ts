@@ -1,21 +1,20 @@
 import { AbstractFrame } from "./abstract-frame";
-import { ParentFrame } from "./interfaces/parent-frame";
-import { Statement } from "./interfaces/statement";
+import { Parent } from "./interfaces/parent";
 import { File } from "./interfaces/file";
-import { SelectStatement } from "./fields/select-statement";
 import { Frame } from "./interfaces/frame";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Collapsible } from "./interfaces/collapsible";
 import { ParsingStatus } from "./parsing-status";
+import { StatementSelector } from "./statements/statement-selector";
 
-export abstract class FrameWithStatements extends AbstractFrame implements ParentFrame, Collapsible{
+export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
     isParent: boolean = true;
-    protected statements: Array<Statement> = new Array<Statement>();
+    protected statements: Array<Frame> = new Array<Frame>();
 
-    constructor(parent: File | ParentFrame) {
+    constructor(parent: File | Parent) {
         super(parent);   
-        this.statements.push(new SelectStatement(this));
+        this.statements.push(new StatementSelector(this));
     }
 
     status(): ParsingStatus {
@@ -32,22 +31,30 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         }
     }
     getFirstChild(): Frame {
-        throw new Error("Method not implemented.");
+        return this.statements[0]; //Should always be one - at minimum a SelectGlobal
     }
+
     getLastChild(): Frame {
-        throw new Error("Method not implemented.");
+        return this.statements[this.statements.length - 1];
     }
-    getChildAfter(): Frame;
-    getChildAfter(): Frame;
-    getChildAfter(): import("./interfaces/frame").Frame {
-        throw new Error("Method not implemented.");
+
+    getChildAfter(g: Frame): Frame {
+        const index = this.statements.indexOf(g);
+        return index < this.statements.length -2 ? this.statements[index +1] : g;
     }
-    getChildBefore(): Frame {
-        throw new Error("Method not implemented.");
+
+    getChildBefore(g: Frame): Frame {
+        const index = this.statements.indexOf(g);
+        return index > 0 ? this.statements[index -1] : g;
     }
-    getChildrenBetween(first: Frame, last: Frame): Frame[] {
-        throw new Error("Method not implemented.");
+
+    getChildRange(first: Frame, last: Frame): Frame[] {
+        this.rangeSelecting = true;
+        var fst = this.statements.indexOf(first);
+        var lst = this.statements.indexOf(first);
+        return this.statements.slice(fst, lst+1);
     }
+
     getStatementFactory(): StatementFactory {
         throw new Error("Method not implemented.");
     }
@@ -76,21 +83,21 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return ss.join("\r\n");
     }
 
-    public addStatementAtEnd(s: Statement) {
+    public addStatementAtEnd(s: Frame) {
         this.statements.push(s);
     }
 
-    public addStatementBefore(s: Statement, before: Statement) {
+    public addStatementBefore(s: Frame, before: Frame) {
         var i = this.statements.indexOf(before);
         this.statements.splice(i, 0, s);
     }
 
-    public addStatementAfter(s: Statement, after: Statement) {
+    public addStatementAfter(s: Frame, after: Frame) {
         var i = this.statements.indexOf(after) + 1;
         this.statements.splice(i, 0, s);   
     }
 
-    public removeStatement(s: Statement) {
+    public removeStatement(s: Frame) {
         var i = this.statements.indexOf(s);
         this.statements.splice(i, 1);   
     }

@@ -1,16 +1,16 @@
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class Variable extends AbstractFrame implements Statement {
+export class Variable extends AbstractFrame  {
     isStatement = true;
     name: Identifier;
     expr: Expression;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.name = new Identifier(this);
         this.expr = new Expression(this);
@@ -20,10 +20,7 @@ export class Variable extends AbstractFrame implements Statement {
         return [this.name, this.expr];
     }
     
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
-    }
-    
+   
     getPrefix(): string {
         return 'var';
     }

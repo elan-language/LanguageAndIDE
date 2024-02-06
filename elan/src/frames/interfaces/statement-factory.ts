@@ -1,16 +1,16 @@
-import { Statement } from "./statement";
+import { Frame } from "./frame";
 
 export interface StatementFactory {
-    addCallBefore(s: Statement): void;
-    addEachBefore(s: Statement): void;
-    addForBefore(s: Statement): void;
-    addIfThenBefore(s: Statement): void;
-    addPrintBefore(s: Statement): void;
-    addRepeatBefore(s: Statement): void;
-    addSetBefore(s: Statement): void;
-    addSwitchBefore(s: Statement): void;
-    addThrowBefore(s: Statement): void;
-    addTryBefore(s: Statement): void;
-    addVarBefore(s: Statement): void;
-    addWhileBefore(s: Statement): void;
+    addCallBefore(s: Frame): void;
+    addEachBefore(s: Frame): void;
+    addForBefore(s: Frame): void;
+    addIfThenBefore(s: Frame): void;
+    addPrintBefore(s: Frame): void;
+    addRepeatBefore(s: Frame): void;
+    addSetBefore(s: Frame): void;
+    addSwitchBefore(s: Frame): void;
+    addThrowBefore(s: Frame): void;
+    addTryBefore(s: Frame): void;
+    addVarBefore(s: Frame): void;
+    addWhileBefore(s: Frame): void;
 }

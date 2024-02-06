@@ -21,8 +21,9 @@ import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
-import { SelectStatement } from "../frames/fields/select-statement";
+import { StatementSelectorField } from "../frames/fields/statement-selector-field";
 import { GlobalSelector } from "../frames/globals/global-selector";
+import { StatementSelector } from "../frames/statements/statement-selector";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();
@@ -101,7 +102,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	m.addStatementAtEnd(if2);
     if2.condition.setTextWithoutParsing("y > 4");
 	if2.addStatementAtEnd(new Else(if2));
-	if2.addStatementAtEnd(new SelectStatement(if2));
+	if2.addStatementAtEnd(new StatementSelector(if2));
 	const if3 = new IfThen(m);
 	m.addStatementAtEnd(if3);
     if3.condition.setTextWithoutParsing("y > 4");
@@ -109,9 +110,9 @@ export function T03_mainWithAllStatements(): FileImpl {
 	el.hasIf = true;
 	el.condition.setTextWithoutParsing("y > 10");
 	if3.addStatementAtEnd(el);
-	if3.addStatementAtEnd(new SelectStatement(if3));
+	if3.addStatementAtEnd(new StatementSelector(if3));
 	if3.addStatementAtEnd(new Else(if3));
-	if3.addStatementAtEnd(new SelectStatement(if3));
+	if3.addStatementAtEnd(new StatementSelector(if3));
 	const tr = new TryCatch(m);
 	m.addStatementAtEnd(tr);
 	return f;

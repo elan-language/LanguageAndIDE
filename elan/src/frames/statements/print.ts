@@ -1,14 +1,14 @@
 import { Expression } from "../fields/expression";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class Print extends AbstractFrame implements Statement {
+export class Print extends AbstractFrame  {
     isStatement = true;
     expr: Expression;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
         this.expr.setPrompt("expression");
@@ -16,10 +16,6 @@ export class Print extends AbstractFrame implements Statement {
 
     getFields(): Field[] {
         return [this.expr];
-    }
-
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     public override selectFirstText(): boolean {

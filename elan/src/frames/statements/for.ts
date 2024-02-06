@@ -1,19 +1,19 @@
-import { Statement } from "../interfaces/statement";
+
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 
-export class For extends FrameWithStatements implements Statement {
+export class For extends FrameWithStatements  {
     isStatement = true;
     variable: Identifier;
     from: Expression;
     to: Expression;
     step: Integer;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);
@@ -28,10 +28,6 @@ export class For extends FrameWithStatements implements Statement {
 
     getFields(): Field[] {
         return [this.variable, this.from, this.to, this.step];
-    }
-    
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

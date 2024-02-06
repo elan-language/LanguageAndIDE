@@ -12,12 +12,12 @@ import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
-import { ParentFrame } from "../interfaces/parent-frame";
+import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { Field } from "../interfaces/field";
 
-export class Class extends AbstractFrame implements ParentFrame {
+export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
@@ -36,6 +36,9 @@ export class Class extends AbstractFrame implements ParentFrame {
         this.addMemberAtEnd(new Constructor(this));
         this.addMemberAtEnd(new SelectMember(this));
         this.addMemberAtEnd(new AsString(this));
+    }
+    getChildRange(first: Frame, last: Frame): Frame[] {
+        throw new Error("Method not implemented.");
     }
 
     getFields(): Field[] {

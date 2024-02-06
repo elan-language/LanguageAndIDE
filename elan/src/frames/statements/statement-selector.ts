@@ -1,33 +1,33 @@
+
 import { AbstractFrame } from "../abstract-frame";
-import { PlainText } from "../fields/plain_text";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { StatementSelectorField } from "../fields/statement-selector-field";
 
-export class GlobalComment extends AbstractFrame {
+export class StatementSelector extends AbstractFrame  {
     isGlobal = true;
-    public text: PlainText;
+    selector: StatementSelectorField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.text = new PlainText(this);
-        this.text.setPrompt("comment");
+        this.selector  = new StatementSelectorField(this);
     }
 
     getFields(): Field[] {
-        return [this.text];
+        return [this.selector];
     }
 
     getPrefix(): string {
-        return 'com';
+        return 'const';
     }
 
     public override selectFirstText(): boolean {
-        this.text.select();
+        this.selector.select();
         return true;
     }
 
     renderAsHtml(): string {
-        return `<comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"># ${this.text.renderAsHtml()}</comment>`;
+        return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0">select: ${this.selector.renderAsHtml()}`;
     }
 
     indent(): string {
@@ -35,6 +35,6 @@ export class GlobalComment extends AbstractFrame {
     }
 
     renderAsSource(): string {
-        return `# ${this.text.renderAsSource()}`;
+        return ``;
     }
 } 

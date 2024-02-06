@@ -3,6 +3,7 @@ import { Field } from "./field";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 import { ParsingStatus } from "../parsing-status";
+import { Parent } from "./parent";
 
 export interface Frame extends Selectable {
     // external use
@@ -13,7 +14,7 @@ export interface Frame extends Selectable {
     getPreviousFrame(): Frame;
     getNextFrame(): Frame;
 
-    getParent(): Frame | File;
+    getParent(): Parent;
     getMap(): Map<string, Selectable>;
 
     renderAsHtml(): string;

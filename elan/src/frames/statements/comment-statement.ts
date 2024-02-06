@@ -1,26 +1,22 @@
 import { PlainText } from "../fields/plain_text";
 import { Member} from "../interfaces/member";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class CommentStatement extends AbstractFrame implements Statement, Member {
+export class CommentStatement extends AbstractFrame implements Member {
     isStatement = true;
     isMember = true;
     public text: PlainText;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.text= new PlainText(this);
     }
 
     getFields(): Field[] {
         return [this.text];
-    }
-    
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

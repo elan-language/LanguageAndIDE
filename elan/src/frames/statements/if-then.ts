@@ -1,15 +1,14 @@
-import { Statement } from "../interfaces/statement";
+
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Selectable } from "../interfaces/selectable";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 
-export class IfThen extends FrameWithStatements implements Statement, ParentFrame {
+export class IfThen extends FrameWithStatements{
     isStatement = true;
     condition: Expression;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.condition = new Expression(this);
@@ -18,10 +17,6 @@ export class IfThen extends FrameWithStatements implements Statement, ParentFram
 
     getFields(): Field[] {
         return [this.condition];
-    }
-
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     public override selectFirstText(): boolean {

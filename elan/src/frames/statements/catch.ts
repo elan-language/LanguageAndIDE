@@ -1,14 +1,14 @@
 import { Identifier } from "../fields/identifier";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class Catch extends AbstractFrame implements Statement {
+export class Catch extends AbstractFrame {
     isStatement = true;
     variable: Identifier;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.variable  = new Identifier(this);
         this.variable.setPrompt("variableName");
@@ -19,10 +19,6 @@ export class Catch extends AbstractFrame implements Statement {
         return [this.variable];
     }
     
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
-    }
-
     getPrefix(): string {
         return 'catch';
     }

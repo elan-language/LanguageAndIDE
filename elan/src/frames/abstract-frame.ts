@@ -1,4 +1,4 @@
-import {ParentFrame} from "./interfaces/parent-frame";
+import {Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
 import { singleIndent } from "./helpers";
 import { StatementFactory } from "./interfaces/statement-factory";
@@ -10,7 +10,7 @@ import { KeyEvent } from "./interfaces/key-event";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
-    private _parent: File | ParentFrame;
+    private _parent: File | Parent;
     private _map?: Map<string, Selectable>;
     private _factory?: StatementFactory;
     protected multiline: boolean = false;
@@ -20,7 +20,7 @@ export abstract class AbstractFrame implements Frame {
     private _classes = new Array<string>;
     protected htmlId: string = "";
 
-    constructor(parent: File | ParentFrame) {
+    constructor(parent: Parent) {
         this._parent = parent;
         var map = parent.getMap();
         this.htmlId = `${this.getPrefix()}${map.size}`;
@@ -36,16 +36,16 @@ export abstract class AbstractFrame implements Frame {
         return this.getFields().map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
     }
     getFirstPeerFrame(): Frame {
-        throw new Error("Method not implemented.");
+        return this.getParent().getFirstChild();
     }
     getLastPeerFrame(): Frame {
-        throw new Error("Method not implemented.");
+        return this.getParent().getLastChild();
     }
     getPreviousFrame(): Frame {
-        throw new Error("Method not implemented.");
+        return this.getParent().getChildBefore(this);
     }
     getNextFrame(): Frame {
-        throw new Error("Method not implemented.");
+        return this.getParent().getChildAfter(this);
     }
     processKey(keyEvent: KeyEvent): void {
         throw new Error("Method not implemented.");
@@ -122,7 +122,7 @@ export abstract class AbstractFrame implements Frame {
         this.selected = true; 
         if (multiSelect) {
             if (this.hasParent()) {
-                var p = this._parent as ParentFrame;
+                var p = this._parent as Parent;
                 if (!p.isRangeSelecting()){
                     p.selectRange(multiSelect);
                 }
@@ -148,16 +148,17 @@ export abstract class AbstractFrame implements Frame {
         return !!this._parent;
     }
 
-    setParent(parent: ParentFrame): void {
+    setParent(parent: Parent): void {
         this._parent = parent;
     }
 
-    getParent(): ParentFrame | File {
+    getParent(): Parent {
         if (this._parent) {
             return this._parent;
         }
         throw new Error(`Frame : ${this.htmlId} has no Parent`);
     }
+
     isCollapsed(): boolean {
         return this.collapsed;
     }

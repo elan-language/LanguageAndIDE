@@ -1,4 +1,4 @@
-import { Statement } from "./interfaces/statement";
+
 import { Each } from "./statements/each";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Call } from "./statements/call";
@@ -12,59 +12,60 @@ import { TryCatch } from "./statements/try-catch";
 import { Variable } from "./statements/variable";
 import { SetStatement } from "./statements/set-statement";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { Frame } from "./interfaces/frame";
 
 export class StatementFactoryImpl implements StatementFactory {
 
-    addCallBefore(s: Statement): void {
-        var newS = new Call(s.getParentFrame());
+    addCallBefore(s: Frame): void {
+        var newS = new Call(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addEachBefore(s: Statement): void {
-        var newS = new Each(s.getParentFrame());
+    addEachBefore(s: Frame): void {
+        var newS = new Each(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addForBefore(s: Statement): void {
-        var newS = new For(s.getParentFrame());
+    addForBefore(s: Frame): void {
+        var newS = new For(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addIfThenBefore(s: Statement): void {
-        var newS = new IfThen(s.getParentFrame());
+    addIfThenBefore(s: Frame): void {
+        var newS = new IfThen(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addPrintBefore(s: Statement): void {
-        var newS = new Print(s.getParentFrame());
+    addPrintBefore(s: Frame): void {
+        var newS = new Print(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addRepeatBefore(s: Statement): void {
-        var newS = new Repeat(s.getParentFrame());
+    addRepeatBefore(s: Frame): void {
+        var newS = new Repeat(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addSetBefore(s: Statement): void {
-        var newS = new SetStatement(s.getParentFrame());
+    addSetBefore(s: Frame): void {
+        var newS = new SetStatement(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addSwitchBefore(s: Statement): void {
+    addSwitchBefore(s: Frame): void {
         throw new Error("Method not implemented.");
     }
-    addThrowBefore(s: Statement): void {
-        var newS = new Throw(s.getParentFrame());
+    addThrowBefore(s: Frame): void {
+        var newS = new Throw(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addTryBefore(s: Statement): void {
-        var newS = new TryCatch(s.getParentFrame());
+    addTryBefore(s: Frame): void {
+        var newS = new TryCatch(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addVarBefore(s: Statement): void {
-        var newS = new Variable(s.getParentFrame());
+    addVarBefore(s: Frame): void {
+        var newS = new Variable(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
-    addWhileBefore(s: Statement): void {
-        var newS = new While(s.getParentFrame());
+    addWhileBefore(s: Frame): void {
+        var newS = new While(s.getParent());
         this.addStatementBeforeAndSelect(newS,s);
     }
   
-    private addStatementBeforeAndSelect(s: Statement, before: Statement) {
-        (before.getParentFrame() as FrameWithStatements).addStatementBefore(s, before);
+    private addStatementBeforeAndSelect(s: Frame, before: Frame) {
+        (before.getParent() as FrameWithStatements).addStatementBefore(s, before);
         s.select(true, false);
     }
 }

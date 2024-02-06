@@ -1,24 +1,20 @@
 import { Expression } from "../fields/expression";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class ReturnStatement extends AbstractFrame implements Statement {   
+export class ReturnStatement extends AbstractFrame  {   
     isStatement = true;
     expr: Expression;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
     }
 
     getFields(): Field[] {
         return [this.expr];
-    }
-   
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

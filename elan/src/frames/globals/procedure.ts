@@ -1,17 +1,15 @@
-
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
-import { File } from "../interfaces/file";
-import { Class } from "./class";
 import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 
 export class Procedure extends FrameWithStatements {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
 
-    constructor(parent: File | Class) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);

@@ -1,18 +1,18 @@
 import { Expression } from "../fields/expression";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { SelectIfClause } from "../fields/select-ifClause";
 import { Field } from "../interfaces/field";
 
 
-export class Else extends AbstractFrame implements Statement {
+export class Else extends AbstractFrame  {
     isStatement = true;
     selectIfClause: SelectIfClause;
     hasIf: boolean = false;
     condition: Expression;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPrompt("condition");
@@ -25,10 +25,6 @@ export class Else extends AbstractFrame implements Statement {
     
     setIfExtension(to: boolean) {
         this.hasIf = to;
-    }
-    
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
 
     getPrefix(): string {

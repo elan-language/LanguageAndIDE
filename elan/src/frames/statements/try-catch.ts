@@ -1,26 +1,21 @@
 import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "./catch";
-import {ParentFrame} from "../interfaces/parent-frame";
-import { SelectStatement } from "../fields/select-statement";
-import { Statement } from "../interfaces/statement";
+import {Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
+import { StatementSelector } from "./statement-selector";
 
-export class TryCatch extends FrameWithStatements implements Statement {
+export class TryCatch extends FrameWithStatements  {
     isStatement = true;
     
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.statements.push(new Catch(this));
-        this.statements.push(new SelectStatement(this));
+        this.statements.push(new StatementSelector(this));
     }
 
     getFields(): Field[] {
         return []; //TODO: Issue here is that Try Catch has no DirectFields.
-    }
-
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
     
     getPrefix(): string {

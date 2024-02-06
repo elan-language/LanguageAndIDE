@@ -6,6 +6,7 @@ import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
 import { isFrame, isParent } from './frames/helpers';
 import { Selectable } from './frames/interfaces/selectable';
+import { Parent } from './frames/interfaces/parent';
 
 
 interface editorEvent {
@@ -205,7 +206,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			case 'ArrowLeft': {
 				const s = this.file?.getById(e.id!);
 				if (isFrame(s)){
-					const p = s.getParent() as Selectable;
+					const p = s.getParent();
 					if (isFrame(p)){
 						p.select(true, false);
 					}

@@ -1,24 +1,20 @@
 import { ExceptionMessage } from "../fields/exception-message";
-import {ParentFrame} from "../interfaces/parent-frame";
+import {Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
+
 import { Field } from "../interfaces/field";
 
-export class Throw extends AbstractFrame implements Statement {
+export class Throw extends AbstractFrame  {
     isStatement = true;
     text: ExceptionMessage;
 
-    constructor(parent: ParentFrame) {
+    constructor(parent: Parent) {
         super(parent);
         this.text = new ExceptionMessage(this);
     }
 
     getFields(): Field[] {
         return [this.text];
-    }
-    
-    getParentFrame(): ParentFrame {
-        return this.getParent() as ParentFrame;
     }
     
     getPrefix(): string {

@@ -5,18 +5,19 @@ import { Type } from "../fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { File } from "../interfaces/file";
-import { Statement } from "../interfaces/statement";
-import {ParentFrame} from "../interfaces/parent-frame";
+
+import {Parent} from "../interfaces/parent";
 import { Class } from "./class";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 
-export class Function extends FrameWithStatements implements ParentFrame {
+export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
     public returnType: Type;
 
-    constructor(parent: File | Class) {
+    constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
         this.name = new Identifier(this);
@@ -43,7 +44,7 @@ export class Function extends FrameWithStatements implements ParentFrame {
         return true;
     }
 
-    public addStatementBeforeReturn(s: Statement): void {
+    public addStatementBeforeReturn(s: Frame): void {
         var i = this.statements.length -1;
         this.statements.splice(i,0,s);
     }

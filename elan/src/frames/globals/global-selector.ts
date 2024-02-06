@@ -1,14 +1,14 @@
 
 import { AbstractFrame } from "../abstract-frame";
-import {File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { SelectGlobal } from "../fields/select-global";
+import { Parent } from "../interfaces/parent";
 
 export class GlobalSelector extends AbstractFrame  {
     isGlobal = true;
     selector: SelectGlobal;
 
-    constructor(parent: File) {
+    constructor(parent: Parent) {
         super(parent);
         this.selector  = new SelectGlobal(this);
     }

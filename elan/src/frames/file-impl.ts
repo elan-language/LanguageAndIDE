@@ -15,6 +15,7 @@ import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
 
 export class FileImpl implements File {
+    isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
     private globals: Array<Frame> = new Array<Frame>();
@@ -25,10 +26,14 @@ export class FileImpl implements File {
         this.map = new Map<string, Selectable>();
         this.factory = new StatementFactoryImpl();
     }
+    getStatementFactory(): StatementFactory {
+       return this.factory;
+    }
     
     selectRange(multiSelect: boolean): void {
         throw new Error("Method not implemented.");
     }
+
     getById(id: string): Selectable {
         return this.map.get(id) as Selectable;
     }
@@ -101,10 +106,6 @@ export class FileImpl implements File {
         var i = this.globals.indexOf(g);
         this.globals.splice(i,1);    
     }
-
-    isParent(): boolean {
-        return true;
-    }
     
     getFirstChild(): Frame {
         return this.globals[0]; //Should always be one - at minimum a SelectGlobal
@@ -119,16 +120,16 @@ export class FileImpl implements File {
         return index < this.globals.length -2 ? this.globals[index +1] : g;
     }
 
-    getGlobalBefore(g: Frame): Frame {
+    getChildBefore(g: Frame): Frame {
         const index = this.globals.indexOf(g);
         return index > 0 ? this.globals[index -1] : g;
     }
 
-    getGlobalRange(multiSelect: boolean): void {
-        throw new Error("Not implemented");
-/*         this.rangeSelecting = true;
-        selectChildRange(this.globals, multiSelect);
-        this.rangeSelecting = false; */
+    getChildRange(first: Frame, last: Frame): Frame[] {
+        this.rangeSelecting = true;
+        var fst = this.globals.indexOf(first);
+        var lst = this.globals.indexOf(first);
+        return this.globals.slice(fst, lst+1);
     }
 
     defocusAll() {
@@ -145,6 +146,13 @@ export class FileImpl implements File {
                f.expandCollapse();
             }
         }
+    }
+
+    expand(): void {
+        //Does nothing
+    }
+    collapse(): void {
+        //does nothing
     }
 
     status(): ParsingStatus {
