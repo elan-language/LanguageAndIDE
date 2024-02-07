@@ -1,20 +1,14 @@
 import { AbstractFrame } from "../abstract-frame";
-
 import { Type } from "../fields/type";
 import { Constructor } from "../class-members/constructor";
-import { Member } from "../interfaces/member";
 import { AsString } from "../class-members/as-string";
-import { Selectable } from "../interfaces/selectable";
-import { isMember, safeSelectAfter, safeSelectBefore } from "../helpers";
 import { TypeList } from "../fields/type-list";
-import { MemberSelectorField } from "../fields/member-selector-field";
 import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
-import { StatementFactory } from "../interfaces/statement-factory";
 import { Field } from "../interfaces/field";
 import { MemberSelector } from "../class-members/member-selector";
 

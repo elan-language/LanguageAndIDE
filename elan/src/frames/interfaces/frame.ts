@@ -20,7 +20,6 @@ export interface Frame extends Selectable {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-    getFactory(): StatementFactory;
     indent(): string;
 
     getFields(): Field[];

@@ -2,7 +2,6 @@ import { AbstractFrame } from "./abstract-frame";
 import { Parent } from "./interfaces/parent";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
-import { StatementFactory } from "./interfaces/statement-factory";
 import { Collapsible } from "./interfaces/collapsible";
 import { ParsingStatus } from "./parsing-status";
 import { StatementSelector } from "./statements/statement-selector";

@@ -21,7 +21,6 @@ import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalComment } from "../frames/globals/global-comment";
 import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
-import { StatementSelectorField } from "../frames/fields/statement-selector-field";
 import { GlobalSelector } from "../frames/globals/global-selector";
 import { StatementSelector } from "../frames/statements/statement-selector";
 
@@ -124,7 +123,7 @@ export function T07_mainWithAllStatementsSelectMainById(f : FileImpl) {
 }
 
 export function T07_mainWithAllStatementsSelectStatementById(f : FileImpl) {
-	f.getById("for24").select(true, false);
+	f.getById("for21").select(true, false);
 	return () => f;
 }
 
