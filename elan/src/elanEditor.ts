@@ -204,37 +204,35 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		}
 	}
 
+	private ArrowHandler(e: editorEvent, fn : (f : Frame) => Frame) {
+		const s = this.file?.getById(e.id!);
+		if (isFrame(s)) {
+			if (e.modKey.shift) {
+				s.select(false, true);
+				fn(s).select(true, true);
+			}
+			else {
+				fn(s).select(true, false);
+			}
+		}
+	}
+
 	private handleFrameKey(e: editorEvent) {
 		switch (e.key) {
+			case 'Shift':
+			case 'Control' : 
+			case 'Alt' : break; // consume
 		 	case 'Escape': {
 				const ss =  this.getAllSelected();
 				ss.forEach(s => s.deselect());
 				break;
 			}
 			case 'ArrowUp': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					if (e.modKey.shift) {
-						s.select(false, true);
-						s?.getPreviousFrame().select(true, true);
-					}
-					else {
-						s?.getPreviousFrame().select(true, false);
-					}
-				}
+				this.ArrowHandler(e, f => f.getPreviousFrame());
 				break;
 			}
 			case 'ArrowDown': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					if (e.modKey.shift) {
-						s.select(false, true);
-						s?.getNextFrame().select(true, true);
-					}
-					else {
-						s?.getNextFrame().select(true, false);
-					}
-				}
+				this.ArrowHandler(e, f => f.getNextFrame());
 				break;
 			}
 			case 'ArrowLeft': {
@@ -273,14 +271,14 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				if (e.modKey.control) {
 					const s = this.file?.getById(e.id!) as Collapsible;
 					s.expandCollapse();
+					break;
 				}
-				break;
 			}
 			case 'O': {
 				if (e.modKey.control) {
 					this.file?.expandCollapseAll();
+					break;
 				}
-				break;
 			} 
 			default:
 				const s = this.file?.getById(e.id!);
