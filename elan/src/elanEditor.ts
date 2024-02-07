@@ -204,6 +204,19 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		}
 	}
 
+	private ArrowHandler(e: editorEvent, fn : (f : Frame) => Frame) {
+		const s = this.file?.getById(e.id!);
+		if (isFrame(s)) {
+			if (e.modKey.shift) {
+				s.select(false, true);
+				fn(s).select(true, true);
+			}
+			else {
+				fn(s).select(true, false);
+			}
+		}
+	}
+
 	private handleFrameKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Shift':
@@ -215,29 +228,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				break;
 			}
 			case 'ArrowUp': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					if (e.modKey.shift) {
-						s.select(false, true);
-						s?.getPreviousFrame().select(true, true);
-					}
-					else {
-						s?.getPreviousFrame().select(true, false);
-					}
-				}
+				this.ArrowHandler(e, f => f.getPreviousFrame());
 				break;
 			}
 			case 'ArrowDown': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					if (e.modKey.shift) {
-						s.select(false, true);
-						s?.getNextFrame().select(true, true);
-					}
-					else {
-						s?.getNextFrame().select(true, false);
-					}
-				}
+				this.ArrowHandler(e, f => f.getNextFrame());
 				break;
 			}
 			case 'ArrowLeft': {
