@@ -40,6 +40,10 @@ export abstract class AbstractField implements Selectable, Field {
 
     processKey(keyEvent: KeyEvent): void {
         var char = keyEvent.key;
+        if (char?.length === 1) {
+            this.text += char;
+            return;
+        }
         if (char === "Tab") {
             if (keyEvent.shift) {
                 this.holder.selectPreviousField();
@@ -52,9 +56,26 @@ export abstract class AbstractField implements Selectable, Field {
             this.text = this.text.substring(0,this.text.length-1);
             return;
         } 
-        if (char?.length === 1) {
-            this.text += char;
-        }
+        if (char === "ArrowDown") {
+           this.holder.getNextFrame().select(true, false);
+            return;
+        } 
+        if (char === "ArrowUp") {
+            this.holder.getPreviousFrame().select(true, false);
+            return;
+        } 
+        if (char === "Escape") {
+            this.holder.select(true, false);
+            return;
+        } 
+        if (char === "ArrowLeft") {
+            //TODO
+            return;
+        } 
+        if (char === "ArrowRight") {
+            //TODO
+            return;
+        } 
     }
     
     isFocused(): boolean {
@@ -120,7 +141,7 @@ export abstract class AbstractField implements Selectable, Field {
             }
             return c;
         } else {
-            return `<prompt>${this.prompt}</prompt>`;
+            return `${this.prompt}`;
         }
     }
 
