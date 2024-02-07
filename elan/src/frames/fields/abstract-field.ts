@@ -41,6 +41,14 @@ export abstract class AbstractField implements Selectable, Field {
 
     processKey(keyEvent: KeyEvent): void {
         var char = keyEvent.key;
+        if (char === "Tab") {
+            if (keyEvent.shift) {
+                this.holder.selectPreviousField();
+            } else {
+                this.holder.selectNextField();
+            }
+            return;
+        } 
         if (char === "Backspace") {
             this.text = this.text.substring(0,this.text.length-1);
             return;
@@ -56,13 +64,6 @@ export abstract class AbstractField implements Selectable, Field {
     getHolder(): Frame  {
         return this.holder;
     }
-    getPreviousField(): Field {
-        throw new Error("Method not implemented.");
-    }
-    getNextField(): Field {
-        throw new Error("Method not implemented.");
-    }
-
     getPrefix(): string {
         return 'text';
     }
@@ -120,7 +121,7 @@ export abstract class AbstractField implements Selectable, Field {
             }
             return c;
         } else {
-            return this.prompt;
+            return `<prompt>${this.prompt}</prompt>`;
         }
     }
 

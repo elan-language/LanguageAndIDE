@@ -28,6 +28,7 @@ export abstract class AbstractFrame implements Frame {
         this.setMap(map);
         this._factory = parent.getFactory();
     }
+
     getFactory(): StatementFactory {
         return this._factory;
     }
@@ -49,8 +50,50 @@ export abstract class AbstractFrame implements Frame {
     getNextFrame(): Frame {
         return this.getParent().getChildAfter(this);
     }
+
+    selectPreviousField():void {
+        var fields = this.getFields();
+        var num = fields.length;
+        var current = fields.filter(f => f.isFocused());
+        if (current.length > 0) {
+            var i = fields.indexOf(current[0]);
+            if (i > 0) {
+                fields[i-1].select(true, false);
+            } else {
+                this.select(true, false);
+            }
+        } else {
+            fields[num-1].select(true, false);
+        }
+    }
+
+    selectNextField(): void {
+        var fields = this.getFields();
+        var num = fields.length;
+        var current = fields.filter(f => f.isFocused());
+        if (current.length > 0) {
+            var i = fields.indexOf(current[0]);
+            if (i < num - 1) {
+                fields[i+1].select(true, false);
+            } else {
+                this.select(true, false);
+            }
+        } else {
+            fields[0].select(true, false);
+        }
+    }
+
     processKey(keyEvent: KeyEvent): void {
-        throw new Error("Method not implemented.");
+        var char = keyEvent.key;
+        if (char === "Tab") {
+            if (keyEvent.shift) {
+                this.selectPreviousField();
+            } else {
+                this.selectNextField();
+            }
+            return;
+        } 
+        //Ignore all others
     }
 
     getMap(): Map<string, Selectable> {
