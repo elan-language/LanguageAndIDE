@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
+import * as jsdom from 'jsdom';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -111,4 +112,14 @@ export async function assertAreEqualByFile<T extends Selectable>(done: Mocha.Don
         done(e);
         throw e;
     }
+}
+
+export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: string){
+	const e = dom.window.document.getElementById(id);
+	const c = e?.className;
+	assert.strictEqual(c, expected);
+}
+
+export function readAsDOM(renderable: { renderAsHtml: () => string }) {
+	return new jsdom.JSDOM(renderable.renderAsHtml());
 }
