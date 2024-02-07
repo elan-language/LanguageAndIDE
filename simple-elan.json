@@ -31,11 +31,15 @@
     }
   ],
   "contributes": {
-   
     "taskDefinitions": [
       {
         "type": "elan",
         "when": "resourceExtname == .elan"
+      }
+    ],
+    "snippets": [
+      {
+        "path": "./elan.code-snippets"
       }
     ]
   },
