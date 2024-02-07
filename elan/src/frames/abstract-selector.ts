@@ -36,7 +36,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
 
     textToDisplay(): string {
         if (this.isSelected()) {
-            return `<text>${this.text}</text><prompt> ${this.help}</prompt>`;
+            return `<text>${this.text}</text><options> ${this.help}</options>`;
         } else {
             return `<prompt>${this.prompt}</prompt>`;
         }

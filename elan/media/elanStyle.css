@@ -2,6 +2,8 @@
     --selection:rgb(173, 214, 255);
     /* --unused: rgb(175,0,219); */
     --valid: rgb(146, 236, 146); 
+    --incomplete: rgba(255, 166, 0);
+    --invalid:  rgba(255, 0, 0, 0.617);
 }
 code { 
     padding: 0px;
@@ -52,7 +54,7 @@ comment, header, header *{
     color: rgb(165, 2, 2);
 }
 /* Status colouring*/
-header .valid, text.valid:focus {
+header .valid {
     background-color: var(--valid);
 }
 
@@ -74,36 +76,38 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * , .selected > prompt {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * , .selected > options {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
 
 text.selected.valid, text.selected.valid * {
 
-    background-color: lightgreen;
+    background-color: var(--valid);
 }
 
 text.selected.incomplete, text.selected.incomplete * {
 
-    background-color: orange;
+    background-color: var(--incomplete);
 }
 
 text.selected.invalid, text.selected.invalid * {
 
-    background-color: red;
+    background-color: var(--invalid);
 }
-
-::placeholder, .selected > prompt {
+prompt {
+    color: lightgrey;
+}
+::placeholder, .selected > options {
     color: white;
 }
 
 /* Text entry validation */
 text.incomplete {
-    color:rgb(223, 145, 0);
+    color: var(--incomplete);
 }
 text.invalid, type.invalid {
-    color:red;
+    color: var(--invalid);
 }
 
 /* Collapse / Expand */
