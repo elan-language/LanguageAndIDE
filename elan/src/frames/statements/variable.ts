@@ -25,7 +25,7 @@ export class Variable extends AbstractFrame  {
         return 'var';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }

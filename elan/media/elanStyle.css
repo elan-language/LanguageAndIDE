@@ -74,7 +74,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * , .selected > prompt {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -83,7 +83,11 @@ text.selected, text.selected * {
     background-color: lightgrey;
 }
 
-::placeholder {
+prompt {
+    color: lightGrey;
+}
+
+::placeholder, .selected > prompt {
     color: white;
 }
 

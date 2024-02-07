@@ -21,7 +21,7 @@ export class Throw extends AbstractFrame  {
         return 'throw';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.text.select();
         return true;
     }

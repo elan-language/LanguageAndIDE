@@ -22,7 +22,7 @@ export class Constructor extends FrameWithStatements implements Member {
         return 'constructor';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.params.select();
         return true;
     }

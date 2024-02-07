@@ -39,7 +39,7 @@ export class Function extends FrameWithStatements implements Parent {
         return this.statements[this.statements.length -1] as ReturnStatement;
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }

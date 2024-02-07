@@ -82,7 +82,7 @@ export class Class extends AbstractFrame implements Parent {
         return this.members[this.members.length -1] as AsString;
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }

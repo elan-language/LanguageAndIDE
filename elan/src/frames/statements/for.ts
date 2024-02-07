@@ -34,7 +34,7 @@ export class For extends FrameWithStatements  {
         return 'for';
      }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.variable.select();
         return true;
     }

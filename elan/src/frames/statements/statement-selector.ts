@@ -21,7 +21,7 @@ export class StatementSelector extends AbstractFrame  {
         return 'select';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.selector.select();
         return true;
     }

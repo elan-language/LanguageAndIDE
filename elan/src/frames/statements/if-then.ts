@@ -19,7 +19,7 @@ export class IfThen extends FrameWithStatements{
         return [this.condition];
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.condition.select();
         return true;
     }

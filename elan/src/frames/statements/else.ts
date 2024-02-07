@@ -31,7 +31,7 @@ export class Else extends AbstractFrame  {
         return 'else';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.condition.select();
         return true;
     }

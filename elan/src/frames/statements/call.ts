@@ -22,7 +22,7 @@ export class Call extends AbstractFrame {
         return [this.proc, this.args];
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.proc.select();
         return true;
     }

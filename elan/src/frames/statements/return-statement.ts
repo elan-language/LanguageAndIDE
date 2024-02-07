@@ -21,7 +21,7 @@ export class ReturnStatement extends AbstractFrame  {
         return 'return';
     }
     
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.expr.select();
         return true;
     }

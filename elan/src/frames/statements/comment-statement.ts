@@ -23,7 +23,7 @@ export class CommentStatement extends AbstractFrame implements Member {
         return 'com';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.text.select();
         return true;
     }

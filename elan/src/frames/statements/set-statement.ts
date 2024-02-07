@@ -25,7 +25,7 @@ export class SetStatement extends AbstractFrame  {
         return 'set';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }

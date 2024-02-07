@@ -24,7 +24,7 @@ export class Procedure extends FrameWithStatements {
         return 'proc';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }

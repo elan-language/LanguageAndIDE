@@ -160,7 +160,7 @@ export abstract class AbstractFrame implements Frame {
         this.collapsed = false;
     }
 
-    selectFirstText(): boolean {
+    selectFirstField(): boolean {
         return false;
     }
 

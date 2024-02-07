@@ -25,7 +25,7 @@ export class Property extends AbstractFrame implements Member {
         return 'prop';
     }
 
-    public override selectFirstText(): boolean {
+    public override selectFirstField(): boolean {
         this.name.select();
         return true;
     }
