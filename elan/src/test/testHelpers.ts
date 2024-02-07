@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
-import { FileImpl } from '../frames/file-impl';
+import { File } from '../frames/interfaces/file';
 import * as jsdom from 'jsdom';
 
 // flag to update test file 
@@ -48,7 +48,7 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => FileImpl) {
+export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => File) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -73,7 +73,7 @@ export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, f
     }
 }
 
-export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => FileImpl) {
+export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => File) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -120,6 +120,16 @@ export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: stri
 	assert.strictEqual(c, expected);
 }
 
-export function readAsDOM(renderable: { renderAsHtml: () => string }) {
-	return new jsdom.JSDOM(renderable.renderAsHtml());
+export function readAsDOM(f: File) {
+	return new jsdom.JSDOM(f.renderAsHtml());
+}
+
+export function assertClasses(setupFn : () => File, testFn : (f: File) => void, assertClasses : [string, string, string]){
+    const ff = setupFn();
+	const preDom = readAsDOM(ff);
+    testFn(ff);
+    const postDom = readAsDOM(ff);
+
+    assertElementsById(preDom, assertClasses[0], assertClasses[1]);
+    assertElementsById(postDom, assertClasses[0], assertClasses[2]);
 }

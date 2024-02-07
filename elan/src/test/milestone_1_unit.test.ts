@@ -1,40 +1,33 @@
 import * as vscode from 'vscode';
 import { T04_allGlobalsExceptClass } from './milestone_1.functions.';
-import { assertElementsById, readAsDOM } from './testHelpers';
+import { assertClasses } from './testHelpers';
 import { isParent } from '../frames/helpers';
-import assert from 'assert';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('Selectable Select', () => {
-		const ff = T04_allGlobalsExceptClass();
-		const preDom = readAsDOM(ff);
-		const frame = ff.getById("const0");
-		frame.select(true, false);
-		const postDom = readAsDOM(ff);
+		assertClasses(
+			T04_allGlobalsExceptClass,
+			(ff) => {
+				const frame = ff.getById("const0");
+				frame.select(true, false);
+			},
+			["const0", "valid", "selected focused valid"]);
 
-		assertElementsById(preDom, "const0", 'valid');
-		assertElementsById(postDom, "const0", 'selected focused valid');
 	});
 
 	test('Select First Child', () => {
-		const ff = T04_allGlobalsExceptClass();
-		const preDom = readAsDOM(ff);
-		const mn = ff.getById("main3");
-
-		if (isParent(mn)){
-			const s = mn.getFirstChild();
-			s.select(true, false);
-
-			const postDom = readAsDOM(ff);
-
-			assertElementsById(preDom, "select4", 'valid');
-			assertElementsById(postDom, "select4", 'selected focused valid');
-		}
-		else {
-			assert.fail("expect main to be parent");
-		}
+		assertClasses(
+			T04_allGlobalsExceptClass,
+			(ff) => {
+				const mn = ff.getById("main3");
+				if (isParent(mn)){
+					const s = mn.getFirstChild();
+					s.select(true, false);
+				}
+			},
+			["select4", "valid", "selected focused valid"]);
 	});
 
 	/*	test('SelectFirstChild', () => {
