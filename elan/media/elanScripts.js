@@ -102,6 +102,11 @@
 			return false;
 		}
 
+		const input = document.querySelector('.focused > input');
+
+		if (input) {
+			input.selectionStart = input.selectionEnd = input.value.length;
+		}
 
 		if (doOnce) {
 			doOnce = false;
