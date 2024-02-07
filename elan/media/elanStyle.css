@@ -79,12 +79,19 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-right-color: var(--selection);
 }
 
-text.selected, text.selected * {
-    background-color: lightgrey;
+text.selected.valid, text.selected.valid * {
+
+    background-color: lightgreen;
 }
 
-prompt {
-    color: lightGrey;
+text.selected.incomplete, text.selected.incomplete * {
+
+    background-color: orange;
+}
+
+text.selected.invalid, text.selected.invalid * {
+
+    background-color: red;
 }
 
 ::placeholder, .selected > prompt {
@@ -92,9 +99,6 @@ prompt {
 }
 
 /* Text entry validation */
-text.empty, type.empty {
-      color: rgb(196, 193, 193);
-}
 text.incomplete {
     color:rgb(223, 145, 0);
 }

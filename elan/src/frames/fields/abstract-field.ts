@@ -39,9 +39,17 @@ export abstract class AbstractField implements Selectable, Field {
         return this._help;
     }
 
-    processKey(key: KeyEvent): void {
-        throw new Error("Method not implemented.");
+    processKey(keyEvent: KeyEvent): void {
+        var char = keyEvent.key;
+        if (char === "Backspace") {
+            this.text = this.text.substring(0,this.text.length-1);
+            return;
+        } 
+        if (char?.length === 1) {
+            this.text += char;
+        }
     }
+    
     isFocused(): boolean {
         return this.focused;
     }

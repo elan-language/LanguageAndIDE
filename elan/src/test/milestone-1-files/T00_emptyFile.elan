@@ -1,11 +1,6 @@
-# Elan v0.1 valid 3254313c1826096c
+# Elan v0.1 valid 01e47998c0a3622a
 
-main
-  call procedureName(arguments)
-  each variableName in iterable value or expression
-    
-  end each
-  set variableName to value or expression
+procedure dxghjhghjg(parameter definitions)
   
-end main
+end procedure
 
