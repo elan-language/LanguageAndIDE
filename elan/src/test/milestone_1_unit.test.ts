@@ -30,53 +30,30 @@ suite('Milestone 1 - Unit tests', () => {
 			["select4", "valid", "selected focused valid"]);
 	});
 
-	/*	test('SelectFirstChild', () => {
-			const ff = T03_mainWithAllStatements();
-			const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-			ff.selectFirstChild(false);
-			const postDom = new jsdom.JSDOM(ff.renderAsHtml());
-	
-			assertElementsById(preDom, "main0", 'multiline');
-			assertElementsById(postDom, "main0", 'multiline selected focused');
-		});
-	
-		test('SelectNextTextByID', () => {
-			const ff = T03_mainWithAllStatements();
-			const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-			ff.getByIdselectNextTextByID("var2");
-			const postDom = new jsdom.JSDOM(ff.renderAsHtml());
-	
-			assertElementsById(preDom, "ident3", 'empty');
-			assertElementsById(postDom, "ident3", 'selected focused empty');
-		});
-	
-		test('SelectLastByID Global', () => {
-			const ff = T04_allGlobalsExceptClass();
-			const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-			ff.selectLastByID("const0");
-			const postDom = new jsdom.JSDOM(ff.renderAsHtml());
-	
-			assertElementsById(preDom, "enum16", 'multiline');
-			assertElementsById(postDom, "enum16", 'multiline selected focused');
-		}); */
+	test('Collapse Main', () => {
+		assertClasses(
+			T04_allGlobalsExceptClass,
+			(ff) => {
+				const mn = ff.getById("main3");
+				if (isParent(mn)){
+					mn.collapse();
+				}
+			},
+			["main3", "multiline valid", "multiline collapsed valid"]);
+	});
 
-	// test('SelectLastByID Statement', () => {
-	// 	const ff = T04_allGlobalsExceptClass();
-	// 	const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-	// 	ff.selectLastByID("statementSelect13");
-	// 	const postDom = new jsdom.JSDOM(ff.renderAsHtml());
-
-	// 	assertElementsById(preDom, "return17", '');
-	// 	assertElementsById(postDom, "return17", 'selected focused');
+	// not implemented exception
+	// test('Key on Global Selector', () => {
+	// 	assertClasses(
+	// 		T00_emptyFile,
+	// 		(ff) => {
+	// 			const fld = ff.getById("globalSelect1");
+	// 			if (isField(fld)){
+	// 				fld.processKey(key("a"));
+	// 			}
+	// 		},
+	// 		["globalSelect1", "multiline valid", "multiline collapsed valid"]);
 	// });
 
-	// test('SelectLastByID Member', () => {
-	// 	const ff = T05_classes();
-	// 	const preDom = new jsdom.JSDOM(ff.renderAsHtml());
-	// 	ff.selectLastByID("constructor4");
-	// 	const postDom = new jsdom.JSDOM(ff.renderAsHtml());
-
-	// 	assertElementsById(preDom, "func12", 'multiline ');
-	// 	assertElementsById(postDom, "func12", 'multiline selected focused');
-	// });
+	
 });

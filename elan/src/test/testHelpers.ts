@@ -3,6 +3,7 @@ import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
 import { File } from '../frames/interfaces/file';
 import * as jsdom from 'jsdom';
+import { KeyEvent } from '../frames/interfaces/key-event';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -132,4 +133,8 @@ export function assertClasses(setupFn : () => File, testFn : (f: File) => void, 
 
     assertElementsById(preDom, assertClasses[0], assertClasses[1]);
     assertElementsById(postDom, assertClasses[0], assertClasses[2]);
+}
+
+export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {
+    return { key: k, shift: !!shift, control: !!control, alt: !!alt };
 }
