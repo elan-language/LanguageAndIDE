@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
-import { FileImpl } from '../frames/file-impl';
+import { File } from '../frames/interfaces/file';
+import * as jsdom from 'jsdom';
+import { KeyEvent } from '../frames/interfaces/key-event';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -47,7 +49,7 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => FileImpl) {
+export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => File) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -72,7 +74,7 @@ export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, f
     }
 }
 
-export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => FileImpl) {
+export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => File) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -111,4 +113,28 @@ export async function assertAreEqualByFile<T extends Selectable>(done: Mocha.Don
         done(e);
         throw e;
     }
+}
+
+export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: string){
+	const e = dom.window.document.getElementById(id);
+	const c = e?.className;
+	assert.strictEqual(c, expected);
+}
+
+export function readAsDOM(f: File) {
+	return new jsdom.JSDOM(f.renderAsHtml());
+}
+
+export function assertClasses(setupFn : () => File, testFn : (f: File) => void, assertClasses : [string, string, string]){
+    const ff = setupFn();
+	const preDom = readAsDOM(ff);
+    testFn(ff);
+    const postDom = readAsDOM(ff);
+
+    assertElementsById(preDom, assertClasses[0], assertClasses[1]);
+    assertElementsById(postDom, assertClasses[0], assertClasses[2]);
+}
+
+export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {
+    return { key: k, shift: !!shift, control: !!control, alt: !!alt };
 }
