@@ -1,4 +1,3 @@
-
 import { EnumValues } from "../fields/enum-values";
 import { Type } from "../fields/type";
 import { AbstractFrame } from "../abstract-frame";

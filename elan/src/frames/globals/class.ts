@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Type } from "../fields/type";
-import { Constructor } from "../class-members/constructor";
 import { AsString } from "../class-members/as-string";
 import { TypeList } from "../fields/type-list";
 import { File } from "../interfaces/file";
@@ -11,6 +10,7 @@ import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { Field } from "../interfaces/field";
 import { MemberSelector } from "../class-members/member-selector";
+import { Constructor } from "../class-members/constructor";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;

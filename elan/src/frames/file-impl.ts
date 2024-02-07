@@ -2,7 +2,7 @@ import { Selectable } from "./interfaces/selectable";
 import { createHash } from "node:crypto";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { ParsingStatus } from "./parsing-status";
-import {File} from "./interfaces/file";
+import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { Function } from "./globals/function";
 import { Procedure } from "./globals/procedure";

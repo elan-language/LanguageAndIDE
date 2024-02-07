@@ -1,4 +1,3 @@
-
 import { Selectable } from "../interfaces/selectable";
 import { ParsingStatus } from "../parsing-status";
 import { Field } from "../interfaces/field";

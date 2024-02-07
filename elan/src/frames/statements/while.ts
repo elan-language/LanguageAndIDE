@@ -1,7 +1,6 @@
-
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import {Parent} from "../interfaces/parent";
+import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 
 export class While extends FrameWithStatements implements Parent { 

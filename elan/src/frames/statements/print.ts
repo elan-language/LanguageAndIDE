@@ -1,5 +1,5 @@
 import { Expression } from "../fields/expression";
-import {Parent} from "../interfaces/parent";
+import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";

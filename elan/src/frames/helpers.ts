@@ -1,5 +1,4 @@
 import { Selectable } from "./interfaces/selectable";
-
 import { Member } from "./interfaces/member";
 import { Field } from "./interfaces/field";
 import { Collapsible } from "./interfaces/collapsible";
@@ -28,28 +27,4 @@ export function isField(f?: Selectable): f is Field {
 
 export function singleIndent() {
     return "  ";
-}
-
-export function safeSelectAfter(toSelect: Array<{ select: (withFocus: boolean, multiSelect: boolean) => void }>, index: number, multiSelect: boolean) {
-    if (index === -1) {
-        return;
-    }
-    if (index < toSelect.length - 1) {
-        toSelect[index + 1].select(true, multiSelect);
-    }
-    else {
-        toSelect[toSelect.length - 1].select(true, multiSelect);
-    }
-}
-
-export function safeSelectBefore(toSelect: Array<{ select: (withFocus: boolean, multiSelect: boolean) => void }>, index: number, multiSelect: boolean) {
-    if (index === -1) {
-        return;
-    }
-    if (index > 0) {
-        toSelect[index - 1].select(true, multiSelect);
-    }
-    else {
-        toSelect[0].select(true, multiSelect);
-    }
 }
