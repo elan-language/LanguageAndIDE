@@ -1,7 +1,6 @@
 import { ExceptionMessage } from "../fields/exception-message";
-import {Parent} from "../interfaces/parent";
+import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-
 import { Field } from "../interfaces/field";
 
 export class Throw extends AbstractFrame  {

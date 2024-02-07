@@ -1,4 +1,3 @@
-
 import { Member } from "../interfaces/member";
 import { singleIndent } from "../helpers";
 import { KeyEvent } from "../interfaces/key-event";

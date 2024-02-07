@@ -1,9 +1,7 @@
-
 import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
-
 import { AbstractFrame } from "../abstract-frame";
-import {File} from "../interfaces/file";
+import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 
 export class Constant extends AbstractFrame {

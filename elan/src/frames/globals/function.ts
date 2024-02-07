@@ -4,10 +4,7 @@ import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { File } from "../interfaces/file";
-
-import {Parent} from "../interfaces/parent";
-import { Class } from "./class";
+import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 

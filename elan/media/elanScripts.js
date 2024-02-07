@@ -12,7 +12,7 @@
 	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
 
 	var doOnce = true;
-	
+
 	function getModKey(e) {
 		return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 	}
@@ -21,13 +21,13 @@
 	 * Render the document in the webview.
 	 */
 	function updateContent(/** @type {string} */ text) {
-        codeContainer.innerHTML = text;
+		codeContainer.innerHTML = text;
 
 		const frames = document.querySelectorAll('[id]');
 
 		for (var frame of frames) {
 			const id = frame.id;
-		
+
 			frame.addEventListener('keydown', event => {
 				const msg = {
 					type: 'key',
@@ -81,25 +81,14 @@
 			});
 		}
 
-		function isHidden(el) {
-		    return (el.offsetParent === null);
-		}
-
-		// debug check 
-		const ff = document.querySelectorAll('.focused');
-		
-		if (ff.length > 1){
-			console.warn("multiple focused");
-		}
-
-		function isVsCodeTaskOrCommand(event){
-			if (event.altKey && event.key === "B" ){
+		function isVsCodeTaskOrCommand(event) {
+			if (event.altKey && event.key === "B") {
 				return true;
 			}
-			if (event.ctrlKey && event.key === "B" ){
+			if (event.ctrlKey && event.key === "B") {
 				return true;
 			}
-			if (event.ctrlKey && event.key === "P" ){
+			if (event.ctrlKey && event.key === "P") {
 				return true;
 			}
 			return false;
@@ -134,6 +123,11 @@
 		}
 		else {
 			elanCode.focus();
+		}
+
+		// debug check 
+		if (document.querySelectorAll('.focused').length > 1) {
+			console.warn("multiple focused");
 		}
 	}
 

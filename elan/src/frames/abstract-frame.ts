@@ -1,4 +1,4 @@
-import {Parent} from "./interfaces/parent";
+import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
 import { singleIndent } from "./helpers";
 import { StatementFactory } from "./interfaces/statement-factory";

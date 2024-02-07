@@ -1,4 +1,3 @@
-
 import { AbstractFrame } from "./abstract-frame";
 import { Field } from "./interfaces/field";
 import { KeyEvent } from "./interfaces/key-event";

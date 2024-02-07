@@ -1,6 +1,6 @@
 import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "./catch";
-import {Parent} from "../interfaces/parent";
+import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { StatementSelector } from "./statement-selector";
 
