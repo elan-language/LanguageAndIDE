@@ -84,10 +84,13 @@
 		function isHidden(el) {
 		    return (el.offsetParent === null);
 		}
-		
 
-		const focused = document.querySelector('.focused');
-		const elanCode = document.querySelector('.elan-code');
+		// debug check 
+		const ff = document.querySelectorAll('.focused');
+		
+		if (ff.length > 1){
+			console.warn("multiple focused");
+		}
 
 		function isVsCodeTaskOrCommand(event){
 			if (event.altKey && event.key === "B" ){
@@ -100,12 +103,6 @@
 				return true;
 			}
 			return false;
-		}
-
-		const input = document.querySelector('.focused > input');
-
-		if (input) {
-			input.selectionStart = input.selectionEnd = input.value.length;
 		}
 
 		if (doOnce) {
@@ -125,7 +122,14 @@
 			});
 		}
 
-		if (focused) {
+		const input = document.querySelector('.focused > input');
+		const focused = document.querySelector('.focused');
+		const elanCode = document.querySelector('.elan-code');
+
+		if (input) {
+			input.setSelectionRange(input.value.length, input.value.length);
+			input.focus();
+		} else if (focused) {
 			focused.focus();
 		}
 		else {

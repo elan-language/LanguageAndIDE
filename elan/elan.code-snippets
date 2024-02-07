@@ -1,0 +1,10 @@
+{
+	"Header": {
+		"prefix": "hdr",
+		"body": [
+			"# Elan v0.1 valid FFFFFFFFFFFFFFFF",
+			"$2"
+		],
+		"description": "Header for new file"
+	}
+}
