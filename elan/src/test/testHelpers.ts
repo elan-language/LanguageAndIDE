@@ -121,6 +121,12 @@ export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: stri
 	assert.strictEqual(c, expected);
 }
 
+export function assertElementHtmlById(dom : jsdom.JSDOM, id: string, expected: string){
+	const e = dom.window.document.getElementById(id);
+	const c = e?.innerHTML;
+	assert.strictEqual(c, expected);
+}
+
 export function readAsDOM(f: File) {
 	return new jsdom.JSDOM(f.renderAsHtml());
 }
@@ -133,6 +139,14 @@ export function assertClasses(setupFn : () => File, testFn : (f: File) => void, 
 
     assertElementsById(preDom, assertClasses[0], assertClasses[1]);
     assertElementsById(postDom, assertClasses[0], assertClasses[2]);
+}
+
+export function assertHtml(setupFn : () => File, testFn : (f: File) => void, assertClasses : [string, string]){
+    const ff = setupFn();
+    testFn(ff);
+    const postDom = readAsDOM(ff);
+
+    assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
 export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {

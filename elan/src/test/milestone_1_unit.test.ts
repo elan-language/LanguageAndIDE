@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { T04_allGlobalsExceptClass } from './milestone_1.functions.';
-import { assertClasses } from './testHelpers';
-import { isParent } from '../frames/helpers';
+import { T00_emptyFile, T04_allGlobalsExceptClass } from './milestone_1.functions.';
+import { assertClasses, assertHtml, key } from './testHelpers';
+import { isField, isParent } from '../frames/helpers';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -42,18 +42,19 @@ suite('Milestone 1 - Unit tests', () => {
 			["main3", "multiline valid", "multiline collapsed valid"]);
 	});
 
-	// not implemented exception
-	// test('Key on Global Selector', () => {
-	// 	assertClasses(
-	// 		T00_emptyFile,
-	// 		(ff) => {
-	// 			const fld = ff.getById("globalSelect1");
-	// 			if (isField(fld)){
-	// 				fld.processKey(key("a"));
-	// 			}
-	// 		},
-	// 		["globalSelect1", "multiline valid", "multiline collapsed valid"]);
-	// });
+	test('Key on Global Selector', () => {
+		assertHtml(
+			T00_emptyFile,
+			(ff) => {
+				const s = ff.getById("select0");
+				s.processKey(key("m"));
+			},
+			["main1", `
+<top><expand>+</expand><keyword>main</keyword></top>
+<statement class="valid" id="select2" tabindex="0"><prompt>new code</prompt></statement>
+<keyword>end main</keyword>
+`]);
+	});
 
 	
 });
