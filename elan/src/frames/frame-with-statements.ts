@@ -19,7 +19,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     status(): ParsingStatus {
         var fieldStatus = this.worstStatusOfFields();
         var statementsStatus = this.statements.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
-        return fieldStatus > statementsStatus ? fieldStatus : statementsStatus;
+        return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
 
     expandCollapse(): void {

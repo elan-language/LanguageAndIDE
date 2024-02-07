@@ -165,10 +165,6 @@ export class FileImpl implements File {
         return this._factory;
     }
 
-    select(withFocus : boolean,  multiSelect: boolean): void {
-        //TODO - method not relevant so does nothing. Review whether this is defined on Parent?
-    }
-
     addMainBefore(g: Frame): void {
         var m = new MainFrame(this);
         this.addGlobalBeforeAndSelect(m,g);

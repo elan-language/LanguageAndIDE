@@ -53,10 +53,6 @@ comment, header, header *{
 .string {
     color: rgb(165, 2, 2);
 }
-/* Status colouring*/
-header .valid {
-    background-color: var(--valid);
-}
 
 /* Horizontal and vertical layout */
 statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
@@ -81,20 +77,20 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-right-color: var(--selection);
 }
 
-text.selected.valid, text.selected.valid * {
-
+/* Status colouring*/
+text.selected.valid, text.selected.valid *, header .valid, .valid expand{
     background-color: var(--valid);
 }
 
-text.selected.incomplete, text.selected.incomplete * {
-
+text.selected.incomplete, text.selected.incomplete *, header .incomplete, .incomplete expand{
     background-color: var(--incomplete);
 }
 
-text.selected.invalid, text.selected.invalid * {
-
+text.selected.invalid, text.selected.invalid * , header .invalid, .invalid expand{
     background-color: var(--invalid);
 }
+
+/* helpers */
 prompt {
     color: lightgrey;
 }
@@ -119,7 +115,6 @@ expand {
     display:inline;
     font-weight: bold;
     color: white;
-    background-color:rgb(101, 176, 250);
     margin-right: 1ch;
     cursor: pointer;
 }

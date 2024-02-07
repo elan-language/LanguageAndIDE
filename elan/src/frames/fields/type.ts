@@ -17,8 +17,9 @@ export class Type extends AbstractField {
         if (this.text === ``) {
             return ParsingStatus.incomplete;
         } else {
-            var regexp = new RegExp('^[A-Z][A-Za-z0-9_]*$');
-            return regexp.test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
+            //var regexp = new RegExp('^[A-Z][A-Za-z0-9_]*$');
+            var regexp = new RegExp('^[A-Z].*$');
+            return regexp.test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;            
         }
     }
 }

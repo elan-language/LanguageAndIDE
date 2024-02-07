@@ -1,6 +1,4 @@
 import { AbstractField } from "./abstract-field";
-
-import {File} from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
 import { Else } from "../statements/else";
 
