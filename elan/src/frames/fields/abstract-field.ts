@@ -17,7 +17,7 @@ export abstract class AbstractField implements Selectable, Field {
     private holder: Frame;
     protected _help: string = "";
     protected _optional: boolean = false;
-    protected map: Map<string, Selectable>
+    protected map: Map<string, Selectable>;
 
     constructor(holder: Frame) {
         this.holder = holder;
