@@ -42,7 +42,7 @@ suite('Milestone 1 - Unit tests', () => {
 			["main3", "multiline valid", "multiline collapsed valid"]);
 	});
 
-	test('Key on Global Selector', () => {
+	test('Key on Global Selector - main', () => {
 		assertHtml(
 			T00_emptyFile,
 			(ff) => {
@@ -53,6 +53,20 @@ suite('Milestone 1 - Unit tests', () => {
 <top><expand>+</expand><keyword>main</keyword></top>
 <statement class="valid" id="select2" tabindex="0"><prompt>new code</prompt></statement>
 <keyword>end main</keyword>
+`]);
+	});
+
+	test('Key on Global Selector = procedure', () => {
+		assertHtml(
+			T00_emptyFile,
+			(ff) => {
+				const s = ff.getById("select0");
+				s.processKey(key("p"));
+			},
+			["proc1", `
+<top><expand>+</expand><keyword>procedure </keyword><text id="ident3" title="" class="empty incomplete" tabindex="0">name</text>(<text id="params4" title="" class="empty incomplete" tabindex="0">parameter definitions</text>)</top>
+<statement class="valid" id="select2" tabindex="0"><prompt>new code</prompt></statement>
+<keyword>end procedure</keyword>
 `]);
 	});
 
