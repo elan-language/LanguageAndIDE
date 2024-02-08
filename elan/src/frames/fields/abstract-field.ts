@@ -44,7 +44,7 @@ export abstract class AbstractField implements Selectable, Field {
             return;
         }
         if (char === "Tab") {
-            if (keyEvent.shift) {
+        if (keyEvent.shift) {
                 this.holder.selectPreviousField();
             } else {
                 this.holder.selectNextField();
@@ -130,7 +130,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input size="${this.width()}"  value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input size="${this.width()}" placeholder="${this.label}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
             var c = this.escapeAngleBrackets(this.text);
@@ -182,6 +182,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
+        this.pushClass(this.isOptional(), "optional")
         this._classes.push(ParsingStatus[this.status()]);
     }
 
@@ -197,7 +198,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><label>${this.label}</label><help>${this.getHelp()}</help></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.label}</placeholder><help>${this.getHelp()}</help></field>`;
     }
 
     indent(): string {

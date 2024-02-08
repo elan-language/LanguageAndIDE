@@ -6,6 +6,7 @@ export class ParamList extends AbstractField {
         super(holder);
         this.setLabel("parameter definitions");
         this.useHtmlTags = true;
+        this.setOptional(true);
     }
 
     getIdPrefix(): string {

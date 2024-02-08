@@ -11,6 +11,7 @@ export class Print extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
+        this.expr.setOptional(true);
         this.expr.setLabel("expression");
     }
 

@@ -29,7 +29,7 @@ export class CommentStatement extends AbstractFrame implements Member {
     }
 
     renderAsHtml(): string {
-        return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"># ${this.text.renderAsHtml()}</comment></statement>`;
+        return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></comment></statement>`;
     }
 
     renderAsSource(): string {

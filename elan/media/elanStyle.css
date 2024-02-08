@@ -27,7 +27,10 @@ input, input:focus , input:active{
     margin: 0px;
 }
 
+
+
 /* Basic Colour scheme */
+
 hash {
     display: none;
 }
@@ -44,13 +47,21 @@ type {
     color: rgb(38,127,153
     );
 }
-
-comment, header, header *{
-    color: green;
-}
-
 .string {
     color: rgb(165, 2, 2);
+}
+/* Header */
+header, header * {
+    color: green;
+}
+header .invalid {
+    background-color: var(--invalid)
+}
+header .incomplete {
+    background-color: var(--incomplete)
+}
+header .valid {
+    background-color: var(--valid)
 }
 
 /* Horizontal and vertical spacing */
@@ -71,7 +82,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field * {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > help {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -80,8 +91,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
 expand {
     display: none;
 }
-.multiline.collapsed > :not(top)
-{
+.multiline.collapsed > :not(top) {
     display: none;
 }
 .multiline.collapsed expand {
@@ -112,40 +122,55 @@ field.incomplete text {
 field.valid text {
     color: black; /* redundant rule - as black by default - but included for clarity */
 }
-field.selected.invalid text {
+field.selected.invalid text, field.selected.invalid input  {
     background-color: var(--invalid);
+    color: black;
 }
-field.selected.incomplete text {
+field.selected.incomplete text, field.selected.incomplete input {
     background-color: var(--incomplete);
+    color: black;
 }
-field.selected.valid text {
+field.selected.valid text, field.selected.valid input {
     background-color: var(--valid);
+    color: black;
 }
-/* field-label */
-field label {
+input::placeholder {
+    color: white;
+}
+/* field-placeholder */
+field placeholder {
   display: none;
 }
-field.empty label {
+field.empty placeholder {
     display:inline;
+    color: var(--incomplete);
 }
-field.empty.optional label {
+field.empty.optional placeholder {
     display:none;
 }
-.selected field.empty.optional label {
-    display: inline;
-    background: lightgrey;
+.selected top field.empty placeholder, .selected top field.empty.optional placeholder,
+.selected > field.empty placeholder, .selected > field.empty.optional placeholder {
+    display:inline;
     color: white;
 }
-field.selected label {
-    display: none;
+field.selected placeholder { 
+    display: none; /* because contents of placeholder will be put into placeholder */
 }
-/* selector label */
-global label, member label, statement label  {
-    display: none;
-}
-global.selected.empty label, member.selected.empty label, statement.selected.empty label {
+field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional placeholder{
     display: inline;
-    color: white;
+}
+
+/* selector placeholder */
+global placeholder, member placeholder, statement placeholder  {
+    display: none;
+}
+global.empty placeholder, member.empty placeholder, statement.empty placeholder {
+    display: inline;
+    color: lightgrey;
+}
+
+global.empty.selected placeholder, member.empty.selected placeholder, statement.empty.selected placeholder {
+    display: none;
 }
 
 /* field-help */
@@ -165,5 +190,10 @@ global help, member help, statement help  {
  global.selected help, member.selected help, statement.selected help {
     display: inline;
     color: white;
+ }
+
+ /* Comments */
+ comment, comment.field.text {
+    color: green;
 }
- 
+

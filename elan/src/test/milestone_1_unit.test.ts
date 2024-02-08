@@ -51,7 +51,7 @@ suite('Milestone 1 - Unit tests', () => {
 			},
 			["main1", `
 <top><expand>+</expand><keyword>main</keyword></top>
-<statement class="valid empty" id="select2" tabindex="0"><text></text><label>new code</label><help> call each for if print repeat set switch throw try var while #</help></statement>
+<statement class="valid empty" id="select2" tabindex="0"><text></text><placeholder>new code</placeholder><help> call each for if print repeat set switch throw try var while #</help></statement>
 <keyword>end main</keyword>
 `]);
 	});
@@ -64,8 +64,8 @@ suite('Milestone 1 - Unit tests', () => {
 				s.processKey(key("p"));
 			},
 			["proc1", `
-<top><expand>+</expand><keyword>procedure </keyword><field id="ident3" class="empty incomplete" tabindex="0"><text></text><label>name</label><help></help></field>(<field id="params4" class="empty incomplete" tabindex="0"><text></text><label>parameter definitions</label><help></help></field>)</top>
-<statement class="valid empty" id="select2" tabindex="0"><text></text><label>new code</label><help> call each for if print repeat set switch throw try var while #</help></statement>
+<top><expand>+</expand><keyword>procedure </keyword><field id="ident3" class="empty incomplete" tabindex="0"><text></text><placeholder>name</placeholder><help></help></field>(<field id="params4" class="empty optional valid" tabindex="0"><text></text><placeholder>parameter definitions</placeholder><help></help></field>)</top>
+<statement class="valid empty" id="select2" tabindex="0"><text></text><placeholder>new code</placeholder><help> call each for if print repeat set switch throw try var while #</help></statement>
 <keyword>end procedure</keyword>
 `]);
 	});

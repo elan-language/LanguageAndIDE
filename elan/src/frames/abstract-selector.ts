@@ -41,7 +41,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
     }
 
     textToDisplay(): string {
-            return `<text>${this.text}</text><label>${this.label}</label><help> ${this.getHelp()}</help>`;
+            return `<text>${this.text}</text><placeholder>${this.label}</placeholder><help> ${this.getHelp()}</help>`;
     }
 
     renderAsSource(): string {
