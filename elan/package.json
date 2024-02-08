@@ -52,12 +52,13 @@
     "debuggers": [
       {
         "type": "elan",
-        "label": "Elan Debug",
+        "label": "Elan",
         "initialConfigurations": [
           {
             "name": "Elan Launch",
             "type": "coreclr",
             "request": "launch",
+            "preLaunchTask" : "${defaultBuildTask}",
             "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
