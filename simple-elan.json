@@ -31,6 +31,18 @@
     }
   ],
   "contributes": {
+    "languages": [
+      {
+        "id": "elan",
+        "extensions": [
+          ".elan"
+        ],
+        "aliases": [
+          "Elan",
+          "elan"
+        ]
+      }
+    ],
     "taskDefinitions": [
       {
         "type": "elan",

@@ -18,19 +18,19 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
-  "languages": [
-    {
-      "id": "elan",
-      "extensions": [
-        ".elan"
-      ],
-      "aliases": [
-        "Elan",
-        "elan"
-      ]
-    }
-  ],
   "contributes": {
+    "languages": [
+      {
+        "id": "elan",
+        "extensions": [
+          ".elan"
+        ],
+        "aliases": [
+          "Elan",
+          "elan"
+        ]
+      }
+    ],
     "customEditors": [
       {
         "viewType": "elan.elanEditor",
