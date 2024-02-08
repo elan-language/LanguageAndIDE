@@ -31,6 +31,18 @@
     }
   ],
   "contributes": {
+    "languages": [
+      {
+        "id": "elan",
+        "extensions": [
+          ".elan"
+        ],
+        "aliases": [
+          "Elan",
+          "elan"
+        ]
+      }
+    ],
     "taskDefinitions": [
       {
         "type": "elan",
@@ -40,6 +52,28 @@
     "snippets": [
       {
         "path": "./elan.code-snippets"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "elan",
+        "label": "Elan",
+        "languages": [
+          "elan"
+        ],
+        "initialConfigurations": [
+          {
+            "name": "Elan Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask" : "${defaultBuildTask}",
+            "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+          }
+        ]
       }
     ]
   },

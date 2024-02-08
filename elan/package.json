@@ -18,19 +18,19 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
-  "languages": [
-    {
-      "id": "elan",
-      "extensions": [
-        ".elan"
-      ],
-      "aliases": [
-        "Elan",
-        "elan"
-      ]
-    }
-  ],
   "contributes": {
+    "languages": [
+      {
+        "id": "elan",
+        "extensions": [
+          ".elan"
+        ],
+        "aliases": [
+          "Elan",
+          "elan"
+        ]
+      }
+    ],
     "customEditors": [
       {
         "viewType": "elan.elanEditor",
@@ -47,6 +47,28 @@
       {
         "type": "elan",
         "when": "resourceExtname == .elan"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "elan",
+        "label": "Elan",
+        "languages": [
+          "elan"
+        ],
+        "initialConfigurations": [
+          {
+            "name": "Elan Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask" : "${defaultBuildTask}",
+            "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+          }
+        ]
       }
     ]
   },
