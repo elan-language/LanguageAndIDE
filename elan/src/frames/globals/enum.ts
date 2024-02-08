@@ -22,7 +22,7 @@ export class Enum extends AbstractFrame {
         return [this.name, this.values];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'enum';
     }
 

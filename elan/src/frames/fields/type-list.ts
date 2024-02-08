@@ -7,7 +7,7 @@ export class TypeList extends AbstractField {
         this.setPrompt("type(s)");
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'args';
     }
 }

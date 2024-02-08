@@ -18,7 +18,7 @@ export class Constructor extends FrameWithStatements implements Member {
         return [this.params];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'constructor';
     }
 

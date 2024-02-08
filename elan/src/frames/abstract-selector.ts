@@ -19,7 +19,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
         return [];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'select';
     }
 

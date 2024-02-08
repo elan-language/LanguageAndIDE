@@ -8,7 +8,7 @@ export class ParamList extends AbstractField {
         this.useHtmlTags = true;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'params';
     }
 }

@@ -20,7 +20,7 @@ export class SetStatement extends AbstractFrame  {
         return [this.name, this.expr];
     }
     
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'set';
     }
 

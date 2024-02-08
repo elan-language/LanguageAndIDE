@@ -64,7 +64,7 @@ suite('Milestone 1 - Unit tests', () => {
 				s.processKey(key("p"));
 			},
 			["proc1", `
-<top><expand>+</expand><keyword>procedure </keyword><text id="ident3" class="empty incomplete" tabindex="0">name</text>(<text id="params4" class="empty incomplete" tabindex="0">parameter definitions</text>)</top>
+<top><expand>+</expand><keyword>procedure </keyword><field id="ident3" class="empty incomplete" tabindex="0"><text></text><label>name</label><help></help></field>(<field id="params4" class="empty incomplete" tabindex="0"><text></text><label>parameter definitions</label><help></help></field>)</top>
 <statement class="valid" id="select2" tabindex="0"><prompt>new code</prompt></statement>
 <keyword>end procedure</keyword>
 `]);

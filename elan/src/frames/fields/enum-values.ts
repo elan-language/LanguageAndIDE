@@ -7,7 +7,7 @@ export class EnumValues extends AbstractField {
         this.setPrompt("values");
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'enumVals';
     }
 }

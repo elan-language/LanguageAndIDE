@@ -8,7 +8,7 @@ export class Identifier extends AbstractField {
         this.setPrompt("name");
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'ident';
     }
 

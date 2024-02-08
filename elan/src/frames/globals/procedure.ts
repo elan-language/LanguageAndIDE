@@ -20,7 +20,7 @@ export class Procedure extends FrameWithStatements {
         return [this.name, this.params];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'proc';
     }
 

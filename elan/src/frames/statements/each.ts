@@ -23,7 +23,7 @@ export class Each extends FrameWithStatements  {
         return [this.variable, this.iter];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'each';
     }
 

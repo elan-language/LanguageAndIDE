@@ -19,7 +19,7 @@ export class Catch extends AbstractFrame {
         return [this.variable];
     }
     
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'catch';
     }
 

@@ -20,7 +20,7 @@ export class Variable extends AbstractFrame  {
     }
     
    
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'var';
     }
 

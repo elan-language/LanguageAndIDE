@@ -18,7 +18,7 @@ export class TryCatch extends FrameWithStatements  {
         return []; //TODO: Issue here is that Try Catch has no DirectFields.
     }
     
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'try';
     }
 

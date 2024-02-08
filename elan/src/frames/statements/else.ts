@@ -26,7 +26,7 @@ export class Else extends AbstractFrame  {
         this.hasIf = to;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'else';
     }
 

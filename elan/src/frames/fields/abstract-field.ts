@@ -7,7 +7,7 @@ import { KeyEvent } from "../interfaces/key-event";
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
     protected text: string = "";
-    protected prompt: string = "";
+    protected label: string = "";
     protected useHtmlTags: boolean = false;
     protected htmlId: string = "";
     private selected: boolean = false;
@@ -20,9 +20,13 @@ export abstract class AbstractField implements Selectable, Field {
     constructor(holder: Frame) {
         this.holder = holder;
         var map = holder.getMap();
-        this.htmlId = `${this.getPrefix()}${map.size}`;
+        this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
+    }
+
+    getHelp(): string {
+        return "";
     }
 
     setOptional(value: boolean) : void {
@@ -79,7 +83,7 @@ export abstract class AbstractField implements Selectable, Field {
     getHolder(): Frame  {
         return this.holder;
     }
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'text';
     }
     focus(): void {
@@ -121,27 +125,25 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     setPrompt(prompt: string): void {
-        this.prompt = prompt;
+        this.label = prompt;
     }
 
-    public contentAsHtml(): string {
+    public textAsHtml(): string {
         if (this.selected) {
-            return `<input size="${this.width()}"  value="${this.escapeDoubleQuotes(this.text)}" placeholder="${this.prompt}">`;
+            return `<input size="${this.width()}"  value="${this.escapeDoubleQuotes(this.text)}">`;
         }
-        if (this.text) { 
+        else{ 
             var c = this.escapeAngleBrackets(this.text);
-            if (this.useHtmlTags) {
+             /* if (this.useHtmlTags) {
                 c = this.tagTypeNames(c);
                 c = this.tagKeywords(c);
-            }
+            } */
             return c;
-        } else {
-            return `${this.prompt}`;
-        }
+        } 
     }
 
     public width(): number {
-        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.prompt.length-1;
+        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.label.length-1;
     }
 
     private escapeDoubleQuotes(str: string): string {
@@ -159,7 +161,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.text) {
          return this.text;
         } else {
-         return this.prompt;
+         return this.label;
         }
      }
 
@@ -195,7 +197,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><label>${this.label}</label><help>${this.getHelp()}</help></field>`;
     }
 
     indent(): string {

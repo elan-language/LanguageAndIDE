@@ -9,7 +9,7 @@ export class ExceptionMessage extends AbstractField {
         this.setPrompt("message");
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'msg';
     }
 

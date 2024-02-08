@@ -31,7 +31,7 @@ export class FileImpl implements File {
         return this._map.get(id) as Selectable;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'file';
     }
 

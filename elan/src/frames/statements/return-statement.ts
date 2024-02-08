@@ -16,7 +16,7 @@ export class ReturnStatement extends AbstractFrame  {
         return [this.expr];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'return';
     }
     

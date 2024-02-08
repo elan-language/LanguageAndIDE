@@ -27,7 +27,7 @@ export class Call extends AbstractFrame {
         return true;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'call';
     }
 

@@ -14,7 +14,7 @@ export class MainFrame extends FrameWithStatements {
         return []; //no direct fields
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'main';
     }
 

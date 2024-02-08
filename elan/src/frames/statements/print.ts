@@ -23,7 +23,7 @@ export class Print extends AbstractFrame  {
         return true;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'print';
     }
 

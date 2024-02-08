@@ -29,7 +29,7 @@ export class For extends FrameWithStatements  {
         return [this.variable, this.from, this.to, this.step];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'for';
      }
 

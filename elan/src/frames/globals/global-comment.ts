@@ -17,7 +17,7 @@ export class GlobalComment extends AbstractFrame {
         return [this.text];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'com';
     }
 

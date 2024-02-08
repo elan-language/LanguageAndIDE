@@ -18,7 +18,7 @@ export class Repeat extends FrameWithStatements {
         return [this.condition];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'repeat';
     }
 

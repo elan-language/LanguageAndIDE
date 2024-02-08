@@ -68,7 +68,7 @@ export class Class extends AbstractFrame implements Parent {
         return fst < lst ? this.members.slice(fst, lst + 1) : this.members.slice(lst, fst + 1);
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'class';
     }
 

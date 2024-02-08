@@ -7,7 +7,7 @@ export class Expression extends AbstractField {
         this.setPrompt("value or expression");
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'expr';
     }
 }

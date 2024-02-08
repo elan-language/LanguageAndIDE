@@ -12,7 +12,7 @@ export class SelectIfClause extends AbstractField {
         this.setOptional(true);
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'elif';
     }
 
@@ -23,10 +23,6 @@ export class SelectIfClause extends AbstractField {
     renderAsSource(): string {
         return ``;
     } 
-
-    renderAsHtml(): string {
-        return this.isSelected() ? super.renderAsHtml() : this.else.isSelected() ? super.renderAsHtml() : ``;
-    }
 
     processKey(keyEvent: KeyEvent): void {
         var char = keyEvent.key;

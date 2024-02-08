@@ -5,10 +5,10 @@ import { AbstractField } from "./abstract-field";
 export class Integer extends AbstractField {  
     constructor(holder: Frame) {
         super(holder);
-        this.prompt = "integer";
+        this.label = "integer";
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return `int`;
     }
 

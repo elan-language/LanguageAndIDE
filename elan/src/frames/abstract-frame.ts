@@ -23,7 +23,7 @@ export abstract class AbstractFrame implements Frame {
     constructor(parent: Parent) {
         this._parent = parent;
         var map = parent.getMap();
-        this.htmlId = `${this.getPrefix()}${map.size}`;
+        this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
         this._factory = parent.getFactory();
@@ -111,7 +111,7 @@ export abstract class AbstractFrame implements Frame {
         this._factory = factory;
     }
 
-    abstract getPrefix(): string;
+    abstract getIdPrefix(): string;
 
     protected pushClass(flag: boolean, cls: string) {
         if (flag) {

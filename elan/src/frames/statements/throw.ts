@@ -16,7 +16,7 @@ export class Throw extends AbstractFrame  {
         return [this.text];
     }
     
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'throw';
     }
 

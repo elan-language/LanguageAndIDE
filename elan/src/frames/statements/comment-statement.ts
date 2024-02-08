@@ -19,7 +19,7 @@ export class CommentStatement extends AbstractFrame implements Member {
         return [this.text];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'com';
     }
 

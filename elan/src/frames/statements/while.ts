@@ -18,7 +18,7 @@ export class While extends FrameWithStatements implements Parent {
         return [this.condition];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'while';
     }
 

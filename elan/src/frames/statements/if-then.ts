@@ -23,7 +23,7 @@ export class IfThen extends FrameWithStatements{
         return true;
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'if';
     }
 

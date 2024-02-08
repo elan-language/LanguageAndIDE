@@ -21,7 +21,7 @@ export class Property extends AbstractFrame implements Member {
         return [this.name, this.type];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'prop';
     }
 

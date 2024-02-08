@@ -6,10 +6,10 @@ export class Type extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
-        this.prompt = "Type";
+        this.label = "Type";
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'type';
     }
 

@@ -28,7 +28,7 @@ export class Function extends FrameWithStatements implements Parent {
         return [this.name, this.params, this.returnType];
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'func';
     }
 

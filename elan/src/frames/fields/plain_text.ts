@@ -7,7 +7,7 @@ export class PlainText extends AbstractField {
         super(holder);
     }
 
-    getPrefix(): string {
+    getIdPrefix(): string {
         return 'text';
     }
 }
