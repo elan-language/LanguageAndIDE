@@ -148,11 +148,15 @@ field.empty placeholder {
 field.empty.optional placeholder {
     display:none;
 }
-.selected top field.empty placeholder, .selected top field.empty.optional placeholder,
-.selected > field.empty placeholder, .selected > field.empty.optional placeholder {
+.selected top field.empty placeholder, .selected > field.empty placeholder {
+    display:inline;
+    color: var(--incomplete);
+}
+.selected top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
     display:inline;
     color: white;
 }
+
 field.selected placeholder { 
     display: none; /* because contents of placeholder will be put into placeholder */
 }
