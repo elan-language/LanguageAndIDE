@@ -94,6 +94,10 @@
 			return false;
 		}
 
+		const input = document.querySelector('.focused > input');
+		const focused = document.querySelector('.focused');
+		const elanCode = document.querySelector('.elan-code');
+
 		if (doOnce) {
 			doOnce = false;
 			elanCode.addEventListener('keydown', event => {
@@ -110,10 +114,6 @@
 				}
 			});
 		}
-
-		const input = document.querySelector('.focused > input');
-		const focused = document.querySelector('.focused');
-		const elanCode = document.querySelector('.elan-code');
 
 		if (input) {
 			input.setSelectionRange(input.value.length, input.value.length);
