@@ -48,6 +48,24 @@
         "type": "elan",
         "when": "resourceExtname == .elan"
       }
+    ],
+    "debuggers": [
+      {
+        "type": "elan",
+        "label": "Elan Debug",
+        "initialConfigurations": [
+          {
+            "name": "Elan Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+          }
+        ]
+      }
     ]
   },
   "scripts": {
