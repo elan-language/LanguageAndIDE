@@ -53,6 +53,9 @@
       {
         "type": "elan",
         "label": "Elan",
+        "languages": [
+          "elan"
+        ],
         "initialConfigurations": [
           {
             "name": "Elan Launch",
