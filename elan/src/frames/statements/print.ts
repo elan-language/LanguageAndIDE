@@ -11,7 +11,7 @@ export class Print extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
-        this.expr.setPrompt("expression");
+        this.expr.setLabel("expression");
     }
 
     getFields(): Field[] {

@@ -11,7 +11,7 @@ export class Repeat extends FrameWithStatements {
         super(parent);
         this.multiline = true;
         this.condition = new Expression(this);
-        this.condition.setPrompt("condition");
+        this.condition.setLabel("condition");
     }
 
     getFields(): Field[] {

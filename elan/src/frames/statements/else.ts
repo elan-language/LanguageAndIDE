@@ -14,7 +14,7 @@ export class Else extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.condition = new Expression(this);
-        this.condition.setPrompt("condition");
+        this.condition.setLabel("condition");
         this.selectIfClause = new SelectIfClause(this);
     }
 

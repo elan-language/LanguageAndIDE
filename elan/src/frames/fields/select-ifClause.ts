@@ -8,7 +8,7 @@ export class SelectIfClause extends AbstractField {
     constructor(holder: Else) {
         super(holder);
         this.else = holder;
-        this.setPrompt("    if");
+        this.setLabel("    if");
         this.setOptional(true);
     }
 

@@ -14,7 +14,7 @@ export class Call extends AbstractFrame {
     constructor(parent: Parent) {
         super(parent);
         this.proc = new Identifier(this);
-        this.proc.setPrompt("procedureName");
+        this.proc.setLabel("procedureName");
         this.args = new ArgList(this);
     }
 

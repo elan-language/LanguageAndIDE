@@ -10,7 +10,7 @@ export class GlobalComment extends AbstractFrame {
     constructor(parent: Parent) {
         super(parent);
         this.text = new PlainText(this);
-        this.text.setPrompt("comment");
+        this.text.setLabel("comment");
     }
 
     getFields(): Field[] {

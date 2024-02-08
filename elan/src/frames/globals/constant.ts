@@ -13,7 +13,7 @@ export class Constant extends AbstractFrame {
         super(parent);
         this.name  = new Identifier(this);
         this.expr = new Expression(this);
-        this.expr.setPrompt("literal value");
+        this.expr.setLabel("literal value");
     }
 
     getFields(): Field[] {

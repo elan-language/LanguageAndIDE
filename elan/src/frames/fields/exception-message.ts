@@ -6,7 +6,7 @@ import { AbstractField } from "./abstract-field";
 export class ExceptionMessage extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
-        this.setPrompt("message");
+        this.setLabel("message");
     }
 
     getIdPrefix(): string {

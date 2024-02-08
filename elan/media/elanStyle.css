@@ -1,6 +1,5 @@
 :root {
     --selection:rgb(173, 214, 255);
-    /* --unused: rgb(175,0,219); */
     --valid: rgb(146, 236, 146); 
     --incomplete: rgba(255, 166, 0);
     --invalid:  rgba(255, 0, 0, 0.617);
@@ -21,10 +20,6 @@ code {
     outline: none;
 }
 
-hash {
-    display: none;
-}
-
 input, input:focus , input:active{
     border: none;
     outline: none;
@@ -33,6 +28,10 @@ input, input:focus , input:active{
 }
 
 /* Basic Colour scheme */
+hash {
+    display: none;
+}
+
 span {
     background-color: inherit;
 }
@@ -54,7 +53,7 @@ comment, header, header *{
     color: rgb(165, 2, 2);
 }
 
-/* Horizontal and vertical layout */
+/* Horizontal and vertical spacing */
 statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
     display: block;
     background-color: white;
@@ -72,54 +71,99 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > text, .selected > text * , .selected > options {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field * {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
 
-/* Status colouring*/
-text.selected.valid, text.selected.valid *, header .valid, .valid expand{
-    background-color: var(--valid);
-}
-
-text.selected.incomplete, text.selected.incomplete *, header .incomplete, .incomplete expand{
-    background-color: var(--incomplete);
-}
-
-text.selected.invalid, text.selected.invalid * , header .invalid, .invalid expand{
-    background-color: var(--invalid);
-}
-
-/* helpers */
-prompt {
-    color: lightgrey;
-}
-::placeholder, .selected > options {
-    color: white;
-}
-
-/* Text entry validation */
-text.incomplete {
-    color: var(--incomplete);
-}
-text.invalid, type.invalid {
-    color: var(--invalid);
-}
-
-/* Collapse / Expand */
+/* Multline Collapse / Expand */
 expand {
     display: none;
 }
-
+.multiline.collapsed > :not(top)
+{
+    display: none;
+}
 .multiline.collapsed expand {
     display:inline;
     font-weight: bold;
     color: white;
     margin-right: 1ch;
-    cursor: pointer;
+    /* cursor: pointer; why only this? */
+}
+.multiline.collapsed.invalid expand {
+    background-color: var(--invalid);
+}
+.multiline.collapsed.incomplete expand {
+    background-color: var(--incomplete);
+}
+.multiline.collapsed.valid expand {
+    background-color: var(--valid);
 }
 
-.multiline.collapsed > :not(top)
-{
+/* Fields */
+/* field-text*/
+field.invalid text {
+    color: var(--invalid);
+}
+field.incomplete text {
+    color: var(--incomplete);
+}
+field.valid text {
+    color: black; /* redundant rule - as black by default - but included for clarity */
+}
+field.selected.invalid text {
+    background-color: var(--invalid);
+}
+field.selected.incomplete text {
+    background-color: var(--incomplete);
+}
+field.selected.valid text {
+    background-color: var(--valid);
+}
+/* field-label */
+field label {
+  display: none;
+}
+field.empty label {
+    display:inline;
+}
+field.empty.optional label {
+    display:none;
+}
+.selected field.empty.optional label {
+    display: inline;
+    background: lightgrey;
+    color: white;
+}
+field.selected label {
     display: none;
 }
+/* selector label */
+global label, member label, statement label  {
+    display: none;
+}
+global.selected.empty label, member.selected.empty label, statement.selected.empty label {
+    display: inline;
+    color: white;
+}
+
+/* field-help */
+field help, global help, member help, statement help  {
+    display: none;
+}
+field.selected help {
+    display: inline;
+    color: white;
+    background-color: lightgrey;
+}
+
+/* selector help */
+global help, member help, statement help  {
+    display: none;
+}
+ global.selected help, member.selected help, statement.selected help {
+    display: inline;
+    color: white;
+}
+ 

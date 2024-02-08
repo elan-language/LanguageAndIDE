@@ -5,8 +5,8 @@ import { AbstractSelector } from "../abstract-selector";
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
   
-    getDefaultHelp(): string {
-            return "main procedure function class constant enum #";
+    getHelp(): string {
+        return this.text === "c" ? "class constant" :  "main procedure function class constant enum #";
     }
 
     getFile(): File {
@@ -46,17 +46,16 @@ export class GlobalSelector extends AbstractSelector  {
         }
         if (empty && char ==='c') {
             this.text+=char;
-            this.help = "class constant";
             return;
         } 
         if (this.text === "c" && char ==="o") {
             this.getFile().addConstantBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (this.text === "c" && char ==="l") {
             this.getFile().addClassBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         super.processKey(keyEvent);

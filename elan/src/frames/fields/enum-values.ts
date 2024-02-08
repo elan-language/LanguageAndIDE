@@ -4,7 +4,7 @@ import { AbstractField } from "./abstract-field";
 export class EnumValues extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
-        this.setPrompt("values");
+        this.setLabel("values");
     }
 
     getIdPrefix(): string {

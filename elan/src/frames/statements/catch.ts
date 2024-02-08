@@ -11,7 +11,7 @@ export class Catch extends AbstractFrame {
     constructor(parent: Parent) {
         super(parent);
         this.variable  = new Identifier(this);
-        this.variable.setPrompt("variableName");
+        this.variable.setLabel("variableName");
         this.variable.setTextWithoutParsing("e");
     }
 

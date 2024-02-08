@@ -7,8 +7,8 @@ import { AbstractSelector } from "../abstract-selector";
 export class MemberSelector extends AbstractSelector implements Member  {
     isMember: boolean = true;
 
-    getDefaultHelp(): string {
-        return "function procedure property";
+    getHelp(): string {
+        return "pro".startsWith(this.text) ? "procedure property" : "function procedure property";
     }
     renderAsHtml(): string {
         return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</member>`;
@@ -31,7 +31,6 @@ export class MemberSelector extends AbstractSelector implements Member  {
         }
         if (empty && (char ==='p')) {
             this.text+=char;
-            this.help = "procedure property";
             return;
         }
         if (this.text === "p" && char ==="r") {
@@ -44,12 +43,12 @@ export class MemberSelector extends AbstractSelector implements Member  {
         }
         if (this.text === "pro" && char ==="c") {
             this.getClass().addProcedureMethodBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (this.text === "pro" && char ==="p") {
             this.getClass().addPropertyBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         super.processKey(keyEvent);

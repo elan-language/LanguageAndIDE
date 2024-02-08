@@ -8,6 +8,6 @@ export class ArgList extends AbstractField {
     
     constructor(holder: Frame) {
         super(holder);
-        this.setPrompt("arguments");
+        this.setLabel("arguments");
     }
 }

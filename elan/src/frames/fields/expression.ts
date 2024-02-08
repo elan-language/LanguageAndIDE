@@ -4,7 +4,7 @@ import { AbstractField } from "./abstract-field";
 export class Expression extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
-        this.setPrompt("value or expression");
+        this.setLabel("value or expression");
     }
 
     getIdPrefix(): string {

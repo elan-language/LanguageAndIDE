@@ -124,8 +124,8 @@ export abstract class AbstractField implements Selectable, Field {
         this.defocus();
     }
 
-    setPrompt(prompt: string): void {
-        this.label = prompt;
+    setLabel(label: string): void {
+        this.label = label;
     }
 
     public textAsHtml(): string {

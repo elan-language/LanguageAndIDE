@@ -16,11 +16,11 @@ export class For extends FrameWithStatements  {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);
-        this.variable.setPrompt("variableName");
+        this.variable.setLabel("variableName");
         this.from = new Expression(this);
-        this.from.setPrompt("integer value or expression");
+        this.from.setLabel("integer value or expression");
         this.to = new Expression(this);
-        this.to.setPrompt("integer value or expression");
+        this.to.setLabel("integer value or expression");
         this.step = new Integer(this);
         this.step.setTextWithoutParsing("1");
     }

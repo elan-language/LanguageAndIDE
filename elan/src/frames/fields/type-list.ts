@@ -4,7 +4,7 @@ import { AbstractField } from "./abstract-field";
 export class TypeList extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
-        this.setPrompt("type(s)");
+        this.setLabel("type(s)");
     }
 
     getIdPrefix(): string {

@@ -5,15 +5,23 @@ import { Parent } from "./interfaces/parent";
 
 export abstract class AbstractSelector extends AbstractFrame  {
     text: string = "";
-    prompt: string = "new code";
-    protected help: string = "";
+    label: string = "new code";
 
     constructor(parent: Parent) {
         super(parent);
-        this.help = this.getDefaultHelp();
     }
 
-    abstract getDefaultHelp(): string;
+    protected setClasses() {
+        super.setClasses();
+        this.pushClass(this.text === "", "empty");
+    };
+
+    abstract getHelp(): string;
+
+    clearText() : void {
+        this.text = "";
+    }
+
 
     getFields(): Field[] {
         return [];
@@ -26,7 +34,6 @@ export abstract class AbstractSelector extends AbstractFrame  {
     override deselect(): void {
         super.deselect();
         this.text = "";
-        this.help = this.getDefaultHelp();
     }
 
     public override selectFirstField(): boolean {
@@ -34,11 +41,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
     }
 
     textToDisplay(): string {
-        if (this.isSelected()) {
-            return `<text>${this.text}</text><options> ${this.help}</options>`;
-        } else {
-            return `<prompt>${this.prompt}</prompt>`;
-        }
+            return `<text>${this.text}</text><label>${this.label}</label><help> ${this.getHelp()}</help>`;
     }
 
     renderAsSource(): string {
@@ -49,7 +52,6 @@ export abstract class AbstractSelector extends AbstractFrame  {
         var char = keyEvent.key;
         if (char === "Backspace") {
             this.text = this.text.substring(0,this.text.length-1);
-            this.help = this.getDefaultHelp();
             return;
         } 
         //Ignore all others

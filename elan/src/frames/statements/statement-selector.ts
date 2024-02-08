@@ -12,8 +12,8 @@ export class StatementSelector extends AbstractSelector  {
         this.factory = (parent.getFactory());
     }
 
-    getDefaultHelp(): string {
-       return "call each for if print repeat set switch throw try var while #";
+    getHelp(): string {
+       return this.text === "s" ? "set switch" : this.text === "t" ? "throw try" : "call each for if print repeat set switch throw try var while #";
     }
 
     renderAsHtml(): string {
@@ -49,33 +49,31 @@ export class StatementSelector extends AbstractSelector  {
         }
         if (empty && (char ==='s')) {
             this.text += char;
-            this.help = "set switch";
             return;
         }
         if (this.text ==="s" && (char ==='e')) {
             this.factory.addSetBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (this.text ==="s" && (char ==='w')) {
             throw new Error("Switch is not implemented");
             this.factory.addSwitchBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (empty && (char ==='t')) {
             this.text += char;
-            this.help = "throw try";
             return;
         }
         if (this.text ==="t" && (char ==='h')) {
             this.factory.addThrowBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (this.text ==="t" && (char ==='r')) {
             this.factory.addTryBefore(this);
-            this.text = "";
+            this.clearText();
             return;
         }
         if (empty && (char ==='v')) {
