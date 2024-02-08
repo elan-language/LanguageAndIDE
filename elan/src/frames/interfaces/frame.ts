@@ -22,4 +22,7 @@ export interface Frame extends Selectable {
 
     getFields(): Field[];
     worstStatusOfFields(): ParsingStatus;
+
+    selectPreviousField() : void;
+    selectNextField(): void;
 }

@@ -36,7 +36,7 @@ export class Else extends AbstractFrame  {
     }
 
     private ifClauseAsHtml() : string {
-        return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:`${this.selectIfClause}`;
+        return this.hasIf ? `<keyword> if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`:` ${this.selectIfClause.renderAsHtml()}`;
     }
 
     private ifClauseAsSource() : string {

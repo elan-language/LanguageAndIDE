@@ -25,6 +25,11 @@ export class SelectIfClause extends AbstractField {
         return ``;
     } 
 
+    renderAsHtml(): string {
+        return super.renderAsHtml();
+    }
+
+
     processKey(keyEvent: KeyEvent): void {
         var char = keyEvent.key;
         var empty = this.text ==="";

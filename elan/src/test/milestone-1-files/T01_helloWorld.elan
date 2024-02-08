@@ -1,6 +1,6 @@
-# Elan v0.1 valid 3875b082b40dd7b4
+# Elan v0.1 valid ffffffffffffffff
 
 main
   # My first program
-  print "Hello World!"h
+  print "Hello World!"
 end main
