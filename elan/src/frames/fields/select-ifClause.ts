@@ -8,8 +8,7 @@ export class SelectIfClause extends AbstractField {
     constructor(holder: Else) {
         super(holder);
         this.else = holder;
-        this._help = "Type 'i' to create an if clause for this 'else'";
-        this.setPrompt("if");
+        this.setPrompt("    if");
         this.setOptional(true);
     }
 
@@ -26,7 +25,7 @@ export class SelectIfClause extends AbstractField {
     } 
 
     renderAsHtml(): string {
-        return super.renderAsHtml();
+        return this.isSelected() ? super.renderAsHtml() : this.else.isSelected() ? super.renderAsHtml() : ``;
     }
 
     processKey(keyEvent: KeyEvent): void {

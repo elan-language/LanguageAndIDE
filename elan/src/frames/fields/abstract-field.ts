@@ -14,7 +14,6 @@ export abstract class AbstractField implements Selectable, Field {
     private focused: boolean = false;
     private _classes = new Array<string>;
     private holder: Frame;
-    protected _help: string = "";
     protected _optional: boolean = false;
     protected map: Map<string, Selectable>;
 
@@ -32,10 +31,6 @@ export abstract class AbstractField implements Selectable, Field {
 
     isOptional(): boolean {
         return this._optional;
-    }
-
-    help(): string {
-        return this._help;
     }
 
     processKey(keyEvent: KeyEvent): void {
@@ -200,7 +195,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<text id="${this.htmlId}" title="${this.help()}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
+        return `<text id="${this.htmlId}" class="${this.cls()}" tabindex=0>${this.contentAsHtml()}</text>`;
     }
 
     indent(): string {
