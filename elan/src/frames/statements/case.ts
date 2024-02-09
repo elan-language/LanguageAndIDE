@@ -2,9 +2,8 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { LiteralValue } from "../fields/literal-value";
 import { FrameWithStatements } from "../frame-with-statements";
-import { StatementSelector } from "./statement-selector";
 
-export class Case extends FrameWithStatements {
+export class Case extends FrameWithStatements{
     isStatement = true;
     value: LiteralValue;
 

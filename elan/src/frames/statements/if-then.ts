@@ -9,7 +9,6 @@ export class IfThen extends FrameWithStatements{
 
     constructor(parent: Parent) {
         super(parent);
-        this.multiline = true;
         this.condition = new Expression(this);
         this.condition.setPlaceholder("condition");
     }

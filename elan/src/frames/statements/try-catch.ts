@@ -9,7 +9,6 @@ export class TryCatch extends FrameWithStatements  {
     
     constructor(parent: Parent) {
         super(parent);
-        this.multiline = true;
         this.statements.push(new Catch(this));
         this.statements.push(new StatementSelector(this));
     }

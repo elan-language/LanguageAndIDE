@@ -5,13 +5,12 @@ import { Field } from "../interfaces/field";
 import { Default } from "./default";
 import { Case } from "./case";
 
-export class Switch extends FrameWithStatements implements Parent { 
+export class Switch extends FrameWithStatements { 
     isStatement = true;
     expr: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.multiline = true;
         this.expr = new Expression(this);
         this.removeStatementSelector();
         this.statements.push(new Case(this));

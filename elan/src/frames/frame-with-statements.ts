@@ -9,6 +9,7 @@ import { StatementSelector } from "./statements/statement-selector";
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
     isParent: boolean = true;
+    multiline:boolean = true;
     protected statements: Array<Frame> = new Array<Frame>();
 
     constructor(parent: File | Parent) {

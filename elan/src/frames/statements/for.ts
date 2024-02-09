@@ -14,7 +14,6 @@ export class For extends FrameWithStatements  {
 
     constructor(parent: Parent) {
         super(parent);
-        this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.from = new Expression(this);

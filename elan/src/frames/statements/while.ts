@@ -9,7 +9,6 @@ export class While extends FrameWithStatements implements Parent {
 
     constructor(parent: Parent) {
         super(parent);
-        this.multiline = true;
         this.condition = new Expression(this);
         this.condition.setPlaceholder("condition");
     }

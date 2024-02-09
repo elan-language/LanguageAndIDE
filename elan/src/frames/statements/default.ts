@@ -1,7 +1,6 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { StatementSelector } from "./statement-selector";
 
 export class Default extends FrameWithStatements {
     isStatement = true;
