@@ -11,7 +11,7 @@ export class IfThen extends FrameWithStatements{
         super(parent);
         this.multiline = true;
         this.condition = new Expression(this);
-        this.condition.setLabel("condition");
+        this.condition.setPlaceholder("condition");
     }
 
     getFields(): Field[] {

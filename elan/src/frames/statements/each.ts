@@ -14,9 +14,9 @@ export class Each extends FrameWithStatements  {
         super(parent);
         this.multiline = true;
         this.variable = new Identifier(this);
-        this.variable.setLabel("variableName");
+        this.variable.setPlaceholder("variableName");
         this.iter = new Expression(this);
-        this.iter.setLabel("iterable value or expression");
+        this.iter.setPlaceholder("iterable value or expression");
     }
 
     getFields(): Field[] {

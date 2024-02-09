@@ -12,7 +12,7 @@ export class Print extends AbstractFrame  {
         super(parent);
         this.expr = new Expression(this);
         this.expr.setOptional(true);
-        this.expr.setLabel("expression");
+        this.expr.setPlaceholder("expression");
     }
 
     getFields(): Field[] {

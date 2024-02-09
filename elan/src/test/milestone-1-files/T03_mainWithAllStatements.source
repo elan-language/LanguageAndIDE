@@ -1,4 +1,4 @@
-# Elan v0.1 incomplete f82805787706bef8
+# Elan v0.1 incomplete d09c82d2fd56276a
 
 main
   var name set to value or expression
@@ -38,4 +38,10 @@ main
   catch e
     
   end try
+  switch value or expression
+    case value
+      
+    default
+      
+  end switch
 end main

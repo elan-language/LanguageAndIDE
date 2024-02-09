@@ -57,7 +57,6 @@ export class StatementSelector extends AbstractSelector  {
             return;
         }
         if (this.text ==="s" && (char ==='w')) {
-            throw new Error("Switch is not implemented");
             this.factory.addSwitchBefore(this);
             this.clearText();
             return;

@@ -20,7 +20,7 @@ export class Function extends FrameWithStatements implements Parent {
         this.name = new Identifier(this);
         this.params = new ParamList(this);
         this.returnType = new Type(this);
-        this.returnType.setLabel("return type");
+        this.returnType.setPlaceholder("return type");
         this.statements.push(new ReturnStatement(this));
     }
 

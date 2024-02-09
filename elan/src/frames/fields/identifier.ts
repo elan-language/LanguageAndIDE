@@ -5,7 +5,7 @@ import { AbstractField } from "./abstract-field";
 export class Identifier extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
-        this.setLabel("name");
+        this.setPlaceholder("name");
     }
 
     getIdPrefix(): string {

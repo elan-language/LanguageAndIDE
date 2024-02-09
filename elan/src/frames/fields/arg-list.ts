@@ -4,7 +4,7 @@ import { Frame } from "../interfaces/frame";
 export class ArgList extends AbstractField {  
     constructor(holder: Frame) {
         super(holder);
-        this.setLabel("arguments");
+        this.setPlaceholder("arguments");
         this.setOptional(true);
     }
 

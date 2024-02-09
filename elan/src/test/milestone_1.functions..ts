@@ -23,6 +23,8 @@ import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
 import { GlobalSelector } from "../frames/globals/global-selector";
 import { StatementSelector } from "../frames/statements/statement-selector";
+import { Switch } from "../frames/statements/switch";
+import { Case } from "../frames/statements/case";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();
@@ -114,6 +116,8 @@ export function T03_mainWithAllStatements(): FileImpl {
 	if3.addStatementAtEnd(new StatementSelector(if3));
 	const tr = new TryCatch(m);
 	m.addStatementAtEnd(tr);
+	const sw = new Switch(m);
+	m.addStatementAtEnd(sw);
 	return f;
 }
 

@@ -7,7 +7,7 @@ import { KeyEvent } from "../interfaces/key-event";
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
     protected text: string = "";
-    protected label: string = "";
+    protected placeholder: string = "";
     protected useHtmlTags: boolean = false;
     protected htmlId: string = "";
     private selected: boolean = false;
@@ -124,13 +124,13 @@ export abstract class AbstractField implements Selectable, Field {
         this.defocus();
     }
 
-    setLabel(label: string): void {
-        this.label = label;
+    setPlaceholder(placeholder: string): void {
+        this.placeholder = placeholder;
     }
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input size="${this.width()}" placeholder="${this.label}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
             var c = this.escapeAngleBrackets(this.text);
@@ -143,7 +143,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     public width(): number {
-        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.label.length-1;
+        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.placeholder.length-1;
     }
 
     private escapeDoubleQuotes(str: string): string {
@@ -161,7 +161,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.text) {
          return this.text;
         } else {
-         return this.label;
+         return this.placeholder;
         }
      }
 
@@ -198,7 +198,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.label}</placeholder><help>${this.getHelp()}</help></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><help>${this.getHelp()}</help></field>`;
     }
 
     indent(): string {

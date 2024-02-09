@@ -6,7 +6,7 @@ export class Type extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
-        this.label = "Type";
+        this.placeholder = "Type";
     }
 
     getIdPrefix(): string {

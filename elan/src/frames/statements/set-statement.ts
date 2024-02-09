@@ -12,7 +12,7 @@ export class SetStatement extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.name = new Identifier(this);
-        this.name.setLabel("variableName");
+        this.name.setPlaceholder("variableName");
         this.expr = new Expression(this);
     }
 

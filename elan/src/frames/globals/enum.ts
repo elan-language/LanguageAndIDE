@@ -14,7 +14,7 @@ export class Enum extends AbstractFrame {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);
-        this.name.setLabel("Name");
+        this.name.setPlaceholder("Name");
         this.values = new EnumValues(this);
     }
 

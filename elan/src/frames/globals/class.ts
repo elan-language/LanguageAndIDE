@@ -26,7 +26,7 @@ export class Class extends AbstractFrame implements Parent {
         super(parent);
         this.multiline = true;
         this.name = new Type(this);
-        this.name.setLabel("class name");
+        this.name.setPlaceholder("class name");
         this.superClasses  = new TypeList(this);
         this.addMemberAtEnd(new Constructor(this));
         this.addMemberAtEnd(new MemberSelector(this));

@@ -13,6 +13,7 @@ import { Variable } from "./statements/variable";
 import { SetStatement } from "./statements/set-statement";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Frame } from "./interfaces/frame";
+import { Switch } from "./statements/switch";
 
 export class StatementFactoryImpl implements StatementFactory {
 
@@ -45,7 +46,8 @@ export class StatementFactoryImpl implements StatementFactory {
         this.addStatementBeforeAndSelect(newS,s);
     }
     addSwitchBefore(s: Frame): void {
-        throw new Error("Method not implemented.");
+        var newS = new Switch(s.getParent());
+        this.addStatementBeforeAndSelect(newS,s);
     }
     addThrowBefore(s: Frame): void {
         var newS = new Throw(s.getParent());
