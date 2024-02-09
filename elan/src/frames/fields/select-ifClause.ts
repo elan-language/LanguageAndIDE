@@ -29,6 +29,7 @@ export class SelectIfClause extends AbstractField {
         var empty = this.text ==="";
         if (empty && (char ==='i')) {
             this.else.setIfExtension(true);
+            this.getHolder().select(true, false);
             return;
         }
         super.processKey(keyEvent);
