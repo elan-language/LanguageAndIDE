@@ -41,7 +41,7 @@ export class FileImpl implements File {
             ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># ${this.getVersion()} <span class="${this.statusAsString()}">${this.statusAsString()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
+        return `<header># ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
     }
 
     public indent(): string {
