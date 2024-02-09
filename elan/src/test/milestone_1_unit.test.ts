@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
-import { T00_emptyFile, T04_allGlobalsExceptClass } from './milestone_1.functions.';
-import { assertClasses, assertElementContainsHtml, assertHtml, key } from './testHelpers';
+import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass } from './milestone_1.functions.';
+import { assertClasses, assertElementContainsHtml, assertElementHasClasses, assertHtml, key } from './testHelpers';
 import { isField, isParent } from '../frames/helpers';
+import assert from 'assert';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -63,5 +64,24 @@ suite('Milestone 1 - Unit tests', () => {
 <keyword>end procedure</keyword>
 `);
 	});
+
+	test('Invalid identifier', () => {
+		var file = T03_mainWithAllStatements();
+		assertElementHasClasses(file, "fileStatus", "incomplete");
+		assertElementHasClasses(file, "var2", "incomplete"); 
+		file.getById("ident3").processKey(key("X"));
+		assertElementHasClasses(file, "var2", "invalid");
+		assertElementHasClasses(file, "fileStatus", "invalid");
+	});
+/* 
+	test('Valid identifier', () => {
+		var file = T03_mainWithAllStatements();
+		assertElementHasClasses(file, "fileStatus", "incomplete");
+		assertElementHasClasses(file, "var2", "incomplete"); 
+		file.getById("ident3").processKey(key("q"));
+		assertElementHasClasses(file, "var2", "valid");
+		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
+	}); */
 	
-});
+
+});	

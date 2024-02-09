@@ -121,8 +121,8 @@ export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: stri
 	assert.strictEqual(c, expected);
 }
 
-export function assertElementHasClasses(setupFn : () => File, elementId: string, classes : string){
-	const dom = readAsDOM(setupFn());
+export function assertElementHasClasses(f: File, elementId: string, classes : string){
+	const dom = readAsDOM(f);
     assertElementsById(dom, elementId, classes);
 }
 
