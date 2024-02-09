@@ -121,10 +121,22 @@ export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: stri
 	assert.strictEqual(c, expected);
 }
 
+export function assertElementHasClasses(setupFn : () => File, elementId: string, classes : string){
+	const dom = readAsDOM(setupFn());
+    assertElementsById(dom, elementId, classes);
+}
+
 export function assertElementHtmlById(dom : jsdom.JSDOM, id: string, expected: string){
 	const e = dom.window.document.getElementById(id);
 	const c = e?.innerHTML;
 	assert.strictEqual(c, expected);
+}
+
+export function assertElementContainsHtml(f: File, id: string, expectedHtml: string){
+    const dom = readAsDOM(f);
+	const e = dom.window.document.getElementById(id);
+	const c = e?.innerHTML;
+	assert.strictEqual(c, expectedHtml);
 }
 
 export function readAsDOM(f: File) {
