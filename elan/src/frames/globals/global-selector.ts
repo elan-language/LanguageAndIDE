@@ -4,6 +4,7 @@ import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 
 export class GlobalSelector extends AbstractSelector  {
+    isGlobal = true;
 
     constructor(parent: Parent) {
         super(parent);
@@ -23,11 +24,6 @@ export class GlobalSelector extends AbstractSelector  {
     validforContext(frameType: string): boolean {
         return true; //TODO
     }
-    isGlobal = true;
-  
-    getHelp(): string {
-        return this.text === "c" ? "class constant" :  "main procedure function class constant enum #";
-    }
 
     getFile(): File {
         return this.getParent() as File;
@@ -41,7 +37,7 @@ export class GlobalSelector extends AbstractSelector  {
         return "";
     }
 
-    addFrame(frameType: string, startText: string): void {
+    addMember(frameType: string, startText: string): void {
         //TODO: use startText
         switch(frameType) {
             case "MainFrame": {
@@ -73,45 +69,5 @@ export class GlobalSelector extends AbstractSelector  {
                 break;
             }
         }
-    }
-
-    processKey(keyEvent: KeyEvent): void {
-        var char = keyEvent.key;
-        var empty = this.text ==="";
-        if (empty && char ==='m') {
-            this.getFile().addMainBefore(this);
-            return;
-        }
-        if (empty && char ==='f') {
-            this.getFile().addFunctionBefore(this);
-            return;
-        }
-        if (empty && char ==='p') {
-            this.getFile().addProcedureBefore(this);
-            return;
-        }
-        if (empty && char ==='e') {
-            this.getFile().addEnumBefore(this);
-            return;
-        }
-        if (empty && char ==='#') {
-            this.getFile().addGlobalCommentBefore(this);
-            return;
-        }
-        if (empty && char ==='c') {
-            this.text+=char;
-            return;
-        } 
-        if (this.text === "c" && char ==="o") {
-            this.getFile().addConstantBefore(this);
-            this.clearText();
-            return;
-        }
-        if (this.text === "c" && char ==="l") {
-            this.getFile().addClassBefore(this);
-            this.clearText();
-            return;
-        }
-        super.processKey(keyEvent);
     }
 } 

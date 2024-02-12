@@ -25,9 +25,6 @@ export class MemberSelector extends AbstractSelector implements Member  {
 
     isMember: boolean = true;
 
-    getHelp(): string {
-        return this.text.length > 0 && "pro".startsWith(this.text) ? "procedure property" : "function procedure property";
-    }
     renderAsHtml(): string {
         return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</member>`;
     }
@@ -40,12 +37,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return this.getParent() as Class;
     }
 
-    private addMember(type: Type, start: string) : void {
-        
-        //TODO, use start
-    }
-
-    addFrame(frameType: string, startText: string): void {
+    addMember(frameType: string, startText: string): void {
         //TODO: use startText
         switch(frameType) {
             case "FunctionMethod": {

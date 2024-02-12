@@ -1,4 +1,3 @@
-import { KeyEvent } from "../interfaces/key-event";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
@@ -33,7 +32,7 @@ export class StatementSelector extends AbstractSelector  {
         ["CommentStatement", "#"]
     ];
 
-    addFrame(frameType: string, startText: string): void {
+    addMember(frameType: string, startText: string): void {
         this.factory.addFrameBefore(frameType, this, startText);
     }
 
@@ -43,11 +42,6 @@ export class StatementSelector extends AbstractSelector  {
 
     isStatement = true;
     private factory: StatementFactory;
-
-
-    getHelp(): string {
-       return this.text === "s" ? "set switch" : this.text === "t" ? "throw try" : "call each for if print repeat set switch throw try var while #";
-    }
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</statement>`;

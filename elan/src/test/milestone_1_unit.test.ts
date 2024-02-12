@@ -6,6 +6,9 @@ import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
+import { MainFrame } from '../frames/globals/main-frame';
+import { StatementSelector } from '../frames/statements/statement-selector';
+import { GlobalSelector } from '../frames/globals/global-selector';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -44,28 +47,6 @@ suite('Milestone 1 - Unit tests', () => {
 				}
 			},
 			["main3", "multiline valid", "multiline collapsed valid"]);
-	});
-
-	test('Key on Global Selector - main', () => {
-		var file = T00_emptyFile();
-		assertElementContainsHtml(file, "select0", `<text></text><placeholder>new code</placeholder><help> main procedure function class constant enum #</help>`);
-		file.getById("select0").processKey(key("m"));
-		assertElementContainsHtml(file, "main1", `
-<top><expand>+</expand><keyword>main</keyword></top>
-<statement class="valid empty" id="select2" tabindex="0"><text></text><placeholder>new code</placeholder><help> call each for if print repeat set switch throw try var while #</help></statement>
-<keyword>end main</keyword>
-`);
-	});
-
-	test('Key on Global Selector = procedure', () => {
-		var file = T00_emptyFile();
-		assertElementContainsHtml(file, "select0", `<text></text><placeholder>new code</placeholder><help> main procedure function class constant enum #</help>`);
-		file.getById("select0").processKey(key("p"));
-		assertElementContainsHtml(file, "proc1", `
-<top><expand>+</expand><keyword>procedure </keyword><field id="ident3" class="empty incomplete" tabindex="0"><text></text><placeholder>name</placeholder><help></help></field>(<field id="params4" class="empty optional valid" tabindex="0"><text></text><placeholder>parameter definitions</placeholder><help></help></field>)</top>
-<statement class="valid empty" id="select2" tabindex="0"><text></text><placeholder>new code</placeholder><help> call each for if print repeat set switch throw try var while #</help></statement>
-<keyword>end procedure</keyword>
-`);
 	});
 
 	test('Invalid identifier', () => {
@@ -120,29 +101,47 @@ suite('Milestone 1 - Unit tests', () => {
 		assert.equal(v, '  procedure name(parameter definitions)\r\n    \r\n  end procedure\r\n');
  	});	
 
-/*	test("Member Select - dynamic help & auto-completion", () => {
+	 test("Global Select - Constant", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		assertElementContainsHtml(file, "select8","<text></text><placeholder>new code</placeholder><help> function procedure property</help>");
-		file.getById("select8").processKey(key("p"));
-		assertElementContainsHtml(file, "select8","<text>pro</text><placeholder>new code</placeholder><help> procedure property</help>");
-		file.getById("select8").processKey(key("c"));
-		var v = file.getById("proc17").renderAsSource();
-		assert.equal(v, '  function name(parameter definitions) as return type\r\n' +
-		'    \r\n' +
-		'    return value or expression\r\n' +
-		'  end function\r\n');
-	});	 */
+		file.getById("select16").processKey(key("c"));
+		file.getById("select16").processKey(key("o"));
+		var v = file.getById("const17").renderAsSource();
+		assert.equal(v, 'constant name set to literal value\r\n');
+ 	});	
 
-	test("Selection Filtering 1", () => {
+	 test("Selection Filtering - globals", () => {
+		const f = new FileImpl();
+		var g = new GlobalSelector(f);
+		var help = g.getHelp();
+		assert.equal(help, " main procedure function class constant enum #");
+		g.processKey(key('c'));
+		help = g.getHelp();
+		assert.equal(help, " class constant");
+        assert.equal(g.renderAsHtml(), `<global class="valid" id='select0' tabindex="0"><text>c</text><placeholder>new code</placeholder><help> class constant</help></global>`);
+	});	
+
+	test("Selection Filtering - members", () => {
 		const f = new FileImpl();
 		var c = new Class(f);		
 		var s = new MemberSelector(c);
-		var help = s.generateHelp();
+		var help = s.getHelp();
 		assert.equal(help, " function procedure property");
 		s.processKey(key('p'));
-		help = s.generateHelp();
+		help = s.getHelp();
 		assert.equal(help, " procedure property");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select14' tabindex="0"><text>pro</text><placeholder>new code</placeholder><help> procedure property</help></member>`);
+	});	
+
+	test("Selection Filtering - statements", () => {
+		const f = new FileImpl();
+		var m = new MainFrame(f);		
+		var s = new StatementSelector(m);
+		var help = s.getHelp();
+		assert.equal(help, " call case catch default each else for if print repeat return set switch throw try var while #");
+		s.processKey(key('s'));
+		help = s.getHelp();
+		assert.equal(help, " set switch");
+        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select2' tabindex="0"><text>s</text><placeholder>new code</placeholder><help> set switch</help></statement>`);
 	});	
 });	
 

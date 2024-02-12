@@ -27,18 +27,16 @@ export abstract class AbstractSelector extends AbstractFrame  {
         return a !== "" && b !=="" &&  a[0] === b[0] ? a[0] + this.maxCommonStart(a.slice(1), b.slice(1)): "";          
     }
  
-    generateHelp(): string {
+    getHelp(): string {
         return this.currentOptions.map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
     }
 
-    abstract addFrame(frameType: string, startText: string): void;
+    abstract addMember(frameType: string, startText: string): void;
 
     protected setClasses() {
         super.setClasses();
         this.pushClass(this.text === "", "empty");
     };
-
-    abstract getHelp(): string;
 
     clearText() : void {
         this.text = "";
@@ -63,7 +61,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
     }
 
     textToDisplay(): string {
-            return `<text>${this.text}</text><placeholder>${this.label}</placeholder><help> ${this.getHelp()}</help>`;
+            return `<text>${this.text}</text><placeholder>${this.label}</placeholder><help>${this.getHelp()}</help>`;
     }
 
     renderAsSource(): string {
@@ -85,7 +83,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
             this.text += this.commonStartText();
         } else if (options.length === 1) {
             var typeToAdd = options[0][0];
-            this.addFrame(typeToAdd, this.text + char);
+            this.addMember(typeToAdd, this.text + char);
             this.text = "";
         } else {
             return; //key not valid so not added
