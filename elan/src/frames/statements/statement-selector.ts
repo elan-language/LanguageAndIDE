@@ -8,7 +8,6 @@ export class StatementSelector extends AbstractSelector  {
     constructor(parent: FrameWithStatements) {
         super(parent);
         this.factory = (parent.getFactory());
-        this.currentOptions = this.defaultOptions;
     }
 
     //call each for if print repeat set switch throw try var while #";
@@ -36,14 +35,14 @@ export class StatementSelector extends AbstractSelector  {
     }
 
     validforContext(frameType: string): boolean {
-        if (frameType === "Case" && this.getParent().getIdPrefix() === "switch" ) {
-            return true;
+        if (this.getParent().getIdPrefix() === "switch" ) {
+            return frameType === "Case";
         } else if (frameType === "Else" && this.getParent().getIdPrefix() === "if" ) {
             return true;
         } else if ((frameType === "Call" || frameType === "Print") && this.isWithinAFunction(this.getParent()) ) {
             return false;
         } else {
-            return true;
+            return frameType !== "Case" && frameType !== "Else";
         }
     }
 
@@ -51,7 +50,6 @@ export class StatementSelector extends AbstractSelector  {
         return parent.getIdPrefix() === 'func' ? true : parent.hasParent() && this.isWithinAFunction(parent.getParent());
 
     }
-
 
     isStatement = true;
     private factory: StatementFactory;

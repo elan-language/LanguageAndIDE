@@ -8,7 +8,6 @@ export class MemberSelector extends AbstractSelector implements Member  {
 
     constructor(parent: Parent) {
         super(parent);
-        this.currentOptions = this.defaultOptions;
     }
    
     defaultOptions: [string, string][] = [

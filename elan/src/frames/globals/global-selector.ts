@@ -8,7 +8,6 @@ export class GlobalSelector extends AbstractSelector  {
 
     constructor(parent: Parent) {
         super(parent);
-        this.currentOptions = this.defaultOptions;
     }
     
     defaultOptions: [string, string][] = [
