@@ -1,8 +1,28 @@
 import { File } from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
 import { AbstractSelector } from "../abstract-selector";
+import { Parent } from "../interfaces/parent";
 
 export class GlobalSelector extends AbstractSelector  {
+
+    constructor(parent: Parent) {
+        super(parent);
+        this.currentOptions = this.defaultOptions;
+    }
+    
+    defaultOptions: [string, string][] = [
+        ["MainFrame", "main"],
+        ["Procedure", "procedure"],
+        ["Function", "function"],
+        ["Class", "class"],
+        ["Constant", "constant"],
+        ["Enum", "enum"],
+        ["GlobalComment", "#"]
+    ];
+
+    validforContext(frameType: string): boolean {
+        return true; //TODO
+    }
     isGlobal = true;
   
     getHelp(): string {
@@ -19,6 +39,40 @@ export class GlobalSelector extends AbstractSelector  {
 
     indent(): string {
         return "";
+    }
+
+    addFrame(frameType: string, startText: string): void {
+        //TODO: use startText
+        switch(frameType) {
+            case "MainFrame": {
+                this.getFile().addMainBefore(this);
+                break;
+            }
+            case "Procedure": {
+                this.getFile().addProcedureBefore(this);
+                break;
+            }
+            case "Function": {
+                this.getFile().addFunctionBefore(this);
+                break;
+            }
+            case "Class": {
+                this.getFile().addClassBefore(this);
+                break;
+            }
+            case "Constant": {
+                this.getFile().addConstantBefore(this);
+                break;
+            }
+            case "Enum": {
+                this.getFile().addEnumBefore(this);
+                break;
+            }
+            case "GlobalComment": {
+                this.getFile().addGlobalCommentBefore(this);
+                break;
+            }
+        }
     }
 
     processKey(keyEvent: KeyEvent): void {

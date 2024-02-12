@@ -1,10 +1,28 @@
 import { Member } from "../interfaces/member";
 import { singleIndent } from "../helpers";
-import { KeyEvent } from "../interfaces/key-event";
 import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
+import { Type } from "../fields/type";
+import { Parent } from "../interfaces/parent";
+
 
 export class MemberSelector extends AbstractSelector implements Member  {
+
+    constructor(parent: Parent) {
+        super(parent);
+        this.currentOptions = this.defaultOptions;
+    }
+   
+    defaultOptions: [string, string][] = [
+        ["FunctionMethod", "function"],
+        ["ProcedureMethod", "procedure"],
+        ["Property", "property"]
+    ];
+
+    validforContext(frameType: string): boolean {
+        return true; //TODO
+    }
+
     isMember: boolean = true;
 
     getHelp(): string {
@@ -22,35 +40,26 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return this.getParent() as Class;
     }
 
-    processKey(keyEvent: KeyEvent): void {
-        var char = keyEvent.key;
-        var empty = this.text ==="";
-        if (empty && (char ==='f')) {
-            this.getClass().addFunctionMethodBefore(this);
-            return;
+    private addMember(type: Type, start: string) : void {
+        
+        //TODO, use start
+    }
+
+    addFrame(frameType: string, startText: string): void {
+        //TODO: use startText
+        switch(frameType) {
+            case "FunctionMethod": {
+                this.getClass().addFunctionMethodBefore(this);
+                break;
+            }
+            case "ProcedureMethod": {
+                this.getClass().addProcedureMethodBefore(this);
+                break;
+            }
+            case "Property": {
+                this.getClass().addPropertyBefore(this);
+                break;
+            }
         }
-        if (empty && (char ==='p')) {
-            this.text+=char;
-            return;
-        }
-        if (this.text === "p" && char ==="r") {
-            this.text+=char;           
-            return;
-        }
-        if (this.text === "pr" && char ==="o") {
-            this.text+=char;           
-            return;
-        }
-        if (this.text === "pro" && char ==="c") {
-            this.getClass().addProcedureMethodBefore(this);
-            this.clearText();
-            return;
-        }
-        if (this.text === "pro" && char ==="p") {
-            this.getClass().addPropertyBefore(this);
-            this.clearText();
-            return;
-        }
-        super.processKey(keyEvent);
     }
 } 

@@ -3,6 +3,9 @@ import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T0
 import { assertClasses, assertElementContainsHtml, assertElementHasClasses, assertHtml, key } from './testHelpers';
 import { isField, isParent } from '../frames/helpers';
 import assert from 'assert';
+import { FileImpl } from '../frames/file-impl';
+import { Class } from '../frames/globals/class';
+import { MemberSelector } from '../frames/class-members/member-selector';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -107,8 +110,17 @@ suite('Milestone 1 - Unit tests', () => {
 		'    \r\n' +
 		'    return value or expression\r\n' +
 		'  end function\r\n');
-/* 	});	
-	test("Member Select - dynamic help & auto-completion", () => {
+ 	});	
+
+	 test("Member Select - procedure", () => {
+		var file = T09_emptyMainAndClassWithGlobalSelector();
+		file.getById("select8").processKey(key("p"));
+		file.getById("select8").processKey(key("c"));
+		var v = file.getById("proc17").renderAsSource();
+		assert.equal(v, '  procedure name(parameter definitions)\r\n    \r\n  end procedure\r\n');
+ 	});	
+
+/*	test("Member Select - dynamic help & auto-completion", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		assertElementContainsHtml(file, "select8","<text></text><placeholder>new code</placeholder><help> function procedure property</help>");
 		file.getById("select8").processKey(key("p"));
@@ -120,4 +132,17 @@ suite('Milestone 1 - Unit tests', () => {
 		'    return value or expression\r\n' +
 		'  end function\r\n');
 	});	 */
+
+	test("Selection Filtering 1", () => {
+		const f = new FileImpl();
+		var c = new Class(f);		
+		var s = new MemberSelector(c);
+		var help = s.generateHelp();
+		assert.equal(help, " function procedure property");
+		s.processKey(key('p'));
+		help = s.generateHelp();
+		assert.equal(help, " procedure property");
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select14' tabindex="0"><text>pro</text><placeholder>new code</placeholder><help> procedure property</help></member>`);
+	});	
 });	
+
