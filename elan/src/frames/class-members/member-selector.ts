@@ -8,7 +8,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
     isMember: boolean = true;
 
     getHelp(): string {
-        return "pro".startsWith(this.text) ? "procedure property" : "function procedure property";
+        return this.text.length > 0 && "pro".startsWith(this.text) ? "procedure property" : "function procedure property";
     }
     renderAsHtml(): string {
         return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</member>`;
