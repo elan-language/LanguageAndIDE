@@ -8,6 +8,8 @@ import * as yauzl from 'yauzl';
 import * as path from 'path';
 import { mkdirp } from 'async-file';
 import * as fs from 'fs';
+import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient';
+import { Trace } from 'vscode-jsonrpc';
 
 var currentDoc : vscode.TextDocument | undefined;
 
@@ -24,6 +26,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "elan" is now active!');
 
 	const compilerPath = `${context.extensionPath}\\.elanCompiler\\`;
+	const languageServerPath = `${context.extensionPath}\\.elanLanguageServer\\`;
 
 	const buildTask = new vscode.Task(
 		{ type: 'process' },
@@ -56,14 +59,18 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff = await downloadCompiler("https://ci.appveyor.com/api/buildjobs/fx5rok2qgq3ah1oe/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
-	await InstallZip(buff, "elan compiler", compilerPath, []);
+	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/fx5rok2qgq3ah1oe/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	await InstallZip(buff1, "elan compiler", compilerPath, []);
+	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/hnyg2d63hutgnxw0/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	await InstallZip(buff2, "elan language server", languageServerPath, []);
+
+	startLanguageServer(context, languageServerPath);
 }
 
 // This method is called when your extension is deactivated
 export function deactivate() { }
 
-async function downloadCompiler(urlString: string): Promise<Buffer> {
+async function downloadServer(urlString: string): Promise<Buffer> {
 	const buffers: any[] = [];
 	const url = parseUrl(urlString);
 
@@ -81,7 +88,7 @@ async function downloadCompiler(urlString: string): Promise<Buffer> {
 					console.warn(`Failed to download from appveyor. Redirected without location header`);
 					return reject();
 				}
-				return resolve(downloadCompiler(response.headers.location));
+				return resolve(downloadServer(response.headers.location));
 			} else if (response.statusCode !== 200) {
 				// Download failed - print error message
 				console.warn(`Failed to download from appveyor. Error code '${response.statusCode}')`);
@@ -187,5 +194,42 @@ export async function InstallZip(
             });
         });
     });
+}
+
+export function startLanguageServer(context: vscode.ExtensionContext, languageServerPath: string) {
+
+	// The server is implemented in node
+	const serverExe = 'dotnet';
+
+    // If the extension is launched in debug mode then the debug server options are used
+    // Otherwise the run options are used
+    const serverOptions: ServerOptions = {
+        run: { command: serverExe, args: [`${languageServerPath}LanguageServer.dll`] },
+        debug: { command: serverExe, args: [`${languageServerPath}LanguageServer.dll`] }
+    };
+
+    // Options to control the language client
+    const clientOptions: LanguageClientOptions = {
+        // Register the server for plain text documents
+        documentSelector: [
+            {
+                pattern: '**/*.elan',
+            }
+        ],
+        synchronize: {
+            // Synchronize the setting section 'elanLanguageServer' to the server
+            configurationSection: 'elanLanguageServer',
+            fileEvents: vscode.workspace.createFileSystemWatcher('**/*.elan')
+        },
+    };
+
+    // Create the language client and start the client.
+    const client = new LanguageClient('elanLanguageServer', 'Elan Language Server', serverOptions, clientOptions);
+    client.trace = Trace.Verbose;
+    const disposable = client.start();
+
+    // Push the disposable to the context's subscriptions so that the
+    // client can be deactivated on extension deactivation
+    context.subscriptions.push(disposable);
 }
 

@@ -13,3 +13,4 @@ Editor_POC/Frames/.vs/Parts/v17/.suo
 node_modules
 .vscode-test/
 .elanCompiler/
+.elanLanguageServer/
