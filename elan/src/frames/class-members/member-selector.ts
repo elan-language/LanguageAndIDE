@@ -2,9 +2,7 @@ import { Member } from "../interfaces/member";
 import { singleIndent } from "../helpers";
 import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
-import { Type } from "../fields/type";
 import { Parent } from "../interfaces/parent";
-
 
 export class MemberSelector extends AbstractSelector implements Member  {
 
@@ -20,7 +18,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
     ];
 
     validforContext(frameType: string): boolean {
-        return true; //TODO
+        return this.getClass().immutable ? frameType !== "FunctionMethod" : true;
     }
 
     isMember: boolean = true;

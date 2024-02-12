@@ -1,6 +1,7 @@
 import { StatementFactory } from "../interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
+import { Parent } from "../interfaces/parent";
 
 export class StatementSelector extends AbstractSelector  {
 
@@ -15,14 +16,12 @@ export class StatementSelector extends AbstractSelector  {
         ["Call", "call"],
         ["Case", "case"],
         ["Catch", "catch"],
-        ["Default", "default"],
         ["Each", "each"],
         ["Else", "else"],
         ["For", "for"],
         ["IfThen", "if"],
         ["Print", "print"],
         ["Repeat", "repeat"],
-        ["ReturnStatement", "return"],
         ["SetStatement", "set"],
         ["Switch", "switch"],
         ["Throw", "throw"],
@@ -31,14 +30,28 @@ export class StatementSelector extends AbstractSelector  {
         ["While", "while"],
         ["CommentStatement", "#"]
     ];
-
+    
     addMember(frameType: string, startText: string): void {
         this.factory.addFrameBefore(frameType, this, startText);
     }
 
     validforContext(frameType: string): boolean {
-        return true; //TODO
+        if (frameType === "Case" && this.getParent().getIdPrefix() === "switch" ) {
+            return true;
+        } else if (frameType === "Else" && this.getParent().getIdPrefix() === "if" ) {
+            return true;
+        } else if ((frameType === "Call" || frameType === "Print") && this.isWithinAFunction(this.getParent()) ) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+    private isWithinAFunction(parent: Parent): boolean {
+        return parent.getIdPrefix() === 'func' ? true : parent.hasParent() && this.isWithinAFunction(parent.getParent());
+
+    }
+
 
     isStatement = true;
     private factory: StatementFactory;

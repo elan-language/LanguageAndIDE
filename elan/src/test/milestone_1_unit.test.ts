@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
-import { assertClasses, assertElementContainsHtml, assertElementHasClasses, assertHtml, key } from './testHelpers';
-import { isField, isParent } from '../frames/helpers';
+import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { assertClasses, assertElementHasClasses, key } from './testHelpers';
+import { isParent } from '../frames/helpers';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 import { Class } from '../frames/globals/class';
@@ -137,7 +137,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getHelp();
-		assert.equal(help, " call case catch default each else for if print repeat return set switch throw try var while #");
+		assert.equal(help, " call case catch each else for if print repeat set switch throw try var while #");
 		s.processKey(key('s'));
 		help = s.getHelp();
 		assert.equal(help, " set switch");
