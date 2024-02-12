@@ -2,7 +2,7 @@ import { AbstractField } from "./abstract-field";
 import { KeyEvent } from "../interfaces/key-event";
 import { Else } from "../statements/else";
 
-export class SelectIfClause extends AbstractField {
+export class IfSelector extends AbstractField {
     private else: Else;
 
     constructor(holder: Else) {

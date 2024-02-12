@@ -1,13 +1,13 @@
 import { Expression } from "../fields/expression";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-import { SelectIfClause } from "../fields/select-ifClause";
+import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
 
 
 export class Else extends AbstractFrame  {
     isStatement = true;
-    selectIfClause: SelectIfClause;
+    selectIfClause: IfSelector;
     hasIf: boolean = false;
     condition: Expression;
 
@@ -15,7 +15,7 @@ export class Else extends AbstractFrame  {
         super(parent);
         this.condition = new Expression(this);
         this.condition.setPlaceholder("condition");
-        this.selectIfClause = new SelectIfClause(this);
+        this.selectIfClause = new IfSelector(this);
     }
 
     getFields(): Field[] {

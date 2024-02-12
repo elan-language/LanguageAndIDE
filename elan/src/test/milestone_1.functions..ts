@@ -216,8 +216,6 @@ export function T06_mergeSort() {
 			main.addStatementAtEnd(pr);
 				pr.expr.setTextWithoutParsing("mergeSort(li)");
 			
-		
-
 		const mergeSort = new Function(f);
 		f.addChildToEnd(mergeSort);
 			mergeSort.removeStatementSelector();
@@ -244,20 +242,8 @@ export function T06_mergeSort() {
 				
 			mergeSort.returnStatement.expr.setTextWithoutParsing(`result`);
 		
-
-		/*
-function mergeSort(list List<of String>) as List<of String> 
-    var result set to list
-    if list.length() > 1 then
-      var mid set to list.length() div 2 
-      set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
-    end if
-    return result
-end function */
-
 		const merge = new Function(f);
-		f.addChildToEnd(merge);
-		
+		f.addChildToEnd(merge);		
 		    merge.removeStatementSelector();
 			merge.name.setTextWithoutParsing(`merge`);
 			merge.params.setTextWithoutParsing(`a List<of String>, b List<of String>`);
@@ -302,20 +288,14 @@ end function */
 	
 	return f;
 }
-/*function merge(a List<of String>, b List<of String>) as List<of String>
-    var result set to new List<of String>()
-    if a.isEmpty() then 
-      set result to b 
-    else if b.isEmpty() then
-      set result to a
-    else if a[0].isBefore(b[0]) then 
-      set result to a[0] + merge(a[1..], b) 
-    else 
-      set result to b[0] + merge(a, b[1..])
-    end if
-    return result
-end function
-*/
+
+export function T09_emptyMainAndClassWithGlobalSelector() {
+	const f = new FileImpl();
+	f.addChildToEnd(new MainFrame(f));
+	f.addChildToEnd(new Class(f));
+	f.addChildToEnd(new GlobalSelector(f));
+	return f;
+}
 
 export function getTestFrame(fn : string) : FileImpl {
 	try {

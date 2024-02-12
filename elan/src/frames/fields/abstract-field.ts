@@ -182,7 +182,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
-        this.pushClass(this.isOptional(), "optional")
+        this.pushClass(this.isOptional(), "optional");
         this._classes.push(ParsingStatus[this.status()]);
     }
 
