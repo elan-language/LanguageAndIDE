@@ -73,15 +73,15 @@ suite('Milestone 1 - Unit tests', () => {
 		assertElementHasClasses(file, "var2", "invalid");
 		assertElementHasClasses(file, "fileStatus", "invalid");
 	});
-/* 
+
 	test('Valid identifier', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
 		assertElementHasClasses(file, "var2", "incomplete"); 
 		file.getById("ident3").processKey(key("q"));
-		assertElementHasClasses(file, "var2", "valid");
+		assertElementHasClasses(file, "ident3", "valid");
 		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
-	}); */
+	});
 	
 
 });	
