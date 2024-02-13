@@ -34,8 +34,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return this.getParent() as Class;
     }
 
-    addMember(frameType: string, startText: string): void {
-        //TODO: use startText
+    addFrame(frameType: string): void {
         switch(frameType) {
             case "FunctionMethod": {
                 this.getClass().addFunctionMethodBefore(this);

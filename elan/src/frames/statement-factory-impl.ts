@@ -81,8 +81,7 @@ export class StatementFactoryImpl implements StatementFactory {
         }
     }
 
-    addFrameBefore(frameType: string, selector: Frame, startText: string ): void {
-        //TODO: use startText
+    addFrameBefore(frameType: string, selector: Frame): void {
         var parent = selector.getParent() as FrameWithStatements;
         var newS = this.getNewStatement(frameType, selector.getParent());
         parent.addStatementBefore(newS, selector);

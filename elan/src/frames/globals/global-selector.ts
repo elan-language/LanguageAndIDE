@@ -36,8 +36,7 @@ export class GlobalSelector extends AbstractSelector  {
         return "";
     }
 
-    addMember(frameType: string, startText: string): void {
-        //TODO: use startText
+    addFrame(frameType: string): void {
         switch(frameType) {
             case "MainFrame": {
                 this.getFile().addMainBefore(this);

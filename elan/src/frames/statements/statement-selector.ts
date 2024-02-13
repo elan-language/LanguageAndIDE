@@ -30,8 +30,8 @@ export class StatementSelector extends AbstractSelector  {
         ["CommentStatement", "#"]
     ];
     
-    addMember(frameType: string, startText: string): void {
-        this.factory.addFrameBefore(frameType, this, startText);
+    addFrame(frameType: string): void {
+        this.factory.addFrameBefore(frameType, this);
     }
 
     validforContext(frameType: string): boolean {

@@ -30,7 +30,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
         return this.currentOptions(this.text).map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
     }
 
-    abstract addMember(frameType: string, startText: string): void;
+    abstract addFrame(frameType: string): void;
 
     protected setClasses() {
         super.setClasses();
@@ -81,7 +81,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
             this.text += this.commonStartText(this.text+ char);
         } else if (options.length === 1) {
             var typeToAdd = options[0][0];
-            this.addMember(typeToAdd, this.text + char);
+            this.addFrame(typeToAdd);
             this.text = "";
         } else {
             return; //key not valid so not added
