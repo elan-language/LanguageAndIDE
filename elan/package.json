@@ -72,6 +72,18 @@
       }
     ]
   },
+  "configuration": {
+    "type": "object",
+    "title": "Elan configuration",
+    "properties": {
+        "elanLanguageServer.maxNumberOfProblems": {
+            "scope": "resource",
+            "type": "number",
+            "default": 100,
+            "description": "Controls the maximum number of problems produced by the server."
+        }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
@@ -86,7 +98,9 @@
   },
   "dependencies": {
     "async-file": "2.0.2",
-    "yauzl": "2.10.0"
+    "yauzl": "2.10.0",
+    "vscode-languageclient": "^9.0.0",
+    "vscode-jsonrpc": "^8.2.0"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.6",
@@ -101,8 +115,6 @@
     "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
     "jsdom": "^24.0.0",
-    "typescript": "^5.3.3",
-    "vscode-languageclient": "^5.1.1",
-    "vscode-jsonrpc": "^4.0.0"
+    "typescript": "^5.3.3"
   }
 }
