@@ -168,6 +168,11 @@ export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean
 export async function activate(docUri: vscode.Uri) {
     // The extensionId is `publisher.name` from package.json
     const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
+
+    if (!ext){
+        assert.fail("extension not found");
+    }
+
     await ext.activate();
     try {
       const doc = await vscode.workspace.openTextDocument(docUri);
