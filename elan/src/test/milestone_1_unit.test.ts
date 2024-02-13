@@ -12,6 +12,8 @@ import { StatementSelector } from '../frames/statements/statement-selector';
 import { GlobalSelector } from '../frames/globals/global-selector';
 import { Switch } from '../frames/statements/switch';
 import { IfThen } from '../frames/statements/if-then';
+import { While } from '../frames/statements/while';
+import { FunctionMethod } from '../frames/class-members/function-method';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -153,6 +155,26 @@ suite('Milestone 1 - Unit tests', () => {
 		var s = new StatementSelector(func);
 		var help = s.getHelp();
 		assert.equal(help, " catch each for if repeat set switch throw try var while #");
+	});	
+
+	test("Selection Context - deeper nesting 1", () => {
+		const fl = new FileImpl();
+		var func = new Function(fl);
+		var if1 = new IfThen(func);
+        var wh = new While(if1);
+		var s = new StatementSelector(wh);
+		var help = s.getHelp();
+		assert.equal(help, " catch each for if repeat set switch throw try var while #");//no else, print, call
+	});	
+
+	test("Selection Context - deeper nesting 2", () => {
+		const fl = new FileImpl();
+		var c = new Class(fl);
+        var fm = new FunctionMethod(c);
+		var if1 = new IfThen(fm);
+		var s = new StatementSelector(if1);
+		var help = s.getHelp();
+		assert.equal(help, " catch each else for if repeat set switch throw try var while #");//else, but no print, call
 	});	
 
 	test("Selection Context - in a Switch", () => {
