@@ -2,6 +2,7 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
+import { Frame } from "../interfaces/frame";
 
 export class StatementSelector extends AbstractSelector  {
 
@@ -30,8 +31,8 @@ export class StatementSelector extends AbstractSelector  {
         ["CommentStatement", "#"]
     ];
     
-    addFrame(frameType: string): void {
-        this.factory.addFrameBefore(frameType, this);
+    addFrame(frameType: string): Frame {
+        return this.factory.addFrameBefore(frameType, this);
     }
 
     validforContext(frameType: string): boolean {

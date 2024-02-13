@@ -174,37 +174,38 @@ export class FileImpl implements File {
         return this._factory;
     }
 
-    addMainBefore(g: Frame): void {
+    addMainBefore(g: Frame): Frame {
         var m = new MainFrame(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addFunctionBefore(g: Frame): void {
+    addFunctionBefore(g: Frame): Frame {
         var m = new Function(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addProcedureBefore(g: Frame): void {
+    addProcedureBefore(g: Frame): Frame {
         var m = new Procedure(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addEnumBefore(g: Frame): void {
+    addEnumBefore(g: Frame): Frame {
         var m = new Enum(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addClassBefore(g: Frame): void {
+    addClassBefore(g: Frame): Frame {
         var m = new Class(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addGlobalCommentBefore(g: Frame): void {
+    addGlobalCommentBefore(g: Frame): Frame {
         var m = new GlobalComment(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    addConstantBefore(g: Frame): void {
+    addConstantBefore(g: Frame): Frame {
         var m = new Constant(this);
-        this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelect(m,g);
     }
-    private addGlobalBeforeAndSelect(g: Frame, before: Frame) {
+    private addGlobalBeforeAndSelect(g: Frame, before: Frame): Frame {
         this.addChildBefore(g, before);
         g.select(true, false);
+        return g;
     }
 
     parseValidCode(code: string): void {

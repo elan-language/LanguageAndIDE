@@ -5,6 +5,7 @@ import { FileImpl } from '../frames/file-impl';
 import { IfThen } from '../frames/statements/if-then';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
+import { StatementSelector } from '../frames/statements/statement-selector';
 
 suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -44,9 +45,9 @@ suite('Parsing Tests', () => {
 
 			parseAsMuchAsPoss(source: SourceOfCode) {
 				var rgx = /^[a-z][A-Za-z0-9_]*/;
-				var isMatch = source.isMatch(rgx);
+				var isMatch = source.isMatchRegEx(rgx);
 				if (isMatch) {
-					source.removeMatch(rgx);
+					source.removeRegEx(rgx);
 				} else {
 					throw new Error(`Code ${source.getRemainingCode()} does not match ${rgx}`);
 				}
@@ -75,6 +76,16 @@ suite('Parsing Tests', () => {
 		setTo.parseAsMuchAsPoss(source);
 		assert.equal(source.getRemainingCode(), "");
 		assert.equal(setTo.renderAsSource(), code);
+	}); 
+
+	test('parse using statement selector', () => {
+		var code = "set fooBar to 3.141";
+        var source = new SourceOfCodeImpl(code + "\n");
+		const fl = new FileImpl();
+		var m = new MainFrame(fl);	
+		var ss = new StatementSelector(m);
+		ss.parseAsMuchAsPoss(source);
+		assert.equal(source.getRemainingCode(), "");
 	}); 
 });	
 

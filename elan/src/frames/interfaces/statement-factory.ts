@@ -1,5 +1,5 @@
 import { Frame } from "./frame";
 
 export interface StatementFactory {
-    addFrameBefore(frameType: string, selector: Frame): void;
+    addFrameBefore(frameType: string, selector: Frame): Frame;
 }

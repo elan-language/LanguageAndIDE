@@ -1,3 +1,4 @@
+import { SourceOfCode } from "../parser-fsm";
 import { ParsingStatus } from "../parsing-status";
 import { KeyEvent } from "./key-event";
 
@@ -18,5 +19,5 @@ export interface Selectable  {
 
     status(): ParsingStatus;
 
-    parseValidCode(code: string): void;
+    parseAsMuchAsPoss(source: SourceOfCode): void;
 }

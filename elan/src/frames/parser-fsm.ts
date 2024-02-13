@@ -5,9 +5,11 @@ export interface Parser {
 
 export interface SourceOfCode {
     getRemainingCode(): string;
-    isMatch(regEx: RegExp): boolean;
-    match(regEx: RegExp): string;
-    removeMatch(regEx: RegExp): void;
+    isMatchRegEx(regEx: RegExp): boolean;
+    isMatchString(match: string): boolean;
+    matchRegEx(regEx: RegExp): string;
+    removeRegEx(regEx: RegExp): void;
+    removeString(s: string): void;
     hasMoreCode(): boolean;
 }
 
@@ -17,6 +19,12 @@ export class SourceOfCodeImpl implements SourceOfCode {
     constructor(code: string) {
         this.remainingCode = code;
     }
+    isMatchString(match: string): boolean {
+        return this.remainingCode.startsWith(match);
+    }
+    removeString(s: string): void {
+        this.remainingCode = this.remainingCode.substring(s.length);
+    }
     hasMoreCode(): boolean {
         return this.remainingCode.length > 0;
     }
@@ -25,11 +33,11 @@ export class SourceOfCodeImpl implements SourceOfCode {
         return this.remainingCode;
     }
 
-    isMatch(regEx: RegExp): boolean {
+    isMatchRegEx(regEx: RegExp): boolean {
         return regEx.test(this.remainingCode);
     }
 
-    match(regEx: RegExp): string {
+    matchRegEx(regEx: RegExp): string {
         var matches = this.remainingCode.match(regEx);
         if (matches === null || matches.length > 1 ) {
             throw new Error(`${matches?.length} matches found for ${regEx}`)
@@ -38,7 +46,7 @@ export class SourceOfCodeImpl implements SourceOfCode {
         }
     }
 
-    removeMatch(regEx: RegExp): void {
+    removeRegEx(regEx: RegExp): void {
         this.remainingCode = this.remainingCode.replace(regEx,"");
     }
 }
@@ -57,7 +65,7 @@ export class ParserRule {
     }
 
     isMatch(currentState: string, source: SourceOfCode): boolean {
-        return currentState === this.currentState && source.isMatch(this.match);
+        return currentState === this.currentState && source.isMatchRegEx(this.match);
     }
 }
 
@@ -80,7 +88,7 @@ export class ParserFSM implements Parser {
         while (this.currentState !== ParserFSM.finished ) {
             var rule = this.findMatchingRule(source);
             this.currentState = rule.newState;
-            source.removeMatch(rule.match);
+            source.removeRegEx(rule.match);
             if (rule.nextFrame) {
                 rule.nextFrame.parseAsMuchAsPoss(source);
             }

@@ -28,9 +28,9 @@ export abstract class AbstractField implements Selectable, Field, Parser {
     }
 
     parseAsMuchAsPoss(source: SourceOfCode): void {
-        var match = source.match(this.regx);
+        var match = source.matchRegEx(this.regx);
         this.text = match;
-        source.removeMatch(this.regx);
+        source.removeRegEx(this.regx);
     }
 
     getHelp(): string {
