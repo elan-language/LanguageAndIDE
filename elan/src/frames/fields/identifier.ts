@@ -3,10 +3,13 @@ import { ParsingStatus } from "../parsing-status";
 import { AbstractField } from "./abstract-field";
 
 export class Identifier extends AbstractField {   
+    protected regx: RegExp = /^[a-z][A-Za-z0-9_]*/;
+
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
     }
+
 
     getIdPrefix(): string {
         return 'ident';
@@ -16,8 +19,7 @@ export class Identifier extends AbstractField {
         if (this.text === ``) {
             return ParsingStatus.incomplete;
         } else {
-            var regexp = new RegExp('^[a-z][A-Za-z0-9_]*$');
-            return regexp.test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
+            return this.regx.test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
         }
     }
 }

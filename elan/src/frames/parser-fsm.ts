@@ -1,13 +1,14 @@
 
-export interface SourceOfCode {
-    getRemainingCode(): string;
-    matches(regEx: RegExp): boolean;
-    removeMatch(regEx: RegExp): void;
-    hasMoreCode(): boolean;
-}
-
 export interface Parser {
     parseAsMuchAsPoss(source: SourceOfCode): void;
+}
+
+export interface SourceOfCode {
+    getRemainingCode(): string;
+    isMatch(regEx: RegExp): boolean;
+    match(regEx: RegExp): string;
+    removeMatch(regEx: RegExp): void;
+    hasMoreCode(): boolean;
 }
 
 export class SourceOfCodeImpl implements SourceOfCode {
@@ -24,8 +25,17 @@ export class SourceOfCodeImpl implements SourceOfCode {
         return this.remainingCode;
     }
 
-    matches(regEx: RegExp): boolean {
+    isMatch(regEx: RegExp): boolean {
         return regEx.test(this.remainingCode);
+    }
+
+    match(regEx: RegExp): string {
+        var matches = this.remainingCode.match(regEx);
+        if (matches === null || matches.length > 1 ) {
+            throw new Error(`${matches?.length} matches found for ${regEx}`)
+        } else {
+            return matches[0];
+        }
     }
 
     removeMatch(regEx: RegExp): void {
@@ -47,7 +57,7 @@ export class ParserRule {
     }
 
     isMatch(currentState: string, source: SourceOfCode): boolean {
-        return currentState === this.currentState && source.matches(this.match);
+        return currentState === this.currentState && source.isMatch(this.match);
     }
 }
 
