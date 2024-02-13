@@ -6,9 +6,9 @@ import * as jsdom from 'jsdom';
 import { KeyEvent } from '../frames/interfaces/key-event';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
-function updateTestFile(testDoc: vscode.TextDocument, newContent: string, done: Mocha.Done,) {
+function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
 
     edit.replace(
@@ -22,12 +22,10 @@ function updateTestFile(testDoc: vscode.TextDocument, newContent: string, done: 
                 if (!b) {
                     console.warn("Save failed: " + testDoc.fileName);
                 }
-                done();
             });
         }
         else {
             console.warn("Edit failed: " + testDoc.fileName);
-            done();
         }
     });  
 }
@@ -65,11 +63,9 @@ export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, f
     }
     catch (e) {
         if (updateTestFiles) {
-            updateTestFile(htmlDoc, actualHtml, done);
+            updateTestFile(htmlDoc, actualHtml);
         }
-        else {
-            done();
-        }
+        done(e);
         throw e;
     }
 }

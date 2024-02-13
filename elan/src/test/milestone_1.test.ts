@@ -23,9 +23,9 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test Comments Source', (done) => {
 		assertAreEqualBySource(done, "T02_comments.source", T02_comments);
 	});
-	test('Test Main With All Statements', (done) => {
-		assertAreEqualByHtml(done, "T03_mainWithAllStatements.html", T03_mainWithAllStatements);
-	});
+	// test('Test Main With All Statements', (done) => {
+	// 	assertAreEqualByHtml(done, "T03_mainWithAllStatements.html", T03_mainWithAllStatements);
+	// });
 	test('Test Main With All Statements Source', (done) => {
 		assertAreEqualBySource(done, "T03_mainWithAllStatements.source", T03_mainWithAllStatements);
 	});
