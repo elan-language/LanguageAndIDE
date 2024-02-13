@@ -1,3 +1,4 @@
+
 export interface SourceOfCode {
     getRemainingCode(): string;
     matches(regEx: RegExp): boolean;
@@ -6,7 +7,7 @@ export interface SourceOfCode {
 }
 
 export interface Parser {
-    processCode(source: SourceOfCode): Parser
+    parseAsMuchAsPoss(source: SourceOfCode): void;
 }
 
 export class SourceOfCodeImpl implements SourceOfCode {
@@ -57,6 +58,7 @@ export class ParserFSM implements Parser {
     //where matching input is a regEx that could match multiple chars, but always from the start onwards specified by start-anchor ^ 
     private rules: ParserRule[];
     private currentState: string; 
+    public static readonly finished: string = "finished";
 
     //The current state of the first rule in the array is set as the initial state for the machine
     constructor(rules: ParserRule[]) {
@@ -64,11 +66,15 @@ export class ParserFSM implements Parser {
         this.rules = rules;
     }
 
-    processCode(source: SourceOfCode): Parser {
-        var rule = this.findMatchingRule(source);
-        this.currentState = rule.newState;
-        source.removeMatch(rule.match);
-        return rule.nextFrame ? rule.nextFrame : this;
+    parseAsMuchAsPoss(source: SourceOfCode) {
+        while (this.currentState !== ParserFSM.finished ) {
+            var rule = this.findMatchingRule(source);
+            this.currentState = rule.newState;
+            source.removeMatch(rule.match);
+            if (rule.nextFrame) {
+                rule.nextFrame.parseAsMuchAsPoss(source);
+            }
+        }
     }
 
     findMatchingRule(source: SourceOfCode): ParserRule {
