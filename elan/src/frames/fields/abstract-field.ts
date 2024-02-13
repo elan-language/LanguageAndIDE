@@ -3,8 +3,10 @@ import { ParsingStatus } from "../parsing-status";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
+import { Parser, SourceOfCode } from "../parser-fsm";
 
-export abstract class AbstractField implements Selectable, Field {
+export abstract class AbstractField implements Selectable, Field, Parser {
+    protected regx: RegExp = /^.*/;
     public isField: boolean = true;
     protected text: string = "";
     protected placeholder: string = "";
@@ -23,6 +25,12 @@ export abstract class AbstractField implements Selectable, Field {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
+    }
+
+    parseAsMuchAsPoss(source: SourceOfCode): void {
+        var match = source.match(this.regx);
+        this.text = match;
+        source.removeMatch(this.regx);
     }
 
     getHelp(): string {

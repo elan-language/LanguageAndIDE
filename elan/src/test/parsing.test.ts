@@ -1,6 +1,10 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import { Parser, ParserFSM, ParserRule, SourceOfCodeImpl } from '../frames/parser-fsm';
+import { Parser, ParserFSM, ParserRule, SourceOfCode, SourceOfCodeImpl } from '../frames/parser-fsm';
+import { FileImpl } from '../frames/file-impl';
+import { IfThen } from '../frames/statements/if-then';
+import { MainFrame } from '../frames/globals/main-frame';
+import { SetStatement } from '../frames/statements/set-statement';
 
 suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -22,18 +26,55 @@ suite('Parsing Tests', () => {
 		assert.equal(updated, "a to b");
 	});
 
-	test('FSM on set-to statement', () => {
+	test('self-contained FSM for a set-to statement', () => {
         var source = new SourceOfCodeImpl("set fooBar to 3.141\n");
 		var r1 = new ParserRule("initial", /^set /, "assignable", undefined);
 		var r2 = new ParserRule("assignable", /^[a-z][A-Za-z0-9_]* /, "to", undefined);
 		var r3 = new ParserRule("to", /^to /, "value", undefined);
-		var r4 = new ParserRule("value", /^[0-9](.[0-9]*)?\n/, "end", undefined);
-        var fsm = new ParserFSM([r1,r2,r3,r4]);
+		var r4 = new ParserRule("value", /^[0-9](.[0-9]*)?/, "eol", undefined);
+		var r5 = new ParserRule("eol", /^\n/, ParserFSM.finished, undefined);
+        var fsm = new ParserFSM([r1,r2,r3,r4,r5]);
         var parser: Parser = fsm;
-		while (source.hasMoreCode()) {
-			parser = parser.processCode(source);
-		}
+        parser.parseAsMuchAsPoss(source);
 		assert.equal(source.getRemainingCode(), "");
+	}); 
+
+ 	test('FSM with separate Parser for Identifier', () => {
+		class IdParser implements Parser {
+
+			parseAsMuchAsPoss(source: SourceOfCode) {
+				var rgx = /^[a-z][A-Za-z0-9_]*/;
+				var isMatch = source.isMatch(rgx);
+				if (isMatch) {
+					source.removeMatch(rgx);
+				} else {
+					throw new Error(`Code ${source.getRemainingCode()} does not match ${rgx}`);
+				}
+			}
+			isFinished(): boolean {
+				return false;
+			}
+		}
+		var idParser = new IdParser(); 
+        var source = new SourceOfCodeImpl("set fooBar to 3.141\n");
+		var r1 = new ParserRule("initial", /^set /, "to", idParser);
+		var r2 = new ParserRule("to", /^ to /, "value", undefined);
+		var r3 = new ParserRule("value", /^[0-9](.[0-9]*)?/, "eol", undefined);
+		var r4 = new ParserRule("eol", /^\n/, ParserFSM.finished, undefined);
+        var fsm = new ParserFSM([r1,r2,r3,r4]);
+        fsm.parseAsMuchAsPoss(source);
+		assert.equal(source.getRemainingCode(), "");
+	}); 
+
+	test('parse set-to statement via the frame', () => {
+		var code = "  set fooBar to 3.141";
+        var source = new SourceOfCodeImpl(code + "\n");
+		const fl = new FileImpl();
+		var m = new MainFrame(fl);	
+		var setTo = new SetStatement(m);
+		setTo.parseAsMuchAsPoss(source);
+		assert.equal(source.getRemainingCode(), "");
+		assert.equal(setTo.renderAsSource(), code);
 	}); 
 });	
 
