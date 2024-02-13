@@ -206,4 +206,8 @@ export class FileImpl implements File {
         this.addChildBefore(g, before);
         g.select(true, false);
     }
+
+    parseValidCode(code: string): void {
+        throw new Error("Not implemented");
+    }
 }

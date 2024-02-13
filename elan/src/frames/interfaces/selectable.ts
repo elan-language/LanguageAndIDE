@@ -17,4 +17,6 @@ export interface Selectable  {
     renderAsSource(): string;
 
     status(): ParsingStatus;
+
+    parseValidCode(code: string): void;
 }

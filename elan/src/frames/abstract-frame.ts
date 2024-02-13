@@ -226,4 +226,8 @@ export abstract class AbstractFrame implements Frame {
     status(): ParsingStatus {
         return this.worstStatusOfFields();
     }
+
+    parseValidCode(code: string): void {
+        throw new Error("Not implemented");
+    }
 }

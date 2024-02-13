@@ -212,4 +212,8 @@ export abstract class AbstractField implements Selectable, Field {
     setTextWithoutParsing(text: string) {
         this.text = text;
     }
+
+    parseValidCode(code: string): void {
+        throw new Error("Not implemented");
+    }
 }

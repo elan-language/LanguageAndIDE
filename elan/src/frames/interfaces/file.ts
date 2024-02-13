@@ -31,4 +31,6 @@ export interface File extends Parent {
     addClassBefore(global: Frame): void;
     addGlobalCommentBefore(global: Frame): void;
     addConstantBefore(global: Frame): void;
+
+    parseValidCode(code: string): void;
 }
