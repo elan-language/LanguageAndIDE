@@ -13,6 +13,7 @@ import { Constant } from "./globals/constant";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
+import { Parent } from "./interfaces/parent";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -25,6 +26,14 @@ export class FileImpl implements File {
     constructor() {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
+    }
+
+    hasParent(): boolean {
+        return false;
+    }
+
+    getParent(): Parent {
+        throw new Error("getParent Should not have been called on a file; test for 'hasParent()' before calling.")
     }
     
     getById(id: string): Selectable {

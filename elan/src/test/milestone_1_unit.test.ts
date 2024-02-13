@@ -1,14 +1,19 @@
 import * as vscode from 'vscode';
-import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
-import { assertClasses, assertElementContainsHtml, assertElementHasClasses, assertHtml, key } from './testHelpers';
-import { isField, isParent } from '../frames/helpers';
+import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { assertClasses, assertElementHasClasses, key } from './testHelpers';
+import { isParent } from '../frames/helpers';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { MainFrame } from '../frames/globals/main-frame';
+import { Function } from '../frames/globals/function';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { GlobalSelector } from '../frames/globals/global-selector';
+import { Switch } from '../frames/statements/switch';
+import { IfThen } from '../frames/statements/if-then';
+import { While } from '../frames/statements/while';
+import { FunctionMethod } from '../frames/class-members/function-method';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -137,11 +142,60 @@ suite('Milestone 1 - Unit tests', () => {
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getHelp();
-		assert.equal(help, " call case catch default each else for if print repeat return set switch throw try var while #");
+		assert.equal(help, " call catch each for if print repeat set switch throw try var while #");
 		s.processKey(key('s'));
 		help = s.getHelp();
 		assert.equal(help, " set switch");
         assert.equal(s.renderAsHtml(), `<statement class="valid" id='select2' tabindex="0"><text>s</text><placeholder>new code</placeholder><help> set switch</help></statement>`);
+	});	
+
+	test("Selection Context - in a Function", () => {
+		const fl = new FileImpl();
+		var func = new Function(fl);		
+		var s = new StatementSelector(func);
+		var help = s.getHelp();
+		assert.equal(help, " catch each for if repeat set switch throw try var while #");
+	});	
+
+	test("Selection Context - deeper nesting 1", () => {
+		const fl = new FileImpl();
+		var func = new Function(fl);
+		var if1 = new IfThen(func);
+        var wh = new While(if1);
+		var s = new StatementSelector(wh);
+		var help = s.getHelp();
+		assert.equal(help, " catch each for if repeat set switch throw try var while #");//no else, print, call
+	});	
+
+	test("Selection Context - deeper nesting 2", () => {
+		const fl = new FileImpl();
+		var c = new Class(fl);
+        var fm = new FunctionMethod(c);
+		var if1 = new IfThen(fm);
+		var s = new StatementSelector(if1);
+		var help = s.getHelp();
+		assert.equal(help, " catch each else for if repeat set switch throw try var while #");//else, but no print, call
+	});	
+
+	test("Selection Context - in a Switch", () => {
+		const fl = new FileImpl();
+		var m = new MainFrame(fl);	
+		var sw = new Switch(m);
+		var s = new StatementSelector(sw);
+		var help = s.getHelp();
+		assert.equal(help, " case");
+	});	
+	test("Selection Context - in an IfThen", () => {
+		const fl = new FileImpl();
+		var m = new MainFrame(fl);	
+		var ifThen = new IfThen(m);
+		var s = new StatementSelector(ifThen);
+		var help = s.getHelp();
+		assert.equal(help, " call catch each else for if print repeat set switch throw try var while #");
+		s.processKey(key('e'));
+		help = s.getHelp();
+		assert.equal(help, " each else");
+
 	});	
 });	
 

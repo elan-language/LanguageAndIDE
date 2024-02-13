@@ -19,4 +19,8 @@ export interface Parent {
 
     getMap(): Map<string, Selectable>;
     getFactory() : StatementFactory;
+
+    getIdPrefix(): string;
+    hasParent(): boolean;
+    getParent(): Parent;
 }

@@ -7,7 +7,6 @@ export abstract class AbstractSelector extends AbstractFrame  {
     text: string = "";
     label: string = "new code";
     protected defaultOptions: [string, string][]= new Array<[string, string]>();
-    protected currentOptions: [string, string][] = new Array<[string, string]>();
 
     constructor(parent: Parent) {
         super(parent);
@@ -15,12 +14,12 @@ export abstract class AbstractSelector extends AbstractFrame  {
 
     abstract validforContext(frameType: string) : boolean;
 
-    filterOptions(match: string): [string, string][] {
-        return this.currentOptions.filter(o => this.validforContext(o[0]) && o[1].startsWith(match));
+    currentOptions(match: string): [string, string][] {
+        return this.defaultOptions.filter(o => this.validforContext(o[0]) && o[1].startsWith(match));
     }
 
-    commonStartText(): string {
-        return this.currentOptions.map(o => o[1]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
+    commonStartText(match: string): string {
+        return this.currentOptions(match).map(o => o[1]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
     }
 
     private maxCommonStart(a: string, b: string): string {
@@ -28,10 +27,10 @@ export abstract class AbstractSelector extends AbstractFrame  {
     }
  
     getHelp(): string {
-        return this.currentOptions.map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
+        return this.currentOptions(this.text).map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
     }
 
-    abstract addMember(frameType: string, startText: string): void;
+    abstract addFrame(frameType: string): void;
 
     protected setClasses() {
         super.setClasses();
@@ -77,13 +76,12 @@ export abstract class AbstractSelector extends AbstractFrame  {
         if (!char || char.length > 1) { //TODO: Make any exception for any specific non-printing chars?
             return;
         }
-        var options = this.filterOptions(this.text + char);
+        var options = this.currentOptions(this.text + char);
         if (options.length > 1 ) {
-            this.currentOptions = options;
-            this.text += this.commonStartText();
+            this.text += this.commonStartText(this.text+ char);
         } else if (options.length === 1) {
             var typeToAdd = options[0][0];
-            this.addMember(typeToAdd, this.text + char);
+            this.addFrame(typeToAdd);
             this.text = "";
         } else {
             return; //key not valid so not added

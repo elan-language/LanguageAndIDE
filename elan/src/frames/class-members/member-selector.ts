@@ -2,15 +2,12 @@ import { Member } from "../interfaces/member";
 import { singleIndent } from "../helpers";
 import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
-import { Type } from "../fields/type";
 import { Parent } from "../interfaces/parent";
-
 
 export class MemberSelector extends AbstractSelector implements Member  {
 
     constructor(parent: Parent) {
         super(parent);
-        this.currentOptions = this.defaultOptions;
     }
    
     defaultOptions: [string, string][] = [
@@ -20,7 +17,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
     ];
 
     validforContext(frameType: string): boolean {
-        return true; //TODO
+        return this.getClass().immutable ? frameType !== "FunctionMethod" : true;
     }
 
     isMember: boolean = true;
@@ -37,8 +34,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return this.getParent() as Class;
     }
 
-    addMember(frameType: string, startText: string): void {
-        //TODO: use startText
+    addFrame(frameType: string): void {
         switch(frameType) {
             case "FunctionMethod": {
                 this.getClass().addFunctionMethodBefore(this);
