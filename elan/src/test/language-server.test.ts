@@ -5,7 +5,11 @@ import { activate } from './testHelpers';
 suite('Language Server', () => {
   
   const ws = vscode.workspace.workspaceFolders![0].uri;
-  const docUri = vscode.Uri.joinPath(ws, "default.elan");
+  const docUri = vscode.Uri.joinPath(ws, "T01_helloWorld.elan");
+
+  suiteSetup(async () => {
+    await activate(docUri);
+  });
   
   test('Check for hard coded completion response from language server', async () => {
    
@@ -16,6 +20,17 @@ suite('Language Server', () => {
       ]
     });
   });
+
+  test('Symbols from code', async () => {
+   
+    await testSymbols(docUri, new vscode.Position(0, 0), {
+      items: [
+        { label: 'Elan', kind: vscode.CompletionItemKind.Text },
+        { label: 'Elan', kind: vscode.CompletionItemKind.Text }
+      ]
+    });
+  });
+
 });
 
 async function testCompletion(
@@ -38,4 +53,26 @@ async function testCompletion(
     assert.equal(actualItem.label, expectedItem.label);
     assert.equal(actualItem.kind, expectedItem.kind);
   });
+}
+
+async function testSymbols(
+  docUri: vscode.Uri,
+  position: vscode.Position,
+  expectedCompletionList: vscode.CompletionList
+) {
+  
+
+  // Executing the command `vscode.executeCompletionItemProvider` to simulate triggering completion
+  const actualSymbols = (await vscode.commands.executeCommand(
+    'vscode.executeDocumentSymbolProvider',
+    docUri,
+    position
+  )) as vscode.SymbolInformation[];
+
+  //assert.ok(actualCompletionList.items.length >= 2);
+  // expectedCompletionList.items.forEach((expectedItem, i) => {
+  //   const actualItem = actualCompletionList.items[i];
+  //   assert.equal(actualItem.label, expectedItem.label);
+  //   assert.equal(actualItem.kind, expectedItem.kind);
+  // });
 }

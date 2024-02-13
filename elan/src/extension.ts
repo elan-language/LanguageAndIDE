@@ -61,7 +61,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/fx5rok2qgq3ah1oe/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff1, "elan compiler", compilerPath, []);
-	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/kdvkq4v4snhmr48d/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/1oco68ry9j1skoj9/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
 	await InstallZip(buff2, "elan language server", languageServerPath, []);
 
 	startLanguageServer(context, languageServerPath);
