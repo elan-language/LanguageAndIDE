@@ -174,7 +174,7 @@ export async function activate(docUri: vscode.Uri) {
     try {
       const doc = await vscode.workspace.openTextDocument(docUri);
       const editor = await vscode.window.showTextDocument(doc);
-      await sleep(2000); // Wait for server activation
+      await sleep(20000); // Wait for server activation
     } catch (e) {
       console.error(e);
     }
