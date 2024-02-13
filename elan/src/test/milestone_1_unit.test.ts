@@ -195,7 +195,6 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('e'));
 		help = s.getHelp();
 		assert.equal(help, " each else");
-
 	});	
 });	
 

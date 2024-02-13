@@ -2,14 +2,21 @@ export interface SourceOfCode {
     getRemainingCode(): string;
     matches(regEx: RegExp): boolean;
     removeMatch(regEx: RegExp): void;
+    hasMoreCode(): boolean;
+}
+
+export interface Parser {
+    processCode(source: SourceOfCode): Parser
 }
 
 export class SourceOfCodeImpl implements SourceOfCode {
-
     private remainingCode: string;
 
     constructor(code: string) {
         this.remainingCode = code;
+    }
+    hasMoreCode(): boolean {
+        return this.remainingCode.length > 0;
     }
 
     getRemainingCode(): string {
@@ -21,50 +28,50 @@ export class SourceOfCodeImpl implements SourceOfCode {
     }
 
     removeMatch(regEx: RegExp): void {
-        this.remainingCode.replace(regEx,"");
+        this.remainingCode = this.remainingCode.replace(regEx,"");
     }
 }
 
-export class ParserFSMrule {
+export class ParserRule {
     readonly currentState: string;
     readonly match: RegExp; 
     readonly newState: string;
-    readonly funcToCall?: (source: SourceOfCode) => void;
+    readonly nextFrame?: Parser;
 
-    constructor(currentState: string, match: RegExp, newState: string,funcToCall: (source: SourceOfCode) => void ) {
+    constructor(currentState: string, match: RegExp, newState: string, nextFrame?: Parser) {
         this.currentState = currentState;
         this.match = match;
         this.newState = newState;
-        this.funcToCall = funcToCall;
+        this.nextFrame = nextFrame;
     }
 
     isMatch(currentState: string, source: SourceOfCode): boolean {
-        return source.matches(this.match);
+        return currentState === this.currentState && source.matches(this.match);
     }
 }
 
 //Strictly speaking this is a 'Mealy Machine' rather than a 'Finite State Machine' - since it generates output.
-export class ParserFSM {
+export class ParserFSM implements Parser {
 
     //Each rule is [currentState, matchingInput, newState, localFunctionToCall ]
     //where matching input is a regEx that could match multiple chars, but always from the start onwards specified by start-anchor ^ 
-    private rules: ParserFSMrule[];
+    private rules: ParserRule[];
     private currentState: string; 
 
     //The current state of the first rule in the array is set as the initial state for the machine
-    constructor(rules: ParserFSMrule[]) {
+    constructor(rules: ParserRule[]) {
         this.currentState = rules[0].currentState;
         this.rules = rules;
     }
 
-    processCode(source: SourceOfCode): (source: SourceOfCode) => void {
+    processCode(source: SourceOfCode): Parser {
         var rule = this.findMatchingRule(source);
         this.currentState = rule.newState;
         source.removeMatch(rule.match);
-        return rule.funcToCall ? rule.funcToCall : this.processCode;
+        return rule.nextFrame ? rule.nextFrame : this;
     }
 
-    findMatchingRule(source: SourceOfCode): ParserFSMrule {
+    findMatchingRule(source: SourceOfCode): ParserRule {
         var matches =  this.rules.filter(r => r.isMatch(this.currentState, source));
         if (matches.length === 1) {
             return matches[0];
