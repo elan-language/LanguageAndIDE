@@ -170,7 +170,8 @@ export async function activate(docUri: vscode.Uri) {
     const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
 
     if (!ext){
-        assert.fail("extension not found");
+        const all = vscode.extensions.all;
+        assert.fail(all[all.length -1].id);
     }
 
     await ext.activate();
