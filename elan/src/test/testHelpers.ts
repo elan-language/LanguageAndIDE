@@ -164,3 +164,26 @@ export function assertHtml(setupFn : () => File, testFn : (f: File) => void, ass
 export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {
     return { key: k, shift: !!shift, control: !!control, alt: !!alt };
 }
+
+export async function activate(docUri: vscode.Uri) {
+    // The extensionId is `publisher.name` from package.json
+    const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
+
+    if (!ext){
+        const all = vscode.extensions.all;
+        assert.fail(all[all.length -1].id);
+    }
+
+    await ext.activate();
+    try {
+      const doc = await vscode.workspace.openTextDocument(docUri);
+      const editor = await vscode.window.showTextDocument(doc);
+      await sleep(2000); // Wait for server activation
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  
+  async function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }

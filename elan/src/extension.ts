@@ -8,7 +8,7 @@ import * as yauzl from 'yauzl';
 import * as path from 'path';
 import { mkdirp } from 'async-file';
 import * as fs from 'fs';
-import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient';
+import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
 import { Trace } from 'vscode-jsonrpc';
 
 var currentDoc : vscode.TextDocument | undefined;
@@ -61,7 +61,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/fx5rok2qgq3ah1oe/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff1, "elan compiler", compilerPath, []);
-	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/hnyg2d63hutgnxw0/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/kdvkq4v4snhmr48d/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
 	await InstallZip(buff2, "elan language server", languageServerPath, []);
 
 	startLanguageServer(context, languageServerPath);
@@ -225,11 +225,13 @@ export function startLanguageServer(context: vscode.ExtensionContext, languageSe
 
     // Create the language client and start the client.
     const client = new LanguageClient('elanLanguageServer', 'Elan Language Server', serverOptions, clientOptions);
-    client.trace = Trace.Verbose;
-    const disposable = client.start();
 
-    // Push the disposable to the context's subscriptions so that the
-    // client can be deactivated on extension deactivation
-    context.subscriptions.push(disposable);
+	client.start();
+    // client.trace = Trace.Verbose;
+    // const disposable = client.start();
+
+    // // Push the disposable to the context's subscriptions so that the
+    // // client can be deactivated on extension deactivation
+    // context.subscriptions.push(disposable);
 }
 
