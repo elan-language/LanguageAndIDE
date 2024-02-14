@@ -1,17 +1,16 @@
 import { AbstractField } from "./abstract-field";
 import { Frame } from "../interfaces/frame";
-import { CodeSource } from "../code-source";
+import { Regexes } from "./regexs";
 
-export class ArgList extends AbstractField {  
+export class ArgList extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("arguments");
         this.setOptional(true);
     }
-    parse(source: CodeSource): void {
-        var match = source.removeRegEx(/^[^\)]*/);
-        this.text = match;
-    }
+    regExp(): RegExp {
+        return new RegExp(`^${Regexes.argList}`);
+    } 
     getIdPrefix(): string {
         return 'args';
     }

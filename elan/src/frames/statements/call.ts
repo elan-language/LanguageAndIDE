@@ -18,12 +18,13 @@ export class Call extends AbstractFrame {
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgList(this);
     }
-    parse(source: CodeSource): void {
+    
+    parseFromSource(source: CodeSource): void {
         source.removeIndent();
         source.remove("call ");
-        this.proc.parse(source);
+        this.proc.parseFromSource(source);
         source.remove("(");
-        this.args.parse(source);
+        this.args.parseFromSource(source);
         source.remove(")");
         source.removeNewLine();
     }

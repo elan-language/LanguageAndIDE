@@ -6,7 +6,6 @@ import { KeyEvent } from "../interfaces/key-event";
 import {CodeSource } from "../code-source";
 
 export abstract class AbstractField implements Selectable, Field {
-    protected regx: RegExp = /^.*/;
     public isField: boolean = true;
     protected text: string = "";
     protected placeholder: string = "";
@@ -26,9 +25,12 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
-    parse(source: CodeSource): void {
-        throw new Error("Not implemented");
+    parseFromSource(source: CodeSource): void {
+        var expr = source.removeRegEx(this.regExp(), this.isOptional());
+        this.text = expr;
     }
+    abstract regExp(): RegExp;
+
     getHelp(): string {
         return "";
     }
@@ -104,15 +106,13 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
     }
- 
-    //Default implementation to be overridden
-     status(): ParsingStatus {
-        if (this.text === ``)  {
+    status(): ParsingStatus {
+        if (this.text === ``) {
             return this.isOptional() ? ParsingStatus.valid : ParsingStatus.incomplete;
+        } else {
+            return this.regExp().test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
         }
-        return ParsingStatus.valid;
     }
-
     select(): void {
         this.deselectAll();
         this.selected = true;

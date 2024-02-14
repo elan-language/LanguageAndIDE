@@ -2,6 +2,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ParsingStatus } from "../parsing-status";
 import { AbstractField } from "./abstract-field";
+import { Regexes } from "./regexs";
 
 //Must be a literal string or an identifier 
 export class ExceptionMessage extends AbstractField {
@@ -9,22 +10,14 @@ export class ExceptionMessage extends AbstractField {
         super(holder);
         this.setPlaceholder("message");
     }
-    parse(source: CodeSource): void {
-        var expr = source.removeRegEx(/^"[A-Za-z\s]*"|\w*/); //TODO Factor out the identifier definition
+    regExp(): RegExp {
+        return new RegExp(`^${Regexes.literalString}|${Regexes.identifier}`);
+    }
+    parseFromSource(source: CodeSource): void {
+        var expr = source.removeRegEx(this.regExp(), false);
         this.text = expr;
     }
     getIdPrefix(): string {
         return 'msg';
-    }
-    status(): ParsingStatus { //TODO experimental/incomplete rules
-        if (this.text === ``) {
-            return ParsingStatus.incomplete;
-        } else if (this.text.startsWith(`"`) && this.text.endsWith(`"`)) {
-            return ParsingStatus.valid;
-        } else if  (this.text.startsWith(`"`)) {
-            return ParsingStatus.incomplete;
-        } else {
-            return ParsingStatus.invalid;
-        }
     }
 }

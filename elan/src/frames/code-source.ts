@@ -5,7 +5,7 @@ export interface CodeSource {
     isMatch(code: string): boolean;
     isMatchRegEx(regx: RegExp): boolean;
     remove(code: string): void;
-    removeRegEx(regx: RegExp): string;
+    removeRegEx(regx: RegExp, optionally: boolean): string;
     hasMoreCode(): boolean;
     getRemainingCode(): string;
 }
@@ -22,7 +22,7 @@ export class CodeSourceFromString implements CodeSource {
     }
     removeIndent(): void {
         var indent = /^\s*/;
-        this.removeRegEx(indent);
+        this.removeRegEx(indent, false);
     }
     remove(match: string): void {
         if (!this.isMatch(match)) {
@@ -30,9 +30,13 @@ export class CodeSourceFromString implements CodeSource {
         }
         this.remainingCode = this.remainingCode.substring(match.length);
     }
-    removeRegEx(regx: RegExp): string {
+    removeRegEx(regx: RegExp, optional: boolean): string {
         if (!this.isMatchRegEx(regx)) {
-            throw new Error(`Code does not match ${regx}`);
+            if (optional){
+                return "";
+            } else {
+                throw new Error(`Code does not match ${regx}`);
+            }
         } else {
             var match = this.remainingCode.match(regx)![0];
             this.remainingCode = this.remainingCode.replace(regx,"");
@@ -44,7 +48,7 @@ export class CodeSourceFromString implements CodeSource {
     }
     isMatchRegEx(regEx: RegExp): boolean {
         var matches = this.remainingCode.match(regEx);
-        return matches !== null && matches.length ===1;
+        return matches !== null && matches.length > 0;
     }
     hasMoreCode(): boolean {
         return this.remainingCode.length > 0;

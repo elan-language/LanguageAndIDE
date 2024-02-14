@@ -1,6 +1,7 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParsingStatus } from "../parsing-status";
 import { AbstractField } from "./abstract-field";
+import { Regexes } from "./regexs";
 
 export class Integer extends AbstractField {  
     constructor(holder: Frame) {
@@ -11,13 +12,11 @@ export class Integer extends AbstractField {
     getIdPrefix(): string {
         return `int`;
     }
-
-    status(): ParsingStatus {
-        if (this.text === ``) {
-            return ParsingStatus.incomplete;
-        } else {
-            var regexp = new RegExp('^[1-9][0-9]*$');
-            return regexp.test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
-        }
+    regExp(): RegExp {
+        return new RegExp(`^${Regexes.literalInt}`);
+    }
+    parseFromSource(source: CodeSource): void {
+        var expr = source.removeRegEx(this.regExp(), false);
+        this.text = expr;
     }
 }

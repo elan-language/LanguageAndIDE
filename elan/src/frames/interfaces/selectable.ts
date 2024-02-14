@@ -19,5 +19,5 @@ export interface Selectable  {
 
     status(): ParsingStatus;
 
-    parse(source: CodeSource): void;
+    parseFromSource(source: CodeSource): void;
 }

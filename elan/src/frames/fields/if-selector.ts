@@ -1,6 +1,7 @@
 import { AbstractField } from "./abstract-field";
 import { KeyEvent } from "../interfaces/key-event";
 import { Else } from "../statements/else";
+import { CodeSource } from "../code-source";
 
 export class IfSelector extends AbstractField {
     private else: Else;
@@ -11,7 +12,12 @@ export class IfSelector extends AbstractField {
         this.setPlaceholder("if");
         this.setOptional(true);
     }
-
+    regExp(): RegExp {
+        throw new  Error("Not implemented");
+    }
+    parseFromSource(source: CodeSource): void {
+        throw new Error("Not implemented.");
+    }
     getIdPrefix(): string {
         return 'elif';
     }

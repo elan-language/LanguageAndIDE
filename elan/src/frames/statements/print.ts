@@ -15,10 +15,10 @@ export class Print extends AbstractFrame  {
         this.expr.setOptional(true);
         this.expr.setPlaceholder("expression");
     }
-    parse(source: CodeSource): void {
+    parseFromSource(source: CodeSource): void {
         source.removeIndent();
         source.remove("print ");
-        this.expr.parse(source);
+        this.expr.parseFromSource(source);
         source.removeNewLine();
     }
     getFields(): Field[] {
