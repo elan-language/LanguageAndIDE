@@ -3,26 +3,27 @@ import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
-import { Parser, ParserFSM, ParserRule, SourceOfCode } from "../parser-fsm";
+import {CodeSource } from "../code-source";
 
-export class SetStatement extends AbstractFrame implements Parser  {
+export class SetStatement extends AbstractFrame  {
     isStatement = true;
     name: Identifier;;
     expr: Expression;
-    parserFSM: ParserFSM;
 
     constructor(parent: Parent) {
         super(parent);
         this.name = new Identifier(this);
         this.name.setPlaceholder("variableName");
         this.expr = new Expression(this);
-		var r1 = new ParserRule("initial", /^\s*set /, "to", this.name);
-		var r2 = new ParserRule("to", /^ to /, "eol", this.expr);;
-		var r3 = new ParserRule("eol", /^\n/, ParserFSM.finished, undefined);
-        this.parserFSM = new ParserFSM([r1, r2, r3]);
     }
-    parseAsMuchAsPoss(source: SourceOfCode): void {
-        this.parserFSM.parseAsMuchAsPoss(source);
+
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("set ");
+        this.name.parse(source);
+        source.remove(" to ");
+        this.expr.parse(source);
+        source.removeNewLine();
     }
 
     getFields(): Field[] {

@@ -3,9 +3,9 @@ import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { KeyEvent } from "./interfaces/key-event";
 import { Parent } from "./interfaces/parent";
-import { Parser, SourceOfCode } from "./parser-fsm";
+import {CodeSource } from "./code-source";
 
-export abstract class AbstractSelector extends AbstractFrame implements Parser  {
+export abstract class AbstractSelector extends AbstractFrame {
     text: string = "";
     label: string = "new code";
     protected defaultOptions: [string, string][]= new Array<[string, string]>();
@@ -13,12 +13,12 @@ export abstract class AbstractSelector extends AbstractFrame implements Parser  
     constructor(parent: Parent) {
         super(parent);
     }
-    parseAsMuchAsPoss(source: SourceOfCode): void {
-        var options = this.optionsForContext().filter(o => source.isMatchString(o[1]));
+    parse(source: CodeSource): void {
+        var options = this.optionsForContext().filter(o => source.isMatch(o[1]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);
-            frame.parseAsMuchAsPoss(source);
+            frame.parse(source);
         } else {
             throw new Error(`${options.length} matches found.`);
         }

@@ -14,6 +14,7 @@ import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { CodeSource } from "./code-source";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -208,7 +209,7 @@ export class FileImpl implements File {
         return g;
     }
 
-    parseValidCode(code: string): void {
+    parse(source: CodeSource): void {
         throw new Error("Not implemented");
     }
 }

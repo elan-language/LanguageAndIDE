@@ -3,9 +3,9 @@ import { ParsingStatus } from "../parsing-status";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
-import { Parser, SourceOfCode } from "../parser-fsm";
+import {CodeSource } from "../code-source";
 
-export abstract class AbstractField implements Selectable, Field, Parser {
+export abstract class AbstractField implements Selectable, Field {
     protected regx: RegExp = /^.*/;
     public isField: boolean = true;
     protected text: string = "";
@@ -27,10 +27,8 @@ export abstract class AbstractField implements Selectable, Field, Parser {
         this.map = map;
     }
 
-    parseAsMuchAsPoss(source: SourceOfCode): void {
-        var match = source.matchRegEx(this.regx);
-        this.text = match;
-        source.removeRegEx(this.regx);
+    parse(source: CodeSource): void {
+        this.text = source.removeRegEx(this.regx);
     }
 
     getHelp(): string {

@@ -1,3 +1,4 @@
+import { CodeSource } from "../code-source";
 import { ParsingStatus } from "../parsing-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
@@ -32,5 +33,5 @@ export interface File extends Parent {
     addGlobalCommentBefore(global: Frame): Frame;
     addConstantBefore(global: Frame): Frame;
 
-    parseValidCode(code: string): void;
+    parse(source: CodeSource): void;
 }
