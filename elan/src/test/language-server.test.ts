@@ -3,16 +3,16 @@ import * as assert from 'assert';
 import { activate } from './testHelpers';
 
 suite('Language Server', () => {
-  
+
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const docUri = vscode.Uri.joinPath(ws, "T01_helloWorld.elan");
 
   suiteSetup(async () => {
     await activate(docUri);
   });
-  
+
   test('Check for hard coded completion response from language server', async () => {
-   
+
     await testCompletion(docUri, new vscode.Position(0, 0), {
       items: [
         { label: 'Elan', kind: vscode.CompletionItemKind.Text },
@@ -22,13 +22,7 @@ suite('Language Server', () => {
   });
 
   test('Symbols from code', async () => {
-   
-    await testSymbols(docUri, new vscode.Position(0, 0), {
-      items: [
-        { label: 'Elan', kind: vscode.CompletionItemKind.Text },
-        { label: 'Elan', kind: vscode.CompletionItemKind.Text }
-      ]
-    });
+    await testSymbols(docUri);
   });
 
 });
@@ -38,7 +32,7 @@ async function testCompletion(
   position: vscode.Position,
   expectedCompletionList: vscode.CompletionList
 ) {
-  await activate(docUri);
+
 
   // Executing the command `vscode.executeCompletionItemProvider` to simulate triggering completion
   const actualCompletionList = (await vscode.commands.executeCommand(
@@ -56,23 +50,15 @@ async function testCompletion(
 }
 
 async function testSymbols(
-  docUri: vscode.Uri,
-  position: vscode.Position,
-  expectedCompletionList: vscode.CompletionList
+  docUri: vscode.Uri
 ) {
-  
 
-  // Executing the command `vscode.executeCompletionItemProvider` to simulate triggering completion
+
+  // Executing the command `vscode.executeDocumentSymbolProvider` to simulate triggering symbols
   const actualSymbols = (await vscode.commands.executeCommand(
     'vscode.executeDocumentSymbolProvider',
-    docUri,
-    position
-  )) as vscode.SymbolInformation[];
+    docUri
+  )) as (vscode.SymbolInformation | vscode.DocumentSymbol)[];
 
-  //assert.ok(actualCompletionList.items.length >= 2);
-  // expectedCompletionList.items.forEach((expectedItem, i) => {
-  //   const actualItem = actualCompletionList.items[i];
-  //   assert.equal(actualItem.label, expectedItem.label);
-  //   assert.equal(actualItem.kind, expectedItem.kind);
-  // });
+  assert.ok(actualSymbols.length >= 263);
 }
