@@ -3,6 +3,7 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Catch extends AbstractFrame {
     isStatement = true;
@@ -14,7 +15,6 @@ export class Catch extends AbstractFrame {
         this.variable.setPlaceholder("variableName");
         this.variable.setTextWithoutParsing("e");
     }
-
     getFields(): Field[] {
         return [this.variable];
     }

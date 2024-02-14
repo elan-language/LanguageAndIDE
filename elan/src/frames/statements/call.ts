@@ -4,6 +4,7 @@ import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Call extends AbstractFrame {
 
@@ -17,7 +18,15 @@ export class Call extends AbstractFrame {
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgList(this);
     }
-
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("call ");
+        this.proc.parse(source);
+        source.remove("(");
+        this.args.parse(source);
+        source.remove(")");
+        source.removeNewLine();
+    }
     getFields(): Field[] {
         return [this.proc, this.args];
     }

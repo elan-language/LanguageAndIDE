@@ -8,19 +8,15 @@ export class Default extends FrameWithStatements {
     constructor(parent: Parent) {
         super(parent);
     }
-
     getFields(): Field[] {
         return [];
-    }
-    
+    }   
     getIdPrefix(): string {
         return 'default';
     }
-
     public override selectFirstField(): boolean {
         return false;
     }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>default </keyword></top>

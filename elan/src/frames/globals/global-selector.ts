@@ -2,6 +2,7 @@ import { File } from "../interfaces/file";
 import { KeyEvent } from "../interfaces/key-event";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
+import { Frame } from "../interfaces/frame";
 
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
@@ -36,36 +37,32 @@ export class GlobalSelector extends AbstractSelector  {
         return "";
     }
 
-    addFrame(frameType: string): void {
+    addFrame(frameType: string): Frame {
         switch(frameType) {
             case "MainFrame": {
-                this.getFile().addMainBefore(this);
-                break;
+                return this.getFile().addMainBefore(this);
             }
             case "Procedure": {
-                this.getFile().addProcedureBefore(this);
-                break;
+                return this.getFile().addProcedureBefore(this);
             }
             case "Function": {
-                this.getFile().addFunctionBefore(this);
-                break;
+                return this.getFile().addFunctionBefore(this);
             }
             case "Class": {
-                this.getFile().addClassBefore(this);
-                break;
+                return this.getFile().addClassBefore(this);
             }
             case "Constant": {
-                this.getFile().addConstantBefore(this);
-                break;
+                return this.getFile().addConstantBefore(this);
             }
             case "Enum": {
-                this.getFile().addEnumBefore(this);
-                break;
+                return this.getFile().addEnumBefore(this);
             }
             case "GlobalComment": {
-                this.getFile().addGlobalCommentBefore(this);
-                break;
+                return this.getFile().addGlobalCommentBefore(this);
+            } 
+            default: {
+                throw new Error(`${frameType} is not a valid global frame type.`);
             }
-        }
+        } 
     }
 } 

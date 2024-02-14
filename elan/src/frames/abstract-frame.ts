@@ -7,6 +7,7 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { KeyEvent } from "./interfaces/key-event";
+import { CodeSource } from "./code-source";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -227,7 +228,7 @@ export abstract class AbstractFrame implements Frame {
         return this.worstStatusOfFields();
     }
 
-    parseValidCode(code: string): void {
+    parse(source: CodeSource): void {
         throw new Error("Not implemented");
     }
 }

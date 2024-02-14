@@ -1,3 +1,4 @@
+import { CodeSource } from "../code-source";
 import { ParsingStatus } from "../parsing-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
@@ -24,13 +25,13 @@ export interface File extends Parent {
     status(): ParsingStatus;
 
     //Internal use only
-    addMainBefore(global: Frame): void;
-    addFunctionBefore(global: Frame): void;
-    addProcedureBefore(global: Frame): void;
-    addEnumBefore(global: Frame): void;
-    addClassBefore(global: Frame): void;
-    addGlobalCommentBefore(global: Frame): void;
-    addConstantBefore(global: Frame): void;
+    addMainBefore(global: Frame): Frame;
+    addFunctionBefore(global: Frame): Frame;
+    addProcedureBefore(global: Frame): Frame;
+    addEnumBefore(global: Frame): Frame;
+    addClassBefore(global: Frame): Frame;
+    addGlobalCommentBefore(global: Frame): Frame;
+    addConstantBefore(global: Frame): Frame;
 
-    parseValidCode(code: string): void;
+    parse(source: CodeSource): void;
 }

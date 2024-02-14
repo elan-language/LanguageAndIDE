@@ -2,6 +2,7 @@ import { ExceptionMessage } from "../fields/exception-message";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Throw extends AbstractFrame  {
     isStatement = true;
@@ -11,15 +12,18 @@ export class Throw extends AbstractFrame  {
         super(parent);
         this.text = new ExceptionMessage(this);
     }
-
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("throw ");
+        this.text.parse(source);
+        source.removeNewLine();
+    }
     getFields(): Field[] {
         return [this.text];
-    }
-    
+    }    
     getIdPrefix(): string {
         return 'throw';
     }
-
     public override selectFirstField(): boolean {
         this.text.select();
         return true;

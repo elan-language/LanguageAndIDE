@@ -1,9 +1,11 @@
 import { AbstractFrame } from "./abstract-frame";
 import { Field } from "./interfaces/field";
+import { Frame } from "./interfaces/frame";
 import { KeyEvent } from "./interfaces/key-event";
 import { Parent } from "./interfaces/parent";
+import {CodeSource } from "./code-source";
 
-export abstract class AbstractSelector extends AbstractFrame  {
+export abstract class AbstractSelector extends AbstractFrame {
     text: string = "";
     label: string = "new code";
     protected defaultOptions: [string, string][]= new Array<[string, string]>();
@@ -11,15 +13,29 @@ export abstract class AbstractSelector extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
     }
+    parse(source: CodeSource): void {
+        var options = this.optionsForContext().filter(o => source.isMatch(o[1]));
+        if (options.length === 1) {
+            var typeToAdd = options[0][0];
+            var frame = this.addFrame(typeToAdd);
+            frame.parse(source);
+        } else {
+            throw new Error(`${options.length} matches found.`);
+        }
+    }
 
     abstract validforContext(frameType: string) : boolean;
 
-    currentOptions(match: string): [string, string][] {
-        return this.defaultOptions.filter(o => this.validforContext(o[0]) && o[1].startsWith(match));
+    optionsMatchingInput(match: string): [string, string][] {
+        return this.optionsForContext().filter(o => o[1].startsWith(match));
+    }
+
+    private optionsForContext(): [string, string][] {
+        return this.defaultOptions.filter(o => this.validforContext(o[0]));
     }
 
     commonStartText(match: string): string {
-        return this.currentOptions(match).map(o => o[1]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
+        return this.optionsMatchingInput(match).map(o => o[1]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
     }
 
     private maxCommonStart(a: string, b: string): string {
@@ -27,10 +43,10 @@ export abstract class AbstractSelector extends AbstractFrame  {
     }
  
     getHelp(): string {
-        return this.currentOptions(this.text).map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
+        return this.optionsMatchingInput(this.text).map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
     }
 
-    abstract addFrame(frameType: string): void;
+    abstract addFrame(frameType: string): Frame;
 
     protected setClasses() {
         super.setClasses();
@@ -76,7 +92,7 @@ export abstract class AbstractSelector extends AbstractFrame  {
         if (!char || char.length > 1) { //TODO: Make any exception for any specific non-printing chars?
             return;
         }
-        var options = this.currentOptions(this.text + char);
+        var options = this.optionsMatchingInput(this.text + char);
         if (options.length > 1 ) {
             this.text += this.commonStartText(this.text+ char);
         } else if (options.length === 1) {
@@ -87,4 +103,6 @@ export abstract class AbstractSelector extends AbstractFrame  {
             return; //key not valid so not added
         }
     }
+
+
 } 

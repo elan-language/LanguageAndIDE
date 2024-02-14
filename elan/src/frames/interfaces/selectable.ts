@@ -1,3 +1,4 @@
+import { CodeSource } from "../code-source";
 import { ParsingStatus } from "../parsing-status";
 import { KeyEvent } from "./key-event";
 
@@ -18,5 +19,5 @@ export interface Selectable  {
 
     status(): ParsingStatus;
 
-    parseValidCode(code: string): void;
+    parse(source: CodeSource): void;
 }

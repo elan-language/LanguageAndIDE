@@ -4,6 +4,7 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class CommentStatement extends AbstractFrame implements Member {
     isStatement = true;
@@ -14,20 +15,22 @@ export class CommentStatement extends AbstractFrame implements Member {
         super(parent);
         this.text= new PlainText(this);
     }
-
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("# ");
+        this.text.parse(source);
+        source.removeNewLine();
+    }
     getFields(): Field[] {
         return [this.text];
     }
-
     getIdPrefix(): string {
         return 'com';
     }
-
     public override selectFirstField(): boolean {
         this.text.select();
         return true;
     }
-
     renderAsHtml(): string {
         return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></comment></statement>`;
     }

@@ -150,19 +150,22 @@ end class\r\n`;
         this.members.splice(i,1);    
     }
 
-    addFunctionMethodBefore(member: Frame): void {
+    addFunctionMethodBefore(member: Frame): Frame {
         var p = new FunctionMethod(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
+        return p;
     }
-    addPropertyBefore(member: Frame): void {
+    addPropertyBefore(member: Frame): Frame {
         var p = new Property(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
+        return p;
     }
-    addProcedureMethodBefore(member: Frame): void {
+    addProcedureMethodBefore(member: Frame): Frame {
         var p = new ProcedureMethod(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
+        return p;
     }
 }

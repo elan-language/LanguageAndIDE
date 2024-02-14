@@ -3,6 +3,7 @@ import { singleIndent } from "../helpers";
 import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
+import { Frame } from "../interfaces/frame";
 
 export class MemberSelector extends AbstractSelector implements Member  {
 
@@ -34,19 +35,19 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return this.getParent() as Class;
     }
 
-    addFrame(frameType: string): void {
+    addFrame(frameType: string): Frame {
         switch(frameType) {
             case "FunctionMethod": {
-                this.getClass().addFunctionMethodBefore(this);
-                break;
+                return this.getClass().addFunctionMethodBefore(this);
             }
             case "ProcedureMethod": {
-                this.getClass().addProcedureMethodBefore(this);
-                break;
+                return this.getClass().addProcedureMethodBefore(this);
             }
             case "Property": {
-                this.getClass().addPropertyBefore(this);
-                break;
+                return this.getClass().addPropertyBefore(this);
+            }
+            default: {
+                throw new Error(`${frameType} is not a valid member frame type.`)
             }
         }
     }
