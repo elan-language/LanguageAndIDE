@@ -9,9 +9,9 @@ import * as path from 'path';
 import { mkdirp } from 'async-file';
 import * as fs from 'fs';
 import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
-import { Trace } from 'vscode-jsonrpc';
 
 var currentDoc : vscode.TextDocument | undefined;
+var client : LanguageClient | undefined;
 
 export function setCurrentElanFile(d : vscode.TextDocument){
 	currentDoc = d;
@@ -61,14 +61,19 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/fx5rok2qgq3ah1oe/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff1, "elan compiler", compilerPath, []);
-	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/1oco68ry9j1skoj9/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/otm40v1nf0onam9g/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
 	await InstallZip(buff2, "elan language server", languageServerPath, []);
 
 	startLanguageServer(context, languageServerPath);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {
+	if (!client) {
+		return undefined;
+	}
+	return client.stop();
+}
 
 async function downloadServer(urlString: string): Promise<Buffer> {
 	const buffers: any[] = [];
@@ -198,7 +203,7 @@ export async function InstallZip(
 
 export function startLanguageServer(context: vscode.ExtensionContext, languageServerPath: string) {
 
-	// The server is implemented in node
+	// The server is implemented in dotnet
 	const serverExe = 'dotnet';
 
     // If the extension is launched in debug mode then the debug server options are used
@@ -210,7 +215,7 @@ export function startLanguageServer(context: vscode.ExtensionContext, languageSe
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        // Register the server for plain text documents
+        // Register the server for elan documents
         documentSelector: [
             {
                 pattern: '**/*.elan',
@@ -227,11 +232,5 @@ export function startLanguageServer(context: vscode.ExtensionContext, languageSe
     const client = new LanguageClient('elanLanguageServer', 'Elan Language Server', serverOptions, clientOptions);
 
 	client.start();
-    // client.trace = Trace.Verbose;
-    // const disposable = client.start();
-
-    // // Push the disposable to the context's subscriptions so that the
-    // // client can be deactivated on extension deactivation
-    // context.subscriptions.push(disposable);
 }
 
