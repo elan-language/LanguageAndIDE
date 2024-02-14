@@ -1,3 +1,4 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ParsingStatus } from "../parsing-status";
 import { AbstractField } from "./abstract-field";
@@ -8,11 +9,13 @@ export class ExceptionMessage extends AbstractField {
         super(holder);
         this.setPlaceholder("message");
     }
-
+    parse(source: CodeSource): void {
+        var expr = source.removeRegEx(/^"[A-Za-z\s]*"|\w*/); //TODO Factor out the identifier definition
+        this.text = expr;
+    }
     getIdPrefix(): string {
         return 'msg';
     }
-
     status(): ParsingStatus { //TODO experimental/incomplete rules
         if (this.text === ``) {
             return ParsingStatus.incomplete;

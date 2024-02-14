@@ -3,6 +3,7 @@ import { Expression } from "../fields/expression";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Variable extends AbstractFrame  {
     isStatement = true;
@@ -14,12 +15,17 @@ export class Variable extends AbstractFrame  {
         this.name = new Identifier(this);
         this.expr = new Expression(this);
     }
-
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("var ");
+        this.name.parse(source);
+        source.remove(" set to ");
+        this.expr.parse(source);
+        source.removeNewLine();
+    }
     getFields(): Field[] {
         return [this.name, this.expr];
-    }
-    
-   
+    } 
     getIdPrefix(): string {
         return 'var';
     }

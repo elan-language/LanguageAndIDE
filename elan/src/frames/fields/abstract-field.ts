@@ -26,11 +26,9 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
-
     parse(source: CodeSource): void {
-        this.text = source.removeRegEx(this.regx);
+        throw new Error("Not implemented");
     }
-
     getHelp(): string {
         return "";
     }
@@ -167,7 +165,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.text) {
          return this.text;
         } else {
-         return this.placeholder;
+            return this.placeholder;
         }
      }
 

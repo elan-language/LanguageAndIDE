@@ -3,6 +3,7 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Print extends AbstractFrame  {
     isStatement = true;
@@ -14,7 +15,12 @@ export class Print extends AbstractFrame  {
         this.expr.setOptional(true);
         this.expr.setPlaceholder("expression");
     }
-
+    parse(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("print ");
+        this.expr.parse(source);
+        source.removeNewLine();
+    }
     getFields(): Field[] {
         return [this.expr];
     }
