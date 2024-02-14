@@ -1,6 +1,6 @@
 import { AbstractField } from "./abstract-field";
 import { Frame } from "../interfaces/frame";
-import { Regexes } from "./regexs";
+import { Regexes } from "./regexes";
 
 export class ArgList extends AbstractField {
     constructor(holder: Frame) {

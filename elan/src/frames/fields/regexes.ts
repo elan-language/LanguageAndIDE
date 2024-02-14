@@ -1,5 +1,6 @@
 export class Regexes {
 
+
     static readonly type = `[A-Z]\\w*`; 
     static readonly identifier = `[a-z]\\w*`; 
     static readonly literalString = `"[^"]*"`;
@@ -15,6 +16,8 @@ export class Regexes {
     static readonly paramList = `${Regexes.paramDef}(, ${Regexes.paramDef})*`;
     static readonly typeList = `${Regexes.type}(, ${Regexes.type})*`;
     static readonly identifierList = `${Regexes.identifier}(, ${Regexes.identifier})*`;
-    static readonly anythingToNewLine = `[^\\n]*`;
+    static readonly newLine = `(\\r)?\\n`;
+    static readonly anythingToNewLine = `[^${Regexes.newLine}]*`;
     static readonly expression = Regexes.anythingToNewLine; //TODO temporary kludge only - expression must go to end of line
+    static readonly comment = `# ${Regexes.anythingToNewLine}`;
 }

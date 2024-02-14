@@ -3,6 +3,7 @@ import { Expression } from "../fields/expression";
 import { AbstractFrame } from "../abstract-frame";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;
@@ -14,6 +15,14 @@ export class Constant extends AbstractFrame {
         this.name  = new Identifier(this);
         this.expr = new Expression(this);
         this.expr.setPlaceholder("literal value");
+    }
+
+    parseFromSource(source: CodeSource): void {
+        source.remove("constant ");
+        this.name.parseFromSource(source);
+        source.remove(" set to ");
+        this.expr.parseFromSource(source);
+        //source.removeNewLine();
     }
 
     getFields(): Field[] {

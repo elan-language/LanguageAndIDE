@@ -15,6 +15,9 @@ import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource } from "./code-source";
+import { Regexes } from "./fields/regexes";
+import { GlobalPreloadContext } from "node:module";
+import { GlobalSelector } from "./globals/global-selector";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -34,7 +37,7 @@ export class FileImpl implements File {
     }
 
     getParent(): Parent {
-        throw new Error("getParent Should not have been called on a file; test for 'hasParent()' before calling.")
+        throw new Error("getParent Should not have been called on a file; test for 'hasParent()' before calling.");
     }
     
     getById(id: string): Selectable {
@@ -209,7 +212,14 @@ export class FileImpl implements File {
         return g;
     }
 
-    parse(source: CodeSource): void {
-        throw new Error("Not implemented");
+    parseFromSource(source: CodeSource): void {
+        source.removeRegEx(new RegExp(Regexes.comment), false);
+        source.removeRegEx(new RegExp(Regexes.newLine), false);
+        source.removeRegEx(new RegExp(Regexes.newLine), false);
+        if (source.hasMoreCode()) {
+            var select = new GlobalSelector(this)
+            this.addChildToEnd(select);
+            select.parseFromSource(source);
+        }
     }
 }

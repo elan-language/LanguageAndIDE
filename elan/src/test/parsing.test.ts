@@ -9,7 +9,8 @@ import { Variable } from '../frames/statements/variable';
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
-import { Regexes } from '../frames/fields/regexs';
+import { Regexes } from '../frames/fields/regexes';
+import { GlobalSelector } from '../frames/globals/global-selector';
 
 suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -182,7 +183,25 @@ suite('Parsing Tests', () => {
 		ss.parseFromSource(source);
 		assert.equal(source.getRemainingCode(), "");
 	}); 
-});	
+
+	test('parse - empty file', () => {
+		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r\n\r\n`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code);
+	});
+
+	test('parse - constant only', () => {
+		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r\n\r\nconstant pi set to 3.142\r\n`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n\r\n`);
+	});
+});
 
 
 
