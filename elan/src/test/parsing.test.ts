@@ -199,7 +199,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n\r\n`);
+		assert.equal(elan, `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n`);
 	});
 });
 

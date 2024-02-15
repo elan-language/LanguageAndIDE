@@ -1,17 +1,15 @@
-# Elan v0.1 incomplete e40dedb83477d09e
+# Elan v0.1 incomplete 1383d9fb02a78bb9
 
 main
-  
+
 end main
 
 class class name
   constructor(parameter definitions)
-    
+
   end constructor
 
-  
   function asString() as String
     return value or expression
   end function
 end class
-

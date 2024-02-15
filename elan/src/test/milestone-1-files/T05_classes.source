@@ -1,11 +1,10 @@
-# Elan v0.1 valid f33c4d9deea9608c
+# Elan v0.1 valid 8d5eec4ded7bb043
 
 class Player
   constructor(parameter definitions)
-    
+
   end constructor
 
-  
   property score Int
 
   function asString() as String
@@ -15,14 +14,12 @@ end class
 
 immutable class Card inherits Foo, Bar
   constructor(parameter definitions)
-    
+
   end constructor
 
-  
   private property value Int
 
   function reset(parameter definitions) as Player
-    
     return value or expression
   end function
 

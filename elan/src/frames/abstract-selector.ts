@@ -6,6 +6,7 @@ import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
 
 export abstract class AbstractSelector extends AbstractFrame {
+    isSelector = true;
     text: string = "";
     label: string = "new code";
     protected defaultOptions: [string, string][]= new Array<[string, string]>();

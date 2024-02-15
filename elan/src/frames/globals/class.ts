@@ -120,15 +120,22 @@ ${members}
     }
 
     public renderAsSource(): string {
+        return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
+${this.membersAsSource()}\r
+end class\r\n`;
+    }
+
+    private membersAsSource(): string {
+        var result = "";
+        if (this.members.length > 0) {
         const ss: Array<string> = [];
-        for (var m of this.members) {
+        for (var m of this.members.filter(m  => !('isSelector' in m))) {
             var s = m.renderAsSource();
             ss.push(s);
         }
-        const members = ss.join("\r\n");
-        return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
-${members}\r
-end class\r\n`;
+        result = ss.join("\r\n");
+        }
+        return result;
     }
 
     private addMemberAtEnd(m: Frame) {

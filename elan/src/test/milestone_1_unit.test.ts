@@ -93,7 +93,6 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select8").processKey(key("f"));
 		var v = file.getById("func17").renderAsSource();
 		assert.equal(v, '  function name(parameter definitions) as return type\r\n' +
-		'    \r\n' +
 		'    return value or expression\r\n' +
 		'  end function\r\n');
  	});	
@@ -103,7 +102,7 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select8").processKey(key("p"));
 		file.getById("select8").processKey(key("c"));
 		var v = file.getById("proc17").renderAsSource();
-		assert.equal(v, '  procedure name(parameter definitions)\r\n    \r\n  end procedure\r\n');
+		assert.equal(v, '  procedure name(parameter definitions)\r\n\r\n  end procedure\r\n');
  	});	
 
 	 test("Global Select - Constant", () => {

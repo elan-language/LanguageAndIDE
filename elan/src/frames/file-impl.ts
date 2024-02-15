@@ -63,7 +63,7 @@ export class FileImpl implements File {
 
     private getHash(body? : string): string {
         // normalize
-        body = (body || this.bodyAsSource()).trim().replaceAll("\r", "");
+        body = (body || this.renderGlobalsAsSource()).trim().replaceAll("\r", "");
 
         const hash = createHash('sha256');
         hash.update(body);
@@ -76,16 +76,20 @@ export class FileImpl implements File {
         return "Elan v0.1";
     }
 
-    bodyAsSource() : string{
-        const ss: Array<string> = [];
-        for (var frame of this._globals) {
-            ss.push(frame.renderAsSource());
+    renderGlobalsAsSource() : string{
+        var result = "";
+        if (this._globals.length > 0) {
+            const ss: Array<string> = [];
+            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
+                ss.push(frame.renderAsSource());
+            }
+            result = ss.join("\r\n");
         }
-        return ss.join("\r\n");
+        return result;
     }
 
     renderAsSource(): string {
-        const globals = this.bodyAsSource();
+        const globals = this.renderGlobalsAsSource();
         return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 

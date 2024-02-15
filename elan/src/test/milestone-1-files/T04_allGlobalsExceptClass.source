@@ -1,17 +1,16 @@
-# Elan v0.1 incomplete e95f5b70ebb4d715
+# Elan v0.1 incomplete 0dae0eb044912d68
 
 constant phi set to 1.618
 
 main
-  
+
 end main
 
 procedure signIn(parameter definitions)
-  
+
 end procedure
 
 function hypotenuse(sideB Float, sideC Float) as Float
-  
   return value or expression
 end function
 
