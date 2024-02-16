@@ -16,7 +16,7 @@ export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
-    private members: Array<Frame> = new Array<Frame>();
+    private _members: Array<Frame> = new Array<Frame>();
     public abstract: boolean = false;
     public immutable: boolean = false;
     public inherits: boolean = false;
@@ -28,9 +28,13 @@ export class Class extends AbstractFrame implements Parent {
         this.name = new Type(this);
         this.name.setPlaceholder("class name");
         this.superClasses  = new TypeList(this);
-        this.addMemberAtEnd(new Constructor(this));
-        this.addMemberAtEnd(new MemberSelector(this));
-        this.addMemberAtEnd(new AsString(this));
+        this._members.push(new Constructor(this));
+        this._members.push(new MemberSelector(this));
+        this._members.push(new AsString(this));
+    }
+
+    public getFirstMemberSelector() : MemberSelector {
+        return this._members.filter(g => ('isSelector' in g))[0] as MemberSelector;
     }
 
     getFields(): Field[] {
@@ -45,27 +49,27 @@ export class Class extends AbstractFrame implements Parent {
         }
     }
     getFirstChild(): Frame {
-        return this.members[0]; //Should always be one - at minimum a SelectGlobal
+        return this._members[0]; //Should always be one - at minimum a SelectGlobal
     }
 
     getLastChild(): Frame {
-        return this.members[this.members.length - 1];
+        return this._members[this._members.length - 1];
     }
 
     getChildAfter(g: Frame): Frame {
-        const index = this.members.indexOf(g);
-        return index < this.members.length -1 ? this.members[index +1] : g;
+        const index = this._members.indexOf(g);
+        return index < this._members.length -1 ? this._members[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
-        const index = this.members.indexOf(g);
-        return index > 0 ? this.members[index -1] : g;
+        const index = this._members.indexOf(g);
+        return index > 0 ? this._members[index -1] : g;
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.members.indexOf(first);
-        var lst = this.members.indexOf(last);
-        return fst < lst ? this.members.slice(fst, lst + 1) : this.members.slice(lst, fst + 1);
+        var fst = this._members.indexOf(first);
+        var lst = this._members.indexOf(last);
+        return fst < lst ? this._members.slice(fst, lst + 1) : this._members.slice(lst, fst + 1);
     }
 
     getIdPrefix(): string {
@@ -73,7 +77,7 @@ export class Class extends AbstractFrame implements Parent {
     }
 
     get asString() {
-        return this.members[this.members.length -1] as AsString;
+        return this._members[this._members.length -1] as AsString;
     }
 
     public override selectFirstField(): boolean {
@@ -82,8 +86,8 @@ export class Class extends AbstractFrame implements Parent {
     }
 
     selectFirstChild(multiSelect: boolean): boolean {
-        if (this.members.length > 0){
-            this.members[0].select(true, multiSelect);
+        if (this._members.length > 0){
+            this._members[0].select(true, multiSelect);
             return true;
         }
         return false;
@@ -104,7 +108,7 @@ export class Class extends AbstractFrame implements Parent {
 
     public renderAsHtml(): string {
         const ss: Array<string> = [];
-        for (var m of this.members) {
+        for (var m of this._members) {
             ss.push(m.renderAsHtml());
         }
         const members = ss.join("\n");
@@ -127,9 +131,9 @@ end class\r\n`;
 
     private membersAsSource(): string {
         var result = "";
-        if (this.members.length > 0) {
+        if (this._members.length > 0) {
         const ss: Array<string> = [];
-        for (var m of this.members.filter(m  => !('isSelector' in m))) {
+        for (var m of this._members.filter(m  => !('isSelector' in m))) {
             var s = m.renderAsSource();
             ss.push(s);
         }
@@ -138,23 +142,14 @@ end class\r\n`;
         return result;
     }
 
-    private addMemberAtEnd(m: Frame) {
-        this.members.push(m);
-    }
-
-    public addMemberBeforeAsString(m: Frame) {
-        var i = this.members.length - 1;
-        this.members.splice(i,0,m);
-    }
-
     public addMemberBefore(m: Frame, before: Frame) {
-        var i = this.   members.indexOf(before);
-        this.members.splice(i,0,m);
+        var i = this.   _members.indexOf(before);
+        this._members.splice(i,0,m);
     }
 
     public removeMember(m: Frame) {
-        var i = this.members.indexOf(m);
-        this.members.splice(i,1);    
+        var i = this._members.indexOf(m);
+        this._members.splice(i,1);    
     }
 
     addFunctionMethodBefore(member: Frame): Frame {

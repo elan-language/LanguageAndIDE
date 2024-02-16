@@ -33,7 +33,7 @@ export function T00_emptyFile() {
 
 export function T01_helloWorld() {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
 	const comment = new CommentStatement(m);
@@ -47,7 +47,7 @@ export function T01_helloWorld() {
 
 export function T02_comments() {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	const gc = new GlobalComment(f);
 	gc.text.setTextWithoutParsing("Comment 1");
 	f.addGlobalBefore(gc,gs);
@@ -61,7 +61,7 @@ export function T02_comments() {
 
 export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
 	const v = new Variable(m);
@@ -142,7 +142,7 @@ export function T08_collapseAll(f : FileImpl) {
 
 export function T04_allGlobalsExceptClass(): FileImpl {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	const con = new Constant(f);
 	con.name.setTextWithoutParsing("phi");
 	con.expr.setTextWithoutParsing("1.618");
@@ -166,17 +166,19 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 
 export function T05_classes() {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	const cl1 = new Class(f);
+	var ms = cl1.getFirstMemberSelector();
 	f.addGlobalBefore(cl1, gs);
 	cl1.name.setTextWithoutParsing("Player");
 	cl1.asString.returnStatement.expr.setTextWithoutParsing("a Player");
 	const p1 = new Property(cl1);
-	cl1.addMemberBeforeAsString(p1);
+	cl1.addMemberBefore(p1,ms);
 	p1.name.setTextWithoutParsing("score");
 	p1.type.setTextWithoutParsing("Int");
 
 	const cl2 = new Class(f);
+	var ms2 = cl2.getFirstMemberSelector();
 	cl2.inherits = true;
 	cl2.superClasses.setTextWithoutParsing("Foo, Bar");
 	f.addGlobalBefore(cl2, gs);
@@ -184,12 +186,12 @@ export function T05_classes() {
 	cl2.immutable = true;
 	cl2.asString.returnStatement.expr.setTextWithoutParsing("a Card");
 	const p2 = new Property(cl2);
-	cl2.addMemberBeforeAsString(p2);
+	cl2.addMemberBefore(p2, ms2);
 	p2.name.setTextWithoutParsing("value");
 	p2.type.setTextWithoutParsing("Int");
 	p2.private = true;
 	const m1 = new FunctionMethod(cl2);
-	cl2.addMemberBeforeAsString(m1);
+	cl2.addMemberBefore(m1,ms2);
 	m1.name.setTextWithoutParsing("reset");
 	m1.params.setTextWithoutParsing("");
 	m1.returnType.setTextWithoutParsing("Player");
@@ -204,7 +206,7 @@ end main */
 
 export function T06_mergeSort() {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 		const main = new MainFrame(f);
 		f.addGlobalBefore(main, gs);
 			const li = new Variable(main);
@@ -287,7 +289,7 @@ export function T06_mergeSort() {
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl();
-	var gs = f.getFirstSelector();
+	var gs = f.getFirstGlobalSelector();
 	f.addGlobalBefore(new MainFrame(f), gs);
 	f.addGlobalBefore(new Class(f), gs);
 	return f;

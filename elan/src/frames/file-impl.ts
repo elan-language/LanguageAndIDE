@@ -93,7 +93,7 @@ export class FileImpl implements File {
         return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
-    public getFirstSelector() : GlobalSelector {
+    public getFirstGlobalSelector() : GlobalSelector {
         return this._globals.filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
@@ -221,7 +221,7 @@ export class FileImpl implements File {
         source.removeRegEx(new RegExp(Regexes.newLine), false);
         source.removeRegEx(new RegExp(Regexes.newLine), false);
         if (source.hasMoreCode()) {
-            var select = this.getFirstSelector();
+            var select = this.getFirstGlobalSelector();
             select.parseFromSource(source);
         }
     }
