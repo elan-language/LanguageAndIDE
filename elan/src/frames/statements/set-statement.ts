@@ -17,12 +17,12 @@ export class SetStatement extends AbstractFrame  {
         this.expr = new Expression(this);
     }
 
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("set ");
-        this.name.parseFromSource(source);
+        this.name.parseFrom(source);
         source.remove(" to ");
-        this.expr.parseFromSource(source);
+        this.expr.parseFrom(source);
         source.removeNewLine();
     }
 

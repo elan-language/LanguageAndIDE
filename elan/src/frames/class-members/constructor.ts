@@ -3,6 +3,7 @@ import { ParamList } from "../fields/param-list";
 import { Member } from "../interfaces/member";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Constructor extends FrameWithStatements implements Member {
     isMember = true;
@@ -35,11 +36,16 @@ ${this.renderStatementsAsHtml()}
 <keyword>end constructor</keyword>
 </constructor>`;
     }
-
     public renderAsSource(): string {
         return `${this.indent()}constructor(${this.params.renderAsSource()})\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end constructor\r
 `;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 }

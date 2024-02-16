@@ -4,6 +4,7 @@ import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Each extends FrameWithStatements  {
     isStatement = true;
@@ -44,5 +45,11 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end each`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

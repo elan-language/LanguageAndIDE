@@ -1,6 +1,7 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../code-source";
 
 export class Default extends FrameWithStatements {
     isStatement = true;
@@ -27,5 +28,12 @@ ${this.renderStatementsAsHtml()}
     renderAsSource(): string {
         return `${this.indent()}default
 ${this.renderStatementsAsSource()}`;
+    }
+    parseTopLine(source: CodeSource): void {
+        //Can Default and case have a common super-class, as much is in common
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

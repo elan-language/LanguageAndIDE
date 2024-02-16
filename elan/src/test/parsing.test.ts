@@ -16,6 +16,10 @@ suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('parse - all Regexes', () => { 
+		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(``), false);
+		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\n`), true);
+		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\r\n`), true);
+
 		assert.equal(new RegExp(`^${Regexes.type}$`).test(``), false);
 		assert.equal(new RegExp(`^${Regexes.type}$`).test(`T`), true);
 		assert.equal(new RegExp(`^${Regexes.type}$`).test(`Foo123_x`), true);
@@ -108,7 +112,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var setTo = new SetStatement(m);
-		setTo.parseFromSource(source);
+		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	}); 
@@ -119,7 +123,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var v = new Variable(m);
-		v.parseFromSource(source);
+		v.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(v.renderAsSource(), code);
 	});
@@ -130,7 +134,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var p = new Print(m);
-		p.parseFromSource(source);
+		p.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(p.renderAsSource(), code);
 	});
@@ -140,7 +144,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
-		setTo.parseFromSource(source);
+		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
@@ -150,7 +154,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
-		setTo.parseFromSource(source);
+		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
@@ -160,7 +164,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var setTo = new Call(m);
-		setTo.parseFromSource(source);
+		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
@@ -170,7 +174,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var setTo = new Call(m);
-		setTo.parseFromSource(source);
+		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
@@ -180,7 +184,7 @@ suite('Parsing Tests', () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
 		var ss = new StatementSelector(m);
-		ss.parseFromSource(source);
+		ss.parseFrom(source);
 		assert.equal(source.getRemainingCode(), "");
 	}); 
 
@@ -194,12 +198,28 @@ suite('Parsing Tests', () => {
 	});
 
 	test('parse - constant only', () => {
-		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r\n\r\nconstant pi set to 3.142\r\n`;
+		var code = `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n`;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n`);
+		assert.equal(elan, code);
+	});
+	test('parse - two constants', () => {
+		var code = `# Elan v0.1 valid 92f459a07caf7d31\r\n\r\nconstant pi set to 3.142\r\n\r\nconstant e set to 2.718\r\n`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code);
+	});
+	test('parse - main', () => {
+		var code = `# Elan v0.1 valid 0cad41862a1b04bf\r\n\r\nmain\r\n\r\nend main\r\n`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code);
 	});
 });
 

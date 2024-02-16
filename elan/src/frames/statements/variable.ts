@@ -15,12 +15,12 @@ export class Variable extends AbstractFrame  {
         this.name = new Identifier(this);
         this.expr = new Expression(this);
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("var ");
-        this.name.parseFromSource(source);
+        this.name.parseFrom(source);
         source.remove(" set to ");
-        this.expr.parseFromSource(source);
+        this.expr.parseFrom(source);
         source.removeNewLine();
     }
     getFields(): Field[] {

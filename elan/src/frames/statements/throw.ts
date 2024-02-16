@@ -12,10 +12,10 @@ export class Throw extends AbstractFrame  {
         super(parent);
         this.text = new ExceptionMessage(this);
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("throw ");
-        this.text.parseFromSource(source);
+        this.text.parseFrom(source);
         source.removeNewLine();
     }
     getFields(): Field[] {

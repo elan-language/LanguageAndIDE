@@ -4,6 +4,7 @@ import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class For extends FrameWithStatements  {
     isStatement = true;
@@ -49,5 +50,11 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end for`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

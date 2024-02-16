@@ -19,12 +19,12 @@ export class Call extends AbstractFrame {
         this.args = new ArgList(this);
     }
     
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("call ");
-        this.proc.parseFromSource(source);
+        this.proc.parseFrom(source);
         source.remove("(");
-        this.args.parseFromSource(source);
+        this.args.parseFrom(source);
         source.remove(")");
         source.removeNewLine();
     }

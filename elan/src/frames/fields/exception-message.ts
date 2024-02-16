@@ -13,7 +13,7 @@ export class ExceptionMessage extends AbstractField {
     regExp(): RegExp {
         return new RegExp(`^${Regexes.literalString}|${Regexes.identifier}`);
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         var expr = source.removeRegEx(this.regExp(), false);
         this.text = expr;
     }

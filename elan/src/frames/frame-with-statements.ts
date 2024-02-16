@@ -5,6 +5,8 @@ import { Frame } from "./interfaces/frame";
 import { Collapsible } from "./interfaces/collapsible";
 import { ParsingStatus } from "./parsing-status";
 import { StatementSelector } from "./statements/statement-selector";
+import { CodeSource } from "./code-source";
+import { Regexes } from "./fields/regexes";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
@@ -92,4 +94,17 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         var i = this.statements.indexOf(s);
         this.statements.splice(i, 1);   
     }
+
+    parseFrom(source: CodeSource): void {
+        this.parseTopLine(source);
+        while (!this.parseEndOfStatements(source)) {
+            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                source.removeRegEx(Regexes.startsWithNewLine, false);}
+            else {
+                this.getFirstStatementSelector().parseFrom(source);
+            }
+        } 
+    }
+    abstract parseTopLine(source: CodeSource): void;
+    abstract parseEndOfStatements(source: CodeSource): boolean;
 }

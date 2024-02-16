@@ -25,7 +25,7 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         var expr = source.removeRegEx(this.regExp(), this.isOptional());
         this.text = expr;
     }

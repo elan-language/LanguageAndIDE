@@ -15,7 +15,7 @@ export class IfSelector extends AbstractField {
     regExp(): RegExp {
         throw new  Error("Not implemented");
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         throw new Error("Not implemented.");
     }
     getIdPrefix(): string {

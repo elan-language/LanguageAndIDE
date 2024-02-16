@@ -4,6 +4,7 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { Default } from "./default";
 import { Case } from "./case";
+import { CodeSource } from "../code-source";
 
 export class Switch extends FrameWithStatements { 
     isStatement = true;
@@ -37,10 +38,15 @@ ${this.renderStatementsAsHtml()}
 <keyword>end switch</keyword>
 </statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}switch ${this.expr.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end switch`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

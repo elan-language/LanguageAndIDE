@@ -2,6 +2,7 @@ import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class While extends FrameWithStatements implements Parent { 
     isStatement = true;
@@ -33,10 +34,15 @@ ${this.renderStatementsAsHtml()}
 <keyword>end while</keyword>
 </statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}while ${this.condition.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end while`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

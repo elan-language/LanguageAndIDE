@@ -1,8 +1,9 @@
+import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
 import { FunctionMethod } from "./function-method";
 
 export class AsString extends FunctionMethod {
-
+//TODO: would like to get rid of this frame - pending compiler change to make asString optional
     constructor(parent: Class) {
         super(parent);
         this.statements.splice(0,1);
@@ -20,5 +21,11 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}function asString() as String\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end function`;// No new line as 'asString' is always last global before 'end class'
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 }

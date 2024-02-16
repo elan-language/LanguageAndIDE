@@ -217,12 +217,15 @@ export class FileImpl implements File {
     }
 
     parseFromSource(source: CodeSource): void {
-        source.removeRegEx(new RegExp(Regexes.comment), false);
-        source.removeRegEx(new RegExp(Regexes.newLine), false);
-        source.removeRegEx(new RegExp(Regexes.newLine), false);
-        if (source.hasMoreCode()) {
-            var select = this.getFirstGlobalSelector();
-            select.parseFromSource(source);
+        source.removeRegEx(Regexes.startsWithComment, false);
+        source.removeRegEx(Regexes.startsWithNewLine, false);
+        source.removeRegEx(Regexes.startsWithNewLine, false);
+        while (source.hasMoreCode()) {
+            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                source.removeNewLine();
+            } else {
+                this.getFirstGlobalSelector().parseFrom(source);
+            }
         }
     }
 }

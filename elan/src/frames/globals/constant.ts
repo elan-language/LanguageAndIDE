@@ -4,25 +4,28 @@ import { AbstractFrame } from "../abstract-frame";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { Regexes } from "../fields/regexes";
+import { GlobalSelector } from "./global-selector";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;
     name: Identifier;
     expr: Expression;
+    file: File;
 
     constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.name  = new Identifier(this);
         this.expr = new Expression(this);
         this.expr.setPlaceholder("literal value");
     }
 
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.remove("constant ");
-        this.name.parseFromSource(source);
+        this.name.parseFrom(source);
         source.remove(" set to ");
-        this.expr.parseFromSource(source);
-        //source.removeNewLine();
+        this.expr.parseFrom(source);
     }
 
     getFields(): Field[] {

@@ -2,6 +2,7 @@ import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
 
 export class Repeat extends FrameWithStatements {
     isStatement = true;
@@ -33,10 +34,15 @@ ${this.renderStatementsAsHtml()}
 <keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
 </statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}repeat\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}until ${this.condition.renderAsSource()}`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

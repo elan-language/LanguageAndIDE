@@ -6,7 +6,7 @@ import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
+import { CodeSource } from "../code-source";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -58,5 +58,12 @@ ${this.renderStatementsAsHtml()}
 ${this.renderStatementsAsSource()}\r
 end function\r
 `;
+    }
+
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 }

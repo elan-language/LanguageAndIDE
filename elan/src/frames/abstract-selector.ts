@@ -14,12 +14,12 @@ export abstract class AbstractSelector extends AbstractFrame {
     constructor(parent: Parent) {
         super(parent);
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         var options = this.optionsForContext().filter(o => source.isMatch(o[1]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);
-            frame.parseFromSource(source);
+            frame.parseFrom(source);
         } else {
             throw new Error(`${options.length} matches found.`);
         }

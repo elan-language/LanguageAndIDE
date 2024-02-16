@@ -15,10 +15,10 @@ export class CommentStatement extends AbstractFrame implements Member {
         super(parent);
         this.text= new PlainText(this);
     }
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("# ");
-        this.text.parseFromSource(source);
+        this.text.parseFrom(source);
         source.removeNewLine();
     }
     getFields(): Field[] {

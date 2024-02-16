@@ -1,3 +1,4 @@
+import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -36,15 +37,19 @@ ${this.renderStatementsAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
     }
-
     indent(): string {
         return "";
     }
-
     public renderAsSource() : string {
         return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderStatementsAsSource()}\r
 end procedure\r
 `;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 }

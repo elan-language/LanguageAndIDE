@@ -3,6 +3,7 @@ import { Catch } from "./catch";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { StatementSelector } from "./statement-selector";
+import { CodeSource } from "../code-source";
 
 export class TryCatch extends FrameWithStatements  {
     isStatement = true;
@@ -28,10 +29,15 @@ ${this.renderStatementsAsHtml()}
 <keyword>end try</keyword>
 </statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}try\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end try`;
+    }
+    parseTopLine(source: CodeSource): void {
+        throw new Error("Method not implemented.");
+    }
+    parseEndOfStatements(source: CodeSource): boolean {
+        throw new Error("Method not implemented.");
     }
 } 

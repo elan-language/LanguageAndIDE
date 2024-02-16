@@ -1,10 +1,11 @@
+import { Regexes } from "./fields/regexes";
 
 export interface CodeSource {
-    removeNewLine(): void;
-    removeIndent(): void;
+    removeNewLine(): CodeSource;
+    removeIndent(): CodeSource;
     isMatch(code: string): boolean;
     isMatchRegEx(regx: RegExp): boolean;
-    remove(code: string): void;
+    remove(code: string): CodeSource;
     removeRegEx(regx: RegExp, optionally: boolean): string;
     hasMoreCode(): boolean;
     getRemainingCode(): string;
@@ -16,19 +17,21 @@ export class CodeSourceFromString implements CodeSource {
     constructor(code: string) {
         this.remainingCode = code;
     }
-    removeNewLine(): void {
-        var newLine = "\n";
-        this.remove(newLine);
+    removeNewLine(): CodeSource {
+        this.removeRegEx(Regexes.startsWithNewLine, false);
+        return this;
     }
-    removeIndent(): void {
+    removeIndent(): CodeSource {
         var indent = /^\s*/;
         this.removeRegEx(indent, false);
+        return this;
     }
-    remove(match: string): void {
+    remove(match: string): CodeSource {
         if (!this.isMatch(match)) {
             throw new Error(`code does not match ${match} - can check by calling 'isMatch' first`);
         }
         this.remainingCode = this.remainingCode.substring(match.length);
+        return this;
     }
     removeRegEx(regx: RegExp, optional: boolean): string {
         if (!this.isMatchRegEx(regx)) {

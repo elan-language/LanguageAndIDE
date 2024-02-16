@@ -228,7 +228,7 @@ export abstract class AbstractFrame implements Frame {
         return this.worstStatusOfFields();
     }
 
-    parseFromSource(source: CodeSource): void {
+    parseFrom(source: CodeSource): void {
         throw new Error("Not implemented");
     }
 }
