@@ -10,7 +10,6 @@ import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
 import { Regexes } from '../frames/fields/regexes';
-import { GlobalSelector } from '../frames/globals/global-selector';
 
 suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -189,67 +188,89 @@ suite('Parsing Tests', () => {
 	}); 
 
 	test('parse - empty file', () => {
-		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r
-\r
+		var code = `# Elan v0.1 valid e3b0c44298fc1c14
+
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
 	test('parse - constant only', () => {
-		var code = `# Elan v0.1 valid ac46b46919180712\r
-\r
-constant pi set to 3.142\r
+		var code = `# Elan v0.1 valid ac46b46919180712
+
+constant pi set to 3.142
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+
+
 	test('parse - two constants', () => {
-		var code = `# Elan v0.1 valid 92f459a07caf7d31\r
-\r
-constant pi set to 3.142\r
-\r
-constant e set to 2.718\r
+		var code = `# Elan v0.1 valid 92f459a07caf7d31
+
+constant pi set to 3.142
+
+constant e set to 2.718
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+
 	test('parse - main', () => {
-		var code = `# Elan v0.1 valid 0cad41862a1b04bf\r
-\r
-main\r
-\r
-end main\r
+		var code = `# Elan v0.1 valid 0cad41862a1b04bf
+
+main
+
+end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
 	test('parse - hello world', () => {
-		var code = `# Elan v0.1 valid fc7c4565dc3c9c3b\r
-\r
-main\r
-  # My first program\r
-  print "Hello World!"\r
-end main\r
+		var code = `# Elan v0.1 valid fc7c4565dc3c9c3b
+
+main
+  # My first program
+  print "Hello World!"
+end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
 		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
+	test('parse - main with all single-line statements', () => {
+		var code = `# Elan v0.1 valid a07f33f9d15ca00c
+
+main
+  var name set to value or expression
+  set a to 3 + 4
+  throw message
+  call signIn(rwp, password)
+  print "Hello World!"
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 });
 
