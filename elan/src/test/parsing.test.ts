@@ -189,7 +189,9 @@ suite('Parsing Tests', () => {
 	}); 
 
 	test('parse - empty file', () => {
-		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r\n\r\n`;
+		var code = `# Elan v0.1 valid e3b0c44298fc1c14\r
+\r
+`;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
@@ -198,7 +200,10 @@ suite('Parsing Tests', () => {
 	});
 
 	test('parse - constant only', () => {
-		var code = `# Elan v0.1 valid ac46b46919180712\r\n\r\nconstant pi set to 3.142\r\n`;
+		var code = `# Elan v0.1 valid ac46b46919180712\r
+\r
+constant pi set to 3.142\r
+`;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
@@ -206,7 +211,12 @@ suite('Parsing Tests', () => {
 		assert.equal(elan, code);
 	});
 	test('parse - two constants', () => {
-		var code = `# Elan v0.1 valid 92f459a07caf7d31\r\n\r\nconstant pi set to 3.142\r\n\r\nconstant e set to 2.718\r\n`;
+		var code = `# Elan v0.1 valid 92f459a07caf7d31\r
+\r
+constant pi set to 3.142\r
+\r
+constant e set to 2.718\r
+`;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFromSource(source);
@@ -214,14 +224,6 @@ suite('Parsing Tests', () => {
 		assert.equal(elan, code);
 	});
 	test('parse - main', () => {
-		var code = `# Elan v0.1 valid 0cad41862a1b04bf\r\n\r\nmain\r\n\r\nend main\r\n`;
-        var source = new CodeSourceFromString(code);
-		const fl = new FileImpl();
-		fl.parseFromSource(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code);
-	});
-	test('parse - main2', () => {
 		var code = `# Elan v0.1 valid 0cad41862a1b04bf\r
 \r
 main\r
