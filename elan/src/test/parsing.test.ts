@@ -221,6 +221,34 @@ suite('Parsing Tests', () => {
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code);
 	});
+	test('parse - main2', () => {
+		var code = `# Elan v0.1 valid 0cad41862a1b04bf\r
+\r
+main\r
+\r
+end main\r
+`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code);
+	});
+
+	test('parse - hello world', () => {
+		var code = `# Elan v0.1 valid fc7c4565dc3c9c3b\r
+\r
+main\r
+  # My first program\r
+  print "Hello World!"\r
+end main\r
+`;
+        var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code);
+	});
 });
 
 
