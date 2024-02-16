@@ -28,15 +28,14 @@ import { Case } from "../frames/statements/case";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();
-	f.addChildToEnd(new GlobalSelector(f));
 	return f;
 }
 
 export function T01_helloWorld() {
 	const f = new FileImpl();
+	var gs = f.getFirstSelector();
 	const m = new MainFrame(f);
-	f.addChildToEnd(m);
-	m.removeStatementSelector();
+	f.addGlobalBefore(m,gs);
 	const comment = new CommentStatement(m);
 	comment.text.setTextWithoutParsing(`My first program`);
 	m.addStatementAtEnd(comment);
@@ -48,12 +47,12 @@ export function T01_helloWorld() {
 
 export function T02_comments() {
 	const f = new FileImpl();
-	const sc1 = new GlobalComment(f);
-	sc1.text.setTextWithoutParsing("Comment 1");
-	f.addChildToEnd(sc1);
+	var gs = f.getFirstSelector();
+	const gc = new GlobalComment(f);
+	gc.text.setTextWithoutParsing("Comment 1");
+	f.addGlobalBefore(gc,gs);
 	const m = new MainFrame(f);
-	f.addChildToEnd(m);
-	m.removeStatementSelector();
+	f.addGlobalBefore(m, gs);
 	const sc2 = new CommentStatement(m);
 	sc2.text.setTextWithoutParsing("Comment 2");
 	m.addStatementAtEnd(sc2);
@@ -62,9 +61,9 @@ export function T02_comments() {
 
 export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl();
+	var gs = f.getFirstSelector();
 	const m = new MainFrame(f);
-	f.addChildToEnd(m);
-	m.removeStatementSelector();
+	f.addGlobalBefore(m,gs);
 	const v = new Variable(m);
 	m.addStatementAtEnd(v);
 	const s = new SetStatement(m);
@@ -122,12 +121,12 @@ export function T03_mainWithAllStatements(): FileImpl {
 }
 
 export function T07_mainWithAllStatementsSelectMainById(f : FileImpl) {
-	f.getById("main0").select(true, false);
+	f.getById("main1").select(true, false);
 	return () => f;
 }
 
 export function T07_mainWithAllStatementsSelectStatementById(f : FileImpl) {
-	f.getById("for21").select(true, false);
+	f.getById("for22").select(true, false);
 	return () => f;
 }
 
@@ -143,32 +142,33 @@ export function T08_collapseAll(f : FileImpl) {
 
 export function T04_allGlobalsExceptClass(): FileImpl {
 	const f = new FileImpl();
+	var gs = f.getFirstSelector();
 	const con = new Constant(f);
 	con.name.setTextWithoutParsing("phi");
 	con.expr.setTextWithoutParsing("1.618");
-	f.addChildToEnd(con);
+	f.addGlobalBefore(con, gs);
 	const main = new MainFrame(f);
-	f.addChildToEnd(main);
-	const p = new Procedure(f);
-	p.name.setTextWithoutParsing("signIn");
-	f.addChildToEnd(p);
-	const c = new Function(f);
-	c.name.setTextWithoutParsing("hypotenuse");
-	c.params.setTextWithoutParsing("sideB Float, sideC Float");
-	c.returnType.setTextWithoutParsing("Float");
-	f.addChildToEnd(c);
-	const e = new Enum(f);
-	e.name.setTextWithoutParsing("Fruit");
-	e.values.setTextWithoutParsing("apple, orange, pear");
-	f.addChildToEnd(e);
+	f.addGlobalBefore(main, gs);
+	const proc = new Procedure(f);
+	proc.name.setTextWithoutParsing("signIn");
+	f.addGlobalBefore(proc, gs);
+	const func = new Function(f);
+	func.name.setTextWithoutParsing("hypotenuse");
+	func.params.setTextWithoutParsing("sideB Float, sideC Float");
+	func.returnType.setTextWithoutParsing("Float");
+	f.addGlobalBefore(func, gs);
+	const enu = new Enum(f);
+	enu.name.setTextWithoutParsing("Fruit");
+	enu.values.setTextWithoutParsing("apple, orange, pear");
+	f.addGlobalBefore(enu, gs);
 	return f;
 }
 
 export function T05_classes() {
 	const f = new FileImpl();
-
+	var gs = f.getFirstSelector();
 	const cl1 = new Class(f);
-	f.addChildToEnd(cl1);
+	f.addGlobalBefore(cl1, gs);
 	cl1.name.setTextWithoutParsing("Player");
 	cl1.asString.returnStatement.expr.setTextWithoutParsing("a Player");
 	const p1 = new Property(cl1);
@@ -179,7 +179,7 @@ export function T05_classes() {
 	const cl2 = new Class(f);
 	cl2.inherits = true;
 	cl2.superClasses.setTextWithoutParsing("Foo, Bar");
-	f.addChildToEnd(cl2);
+	f.addGlobalBefore(cl2, gs);
 	cl2.name.setTextWithoutParsing("Card");
 	cl2.immutable = true;
 	cl2.asString.returnStatement.expr.setTextWithoutParsing("a Card");
@@ -204,9 +204,9 @@ end main */
 
 export function T06_mergeSort() {
 	const f = new FileImpl();
+	var gs = f.getFirstSelector();
 		const main = new MainFrame(f);
-		f.addChildToEnd(main);
-		    main.removeStatementSelector();
+		f.addGlobalBefore(main, gs);
 			const li = new Variable(main);
 			main.addStatementAtEnd(li);
 				li.name.setTextWithoutParsing("li");
@@ -217,8 +217,7 @@ export function T06_mergeSort() {
 				pr.expr.setTextWithoutParsing("mergeSort(li)");
 			
 		const mergeSort = new Function(f);
-		f.addChildToEnd(mergeSort);
-			mergeSort.removeStatementSelector();
+		f.addGlobalBefore(mergeSort,gs);
 			mergeSort.name.setTextWithoutParsing("mergeSort");
 			mergeSort.params.setTextWithoutParsing(`list List<of String>`);
 			mergeSort.returnType.setTextWithoutParsing(`List<of String>`);
@@ -229,7 +228,6 @@ export function T06_mergeSort() {
 
 			const if1 = new IfThen(mergeSort);
 			mergeSort.addStatementBeforeReturn(if1);
-			    if1.removeStatementSelector();
 				if1.condition.setTextWithoutParsing(`list.length() > 1`);
 				const mid = new Variable(if1);
 					if1.addStatementAtEnd(mid);
@@ -243,8 +241,7 @@ export function T06_mergeSort() {
 			mergeSort.returnStatement.expr.setTextWithoutParsing(`result`);
 		
 		const merge = new Function(f);
-		f.addChildToEnd(merge);		
-		    merge.removeStatementSelector();
+		f.addGlobalBefore(merge,gs);		
 			merge.name.setTextWithoutParsing(`merge`);
 			merge.params.setTextWithoutParsing(`a List<of String>, b List<of String>`);
 			merge.returnType.setTextWithoutParsing(`List<of String>`);
@@ -255,7 +252,6 @@ export function T06_mergeSort() {
 			
 			const if2 = new IfThen(merge);
 			merge.addStatementBeforeReturn(if2);
-			    if2.removeStatementSelector();
 				if2.condition.setTextWithoutParsing(`a.isEmpty()`);
 				const setResult1 = new SetStatement(if2);
 					setResult1.name.setTextWithoutParsing(`result`);
@@ -291,9 +287,9 @@ export function T06_mergeSort() {
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl();
-	f.addChildToEnd(new MainFrame(f));
-	f.addChildToEnd(new Class(f));
-	f.addChildToEnd(new GlobalSelector(f));
+	var gs = f.getFirstSelector();
+	f.addGlobalBefore(new MainFrame(f), gs);
+	f.addGlobalBefore(new Class(f), gs);
 	return f;
 }
 

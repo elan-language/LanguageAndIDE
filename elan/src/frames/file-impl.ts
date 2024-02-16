@@ -16,7 +16,6 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
-import { GlobalPreloadContext } from "node:module";
 import { GlobalSelector } from "./globals/global-selector";
 
 export class FileImpl implements File {
@@ -30,6 +29,7 @@ export class FileImpl implements File {
     constructor() {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
+        this._globals.push(new GlobalSelector(this));
     }
 
     hasParent(): boolean {
@@ -93,16 +93,16 @@ export class FileImpl implements File {
         return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
-    public addChildToEnd(g: Frame) {
-        this._globals.push(g);
+    public getFirstSelector() : GlobalSelector {
+        return this._globals.filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
-    public addChildBefore(g: Frame, before: Frame): void {
+    public addGlobalBefore(g: Frame, before: Frame): void {
         var i = this._globals.indexOf(before);
         this._globals.splice(i,0,g);
     }
 
-    public addChildAfter(g: Frame, after: Frame) {
+    public addGlobalAfter(g: Frame, after: Frame) {
         var i = this._globals.indexOf(after)+1;
         this._globals.splice(i,0,g);     
     }
@@ -211,7 +211,7 @@ export class FileImpl implements File {
         return this.addGlobalBeforeAndSelect(m,g);
     }
     private addGlobalBeforeAndSelect(g: Frame, before: Frame): Frame {
-        this.addChildBefore(g, before);
+        this.addGlobalBefore(g, before);
         g.select(true, false);
         return g;
     }
@@ -221,8 +221,7 @@ export class FileImpl implements File {
         source.removeRegEx(new RegExp(Regexes.newLine), false);
         source.removeRegEx(new RegExp(Regexes.newLine), false);
         if (source.hasMoreCode()) {
-            var select = new GlobalSelector(this)
-            this.addChildToEnd(select);
+            var select = this.getFirstSelector();
             select.parseFromSource(source);
         }
     }

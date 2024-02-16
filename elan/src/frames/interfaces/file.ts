@@ -13,8 +13,8 @@ export interface File extends Parent {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-    addChildBefore(g: Frame, before: Frame): void;
-    addChildAfter(g: Frame, after: Frame): void;
+    addGlobalBefore(g: Frame, before: Frame): void;
+    addGlobalAfter(g: Frame, after: Frame): void;
 
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;

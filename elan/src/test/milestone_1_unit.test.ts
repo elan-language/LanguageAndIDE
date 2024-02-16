@@ -22,10 +22,10 @@ suite('Milestone 1 - Unit tests', () => {
 		assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
-				const frame = ff.getById("const0");
+				const frame = ff.getById("const1");
 				frame.select(true, false);
 			},
-			["const0", "valid", "selected focused valid"]);
+			["const1", "valid", "selected focused valid"]);
 
 	});
 
@@ -33,64 +33,64 @@ suite('Milestone 1 - Unit tests', () => {
 		assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
-				const mn = ff.getById("main3");
+				const mn = ff.getById("main4");
 				if (isParent(mn)){
 					const s = mn.getFirstChild();
 					s.select(true, false);
 				}
 			},
-			["select4", "valid empty", "selected focused valid empty"]);
+			["select5", "valid empty", "selected focused valid empty"]);
 	});
 
 	test('Collapse Main', () => {
 		assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
-				const mn = ff.getById("main3");
+				const mn = ff.getById("main4");
 				if (isParent(mn)){
 					mn.collapse();
 				}
 			},
-			["main3", "multiline valid", "multiline collapsed valid"]);
+			["main4", "multiline valid", "multiline collapsed valid"]);
 	});
 
 	test('Invalid identifier', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var2", "incomplete"); 
-		file.getById("ident3").processKey(key("X"));
-		assertElementHasClasses(file, "var2", "invalid");
+		assertElementHasClasses(file, "var3", "incomplete"); 
+		file.getById("ident4").processKey(key("X"));
+		assertElementHasClasses(file, "var3", "invalid");
 		assertElementHasClasses(file, "fileStatus", "invalid");
 	});
 
 	test('Valid identifier', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var2", "incomplete"); 
-		file.getById("ident3").processKey(key("q"));
-		assertElementHasClasses(file, "ident3", "valid");
+		assertElementHasClasses(file, "var3", "incomplete"); 
+		file.getById("ident4").processKey(key("q"));
+		assertElementHasClasses(file, "ident4", "valid");
 		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
 	});
 
 	test('Valid variable statement', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var2", "incomplete"); 
-		file.getById("ident3").processKey(key("q"));
-		file.getById("expr4").processKey(key("5"));
-		assertElementHasClasses(file, "var2", "valid");
+		assertElementHasClasses(file, "var3", "incomplete"); 
+		file.getById("ident4").processKey(key("q"));
+		file.getById("expr5").processKey(key("5"));
+		assertElementHasClasses(file, "var3", "valid");
 	});
 
 	test("Statement Select - variable", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select1").processKey(key("v"));
+		file.getById("select2").processKey(key("v"));
 		var v = file.getById("var17").renderAsSource();
 		assert.equal(v, '  var name set to value or expression');
 	});	
 	
 	test("Member Select - function", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select8").processKey(key("f"));
+		file.getById("select9").processKey(key("f"));
 		var v = file.getById("func17").renderAsSource();
 		assert.equal(v, '  function name(parameter definitions) as return type\r\n' +
 		'    return value or expression\r\n' +
@@ -99,16 +99,16 @@ suite('Milestone 1 - Unit tests', () => {
 
 	 test("Member Select - procedure", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select8").processKey(key("p"));
-		file.getById("select8").processKey(key("c"));
+		file.getById("select9").processKey(key("p"));
+		file.getById("select9").processKey(key("c"));
 		var v = file.getById("proc17").renderAsSource();
 		assert.equal(v, '  procedure name(parameter definitions)\r\n\r\n  end procedure\r\n');
  	});	
 
 	 test("Global Select - Constant", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select16").processKey(key("c"));
-		file.getById("select16").processKey(key("o"));
+		file.getById("select0").processKey(key("c"));
+		file.getById("select0").processKey(key("o"));
 		var v = file.getById("const17").renderAsSource();
 		assert.equal(v, 'constant name set to literal value\r\n');
  	});	
@@ -121,7 +121,7 @@ suite('Milestone 1 - Unit tests', () => {
 		g.processKey(key('c'));
 		help = g.getHelp();
 		assert.equal(help, " class constant");
-        assert.equal(g.renderAsHtml(), `<global class="valid" id='select0' tabindex="0"><text>c</text><placeholder>new code</placeholder><help> class constant</help></global>`);
+        assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><text>c</text><placeholder>new code</placeholder><help> class constant</help></global>`);
 	});	
 
 	test("Selection Filtering - members", () => {
@@ -133,7 +133,7 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('p'));
 		help = s.getHelp();
 		assert.equal(help, " procedure property");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select14' tabindex="0"><text>pro</text><placeholder>new code</placeholder><help> procedure property</help></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select15' tabindex="0"><text>pro</text><placeholder>new code</placeholder><help> procedure property</help></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {
@@ -145,7 +145,7 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('s'));
 		help = s.getHelp();
 		assert.equal(help, " set switch");
-        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select2' tabindex="0"><text>s</text><placeholder>new code</placeholder><help> set switch</help></statement>`);
+        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><text>s</text><placeholder>new code</placeholder><help> set switch</help></statement>`);
 	});	
 
 	test("Selection Context - in a Function", () => {

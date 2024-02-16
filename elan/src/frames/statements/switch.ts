@@ -12,7 +12,7 @@ export class Switch extends FrameWithStatements {
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
-        this.removeStatementSelector();
+        this.statements.splice(0,1); //Removes the StatementSelector auto-added by FrameWithStatements
         this.statements.push(new Case(this));
         this.statements.push(new Default(this));
     }

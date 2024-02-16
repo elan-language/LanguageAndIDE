@@ -47,7 +47,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
                 return this.getClass().addPropertyBefore(this);
             }
             default: {
-                throw new Error(`${frameType} is not a valid member frame type.`)
+                throw new Error(`${frameType} is not a valid member frame type.`);
             }
         }
     }

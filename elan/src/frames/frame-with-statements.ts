@@ -92,9 +92,4 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         var i = this.statements.indexOf(s);
         this.statements.splice(i, 1);   
     }
-
-    //TODO: This is a kludge method, since all selectors should be removed automatically once frame has exited provided there is at least one statement
-    public removeStatementSelector(): void {
-        this.statements.splice(0,1);
-    }
 }
