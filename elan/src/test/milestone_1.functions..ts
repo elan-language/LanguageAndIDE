@@ -36,12 +36,13 @@ export function T01_helloWorld() {
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
+	var ss = m.getFirstStatementSelector();
 	const comment = new CommentStatement(m);
 	comment.text.setTextWithoutParsing(`My first program`);
-	m.addStatementAtEnd(comment);
+	m.addStatementBefore(comment, ss);
 	const pr = new Print(m);
 	pr.expr.setTextWithoutParsing(`"Hello World!"`);
-	m.addStatementAtEnd(pr);
+	m.addStatementBefore(pr, ss);
 	return f;
 }
 
@@ -53,9 +54,10 @@ export function T02_comments() {
 	f.addGlobalBefore(gc,gs);
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m, gs);
+	var ss = m.getFirstStatementSelector();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setTextWithoutParsing("Comment 2");
-	m.addStatementAtEnd(sc2);
+	m.addStatementBefore(sc2, ss);
 	return f;
 }
 
@@ -64,29 +66,30 @@ export function T03_mainWithAllStatements(): FileImpl {
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
+	var ssm = m.getFirstStatementSelector();
 	const v = new Variable(m);
-	m.addStatementAtEnd(v);
+	m.addStatementBefore(v,ssm);
 	const s = new SetStatement(m);
 	s.name.setTextWithoutParsing("a");
 	s.expr.setTextWithoutParsing("3 + 4");
-	m.addStatementAtEnd(s);
+	m.addStatementBefore(s,ssm);
 	const t = new Throw(m);
-	m.addStatementAtEnd(t);
+	m.addStatementBefore(t,ssm);
 	const ca = new Call(m);
 	ca.proc.setTextWithoutParsing("signIn");
 	ca.args.setTextWithoutParsing(`rwp, password`);
-	m.addStatementAtEnd(ca);
+	m.addStatementBefore(ca,ssm);
 	const pr = new Print(m);
 	pr.expr.setTextWithoutParsing(`"Hello World!"`);
-	m.addStatementAtEnd(pr);
+	m.addStatementBefore(pr,ssm);
 	const w = new While(m);
 	w.condition.setTextWithoutParsing("newGame");
-	m.addStatementAtEnd(w);
+	m.addStatementBefore(w,ssm);
 	const r = new Repeat(m);
 	r.condition.setTextWithoutParsing("score > 20");
-	m.addStatementAtEnd(r);
+	m.addStatementBefore(r,ssm);
 	const for1 = new For(m);
-	m.addStatementAtEnd(for1);
+	m.addStatementBefore(for1,ssm);
 	for1.variable.setTextWithoutParsing("i");
 	for1.from.setTextWithoutParsing("1");
 	for1.to.setTextWithoutParsing("10");
@@ -94,29 +97,30 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const ea = new Each(m);
 	ea.variable.setTextWithoutParsing("letter");
 	ea.iter.setTextWithoutParsing("Charlie Duke");
-	m.addStatementAtEnd(ea);
+	m.addStatementBefore(ea,ssm);
 	const if1 = new IfThen(m);
     if1.condition.setTextWithoutParsing("y > 4");
-	m.addStatementAtEnd(if1);
+	m.addStatementBefore(if1,ssm);
 	const if2 = new IfThen(m);
-	m.addStatementAtEnd(if2);
+	m.addStatementBefore(if2,ssm);
     if2.condition.setTextWithoutParsing("y > 4");
-	if2.addStatementAtEnd(new Else(if2));
-	if2.addStatementAtEnd(new StatementSelector(if2));
+	var ss2 = if2.getFirstStatementSelector();
+	var el1 = new Else(if2);
+	if2.addStatementBefore(el1,ss2);
+	if2.addStatementBefore(new StatementSelector(if2), el1);
 	const if3 = new IfThen(m);
-	m.addStatementAtEnd(if3);
+	m.addStatementBefore(if3, ssm);
+	var ss_if3 = if3.getFirstStatementSelector();
     if3.condition.setTextWithoutParsing("y > 4");
-	const el = new Else(if3);
-	el.hasIf = true;
-	el.condition.setTextWithoutParsing("y > 10");
-	if3.addStatementAtEnd(el);
-	if3.addStatementAtEnd(new StatementSelector(if3));
-	if3.addStatementAtEnd(new Else(if3));
-	if3.addStatementAtEnd(new StatementSelector(if3));
+	const el2 = new Else(if3);
+	el2.hasIf = true;
+	el2.condition.setTextWithoutParsing("y > 10");
+	if3.addStatementBefore(el2,ss_if3);
+	if3.addStatementBefore(new Else(if3),ss_if3);
 	const tr = new TryCatch(m);
-	m.addStatementAtEnd(tr);
+	m.addStatementBefore(tr,ssm);
 	const sw = new Switch(m);
-	m.addStatementAtEnd(sw);
+	m.addStatementBefore(sw,ssm);
 	return f;
 }
 
@@ -206,81 +210,86 @@ end main */
 
 export function T06_mergeSort() {
 	const f = new FileImpl();
-	var gs = f.getFirstGlobalSelector();
+	var gs_file = f.getFirstGlobalSelector();
 		const main = new MainFrame(f);
-		f.addGlobalBefore(main, gs);
+		f.addGlobalBefore(main, gs_file);
+		var ssm = main.getFirstStatementSelector();
 			const li = new Variable(main);
-			main.addStatementAtEnd(li);
+			main.addStatementBefore(li, ssm);
 				li.name.setTextWithoutParsing("li");
 				li.expr.setTextWithoutParsing(`{"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}`);
 			
 			const pr = new Print(main);
-			main.addStatementAtEnd(pr);
+			main.addStatementBefore(pr, ssm);
 				pr.expr.setTextWithoutParsing("mergeSort(li)");
 			
 		const mergeSort = new Function(f);
-		f.addGlobalBefore(mergeSort,gs);
+		f.addGlobalBefore(mergeSort,gs_file);
+		var ss_ms = mergeSort.getFirstStatementSelector();
 			mergeSort.name.setTextWithoutParsing("mergeSort");
 			mergeSort.params.setTextWithoutParsing(`list List<of String>`);
 			mergeSort.returnType.setTextWithoutParsing(`List<of String>`);
 			const result1 = new Variable(mergeSort);
-				mergeSort.addStatementBeforeReturn(result1);
+				mergeSort.addStatementBefore(result1,ss_ms);
 				result1.name.setTextWithoutParsing(`result`);
 				result1.expr.setTextWithoutParsing(`list`);
 
 			const if1 = new IfThen(mergeSort);
-			mergeSort.addStatementBeforeReturn(if1);
+			mergeSort.addStatementBefore(if1, ss_ms);
+			    var ss_mergeSort_if1 = if1.getFirstStatementSelector();
 				if1.condition.setTextWithoutParsing(`list.length() > 1`);
 				const mid = new Variable(if1);
-					if1.addStatementAtEnd(mid);
+					if1.addStatementBefore(mid, ss_mergeSort_if1);
 					mid.name.setTextWithoutParsing(`mid`);
 					mid.expr.setTextWithoutParsing(`list.length() div 2`);
 				const setMid = new SetStatement(if1);
-					if1.addStatementAtEnd(setMid);
+					if1.addStatementBefore(setMid, ss_mergeSort_if1);
 					setMid.name.setTextWithoutParsing(`result`);
 					setMid.expr.setTextWithoutParsing(`merge(mergeSort(list[..mid]), mergeSort(list[mid..]))`);
 				
 			mergeSort.returnStatement.expr.setTextWithoutParsing(`result`);
 		
 		const merge = new Function(f);
-		f.addGlobalBefore(merge,gs);		
+		f.addGlobalBefore(merge,gs_file);	
+		var ss_merge = merge.getFirstStatementSelector();	
 			merge.name.setTextWithoutParsing(`merge`);
 			merge.params.setTextWithoutParsing(`a List<of String>, b List<of String>`);
 			merge.returnType.setTextWithoutParsing(`List<of String>`);
 			const result = new Variable(merge);
-			merge.addStatementBeforeReturn(result);
+			merge.addStatementBefore(result, ss_merge);
 				result.name.setTextWithoutParsing(`name`);
 				result.expr.setTextWithoutParsing(`new List<of String>()`);
 			
 			const if2 = new IfThen(merge);
-			merge.addStatementBeforeReturn(if2);
+			merge.addStatementBefore(if2, ss_merge);
+			    var ss_merge_if = if2.getFirstStatementSelector();
 				if2.condition.setTextWithoutParsing(`a.isEmpty()`);
 				const setResult1 = new SetStatement(if2);
 					setResult1.name.setTextWithoutParsing(`result`);
 					setResult1.expr.setTextWithoutParsing(`b`);
-				if2.addStatementAtEnd(setResult1);
+				if2.addStatementBefore(setResult1, ss_merge_if);
 			const elif1 = new Else(if2);
 				elif1.hasIf = true;
 				elif1.condition.setTextWithoutParsing(`b.isEmpty()`);
-			if2.addStatementAtEnd(elif1);	
+			if2.addStatementBefore(elif1, ss_merge_if);	
 			const setResult2 = new SetStatement(if2);
 				setResult2.name.setTextWithoutParsing(`result`);
 				setResult2.expr.setTextWithoutParsing(`a`);
-			if2.addStatementAtEnd(setResult2);
+			if2.addStatementBefore(setResult2, ss_merge_if);
 			const elif2 = new Else(if2);
 				elif2.hasIf = true;
 				elif2.condition.setTextWithoutParsing(`a[0].isBefore(b[0])`);
-			if2.addStatementAtEnd(elif2);	
+			if2.addStatementBefore(elif2, ss_merge_if);	
 			const setResult3 = new SetStatement(if2);
 				setResult3.name.setTextWithoutParsing(`result`);
 				setResult3.expr.setTextWithoutParsing(`a[0] + merge(a[1..], b)`);
-			if2.addStatementAtEnd(setResult3);
+			if2.addStatementBefore(setResult3, ss_merge_if);
             const els = new Else(if2);
-			if2.addStatementAtEnd(els);
+			if2.addStatementBefore(els, ss_merge_if);
 			const setResult4 = new SetStatement(if2);
 				setResult4.name.setTextWithoutParsing(`result`);
 				setResult4.expr.setTextWithoutParsing(`b[0] + merge(a, b[1..])`);
-			if2.addStatementAtEnd(setResult4);
+			if2.addStatementBefore(setResult4, ss_merge_if);
 		
 		merge.returnStatement.expr.setTextWithoutParsing(`result`);
 	

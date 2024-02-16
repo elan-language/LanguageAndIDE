@@ -41,11 +41,6 @@ export class Function extends FrameWithStatements implements Parent {
         return true;
     }
 
-    public addStatementBeforeReturn(s: Frame): void {
-        var i = this.statements.length -1;
-        this.statements.splice(i,0,s);
-    }
-
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}</top>

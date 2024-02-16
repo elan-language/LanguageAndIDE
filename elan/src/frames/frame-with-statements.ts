@@ -30,6 +30,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             this.collapse();
         }
     }
+    public getFirstStatementSelector() : StatementSelector {
+        return this.statements.filter(g => ('isSelector' in g))[0] as StatementSelector;
+    }
+
     getFirstChild(): Frame {
         return this.statements[0]; //Should always be one - at minimum a SelectGlobal
     }
@@ -72,10 +76,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             result = ss.join("\r\n");
         }
         return result;
-    }
-
-    public addStatementAtEnd(s: Frame) {
-        this.statements.push(s);
     }
 
     public addStatementBefore(s: Frame, before: Frame) {
