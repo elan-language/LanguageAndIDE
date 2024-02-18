@@ -4,6 +4,8 @@ import { AbstractFrame } from "../abstract-frame";
 import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
+import { Regexes } from "../fields/regexes";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
@@ -48,5 +50,15 @@ export class Enum extends AbstractFrame {
 ${singleIndent()}${this.values.renderAsSource()}\r
 end enum\r
 `;
+    }
+
+    parseFrom(source: CodeSource): void {
+        source.remove("enum ");
+        this.name.parseFrom(source);
+        source.removeNewLine();
+        source.removeIndent();
+        this.values.parseFrom(source);
+        source.removeNewLine();
+        source.remove("end enum");
     }
 } 

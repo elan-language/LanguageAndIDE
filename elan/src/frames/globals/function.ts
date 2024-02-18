@@ -7,6 +7,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { Regexes } from "../fields/regexes";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -60,10 +61,29 @@ end function\r
 `;
     }
 
-    parseTopLine(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+    parseTopOfFrame(source: CodeSource): void {
+        source.remove("function ");
+        this.name.parseFrom(source);
+        source.remove("(");
+        this.params.parseFrom(source);
+        source.remove(") as ");
+        this.returnType.parseFrom(source);
     }
-    parseEndOfStatements(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+    parseBottomOfFrame(source: CodeSource): boolean {
+        var result = false;
+        var keyword = "return ";
+        source.removeIndent();
+        if (source.isMatch(keyword)) {
+            this.getReturnStatement().parseFrom(source);
+            source.removeRegEx(Regexes.startsWithNewLine, false);
+            this.parseStandardEnding(source, "end function");
+            result = true;
+        }
+        return result;
     }
+
+    private getReturnStatement() : ReturnStatement {
+        return this.statements.filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
+    }
+
 }

@@ -272,6 +272,35 @@ end main
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+
+	test('parse - all globals except class', () => {
+		var code = `# Elan v0.1 valid c6f179daced8df8a
+
+constant phi set to 1.618
+
+main
+
+end main
+
+procedure signIn(password String)
+
+end procedure
+
+function hypotenuse(sideB Float, sideC Float) as Float
+  return value or expression
+end function
+
+enum Fruit
+  apple, orange, pear
+end enum
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 });
 
 

@@ -46,10 +46,14 @@ ${this.renderStatementsAsSource()}\r
 end procedure\r
 `;
     }
-    parseTopLine(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+    parseTopOfFrame(source: CodeSource): void {
+        source.remove("procedure ");
+        this.name.parseFrom(source);
+        source.remove("(");
+        this.params.parseFrom(source);
+        source.remove(")");
     }
-    parseEndOfStatements(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+    parseBottomOfFrame(source: CodeSource): boolean {
+       return this.parseStandardEnding(source, "end procedure");
     }
 }

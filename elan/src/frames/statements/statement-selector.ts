@@ -28,7 +28,8 @@ export class StatementSelector extends AbstractSelector  {
         ["TryCatch", "try"],
         ["Variable", "var"],
         ["While", "while"],
-        ["CommentStatement", "#"]
+        ["CommentStatement", "#"],
+        ["ReturnStatement", "return"]
     ];
     
     addFrame(frameType: string): Frame {
@@ -43,7 +44,7 @@ export class StatementSelector extends AbstractSelector  {
         } else if ((frameType === "Call" || frameType === "Print") && this.isWithinAFunction(this.getParent()) ) {
             return false;
         } else {
-            return frameType !== "Case" && frameType !== "Else";
+            return frameType !== "Case" && frameType !== "Else" && frameType !== "ReturnStatement";
         }
     }
 

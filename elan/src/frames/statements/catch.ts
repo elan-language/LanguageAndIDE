@@ -1,9 +1,7 @@
 import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-
 import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
 
 export class Catch extends AbstractFrame {
     isStatement = true;

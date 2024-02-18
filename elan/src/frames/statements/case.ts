@@ -35,10 +35,10 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}case ${this.value.renderAsSource()}
 ${this.renderStatementsAsSource()}`;
     }
-    parseTopLine(source: CodeSource): void {
+    parseTopOfFrame(source: CodeSource): void {
         throw new Error("Method not implemented.");
     }
-    parseEndOfStatements(source: CodeSource): boolean {
+    parseBottomOfFrame(source: CodeSource): boolean {
         throw new Error("Method not implemented.");
     }
 } 

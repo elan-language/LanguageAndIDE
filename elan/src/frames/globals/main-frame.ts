@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { Regexes } from "../fields/regexes";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
@@ -39,18 +38,11 @@ end main\r
 `;
     }
 
-    parseTopLine(source: CodeSource) {
+    parseTopOfFrame(source: CodeSource) {
         source.remove("main");
-    }
-    
-    parseEndOfStatements(source: CodeSource): boolean {
-        var end = "end main";
-        var result = false;
-        if (source.isMatch(end)) {
-            source.remove(end);
-            result = true
-        }
-        return result;
+    }  
+    parseBottomOfFrame(source: CodeSource): boolean {
+       return this.parseStandardEnding(source, "end main");
     }
 
 }

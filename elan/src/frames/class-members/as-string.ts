@@ -22,10 +22,10 @@ ${this.renderStatementsAsHtml()}
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end function`;// No new line as 'asString' is always last global before 'end class'
     }
-    parseTopLine(source: CodeSource): void {
+    parseTopOfFrame(source: CodeSource): void {
         throw new Error("Method not implemented.");
     }
-    parseEndOfStatements(source: CodeSource): boolean {
+    parseBottomOfFrame(source: CodeSource): boolean {
         throw new Error("Method not implemented.");
     }
 }

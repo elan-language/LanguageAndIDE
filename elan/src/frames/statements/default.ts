@@ -29,11 +29,11 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}default
 ${this.renderStatementsAsSource()}`;
     }
-    parseTopLine(source: CodeSource): void {
+    parseTopOfFrame(source: CodeSource): void {
         //Can Default and case have a common super-class, as much is in common
         throw new Error("Method not implemented.");
     }
-    parseEndOfStatements(source: CodeSource): boolean {
+    parseBottomOfFrame(source: CodeSource): boolean {
         throw new Error("Method not implemented.");
     }
 } 

@@ -16,7 +16,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        var options = this.optionsForContext().filter(o => source.isMatch(o[1]));
+        var options = this.defaultOptions.filter(o => source.isMatch(o[1]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);

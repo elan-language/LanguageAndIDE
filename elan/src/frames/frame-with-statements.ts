@@ -96,8 +96,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     parseFrom(source: CodeSource): void {
-        this.parseTopLine(source);
-        while (!this.parseEndOfStatements(source)) {
+        this.parseTopOfFrame(source);
+        while (!this.parseBottomOfFrame(source)) {
             if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                 source.removeRegEx(Regexes.startsWithNewLine, false);}
             else {
@@ -105,6 +105,15 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             }
         } 
     }
-    abstract parseTopLine(source: CodeSource): void;
-    abstract parseEndOfStatements(source: CodeSource): boolean;
+    abstract parseTopOfFrame(source: CodeSource): void;
+    abstract parseBottomOfFrame(source: CodeSource): boolean;
+
+    protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
+        var result = false;
+        if (source.isMatch(keywords)) {
+            source.remove(keywords);
+            result = true;
+        }
+        return result;
+    }
 }
