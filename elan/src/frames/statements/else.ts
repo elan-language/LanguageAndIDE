@@ -3,9 +3,11 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
+import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../code-source";
 
 
-export class Else extends AbstractFrame  {
+export class Else extends FrameWithStatements  {
     isStatement = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
@@ -44,7 +46,7 @@ export class Else extends AbstractFrame  {
     }
 
     renderAsHtml(): string {
-        return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}</clause>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}</statement>`;
     }
 
     indent(): string {
@@ -53,6 +55,17 @@ export class Else extends AbstractFrame  {
 
     renderAsSource(): string {
         return `${this.indent()}else${this.ifClauseAsSource()}`;
+    }
+
+    parseTopOfFrame(source: CodeSource): void {
+        source.remove("else");
+        if (source.isMatch(" if ")) {
+            source.remove(" if ");
+            this.condition.parseFrom(source);
+        }
+    }
+    parseBottomOfFrame(source: CodeSource): boolean {
+        return source.isMatch("else") || source.isMatch("end if");
     }
 
 } 
