@@ -3,9 +3,9 @@ export class Regexes {
     static readonly newLine = `(\\r)?\\n`;
     static readonly startsWithNewLine = new RegExp(`^${Regexes.newLine}`);
     
-    static readonly anythingToNewLine = `[^${Regexes.newLine}]*`;
+    static readonly anythingToNewLine = `.*`;
 
-    static readonly type = `[A-Z]\\w*`; 
+    static readonly type = `[A-Z]\\w*(<of [A-Z]\\w*>)?`; 
     static readonly identifier = `[a-z]\\w*`; 
     static readonly literalString = `"[^"]*"`;
     static readonly literalInt = `[0-9][0-9]*`;
