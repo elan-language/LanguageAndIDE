@@ -15,4 +15,11 @@ export class ParamList extends AbstractField {
     getIdPrefix(): string {
         return 'params';
     }
+    public contentAsSource() : string {
+        if (this.text) {
+         return this.text;
+        } else {
+            return "";
+        }
+     }
 }

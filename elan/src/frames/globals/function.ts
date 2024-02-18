@@ -75,7 +75,7 @@ end function\r
         source.removeIndent();
         if (source.isMatch(keyword)) {
             this.getReturnStatement().parseFrom(source);
-            source.removeRegEx(Regexes.startsWithNewLine, false);
+            source.removeNewLine();
             this.parseStandardEnding(source, "end function");
             result = true;
         }

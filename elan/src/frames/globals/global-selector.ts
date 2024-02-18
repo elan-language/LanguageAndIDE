@@ -1,8 +1,8 @@
 import { File } from "../interfaces/file";
-import { KeyEvent } from "../interfaces/key-event";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
+import { Class } from "./class";
 
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
@@ -18,11 +18,13 @@ export class GlobalSelector extends AbstractSelector  {
         ["Class", "class"],
         ["Constant", "constant"],
         ["Enum", "enum"],
-        ["GlobalComment", "#"]
+        ["GlobalComment", "#"],
+        ["Abstract", "abstract"],
+        ["Immutable", "immutable"],
     ];
 
-    validforContext(frameType: string): boolean {
-        return true; //TODO
+    validForEditorWithin(frameType: string): boolean {
+        return frameType !== "Abstract" && frameType !== "Immutable"; //Those options available for parsing code from file only
     }
 
     getFile(): File {
@@ -50,6 +52,12 @@ export class GlobalSelector extends AbstractSelector  {
             }
             case "Class": {
                 return this.getFile().addClassBefore(this);
+            }
+            case "Abstract": {
+                return this.getFile().addClassBefore(this) as Class;
+            } 
+            case "Immutable": {
+                return this.getFile().addClassBefore(this) as Class;
             }
             case "Constant": {
                 return this.getFile().addConstantBefore(this);

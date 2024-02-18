@@ -1,4 +1,4 @@
-# Elan v0.1 incomplete 0dae0eb044912d68
+# Elan v0.1 incomplete ff53d77a302f1600
 
 constant phi set to 1.618
 
@@ -6,7 +6,7 @@ main
 
 end main
 
-procedure signIn(parameter definitions)
+procedure signIn()
 
 end procedure
 

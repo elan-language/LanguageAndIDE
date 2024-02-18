@@ -26,14 +26,14 @@ export abstract class AbstractSelector extends AbstractFrame {
         }
     }
 
-    abstract validforContext(frameType: string) : boolean;
+    abstract validForEditorWithin(frameType: string) : boolean;
 
     optionsMatchingInput(match: string): [string, string][] {
         return this.optionsForContext().filter(o => o[1].startsWith(match));
     }
 
     private optionsForContext(): [string, string][] {
-        return this.defaultOptions.filter(o => this.validforContext(o[0]));
+        return this.defaultOptions.filter(o => this.validForEditorWithin(o[0]));
     }
 
     commonStartText(match: string): string {

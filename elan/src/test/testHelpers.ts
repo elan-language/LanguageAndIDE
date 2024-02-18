@@ -6,7 +6,7 @@ import * as jsdom from 'jsdom';
 import { KeyEvent } from '../frames/interfaces/key-event';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();

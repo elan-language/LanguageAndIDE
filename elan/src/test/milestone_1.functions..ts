@@ -175,7 +175,6 @@ export function T05_classes() {
 	var ms = cl1.getFirstMemberSelector();
 	f.addGlobalBefore(cl1, gs);
 	cl1.name.setTextWithoutParsing("Player");
-	cl1.asString.returnStatement.expr.setTextWithoutParsing("a Player");
 	const p1 = new Property(cl1);
 	cl1.addMemberBefore(p1,ms);
 	p1.name.setTextWithoutParsing("score");
@@ -188,7 +187,6 @@ export function T05_classes() {
 	f.addGlobalBefore(cl2, gs);
 	cl2.name.setTextWithoutParsing("Card");
 	cl2.immutable = true;
-	cl2.asString.returnStatement.expr.setTextWithoutParsing("a Card");
 	const p2 = new Property(cl2);
 	cl2.addMemberBefore(p2, ms2);
 	p2.name.setTextWithoutParsing("value");

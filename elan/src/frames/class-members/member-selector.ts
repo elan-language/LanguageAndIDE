@@ -14,10 +14,14 @@ export class MemberSelector extends AbstractSelector implements Member  {
     defaultOptions: [string, string][] = [
         ["FunctionMethod", "function"],
         ["ProcedureMethod", "procedure"],
-        ["Property", "property"]
+        ["Property", "property"],
+        ["PrivateProperty", "private"]
     ];
 
-    validforContext(frameType: string): boolean {
+    validForEditorWithin(frameType: string): boolean {
+        if(frameType === "PrivateProperty") {
+            return false;
+        }
         return this.getClass().immutable ? frameType !== "FunctionMethod" : true;
     }
 
@@ -44,6 +48,9 @@ export class MemberSelector extends AbstractSelector implements Member  {
                 return this.getClass().addProcedureMethodBefore(this);
             }
             case "Property": {
+                return this.getClass().addPropertyBefore(this);
+            }
+            case "PrivateProperty": {
                 return this.getClass().addPropertyBefore(this);
             }
             default: {

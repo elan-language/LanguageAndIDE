@@ -36,7 +36,7 @@ export class StatementSelector extends AbstractSelector  {
         return this.factory.addFrameBefore(frameType, this);
     }
 
-    validforContext(frameType: string): boolean {
+    validForEditorWithin(frameType: string): boolean {
         if (this.getParent().getIdPrefix() === "switch" ) {
             return frameType === "Case";
         } else if (frameType === "Else" && this.getParent().getIdPrefix() === "if" ) {

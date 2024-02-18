@@ -21,9 +21,11 @@ ${this.indent()}end procedure\r
 `;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.removeIndent();
+        return super.parseTopOfFrame(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        source.removeIndent();
+        return super.parseBottomOfFrame(source);
     }
 }

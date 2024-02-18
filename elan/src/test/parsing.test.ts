@@ -301,6 +301,35 @@ end enum
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+
+	test('parse - classes', () => {
+		var code = `# Elan v0.1 valid 2e37a37df8d16018
+
+class Player
+  constructor()
+
+  end constructor
+
+  property score Int
+
+end class
+
+immutable class Card inherits Foo, Bar
+  constructor()
+
+  end constructor
+
+  private property value Int
+
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFromSource(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 });
 
 

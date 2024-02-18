@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Type } from "../fields/type";
-import { AsString } from "../class-members/as-string";
 import { TypeList } from "../fields/type-list";
 import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
@@ -11,6 +10,8 @@ import { Frame } from "../interfaces/frame";
 import { Field } from "../interfaces/field";
 import { MemberSelector } from "../class-members/member-selector";
 import { Constructor } from "../class-members/constructor";
+import { CodeSource } from "../code-source";
+import { Regexes } from "../fields/regexes";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
@@ -30,7 +31,6 @@ export class Class extends AbstractFrame implements Parent {
         this.superClasses  = new TypeList(this);
         this._members.push(new Constructor(this));
         this._members.push(new MemberSelector(this));
-        this._members.push(new AsString(this));
     }
 
     public getFirstMemberSelector() : MemberSelector {
@@ -74,10 +74,6 @@ export class Class extends AbstractFrame implements Parent {
 
     getIdPrefix(): string {
         return 'class';
-    }
-
-    get asString() {
-        return this._members[this._members.length -1] as AsString;
     }
 
     public override selectFirstField(): boolean {
@@ -169,5 +165,50 @@ end class\r\n`;
         this.addMemberBefore(p, member);
         p.select(true, false);
         return p;
+    }
+
+    private getConstructor(): Constructor {
+        return this._members.filter(m => ('isConstructor' in m))[0] as Constructor;
+    }
+    
+    parseFrom(source: CodeSource): void {
+        var abs = "abstract ";
+        if (source.isMatch(abs)) {
+            source.remove(abs);
+            this.abstract = true;
+        }
+        var imm = "immutable ";
+        if (source.isMatch(imm)) {
+            source.remove(imm);
+            this.immutable = true;
+        }
+        source.remove("class ");
+        this.name.parseFrom(source);
+        var inh = " inherits "; //Note leading & trailing space
+        if (source.isMatch(inh)) {
+            source.remove(inh);
+            this.inherits = true;
+            this.superClasses.parseFrom(source);
+        }
+        source.removeNewLine();
+        this.getConstructor().parseFrom(source);
+        while (!this.parseEndOfClass(source)) {
+            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                source.removeRegEx(Regexes.startsWithNewLine, false);}
+            else {
+                this.getFirstMemberSelector().parseFrom(source);
+            }
+        } 
+    }
+
+    private parseEndOfClass(source: CodeSource): boolean {
+        var result = false;
+        source.removeIndent();
+        var keyword = "end class"
+        if (source.isMatch(keyword)) {
+            source.remove(keyword);
+            result = true;
+        }
+        return result;
     }
 }

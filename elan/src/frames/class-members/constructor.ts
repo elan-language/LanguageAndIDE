@@ -6,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 
 export class Constructor extends FrameWithStatements implements Member {
+    isConstructor = true;
     isMember = true;
     public params: ParamList ;
 
@@ -43,9 +44,13 @@ ${this.indent()}end constructor\r
 `;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.removeIndent();
+        source.remove("constructor(");
+        this.params.parseFrom(source);
+        source.remove(")");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        source.removeIndent();
+        return this.parseStandardEnding(source, "end constructor");
     }
 }
