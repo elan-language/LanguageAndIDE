@@ -380,6 +380,24 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
+	test('parse - abstract immutable class', () => {
+		var code = `# Elan v0.1 valid cdf1d048244b396c
+
+abstract immutable class Card
+  abstract property value Int
+
+  abstract function bar() as Qux
+
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
 /* TODO:
 - abstract class & immutable abstract class
 - switch with actual cases
