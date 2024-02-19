@@ -326,7 +326,7 @@ end enum
 	});
 
 	test('parse - class', () => {
-		var code = `# Elan v0.1 valid 3b13248196c75721
+		var code = `# Elan v0.1 valid 66b203d7b930afe3
 
 class Player inherits Foo, Bar
   constructor()
@@ -338,6 +338,10 @@ class Player inherits Foo, Bar
   procedure foo()
     print 1
   end procedure
+
+  function bar() as Int
+    return 1
+  end function
 
 end class
 `
