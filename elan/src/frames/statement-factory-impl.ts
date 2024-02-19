@@ -80,7 +80,7 @@ export class StatementFactoryImpl implements StatementFactory {
                 return new CommentStatement(parent);
             }
             default: {
-                throw new Error(`Invalid frame type ${frameType}`)
+                throw new Error(`Invalid frame type ${frameType}`);
             }
         }
     }

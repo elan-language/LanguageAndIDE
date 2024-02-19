@@ -204,7 +204,7 @@ end class\r\n`;
     private parseEndOfClass(source: CodeSource): boolean {
         var result = false;
         source.removeIndent();
-        var keyword = "end class"
+        var keyword = "end class";
         if (source.isMatch(keyword)) {
             source.remove(keyword);
             result = true;
