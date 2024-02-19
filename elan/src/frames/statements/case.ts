@@ -32,13 +32,14 @@ ${this.renderStatementsAsHtml()}
 </statement>`;
     }
     renderAsSource(): string {
-        return `${this.indent()}case ${this.value.renderAsSource()}
+        return `${this.indent()}case ${this.value.renderAsSource()}\r
 ${this.renderStatementsAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("case ");
+        this.value.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        return source.isMatch("case ") || source.isMatch("default");
     }
 } 

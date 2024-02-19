@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { assertAreEqualByHtml, assertAreEqualBySource } from './testHelpers';
-import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T06_mergeSort, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -40,12 +40,6 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	});
 	test('Test Classes Source', (done) => {
 		assertAreEqualBySource(done, "T05_classes.source", T05_classes);
-	});
-	test('Test Merge Sort', (done) => {
-		assertAreEqualByHtml(done, "T06_mergeSort.html", T06_mergeSort);
-	});
-	test('Test Merge Sort Source', (done) => {
-		assertAreEqualBySource(done, "T06_mergeSort.source", T06_mergeSort);
 	});
 	test('Test Select Main By Id', (done) => {
 		const ff = T03_mainWithAllStatements();

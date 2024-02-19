@@ -7,10 +7,12 @@ import { CodeSource } from "../code-source";
 
 export class TryCatch extends FrameWithStatements  {
     isStatement = true;
+    private catch: Catch;
     
     constructor(parent: Parent) {
         super(parent);
-        this.statements.push(new Catch(this));
+        this.catch =new Catch(this);
+        this.statements.push(this.catch);
         this.statements.push(new StatementSelector(this));
     }
 
@@ -35,9 +37,14 @@ ${this.renderStatementsAsSource()}\r
 ${this.indent()}end try`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("try");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        var result = false;
+        if (source.isMatch("catch ")) {
+            result = true;
+            this.catch.parseFrom(source);
+        }
+        return result;
     }
 } 

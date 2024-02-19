@@ -26,14 +26,13 @@ ${this.renderStatementsAsHtml()}
     }
 
     renderAsSource(): string {
-        return `${this.indent()}default
+        return `${this.indent()}default\r
 ${this.renderStatementsAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        //Can Default and case have a common super-class, as much is in common
-        throw new Error("Method not implemented.");
+        source.remove("default");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        return source.isMatch("end switch");
     }
 } 

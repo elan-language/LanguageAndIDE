@@ -1,23 +1,22 @@
+import { CodeSource } from "../code-source";
 import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
+import { Parent} from "../interfaces/parent";
 import { Default } from "./default";
-import { Case } from "./case";
-import { CodeSource } from "../code-source";
+import { StatementSelector } from "./statement-selector";
 
 export class Switch extends FrameWithStatements { 
     isStatement = true;
     expr: Expression;
+    default: Default;
 
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
-        this.statements.splice(0,1); //Removes the StatementSelector auto-added by FrameWithStatements
-        this.statements.push(new Case(this));
-        this.statements.push(new Default(this));
+        this.default = new Default(this);
+        this.statements.push(this.default);
     }
-
     getFields(): Field[] {
         return [this.expr];
     }
@@ -44,9 +43,16 @@ ${this.renderStatementsAsSource()}\r
 ${this.indent()}end switch`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("switch ");
+        this.expr.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        var result = false;
+        if (source.isMatch("default")) {
+            result = true;
+            this.default.parseFrom(source);
+            source.remove("end switch");
+        };
+        return result;
     }
 } 

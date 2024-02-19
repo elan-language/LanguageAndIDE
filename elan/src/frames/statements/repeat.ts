@@ -37,12 +37,17 @@ ${this.renderStatementsAsHtml()}
     renderAsSource(): string {
         return `${this.indent()}repeat\r
 ${this.renderStatementsAsSource()}\r
-${this.indent()}until ${this.condition.renderAsSource()}`;
+${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("repeat");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        var result = false;
+        if (this.parseStandardEnding(source, "end repeat when ")) {
+            this.condition.parseFrom(source);
+            result = true;
+        }
+        return result;
     }
 } 

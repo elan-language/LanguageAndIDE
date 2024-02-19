@@ -1,21 +1,21 @@
-import { Expression } from "../fields/expression";
 import { Parent} from "../interfaces/parent";
-import { AbstractFrame} from "../abstract-frame";
 import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../code-source";
+import { singleIndent } from "../helpers";
+import { Condition } from "../fields/condition";
 
 
 export class Else extends FrameWithStatements  {
     isStatement = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
-    condition: Expression;
+    condition: Condition;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Expression(this);
+        this.condition = new Condition(this);
         this.condition.setPlaceholder("condition");
         this.selectIfClause = new IfSelector(this);
     }
@@ -46,22 +46,27 @@ export class Else extends FrameWithStatements  {
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
+${this.renderStatementsAsHtml()}
+</statement>`;
     }
 
     indent(): string {
-        return this.getParent()?.indent()+""; //No additonal indent for an else clause
+        return this.getParent()?.indent()+singleIndent(); 
     }
 
     renderAsSource(): string {
-        return `${this.indent()}else${this.ifClauseAsSource()}`;
+        return `${this.indent()}else${this.ifClauseAsSource()}\r
+${this.renderStatementsAsSource()}`;
     }
 
     parseTopOfFrame(source: CodeSource): void {
         source.remove("else");
         if (source.isMatch(" if ")) {
+            this.hasIf = true;
             source.remove(" if ");
             this.condition.parseFrom(source);
+            source.remove(" then");
         }
     }
     parseBottomOfFrame(source: CodeSource): boolean {

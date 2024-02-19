@@ -1,4 +1,4 @@
-# Elan v0.1 incomplete d07dd02f74a1fc28
+# Elan v0.1 incomplete aa45a00b6e8a7294
 
 main
   var name set to value or expression
@@ -11,7 +11,7 @@ main
   end while
   repeat
 
-  until score > 20
+  end repeat when score > 20
   for i from 1 to 10 step 1
 
   end for
@@ -22,18 +22,20 @@ main
 
   end if
   if y > 4 then
-  else
+    else
+
   end if
   if y > 4 then
-  else if y > 10 then
-  else
+    else if y > 10 then
+
+    else
+
   end if
   try
-  catch e
+    catch e
+
   end try
   switch value or expression
-    case value
-
     default
 
   end switch

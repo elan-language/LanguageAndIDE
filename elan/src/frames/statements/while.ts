@@ -40,9 +40,10 @@ ${this.renderStatementsAsSource()}\r
 ${this.indent()}end while`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("while ");
+        this.condition.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        return this.parseStandardEnding(source, "end while");
     }
 } 

@@ -23,4 +23,7 @@ export class Regexes {
     static readonly expression = `.${Regexes.anythingToNewLine}`; //TODO temporary kludge only - expression must go to end of line
     static readonly comment = `# ${Regexes.anythingToNewLine}`;
     static readonly startsWithComment = new RegExp(`^${Regexes.comment}`);
+    static readonly conditionalOperator = `(is|is not|>|<|>=|<=)`;
+    static readonly condition = `(${Regexes.value})\\s${Regexes.conditionalOperator}\\s(${Regexes.value})`; //TODO stop-gap, pending parsing of Expression
+
 }

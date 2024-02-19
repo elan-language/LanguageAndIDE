@@ -102,6 +102,11 @@ suite('Parsing Tests', () => {
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`3 + 4`), true);
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`(3 + 4) * 5`), true);
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`mergeSort(li)`), true);
+
+		assert.equal(new RegExp(`^${Regexes.conditionalOperator}$`).test(`>`), true);
+
+		assert.equal(new RegExp(`^${Regexes.condition}$`).test(``), false);
+		assert.equal(new RegExp(`^${Regexes.condition}$`).test(`a > b`), true);
 	
 /*		static readonly argList = `${Regexes.value}(, ${Regexes.value})*`; //For time being does not allow expressions
 		static readonly paramDef = `${Regexes.identifier} ${Regexes.type}`;
@@ -398,10 +403,56 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
+	test('parse - all multiline statements', () => {
+		var code = `# Elan v0.1 valid 5f4023bd4909d889
+
+main
+  while newGame
+
+  end while
+  repeat
+
+  end repeat when score > 20
+  for i from 1 to 10 step 1
+
+  end for
+  each letter in Charlie Duke
+
+  end each
+  if y > 4 then
+
+  end if
+  if y > 4 then
+    else
+
+  end if
+  if y > 4 then
+    else if y > 10 then
+
+    else
+
+  end if
+  try
+    catch e
+
+  end try
+  switch a
+    case 1
+
+    default
+
+  end switch
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
 /* TODO:
-- abstract class & immutable abstract class
-- switch with actual cases
-- if then else with content
 - class with procedureMethod & functionMethod
 - example programs (with helper method to load them from file)
 */

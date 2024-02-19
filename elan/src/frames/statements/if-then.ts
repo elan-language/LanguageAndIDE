@@ -1,16 +1,16 @@
-import { Expression } from "../fields/expression";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { Condition } from "../fields/condition";
 
 export class IfThen extends FrameWithStatements{
     isStatement = true;
-    condition: Expression;
+    condition: Condition;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Expression(this);
+        this.condition = new Condition(this);
         this.condition.setPlaceholder("condition");
     }
 
@@ -40,9 +40,11 @@ ${this.renderStatementsAsSource()}\r
 ${this.indent()}end if`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("if ");
+        this.condition.parseFrom(source);
+        source.remove(" then");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        return this.parseStandardEnding(source, "end if");
     }
 } 

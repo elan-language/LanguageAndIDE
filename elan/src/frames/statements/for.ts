@@ -5,21 +5,22 @@ import { Integer } from "../fields/integer";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { Value } from "../fields/value";
 
 export class For extends FrameWithStatements  {
     isStatement = true;
     variable: Identifier;
-    from: Expression;
-    to: Expression;
+    from: Value;
+    to: Value;
     step: Integer;
 
     constructor(parent: Parent) {
         super(parent);
         this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
-        this.from = new Expression(this);
+        this.from = new Value(this);
         this.from.setPlaceholder("integer value or expression");
-        this.to = new Expression(this);
+        this.to = new Value(this);
         this.to.setPlaceholder("integer value or expression");
         this.step = new Integer(this);
         this.step.setTextWithoutParsing("1");
@@ -52,9 +53,16 @@ ${this.renderStatementsAsSource()}\r
 ${this.indent()}end for`;
     }
     parseTopOfFrame(source: CodeSource): void {
-        throw new Error("Method not implemented.");
+        source.remove("for ");
+        this.variable.parseFrom(source);
+        source.remove(" from ");
+        this.from.parseFrom(source);
+        source.remove(" to ");
+        this.to.parseFrom(source);
+        source.remove(" step ");
+        this.step.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        throw new Error("Method not implemented.");
+        return this.parseStandardEnding(source, "end for");
     }
 } 

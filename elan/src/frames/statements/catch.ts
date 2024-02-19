@@ -1,9 +1,11 @@
 import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
-import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
+import { CodeSource } from "../code-source";
+import { FrameWithStatements } from "../frame-with-statements";
+import { singleIndent } from "../helpers";
 
-export class Catch extends AbstractFrame {
+export class Catch extends FrameWithStatements {
     isStatement = true;
     variable: Identifier;
 
@@ -26,15 +28,26 @@ export class Catch extends AbstractFrame {
         return true;
     }
 
-    renderAsHtml(): string {
-        return `<clause class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}</clause>`;
+    indent(): string {
+        return this.getParent()?.indent()+singleIndent(); 
     }
 
-    indent(): string {
-        return this.getParent()?.indent()+""; //No additonal indent for a catch clause
+    renderAsHtml(): string {
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}
+${this.renderStatementsAsHtml()}        
+</statement>`;
     }
 
     renderAsSource(): string {
-        return `${this.indent()}catch ${this.variable.renderAsSource()}`;
+        return `${this.indent()}catch ${this.variable.renderAsSource()}\r
+${this.renderStatementsAsSource()}`;;
+    }
+
+    parseTopOfFrame(source: CodeSource): void {
+        source.remove("catch ");
+        this.variable.parseFrom(source);
+    }
+    parseBottomOfFrame(source: CodeSource): boolean {
+        return this.parseStandardEnding(source, "end try");
     }
 } 
