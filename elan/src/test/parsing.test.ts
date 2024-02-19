@@ -320,10 +320,10 @@ end enum
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - classes', () => {
-		var code = `# Elan v0.1 valid 5138a052458be14c
+	test('parse - class', () => {
+		var code = `# Elan v0.1 valid 98d63b278ce025b5
 
-class Player
+class Player inherits Foo, Bar
   constructor()
 
   end constructor
@@ -331,6 +331,17 @@ class Player
   property score Int
 
 end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
+	test('parse - immutable class', () => {
+		var code = `# Elan v0.1 valid 33a98752be0ede6a
 
 immutable class Card inherits Foo, Bar
   constructor()
@@ -339,9 +350,25 @@ immutable class Card inherits Foo, Bar
 
   private property value Int
 
-  procedure foo()
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 
-  end procedure
+	test('parse - abstract class', () => {
+		var code = `# Elan v0.1 valid 12efc404ab43c3e2
+
+abstract class Card
+  abstract property value Int
+
+  abstract procedure foo()
+
+  abstract function bar() as Qux
 
 end class
 `

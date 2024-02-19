@@ -54,7 +54,9 @@ export class GlobalSelector extends AbstractSelector  {
                 return this.getFile().addClassBefore(this);
             }
             case "Abstract": {
-                return this.getFile().addClassBefore(this) as Class;
+                var cl = this.getFile().addClassBefore(this) as Class;
+                cl.makeAbstract();
+                return cl;
             } 
             case "Immutable": {
                 return this.getFile().addClassBefore(this) as Class;

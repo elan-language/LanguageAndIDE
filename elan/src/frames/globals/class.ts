@@ -13,13 +13,16 @@ import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import { Regexes } from "../fields/regexes";
 import { ParsingStatus } from "../parsing-status";
+import { AbstractFunction as AbstractFunction } from "../class-members/abstract-function";
+import { AbstractProperty } from "../class-members/abstract-property";
+import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
     private _members: Array<Frame> = new Array<Frame>();
-    public abstract: boolean = false;
+    private abstract: boolean = false;
     public immutable: boolean = false;
     public inherits: boolean = false;
     public superClasses: TypeList;
@@ -32,6 +35,15 @@ export class Class extends AbstractFrame implements Parent {
         this.superClasses  = new TypeList(this);
         this._members.push(new Constructor(this));
         this._members.push(new MemberSelector(this));
+    }
+
+    isAbstract(): boolean {
+        return this.abstract;
+    }
+
+    makeAbstract(): void {
+        this.abstract = true;
+        this._members.splice(0,1);//Remove constructor
     }
 
     public getFirstMemberSelector() : MemberSelector {
@@ -167,6 +179,25 @@ end class\r\n`;
         p.select(true, false);
         return p;
     }
+    addAbstractFunctionBefore(member: Frame): Frame {
+        var p = new AbstractFunction(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+        return p;
+    }
+    addAbstractPropertyBefore(member: Frame): Frame {
+        var p = new AbstractProperty(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+        return p;
+    }
+    addAbstractProcedureBefore(member: Frame): Frame {
+        var p = new AbstractProcedure(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+        return p;
+    }
+
 
     private getConstructor(): Constructor {
         return this._members.filter(m => ('isConstructor' in m))[0] as Constructor;
@@ -198,7 +229,9 @@ end class\r\n`;
             this.superClasses.parseFrom(source);
         }
         source.removeNewLine();
-        this.getConstructor().parseFrom(source);
+        if (!this.abstract) {
+            this.getConstructor().parseFrom(source);
+        }
         while (!this.parseEndOfClass(source)) {
             if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                 source.removeRegEx(Regexes.startsWithNewLine, false);}

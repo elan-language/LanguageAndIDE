@@ -5,6 +5,7 @@ import { singleIndent } from "../helpers";
 import { Member } from "../interfaces/member";
 
 export class ProcedureMethod extends Procedure implements Member {
+    isGlobal: boolean = false;
     isMember: boolean = true;
 
     constructor(parent: Class) {
