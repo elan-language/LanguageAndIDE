@@ -116,7 +116,7 @@ suite('Parsing Tests', () => {
         var source = new CodeSourceFromString("");
 		const fl = new FileImpl();
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource()
+		var elan = fl.renderAsSource();
 		var code = `# Elan v0.1 valid e3b0c44298fc1c14
 
 `;
@@ -205,7 +205,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.getRemainingCode(), "");
 	}); 
 
-	test('parse - empty file', () => {
+	test('parse - header file', () => {
 		var code = `# Elan v0.1 valid e3b0c44298fc1c14
 
 `;

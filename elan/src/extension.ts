@@ -10,12 +10,8 @@ import { mkdirp } from 'async-file';
 import * as fs from 'fs';
 import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
 
-var currentDoc : vscode.TextDocument | undefined;
-var client : LanguageClient | undefined;
 
-export function setCurrentElanFile(d : vscode.TextDocument){
-	currentDoc = d;
-}
+var client : LanguageClient | undefined;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
