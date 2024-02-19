@@ -4,6 +4,8 @@ import assert from 'assert';
 import { File } from '../frames/interfaces/file';
 import * as jsdom from 'jsdom';
 import { KeyEvent } from '../frames/interfaces/key-event';
+import { FileImpl } from '../frames/file-impl';
+import { CodeSourceFromString } from '../frames/code-source';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -80,6 +82,25 @@ export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: strin
     const actualSource = model.renderAsSource().replaceAll("\r", "");
     const expectedSource = sourceDoc.getText().replaceAll("\r", "");
 
+    try {
+        assert.strictEqual(actualSource, expectedSource);
+        done();
+    }
+    catch (e) {
+        done(e);
+        throw e;
+    }
+}
+
+export async function assertSourceFileParses(done: Mocha.Done, sourceFile: string) {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
+    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+    var codeSource = new CodeSourceFromString(sourceDoc.getText());
+    var fl = new FileImpl();
+    fl.parseFrom(codeSource);
+    const actualSource = fl.renderAsSource().replaceAll("\r", "");
+    const expectedSource = sourceDoc.getText().replaceAll("\r", "");
     try {
         assert.strictEqual(actualSource, expectedSource);
         done();

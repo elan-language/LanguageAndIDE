@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {CodeSource, CodeSourceFromString } from '../frames/code-source';
+import {CodeSourceFromString } from '../frames/code-source';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
@@ -10,6 +10,7 @@ import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
 import { Regexes } from '../frames/fields/regexes';
+import { assertSourceFileParses } from './testHelpers';
 
 suite('Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -460,9 +461,9 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-/* TODO:
-- class with procedureMethod & functionMethod
-- example programs (with helper method to load them from file)
-*/
+	/* Not yet running as conditions use more complex expressions than current parsing recognises
+	test('parse - mergeSort', (done) => {
+		assertSourceFileParses(done, "T06_mergeSort.source");
+	});*/
 
 });
