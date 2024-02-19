@@ -1,14 +1,14 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
-import { getTestFrame } from './test/milestone_1.functions.';
 import { File } from './frames/interfaces/file';
-import { setCurrentElanFile } from './extension';
 import { ParsingStatus } from './frames/parsing-status';
 import { isFrame, isParent } from './frames/helpers';
 import { Collapsible } from './frames/interfaces/collapsible';
 import { Selectable } from './frames/interfaces/selectable';
 import { Frame } from './frames/interfaces/frame';
-
+import { Uri } from 'vscode';
+import { FileImpl } from './frames/file-impl';
+import { CodeSourceFromString } from './frames/code-source';
 
 interface editorEvent {
 	type: "click" | "dblclick" | "key"
@@ -29,8 +29,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private static readonly viewType = 'elan.elanEditor';
 
 	private file?: File;
-	private currentSource = "";
-	private currentFile = "";
+	private currentFileUri? : Uri;
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -47,22 +46,16 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		_token: vscode.CancellationToken
 	): Promise<void> {
 
-		setCurrentElanFile(document);
-
 		// Setup initial content for the webview
 		webviewPanel.webview.options = {
 			enableScripts: true,
 		};
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-		if (this.currentFile !== document.fileName || !this.file) {
-			const name = document.fileName;
-			const arr = name.split("\\");
-			const fn = arr[arr.length - 1].split(".")[0];
-
-			this.file = getTestFrame(fn);
-			this.currentSource = this.file!.renderAsSource();
-			this.currentFile = document.fileName;
+		if (this.currentFileUri !== document.uri || !this.file) {
+			this.file = new FileImpl();
+			this.file.parseFromSource(new CodeSourceFromString(document.getText()));
+			this.currentFileUri = document.uri;
 		}
 
 		function updateWebview(fm: File) {
@@ -72,23 +65,21 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 			});
 		}
 
-		function updateSource(fm: File, currentSource: string) {
+		function updateSource(fm: File) {
 
 			if (fm.status() === ParsingStatus.valid) {
 				const source = fm.renderAsSource();
-				if (currentSource !== source) {
 
-					const edit = new vscode.WorkspaceEdit();
+				const edit = new vscode.WorkspaceEdit();
 
-					// Just replace the entire document every time for this example extension.
-					// A more complete extension should compute minimal edits instead.
-					edit.replace(
-						document.uri,
-						new vscode.Range(0, 0, document.lineCount, 0),
-						source);
+				// Just replace the entire document every time for this example extension.
+				// A more complete extension should compute minimal edits instead.
+				edit.replace(
+					document.uri,
+					new vscode.Range(0, 0, document.lineCount, 0),
+					source);
 
-					vscode.workspace.applyEdit(edit);
-				}
+				vscode.workspace.applyEdit(edit);
 			}
 		}
 
@@ -110,7 +101,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.onDidDispose(() => {
 			changeDocumentSubscription.dispose();
 			this.file = undefined;
-			this.currentSource = "";
 		});
 
 		// Receive message from the webview.
@@ -127,7 +117,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				case 'key':
 					this.handleKey(e);
 					updateWebview(this.file!);
-					updateSource(this.file!, this.currentSource);
+					updateSource(this.file!);
 					return;
 			}
 		});
