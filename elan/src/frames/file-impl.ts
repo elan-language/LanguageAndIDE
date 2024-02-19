@@ -216,10 +216,12 @@ export class FileImpl implements File {
         return g;
     }
 
-    parseFromSource(source: CodeSource): void {
-        source.removeRegEx(Regexes.startsWithComment, false);
-        source.removeRegEx(Regexes.startsWithNewLine, false);
-        source.removeRegEx(Regexes.startsWithNewLine, false);
+    parseFrom(source: CodeSource): void {
+        if (source.isMatch("#")) {
+            source.removeRegEx(Regexes.startsWithComment, false);
+            source.removeRegEx(Regexes.startsWithNewLine, false);
+            source.removeRegEx(Regexes.startsWithNewLine, false);
+        }
         while (source.hasMoreCode()) {
             if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                 source.removeNewLine();

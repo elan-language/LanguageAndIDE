@@ -112,6 +112,17 @@ suite('Parsing Tests', () => {
 		static readonly expression = Regexes.anythingToNewLine; //TODO temporary kludge only - expression must go to end of line */
 	}); 
 
+	test('parse - empty file', () => {
+        var source = new CodeSourceFromString("");
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource()
+		var code = `# Elan v0.1 valid e3b0c44298fc1c14
+
+`;
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	}); 
+
     test('parse - set statement', () => {
 		var code = "  set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
@@ -200,7 +211,7 @@ suite('Parsing Tests', () => {
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -212,7 +223,7 @@ constant pi set to 3.142
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -227,7 +238,7 @@ constant e set to 2.718
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -241,7 +252,7 @@ end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -256,7 +267,7 @@ end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -275,7 +286,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -304,7 +315,7 @@ end enum
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -337,7 +348,7 @@ end class
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
-		fl.parseFromSource(source);
+		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
