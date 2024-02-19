@@ -20,7 +20,7 @@ export class Regexes {
     static readonly paramList = `${Regexes.paramDef}(, ${Regexes.paramDef})*`;
     static readonly typeList = `${Regexes.type}(, ${Regexes.type})*`;
     static readonly identifierList = `${Regexes.identifier}(, ${Regexes.identifier})*`;
-    static readonly expression = Regexes.anythingToNewLine; //TODO temporary kludge only - expression must go to end of line
+    static readonly expression = `.${Regexes.anythingToNewLine}`; //TODO temporary kludge only - expression must go to end of line
     static readonly comment = `# ${Regexes.anythingToNewLine}`;
     static readonly startsWithComment = new RegExp(`^${Regexes.comment}`);
 }

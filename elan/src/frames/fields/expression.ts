@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParsingStatus } from "../parsing-status";
 import { AbstractField } from "./abstract-field";
 import { Regexes } from "./regexes";
 

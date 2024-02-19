@@ -12,6 +12,7 @@ import { MemberSelector } from "../class-members/member-selector";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import { Regexes } from "../fields/regexes";
+import { ParsingStatus } from "../parsing-status";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
@@ -169,6 +170,12 @@ end class\r\n`;
 
     private getConstructor(): Constructor {
         return this._members.filter(m => ('isConstructor' in m))[0] as Constructor;
+    }
+
+    status(): ParsingStatus {
+        var fieldStatus = this.worstStatusOfFields();
+        var statementsStatus = this._members.map(s => s.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+        return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
     
     parseFrom(source: CodeSource): void {

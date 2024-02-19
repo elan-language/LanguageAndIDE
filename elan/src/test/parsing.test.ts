@@ -97,7 +97,7 @@ suite('Parsing Tests', () => {
 		assert.equal(new RegExp(`^${Regexes.argList}$`).test(`,`), false);
 		assert.equal(new RegExp(`^${Regexes.argList}$`).test(`a,b`), false);
 
-		assert.equal(new RegExp(`^${Regexes.expression}$`).test(``), true);
+		assert.equal(new RegExp(`^${Regexes.expression}$`).test(``), false);
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`3`), true);
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`3 + 4`), true);
 		assert.equal(new RegExp(`^${Regexes.expression}$`).test(`(3 + 4) * 5`), true);
@@ -353,45 +353,12 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-/* 	test('parse - merge sort', () => {
-		var code = `# Elan v0.1 valid 0de62ea94afdb084
+/* TODO:
+- abstract class & immutable abstract class
+- switch with actual cases
+- if then else with content
+- class with procedureMethod & functionMethod
+- example programs (with helper method to load them from file)
+*/
 
-main
-  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
-  print mergeSort(li)
-end main
-
-function mergeSort(list List<of String>) as List<of String>
-  var result set to list
-  if list.length() > 1 then
-    var mid set to list.length() div 2
-    set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
-  end if
-  return result
-end function
-
-function merge(a List<of String>, b List<of String>) as List<of String>
-  var name set to new List<of String>()
-  if a.isEmpty() then
-    set result to b
-    else if b.isEmpty() then
-    set result to a
-    else if a[0].isBefore(b[0]) then
-    set result to a[0] + merge(a[1..], b)
-    else
-    set result to b[0] + merge(a, b[1..])
-  end if
-  return result
-end function
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl();
-		fl.parseFromSource(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); */
 });
-
-
-
