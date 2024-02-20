@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore } from '../frames/fields/field-parsers';
+import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence } from '../frames/fields/field-parsers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -64,14 +64,23 @@ suite('Field Parsing Tests', () => {
 		assert.deepEqual(comma([Status.NotParsed, ", ,"]), [Status.Valid,  ","]);
 	}); 
 
+	test('parseField - sequence', () => {
+		assert.deepEqual(sequence([Status.NotParsed, ", bar"], [comma, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(sequence([Status.NotParsed, ", ,"], [comma, identifier]), [Status.Incomplete,  ","]);
+		assert.deepEqual(sequence([Status.NotParsed, "bar "], [comma, identifier]), [Status.Invalid,  "bar "]);
+	});
+
 	test('parseField - paramDef', () => {
 		assert.deepEqual(paramDef([Status.NotParsed, "foo Bar"]), [Status.Valid,  ""]);
+		assert.deepEqual(paramDef([Status.NotParsed, "foo   Bar"]), [Status.Valid,  ""]);
 		assert.deepEqual(paramDef([Status.NotParsed, "foo Bar more"]), [Status.Valid, " more"]);
 		assert.deepEqual(paramDef([Status.NotParsed, "foo "]), [Status.Incomplete,  ""]);
 		assert.deepEqual(paramDef([Status.NotParsed, "foo"]), [Status.Incomplete,  ""]);
+		assert.deepEqual(paramDef([Status.NotParsed, "fooBar"]), [Status.Incomplete,  ""]);
 		assert.deepEqual(paramDef([Status.NotParsed, "Foo bar"]), [Status.Invalid,  "Foo bar"]);
+		assert.deepEqual(paramDef([Status.NotParsed, "foo, "]), [Status.Incomplete,  ", "]);
+		//foo, 
 	}); 
-
 
 	test('parseField - optional', () => {
 		assert.deepEqual(optional([Status.NotParsed, "foo"], identifier), [Status.Valid,  ""]);
@@ -86,5 +95,44 @@ suite('Field Parsing Tests', () => {
 
 	test('parseField - zeroOrMore', () => {
 		assert.deepEqual(zeroOrMore([Status.NotParsed, " , ,, ,   ,,,  "], comma), [Status.Valid,  ""]);
+		assert.deepEqual(zeroOrMore([Status.NotParsed, ""], comma), [Status.Valid,  ""]);
 	}); 
+
+	test('parseField - oneOrMore', () => {
+		assert.deepEqual(oneOrMore([Status.NotParsed, " , ,, ,   ,,,  "], comma), [Status.Valid,  ""]);
+		assert.deepEqual(oneOrMore([Status.NotParsed, ""], comma), [Status.Invalid,  ""]);
+		assert.deepEqual(oneOrMore([Status.NotParsed, "x,y"], comma), [Status.Invalid,  "x,y"]);
+	}); 
+
+	test('parseField - commaSeparatedOneOrMore - identifiers', () => {
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, "foo , bar ,a, yon"], identifier), [Status.Valid,  ""]);
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, "foo , bar ,a, yon ,"], identifier), [Status.Incomplete,  ""]);
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, "foo  bar"], identifier), [Status.Valid,  "  bar"]);
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, "1"], identifier), [Status.Invalid,  "1"]);
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, ", bar"], identifier), [Status.Invalid,  ", bar"]);
+		assert.deepEqual(commaSeparatedOneOrMore([Status.NotParsed, "foo  "], identifier), [Status.Valid,  "  "]);
+	}); 
+
+	test('parseField - commaSeparatedZeroOrMore - identifiers', () => {
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "foo , bar ,a, yon"], identifier), [Status.Valid,  ""]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "foo , bar ,a, yon ,"], identifier), [Status.Incomplete,  ""]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "foo  bar"], identifier), [Status.Valid,  "  bar"]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "1"], identifier), [Status.Valid,  "1"]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "foo  "], identifier), [Status.Valid,  "  "]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, "foo,  "], identifier), [Status.Incomplete,  ""]);
+		assert.deepEqual(commaSeparatedZeroOrMore([Status.NotParsed, ", bar"], identifier), [Status.Valid,  ", bar"]);
+	}); 
+
+	test('parseField - paramsList', () => {
+		assert.deepEqual(paramsList([Status.NotParsed, "foo String , bar Int ,a Char, yon Float"]), [Status.Valid,  ""]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo String"]), [Status.Valid,  ""]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo String , "]), [Status.Incomplete,  ""]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo, "]), [Status.Incomplete,  ", "]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo String , bar "]), [Status.Incomplete,  ""]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo String , Bar"]), [Status.Incomplete,  "Bar"]);
+		assert.deepEqual(paramsList([Status.NotParsed, "foo string"]), [Status.Incomplete,  "string"]);
+		assert.deepEqual(paramsList([Status.NotParsed, "Foo String"]), [Status.Valid,  "Foo String"]);
+	}); 
+
+
 });

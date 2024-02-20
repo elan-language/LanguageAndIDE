@@ -71,13 +71,13 @@ export function comma(input: [Status, string]): [Status, string] {
     return genericRegEx(input, `^\\s*,\\s*`);
 }
 
-function sequence(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
+export function sequence(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
 {
     var i = 0; //Index
     var result = input;
     while (i < funcs.length && result[0] >= Status.Valid) {  
         result = funcs[i](result);     
-        if (i > 0 && result[0] === Status.Invalid && result[1].length === 0) {
+        if (i > 0 && result[0] === Status.Invalid) {
             result = [Status.Incomplete, result[1]];
         } else {
             i++;
@@ -106,11 +106,55 @@ export function zeroOrMore(input: [Status, string], func: (input: [Status, strin
     while (result[0] > Status.Incomplete && result[1].length > 0) {  
         result = func(result);     
     }
-    return result;
+    return result[0] === Status.NotParsed ? [Status.Valid, result[1]] : result;
 }
 
-export function commaSeparated(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
-    throw new Error("Not implemented");
+export function oneOrMore(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+    var result = input;
+    var count = 0;
+    while (result[0] > Status.Incomplete && result[1].length > 0) {  
+        result = func(result); 
+        if (result[0] > Status.Invalid) {
+            count ++;
+        }   
+    }
+    return count > 0 ? result : [Status.Invalid, result[1]];
+}
+
+export function commaSeparatedOneOrMore(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+   var result = func(input);
+   var cont = true;
+   while (result[0] === Status.Valid && result[1].length > 0 && cont) {
+        var result2 = sequence(result, [comma, func]);
+        if (result2[0] >Status.Invalid) {
+            result = result2;
+        } else {
+            cont = false;
+        }
+   }
+   return result;
+}
+
+export function commaSeparatedZeroOrMore(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+    var result = func(input);
+    if (result[0] === Status.Valid) {
+        var cont = true;
+        while (result[0] >= Status.Valid && result[1].length > 0 && cont) {
+            var result2 = sequence(result, [comma, func]);
+            if (result2[0] >Status.Invalid) {
+                result = result2;
+            } else {
+                cont = false;
+            }
+        }
+    } else if (result[0] === Status.Invalid){
+        result = [Status.Valid, result[1]];
+    }
+    return result;
+ }
+
+export function paramsList(input: [Status, string]): [Status, string] {
+    return commaSeparatedZeroOrMore(input, paramDef);
 }
 
 export function or(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>)
