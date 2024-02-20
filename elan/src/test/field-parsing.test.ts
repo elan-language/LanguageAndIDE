@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, SEQ, OR, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue } from '../frames/fields/field-parsers';
+import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, SEQ, OR, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value } from '../frames/fields/field-parsers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -187,9 +187,27 @@ suite('Field Parsing Tests', () => {
 
 	test('parseField - literalValue', () => {
 		assert.deepEqual(literalValue([Status.NotParsed, `Colour.red more`]), [Status.Valid,  " more"]);
-		assert.deepEqual(literalChar([Status.NotParsed, `'z'`]), [Status.Valid,  ""]);
-		assert.deepEqual(literalFloat([Status.NotParsed, "1.x"]), [Status.Incomplete,  "x"]);
-		assert.deepEqual(literalBoolean([Status.NotParsed, "true more"]), [Status.Valid,  " more"]);
-		assert.deepEqual(literalFloat([Status.NotParsed, "a1"]), [Status.Invalid,  "a1"]);
+		assert.deepEqual(literalValue([Status.NotParsed, `'z'`]), [Status.Valid,  ""]);
+		assert.deepEqual(literalValue([Status.NotParsed, "1.x"]), [Status.Valid,  ".x"]);
+		assert.deepEqual(literalValue([Status.NotParsed, "true more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalValue([Status.NotParsed, "a1"]), [Status.Invalid,  "a1"]);
+	}); 
+
+	test('parseField - scopeQualifier', () => {
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `xyz`]), [Status.Valid,  "xyz"]);
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `property.more`]), [Status.Valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `global.more`]), [Status.Valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `library.more`]), [Status.Valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `myLib.more`]), [Status.Valid,  "myLib.more"]);
+		assert.deepEqual(scopeQualifier_opt([Status.NotParsed, `myLib`]), [Status.Valid,  "myLib"]);
+	}); 
+
+	test('parseField - value', () => {
+		assert.deepEqual(value([Status.NotParsed, `123`]), [Status.Valid,  ""]);
+		assert.deepEqual(value([Status.NotParsed, `a`]), [Status.Valid,  ""]);
+		assert.deepEqual(value([Status.NotParsed, `a1`]), [Status.Valid,  ""]);
+		assert.deepEqual(value([Status.NotParsed, `global.a1`]), [Status.Valid,  ""]);
+		assert.deepEqual(value([Status.NotParsed, `library.`]), [Status.Incomplete,  ""]);
+		assert.deepEqual(value([Status.NotParsed, `global.1`]), [Status.Incomplete,  "1"]);
 	}); 
 });

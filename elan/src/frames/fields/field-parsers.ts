@@ -226,3 +226,5 @@ export function value(input: [Status, string]): [Status, string] {
     var sqId = (input: [Status, string]) => SEQ(input, [scopeQualifier_opt, identifier]);
     return OR(input, [literal, sqId]);  //TODO others
 }
+
+
