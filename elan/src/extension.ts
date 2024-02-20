@@ -55,9 +55,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/klaa9g0ow97w2slr/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g85ggjhwd42w2sbg/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff1, "elan compiler", compilerPath, []);
-	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/klaa9g0ow97w2slr/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g85ggjhwd42w2sbg/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
 	await InstallZip(buff2, "elan language server", languageServerPath, []);
 
 	startLanguageServer(context, languageServerPath);
