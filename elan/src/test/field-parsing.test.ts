@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence, OR, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue } from '../frames/fields/field-parsers';
+import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, SEQ, OR, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue } from '../frames/fields/field-parsers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -65,9 +65,9 @@ suite('Field Parsing Tests', () => {
 	}); 
 
 	test('parseField - sequence', () => {
-		assert.deepEqual(sequence([Status.NotParsed, ", bar"], [comma, identifier]), [Status.Valid,  ""]);
-		assert.deepEqual(sequence([Status.NotParsed, ", ,"], [comma, identifier]), [Status.Incomplete,  ","]);
-		assert.deepEqual(sequence([Status.NotParsed, "bar "], [comma, identifier]), [Status.Invalid,  "bar "]);
+		assert.deepEqual(SEQ([Status.NotParsed, ", bar"], [comma, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(SEQ([Status.NotParsed, ", ,"], [comma, identifier]), [Status.Incomplete,  ","]);
+		assert.deepEqual(SEQ([Status.NotParsed, "bar "], [comma, identifier]), [Status.Invalid,  "bar "]);
 	});
 
 	test('parseField - paramDef', () => {

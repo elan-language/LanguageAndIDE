@@ -93,7 +93,7 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select9").processKey(key("f"));
 		var v = file.getById("func10").renderAsSource();
 		assert.equal(v, '  function name() as return type\r\n' +
-		'    return value or expression\r\n' +
+		'    return default\r\n' +
 		'  end function\r\n');
  	});	
 

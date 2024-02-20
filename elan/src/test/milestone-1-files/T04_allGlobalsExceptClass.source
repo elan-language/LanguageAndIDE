@@ -1,4 +1,4 @@
-# Elan v0.1 incomplete ff53d77a302f1600
+# Elan v0.1 valid 82ddb54b7f227455
 
 constant phi set to 1.618
 
@@ -11,7 +11,7 @@ procedure signIn()
 end procedure
 
 function hypotenuse(sideB Float, sideC Float) as Float
-  return value or expression
+  return default
 end function
 
 enum Fruit

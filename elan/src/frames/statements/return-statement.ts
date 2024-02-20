@@ -3,7 +3,6 @@ import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { ParsingStatus } from "../parsing-status";
 
 export class ReturnStatement extends AbstractFrame  { 
     isReturnStatement = true;  
@@ -13,6 +12,7 @@ export class ReturnStatement extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
+        this.expr.setTextWithoutParsing("default");
     }
 
     getFields(): Field[] {

@@ -71,7 +71,7 @@ export function comma(input: [Status, string]): [Status, string] {
     return genericRegEx(input, `^\\s*,\\s*`);
 }
 
-export function sequence(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
+export function SEQ(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
 {
     var i = 0; //Index
     var result = input;
@@ -87,7 +87,7 @@ export function sequence(input: [Status, string], funcs: Array<(input: [Status, 
 }
 
 export function paramDef(input: [Status, string]): [Status, string] {
-    return sequence(input, [identifier, sp, type]);
+    return SEQ(input, [identifier, sp, type]);
 }
 
 export function optional(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
@@ -125,7 +125,7 @@ export function commaSeparatedOneOrMore(input: [Status, string],  func: (input: 
    var result = func(input);
    var cont = true;
    while (result[0] === Status.Valid && result[1].length > 0 && cont) {
-        var result2 = sequence(result, [comma, func]);
+        var result2 = SEQ(result, [comma, func]);
         if (result2[0] >Status.Invalid) {
             result = result2;
         } else {
@@ -140,7 +140,7 @@ export function commaSeparatedZeroOrMore(input: [Status, string],  func: (input:
     if (result[0] === Status.Valid) {
         var cont = true;
         while (result[0] >= Status.Valid && result[1].length > 0 && cont) {
-            var result2 = sequence(result, [comma, func]);
+            var result2 = SEQ(result, [comma, func]);
             if (result2[0] >Status.Invalid) {
                 result = result2;
             } else {
@@ -188,18 +188,41 @@ export function literalInt(input: [Status, string]): [Status, string] {
 const dot = (input: [Status, string]) => genericString(input, ".");
 
 export function literalFloat(input: [Status, string]): [Status, string] {
-    return sequence(input, [literalInt, dot, literalInt]);
+    return SEQ(input, [literalInt, dot, literalInt]);
 }
 export function literalChar(input: [Status, string]): [Status, string] {
     var quote = (input: [Status, string]) => genericString(input, `'`); //defines all printable ascii chars
     var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);
-    return sequence(input, [quote, ch, quote]);
+    return SEQ(input, [quote, ch, quote]);
 }
 
 export function enumValue(input: [Status, string]): [Status, string] {
-    return sequence(input, [type, dot, identifier]);
+    return SEQ(input, [type, dot, identifier]);
 }
 
 export function literalValue(input: [Status, string]): [Status, string] {
     return OR(input, [literalBoolean, literalInt, literalFloat, literalChar, enumValue]);
+}
+
+//TODO: literalValue | literalDataStructure 
+export function literal(input: [Status, string]): [Status, string] {
+    return OR(input, [literalValue]);
+}
+
+//TODO: scopeQualifier: (PROPERTY | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
+//Note: always optional here
+export function scopeQualifier_opt(input: [Status, string]): [Status, string] {
+    var prop = (input: [Status, string]) => genericString(input, "property");
+    var glob = (input: [Status, string]) => genericString(input, "global");
+    var lib = (input: [Status, string]) => genericString(input, "library");
+    //TODO package
+    var keywords = (input: [Status, string]) =>OR(input, [prop,glob,lib]);
+    var qual= (input: [Status, string]) => SEQ(input, [keywords, dot]);
+    return optional(input, qual);  
+}
+
+//TODO literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | THIS | DEFAULT type;
+export function value(input: [Status, string]): [Status, string] {
+    var sqId = (input: [Status, string]) => SEQ(input, [scopeQualifier_opt, identifier]);
+    return OR(input, [literal, sqId]);  //TODO others
 }
