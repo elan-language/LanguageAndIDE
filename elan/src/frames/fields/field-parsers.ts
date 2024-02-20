@@ -157,8 +157,8 @@ export function paramsList(input: [Status, string]): [Status, string] {
     return commaSeparatedZeroOrMore(input, paramDef);
 }
 
-export function or(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>)
-{
+export function OR(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
+{   var result = input;
     if (input[0] ! > Status.Incomplete && input[1].length > 0) {
         var bestStatus = Status.Invalid;
         var bestRemainingCode = input[1];
@@ -170,8 +170,36 @@ export function or(input: [Status, string], funcs: Array<(input: [Status, string
                bestRemainingCode = code;
            }
         });
-        return [bestStatus, bestRemainingCode];
+        result = [bestStatus, bestRemainingCode];
     }
+    return result;
 }
 
+export function literalBoolean(input: [Status, string]): [Status, string] {
+    var t = (input: [Status, string]) => genericString(input, "true");
+    var f = (input: [Status, string]) => genericString(input, "false");
+    return OR(input, [t,f]);
+}
 
+export function literalInt(input: [Status, string]): [Status, string] {
+    return genericRegEx(input, `^${Regexes.literalInt}`);
+}
+
+const dot = (input: [Status, string]) => genericString(input, ".");
+
+export function literalFloat(input: [Status, string]): [Status, string] {
+    return sequence(input, [literalInt, dot, literalInt]);
+}
+export function literalChar(input: [Status, string]): [Status, string] {
+    var quote = (input: [Status, string]) => genericString(input, `'`); //defines all printable ascii chars
+    var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);
+    return sequence(input, [quote, ch, quote]);
+}
+
+export function enumValue(input: [Status, string]): [Status, string] {
+    return sequence(input, [type, dot, identifier]);
+}
+
+export function literalValue(input: [Status, string]): [Status, string] {
+    return OR(input, [literalBoolean, literalInt, literalFloat, literalChar, enumValue]);
+}

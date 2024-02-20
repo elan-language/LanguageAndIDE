@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence, or } from '../frames/fields/field-parsers';
+import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence, OR, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue } from '../frames/fields/field-parsers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -135,9 +135,61 @@ suite('Field Parsing Tests', () => {
 	}); 
 
 	test('parseField - or', () => {
-		assert.deepEqual(or([Status.NotParsed, "foo"], [type, identifier]), [Status.Valid,  ""]);
-		assert.deepEqual(or([Status.NotParsed, "String"], [type, identifier]), [Status.Valid,  ""]);
-		assert.deepEqual(or([Status.NotParsed, "foo String"], [type, identifier]), [Status.Valid,  " String"]);
-		assert.deepEqual(or([Status.NotParsed, "123"], [type, identifier]), [Status.Invalid,  "123"]);
+		assert.deepEqual(OR([Status.NotParsed, "foo"], [type, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(OR([Status.NotParsed, "String"], [type, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(OR([Status.NotParsed, "foo String"], [type, identifier]), [Status.Valid,  " String"]);
+		assert.deepEqual(OR([Status.NotParsed, "123"], [type, identifier]), [Status.Invalid,  "123"]);
+	}); 
+
+	test('parseField - literalBoolean', () => {
+		assert.deepEqual(literalBoolean([Status.NotParsed, "true more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalBoolean([Status.NotParsed, "false"]), [Status.Valid,  ""]);
+		assert.deepEqual(literalBoolean([Status.NotParsed, "tr"]), [Status.Incomplete,  ""]);
+		assert.deepEqual(literalBoolean([Status.NotParsed, "f"]), [Status.Incomplete,  ""]);
+		assert.deepEqual(literalBoolean([Status.NotParsed, "tr ue"]), [Status.Invalid,  "tr ue"]);
+	}); 
+
+	test('parseField - literalInt', () => {
+		assert.deepEqual(literalInt([Status.NotParsed, "30564 more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalInt([Status.NotParsed, "0 more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalInt([Status.NotParsed, "-3"]), [Status.Invalid,  "-3"]);
+		assert.deepEqual(literalInt([Status.NotParsed, "3.141"]), [Status.Valid,  ".141"]);
+	}); 
+
+	//TODO add Exponent
+	test('parseField - literalFloat', () => {
+		assert.deepEqual(literalFloat([Status.NotParsed, "3.141 more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "0.0"]), [Status.Valid,  ""]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "0"]), [Status.Incomplete,  ""]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "1."]), [Status.Incomplete,  ""]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "1.x"]), [Status.Incomplete,  "x"]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "a1"]), [Status.Invalid,  "a1"]);
+		assert.deepEqual(literalFloat([Status.NotParsed, ""]), [Status.Invalid,  ""]);
+	}); 
+
+	//TODO: cope with unicode ?
+	test('parseField - literalChar', () => {
+	 	assert.deepEqual(literalChar([Status.NotParsed, `'A' more`]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalChar([Status.NotParsed, `'z'`]), [Status.Valid,  ""]);
+		assert.deepEqual(literalChar([Status.NotParsed, `'1`]), [Status.Incomplete,  ""]);
+		assert.deepEqual(literalChar([Status.NotParsed, `'12`]), [Status.Incomplete,  "2"]);
+		assert.deepEqual(literalChar([Status.NotParsed, `A'`]), [Status.Invalid,  "A'"]);
+	}); 
+
+	test('parseField - enumValue', () => {
+		assert.deepEqual(enumValue([Status.NotParsed, `Colour.red more`]), [Status.Valid,  " more"]);
+		assert.deepEqual(enumValue([Status.NotParsed, `Colour.`]), [Status.Incomplete, ""]);
+		assert.deepEqual(enumValue([Status.NotParsed, `Colour.Red`]), [Status.Incomplete, "Red"]);
+		assert.deepEqual(enumValue([Status.NotParsed, `Colo`]), [Status.Incomplete, ""]);
+		assert.deepEqual(enumValue([Status.NotParsed, `colour.red`]), [Status.Invalid, "colour.red"]);
+		assert.deepEqual(enumValue([Status.NotParsed, `.red`]), [Status.Invalid, ".red"]);
+	}); 
+
+	test('parseField - literalValue', () => {
+		assert.deepEqual(literalValue([Status.NotParsed, `Colour.red more`]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalChar([Status.NotParsed, `'z'`]), [Status.Valid,  ""]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "1.x"]), [Status.Incomplete,  "x"]);
+		assert.deepEqual(literalBoolean([Status.NotParsed, "true more"]), [Status.Valid,  " more"]);
+		assert.deepEqual(literalFloat([Status.NotParsed, "a1"]), [Status.Invalid,  "a1"]);
 	}); 
 });
