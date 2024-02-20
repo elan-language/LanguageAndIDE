@@ -12,10 +12,10 @@ import { Call } from '../frames/statements/call';
 import { Regexes } from '../frames/fields/regexes';
 import { assertSourceFileParses } from './testHelpers';
 
-suite('Parsing Tests', () => {
+suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
-	test('parse - all Regexes', () => { 
+	test('parse Frames - all Regexes', () => { 
 		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(``), false);
 		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\n`), true);
 		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\r\n`), true);
@@ -118,7 +118,7 @@ suite('Parsing Tests', () => {
 		static readonly expression = Regexes.anythingToNewLine; //TODO temporary kludge only - expression must go to end of line */
 	}); 
 
-	test('parse - empty file', () => {
+	test('parse Frames - empty file', () => {
         var source = new CodeSourceFromString("");
 		const fl = new FileImpl();
 		fl.parseFrom(source);
@@ -129,7 +129,7 @@ suite('Parsing Tests', () => {
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	}); 
 
-    test('parse - set statement', () => {
+    test('parse Frames - set statement', () => {
 		var code = "  set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -140,7 +140,7 @@ suite('Parsing Tests', () => {
 		assert.equal(setTo.renderAsSource(), code);
 	}); 
 
-	test('parse - variable', () => {
+	test('parse Frames - variable', () => {
 		var code = "  var fooBar set to 3.141";
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -151,7 +151,7 @@ suite('Parsing Tests', () => {
 		assert.equal(v.renderAsSource(), code);
 	});
 
-	test('parse - print', () => {
+	test('parse Frames - print', () => {
 		var code = `  print "Hello World!"`;
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -161,7 +161,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(p.renderAsSource(), code);
 	});
-	test('parse - throw', () => {
+	test('parse Frames - throw', () => {
 		var code = `  throw "Failure"`;
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -171,7 +171,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
-	test('parse - throw with variable', () => {
+	test('parse Frames - throw with variable', () => {
 		var code = `  throw message1`;
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -181,7 +181,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
-	test('parse - call', () => {
+	test('parse Frames - call', () => {
 		var code = `  call foo()`;
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -191,7 +191,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
-	test('parse - call with args', () => {
+	test('parse Frames - call with args', () => {
 		var code = `  call foo(3, a, "hello")`;
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -201,7 +201,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	});
-	test('parse - StatementSelector', () => {
+	test('parse Frames - StatementSelector', () => {
 		var code = "set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
@@ -211,7 +211,7 @@ suite('Parsing Tests', () => {
 		assert.equal(source.getRemainingCode(), "");
 	}); 
 
-	test('parse - header file', () => {
+	test('parse Frames - header file', () => {
 		var code = `# Elan v0.1 valid e3b0c44298fc1c14
 
 `;
@@ -222,7 +222,7 @@ suite('Parsing Tests', () => {
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - constant only', () => {
+	test('parse Frames - constant only', () => {
 		var code = `# Elan v0.1 valid ac46b46919180712
 
 constant pi set to 3.142
@@ -235,7 +235,7 @@ constant pi set to 3.142
 	});
 
 
-	test('parse - two constants', () => {
+	test('parse Frames - two constants', () => {
 		var code = `# Elan v0.1 valid 92f459a07caf7d31
 
 constant pi set to 3.142
@@ -249,7 +249,7 @@ constant e set to 2.718
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - main', () => {
+	test('parse Frames - main', () => {
 		var code = `# Elan v0.1 valid 0cad41862a1b04bf
 
 main
@@ -263,7 +263,7 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - hello world', () => {
+	test('parse Frames - hello world', () => {
 		var code = `# Elan v0.1 valid fc7c4565dc3c9c3b
 
 main
@@ -278,7 +278,7 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - main with all single-line statements', () => {
+	test('parse Frames - main with all single-line statements', () => {
 		var code = `# Elan v0.1 valid a07f33f9d15ca00c
 
 main
@@ -297,7 +297,7 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - all globals except class', () => {
+	test('parse Frames - all globals except class', () => {
 		var code = `# Elan v0.1 valid c6f179daced8df8a
 
 constant phi set to 1.618
@@ -326,7 +326,7 @@ end enum
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - class', () => {
+	test('parse Frames - class', () => {
 		var code = `# Elan v0.1 valid 66b203d7b930afe3
 
 class Player inherits Foo, Bar
@@ -354,7 +354,7 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - immutable class', () => {
+	test('parse Frames - immutable class', () => {
 		var code = `# Elan v0.1 valid 33a98752be0ede6a
 
 immutable class Card inherits Foo, Bar
@@ -374,7 +374,7 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - abstract class', () => {
+	test('parse Frames - abstract class', () => {
 		var code = `# Elan v0.1 valid 12efc404ab43c3e2
 
 abstract class Card
@@ -394,7 +394,7 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - abstract immutable class', () => {
+	test('parse Frames - abstract immutable class', () => {
 		var code = `# Elan v0.1 valid cdf1d048244b396c
 
 abstract immutable class Card
@@ -412,7 +412,7 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse - all multiline statements', () => {
+	test('parse Frames - all multiline statements', () => {
 		var code = `# Elan v0.1 valid 5f4023bd4909d889
 
 main
@@ -462,7 +462,7 @@ end main
 	});
 
 	/* Not yet running as conditions use more complex expressions than current parsing recognises
-	test('parse - mergeSort', (done) => {
+	test('parse Frames - mergeSort', (done) => {
 		assertSourceFileParses(done, "T06_mergeSort.source");
 	});*/
 
