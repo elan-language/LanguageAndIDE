@@ -159,9 +159,9 @@ export function paramsList(input: [Status, string]): [Status, string] {
 
 export function or(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>)
 {
-    if (input[0] !== Status.Invalid && input[1].length > 0) {
-        var bestStatus = Status.NotParsed;
-        var bestRemainingCode = "";
+    if (input[0] ! > Status.Incomplete && input[1].length > 0) {
+        var bestStatus = Status.Invalid;
+        var bestRemainingCode = input[1];
         funcs.forEach(f => {
            var [st, code] = f(input);
            if (st > bestStatus)
@@ -173,3 +173,5 @@ export function or(input: [Status, string], funcs: Array<(input: [Status, string
         return [bestStatus, bestRemainingCode];
     }
 }
+
+

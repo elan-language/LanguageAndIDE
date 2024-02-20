@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence } from '../frames/fields/field-parsers';
+import {Status, genericString, identifier, type, sp, paramDef, optional, optSp, comma, zeroOrMore, oneOrMore, commaSeparatedOneOrMore, paramsList, commaSeparatedZeroOrMore, sequence, or } from '../frames/fields/field-parsers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -134,5 +134,10 @@ suite('Field Parsing Tests', () => {
 		assert.deepEqual(paramsList([Status.NotParsed, "Foo String"]), [Status.Valid,  "Foo String"]);
 	}); 
 
-
+	test('parseField - or', () => {
+		assert.deepEqual(or([Status.NotParsed, "foo"], [type, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(or([Status.NotParsed, "String"], [type, identifier]), [Status.Valid,  ""]);
+		assert.deepEqual(or([Status.NotParsed, "foo String"], [type, identifier]), [Status.Valid,  " String"]);
+		assert.deepEqual(or([Status.NotParsed, "123"], [type, identifier]), [Status.Invalid,  "123"]);
+	}); 
 });
