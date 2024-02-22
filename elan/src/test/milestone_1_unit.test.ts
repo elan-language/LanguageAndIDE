@@ -117,7 +117,7 @@ suite('Milestone 1 - Unit tests', () => {
 		const f = new FileImpl();
 		var g = new GlobalSelector(f);
 		var help = g.getHelp();
-		assert.equal(help, " main procedure function class constant enum #");
+		assert.equal(help, " main procedure function class constant enum test #");
 		g.processKey(key('c'));
 		help = g.getHelp();
 		assert.equal(help, " class constant");
@@ -141,7 +141,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getHelp();
-		assert.equal(help, " call catch each for if print repeat set switch throw try var while #");
+		assert.equal(help, " assert call catch each for if print repeat set switch throw try var while #");
 		s.processKey(key('s'));
 		help = s.getHelp();
 		assert.equal(help, " set switch");
@@ -153,7 +153,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var func = new Function(fl);		
 		var s = new StatementSelector(func);
 		var help = s.getHelp();
-		assert.equal(help, " catch each for if repeat set switch throw try var while #");
+		assert.equal(help, " assert catch each for if repeat set switch throw try var while #");
 	});	
 
 	test("Selection Context - deeper nesting 1", () => {
@@ -163,7 +163,7 @@ suite('Milestone 1 - Unit tests', () => {
         var wh = new While(if1);
 		var s = new StatementSelector(wh);
 		var help = s.getHelp();
-		assert.equal(help, " catch each for if repeat set switch throw try var while #");//no else, print, call
+		assert.equal(help, " assert catch each for if repeat set switch throw try var while #");//no else, print, call
 	});	
 
 	test("Selection Context - deeper nesting 2", () => {
@@ -173,7 +173,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var if1 = new IfThen(fm);
 		var s = new StatementSelector(if1);
 		var help = s.getHelp();
-		assert.equal(help, " catch each else for if repeat set switch throw try var while #");//else, but no print, call
+		assert.equal(help, " assert catch each else for if repeat set switch throw try var while #");//else, but no print, call
 	});	
 
 	test("Selection Context - in a Switch", () => {
@@ -190,7 +190,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var ifThen = new IfThen(m);
 		var s = new StatementSelector(ifThen);
 		var help = s.getHelp();
-		assert.equal(help, " call catch each else for if print repeat set switch throw try var while #");
+		assert.equal(help, " assert call catch each else for if print repeat set switch throw try var while #");
 		s.processKey(key('e'));
 		help = s.getHelp();
 		assert.equal(help, " each else");

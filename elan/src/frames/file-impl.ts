@@ -10,6 +10,7 @@ import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
+import { Test } from "./globals/test";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
@@ -208,6 +209,10 @@ export class FileImpl implements File {
     }
     addConstantBefore(g: Frame): Frame {
         var m = new Constant(this);
+        return this.addGlobalBeforeAndSelect(m,g);
+    }
+    addTestBefore(g: Frame): Frame {
+        var m = new Test(this);
         return this.addGlobalBeforeAndSelect(m,g);
     }
     private addGlobalBeforeAndSelect(g: Frame, before: Frame): Frame {

@@ -18,6 +18,7 @@ export class GlobalSelector extends AbstractSelector  {
         ["Class", "class"],
         ["Constant", "constant"],
         ["Enum", "enum"],
+        ["Test", "test"],
         ["GlobalComment", "#"],
         ["Abstract", "abstract"],
         ["Immutable", "immutable"],
@@ -69,6 +70,9 @@ export class GlobalSelector extends AbstractSelector  {
             }
             case "GlobalComment": {
                 return this.getFile().addGlobalCommentBefore(this);
+            } 
+            case "Test": {
+                return this.getFile().addTestBefore(this);
             } 
             default: {
                 throw new Error(`${frameType} is not a valid global frame type.`);

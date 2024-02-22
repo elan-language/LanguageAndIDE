@@ -13,6 +13,7 @@ export class StatementSelector extends AbstractSelector  {
 
     //call each for if print repeat set switch throw try var while #";
     defaultOptions: [string, string][] = [
+        ["Assert", "assert"],
         ["Call", "call"],
         ["Case", "case"],
         ["Catch", "catch"],
@@ -37,7 +38,9 @@ export class StatementSelector extends AbstractSelector  {
     }
 
     validForEditorWithin(frameType: string): boolean {
-        if (this.getParent().getIdPrefix() === "switch" ) {
+        if (this.getParent().getIdPrefix() === "test" ) {
+            return frameType === "Assert" || frameType === "Call" || frameType === "Var";
+        } else if (this.getParent().getIdPrefix() === "switch" ) {
             return frameType === "Case";
         } else if (frameType === "Else" && this.getParent().getIdPrefix() === "if" ) {
             return true;

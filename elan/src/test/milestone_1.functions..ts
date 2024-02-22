@@ -18,13 +18,11 @@ import { Each } from "../frames/statements/each";
 import { IfThen } from "../frames/statements/if-statements";
 import { Else } from "../frames/statements/else";
 import { TryCatch } from "../frames/statements/try-catch";
+import { CommentStatement } from "../frames/statements/comment-statement";
 import { GlobalComment } from "../frames/globals/global-comment";
-import {CommentStatement} from "../frames/statements/comment-statement";
 import { FileImpl } from "../frames/file-impl";
-import { GlobalSelector } from "../frames/globals/global-selector";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { Switch } from "../frames/statements/switch";
-import { Case } from "../frames/statements/case";
 
 export function T00_emptyFile() {
 	const f = new FileImpl();

@@ -20,11 +20,15 @@ import { Else } from "./statements/else";
 import { Default } from "./statements/default";
 import { Catch } from "./statements/catch";
 import { Case } from "./statements/case";
+import { Assert } from "./statements/assert";
 
 export class StatementFactoryImpl implements StatementFactory {
 
     private getNewStatement(frameType: string, parent: Parent): Frame{ 
         switch(frameType) {
+            case "Assert": {
+                return new Assert(parent);
+            }
             case "Call": {
                 return new Call(parent);
             }
