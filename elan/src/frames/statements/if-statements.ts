@@ -2,15 +2,15 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { Condition } from "../fields/condition";
+import { Expression } from "../fields/expression";
 
 export class IfThen extends FrameWithStatements{
     isStatement = true;
-    condition: Condition;
+    condition: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Condition(this);
+        this.condition = new Expression(this);
         this.condition.setPlaceholder("condition");
     }
 

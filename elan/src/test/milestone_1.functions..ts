@@ -149,7 +149,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	var gs = f.getFirstGlobalSelector();
 	const con = new Constant(f);
 	con.name.setTextWithoutParsing("phi");
-	con.expr.setTextWithoutParsing("1.618");
+	con.literal.setTextWithoutParsing("1.618");
 	f.addGlobalBefore(con, gs);
 	const main = new MainFrame(f);
 	f.addGlobalBefore(main, gs);

@@ -110,7 +110,7 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select0").processKey(key("c"));
 		file.getById("select0").processKey(key("o"));
 		var v = file.getById("const10").renderAsSource();
-		assert.equal(v, 'constant name set to literal value\r\n');
+		assert.equal(v, 'constant name set to literal value or data structure\r\n');
  	});	
 
 	 test("Selection Filtering - globals", () => {

@@ -4,18 +4,18 @@ import { Field } from "../interfaces/field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
-import { Condition } from "../fields/condition";
+import { Expression } from "../fields/expression";
 
 
 export class Else extends FrameWithStatements  {
     isStatement = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
-    condition: Condition;
+    condition: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Condition(this);
+        this.condition = new Expression(this);
         this.condition.setPlaceholder("condition");
         this.selectIfClause = new IfSelector(this);
     }
