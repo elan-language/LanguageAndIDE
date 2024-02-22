@@ -20,7 +20,7 @@ function removeRegEx(code: string, regx: RegExp): string {
 export function genericString(input: [Status, string], match: string): [Status, string] {
     var result = input;
     if (match.length === 0) {
-        throw new Error("Cannot specifify empty string as the match");
+        throw new Error("Cannot specify empty string as the match");
     }
     if (input[0] >= Status.Valid) {
         var [_, code] = input;
@@ -35,6 +35,18 @@ export function genericString(input: [Status, string], match: string): [Status, 
         }
     }
     return result;
+}
+
+export function singleChar(input: [Status, string], char: string ): [Status, string] {
+  var result = input
+  if (input[0] >= Status.Valid) {
+    if (input[1].startsWith(char)){
+        result = [Status.Valid, input[1].substring(1)];
+    } else {
+        result =  [Status.Invalid, input[1]];
+    }
+  } 
+  return result;
 }
 
 export function identifier(input: [Status, string]): [Status, string] {
@@ -101,7 +113,8 @@ export function optional(input: [Status, string], func: (input: [Status, string]
     return result;
 }
 
-export function zeroOrMore(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+// 'Zero or more'
+export function STAR(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
     var result = input;
     while (result[0] > Status.Incomplete && result[1].length > 0) {  
         result = func(result);     
@@ -109,7 +122,8 @@ export function zeroOrMore(input: [Status, string], func: (input: [Status, strin
     return result[0] === Status.NotParsed ? [Status.Valid, result[1]] : result;
 }
 
-export function oneOrMore(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+// 'one or more'
+export function PLUS(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
     var result = input;
     var count = 0;
     while (result[0] > Status.Incomplete && result[1].length > 0) {  
@@ -121,7 +135,7 @@ export function oneOrMore(input: [Status, string], func: (input: [Status, string
     return count > 0 ? result : [Status.Invalid, result[1]];
 }
 
-export function commaSeparatedOneOrMore(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+export function CSV_1(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
    var result = func(input);
    var cont = true;
    while (result[0] === Status.Valid && result[1].length > 0 && cont) {
@@ -135,7 +149,7 @@ export function commaSeparatedOneOrMore(input: [Status, string],  func: (input: 
    return result;
 }
 
-export function commaSeparatedZeroOrMore(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+export function CSV_0(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
     var result = func(input);
     if (result[0] === Status.Valid) {
         var cont = true;
@@ -154,10 +168,11 @@ export function commaSeparatedZeroOrMore(input: [Status, string],  func: (input:
  }
 
 export function paramsList(input: [Status, string]): [Status, string] {
-    return commaSeparatedZeroOrMore(input, paramDef);
+    return CSV_0(input, paramDef);
 }
 
-export function OR(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
+//TODO: consider case for adding a 'firstMatchFrom'
+export function LongestMatchFrom(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
 {   var result = input;
     if (input[0] ! > Status.Incomplete && input[1].length > 0) {
         var bestStatus = Status.Invalid;
@@ -178,18 +193,20 @@ export function OR(input: [Status, string], funcs: Array<(input: [Status, string
 export function literalBoolean(input: [Status, string]): [Status, string] {
     var t = (input: [Status, string]) => genericString(input, "true");
     var f = (input: [Status, string]) => genericString(input, "false");
-    return OR(input, [t,f]);
+    return LongestMatchFrom(input, [t,f]);
 }
 
 export function literalInt(input: [Status, string]): [Status, string] {
     return genericRegEx(input, `^${Regexes.literalInt}`);
 }
 
-const dot = (input: [Status, string]) => genericString(input, ".");
+const dot = (input: [Status, string]) => singleChar(input, ".");
 
+//TODO: Exponent
 export function literalFloat(input: [Status, string]): [Status, string] {
     return SEQ(input, [literalInt, dot, literalInt]);
 }
+//TODO: Unicode def?
 export function literalChar(input: [Status, string]): [Status, string] {
     var quote = (input: [Status, string]) => genericString(input, `'`); //defines all printable ascii chars
     var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);
@@ -201,12 +218,12 @@ export function enumValue(input: [Status, string]): [Status, string] {
 }
 
 export function literalValue(input: [Status, string]): [Status, string] {
-    return OR(input, [literalBoolean, literalInt, literalFloat, literalChar, enumValue]);
+    return LongestMatchFrom(input, [literalBoolean, literalInt, literalFloat, literalChar, enumValue]);
 }
 
-//TODO: literalValue | literalDataStructure 
 export function literal(input: [Status, string]): [Status, string] {
-    return OR(input, [literalValue]);
+    //TODO: maybe shortcut this based on starting characters
+    return LongestMatchFrom(input, [literalValue]); //TODO literalDataStructure
 }
 
 //TODO: scopeQualifier: (PROPERTY | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
@@ -216,7 +233,7 @@ export function scopeQualifier_opt(input: [Status, string]): [Status, string] {
     var glob = (input: [Status, string]) => genericString(input, "global");
     var lib = (input: [Status, string]) => genericString(input, "library");
     //TODO package
-    var keywords = (input: [Status, string]) =>OR(input, [prop,glob,lib]);
+    var keywords = (input: [Status, string]) =>LongestMatchFrom(input, [prop,glob,lib]);
     var qual= (input: [Status, string]) => SEQ(input, [keywords, dot]);
     return optional(input, qual);  
 }
@@ -224,7 +241,32 @@ export function scopeQualifier_opt(input: [Status, string]): [Status, string] {
 //TODO literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | THIS | DEFAULT type;
 export function value(input: [Status, string]): [Status, string] {
     var sqId = (input: [Status, string]) => SEQ(input, [scopeQualifier_opt, identifier]);
-    return OR(input, [literal, sqId]);  //TODO others
+    return LongestMatchFrom(input, [literal, sqId]);  //TODO others
 }
 
+export function literalString(input: [Status, string]): [Status, string] {
+  throw new Error("Not implemented")
+}
+
+export function literalList(input: [Status, string]): [Status, string] {
+    throw new Error("Not implemented");
+    //short circuit for starting with open brace
+    //Test first for specific types of list i.e. litListString, litListInt etc
+    //Maybe we should disallow literal lists except of literal values. i.e. if
+    // you want to build list from expressions, need to define list and add to it.
+    // Similarly for dictionaries
+
+}
+
+export function literalTuple(input: [Status, string]): [Status, string] {
+  throw new Error("Not implemented")
+}
+
+export function literalDictionary(input: [Status, string]): [Status, string] {
+    throw new Error("Not implemented")
+}
+
+export function literalDataStructure(input: [Status, string]): [Status, string] {
+    return LongestMatchFrom(input, [literalString, literalList, literalTuple, literalDictionary]);
+}
 

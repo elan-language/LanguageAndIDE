@@ -11,7 +11,7 @@ import { Function } from '../frames/globals/function';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { GlobalSelector } from '../frames/globals/global-selector';
 import { Switch } from '../frames/statements/switch';
-import { IfThen } from '../frames/statements/if-then';
+import { IfThen } from '../frames/statements/if-statements';
 import { While } from '../frames/statements/while';
 import { FunctionMethod } from '../frames/class-members/function-method';
 

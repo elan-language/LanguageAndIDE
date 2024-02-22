@@ -1,4 +1,4 @@
-# Elan v0.1 incomplete aa45a00b6e8a7294
+# Elan v0.1 incomplete 3de2f29bb276a9ab
 
 main
   var name set to value or expression
@@ -18,15 +18,15 @@ main
   each letter in Charlie Duke
 
   end each
-  if y > 4 then
+  if y > 4
 
   end if
-  if y > 4 then
+  if y > 4
     else
 
   end if
-  if y > 4 then
-    else if y > 10 then
+  if y > 4
+    else if y > 10
 
     else
 

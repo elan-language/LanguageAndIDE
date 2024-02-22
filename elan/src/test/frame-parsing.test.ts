@@ -413,7 +413,7 @@ end class
 	});
 
 	test('parse Frames - all multiline statements', () => {
-		var code = `# Elan v0.1 valid 5f4023bd4909d889
+		var code = `# Elan v0.1 valid bee13e6e47a3fd05
 
 main
   while newGame
@@ -428,15 +428,15 @@ main
   each letter in Charlie Duke
 
   end each
-  if y > 4 then
+  if y > 4
 
   end if
-  if y > 4 then
+  if y > 4
     else
 
   end if
-  if y > 4 then
-    else if y > 10 then
+  if y > 4
+    else if y > 10
 
     else
 

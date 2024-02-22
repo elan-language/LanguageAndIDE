@@ -15,7 +15,7 @@ import { While } from "../frames/statements/while";
 import { Repeat } from "../frames/statements/repeat";
 import { For } from "../frames/statements/for";
 import { Each } from "../frames/statements/each";
-import { IfThen } from "../frames/statements/if-then";
+import { IfThen } from "../frames/statements/if-statements";
 import { Else } from "../frames/statements/else";
 import { TryCatch } from "../frames/statements/try-catch";
 import { GlobalComment } from "../frames/globals/global-comment";

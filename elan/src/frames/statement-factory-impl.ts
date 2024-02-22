@@ -2,7 +2,7 @@ import { Each } from "./statements/each";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Call } from "./statements/call";
 import { For } from "./statements/for";
-import { IfThen } from "./statements/if-then";
+import { IfThen } from "./statements/if-statements";
 import { Print } from "./statements/print";
 import { Repeat } from "./statements/repeat";
 import { Throw } from "./statements/throw";

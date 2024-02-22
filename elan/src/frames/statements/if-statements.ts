@@ -29,20 +29,19 @@ export class IfThen extends FrameWithStatements{
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}<keyword> then </keyword></top>
+<top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end if</keyword>
 </statement>`;
     }
     renderAsSource(): string {
-    return `${this.indent()}if ${this.condition.renderAsSource()} then\r
+    return `${this.indent()}if ${this.condition.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end if`;
     }
     parseTopOfFrame(source: CodeSource): void {
         source.remove("if ");
         this.condition.parseFrom(source);
-        source.remove(" then");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end if");

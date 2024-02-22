@@ -38,13 +38,12 @@ export class Else extends FrameWithStatements  {
     }
 
     private ifClauseAsHtml() : string {
-        return this.hasIf ? `<keyword>if </keyword>${this.condition.renderAsHtml()}<keyword> then</keyword>`: `${this.selectIfClause.renderAsHtml()}`;
-     }
-
-    private ifClauseAsSource() : string {
-        return this.hasIf ? ` if ${this.condition.renderAsSource()} then`:``;
+        return this.hasIf ? `<keyword>if </keyword>${this.condition.renderAsHtml()}`: `${this.selectIfClause.renderAsHtml()}`;
     }
 
+    private ifClauseAsSource() : string {
+        return this.hasIf ? ` if ${this.condition.renderAsSource()}`:``;
+    }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
 ${this.renderStatementsAsHtml()}
@@ -66,11 +65,9 @@ ${this.renderStatementsAsSource()}`;
             this.hasIf = true;
             source.remove(" if ");
             this.condition.parseFrom(source);
-            source.remove(" then");
         }
     }
     parseBottomOfFrame(source: CodeSource): boolean {
         return source.isMatch("else") || source.isMatch("end if");
     }
-
 } 
