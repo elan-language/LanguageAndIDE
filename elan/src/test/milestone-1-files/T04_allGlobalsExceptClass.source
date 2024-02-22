@@ -1,4 +1,4 @@
-# Elan v0.1 valid 82ddb54b7f227455
+# Elan v0.1 incomplete ec02f83079469a90
 
 constant phi set to 1.618
 
@@ -17,3 +17,8 @@ end function
 enum Fruit
   apple, orange, pear
 end enum
+
+test test1
+  var result set to value or expression
+  assert result is expected value
+end test

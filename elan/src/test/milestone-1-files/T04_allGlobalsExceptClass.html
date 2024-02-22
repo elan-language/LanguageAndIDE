@@ -8,7 +8,7 @@
 </head>
 <body>
 <elan-code>
-<header># Elan v0.1 <span id="fileStatus" class="valid">valid</span> <hash>82ddb54b7f227455</hash></header>
+<header># Elan v0.1 <span id="fileStatus" class="incomplete">incomplete</span> <hash>ec02f83079469a90</hash></header>
 <constant class="valid" id='const1' tabindex="0"><keyword>constant </keyword><field id="ident2" class="valid" tabindex=0><text>phi</text><placeholder>name</placeholder><help></help></field><keyword> set to </keyword><field id="text3" class="valid" tabindex=0><text>1.618</text><placeholder>literal value or data structure</placeholder><help>Literal value (e.g. number or string)</help></field></constant>
 <main class="multiline valid" id='main4' tabindex="0">
 <top><expand>+</expand><keyword>main</keyword></top>
@@ -31,6 +31,13 @@
 <statement><field id="enumVals19" class="valid" tabindex=0><text>apple, orange, pear</text><placeholder>values</placeholder><help></help></field></statement>       
 <keyword>end enum</keyword>
 </enum>
+<test class="multiline incomplete" id='test20' tabindex="0">
+<top><expand>+</expand><keyword>test </keyword><field id="ident22" class="valid" tabindex=0><text>test1</text><placeholder>name</placeholder><help></help></field></top>
+<statement class="valid empty" id='select21' tabindex="0"><text></text><placeholder>new code</placeholder><help> assert call var</help></statement>
+<statement class="incomplete" id='var23' tabindex="0"><keyword>var </keyword><field id="ident24" class="valid" tabindex=0><text>result</text><placeholder>name</placeholder><help></help></field><keyword> set to </keyword><field id="expr25" class="empty incomplete" tabindex=0><text></text><placeholder>value or expression</placeholder><help></help></field></statement>
+<statement class="incomplete" id='assert26' tabindex="0"><keyword>assert </keyword><span>result</span><keyword> is </keyword><field id="expr27" class="empty incomplete" tabindex=0><text></text><placeholder>expected value</placeholder><help></help></field></statement>
+<keyword>end test</keyword>
+</test>
 <global class="valid empty" id='select0' tabindex="0"><text></text><placeholder>new code</placeholder><help> main procedure function class constant enum test #</help></global>
 </elan-code>
 </body>

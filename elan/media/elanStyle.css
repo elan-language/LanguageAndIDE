@@ -72,7 +72,7 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
     border-left-width: 2ch;
 }
 
-header, constant, main, procedure, function, enum, classDef, constructor, property, member, global {
+header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
     display: block;
     padding-bottom: 1ch;
 }

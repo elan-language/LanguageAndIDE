@@ -6,6 +6,7 @@ import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { Enum } from "../frames/globals/enum";
+import { Test } from "../frames/globals/test";
 import { Class } from "../frames/globals/class";
 import { Property } from "../frames/class-members/property";
 import { Throw } from "../frames/statements/throw";
@@ -163,6 +164,9 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	enu.name.setTextWithoutParsing("Fruit");
 	enu.values.setTextWithoutParsing("apple, orange, pear");
 	f.addGlobalBefore(enu, gs);
+	const test = new Test(f);
+	test.name.setTextWithoutParsing("test1");
+	f.addGlobalBefore(test, gs);
 	return f;
 }
 

@@ -3,6 +3,8 @@ import { Identifier } from "../fields/identifier";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { Assert } from "../statements/assert";
+import { Variable } from "../statements/variable";
 
 export class Test extends FrameWithStatements {
     isTest = true;
@@ -12,7 +14,12 @@ export class Test extends FrameWithStatements {
     constructor(parent: Parent) {
         super(parent);
         this.multiline = true;
+        this.statements.slice(0,1); //remove statement selector
         this.name = new Identifier(this);
+        var result = new Variable(this);
+        result.name.setTextWithoutParsing("result");
+        this.statements.push(result);
+        this.statements.push( new Assert(this));
     }
 
     getFields(): Field[] {
@@ -29,11 +36,11 @@ export class Test extends FrameWithStatements {
     }
 
     public renderAsHtml() : string {
-        return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+        return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>test </keyword>${this.name.renderAsHtml()}</top>
 ${this.renderStatementsAsHtml()}
 <keyword>end test</keyword>
-</procedure>`;
+</test>`;
     }
     indent(): string {
         return "";

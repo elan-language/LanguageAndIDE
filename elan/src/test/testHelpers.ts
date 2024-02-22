@@ -8,7 +8,7 @@ import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
