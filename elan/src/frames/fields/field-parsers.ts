@@ -1,3 +1,4 @@
+import { Integer } from "./integer";
 import { Regexes } from "./regexes";
 
 export enum Status {
@@ -38,7 +39,7 @@ export function genericString(input: [Status, string], match: string): [Status, 
 }
 
 export function singleChar(input: [Status, string], char: string ): [Status, string] {
-  var result = input
+  var result = input;
   if (input[0] >= Status.Valid) {
     if (input[1].startsWith(char)){
         result = [Status.Valid, input[1].substring(1)];
@@ -87,9 +88,10 @@ export function SEQ(input: [Status, string], funcs: Array<(input: [Status, strin
 {
     var i = 0; //Index
     var result = input;
-    while (i < funcs.length && result[0] >= Status.Valid) {  
+    while (i < funcs.length && result[0] >= Status.Valid) { 
+        var prev = result[0]; 
         result = funcs[i](result);     
-        if (i > 0 && result[0] === Status.Invalid) {
+        if (i > 0 && result[0] === Status.Invalid && prev === Status.Valid) {
             result = [Status.Incomplete, result[1]];
         } else {
             i++;
@@ -107,7 +109,7 @@ export function optional(input: [Status, string], func: (input: [Status, string]
     if (input[0] >= Status.Valid) {
         var result = func(input);
         if (result[0] === Status.Invalid) {
-            result = [Status.Valid, result[1]];
+            result = [input[0], result[1]];
         }
     }
     return result;
@@ -200,7 +202,9 @@ export function literalInt(input: [Status, string]): [Status, string] {
     return genericRegEx(input, `^${Regexes.literalInt}`);
 }
 
-const dot = (input: [Status, string]) => singleChar(input, ".");
+const dot = (input: [Status, string]) => singleChar(input, `.`);
+const quoteS = (input: [Status, string]) => singleChar(input, `'`);
+const quoteD = (input: [Status, string]) => singleChar(input, `"`);
 
 //TODO: Exponent
 export function literalFloat(input: [Status, string]): [Status, string] {
@@ -208,17 +212,18 @@ export function literalFloat(input: [Status, string]): [Status, string] {
 }
 //TODO: Unicode def?
 export function literalChar(input: [Status, string]): [Status, string] {
-    var quote = (input: [Status, string]) => genericString(input, `'`); //defines all printable ascii chars
-    var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);
-    return SEQ(input, [quote, ch, quote]);
+    var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);//defines all printable ascii chars
+    return SEQ(input, [quoteS, ch, quoteS]);
+}
+
+//TODO: Cope with escaped quotes & more characters
+export function literalString(input: [Status, string]): [Status, string] {
+    var content = (input: [Status, string]) => genericRegEx(input, `^[^"]*`);//anything except quote
+    return SEQ(input, [quoteD, content, quoteD]);
 }
 
 export function enumValue(input: [Status, string]): [Status, string] {
     return SEQ(input, [type, dot, identifier]);
-}
-
-export function literalValue(input: [Status, string]): [Status, string] {
-    return LongestMatchFrom(input, [literalBoolean, literalInt, literalFloat, literalChar, enumValue]);
 }
 
 export function literal(input: [Status, string]): [Status, string] {
@@ -238,15 +243,39 @@ export function scopeQualifier_opt(input: [Status, string]): [Status, string] {
     return optional(input, qual);  
 }
 
-//TODO literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | THIS | DEFAULT type;
-export function value(input: [Status, string]): [Status, string] {
-    var sqId = (input: [Status, string]) => SEQ(input, [scopeQualifier_opt, identifier]);
-    return LongestMatchFrom(input, [literal, sqId]);  //TODO others
+export function index_opt(input: [Status, string]): [Status, string] {
+    var open = (input: [Status, string]) => singleChar(input,"[");
+    var close = (input: [Status, string]) => singleChar(input,"]");
+    var index =  (input: [Status, string]) => SEQ(input, [open, value, close]);
+    return optional(input, index);
 }
 
-export function literalString(input: [Status, string]): [Status, string] {
-  throw new Error("Not implemented")
+export function variable(input: [Status, string]): [Status, string] {
+    return SEQ(input, [scopeQualifier_opt, identifier, index_opt]);
 }
+
+export function value(input: [Status, string]): [Status, string] {
+    return LongestMatchFrom(input, [literalValue, variable]); 
+}
+
+export function literalValue(input: [Status, string]): [Status, string] {
+    if (input[0] ! > Status.Incomplete && input[1].length > 0) {
+      if (isMatchRegEx(input[1], /^[0-9]/)) {
+        return (LongestMatchFrom(input, [literalInt, literalFloat]))
+      } else if (input[1].startsWith(`'`)) {
+        return literalChar(input);
+      } else if (input[1].startsWith(`"`)) {
+        return literalString(input);
+      } else if (isMatchRegEx(input[1], /^[A-Z]/)) {
+        return enumValue(input);
+      } else {
+        return literalBoolean(input);
+      }
+    } else {
+        return input;
+    }
+}
+
 
 export function literalList(input: [Status, string]): [Status, string] {
     throw new Error("Not implemented");
