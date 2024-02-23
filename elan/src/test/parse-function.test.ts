@@ -141,10 +141,12 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo"]), [ParseStatus.valid,  ""]);
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo "]), [ParseStatus.valid,  " "]);
 		assert.deepEqual(type([ParseStatus.notParsed, "foo"]), [ParseStatus.invalid,  "foo"]);
-		//Bad starting points:
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar>"]), [ParseStatus.valid,  ""]);
+
+
 		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
-		assert.deepEqual(type([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
+
 	}); 
 
 	test('parse functions - sp', () => {

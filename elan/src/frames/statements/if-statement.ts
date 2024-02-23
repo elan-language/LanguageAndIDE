@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Expression } from "../fields/expression";
 
-export class IfThen extends FrameWithStatements{
+export class IfStatement extends FrameWithStatements{
     isStatement = true;
     condition: Expression;
 
@@ -44,6 +44,7 @@ ${this.indent()}end if`;
         this.condition.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
+        source.removeIndent();
         return this.parseStandardEnding(source, "end if");
     }
 } 

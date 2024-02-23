@@ -72,6 +72,7 @@ end function\r
     parseBottomOfFrame(source: CodeSource): boolean {
         var result = false;
         var keyword = "return ";
+        source.removeIndent();
         if (source.isMatch(keyword)) {
             this.getReturnStatement().parseFrom(source);
             source.removeNewLine().removeIndent();

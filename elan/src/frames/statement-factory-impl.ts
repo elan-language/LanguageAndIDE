@@ -2,7 +2,7 @@ import { Each } from "./statements/each";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Call } from "./statements/call";
 import { For } from "./statements/for";
-import { IfThen } from "./statements/if-statements";
+import { IfStatement } from "./statements/if-statement";
 import { Print } from "./statements/print";
 import { Repeat } from "./statements/repeat";
 import { Throw } from "./statements/throw";
@@ -51,7 +51,7 @@ export class StatementFactoryImpl implements StatementFactory {
                 return new For(parent);
             }
             case "IfThen": {
-                return new IfThen(parent);
+                return new IfStatement(parent);
             }
             case "Print": {
                 return new Print(parent);

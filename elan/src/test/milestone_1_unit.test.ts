@@ -11,7 +11,7 @@ import { Function } from '../frames/globals/function';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { GlobalSelector } from '../frames/globals/global-selector';
 import { Switch } from '../frames/statements/switch';
-import { IfThen } from '../frames/statements/if-statements';
+import { IfStatement } from '../frames/statements/if-statement';
 import { While } from '../frames/statements/while';
 import { FunctionMethod } from '../frames/class-members/function-method';
 
@@ -159,7 +159,7 @@ suite('Milestone 1 - Unit tests', () => {
 	test("Selection Context - deeper nesting 1", () => {
 		const fl = new FileImpl();
 		var func = new Function(fl);
-		var if1 = new IfThen(func);
+		var if1 = new IfStatement(func);
         var wh = new While(if1);
 		var s = new StatementSelector(wh);
 		var help = s.getHelp();
@@ -170,7 +170,7 @@ suite('Milestone 1 - Unit tests', () => {
 		const fl = new FileImpl();
 		var c = new Class(fl);
         var fm = new FunctionMethod(c);
-		var if1 = new IfThen(fm);
+		var if1 = new IfStatement(fm);
 		var s = new StatementSelector(if1);
 		var help = s.getHelp();
 		assert.equal(help, " catch each else for if repeat set switch throw try var while #");//else, but no print, call
@@ -187,7 +187,7 @@ suite('Milestone 1 - Unit tests', () => {
 	test("Selection Context - in an IfThen", () => {
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
-		var ifThen = new IfThen(m);
+		var ifThen = new IfStatement(m);
 		var s = new StatementSelector(ifThen);
 		var help = s.getHelp();
 		assert.equal(help, " call catch each else for if print repeat set switch throw try var while #");

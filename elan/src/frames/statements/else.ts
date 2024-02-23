@@ -68,6 +68,13 @@ ${this.renderStatementsAsSource()}`;
         }
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        return source.isMatch("else") || source.isMatch("end if");
+        var result = false;
+        source.removeIndent();
+        if (source.isMatch("else")) {
+            result = true;
+        } else  if (source.isMatch("end if")){
+           result = true;
+        }
+        return result; 
     }
 } 

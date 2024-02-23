@@ -358,9 +358,46 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	/* Not yet running as conditions use more complex expressions than current parsing recognises
-	test('parse Frames - mergeSort', (done) => {
+/* 	test('parse Frames - mergeSort', (done) => {
 		assertSourceFileParses(done, "T06_mergeSort.source");
-	});*/
+	}); */
+
+	test('parse Frames - mergeSort', () => {
+		var code = `# Elan v0.1 valid 4d28f8a01546c4ab
+
+main
+  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
+  print mergeSort(li)
+end main
+
+function mergeSort(list List<of String>) as List<of String>
+  var result set to list
+  if list.length() > 1
+    var mid set to list.length() div 2
+    set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
+  end if
+  return result
+end function
+
+function merge(a List<of String>, b List<of String>) as List<of String>
+  var name set to new List<of String>()
+  if a.isEmpty()
+    set result to b
+    else if b.isEmpty()
+      set result to a
+    else if a[0].isBefore(b[0])
+      set result to a[0] + merge(a[1..], b)
+    else
+      set result to b[0] + merge(a, b[1..])
+  end if
+  return result
+end function
+`;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 
 });
