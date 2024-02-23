@@ -1,7 +1,21 @@
-# Elan v0.1 valid a52c0b92f9120c7a
+# Elan v0.1 valid 27ca0e4d804acb31
 
 main
   print 3+4
-  var x set to 3
+  var v set to £
   call h()
+  call foo(a,b, c,  d1,3,"fjdkl")
 end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  property name List<of String>
+
+  function reset() as String
+    return default
+  end function
+
+end class

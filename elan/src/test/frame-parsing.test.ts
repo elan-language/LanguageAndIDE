@@ -358,9 +358,6 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-/* 	test('parse Frames - mergeSort', (done) => {
-		assertSourceFileParses(done, "T06_mergeSort.source");
-	}); */
 
 	test('parse Frames - mergeSort', () => {
 		var code = `# Elan v0.1 valid 4d28f8a01546c4ab
@@ -399,5 +396,10 @@ end function
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+
+	test('parse Frames - mergeSort from file', (done) => {
+		assertSourceFileParses(done, "T06_mergeSort.source");
+	});
+
 
 });

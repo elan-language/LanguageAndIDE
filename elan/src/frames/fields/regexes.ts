@@ -5,7 +5,7 @@ export class Regexes {
     
     static readonly anythingToNewLine = `.*`;
 
-    static readonly type = `[A-Z]\\w*(<of [A-Z]\\w*>)?`; 
+    static readonly simpleType = `[A-Z]\\w*`; 
     static readonly identifier = `[a-z]\\w*`; 
     static readonly literalString = `"[^"]*"`;
     static readonly literalInt = `[0-9][0-9]*`;
@@ -16,9 +16,9 @@ export class Regexes {
     static readonly variable = `${Regexes.identifier}(\\[.*\\])?`; //TODO '.*' is too open
     static readonly value = `${Regexes.literalValue}|${Regexes.variable}`;
     static readonly argList = `(${Regexes.value})(,\\s(${Regexes.value}))*`; //For time being does not allow expressions
-    static readonly paramDef = `${Regexes.identifier} ${Regexes.type}`;
+    static readonly paramDef = `${Regexes.identifier} ${Regexes.simpleType}`;
     static readonly paramList = `${Regexes.paramDef}(, ${Regexes.paramDef})*`;
-    static readonly typeList = `${Regexes.type}(, ${Regexes.type})*`;
+    static readonly typeList = `${Regexes.simpleType}(, ${Regexes.simpleType})*`;
     static readonly identifierList = `${Regexes.identifier}(, ${Regexes.identifier})*`;
     static readonly expression = `.${Regexes.anythingToNewLine}`; //TODO temporary kludge only - expression must go to end of line
     static readonly comment = `# ${Regexes.anythingToNewLine}`;

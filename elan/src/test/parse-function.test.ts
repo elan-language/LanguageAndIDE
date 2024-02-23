@@ -13,11 +13,10 @@ suite('Parse Function Tests', () => {
 		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\n`), true);
 		assert.equal(new RegExp(`^${Regexes.newLine}$`).test(`\r\n`), true);
 
-		assert.equal(new RegExp(`^${Regexes.type}$`).test(``), false);
-		assert.equal(new RegExp(`^${Regexes.type}$`).test(`T`), true);
-		assert.equal(new RegExp(`^${Regexes.type}$`).test(`Foo123_x`), true);
-		assert.equal(new RegExp(`^${Regexes.type}$`).test(`Foo<of Bar>`), true);
-		assert.equal(new RegExp(`^${Regexes.type}$`).test(`f`), false);
+		assert.equal(new RegExp(`^${Regexes.simpleType}$`).test(``), false);
+		assert.equal(new RegExp(`^${Regexes.simpleType}$`).test(`T`), true);
+		assert.equal(new RegExp(`^${Regexes.simpleType}$`).test(`Foo123_x`), true);
+		assert.equal(new RegExp(`^${Regexes.simpleType}$`).test(`f`), false);
 
 
 		assert.equal(new RegExp(`^${Regexes.identifier}$`).test(``), false);
@@ -142,7 +141,10 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo "]), [ParseStatus.valid,  " "]);
 		assert.deepEqual(type([ParseStatus.notParsed, "foo"]), [ParseStatus.invalid,  "foo"]);
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar>"]), [ParseStatus.valid,  ""]);
-
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of "]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar"]), [ParseStatus.incomplete,  ""]);
+		//assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar<of Qux>>"]), [ParseStatus.valid,  ""]); TODO
 
 		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);

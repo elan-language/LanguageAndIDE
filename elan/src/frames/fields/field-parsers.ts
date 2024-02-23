@@ -62,8 +62,20 @@ function genericRegEx(input: [ParseStatus, string], regxString: string): [ParseS
 }
 
 export function type(input: [ParseStatus, string]): [ParseStatus, string] {
-    return genericRegEx(input, `^${Regexes.type}`);
+    return SEQ(input, [simpleType, generic_opt]);
 }
+
+export function simpleType(input: [ParseStatus, string]): [ParseStatus, string] {
+    return genericRegEx(input, `^${Regexes.simpleType}`);
+}
+
+export function generic_opt(input: [ParseStatus, string]): [ParseStatus, string] {
+    var open =  (input: [ParseStatus, string]) => genericString(input, "<of ");
+    var gen = (input: [ParseStatus, string]) => SEQ(input, [open, simpleType, close]);
+    var close =  (input: [ParseStatus, string]) => singleChar(input, ">");
+    return optional(input, gen);
+}
+
 
 export function sp(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^\\s+`);
@@ -80,7 +92,7 @@ export function comma(input: [ParseStatus, string]): [ParseStatus, string] {
 export function SEQ(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
 {
     var i = 0; //Index
-    var result = input;
+    var result: [ParseStatus, string] = [ ParseStatus.notParsed, input[1]];
     while (i < funcs.length && result[0] >= ParseStatus.valid) { 
         var prev = result[0]; 
         result = funcs[i](result);     
