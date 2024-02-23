@@ -134,6 +134,10 @@ field.selected.valid text, field.selected.valid input {
     background-color: var(--valid);
     color: black;
 }
+field.selected.valid.optional.empty text, field.selected.valid.optional.empty input {
+    background-color: lightgrey;
+    color: white;
+}
 input::placeholder {
     color: white;
 }
@@ -147,12 +151,13 @@ field.empty placeholder {
 }
 field.empty.optional placeholder {
     display:none;
+    color: lightgrey;
 }
-.selected top field.empty placeholder, .selected > field.empty placeholder {
+.selected > top field.empty placeholder, .selected > field.empty placeholder {
     display:inline;
     color: var(--incomplete);
 }
-.selected top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
+.selected > top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
     display:inline;
     color: white;
 }
