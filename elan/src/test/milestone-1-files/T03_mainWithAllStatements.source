@@ -1,9 +1,9 @@
-# Elan v0.1 valid 3de2f29bb276a9ab
+# Elan v0.1 incomplete c6b6ef7ea13fc9c0
 
 main
-  var name set to value or expression
+  var  set to 
   set a to 3 + 4
-  throw message
+  throw 
   call signIn(rwp, password)
   print "Hello World!"
   while newGame
@@ -35,7 +35,7 @@ main
     catch e
 
   end try
-  switch value or expression
+  switch 
     default
 
   end switch

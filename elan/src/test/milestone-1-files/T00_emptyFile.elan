@@ -1,6 +1,7 @@
-# Elan v0.1 valid c0b452738c3a0f35
+# Elan v0.1 valid a52c0b92f9120c7a
 
 main
-  
+  print 3+4
+  var x set to 3
+  call h()
 end main
-

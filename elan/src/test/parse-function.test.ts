@@ -111,7 +111,6 @@ suite('Parse Function Tests', () => {
 		static readonly expression = Regexes.anythingToNewLine; //TODO temporary kludge only - expression must go to end of line */
 	}); 
 
-
 	test('parse functions - generic string', () => {
 		var kw = "var";
 		assert.deepEqual(genericString([ParseStatus.notParsed, "var a set to 3"],kw), [ParseStatus.valid,  " a set to 3"]);
@@ -132,9 +131,10 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(identifier([ParseStatus.notParsed, "f set to"]), [ParseStatus.valid,  " set to"]);
 		assert.deepEqual(identifier([ParseStatus.notParsed, "Foo"]), [ParseStatus.invalid,  "Foo"]);
 		//Bad starting points:
-		assert.deepEqual(identifier([ParseStatus.invalid, "foo"]), [ParseStatus.invalid, "foo"]);
-		assert.deepEqual(identifier([ParseStatus.incomplete, ""]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(identifier([ParseStatus.invalid, "foo"]), [ParseStatus.valid, ""]);
+		assert.deepEqual(identifier([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
 		assert.deepEqual(identifier([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(identifier([ParseStatus.invalid, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
 	test('parse functions - type', () => {
@@ -142,8 +142,8 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo "]), [ParseStatus.valid,  " "]);
 		assert.deepEqual(type([ParseStatus.notParsed, "foo"]), [ParseStatus.invalid,  "foo"]);
 		//Bad starting points:
-		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.invalid, "Foo"]);
-		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
+		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
 		assert.deepEqual(type([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
@@ -152,8 +152,8 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(sp([ParseStatus.notParsed, "   def"]), [ParseStatus.valid,  "def"]);
 		assert.deepEqual(sp([ParseStatus.notParsed, "ghi"]), [ParseStatus.invalid,  "ghi"]);
 		//Bad starting points:
-		assert.deepEqual(sp([ParseStatus.invalid, " abc"]), [ParseStatus.invalid, " abc"]);
-		assert.deepEqual(sp([ParseStatus.incomplete, ""]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(sp([ParseStatus.invalid, " abc"]), [ParseStatus.valid, "abc"]);
+		assert.deepEqual(sp([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
 		assert.deepEqual(sp([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
@@ -238,7 +238,7 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , bar "]), [ParseStatus.incomplete,  ""]);
 		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , Bar"]), [ParseStatus.incomplete,  "Bar"]);
 		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo string"]), [ParseStatus.incomplete,  "string"]);
-		assert.deepEqual(paramsList([ParseStatus.notParsed, "Foo String"]), [ParseStatus.valid,  "Foo String"]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "Foo String"]), [ParseStatus.invalid,  "Foo String"]);
 	}); 
 
 	test('parse functions - longestMatchFrom', () => {
@@ -368,8 +368,7 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(argsList([ParseStatus.notParsed, `1, 2, 3`]), [ParseStatus.valid,  ""]);
 		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d], "hello", 'c', true`]), [ParseStatus.valid,  ""]);
 		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d],,`]), [ParseStatus.incomplete,  ","]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, ``]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d], "hello", 'c', true`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, ``]), [ParseStatus.invalid,  ""]);
 		assert.deepEqual(argsList([ParseStatus.notParsed, `a b[2]`]), [ParseStatus.valid,  " b[2]"]);
 		assert.deepEqual(argsList([ParseStatus.notParsed, `a, `]), [ParseStatus.incomplete,  ""]);
 	});

@@ -176,12 +176,12 @@ end main
 	});
 
 	test('parse Frames - main with all single-line statements', () => {
-		var code = `# Elan v0.1 valid a07f33f9d15ca00c
+		var code = `# Elan v0.1 valid edecbe6cd394058d
 
 main
   var name set to value or expression
   set a to 3 + 4
-  throw message
+  throw "message"
   call signIn(rwp, password)
   print "Hello World!"
 end main

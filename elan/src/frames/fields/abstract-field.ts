@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
 import {CodeSource } from "../code-source";
+import { optional } from "./field-parsers";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -17,8 +18,7 @@ export abstract class AbstractField implements Selectable, Field {
     private holder: Frame;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
-    private status: ParseStatus = ParseStatus.notParsed;
-
+    private status: ParseStatus = ParseStatus.incomplete;
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -26,6 +26,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
+        this.parseCurrentText();
     }
     
     abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];
@@ -33,16 +34,14 @@ export abstract class AbstractField implements Selectable, Field {
     parseFrom(source: CodeSource): void {
         var rol = source.readToEndOfLine();
         var result = this.parseFunction([ParseStatus.notParsed, rol]);
-        var stat = result[0];
-        if (stat === ParseStatus.invalid || stat === ParseStatus.incomplete) {
-            throw new Error(`Parse ${stat.toString()} at ${rol}`);
-        } else {
-            this.setStatus(result[0]);
+        if (result[0] === ParseStatus.valid || this._optional) {
             var taken = rol.length - result[1].length;
             this.text = rol.substring(0, taken);
             rol = rol.substring(taken);
             source.pushBackOntoFrontOfCode(rol);
-        }
+        } else {
+            throw new Error(`Parse ${result[0].toString()} at ${rol}`);
+        } 
     }
 
     getHelp(): string {
@@ -66,13 +65,19 @@ export abstract class AbstractField implements Selectable, Field {
         return this._optional;
     }
 
-    parseCurrentText() {
-       var result = this.parseFunction([ParseStatus.notParsed, this.text]);
-       if (result[1].length > 0) {
-        this.setStatus(ParseStatus.invalid);
-       } else {
-        this.setStatus(result[0]);
-       }
+    parseCurrentText() : ParseStatus {
+        var status: ParseStatus = ParseStatus.notParsed;
+        if (this.text === "") {
+            status = this._optional ? ParseStatus.valid : ParseStatus.incomplete;
+        } else {
+            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+            if (result[1].length > 0) {
+                status = ParseStatus.invalid;
+            } else {
+                status = result[0];
+            }
+        }
+        return status;
     }
 
     processKey(keyEvent: KeyEvent): void {
@@ -141,10 +146,7 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
     getStatus(): ParseStatus {
-        return this.status;
-    }
-    setStatus(to: ParseStatus): void {
-        this.status = to;
+        return this.parseCurrentText();
     }
 
     select(): void {
@@ -195,12 +197,8 @@ export abstract class AbstractField implements Selectable, Field {
         .replace(/>/g, '&gt;');
     }
 
-    public contentAsSource() : string {
-        if (this.text) {
-         return this.text;
-        } else {
-            return this.placeholder;
-        }
+    public textAsSource() : string {
+        return this.text;
      }
 
     private tagTypeNames(c: string) : string {
@@ -244,7 +242,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     renderAsSource(): string {
-        return this.contentAsSource();
+        return this.textAsSource();
     }
 
     setText(text: string) {

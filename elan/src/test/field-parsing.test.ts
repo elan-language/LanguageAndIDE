@@ -15,8 +15,8 @@ suite('Field Parsing Tests', () => {
 		var main = new MainFrame(new FileImpl());
 		var variable = new Variable(main);
         var id = variable.name;
-		assert.equal(id.contentAsSource(), "name");
-		assert.equal(id.getStatus(), ParseStatus.notParsed);
+		assert.equal(id.textAsSource(), "");
+		assert.equal(id.getStatus(), ParseStatus.incomplete);
 		id.setText("ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.valid);
@@ -31,8 +31,8 @@ suite('Field Parsing Tests', () => {
 		var sw = new Switch(main);
 		var c = new Case(sw);
 		var f = c.value;
-		assert.equal(f.contentAsSource(), "value");
-		assert.equal(f.getStatus(), ParseStatus.notParsed);
+		assert.equal(f.textAsSource(), "");
+		assert.equal(f.getStatus(), ParseStatus.incomplete);
 		f.setText("3");
 		f.parseCurrentText();
 		assert.equal(f.getStatus(), ParseStatus.valid);

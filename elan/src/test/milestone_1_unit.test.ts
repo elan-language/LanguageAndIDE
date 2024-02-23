@@ -56,8 +56,8 @@ suite('Milestone 1 - Unit tests', () => {
 
 	test('Invalid identifier', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "valid");
-		assertElementHasClasses(file, "var3", "valid"); 
+		assertElementHasClasses(file, "fileStatus", "incomplete");
+		assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("ident4").processKey(key("X"));
 		assertElementHasClasses(file, "var3", "invalid");
 		assertElementHasClasses(file, "fileStatus", "invalid");
@@ -65,17 +65,17 @@ suite('Milestone 1 - Unit tests', () => {
 
 	test('Valid identifier', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "valid");
-		assertElementHasClasses(file, "var3", "valid"); 
+		assertElementHasClasses(file, "fileStatus", "incomplete");
+		assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("ident4").processKey(key("q"));
 		assertElementHasClasses(file, "ident4", "valid");
-		assertElementHasClasses(file, "fileStatus", "valid"); //Because there are other incomplete fields
+		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
 	});
 
 	test('Valid variable statement', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "valid");
-		assertElementHasClasses(file, "var3", "valid"); 
+		assertElementHasClasses(file, "fileStatus", "incomplete");
+		assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("ident4").processKey(key("q"));
 		file.getById("expr5").processKey(key("5"));
 		assertElementHasClasses(file, "var3", "valid");
@@ -85,14 +85,14 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("v"));
 		var v = file.getById("var10").renderAsSource();
-		assert.equal(v, '  var name set to value or expression');
+		assert.equal(v, '  var  set to ');
 	});	
 	
 	test("Member Select - function", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select9").processKey(key("f"));
 		var v = file.getById("func10").renderAsSource();
-		assert.equal(v, '  function name() as return type\r\n' +
+		assert.equal(v, '  function () as \r\n' +
 		'    return default\r\n' +
 		'  end function\r\n');
  	});	
@@ -102,7 +102,7 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select9").processKey(key("p"));
 		file.getById("select9").processKey(key("c"));
 		var v = file.getById("proc10").renderAsSource();
-		assert.equal(v, '  procedure name()\r\n\r\n  end procedure\r\n');
+		assert.equal(v, '  procedure ()\r\n\r\n  end procedure\r\n');
  	});	
 
 	 test("Global Select - Constant", () => {
@@ -110,7 +110,7 @@ suite('Milestone 1 - Unit tests', () => {
 		file.getById("select0").processKey(key("c"));
 		file.getById("select0").processKey(key("o"));
 		var v = file.getById("const10").renderAsSource();
-		assert.equal(v, 'constant name set to literal value or data structure\r\n');
+		assert.equal(v, 'constant  set to \r\n');
  	});	
 
 	 test("Selection Filtering - globals", () => {

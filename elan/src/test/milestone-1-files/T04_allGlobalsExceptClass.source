@@ -1,4 +1,4 @@
-# Elan v0.1 valid ec02f83079469a90
+# Elan v0.1 incomplete a830e9f6e107d90a
 
 constant phi set to 1.618
 
@@ -19,6 +19,6 @@ enum Fruit
 end enum
 
 test test1
-  var result set to value or expression
-  assert result is expected value
+  var result set to 
+  assert result is 
 end test

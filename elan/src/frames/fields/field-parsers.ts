@@ -52,14 +52,11 @@ export function identifier(input: [ParseStatus, string]): [ParseStatus, string] 
 
 function genericRegEx(input: [ParseStatus, string], regxString: string): [ParseStatus, string] {
     var result = input;
-    if (input[0] >= ParseStatus.valid) {
-        var [_, code] = input;
-        var regx = new RegExp(regxString);
-        if (isMatchRegEx(code, regx)) {
-            result = [ParseStatus.valid, removeRegEx(code, regx)];
-        } else {
-            result = [ParseStatus.invalid, code];
-        }
+    var regx = new RegExp(regxString);
+    if (isMatchRegEx(input[1], regx)) {
+        result = [ParseStatus.valid, removeRegEx(input[1], regx)];
+    } else {
+        result = [ParseStatus.invalid, input[1]];
     }
     return result;
 }
@@ -166,7 +163,7 @@ export function CSV_0(input: [ParseStatus, string],  func: (input: [ParseStatus,
  }
 
 export function paramsList(input: [ParseStatus, string]): [ParseStatus, string] {
-    return CSV_0(input, paramDef);
+    return CSV_1(input, paramDef);
 }
 
 export function firstMatchFrom(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
@@ -174,7 +171,6 @@ export function firstMatchFrom(input: [ParseStatus, string], funcs: Array<(input
     var i = 0; //Index
     var result = input;
     do  { 
-        var prev = result[0]; 
         result = funcs[i](result);     
         if (result[0] === ParseStatus.invalid) {
             i++;
@@ -286,7 +282,7 @@ export function value(input: [ParseStatus, string]): [ParseStatus, string] {
 }
 
 export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {
-    return CSV_0(input, value);
+    return CSV_1(input, value);
 }
 
 export function typesList(input: [ParseStatus, string]): [ParseStatus, string] {
