@@ -12,7 +12,7 @@ export class ReturnStatement extends AbstractFrame  {
     constructor(parent: Parent) {
         super(parent);
         this.expr = new Expression(this);
-        this.expr.setTextWithoutParsing("default");
+        this.expr.setText("default");
     }
 
     getFields(): Field[] {

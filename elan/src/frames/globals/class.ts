@@ -12,7 +12,7 @@ import { MemberSelector } from "../class-members/member-selector";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import { Regexes } from "../fields/regexes";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { AbstractFunction as AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
@@ -203,9 +203,9 @@ end class\r\n`;
         return this._members.filter(m => ('isConstructor' in m))[0] as Constructor;
     }
 
-    status(): ParsingStatus {
+    getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this._members.map(s => s.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+        var statementsStatus = this._members.map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
     

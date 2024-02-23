@@ -1,6 +1,8 @@
 import { Regexes } from "./fields/regexes";
 
 export interface CodeSource {
+    readToEndOfLine(): string;
+    pushBackOntoFrontOfCode(push: string): void;
     removeNewLine(): CodeSource;
     removeIndent(): CodeSource;
     isMatch(code: string): boolean;
@@ -16,6 +18,12 @@ export class CodeSourceFromString implements CodeSource {
 
     constructor(code: string) {
         this.remainingCode = code;
+    }
+    readToEndOfLine(): string {
+        return this.removeRegEx(new RegExp(`^[^\n]*`),false);
+    }
+    pushBackOntoFrontOfCode(pushBack: string): void {
+        this.remainingCode = pushBack + this.remainingCode;
     }
     removeNewLine(): CodeSource {
         this.removeRegEx(Regexes.startsWithNewLine, false);

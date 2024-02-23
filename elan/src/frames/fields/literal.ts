@@ -1,6 +1,7 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { literal } from "./field-parsers";
 
 //Literal value or data structure
 export class Literal extends AbstractField {   
@@ -8,13 +9,10 @@ export class Literal extends AbstractField {
         super(holder);
         this.setPlaceholder("lit");
     }
-
-    //TODO - this definition needs to be expanded to accommodate literal data structures
-    regExp(): RegExp {
-        return new RegExp(`^.*`);;
-    }
-
     getHelp(): string {
         return "Literal value (e.g. number or string)";
     }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return literal(input);
+    }   
 }

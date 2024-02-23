@@ -1,6 +1,7 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { variable } from "./field-parsers";
 
 // (For the time being) an identifier with optional index
 export class Variable extends AbstractField  {   
@@ -8,10 +9,10 @@ export class Variable extends AbstractField  {
         super(holder);
         this.setPlaceholder("variable");
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.variable}`);
-    }
     getIdPrefix(): string {
         return 'val';
     }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return variable(input);
+    }   
 }

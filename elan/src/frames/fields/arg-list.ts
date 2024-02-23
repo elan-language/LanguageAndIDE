@@ -1,6 +1,7 @@
 import { AbstractField } from "./abstract-field";
 import { Frame } from "../interfaces/frame";
-import { Regexes } from "./regexes";
+import { ParseStatus } from "../parse-status";
+import { argsList } from "./field-parsers";
 
 export class ArgList extends AbstractField {
     constructor(holder: Frame) {
@@ -8,9 +9,6 @@ export class ArgList extends AbstractField {
         this.setPlaceholder("arguments");
         this.setOptional(true);
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.argList}`);
-    } 
     getIdPrefix(): string {
         return 'args';
     }
@@ -20,5 +18,8 @@ export class ArgList extends AbstractField {
         } else {
             return "";
         }
-     }
+    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return argsList(input);
+    }  
 }

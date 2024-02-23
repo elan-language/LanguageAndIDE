@@ -1,6 +1,6 @@
 import { Field } from "./field";
 import { Selectable } from "./selectable";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { Parent } from "./parent";
 
 export interface Frame extends Selectable {
@@ -21,7 +21,7 @@ export interface Frame extends Selectable {
     indent(): string;
 
     getFields(): Field[];
-    worstStatusOfFields(): ParsingStatus;
+    worstStatusOfFields(): ParseStatus;
 
     selectPreviousField() : void;
     selectNextField(): void;

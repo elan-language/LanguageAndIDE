@@ -1,22 +1,18 @@
-import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { identifier } from "./field-parsers";
 
 export class Identifier extends AbstractField { 
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.identifier}`);
-    }
-    parseFrom(source: CodeSource): void {
-        var expr = source.removeRegEx(this.regExp(), false);
-        this.text = expr;
-    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return identifier(input);
+    }   
     getIdPrefix(): string {
         return 'ident';
     }
+
 }

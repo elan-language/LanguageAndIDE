@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { KeyEvent } from "./key-event";
 
 export interface Selectable  {
@@ -17,7 +17,7 @@ export interface Selectable  {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-    status(): ParsingStatus;
+    getStatus(): ParseStatus;
 
     parseFrom(source: CodeSource): void;
 }

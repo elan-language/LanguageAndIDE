@@ -1,8 +1,9 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { type } from "./field-parsers";
 
-export class Type extends AbstractField {   
+export class Type extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
@@ -11,7 +12,7 @@ export class Type extends AbstractField {
     getIdPrefix(): string {
         return 'type';
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.type}`);
-    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return type(input);
+    }   
 }

@@ -1,16 +1,17 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { typesList } from "./field-parsers";
 
-export class TypeList extends AbstractField {   
+export class TypeList extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("type(s)");
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.typeList}`);
-    }
     getIdPrefix(): string {
         return 'args';
     }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return typesList(input);
+    }   
 }

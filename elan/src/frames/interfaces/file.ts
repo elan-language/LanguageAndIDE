@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
@@ -22,7 +22,7 @@ export interface File extends Parent {
     indent(): string;
     expandCollapseAll(): void;
 
-    status(): ParsingStatus;
+    status(): ParseStatus;
 
     //Internal use only
     addMainBefore(global: Frame): Frame;

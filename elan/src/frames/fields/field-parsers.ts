@@ -1,9 +1,5 @@
-import { Integer } from "./integer";
+import { ParseStatus } from "../parse-status";
 import { Regexes } from "./regexes";
-
-export enum Status {
-    Invalid, Incomplete, Valid, NotParsed
-}
 
 function isMatchRegEx(code: string, regEx: RegExp): boolean {
     var matches = code.match(regEx);
@@ -18,81 +14,81 @@ function removeRegEx(code: string, regx: RegExp): string {
     }
 }
 
-export function genericString(input: [Status, string], match: string): [Status, string] {
+export function genericString(input: [ParseStatus, string], match: string): [ParseStatus, string] {
     var result = input;
     if (match.length === 0) {
         throw new Error("Cannot specify empty string as the match");
     }
-    if (input[0] >= Status.Valid) {
+    if (input[0] >= ParseStatus.valid) {
         var [_, code] = input;
         if (code.length ===0) {
-            result = [Status.Invalid, code];
+            result = [ParseStatus.invalid, code];
         } else if (code.startsWith(match)) {
-            result = [Status.Valid, code.substring(match.length)];
+            result = [ParseStatus.valid, code.substring(match.length)];
         } else if (match.startsWith(code)) {
-            result = [Status.Incomplete, ""];
+            result = [ParseStatus.incomplete, ""];
         } else {
-            result = [Status.Invalid, code];
+            result = [ParseStatus.invalid, code];
         }
     }
     return result;
 }
 
-export function singleChar(input: [Status, string], char: string ): [Status, string] {
+export function singleChar(input: [ParseStatus, string], char: string ): [ParseStatus, string] {
   var result = input;
-  if (input[0] >= Status.Valid) {
+  if (input[0] >= ParseStatus.valid) {
     if (input[1].startsWith(char)){
-        result = [Status.Valid, input[1].substring(1)];
+        result = [ParseStatus.valid, input[1].substring(1)];
     } else {
-        result =  [Status.Invalid, input[1]];
+        result =  [ParseStatus.invalid, input[1]];
     }
   } 
   return result;
 }
 
-export function identifier(input: [Status, string]): [Status, string] {
+export function identifier(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^${Regexes.identifier}`);
 }
 
-function genericRegEx(input: [Status, string], regxString: string): [Status, string] {
+function genericRegEx(input: [ParseStatus, string], regxString: string): [ParseStatus, string] {
     var result = input;
-    if (input[0] >= Status.Valid) {
+    if (input[0] >= ParseStatus.valid) {
         var [_, code] = input;
         var regx = new RegExp(regxString);
         if (isMatchRegEx(code, regx)) {
-            result = [Status.Valid, removeRegEx(code, regx)];
+            result = [ParseStatus.valid, removeRegEx(code, regx)];
         } else {
-            result = [Status.Invalid, code];
+            result = [ParseStatus.invalid, code];
         }
     }
     return result;
 }
 
-export function type(input: [Status, string]): [Status, string] {
+export function type(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^${Regexes.type}`);
 }
 
-export function sp(input: [Status, string]): [Status, string] {
+export function sp(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^\\s+`);
 }
 
-export function optSp(input: [Status, string]): [Status, string] {
+export function optSp(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^\\s*`);
 }
 
-export function comma(input: [Status, string]): [Status, string] {
+export function comma(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^\\s*,\\s*`);
 }
 
-export function SEQ(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
+export function SEQ(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
 {
     var i = 0; //Index
     var result = input;
-    while (i < funcs.length && result[0] >= Status.Valid) { 
+    while (i < funcs.length && result[0] >= ParseStatus.valid) { 
         var prev = result[0]; 
         result = funcs[i](result);     
-        if (i > 0 && result[0] === Status.Invalid && prev === Status.Valid) {
-            result = [Status.Incomplete, result[1]];
+        if (i > 0 && result[0] === ParseStatus.invalid && prev === ParseStatus.valid) {
+            result = [ParseStatus.incomplete, result[1]];
         } else {
             i++;
         }
@@ -100,15 +96,15 @@ export function SEQ(input: [Status, string], funcs: Array<(input: [Status, strin
     return result;
 }
 
-export function paramDef(input: [Status, string]): [Status, string] {
+export function paramDef(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [identifier, sp, type]);
 }
 
-export function optional(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+export function optional(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
     var result = input;
-    if (input[0] >= Status.Valid) {
+    if (input[0] >= ParseStatus.valid) {
         var result = func(input);
-        if (result[0] === Status.Invalid) {
+        if (result[0] === ParseStatus.invalid) {
             result = [input[0], result[1]];
         }
     }
@@ -116,33 +112,33 @@ export function optional(input: [Status, string], func: (input: [Status, string]
 }
 
 // 'Zero or more'
-export function STAR(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+export function STAR(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
     var result = input;
-    while (result[0] > Status.Incomplete && result[1].length > 0) {  
+    while (result[0] > ParseStatus.incomplete && result[1].length > 0) {  
         result = func(result);     
     }
-    return result[0] === Status.NotParsed ? [Status.Valid, result[1]] : result;
+    return result[0] === ParseStatus.notParsed ? [ParseStatus.valid, result[1]] : result;
 }
 
 // 'one or more'
-export function PLUS(input: [Status, string], func: (input: [Status, string]) => [Status, string]) {
+export function PLUS(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
     var result = input;
     var count = 0;
-    while (result[0] > Status.Incomplete && result[1].length > 0) {  
+    while (result[0] > ParseStatus.incomplete && result[1].length > 0) {  
         result = func(result); 
-        if (result[0] > Status.Invalid) {
+        if (result[0] > ParseStatus.invalid) {
             count ++;
         }   
     }
-    return count > 0 ? result : [Status.Invalid, result[1]];
+    return count > 0 ? result : [ParseStatus.invalid, result[1]];
 }
 
-export function CSV_1(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+export function CSV_1(input: [ParseStatus, string],  func: (input: [ParseStatus, string]) => [ParseStatus, string]): [ParseStatus, string] {
    var result = func(input);
    var cont = true;
-   while (result[0] === Status.Valid && result[1].length > 0 && cont) {
+   while (result[0] === ParseStatus.valid && result[1].length > 0 && cont) {
         var result2 = SEQ(result, [comma, func]);
-        if (result2[0] >Status.Invalid) {
+        if (result2[0] >ParseStatus.invalid) {
             result = result2;
         } else {
             cont = false;
@@ -151,117 +147,121 @@ export function CSV_1(input: [Status, string],  func: (input: [Status, string]) 
    return result;
 }
 
-export function CSV_0(input: [Status, string],  func: (input: [Status, string]) => [Status, string]): [Status, string] {
+export function CSV_0(input: [ParseStatus, string],  func: (input: [ParseStatus, string]) => [ParseStatus, string]): [ParseStatus, string] {
     var result = func(input);
-    if (result[0] === Status.Valid) {
+    if (result[0] === ParseStatus.valid) {
         var cont = true;
-        while (result[0] >= Status.Valid && result[1].length > 0 && cont) {
+        while (result[0] >= ParseStatus.valid && result[1].length > 0 && cont) {
             var result2 = SEQ(result, [comma, func]);
-            if (result2[0] >Status.Invalid) {
+            if (result2[0] >ParseStatus.invalid) {
                 result = result2;
             } else {
                 cont = false;
             }
         }
-    } else if (result[0] === Status.Invalid){
-        result = [Status.Valid, result[1]];
+    } else if (result[0] === ParseStatus.invalid){
+        result = [ParseStatus.valid, result[1]];
     }
     return result;
  }
 
-export function paramsList(input: [Status, string]): [Status, string] {
+export function paramsList(input: [ParseStatus, string]): [ParseStatus, string] {
     return CSV_0(input, paramDef);
 }
 
-//TODO: consider case for adding a 'firstMatchFrom'
-export function LongestMatchFrom(input: [Status, string], funcs: Array<(input: [Status, string]) => [Status, string]>): [Status, string]
-{   var result = input;
-    if (input[0] ! > Status.Incomplete && input[1].length > 0) {
-        var bestStatus = Status.Invalid;
-        var bestRemainingCode = input[1];
-        funcs.forEach(f => {
-           var [st, code] = f(input);
-           if (st > bestStatus)
-           {
-               bestStatus = st;
-               bestRemainingCode = code;
-           }
-        });
-        result = [bestStatus, bestRemainingCode];
-    }
+export function firstMatchFrom(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
+{
+    var i = 0; //Index
+    var result = input;
+    do  { 
+        var prev = result[0]; 
+        result = funcs[i](result);     
+        if (result[0] === ParseStatus.invalid) {
+            i++;
+        }
+    } while (result[0] === ParseStatus.invalid && i < funcs.length)
     return result;
 }
 
-export function literalBoolean(input: [Status, string]): [Status, string] {
-    var t = (input: [Status, string]) => genericString(input, "true");
-    var f = (input: [Status, string]) => genericString(input, "false");
+export function LongestMatchFrom(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
+{   
+    var bestResultSoFar: [ParseStatus, string] = [ParseStatus.invalid, input[1]];
+    if (input[1].length > 0) {
+        funcs.forEach(f => {
+           var thisResult = f(input);
+           if (thisResult[0] > bestResultSoFar[0] ||
+             (thisResult[0] === bestResultSoFar[0] &&
+                thisResult[1].length < bestResultSoFar[1].length)
+            )
+           {
+               bestResultSoFar = thisResult;
+           }
+        });
+    }
+    return bestResultSoFar;
+}
+
+export function literalBoolean(input: [ParseStatus, string]): [ParseStatus, string] {
+    var t = (input: [ParseStatus, string]) => genericString(input, "true");
+    var f = (input: [ParseStatus, string]) => genericString(input, "false");
     return LongestMatchFrom(input, [t,f]);
 }
 
-export function literalInt(input: [Status, string]): [Status, string] {
+export function literalInt(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^${Regexes.literalInt}`);
 }
 
-const dot = (input: [Status, string]) => singleChar(input, `.`);
-const quoteS = (input: [Status, string]) => singleChar(input, `'`);
-const quoteD = (input: [Status, string]) => singleChar(input, `"`);
+const dot = (input: [ParseStatus, string]) => singleChar(input, `.`);
+const quoteS = (input: [ParseStatus, string]) => singleChar(input, `'`);
+const quoteD = (input: [ParseStatus, string]) => singleChar(input, `"`);
 
 //TODO: Exponent
-export function literalFloat(input: [Status, string]): [Status, string] {
+export function literalFloat(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [literalInt, dot, literalInt]);
 }
 //TODO: Unicode def?
-export function literalChar(input: [Status, string]): [Status, string] {
-    var ch = (input: [Status, string]) => genericRegEx(input, `^[ -~]`);//defines all printable ascii chars
+export function literalChar(input: [ParseStatus, string]): [ParseStatus, string] {
+    var ch = (input: [ParseStatus, string]) => genericRegEx(input, `^[ -~]`);//defines all printable ascii chars
     return SEQ(input, [quoteS, ch, quoteS]);
 }
 
 //TODO: Cope with escaped quotes & more characters
-export function literalString(input: [Status, string]): [Status, string] {
-    var content = (input: [Status, string]) => genericRegEx(input, `^[^"]*`);//anything except quote
+export function literalString(input: [ParseStatus, string]): [ParseStatus, string] {
+    var content = (input: [ParseStatus, string]) => genericRegEx(input, `^[^"]*`);//anything except quote
     return SEQ(input, [quoteD, content, quoteD]);
 }
 
-export function enumValue(input: [Status, string]): [Status, string] {
+export function enumValue(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [type, dot, identifier]);
-}
-
-export function literal(input: [Status, string]): [Status, string] {
-    //TODO: maybe shortcut this based on starting characters
-    return LongestMatchFrom(input, [literalValue]); //TODO literalDataStructure
 }
 
 //TODO: scopeQualifier: (PROPERTY | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
 //Note: always optional here
-export function scopeQualifier_opt(input: [Status, string]): [Status, string] {
-    var prop = (input: [Status, string]) => genericString(input, "property");
-    var glob = (input: [Status, string]) => genericString(input, "global");
-    var lib = (input: [Status, string]) => genericString(input, "library");
+export function scopeQualifier_opt(input: [ParseStatus, string]): [ParseStatus, string] {
+    var prop = (input: [ParseStatus, string]) => genericString(input, "property");
+    var glob = (input: [ParseStatus, string]) => genericString(input, "global");
+    var lib = (input: [ParseStatus, string]) => genericString(input, "library");
     //TODO package
-    var keywords = (input: [Status, string]) =>LongestMatchFrom(input, [prop,glob,lib]);
-    var qual= (input: [Status, string]) => SEQ(input, [keywords, dot]);
+    var keywords = (input: [ParseStatus, string]) =>LongestMatchFrom(input, [prop,glob,lib]);
+    var qual= (input: [ParseStatus, string]) => SEQ(input, [keywords, dot]);
     return optional(input, qual);  
 }
 
-export function index_opt(input: [Status, string]): [Status, string] {
-    var open = (input: [Status, string]) => singleChar(input,"[");
-    var close = (input: [Status, string]) => singleChar(input,"]");
-    var index =  (input: [Status, string]) => SEQ(input, [open, value, close]);
+export function index_opt(input: [ParseStatus, string]): [ParseStatus, string] {
+    var open = (input: [ParseStatus, string]) => singleChar(input,"[");
+    var close = (input: [ParseStatus, string]) => singleChar(input,"]");
+    var index =  (input: [ParseStatus, string]) => SEQ(input, [open, value, close]);
     return optional(input, index);
 }
 
-export function variable(input: [Status, string]): [Status, string] {
+export function variable(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [scopeQualifier_opt, identifier, index_opt]);
 }
 
-export function value(input: [Status, string]): [Status, string] {
-    return LongestMatchFrom(input, [literalValue, variable]); 
-}
-
-export function literalValue(input: [Status, string]): [Status, string] {
-    if (input[0] ! > Status.Incomplete && input[1].length > 0) {
+export function literalValue(input: [ParseStatus, string]): [ParseStatus, string] {
+    if (input[0] ! > ParseStatus.incomplete && input[1].length > 0) {
       if (isMatchRegEx(input[1], /^[0-9]/)) {
-        return (LongestMatchFrom(input, [literalInt, literalFloat]))
+        return (LongestMatchFrom(input, [literalInt, literalFloat]));
       } else if (input[1].startsWith(`'`)) {
         return literalChar(input);
       } else if (input[1].startsWith(`"`)) {
@@ -276,8 +276,28 @@ export function literalValue(input: [Status, string]): [Status, string] {
     }
 }
 
+export function literal(input: [ParseStatus, string]): [ParseStatus, string] {
+    //TODO: maybe shortcut this based on starting characters
+    return LongestMatchFrom(input, [literalValue]); //TODO literalDataStructure
+}
 
-export function literalList(input: [Status, string]): [Status, string] {
+export function value(input: [ParseStatus, string]): [ParseStatus, string] {
+    return LongestMatchFrom(input, [literalValue, variable]); 
+}
+
+export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {
+    return CSV_0(input, value);
+}
+
+export function typesList(input: [ParseStatus, string]): [ParseStatus, string] {
+    return CSV_1(input, type);
+}
+
+export function identifierList(input: [ParseStatus, string]): [ParseStatus, string] {
+    return CSV_1(input, identifier);
+}
+
+export function literalList(input: [ParseStatus, string]): [ParseStatus, string] {
     throw new Error("Not implemented");
     //short circuit for starting with open brace
     //Test first for specific types of list i.e. litListString, litListInt etc
@@ -287,15 +307,22 @@ export function literalList(input: [Status, string]): [Status, string] {
 
 }
 
-export function literalTuple(input: [Status, string]): [Status, string] {
-  throw new Error("Not implemented")
+export function literalTuple(input: [ParseStatus, string]): [ParseStatus, string] {
+  throw new Error("Not implemented");
 }
 
-export function literalDictionary(input: [Status, string]): [Status, string] {
-    throw new Error("Not implemented")
+export function literalDictionary(input: [ParseStatus, string]): [ParseStatus, string] {
+    throw new Error("Not implemented");
 }
 
-export function literalDataStructure(input: [Status, string]): [Status, string] {
+export function literalDataStructure(input: [ParseStatus, string]): [ParseStatus, string] {
     return LongestMatchFrom(input, [literalString, literalList, literalTuple, literalDictionary]);
 }
 
+export function anythingToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
+    return genericRegEx(input, `^${Regexes.expression}`);
+}
+
+export function atLeast1CharThenToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
+    return genericRegEx(input, `^${Regexes.expression}`);
+}

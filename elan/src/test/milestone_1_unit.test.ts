@@ -56,8 +56,8 @@ suite('Milestone 1 - Unit tests', () => {
 
 	test('Invalid identifier', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		assertElementHasClasses(file, "fileStatus", "valid");
+		assertElementHasClasses(file, "var3", "valid"); 
 		file.getById("ident4").processKey(key("X"));
 		assertElementHasClasses(file, "var3", "invalid");
 		assertElementHasClasses(file, "fileStatus", "invalid");
@@ -65,17 +65,17 @@ suite('Milestone 1 - Unit tests', () => {
 
 	test('Valid identifier', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		assertElementHasClasses(file, "fileStatus", "valid");
+		assertElementHasClasses(file, "var3", "valid"); 
 		file.getById("ident4").processKey(key("q"));
 		assertElementHasClasses(file, "ident4", "valid");
-		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
+		assertElementHasClasses(file, "fileStatus", "valid"); //Because there are other incomplete fields
 	});
 
 	test('Valid variable statement', () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		assertElementHasClasses(file, "fileStatus", "valid");
+		assertElementHasClasses(file, "var3", "valid"); 
 		file.getById("ident4").processKey(key("q"));
 		file.getById("expr5").processKey(key("5"));
 		assertElementHasClasses(file, "var3", "valid");

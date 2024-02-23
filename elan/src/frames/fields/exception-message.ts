@@ -1,10 +1,10 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
+import { firstMatchFrom, identifier, literalString } from "./field-parsers";
 import { Regexes } from "./regexes";
 
-//Must be a literal string or an identifier 
 export class ExceptionMessage extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
@@ -19,5 +19,8 @@ export class ExceptionMessage extends AbstractField {
     }
     getIdPrefix(): string {
         return 'msg';
+    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return firstMatchFrom(input, [literalString, identifier]);
     }
 }

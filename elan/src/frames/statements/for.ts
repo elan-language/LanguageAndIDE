@@ -22,7 +22,7 @@ export class For extends FrameWithStatements  {
         this.to = new Value(this);
         this.to.setPlaceholder("integer value or expression");
         this.step = new Integer(this);
-        this.step.setTextWithoutParsing("1");
+        this.step.setText("1");
     }
 
     getFields(): Field[] {

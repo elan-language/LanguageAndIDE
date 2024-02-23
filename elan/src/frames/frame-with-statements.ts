@@ -3,7 +3,7 @@ import { Parent } from "./interfaces/parent";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Collapsible } from "./interfaces/collapsible";
-import { ParsingStatus } from "./parsing-status";
+import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
@@ -19,9 +19,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         this.statements.push(new StatementSelector(this));
     }
 
-    status(): ParsingStatus {
+    getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.statements.map(s => s.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+        var statementsStatus = this.statements.map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
 

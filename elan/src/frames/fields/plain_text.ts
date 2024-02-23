@@ -1,16 +1,16 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { anythingToNewline } from "./field-parsers";
 
 export class PlainText extends AbstractField {
-
     constructor(holder: Frame) {
         super(holder);
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.anythingToNewLine}`);
-    }
     getIdPrefix(): string {
         return 'text';
+    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return anythingToNewline(input);
     }
 }

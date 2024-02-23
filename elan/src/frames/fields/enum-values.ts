@@ -1,7 +1,9 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { identifierList } from "./field-parsers";
+
 
 export class EnumValues extends AbstractField {
     constructor(holder: Frame) {
@@ -11,7 +13,7 @@ export class EnumValues extends AbstractField {
     getIdPrefix(): string {
         return 'enumVals';
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.identifierList}`);
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return identifierList(input);
     }
 }

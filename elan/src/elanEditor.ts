@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { File } from './frames/interfaces/file';
-import { ParsingStatus } from './frames/parsing-status';
+import { ParseStatus } from './frames/parse-status';
 import { isFrame, isParent } from './frames/helpers';
 import { Collapsible } from './frames/interfaces/collapsible';
 import { Selectable } from './frames/interfaces/selectable';
@@ -67,7 +67,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		function updateSource(fm: File) {
 
-			if (fm.status() === ParsingStatus.valid) {
+			if (fm.status() === ParseStatus.valid) {
 				const source = fm.renderAsSource();
 
 				const edit = new vscode.WorkspaceEdit();

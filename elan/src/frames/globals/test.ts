@@ -17,7 +17,7 @@ export class Test extends FrameWithStatements {
         this.statements.slice(0,1); //remove statement selector
         this.name = new Identifier(this);
         var result = new Variable(this);
-        result.name.setTextWithoutParsing("result");
+        result.name.setText("result");
         this.statements.push(result);
         this.statements.push( new Assert(this));
     }

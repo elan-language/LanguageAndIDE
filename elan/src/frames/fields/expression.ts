@@ -1,16 +1,17 @@
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { anythingToNewline } from "./field-parsers";
 
 export class Expression extends AbstractField  {   
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value or expression");
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.expression}`);
-    }
     getIdPrefix(): string {
         return 'expr';
     }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return anythingToNewline(input);
+    }   
 }

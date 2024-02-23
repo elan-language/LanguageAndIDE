@@ -2,7 +2,7 @@ import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
 import { singleIndent } from "./helpers";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ParsingStatus } from "./parsing-status";
+import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
@@ -36,8 +36,8 @@ export abstract class AbstractFrame implements Frame {
 
     abstract getFields(): Field[];
     
-    worstStatusOfFields(): ParsingStatus {
-        return this.getFields().map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+    worstStatusOfFields(): ParseStatus {
+        return this.getFields().map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
     }
     getFirstPeerFrame(): Frame {
         return this.getParent().getFirstChild();
@@ -126,7 +126,7 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
-        this._classes.push(ParsingStatus[this.status()]);
+        this._classes.push(ParseStatus[this.getStatus()]);
     };
 
     protected cls(): string {
@@ -224,7 +224,7 @@ export abstract class AbstractFrame implements Frame {
         return true;
     }
 
-    status(): ParsingStatus {
+    getStatus(): ParseStatus {
         return this.worstStatusOfFields();
     }
 

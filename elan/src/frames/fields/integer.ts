@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { Regexes } from "./regexes";
+import { literalInt } from "./field-parsers";
 
 export class Integer extends AbstractField {  
     constructor(holder: Frame) {
@@ -12,11 +12,7 @@ export class Integer extends AbstractField {
     getIdPrefix(): string {
         return `int`;
     }
-    regExp(): RegExp {
-        return new RegExp(`^${Regexes.literalInt}`);
-    }
-    parseFrom(source: CodeSource): void {
-        var expr = source.removeRegEx(this.regExp(), false);
-        this.text = expr;
-    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        return literalInt(input);
+    }   
 }

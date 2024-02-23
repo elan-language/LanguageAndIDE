@@ -1,5 +1,5 @@
 import { Selectable } from "../interfaces/selectable";
-import { ParsingStatus } from "../parsing-status";
+import { ParseStatus } from "../parse-status";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
@@ -15,8 +15,10 @@ export abstract class AbstractField implements Selectable, Field {
     private focused: boolean = false;
     private _classes = new Array<string>;
     private holder: Frame;
-    protected _optional: boolean = false;
+    private _optional: boolean = false;
     protected map: Map<string, Selectable>;
+    private status: ParseStatus = ParseStatus.notParsed;
+
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -25,32 +27,63 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
+    
+    abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];
+
     parseFrom(source: CodeSource): void {
-        var expr = source.removeRegEx(this.regExp(), this.isOptional());
-        this.text = expr;
+        var rol = source.readToEndOfLine();
+        var result = this.parseFunction([ParseStatus.notParsed, rol]);
+        var stat = result[0];
+        if (stat === ParseStatus.invalid || stat === ParseStatus.incomplete) {
+            throw new Error(`Parse ${stat.toString()} at ${rol}`);
+        } else {
+            this.setStatus(result[0]);
+            var taken = rol.length - result[1].length;
+            this.text = rol.substring(0, taken);
+            rol = rol.substring(taken);
+            source.pushBackOntoFrontOfCode(rol);
+        }
     }
-    abstract regExp(): RegExp;
 
     getHelp(): string {
         return "";
     }
 
-    setOptional(value: boolean) : void {
-        this._optional = value;
+    setOptional(optional: boolean) : void {
+        this._optional = optional;
+        if (this.text ==='' && optional ) {
+            this.status = ParseStatus.valid;
+        } else  if (this.text ==='' && !optional ) {
+            this.status === ParseStatus.incomplete;
+        }
+    }
+
+    getOptional(): boolean {
+        return this._optional;
     }
 
     isOptional(): boolean {
         return this._optional;
     }
 
+    parseCurrentText() {
+       var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+       if (result[1].length > 0) {
+        this.setStatus(ParseStatus.invalid);
+       } else {
+        this.setStatus(result[0]);
+       }
+    }
+
     processKey(keyEvent: KeyEvent): void {
         var char = keyEvent.key;
         if (char?.length === 1) {
             this.text += char;
+            this.parseCurrentText(); 
             return;
         }
         if (char === "Tab") {
-        if (keyEvent.shift) {
+            if (keyEvent.shift) {
                 this.holder.selectPreviousField();
             } else {
                 this.holder.selectNextField();
@@ -59,6 +92,7 @@ export abstract class AbstractField implements Selectable, Field {
         } 
         if (char === "Backspace") {
             this.text = this.text.substring(0,this.text.length-1);
+            this.parseCurrentText();
             return;
         } 
         if (char === "ArrowDown") {
@@ -106,13 +140,13 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
     }
-    status(): ParsingStatus {
-        if (this.text === ``) {
-            return this.isOptional() ? ParsingStatus.valid : ParsingStatus.incomplete;
-        } else {
-            return this.regExp().test(this.text)? ParsingStatus.valid : ParsingStatus.invalid;
-        }
+    getStatus(): ParseStatus {
+        return this.status;
     }
+    setStatus(to: ParseStatus): void {
+        this.status = to;
+    }
+
     select(): void {
         this.deselectAll();
         this.selected = true;
@@ -187,7 +221,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
         this.pushClass(this.isOptional(), "optional");
-        this._classes.push(ParsingStatus[this.status()]);
+        this._classes.push(ParseStatus[this.getStatus()]);
     }
 
     protected pushClass(flag: boolean, cls: string) {
@@ -213,11 +247,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this.contentAsSource();
     }
 
-    setTextWithoutParsing(text: string) {
+    setText(text: string) {
         this.text = text;
-    }
-
-    parseValidCode(code: string): void {
-        throw new Error("Not implemented");
     }
 }

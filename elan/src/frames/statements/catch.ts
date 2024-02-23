@@ -13,7 +13,7 @@ export class Catch extends FrameWithStatements {
         super(parent);
         this.variable  = new Identifier(this);
         this.variable.setPlaceholder("variableName");
-        this.variable.setTextWithoutParsing("e");
+        this.variable.setText("e");
     }
     getFields(): Field[] {
         return [this.variable];

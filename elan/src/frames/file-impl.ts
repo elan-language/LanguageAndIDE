@@ -1,7 +1,7 @@
 import { Selectable } from "./interfaces/selectable";
 import { createHash } from "node:crypto";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ParsingStatus } from "./parsing-status";
+import { ParseStatus } from "./parse-status";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { Function } from "./globals/function";
@@ -160,12 +160,12 @@ export class FileImpl implements File {
         //does nothing
     }
 
-    status(): ParsingStatus {
-        return this._globals.map(g => g.status()).reduce((prev, cur) => cur < prev ? cur : prev, ParsingStatus.valid);
+    status(): ParseStatus {
+        return this._globals.map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
     }
 
     statusAsString() : string {
-        return ParsingStatus[this.status()];
+        return ParseStatus[this.status()];
     }
 
     deselectAll() {
