@@ -46,7 +46,7 @@ export class CodeSourceFromString implements CodeSource {
             if (optional){
                 return "";
             } else {
-                throw new Error(`Code does not match ${regx}`);
+                throw new Error(`${this.readToEndOfLine()} does not match ${regx}`);
             }
         } else {
             var match = this.remainingCode.match(regx)![0];

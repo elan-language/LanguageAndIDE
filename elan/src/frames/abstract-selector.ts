@@ -22,7 +22,7 @@ export abstract class AbstractSelector extends AbstractFrame {
             var frame = this.addFrame(typeToAdd);
             frame.parseFrom(source);
         } else {
-            throw new Error(`${options.length} matches found.`);
+            throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
         }
     }
 
