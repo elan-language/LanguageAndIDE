@@ -401,5 +401,32 @@ end function
 		assertSourceFileParses(done, "T06_mergeSort.source");
 	});
 
+/* 	test('parse Frames - snake.oop', () => {
+		var code = `# Elan v0.1 valid FFFFFFFFFFFFFFFF
+
+main
+  print welcome
+  var k set to system.readKey()
+  var newGame set to true
+  while newGame
+    call playGame()
+    print "Do you want to play again (y/n)?"
+    var answer set to ' '
+    repeat
+      set answer to system.readKey()
+    end repeat when answer is 'y' or answer is 'n'
+    if answer is 'n'
+      set newGame to false
+    end if
+  end while
+end main
+`;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	}); */
+
 
 });
