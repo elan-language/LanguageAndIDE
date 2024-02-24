@@ -43,7 +43,7 @@ export class StatementSelector extends AbstractSelector  {
             return frameType === "Assert" ||frameType === "Call" || frameType === "Variable";
         } else if (this.getParent().getIdPrefix() === "switch") {
             return frameType === "Case";     
-        } else if (frameType === "ReturnStatement" || frameType === "Assert" || frameType === "Case") {
+        } else if (frameType === "ReturnStatement" || frameType === "Assert" || frameType === "Case" ||frameType === "Catch" ) {
             return false;
         } else if (frameType === "Else" ) {
             return this.getParent().getIdPrefix() === "if" ;
