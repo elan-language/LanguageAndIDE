@@ -195,5 +195,16 @@ suite('Milestone 1 - Unit tests', () => {
 		help = s.getHelp();
 		assert.equal(help, " each else");
 	});	
+	test("Selection Context - selector prevents more than one main", () => {
+		const fl = new FileImpl();
+		var gs = new GlobalSelector(fl);
+		var help = gs.getHelp();
+		assert.equal(help, " main procedure function class constant enum test #");
+		var m = new MainFrame(fl);	
+		fl.addGlobal(m);
+		gs = new GlobalSelector(fl);
+		help = gs.getHelp();
+		assert.equal(help, " procedure function class constant enum test #");
+	});	
 });	
 

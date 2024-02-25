@@ -94,6 +94,10 @@ export class FileImpl implements File {
         return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
     }
 
+    public addGlobal(g: Frame) : void {
+        this._globals.push(g);
+    }
+
     public getFirstGlobalSelector() : GlobalSelector {
         return this._globals.filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
@@ -234,5 +238,10 @@ export class FileImpl implements File {
                 this.getFirstGlobalSelector().parseFrom(source);
             }
         }
+    }
+
+    containsMain(): boolean {
+        var mains = this._globals.filter(g => 'isMain' in g);
+        return mains.length > 0;
     }
 }

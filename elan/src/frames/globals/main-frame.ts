@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 
 export class MainFrame extends FrameWithStatements {
+    isMain = true;
     isGlobal = true;
     
     constructor(parent: Parent) {

@@ -6,9 +6,11 @@ import { Class } from "./class";
 
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
+    file: File;
 
     constructor(parent: Parent) {
         super(parent);
+        this.file = parent as File;
     }
     
     defaultOptions: [string, string][] = [
@@ -25,7 +27,15 @@ export class GlobalSelector extends AbstractSelector  {
     ];
 
     validForEditorWithin(frameType: string): boolean {
-        return frameType !== "Abstract" && frameType !== "Immutable"; //Those options available for parsing code from file only
+        var result = false;
+        if (frameType === "MainFrame") {
+            result = !this.file.containsMain();
+        } else if ( frameType === "Abstract" || frameType === "Immutable") { //Those options available for parsing code from file only
+            result = false;
+        } else {
+            result = true;
+        }
+        return result;
     }
 
     getFile(): File {

@@ -34,4 +34,6 @@ export interface File extends Parent {
     addConstantBefore(global: Frame): Frame;
     addTestBefore(global: Frame): Frame;
     parseFrom(source: CodeSource): void;
+
+    containsMain(): boolean;
 }
