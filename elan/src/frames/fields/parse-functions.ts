@@ -1,5 +1,6 @@
 import { ParseStatus } from "../parse-status";
 import { Regexes } from "./regexes";
+import { TypeList } from "./type-list";
 
 function isMatchRegEx(code: string, regEx: RegExp): boolean {
     var matches = code.match(regEx);
@@ -19,17 +20,15 @@ export function genericString(input: [ParseStatus, string], match: string): [Par
     if (match.length === 0) {
         throw new Error("Cannot specify empty string as the match");
     }
-    if (input[0] >= ParseStatus.valid) {
-        var [_, code] = input;
-        if (code.length ===0) {
-            result = [ParseStatus.invalid, code];
-        } else if (code.startsWith(match)) {
-            result = [ParseStatus.valid, code.substring(match.length)];
-        } else if (match.startsWith(code)) {
-            result = [ParseStatus.incomplete, ""];
-        } else {
-            result = [ParseStatus.invalid, code];
-        }
+    var [_, code] = input;
+    if (code.length ===0) {
+        result = [ParseStatus.invalid, code];
+    } else if (code.startsWith(match)) {
+        result = [ParseStatus.valid, code.substring(match.length)];
+    } else if (match.startsWith(code)) {
+        result = [ParseStatus.incomplete, ""];
+    } else {
+        result = [ParseStatus.invalid, code];
     }
     return result;
 }
@@ -51,7 +50,7 @@ export function identifier(input: [ParseStatus, string]): [ParseStatus, string] 
 }
 
 export function variableDotMember(input: [ParseStatus, string]) {
-  return SEQ(input, [variable, dot, identifier]);
+  return SEQ(input, [variableUse, dot, identifier]);
 } 
 
 export function procedureRef(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -70,7 +69,23 @@ function genericRegEx(input: [ParseStatus, string], regxString: string): [ParseS
 }
 
 export function type(input: [ParseStatus, string]): [ParseStatus, string] {
+    return firstValidMatchOrLongestIncomplete(input, [singleType, enumType]);
+}
+
+export function singleType(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [simpleType, generic_opt]);
+}
+
+export function typeList(input: [ParseStatus, string]): [ParseStatus, string] {
+    return CSV_1(input, type);
+}
+
+export function enumType(input: [ParseStatus, string]): [ParseStatus, string] {
+    return SEQ(input, [openBracket, typeList, closeBracket]);
+}
+
+export function deconstructedTuple(input: [ParseStatus, string]): [ParseStatus, string] {
+  return SEQ(input, [openBracket, identifierList, closeBracket]);
 }
 
 export function simpleType(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -83,7 +98,6 @@ export function generic_opt(input: [ParseStatus, string]): [ParseStatus, string]
     var close =  (input: [ParseStatus, string]) => singleChar(input, ">");
     return optional(input, gen);
 }
-
 
 export function sp(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^\\s+`);
@@ -188,17 +202,19 @@ export function paramsList(input: [ParseStatus, string]): [ParseStatus, string] 
     return CSV_1(input, paramDef);
 }
 
-export function firstMatchFrom(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
+export function firstValidMatchOrLongestIncomplete(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
 {
     var i = 0; //Index
     var result = input;
+    var bestOfRest:[ParseStatus, string] = [ParseStatus.invalid, input[1]];
     do  { 
-        result = funcs[i](result);     
-        if (result[0] === ParseStatus.invalid) {
-            i++;
+        result = funcs[i](result); 
+        if (result[0] === ParseStatus.incomplete && result[1].length < bestOfRest[1].length) {
+            bestOfRest = result;
         }
-    } while (result[0] === ParseStatus.invalid && i < funcs.length);
-    return result;
+        i++;
+    } while (result[0] !== ParseStatus.valid && i < funcs.length);
+    return result[0] === ParseStatus.valid? result : bestOfRest;
 }
 
 export function LongestMatchFrom(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
@@ -255,13 +271,17 @@ export function enumValue(input: [ParseStatus, string]): [ParseStatus, string] {
 //TODO: scopeQualifier: (PROPERTY | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
 //Note: always optional here
 export function scopeQualifier_opt(input: [ParseStatus, string]): [ParseStatus, string] {
-    var prop = (input: [ParseStatus, string]) => genericString(input, "property");
-    var glob = (input: [ParseStatus, string]) => genericString(input, "global");
-    var lib = (input: [ParseStatus, string]) => genericString(input, "library");
+    var prop = (input: [ParseStatus, string]) => genericString(input, "property.");
+    var glob = (input: [ParseStatus, string]) => genericString(input, "global.");
+    var lib = (input: [ParseStatus, string]) => genericString(input, "library.");
     //TODO package
-    var keywords = (input: [ParseStatus, string]) =>LongestMatchFrom(input, [prop,glob,lib]);
-    var qual= (input: [ParseStatus, string]) => SEQ(input, [keywords, dot]);
-    return optional(input, qual);  
+    var result = firstValidMatchOrLongestIncomplete(input, [prop,glob,lib]);
+    if (result[0] === ParseStatus.valid) {
+        return result;
+    } else {
+       return  input;
+    }
+
 }
 
 export function index_opt(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -271,8 +291,12 @@ export function index_opt(input: [ParseStatus, string]): [ParseStatus, string] {
     return optional(input, index);
 }
 
-export function variable(input: [ParseStatus, string]): [ParseStatus, string] {
+export function variableUse(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [scopeQualifier_opt, identifier, index_opt]);
+}
+
+export function variableDef(input: [ParseStatus, string]): [ParseStatus, string] {
+    return firstValidMatchOrLongestIncomplete(input, [identifier, deconstructedTuple, listDecomp]);
 }
 
 export function literalValue(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -299,7 +323,15 @@ export function literal(input: [ParseStatus, string]): [ParseStatus, string] {
 }
 
 export function value(input: [ParseStatus, string]): [ParseStatus, string] {
-    return LongestMatchFrom(input, [literalValue, variable, variableDotMember, anythingBetweenBrackets]); 
+    return LongestMatchFrom(input, [literalValue, variableUse, variableDotMember, anythingBetweenBrackets]); 
+}
+
+export function assignableValue(input: [ParseStatus, string]): [ParseStatus, string] {
+    return firstValidMatchOrLongestIncomplete(input, [variableUse, deconstructedTuple, listDecomp]); 
+}
+
+export function listDecomp(input: [ParseStatus, string]): [ParseStatus, string] {
+    return SEQ(input, [openBrace, identifier, colon, identifier, closeBrace]); 
 }
 
 export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -343,6 +375,25 @@ export function anythingToNewline(input: [ParseStatus, string]): [ParseStatus, s
 export function atLeast1CharThenToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^${Regexes.expression}`);
 }
+
+export function openBracket(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return singleChar(input, "(");
+}
+export function closeBracket(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return singleChar(input, ")");
+}
+
+export function openBrace(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return singleChar(input, "{");
+}
+export function closeBrace(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return singleChar(input, "}");
+}
+
+export function colon(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return singleChar(input, ":");
+}
+
 export function anythingBetweenBrackets(input: [ParseStatus, string]) :  [ParseStatus, string] {
     return anythingBetweenMatching(input, "(", ")");
 }

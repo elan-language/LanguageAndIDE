@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import {CodeSourceFromString } from '../frames/code-source';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
-import { Variable } from '../frames/statements/variable';
+import { VariableDefStatement } from '../frames/statements/variable-def-statement';
 import { ParseStatus } from '../frames/parse-status';
 import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
@@ -12,16 +12,16 @@ import { Call } from '../frames/statements/call';
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
-	test('parse Frames - identifier', () => { 
+	test('parse Frames - VariableDefStatement', () => { 
 		var main = new MainFrame(new FileImpl());
-		var variable = new Variable(main);
+		var variable = new VariableDefStatement(main);
         var id = variable.name;
 		assert.equal(id.textAsSource(), "");
 		assert.equal(id.getStatus(), ParseStatus.incomplete);
 		id.setText("ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.valid);
-		assert.equal(id.renderAsHtml(), `<field id="ident4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><help></help></field>`);
+		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><help></help></field>`);
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.invalid);

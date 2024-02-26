@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variable, index_opt, argsList, firstMatchFrom, identifierList, procedureRef, variableDotMember, anythingBetweenBrackets } from '../frames/fields/parse-functions';
+import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variableUse, index_opt, argsList, firstValidMatchOrLongestIncomplete, identifierList, procedureRef, variableDotMember, anythingBetweenBrackets, assignableValue } from '../frames/fields/parse-functions';
 import { ParseStatus } from '../frames/parse-status';
 import { Regexes } from '../frames/fields/regexes';
 
@@ -118,10 +118,6 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(genericString([ParseStatus.notParsed, "v"],kw), [ParseStatus.incomplete, ""]);
 		assert.deepEqual(genericString([ParseStatus.notParsed, "vax"],kw), [ParseStatus.invalid, "vax"]);
 		assert.deepEqual(genericString([ParseStatus.notParsed, "tvar"],kw), [ParseStatus.invalid, "tvar"]);
-		//Bad starting points:
-		assert.deepEqual(genericString([ParseStatus.invalid, "var"],kw), [ParseStatus.invalid, "var"]);
-		assert.deepEqual(genericString([ParseStatus.incomplete, ""],kw), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(genericString([ParseStatus.notParsed, ""],kw), [ParseStatus.invalid,  ""]);
 	}); 
 
 	test('parse functions - identifier', () => {
@@ -145,6 +141,10 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of "]), [ParseStatus.incomplete,  ""]);
 		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar"]), [ParseStatus.incomplete,  ""]);
 		//assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar<of Qux>>"]), [ParseStatus.valid,  ""]); TODO
+		assert.deepEqual(type([ParseStatus.invalid, "(Foo, Bar)"]), [ParseStatus.valid, ""]);
+		assert.deepEqual(type([ParseStatus.invalid, "(Foo, Foo<of Bar>, Yon)"]), [ParseStatus.valid, ""]);
+		assert.deepEqual(type([ParseStatus.incomplete, "(Foo,"]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(type([ParseStatus.incomplete, "(bar"]), [ParseStatus.incomplete, "bar"]);
 
 		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
@@ -259,12 +259,12 @@ suite('Parse Function Tests', () => {
 	}); 
 
 	test('parse functions - firstMatchFrom', () => {
-		assert.deepEqual(firstMatchFrom([ParseStatus.notParsed, "foo"], [identifier, paramDef]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(firstMatchFrom([ParseStatus.notParsed, "foo bar"], [identifier, paramDef]), [ParseStatus.valid,  " bar"]);
-		assert.deepEqual(firstMatchFrom([ParseStatus.notParsed, "foo String"], [identifier, paramDef]), [ParseStatus.valid,  " String"]);
-		assert.deepEqual(firstMatchFrom([ParseStatus.notParsed, "123"], [identifier, paramDef]), [ParseStatus.invalid,  "123"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo"], [identifier, paramDef]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo bar"], [identifier, paramDef]), [ParseStatus.valid,  " bar"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo String"], [identifier, paramDef]), [ParseStatus.valid,  " String"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "123"], [identifier, paramDef]), [ParseStatus.invalid,  "123"]);
 		// functions specified in different order
-		assert.deepEqual(firstMatchFrom([ParseStatus.notParsed, "foo String"], [paramDef,identifier]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo String"], [paramDef,identifier]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - literalBoolean', () => {
@@ -346,14 +346,11 @@ suite('Parse Function Tests', () => {
 	});
 
 	test('parse functions - variable', () => {
-		assert.deepEqual(variable([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `a[23]`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `a[2`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `a[`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `a[b]`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `global.a1`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `library.`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variable([ParseStatus.notParsed, `global.1`]), [ParseStatus.incomplete,  "1"]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[23]`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[2`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[b]`]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - value', () => {
@@ -366,7 +363,7 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(value([ParseStatus.notParsed, `a[b]`]), [ParseStatus.valid,  ""]);
 
 		//Problem here: why parsing as a variable. Poss error in SEQ when ends (or just has) an optional element
-		assert.deepEqual(variable([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
 		assert.deepEqual(value([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
 	}); 
 
@@ -411,5 +408,14 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)`]), [ParseStatus.valid,  ""]);
 		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)()`]), [ParseStatus.valid,  "()"]);
 		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `3+4)*5)()`]), [ParseStatus.invalid,  "3+4)*5)()"]);
+	});
+
+	test('parse functions - assignableValue', () => {
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `(a, b)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `(a, b`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `a, b`]), [ParseStatus.valid,  ", b"]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `{x:xs}`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `{()`]), [ParseStatus.incomplete,  "()"]);
 	});
 });

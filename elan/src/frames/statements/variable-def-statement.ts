@@ -4,15 +4,16 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { VariableDef } from "../fields/variable";
 
-export class Variable extends AbstractFrame  {
+export class VariableDefStatement extends AbstractFrame  {
     isStatement = true;
-    name: Identifier;
+    name: VariableDef;
     expr: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.name = new Identifier(this);
+        this.name = new VariableDef(this);
         this.expr = new Expression(this);
     }
     parseFrom(source: CodeSource): void {

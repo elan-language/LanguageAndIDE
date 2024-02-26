@@ -5,7 +5,7 @@ import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
 import { StatementSelector } from '../frames/statements/statement-selector';
-import { Variable } from '../frames/statements/variable';
+import { VariableDefStatement } from '../frames/statements/variable-def-statement';
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
@@ -42,7 +42,7 @@ suite('File Parsing Tests', () => {
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl();
 		var m = new MainFrame(fl);	
-		var v = new Variable(m);
+		var v = new VariableDefStatement(m);
 		v.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(v.renderAsSource(), code);
@@ -554,6 +554,119 @@ class Square
 end class
 `;
 		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl();
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
+  test('parse Frames - wordle', () => {
+		var code = `# d62f1187f5416a0d388d1097e326564403b46393e734db8587f0e8a27a817cb2 Elan v0.1 valid
+
+constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
+
+constant validWords set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
+
+main
+  var possible set to validWords
+  var marking set to ""
+  var attempt set to "RAISE"
+  while marking is not "*****"
+    print attempt
+    set marking to input
+    set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
+    set attempt to bestAttempt(possible, validWords)
+  end while
+end main
+
+function isGreen(attempt String, target String, n Int) as Bool
+  return target[n] is attempt[n]
+end function
+
+function setChar(word String, n Int, newChar Char) as String
+  return word[..n] + newChar + word[n+1..]
+end function
+
+function setAttemptIfGreen(attempt String, target String, n Int) as String
+  return attempt.setChar(n, '*') if attempt.isGreen(target, n)  else attempt
+end function
+
+function setTargetIfGreen(attempt String, target String, n Int) as String
+  return target.setChar(n, '.') if attempt.isGreen(target, n) else target
+end function
+
+function isAlreadyMarkedGreen(attempt String, n Int) as Bool
+  return attempt[n] is '*'
+end function
+
+function isYellow(attempt String, target String, n Int) as Bool
+  return target.contains(attempt[n])
+end function
+
+function setAttemptIfYellow(attempt String, target String, n Int) as String
+  return attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
+end function
+
+function setTargetIfYellow(attempt String, target String, n Int) as String
+  return target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
+end function
+
+constant letterPositions set to {0,1,2,3,4}
+
+function evaluateGreens(attempt String, target String) as (String, String)
+  return letterPositions.reduce((attempt, target), lambda a, x  -> (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
+end function
+
+function evaluateYellows(attempt String, target String) as (String, String)
+  return letterPositions.reduce((attempt, target),lambda a, x -> (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
+end function
+
+function markAttempt(attempt String, target String) as String
+  var (attemptAfterGreens, targetAfterGreens) set to evaluateGreens(attempt, target)
+  return attemptAfterGreens.evaluateYellows(targetAfterGreens).first()
+end function
+
+function possibleAnswersAfterAttempt(prior Iter<of String>, attempt String, mark String) as Iter<of String>
+  return prior.filter(lambda w -> markAttempt(attempt, w) is mark)
+end function
+
+function wordCountRemainingAfterAttempt(possibleAnswers Iter<of String>, attempt String) as WordCount
+  var groups set to possibleAnswers.groupBy(lambda w -> markAttempt(attempt, w))
+  return new WordCount(attempt, groups.maxBy(lambda g -> g.members.count()).members.count())
+end function
+
+function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<of String>) as Iter<of WordCount>
+  return possAttempts.asParallel().map(lambda w -> wordCountRemainingAfterAttempt(possAnswers, w))
+end function
+
+function betterOf(wc1 WordCount, wc2 WordCount, possAnswers Iter<of String>) as WordCount
+  var isBetter set to wc2.count < wc1.count
+  var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
+  return wc2  if isBetter or isEqualAndPossAnswer  else wc1
+end function
+
+function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String
+  var wordCounts set to allRemainingWordCounts(possAnswers, possAttempts)
+  return wordCounts.reduce(wordCounts.head(),lambda bestSoFar, newWord ->  betterOf(bestSoFar, newWord, possAnswers)).word
+end function
+
+immutable class WordCount
+  constructor(word String, count Int)
+    set property.word to word
+    set property.count to count
+  end constructor
+
+  property word String
+
+  property count Int
+
+  function asString() as String
+    return "{word}, {count}"
+  end function
+
+end class
+`;
+    var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
