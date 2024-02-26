@@ -402,7 +402,7 @@ end function
 	});
 
 	test('parse Frames - snake.oop', () => {
-		var code = `# 3364680efaaf1d48ecfce2eaf511ce256a46ddbf1dbf50d0e2d46b4b4dfc371b Elan v0.1 valid
+		var code = `# 8da5e60f94d98198331783cde9b3a12f0f55dc12ecd1ac220becaaa8b9205472 Elan v0.1 valid
 
 main
   print welcome
@@ -520,6 +520,36 @@ class Snake
       set apple to new Square(ranW, ranH) 
     end repeat when not bodyCovers(apple)
   end procedure
+
+end class
+
+class Square
+  constructor(x Int, y Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  property x Int
+
+  property y Int
+
+  function getAdjacentSquare(d Direction) as Square
+    var newX set to x
+    var newY set to y
+    switch d
+      case Direction.left
+        set newX to newX - 1     
+      case Direction.right
+        set newX to newX + 1
+      case Direction.up
+        set newY to newY - 1 
+      case Direction.down
+        set newY to newY + 1
+      default
+
+    end switch
+    return new Square(newX, newY)
+  end function
 
 end class
 `;
