@@ -55,7 +55,7 @@ export class FileImpl implements File {
             ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
-        return `<header># ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span> <hash>${this.getHash()}</hash></header>\r\n${globals}`;
+        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
     }
 
     public indent(): string {
@@ -68,9 +68,7 @@ export class FileImpl implements File {
 
         const hash = createHash('sha256');
         hash.update(body);
-        const sHash = hash.digest('hex');
-        const truncatedHash = sHash.slice(0, 16);
-        return truncatedHash;
+        return hash.digest('hex');
     }
 
     private getVersion() {
@@ -91,7 +89,7 @@ export class FileImpl implements File {
 
     renderAsSource(): string {
         const globals = this.renderGlobalsAsSource();
-        return `# ${this.getVersion()} ${this.statusAsString()} ${this.getHash()}\r\n\r\n${globals}`; 
+        return `# ${this.getHash()} ${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
 
     public addGlobal(g: Frame) : void {
