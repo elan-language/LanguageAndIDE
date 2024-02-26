@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 export function getNonce() {
 	let text = '';
 	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -5,4 +7,8 @@ export function getNonce() {
 		text += possible.charAt(Math.floor(Math.random() * possible.length));
 	}
 	return text;
+}
+
+export function createSha256Hash() {
+	return createHash('sha256');
 }

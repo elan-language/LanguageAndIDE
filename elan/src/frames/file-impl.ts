@@ -1,5 +1,4 @@
 import { Selectable } from "./interfaces/selectable";
-import { createHash } from "node:crypto";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 import { File} from "./interfaces/file";
@@ -18,6 +17,7 @@ import { Parent } from "./interfaces/parent";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
+import { createSha256Hash } from "../util";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -72,7 +72,7 @@ export class FileImpl implements File {
         // normalize
         body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
 
-        const hash = createHash('sha256');
+        const hash = createSha256Hash();
         hash.update(body);
         return hash.digest('hex');
     }
