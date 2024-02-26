@@ -401,8 +401,8 @@ end function
 		assertSourceFileParses(done, "T06_mergeSort.source");
 	});
 
-/* 	test('parse Frames - snake.oop', () => {
-		var code = `# Elan v0.1 valid FFFFFFFFFFFFFFFF
+	test('parse Frames - snake.oop', () => {
+		var code = `# Elan v0.1 valid 370bfe719ebc20b7
 
 main
   print welcome
@@ -426,7 +426,7 @@ end main
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); */
+	});
 
 
 });
