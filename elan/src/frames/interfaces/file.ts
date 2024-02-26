@@ -36,4 +36,6 @@ export interface File extends Parent {
     parseFrom(source: CodeSource): void;
 
     containsMain(): boolean;
+
+    parseError?: string;
 }

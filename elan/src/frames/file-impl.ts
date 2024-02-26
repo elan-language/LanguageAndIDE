@@ -23,6 +23,8 @@ export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
+    parseError?: string;
+
     private _globals: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
@@ -50,6 +52,10 @@ export class FileImpl implements File {
     }
 
     public renderAsHtml(): string {
+        if (this.parseError){
+            return `<parseError>${this.parseError}</parseError>`;
+        }
+
         const ss: Array<string> = [];
         for (var global of this._globals) {
             ss.push(global.renderAsHtml());
@@ -230,22 +236,46 @@ export class FileImpl implements File {
     }
 
     parseFrom(source: CodeSource): void {
-        if (source.isMatch("#")) {
-            source.removeRegEx(Regexes.startsWithComment, false);
-            source.removeRegEx(Regexes.startsWithNewLine, false);
-            source.removeRegEx(Regexes.startsWithNewLine, false);
-        }
-        while (source.hasMoreCode()) {
-            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
-                source.removeNewLine();
-            } else {
-                this.getFirstGlobalSelector().parseFrom(source);
+        try {
+            this.parseError = undefined;
+            this.validateHeader(source.getRemainingCode());
+            if (source.isMatch("#")) {
+                source.removeRegEx(Regexes.startsWithComment, false);
+                source.removeRegEx(Regexes.startsWithNewLine, false);
+                source.removeRegEx(Regexes.startsWithNewLine, false);
             }
+            while (source.hasMoreCode()) {
+                if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                    source.removeNewLine();
+                } else {
+                    this.getFirstGlobalSelector().parseFrom(source);
+                }
+            }
+        } catch (e) {
+            this.parseError = `Code cannot be parsed: ${e instanceof Error ? e.message : e}`;
         }
     }
 
     containsMain(): boolean {
         var mains = this._globals.filter(g => 'isMain' in g);
         return mains.length > 0;
+    }
+
+    validateHeader(code: string) {
+        if (code !== "") {
+            const eol = code.indexOf("\n");
+            const header = code.substring(0, eol > 0 ? eol : undefined);
+            const tokens = header.split(" ");
+            if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
+                throw new Error("File cannot be loaded - error in file header");
+            }
+            const fileHash = tokens[1];
+            const toHash = code.substring(code.indexOf("Elan"));
+            const newHash = this.getHash(toHash);
+
+            if (fileHash !== newHash) {
+                throw new Error("File cannot be loaded - error in file header");
+            }
+        }
     }
 }

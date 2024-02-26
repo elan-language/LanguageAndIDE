@@ -206,3 +206,6 @@ global help, member help, statement help  {
     color: green;
 }
 
+parseError {
+    color: red;
+}
