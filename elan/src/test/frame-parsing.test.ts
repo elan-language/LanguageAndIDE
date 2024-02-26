@@ -402,7 +402,7 @@ end function
 	});
 
 	test('parse Frames - snake.oop', () => {
-		var code = `# Elan v0.1 valid 370bfe719ebc20b7
+		var code = `# e47d2d8965b8780e58df6490ef79bc340857bb116d5c81af96fca0be6bb0fb80 Elan v0.1 valid
 
 main
   print welcome
@@ -420,6 +420,35 @@ main
     end if
   end while
 end main
+
+constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
+
+constant welcome set to "Welcome to the Snake game."
+
+procedure playGame()
+  var charMap set to new CharMap()
+  call charMap.fillBackground()
+  var currentDirection set to Direction.right
+  var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
+  var gameOn set to true
+  while gameOn
+    call draw(charMap, snake.head, Colour.green)
+    call draw(charMap, snake.apple, Colour.red)
+    var priorTail set to snake.tail()
+    call pause(200)
+    var pressed set to system.keyHasBeenPressed()
+    if pressed
+      var k set to system.readKey()
+      set currentDirection to directionByKey[k]
+    end if
+    call snake.clockTick(currentDirection, gameOn)
+    if snake.tail() is not priorTail
+      call draw(charMap, priorTail, charMap.backgroundColour)
+    end if
+  end while
+  call charMap.setCursor(0, 0)
+  print "Game Over! Score: {snake.length() - 2}"
+end procedure
 `;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();

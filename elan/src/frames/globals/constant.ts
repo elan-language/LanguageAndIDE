@@ -4,6 +4,7 @@ import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Literal } from "../fields/literal";
+import { PlainText } from "../fields/plain_text";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;
@@ -15,7 +16,7 @@ export class Constant extends AbstractFrame {
         super(parent);
         this.file = parent;
         this.name  = new Identifier(this);
-        this.literal = new Literal(this);
+        this.literal = new PlainText(this); //TODO: temp kludge - should be a literal value or data structure
         this.literal.setPlaceholder("literal value or data structure");
     }
 
