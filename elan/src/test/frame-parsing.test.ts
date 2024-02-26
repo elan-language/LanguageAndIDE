@@ -402,7 +402,7 @@ end function
 	});
 
 	test('parse Frames - snake.oop', () => {
-		var code = `# e47d2d8965b8780e58df6490ef79bc340857bb116d5c81af96fca0be6bb0fb80 Elan v0.1 valid
+		var code = `# 3364680efaaf1d48ecfce2eaf511ce256a46ddbf1dbf50d0e2d46b4b4dfc371b Elan v0.1 valid
 
 main
   print welcome
@@ -449,6 +449,79 @@ procedure playGame()
   call charMap.setCursor(0, 0)
   print "Game Over! Score: {snake.length() - 2}"
 end procedure
+
+procedure draw(cm CharMap, sq Square, colour Colour)
+  var col set to sq.x * 2
+  var row set to sq.y
+  call cm.putBlockWithColour(col, row, colour)
+  var colPlus set to col + 1
+  call cm.putBlockWithColour(colPlus, row, colour)
+end procedure
+
+class Snake
+  constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
+    set property.boardWidth to boardWidth
+    set property.boardHeight to boardHeight
+    var tail set to new Square(boardWidth div 2, boardHeight div 2)
+    set body to {tail}
+    set head to tail.getAdjacentSquare(startingDirection)
+    call setNewApplePosition()
+  end constructor
+
+  property boardWidth Int
+
+  property boardHeight Int
+
+  property head Square
+
+  private property body List<of Square>
+
+  property apple Square
+
+  function tail() as Square
+    return body[0]
+  end function
+
+  function length() as Int
+    return body.length()
+  end function
+
+  function bodyCovers(sq Square) as Bool
+    var result set to false
+    each seg in body
+      if (seg is sq)
+        set result to true
+      end if
+    end each
+    return result
+  end function
+
+  procedure clockTick(d Direction, out continue Boolean)
+    set body to body + head;
+    set head to head.getAdjacentSquare(d);
+    if head is apple
+      call setNewApplePosition()
+      else
+        set body to body[1..]
+    end if
+    set continue to not hasHitEdge() and not bodyCovers(head)
+  end procedure
+
+  function hasHitEdge() as Bool
+    return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
+  end function
+
+  procedure setNewApplePosition()
+    repeat
+      var w set to boardWidth - 1
+      var h set to boardHeight - 1
+      var ranW set to system.random(w)
+      var ranH set to system.random(h)
+      set apple to new Square(ranW, ranH) 
+    end repeat when not bodyCovers(apple)
+  end procedure
+
+end class
 `;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
@@ -456,6 +529,4 @@ end procedure
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
-
-
 });

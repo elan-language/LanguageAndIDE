@@ -190,7 +190,9 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "fooBar"]), [ParseStatus.incomplete,  ""]);
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "Foo bar"]), [ParseStatus.invalid,  "Foo bar"]);
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo, "]), [ParseStatus.incomplete,  ", "]);
-		//foo, 
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo Bar"]), [ParseStatus.valid,  ""]); 
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out Foo"]), [ParseStatus.incomplete,  "Foo"]);
 	}); 
 
 	test('parse functions - optional', () => {

@@ -114,7 +114,9 @@ export function SEQ(input: [ParseStatus, string], funcs: Array<(input: [ParseSta
 }
 
 export function paramDef(input: [ParseStatus, string]): [ParseStatus, string] {
-    return SEQ(input, [identifier, sp, type]);
+    var out = (input: [ParseStatus, string]) => genericString(input, "out ");
+    var out_opt = (input: [ParseStatus, string]) => optional(input, out);
+    return SEQ(input, [out_opt, identifier, sp, type]);
 }
 
 export function optional(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
