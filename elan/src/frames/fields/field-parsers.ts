@@ -50,6 +50,14 @@ export function identifier(input: [ParseStatus, string]): [ParseStatus, string] 
     return genericRegEx(input, `^${Regexes.identifier}`);
 }
 
+export function variableDotMember(input: [ParseStatus, string]) {
+  return SEQ(input, [variable, dot, identifier]);
+} 
+
+export function procedureRef(input: [ParseStatus, string]): [ParseStatus, string] {
+   return LongestMatchFrom(input, [identifier, variableDotMember]);
+}
+
 function genericRegEx(input: [ParseStatus, string], regxString: string): [ParseStatus, string] {
     var result = input;
     var regx = new RegExp(regxString);
@@ -106,7 +114,9 @@ export function SEQ(input: [ParseStatus, string], funcs: Array<(input: [ParseSta
 }
 
 export function paramDef(input: [ParseStatus, string]): [ParseStatus, string] {
-    return SEQ(input, [identifier, sp, type]);
+    var out = (input: [ParseStatus, string]) => genericString(input, "out ");
+    var out_opt = (input: [ParseStatus, string]) => optional(input, out);
+    return SEQ(input, [out_opt, identifier, sp, type]);
 }
 
 export function optional(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
@@ -197,9 +207,8 @@ export function LongestMatchFrom(input: [ParseStatus, string], funcs: Array<(inp
     if (input[1].length > 0) {
         funcs.forEach(f => {
            var thisResult = f(input);
-           if (thisResult[0] > bestResultSoFar[0] ||
-             (thisResult[0] === bestResultSoFar[0] &&
-                thisResult[1].length < bestResultSoFar[1].length)
+           if (thisResult[1].length < bestResultSoFar[1].length ||
+            (thisResult[1].length === bestResultSoFar[1].length && thisResult[0] > bestResultSoFar[0])
             )
            {
                bestResultSoFar = thisResult;
@@ -286,11 +295,11 @@ export function literalValue(input: [ParseStatus, string]): [ParseStatus, string
 
 export function literal(input: [ParseStatus, string]): [ParseStatus, string] {
     //TODO: maybe shortcut this based on starting characters
-    return LongestMatchFrom(input, [literalValue]); //TODO literalDataStructure
+    return LongestMatchFrom(input, [literalValue, ]); //TODO literalDataStructure
 }
 
 export function value(input: [ParseStatus, string]): [ParseStatus, string] {
-    return LongestMatchFrom(input, [literalValue, variable]); 
+    return LongestMatchFrom(input, [literalValue, variable, variableDotMember]); 
 }
 
 export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {

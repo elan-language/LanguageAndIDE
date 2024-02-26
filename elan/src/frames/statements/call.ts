@@ -5,16 +5,17 @@ import { AbstractFrame } from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { ProcedureRef } from "../fields/procedureRef";
 
 export class Call extends AbstractFrame {
 
     isStatement = true;
-    proc: Identifier;
+    proc: ProcedureRef;
     args: ArgList;
 
     constructor(parent: Parent) {
         super(parent);
-        this.proc = new Identifier(this);
+        this.proc = new ProcedureRef(this);
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgList(this);
     }

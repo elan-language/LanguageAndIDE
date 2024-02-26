@@ -36,7 +36,7 @@ export class CodeSourceFromString implements CodeSource {
     }
     remove(match: string): CodeSource {
         if (!this.isMatch(match)) {
-            throw new Error(`code does not match ${match} - can check by calling 'isMatch' first`);
+            throw new Error(`${this.readToEndOfLine()} does not match ${match}`);
         }
         this.remainingCode = this.remainingCode.substring(match.length);
         return this;

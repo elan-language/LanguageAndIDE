@@ -401,8 +401,8 @@ end function
 		assertSourceFileParses(done, "T06_mergeSort.source");
 	});
 
-/* 	test('parse Frames - snake.oop', () => {
-		var code = `# Elan v0.1 valid FFFFFFFFFFFFFFFF
+	test('parse Frames - snake.oop', () => {
+		var code = `# 8da5e60f94d98198331783cde9b3a12f0f55dc12ecd1ac220becaaa8b9205472 Elan v0.1 valid
 
 main
   print welcome
@@ -420,13 +420,143 @@ main
     end if
   end while
 end main
+
+constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
+
+constant welcome set to "Welcome to the Snake game."
+
+procedure playGame()
+  var charMap set to new CharMap()
+  call charMap.fillBackground()
+  var currentDirection set to Direction.right
+  var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
+  var gameOn set to true
+  while gameOn
+    call draw(charMap, snake.head, Colour.green)
+    call draw(charMap, snake.apple, Colour.red)
+    var priorTail set to snake.tail()
+    call pause(200)
+    var pressed set to system.keyHasBeenPressed()
+    if pressed
+      var k set to system.readKey()
+      set currentDirection to directionByKey[k]
+    end if
+    call snake.clockTick(currentDirection, gameOn)
+    if snake.tail() is not priorTail
+      call draw(charMap, priorTail, charMap.backgroundColour)
+    end if
+  end while
+  call charMap.setCursor(0, 0)
+  print "Game Over! Score: {snake.length() - 2}"
+end procedure
+
+procedure draw(cm CharMap, sq Square, colour Colour)
+  var col set to sq.x * 2
+  var row set to sq.y
+  call cm.putBlockWithColour(col, row, colour)
+  var colPlus set to col + 1
+  call cm.putBlockWithColour(colPlus, row, colour)
+end procedure
+
+class Snake
+  constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
+    set property.boardWidth to boardWidth
+    set property.boardHeight to boardHeight
+    var tail set to new Square(boardWidth div 2, boardHeight div 2)
+    set body to {tail}
+    set head to tail.getAdjacentSquare(startingDirection)
+    call setNewApplePosition()
+  end constructor
+
+  property boardWidth Int
+
+  property boardHeight Int
+
+  property head Square
+
+  private property body List<of Square>
+
+  property apple Square
+
+  function tail() as Square
+    return body[0]
+  end function
+
+  function length() as Int
+    return body.length()
+  end function
+
+  function bodyCovers(sq Square) as Bool
+    var result set to false
+    each seg in body
+      if (seg is sq)
+        set result to true
+      end if
+    end each
+    return result
+  end function
+
+  procedure clockTick(d Direction, out continue Boolean)
+    set body to body + head;
+    set head to head.getAdjacentSquare(d);
+    if head is apple
+      call setNewApplePosition()
+      else
+        set body to body[1..]
+    end if
+    set continue to not hasHitEdge() and not bodyCovers(head)
+  end procedure
+
+  function hasHitEdge() as Bool
+    return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
+  end function
+
+  procedure setNewApplePosition()
+    repeat
+      var w set to boardWidth - 1
+      var h set to boardHeight - 1
+      var ranW set to system.random(w)
+      var ranH set to system.random(h)
+      set apple to new Square(ranW, ranH) 
+    end repeat when not bodyCovers(apple)
+  end procedure
+
+end class
+
+class Square
+  constructor(x Int, y Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  property x Int
+
+  property y Int
+
+  function getAdjacentSquare(d Direction) as Square
+    var newX set to x
+    var newY set to y
+    switch d
+      case Direction.left
+        set newX to newX - 1     
+      case Direction.right
+        set newX to newX + 1
+      case Direction.up
+        set newY to newY - 1 
+      case Direction.down
+        set newY to newY + 1
+      default
+
+    end switch
+    return new Square(newX, newY)
+  end function
+
+end class
 `;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); */
-
-
+	});
 });

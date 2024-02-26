@@ -50,7 +50,6 @@ ${this.indent()}end constructor\r
         source.remove(")");
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        source.removeIndent();
         return this.parseStandardEnding(source, "end constructor");
     }
 }

@@ -110,6 +110,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     abstract parseBottomOfFrame(source: CodeSource): boolean;
 
     protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
+        source.removeIndent();
         var result = false;
         if (source.isMatch(keywords)) {
             source.remove(keywords);

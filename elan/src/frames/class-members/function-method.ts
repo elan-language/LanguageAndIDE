@@ -25,7 +25,6 @@ ${this.indent()}end function\r
         super.parseTopOfFrame(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
-        source.removeIndent();
         return super.parseBottomOfFrame(source);
     }
 }

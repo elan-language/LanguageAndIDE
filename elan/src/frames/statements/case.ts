@@ -40,6 +40,7 @@ ${this.renderStatementsAsSource()}`;
         this.value.parseFrom(source);
     }
     parseBottomOfFrame(source: CodeSource): boolean {
+        source.removeIndent();
         return source.isMatch("case ") || source.isMatch("default");
     }
 } 

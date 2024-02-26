@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variable, index_opt, argsList, firstMatchFrom, identifierList } from '../frames/fields/field-parsers';
+import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variable, index_opt, argsList, firstMatchFrom, identifierList, procedureRef, variableDotMember } from '../frames/fields/field-parsers';
 import { ParseStatus } from '../frames/parse-status';
 import { Regexes } from '../frames/fields/regexes';
 
@@ -190,7 +190,9 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "fooBar"]), [ParseStatus.incomplete,  ""]);
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "Foo bar"]), [ParseStatus.invalid,  "Foo bar"]);
 		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo, "]), [ParseStatus.incomplete,  ", "]);
-		//foo, 
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo Bar"]), [ParseStatus.valid,  ""]); 
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out Foo"]), [ParseStatus.incomplete,  "Foo"]);
 	}); 
 
 	test('parse functions - optional', () => {
@@ -320,7 +322,7 @@ suite('Parse Function Tests', () => {
 	test('parse functions - literalValue', () => {
 		assert.deepEqual(literalValue([ParseStatus.notParsed, `Colour.red more`]), [ParseStatus.valid,  " more"]);
 		assert.deepEqual(literalValue([ParseStatus.notParsed, `'z'`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(literalValue([ParseStatus.notParsed, "1.x"]), [ParseStatus.valid,  ".x"]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, "1.x"]), [ParseStatus.incomplete,  "x"]);
 		assert.deepEqual(literalValue([ParseStatus.notParsed, "true more"]), [ParseStatus.valid,  " more"]);
 		assert.deepEqual(literalValue([ParseStatus.notParsed, "a1"]), [ParseStatus.invalid,  "a1"]);
 		assert.deepEqual(literalValue([ParseStatus.notParsed, `"a1"`]), [ParseStatus.valid,  ""]);
@@ -384,5 +386,23 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(identifierList([ParseStatus.notParsed, ``]), [ParseStatus.invalid,  ""]);
 		assert.deepEqual(identifierList([ParseStatus.notParsed, `Foo`]), [ParseStatus.invalid,  "Foo"]);
 		assert.deepEqual(identifierList([ParseStatus.notParsed, `a[1]`]), [ParseStatus.valid,  "[1]"]);
+	});
+
+	test('parse functions - variableDotIdentifier', () => {
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo.bar`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo:bar`]), [ParseStatus.incomplete,  ":bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
+	});
+
+	test('parse functions - procedureRef', () => {
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo.bar`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo:bar`]), [ParseStatus.valid,  ":bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
 	});
 });

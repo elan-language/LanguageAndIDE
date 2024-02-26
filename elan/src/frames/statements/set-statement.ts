@@ -4,15 +4,16 @@ import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import {CodeSource } from "../code-source";
+import { Value } from "../fields/value";
 
 export class SetStatement extends AbstractFrame  {
     isStatement = true;
-    name: Identifier;;
+    name: Value;;
     expr: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.name = new Identifier(this);
+        this.name = new Value(this);
         this.name.setPlaceholder("variableName");
         this.expr = new Expression(this);
     }
