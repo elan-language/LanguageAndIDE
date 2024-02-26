@@ -64,7 +64,7 @@ export class FileImpl implements File {
 
     private getHash(body? : string): string {
         // normalize
-        body = (body || this.renderGlobalsAsSource()).trim().replaceAll("\r", "");
+        body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
 
         const hash = createHash('sha256');
         hash.update(body);
@@ -88,9 +88,15 @@ export class FileImpl implements File {
     }
 
     renderAsSource(): string {
-        const globals = this.renderGlobalsAsSource();
-        return `# ${this.getHash()} ${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
+        const content = this.renderHashableContent();
+        return `# ${this.getHash(content)} ${content}`; 
     }
+
+    renderHashableContent(): string {
+        const globals = this.renderGlobalsAsSource();
+        return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
+    }
+
 
     public addGlobal(g: Frame) : void {
         this._globals.push(g);

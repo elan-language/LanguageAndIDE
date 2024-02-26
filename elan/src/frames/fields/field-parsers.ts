@@ -187,7 +187,7 @@ export function firstMatchFrom(input: [ParseStatus, string], funcs: Array<(input
         if (result[0] === ParseStatus.invalid) {
             i++;
         }
-    } while (result[0] === ParseStatus.invalid && i < funcs.length)
+    } while (result[0] === ParseStatus.invalid && i < funcs.length);
     return result;
 }
 
