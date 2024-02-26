@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { assertAreEqualByHtml, assertAreEqualBySource } from './testHelpers';
 import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import assert from 'assert';
+import { createHash } from "node:crypto";
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -67,5 +69,4 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 	test('Test Empty Main and Class - Source', (done) => {
 		assertAreEqualBySource(done, "T09_emptyMainAndClass.source", T09_emptyMainAndClassWithGlobalSelector);
 	});
-
 });
