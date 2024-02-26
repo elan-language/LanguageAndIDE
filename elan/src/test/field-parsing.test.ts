@@ -7,6 +7,7 @@ import { Variable } from '../frames/statements/variable';
 import { ParseStatus } from '../frames/parse-status';
 import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
+import { Call } from '../frames/statements/call';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -43,5 +44,23 @@ suite('Field Parsing Tests', () => {
 		f.parseCurrentText();
 		assert.equal(f.getStatus(), ParseStatus.invalid);
 		}); 
+
+		test('parse Frames - argsList', () => { 
+			var main = new MainFrame(new FileImpl());
+			var call = new Call(main);
+			var args = call.args; 
+			args.setText("3,4,5");
+			args.parseCurrentText();
+			assert.equal(args.getStatus(), ParseStatus.valid);
+			args.setText(`s, a, "hello", b[5]`);
+			args.parseCurrentText();
+			assert.equal(args.getStatus(), ParseStatus.valid);
+			args.setText(`5, 3 + 4`);
+			args.parseCurrentText();
+			assert.equal(args.getStatus(), ParseStatus.invalid);
+			args.setText(`5, (3 + 4)`);
+			args.parseCurrentText();
+			assert.equal(args.getStatus(), ParseStatus.valid);
+			}); 
 
 });

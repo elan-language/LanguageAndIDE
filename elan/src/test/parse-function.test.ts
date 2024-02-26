@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variable, index_opt, argsList, firstMatchFrom, identifierList, procedureRef, variableDotMember } from '../frames/fields/field-parsers';
+import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variable, index_opt, argsList, firstMatchFrom, identifierList, procedureRef, variableDotMember, anythingBetweenBrackets } from '../frames/fields/parse-functions';
 import { ParseStatus } from '../frames/parse-status';
 import { Regexes } from '../frames/fields/regexes';
 
@@ -404,5 +404,12 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
 		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo:bar`]), [ParseStatus.valid,  ":bar"]);
 		assert.deepEqual(procedureRef([ParseStatus.notParsed, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
+	}); 
+
+	test('parse functions - anythingBetweenBrackets', () => {
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `(3 + 4)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)()`]), [ParseStatus.valid,  "()"]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `3+4)*5)()`]), [ParseStatus.invalid,  "3+4)*5)()"]);
 	});
 });

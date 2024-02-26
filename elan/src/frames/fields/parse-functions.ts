@@ -299,7 +299,7 @@ export function literal(input: [ParseStatus, string]): [ParseStatus, string] {
 }
 
 export function value(input: [ParseStatus, string]): [ParseStatus, string] {
-    return LongestMatchFrom(input, [literalValue, variable, variableDotMember]); 
+    return LongestMatchFrom(input, [literalValue, variable, variableDotMember, anythingBetweenBrackets]); 
 }
 
 export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {
@@ -342,4 +342,36 @@ export function anythingToNewline(input: [ParseStatus, string]): [ParseStatus, s
 
 export function atLeast1CharThenToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
     return genericRegEx(input, `^${Regexes.expression}`);
+}
+export function anythingBetweenBrackets(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return anythingBetweenMatching(input, "(", ")");
+}
+export function anythingBetweenSquareBrackets(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return anythingBetweenMatching(input, "[", "]");
+}
+export function anythingBetweenBraces(input: [ParseStatus, string]) :  [ParseStatus, string] {
+    return anythingBetweenMatching(input, "{", "}");
+}
+
+function anythingBetweenMatching(input: [ParseStatus, string], open: string, close: string) :  [ParseStatus, string] {
+    var result: [ParseStatus, string] = [ParseStatus.invalid, input[1]];
+    var content = input[1];
+    var unclosed = 0;
+    if (content[0] === open) {
+        var i = 1;
+        unclosed = 1;
+        while (i < content.length && unclosed > 0) {
+            var char = content[i];
+            if (char === close) {
+                unclosed --;
+            } else if (char === open) {
+                unclosed ++;
+            }
+            i++;
+        }
+        if (unclosed === 0) {
+            result = [ParseStatus.valid, input[1].substring(i)];
+        }
+    }
+    return result;
 }

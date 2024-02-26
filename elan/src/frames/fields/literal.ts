@@ -1,7 +1,7 @@
 import { Frame } from "../interfaces/frame";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { literal } from "./field-parsers";
+import { literal } from "./parse-functions";
 
 //Literal value or data structure
 export class Literal extends AbstractField {   

@@ -1,7 +1,7 @@
 import { Frame } from "../interfaces/frame";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { paramsList } from "./field-parsers";
+import { paramsList } from "./parse-functions";
 
 export class ParamList extends AbstractField {
     constructor(holder: Frame) {

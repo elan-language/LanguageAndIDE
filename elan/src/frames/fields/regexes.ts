@@ -25,5 +25,5 @@ export class Regexes {
     static readonly startsWithComment = new RegExp(`^${Regexes.comment}`);
     static readonly conditionalOperator = `(is|is not|>|<|>=|<=)`;
     static readonly condition = `(${Regexes.value})\\s${Regexes.conditionalOperator}\\s(${Regexes.value})`; //TODO stop-gap, pending parsing of Expression
-
+    static readonly anythingExceptBrackets = `^[^\(\)]*`; //TODO stop-gap, pending parsing of Expression
 }

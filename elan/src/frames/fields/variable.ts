@@ -1,7 +1,7 @@
 import { Frame } from "../interfaces/frame";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { variable } from "./field-parsers";
+import { variable } from "./parse-functions";
 
 // (For the time being) an identifier with optional index
 export class Variable extends AbstractField  {   

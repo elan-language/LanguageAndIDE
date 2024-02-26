@@ -1,7 +1,7 @@
 import { Frame } from "../interfaces/frame";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { literalInt } from "./field-parsers";
+import { literalInt } from "./parse-functions";
 
 export class Integer extends AbstractField {  
     constructor(holder: Frame) {

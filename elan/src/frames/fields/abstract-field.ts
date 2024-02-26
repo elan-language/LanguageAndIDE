@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
 import {CodeSource } from "../code-source";
-import { optional } from "./field-parsers";
+import { optional } from "./parse-functions";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;

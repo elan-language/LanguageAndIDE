@@ -1,7 +1,7 @@
 import { Frame } from "../interfaces/frame";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { anythingToNewline } from "./field-parsers";
+import { anythingToNewline } from "./parse-functions";
 
 export class PlainText extends AbstractField {
     constructor(holder: Frame) {
