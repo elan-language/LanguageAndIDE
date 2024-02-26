@@ -402,7 +402,7 @@ end function
 	});
 
 	test('parse Frames - snake.oop', () => {
-		var code = `# 8da5e60f94d98198331783cde9b3a12f0f55dc12ecd1ac220becaaa8b9205472 Elan v0.1 valid
+		var code = `# 4e8bee2c83ff12cf2b63ad55e2daaab1b3d8899f05648823f0ef2a80d197be91 Elan v0.1 valid
 
 main
   print welcome
