@@ -94,7 +94,7 @@
 			return false;
 		}
 
-		const input = document.querySelector('.focused > input');
+		const input = document.querySelector('.focused input');
 		const focused = document.querySelector('.focused');
 		const elanCode = document.querySelector('.elan-code');
 

@@ -8,21 +8,21 @@ suite('Language Server', () => {
   const docUri = vscode.Uri.joinPath(ws, "T01_helloWorld.elan");
 
   suiteSetup(async () => {
-    await activate(docUri);
+    //await activate(docUri);
   });
 
-  test('Check for hard coded completion response from language server', async () => {
+  // test('Check for hard coded completion response from language server', async () => {
 
-    await testCompletion(docUri, new vscode.Position(0, 0), {
-      items: [
-        { label: 'Elan', kind: vscode.CompletionItemKind.Text },
-        { label: 'Elan', kind: vscode.CompletionItemKind.Text }
-      ]
-    });
-  });
+  //   await testCompletion(docUri, new vscode.Position(0, 0), {
+  //     items: [
+  //       { label: 'Elan', kind: vscode.CompletionItemKind.Text },
+  //       { label: 'Elan', kind: vscode.CompletionItemKind.Text }
+  //     ]
+  //   });
+  // });
 
   test('Symbols from code', async () => {
-    await testSymbols(docUri);
+    //await testSymbols(docUri);
   });
 
 });

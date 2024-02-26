@@ -20,7 +20,7 @@ suite('File Parsing Tests', () => {
 		const fl = new FileImpl();
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
-		var code = `# Elan v0.1 valid e3b0c44298fc1c14
+		var code = `# e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 Elan v0.1 valid
 
 `;
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -109,7 +109,7 @@ suite('File Parsing Tests', () => {
 	}); 
 
 	test('parse Frames - header file', () => {
-		var code = `# Elan v0.1 valid e3b0c44298fc1c14
+		var code = `# e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 Elan v0.1 valid
 
 `;
         var source = new CodeSourceFromString(code);
@@ -120,7 +120,7 @@ suite('File Parsing Tests', () => {
 	});
 
 	test('parse Frames - constant only', () => {
-		var code = `# Elan v0.1 valid ac46b46919180712
+		var code = `# ac46b469191807126275bd96064b77c6ea13633faa227fda6513d90820f49dea Elan v0.1 valid
 
 constant pi set to 3.142
 `;
@@ -133,7 +133,7 @@ constant pi set to 3.142
 
 
 	test('parse Frames - two constants', () => {
-		var code = `# Elan v0.1 valid 92f459a07caf7d31
+		var code = `# 92f459a07caf7d31f5383b5d7e26476d8c9470c8259a3cdcb39cbf1b3e101aac Elan v0.1 valid
 
 constant pi set to 3.142
 
@@ -147,7 +147,7 @@ constant e set to 2.718
 	});
 
 	test('parse Frames - main', () => {
-		var code = `# Elan v0.1 valid 0cad41862a1b04bf
+		var code = `# 0cad41862a1b04bf92c8af69439d0e7e84531c7197be676912015cdfff86c355 Elan v0.1 valid
 
 main
 
@@ -161,7 +161,7 @@ end main
 	});
 
 	test('parse Frames - hello world', () => {
-		var code = `# Elan v0.1 valid fc7c4565dc3c9c3b
+		var code = `# fc7c4565dc3c9c3b087c41e6ac607330bb97003fe75fd57360c88a0ff28f6a7d Elan v0.1 valid
 
 main
   # My first program
@@ -176,7 +176,7 @@ end main
 	});
 
 	test('parse Frames - main with all single-line statements', () => {
-		var code = `# Elan v0.1 valid edecbe6cd394058d
+		var code = `# edecbe6cd394058d2f572608d1b334c2fe2387333b261e3060bacc123c775bdf Elan v0.1 valid
 
 main
   var name set to value or expression
@@ -195,7 +195,7 @@ end main
 	});
 
 	test('parse Frames - all globals except class', () => {
-		var code = `# Elan v0.1 valid c6f179daced8df8a
+		var code = `# c6f179daced8df8a9550680f2a67ae9dc26e6355aa8ea6437c685b140ae58de2 Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -224,7 +224,7 @@ end enum
 	});
 
 	test('parse Frames - class', () => {
-		var code = `# Elan v0.1 valid 66b203d7b930afe3
+		var code = `# 66b203d7b930afe3747b4ad07b21a812bf0134cd1b4792c9b6da723307acdfd1 Elan v0.1 valid
 
 class Player inherits Foo, Bar
   constructor()
@@ -252,7 +252,7 @@ end class
 	});
 
 	test('parse Frames - immutable class', () => {
-		var code = `# Elan v0.1 valid 33a98752be0ede6a
+		var code = `# 33a98752be0ede6a68fbc894b8ab92bf6c02f43c29f14ab8f2e9ec1146d8abe3 Elan v0.1 valid
 
 immutable class Card inherits Foo, Bar
   constructor()
@@ -272,7 +272,7 @@ end class
 	});
 
 	test('parse Frames - abstract class', () => {
-		var code = `# Elan v0.1 valid 12efc404ab43c3e2
+		var code = `# 12efc404ab43c3e2597dd738a3eb8bbb2ecd25115938ac717d11c09b28fa1044 Elan v0.1 valid
 
 abstract class Card
   abstract property value Int
@@ -292,7 +292,7 @@ end class
 	});
 
 	test('parse Frames - abstract immutable class', () => {
-		var code = `# Elan v0.1 valid cdf1d048244b396c
+		var code = `# cdf1d048244b396c4e0cf2f19999e572913743a8c4390fb57a9224dd8fe53731 Elan v0.1 valid
 
 abstract immutable class Card
   abstract property value Int
@@ -310,7 +310,7 @@ end class
 	});
 
 	test('parse Frames - all multiline statements', () => {
-		var code = `# Elan v0.1 valid bee13e6e47a3fd05
+		var code = `# bee13e6e47a3fd0547f7a9317ffd676fea5fc5fba88c46b7d57cae0eef948fc8 Elan v0.1 valid
 
 main
   while newGame
@@ -360,7 +360,7 @@ end main
 
 
 	test('parse Frames - mergeSort', () => {
-		var code = `# Elan v0.1 valid 4d28f8a01546c4ab
+		var code = `# 4d28f8a01546c4abc583b6ff1852559209498535f526461821c1bdd7fbdba611 Elan v0.1 valid
 
 main
   var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
