@@ -5,7 +5,7 @@ import { activate } from './testHelpers';
 suite('Language Server', () => {
 
   const ws = vscode.workspace.workspaceFolders![0].uri;
-  const docUri = vscode.Uri.joinPath(ws, "T01_helloWorld.elan");
+  const docUri = vscode.Uri.joinPath(ws, "T01_helloWorld.source");
 
   suiteSetup(async () => {
     await activate(docUri);

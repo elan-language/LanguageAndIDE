@@ -6,6 +6,7 @@ import * as jsdom from 'jsdom';
 import { KeyEvent } from '../frames/interfaces/key-event';
 import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
+import { hash } from '../util';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -97,7 +98,7 @@ export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl();
+    var fl = new FileImpl(hash);
     fl.parseFrom(codeSource);
     if (fl.parseError) {
         throw new Error(fl.parseError);

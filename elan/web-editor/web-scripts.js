@@ -6,7 +6,7 @@
 	var file;
 
 	import("./web-editor.js").then(editor => {
-		file = new editor.FileImpl();
+		file = new editor.FileImpl((s) => "");
 		updateContent(file.renderAsHtml());
 	});
 

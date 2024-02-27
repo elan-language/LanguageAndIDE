@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getNonce } from './util';
+import { getNonce, hash } from './util';
 import { File } from './frames/interfaces/file';
 import { ParseStatus } from './frames/parse-status';
 import { isFrame, isParent } from './frames/helpers';
@@ -53,7 +53,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
 		if (this.currentFileUri !== document.uri || !this.file) {
-			this.file = new FileImpl();
+			this.file = new FileImpl(hash);
 			this.file.parseFrom(new CodeSourceFromString(document.getText()));
 			this.currentFileUri = document.uri;
 		}

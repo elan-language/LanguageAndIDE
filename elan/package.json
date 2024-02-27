@@ -106,7 +106,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "web-editor-build": ""
   },
   "dependencies": {
     "async-file": "2.0.2",

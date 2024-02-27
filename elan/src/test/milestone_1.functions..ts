@@ -24,14 +24,15 @@ import { GlobalComment } from "../frames/globals/global-comment";
 import { FileImpl } from "../frames/file-impl";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { Switch } from "../frames/statements/switch";
+import { hash } from "../util";
 
 export function T00_emptyFile() {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	return f;
 }
 
 export function T01_helloWorld() {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
@@ -46,7 +47,7 @@ export function T01_helloWorld() {
 }
 
 export function T02_comments() {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const gc = new GlobalComment(f);
 	gc.text.setText("Comment 1");
@@ -61,7 +62,7 @@ export function T02_comments() {
 }
 
 export function T03_mainWithAllStatements(): FileImpl {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addGlobalBefore(m,gs);
@@ -144,7 +145,7 @@ export function T08_collapseAll(f : FileImpl) {
 }
 
 export function T04_allGlobalsExceptClass(): FileImpl {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const con = new Constant(f);
 	con.name.setText("phi");
@@ -171,7 +172,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 }
 
 export function T05_classes() {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const cl1 = new Class(f);
 	var ms = cl1.getFirstMemberSelector();
@@ -209,7 +210,7 @@ main
 end main */
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
-	const f = new FileImpl();
+	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	f.addGlobalBefore(new MainFrame(f), gs);
 	f.addGlobalBefore(new Class(f), gs);
@@ -221,6 +222,6 @@ export function getTestFrame(fn : string) : FileImpl {
     	return eval(`${fn}()`);
 	}
 	catch (e){
-		return new FileImpl();
+		return new FileImpl(hash);
 	}
 }
