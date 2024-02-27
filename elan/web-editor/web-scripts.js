@@ -5,6 +5,14 @@
 
 	var file;
 
+	function isFrame(f) {
+		return !!f && 'isFrame' in f;
+	}
+	
+	function isParent(f) {
+		return !!f && 'isParent' in f;
+	}
+
 	import("./web-editor.js").then(editor => {
 		file = new editor.FileImpl((s) => "");
 		updateContent(file.renderAsHtml());
