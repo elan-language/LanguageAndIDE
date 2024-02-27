@@ -4,7 +4,7 @@ import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Literal } from "../fields/literal";
-import { PlainText } from "../fields/plain_text";
+import { PlainText } from "../fields/plain-text";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;

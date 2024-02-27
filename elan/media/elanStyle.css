@@ -202,7 +202,7 @@ global help, member help, statement help  {
  }
 
  /* Comments */
- comment, comment.field.text {
+ comment, comment top, comment field.valid text, comment keyword {
     color: green;
 }
 
