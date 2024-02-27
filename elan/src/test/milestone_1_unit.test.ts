@@ -58,7 +58,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
 		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("ident4").processKey(key("X"));
+		file.getById("var4").processKey(key("X"));
 		assertElementHasClasses(file, "var3", "invalid");
 		assertElementHasClasses(file, "fileStatus", "invalid");
 	});
@@ -67,8 +67,8 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
 		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("ident4").processKey(key("q"));
-		assertElementHasClasses(file, "ident4", "valid");
+		file.getById("var4").processKey(key("q"));
+		assertElementHasClasses(file, "var4", "valid");
 		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
 	});
 
@@ -76,7 +76,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T03_mainWithAllStatements();
 		assertElementHasClasses(file, "fileStatus", "incomplete");
 		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("ident4").processKey(key("q"));
+		file.getById("var4").processKey(key("q"));
 		file.getById("expr5").processKey(key("5"));
 		assertElementHasClasses(file, "var3", "valid");
 	});
