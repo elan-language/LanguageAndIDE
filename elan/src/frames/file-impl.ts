@@ -251,7 +251,7 @@ export class FileImpl implements File {
                 }
             }
         } catch (e) {
-            this.parseError = `Code cannot be parsed at ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+            this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }
     }
 
@@ -266,14 +266,14 @@ export class FileImpl implements File {
             const header = code.substring(0, eol > 0 ? eol : undefined);
             const tokens = header.split(" ");
             if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-                throw new Error("File cannot be loaded - error in file header");
+                throw new Error("Invalid file header format");
             }
             const fileHash = tokens[1];
             const toHash = code.substring(code.indexOf("Elan"));
             const newHash = this.getHash(toHash);
 
             if (fileHash !== newHash) {
-                throw new Error("File cannot be loaded - error in file header");
+                throw new Error("Code does not match the hash in the file header");
             }
         }
     }
