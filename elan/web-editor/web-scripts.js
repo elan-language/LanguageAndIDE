@@ -40,9 +40,6 @@
 	// @ts-ignore
 	//const vscode = acquireVsCodeApi();
 
-	
-	
-
 	var doOnce = true;
 
 	function getModKey(e) {
