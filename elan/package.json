@@ -97,7 +97,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-web-editor": "esbuild ./src/frames/file-impl.ts --bundle --outfile=dist/web-editor.js",
+    "esbuild-web-editor": "esbuild ./src/frames/file-impl.ts --bundle --format=esm --outfile=dist/web-editor.js",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
