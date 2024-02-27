@@ -116,7 +116,11 @@
 		}
 
 		if (input) {
-			input.setSelectionRange(input.value.length, input.value.length);
+			const cursor = input.dataset.cursor;
+			const pIndex = parseInt(cursor);
+			const cursorIndex = pIndex === NaN ? input.value.length : pIndex;
+
+			input.setSelectionRange(cursorIndex, cursorIndex);
 			input.focus();
 		} else if (focused) {
 			focused.focus();
