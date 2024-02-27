@@ -13,8 +13,24 @@
 		return !!f && 'isParent' in f;
 	}
 
+	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
+
 	import("./web-editor.js").then(editor => {
-		file = new editor.FileImpl((s) => "");
+		file = new editor.FileImpl((s) => "", true);
+
+		const elanLines = codeContainer.getElementsByClassName("elanSource");
+		var elanCode = "";
+
+		for (var e of elanLines){
+			elanCode = elanCode + "\r\n" + e.innerText;
+		}
+
+		elanCode = elanCode.trim();
+		if (elanCode) {
+			const code = new editor.CodeSourceFromString(elanCode);
+			file.parseFrom(code);
+		}
+
 		updateContent(file.renderAsHtml());
 	});
 
@@ -25,7 +41,7 @@
 	//const vscode = acquireVsCodeApi();
 
 	
-	const codeContainer = /** @type {HTMLElement} */ (document.querySelector('.elan-code'));
+	
 
 	var doOnce = true;
 

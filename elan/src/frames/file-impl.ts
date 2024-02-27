@@ -14,9 +14,12 @@ import { StatementFactoryImpl } from "./statement-factory-impl";
 import { isCollapsible } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { CodeSource } from "./code-source";
+import { CodeSource, CodeSourceFromString } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
+
+// for web editor bundle
+export { CodeSourceFromString };
 
 export class FileImpl implements File {
     isParent: boolean = true;
