@@ -1,4 +1,4 @@
-﻿# FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF Elan v0.1 valid
+﻿# 9d12909e98653a6e15f3b847e4afede63374a214f5581beeb7cd28ea354667f5 Elan v0.1 valid
 
 function calcSumX(points List<of (Float, Float)>) as Float
   return points.reduce(0.0, lambda s,p -> s + p.first())

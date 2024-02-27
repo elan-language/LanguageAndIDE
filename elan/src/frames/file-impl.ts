@@ -28,14 +28,14 @@ export class FileImpl implements File {
     private _globals: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
-    private _noHash: boolean = false;
+    private ignoreHashOnParsing: boolean = false;
    
-    constructor(noHash?: boolean) {
+    constructor(ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this._globals.push(new GlobalSelector(this));
-        if (noHash) {
-            this._noHash = noHash;
+        if (ignoreHashOnParsing) {
+            this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
 
@@ -73,12 +73,8 @@ export class FileImpl implements File {
     }
 
     private getHash(body? : string): string {
-        if (this._noHash) {
-            return "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-        } else {
-            body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
-            return hash(body);
-        }
+        body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
+        return hash(body);
     }
 
     private getVersion() {
@@ -106,7 +102,6 @@ export class FileImpl implements File {
         const globals = this.renderGlobalsAsSource();
         return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
-
 
     public addGlobal(g: Frame) : void {
         this._globals.push(g);
@@ -266,7 +261,7 @@ export class FileImpl implements File {
     }
 
     validateHeader(code: string) {
-        if (code !== "") {
+        if (!this.ignoreHashOnParsing && code !== "") {
             const eol = code.indexOf("\n");
             const header = code.substring(0, eol > 0 ? eol : undefined);
             const tokens = header.split(" ");

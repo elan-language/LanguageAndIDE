@@ -97,7 +97,7 @@ export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl(true);
+    var fl = new FileImpl();
     fl.parseFrom(codeSource);
     if (fl.parseError) {
         throw new Error(fl.parseError);
