@@ -14,6 +14,7 @@ import { Switch } from '../frames/statements/switch';
 import { IfStatement } from '../frames/statements/if-statement';
 import { While } from '../frames/statements/while';
 import { FunctionMethod } from '../frames/class-members/function-method';
+import { hash } from '../util';
 
 suite('Milestone 1 - Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -114,7 +115,7 @@ suite('Milestone 1 - Unit tests', () => {
  	});	
 
 	 test("Selection Filtering - globals", () => {
-		const f = new FileImpl();
+		const f = new FileImpl(hash);
 		var g = new GlobalSelector(f);
 		var help = g.getHelp();
 		assert.equal(help, " main procedure function class constant enum test #");
@@ -125,7 +126,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Filtering - members", () => {
-		const f = new FileImpl();
+		const f = new FileImpl(hash);
 		var c = new Class(f);		
 		var s = new MemberSelector(c);
 		var help = s.getHelp();
@@ -137,7 +138,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Filtering - statements", () => {
-		const f = new FileImpl();
+		const f = new FileImpl(hash);
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getHelp();
@@ -149,7 +150,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Context - in a Function", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var func = new Function(fl);		
 		var s = new StatementSelector(func);
 		var help = s.getHelp();
@@ -157,7 +158,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Context - deeper nesting 1", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var func = new Function(fl);
 		var if1 = new IfStatement(func);
         var wh = new While(if1);
@@ -167,7 +168,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Context - deeper nesting 2", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var c = new Class(fl);
         var fm = new FunctionMethod(c);
 		var if1 = new IfStatement(fm);
@@ -177,7 +178,7 @@ suite('Milestone 1 - Unit tests', () => {
 	});	
 
 	test("Selection Context - in a Switch", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var m = new MainFrame(fl);	
 		var sw = new Switch(m);
 		var s = new StatementSelector(sw);
@@ -185,7 +186,7 @@ suite('Milestone 1 - Unit tests', () => {
 		assert.equal(help, " case");
 	});	
 	test("Selection Context - in an IfThen", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var m = new MainFrame(fl);	
 		var ifThen = new IfStatement(m);
 		var s = new StatementSelector(ifThen);
@@ -196,7 +197,7 @@ suite('Milestone 1 - Unit tests', () => {
 		assert.equal(help, " each else");
 	});	
 	test("Selection Context - selector prevents more than one main", () => {
-		const fl = new FileImpl();
+		const fl = new FileImpl(hash);
 		var gs = new GlobalSelector(fl);
 		var help = gs.getHelp();
 		assert.equal(help, " main procedure function class constant enum test #");

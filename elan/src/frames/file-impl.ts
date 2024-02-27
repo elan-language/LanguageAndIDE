@@ -17,7 +17,6 @@ import { Parent } from "./interfaces/parent";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
-import { hash } from "../util";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -29,8 +28,8 @@ export class FileImpl implements File {
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
     private ignoreHashOnParsing: boolean = false;
-   
-    constructor(ignoreHashOnParsing?: boolean) {
+
+    constructor(private hash: (toHash: string) => string, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this._globals.push(new GlobalSelector(this));
@@ -74,7 +73,7 @@ export class FileImpl implements File {
 
     private getHash(body? : string): string {
         body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
-        return hash(body);
+        return this.hash(body);
     }
 
     private getVersion() {
