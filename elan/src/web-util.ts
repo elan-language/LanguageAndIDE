@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-
 export function getNonce() {
 	let text = '';
 	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -9,8 +7,6 @@ export function getNonce() {
 	return text;
 }
 
-export function hash(toHash : string) {
-	const hash = createHash('sha256');
-	hash.update(toHash);
-	return  hash.digest('hex');
+export function hash(toHash : string) : string {
+	return "web-hash";
 }
