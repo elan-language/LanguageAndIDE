@@ -17,7 +17,7 @@ import { Parent } from "./interfaces/parent";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
-import { createSha256Hash } from "../util";
+import { hash } from "../util";
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -77,9 +77,7 @@ export class FileImpl implements File {
             return "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
         } else {
             body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
-            const hash = createSha256Hash();
-            hash.update(body);
-            return hash.digest('hex');
+            return hash(body);
         }
     }
 
