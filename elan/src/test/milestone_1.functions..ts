@@ -179,7 +179,7 @@ export function T05_classes() {
 	f.addGlobalBefore(cl1, gs);
 	cl1.name.setText("Player");
 	const p1 = new Property(cl1);
-	cl1.addMemberBefore(p1,ms);
+	cl1.addMemberBeforeAndSelectFirstField(p1,ms);
 	p1.name.setText("score");
 	p1.type.setText("Int");
 
@@ -191,12 +191,12 @@ export function T05_classes() {
 	cl2.name.setText("Card");
 	cl2.immutable = true;
 	const p2 = new Property(cl2);
-	cl2.addMemberBefore(p2, ms2);
+	cl2.addMemberBeforeAndSelectFirstField(p2, ms2);
 	p2.name.setText("value");
 	p2.type.setText("Int");
 	p2.private = true;
 	const m1 = new FunctionMethod(cl2);
-	cl2.addMemberBefore(m1,ms2);
+	cl2.addMemberBeforeAndSelectFirstField(m1,ms2);
 	m1.name.setText("reset");
 	m1.params.setText("");
 	m1.returnType.setText("Player");

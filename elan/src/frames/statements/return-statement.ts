@@ -23,7 +23,7 @@ export class ReturnStatement extends AbstractFrame  {
         return 'return';
     }
     
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.expr.select();
         return true;
     }

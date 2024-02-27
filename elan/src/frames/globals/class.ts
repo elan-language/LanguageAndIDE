@@ -90,7 +90,7 @@ export class Class extends AbstractFrame implements Parent {
         return 'class';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.name.select();
         return true;
     }
@@ -152,9 +152,10 @@ end class\r\n`;
         return result;
     }
 
-    public addMemberBefore(m: Frame, before: Frame) {
+    public addMemberBeforeAndSelectFirstField(m: Frame, before: Frame) {
         var i = this.   _members.indexOf(before);
         this._members.splice(i,0,m);
+        m.selectFirstFieldOrChildIfNone();
     }
 
     public removeMember(m: Frame) {
@@ -164,43 +165,43 @@ end class\r\n`;
 
     addFunctionMethodBefore(member: Frame): Frame {
         var p = new FunctionMethod(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addPropertyBefore(member: Frame): Frame {
         var p = new Property(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addProcedureMethodBefore(member: Frame): Frame {
         var p = new ProcedureMethod(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractFunctionBefore(member: Frame): Frame {
         var p = new AbstractFunction(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addCommentBefore(member: Frame): Frame {
         var p = new CommentStatement(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractPropertyBefore(member: Frame): Frame {
         var p = new AbstractProperty(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractProcedureBefore(member: Frame): Frame {
         var p = new AbstractProcedure(this);
-        this.addMemberBefore(p, member);
+        this.addMemberBeforeAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }

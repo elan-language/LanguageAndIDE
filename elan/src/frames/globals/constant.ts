@@ -35,7 +35,7 @@ export class Constant extends AbstractFrame {
         return 'const';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.name.select();
         return true;
     }

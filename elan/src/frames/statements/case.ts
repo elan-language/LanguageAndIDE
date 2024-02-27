@@ -21,7 +21,7 @@ export class Case extends FrameWithStatements{
         return 'case';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.value.select();
         return true;
     }

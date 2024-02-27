@@ -25,7 +25,7 @@ export class Print extends AbstractFrame  {
         return [this.expr];
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.expr.select();
         return true;
     }

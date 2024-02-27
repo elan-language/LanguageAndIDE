@@ -32,7 +32,7 @@ export class Else extends FrameWithStatements  {
         return 'else';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.condition.select();
         return true;
     }

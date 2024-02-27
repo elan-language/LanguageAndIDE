@@ -89,11 +89,11 @@ export class StatementFactoryImpl implements StatementFactory {
         }
     }
 
-    addFrameBefore(frameType: string, selector: Frame): Frame {
+    addFrameBeforeAndSelectFirstField(frameType: string, selector: Frame): Frame {
         var parent = selector.getParent() as FrameWithStatements;
         var newS = this.getNewStatement(frameType, selector.getParent());
         parent.addStatementBefore(newS, selector);
-        newS.select(true,   false);
+        newS.selectFirstFieldOrChildIfNone();
         return newS;
     }
 }

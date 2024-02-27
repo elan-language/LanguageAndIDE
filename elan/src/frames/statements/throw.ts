@@ -24,7 +24,7 @@ export class Throw extends AbstractFrame  {
     getIdPrefix(): string {
         return 'throw';
     }
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.text.select();
         return true;
     }

@@ -18,7 +18,7 @@ export class IfStatement extends FrameWithStatements{
         return [this.condition];
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.condition.select();
         return true;
     }

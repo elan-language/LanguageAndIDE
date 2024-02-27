@@ -30,7 +30,7 @@ export class Test extends FrameWithStatements {
         return 'test';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.name.select();
         return true;
     }

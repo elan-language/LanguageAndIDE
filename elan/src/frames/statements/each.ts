@@ -28,7 +28,7 @@ export class Each extends FrameWithStatements  {
         return 'each';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.variable.select();
         return true;
     }
