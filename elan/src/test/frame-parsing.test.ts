@@ -10,7 +10,7 @@ import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
 import { Regexes } from '../frames/fields/regexes';
-import { assertSourceFileParses } from './testHelpers';
+import { assertFileParses } from './testHelpers';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -161,8 +161,9 @@ end main
 	});
 
 	test('parse Frames - hello world', () => {
-		var code = `# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan v0.1 valid
+		var code = `# 244696ccd30157219b43a148c6139816206b9269b1de2665cf230de346df30c3 Elan v0.1 valid
 
+# my comment
 main
   # My first program
   print "Hello World!"
@@ -171,6 +172,9 @@ end main
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl();
 		fl.parseFrom(source);
+    if (fl.parseError) {
+      throw new Error(fl.parseError);
+    }
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -357,319 +361,41 @@ end main
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+	test('parse Frames - merge-sort', (done) => {
+		assertFileParses(done, "programs/merge-sort.elan");
+	});
+	test('parse Frames - snake-oop', (done) => {
+    assertFileParses(done, "programs/snake-oop.elan");
+  });
+  test('parse Frames - wordle', (done) => {
+    assertFileParses(done, "programs/wordle-with-class.elan");
+	});
+  test('parse Frames - life', (done) => {
+    assertFileParses(done, "programs/life.elan");
+	});
+  test('parse Frames - best-fit', (done) => {
+    assertFileParses(done, "programs/best-fit.elan");
+	});
+  test('parse Frames - binary-search', (done) => {
+    assertFileParses(done, "programs/binary-search.elan");
+	});
+  test('parse Frames - pathfinder', (done) => {
+    assertFileParses(done, "programs/binary-search.elan");
+	});
 
+/*   test('parse Frames - temp - next test example', () => {
 
-	test('parse Frames - mergeSort', () => {
-		var code = `# 99e4a4090ff23e3d09d26320f73c5c1d483cfe33e6b9c17250b86d2a762553c5 Elan v0.1 valid
+  var code = `# FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF Elan v0.1 valid
 
-main
-  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
-  print mergeSort(li)
-end main
-
-function mergeSort(list List<of String>) as List<of String>
-  var result set to list
-  if list.length() > 1
-    var mid set to list.length() div 2
-    set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
-  end if
-  return result
-end function
-
-function merge(a List<of String>, b List<of String>) as List<of String>
-  var name set to new List<of String>()
-  if a.isEmpty()
-    set result to b
-    else if b.isEmpty()
-      set result to a
-    else if a[0].isBefore(b[0])
-      set result to a[0] + merge(a[1..], b)
-    else
-      set result to b[0] + merge(a, b[1..])
-  end if
-  return result
-end function
 `;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl();
+		const fl = new FileImpl(true);
 		fl.parseFrom(source);
+    if (fl.parseError) {
+      throw new Error(fl.parseError);
+    }
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
+	}); */
 
-	test('parse Frames - mergeSort from file', (done) => {
-		assertSourceFileParses(done, "T06_mergeSort.source");
-	});
-
-	test('parse Frames - snake.oop', () => {
-		var code = `# 4e8bee2c83ff12cf2b63ad55e2daaab1b3d8899f05648823f0ef2a80d197be91 Elan v0.1 valid
-
-main
-  print welcome
-  var k set to system.readKey()
-  var newGame set to true
-  while newGame
-    call playGame()
-    print "Do you want to play again (y/n)?"
-    var answer set to ' '
-    repeat
-      set answer to system.readKey()
-    end repeat when answer is 'y' or answer is 'n'
-    if answer is 'n'
-      set newGame to false
-    end if
-  end while
-end main
-
-constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
-
-constant welcome set to "Welcome to the Snake game."
-
-procedure playGame()
-  var charMap set to new CharMap()
-  call charMap.fillBackground()
-  var currentDirection set to Direction.right
-  var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
-  var gameOn set to true
-  while gameOn
-    call draw(charMap, snake.head, Colour.green)
-    call draw(charMap, snake.apple, Colour.red)
-    var priorTail set to snake.tail()
-    call pause(200)
-    var pressed set to system.keyHasBeenPressed()
-    if pressed
-      var k set to system.readKey()
-      set currentDirection to directionByKey[k]
-    end if
-    call snake.clockTick(currentDirection, gameOn)
-    if snake.tail() is not priorTail
-      call draw(charMap, priorTail, charMap.backgroundColour)
-    end if
-  end while
-  call charMap.setCursor(0, 0)
-  print "Game Over! Score: {snake.length() - 2}"
-end procedure
-
-procedure draw(cm CharMap, sq Square, colour Colour)
-  var col set to sq.x * 2
-  var row set to sq.y
-  call cm.putBlockWithColour(col, row, colour)
-  var colPlus set to col + 1
-  call cm.putBlockWithColour(colPlus, row, colour)
-end procedure
-
-class Snake
-  constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
-    set property.boardWidth to boardWidth
-    set property.boardHeight to boardHeight
-    var tail set to new Square(boardWidth div 2, boardHeight div 2)
-    set body to {tail}
-    set head to tail.getAdjacentSquare(startingDirection)
-    call setNewApplePosition()
-  end constructor
-
-  property boardWidth Int
-
-  property boardHeight Int
-
-  property head Square
-
-  private property body List<of Square>
-
-  property apple Square
-
-  function tail() as Square
-    return body[0]
-  end function
-
-  function length() as Int
-    return body.length()
-  end function
-
-  function bodyCovers(sq Square) as Bool
-    var result set to false
-    each seg in body
-      if (seg is sq)
-        set result to true
-      end if
-    end each
-    return result
-  end function
-
-  procedure clockTick(d Direction, out continue Boolean)
-    set body to body + head;
-    set head to head.getAdjacentSquare(d);
-    if head is apple
-      call setNewApplePosition()
-      else
-        set body to body[1..]
-    end if
-    set continue to not hasHitEdge() and not bodyCovers(head)
-  end procedure
-
-  function hasHitEdge() as Bool
-    return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
-  end function
-
-  procedure setNewApplePosition()
-    repeat
-      var w set to boardWidth - 1
-      var h set to boardHeight - 1
-      var ranW set to system.random(w)
-      var ranH set to system.random(h)
-      set apple to new Square(ranW, ranH) 
-    end repeat when not bodyCovers(apple)
-  end procedure
-
-end class
-
-class Square
-  constructor(x Int, y Int)
-    set property.x to x
-    set property.y to y
-  end constructor
-
-  property x Int
-
-  property y Int
-
-  function getAdjacentSquare(d Direction) as Square
-    var newX set to x
-    var newY set to y
-    switch d
-      case Direction.left
-        set newX to newX - 1     
-      case Direction.right
-        set newX to newX + 1
-      case Direction.up
-        set newY to newY - 1 
-      case Direction.down
-        set newY to newY + 1
-      default
-
-    end switch
-    return new Square(newX, newY)
-  end function
-
-end class
-`;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl();
-		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
-  test('parse Frames - wordle', () => {
-		var code = `# d62f1187f5416a0d388d1097e326564403b46393e734db8587f0e8a27a817cb2 Elan v0.1 valid
-
-constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
-
-constant validWords set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
-
-main
-  var possible set to validWords
-  var marking set to ""
-  var attempt set to "RAISE"
-  while marking is not "*****"
-    print attempt
-    set marking to input
-    set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
-    set attempt to bestAttempt(possible, validWords)
-  end while
-end main
-
-function isGreen(attempt String, target String, n Int) as Bool
-  return target[n] is attempt[n]
-end function
-
-function setChar(word String, n Int, newChar Char) as String
-  return word[..n] + newChar + word[n+1..]
-end function
-
-function setAttemptIfGreen(attempt String, target String, n Int) as String
-  return attempt.setChar(n, '*') if attempt.isGreen(target, n)  else attempt
-end function
-
-function setTargetIfGreen(attempt String, target String, n Int) as String
-  return target.setChar(n, '.') if attempt.isGreen(target, n) else target
-end function
-
-function isAlreadyMarkedGreen(attempt String, n Int) as Bool
-  return attempt[n] is '*'
-end function
-
-function isYellow(attempt String, target String, n Int) as Bool
-  return target.contains(attempt[n])
-end function
-
-function setAttemptIfYellow(attempt String, target String, n Int) as String
-  return attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
-end function
-
-function setTargetIfYellow(attempt String, target String, n Int) as String
-  return target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
-end function
-
-constant letterPositions set to {0,1,2,3,4}
-
-function evaluateGreens(attempt String, target String) as (String, String)
-  return letterPositions.reduce((attempt, target), lambda a, x  -> (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
-end function
-
-function evaluateYellows(attempt String, target String) as (String, String)
-  return letterPositions.reduce((attempt, target),lambda a, x -> (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
-end function
-
-function markAttempt(attempt String, target String) as String
-  var (attemptAfterGreens, targetAfterGreens) set to evaluateGreens(attempt, target)
-  return attemptAfterGreens.evaluateYellows(targetAfterGreens).first()
-end function
-
-function possibleAnswersAfterAttempt(prior Iter<of String>, attempt String, mark String) as Iter<of String>
-  return prior.filter(lambda w -> markAttempt(attempt, w) is mark)
-end function
-
-function wordCountRemainingAfterAttempt(possibleAnswers Iter<of String>, attempt String) as WordCount
-  var groups set to possibleAnswers.groupBy(lambda w -> markAttempt(attempt, w))
-  return new WordCount(attempt, groups.maxBy(lambda g -> g.members.count()).members.count())
-end function
-
-function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<of String>) as Iter<of WordCount>
-  return possAttempts.asParallel().map(lambda w -> wordCountRemainingAfterAttempt(possAnswers, w))
-end function
-
-function betterOf(wc1 WordCount, wc2 WordCount, possAnswers Iter<of String>) as WordCount
-  var isBetter set to wc2.count < wc1.count
-  var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
-  return wc2  if isBetter or isEqualAndPossAnswer  else wc1
-end function
-
-function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String
-  var wordCounts set to allRemainingWordCounts(possAnswers, possAttempts)
-  return wordCounts.reduce(wordCounts.head(),lambda bestSoFar, newWord ->  betterOf(bestSoFar, newWord, possAnswers)).word
-end function
-
-immutable class WordCount
-  constructor(word String, count Int)
-    set property.word to word
-    set property.count to count
-  end constructor
-
-  property word String
-
-  property count Int
-
-  function asString() as String
-    return "{word}, {count}"
-  end function
-
-end class
-`;
-    var source = new CodeSourceFromString(code);
-		const fl = new FileImpl();
-		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
 });

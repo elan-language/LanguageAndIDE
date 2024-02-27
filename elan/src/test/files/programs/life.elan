@@ -1,0 +1,77 @@
+﻿# e5728bf08c5fd0242321297b7d1252d8ed0b3102c0504b445f06b56cd466bcfa Elan v0.1 valid
+
+main
+  var cm set to new CharMap()
+  var g set to exampleCells
+  while true
+    call drawGrid(cm, g)
+    set g to nextGeneration(g)
+  end while
+end main
+
+procedure drawGrid(cm CharMap, grid List<of Bool>)
+  # should be re-done using buffered char map to reduce flickering.
+  for row from 0 to 19 step 1
+    for col from 0 to 19 step 1
+      var cell set to grid[col * 20 + row]
+      var colour set to Colour.white  if cell  else Colour.black
+      call cm.putBlockWithColour((col * 2), row, colour)
+      call cm.putBlockWithColour((col * 2 + 1), row, colour)
+      # because square block is 2 chars wide
+    end for
+  end for
+end procedure
+
+function north(c Int) as Int
+  return c - 20 if c > 19 else   c + 380
+end function
+
+function south(c Int) as Int
+  return c + 20 if c < 380 else c - 380
+end function
+
+function east(c Int) as Int
+  return c + 1 if c mod 20 < 19 else c - 19
+end function
+
+function west(c Int) as Int
+  return c - 1 if c mod 20 > 0 else c + 19
+end function
+
+function northEast(c Int) as Int
+  return north(east(c))
+end function
+
+function southEast(c Int) as Int
+  return south(east(c))
+end function
+
+function northWest(c Int) as Int
+  return north(west(c))
+end function
+
+function southWest(c Int) as Int
+  return south(west(c))
+end function
+
+function neighbourCells(c Int) as List<of Int>
+  return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
+end function
+
+function liveNeighbours(cells List<of Bool>, c Int) as Int
+  return neighbourCells(c).filter(lambda i -> cells[i]).count()
+end function
+
+function willLive(currentlyAlive Bool, liveNeighbours Int) as Bool
+  return liveNeighbours > 1 and liveNeighbours < 4 if currentlyAlive  else liveNeighbours is 3
+end function
+
+function nextCellValue(cells List<of Bool>, c Int) as Bool
+  return willLive(cells[c], liveNeighbours(cells, c))
+end function
+
+function nextGeneration(cells List<of Bool>) as List<of Bool>
+  return integers(0, cells.length()-1).map(lambda n -> nextCellValue(cells, n)).asList()
+end function
+
+constant exampleCells set to {false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false}

@@ -1,0 +1,16 @@
+# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    var d set to 1789
+    print roman(d)
+end main
+
+function roman(d Int) as String
+   var ds set to d.asString()
+   var rm set to ""
+   for i from ds.length() -1 to 0 step -1
+		set rm to symbols[i][ds[i].asInt()-48] + rm
+   end for
+   return rm
+end function
+
+constant symbols set to {{"","M","MM"},{"","C","CC","CCC","CD","D","DC","DCC","DCCC","CX"},{"","","XX","XXX","XL","L","LX","LXX","LXXX","XX"},{"","I","II","III","IV","V","VI","VII","VIII","IX"}}

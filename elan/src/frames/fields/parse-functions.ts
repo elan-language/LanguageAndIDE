@@ -94,7 +94,7 @@ export function simpleType(input: [ParseStatus, string]): [ParseStatus, string] 
 
 export function generic_opt(input: [ParseStatus, string]): [ParseStatus, string] {
     var open =  (input: [ParseStatus, string]) => genericString(input, "<of ");
-    var gen = (input: [ParseStatus, string]) => SEQ(input, [open, simpleType, close]);
+    var gen = (input: [ParseStatus, string]) => SEQ(input, [open, typeList, close]);
     var close =  (input: [ParseStatus, string]) => singleChar(input, ">");
     return optional(input, gen);
 }
@@ -281,7 +281,6 @@ export function scopeQualifier_opt(input: [ParseStatus, string]): [ParseStatus, 
     } else {
        return  input;
     }
-
 }
 
 export function index_opt(input: [ParseStatus, string]): [ParseStatus, string] {

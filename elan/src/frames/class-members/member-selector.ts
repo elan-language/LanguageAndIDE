@@ -15,6 +15,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         ["FunctionMethod", "function"],
         ["ProcedureMethod", "procedure"],
         ["Property", "property"],
+        ["Comment", "#"],
         ["PrivateProperty", "private"],
         ["AbstractProperty", "abstract property"],
         ["AbstractFunction", "abstract function"],
@@ -61,6 +62,9 @@ export class MemberSelector extends AbstractSelector implements Member  {
             }
             case "Property": {
                 return this.getClass().addPropertyBefore(this);
+            }
+            case "Comment": {
+                return this.getClass().addCommentBefore(this);
             }
             case "PrivateProperty": {
                 return this.getClass().addPropertyBefore(this);

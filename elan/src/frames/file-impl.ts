@@ -28,11 +28,15 @@ export class FileImpl implements File {
     private _globals: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
+    private ignoreHashOnParsing: boolean = false;
    
-    constructor() {
+    constructor(ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this._globals.push(new GlobalSelector(this));
+        if (ignoreHashOnParsing) {
+            this.ignoreHashOnParsing = ignoreHashOnParsing;
+        }
     }
 
     hasParent(): boolean {
@@ -69,7 +73,6 @@ export class FileImpl implements File {
     }
 
     private getHash(body? : string): string {
-        // normalize
         body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
         return hash(body);
     }
@@ -99,7 +102,6 @@ export class FileImpl implements File {
         const globals = this.renderGlobalsAsSource();
         return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
-
 
     public addGlobal(g: Frame) : void {
         this._globals.push(g);
@@ -249,7 +251,7 @@ export class FileImpl implements File {
                 }
             }
         } catch (e) {
-            this.parseError = `Code cannot be parsed: ${e instanceof Error ? e.message : e}`;
+            this.parseError = `Code cannot be parsed at ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }
     }
 
@@ -259,7 +261,7 @@ export class FileImpl implements File {
     }
 
     validateHeader(code: string) {
-        if (code !== "") {
+        if (!this.ignoreHashOnParsing && code !== "") {
             const eol = code.indexOf("\n");
             const header = code.substring(0, eol > 0 ? eol : undefined);
             const tokens = header.split(" ");

@@ -1,0 +1,44 @@
+﻿test sumX
+    assert calcsumX(empty) is 0.0
+    assert calcSumX(l1) is 12.1
+end test 
+
+test sumY
+    assert calcSumY(empty) is 0.0
+    assert calcSumY(l1) is 15.52
+end test 
+
+test sumXsq
+    assert calcsumXsq(empty) is  0.0
+    assert calcsumXsq(l1) is 74.4866
+end test 
+
+test sumXY
+    assert calcSumXY(empty) is 0.0
+    assert calcSumXY(l1) is 90.66
+end test 
+
+test calcA
+    var expected set to 0.76633595414913458
+    var actual set to calcA(SumX(l1), calcSumXsq(l1), calcSumY(l1), calcSumXY(l1), l1.length())
+    assert actual is expected
+end test 
+
+test calcB
+    var expected set to 1.0926439783101325
+    var actual set to calcB(SumX(l1), calcSumXsq(l1), calcSumY(l1), calcSumXY(l1), l1.length())
+    assert actual is expected
+end test 
+
+test bestFitFromSummaryTerms
+    var actual set to bestFitFromSummaryTerms(calcSumX(l1), calcSumXsq(l1), calcSumY(l1), calcSumXY(l1), l1.length())
+    var expected set to (0.76633595414913458, 1.0926439783101325)
+    assert actual is expected
+end test 
+
+test bestFitFromPoints
+    assert bestFitFromPoints(l1) is (0.76633595414913458, 1.0926439783101325)
+end test 
+
+constant empty set to new List<of (Float, Float)>()
+constant l1 set to {(0.71, 1.12), (3.56, 5.36), (7.83, 9.04)}

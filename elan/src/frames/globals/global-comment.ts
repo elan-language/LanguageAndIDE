@@ -1,4 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
 import { PlainText } from "../fields/plain_text";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
@@ -36,5 +37,12 @@ export class GlobalComment extends AbstractFrame {
 
     renderAsSource(): string {
         return `# ${this.text.renderAsSource()}`;
+    }
+
+    parseFrom(source: CodeSource): void {
+        source.removeIndent();
+        source.remove("# ");
+        this.text.parseFrom(source);
+        source.removeNewLine();
     }
 } 

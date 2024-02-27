@@ -149,6 +149,12 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
 
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float, Float)>"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float, Float)"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float>"]), [ParseStatus.incomplete,  ">"]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point, Point>"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point, Point"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point,>"]), [ParseStatus.incomplete,  ">"]);
 	}); 
 
 	test('parse functions - sp', () => {
