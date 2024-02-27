@@ -92,13 +92,16 @@ export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: strin
     }
 }
 
-export async function assertSourceFileParses(done: Mocha.Done, sourceFile: string) {
+export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl();
+    var fl = new FileImpl(true);
     fl.parseFrom(codeSource);
+    if (fl.parseError) {
+        throw new Error(fl.parseError);
+    }
     const actualSource = fl.renderAsSource().replaceAll("\r", "");
     const expectedSource = sourceDoc.getText().replaceAll("\r", "");
     try {

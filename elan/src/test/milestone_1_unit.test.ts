@@ -129,7 +129,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var c = new Class(f);		
 		var s = new MemberSelector(c);
 		var help = s.getHelp();
-		assert.equal(help, " function procedure property");
+		assert.equal(help, " function procedure property #");
 		s.processKey(key('p'));
 		help = s.getHelp();
 		assert.equal(help, " procedure property");

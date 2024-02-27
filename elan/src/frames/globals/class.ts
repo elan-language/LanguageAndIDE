@@ -16,6 +16,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractFunction as AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
+import { CommentStatement } from "../statements/comment-statement";
 
 export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
@@ -181,6 +182,12 @@ end class\r\n`;
     }
     addAbstractFunctionBefore(member: Frame): Frame {
         var p = new AbstractFunction(this);
+        this.addMemberBefore(p, member);
+        p.select(true, false);
+        return p;
+    }
+    addCommentBefore(member: Frame): Frame {
+        var p = new CommentStatement(this);
         this.addMemberBefore(p, member);
         p.select(true, false);
         return p;

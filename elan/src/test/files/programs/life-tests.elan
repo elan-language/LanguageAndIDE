@@ -1,0 +1,143 @@
+﻿test north_tests
+    assert north(25) is 5
+    assert north(19) is 399
+    assert north(0) is 380
+    assert north(20) is 0
+end test
+
+test east_tests
+    assert east(25) is 26
+    assert east(19) is 0
+    assert east(20) is 21
+    assert east(399) is 380
+end test
+
+test south_tests
+    assert south(25) is 45
+    assert south(19) is 39
+    assert south(20) is 40
+    assert south(380) is 0
+    assert south(399) is 19
+end test
+
+test west_tests
+    assert west(25) is 24
+    assert west(19) is 18
+    assert west(0) is 19
+    assert west(380) is 399
+end test
+
+test northEast_tests
+    assert northEast(25) is 6
+    assert northEast(0) is 381
+    assert northEast(19) is 380
+    assert northEast(380) is 361
+    assert northEast(399) is 360
+end test
+
+test southEast_tests
+    assert southEast(25) is 46
+    assert southEast(0) is 21
+    assert southEast(19) is 20
+    assert southEast(380) is 1
+    assert southEast(399) is 0
+end test
+
+test southWest_tests
+    assert southWest(25) is 44
+    assert southWest(0) is 39
+    assert southWest(19) is 38
+    assert southWest(380) is 19
+    assert southWest(399) is 18
+end test
+
+test northWest_tests
+    assert northWest(25) is 4
+    assert northWest(0) is 399
+    assert northWest(19) is 398
+    assert northWest(380) is 379
+    assert northWest(399) is 378
+end test
+
+procedure neighbourCells(cell Int, expected List<of Int>)
+    var n set to neighbourCells(cell)
+    assert n.Count is 8
+    each val in expected
+        assert n.contains(val) is true
+    end each
+end procedure
+
+test neighbourCells_tests
+    testNeighbourCells(25, {4, 5, 6, 24, 26, 44, 45, 46})
+    testNeighbourCells(10, {389, 390, 391, 9, 11, 29, 30, 31})
+    testNeighbourCells(390, {369, 370, 371, 389, 391, 9, 10, 11})
+    testNeighbourCells(60, {59, 40, 41, 79, 61, 99, 80, 81})
+    testNeighbourCells(79, {58, 59, 40, 78, 60, 98, 99, 80})
+
+    testNeighbourCells(0, {399, 380, 381, 19, 1, 19, 20, 21})
+    testNeighbourCells(19, {398, 399, 0, 18, 20, 38, 39, 20})
+    testNeighbourCells(399, {378, 379, 360, 398, 380, 18, 19, 0})
+    testNeighbourCells(380, {379, 360, 361, 399, 381, 19, 0, 1})
+end test
+
+procedure Sub testLiveNeighbourCount(p1 Int, expected Int)
+    var actual set to liveNeighbours(exampleCells, p1)
+    assert actual is expected
+end procedure
+
+test liveNeighbourCount_tests
+    testLiveNeighbourCount(0, 5)
+    testLiveNeighbourCount(19, 4)
+    testLiveNeighbourCount(30, 2)
+    testLiveNeighbourCount(44, 3)
+    testLiveNeighbourCount(59, 5)
+    testLiveNeighbourCount(60, 3)
+    testLiveNeighbourCount(399, 3)
+end test
+
+procedure testWillLive(alive Bool, neighbours Int, expected Bool)
+    var actual set to willLive(alive, neighbours)
+   assert actual is expected
+end procedure
+
+test willLive_tests
+    testWillLive(false, 0, false)
+    testWillLive(false, 1, false)
+    testWillLive(false, 2, false)
+    testWillLive(false, 3, true)
+    testWillLive(false, 4, false)
+    testWillLive(false, 5, false)
+    testWillLive(false, 6, false)
+    testWillLive(false, 7, false)
+    testWillLive(false, 8, false)
+    testWillLive(true, 0, false)
+    testWillLive(true, 1, false)
+    testWillLive(true, 2, true)
+    testWillLive(true, 3, true)
+    testWillLive(true, 4, false)
+    testWillLive(true, 5, false)
+    testWillLive(true, 6, false)
+    testWillLive(true, 7, false)
+    testWillLive(true, 8, false)
+end test
+
+procedure testNextCellValue(c Int, expected Bool)
+    var actual set to NextCellValue(exampleCells, c)
+    assert actual is expected
+end procedure
+
+test nextCellValue_tests
+    testNextCellValue(0, false)
+    testNextCellValue(19, false)
+    testNextCellValue(30, true)
+    testNextCellValue(44, true)
+    testNextCellValue(59, false)
+    testNextCellValue(60, true)
+    testNextCellValue(399, true)
+end test
+
+test nextGeneration_tests
+    var expected set to {false, true, false, true, true, true, true, false, true, false, true, true, true, false, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, true, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, false, false, true, false, true, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, false, false, true, false, true, false, true, false, true, false, false, false, false, false, false, false, true, true, true, true, true, false, true, false, true, false, true, true, false, true, false, true, false, true, true, false, false, false, true, false, true, false, false, false, true, false, false, false, false, true, false, true, false, false, true, false, false, false, true, false, true, false, true, true, false, true, false, false, true, true, false, true, false, false, false, false, false, false, true, false, true, true, false, false, true, false, false, true, true, false, true, true, false, false, false, true, true, false, true, true, false, false, false, true, false, false, false, false, false, true, false, true, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, true, false, false, true, false, true, false, true, false, false, true, false, true, true, false, false, false, false, true, false, true, true, true, false, false, true, true, false, true, false, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, true, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, true, true, false, false, false, true, false, false, false, true, true, false, false, false, true, false, true, false, true, false, false, false, true, true, true, true}
+    var actual set to nextGeneration(exampleCells)
+    assert actual is expected
+end test

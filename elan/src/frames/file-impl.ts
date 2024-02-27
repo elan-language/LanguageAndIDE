@@ -28,11 +28,15 @@ export class FileImpl implements File {
     private _globals: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
+    private _noHash: boolean = false;
    
-    constructor() {
+    constructor(noHash?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this._globals.push(new GlobalSelector(this));
+        if (noHash) {
+            this._noHash = noHash;
+        }
     }
 
     hasParent(): boolean {
@@ -69,12 +73,14 @@ export class FileImpl implements File {
     }
 
     private getHash(body? : string): string {
-        // normalize
-        body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
-
-        const hash = createSha256Hash();
-        hash.update(body);
-        return hash.digest('hex');
+        if (this._noHash) {
+            return "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+        } else {
+            body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
+            const hash = createSha256Hash();
+            hash.update(body);
+            return hash.digest('hex');
+        }
     }
 
     private getVersion() {
@@ -252,7 +258,7 @@ export class FileImpl implements File {
                 }
             }
         } catch (e) {
-            this.parseError = `Code cannot be parsed: ${e instanceof Error ? e.message : e}`;
+            this.parseError = `Code cannot be parsed at ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }
     }
 

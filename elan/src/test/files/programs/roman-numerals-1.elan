@@ -1,0 +1,58 @@
+# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    var d set to 1789
+    var result set to ""
+    while d >= 1000            
+        set d to d - 1000
+        set result to result + "M"
+    end while
+    while d >= 900           
+        set d to d - 900
+        set result to result + "CM"
+    end while
+    while d >= 500            
+        set d to d - 500
+        set result to result + "D"
+    end while
+    while d >= 400           
+        set d to d - 400
+        set result to result + "CD"
+    end while
+    while d >= 100            
+        set d to d - 100
+        set result to result + "C"
+    end while
+    while d >= 90           
+        set d to d - 90
+        set result to result + "XC"
+    end while
+    while d >= 50            
+        set d to d - 50
+        set result to result + "L"
+    end while
+    while d >= 40            
+        set d to d - 40
+        set result to result + "XL"
+    end while
+    while d >= 10           
+        set d to d - 10
+        set result to result + "X"
+    end while
+    while d >= 9          
+        set d to d - 9
+        set result to result + "IX"
+    end while
+    while d >= 5
+        set d to d - 5
+        set result to result + "V"
+    end while
+    while d >= 4
+        set d to d - 4
+        set result to result + "IV"
+    end while
+    while d >= 1
+        set d to d - 1
+        set result to result + "I"
+    end while
+    print result
+end main
