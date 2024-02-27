@@ -1,17 +1,16 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
-import { PlainText } from "../fields/plain_text";
+import { Comment } from "../fields/comment";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 
 export class GlobalComment extends AbstractFrame {
     isGlobal = true;
-    public text: PlainText;
+    public text: Comment;
 
     constructor(parent: Parent) {
         super(parent);
-        this.text = new PlainText(this);
-        this.text.setPlaceholder("comment");
+        this.text = new Comment(this);
     }
 
     getFields(): Field[] {
@@ -28,7 +27,7 @@ export class GlobalComment extends AbstractFrame {
     }
 
     renderAsHtml(): string {
-        return `<comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"># ${this.text.renderAsHtml()}</comment>`;
+        return `<global><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></comment></global>`;
     }
 
     indent(): string {

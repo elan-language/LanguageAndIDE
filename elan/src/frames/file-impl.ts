@@ -217,7 +217,9 @@ export class FileImpl implements File {
     }
     addGlobalCommentBefore(g: Frame): Frame {
         var m = new GlobalComment(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        this.addGlobalBeforeAndSelect(m,g);
+        m.text.select();
+        return m;
     }
     addConstantBefore(g: Frame): Frame {
         var m = new Constant(this);
