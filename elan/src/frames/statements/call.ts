@@ -33,7 +33,7 @@ export class Call extends AbstractFrame {
         return [this.proc, this.args];
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.proc.select();
         return true;
     }

@@ -204,7 +204,7 @@ export abstract class AbstractFrame implements Frame {
         this.collapsed = false;
     }
 
-    selectFirstField(): boolean {
+    selectFirstFieldOrChildIfNone(): boolean {
         return false;
     }
 

@@ -35,7 +35,7 @@ export class StatementSelector extends AbstractSelector  {
         this.if, this.print, this.repeat, this.set, this.switch, this.throw, this.try, this.var, this.while, this.comment, this.return];
 
     addFrame(frameType: string): Frame {
-        return this.factory.addFrameBefore(frameType, this);
+        return this.factory.addFrameBeforeAndSelectFirstField(frameType, this);
     }
 
     validForEditorWithin(frameType: string): boolean {

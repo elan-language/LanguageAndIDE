@@ -25,6 +25,7 @@ input, input:focus , input:active{
     outline: none;
     padding: 0px;
     margin: 0px;
+    caret-color: black;
 }
 
 

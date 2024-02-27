@@ -21,7 +21,7 @@ export class GlobalComment extends AbstractFrame {
         return 'com';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.text.select();
         return true;
     }

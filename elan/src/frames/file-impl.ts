@@ -200,41 +200,39 @@ export class FileImpl implements File {
 
     addMainBefore(g: Frame): Frame {
         var m = new MainFrame(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addFunctionBefore(g: Frame): Frame {
         var m = new Function(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addProcedureBefore(g: Frame): Frame {
         var m = new Procedure(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addEnumBefore(g: Frame): Frame {
         var m = new Enum(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addClassBefore(g: Frame): Frame {
         var m = new Class(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addGlobalCommentBefore(g: Frame): Frame {
         var m = new GlobalComment(this);
-        this.addGlobalBeforeAndSelect(m,g);
-        m.text.select();
-        return m;
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addConstantBefore(g: Frame): Frame {
         var m = new Constant(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
     addTestBefore(g: Frame): Frame {
         var m = new Test(this);
-        return this.addGlobalBeforeAndSelect(m,g);
+        return this.addGlobalBeforeAndSelectFirstField(m,g);
     }
-    private addGlobalBeforeAndSelect(g: Frame, before: Frame): Frame {
+    private addGlobalBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
         this.addGlobalBefore(g, before);
-        g.select(true, false);
+        g.selectFirstFieldOrChildIfNone();
         return g;
     }
 

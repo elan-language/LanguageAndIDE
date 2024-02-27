@@ -26,7 +26,7 @@ export class Assert extends AbstractFrame {
         return [this.expected];
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.expected.select();
         return true;
     }

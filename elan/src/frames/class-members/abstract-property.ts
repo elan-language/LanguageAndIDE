@@ -27,7 +27,7 @@ export class AbstractProperty extends AbstractFrame implements Member {
         return 'prop';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.name.select();
         return true;
     }

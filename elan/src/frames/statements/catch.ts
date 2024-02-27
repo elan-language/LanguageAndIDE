@@ -23,7 +23,7 @@ export class Catch extends FrameWithStatements {
         return 'catch';
     }
 
-    public override selectFirstField(): boolean {
+    public override selectFirstFieldOrChildIfNone(): boolean {
         this.variable.select();
         return true;
     }
