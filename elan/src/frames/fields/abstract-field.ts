@@ -19,6 +19,7 @@ export abstract class AbstractField implements Selectable, Field {
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
     private status: ParseStatus = ParseStatus.incomplete;
+    private cursorPos: number = 0; //Relative to LH end of text
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -170,14 +171,10 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
             var c = this.escapeAngleBrackets(this.text);
-             /* if (this.useHtmlTags) {
-                c = this.tagTypeNames(c);
-                c = this.tagKeywords(c);
-            } */
             return c;
         } 
     }
