@@ -85,26 +85,22 @@ export abstract class AbstractSelector extends AbstractFrame {
         return `${this.indent()}`;
     }
 
-    processKey(keyEvent: KeyEvent): void {
-        var char = keyEvent.key;
-        if (char === "Backspace") {
+    processKey(e: KeyEvent): void {
+        var key = e.key;
+        if (key === "Backspace") {
             this.text = this.text.substring(0,this.text.length-1);
-            return;
         } 
-        if (!char || char.length > 1) { //TODO: Make any exception for any specific non-printing chars?
-            return;
-        }
-        var options = this.optionsMatchingInput(this.text + char);
-        if (options.length > 1 ) {
-            this.text += this.commonStartText(this.text+ char);
-        } else if (options.length === 1) {
-            var typeToAdd = options[0][0];
-            this.addFrame(typeToAdd);
-            this.text = "";
+        else if (!key || key.length == 1) { //TODO: Make any exception for any specific non-printing chars?
+            var options = this.optionsMatchingInput(this.text + key);
+            if (options.length > 1 ) {
+                this.text += this.commonStartText(this.text+ key);
+            } else if (options.length === 1) {
+                var typeToAdd = options[0][0];
+                this.addFrame(typeToAdd);
+                this.text = "";
+            }
         } else {
-            return; //key not valid so not added
-        }
+            super.processKey(e);
+        }   
     }
-
-
 } 

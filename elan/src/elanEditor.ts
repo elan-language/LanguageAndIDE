@@ -184,7 +184,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleKey(e: editorEvent) {
 		switch (e.target) {
 			case 'frame': {
-				this.handleFrameKey(e);
+				this.handleModelKey(e);
 				break;
 			}
 			case 'window': {
@@ -194,20 +194,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		}
 	}
 
-	private ArrowHandler(e: editorEvent, fn: (f: Frame) => Frame) {
-		const s = this.file?.getById(e.id!);
-		if (isFrame(s)) {
-			if (e.modKey.shift) {
-				s.select(false, true);
-				fn(s).select(true, true);
-			}
-			else {
-				fn(s).select(true, false);
-			}
-		}
-	}
-
-	private handleFrameKey(e: editorEvent) {
+    private handleModelKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Shift':
 			case 'Control':
@@ -217,57 +204,9 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				ss.forEach(s => s.deselect());
 				break;
 			}
-			case 'ArrowUp': {
-				this.ArrowHandler(e, f => f.getPreviousFrame());
-				break;
-			}
-			case 'ArrowDown': {
-				this.ArrowHandler(e, f => f.getNextFrame());
-				break;
-			}
-			case 'ArrowLeft': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					const p = s.getParent();
-					if (isFrame(p)) {
-						p.select(true, false);
-					}
-				}
-				break;
-			}
-			case 'ArrowRight': {
-				const s = this.file?.getById(e.id!);
-				if (isParent(s)) {
-					const p = s.getFirstChild();
-					p.select(true, false);
-				}
-				break;
-			}
-			case 'Home': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					s.getFirstPeerFrame().select(true, false);
-				}
-				break;
-			}
-			case 'End': {
-				const s = this.file?.getById(e.id!);
-				if (isFrame(s)) {
-					s.getLastPeerFrame().select(true, false);
-				}
-				break;
-			}
-			case 'o': {
-				if (e.modKey.control) {
-					const s = this.file?.getById(e.id!) as Collapsible;
-					s.expandCollapse();
-					break;
-				}
-			}
 			case 'O': {
-				if (e.modKey.control) {
+				if(e.modKey.control) {
 					this.file?.expandCollapseAll();
-					break;
 				}
 			}
 			default:
@@ -279,6 +218,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private handleWindowKey(e: editorEvent) {
 		switch (e.key) {
 			case 'Home': {
+				const g = this.file?.getFirstChild();
+				g?.select(true, false);
+				break;
+			}
+			case 'Enter': {
 				const g = this.file?.getFirstChild();
 				g?.select(true, false);
 				break;

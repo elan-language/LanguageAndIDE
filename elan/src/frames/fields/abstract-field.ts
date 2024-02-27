@@ -4,7 +4,6 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
 import {CodeSource } from "../code-source";
-import { optional } from "./parse-functions";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -81,8 +80,8 @@ export abstract class AbstractField implements Selectable, Field {
         return status;
     }
 
-    processKey(keyEvent: KeyEvent): void {
-        var key = keyEvent.key;
+    processKey(e: KeyEvent): void {
+        var key = e.key;
         if (key?.length === 1) {
             this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
             this.cursorPos ++;
@@ -91,7 +90,7 @@ export abstract class AbstractField implements Selectable, Field {
         }
         switch (key) {
           case "Tab": {
-            if (keyEvent.shift) {
+            if (e.shift) {
                 this.holder.selectPreviousField();
             } else {
                 this.holder.selectNextField();

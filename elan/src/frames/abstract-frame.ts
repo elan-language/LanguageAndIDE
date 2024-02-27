@@ -1,6 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { singleIndent } from "./helpers";
+import { isCollapsible, isFrame, isParent, singleIndent } from "./helpers";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
@@ -84,11 +84,50 @@ export abstract class AbstractFrame implements Frame {
         }
     }
 
-    processKey(keyEvent: KeyEvent): void {
-        var key = keyEvent.key;
+    processKey(e: KeyEvent): void {
+        var key = e.key;
         switch (key) {
+          case "ArrowUp": {
+            var pf  = this.getPreviousFrame();
+            this.selectAsAppropriate(e, pf);
+            break;
+          }
+          case "ArrowDown": {
+            var nf  = this.getNextFrame();
+            this.selectAsAppropriate(e, nf);
+            break;
+          }
+          case "ArrowLeft": {
+            var pt = this.getParent();
+            if (isFrame(pt)) {
+                pt.select(true, false);
+            }
+            break;
+          }
+          case "ArrowRight": {
+            if (isParent(this)) {
+                this.getFirstChild().select(true, false);
+            }
+            break;
+          }
+          case "Home": {
+            this.getFirstPeerFrame().select(true, false);
+            break;
+          }
+          case "End": {
+            this.getLastPeerFrame().select(true, false);
+            break;
+          }
+          case "o": {
+            if (e.control) {
+                if (isCollapsible(this)) {
+                    this.expandCollapse();
+                }
+            }
+            break;
+          }
           case "Tab": {
-            if (keyEvent.shift) {
+            if (e.shift) {
                 this.selectPreviousField();
             } else {
                 this.selectNextField();
@@ -99,6 +138,17 @@ export abstract class AbstractFrame implements Frame {
             this.selectPreviousField();
             break;
           }
+          
+        }
+    }
+
+    private selectAsAppropriate(e: KeyEvent, s: Frame) {
+        if (e.shift) {
+            this.select(false, true);
+            s.select(true, true);
+        }
+        else {
+            s.select(true, false);
         }
     }
 
