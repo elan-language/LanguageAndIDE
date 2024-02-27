@@ -85,16 +85,21 @@ export abstract class AbstractFrame implements Frame {
     }
 
     processKey(keyEvent: KeyEvent): void {
-        var char = keyEvent.key;
-        if (char === "Tab") {
+        var key = keyEvent.key;
+        switch (key) {
+          case "Tab": {
             if (keyEvent.shift) {
                 this.selectPreviousField();
             } else {
                 this.selectNextField();
             }
-            return;
-        } 
-        //Ignore all others
+            break;
+          } 
+          case "Enter": {
+            this.selectPreviousField();
+            break;
+          }
+        }
     }
 
     getMap(): Map<string, Selectable> {

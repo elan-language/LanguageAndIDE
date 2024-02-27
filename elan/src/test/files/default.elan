@@ -1,4 +1,4 @@
-# c9b0eb6f7c06fcf40953c29cf639abd6fa3d5fc00d880212bbd4dc67e291c206 Elan v0.1 valid
+# e57d52bba66a9ae3059fff46b875403658b2a395119f75e68b755372bde83ea5 Elan v0.1 valid
 
 main
 
@@ -10,3 +10,7 @@ class Foo
   end constructor
 
 end class
+
+procedure fooddhj()
+
+end procedure

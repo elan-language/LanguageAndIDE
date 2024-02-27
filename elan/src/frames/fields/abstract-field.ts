@@ -82,45 +82,63 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     processKey(keyEvent: KeyEvent): void {
-        var char = keyEvent.key;
-        if (char?.length === 1) {
-            this.text += char;
-            this.parseCurrentText(); 
+        var key = keyEvent.key;
+        if (key?.length === 1) {
+            this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
+            this.cursorPos ++;
+            this.parseCurrentText();
             return;
         }
-        if (char === "Tab") {
+        switch (key) {
+          case "Tab": {
             if (keyEvent.shift) {
                 this.holder.selectPreviousField();
             } else {
                 this.holder.selectNextField();
+            } 
+            break;
+          } 
+          case "Enter": {
+            this.holder.selectNextField();
+            break;
+          }
+          case "ArrowRight": {
+            if (this.cursorPos === this.text.length) {
+                this.holder.selectNextField();
+            } else {
+                this.cursorPos ++;
             }
-            return;
-        } 
-        if (char === "Backspace") {
-            this.text = this.text.substring(0,this.text.length-1);
-            this.parseCurrentText();
-            return;
-        } 
-        if (char === "ArrowDown") {
-           this.holder.getNextFrame().select(true, false);
-            return;
-        } 
-        if (char === "ArrowUp") {
-            this.holder.getPreviousFrame().select(true, false);
-            return;
-        } 
-        if (char === "Escape") {
+            break;
+          } 
+          case "ArrowLeft": {
+            if (this.cursorPos === 0) {
+                this.holder.selectPreviousField();
+            } else {
+                this.cursorPos --;
+            }
+            break;
+          } 
+          case "Home": {
+            this.cursorPos === 0;
+            break;
+          } 
+          case "End": {
+            this.cursorPos === this.text.length;
+            break;
+          } 
+          case "Backspace": {
+            if (this.cursorPos > 0) {
+                this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                this.cursorPos --;
+                this.parseCurrentText();
+            }
+            break;
+          } 
+          case "Escape": {
             this.holder.select(true, false);
-            return;
-        } 
-        if (char === "ArrowLeft") {
-            //TODO
-            return;
-        } 
-        if (char === "ArrowRight") {
-            //TODO
-            return;
-        } 
+            break;
+          } 
+        }
     }
     
     isFocused(): boolean {
