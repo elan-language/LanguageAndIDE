@@ -125,9 +125,9 @@ function updateContent(text: string) {
 		});
 
 		const form = document.querySelector('form') as Element;
-		form.addEventListener('submit', handleSubmit);
+		form.addEventListener('submit', handleUpload);
 
-		function handleSubmit(event : Event) {
+		function handleUpload(event : Event) {
 			const form = event.currentTarget! as any;
             const elanFile = form[0].files[0];
 
@@ -140,6 +140,24 @@ function updateContent(text: string) {
 			});
 			reader.readAsText(elanFile);
 		  
+			event.preventDefault();
+		}
+
+		const download = document.querySelector('#download') as Element;
+		download.addEventListener('click', handleDownload);
+
+		function handleDownload(event : Event) {
+			const code = file.renderAsSource();
+			const blob = new Blob([code], { type : 'plain/text' });
+
+			const aElement = document.createElement('a');
+			aElement.setAttribute('download', "code.elan");
+			const href = URL.createObjectURL(blob);
+			aElement.href = href;
+			aElement.setAttribute('target', '_blank');
+			aElement.click();
+			URL.revokeObjectURL(href);
+
 			event.preventDefault();
 		}
 	}
