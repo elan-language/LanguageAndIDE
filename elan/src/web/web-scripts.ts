@@ -2,13 +2,10 @@ import { editorEvent, handleClick, handleDblClick, handleKey } from "../editorHa
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { File } from "../frames/interfaces/file";
 
-var file: File;
-
 const codeContainer = document.querySelector('.elan-code');
-
-file = new FileImpl((s) => "", true);
-
+var file : File = new FileImpl((s) => "", true);
 const hash = window.location.hash;
+var doOnce = true;
 
 if (hash) {
 	const initialFile = hash.substring(1);
@@ -29,7 +26,45 @@ else {
 	updateContent(file.renderAsHtml());
 }
 
-var doOnce = true;
+const upload = document.querySelector('#upload') as Element;
+upload.addEventListener('click', handleUpload);
+
+function handleUpload(event: Event) {
+	const fileSelector = document.querySelector('#file-select') as any;
+	const elanFile = fileSelector.files[0];
+
+	if (elanFile) {
+		const reader = new FileReader();
+		reader.addEventListener('load', (event: any) => {
+			const rawCode = event.target.result;
+			const code = new CodeSourceFromString(rawCode);
+			file = new FileImpl((s) => "", true);
+			file.parseFrom(code);
+			updateContent(file.renderAsHtml());
+		});
+		reader.readAsText(elanFile);
+	}
+
+	event.preventDefault();
+}
+
+const download = document.querySelector('#download') as Element;
+download.addEventListener('click', handleDownload);
+
+function handleDownload(event: Event) {
+	const code = file.renderAsSource();
+	const blob = new Blob([code], { type: 'plain/text' });
+
+	const aElement = document.createElement('a');
+	aElement.setAttribute('download', "code.elan");
+	const href = URL.createObjectURL(blob);
+	aElement.href = href;
+	aElement.setAttribute('target', '_blank');
+	aElement.click();
+	URL.revokeObjectURL(href);
+
+	event.preventDefault();
+}
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
 	return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
@@ -123,43 +158,6 @@ function updateContent(text: string) {
 			event.preventDefault();
 			event.stopPropagation();
 		});
-
-		const form = document.querySelector('form') as Element;
-		form.addEventListener('submit', handleUpload);
-
-		function handleUpload(event : Event) {
-			const form = event.currentTarget! as any;
-            const elanFile = form[0].files[0];
-
-			const reader = new FileReader();
-			reader.addEventListener('load', (event : any) => {
-				const rawCode = event.target.result;
-				const code = new CodeSourceFromString(rawCode);
-				file.parseFrom(code);
-				updateContent(file.renderAsHtml());
-			});
-			reader.readAsText(elanFile);
-		  
-			event.preventDefault();
-		}
-
-		const download = document.querySelector('#download') as Element;
-		download.addEventListener('click', handleDownload);
-
-		function handleDownload(event : Event) {
-			const code = file.renderAsSource();
-			const blob = new Blob([code], { type : 'plain/text' });
-
-			const aElement = document.createElement('a');
-			aElement.setAttribute('download', "code.elan");
-			const href = URL.createObjectURL(blob);
-			aElement.href = href;
-			aElement.setAttribute('target', '_blank');
-			aElement.click();
-			URL.revokeObjectURL(href);
-
-			event.preventDefault();
-		}
 	}
 
 	if (input) {
