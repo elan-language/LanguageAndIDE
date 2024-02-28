@@ -97,7 +97,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-web-editor": "cpr ./media/elanStyle.css ./web-editor/elanStyle.css -o && esbuild ./src/frames/file-impl.ts --bundle --format=esm --outfile=web-editor/web-editor.js",
+    "esbuild-web-editor": "cpr ./media/elanStyle.css ./web-editor/elanStyle.css -o && esbuild ./web-editor/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
@@ -106,8 +106,7 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test",
-    "web-editor-build": ""
+    "test": "vscode-test"
   },
   "dependencies": {
     "async-file": "2.0.2",
