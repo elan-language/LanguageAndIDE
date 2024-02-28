@@ -40,7 +40,7 @@ export class FileImpl implements File {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
-    
+
     getLastFieldOrSuitableFrame(): Selectable {
         return this._globals[0];
     }
@@ -267,7 +267,7 @@ export class FileImpl implements File {
     }
 
     validateHeader(code: string) {
-        if (!this.ignoreHashOnParsing && code !== "") {
+        if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
             const eol = code.indexOf("\n");
             const header = code.substring(0, eol > 0 ? eol : undefined);
             const tokens = header.split(" ");
@@ -282,5 +282,10 @@ export class FileImpl implements File {
                 throw new Error("Code does not match the hash in the file header");
             }
         }
+    }
+
+    private isEmpty(code: string): boolean {
+        var matches = code.match(/^[\s\r\n]*$/);
+        return matches !== null && matches.length > 0;
     }
 }
