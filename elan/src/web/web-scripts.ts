@@ -39,9 +39,11 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
  * Render the document
  */
 function updateContent(text: string) {
+	doOnce = doOnce === undefined || doOnce ? true : false;
+
 	codeContainer!.innerHTML = text;
 
-	const frames = document.querySelectorAll('[id]');
+	const frames = document.querySelectorAll('.elan-code [id]');
 
 	for (var frame of frames) {
 		const id = frame.id;
@@ -121,6 +123,25 @@ function updateContent(text: string) {
 			event.preventDefault();
 			event.stopPropagation();
 		});
+
+		const form = document.querySelector('form') as Element;
+		form.addEventListener('submit', handleSubmit);
+
+		function handleSubmit(event : Event) {
+			const form = event.currentTarget! as any;
+            const elanFile = form[0].files[0];
+
+			const reader = new FileReader();
+			reader.addEventListener('load', (event : any) => {
+				const rawCode = event.target.result;
+				const code = new CodeSourceFromString(rawCode);
+				file.parseFrom(code);
+				updateContent(file.renderAsHtml());
+			});
+			reader.readAsText(elanFile);
+		  
+			event.preventDefault();
+		}
 	}
 
 	if (input) {
