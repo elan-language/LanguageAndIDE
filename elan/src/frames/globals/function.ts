@@ -7,7 +7,6 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { Regexes } from "../fields/regexes";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -25,16 +24,16 @@ export class Function extends FrameWithStatements implements Parent {
         this.statements.push(new ReturnStatement(this));
     }
 
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this.getNoOfStatements() > 1; // return may be the only statement
+    }
+
     getFields(): Field[] {
         return [this.name, this.params, this.returnType];
     }
 
     getIdPrefix(): string {
         return 'func';
-    }
-
-    get returnStatement() {
-        return this.statements[this.statements.length -1] as ReturnStatement;
     }
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">

@@ -37,7 +37,13 @@ export class Class extends AbstractFrame implements Parent {
         this._members.push(new Constructor(this));
         this._members.push(new MemberSelector(this));
     }
-
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this._members.length > 2; //Constructor +
+    }
+    removeChild(child: Frame): void {
+        var i = this._members.indexOf(child);
+        this._members.splice(i,1);
+    }
     isAbstract(): boolean {
         return this.abstract;
     }

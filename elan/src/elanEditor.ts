@@ -26,8 +26,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 	/**
 	 * Called when our custom editor is opened.
-	 * 
-	 * 
 	 */
 	public async resolveCustomTextEditor(
 		document: vscode.TextDocument,
@@ -43,7 +41,8 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		if (this.currentFileUri !== document.uri || !this.file) {
 			this.file = new FileImpl(hash);
-			this.file.parseFrom(new CodeSourceFromString(document.getText()));
+			this.file.parseFrom(new CodeSourceFromString(document.getText()));   
+			this.file.deselectAll();
 			this.currentFileUri = document.uri;
 		}
 

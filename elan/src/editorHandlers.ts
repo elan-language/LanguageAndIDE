@@ -87,8 +87,7 @@ function handleModelKey(e: editorEvent, file: File) {
         case 'Control':
         case 'Alt': break; // consume
         case 'Escape': {
-            const ss = getAllSelected(file);
-            ss.forEach(s => s.deselect());
+            file.deselectAll();
             break;
         }
         case 'O': {

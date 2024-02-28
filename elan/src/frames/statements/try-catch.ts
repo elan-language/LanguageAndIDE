@@ -13,7 +13,10 @@ export class TryCatch extends FrameWithStatements  {
         super(parent);
         this.catch =new Catch(this);
         this.statements.push(this.catch);
-        this.statements.push(new StatementSelector(this));
+    }
+
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this.getNoOfStatements() > 2; //catch +
     }
 
     getFields(): Field[] {

@@ -19,6 +19,19 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         this.statements.push(new StatementSelector(this));
     }
 
+    protected getNoOfStatements(): number {
+        return this.statements.length;
+    }
+
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this.statements.length > 1;
+    }
+
+    removeChild(child: Frame): void {
+        var i = this.statements.indexOf(child);
+        this.statements.splice(i,1);
+    }
+
     getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
         var statementsStatus = this.statements.map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);

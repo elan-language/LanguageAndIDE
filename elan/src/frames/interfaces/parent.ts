@@ -1,3 +1,4 @@
+import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "./frame";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
@@ -5,15 +6,17 @@ import { StatementFactory } from "./statement-factory";
 export interface Parent {
     //External use
     isParent: boolean;
+
+    minimumNumberOfChildrenExceeded(): boolean;
     getFirstChild(): Frame; 
     getLastChild(): Frame;
     expand(): void;
     collapse(): void;
     
-    //Internal use
     getChildAfter(child: Frame): Frame;
     getChildBefore(child: Frame): Frame;
     getChildRange(first: Frame, last: Frame): Frame[];
+    removeChild(child: Frame): void;
 
     indent(): string;
 

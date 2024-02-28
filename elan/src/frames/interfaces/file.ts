@@ -38,4 +38,6 @@ export interface File extends Parent {
     containsMain(): boolean;
 
     parseError?: string;
+
+    deselectAll(): void;
 }

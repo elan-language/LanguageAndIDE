@@ -4,7 +4,6 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent} from "../interfaces/parent";
 import { Default } from "./default";
-import { StatementSelector } from "./statement-selector";
 
 export class Switch extends FrameWithStatements { 
     isStatement = true;
@@ -17,6 +16,11 @@ export class Switch extends FrameWithStatements {
         this.default = new Default(this);
         this.statements.push(this.default);
     }
+
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this.getNoOfStatements() > 2; //default +
+    }
+
     getFields(): Field[] {
         return [this.expr];
     }

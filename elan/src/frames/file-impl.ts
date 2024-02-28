@@ -41,6 +41,15 @@ export class FileImpl implements File {
         }
     }
 
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this._globals.length > 1;
+    }
+
+    removeChild(child: Frame): void {
+        var i = this._globals.indexOf(child);
+        this._globals.splice(i,1);
+    }
+
     getLastFieldOrSuitableFrame(): Selectable {
         return this._globals[0];
     }
@@ -187,12 +196,10 @@ export class FileImpl implements File {
         return ParseStatus[this.status()];
     }
 
-    deselectAll() {
-        for (const f of this._map.values()) {
-            if (f.isSelected()) {
-                f.deselect();
-            }
-        }
+    deselectAll(): void {
+        const v = this.getMap().values()!;
+        var selected =  [...v].filter(s => s.isSelected());
+        selected.forEach(s => s.deselect());
     }
 
     getMap(): Map<string, Selectable> {
