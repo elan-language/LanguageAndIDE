@@ -91,19 +91,19 @@ export abstract class AbstractField implements Selectable, Field {
         switch (key) {
           case "Tab": {
             if (e.shift) {
-                this.holder.selectPreviousField();
+                this.holder.selectFieldOrFrameBefore(this);
             } else {
-                this.holder.selectNextField();
+                this.holder.selectFieldOrFrameAfter(this);
             } 
             break;
           } 
           case "Enter": {
-            this.holder.selectNextField();
+            this.holder.selectFieldOrFrameAfter(this);
             break;
           }
           case "ArrowRight": {
             if (this.cursorPos === this.text.length) {
-                this.holder.selectNextField();
+                this.holder.selectFieldOrFrameAfter(this);
             } else {
                 this.cursorPos ++;
             }
@@ -111,7 +111,7 @@ export abstract class AbstractField implements Selectable, Field {
           } 
           case "ArrowLeft": {
             if (this.cursorPos === 0) {
-                this.holder.selectPreviousField();
+                this.holder.selectFieldOrFrameBefore(this);
             } else {
                 this.cursorPos --;
             }

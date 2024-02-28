@@ -33,7 +33,7 @@ export class For extends FrameWithStatements  {
         return 'for';
      }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.variable.select();
         return true;
     }

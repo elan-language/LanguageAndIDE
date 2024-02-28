@@ -60,6 +60,28 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
     }
 
+    selectFirstFieldOrSuitableFrameIfNone(): boolean {
+        var result = super.selectFirstFieldOrSuitableFrameIfNone();
+        if (!result && this.statements.length > 0) {
+            this.statements[0].select(true, false);
+            result = true;
+        }
+        return result;
+    } 
+
+    override selectFirstChildOrNextPeerIfNone() : boolean { 
+        return this.selectFirstChildIfAny() || super.selectFirstChildOrNextPeerIfNone();
+    }
+
+    selectFirstChildIfAny(): boolean {
+        var result = false;
+        if (this.statements.length > 0) {
+            this.statements[0].select(true, false);
+            result = true;
+        }
+        return result;
+    }
+
     protected renderStatementsAsHtml() : string {
         const ss: Array<string> = [];
         for (var frame of this.statements) {

@@ -22,7 +22,7 @@ export class Repeat extends FrameWithStatements {
         return 'repeat';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.condition.select();
         return true;
     }

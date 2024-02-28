@@ -22,7 +22,7 @@ export class While extends FrameWithStatements implements Parent {
         return 'while';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.condition.select();
         return true;
     }

@@ -46,7 +46,7 @@ end main\r
        return this.parseStandardEnding(source, "end main");
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.statements[0].select(true,false);
         return true;
     }

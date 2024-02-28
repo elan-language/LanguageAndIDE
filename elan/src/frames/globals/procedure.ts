@@ -25,7 +25,7 @@ export class Procedure extends FrameWithStatements {
         return 'proc';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.name.select();
         return true;
     }

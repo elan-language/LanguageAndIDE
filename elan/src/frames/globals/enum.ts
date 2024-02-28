@@ -28,7 +28,7 @@ export class Enum extends AbstractFrame {
         return 'enum';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.name.select();
         return true;
     }

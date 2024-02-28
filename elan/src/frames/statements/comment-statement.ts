@@ -27,7 +27,7 @@ export class CommentStatement extends AbstractFrame implements Member {
     getIdPrefix(): string {
         return 'com';
     }
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.text.select();
         return true;
     }

@@ -25,7 +25,7 @@ export class Switch extends FrameWithStatements {
         return 'switch';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.expr.select();
         return true;
     }

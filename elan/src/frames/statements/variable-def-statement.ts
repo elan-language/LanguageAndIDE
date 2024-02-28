@@ -31,7 +31,7 @@ export class VariableDefStatement extends AbstractFrame  {
         return 'var';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.name.select();
         return true;
     }
