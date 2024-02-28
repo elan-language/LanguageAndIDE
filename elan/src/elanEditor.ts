@@ -2,21 +2,10 @@ import * as vscode from 'vscode';
 import { getNonce, hash } from './util';
 import { File } from './frames/interfaces/file';
 import { ParseStatus } from './frames/parse-status';
-import { isFrame, isParent } from './frames/helpers';
-import { Collapsible } from './frames/interfaces/collapsible';
-import { Selectable } from './frames/interfaces/selectable';
-import { Frame } from './frames/interfaces/frame';
 import { Uri } from 'vscode';
 import { FileImpl } from './frames/file-impl';
 import { CodeSourceFromString } from './frames/code-source';
-
-interface editorEvent {
-	type: "click" | "dblclick" | "key"
-	target: "frame" | "window"
-	key?: string,
-	modKey: { control: boolean, shift: boolean, alt: boolean },
-	id?: string
-}
+import { editorEvent, handleClick, handleDblClick, handleKey } from './editorHandlers';
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -29,7 +18,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 	private static readonly viewType = 'elan.elanEditor';
 
 	private file?: File;
-	private currentFileUri? : Uri;
+	private currentFileUri?: Uri;
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
@@ -107,15 +96,15 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.onDidReceiveMessage((e: editorEvent) => {
 			switch (e.type) {
 				case 'click':
-					this.handleClick(e);
+					handleClick(e, this.file!);
 					updateWebview(this.file!);
 					return;
 				case 'dblclick':
-					this.handleDblClick(e);
+					handleDblClick(e, this.file!);
 					updateWebview(this.file!);
 					return;
 				case 'key':
-					this.handleKey(e);
+					handleKey(e, this.file!);
 					updateWebview(this.file!);
 					updateSource(this.file!);
 					return;
@@ -123,132 +112,6 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		updateWebview(this.file!);
-	}
-
-	private getAllSelected() {
-		const v = this.file?.getMap().values()!;
-		return [...v].filter(s => s.isSelected());
-	}
-
-	private handleClick(e: editorEvent) {
-		switch (e.target) {
-			case 'frame': {
-				const s = this.file?.getById(e.id!);
-
-				if (e.modKey.shift && isFrame(s)) {
-					const parent = s.getParent();
-					// all current selections with same parent
-					const curSel = this.getAllSelected().filter(i => isFrame(i) && i.getParent() === parent);
-
-					if (curSel.length > 0) {
-						const toSelect = new Set<Selectable>();
-
-						for (var cs of curSel) {
-							const range = parent.getChildRange(cs as Frame, s);
-							for (var r of range) {
-								toSelect.add(r);
-							}
-						}
-
-						// this should clear all other selections
-						s?.select(true, false);
-						// select all in range
-						for (var ts of toSelect) {
-							ts.select(false, true);
-						}
-						// select with focus clicked on frame
-						s?.select(true, true);
-					}
-					else {
-						s?.select(true, false);
-					}
-				}
-				else {
-					s?.select(true, false);
-				}
-				break;
-			}
-		}
-	}
-
-	private handleDblClick(e: editorEvent) {
-		switch (e.target) {
-			case 'frame': {
-				const s = this.file?.getById(e.id!) as Collapsible;
-				s.expandCollapse();
-				break;
-			}
-		}
-	}
-
-	private handleKey(e: editorEvent) {
-		switch (e.target) {
-			case 'frame': {
-				this.handleModelKey(e);
-				break;
-			}
-			case 'window': {
-				this.handleWindowKey(e);
-				break;
-			}
-		}
-	}
-
-    private handleModelKey(e: editorEvent) {
-		switch (e.key) {
-			case 'Shift':
-			case 'Control':
-			case 'Alt': break; // consume
-			case 'Escape': {
-				const ss = this.getAllSelected();
-				ss.forEach(s => s.deselect());
-				break;
-			}
-			case 'O': {
-				if(e.modKey.control) {
-					this.file?.expandCollapseAll();
-				}
-			}
-			default:
-				const s = this.file?.getById(e.id!);
-				s?.processKey({ key: e.key, shift: e.modKey.shift, control: e.modKey.control, alt: e.modKey.alt });
-		}
-	}
-
-	private handleWindowKey(e: editorEvent) {
-		switch (e.key) {
-			case 'Home': {
-				const g = this.file?.getFirstChild();
-				g?.select(true, false);
-				break;
-			}
-			case 'Enter': {
-				const g = this.file?.getFirstChild();
-				g?.select(true, false);
-				break;
-			}
-			case 'ArrowDown': {
-				const g = this.file?.getFirstChild();
-				g?.select(true, false);
-				break;
-			}
-			case 'ArrowRight': {
-				const g = this.file?.getFirstChild();
-				g?.select(true, false);
-				break;
-			}
-			case 'End': {
-				const g = this.file?.getLastChild();
-				g?.select(true, false);
-				break;
-			}
-			case 'O': {
-				if (e.modKey.control) {
-					this.file?.expandCollapseAll();
-				}
-				break;
-			}
-		}
 	}
 
 	/**

@@ -90,7 +90,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         if (key === "Backspace") {
             this.text = this.text.substring(0,this.text.length-1);
         } 
-        else if (!key || key.length == 1) { //TODO: Make any exception for any specific non-printing chars?
+        else if (!key || key.length === 1) { //TODO: Make any exception for any specific non-printing chars?
             var options = this.optionsMatchingInput(this.text + key);
             if (options.length > 1 ) {
                 this.text += this.commonStartText(this.text+ key);
