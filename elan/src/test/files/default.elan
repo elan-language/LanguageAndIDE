@@ -1,5 +1,1 @@
-# 6dd0558d22f34750436b610f229d8a863067f7a2498a1bf43dee4c2d72bdabaa Elan v0.1 valid
 
-main
-  print "Hello world"
-end main
