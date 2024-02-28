@@ -139,19 +139,6 @@ function updateContent(text: string) {
 	}
 }
 
-// Handle messages sent from the extension to the webview
-window.addEventListener('message', event => {
-	const message = event.data; // The json data that the extension sent
-	switch (message.type) {
-		case 'update':
-			const text = message.text;
-
-			// Update our webview's content
-			updateContent(text);
-			return;
-	}
-});
-
 function postMessage(e: editorEvent) {
 	switch (e.type) {
 		case 'click':
