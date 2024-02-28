@@ -29,13 +29,6 @@ else {
 	updateContent(file.renderAsHtml());
 }
 
-
-// Get a reference to the VS Code webview api.
-// We use this API to post messages back to our extension.
-
-// @ts-ignore
-//const vscode = acquireVsCodeApi();
-
 var doOnce = true;
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
@@ -43,7 +36,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 /**
- * Render the document in the webview.
+ * Render the document
  */
 function updateContent(text: string) {
 	codeContainer!.innerHTML = text;
@@ -110,9 +103,9 @@ function updateContent(text: string) {
 		});
 	}
 
-	const input = document.querySelector('.focused input') as any;
-	const focused = document.querySelector('.focused') as any;
-	const elanCode = document.querySelector('.elan-code') as any;
+	const input = document.querySelector('.focused input') as HTMLInputElement;
+	const focused = document.querySelector('.focused') as HTMLUnknownElement;
+	const elanCode = document.querySelector('.elan-code') as HTMLDivElement;
 
 	if (doOnce) {
 		doOnce = false;
@@ -127,7 +120,6 @@ function updateContent(text: string) {
 			postMessage(msg);
 			event.preventDefault();
 			event.stopPropagation();
-
 		});
 	}
 
@@ -156,11 +148,6 @@ window.addEventListener('message', event => {
 
 			// Update our webview's content
 			updateContent(text);
-
-			// Then persist state information.
-			// This state is returned in the call to `vscode.getState` below when a webview is reloaded.
-			//vscode.setState({ text });
-
 			return;
 	}
 });
