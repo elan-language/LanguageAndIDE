@@ -90,7 +90,7 @@ export class Class extends AbstractFrame implements Parent {
         return 'class';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.name.select();
         return true;
     }
@@ -155,7 +155,7 @@ end class\r\n`;
     public addMemberBeforeAndSelectFirstField(m: Frame, before: Frame) {
         var i = this.   _members.indexOf(before);
         this._members.splice(i,0,m);
-        m.selectFirstFieldOrChildIfNone();
+        m.selectFirstFieldOrSuitableFrameIfNone();
     }
 
     public removeMember(m: Frame) {

@@ -15,7 +15,7 @@ export class Default extends FrameWithStatements {
     getIdPrefix(): string {
         return 'default';
     }
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         return false;
     }
     renderAsHtml(): string {

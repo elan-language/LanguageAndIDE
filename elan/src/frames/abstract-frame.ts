@@ -52,36 +52,30 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().getChildAfter(this);
     }
 
-    selectPreviousField():void {
+    selectFieldOrFrameBefore(current: Field):void {
         var fields = this.getFields();
-        var num = fields.length;
-        var current = fields.filter(f => f.isFocused());
-        if (current.length > 0) {
-            var i = fields.indexOf(current[0]);
-            if (i > 0) {
-                fields[i-1].select(true, false);
-            } else {
-                this.select(true, false);
-            }
+        var i = fields.indexOf(current);
+        if (i > 0) {
+            fields[i-1].select(true, false);
         } else {
-            fields[num-1].select(true, false);
+            this.select(true, false);
         }
     }
 
-    selectNextField(): void {
+    selectFieldOrFrameAfter(current: Field): void {
         var fields = this.getFields();
-        var num = fields.length;
-        var current = fields.filter(f => f.isFocused());
-        if (current.length > 0) {
-            var i = fields.indexOf(current[0]);
-            if (i < num - 1) {
-                fields[i+1].select(true, false);
-            } else {
-                this.select(true, false);
-            }
+        var i = fields.indexOf(current);
+        if (i < fields.length - 1) {
+            fields[i+1].select(true, false);
         } else {
-            fields[0].select(true, false);
+            this.selectFirstChildOrNextPeerIfNone();
         }
+    }
+
+    //default implementation to be overridden by frameWithStatements
+    selectFirstChildOrNextPeerIfNone() : boolean { 
+        this.getParent().getChildAfter(this).select(true, false);
+        return true;
     }
 
     processKey(e: KeyEvent): void {
@@ -127,15 +121,11 @@ export abstract class AbstractFrame implements Frame {
             break;
           }
           case "Tab": {
-            if (e.shift) {
-                this.selectPreviousField();
-            } else {
-                this.selectNextField();
-            }
+            this.selectFirstFieldOrSuitableFrameIfNone();
             break;
           } 
           case "Enter": {
-            this.selectPreviousField();
+            this.selectFirstFieldOrSuitableFrameIfNone();
             break;
           }
           
@@ -259,9 +249,14 @@ export abstract class AbstractFrame implements Frame {
         this.collapsed = false;
     }
 
-    selectFirstFieldOrChildIfNone(): boolean {
-        return false;
-    }
+    selectFirstFieldOrSuitableFrameIfNone(): boolean {
+        var result = false;
+        if (this.getFields().length > 0) {
+          this.getFields()[0].select(true, false);
+          result = true;
+        } 
+        return result;
+    } 
 
     isFocused(): boolean {
         return this.focused;

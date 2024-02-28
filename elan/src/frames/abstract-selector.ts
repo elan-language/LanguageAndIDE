@@ -73,7 +73,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         this.text = "";
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         return false;
     }
 

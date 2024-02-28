@@ -35,7 +35,7 @@ export class SetStatement extends AbstractFrame  {
         return 'set';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.name.select();
         return true;
     }

@@ -24,7 +24,7 @@ export class Constructor extends FrameWithStatements implements Member {
         return 'constructor';
     }
 
-    public override selectFirstFieldOrChildIfNone(): boolean {
+    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
         this.params.select();
         return true;
     }
