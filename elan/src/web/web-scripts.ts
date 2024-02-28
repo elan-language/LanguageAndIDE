@@ -1,6 +1,6 @@
-import { editorEvent, handleClick, handleDblClick, handleKey } from "../src/editorHandlers";
-import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
-import { File } from "../src/frames/interfaces/file";
+import { editorEvent, handleClick, handleDblClick, handleKey } from "../editorHandlers";
+import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
+import { File } from "../frames/interfaces/file";
 
 var file: File;
 
