@@ -24,11 +24,6 @@ export class Throw extends AbstractFrame  {
     getIdPrefix(): string {
         return 'throw';
     }
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.text.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>throw </keyword>${this.text.renderAsHtml()}</statement>`;
     }

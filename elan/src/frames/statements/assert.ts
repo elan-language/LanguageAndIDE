@@ -26,11 +26,6 @@ export class Assert extends AbstractFrame {
         return [this.expected];
     }
 
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.expected.select();
-        return true;
-    }
-
     getIdPrefix(): string {
         return 'assert';
     }

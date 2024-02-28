@@ -31,12 +31,6 @@ export class Else extends FrameWithStatements  {
     getIdPrefix(): string {
         return 'else';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.condition.select();
-        return true;
-    }
-
     private ifClauseAsHtml() : string {
         return this.hasIf ? `<keyword>if </keyword>${this.condition.renderAsHtml()}`: `${this.selectIfClause.renderAsHtml()}`;
     }

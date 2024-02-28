@@ -26,12 +26,6 @@ export class AbstractProperty extends AbstractFrame implements Member {
     getIdPrefix(): string {
         return 'prop';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>abstract property </keyword>${this.name.renderAsHtml()} ${this.type.renderAsHtml()}</property>`;
     }

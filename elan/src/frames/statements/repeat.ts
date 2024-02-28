@@ -21,12 +21,6 @@ export class Repeat extends FrameWithStatements {
     getIdPrefix(): string {
         return 'repeat';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.condition.select();
-        return true;
-    }
-    
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>repeat</keyword></top>

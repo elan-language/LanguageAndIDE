@@ -31,12 +31,7 @@ export class VariableDefStatement extends AbstractFrame  {
         return 'var';
     }
 
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
-    renderAsHtml(): string {
+   renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>var </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
 

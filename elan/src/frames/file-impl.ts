@@ -40,6 +40,10 @@ export class FileImpl implements File {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
+    
+    getLastFieldOrSuitableFrame(): Selectable {
+        return this._globals[0];
+    }
 
     hasParent(): boolean {
         return false;
@@ -232,7 +236,7 @@ export class FileImpl implements File {
     }
     private addGlobalBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
         this.addGlobalBefore(g, before);
-        g.selectFirstFieldOrSuitableFrameIfNone();
+        g.selectFirstFieldOrSuitableFrame();
         return g;
     }
 

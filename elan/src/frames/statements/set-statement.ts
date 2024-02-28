@@ -26,24 +26,15 @@ export class SetStatement extends AbstractFrame  {
         this.expr.parseFrom(source);
         source.removeNewLine();
     }
-
     getFields(): Field[] {
         return [this.name, this.expr];
-    }
-    
+    }  
     getIdPrefix(): string {
         return 'set';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.name.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}set ${this.name.renderAsSource()} to ${this.expr.renderAsSource()}`;
     }

@@ -27,12 +27,6 @@ export class Each extends FrameWithStatements  {
     getIdPrefix(): string {
         return 'each';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.variable.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}</top>

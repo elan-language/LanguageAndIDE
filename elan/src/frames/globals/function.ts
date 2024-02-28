@@ -36,12 +36,6 @@ export class Function extends FrameWithStatements implements Parent {
     get returnStatement() {
         return this.statements[this.statements.length -1] as ReturnStatement;
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}</top>

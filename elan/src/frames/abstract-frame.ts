@@ -68,13 +68,65 @@ export abstract class AbstractFrame implements Frame {
         if (i < fields.length - 1) {
             fields[i+1].select(true, false);
         } else {
-            this.selectFirstChildOrNextPeerIfNone();
+            this.selectFirstChildOrNextPeer();
         }
     }
 
-    //default implementation to be overridden by frameWithStatements
-    selectFirstChildOrNextPeerIfNone() : boolean { 
-        this.getParent().getChildAfter(this).select(true, false);
+    selectFirstFieldOrSuitableFrame(): boolean {
+        var result = false;
+        if (this.getFields().length > 0) {
+          this.getFields()[0].select(true, false);
+          result = true;
+        } else {
+            result = this.selectFirstChildOrNextPeer();
+        }
+        return result;
+    } 
+
+    getLastFieldOrSuitableFrame(): Selectable {
+        var result: Selectable = this;
+        var fields = this.getFields();
+        if (fields.length > 0) {
+          result = this.getFields()[fields.length-1];
+        } else {
+            result = this.getPreviousPeerOrParent();
+        }
+        return result;
+    } 
+    
+    private getPreviousPeerOrParent() : Selectable { 
+        var result: Selectable = this;
+        var pt = this.getParent();
+        var previousPeer = this.getPreviousFrame();
+        if(previousPeer !== this) {
+           result = previousPeer;
+        } else if (isFrame(pt)) {
+            result = pt;
+        }
+        return result;
+    }
+
+    private selectLastChildOrPreviousPeer() : boolean { 
+        if(isParent(this)) {
+            this.getLastChild().select(true, false);
+        } else {
+            this.getParent().getChildBefore(this).select(true, false);
+        }
+        return true;
+    }
+
+    private selectFirstChildOrNextPeer() : boolean { 
+        if(isParent(this)) {
+            this.getFirstChild().select(true, false);
+        } else {
+            var parent = this.getParent();
+            var next = parent.getChildAfter(this);
+            if (next !== this){
+                next.select(true, false);
+            } else if (isFrame(parent)) {               
+                parent.getParent().getChildAfter(parent).select(true,false);
+            }
+        }
         return true;
     }
 
@@ -121,14 +173,27 @@ export abstract class AbstractFrame implements Frame {
             break;
           }
           case "Tab": {
-            this.selectFirstFieldOrSuitableFrameIfNone();
+            this.tabOrEnter(e.shift);
             break;
           } 
           case "Enter": {
-            this.selectFirstFieldOrSuitableFrameIfNone();
+            this.tabOrEnter(e.shift);
             break;
-          }
-          
+          }   
+        }
+    }
+
+    private tabOrEnter(back: boolean) {
+        if (back) {
+            var parent = this.getParent();
+            var prev = parent.getChildBefore(this);
+            if (prev !== this) {
+                prev.getLastFieldOrSuitableFrame().select(true, false);
+            } else {
+                parent.getLastFieldOrSuitableFrame().select(true, false);
+            }
+        } else {
+            this.selectFirstFieldOrSuitableFrame();
         }
     }
 
@@ -248,15 +313,6 @@ export abstract class AbstractFrame implements Frame {
     expand(): void {
         this.collapsed = false;
     }
-
-    selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        var result = false;
-        if (this.getFields().length > 0) {
-          this.getFields()[0].select(true, false);
-          result = true;
-        } 
-        return result;
-    } 
 
     isFocused(): boolean {
         return this.focused;

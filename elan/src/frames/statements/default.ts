@@ -15,9 +15,6 @@ export class Default extends FrameWithStatements {
     getIdPrefix(): string {
         return 'default';
     }
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        return false;
-    }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>default </keyword></top>

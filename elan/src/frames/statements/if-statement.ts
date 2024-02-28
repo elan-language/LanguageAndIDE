@@ -17,12 +17,6 @@ export class IfStatement extends FrameWithStatements{
     getFields(): Field[] {
         return [this.condition];
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.condition.select();
-        return true;
-    }
-
     getIdPrefix(): string {
         return 'if';
     }

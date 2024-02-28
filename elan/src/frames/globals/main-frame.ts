@@ -45,10 +45,4 @@ end main\r
     parseBottomOfFrame(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end main");
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.statements[0].select(true,false);
-        return true;
-    }
-
 }

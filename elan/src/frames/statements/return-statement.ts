@@ -22,12 +22,6 @@ export class ReturnStatement extends AbstractFrame  {
     getIdPrefix(): string {
         return 'return';
     }
-    
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.expr.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
     }

@@ -27,14 +27,9 @@ export class CommentStatement extends AbstractFrame implements Member {
     getIdPrefix(): string {
         return 'com';
     }
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.text.select();
-        return true;
-    }
     renderAsHtml(): string {
         return `<statement><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword># </keyword>${this.text.renderAsHtml()}</top></comment></statement>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}# ${this.text.renderAsSource()}`;
     }

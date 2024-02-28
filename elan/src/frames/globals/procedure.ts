@@ -24,12 +24,6 @@ export class Procedure extends FrameWithStatements {
     getIdPrefix(): string {
         return 'proc';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     public renderAsHtml() : string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})</top>

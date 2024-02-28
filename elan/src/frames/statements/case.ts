@@ -20,11 +20,6 @@ export class Case extends FrameWithStatements{
     getIdPrefix(): string {
         return 'case';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.value.select();
-        return true;
-    }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>case </keyword>${this.value.renderAsHtml()}</top>

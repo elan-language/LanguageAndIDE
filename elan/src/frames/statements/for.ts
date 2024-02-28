@@ -32,12 +32,6 @@ export class For extends FrameWithStatements  {
     getIdPrefix(): string {
         return 'for';
      }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.variable.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>for </keyword>${this.variable.renderAsHtml()}<keyword> from </keyword>${this.from.renderAsHtml()}<keyword> to </keyword>${this.to.renderAsHtml()}<keyword> step </keyword>${this.step.renderAsHtml()}</top>

@@ -19,20 +19,12 @@ export class Enum extends AbstractFrame {
         this.name.setPlaceholder("Name");
         this.values = new EnumValues(this);
     }
-
     getFields(): Field[] {
         return [this.name, this.values];
     }
-
     getIdPrefix(): string {
         return 'enum';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>
@@ -40,11 +32,9 @@ export class Enum extends AbstractFrame {
 <keyword>end enum</keyword>
 </enum>`;
     }
-
     indent(): string {
         return "";
     }
-
     renderAsSource(): string {
         return `enum ${this.name.renderAsSource()}\r
 ${singleIndent()}${this.values.renderAsSource()}\r

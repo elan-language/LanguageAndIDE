@@ -23,13 +23,6 @@ export class Constructor extends FrameWithStatements implements Member {
     getIdPrefix(): string {
         return 'constructor';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.params.select();
-        return true;
-    }
-
-
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>constructor</keyword>(${this.params.renderAsHtml()})</top>

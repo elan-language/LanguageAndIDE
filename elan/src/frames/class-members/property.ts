@@ -25,12 +25,6 @@ export class Property extends AbstractFrame implements Member {
     getIdPrefix(): string {
         return 'prop';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     private modifierAsHtml(): string {
         return this.private ? `<keyword>private </keyword>`: "";
     }

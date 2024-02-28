@@ -21,12 +21,6 @@ export class While extends FrameWithStatements implements Parent {
     getIdPrefix(): string {
         return 'while';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.condition.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}</top>

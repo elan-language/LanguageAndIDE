@@ -23,4 +23,6 @@ export interface Parent {
     getIdPrefix(): string;
     hasParent(): boolean;
     getParent(): Parent;
+
+    getLastFieldOrSuitableFrame() : Selectable;
 }

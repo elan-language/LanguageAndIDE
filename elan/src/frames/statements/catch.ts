@@ -22,12 +22,6 @@ export class Catch extends FrameWithStatements {
     getIdPrefix(): string {
         return 'catch';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.variable.select();
-        return true;
-    }
-
     indent(): string {
         return this.getParent()?.indent()+singleIndent(); 
     }

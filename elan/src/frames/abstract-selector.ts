@@ -63,20 +63,13 @@ export abstract class AbstractSelector extends AbstractFrame {
     getFields(): Field[] {
         return [];
     }
-
     getIdPrefix(): string {
         return 'select';
     }
-
     override deselect(): void {
         super.deselect();
         this.text = "";
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        return false;
-    }
-
     textToDisplay(): string {
             return `<text>${this.text}</text><placeholder>${this.label}</placeholder><help>${this.getHelp()}</help>`;
     }
@@ -100,7 +93,7 @@ export abstract class AbstractSelector extends AbstractFrame {
                 this.text = "";
             }
         } else {
-            super.processKey(e);
+                super.processKey(e);
         }   
     }
 } 

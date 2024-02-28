@@ -24,12 +24,6 @@ export class Print extends AbstractFrame  {
     getFields(): Field[] {
         return [this.expr];
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.expr.select();
-        return true;
-    }
-
     getIdPrefix(): string {
         return 'print';
     }

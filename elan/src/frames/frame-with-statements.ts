@@ -37,7 +37,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     getFirstChild(): Frame {
-        return this.statements[0]; //Should always be one - at minimum a SelectGlobal
+        return this.statements[0]; //Should always be one - if only a Selector
     }
 
     getLastChild(): Frame {
@@ -60,18 +60,14 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
     }
 
-    selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        var result = super.selectFirstFieldOrSuitableFrameIfNone();
+    selectFirstFieldOrSuitableFrame(): boolean {
+        var result = super.selectFirstFieldOrSuitableFrame();
         if (!result && this.statements.length > 0) {
             this.statements[0].select(true, false);
             result = true;
         }
         return result;
     } 
-
-    override selectFirstChildOrNextPeerIfNone() : boolean { 
-        return this.selectFirstChildIfAny() || super.selectFirstChildOrNextPeerIfNone();
-    }
 
     selectFirstChildIfAny(): boolean {
         var result = false;

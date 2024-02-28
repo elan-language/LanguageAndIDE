@@ -29,12 +29,6 @@ export class Test extends FrameWithStatements {
     getIdPrefix(): string {
         return 'test';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     public renderAsHtml() : string {
         return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>test </keyword>${this.name.renderAsHtml()}</top>

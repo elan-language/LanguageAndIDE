@@ -34,12 +34,6 @@ export class Constant extends AbstractFrame {
     getIdPrefix(): string {
         return 'const';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.name.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.literal.renderAsHtml()}</constant>`;
     }

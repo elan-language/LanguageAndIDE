@@ -24,12 +24,6 @@ export class Switch extends FrameWithStatements {
     getIdPrefix(): string {
         return 'switch';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.expr.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}</top>

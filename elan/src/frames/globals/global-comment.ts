@@ -20,12 +20,6 @@ export class GlobalComment extends AbstractFrame {
     getIdPrefix(): string {
         return 'com';
     }
-
-    public override selectFirstFieldOrSuitableFrameIfNone(): boolean {
-        this.text.select();
-        return true;
-    }
-
     renderAsHtml(): string {
         return `<global><comment class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top># ${this.text.renderAsHtml()}</top></comment></global>`;
     }
