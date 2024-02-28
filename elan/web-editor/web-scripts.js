@@ -18,20 +18,26 @@
 	import("./web-editor.js").then(editor => {
 		file = new editor.FileImpl((s) => "", true);
 
-		const elanLines = codeContainer.getElementsByClassName("elanSource");
-		var elanCode = "";
+		const hash = window.location.hash;
 
-		for (var e of elanLines){
-			elanCode = elanCode + "\r\n" + e.innerText;
+		if (hash) {
+			const initialFile = hash.substring(1);
+
+			fetch(initialFile)
+				.then((f) => f.text())
+				.then((text) => {
+					const code = new editor.CodeSourceFromString(text);
+					file.parseFrom(code);
+					updateContent(file.renderAsHtml());
+				})
+				.catch((e) => {
+					console.error(e);
+					updateContent(file.renderAsHtml());
+				});
 		}
-
-		elanCode = elanCode.trim();
-		if (elanCode) {
-			const code = new editor.CodeSourceFromString(elanCode);
-			file.parseFrom(code);
+		else {
+			updateContent(file.renderAsHtml());
 		}
-
-		updateContent(file.renderAsHtml());
 	});
 
 	// Get a reference to the VS Code webview api.
