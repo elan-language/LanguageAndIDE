@@ -32,4 +32,7 @@ ${this.renderStatementsAsSource()}`;
     parseBottomOfFrame(source: CodeSource): boolean {
         return source.isMatch("end switch");
     }
+    protected canInsertBelow(): boolean {
+        return false;
+    }
 } 

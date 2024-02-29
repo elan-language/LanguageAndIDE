@@ -7,6 +7,8 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { AbstractSelector } from "../abstract-selector";
+import { GlobalSelector } from "./global-selector";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -74,9 +76,10 @@ end function\r
         }
         return result;
     }
-
     private getReturnStatement() : ReturnStatement {
         return this.statements.filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
-
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
+    }
 }

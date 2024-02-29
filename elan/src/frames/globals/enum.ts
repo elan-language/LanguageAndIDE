@@ -6,6 +6,8 @@ import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Regexes } from "../fields/regexes";
+import { AbstractSelector } from "../abstract-selector";
+import { GlobalSelector } from "./global-selector";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
@@ -50,5 +52,8 @@ end enum\r
         this.values.parseFrom(source);
         source.removeNewLine();
         source.remove("end enum");
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
     }
 } 

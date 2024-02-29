@@ -1,8 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
+import { Class } from "../globals/class";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -14,9 +16,11 @@ export class AbstractFunction extends AbstractFrame implements Member {
     public name : Identifier;
     public params: ParamList;
     public returnType: Type;
+    private class: Class;
 
     constructor(parent: Parent) {
         super(parent);
+        this.class = parent as Class;
         this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
@@ -54,5 +58,8 @@ export class AbstractFunction extends AbstractFrame implements Member {
         this.params.parseFrom(source);
         source.remove(") as ");
         this.returnType.parseFrom(source);
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 }

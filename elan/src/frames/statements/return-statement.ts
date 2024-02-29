@@ -33,4 +33,8 @@ export class ReturnStatement extends SingleLineStatement  {
         source.remove("return ");
         this.expr.parseFrom(source);
     }
+
+    protected canInsertBelow(): boolean {
+        return false;
+    }
 } 

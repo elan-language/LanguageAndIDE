@@ -1,4 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { Type } from "../fields/type";
@@ -12,9 +13,11 @@ export class AbstractProperty extends AbstractFrame implements Member {
     name: Identifier;
     type: Type;
     public private: boolean = false;
+    private class: Class;
 
     constructor(parent: Class) {
         super(parent);
+        this.class = parent as Class;
         this.name = new Identifier(this);
         this.type = new Type(this);
     }
@@ -39,5 +42,8 @@ export class AbstractProperty extends AbstractFrame implements Member {
         this.name.parseFrom(source);
         source.remove(" ");
         this.type.parseFrom(source);
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 } 

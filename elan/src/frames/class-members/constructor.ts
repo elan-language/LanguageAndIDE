@@ -4,14 +4,17 @@ import { Member } from "../interfaces/member";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { AbstractSelector } from "../abstract-selector";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
     isMember = true;
     public params: ParamList ;
+    private class: Class;
 
     constructor(parent: Class) {
         super(parent);
+        this.class = parent as Class;
         this.multiline = true;
         this.params = new ParamList(parent);
     }
@@ -44,5 +47,11 @@ ${this.indent()}end constructor\r
     }
     parseBottomOfFrame(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end constructor");
+    }
+    protected canInsertAbove(): boolean {
+        return false;
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 }

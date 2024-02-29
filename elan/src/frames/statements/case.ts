@@ -3,6 +3,8 @@ import { Field } from "../interfaces/field";
 import { LiteralValue } from "../fields/literal-value";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../code-source";
+import { AbstractSelector } from "../abstract-selector";
+import { StatementSelector } from "./statement-selector";
 
 export class Case extends FrameWithStatements{
     isStatement = true;

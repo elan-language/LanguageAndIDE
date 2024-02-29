@@ -1,4 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
@@ -13,9 +14,11 @@ export class AbstractProcedure extends AbstractFrame implements Member {
     isMember: boolean = true;
     public name : Identifier;
     public params: ParamList;
+    private class: Class;
 
     constructor(parent: Parent) {
         super(parent);
+        this.class = parent as Class;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
     }
@@ -49,5 +52,8 @@ export class AbstractProcedure extends AbstractFrame implements Member {
         source.remove("(");
         this.params.parseFrom(source);
         source.remove(")");
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 }

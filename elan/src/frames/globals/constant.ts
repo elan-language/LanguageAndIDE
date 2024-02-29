@@ -5,6 +5,8 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Literal } from "../fields/literal";
 import { PlainText } from "../fields/plain-text";
+import { AbstractSelector } from "../abstract-selector";
+import { GlobalSelector } from "./global-selector";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;
@@ -41,9 +43,11 @@ export class Constant extends AbstractFrame {
     indent(): string {
         return "";
     }
-
     renderAsSource(): string {
         return `constant ${this.name.renderAsSource()} set to ${this.literal.renderAsSource()}\r
 `;
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
     }
 } 

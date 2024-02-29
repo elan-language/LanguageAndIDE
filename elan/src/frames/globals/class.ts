@@ -17,8 +17,11 @@ import { AbstractFunction as AbstractFunction } from "../class-members/abstract-
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 import { CommentStatement } from "../statements/comment-statement";
+import { AbstractSelector } from "../abstract-selector";
+import { GlobalSelector } from "./global-selector";
 
 export class Class extends AbstractFrame implements Parent {
+
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
@@ -35,8 +38,13 @@ export class Class extends AbstractFrame implements Parent {
         this.name.setPlaceholder("class name");
         this.superClasses  = new TypeList(this);
         this._members.push(new Constructor(this));
-        this._members.push(new MemberSelector(this));
+        this._members.push(this.newMemberSelector());
     }
+
+    newMemberSelector(): AbstractSelector {
+        return new MemberSelector(this);
+    }
+
     minimumNumberOfChildrenExceeded(): boolean {
         return this._members.length > 2; //Constructor +
     }
@@ -258,5 +266,8 @@ end class\r\n`;
             result = true;
         }
         return result;
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
     }
 }

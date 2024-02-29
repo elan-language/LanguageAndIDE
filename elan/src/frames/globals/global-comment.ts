@@ -1,8 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Comment } from "../fields/comment";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { GlobalSelector } from "./global-selector";
 
 export class GlobalComment extends AbstractFrame {
     isGlobal = true;
@@ -27,15 +29,16 @@ export class GlobalComment extends AbstractFrame {
     indent(): string {
         return "";
     }
-
     renderAsSource(): string {
         return `# ${this.text.renderAsSource()}`;
     }
-
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("# ");
         this.text.parseFrom(source);
         source.removeNewLine();
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
     }
 } 

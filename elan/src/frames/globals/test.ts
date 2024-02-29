@@ -1,3 +1,4 @@
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -5,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Assert } from "../statements/assert";
 import { VariableDefStatement } from "../statements/variable-def-statement";
+import { GlobalSelector } from "./global-selector";
 
 export class Test extends FrameWithStatements {
     isTest = true;
@@ -51,5 +53,8 @@ end test\r
     }
     parseBottomOfFrame(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return new GlobalSelector(this.getParent());
     }
 }

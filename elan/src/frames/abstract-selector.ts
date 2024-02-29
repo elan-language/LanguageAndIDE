@@ -102,4 +102,12 @@ export abstract class AbstractSelector extends SingleLineStatement {
                 super.processKey(e);
         }   
     }
+
+    protected canInsertAbove(): boolean {
+        return false;
+    }
+
+    protected canInsertBelow(): boolean {
+        return false;
+    }
 } 

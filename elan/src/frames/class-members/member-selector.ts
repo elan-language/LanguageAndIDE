@@ -6,9 +6,11 @@ import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 
 export class MemberSelector extends AbstractSelector implements Member  {
+    private class: Class;
 
     constructor(parent: Parent) {
         super(parent);
+        this.class = parent as Class;
     }
    
     defaultOptions: [string, string][] = [
@@ -82,5 +84,8 @@ export class MemberSelector extends AbstractSelector implements Member  {
                 throw new Error(`${frameType} is not a valid member frame type.`);
             }
         }
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 } 

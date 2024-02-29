@@ -1,3 +1,4 @@
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
 import { Procedure } from "../globals/procedure";
@@ -7,9 +8,11 @@ import { Member } from "../interfaces/member";
 export class ProcedureMethod extends Procedure implements Member {
     isGlobal: boolean = false;
     isMember: boolean = true;
+    private class: Class;
 
     constructor(parent: Class) {
         super(parent);
+        this.class = parent as Class;
     }
 
     public override indent(): string {
@@ -27,5 +30,8 @@ ${this.indent()}end procedure\r
     }
     parseBottomOfFrame(source: CodeSource): boolean {
         return super.parseBottomOfFrame(source);
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector {
+        return this.class.newMemberSelector();
     }
 }

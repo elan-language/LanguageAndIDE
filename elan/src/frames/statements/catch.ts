@@ -4,6 +4,8 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { singleIndent } from "../helpers";
+import { AbstractSelector } from "../abstract-selector";
+import { StatementSelector } from "./statement-selector";
 
 export class Catch extends FrameWithStatements {
     isStatement = true;

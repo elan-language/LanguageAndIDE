@@ -7,6 +7,7 @@ import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
+import { AbstractSelector } from "./abstract-selector";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
@@ -16,7 +17,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     constructor(parent: File | Parent) {
         super(parent);   
-        this.statements.push(new StatementSelector(this));
+        this.statements.push(this.newStatementSelector());
+    }
+
+    newStatementSelector(): StatementSelector {
+        return new StatementSelector(this);
     }
 
     protected getNoOfStatements(): number {
@@ -148,5 +153,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             result = true;
         }
         return result;
+    }
+    getSelectorToInsertAboveBelow(): AbstractSelector { //Overridden by Global frames that inherit from this
+        return new StatementSelector(this.getParent() as FrameWithStatements);
     }
 }

@@ -8,6 +8,7 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { KeyEvent } from "./interfaces/key-event";
 import { CodeSource } from "./code-source";
+import { AbstractSelector } from "./abstract-selector";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -179,8 +180,26 @@ export abstract class AbstractFrame implements Frame {
           case "Enter": {
             this.tabOrEnter(e.shift);
             break;
-          }   
+          }  
+          case "Insert": {
+            this.insertSelector(e.shift);
+            break;
+          } 
         }
+    }
+
+    abstract getSelectorToInsertAboveBelow(): AbstractSelector;
+
+    private insertSelector(after: boolean): void {
+        throw new Error("Not implemented");
+    }
+
+    protected canInsertAbove(): boolean {
+        return true;
+    }
+
+    protected canInsertBelow(): boolean {
+        return true;
     }
 
     private tabOrEnter(back: boolean) {
