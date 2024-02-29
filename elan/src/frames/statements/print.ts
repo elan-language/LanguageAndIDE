@@ -4,9 +4,9 @@ import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class Print extends AbstractFrame  {
-    isStatement = true;
+export class Print extends SingleLineStatement  {
     expr: Expression;
 
     constructor(parent: Parent) {

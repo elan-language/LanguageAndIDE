@@ -1,13 +1,11 @@
 import { Comment } from "../fields/comment";
 import { Member} from "../interfaces/member";
 import { Parent} from "../interfaces/parent";
-import { AbstractFrame} from "../abstract-frame";
-
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class CommentStatement extends AbstractFrame implements Member {
-    isStatement = true;
+export class CommentStatement extends SingleLineStatement implements Member {
     isMember = true;
     public text: Comment;
 

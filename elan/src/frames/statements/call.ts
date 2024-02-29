@@ -1,15 +1,11 @@
-import { Identifier } from "../fields/identifier";
 import { ArgList } from "../fields/arg-list";
 import { Parent } from "../interfaces/parent";
-import { AbstractFrame } from "../abstract-frame";
-
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ProcedureRef } from "../fields/procedureRef";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class Call extends AbstractFrame {
-
-    isStatement = true;
+export class Call extends SingleLineStatement {
     proc: ProcedureRef;
     args: ArgList;
 

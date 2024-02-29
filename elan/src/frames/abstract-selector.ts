@@ -1,12 +1,13 @@
-import { AbstractFrame } from "./abstract-frame";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { KeyEvent } from "./interfaces/key-event";
 import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
+import { SingleLineStatement } from "./statements/single-line-statement";
 
-export abstract class AbstractSelector extends AbstractFrame {
+export abstract class AbstractSelector extends SingleLineStatement {
     isSelector = true;
+    isStatement = true;
     text: string = "";
     label: string = "new code";
     protected defaultOptions: [string, string][]= new Array<[string, string]>();

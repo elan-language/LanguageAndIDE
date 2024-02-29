@@ -1,12 +1,11 @@
-import { Identifier } from "../fields/identifier";
 import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
-import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import {CodeSource } from "../code-source";
 import { Value } from "../fields/value";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class SetStatement extends AbstractFrame  {
+export class SetStatement extends SingleLineStatement  {
     isStatement = true;
     name: Value;;
     expr: Expression;

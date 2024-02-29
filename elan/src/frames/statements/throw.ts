@@ -3,9 +3,9 @@ import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class Throw extends AbstractFrame  {
-    isStatement = true;
+export class Throw extends SingleLineStatement  {
     text: ExceptionMessage;
 
     constructor(parent: Parent) {

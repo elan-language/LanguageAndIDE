@@ -1,12 +1,11 @@
 import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
-import { AbstractFrame } from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { SingleLineStatement } from "./single-line-statement";
 
-export class ReturnStatement extends AbstractFrame  { 
+export class ReturnStatement extends SingleLineStatement  { 
     isReturnStatement = true;  
-    isStatement = true;
     expr: Expression;
 
     constructor(parent: Parent) {
