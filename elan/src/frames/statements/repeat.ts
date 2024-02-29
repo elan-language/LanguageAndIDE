@@ -1,11 +1,10 @@
 import { Expression } from "../fields/expression";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class Repeat extends FrameWithStatements {
-    isStatement = true;
+export class Repeat extends MultiLineStatement {
     condition: Expression;
 
     constructor(parent: Parent) {

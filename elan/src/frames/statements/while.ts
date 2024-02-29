@@ -1,10 +1,10 @@
 import { Expression } from "../fields/expression";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class While extends FrameWithStatements implements Parent { 
+export class While extends MultiLineStatement { 
     isStatement = true;
     condition: Expression;
 

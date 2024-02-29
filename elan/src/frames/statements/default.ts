@@ -1,11 +1,9 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
-import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../code-source";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class Default extends FrameWithStatements {
-    isStatement = true;
-
+export class Default extends MultiLineStatement {
     constructor(parent: Parent) {
         super(parent);
     }
@@ -32,7 +30,7 @@ ${this.renderStatementsAsSource()}`;
     parseBottomOfFrame(source: CodeSource): boolean {
         return source.isMatch("end switch");
     }
-    protected canInsertBelow(): boolean {
+    canInsertAfter(): boolean {
         return false;
     }
 } 

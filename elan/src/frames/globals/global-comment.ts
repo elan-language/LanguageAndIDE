@@ -5,13 +5,16 @@ import { Comment } from "../fields/comment";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { GlobalSelector } from "./global-selector";
+import { File } from "../interfaces/file";
 
 export class GlobalComment extends AbstractFrame {
     isGlobal = true;
     public text: Comment;
+    file: File;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.text = new Comment(this);
     }
 
@@ -38,7 +41,7 @@ export class GlobalComment extends AbstractFrame {
         this.text.parseFrom(source);
         source.removeNewLine();
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 } 

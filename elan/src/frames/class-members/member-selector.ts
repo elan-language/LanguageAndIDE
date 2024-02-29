@@ -85,7 +85,4 @@ export class MemberSelector extends AbstractSelector implements Member  {
             }
         }
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
-    }
 } 

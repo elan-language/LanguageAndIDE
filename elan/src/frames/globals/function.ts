@@ -7,17 +7,18 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { AbstractSelector } from "../abstract-selector";
-import { GlobalSelector } from "./global-selector";
+import { File } from "../interfaces/file";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
     public name : Identifier;
     public params: ParamList;
     public returnType: Type;
+    file: File;
 
     constructor(parent: Parent) {
         super(parent);
+        this.file = parent as File;
         this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
@@ -79,7 +80,7 @@ end function\r
     private getReturnStatement() : ReturnStatement {
         return this.statements.filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 }

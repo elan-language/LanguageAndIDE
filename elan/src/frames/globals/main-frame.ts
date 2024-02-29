@@ -4,13 +4,16 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { GlobalSelector } from "./global-selector";
+import { File } from "../interfaces/file";
 
 export class MainFrame extends FrameWithStatements {
     isMain = true;
     isGlobal = true;
+    file: File;
     
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.multiline = true;
     }
 
@@ -47,7 +50,7 @@ end main\r
     parseBottomOfFrame(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end main");
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 }

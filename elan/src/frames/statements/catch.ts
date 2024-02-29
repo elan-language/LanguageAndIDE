@@ -2,13 +2,10 @@ import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { FrameWithStatements } from "../frame-with-statements";
 import { singleIndent } from "../helpers";
-import { AbstractSelector } from "../abstract-selector";
-import { StatementSelector } from "./statement-selector";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class Catch extends FrameWithStatements {
-    isStatement = true;
+export class Catch extends MultiLineStatement {
     variable: Identifier;
 
     constructor(parent: Parent) {

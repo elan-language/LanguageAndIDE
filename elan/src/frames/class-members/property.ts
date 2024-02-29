@@ -54,7 +54,7 @@ export class Property extends AbstractFrame implements Member {
         source.remove(" ");
         this.type.parseFrom(source);
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
+    insertSelector(after: boolean): void {
+        this.class.insertMemberSelector(after, this);
     }
 } 

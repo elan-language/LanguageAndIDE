@@ -1,14 +1,12 @@
 import { Parent} from "../interfaces/parent";
 import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
-import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
 import { Expression } from "../fields/expression";
+import { MultiLineStatement } from "./multi-line-statement";
 
-
-export class Else extends FrameWithStatements  {
-    isStatement = true;
+export class Else extends MultiLineStatement  {
     selectIfClause: IfSelector;
     hasIf: boolean = false;
     condition: Expression;

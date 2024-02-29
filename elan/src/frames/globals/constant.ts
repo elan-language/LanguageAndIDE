@@ -47,7 +47,7 @@ export class Constant extends AbstractFrame {
         return `constant ${this.name.renderAsSource()} set to ${this.literal.renderAsSource()}\r
 `;
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 } 

@@ -48,10 +48,10 @@ ${this.indent()}end constructor\r
     parseBottomOfFrame(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end constructor");
     }
-    protected canInsertAbove(): boolean {
+    canInsertBefore(): boolean {
         return false;
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
+    insertSelector(after: boolean): void {
+        this.class.insertMemberSelector(after, this);
     }
 }

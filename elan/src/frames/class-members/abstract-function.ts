@@ -59,7 +59,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
         source.remove(") as ");
         this.returnType.parseFrom(source);
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
+    insertSelector(after: boolean): void {
+        this.class.insertMemberSelector(after, this);
     }
 }

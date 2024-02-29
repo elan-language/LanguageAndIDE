@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ProcedureRef } from "../fields/procedureRef";
 import { SingleLineStatement } from "./single-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
 
 export class Call extends SingleLineStatement {
     proc: ProcedureRef;

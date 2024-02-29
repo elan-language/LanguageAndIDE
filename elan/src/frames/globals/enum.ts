@@ -5,17 +5,16 @@ import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { Regexes } from "../fields/regexes";
-import { AbstractSelector } from "../abstract-selector";
-import { GlobalSelector } from "./global-selector";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
     name: Type;
     values: EnumValues;
+    file: File;
 
     constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPlaceholder("Name");
@@ -53,7 +52,7 @@ end enum\r
         source.removeNewLine();
         source.remove("end enum");
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 } 

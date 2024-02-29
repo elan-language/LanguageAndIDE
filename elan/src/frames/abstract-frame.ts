@@ -188,17 +188,13 @@ export abstract class AbstractFrame implements Frame {
         }
     }
 
-    abstract getSelectorToInsertAboveBelow(): AbstractSelector;
+    abstract insertSelector(after: boolean): void;
 
-    private insertSelector(after: boolean): void {
-        throw new Error("Not implemented");
-    }
-
-    protected canInsertAbove(): boolean {
+    canInsertBefore(): boolean {
         return true;
     }
 
-    protected canInsertBelow(): boolean {
+    canInsertAfter(): boolean {
         return true;
     }
 

@@ -1,13 +1,13 @@
 import { AbstractFrame } from "../abstract-frame";
 import { Type } from "../fields/type";
 import { TypeList } from "../fields/type-list";
-import { File } from "../interfaces/file";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { Field } from "../interfaces/field";
+import { File } from "../interfaces/file";
 import { MemberSelector } from "../class-members/member-selector";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
@@ -17,8 +17,6 @@ import { AbstractFunction as AbstractFunction } from "../class-members/abstract-
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 import { CommentStatement } from "../statements/comment-statement";
-import { AbstractSelector } from "../abstract-selector";
-import { GlobalSelector } from "./global-selector";
 
 export class Class extends AbstractFrame implements Parent {
 
@@ -30,19 +28,17 @@ export class Class extends AbstractFrame implements Parent {
     public immutable: boolean = false;
     public inherits: boolean = false;
     public superClasses: TypeList;
+    private file: File;
 
     constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPlaceholder("class name");
         this.superClasses  = new TypeList(this);
         this._members.push(new Constructor(this));
-        this._members.push(this.newMemberSelector());
-    }
-
-    newMemberSelector(): AbstractSelector {
-        return new MemberSelector(this);
+        this._members.push(new MemberSelector(this));
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
@@ -160,11 +156,16 @@ end class\r\n`;
         return result;
     }
 
-    public addMemberBeforeAndSelectFirstField(m: Frame, before: Frame) {
-        var i = this.   _members.indexOf(before);
-        this._members.splice(i,0,m);
-        m.selectFirstFieldOrSuitableFrame();
+    public addMemberAndSelectFirstField(newM: Frame, existing: Frame, after: boolean = false) {
+        var i = this.   _members.indexOf(existing);
+        if (after) {
+            this._members.splice(i+1,0, newM);
+        } else {
+            this._members.splice(i,0, newM);
+        }
+        newM.selectFirstFieldOrSuitableFrame();
     }
+
 
     public removeMember(m: Frame) {
         var i = this._members.indexOf(m);
@@ -173,43 +174,43 @@ end class\r\n`;
 
     addFunctionMethodBefore(member: Frame): Frame {
         var p = new FunctionMethod(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addPropertyBefore(member: Frame): Frame {
         var p = new Property(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addProcedureMethodBefore(member: Frame): Frame {
         var p = new ProcedureMethod(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractFunctionBefore(member: Frame): Frame {
         var p = new AbstractFunction(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addCommentBefore(member: Frame): Frame {
         var p = new CommentStatement(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractPropertyBefore(member: Frame): Frame {
         var p = new AbstractProperty(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
     addAbstractProcedureBefore(member: Frame): Frame {
         var p = new AbstractProcedure(this);
-        this.addMemberBeforeAndSelectFirstField(p, member);
+        this.addMemberAndSelectFirstField(p, member);
         p.select(true, false);
         return p;
     }
@@ -267,7 +268,22 @@ end class\r\n`;
         }
         return result;
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertMemberSelector(after: boolean, existing: Frame): void {
+        var selector =  new MemberSelector(this);
+        var i = this.   _members.indexOf(existing);
+        if (after) {
+            if (existing.canInsertAfter()) {
+                this._members.splice(i+1,0, selector);
+            }
+        } else {
+            if (existing.canInsertBefore()) {
+                this._members.splice(i,0, selector);
+            }
+        }
+        selector.select(true, false);
+    }
+    
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 }

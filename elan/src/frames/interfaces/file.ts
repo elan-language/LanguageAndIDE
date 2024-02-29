@@ -1,4 +1,5 @@
 import { CodeSource } from "../code-source";
+import { GlobalSelector } from "../globals/global-selector";
 import { ParseStatus } from "../parse-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
@@ -40,4 +41,6 @@ export interface File extends Parent {
     parseError?: string;
 
     deselectAll(): void;
+
+    insertGlobalSelector(after: boolean, existing: Frame): void;
 }

@@ -295,4 +295,18 @@ export class FileImpl implements File {
         var matches = code.match(/^[\s\r\n]*$/);
         return matches !== null && matches.length > 0;
     }
+
+    insertGlobalSelector(after: boolean, existing: Frame): void {
+        var selector =  new GlobalSelector(this);
+        if (after) {
+            if (existing.canInsertAfter()) {
+                this.addGlobalAfter(selector, existing);
+            }
+        } else {
+            if (existing.canInsertBefore()) {
+                this.addGlobalBefore(selector, existing);
+            }
+        }
+        selector.select(true, false);
+    }
 }

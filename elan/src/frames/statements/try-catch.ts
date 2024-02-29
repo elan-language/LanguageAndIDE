@@ -1,12 +1,10 @@
-import { FrameWithStatements } from "../frame-with-statements";
 import { Catch } from "./catch";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
-import { StatementSelector } from "./statement-selector";
 import { CodeSource } from "../code-source";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class TryCatch extends FrameWithStatements  {
-    isStatement = true;
+export class TryCatch extends MultiLineStatement  {
     private catch: Catch;
     
     constructor(parent: Parent) {

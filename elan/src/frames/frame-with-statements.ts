@@ -157,4 +157,18 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     getSelectorToInsertAboveBelow(): AbstractSelector { //Overridden by Global frames that inherit from this
         return new StatementSelector(this.getParent() as FrameWithStatements);
     }
+
+    insertSelector(after: boolean): void { //Overridden by Global frames that inherit from this
+        var selector = this.getSelectorToInsertAboveBelow();
+        var parent =(this.getParent() as FrameWithStatements);
+        if (after) {
+            if (this.canInsertAfter()) {
+                parent.addStatementAfter(selector, this);
+            }
+        } else {
+            if (this.canInsertBefore()) {
+                parent.addStatementBefore(selector, this);
+            }
+        }
+    }
 }

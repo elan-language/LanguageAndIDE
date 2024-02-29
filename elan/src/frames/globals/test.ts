@@ -1,20 +1,20 @@
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
+import { File } from "../interfaces/file";
 import { Assert } from "../statements/assert";
 import { VariableDefStatement } from "../statements/variable-def-statement";
-import { GlobalSelector } from "./global-selector";
 
 export class Test extends FrameWithStatements {
     isTest = true;
     isGlobal = true;
     public name : Identifier;
+    file: File;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
+        this.file = parent;
         this.multiline = true;
         this.statements.slice(0,1); //remove statement selector
         this.name = new Identifier(this);
@@ -54,7 +54,7 @@ end test\r
     parseBottomOfFrame(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return new GlobalSelector(this.getParent());
+    insertSelector(after: boolean): void {
+        this.file.insertGlobalSelector(after, this);
     }
 }

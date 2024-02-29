@@ -1,11 +1,11 @@
 import { CodeSource } from "../code-source";
 import { Expression } from "../fields/expression";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent} from "../interfaces/parent";
 import { Default } from "./default";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class Switch extends FrameWithStatements { 
+export class Switch extends MultiLineStatement { 
     isStatement = true;
     expr: Expression;
     default: Default;

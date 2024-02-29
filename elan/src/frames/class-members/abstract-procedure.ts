@@ -53,7 +53,7 @@ export class AbstractProcedure extends AbstractFrame implements Member {
         this.params.parseFrom(source);
         source.remove(")");
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
+    insertSelector(after: boolean): void {
+        this.class.insertMemberSelector(after, this);
     }
 }

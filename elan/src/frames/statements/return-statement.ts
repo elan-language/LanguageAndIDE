@@ -34,7 +34,7 @@ export class ReturnStatement extends SingleLineStatement  {
         this.expr.parseFrom(source);
     }
 
-    protected canInsertBelow(): boolean {
+    canInsertAfter(): boolean {
         return false;
     }
 } 

@@ -30,7 +30,7 @@ ${this.indent()}end function\r
     parseBottomOfFrame(source: CodeSource): boolean {
         return super.parseBottomOfFrame(source);
     }
-    getSelectorToInsertAboveBelow(): AbstractSelector {
-        return this.class.newMemberSelector();
+    insertSelector(after: boolean): void {
+        this.class.insertMemberSelector(after, this);
     }
 }

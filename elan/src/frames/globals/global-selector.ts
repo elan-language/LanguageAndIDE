@@ -1,6 +1,5 @@
 import { File } from "../interfaces/file";
 import { AbstractSelector } from "../abstract-selector";
-import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { Class } from "./class";
 
@@ -8,9 +7,9 @@ export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
     file: File;
 
-    constructor(parent: Parent) {
+    constructor(parent: File) {
         super(parent);
-        this.file = parent as File;
+        this.file = parent;
     }
     
     defaultOptions: [string, string][] = [

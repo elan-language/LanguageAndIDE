@@ -1,13 +1,12 @@
 import { Expression } from "../fields/expression";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { MultiLineStatement } from "./multi-line-statement";
 
-export class Each extends FrameWithStatements  {
-    isStatement = true;
+export class Each extends MultiLineStatement  {
     variable: Identifier;
     iter: Expression;
 

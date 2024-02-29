@@ -103,11 +103,20 @@ export abstract class AbstractSelector extends SingleLineStatement {
         }   
     }
 
-    protected canInsertAbove(): boolean {
+    canInsertBefore(): boolean {
         return false;
     }
 
-    protected canInsertBelow(): boolean {
+    canInsertAfter(): boolean {
         return false;
+    }
+
+    insertSelector(after: boolean): void {
+        throw new Error("Should never be called on a Selector");
+    }
+
+    selectFirstFieldOrSuitableFrame() : boolean {
+        this.select(true, false);
+        return true;
     }
 } 

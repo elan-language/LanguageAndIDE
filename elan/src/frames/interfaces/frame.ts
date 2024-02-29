@@ -28,4 +28,7 @@ export interface Frame extends Selectable {
     selectFieldOrFrameAfter(current: Field): void;
 
     getLastFieldOrSuitableFrame() : Selectable;
+
+    canInsertBefore(): boolean;
+    canInsertAfter(): boolean;
 }
