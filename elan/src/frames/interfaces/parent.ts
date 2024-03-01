@@ -1,3 +1,4 @@
+import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "./frame";
 import { Selectable } from "./selectable";
@@ -28,4 +29,6 @@ export interface Parent {
     getParent(): Parent;
 
     getLastFieldOrSuitableFrame() : Selectable;
+    moveDownOne(child: Frame): void;
+    moveUpOne(child: Frame): void;
 }

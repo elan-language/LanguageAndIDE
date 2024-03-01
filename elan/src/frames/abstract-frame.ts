@@ -135,13 +135,25 @@ export abstract class AbstractFrame implements Frame {
         var key = e.key;
         switch (key) {
           case "ArrowUp": {
-            var pf  = this.getPreviousFrame();
-            this.selectAsAppropriate(e, pf);
+            if (e.control) {
+                //TODO currenly works only on the single frame with focus
+                this.getParent().moveUpOne(this);
+                this.select(true, false);
+            } else {
+                var pf  = this.getPreviousFrame();
+                this.selectAsAppropriate(e, pf);
+            }
             break;
           }
           case "ArrowDown": {
-            var nf  = this.getNextFrame();
-            this.selectAsAppropriate(e, nf);
+            if (e.control) {
+                //TODO currenly works only on the single frame with focus
+                this.getParent().moveDownOne(this);
+                this.select(true, false);           
+            } else {
+                var nf  = this.getNextFrame();
+                this.selectAsAppropriate(e, nf);
+            }
             break;
           }
           case "ArrowLeft": {

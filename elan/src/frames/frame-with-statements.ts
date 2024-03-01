@@ -171,4 +171,15 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             }
         }
     }
+
+    moveDownOne(child: Frame): void {
+        var i = this.statements.indexOf(child);
+        this.statements.splice(i,1);
+        this.statements.splice(i+1,0,child);  
+    }
+    moveUpOne(child: Frame): void {
+        var i = this.statements.indexOf(child);
+        this.statements.splice(i,1);
+        this.statements.splice(i-1,0,child);     
+    }
 }

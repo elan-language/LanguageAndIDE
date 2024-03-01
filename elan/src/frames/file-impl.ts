@@ -40,6 +40,16 @@ export class FileImpl implements File {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
+    moveDownOne(child: Frame): void {
+        var i = this._globals.indexOf(child);
+        this._globals.splice(i,1);
+        this._globals.splice(i+1,0,child);  
+    }
+    moveUpOne(child: Frame): void {
+        var i = this._globals.indexOf(child);
+        this._globals.splice(i,1);
+        this._globals.splice(i-1,0,child);     
+    }
 
     minimumNumberOfChildrenExceeded(): boolean {
         return this._globals.length > 1;

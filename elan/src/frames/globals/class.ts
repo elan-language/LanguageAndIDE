@@ -286,4 +286,15 @@ end class\r\n`;
     insertSelector(after: boolean): void {
         this.file.insertGlobalSelector(after, this);
     }
+
+    moveDownOne(child: Frame): void {
+        var i = this._members.indexOf(child);
+        this._members.splice(i,1);
+        this._members.splice(i+1,0,child);  
+    }
+    moveUpOne(child: Frame): void {
+        var i = this._members.indexOf(child);
+        this._members.splice(i,1);
+        this._members.splice(i-1,0,child);     
+    }
 }
