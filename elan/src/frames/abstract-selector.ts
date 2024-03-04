@@ -99,7 +99,7 @@ export abstract class AbstractSelector extends SingleLineStatement {
                 this.text = "";
             }
         } else {
-                super.processKey(e);
+            super.processKey(e);
         }   
     }
 
@@ -113,10 +113,5 @@ export abstract class AbstractSelector extends SingleLineStatement {
 
     insertSelector(after: boolean): void {
         throw new Error("Should never be called on a Selector");
-    }
-
-    selectFirstFieldOrSuitableFrame() : boolean {
-        this.select(true, false);
-        return true;
     }
 } 
