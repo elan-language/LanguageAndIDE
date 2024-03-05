@@ -8,6 +8,7 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { KeyEvent } from "./interfaces/key-event";
 import { CodeSource } from "./code-source";
+import { MainFrame } from "./globals/main-frame";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -59,7 +60,9 @@ export abstract class AbstractFrame implements Frame {
         if (i > 0) {
             fields[i-1].select(true, false);
             result = true;
-        } 
+        } else {
+           this.selectLastFieldAboveThisFrame();
+        }
         return result;
     }
 
@@ -95,6 +98,20 @@ export abstract class AbstractFrame implements Frame {
         return result;
     }
 
+    getPreviousFramePeerOrAbove(): Frame {
+        var result: Frame = this;
+        if (this.getPreviousPeerFrame() !== this) {
+            result = this.getPreviousPeerFrame();
+        } else {
+            var parent = this.getParent();
+            if (isFrame(parent)) {
+                result = parent.getPreviousFramePeerOrAbove();
+            }
+        }
+        return result;
+    }
+
+    //Overridden by any frames that have children
     selectFirstField(): boolean {
         var result = false;
         if (this.getFields().length > 0) {
@@ -103,6 +120,16 @@ export abstract class AbstractFrame implements Frame {
         } 
         return result;
     } 
+
+    selectLastField(): boolean {
+        var result = false;
+        var n = this.getFields().length;
+        if (n > 0) {
+          this.getFields()[n -1].select(true, false);
+          result = true;
+        } 
+        return result;
+    }
 
     getLastFieldOrSuitableFrame(): Selectable {
         var result: Selectable = this;
@@ -221,19 +248,37 @@ export abstract class AbstractFrame implements Frame {
         return true;
     }
 
-    private tabOrEnter(back: boolean) {
+    tabOrEnter(back: boolean) {
         if (back) {
-            throw new Error("TODO");
-            var parent = this.getParent();
-            var prev = parent.getChildBefore(this);
-            if (prev !== this) {
-                prev.getLastFieldOrSuitableFrame().select(true, false);
-            } else {
-                parent.getLastFieldOrSuitableFrame().select(true, false);
-            }
+           this.selectLastFieldAboveThisFrame();
         } else {
             this.selectFirstField();
         }
+    }
+
+    selectLastFieldAboveThisFrame(): boolean {
+        var result = false;
+        var peer = this.getPreviousPeerFrame();
+        if (peer !== this) {
+            result = peer.selectLastField();
+        } else {
+            var parent = this.getParent();
+            var fields = parent.getFields();
+            var n = fields.length;
+            if (n > 0) {
+                fields[n -1].select(true, false);
+                result = true;
+            } else { //should only occur if the parent is 'main'
+                var main = parent as MainFrame;
+                var file = main.getParent() as File;
+                var prior = file.getChildBefore(main);
+                if (prior !== main ) {
+                    prior.selectLastField();  
+                    result = true;
+                }                
+            }
+        }
+        return result;
     }
 
     private selectAsAppropriate(e: KeyEvent, s: Frame) {

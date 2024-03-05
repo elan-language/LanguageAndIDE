@@ -297,4 +297,8 @@ end class\r\n`;
         this._members.splice(i,1);
         this._members.splice(i-1,0,child);     
     }
+    selectLastField(): boolean {
+        var n = this._members.length;
+        return this._members[n-1].selectLastField();
+    } 
 }

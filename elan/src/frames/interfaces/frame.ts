@@ -24,12 +24,14 @@ export interface Frame extends Selectable {
     worstStatusOfFields(): ParseStatus;
 
     selectFirstField() : boolean;
+    selectLastField() : boolean;
     selectFieldBefore(current: Field) : boolean;
     selectFieldAfter(current: Field): boolean;
 
     getLastFieldOrSuitableFrame() : Selectable;
     //If none, return this
     getNextFramePeerOrAbove(): Frame;
+    getPreviousFramePeerOrAbove(): Frame;
 
     canInsertBefore(): boolean;
     canInsertAfter(): boolean;

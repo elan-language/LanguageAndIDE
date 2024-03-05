@@ -1,5 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
+import { Field } from "./field";
 import { Frame } from "./frame";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
@@ -29,6 +30,8 @@ export interface Parent {
     getParent(): Parent;
 
     getLastFieldOrSuitableFrame() : Selectable;
+
+    getFields(): Field[];
 
     moveDownOne(child: Frame): void;
     moveUpOne(child: Frame): void;

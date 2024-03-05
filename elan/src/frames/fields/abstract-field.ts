@@ -134,7 +134,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     private tabOrEnter(back: boolean) {  
         if (back) {
-            this.holder.selectFieldBefore(this);
+this.holder.selectFieldBefore(this);
         } else {
             this.holder.selectFieldAfter(this);
         }

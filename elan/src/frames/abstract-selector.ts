@@ -89,12 +89,8 @@ export abstract class AbstractSelector extends SingleLineStatement {
                 this.getParent().removeChild(this);
             }
         }
-        else if (key === "Tab" || key === "Delete") {
-            if (e.shift) {
-                throw new Error("TODO");
-            } else {
-                this.getNextFramePeerOrAbove().selectFirstField();
-            }
+        else if (key === "Tab" || key === "Enter") {
+            this.tabOrEnter(e.shift);
         }
         else if (!key || key.length === 1) { //TODO: Make any exception for any specific non-printing chars?
             var options = this.optionsMatchingInput(this.text + key);
@@ -110,6 +106,14 @@ export abstract class AbstractSelector extends SingleLineStatement {
         }   
     }
 
+    tabOrEnter(shift: boolean): void {
+        if (shift) {
+            this.selectLastFieldAboveThisFrame();
+        } else {
+            this.getNextFramePeerOrAbove().selectFirstField();
+        }
+    }
+
     canInsertBefore(): boolean {
         return false;
     }
@@ -123,6 +127,11 @@ export abstract class AbstractSelector extends SingleLineStatement {
     }
 
     selectFirstField() : boolean {
+        this.select(true, false);
+        return true;
+    }
+
+    selectLastField() : boolean {
         this.select(true, false);
         return true;
     }

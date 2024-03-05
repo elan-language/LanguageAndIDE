@@ -17,6 +17,7 @@ import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
+import { Field } from "./interfaces/field";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -318,5 +319,9 @@ export class FileImpl implements File {
             }
         }
         selector.select(true, false);
+    }
+
+    getFields(): Field[] {
+        return [];
     }
 }
