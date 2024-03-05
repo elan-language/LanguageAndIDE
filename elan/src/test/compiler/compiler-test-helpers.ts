@@ -9,6 +9,10 @@ export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
 }
 
+export function assertDoesNotParse(file: FileImpl) {
+    assert.ok(file.parseError);
+}
+
 export function assertStatusIsValid(file: FileImpl) {
     assert.strictEqual(file.status(), ParseStatus.valid);
 }
