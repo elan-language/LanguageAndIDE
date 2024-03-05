@@ -98,17 +98,13 @@ export abstract class AbstractField implements Selectable, Field {
             break;
             } 
           case "ArrowRight": {
-            if (this.cursorPos === this.text.length) {
-                this.holder.selectFieldOrFrameAfter(this);
-            } else {
+            if (this.cursorPos < this.text.length) {
                 this.cursorPos ++;
             }
             break;
           } 
           case "ArrowLeft": {
-            if (this.cursorPos === 0) {
-                this.holder.selectFieldOrFrameBefore(this);
-            } else {
+            if (this.cursorPos > 0) {
                 this.cursorPos --;
             }
             break;
@@ -138,9 +134,15 @@ export abstract class AbstractField implements Selectable, Field {
 
     private tabOrEnter(back: boolean) {  
         if (back) {
-            this.holder.selectFieldOrFrameBefore(this);
+            var prev = this.holder.getFieldBefore(this);
+            if (prev !== this) {
+                prev.select(true, false);
+            }
         } else {
-            this.holder.selectFieldOrFrameAfter(this);
+            var next = this.holder.getFieldAfter(this);
+            if (next !== this) {
+                next.select(true, false);
+            }
         }
     }
 

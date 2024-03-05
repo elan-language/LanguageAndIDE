@@ -93,7 +93,7 @@ export class StatementFactoryImpl implements StatementFactory {
         var parent = selector.getParent() as FrameWithStatements;
         var newS = this.getNewStatement(frameType, selector.getParent());
         parent.addStatementBefore(newS, selector);
-        newS.selectFirstFieldOrSuitableFrame();
+        newS.selectFirstField();
         return newS;
     }
 }

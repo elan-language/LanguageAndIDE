@@ -8,7 +8,6 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { KeyEvent } from "./interfaces/key-event";
 import { CodeSource } from "./code-source";
-import { AbstractSelector } from "./abstract-selector";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -53,27 +52,27 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().getChildAfter(this);
     }
 
-    selectFieldOrFrameBefore(current: Field):void {
+    getFieldBefore(current: Field): Field {
+        var result: Field = current;
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i > 0) {
-            fields[i-1].select(true, false);
-        } else {
-            this.select(true, false);
-        }
+            result = fields[i-1];
+        } 
+        return result;
     }
 
-    selectFieldOrFrameAfter(current: Field): void {
+    getFieldAfter(current: Field): Field {
+        var result: Field = current;
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i < fields.length - 1) {
-            fields[i+1].select(true, false);
-        } else {
-            this.selectFirstChildOrNextPeer();
-        }
+            result = fields[i+1];
+        } 
+        return result;
     }
 
-    selectFirstFieldOrSuitableFrame(): boolean {
+    selectFirstField(): boolean {
         var result = false;
         if (this.getFields().length > 0) {
           this.getFields()[0].select(true, false);
@@ -105,15 +104,6 @@ export abstract class AbstractFrame implements Frame {
             result = pt;
         }
         return result;
-    }
-
-    private selectLastChildOrPreviousPeer() : boolean { 
-        if(isParent(this)) {
-            this.getLastChild().select(true, false);
-        } else {
-            this.getParent().getChildBefore(this).select(true, false);
-        }
-        return true;
     }
 
     private selectFirstChildOrNextPeer() : boolean { 
@@ -220,7 +210,7 @@ export abstract class AbstractFrame implements Frame {
                 parent.getLastFieldOrSuitableFrame().select(true, false);
             }
         } else {
-            this.selectFirstFieldOrSuitableFrame();
+            this.selectFirstField();
         }
     }
 

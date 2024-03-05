@@ -78,8 +78,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
     }
 
-    selectFirstFieldOrSuitableFrame(): boolean {
-        var result = super.selectFirstFieldOrSuitableFrame();
+    selectFirstField(): boolean {
+        var result = super.selectFirstField();
         if (!result && this.statements.length > 0) {
             this.statements[0].select(true, false);
             result = true;

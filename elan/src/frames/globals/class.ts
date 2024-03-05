@@ -163,7 +163,7 @@ end class\r\n`;
         } else {
             this._members.splice(i,0, newM);
         }
-        newM.selectFirstFieldOrSuitableFrame();
+        newM.selectFirstField();
     }
 
 

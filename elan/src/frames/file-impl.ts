@@ -253,7 +253,7 @@ export class FileImpl implements File {
     }
     private addGlobalBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
         this.addGlobalBefore(g, before);
-        g.selectFirstFieldOrSuitableFrame();
+        g.selectFirstField();
         return g;
     }
 
