@@ -8,6 +8,7 @@ import { StatementSelector } from "./statements/statement-selector";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { AbstractSelector } from "./abstract-selector";
+import { Field } from "./interfaces/field";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
@@ -81,11 +82,24 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     selectFirstField(): boolean {
         var result = super.selectFirstField();
         if (!result && this.statements.length > 0) {
-            this.statements[0].select(true, false);
-            result = true;
+            result = this.statements[0].selectFirstField();
         }
         return result;
     } 
+
+    selectFieldBefore(current: Field): boolean {
+        var result = super.selectFieldBefore(current);
+        return result;
+    }
+
+    selectFieldAfter(current: Field): boolean {
+        var result = super.selectFieldAfter(current);
+        if (!result && this.statements.length > 0) {
+            this.statements[0].selectFirstField();
+        } 
+        return result;
+    }
+
 
     selectFirstChildIfAny(): boolean {
         var result = false;

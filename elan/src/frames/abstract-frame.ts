@@ -52,23 +52,25 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().getChildAfter(this);
     }
 
-    getFieldBefore(current: Field): Field {
-        var result: Field = current;
+    selectFieldBefore(current: Field): boolean {
+        var result = false;
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i > 0) {
-            result = fields[i-1];
-        } 
+            fields[i-1].select(true, false);
+            result = true;
+        }
         return result;
     }
 
-    getFieldAfter(current: Field): Field {
-        var result: Field = current;
+    selectFieldAfter(current: Field): boolean {
+        var result = false;
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i < fields.length - 1) {
-            result = fields[i+1];
-        } 
+            fields[i+1].select(true, false);
+            result = true;
+        }
         return result;
     }
 
@@ -77,9 +79,7 @@ export abstract class AbstractFrame implements Frame {
         if (this.getFields().length > 0) {
           this.getFields()[0].select(true, false);
           result = true;
-        } else {
-            result = this.selectFirstChildOrNextPeer();
-        }
+        } 
         return result;
     } 
 
