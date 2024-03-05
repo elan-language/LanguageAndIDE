@@ -70,7 +70,7 @@ class TestSystem {
         return this.testInput;
     }
 
-    print(v: AnyMxRecord) {
+    print(v: any) {
         assert.strictEqual(v, this.testOutput);
     }
 }
