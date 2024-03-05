@@ -104,23 +104,23 @@ function handleModelKey(e: editorEvent, file: File) {
 function handleWindowKey(e: editorEvent, file: File) {
     switch (e.key) {
         case 'Home': {
-            const g = file.getFirstChild();
-            g?.select(true, false);
-            break;
-        }
-        case 'Enter': {
-            const g = file.getFirstChild();
-            g?.select(true, false);
+            selectFirstGlobal(file);
             break;
         }
         case 'ArrowDown': {
-            const g = file.getFirstChild();
-            g?.select(true, false);
+            selectFirstGlobal(file);
             break;
         }
         case 'ArrowRight': {
-            const g = file.getFirstChild();
-            g?.select(true, false);
+            selectFirstGlobal(file);
+            break;
+        }
+        case 'Enter': {
+            selectFirstField(file);
+            break;
+        }
+        case 'Tab': {
+            selectFirstField(file);
             break;
         }
         case 'End': {
@@ -134,5 +134,14 @@ function handleWindowKey(e: editorEvent, file: File) {
             }
             break;
         }
+    }
+
+    function selectFirstGlobal(file: File) {
+        const g = file.getFirstChild();
+        g?.select(true, false);
+    }
+
+    function selectFirstField(file: File) {
+        file.getFirstChild().selectFirstField();
     }
 }
