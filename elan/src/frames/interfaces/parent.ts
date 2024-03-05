@@ -29,6 +29,7 @@ export interface Parent {
     getParent(): Parent;
 
     getLastFieldOrSuitableFrame() : Selectable;
+
     moveDownOne(child: Frame): void;
     moveUpOne(child: Frame): void;
 }

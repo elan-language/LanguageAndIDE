@@ -45,10 +45,10 @@ export abstract class AbstractFrame implements Frame {
     getLastPeerFrame(): Frame {
         return this.getParent().getLastChild();
     }
-    getPreviousFrame(): Frame {
+    getPreviousPeerFrame(): Frame {
         return this.getParent().getChildBefore(this);
     }
-    getNextFrame(): Frame {
+    getNextPeerFrame(): Frame {
         return this.getParent().getChildAfter(this);
     }
 
@@ -59,7 +59,7 @@ export abstract class AbstractFrame implements Frame {
         if (i > 0) {
             fields[i-1].select(true, false);
             result = true;
-        }
+        } 
         return result;
     }
 
@@ -70,6 +70,27 @@ export abstract class AbstractFrame implements Frame {
         if (i < fields.length - 1) {
             fields[i+1].select(true, false);
             result = true;
+        } else {
+            if (isParent(this)){
+                this.getFirstChild().selectFirstField();
+                result = true;
+            } else {
+                this.getNextFramePeerOrAbove().selectFirstField();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    getNextFramePeerOrAbove(): Frame {
+        var result: Frame = this;
+        if (this.getNextPeerFrame() !== this) {
+            result = this.getNextPeerFrame();
+        } else {
+            var parent = this.getParent();
+            if (isFrame(parent)) {
+                result = parent.getNextFramePeerOrAbove();
+            }
         }
         return result;
     }
@@ -97,7 +118,7 @@ export abstract class AbstractFrame implements Frame {
     private getPreviousPeerOrParent() : Selectable { 
         var result: Selectable = this;
         var pt = this.getParent();
-        var previousPeer = this.getPreviousFrame();
+        var previousPeer = this.getPreviousPeerFrame();
         if(previousPeer !== this) {
            result = previousPeer;
         } else if (isFrame(pt)) {
@@ -130,7 +151,7 @@ export abstract class AbstractFrame implements Frame {
                 this.getParent().moveUpOne(this);
                 this.select(true, false);
             } else {
-                var pf  = this.getPreviousFrame();
+                var pf  = this.getPreviousPeerFrame();
                 this.selectAsAppropriate(e, pf);
             }
             break;
@@ -141,7 +162,7 @@ export abstract class AbstractFrame implements Frame {
                 this.getParent().moveDownOne(this);
                 this.select(true, false);           
             } else {
-                var nf  = this.getNextFrame();
+                var nf  = this.getNextPeerFrame();
                 this.selectAsAppropriate(e, nf);
             }
             break;

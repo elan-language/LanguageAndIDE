@@ -21,11 +21,4 @@ export abstract class SingleLineStatement extends AbstractFrame  {
         selector.select(true, false);
     }
 
-    selectFieldAfter(current: Field): boolean {
-        var result = super.selectFieldAfter(current);
-        if (!result) {
-            result = this.getNextFrame().selectFirstField();
-        }
-        return result;
-    }
 } 

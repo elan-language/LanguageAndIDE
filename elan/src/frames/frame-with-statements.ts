@@ -92,15 +92,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return result;
     }
 
-    selectFieldAfter(current: Field): boolean {
-        var result = super.selectFieldAfter(current);
-        if (!result && this.statements.length > 0) {
-            this.statements[0].selectFirstField();
-        } 
-        return result;
-    }
-
-
     selectFirstChildIfAny(): boolean {
         var result = false;
         if (this.statements.length > 0) {

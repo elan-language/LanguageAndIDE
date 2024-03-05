@@ -9,8 +9,8 @@ export interface Frame extends Selectable {
     
     getFirstPeerFrame(): Frame;
     getLastPeerFrame(): Frame;
-    getPreviousFrame(): Frame;
-    getNextFrame(): Frame;
+    getPreviousPeerFrame(): Frame;
+    getNextPeerFrame(): Frame;
 
     getParent(): Parent;
     getMap(): Map<string, Selectable>;
@@ -28,6 +28,8 @@ export interface Frame extends Selectable {
     selectFieldAfter(current: Field): boolean;
 
     getLastFieldOrSuitableFrame() : Selectable;
+    //If none, return this
+    getNextFramePeerOrAbove(): Frame;
 
     canInsertBefore(): boolean;
     canInsertAfter(): boolean;
