@@ -9,16 +9,12 @@ export abstract class SingleLineStatement extends AbstractFrame  {
     insertSelector(after: boolean): void {
         var selector = (this.getParent() as FrameWithStatements).newStatementSelector();
         var parent =(this.getParent() as FrameWithStatements);
-        if (after) {
-            if (this.canInsertAfter()) {
+        if (after && this.canInsertAfter()) {
                 parent.addStatementAfter(selector, this);
-            }
-        } else {
-            if (this.canInsertBefore()) {
+                selector.select(true, false);
+        } else if (!after && this.canInsertBefore()) {
                 parent.addStatementBefore(selector, this);
-            }
+                selector.select(true, false);
         }
-        selector.select(true, false);
     }
-
 } 

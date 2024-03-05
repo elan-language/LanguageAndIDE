@@ -48,8 +48,10 @@ export class FileImpl implements File {
     }
     moveUpOne(child: Frame): void {
         var i = this._globals.indexOf(child);
-        this._globals.splice(i,1);
-        this._globals.splice(i-1,0,child);     
+        if (i > 0) {
+            this._globals.splice(i,1);
+            this._globals.splice(i-1,0,child);   
+        }  
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
@@ -305,16 +307,13 @@ export class FileImpl implements File {
 
     insertGlobalSelector(after: boolean, existing: Frame): void {
         var selector =  new GlobalSelector(this);
-        if (after) {
-            if (existing.canInsertAfter()) {
-                this.addGlobalAfter(selector, existing);
-            }
-        } else {
-            if (existing.canInsertBefore()) {
-                this.addGlobalBefore(selector, existing);
-            }
+        if (after && existing.canInsertAfter()) {
+            this.addGlobalAfter(selector, existing);
+            selector.select(true, false);
+        } else if (!after && existing.canInsertBefore()) {
+            this.addGlobalBefore(selector, existing);
+            selector.select(true, false);
         }
-        selector.select(true, false);
     }
 
     getFields(): Field[] {

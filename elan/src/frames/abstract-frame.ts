@@ -21,6 +21,7 @@ export abstract class AbstractFrame implements Frame {
     private collapsed: boolean = false;
     private _classes = new Array<string>;
     protected htmlId: string = "";
+    protected movable: boolean = true;
 
     constructor(parent: Parent) {
         this._parent = parent;
@@ -78,34 +79,34 @@ export abstract class AbstractFrame implements Frame {
                 this.getFirstChild().selectFirstField();
                 result = true;
             } else {
-                this.getNextFramePeerOrAbove().selectFirstField();
+                this.getNextFrameInTabOrder().selectFirstField();
                 result = true;
             }
         }
         return result;
     }
 
-    getNextFramePeerOrAbove(): Frame {
+    getNextFrameInTabOrder(): Frame {
         var result: Frame = this;
         if (this.getNextPeerFrame() !== this) {
             result = this.getNextPeerFrame();
         } else {
             var parent = this.getParent();
             if (isFrame(parent)) {
-                result = parent.getNextFramePeerOrAbove();
+                result = parent.getNextFrameInTabOrder();
             }
         }
         return result;
     }
 
-    getPreviousFramePeerOrAbove(): Frame {
+    getPreviousFrameInTabOrder(): Frame {
         var result: Frame = this;
         if (this.getPreviousPeerFrame() !== this) {
             result = this.getPreviousPeerFrame();
         } else {
             var parent = this.getParent();
             if (isFrame(parent)) {
-                result = parent.getPreviousFramePeerOrAbove();
+                result = parent.getPreviousFrameInTabOrder();
             }
         }
         return result;
@@ -137,22 +138,23 @@ export abstract class AbstractFrame implements Frame {
           case "ArrowUp": {
             if (e.control) {
                 //TODO currenly works only on the single frame with focus
-                this.getParent().moveUpOne(this);
-                this.select(true, false);
+                if (this.movable) {
+                    this.getParent().moveUpOne(this);
+                }
             } else {
                 var pf  = this.getPreviousPeerFrame();
-                this.selectAsAppropriate(e, pf);
+                this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.shift);
             }
             break;
           }
           case "ArrowDown": {
             if (e.control) {
                 //TODO currenly works only on the single frame with focus
-                this.getParent().moveDownOne(this);
-                this.select(true, false);           
+                if (this.movable) {
+                  this.getParent().moveDownOne(this);    
+                }      
             } else {
-                var nf  = this.getNextPeerFrame();
-                this.selectAsAppropriate(e, nf);
+                this.selectSingleOrMulti(this.getNextPeerFrame(), e.shift);
             }
             break;
           }
@@ -243,8 +245,8 @@ export abstract class AbstractFrame implements Frame {
         return result;
     }
 
-    private selectAsAppropriate(e: KeyEvent, s: Frame) {
-        if (e.shift) {
+    private selectSingleOrMulti(s: Frame, multiSelect: boolean) {
+        if (multiSelect) {
             this.select(false, true);
             s.select(true, true);
         }
@@ -380,7 +382,6 @@ export abstract class AbstractFrame implements Frame {
         return this.worstStatusOfFields();
     }
 
-    parseFrom(source: CodeSource): void {
-        throw new Error("Not implemented");
-    }
+    abstract parseFrom(source: CodeSource): void;
+
 }

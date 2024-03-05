@@ -1,4 +1,4 @@
-# e6017abcee346b21fd408f866fe467946d49c9e34adb3c9f4c7d663bf856a427 Elan v0.1 valid
+# 7c0938330686ed4781537aedfeb9874509a5042d89ba44947f014ad0f0034d4e Elan v0.1 valid
 
 main
   print welcome
@@ -16,8 +16,6 @@ main
     end if
   end while
 end main
-
-constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
 
 constant welcome set to "Welcome to the Snake game."
 
@@ -125,9 +123,9 @@ class Square
     set property.y to y
   end constructor
 
-  property x Int
-
   property y Int
+
+  property x Int
 
   function getAdjacentSquare(d Direction) as Square
     var newX set to x
@@ -151,3 +149,5 @@ class Square
   end function
 
 end class
+
+constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}

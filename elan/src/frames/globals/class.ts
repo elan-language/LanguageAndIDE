@@ -270,17 +270,14 @@ end class\r\n`;
     }
     insertMemberSelector(after: boolean, existing: Frame): void {
         var selector =  new MemberSelector(this);
-        var i = this.   _members.indexOf(existing);
-        if (after) {
-            if (existing.canInsertAfter()) {
+        var i = this._members.indexOf(existing);
+        if (after && existing.canInsertAfter()) {
                 this._members.splice(i+1,0, selector);
-            }
-        } else {
-            if (existing.canInsertBefore()) {
+                selector.select(true, false);
+        } else if (!after && existing.canInsertBefore()) {
                 this._members.splice(i,0, selector);
-            }
+                selector.select(true, false);
         }
-        selector.select(true, false);
     }
     
     insertSelector(after: boolean): void {
@@ -289,13 +286,18 @@ end class\r\n`;
 
     moveDownOne(child: Frame): void {
         var i = this._members.indexOf(child);
-        this._members.splice(i,1);
-        this._members.splice(i+1,0,child);  
+        if ((i < this._members.length - 1) && (this._members[i+1].canInsertAfter())) {
+            this._members.splice(i,1);
+            this._members.splice(i+1,0,child); 
+        } 
     }
+
     moveUpOne(child: Frame): void {
         var i = this._members.indexOf(child);
-        this._members.splice(i,1);
-        this._members.splice(i-1,0,child);     
+        if ((i > 0) && (this._members[i-1].canInsertBefore())) {
+            this._members.splice(i,1);
+            this._members.splice(i-1,0,child); 
+        }    
     }
     selectLastField(): boolean {
         var n = this._members.length;

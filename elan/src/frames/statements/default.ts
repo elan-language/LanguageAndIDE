@@ -6,6 +6,7 @@ import { MultiLineStatement } from "./multi-line-statement";
 export class Default extends MultiLineStatement {
     constructor(parent: Parent) {
         super(parent);
+        this.movable = false;
     }
     getFields(): Field[] {
         return [];

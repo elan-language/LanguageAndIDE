@@ -110,7 +110,7 @@ export abstract class AbstractSelector extends SingleLineStatement {
         if (shift) {
             this.selectLastFieldAboveThisFrame();
         } else {
-            this.getNextFramePeerOrAbove().selectFirstField();
+            this.getNextFrameInTabOrder().selectFirstField();
         }
     }
 

@@ -173,25 +173,27 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     insertSelector(after: boolean): void { //Overridden by Global frames that inherit from this
         var selector = this.getSelectorToInsertAboveBelow();
         var parent =(this.getParent() as FrameWithStatements);
-        if (after) {
-            if (this.canInsertAfter()) {
-                parent.addStatementAfter(selector, this);
-            }
-        } else {
-            if (this.canInsertBefore()) {
-                parent.addStatementBefore(selector, this);
-            }
-        }
+        if (after && this.canInsertAfter()) {
+            parent.addStatementAfter(selector, this);
+            selector.select(true, false);
+        } else if (!after && this.canInsertBefore()) {
+            parent.addStatementBefore(selector, this);
+            selector.select(true, false);
+        } 
     }
 
     moveDownOne(child: Frame): void {
         var i = this.statements.indexOf(child);
-        this.statements.splice(i,1);
-        this.statements.splice(i+1,0,child);  
+        if ((i < this.statements.length - 1) && (this.statements[i+1].canInsertAfter())) {
+            this.statements.splice(i,1);
+            this.statements.splice(i+1,0,child);  
+        }
     }
     moveUpOne(child: Frame): void {
         var i = this.statements.indexOf(child);
-        this.statements.splice(i,1);
-        this.statements.splice(i-1,0,child);     
+        if ((i > 0) && (this.statements[i-1].canInsertBefore())) {
+            this.statements.splice(i,1);
+            this.statements.splice(i-1,0,child);     
+        }
     }
 }

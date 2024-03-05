@@ -82,6 +82,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     processKey(e: KeyEvent): void {
         var key = e.key;
+        var textLen = this.text.length;
         if (key?.length === 1) {
             this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
             this.cursorPos ++;
@@ -98,7 +99,7 @@ export abstract class AbstractField implements Selectable, Field {
             break;
             } 
           case "ArrowRight": {
-            if (this.cursorPos < this.text.length) {
+            if (this.cursorPos < textLen) {
                 this.cursorPos ++;
             }
             break;
@@ -110,17 +111,24 @@ export abstract class AbstractField implements Selectable, Field {
             break;
           } 
           case "Home": {
-            this.cursorPos === 0;
+            this.cursorPos = 0;
             break;
           } 
           case "End": {
-            this.cursorPos === this.text.length;
+            this.cursorPos = textLen;
             break;
           } 
           case "Backspace": {
             if (this.cursorPos > 0) {
                 this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
                 this.cursorPos --;
+                this.parseCurrentText();
+            }
+            break;
+          } 
+          case "Delete": {
+            if (this.cursorPos < textLen) {
+                this.text = this.text.slice(0,this.cursorPos) + this.text.slice(this.cursorPos+1);
                 this.parseCurrentText();
             }
             break;
@@ -134,7 +142,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     private tabOrEnter(back: boolean) {  
         if (back) {
-this.holder.selectFieldBefore(this);
+            this.holder.selectFieldBefore(this);
         } else {
             this.holder.selectFieldAfter(this);
         }

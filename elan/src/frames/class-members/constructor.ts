@@ -15,6 +15,7 @@ export class Constructor extends FrameWithStatements implements Member {
     constructor(parent: Class) {
         super(parent);
         this.class = parent as Class;
+        this.movable = false;
         this.multiline = true;
         this.params = new ParamList(this);
     }

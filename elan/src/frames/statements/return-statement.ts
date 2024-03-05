@@ -10,6 +10,7 @@ export class ReturnStatement extends SingleLineStatement  {
 
     constructor(parent: Parent) {
         super(parent);
+        this.movable = false;
         this.expr = new Expression(this);
         this.expr.setText("default");
     }

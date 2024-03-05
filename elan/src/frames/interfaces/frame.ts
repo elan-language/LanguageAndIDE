@@ -4,7 +4,6 @@ import { ParseStatus } from "../parse-status";
 import { Parent } from "./parent";
 
 export interface Frame extends Selectable {
-    // external use
     isFrame: boolean;
     
     getFirstPeerFrame(): Frame;
@@ -29,8 +28,8 @@ export interface Frame extends Selectable {
     selectFieldAfter(current: Field): boolean;
 
     //If none, return this
-    getNextFramePeerOrAbove(): Frame;
-    getPreviousFramePeerOrAbove(): Frame;
+    getNextFrameInTabOrder(): Frame;
+    getPreviousFrameInTabOrder(): Frame;
 
     canInsertBefore(): boolean;
     canInsertAfter(): boolean;
