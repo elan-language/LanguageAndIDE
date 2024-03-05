@@ -28,7 +28,6 @@ export interface Frame extends Selectable {
     selectFieldBefore(current: Field) : boolean;
     selectFieldAfter(current: Field): boolean;
 
-    getLastFieldOrSuitableFrame() : Selectable;
     //If none, return this
     getNextFramePeerOrAbove(): Frame;
     getPreviousFramePeerOrAbove(): Frame;

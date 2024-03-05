@@ -131,44 +131,6 @@ export abstract class AbstractFrame implements Frame {
         return result;
     }
 
-    getLastFieldOrSuitableFrame(): Selectable {
-        var result: Selectable = this;
-        var fields = this.getFields();
-        if (fields.length > 0) {
-          result = this.getFields()[fields.length-1];
-        } else {
-            result = this.getPreviousPeerOrParent();
-        }
-        return result;
-    } 
-    
-    private getPreviousPeerOrParent() : Selectable { 
-        var result: Selectable = this;
-        var pt = this.getParent();
-        var previousPeer = this.getPreviousPeerFrame();
-        if(previousPeer !== this) {
-           result = previousPeer;
-        } else if (isFrame(pt)) {
-            result = pt;
-        }
-        return result;
-    }
-
-    private selectFirstChildOrNextPeer() : boolean { 
-        if(isParent(this)) {
-            this.getFirstChild().select(true, false);
-        } else {
-            var parent = this.getParent();
-            var next = parent.getChildAfter(this);
-            if (next !== this){
-                next.select(true, false);
-            } else if (isFrame(parent)) {               
-                parent.getParent().getChildAfter(parent).select(true,false);
-            }
-        }
-        return true;
-    }
-
     processKey(e: KeyEvent): void {
         var key = e.key;
         switch (key) {
