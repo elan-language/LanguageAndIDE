@@ -118,9 +118,25 @@ export class FileImpl implements File {
         return result;
     }
 
+    renderGlobalsAsObjectCode() : string{
+        var result = "";
+        if (this._globals.length > 0) {
+            const ss: Array<string> = [];
+            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
+                ss.push(frame.renderAsObjectCode());
+            }
+            result = ss.join("\r\n");
+        }
+        return result;
+    }
+
     renderAsSource(): string {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
+    }
+
+    renderAsObjectCode(): string {
+        return this.renderGlobalsAsObjectCode(); 
     }
 
     renderHashableContent(): string {

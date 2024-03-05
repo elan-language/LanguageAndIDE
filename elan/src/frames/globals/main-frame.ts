@@ -44,6 +44,13 @@ end main\r
 `;
     }
 
+    public renderAsObjectCode() : string {
+        return `export async function main(system : any) {\r
+${this.renderStatementsAsObjectCode()}\r
+}\r
+`;
+    }
+
     parseTopOfFrame(source: CodeSource) {
         source.remove("main");
     }  
