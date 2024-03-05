@@ -223,6 +223,7 @@ export abstract class AbstractFrame implements Frame {
 
     private tabOrEnter(back: boolean) {
         if (back) {
+            throw new Error("TODO");
             var parent = this.getParent();
             var prev = parent.getChildBefore(this);
             if (prev !== this) {

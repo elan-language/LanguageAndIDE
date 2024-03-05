@@ -89,6 +89,13 @@ export abstract class AbstractSelector extends SingleLineStatement {
                 this.getParent().removeChild(this);
             }
         }
+        else if (key === "Tab" || key === "Delete") {
+            if (e.shift) {
+                throw new Error("TODO");
+            } else {
+                this.getNextFramePeerOrAbove().selectFirstField();
+            }
+        }
         else if (!key || key.length === 1) { //TODO: Make any exception for any specific non-printing chars?
             var options = this.optionsMatchingInput(this.text + key);
             if (options.length > 1 ) {
@@ -113,5 +120,10 @@ export abstract class AbstractSelector extends SingleLineStatement {
 
     insertSelector(after: boolean): void {
         throw new Error("Should never be called on a Selector");
+    }
+
+    selectFirstField() : boolean {
+        this.select(true, false);
+        return true;
     }
 } 
