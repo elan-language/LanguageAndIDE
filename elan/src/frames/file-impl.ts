@@ -61,10 +61,6 @@ export class FileImpl implements File {
         this._globals.splice(i,1);
     }
 
-    getLastFieldOrSuitableFrame(): Selectable {
-        return this._globals[0];
-    }
-
     hasParent(): boolean {
         return false;
     }

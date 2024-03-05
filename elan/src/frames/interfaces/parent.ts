@@ -29,8 +29,6 @@ export interface Parent {
     hasParent(): boolean;
     getParent(): Parent;
 
-    getLastFieldOrSuitableFrame() : Selectable;
-
     getFields(): Field[];
 
     moveDownOne(child: Frame): void;
