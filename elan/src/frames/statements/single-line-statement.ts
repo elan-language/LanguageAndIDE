@@ -1,6 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
 
 export abstract class SingleLineStatement extends AbstractFrame  {
     isStatement = true;
@@ -18,5 +19,13 @@ export abstract class SingleLineStatement extends AbstractFrame  {
             }
         }
         selector.select(true, false);
+    }
+
+    selectFieldAfter(current: Field): boolean {
+        var result = super.selectFieldAfter(current);
+        if (!result) {
+            result = this.getNextFrame().selectFirstField();
+        }
+        return result;
     }
 } 
