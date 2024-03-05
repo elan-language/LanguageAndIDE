@@ -3,6 +3,7 @@ import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
 import * as ts from "typescript";
 import { Done } from "mocha";
+import { AnyMxRecord } from "dns";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -32,7 +33,7 @@ function doImport(str: string) {
 }
 
 
-export function assertObjectCodeExecutes(file: FileImpl, output: string, done: Done) {
+export function assertObjectCodeExecutes(file: FileImpl, output: any, done: Done) {
 
     const tsCode = file.renderAsObjectCode();
     const jsCode = ts.transpile(tsCode, {
@@ -53,19 +54,19 @@ export function assertObjectCodeExecutes(file: FileImpl, output: string, done: D
     });
 }
 
-export function ignore_test(name: string, test: any) {
+export function ignore_test(name: string, test: (done : Done) => void) {
 }
 
 class TestSystem {
 
-    constructor(private testOutput: string, private testInput?: string) {
+    constructor(private testOutput: any, private testInput?: string) {
     }
 
     async input() {
         return this.testInput;
     }
 
-    print(v: string) {
+    print(v: AnyMxRecord) {
         assert.strictEqual(v, this.testOutput);
     }
 }
