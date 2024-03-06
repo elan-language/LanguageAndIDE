@@ -122,7 +122,7 @@ suite('Milestone 1 - Unit tests', () => {
 		g.processKey(key('c'));
 		help = g.getHelp();
 		assert.equal(help, " class constant");
-        assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><text>c</text><placeholder>new code</placeholder><help> class constant</help></global>`);
+        assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`);
 	});	
 
 	test("Selection Filtering - members", () => {
@@ -134,7 +134,7 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('p'));
 		help = s.getHelp();
 		assert.equal(help, " procedure property");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select8' tabindex="0"><text>pro</text><placeholder>new code</placeholder><help> procedure property</help></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select8' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {
@@ -146,7 +146,7 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('s'));
 		help = s.getHelp();
 		assert.equal(help, " set switch");
-        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><text>s</text><placeholder>new code</placeholder><help> set switch</help></statement>`);
+        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`);
 	});	
 
 	test("Selection Context - in a Function", () => {

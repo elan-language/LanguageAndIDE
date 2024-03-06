@@ -210,3 +210,16 @@ global help, member help, statement help  {
 parseError {
     color: red;
 }
+
+/* Selectors */
+selector * {
+  background-color: white;
+  color: lightgrey;
+}
+.selected > selector * {
+  background-color: lightgrey;
+  color: white;
+}
+.selected > selector text {
+  color: black;
+}

@@ -72,7 +72,7 @@ export abstract class AbstractSelector extends SingleLineStatement {
         this.text = "";
     }
     textToDisplay(): string {
-            return `<text>${this.text}</text><placeholder>${this.label}</placeholder><help>${this.getHelp()}</help>`;
+            return `<selector><text>${this.text}</text><placeholder>${this.label}</placeholder><help class="selector">${this.getHelp()}</help></selector>`;
     }
 
     renderAsSource(): string {

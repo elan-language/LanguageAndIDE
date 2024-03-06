@@ -9,7 +9,7 @@ import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
