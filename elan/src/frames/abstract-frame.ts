@@ -143,7 +143,7 @@ export abstract class AbstractFrame implements Frame {
           case "o": {if (e.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "ArrowUp": {
             if (e.control && this.movable) {
-                this.getParent().moveUpOne(this);
+                this.getParent().moveSelectedChildrenUpOne();
             } else {
                 this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.shift);
             }
@@ -151,7 +151,7 @@ export abstract class AbstractFrame implements Frame {
           }
           case "ArrowDown": {
             if (e.control && this.movable) {
-                  this.getParent().moveDownOne(this);         
+                  this.getParent().moveSelectedChildrenDownOne();         
             } else {
                 this.selectSingleOrMulti(this.getNextPeerFrame(), e.shift);
             }
@@ -293,6 +293,16 @@ export abstract class AbstractFrame implements Frame {
                 f.deselect();
             }
         }
+    }
+
+    getAllSelected(): Selectable[] {
+        var selected = [];
+        for (const f of this.getMap().values()) {
+            if (f.isSelected()) {
+                selected.push(f);
+            }
+        }
+        return selected;
     }
 
     hasParent(): boolean {

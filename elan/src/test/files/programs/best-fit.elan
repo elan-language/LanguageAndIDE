@@ -1,7 +1,15 @@
-﻿# 9d12909e98653a6e15f3b847e4afede63374a214f5581beeb7cd28ea354667f5 Elan v0.1 valid
+﻿# 3b8211ef978bc79f6b11744d9a8dee03344b9dbea0c58ef2fea04edb9f26c8c9 Elan v0.1 valid
+
+function calcA(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float
+  return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
+end function
 
 function calcSumX(points List<of (Float, Float)>) as Float
   return points.reduce(0.0, lambda s,p -> s + p.first())
+end function
+
+function calcSumXY(points List<of (Float, Float)>) as Float
+  return points.reduce(0.0, lambda s,p ->s + p.first() * p.second())
 end function
 
 function calcSumY(points List<of (Float, Float)>) as Float
@@ -12,12 +20,8 @@ function calcSumXsq(points List<of (Float, Float)>) as Float
   return points.reduce(0.0, lambda s,p -> s + p.first() * p.first())
 end function
 
-function calcSumXY(points List<of (Float, Float)>) as Float
-  return points.reduce(0.0, lambda s,p ->s + p.first() * p.second())
-end function
-
-function calcA(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float
-  return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
+function bestFitFromPoints(points List<of (Float, Float)>) as (Float, Float)
+  return bestFitFromSummaryTerms(calcSumX(points), calcSumXsq(points), calcSumY(points), calcSumXY(points), points.length())
 end function
 
 function calcB(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float
@@ -26,10 +30,6 @@ end function
 
 function bestFitFromSummaryTerms(sumX Float, sumX2 Float, sumY Float, sumXY Float, n Int) as (Float, Float)
   return (calcA(sumX, sumX2, sumY, sumXY, n), calcB(sumX, sumX2, sumY, sumXY, n))
-end function
-
-function bestFitFromPoints(points List<of (Float, Float)>) as (Float, Float)
-  return bestFitFromSummaryTerms(calcSumX(points), calcSumXsq(points), calcSumY(points), calcSumXY(points), points.length())
 end function
 
 constant example set to {(0, 2.673040396), (1, 3.550437254), (2, 5.063963424), (3, 6.445493589), (4, 5.959864362), (5, 7.826499306), (6, 5.628729698), (7, 10.65942485), (8, 8.010532477), (9, 10.67121885), (10, 9.000669447), (11, 13.50830072), (12, 11.43464406), (13, 13.58275437), (14, 13.10821319), (15, 10.28617997), (16, 17.86384888), (17, 15.20409345), (18, 17.00764549), (19, 12.11596949)}

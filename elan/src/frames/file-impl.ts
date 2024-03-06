@@ -41,19 +41,44 @@ export class FileImpl implements File {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
-    moveDownOne(child: Frame): void {
+    private moveDownOne(child: Frame): boolean {
+        var result = false;
         var i = this._globals.indexOf(child);
-        this._globals.splice(i,1);
-        this._globals.splice(i+1,0,child);  
+        if (i < this._globals.length - 1) {
+            this._globals.splice(i,1);
+            this._globals.splice(i+1,0,child);
+            result = true;
+        }  
+        return result;
     }
-    moveUpOne(child: Frame): void {
+    private moveUpOne(child: Frame): boolean {
+        var result = false;
         var i = this._globals.indexOf(child);
         if (i > 0) {
             this._globals.splice(i,1);
-            this._globals.splice(i-1,0,child);   
+            this._globals.splice(i-1,0,child); 
+            return result = true;  
         }  
+        return result;
     }
-
+    moveSelectedChildrenUpOne(): void {
+        var toMove = this._globals.filter(g => g.isSelected()); 
+        var cont = true;
+        var i = 0;
+        while (cont && i < toMove.length) {
+            cont = this.moveUpOne(toMove[i]);
+            i++;
+        }
+    }
+    moveSelectedChildrenDownOne(): void {
+        var toMove = this._globals.filter(g => g.isSelected());
+        var cont = true;
+        var i = toMove.length - 1;
+        while (cont && i >= 0) {
+            cont = this.moveDownOne(toMove[i]);
+            i--;
+        }
+    }
     minimumNumberOfChildrenExceeded(): boolean {
         return this._globals.length > 1;
     }

@@ -182,18 +182,43 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         } 
     }
 
-    moveDownOne(child: Frame): void {
+    private moveDownOne(child: Frame): boolean {
+        var result = false;
         var i = this.statements.indexOf(child);
         if ((i < this.statements.length - 1) && (this.statements[i+1].canInsertAfter())) {
             this.statements.splice(i,1);
             this.statements.splice(i+1,0,child);  
+            result = true;
         }
+        return result;
     }
-    moveUpOne(child: Frame): void {
+    private moveUpOne(child: Frame): boolean {
+        var result = false;
         var i = this.statements.indexOf(child);
         if ((i > 0) && (this.statements[i-1].canInsertBefore())) {
             this.statements.splice(i,1);
-            this.statements.splice(i-1,0,child);     
+            this.statements.splice(i-1,0,child);
+            result = true;     
+        }
+        return result;
+    }
+
+    moveSelectedChildrenUpOne(): void {
+        var toMove = this.statements.filter(g => g.isSelected()); 
+        var cont = true;
+        var i = 0;
+        while (cont && i < toMove.length) {
+            cont = this.moveUpOne(toMove[i]);
+            i++;
+        }
+    }
+    moveSelectedChildrenDownOne(): void {
+        var toMove = this.statements.filter(g => g.isSelected()); 
+        var cont = true;
+        var i = toMove.length - 1;
+        while (cont && i >= 0) {
+            cont = this.moveDownOne(toMove[i]);
+            i--;
         }
     }
 }

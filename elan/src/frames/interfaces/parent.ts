@@ -31,6 +31,8 @@ export interface Parent {
 
     getFields(): Field[];
 
-    moveDownOne(child: Frame): void;
-    moveUpOne(child: Frame): void;
+    moveSelectedChildrenDownOne(): void;
+    moveSelectedChildrenUpOne(): void;
+
+
 }

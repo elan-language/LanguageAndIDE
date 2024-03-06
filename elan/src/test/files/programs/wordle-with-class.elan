@@ -1,4 +1,16 @@
-# d62f1187f5416a0d388d1097e326564403b46393e734db8587f0e8a27a817cb2 Elan v0.1 valid
+# 1cae7a719f258495aec7350d8969e2bfac9b6a25b8adbcb86bce5d42a73fdf56 Elan v0.1 valid
+
+function isYellow(attempt String, target String, n Int) as Bool
+  return target.contains(attempt[n])
+end function
+
+function setAttemptIfYellow(attempt String, target String, n Int) as String
+  return attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
+end function
+
+function setTargetIfYellow(attempt String, target String, n Int) as String
+  return target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
+end function
 
 constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
 
@@ -34,18 +46,6 @@ end function
 
 function isAlreadyMarkedGreen(attempt String, n Int) as Bool
   return attempt[n] is '*'
-end function
-
-function isYellow(attempt String, target String, n Int) as Bool
-  return target.contains(attempt[n])
-end function
-
-function setAttemptIfYellow(attempt String, target String, n Int) as String
-  return attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
-end function
-
-function setTargetIfYellow(attempt String, target String, n Int) as String
-  return target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
 end function
 
 constant letterPositions set to {0,1,2,3,4}

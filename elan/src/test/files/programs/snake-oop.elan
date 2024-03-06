@@ -1,4 +1,4 @@
-# 7c0938330686ed4781537aedfeb9874509a5042d89ba44947f014ad0f0034d4e Elan v0.1 valid
+# ca16efc978c736aaeec8597d5429772d15650abd50689e8e619fc966110ede2c Elan v0.1 valid
 
 main
   print welcome
@@ -26,16 +26,16 @@ procedure playGame()
   var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
   var gameOn set to true
   while gameOn
+    var pressed set to system.keyHasBeenPressed()
+    call pause(200)
+    call snake.clockTick(currentDirection, gameOn)
     call draw(charMap, snake.head, Colour.green)
     call draw(charMap, snake.apple, Colour.red)
     var priorTail set to snake.tail()
-    call pause(200)
-    var pressed set to system.keyHasBeenPressed()
     if pressed
       var k set to system.readKey()
       set currentDirection to directionByKey[k]
     end if
-    call snake.clockTick(currentDirection, gameOn)
     if snake.tail() is not priorTail
       call draw(charMap, priorTail, charMap.backgroundColour)
     end if
@@ -45,11 +45,11 @@ procedure playGame()
 end procedure
 
 procedure draw(cm CharMap, sq Square, colour Colour)
-  var col set to sq.x * 2
-  var row set to sq.y
   call cm.putBlockWithColour(col, row, colour)
   var colPlus set to col + 1
   call cm.putBlockWithColour(colPlus, row, colour)
+  var col set to sq.x * 2
+  var row set to sq.y
 end procedure
 
 class Snake
@@ -62,15 +62,9 @@ class Snake
     call setNewApplePosition()
   end constructor
 
-  property boardWidth Int
-
-  property boardHeight Int
-
   property head Square
 
   private property body List<of Square>
-
-  property apple Square
 
   function tail() as Square
     return body[0]
@@ -79,6 +73,10 @@ class Snake
   function length() as Int
     return body.length()
   end function
+
+  property boardHeight Int
+
+  property boardWidth Int
 
   function bodyCovers(sq Square) as Bool
     var result set to false
@@ -114,6 +112,8 @@ class Snake
       set apple to new Square(ranW, ranH) 
     end repeat when not bodyCovers(apple)
   end procedure
+
+  property apple Square
 
 end class
 
