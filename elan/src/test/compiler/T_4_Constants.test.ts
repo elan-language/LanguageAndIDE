@@ -118,7 +118,8 @@ main
 end main
 `;
 
-    const objectCode = `const a = '';
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = '';
 
 export async function main() {
   system.print(system.asString(a));
@@ -133,5 +134,92 @@ export async function main() {
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     assertObjectCodeExecutes(fileImpl, "", done);
+  });
+
+  test('Pass_SpaceAsChar', (done) => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ' '
+main
+  print a
+end main
+`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = ' ';
+
+export async function main() {
+  system.print(system.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeExecutes(fileImpl, " ", done);
+  });
+
+  test('Pass_Bool', (done) => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to true
+main
+  print a
+end main
+`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = true;
+
+export async function main() {
+  system.print(system.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeExecutes(fileImpl, "true", done);
+  });
+
+  ignore_test('Pass_Enum', (done) => {
+    // enums need to be declared before use - so need to move to top of file in ts code. also we will need to set the value of
+    // each enum to the appropriate string
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to Fruit.apple
+main
+  print a
+end main
+enum Fruit
+  apple, orange, pear
+end enum
+`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+enum Fruit {
+  apple = "apple", orange = "orange", pear = "pear"
+}
+
+const a = Fruit.apple;
+
+export async function main() {
+  system.print(system.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeExecutes(fileImpl, "apple", done);
   });
 });
