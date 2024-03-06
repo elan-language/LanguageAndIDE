@@ -2,7 +2,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
 suite('T_2_HelloWorld', () => {
-    ignore_test('Pass_CommentsOnly', (done) => {
+    ignore_test('Pass_CommentsOnly', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 # comment 1
@@ -21,10 +21,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "", done!);
+        await assertObjectCodeExecutes(fileImpl, "");
     });
 
-    ignore_test('Pass_PrintWithNoExpression', (done) => {
+    ignore_test('Pass_PrintWithNoExpression', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -45,10 +45,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "\r\n\r\n", done);
+        await assertObjectCodeExecutes(fileImpl, "\r\n\r\n");
     });
 
-    test('Pass_StringLiteral', (done) => {
+    test('Pass_StringLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -67,10 +67,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "Hello World!", done);
+        await assertObjectCodeExecutes(fileImpl, "Hello World!");
     });
 
-    test('Pass_BracketsMakeNoDifference', (done) => {
+    test('Pass_BracketsMakeNoDifference', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -89,10 +89,11 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "Hello World!", done);
+        await assertObjectCodeExecutes(fileImpl, "Hello World!");
+        
     });
 
-    test('Pass_IntegerLiteral', (done) => {
+    test('Pass_IntegerLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -111,10 +112,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "1", done);
+        await assertObjectCodeExecutes(fileImpl, "1");
     });
 
-    test('Pass_FloatLiteral', (done) => {
+    test('Pass_FloatLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -133,10 +134,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "2.1", done);
+        await assertObjectCodeExecutes(fileImpl, "2.1");
     });
 
-    test('Pass_FloatWithExponent', (done) => {
+    test('Pass_FloatWithExponent', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -155,10 +156,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "21000", done);
+        await assertObjectCodeExecutes(fileImpl, "21000");
     });
 
-    test('Pass_FloatWithExponent2', (done) => {
+    test('Pass_FloatWithExponent2', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -177,10 +178,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "2.1e+100", done);
+        await assertObjectCodeExecutes(fileImpl, "2.1e+100");
     });
 
-    test('Pass_FloatWithExponent3', (done) => {
+    test('Pass_FloatWithExponent3', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -199,10 +200,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "0.00021", done);
+        await assertObjectCodeExecutes(fileImpl, "0.00021");
     });
 
-    test('Pass_CharLiteral', (done) => {
+    test('Pass_CharLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -221,10 +222,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, '%', done);
+        await assertObjectCodeExecutes(fileImpl, '%');
     });
 
-    test('Pass_BoolLiteral', (done) => {
+    test('Pass_BoolLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -243,10 +244,10 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "true", done);
+        await assertObjectCodeExecutes(fileImpl, "true");
     });
 
-    test('Pass_EmptyLine', (done) => {
+    test('Pass_EmptyLine', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -265,7 +266,7 @@ export async function main() {
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "", done);
+        await assertObjectCodeExecutes(fileImpl, "");
     });
 
     test('Fail_noMain', () => {

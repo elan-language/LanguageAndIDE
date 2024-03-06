@@ -10,7 +10,7 @@ suite('T_3_Header', () => {
         return  hash.digest('hex');
     }
 
-    ignore_test('Pass_hash', (done) => {
+    ignore_test('Pass_hash', async () => {
         const code = `# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan v0.1 valid
 
 main
@@ -29,6 +29,6 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, "Hello World!", done);
+        await assertObjectCodeExecutes(fileImpl, "Hello World!");
     });
 });

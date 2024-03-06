@@ -1,10 +1,10 @@
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
 
 suite('T_4_Constants', () => {
 
-  test('Pass_Int', (done) => {
+  test('Pass_Int', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
@@ -27,10 +27,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "3", done);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test('Pass_Float', (done) => {
+  test('Pass_Float', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3.1
@@ -53,10 +53,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "3.1", done);
+    await assertObjectCodeExecutes(fileImpl, "3.1");
   });
 
-  test('Pass_String', (done) => {
+  test('Pass_String', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to "hell0"
@@ -79,10 +79,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "hell0", done);
+    await assertObjectCodeExecutes(fileImpl, "hell0");
   });
 
-  test('Pass_Char', (done) => {
+  test('Pass_Char', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 'a'
@@ -105,10 +105,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "a", done);
+    await assertObjectCodeExecutes(fileImpl, "a");
   });
 
-  ignore_test('Pass_EmptyChar', (done) => {
+  ignore_test('Pass_EmptyChar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ''
@@ -133,10 +133,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "", done);
+    await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test('Pass_SpaceAsChar', (done) => {
+  test('Pass_SpaceAsChar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ' '
@@ -159,10 +159,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, " ", done);
+    await assertObjectCodeExecutes(fileImpl, " ");
   });
 
-  test('Pass_Bool', (done) => {
+  test('Pass_Bool', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to true
@@ -185,10 +185,10 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "true", done);
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  ignore_test('Pass_Enum', (done) => {
+  ignore_test('Pass_Enum', async () => {
     // enums need to be declared before use - so need to move to top of file in ts code. also we will need to set the value of
     // each enum to the appropriate string
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -220,6 +220,123 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, "apple", done);
+    await assertObjectCodeExecutes(fileImpl, "apple");
   });
+
+  test(' Fail_useInsideMain', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  constant a set to 3 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test(' Fail_incorrectKeyword', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+const a set to 3
+
+main 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_invalidLiteralString', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 'hello'
+
+main 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_invalidLiteralString2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to hello
+
+main 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl);
+  });
+
+  test('Fail_reassignment', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 3
+
+main
+  set a to 4 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl);
+  });
+
+  ignore_test('Fail_expression', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 3 + 4
+
+main
+  set a to 4 
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_referenceToOtherConstant', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 3
+constant b set to a
+
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 });

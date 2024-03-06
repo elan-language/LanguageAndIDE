@@ -37,8 +37,7 @@ function doImport(str: string) {
     return import(url);
 }
 
-
-export function assertObjectCodeExecutes(file: FileImpl, output: string, done: Done) {
+function executeCode(file: FileImpl) {
 
     const tsCode = file.renderAsObjectCode();
     const jsCode = ts.transpile(tsCode, {
@@ -47,34 +46,39 @@ export function assertObjectCodeExecutes(file: FileImpl, output: string, done: D
     });
 
     const stdlib = new StdLib();
-    
-    doImport(jsCode).then(async (elan) => {
+
+    return doImport(jsCode).then(async (elan) => {
         if (elan.main) {
             elan._inject(stdlib);
             await elan.main();
-            done (assert.strictEqual(stdlib.printed, output));
+            return stdlib;
         }
-        else {
-            done(assert.fail("no compiled main"));
-        }
-    }).catch((e) => {
-        done(assert.fail(e));
+        return undefined;
     });
 }
 
-export function ignore_test(name: string, test: (done : Done) => void) {
+
+export async function assertObjectCodeExecutes(file: FileImpl, output: string) {
+
+    try {
+        const sl = await executeCode(file);
+        assert.strictEqual(sl?.printed, output);
+    }
+    catch (e) {
+        assert.fail();
+    }
 }
 
-class TestSystem {
+export async function assertObjectCodeDoesNotExecute(file: FileImpl) {
 
-    constructor(private testOutput: any, private testInput?: string) {
+    try {
+        await executeCode(file);
+        assert.fail();
     }
+    catch (e) {
+        // ok
+    }
+}
 
-    async input() {
-        return this.testInput;
-    }
-
-    print(v: any) {
-        assert.strictEqual(v, this.testOutput);
-    }
+export function ignore_test(name: string, test: (done: Done) => void) {
 }
