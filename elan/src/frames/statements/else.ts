@@ -36,6 +36,11 @@ export class Else extends MultiLineStatement  {
     private ifClauseAsSource() : string {
         return this.hasIf ? ` if ${this.condition.renderAsSource()}`:``;
     }
+
+    private ifClauseAsObjectCode() : string {
+        return this.hasIf ? ` if (${this.condition.renderAsSource()}) {`: `{`;
+    }
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
 ${this.renderStatementsAsHtml()}
@@ -48,6 +53,11 @@ ${this.renderStatementsAsHtml()}
 
     renderAsSource(): string {
         return `${this.indent()}else${this.ifClauseAsSource()}\r
+${this.renderStatementsAsSource()}`;
+    }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}else${this.ifClauseAsObjectCode()}\r
 ${this.renderStatementsAsSource()}`;
     }
 

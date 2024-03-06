@@ -159,4 +159,93 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
+  ignore_test('Pass_Power', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print 3 ^ 3
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(3 ^ 3));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "27");
+  });
+
+  test('Pass_UseVariableBothSides', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  set a to a + 1
+  print a
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 3;
+  a = a + 1;
+  system.print(system.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
+  test('Fail_InvalidExpression', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a = 3 4
+end main`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_PlusEquals', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  a += 1
+end main`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_PlusPlus', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  a++
+end main`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 });

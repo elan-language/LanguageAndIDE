@@ -1,10 +1,10 @@
-import { Parent} from "../interfaces/parent";
+import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Expression } from "../fields/expression";
 import { MultiLineStatement } from "./multi-line-statement";
 
-export class IfStatement extends MultiLineStatement{
+export class IfStatement extends MultiLineStatement {
     condition: Expression;
 
     constructor(parent: Parent) {
@@ -28,10 +28,17 @@ ${this.renderStatementsAsHtml()}
 </statement>`;
     }
     renderAsSource(): string {
-    return `${this.indent()}if ${this.condition.renderAsSource()}\r
+        return `${this.indent()}if ${this.condition.renderAsSource()}\r
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end if`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}if (${this.condition.renderAsSource()}) {\r
+    ${this.renderStatementsAsObjectCode()}\r
+    ${this.indent()}}`;
+    }
+
     parseTopOfFrame(source: CodeSource): void {
         source.remove("if ");
         this.condition.parseFrom(source);
