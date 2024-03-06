@@ -4,6 +4,8 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { KeyEvent } from "../interfaces/key-event";
 import {CodeSource } from "../code-source";
+import { error } from "console";
+import { AbstractFrame } from "../abstract-frame";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -14,7 +16,7 @@ export abstract class AbstractField implements Selectable, Field {
     private selected: boolean = false;
     private focused: boolean = false;
     private _classes = new Array<string>;
-    private holder: Frame;
+    private holder;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
     private status: ParseStatus = ParseStatus.incomplete;
@@ -83,62 +85,39 @@ export abstract class AbstractField implements Selectable, Field {
     processKey(e: KeyEvent): void {
         var key = e.key;
         var textLen = this.text.length;
-        if (key?.length === 1) {
-            this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
-            this.cursorPos ++;
-            this.parseCurrentText();
-            return;
-        }
         switch (key) {
-          case "Tab": {
-            this.tabOrEnter(e.shift);
-            break;
-            } 
-          case "Enter": {
-            this.tabOrEnter(e.shift);
-            break;
-            } 
-          case "ArrowRight": {
-            if (this.cursorPos < textLen) {
-                this.cursorPos ++;
-            }
-            break;
-          } 
-          case "ArrowLeft": {
-            if (this.cursorPos > 0) {
-                this.cursorPos --;
-            }
-            break;
-          } 
-          case "Home": {
-            this.cursorPos = 0;
-            break;
-          } 
-          case "End": {
-            this.cursorPos = textLen;
-            break;
-          } 
-          case "Backspace": {
+        case "Home": {this.cursorPos = 0; break; } 
+        case "End": {this.cursorPos = textLen; break;} 
+        case "Tab": {this.tabOrEnter(e.shift); break; } 
+        case "Enter": {this.tabOrEnter(e.shift); break;} 
+        case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
+        case "ArrowRight": {if (this.cursorPos < textLen) { this.cursorPos ++; } break; } 
+        case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
+        case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
+        case "Backspace": {
             if (this.cursorPos > 0) {
                 this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
                 this.cursorPos --;
                 this.parseCurrentText();
             }
             break;
-          } 
-          case "Delete": {
+        } 
+        case "Delete": {
             if (this.cursorPos < textLen) {
                 this.text = this.text.slice(0,this.cursorPos) + this.text.slice(this.cursorPos+1);
                 this.parseCurrentText();
             }
             break;
-          } 
-          case "Escape": {
-            this.holder.select(true, false);
-            break;
-          } 
+        } 
+        default: {
+            if (key?.length === 1) {
+                this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
+                this.cursorPos ++;
+                this.parseCurrentText();
+            }
         }
     }
+}
 
     private tabOrEnter(back: boolean) {  
         if (back) {

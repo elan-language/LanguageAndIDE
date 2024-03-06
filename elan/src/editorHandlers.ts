@@ -11,12 +11,10 @@ export interface editorEvent {
     modKey: { control: boolean, shift: boolean, alt: boolean },
     id?: string
 }
-
 function getAllSelected(file: File) {
     const v = file?.getMap().values()!;
     return [...v].filter(s => s.isSelected());
 }
-
 export function handleClick(e: editorEvent, file: File) {
     switch (e.target) {
         case 'frame': {
@@ -57,7 +55,6 @@ export function handleClick(e: editorEvent, file: File) {
         }
     }
 }
-
 export function handleDblClick(e: editorEvent, file: File) {
     switch (e.target) {
         case 'frame': {
@@ -67,7 +64,6 @@ export function handleDblClick(e: editorEvent, file: File) {
         }
     }
 }
-
 export function handleKey(e: editorEvent, file: File) {
     switch (e.target) {
         case 'frame': {
@@ -80,7 +76,6 @@ export function handleKey(e: editorEvent, file: File) {
         }
     }
 }
-
 function handleModelKey(e: editorEvent, file: File) {
     switch (e.key) {
         case 'Shift':
@@ -100,48 +95,25 @@ function handleModelKey(e: editorEvent, file: File) {
             s?.processKey({ key: e.key, shift: e.modKey.shift, control: e.modKey.control, alt: e.modKey.alt });
     }
 }
-
 function handleWindowKey(e: editorEvent, file: File) {
     switch (e.key) {
-        case 'Home': {
-            selectFirstGlobal(file);
-            break;
-        }
-        case 'ArrowDown': {
-            selectFirstGlobal(file);
-            break;
-        }
-        case 'ArrowRight': {
-            selectFirstGlobal(file);
-            break;
-        }
-        case 'Enter': {
-            selectFirstField(file);
-            break;
-        }
-        case 'Tab': {
-            selectFirstField(file);
-            break;
-        }
-        case 'End': {
-            const g = file.getLastChild();
-            g?.select(true, false);
-            break;
-        }
-        case 'O': {
-            if (e.modKey.control) {
-                file.expandCollapseAll();
-            }
-            break;
-        }
+        case 'Home': {selectFirstGlobal(file); break;}
+        case 'End': {const g = file.getLastChild();g?.select(true, false); break;}
+        case 'Tab': {tabOrEnter(e.modKey.shift, file); break;}
+        case 'Enter': {tabOrEnter(e.modKey.shift, file); break;}
+        case 'ArrowDown': {selectFirstGlobal(file); break;}
+        case 'ArrowRight': {selectFirstGlobal(file); break;}
+        case 'O': {if (e.modKey.control) {file.expandCollapseAll();} break;}
     }
-
-    function selectFirstGlobal(file: File) {
-        const g = file.getFirstChild();
-        g?.select(true, false);
-    }
-
-    function selectFirstField(file: File) {
+}
+function tabOrEnter(back: boolean, file: File) {
+    if (back) {
+        file.getLastChild().selectLastField();
+    } else {
         file.getFirstChild().selectFirstField();
     }
+}
+function selectFirstGlobal(file: File) {
+    const g = file.getFirstChild();
+    g?.select(true, false);
 }

@@ -81,29 +81,30 @@ export abstract class AbstractSelector extends SingleLineStatement {
 
     processKey(e: KeyEvent): void {
         var key = e.key;
-        if (key === "Backspace") {
-            this.text = this.text.substring(0,this.text.length-1);
-        } 
-        if (key === "Delete") {
-            if(this.getParent().minimumNumberOfChildrenExceeded()) {
-                this.getParent().removeChild(this);
+        switch (key) {
+            case "Tab" : {this.tabOrEnter(e.shift); break}
+            case "Enter" : {this.tabOrEnter(e.shift); break}
+            case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
+            case "Delete": {if(this.getParent().minimumNumberOfChildrenExceeded()) {this.getParent().removeChild(this);} break;}
+            default: {
+                if (!key || key.length === 1) {
+                    this.processOptions(key);
+                } else {
+                    super.processKey(e);
+                } 
             }
+        }  
+    }
+
+    processOptions(key: string | undefined) {
+        var options = this.optionsMatchingInput(this.text + key);
+        if (options.length > 1 ) {
+            this.text += this.commonStartText(this.text+ key);
+        } else if (options.length === 1) {
+            var typeToAdd = options[0][0];
+            this.addFrame(typeToAdd);
+            this.text = "";
         }
-        else if (key === "Tab" || key === "Enter") {
-            this.tabOrEnter(e.shift);
-        }
-        else if (!key || key.length === 1) { //TODO: Make any exception for any specific non-printing chars?
-            var options = this.optionsMatchingInput(this.text + key);
-            if (options.length > 1 ) {
-                this.text += this.commonStartText(this.text+ key);
-            } else if (options.length === 1) {
-                var typeToAdd = options[0][0];
-                this.addFrame(typeToAdd);
-                this.text = "";
-            }
-        } else {
-            super.processKey(e);
-        }   
     }
 
     tabOrEnter(shift: boolean): void {

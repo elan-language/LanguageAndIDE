@@ -135,24 +135,23 @@ export abstract class AbstractFrame implements Frame {
     processKey(e: KeyEvent): void {
         var key = e.key;
         switch (key) {
+          case "Home": {this.getFirstPeerFrame().select(true, false); break;}
+          case "End": {this.getLastPeerFrame().select(true, false); break;}
+          case "Tab": {this.tabOrEnter(e.shift); break;} 
+          case "Enter": {this.tabOrEnter(e.shift); break;}  
+          case "Insert": {this.insertSelector(e.shift); break;} 
+          case "o": {if (e.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "ArrowUp": {
-            if (e.control) {
-                //TODO currenly works only on the single frame with focus
-                if (this.movable) {
-                    this.getParent().moveUpOne(this);
-                }
+            if (e.control && this.movable) {
+                this.getParent().moveUpOne(this);
             } else {
-                var pf  = this.getPreviousPeerFrame();
                 this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.shift);
             }
             break;
           }
           case "ArrowDown": {
-            if (e.control) {
-                //TODO currenly works only on the single frame with focus
-                if (this.movable) {
-                  this.getParent().moveDownOne(this);    
-                }      
+            if (e.control && this.movable) {
+                  this.getParent().moveDownOne(this);         
             } else {
                 this.selectSingleOrMulti(this.getNextPeerFrame(), e.shift);
             }
@@ -165,52 +164,15 @@ export abstract class AbstractFrame implements Frame {
             }
             break;
           }
-          case "ArrowRight": {
-            if (isParent(this)) {
-                this.getFirstChild().select(true, false);
-            }
-            break;
-          }
-          case "Home": {
-            this.getFirstPeerFrame().select(true, false);
-            break;
-          }
-          case "End": {
-            this.getLastPeerFrame().select(true, false);
-            break;
-          }
-          case "o": {
-            if (e.control) {
-                if (isCollapsible(this)) {
-                    this.expandCollapse();
-                }
-            }
-            break;
-          }
-          case "Tab": {
-            this.tabOrEnter(e.shift);
-            break;
-          } 
-          case "Enter": {
-            this.tabOrEnter(e.shift);
-            break;
-          }  
-          case "Insert": {
-            this.insertSelector(e.shift);
-            break;
-          } 
+          case "ArrowRight": {if (isParent(this)) { this.getFirstChild().select(true, false);} break;}
         }
     }
 
     abstract insertSelector(after: boolean): void;
 
-    canInsertBefore(): boolean {
-        return true;
-    }
+    canInsertBefore(): boolean { return true; }
 
-    canInsertAfter(): boolean {
-        return true;
-    }
+    canInsertAfter(): boolean { return true;}
 
     tabOrEnter(back: boolean) {
         if (back) {
