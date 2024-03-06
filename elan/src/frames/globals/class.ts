@@ -20,6 +20,7 @@ import { CommentStatement } from "../statements/comment-statement";
 
 export class Class extends AbstractFrame implements Parent {
 
+    isCollapsible: boolean = true;
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;

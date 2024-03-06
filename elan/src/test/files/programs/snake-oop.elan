@@ -1,4 +1,4 @@
-# ca16efc978c736aaeec8597d5429772d15650abd50689e8e619fc966110ede2c Elan v0.1 valid
+# 39a55ae17ed40c6dac43ede468a2c20a7c2c03c3127f5b88d260450037048b87 Elan v0.1 valid
 
 main
   print welcome
@@ -117,6 +117,8 @@ class Snake
 
 end class
 
+constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
+
 class Square
   constructor(x Int, y Int)
     set property.x to x
@@ -149,5 +151,3 @@ class Square
   end function
 
 end class
-
-constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
