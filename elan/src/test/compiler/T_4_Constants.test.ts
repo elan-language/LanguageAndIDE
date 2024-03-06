@@ -223,7 +223,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
-  test(' Fail_useInsideMain', () => {
+  test('Fail_useInsideMain', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -238,7 +238,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test(' Fail_incorrectKeyword', () => {
+  test('Fail_incorrectKeyword', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 const a set to 3
