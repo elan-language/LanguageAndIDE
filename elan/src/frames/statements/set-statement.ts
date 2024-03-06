@@ -37,4 +37,7 @@ export class SetStatement extends SingleLineStatement  {
     renderAsSource(): string {
         return `${this.indent()}set ${this.name.renderAsSource()} to ${this.expr.renderAsSource()}`;
     }
+    renderAsObjectCode(): string {
+        return `${this.indent()}${this.name.renderAsObjectCode()} = ${this.expr.renderAsObjectCode()};`;
+    }
 } 
