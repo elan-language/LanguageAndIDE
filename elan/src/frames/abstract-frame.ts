@@ -32,6 +32,10 @@ export abstract class AbstractFrame implements Frame {
         this._factory = parent.getFactory();
     }
 
+    fieldUpdated(field: Field): void {
+        //Does nothing - for sub-classes to override as needed
+    }
+
     getFactory(): StatementFactory {
         return this._factory;
     }

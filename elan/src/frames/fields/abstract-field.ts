@@ -13,7 +13,7 @@ export abstract class AbstractField implements Selectable, Field {
     protected placeholder: string = "";
     protected useHtmlTags: boolean = false;
     protected htmlId: string = "";
-    private selected: boolean = false;
+    protected selected: boolean = false;
     private focused: boolean = false;
     private _classes = new Array<string>;
     private holder;
@@ -29,6 +29,10 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
         this.parseCurrentText();
+    }
+
+    alertHolderToUpdate():void {
+        this.getHolder().fieldUpdated(this);
     }
     
     abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];
@@ -192,7 +196,7 @@ export abstract class AbstractField implements Selectable, Field {
             .replace(/"/g, '&quot;');
     }
 
-    private escapeAngleBrackets(str: string) : string {
+    protected escapeAngleBrackets(str: string) : string {
         return str
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
@@ -200,7 +204,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsSource() : string {
         return this.text;
-     }
+    }
 
     private tagTypeNames(c: string) : string {
         return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');

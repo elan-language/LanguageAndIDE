@@ -85,14 +85,14 @@ suite('Milestone 1 - Unit tests', () => {
 	test("Statement Select - variable", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("v"));
-		var v = file.getById("var10").renderAsSource();
+		var v = file.getById("var13").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
 	
 	test("Member Select - function", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select9").processKey(key("f"));
-		var v = file.getById("func10").renderAsSource();
+		file.getById("select12").processKey(key("f"));
+		var v = file.getById("func13").renderAsSource();
 		assert.equal(v, '  function () as \r\n' +
 		'    return default\r\n' +
 		'  end function\r\n');
@@ -100,9 +100,9 @@ suite('Milestone 1 - Unit tests', () => {
 
 	 test("Member Select - procedure", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select9").processKey(key("p"));
-		file.getById("select9").processKey(key("c"));
-		var v = file.getById("proc10").renderAsSource();
+		file.getById("select12").processKey(key("p"));
+		file.getById("select12").processKey(key("c"));
+		var v = file.getById("proc13").renderAsSource();
 		assert.equal(v, '  procedure ()\r\n\r\n  end procedure\r\n');
  	});	
 
@@ -110,7 +110,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select0").processKey(key("c"));
 		file.getById("select0").processKey(key("o"));
-		var v = file.getById("const10").renderAsSource();
+		var v = file.getById("const13").renderAsSource();
 		assert.equal(v, 'constant  set to \r\n');
  	});	
 
@@ -134,7 +134,7 @@ suite('Milestone 1 - Unit tests', () => {
 		s.processKey(key('p'));
 		help = s.getHelp();
 		assert.equal(help, " procedure property");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select8' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select11' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {

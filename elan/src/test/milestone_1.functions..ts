@@ -185,11 +185,11 @@ export function T05_classes() {
 
 	const cl2 = new Class(f);
 	var ms2 = cl2.getFirstMemberSelector();
-	cl2.inherits = true;
+	cl2.makeInherits();
 	cl2.superClasses.setText("Foo, Bar");
 	f.addGlobalBefore(cl2, gs);
 	cl2.name.setText("Card");
-	cl2.immutable = true;
+	cl2.makeImmutable();
 	const p2 = new Property(cl2);
 	cl2.addMemberAndSelectFirstField(p2, ms2);
 	p2.name.setText("value");

@@ -133,7 +133,7 @@ export function paramDef(input: [ParseStatus, string]): [ParseStatus, string] {
     return SEQ(input, [out_opt, identifier, sp, type]);
 }
 
-export function optional(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]) {
+export function optional(input: [ParseStatus, string], func: (input: [ParseStatus, string]) => [ParseStatus, string]): [ParseStatus, string] {
     var result = input;
     if (input[0] >= ParseStatus.valid) {
         var result = func(input);

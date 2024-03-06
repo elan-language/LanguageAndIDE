@@ -1,13 +1,9 @@
-# f216653edff12047762a9dd4104b5be78f08ac2af64d7d62023dc65fd9465a05 Elan v0.1 valid
+# 7b8734cdf33e24bc2a5266131bc9002598b1cd0538aad781e0561e5a36a00298 Elan v0.1 valid
 
 main
 
 end main
 
-class Foo
-  constructor()
-    print 
-    print 2
-  end constructor
+abstract abstract class Foo
 
 end class

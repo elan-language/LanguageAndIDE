@@ -27,12 +27,12 @@ export class MemberSelector extends AbstractSelector implements Member  {
     validForEditorWithin(frameType: string): boolean {
         var result = false;
         if (this.getClass().isAbstract()) {
-            if (this.getClass().immutable) {
+            if (this.getClass().isImmutable()) {
                 result = frameType.startsWith("Abstract") && frameType !== "AbstractProcedure";
             } else {
                 result = frameType.startsWith("Abstract");
             }
-        } else if (this.getClass().immutable) {
+        } else if (this.getClass().isImmutable()) {
             result = !frameType.startsWith("Abstract") && frameType !== "ProcedureMethod" && frameType !== "PrivateProperty";
         }  else {
             result = !frameType.startsWith("Abstract") && frameType !== "PrivateProperty";

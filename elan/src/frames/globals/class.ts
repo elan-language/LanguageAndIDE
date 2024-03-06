@@ -17,6 +17,7 @@ import { AbstractFunction as AbstractFunction } from "../class-members/abstract-
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 import { CommentStatement } from "../statements/comment-statement";
+import { OptionalKeyword } from "../fields/optionalKeyword";
 
 export class Class extends AbstractFrame implements Parent {
 
@@ -24,11 +25,11 @@ export class Class extends AbstractFrame implements Parent {
     isParent: boolean = true;
     isGlobal = true;
     public name: Type;
-    private _members: Array<Frame> = new Array<Frame>();
-    private abstract: boolean = false;
-    public immutable: boolean = false;
-    public inherits: boolean = false;
+    public abstract: OptionalKeyword;
+    public immutable: OptionalKeyword;
+    public inherits: OptionalKeyword;
     public superClasses: TypeList;
+    private _members: Array<Frame> = new Array<Frame>();
     private file: File;
 
     constructor(parent: File) {
@@ -37,9 +38,32 @@ export class Class extends AbstractFrame implements Parent {
         this.multiline = true;
         this.name = new Type(this);
         this.name.setPlaceholder("class name");
+        this.abstract = new OptionalKeyword(this, "abstract");
+        this.immutable = new OptionalKeyword(this, "immutable");
+        this.inherits = new OptionalKeyword(this, "inherits");
         this.superClasses  = new TypeList(this);
+        this.superClasses.setOptional(true);
         this._members.push(new Constructor(this));
         this._members.push(new MemberSelector(this));
+    }
+
+    fieldUpdated(field: Field): void {
+        if (field === this.abstract) {
+            if (this.abstract.isSpecified()) {
+                if ('isConstructor' in this._members[0]) {
+                    this._members = this._members.slice(1);
+                }
+            } else if (!('isConstructor' in this._members[0])) {
+                this._members.splice(0,0,new Constructor(this));
+            }
+        } else if (field === this.inherits) {
+            if (this.inherits.isSpecified()) {
+                this.superClasses.setOptional(false);
+            } else {
+                this.superClasses.setText("");
+                this.superClasses.setOptional(true);
+            }
+        }
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
@@ -50,22 +74,29 @@ export class Class extends AbstractFrame implements Parent {
         this._members.splice(i,1);
     }
     isAbstract(): boolean {
-        return this.abstract;
+        return this.abstract.isSpecified();
     }
-
     makeAbstract(): void {
-        this.abstract = true;
-        this._members.splice(0,1);//Remove constructor
+        this.abstract.specify();
     }
-
+    isImmutable(): boolean {
+        return this.immutable.isSpecified();
+    }
+    makeImmutable(): void {
+        this.immutable.specify();
+    }
+    doesInherit(): boolean {
+        return this.inherits.isSpecified();
+    }
+    makeInherits(): void {
+        this.inherits.specify();
+    }
     public getFirstMemberSelector() : MemberSelector {
         return this._members.filter(g => ('isSelector' in g))[0] as MemberSelector;
     }
-
     getFields(): Field[] {
-        return this.inherits? [this.name, this.superClasses] : [this.name]; //TODO: Immutable, Abstract?
-    }
-
+        return [this.abstract, this.immutable, this.name, this.inherits, this.superClasses];
+    } 
     expandCollapse(): void {
         if (this.isCollapsed()) {
             this.expand();
@@ -109,16 +140,29 @@ export class Class extends AbstractFrame implements Parent {
     }
 
     private modifiersAsHtml(): string {
-        return `${this.abstract ? "<keyword>abstract </keyword>" : ""}${this.immutable ? "<keyword>immutable </keyword>" : ""}`;
+        return `${this.abstract.renderAsHtml()} ${this.immutable.renderAsHtml()} `;
     }
     private modifiersAsSource(): string {
-        return `${this.abstract ? "abstract " : ""}${this.immutable ? "immutable " : ""}`;
+        var result = "";
+        if (this.isAbstract()) {
+            result += `${this.abstract.renderAsSource()} `;
+        }
+        if (this.isImmutable()) {
+            result += `${this.immutable.renderAsSource()} `;
+        }
+        return result;
     }
     private inhertanceAsHtml(): string {
-        return `${this.inherits ? "<keyword> inherits </keyword>" + this.superClasses.renderAsHtml() : ""}`;
+        var result = "";
+        if (this.doesInherit()) {
+            result = ` ${this.inherits.renderAsHtml()} ${this.superClasses.renderAsHtml()}`;
+        } else {
+            result = ` ${this.inherits.renderAsHtml()}`;
+        }
+        return result;
     }
     private inhertanceAsSource(): string {
-        return `${this.inherits ? " inherits " + this.superClasses.renderAsSource() : ""}`;
+        return  this.doesInherit() ? ` ${this.inherits.renderAsSource()} ${this.superClasses.renderAsSource()}` : ``;
     }
 
     public renderAsHtml(): string {
@@ -231,23 +275,23 @@ end class\r\n`;
         var abs = "abstract ";
         if (source.isMatch(abs)) {
             source.remove(abs);
-            this.abstract = true;
+            this.makeAbstract();
         }
         var imm = "immutable ";
         if (source.isMatch(imm)) {
             source.remove(imm);
-            this.immutable = true;
+            this.makeImmutable();
         }
         source.remove("class ");
         this.name.parseFrom(source);
         var inh = " inherits "; //Note leading & trailing space
         if (source.isMatch(inh)) {
             source.remove(inh);
-            this.inherits = true;
+            this.makeInherits();
             this.superClasses.parseFrom(source);
         }
         source.removeNewLine();
-        if (!this.abstract) {
+        if (!this.isAbstract()) {
             this.getConstructor().parseFrom(source);
         }
         while (!this.parseEndOfClass(source)) {

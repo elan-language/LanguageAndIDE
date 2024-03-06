@@ -33,4 +33,6 @@ export interface Frame extends Selectable {
 
     canInsertBefore(): boolean;
     canInsertAfter(): boolean;
+
+    fieldUpdated(field: Field): void;
 }
