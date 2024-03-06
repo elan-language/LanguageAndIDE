@@ -26,7 +26,7 @@ export class Class extends AbstractFrame implements Parent {
     isGlobal = true;
     public name: Type;
     public abstract: OptionalKeyword;
-    public immutable: OptionalKeyword;
+    public immutable: boolean;
     public inherits: OptionalKeyword;
     public superClasses: TypeList;
     private _members: Array<Frame> = new Array<Frame>();
@@ -39,12 +39,12 @@ export class Class extends AbstractFrame implements Parent {
         this.name = new Type(this);
         this.name.setPlaceholder("class name");
         this.abstract = new OptionalKeyword(this, "abstract");
-        this.immutable = new OptionalKeyword(this, "immutable");
         this.inherits = new OptionalKeyword(this, "inherits");
         this.superClasses  = new TypeList(this);
         this.superClasses.setOptional(true);
         this._members.push(new Constructor(this));
         this._members.push(new MemberSelector(this));
+        this.immutable = false;
     }
 
     fieldUpdated(field: Field): void {
@@ -80,10 +80,10 @@ export class Class extends AbstractFrame implements Parent {
         this.abstract.specify();
     }
     isImmutable(): boolean {
-        return this.immutable.isSpecified();
+        return this.immutable;
     }
     makeImmutable(): void {
-        this.immutable.specify();
+        this.immutable = true;
     }
     doesInherit(): boolean {
         return this.inherits.isSpecified();
@@ -95,7 +95,7 @@ export class Class extends AbstractFrame implements Parent {
         return this._members.filter(g => ('isSelector' in g))[0] as MemberSelector;
     }
     getFields(): Field[] {
-        return [this.abstract, this.immutable, this.name, this.inherits, this.superClasses];
+        return [this.abstract, this.name, this.inherits, this.superClasses];
     } 
     expandCollapse(): void {
         if (this.isCollapsed()) {
@@ -140,7 +140,7 @@ export class Class extends AbstractFrame implements Parent {
     }
 
     private modifiersAsHtml(): string {
-        return `${this.abstract.renderAsHtml()} ${this.immutable.renderAsHtml()} `;
+        return `${this.abstract.renderAsHtml()} `;
     }
     private modifiersAsSource(): string {
         var result = "";
@@ -148,7 +148,7 @@ export class Class extends AbstractFrame implements Parent {
             result += `${this.abstract.renderAsSource()} `;
         }
         if (this.isImmutable()) {
-            result += `${this.immutable.renderAsSource()} `;
+            result += `immutable `;
         }
         return result;
     }
