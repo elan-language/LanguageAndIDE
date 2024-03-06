@@ -3,7 +3,8 @@ import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
 import * as ts from "typescript";
 import { Done } from "mocha";
-import { AnyMxRecord } from "dns";
+import * as fs from 'fs';
+import { _stdlib as StdLib } from "./standard-library";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -37,18 +38,21 @@ function doImport(str: string) {
 }
 
 
-export function assertObjectCodeExecutes(file: FileImpl, output: any, done: Done) {
+export function assertObjectCodeExecutes(file: FileImpl, output: string, done: Done) {
 
     const tsCode = file.renderAsObjectCode();
     const jsCode = ts.transpile(tsCode, {
         "module": ts.ModuleKind.ES2022,
         "target": ts.ScriptTarget.ES2022,
     });
-    const testSystem = new TestSystem(output);
 
+    const stdlib = new StdLib();
+    
     doImport(jsCode).then(async (elan) => {
         if (elan.main) {
-            done(await elan.main(testSystem));
+            elan._inject(stdlib);
+            await elan.main();
+            done (assert.strictEqual(stdlib.printed, output));
         }
         else {
             done(assert.fail("no compiled main"));

@@ -37,6 +37,6 @@ export class Print extends SingleLineStatement  {
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}system.print (${this.expr.renderAsSource()});`;
+        return `${this.indent()}system.print(system.asString(${this.expr.renderAsObjectCode()}));`;
     }
 } 

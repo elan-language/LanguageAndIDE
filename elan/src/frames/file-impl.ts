@@ -21,6 +21,8 @@ import { GlobalSelector } from "./globals/global-selector";
 // for web editor bundle
 export { CodeSourceFromString };
 
+var system : any; export function _inject(l : any) { system = l; };
+
 export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
@@ -136,7 +138,8 @@ export class FileImpl implements File {
     }
 
     renderAsObjectCode(): string {
-        return this.renderGlobalsAsObjectCode(); 
+        const stdLib = 'var system : any; export function _inject(l : any) { system = l; };';
+        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}`; 
     }
 
     renderHashableContent(): string {

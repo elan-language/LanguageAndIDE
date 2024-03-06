@@ -13,10 +13,11 @@ main
 end main
 `;
 
-    const objectCode = `const a = 3;
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = 3;
 
-export async function main(system : any) {
-  system.print (a);
+export async function main() {
+  system.print(system.asString(a));
 }
 `;
 
@@ -26,7 +27,7 @@ export async function main(system : any) {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, 3, done);
+    assertObjectCodeExecutes(fileImpl, "3", done);
   });
 
   test('Pass_Float', (done) => {
@@ -38,10 +39,11 @@ print a
 end main
 `;
 
-    const objectCode = `const a = 3.1;
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = 3.1;
 
-export async function main(system : any) {
-  system.print (a);
+export async function main() {
+  system.print(system.asString(a));
 }
 `;
 
@@ -51,7 +53,7 @@ export async function main(system : any) {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertObjectCodeExecutes(fileImpl, 3.1, done);
+    assertObjectCodeExecutes(fileImpl, "3.1", done);
   });
 
   test('Pass_String', (done) => {
@@ -63,10 +65,11 @@ print a
 end main
 `;
 
-    const objectCode = `const a = "hell0";
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = "hell0";
 
-export async function main(system : any) {
-  system.print (a);
+export async function main() {
+  system.print(system.asString(a));
 }
 `;
 
@@ -88,10 +91,11 @@ main
 end main
 `;
 
-    const objectCode = `const a = 'a';
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+const a = 'a';
 
-export async function main(system : any) {
-  system.print (a);
+export async function main() {
+  system.print(system.asString(a));
 }
 `;
 
@@ -116,9 +120,9 @@ end main
 
     const objectCode = `const a = '';
 
-export async function main(system : any) {
-  system.print (a);
-  system.print (a is default Char);
+export async function main() {
+  system.print(system.asString(a));
+  system.print(system.asString(a is default Char));
 }
 `;
 

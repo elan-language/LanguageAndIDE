@@ -10,7 +10,8 @@ main # comment 2
     # comment 3 (indented)
 end main`;
 
-        const objectCode = `export async function main(system : any) {
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
 }
 `;
 
@@ -31,7 +32,8 @@ main
     print
 end main`;
 
-        const objectCode = `export async function main(system : any) {
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
   system.print ();
   system.print ();
 }
@@ -53,8 +55,9 @@ main
     print "Hello World!"
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print ("Hello World!");
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString("Hello World!"));
 }
 `;
 
@@ -74,8 +77,9 @@ main
     print ("Hello World!")
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (("Hello World!"));
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(("Hello World!")));
 }
 `;
 
@@ -95,8 +99,9 @@ main
     print 1
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (1);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(1));
 }
 `;
 
@@ -106,7 +111,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, 1, done);
+        assertObjectCodeExecutes(fileImpl, "1", done);
     });
 
     test('Pass_FloatLiteral', (done) => {
@@ -116,8 +121,9 @@ main
     print 2.1
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (2.1);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(2.1));
 }
 `;
 
@@ -127,7 +133,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, 2.1, done);
+        assertObjectCodeExecutes(fileImpl, "2.1", done);
     });
 
     test('Pass_FloatWithExponent', (done) => {
@@ -137,8 +143,9 @@ main
   print 2.1E4
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (2.1E4);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(2.1E4));
 }
 `;
 
@@ -148,7 +155,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, 21000, done);
+        assertObjectCodeExecutes(fileImpl, "21000", done);
     });
 
     test('Pass_FloatWithExponent2', (done) => {
@@ -158,8 +165,9 @@ main
   print 2.1E100
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (2.1E100);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(2.1E100));
 }
 `;
 
@@ -169,7 +177,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, 2.1E+100, done);
+        assertObjectCodeExecutes(fileImpl, "2.1e+100", done);
     });
 
     test('Pass_FloatWithExponent3', (done) => {
@@ -179,8 +187,9 @@ main
   print 2.1e-4
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (2.1e-4);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(2.1e-4));
 }
 `;
 
@@ -190,7 +199,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, 0.00021, done);
+        assertObjectCodeExecutes(fileImpl, "0.00021", done);
     });
 
     test('Pass_CharLiteral', (done) => {
@@ -200,8 +209,9 @@ main
   print '%'
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print ('%');
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString('%'));
 }
 `;
 
@@ -221,8 +231,9 @@ main
     print true
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print (true);
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(true));
 }
 `;
 
@@ -232,7 +243,7 @@ end main`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        assertObjectCodeExecutes(fileImpl, true, done);
+        assertObjectCodeExecutes(fileImpl, "true", done);
     });
 
     test('Pass_EmptyLine', (done) => {
@@ -242,8 +253,9 @@ main
     print ""
 end main`;
 
-        const objectCode = `export async function main(system : any) {
-  system.print ("");
+        const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.print(system.asString(""));
 }
 `;
 
