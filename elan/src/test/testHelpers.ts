@@ -3,7 +3,7 @@ import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
 import { File } from '../frames/interfaces/file';
 import * as jsdom from 'jsdom';
-import { KeyEvent } from '../frames/interfaces/key-event';
+import { editorEvent } from '../frames/interfaces/editor-event';
 import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
@@ -115,6 +115,19 @@ export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     }
 }
 
+export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
+    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+    var codeSource = new CodeSourceFromString(sourceDoc.getText());
+    var fl = new FileImpl(hash);
+    fl.parseFrom(codeSource);
+    if (fl.parseError) {
+        throw new Error(fl.parseError);
+    }
+   return fl;
+}
+
 export async function assertAreEqualByFile<T extends Selectable>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
@@ -182,8 +195,8 @@ export function assertHtml(setupFn : () => File, testFn : (f: File) => void, ass
     assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
-export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {
-    return { key: k, shift: !!shift, control: !!control, alt: !!alt };
+export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): editorEvent {
+    return { key: k, modKey: {shift: !!shift, control: !!control, alt: !!alt }, type: "key", target: "frame"};
 }
 
 export async function activate(docUri: vscode.Uri) {

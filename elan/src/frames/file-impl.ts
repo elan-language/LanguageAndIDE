@@ -18,6 +18,7 @@ import { CodeSource, CodeSourceFromString } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
+import { editorEvent } from "./interfaces/editor-event";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -173,6 +174,10 @@ export class FileImpl implements File {
     public removeGlobal(g: Frame) {
         var i = this._globals.indexOf(g);
         this._globals.splice(i,1);    
+    }
+
+    getChildNumber(n: number): Frame {
+        return this._globals[n];
     }
     
     getFirstChild(): Frame {
@@ -343,5 +348,29 @@ export class FileImpl implements File {
 
     getFields(): Field[] {
         return [];
+    }
+
+    processKey(e: editorEvent): void {
+        switch (e.key) {
+            case 'Home': {this.selectFirstGlobal(); break;}
+            case 'End': {this.getLastChild().select(true, false); break;}
+            case 'Tab': {this.tabOrEnter(e.modKey.shift); break;}
+            case 'Enter': {this.tabOrEnter(e.modKey.shift); break;}
+            case 'ArrowDown':  {this.selectFirstGlobal(); break;}
+            case 'ArrowRight':  {this.selectFirstGlobal(); break;}
+            case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
+        }
+    }
+
+    private selectFirstGlobal(): void {
+        this.getFirstChild().select(true, false);
+    }
+
+    private tabOrEnter(back: boolean) {
+        if (back) {
+            this.getLastChild().selectLastField();
+        } else {
+            this.getFirstChild().selectFirstField();
+        }
     }
 }

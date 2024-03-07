@@ -6,7 +6,7 @@ import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
-import { KeyEvent } from "./interfaces/key-event";
+import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
 import { MainFrame } from "./globals/main-frame";
 
@@ -136,28 +136,29 @@ export abstract class AbstractFrame implements Frame {
         return result;
     }
 
-    processKey(e: KeyEvent): void {
+    processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {
+          case 'Escape': {this.deselectAll(); break;}
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
-          case "Tab": {this.tabOrEnter(e.shift); break;} 
-          case "Enter": {this.tabOrEnter(e.shift); break;}  
-          case "Insert": {this.insertSelector(e.shift); break;} 
-          case "o": {if (e.control && isCollapsible(this)) {this.expandCollapse();} break;}
+          case "Tab": {this.tabOrEnter(e.modKey.shift); break;} 
+          case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
+          case "Insert": {this.insertSelector(e.modKey.shift); break;} 
+          case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "ArrowUp": {
-            if (e.control && this.movable) {
+            if (e.modKey.control && this.movable) {
                 this.getParent().moveSelectedChildrenUpOne();
             } else {
-                this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.shift);
+                this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
             }
             break;
           }
           case "ArrowDown": {
-            if (e.control && this.movable) {
+            if (e.modKey.control && this.movable) {
                   this.getParent().moveSelectedChildrenDownOne();         
             } else {
-                this.selectSingleOrMulti(this.getNextPeerFrame(), e.shift);
+                this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
             }
             break;
           }

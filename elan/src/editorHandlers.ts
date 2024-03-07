@@ -1,16 +1,10 @@
 import { isFrame } from './frames/helpers';
 import { Collapsible } from './frames/interfaces/collapsible';
+import { editorEvent } from './frames/interfaces/editor-event';
 import { File } from './frames/interfaces/file';
 import { Frame } from './frames/interfaces/frame';
 import { Selectable } from './frames/interfaces/selectable';
 
-export interface editorEvent {
-    type: "click" | "dblclick" | "key"
-    target: "frame" | "window"
-    key?: string,
-    modKey: { control: boolean, shift: boolean, alt: boolean },
-    id?: string
-}
 function getAllSelected(file: File) {
     const v = file?.getMap().values()!;
     return [...v].filter(s => s.isSelected());
@@ -63,57 +57,4 @@ export function handleDblClick(e: editorEvent, file: File) {
             break;
         }
     }
-}
-export function handleKey(e: editorEvent, file: File) {
-    switch (e.target) {
-        case 'frame': {
-            handleModelKey(e, file);
-            break;
-        }
-        case 'window': {
-            handleWindowKey(e, file);
-            break;
-        }
-    }
-}
-function handleModelKey(e: editorEvent, file: File) {
-    switch (e.key) {
-        case 'Shift':
-        case 'Control':
-        case 'Alt': break; // consume
-        case 'Escape': {
-            file.deselectAll();
-            break;
-        }
-        case 'O': {
-            if (e.modKey.control) {
-                file.expandCollapseAll();
-            }
-        }
-        default:
-            const s = file.getById(e.id!);
-            s?.processKey({ key: e.key, shift: e.modKey.shift, control: e.modKey.control, alt: e.modKey.alt });
-    }
-}
-function handleWindowKey(e: editorEvent, file: File) {
-    switch (e.key) {
-        case 'Home': {selectFirstGlobal(file); break;}
-        case 'End': {const g = file.getLastChild();g?.select(true, false); break;}
-        case 'Tab': {tabOrEnter(e.modKey.shift, file); break;}
-        case 'Enter': {tabOrEnter(e.modKey.shift, file); break;}
-        case 'ArrowDown': {selectFirstGlobal(file); break;}
-        case 'ArrowRight': {selectFirstGlobal(file); break;}
-        case 'O': {if (e.modKey.control) {file.expandCollapseAll();} break;}
-    }
-}
-function tabOrEnter(back: boolean, file: File) {
-    if (back) {
-        file.getLastChild().selectLastField();
-    } else {
-        file.getFirstChild().selectFirstField();
-    }
-}
-function selectFirstGlobal(file: File) {
-    const g = file.getFirstChild();
-    g?.select(true, false);
 }

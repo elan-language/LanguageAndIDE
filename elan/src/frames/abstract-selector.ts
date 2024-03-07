@@ -1,6 +1,6 @@
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
-import { KeyEvent } from "./interfaces/key-event";
+import { editorEvent } from "./interfaces/editor-event";
 import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
 import { SingleLineStatement } from "./statements/single-line-statement";
@@ -79,11 +79,11 @@ export abstract class AbstractSelector extends SingleLineStatement {
         return `${this.indent()}`;
     }
 
-    processKey(e: KeyEvent): void {
+    processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {
-            case "Tab" : {this.tabOrEnter(e.shift); break}
-            case "Enter" : {this.tabOrEnter(e.shift); break}
+            case "Tab" : {this.tabOrEnter(e.modKey.shift); break}
+            case "Enter" : {this.tabOrEnter(e.modKey.shift); break}
             case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
             case "Delete": {if(this.getParent().minimumNumberOfChildrenExceeded()) {this.getParent().removeChild(this);} break;}
             default: {

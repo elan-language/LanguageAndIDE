@@ -1,3 +1,4 @@
+import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
 import { GlobalSelector } from "../globals/global-selector";
 import { ParseStatus } from "../parse-status";
@@ -43,4 +44,5 @@ export interface File extends Parent {
     deselectAll(): void;
 
     insertGlobalSelector(after: boolean, existing: Frame): void;
+    processKey(e: editorEvent): void;
 }
