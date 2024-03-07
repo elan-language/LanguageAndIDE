@@ -235,10 +235,13 @@ export class FileImpl implements File {
         return ParseStatus[this.status()];
     }
 
-    deselectAll(): void {
+    getAllSelected(): Selectable[] {
         const v = this.getMap().values()!;
-        var selected =  [...v].filter(s => s.isSelected());
-        selected.forEach(s => s.deselect());
+        return  [...v].filter(s => s.isSelected());
+    }
+
+    deselectAll(): void {
+        this.getAllSelected().forEach(s => s.deselect());
     }
 
     getMap(): Map<string, Selectable> {

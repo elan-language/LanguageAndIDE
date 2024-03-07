@@ -221,3 +221,47 @@ export async function activate(docUri: vscode.Uri) {
   async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  //Keys
+  export function up() {
+    return key("ArrowUp");
+  }
+  export function shift_up() {
+    return key("ArrowUp",true);
+  }
+  export function ctrl_up() {
+    return key("ArrowUp",false,true);
+  }
+  export function down() {
+    return key("ArrowDown");
+  }
+  export function shift_down() {
+    return key("ArrowDown",true);
+  }
+  export function ctrl_down() {
+    return key("ArrowDown",false,true);
+  }
+  export function left() {
+    return key("ArrowLeft");
+  }
+  export function right() {
+    return key("ArrowRight");
+  }
+  export function home() {
+    return key("Home");
+  }
+  export function end() {
+    return key("End");
+  }
+  export function esc() {
+    return key("Escape");
+  }
+  export function ins() {
+    return key("Insert");
+  }
+  export function del() {
+    return key("Delete");
+  }
+  export function shift_ins() {
+    return key("Insert",true);
+  }
