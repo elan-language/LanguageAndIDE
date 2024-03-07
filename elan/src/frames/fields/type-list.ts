@@ -6,7 +6,7 @@ import { typesList } from "./parse-functions";
 export class TypeList extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
-        this.setPlaceholder("type or types (comma-separated)");
+        this.setPlaceholder("type(s)");
     }
     getIdPrefix(): string {
         return 'args';

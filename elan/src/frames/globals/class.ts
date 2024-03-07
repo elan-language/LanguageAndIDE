@@ -37,7 +37,7 @@ export class Class extends AbstractFrame implements Parent {
         this.file = parent;
         this.multiline = true;
         this.name = new Type(this);
-        this.name.setPlaceholder("class name");
+        this.name.setPlaceholder("name");
         this.abstract = new OptionalKeyword(this, "abstract");
         this.inherits = new OptionalKeyword(this, "inherits");
         this.superClasses  = new TypeList(this);
@@ -153,13 +153,7 @@ export class Class extends AbstractFrame implements Parent {
         return result;
     }
     private inhertanceAsHtml(): string {
-        var result = "";
-        if (this.doesInherit()) {
-            result = ` ${this.inherits.renderAsHtml()} ${this.superClasses.renderAsHtml()}`;
-        } else {
-            result = ` ${this.inherits.renderAsHtml()}`;
-        }
-        return result;
+        return ` ${this.inherits.renderAsHtml()} ${this.superClasses.renderAsHtml()}`;
     }
     private inhertanceAsSource(): string {
         return  this.doesInherit() ? ` ${this.inherits.renderAsSource()} ${this.superClasses.renderAsSource()}` : ``;

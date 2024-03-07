@@ -34,11 +34,14 @@ export class OptionalKeyword extends AbstractField {
         if (key && key.length ===1 && this.keyword.startsWith(key.toLowerCase())) {
             this.text = this.keyword;
             this.alertHolderToUpdate();
+            this.getHolder().selectFieldAfter(this);
         } else if (key === "Delete" || key === "Backspace") {
             this.text = "";
             this.alertHolderToUpdate();
+            this.getHolder().selectFieldAfter(this);
+        } else {
+            super.processKey(e);
         }
-        this.getHolder().selectFieldAfter(this);
     }
 
     public textAsHtml(): string {
