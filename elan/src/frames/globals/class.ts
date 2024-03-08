@@ -186,13 +186,6 @@ end class\r\n`;
     private getConstructor(): Constructor {
         return this.getChildren().filter(m => ('isConstructor' in m))[0] as Constructor;
     }
-
-    getStatus(): ParseStatus {
-        var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
-        return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
-    }
-    
     parseTop(source: CodeSource): boolean {
         var abs = "abstract ";
         if (source.isMatch(abs)) {

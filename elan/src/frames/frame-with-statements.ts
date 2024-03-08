@@ -19,12 +19,6 @@ export abstract class FrameWithStatements extends AbstractFrameWithChildren {
         return new StatementSelector(this);
     }
 
-    getStatus(): ParseStatus {
-        var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
-        return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
-    }
-
     protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
         source.removeIndent();
         var result = false;

@@ -6,12 +6,19 @@ import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
     isParent: boolean = true;
     multiline:boolean = true;
     private _children: Array<Frame> = new Array<Frame>();
+
+    getStatus(): ParseStatus {
+        var fieldStatus = this.worstStatusOfFields();
+        var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
+    }
 
     getChildren(): Frame[] {
         return this._children;
