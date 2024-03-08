@@ -29,11 +29,11 @@ ${this.renderChildrenAsHtml()}
         return `${this.indent()}case ${this.value.renderAsSource()}\r
 ${this.renderChildrenAsSource()}`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("case ");
         this.value.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         source.removeIndent();
         return source.isMatch("case ") || source.isMatch("default");
     }

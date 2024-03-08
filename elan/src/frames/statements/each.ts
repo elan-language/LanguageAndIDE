@@ -39,13 +39,13 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("each ");
         this.variable.parseFrom(source);
         source.remove(" in ");
         this.iter.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end each");
     }
 } 

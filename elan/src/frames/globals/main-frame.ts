@@ -44,10 +44,10 @@ end main\r
 `;
     }
 
-    parseTopOfFrame(source: CodeSource) {
+    parseTop(source: CodeSource) {
         source.remove("main");
     }  
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end main");
     }
     insertSelector(after: boolean): void {

@@ -193,7 +193,7 @@ end class\r\n`;
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
     
-    parseFrom(source: CodeSource): void {
+    parseTop(source: CodeSource): boolean {
         var abs = "abstract ";
         if (source.isMatch(abs)) {
             source.remove(abs);
@@ -216,16 +216,10 @@ end class\r\n`;
         if (!this.isAbstract()) {
             this.getConstructor().parseFrom(source);
         }
-        while (!this.parseEndOfClass(source)) {
-            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
-                source.removeRegEx(Regexes.startsWithNewLine, false);}
-            else {
-                this.getFirstSelectorAsDirectChild().parseFrom(source);
-            }
-        } 
+        return true;
     }
 
-    private parseEndOfClass(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         source.removeIndent();
         var keyword = "end class";

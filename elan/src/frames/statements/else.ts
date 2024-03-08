@@ -51,7 +51,7 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("else");
         if (source.isMatch(" if ")) {
             this.hasIf = true;
@@ -59,7 +59,7 @@ ${this.renderChildrenAsSource()}`;
             this.condition.parseFrom(source);
         }
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         source.removeIndent();
         if (source.isMatch("else")) {

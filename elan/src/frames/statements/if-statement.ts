@@ -32,11 +32,11 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("if ");
         this.condition.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         source.removeIndent();
         return this.parseStandardEnding(source, "end if");
     }

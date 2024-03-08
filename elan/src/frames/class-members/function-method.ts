@@ -23,12 +23,12 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end function\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.removeIndent();
-        super.parseTopOfFrame(source);
+        super.parseTop(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
-        return super.parseBottomOfFrame(source);
+    parseBottom(source: CodeSource): boolean {
+        return super.parseBottom(source);
     }
     insertSelector(after: boolean): void {
         this.class.insertMemberSelector(after, this);

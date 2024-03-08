@@ -25,10 +25,10 @@ ${this.renderChildrenAsHtml()}
         return `${this.indent()}default\r
 ${this.renderChildrenAsSource()}`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("default");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return source.isMatch("end switch");
     }
     canInsertAfter(): boolean {

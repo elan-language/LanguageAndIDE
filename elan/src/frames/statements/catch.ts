@@ -36,11 +36,11 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("catch ");
         this.variable.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end try");
     }
 } 

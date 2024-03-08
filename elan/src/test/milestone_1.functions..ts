@@ -39,10 +39,10 @@ export function T01_helloWorld() {
 	var ss = m.getFirstSelectorAsDirectChild();
 	const comment = new CommentStatement(m);
 	comment.text.setText(`My first program`);
-	m.addStatementBefore(comment, ss);
+	m.addChildBefore(comment, ss);
 	const pr = new Print(m);
 	pr.expr.setText(`"Hello World!"`);
-	m.addStatementBefore(pr, ss);
+	m.addChildBefore(pr, ss);
 	return f;
 }
 
@@ -57,7 +57,7 @@ export function T02_comments() {
 	var ss = m.getFirstSelectorAsDirectChild();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setText("Comment 2");
-	m.addStatementBefore(sc2, ss);
+	m.addChildBefore(sc2, ss);
 	return f;
 }
 
@@ -68,28 +68,28 @@ export function T03_mainWithAllStatements(): FileImpl {
 	f.addChildBefore(m,gs);
 	var ssm = m.getFirstSelectorAsDirectChild();
 	const v = new VariableDefStatement(m);
-	m.addStatementBefore(v,ssm);
+	m.addChildBefore(v,ssm);
 	const s = new SetStatement(m);
 	s.name.setText("a");
 	s.expr.setText("3 + 4");
-	m.addStatementBefore(s,ssm);
+	m.addChildBefore(s,ssm);
 	const t = new Throw(m);
-	m.addStatementBefore(t,ssm);
+	m.addChildBefore(t,ssm);
 	const ca = new Call(m);
 	ca.proc.setText("signIn");
 	ca.args.setText(`rwp, password`);
-	m.addStatementBefore(ca,ssm);
+	m.addChildBefore(ca,ssm);
 	const pr = new Print(m);
 	pr.expr.setText(`"Hello World!"`);
-	m.addStatementBefore(pr,ssm);
+	m.addChildBefore(pr,ssm);
 	const w = new While(m);
 	w.condition.setText("newGame");
-	m.addStatementBefore(w,ssm);
+	m.addChildBefore(w,ssm);
 	const r = new Repeat(m);
 	r.condition.setText("score > 20");
-	m.addStatementBefore(r,ssm);
+	m.addChildBefore(r,ssm);
 	const for1 = new For(m);
-	m.addStatementBefore(for1,ssm);
+	m.addChildBefore(for1,ssm);
 	for1.variable.setText("i");
 	for1.from.setText("1");
 	for1.to.setText("10");
@@ -97,30 +97,30 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const ea = new Each(m);
 	ea.variable.setText("letter");
 	ea.iter.setText("Charlie Duke");
-	m.addStatementBefore(ea,ssm);
+	m.addChildBefore(ea,ssm);
 	const if1 = new IfStatement(m);
     if1.condition.setText("y > 4");
-	m.addStatementBefore(if1,ssm);
+	m.addChildBefore(if1,ssm);
 	const if2 = new IfStatement(m);
-	m.addStatementBefore(if2,ssm);
+	m.addChildBefore(if2,ssm);
     if2.condition.setText("y > 4");
 	var ss2 = if2.getFirstSelectorAsDirectChild();
 	var el1 = new Else(if2);
-	if2.addStatementBefore(el1,ss2);
-	if2.addStatementBefore(new StatementSelector(if2), el1);
+	if2.addChildBefore(el1,ss2);
+	if2.addChildBefore(new StatementSelector(if2), el1);
 	const if3 = new IfStatement(m);
-	m.addStatementBefore(if3, ssm);
+	m.addChildBefore(if3, ssm);
 	var ss_if3 = if3.getFirstSelectorAsDirectChild();
     if3.condition.setText("y > 4");
 	const el2 = new Else(if3);
 	el2.hasIf = true;
 	el2.condition.setText("y > 10");
-	if3.addStatementBefore(el2,ss_if3);
-	if3.addStatementBefore(new Else(if3),ss_if3);
+	if3.addChildBefore(el2,ss_if3);
+	if3.addChildBefore(new Else(if3),ss_if3);
 	const tr = new TryCatch(m);
-	m.addStatementBefore(tr,ssm);
+	m.addChildBefore(tr,ssm);
 	const sw = new Switch(m);
-	m.addStatementBefore(sw,ssm);
+	m.addChildBefore(sw,ssm);
 	return f;
 }
 

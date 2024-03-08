@@ -47,11 +47,11 @@ ${this.renderChildrenAsSource()}\r
 end test\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("test ");
         this.name.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
     }
     insertSelector(after: boolean): void {

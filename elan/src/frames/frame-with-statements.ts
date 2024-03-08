@@ -25,35 +25,6 @@ export abstract class FrameWithStatements extends AbstractFrameWithChildren {
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
 
-    public addStatementBefore(s: Frame, before: Frame) {
-        var i = this.getChildren().indexOf(before);
-        this.getChildren().splice(i, 0, s);
-    }
-
-    public addStatementAfter(s: Frame, after: Frame) {
-        var i = this.getChildren().indexOf(after) + 1;
-        this.getChildren().splice(i, 0, s);   
-    }
-
-    public removeStatement(s: Frame) {
-        var i = this.getChildren().indexOf(s);
-        this.getChildren().splice(i, 1);   
-    }
-
-    parseFrom(source: CodeSource): void {
-        this.parseTopOfFrame(source);
-        while (!this.parseBottomOfFrame(source)) {
-            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
-                source.removeRegEx(Regexes.startsWithNewLine, false);
-                source.removeIndent();
-            } else {
-                this.getFirstSelectorAsDirectChild().parseFrom(source);
-            }
-        } 
-    }
-    abstract parseTopOfFrame(source: CodeSource): void;
-    abstract parseBottomOfFrame(source: CodeSource): boolean;
-
     protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
         source.removeIndent();
         var result = false;
@@ -71,10 +42,10 @@ export abstract class FrameWithStatements extends AbstractFrameWithChildren {
         var selector = this.getSelectorToInsertAboveBelow();
         var parent =(this.getParent() as FrameWithStatements);
         if (after && this.canInsertAfter()) {
-            parent.addStatementAfter(selector, this);
+            parent.addChildAfter(selector, this);
             selector.select(true, false);
         } else if (!after && this.canInsertBefore()) {
-            parent.addStatementBefore(selector, this);
+            parent.addChildBefore(selector, this);
             selector.select(true, false);
         } 
     }

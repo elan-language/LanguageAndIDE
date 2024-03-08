@@ -92,7 +92,7 @@ export class StatementFactoryImpl implements StatementFactory {
     addFrameBeforeAndSelectFirstField(frameType: string, selector: Frame): Frame {
         var parent = selector.getParent() as FrameWithStatements;
         var newS = this.getNewStatement(frameType, selector.getParent());
-        parent.addStatementBefore(newS, selector);
+        parent.addChildBefore(newS, selector);
         newS.selectFirstField();
         return newS;
     }

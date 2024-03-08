@@ -40,11 +40,11 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end switch`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("switch ");
         this.expr.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         if (source.isMatch("default")) {
             result = true;

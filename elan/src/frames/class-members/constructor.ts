@@ -40,13 +40,13 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.removeIndent();
         source.remove("constructor(");
         this.params.parseFrom(source);
         source.remove(")");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end constructor");
     }
     canInsertBefore(): boolean {

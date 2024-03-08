@@ -32,10 +32,10 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("repeat");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         if (this.parseStandardEnding(source, "end repeat when ")) {
             this.condition.parseFrom(source);

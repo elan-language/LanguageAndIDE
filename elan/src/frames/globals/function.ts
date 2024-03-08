@@ -57,7 +57,7 @@ end function\r
 `;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("function ");
         this.name.parseFrom(source);
         source.remove("(");
@@ -65,7 +65,7 @@ end function\r
         source.remove(") as ");
         this.returnType.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         var keyword = "return ";
         source.removeIndent();

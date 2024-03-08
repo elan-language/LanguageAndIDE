@@ -9,11 +9,11 @@ export abstract class MultiLineStatement extends FrameWithStatements{
         var parent =(this.getParent() as FrameWithStatements);
         if (after) {
             if (this.canInsertAfter()) {
-                parent.addStatementAfter(selector, this);
+                parent.addChildAfter(selector, this);
             }
         } else {
             if (this.canInsertBefore()) {
-                parent.addStatementBefore(selector, this);
+                parent.addChildBefore(selector, this);
             }
         }
         selector.select(true, false);

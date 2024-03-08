@@ -33,11 +33,11 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("while ");
         this.condition.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end while");
     }
 } 

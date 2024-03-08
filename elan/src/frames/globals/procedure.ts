@@ -43,14 +43,14 @@ ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("procedure ");
         this.name.parseFrom(source);
         source.remove("(");
         this.params.parseFrom(source);
         source.remove(")");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end procedure");
     }
     insertSelector(after: boolean): void {

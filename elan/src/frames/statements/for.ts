@@ -44,7 +44,7 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("for ");
         this.variable.parseFrom(source);
         source.remove(" from ");
@@ -54,7 +54,7 @@ ${this.indent()}end for`;
         source.remove(" step ");
         this.step.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end for");
     }
 } 

@@ -1,5 +1,7 @@
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
+import { CodeSource } from "./code-source";
+import { Regexes } from "./fields/regexes";
 import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
@@ -136,6 +138,16 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         return result;
     }
 
+    public addChildBefore(child: Frame, before: Frame) {
+        var i = this.getChildren().indexOf(before);
+        this.getChildren().splice(i, 0, child);
+    }
+
+    public addChildAfter(child: Frame, after: Frame) {
+        var i = this.getChildren().indexOf(after) + 1;
+        this.getChildren().splice(i, 0, child);   
+    }
+
     protected renderChildrenAsHtml(): string {
         const ss: Array<string> = [];
         for (var m of this.getChildren()) {
@@ -155,4 +167,19 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         }
         return result;
     }
+
+    parseFrom(source: CodeSource): void {
+        this.parseTop(source);
+        while (!this.parseBottom(source)) {
+            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                source.removeRegEx(Regexes.startsWithNewLine, false);
+                source.removeIndent();
+            } else {
+                this.getFirstSelectorAsDirectChild().parseFrom(source);
+            }
+        } 
+    }
+
+    abstract parseTop(source: CodeSource): void;
+    abstract parseBottom(source: CodeSource): boolean;
 }
