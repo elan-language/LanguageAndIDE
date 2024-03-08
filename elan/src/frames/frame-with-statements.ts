@@ -14,11 +14,15 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     isCollapsible: boolean = true;
     isParent: boolean = true;
     multiline:boolean = true;
-    protected statements: Array<Frame> = new Array<Frame>();
+    private _children: Array<Frame> = new Array<Frame>();
 
     constructor(parent: File | Parent) {
         super(parent);   
-        this.statements.push(this.newStatementSelector());
+        this.getChildren().push(this.newStatementSelector());
+    }
+
+    getChildren(): Frame[] {
+        return this._children;
     }
 
     newStatementSelector(): StatementSelector {
@@ -26,21 +30,21 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     protected getNoOfStatements(): number {
-        return this.statements.length;
+        return this.getChildren().length;
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.statements.length > 1;
+        return this.getChildren().length > 1;
     }
 
     removeChild(child: Frame): void {
-        var i = this.statements.indexOf(child);
-        this.statements.splice(i,1);
+        var i = this.getChildren().indexOf(child);
+        this.getChildren().splice(i,1);
     }
 
     getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.statements.map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
 
@@ -52,44 +56,44 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         }
     }
     public getFirstStatementSelector() : StatementSelector {
-        return this.statements.filter(g => ('isSelector' in g))[0] as StatementSelector;
+        return this.getChildren().filter(g => ('isSelector' in g))[0] as StatementSelector;
     }
 
     getFirstChild(): Frame {
-        return this.statements[0]; //Should always be one - if only a Selector
+        return this.getChildren()[0]; //Should always be one - if only a Selector
     }
 
     getLastChild(): Frame {
-        return this.statements[this.statements.length - 1];
+        return this.getChildren()[this.getChildren().length - 1];
     }
 
     getChildAfter(g: Frame): Frame {
-        const index = this.statements.indexOf(g);
-        return index < this.statements.length -1 ? this.statements[index +1] : g;
+        const index = this.getChildren().indexOf(g);
+        return index < this.getChildren().length -1 ? this.getChildren()[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
-        const index = this.statements.indexOf(g);
-        return index > 0 ? this.statements[index -1] : g;
+        const index = this.getChildren().indexOf(g);
+        return index > 0 ? this.getChildren()[index -1] : g;
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.statements.indexOf(first);
-        var lst = this.statements.indexOf(last);
-        return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
+        var fst = this.getChildren().indexOf(first);
+        var lst = this.getChildren().indexOf(last);
+        return fst < lst ? this.getChildren().slice(fst, lst + 1) : this.getChildren().slice(lst, fst + 1);
     }
 
     selectFirstField(): boolean {
         var result = super.selectFirstField();
         if (!result) {
-            result = this.statements[0].selectFirstField();
+            result = this.getChildren()[0].selectFirstField();
         }
         return result;
     } 
 
     selectLastField(): boolean {
-        var n = this.statements.length;
-        return this.statements[n-1].selectLastField();
+        var n = this.getChildren().length;
+        return this.getChildren()[n-1].selectLastField();
     } 
 
     selectFieldBefore(current: Field): boolean {
@@ -101,8 +105,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     selectFirstChildIfAny(): boolean {
         var result = false;
-        if (this.statements.length > 0) {
-            this.statements[0].select(true, false);
+        if (this.getChildren().length > 0) {
+            this.getChildren()[0].select(true, false);
             result = true;
         }
         return result;
@@ -110,7 +114,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     protected renderStatementsAsHtml() : string {
         const ss: Array<string> = [];
-        for (var frame of this.statements) {
+        for (var frame of this.getChildren()) {
             ss.push(frame.renderAsHtml());
         }
         return ss.join("\n");
@@ -118,9 +122,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     protected renderStatementsAsSource() : string {
         var result = "";
-        if (this.statements.length > 0 ) {
+        if (this.getChildren().length > 0 ) {
             const ss: Array<string> = [];
-            for (var frame of this.statements.filter(s => !('isSelector' in s))) {
+            for (var frame of this.getChildren().filter(s => !('isSelector' in s))) {
                 ss.push(frame.renderAsSource());
             }
             result = ss.join("\r\n");
@@ -129,18 +133,18 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     public addStatementBefore(s: Frame, before: Frame) {
-        var i = this.statements.indexOf(before);
-        this.statements.splice(i, 0, s);
+        var i = this.getChildren().indexOf(before);
+        this.getChildren().splice(i, 0, s);
     }
 
     public addStatementAfter(s: Frame, after: Frame) {
-        var i = this.statements.indexOf(after) + 1;
-        this.statements.splice(i, 0, s);   
+        var i = this.getChildren().indexOf(after) + 1;
+        this.getChildren().splice(i, 0, s);   
     }
 
     public removeStatement(s: Frame) {
-        var i = this.statements.indexOf(s);
-        this.statements.splice(i, 1);   
+        var i = this.getChildren().indexOf(s);
+        this.getChildren().splice(i, 1);   
     }
 
     parseFrom(source: CodeSource): void {
@@ -184,27 +188,27 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     private moveDownOne(child: Frame): boolean {
         var result = false;
-        var i = this.statements.indexOf(child);
-        if ((i < this.statements.length - 1) && (this.statements[i+1].canInsertAfter())) {
-            this.statements.splice(i,1);
-            this.statements.splice(i+1,0,child);  
+        var i = this.getChildren().indexOf(child);
+        if ((i < this.getChildren().length - 1) && (this.getChildren()[i+1].canInsertAfter())) {
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i+1,0,child);  
             result = true;
         }
         return result;
     }
     private moveUpOne(child: Frame): boolean {
         var result = false;
-        var i = this.statements.indexOf(child);
-        if ((i > 0) && (this.statements[i-1].canInsertBefore())) {
-            this.statements.splice(i,1);
-            this.statements.splice(i-1,0,child);
+        var i = this.getChildren().indexOf(child);
+        if ((i > 0) && (this.getChildren()[i-1].canInsertBefore())) {
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i-1,0,child);
             result = true;     
         }
         return result;
     }
 
     moveSelectedChildrenUpOne(): void {
-        var toMove = this.statements.filter(g => g.isSelected()); 
+        var toMove = this.getChildren().filter(g => g.isSelected()); 
         var cont = true;
         var i = 0;
         while (cont && i < toMove.length) {
@@ -213,7 +217,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         }
     }
     moveSelectedChildrenDownOne(): void {
-        var toMove = this.statements.filter(g => g.isSelected()); 
+        var toMove = this.getChildren().filter(g => g.isSelected()); 
         var cont = true;
         var i = toMove.length - 1;
         while (cont && i >= 0) {

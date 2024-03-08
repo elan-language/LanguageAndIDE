@@ -14,7 +14,7 @@ export class Switch extends MultiLineStatement {
         super(parent);
         this.expr = new Expression(this);
         this.default = new Default(this);
-        this.statements.push(this.default);
+        this.getChildren().push(this.default);
     }
 
     minimumNumberOfChildrenExceeded(): boolean {

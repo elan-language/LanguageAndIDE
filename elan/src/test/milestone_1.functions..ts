@@ -35,7 +35,7 @@ export function T01_helloWorld() {
 	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
-	f.addGlobalBefore(m,gs);
+	f.addChildBefore(m,gs);
 	var ss = m.getFirstStatementSelector();
 	const comment = new CommentStatement(m);
 	comment.text.setText(`My first program`);
@@ -51,9 +51,9 @@ export function T02_comments() {
 	var gs = f.getFirstGlobalSelector();
 	const gc = new GlobalComment(f);
 	gc.text.setText("Comment 1");
-	f.addGlobalBefore(gc,gs);
+	f.addChildBefore(gc,gs);
 	const m = new MainFrame(f);
-	f.addGlobalBefore(m, gs);
+	f.addChildBefore(m, gs);
 	var ss = m.getFirstStatementSelector();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setText("Comment 2");
@@ -65,7 +65,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
-	f.addGlobalBefore(m,gs);
+	f.addChildBefore(m,gs);
 	var ssm = m.getFirstStatementSelector();
 	const v = new VariableDefStatement(m);
 	m.addStatementBefore(v,ssm);
@@ -150,24 +150,24 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	const con = new Constant(f);
 	con.name.setText("phi");
 	con.literal.setText("1.618");
-	f.addGlobalBefore(con, gs);
+	f.addChildBefore(con, gs);
 	const main = new MainFrame(f);
-	f.addGlobalBefore(main, gs);
+	f.addChildBefore(main, gs);
 	const proc = new Procedure(f);
 	proc.name.setText("signIn");
-	f.addGlobalBefore(proc, gs);
+	f.addChildBefore(proc, gs);
 	const func = new Function(f);
 	func.name.setText("hypotenuse");
 	func.params.setText("sideB Float, sideC Float");
 	func.returnType.setText("Float");
-	f.addGlobalBefore(func, gs);
+	f.addChildBefore(func, gs);
 	const enu = new Enum(f);
 	enu.name.setText("Fruit");
 	enu.values.setText("apple, orange, pear");
-	f.addGlobalBefore(enu, gs);
+	f.addChildBefore(enu, gs);
 	const test = new Test(f);
 	test.name.setText("test1");
-	f.addGlobalBefore(test, gs);
+	f.addChildBefore(test, gs);
 	return f;
 }
 
@@ -176,7 +176,7 @@ export function T05_classes() {
 	var gs = f.getFirstGlobalSelector();
 	const cl1 = new Class(f);
 	var ms = cl1.getFirstMemberSelector();
-	f.addGlobalBefore(cl1, gs);
+	f.addChildBefore(cl1, gs);
 	cl1.name.setText("Player");
 	const p1 = new Property(cl1);
 	cl1.addMemberAndSelectFirstField(p1,ms);
@@ -187,7 +187,7 @@ export function T05_classes() {
 	var ms2 = cl2.getFirstMemberSelector();
 	cl2.makeInherits();
 	cl2.superClasses.setText("Foo, Bar");
-	f.addGlobalBefore(cl2, gs);
+	f.addChildBefore(cl2, gs);
 	cl2.name.setText("Card");
 	cl2.makeImmutable();
 	const p2 = new Property(cl2);
@@ -212,8 +212,8 @@ end main */
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
-	f.addGlobalBefore(new MainFrame(f), gs);
-	f.addGlobalBefore(new Class(f), gs);
+	f.addChildBefore(new MainFrame(f), gs);
+	f.addChildBefore(new Class(f), gs);
 	return f;
 }
 

@@ -54,6 +54,6 @@ end procedure\r
        return this.parseStandardEnding(source, "end procedure");
     }
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 }

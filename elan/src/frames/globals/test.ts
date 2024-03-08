@@ -16,12 +16,12 @@ export class Test extends FrameWithStatements {
         super(parent);
         this.file = parent;
         this.multiline = true;
-        this.statements.slice(0,1); //remove statement selector
+        this.getChildren().splice(0,1); //remove statement selector
         this.name = new Identifier(this);
         var result = new VariableDefStatement(this);
         result.name.setText("result");
-        this.statements.push(result);
-        this.statements.push( new Assert(this));
+        this.getChildren().push(result);
+        this.getChildren().push( new Assert(this));
     }
 
     getFields(): Field[] {
@@ -55,6 +55,6 @@ end test\r
        return this.parseStandardEnding(source, "end test");
     }
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 }

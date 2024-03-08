@@ -51,6 +51,6 @@ end main\r
        return this.parseStandardEnding(source, "end main");
     }
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 }

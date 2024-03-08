@@ -24,7 +24,7 @@ export class Function extends FrameWithStatements implements Parent {
         this.params = new ParamList(this);
         this.returnType = new Type(this);
         this.returnType.setPlaceholder("return type");
-        this.statements.push(new ReturnStatement(this));
+        this.getChildren().push(new ReturnStatement(this));
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
@@ -78,9 +78,9 @@ end function\r
         return result;
     }
     private getReturnStatement() : ReturnStatement {
-        return this.statements.filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
+        return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 }

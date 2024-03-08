@@ -10,7 +10,7 @@ export class TryCatch extends MultiLineStatement  {
     constructor(parent: Parent) {
         super(parent);
         this.catch =new Catch(this);
-        this.statements.push(this.catch);
+        this.getChildren().push(this.catch);
     }
 
     minimumNumberOfChildrenExceeded(): boolean {

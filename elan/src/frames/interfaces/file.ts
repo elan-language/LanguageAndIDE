@@ -14,8 +14,8 @@ export interface File extends Parent {
     renderAsHtml(): string;
     renderAsSource(): string;
 
-    addGlobalBefore(g: Frame, before: Frame): void;
-    addGlobalAfter(g: Frame, after: Frame): void;
+    addChildBefore(g: Frame, before: Frame): void;
+    addChildAfter(g: Frame, after: Frame): void;
 
     getMap(): Map<string, Selectable>;
     getFactory(): StatementFactory;
@@ -35,13 +35,12 @@ export interface File extends Parent {
     addConstantBefore(global: Frame): Frame;
     addTestBefore(global: Frame): Frame;
     parseFrom(source: CodeSource): void;
-
     containsMain(): boolean;
 
     parseError?: string;
 
     deselectAll(): void;
 
-    insertGlobalSelector(after: boolean, existing: Frame): void;
+    insertSelector(after: boolean, existing: Frame): void;
     processKey(e: editorEvent): void;
 }

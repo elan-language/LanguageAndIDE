@@ -29,7 +29,7 @@ export class FileImpl implements File {
     isFile: boolean = true;
     parseError?: string;
 
-    private _globals: Array<Frame> = new Array<Frame>();
+    private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
     private ignoreHashOnParsing: boolean = false;
@@ -37,33 +37,38 @@ export class FileImpl implements File {
     constructor(private hash: (toHash: string) => string, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
-        this._globals.push(new GlobalSelector(this));
+        this.getChildren().push(new GlobalSelector(this));
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
+
+    getChildren(): Frame[] {
+        return this._children;
+    }
+
     private moveDownOne(child: Frame): boolean {
         var result = false;
-        var i = this._globals.indexOf(child);
-        if (i < this._globals.length - 1) {
-            this._globals.splice(i,1);
-            this._globals.splice(i+1,0,child);
+        var i = this.getChildren().indexOf(child);
+        if (i < this.getChildren().length - 1) {
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i+1,0,child);
             result = true;
         }  
         return result;
     }
     private moveUpOne(child: Frame): boolean {
         var result = false;
-        var i = this._globals.indexOf(child);
+        var i = this.getChildren().indexOf(child);
         if (i > 0) {
-            this._globals.splice(i,1);
-            this._globals.splice(i-1,0,child); 
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i-1,0,child); 
             return result = true;  
         }  
         return result;
     }
     moveSelectedChildrenUpOne(): void {
-        var toMove = this._globals.filter(g => g.isSelected()); 
+        var toMove = this.getChildren().filter(g => g.isSelected()); 
         var cont = true;
         var i = 0;
         while (cont && i < toMove.length) {
@@ -72,7 +77,7 @@ export class FileImpl implements File {
         }
     }
     moveSelectedChildrenDownOne(): void {
-        var toMove = this._globals.filter(g => g.isSelected());
+        var toMove = this.getChildren().filter(g => g.isSelected());
         var cont = true;
         var i = toMove.length - 1;
         while (cont && i >= 0) {
@@ -81,12 +86,12 @@ export class FileImpl implements File {
         }
     }
     minimumNumberOfChildrenExceeded(): boolean {
-        return this._globals.length > 1;
+        return this.getChildren().length > 1;
     }
 
     removeChild(child: Frame): void {
-        var i = this._globals.indexOf(child);
-        this._globals.splice(i,1);
+        var i = this.getChildren().indexOf(child);
+        this.getChildren().splice(i,1);
     }
 
     hasParent(): boolean {
@@ -111,7 +116,7 @@ export class FileImpl implements File {
         }
 
         const ss: Array<string> = [];
-        for (var global of this._globals) {
+        for (var global of this.getChildren()) {
             ss.push(global.renderAsHtml());
         }
         const globals = ss.join("\n");
@@ -133,9 +138,9 @@ export class FileImpl implements File {
 
     renderGlobalsAsSource() : string{
         var result = "";
-        if (this._globals.length > 0) {
+        if (this.getChildren().length > 0) {
             const ss: Array<string> = [];
-            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
+            for (var frame of this.getChildren().filter(g => !('isSelector' in g))) {
                 ss.push(frame.renderAsSource());
             }
             result = ss.join("\r\n");
@@ -154,54 +159,54 @@ export class FileImpl implements File {
     }
 
     public addGlobal(g: Frame) : void {
-        this._globals.push(g);
+        this.getChildren().push(g);
     }
 
     public getFirstGlobalSelector() : GlobalSelector {
-        return this._globals.filter(g => ('isSelector' in g))[0] as GlobalSelector;
+        return this.getChildren().filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
-    public addGlobalBefore(g: Frame, before: Frame): void {
-        var i = this._globals.indexOf(before);
-        this._globals.splice(i,0,g);
+    public addChildBefore(g: Frame, before: Frame): void {
+        var i = this.getChildren().indexOf(before);
+        this.getChildren().splice(i,0,g);
     }
 
-    public addGlobalAfter(g: Frame, after: Frame) {
-        var i = this._globals.indexOf(after)+1;
-        this._globals.splice(i,0,g);     
+    public addChildAfter(g: Frame, after: Frame) {
+        var i = this.getChildren().indexOf(after)+1;
+        this.getChildren().splice(i,0,g);     
     }
 
     public removeGlobal(g: Frame) {
-        var i = this._globals.indexOf(g);
-        this._globals.splice(i,1);    
+        var i = this.getChildren().indexOf(g);
+        this.getChildren().splice(i,1);    
     }
 
     getChildNumber(n: number): Frame {
-        return this._globals[n];
+        return this.getChildren()[n];
     }
     
     getFirstChild(): Frame {
-        return this._globals[0]; //Should always be one - at minimum a SelectGlobal
+        return this.getChildren()[0]; //Should always be one - at minimum a SelectGlobal
     }
 
     getLastChild(): Frame {
-        return this._globals[this._globals.length - 1];
+        return this.getChildren()[this.getChildren().length - 1];
     }
 
     getChildAfter(g: Frame): Frame {
-        const index = this._globals.indexOf(g);
-        return index < this._globals.length - 1 ? this._globals[index +1] : g;
+        const index = this.getChildren().indexOf(g);
+        return index < this.getChildren().length - 1 ? this.getChildren()[index +1] : g;
     }
 
     getChildBefore(g: Frame): Frame {
-        const index = this._globals.indexOf(g);
-        return index > 0 ? this._globals[index -1] : g;
+        const index = this.getChildren().indexOf(g);
+        return index > 0 ? this.getChildren()[index -1] : g;
     }
 
     getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this._globals.indexOf(first);
-        var lst = this._globals.indexOf(last);
-        return fst < lst ? this._globals.slice(fst, lst + 1) : this._globals.slice(lst, fst + 1);
+        var fst = this.getChildren().indexOf(first);
+        var lst = this.getChildren().indexOf(last);
+        return fst < lst ? this.getChildren().slice(fst, lst + 1) : this.getChildren().slice(lst, fst + 1);
     }
 
     defocusAll() {
@@ -228,7 +233,7 @@ export class FileImpl implements File {
     }
 
     status(): ParseStatus {
-        return this._globals.map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        return this.getChildren().map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
     }
 
     statusAsString() : string {
@@ -253,38 +258,38 @@ export class FileImpl implements File {
 
     addMainBefore(g: Frame): Frame {
         var m = new MainFrame(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addFunctionBefore(g: Frame): Frame {
         var m = new Function(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addProcedureBefore(g: Frame): Frame {
         var m = new Procedure(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addEnumBefore(g: Frame): Frame {
         var m = new Enum(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addClassBefore(g: Frame): Frame {
         var m = new Class(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addGlobalCommentBefore(g: Frame): Frame {
         var m = new GlobalComment(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addConstantBefore(g: Frame): Frame {
         var m = new Constant(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
     addTestBefore(g: Frame): Frame {
         var m = new Test(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
+        return this.addChildBeforeAndSelectFirstField(m,g);
     }
-    private addGlobalBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
-        this.addGlobalBefore(g, before);
+    private addChildBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
+        this.addChildBefore(g, before);
         g.selectFirstField();
         return g;
     }
@@ -311,7 +316,7 @@ export class FileImpl implements File {
     }
 
     containsMain(): boolean {
-        var mains = this._globals.filter(g => 'isMain' in g);
+        var mains = this.getChildren().filter(g => 'isMain' in g);
         return mains.length > 0;
     }
 
@@ -338,13 +343,13 @@ export class FileImpl implements File {
         return matches !== null && matches.length > 0;
     }
 
-    insertGlobalSelector(after: boolean, existing: Frame): void {
+    insertSelector(after: boolean, existing: Frame): void {
         var selector =  new GlobalSelector(this);
         if (after && existing.canInsertAfter()) {
-            this.addGlobalAfter(selector, existing);
+            this.addChildAfter(selector, existing);
             selector.select(true, false);
         } else if (!after && existing.canInsertBefore()) {
-            this.addGlobalBefore(selector, existing);
+            this.addChildBefore(selector, existing);
             selector.select(true, false);
         }
     }

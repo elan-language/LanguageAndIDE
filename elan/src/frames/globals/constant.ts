@@ -48,6 +48,6 @@ export class Constant extends AbstractFrame {
 `;
     }
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 } 

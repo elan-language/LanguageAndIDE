@@ -316,7 +316,7 @@ end class\r\n`;
     }
     
     insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        this.file.insertSelector(after, this);
     }
 
     private moveDownOne(child: Frame): boolean {
