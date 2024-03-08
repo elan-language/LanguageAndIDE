@@ -21,10 +21,6 @@ import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractFrameWithChildren } from "../abstract-frame-with-children";
 
 export class Class extends AbstractFrameWithChildren implements Parent {
-
-    isCollapsible: boolean = true;
-    isParent: boolean = true;
-    isGlobal = true;
     public name: Type;
     public abstract: OptionalKeyword;
     public immutable: boolean;
@@ -35,7 +31,6 @@ export class Class extends AbstractFrameWithChildren implements Parent {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.multiline = true;
         this.name = new Type(this);
         this.name.setPlaceholder("name");
         this.abstract = new OptionalKeyword(this, "abstract");
@@ -96,14 +91,6 @@ export class Class extends AbstractFrameWithChildren implements Parent {
     getIdPrefix(): string {
         return 'class';
     }
-    selectFirstChild(multiSelect: boolean): boolean {
-        if (this.getChildren().length > 0){
-            this.getChildren()[0].select(true, multiSelect);
-            return true;
-        }
-        return false;
-    }
-
     private modifiersAsHtml(): string {
         return `${this.abstract.renderAsHtml()} `;
     }
@@ -125,14 +112,10 @@ export class Class extends AbstractFrameWithChildren implements Parent {
     }
 
     public renderAsHtml(): string {
-        const ss: Array<string> = [];
-        for (var m of this.getChildren()) {
-            ss.push(m.renderAsHtml());
-        }
-        const members = ss.join("\n");
+
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inhertanceAsHtml()}</top>
-${members}
+${this.renderChildrenAsHtml()}
 <keyword>end class</keyword>
 </classDef>`;
     }
@@ -143,22 +126,10 @@ ${members}
 
     public renderAsSource(): string {
         return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
-${this.membersAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end class\r\n`;
     }
 
-    private membersAsSource(): string {
-        var result = "";
-        if (this.getChildren().length > 0) {
-        const ss: Array<string> = [];
-        for (var m of this.getChildren().filter(m  => !('isSelector' in m))) {
-            var s = m.renderAsSource();
-            ss.push(s);
-        }
-        result = ss.join("\r\n");
-        }
-        return result;
-    }
 
     public addMemberAndSelectFirstField(newM: Frame, existing: Frame, after: boolean = false) {
         var i = this.getChildren().indexOf(existing);

@@ -31,13 +31,13 @@ export class Switch extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end switch</keyword>
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}switch ${this.expr.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end switch`;
     }
     parseTopOfFrame(source: CodeSource): void {

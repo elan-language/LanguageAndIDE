@@ -24,13 +24,13 @@ export class While extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end while</keyword>
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}while ${this.condition.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
     }
     parseTopOfFrame(source: CodeSource): void {

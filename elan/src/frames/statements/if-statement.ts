@@ -23,13 +23,13 @@ export class IfStatement extends MultiLineStatement{
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end if</keyword>
 </statement>`;
     }
     renderAsSource(): string {
     return `${this.indent()}if ${this.condition.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
     parseTopOfFrame(source: CodeSource): void {

@@ -23,13 +23,13 @@ export class Repeat extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>repeat</keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}repeat\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {

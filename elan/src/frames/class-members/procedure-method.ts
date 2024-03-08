@@ -20,7 +20,7 @@ export class ProcedureMethod extends Procedure implements Member {
     }
     public override renderAsSource() : string {
         return `${this.indent()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
     }

@@ -29,14 +29,14 @@ export class Each extends MultiLineStatement  {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end each</keyword>
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
     parseTopOfFrame(source: CodeSource): void {

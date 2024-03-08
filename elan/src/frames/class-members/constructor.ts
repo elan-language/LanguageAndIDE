@@ -30,13 +30,13 @@ export class Constructor extends FrameWithStatements implements Member {
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>constructor</keyword>(${this.params.renderAsHtml()})</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end constructor</keyword>
 </constructor>`;
     }
     public renderAsSource(): string {
         return `${this.indent()}constructor(${this.params.renderAsSource()})\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;
     }

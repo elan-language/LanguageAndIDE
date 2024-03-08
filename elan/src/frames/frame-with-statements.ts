@@ -1,14 +1,11 @@
-import { AbstractFrame } from "./abstract-frame";
 import { Parent } from "./interfaces/parent";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
-import { Collapsible } from "./interfaces/collapsible";
 import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { AbstractSelector } from "./abstract-selector";
-import { Field } from "./interfaces/field";
 import { AbstractFrameWithChildren } from "./abstract-frame-with-children";
 
 export abstract class FrameWithStatements extends AbstractFrameWithChildren {
@@ -26,26 +23,6 @@ export abstract class FrameWithStatements extends AbstractFrameWithChildren {
         var fieldStatus = this.worstStatusOfFields();
         var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
-    }
-
-    protected renderStatementsAsHtml() : string {
-        const ss: Array<string> = [];
-        for (var frame of this.getChildren()) {
-            ss.push(frame.renderAsHtml());
-        }
-        return ss.join("\n");
-    }
-
-    protected renderStatementsAsSource() : string {
-        var result = "";
-        if (this.getChildren().length > 0 ) {
-            const ss: Array<string> = [];
-            for (var frame of this.getChildren().filter(s => !('isSelector' in s))) {
-                ss.push(frame.renderAsSource());
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
     }
 
     public addStatementBefore(s: Frame, before: Frame) {

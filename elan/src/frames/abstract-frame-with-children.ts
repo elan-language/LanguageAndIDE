@@ -10,7 +10,6 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
     isParent: boolean = true;
     multiline:boolean = true;
     private _children: Array<Frame> = new Array<Frame>();
-    
 
     getChildren(): Frame[] {
         return this._children;
@@ -100,6 +99,14 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         }
     }
 
+    selectFirstChild(multiSelect: boolean): boolean {
+        if (this.getChildren().length > 0){
+            this.getChildren()[0].select(true, multiSelect);
+            return true;
+        }
+        return false;
+    }
+
     selectLastField(): boolean {
         var n = this.getChildren().length;
         return this.getChildren()[n-1].selectLastField();
@@ -129,5 +136,23 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         return result;
     }
 
- 
+    protected renderChildrenAsHtml(): string {
+        const ss: Array<string> = [];
+        for (var m of this.getChildren()) {
+            ss.push(m.renderAsHtml());
+        }
+        return ss.join("\n");
+    }
+
+    protected renderChildrenAsSource() : string {
+        var result = "";
+        if (this.getChildren().length > 0 ) {
+            const ss: Array<string> = [];
+            for (var frame of this.getChildren().filter(s => !('isSelector' in s))) {
+                ss.push(frame.renderAsSource());
+            }
+            result = ss.join("\r\n");
+        }
+        return result;
+    }
 }

@@ -17,13 +17,13 @@ export class Default extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>default </keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}default\r
-${this.renderStatementsAsSource()}`;
+${this.renderChildrenAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {
         source.remove("default");

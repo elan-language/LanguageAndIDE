@@ -38,7 +38,7 @@ export class Else extends MultiLineStatement  {
     }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 </statement>`;
     }
 
@@ -48,7 +48,7 @@ ${this.renderStatementsAsHtml()}
 
     renderAsSource(): string {
         return `${this.indent()}else${this.ifClauseAsSource()}\r
-${this.renderStatementsAsSource()}`;
+${this.renderChildrenAsSource()}`;
     }
 
     parseTopOfFrame(source: CodeSource): void {

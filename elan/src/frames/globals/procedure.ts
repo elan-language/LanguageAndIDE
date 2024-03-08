@@ -30,7 +30,7 @@ export class Procedure extends FrameWithStatements {
     public renderAsHtml() : string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
     }
@@ -39,7 +39,7 @@ ${this.renderStatementsAsHtml()}
     }
     public renderAsSource() : string {
         return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
     }

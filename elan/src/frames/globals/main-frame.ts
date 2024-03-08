@@ -28,7 +28,7 @@ export class MainFrame extends FrameWithStatements {
     public renderAsHtml() : string {
         return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>main</keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end main</keyword>
 </main>`;
     }
@@ -39,7 +39,7 @@ ${this.renderStatementsAsHtml()}
 
     public renderAsSource() : string {
         return `main\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end main\r
 `;
     }

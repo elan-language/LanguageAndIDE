@@ -27,13 +27,13 @@ export class Catch extends MultiLineStatement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}
-${this.renderStatementsAsHtml()}        
+${this.renderChildrenAsHtml()}        
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}catch ${this.variable.renderAsSource()}\r
-${this.renderStatementsAsSource()}`;;
+${this.renderChildrenAsSource()}`;;
     }
 
     parseTopOfFrame(source: CodeSource): void {

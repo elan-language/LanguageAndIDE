@@ -41,7 +41,7 @@ export class Function extends FrameWithStatements implements Parent {
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }
@@ -52,7 +52,7 @@ ${this.renderStatementsAsHtml()}
 
     public renderAsSource() : string {
         return `function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end function\r
 `;
     }

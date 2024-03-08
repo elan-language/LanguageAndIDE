@@ -19,7 +19,7 @@ export class FunctionMethod extends Function implements Member {
     }
     public override renderAsSource() : string {
         return `${this.indent()}function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end function\r
 `;
     }

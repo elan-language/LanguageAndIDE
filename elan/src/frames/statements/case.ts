@@ -22,12 +22,12 @@ export class Case extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>case </keyword>${this.value.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}case ${this.value.renderAsSource()}\r
-${this.renderStatementsAsSource()}`;
+${this.renderChildrenAsSource()}`;
     }
     parseTopOfFrame(source: CodeSource): void {
         source.remove("case ");

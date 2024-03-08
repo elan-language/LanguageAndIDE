@@ -34,7 +34,7 @@ export class Test extends FrameWithStatements {
     public renderAsHtml() : string {
         return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>test </keyword>${this.name.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;
     }
@@ -43,7 +43,7 @@ ${this.renderStatementsAsHtml()}
     }
     public renderAsSource() : string {
         return `test ${this.name.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end test\r
 `;
     }

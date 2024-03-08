@@ -28,13 +28,13 @@ export class TryCatch extends MultiLineStatement  {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>try </keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end try</keyword>
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}try\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end try`;
     }
     parseTopOfFrame(source: CodeSource): void {
