@@ -214,46 +214,38 @@ end class\r\n`;
     addFunctionMethodBefore(member: Frame): Frame {
         var p = new FunctionMethod(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addPropertyBefore(member: Frame): Frame {
         var p = new Property(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addProcedureMethodBefore(member: Frame): Frame {
         var p = new ProcedureMethod(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addAbstractFunctionBefore(member: Frame): Frame {
         var p = new AbstractFunction(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addCommentBefore(member: Frame): Frame {
         var p = new CommentStatement(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addAbstractPropertyBefore(member: Frame): Frame {
         var p = new AbstractProperty(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
     addAbstractProcedureBefore(member: Frame): Frame {
         var p = new AbstractProcedure(this);
         this.addMemberAndSelectFirstField(p, member);
-        p.select(true, false);
         return p;
     }
-
 
     private getConstructor(): Constructor {
         return this._members.filter(m => ('isConstructor' in m))[0] as Constructor;

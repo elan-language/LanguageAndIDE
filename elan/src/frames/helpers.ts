@@ -4,11 +4,19 @@ import { Field } from "./interfaces/field";
 import { Collapsible } from "./interfaces/collapsible";
 import { Parent } from "./interfaces/parent";
 import { Frame } from "./interfaces/frame";
+import { File } from "./interfaces/file";
+import { MainFrame } from "./globals/main-frame";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
     return !!f && 'isCollapsible' in f;
 }
 
+export function isFile(f?: any): f is File {
+    return !!f && 'isFile' in f;
+}
+export function isMain(f?: any): f is MainFrame {
+    return !!f && 'isMain' in f;
+}
 export function isFrame(f?: any): f is Frame {
     return !!f && 'isFrame' in f;
 }

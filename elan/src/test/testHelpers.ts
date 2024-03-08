@@ -223,6 +223,18 @@ export async function activate(docUri: vscode.Uri) {
   }
 
   //Keys
+  export function enter() {
+    return key("Enter");
+  }
+  export function shift_enter() {
+    return key("Enter", true);
+  }
+  export function tab() {
+    return key("Tab");
+  }
+  export function shift_tab() {
+    return key("Tab", true);
+  }
   export function up() {
     return key("ArrowUp");
   }

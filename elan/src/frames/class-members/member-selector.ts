@@ -13,6 +13,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         this.class = parent as Class;
     }
    
+    //TODO: this could be [() => Member, string] e.g. [() => cls.newComment(), "#"]
     defaultOptions: [string, string][] = [
         ["FunctionMethod", "function"],
         ["ProcedureMethod", "procedure"],
@@ -23,6 +24,11 @@ export class MemberSelector extends AbstractSelector implements Member  {
         ["AbstractFunction", "abstract function"],
         ["AbstractProcedure", "abstract procedure"]
     ];
+
+    //TODO: generic method (common to all selectors) 
+    //processNew(frame: Frame)
+    //But even this could be pushed up into AbstractSelector if we make it more generic
+    //in terms of 'children' rather than specific to Global, Member, Statement
 
     validForEditorWithin(frameType: string): boolean {
         var result = false;
@@ -55,30 +61,38 @@ export class MemberSelector extends AbstractSelector implements Member  {
     }
 
     addFrame(frameType: string): Frame {
+        //TODO: refactor to reduce repetition (here and on class):
+        //just get the newly-created member from the class, then call the addMemberAndSelectFirstField method here
+        //once at the end of the switch. (Same for adding globals into file impl. )
+        //N.B StatementSelector and Factory is more efficient.
+        //could even eliminate this by making the defaultOptions a dictionary holding the 
+        //string label and function (delegating to class) to create the new member.
+        var cls = this.class;
+        var newMem: Member;
         switch(frameType) {
             case "FunctionMethod": {
-                return this.getClass().addFunctionMethodBefore(this);
+                return cls.addFunctionMethodBefore(this);  //change to newMen = cls.newFunctionMethod();
             }
             case "ProcedureMethod": {
-                return this.getClass().addProcedureMethodBefore(this);
+                return cls.addProcedureMethodBefore(this);
             }
             case "Property": {
-                return this.getClass().addPropertyBefore(this);
+                return cls.addPropertyBefore(this);
             }
             case "Comment": {
-                return this.getClass().addCommentBefore(this);
+                return cls.addCommentBefore(this);
             }
             case "PrivateProperty": {
-                return this.getClass().addPropertyBefore(this);
+                return cls.addPropertyBefore(this);
             }
             case "AbstractProperty": {
-                return this.getClass().addAbstractPropertyBefore(this);
+                return cls.addAbstractPropertyBefore(this);
             }
             case "AbstractProcedure": {
-                return this.getClass().addAbstractProcedureBefore(this);
+                return cls.addAbstractProcedureBefore(this);
             }
             case "AbstractFunction": {
-                return this.getClass().addAbstractFunctionBefore(this);
+                return cls.addAbstractFunctionBefore(this);
             }
             default: {
                 throw new Error(`${frameType} is not a valid member frame type.`);

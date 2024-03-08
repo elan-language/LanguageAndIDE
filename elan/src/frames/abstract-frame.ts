@@ -1,6 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { isCollapsible, isFrame, isParent, singleIndent } from "./helpers";
+import { isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
@@ -9,6 +9,7 @@ import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
 import { MainFrame } from "./globals/main-frame";
+import { resourceLimits } from "worker_threads";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -199,15 +200,23 @@ export abstract class AbstractFrame implements Frame {
             if (n > 0) {
                 fields[n -1].select(true, false);
                 result = true;
-            } else { //should only occur if the parent is 'main'
-                var main = parent as MainFrame;
-                var file = main.getParent() as File;
-                var prior = file.getChildBefore(main);
-                if (prior !== main ) {
-                    prior.selectLastField();  
-                    result = true;
-                }                
+            } else {
+                if (isMain(parent)) {
+                    result =  this.selectLastFieldInPreviousGlobal(parent.getParent() as File, parent);
+                } else if (isFile(parent)) {
+                    result = this.selectLastFieldInPreviousGlobal(parent, this);
+                }               
             }
+        }
+        return result;
+    }
+
+    private selectLastFieldInPreviousGlobal(file: File, frame: Frame) : boolean {
+        var result = false;
+        var prior = file.getChildBefore(frame);
+        if (prior !== frame ) {
+            prior.selectLastField();  
+            result = true;
         }
         return result;
     }

@@ -1,46 +1,75 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
-import {ctrl_down, ctrl_up, del, down, end, esc, home, ins, key, loadFileAsModel, readAsDOM, right, shift_down, shift_ins, shift_up, up } from './testHelpers';
+import {ctrl_down, ctrl_up, del, down, end, enter, esc, home, ins, key, loadFileAsModel, readAsDOM, right, shift_down, shift_enter, shift_ins, shift_tab, shift_up, tab, up } from './testHelpers';
 import assert from 'assert';
 import { Identifier } from '../frames/fields/identifier';
 import { Expression } from '../frames/fields/expression';
 import { Function } from '../frames/globals/function';
 import { Frame } from '../frames/interfaces/frame';
 import { Constructor } from '../frames/class-members/constructor';
+import { Field } from '../frames/interfaces/field';
+import { Selectable } from '../frames/interfaces/selectable';
 
 suite('Navigation', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('Tabbing through fields (& back)', () => {
-		var tab = key("Tab");
-		var enter = key("Enter");
-		var s_tab = key("Tab",true);
-		var s_enter = key("Enter",true);
+
 		var file = T03_mainWithAllStatements();
 		var var4 = file.getById("var4") as Identifier;
 		assert.equal(var4.isSelected(), false);
-		file.processKey(enter);
+		file.processKey(enter());
 		assert.equal(var4.isSelected(), true);
 		var expr5 = file.getById("expr5") as Expression;
 		assert.equal(expr5.isSelected(), false);
-		var4.processKey(tab);
+		var4.processKey(tab());
 		assert.equal(var4.isSelected(), false);
 		assert.equal(expr5.isSelected(), true);
-		expr5.processKey(tab);
+		expr5.processKey(tab());
 		var expr7 = file.getById("expr7") as Expression;
 		assert.equal(expr7.isSelected(), true);
-		expr7.processKey(enter);
+		expr7.processKey(enter());
 		var expr8 = file.getById("expr8") as Expression;
 		assert.equal(expr8.isSelected(), true);
-		expr8.processKey(s_tab);
+		expr8.processKey(shift_tab());
 		assert.equal(expr8.isSelected(), false);
 		assert.equal(expr7.isSelected(), true);
-		expr7.processKey(s_enter);
+		expr7.processKey(shift_enter());
 		assert.equal(expr7.isSelected(), false);
 		assert.equal(expr5.isSelected(), true);
-		expr5.processKey(s_enter);
+		expr5.processKey(shift_enter());
 		assert.equal(expr5.isSelected(), false);
 		assert.equal(var4.isSelected(), true);
+	});
+	test('Tabbing through ALL fields (& back)', () => {
+		var file = T05_classes();
+		file.processKey(enter());
+		var fields = ["text3","type2","text4","args5","params8",
+		"select7","ident11","type12","select9","text15","type14","text16","args17",
+	"params20","select19",
+"ident23", "type24", 
+"ident27", "params28", "type29",
+"select26",
+"expr31",
+"select21",
+"select0"];
+		file.processKey(esc());
+		file.processKey(shift_enter());
+		for (var i in fields.reverse()) {
+			var field = file.getById(fields[i]);
+			assert.equal(field.isSelected(), true);
+			field.processKey(shift_enter());
+		}
+	});
+
+	test('Shift-Enter from first field in first global', () => {
+			var file = T05_classes();
+			file.processKey(enter());
+			var field = file.getById("text3");
+			assert.equal(field.isSelected(), true);
+			field.processKey(shift_enter());
+			assert.equal(field.isSelected(), true);
+
 	});
 	test('Selecting frames', () => {
 		var file = T03_mainWithAllStatements();
