@@ -6,11 +6,6 @@ import { Parent } from "./parent";
 export interface Frame extends Selectable {
     isFrame: boolean;
     
-    getFirstPeerFrame(): Frame;
-    getLastPeerFrame(): Frame;
-    getPreviousPeerFrame(): Frame;
-    getNextPeerFrame(): Frame;
-
     getParent(): Parent;
     getMap(): Map<string, Selectable>;
 

@@ -1,6 +1,5 @@
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import { GlobalSelector } from "../globals/global-selector";
 import { ParseStatus } from "../parse-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
