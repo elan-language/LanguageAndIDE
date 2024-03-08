@@ -69,8 +69,17 @@ suite('Navigation', () => {
 			assert.equal(field.isSelected(), true);
 			field.processKey(shift_enter());
 			assert.equal(field.isSelected(), true);
-
 	});
+	test('Shift-enter from first field in a main (that is also first in file', () => {
+		var file = T03_mainWithAllStatements();
+		var var4 = file.getById("var4");
+		assert.equal(var4.isSelected(), false);
+		file.processKey(enter());
+		assert.equal(var4.isSelected(), true);
+		var4.processKey(shift_enter());
+		assert.equal(var4.isSelected(), true);
+	});
+
 	test('Selecting frames', () => {
 		var file = T03_mainWithAllStatements();
 		var main = file.getById("main1");
