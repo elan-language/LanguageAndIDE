@@ -24,6 +24,7 @@ import { editorEvent } from "./interfaces/editor-event";
 export { CodeSourceFromString };
 
 export class FileImpl implements File {
+    isFrame: boolean = true;
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
@@ -41,6 +42,57 @@ export class FileImpl implements File {
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
+    }
+    worstStatusOfFields(): ParseStatus {
+        throw new Error("Method not implemented.");
+    }
+    selectFirstField(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    selectLastField(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    selectFieldBefore(current: Field): boolean {
+        throw new Error("Method not implemented.");
+    }
+    selectFieldAfter(current: Field): boolean {
+        throw new Error("Method not implemented.");
+    }
+    getNextFrameInTabOrder(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    getPreviousFrameInTabOrder(): Frame {
+        throw new Error("Method not implemented.");
+    }
+    canInsertBefore(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canInsertAfter(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    fieldUpdated(field: Field): void {
+        throw new Error("Method not implemented.");
+    }
+    isSelected(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    select(withFocus: boolean, multiSelect: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+    deselect(): void {
+        throw new Error("Method not implemented.");
+    }
+    isFocused(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    focus(): void {
+        throw new Error("Method not implemented.");
+    }
+    defocus(): void {
+        throw new Error("Method not implemented.");
+    }
+    getStatus(): ParseStatus {
+        throw new Error("Method not implemented.");
     }
 
     getChildren(): Frame[] {

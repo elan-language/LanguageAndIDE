@@ -7,7 +7,7 @@ import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 
 // Defines view of File from the internal (model) perspective, c.f. FileAPI for external (editor) view
-export interface File extends Parent {
+export interface File extends Parent, Frame {
     // external use
     isFile : boolean;
     getById(id: string) : Selectable;
