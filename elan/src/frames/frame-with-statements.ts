@@ -9,20 +9,16 @@ import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { AbstractSelector } from "./abstract-selector";
 import { Field } from "./interfaces/field";
+import { AbstractFrameWithChildren } from "./abstract-frame-with-children";
 
-export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
+export abstract class FrameWithStatements extends AbstractFrameWithChildren implements Parent, Collapsible{
     isCollapsible: boolean = true;
     isParent: boolean = true;
     multiline:boolean = true;
-    private _children: Array<Frame> = new Array<Frame>();
 
     constructor(parent: File | Parent) {
         super(parent);   
         this.getChildren().push(this.newStatementSelector());
-    }
-
-    getChildren(): Frame[] {
-        return this._children;
     }
 
     newStatementSelector(): StatementSelector {

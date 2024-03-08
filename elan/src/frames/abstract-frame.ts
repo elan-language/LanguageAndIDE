@@ -8,8 +8,6 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
-import { MainFrame } from "./globals/main-frame";
-import { resourceLimits } from "worker_threads";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;

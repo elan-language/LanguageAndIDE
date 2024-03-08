@@ -18,8 +18,9 @@ import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
+import { AbstractFrameWithChildren } from "../abstract-frame-with-children";
 
-export class Class extends AbstractFrame implements Parent {
+export class Class extends AbstractFrameWithChildren implements Parent {
 
     isCollapsible: boolean = true;
     isParent: boolean = true;
@@ -29,7 +30,6 @@ export class Class extends AbstractFrame implements Parent {
     public immutable: boolean;
     public inherits: OptionalKeyword;
     public superClasses: TypeList;
-    private _children: Array<Frame> = new Array<Frame>();
     private file: File;
 
     constructor(parent: File) {
@@ -46,11 +46,7 @@ export class Class extends AbstractFrame implements Parent {
         this.getChildren().push(new MemberSelector(this));
         this.immutable = false;
     }
-
-    getChildren(): Frame[] {
-        return this._children;
-    }
-
+    
     fieldUpdated(field: Field): void {
         if (field === this.abstract) {
             if (this.abstract.isSpecified()) {
