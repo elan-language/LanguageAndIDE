@@ -52,7 +52,7 @@ suite('Milestone 1 - Unit tests', () => {
 					mn.collapse();
 				}
 			},
-			["main4", "multiline valid", "multiline collapsed valid"]);
+			["main4", "valid multiline", "collapsed valid multiline"]);
 	});
 
 	test('Invalid identifier', () => {

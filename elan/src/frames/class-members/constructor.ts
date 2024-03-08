@@ -5,6 +5,7 @@ import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractSelector } from "../abstract-selector";
+import { Collapsible } from "../interfaces/collapsible";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -16,7 +17,6 @@ export class Constructor extends FrameWithStatements implements Member {
         super(parent);
         this.class = parent as Class;
         this.movable = false;
-        this.multiline = true;
         this.params = new ParamList(this);
     }
 
@@ -52,7 +52,7 @@ ${this.indent()}end constructor\r
     canInsertBefore(): boolean {
         return false;
     }
-    insertSelector(after: boolean): void {
+    insertPeerSelector(after: boolean): void {
         this.class.insertMemberSelector(after, this);
     }
 }

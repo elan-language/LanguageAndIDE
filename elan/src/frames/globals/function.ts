@@ -19,7 +19,6 @@ export class Function extends FrameWithStatements implements Parent {
     constructor(parent: Parent) {
         super(parent);
         this.file = parent as File;
-        this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
         this.returnType = new Type(this);
@@ -79,8 +78,5 @@ end function\r
     }
     private getReturnStatement() : ReturnStatement {
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertSelector(after, this);
     }
 }

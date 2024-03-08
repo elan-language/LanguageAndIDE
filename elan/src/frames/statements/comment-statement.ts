@@ -3,9 +3,11 @@ import { Member} from "../interfaces/member";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { SingleLineStatement } from "./single-line-statement";
+import { AbstractFrame } from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class CommentStatement extends SingleLineStatement implements Member {
+export class CommentStatement extends AbstractFrame implements Statement, Member {
+    isStatement = true;
     isMember = true;
     public text: Comment;
 

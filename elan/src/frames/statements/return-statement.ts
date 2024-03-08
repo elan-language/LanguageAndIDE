@@ -2,9 +2,11 @@ import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { SingleLineStatement } from "./single-line-statement";
+import { Statement } from "../interfaces/statement";
+import { AbstractFrame } from "../abstract-frame";
 
-export class ReturnStatement extends SingleLineStatement  { 
+export class ReturnStatement extends AbstractFrame implements Statement{
+    isStatement = true; 
     isReturnStatement = true;  
     expr: Expression;
 

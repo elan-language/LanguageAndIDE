@@ -2,9 +2,11 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { LiteralValue } from "../fields/literal-value";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Case extends MultiLineStatement {
+export class Case extends FrameWithStatements implements Statement {
+    isStatement = true;
     value: LiteralValue;
 
     constructor(parent: Parent) {

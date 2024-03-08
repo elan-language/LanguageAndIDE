@@ -1,9 +1,11 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Default extends MultiLineStatement {
+export class Default extends FrameWithStatements implements Statement {
+    isStatement = true;
     constructor(parent: Parent) {
         super(parent);
         this.movable = false;

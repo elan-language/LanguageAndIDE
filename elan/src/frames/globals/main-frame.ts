@@ -14,7 +14,6 @@ export class MainFrame extends FrameWithStatements {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.multiline = true;
     }
 
     getFields(): Field[] {
@@ -43,14 +42,10 @@ ${this.renderChildrenAsSource()}\r
 end main\r
 `;
     }
-
     parseTop(source: CodeSource) {
         source.remove("main");
     }  
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end main");
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertSelector(after, this);
     }
 }

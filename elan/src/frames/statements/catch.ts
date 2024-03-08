@@ -3,9 +3,11 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Catch extends MultiLineStatement {
+export class Catch extends FrameWithStatements implements Statement {
+    isStatement = true;
     variable: Identifier;
 
     constructor(parent: Parent) {

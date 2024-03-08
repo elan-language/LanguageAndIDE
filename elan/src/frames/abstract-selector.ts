@@ -3,9 +3,9 @@ import { Frame } from "./interfaces/frame";
 import { editorEvent } from "./interfaces/editor-event";
 import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
-import { SingleLineStatement } from "./statements/single-line-statement";
+import { AbstractFrame } from "./abstract-frame";
 
-export abstract class AbstractSelector extends SingleLineStatement {
+export abstract class AbstractSelector extends AbstractFrame {
     isSelector = true;
     isStatement = true;
     text: string = "";
@@ -123,7 +123,7 @@ export abstract class AbstractSelector extends SingleLineStatement {
         return false;
     }
 
-    insertSelector(after: boolean): void {
+    insertPeerSelector(after: boolean): void {
         throw new Error("Should never be called on a Selector");
     }
 

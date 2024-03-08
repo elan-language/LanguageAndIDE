@@ -34,5 +34,5 @@ export interface Parent {
     moveSelectedChildrenDownOne(): void;
     moveSelectedChildrenUpOne(): void;
 
-
+    insertChildSelector(after: boolean, child: Frame): void;
 }

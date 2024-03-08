@@ -2,9 +2,9 @@ import { Catch } from "./catch";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
 
-export class TryCatch extends MultiLineStatement  {
+export class TryCatch extends FrameWithStatements  {
     private catch: Catch;
     
     constructor(parent: Parent) {

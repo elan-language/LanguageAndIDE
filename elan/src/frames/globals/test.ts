@@ -15,7 +15,6 @@ export class Test extends FrameWithStatements {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.multiline = true;
         this.getChildren().splice(0,1); //remove statement selector
         this.name = new Identifier(this);
         var result = new VariableDefStatement(this);
@@ -53,8 +52,5 @@ end test\r
     }
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertSelector(after, this);
     }
 }

@@ -40,7 +40,5 @@ export interface File extends Parent {
     parseError?: string;
 
     deselectAll(): void;
-
-    insertSelector(after: boolean, existing: Frame): void;
     processKey(e: editorEvent): void;
 }

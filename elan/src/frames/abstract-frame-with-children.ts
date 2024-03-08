@@ -9,10 +9,15 @@ import { Parent } from "./interfaces/parent";
 import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
+
     isCollapsible: boolean = true;
     isParent: boolean = true;
-    multiline:boolean = true;
     private _children: Array<Frame> = new Array<Frame>();
+
+    protected setClasses() {
+        super.setClasses();
+        this.pushClass(true,"multiline");
+    };
 
     getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
@@ -189,4 +194,16 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
 
     abstract parseTop(source: CodeSource): void;
     abstract parseBottom(source: CodeSource): boolean;
+
+    abstract newChildSelector(): AbstractSelector;
+
+    insertChildSelector(after: boolean, child: Frame) {
+        var selector = this.newChildSelector();
+        if (after && child.canInsertAfter()) {
+            this.addChildAfter(selector, child);
+        } else if (!after && child.canInsertBefore()) {
+            this.addChildBefore(selector, child);
+        }
+        selector.select(true, false);
+    }
 }

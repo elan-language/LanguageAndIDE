@@ -1,4 +1,3 @@
-import { Selectable } from "./interfaces/selectable";
 import { Member } from "./interfaces/member";
 import { Field } from "./interfaces/field";
 import { Collapsible } from "./interfaces/collapsible";
@@ -7,7 +6,7 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 
-export function isCollapsible(f?: Selectable): f is Collapsible {
+export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
 }
 
@@ -25,11 +24,11 @@ export function isParent(f?: any): f is Parent {
     return !!f && 'isParent' in f;
 }
 
-export function isMember(f?: Selectable): f is Member {
+export function isMember(f?: any): f is Member {
     return !!f && 'isMember' in f;
 } 
 
-export function isField(f?: Selectable): f is Field {
+export function isField(f?: any): f is Field {
     return !!f && 'isField' in f;
 } 
 

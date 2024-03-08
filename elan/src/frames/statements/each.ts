@@ -4,15 +4,16 @@ import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Each extends MultiLineStatement  {
+export class Each extends FrameWithStatements implements Statement {
+    isStatement = true;
     variable: Identifier;
     iter: Expression;
 
     constructor(parent: File | Parent) {
         super(parent);
-        this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.iter = new Expression(this);

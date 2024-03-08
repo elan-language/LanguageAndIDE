@@ -19,6 +19,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractFrameWithChildren } from "../abstract-frame-with-children";
+import { AbstractSelector } from "../abstract-selector";
 
 export class Class extends AbstractFrameWithChildren implements Parent {
     public name: Type;
@@ -233,10 +234,8 @@ end class\r\n`;
                 selector.select(true, false);
         }
     }
-    
-    insertSelector(after: boolean): void {
-        this.file.insertSelector(after, this);
+
+    newChildSelector(): AbstractSelector {
+        return new MemberSelector(this);
     }
-
-
 }

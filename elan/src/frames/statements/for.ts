@@ -4,9 +4,11 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Value } from "../fields/value";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class For extends MultiLineStatement  {
+export class For extends FrameWithStatements implements Statement  {
+    isStatement: boolean = true;
     variable: Identifier;
     from: Value;
     to: Value;

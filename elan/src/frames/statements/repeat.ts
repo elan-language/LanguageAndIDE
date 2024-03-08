@@ -2,9 +2,11 @@ import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Repeat extends MultiLineStatement {
+export class Repeat extends FrameWithStatements implements Statement {
+    isStatement: boolean = true;
     condition: Expression;
 
     constructor(parent: Parent) {

@@ -382,4 +382,14 @@ export class FileImpl implements File {
             this.getFirstChild().selectFirstField();
         }
     }
+
+    insertChildSelector(after: boolean, child: Frame) {
+        var selector = new GlobalSelector(this);
+        if (after && child.canInsertAfter()) {
+            this.addChildAfter(selector, child);
+        } else if (!after && child.canInsertBefore()) {
+            this.addChildBefore(selector, child);
+        }
+        selector.select(true, false);
+    }
 }

@@ -14,7 +14,6 @@ export abstract class AbstractFrame implements Frame {
     private _parent: File | Parent;
     private _map?: Map<string, Selectable>;
     private _factory: StatementFactory;
-    protected multiline: boolean = false;
     private selected: boolean = false;
     private focused: boolean = false;
     private collapsed: boolean = false;
@@ -143,7 +142,7 @@ export abstract class AbstractFrame implements Frame {
           case "End": {this.getLastPeerFrame().select(true, false); break;}
           case "Tab": {this.tabOrEnter(e.modKey.shift); break;} 
           case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
-          case "Insert": {this.insertSelector(e.modKey.shift); break;} 
+          case "Insert": {this.insertPeerSelector(e.modKey.shift); break;} 
           case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "ArrowUp": {
             if (e.modKey.control && this.movable) {
@@ -172,7 +171,14 @@ export abstract class AbstractFrame implements Frame {
         }
     }
 
-    abstract insertSelector(after: boolean): void;
+    insertPeerSelector(after: boolean): void { //Overridden by Global frames that inherit from this
+        var parent =this.getParent();
+        if (after && this.canInsertAfter()) {
+            parent.insertChildSelector(true, this);
+        } else if (!after && this.canInsertBefore()) {
+            parent.insertChildSelector(false, this)
+        } 
+    }
 
     canInsertBefore(): boolean { return true; }
 
@@ -254,7 +260,6 @@ export abstract class AbstractFrame implements Frame {
 
     protected setClasses() {
         this._classes = new Array<string>();
-        this.pushClass(this.multiline, "multiline");
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
@@ -280,10 +285,6 @@ export abstract class AbstractFrame implements Frame {
 
     isSelected(): boolean {
         return this.selected;
-    }
-
-    isMultiline(): boolean {
-        return this.multiline;
     }
 
     select(withFocus : boolean,  multiSelect: boolean): void {
@@ -337,13 +338,15 @@ export abstract class AbstractFrame implements Frame {
     }
 
     collapse(): void {
-        if (this.multiline) {
+        if ('isCollapsible' in this) {
             this.collapsed = true;
         }
     }
 
     expand(): void {
-        this.collapsed = false;
+        if ('isCollapsible' in this) {
+            this.collapsed = false;
+        }
     }
 
     isFocused(): boolean {

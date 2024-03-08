@@ -30,7 +30,7 @@ ${this.indent()}end function\r
     parseBottom(source: CodeSource): boolean {
         return super.parseBottom(source);
     }
-    insertSelector(after: boolean): void {
+    insertPeerSelector(after: boolean): void {
         this.class.insertMemberSelector(after, this);
     }
 }

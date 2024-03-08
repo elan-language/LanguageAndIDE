@@ -21,7 +21,6 @@ export class AbstractFunction extends AbstractFrame implements Member {
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
-        this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
         this.returnType = new Type(this);
@@ -59,7 +58,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
         source.remove(") as ");
         this.returnType.parseFrom(source);
     }
-    insertSelector(after: boolean): void {
+    insertPeerSelector(after: boolean): void {
         this.class.insertMemberSelector(after, this);
     }
 }

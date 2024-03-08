@@ -3,9 +3,10 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { VariableDef } from "../fields/variable";
-import { SingleLineStatement } from "./single-line-statement";
+import { AbstractFrame } from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class VariableDefStatement extends SingleLineStatement  {
+export class VariableDefStatement extends AbstractFrame implements Statement  {
     isStatement = true;
     name: VariableDef;
     expr: Expression;

@@ -15,7 +15,6 @@ export class Procedure extends FrameWithStatements {
     constructor(parent: Parent) {
         super(parent);
         this.file = parent as File;
-        this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
     }
@@ -52,8 +51,5 @@ end procedure\r
     }
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end procedure");
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertSelector(after, this);
     }
 }

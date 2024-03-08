@@ -4,9 +4,11 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
 import { Expression } from "../fields/expression";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Else extends MultiLineStatement  {
+export class Else extends FrameWithStatements implements Statement {
+    isStatement: boolean = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
     condition: Expression;
