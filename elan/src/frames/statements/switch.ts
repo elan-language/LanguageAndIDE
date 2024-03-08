@@ -18,7 +18,7 @@ export class Switch extends MultiLineStatement {
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.getNoOfStatements() > 2; //default +
+        return this.getChildren().length > 2; //default +
     }
 
     getFields(): Field[] {

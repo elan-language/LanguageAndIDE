@@ -14,7 +14,7 @@ export class TryCatch extends MultiLineStatement  {
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.getNoOfStatements() > 2; //catch +
+        return this.getChildren().length > 2; //catch +
     }
 
     getFields(): Field[] {

@@ -36,7 +36,7 @@ export function T01_helloWorld() {
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
-	var ss = m.getFirstStatementSelector();
+	var ss = m.getFirstSelectorAsDirectChild();
 	const comment = new CommentStatement(m);
 	comment.text.setText(`My first program`);
 	m.addStatementBefore(comment, ss);
@@ -54,7 +54,7 @@ export function T02_comments() {
 	f.addChildBefore(gc,gs);
 	const m = new MainFrame(f);
 	f.addChildBefore(m, gs);
-	var ss = m.getFirstStatementSelector();
+	var ss = m.getFirstSelectorAsDirectChild();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setText("Comment 2");
 	m.addStatementBefore(sc2, ss);
@@ -66,7 +66,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	var gs = f.getFirstGlobalSelector();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
-	var ssm = m.getFirstStatementSelector();
+	var ssm = m.getFirstSelectorAsDirectChild();
 	const v = new VariableDefStatement(m);
 	m.addStatementBefore(v,ssm);
 	const s = new SetStatement(m);
@@ -104,13 +104,13 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const if2 = new IfStatement(m);
 	m.addStatementBefore(if2,ssm);
     if2.condition.setText("y > 4");
-	var ss2 = if2.getFirstStatementSelector();
+	var ss2 = if2.getFirstSelectorAsDirectChild();
 	var el1 = new Else(if2);
 	if2.addStatementBefore(el1,ss2);
 	if2.addStatementBefore(new StatementSelector(if2), el1);
 	const if3 = new IfStatement(m);
 	m.addStatementBefore(if3, ssm);
-	var ss_if3 = if3.getFirstStatementSelector();
+	var ss_if3 = if3.getFirstSelectorAsDirectChild();
     if3.condition.setText("y > 4");
 	const el2 = new Else(if3);
 	el2.hasIf = true;
@@ -175,7 +175,7 @@ export function T05_classes() {
 	const f = new FileImpl(hash);
 	var gs = f.getFirstGlobalSelector();
 	const cl1 = new Class(f);
-	var ms = cl1.getFirstMemberSelector();
+	var ms = cl1.getFirstSelectorAsDirectChild();
 	f.addChildBefore(cl1, gs);
 	cl1.name.setText("Player");
 	const p1 = new Property(cl1);
@@ -184,7 +184,7 @@ export function T05_classes() {
 	p1.type.setText("Int");
 
 	const cl2 = new Class(f);
-	var ms2 = cl2.getFirstMemberSelector();
+	var ms2 = cl2.getFirstSelectorAsDirectChild();
 	cl2.makeInherits();
 	cl2.superClasses.setText("Foo, Bar");
 	f.addChildBefore(cl2, gs);

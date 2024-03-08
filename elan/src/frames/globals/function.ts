@@ -28,7 +28,7 @@ export class Function extends FrameWithStatements implements Parent {
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.getNoOfStatements() > 1; // return may be the only statement
+        return this.getChildren().length > 1; // return may be the only statement
     }
 
     getFields(): Field[] {

@@ -69,10 +69,7 @@ export class Class extends AbstractFrameWithChildren implements Parent {
     minimumNumberOfChildrenExceeded(): boolean {
         return this.getChildren().length > 2; //Constructor +
     }
-    removeChild(child: Frame): void {
-        var i = this.getChildren().indexOf(child);
-        this.getChildren().splice(i,1);
-    }
+
     isAbstract(): boolean {
         return this.abstract.isSpecified();
     }
@@ -91,42 +88,10 @@ export class Class extends AbstractFrameWithChildren implements Parent {
     makeInherits(): void {
         this.inherits.specify();
     }
-    public getFirstMemberSelector() : MemberSelector {
-        return this.getChildren().filter(g => ('isSelector' in g))[0] as MemberSelector;
-    }
+
     getFields(): Field[] {
         return [this.abstract, this.name, this.inherits, this.superClasses];
     } 
-    expandCollapse(): void {
-        if (this.isCollapsed()) {
-            this.expand();
-        } else {
-            this.collapse();
-        }
-    }
-    getFirstChild(): Frame {
-        return this.getChildren()[0]; //Should always be one - at minimum a SelectGlobal
-    }
-
-    getLastChild(): Frame {
-        return this.getChildren()[this.getChildren().length - 1];
-    }
-
-    getChildAfter(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index < this.getChildren().length -1 ? this.getChildren()[index +1] : g;
-    }
-
-    getChildBefore(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index > 0 ? this.getChildren()[index -1] : g;
-    }
-
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.getChildren().indexOf(first);
-        var lst = this.getChildren().indexOf(last);
-        return fst < lst ? this.getChildren().slice(fst, lst + 1) : this.getChildren().slice(lst, fst + 1);
-    }
 
     getIdPrefix(): string {
         return 'class';
@@ -284,7 +249,7 @@ end class\r\n`;
             if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                 source.removeRegEx(Regexes.startsWithNewLine, false);}
             else {
-                this.getFirstMemberSelector().parseFrom(source);
+                this.getFirstSelectorAsDirectChild().parseFrom(source);
             }
         } 
     }
@@ -315,47 +280,5 @@ end class\r\n`;
         this.file.insertSelector(after, this);
     }
 
-    private moveDownOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
-        if ((i < this.getChildren().length - 1) && (this.getChildren()[i+1].canInsertAfter())) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i+1,0,child); 
-            result = true;
-        } 
-        return result;
-    }
 
-    private moveUpOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
-        if ((i > 0) && (this.getChildren()[i-1].canInsertBefore())) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i-1,0,child); 
-            result = true;
-        }
-        return result;
-    }
-    moveSelectedChildrenUpOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected()); 
-        var cont = true;
-        var i = 0;
-        while (cont && i < toMove.length) {
-            cont = this.moveUpOne(toMove[i]);
-            i++;
-        }
-    }
-    moveSelectedChildrenDownOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected()); 
-        var cont = true;
-        var i = toMove.length - 1;
-        while (cont && i >= 0) {
-            cont = this.moveDownOne(toMove[i]);
-            i--;
-        }
-    }
-    selectLastField(): boolean {
-        var n = this.getChildren().length;
-        return this.getChildren()[n-1].selectLastField();
-    } 
 }
