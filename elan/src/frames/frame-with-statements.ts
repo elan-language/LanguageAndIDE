@@ -1,7 +1,6 @@
 import { Parent } from "./interfaces/parent";
 import { File } from "./interfaces/file";
 import { StatementSelector } from "./statements/statement-selector";
-import { CodeSource } from "./code-source";
 import { AbstractSelector } from "./abstract-selector";
 import { AbstractFrameWithChildren } from "./abstract-frame-with-children";
 

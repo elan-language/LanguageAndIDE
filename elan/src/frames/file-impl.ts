@@ -20,6 +20,7 @@ import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -29,7 +30,7 @@ export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
-    parseError?: string;
+    parseError? : string;
 
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
@@ -91,11 +92,6 @@ export class FileImpl implements File {
         return this.getChildren().length > 1;
     }
 
-    removeChild(child: Frame): void {
-        var i = this.getChildren().indexOf(child);
-        this.getChildren().splice(i,1);
-    }
-
     hasParent(): boolean {
         return false;
     }
@@ -113,15 +109,7 @@ export class FileImpl implements File {
     }
 
     public renderAsHtml(): string {
-        if (this.parseError){
-            return `<parseError>${this.parseError}</parseError>`;
-        }
-
-        const ss: Array<string> = [];
-        for (var global of this.getChildren()) {
-            ss.push(global.renderAsHtml());
-        }
-        const globals = ss.join("\n");
+        var globals = parentHelper_renderChildrenAsHtml(this);
         return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
     }
 
@@ -138,25 +126,13 @@ export class FileImpl implements File {
         return "Elan v0.1";
     }
 
-    renderGlobalsAsSource() : string{
-        var result = "";
-        if (this.getChildren().length > 0) {
-            const ss: Array<string> = [];
-            for (var frame of this.getChildren().filter(g => !('isSelector' in g))) {
-                ss.push(frame.renderAsSource());
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
-    }
-
     renderAsSource(): string {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
     }
 
     renderHashableContent(): string {
-        const globals = this.renderGlobalsAsSource();
+        const globals = parentHelper_renderChildrenAsSource(this);
         return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
 
@@ -164,48 +140,18 @@ export class FileImpl implements File {
         return this.getChildren().filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
-    public addChildBefore(g: Frame, before: Frame): void {
-        var i = this.getChildren().indexOf(before);
-        this.getChildren().splice(i,0,g);
-    }
-
-    public addChildAfter(g: Frame, after: Frame) {
-        var i = this.getChildren().indexOf(after)+1;
-        this.getChildren().splice(i,0,g);     
-    }
-
-    public removeGlobal(g: Frame) {
-        var i = this.getChildren().indexOf(g);
-        this.getChildren().splice(i,1);    
-    }
-
     getChildNumber(n: number): Frame {
         return this.getChildren()[n];
     }
     
-    getFirstChild(): Frame {
-        return this.getChildren()[0]; //Should always be one - at minimum a SelectGlobal
-    }
-
-    getLastChild(): Frame {
-        return this.getChildren()[this.getChildren().length - 1];
-    }
-
-    getChildAfter(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index < this.getChildren().length - 1 ? this.getChildren()[index +1] : g;
-    }
-
-    getChildBefore(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index > 0 ? this.getChildren()[index -1] : g;
-    }
-
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.getChildren().indexOf(first);
-        var lst = this.getChildren().indexOf(last);
-        return fst < lst ? this.getChildren().slice(fst, lst + 1) : this.getChildren().slice(lst, fst + 1);
-    }
+    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame {return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
+    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
+    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
+    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
+    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
 
     defocusAll() {
         for (const f of this._map.values()) {
@@ -231,7 +177,7 @@ export class FileImpl implements File {
     }
 
     status(): ParseStatus {
-        return this.getChildren().map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        return parentHelper_worstStatusOfChildren(this);
     }
 
     statusAsString() : string {
@@ -312,17 +258,6 @@ export class FileImpl implements File {
         return matches !== null && matches.length > 0;
     }
 
-    insertSelector(after: boolean, existing: Frame): void {
-        var selector =  new GlobalSelector(this);
-        if (after && existing.canInsertAfter()) {
-            this.addChildAfter(selector, existing);
-            selector.select(true, false);
-        } else if (!after && existing.canInsertBefore()) {
-            this.addChildBefore(selector, existing);
-            selector.select(true, false);
-        }
-    }
-
     getFields(): Field[] {
         return [];
     }
@@ -349,6 +284,10 @@ export class FileImpl implements File {
         } else {
             this.getFirstChild().selectFirstField();
         }
+    }
+
+    newChildSelector(): AbstractSelector {
+        return new GlobalSelector(this);
     }
 
     insertChildSelector(after: boolean, child: Frame) {

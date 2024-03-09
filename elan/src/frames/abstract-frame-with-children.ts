@@ -7,27 +7,26 @@ import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
-
-
     isCollapsible: boolean = true;
     isParent: boolean = true;
     private _children: Array<Frame> = new Array<Frame>();
-
-    getFactory(): StatementFactory {
-        return this.getParent().getFactory();
-    }
 
     protected setClasses() {
         super.setClasses();
         this.pushClass(true,"multiline");
     };
 
+    getFactory(): StatementFactory {
+        return this.getParent().getFactory();
+    }
+
     getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        var statementsStatus = parentHelper_worstStatusOfChildren(this);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
     }
 
@@ -39,35 +38,7 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         return this.getChildren().length > 1;
     }
 
-    removeChild(child: Frame): void {
-        var i = this.getChildren().indexOf(child);
-        this.getChildren().splice(i,1);
-    }
-
-    getFirstChild(): Frame {
-        return this.getChildren()[0]; //Should always be one - if only a Selector
-    }
-
-    getLastChild(): Frame {
-        return this.getChildren()[this.getChildren().length - 1];
-    }
-
-    getChildAfter(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index < this.getChildren().length -1 ? this.getChildren()[index +1] : g;
-    }
-
-    getChildBefore(g: Frame): Frame {
-        const index = this.getChildren().indexOf(g);
-        return index > 0 ? this.getChildren()[index -1] : g;
-    }
-
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.getChildren().indexOf(first);
-        var lst = this.getChildren().indexOf(last);
-        return fst < lst ? this.getChildren().slice(fst, lst + 1) : this.getChildren().slice(lst, fst + 1);
-    }
-        expandCollapse(): void {
+    expandCollapse(): void {
         if (this.isCollapsed()) {
             this.expand();
         } else {
@@ -75,9 +46,50 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         }
     }
 
-    public getFirstSelectorAsDirectChild() : AbstractSelector {
-        return this.getChildren().filter(g => ('isSelector' in g))[0] as AbstractSelector;
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
+    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame {return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
+    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
+    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
+    getFirstSelectorAsDirectChild() : AbstractSelector {return parentHelper_getFirstSelectorAsDirectChild(this);}
+    selectFirstChild(multiSelect: boolean): boolean {return parentHelper_selectFirstChild(this, multiSelect);}
+    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
+    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+
+    protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
+    protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
+
+    selectLastField(): boolean {
+        var n = this.getChildren().length;
+        return this.getChildren()[n-1].selectLastField();
+    } 
+    
+    selectFirstField(): boolean {
+        var result = super.selectFirstField();
+        if (!result) {
+            result = this.getChildren()[0].selectFirstField();
+        }
+        return result;
+    } 
+
+    selectFieldBefore(current: Field): boolean {
+        if (this.getFields().includes(current)) {
+            return super.selectFieldBefore(current);
+        }
+        return this.getLastChild().selectLastField();
     }
+
+    selectFirstChildIfAny(): boolean {
+        var result = false;
+        if (this.getChildren().length > 0) {
+            this.getChildren()[0].select(true, false);
+            result = true;
+        }
+        return result;
+    }
+
+
 
     private moveDownOne(child: Frame): boolean {
         var result = false;
@@ -119,72 +131,6 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         }
     }
 
-    selectFirstChild(multiSelect: boolean): boolean {
-        if (this.getChildren().length > 0){
-            this.getChildren()[0].select(true, multiSelect);
-            return true;
-        }
-        return false;
-    }
-
-    selectLastField(): boolean {
-        var n = this.getChildren().length;
-        return this.getChildren()[n-1].selectLastField();
-    } 
-    
-    selectFirstField(): boolean {
-        var result = super.selectFirstField();
-        if (!result) {
-            result = this.getChildren()[0].selectFirstField();
-        }
-        return result;
-    } 
-
-    selectFieldBefore(current: Field): boolean {
-        if (this.getFields().includes(current)) {
-            return super.selectFieldBefore(current);
-        }
-        return this.getLastChild().selectLastField();
-    }
-
-    selectFirstChildIfAny(): boolean {
-        var result = false;
-        if (this.getChildren().length > 0) {
-            this.getChildren()[0].select(true, false);
-            result = true;
-        }
-        return result;
-    }
-
-    public addChildBefore(child: Frame, before: Frame) {
-        var i = this.getChildren().indexOf(before);
-        this.getChildren().splice(i, 0, child);
-    }
-
-    public addChildAfter(child: Frame, after: Frame) {
-        var i = this.getChildren().indexOf(after) + 1;
-        this.getChildren().splice(i, 0, child);   
-    }
-
-    protected renderChildrenAsHtml(): string {
-        const ss: Array<string> = [];
-        for (var m of this.getChildren()) {
-            ss.push(m.renderAsHtml());
-        }
-        return ss.join("\n");
-    }
-
-    protected renderChildrenAsSource() : string {
-        var result = "";
-        if (this.getChildren().length > 0 ) {
-            const ss: Array<string> = [];
-            for (var frame of this.getChildren().filter(s => !('isSelector' in s))) {
-                ss.push(frame.renderAsSource());
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
-    }
 
     parseFrom(source: CodeSource): void {
         this.parseTop(source);
@@ -213,13 +159,5 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
 
     abstract newChildSelector(): AbstractSelector;
 
-    insertChildSelector(after: boolean, child: Frame) {
-        var selector = this.newChildSelector();
-        if (after && child.canInsertAfter()) {
-            this.addChildAfter(selector, child);
-        } else if (!after && child.canInsertBefore()) {
-            this.addChildBefore(selector, child);
-        }
-        selector.select(true, false);
-    }
+    insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after, child);}
 }

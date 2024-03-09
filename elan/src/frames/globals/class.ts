@@ -23,11 +23,9 @@ export class Class extends AbstractFrameWithChildren {
     public immutable: boolean;
     public inherits: OptionalKeyword;
     public superClasses: TypeList;
-    private file: File;
 
     constructor(parent: File) {
         super(parent);
-        this.file = parent;
         this.name = new Type(this);
         this.name.setPlaceholder("name");
         this.abstract = new OptionalKeyword(this, "abstract");
