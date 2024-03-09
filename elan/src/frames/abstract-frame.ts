@@ -13,8 +13,7 @@ export abstract class AbstractFrame implements Frame {
     isFrame = true;
     private _parent: File | Parent;
     private _map?: Map<string, Selectable>;
-    private _factory: StatementFactory;
-    private selected: boolean = false;
+      private selected: boolean = false;
     private focused: boolean = false;
     private collapsed: boolean = false;
     private _classes = new Array<string>;
@@ -27,15 +26,10 @@ export abstract class AbstractFrame implements Frame {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
-        this._factory = parent.getFactory();
     }
 
     fieldUpdated(field: Field): void {
         //Does nothing - for sub-classes to override as needed
-    }
-
-    getFactory(): StatementFactory {
-        return this._factory;
     }
 
     abstract getFields(): Field[];
@@ -244,10 +238,6 @@ export abstract class AbstractFrame implements Frame {
 
     setMap(Map: Map<string, Selectable>) {
         this._map = Map;
-    }
-
-    setFactory(factory: StatementFactory) {
-        this._factory = factory;
     }
 
     abstract getIdPrefix(): string;

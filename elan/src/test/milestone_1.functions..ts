@@ -33,7 +33,7 @@ export function T00_emptyFile() {
 
 export function T01_helloWorld() {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
 	var ss = m.getFirstSelectorAsDirectChild();
@@ -48,7 +48,7 @@ export function T01_helloWorld() {
 
 export function T02_comments() {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	const gc = new GlobalComment(f);
 	gc.text.setText("Comment 1");
 	f.addChildBefore(gc,gs);
@@ -63,7 +63,7 @@ export function T02_comments() {
 
 export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
 	var ssm = m.getFirstSelectorAsDirectChild();
@@ -146,7 +146,7 @@ export function T08_collapseAll(f : FileImpl) {
 
 export function T04_allGlobalsExceptClass(): FileImpl {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	const con = new Constant(f);
 	con.name.setText("phi");
 	con.literal.setText("1.618");
@@ -173,7 +173,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 
 export function T05_classes() {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	const cl1 = new Class(f);
 	var ms = cl1.getFirstSelectorAsDirectChild();
 	f.addChildBefore(cl1, gs);
@@ -211,7 +211,7 @@ end main */
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl(hash);
-	var gs = f.getFirstGlobalSelector();
+	var gs = f.getFirstSelectorAsDirectChild();
 	f.addChildBefore(new MainFrame(f), gs);
 	f.addChildBefore(new Class(f), gs);
 	return f;

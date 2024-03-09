@@ -6,13 +6,19 @@ import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
 
+
     isCollapsible: boolean = true;
     isParent: boolean = true;
     private _children: Array<Frame> = new Array<Frame>();
+
+    getFactory(): StatementFactory {
+        return this.getParent().getFactory();
+    }
 
     protected setClasses() {
         super.setClasses();

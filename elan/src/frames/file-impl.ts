@@ -19,6 +19,7 @@ import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
+import { AbstractSelector } from "./abstract-selector";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -159,11 +160,7 @@ export class FileImpl implements File {
         return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
 
-    public addGlobal(g: Frame) : void {
-        this.getChildren().push(g);
-    }
-
-    public getFirstGlobalSelector() : GlobalSelector {
+    public getFirstSelectorAsDirectChild() : AbstractSelector {
         return this.getChildren().filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
@@ -279,7 +276,7 @@ export class FileImpl implements File {
                 if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                     source.removeNewLine();
                 } else {
-                    this.getFirstGlobalSelector().parseFrom(source);
+                    this.getFirstSelectorAsDirectChild().parseFrom(source);
                 }
             }
         } catch (e) {

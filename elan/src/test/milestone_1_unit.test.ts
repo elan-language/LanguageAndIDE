@@ -202,7 +202,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var help = gs.getHelp();
 		assert.equal(help, " main procedure function class constant enum test #");
 		var m = new MainFrame(fl);	
-		fl.addGlobal(m);
+		fl.getChildren().push(m);
 		gs = new GlobalSelector(fl);
 		help = gs.getHelp();
 		assert.equal(help, " procedure function class constant enum test #");

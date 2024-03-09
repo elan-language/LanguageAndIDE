@@ -34,4 +34,6 @@ export interface Parent {
     moveSelectedChildrenUpOne(): void;
 
     insertChildSelector(after: boolean, child: Frame): void;
+
+    getFactory(): StatementFactory;
 }
