@@ -2,6 +2,7 @@ import { File } from "../interfaces/file";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { commentMarker, abstractKeyword, classKeyword, constantKeyword, enumKeyword, functionKeyword, immutableKeyword, mainKeyword, procedureKeyword, testKeyword } from "../keywords";
 
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
@@ -13,23 +14,23 @@ export class GlobalSelector extends AbstractSelector  {
     }
 
     defaultOptions: [string, (parent: Parent) => Frame][] = [
-        ["main", (parent: Parent) => this.file.createMain()],
-        ["procedure", (parent: Parent) => this.file.createProcedure()],
-        ["function", (parent: Parent) => this.file.createFunction()],
-        ["class", (parent: Parent) => this.file.createClass()],
-        ["constant", (parent: Parent) => this.file.createConstant()],
-        ["enum", (parent: Parent) => this.file.createEnum()],
-        ["test", (parent: Parent) => this.file.createTest()],
-        ["#", (parent: Parent) => this.file.createGlobalComment()],
-        ["abstract", (parent: Parent) => this.file.createClass()],
-        ["immutable", (parent: Parent) => this.file.createClass()],
+        [mainKeyword, (parent: Parent) => this.file.createMain()],
+        [procedureKeyword, (parent: Parent) => this.file.createProcedure()],
+        [functionKeyword, (parent: Parent) => this.file.createFunction()],
+        [classKeyword, (parent: Parent) => this.file.createClass()],
+        [constantKeyword, (parent: Parent) => this.file.createConstant()],
+        [enumKeyword, (parent: Parent) => this.file.createEnum()],
+        [testKeyword, (parent: Parent) => this.file.createTest()],
+        [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
+        [abstractKeyword, (parent: Parent) => this.file.createClass()],
+        [immutableKeyword, (parent: Parent) => this.file.createClass()],
     ];
 
     validForEditorWithin(keyword: string): boolean {
         var result = false;
-        if (keyword === "main") {
+        if (keyword === mainKeyword) {
             result = !this.file.containsMain();
-        } else if ( keyword === "abstract" || keyword === "immutable") { //Those options available for parsing code from file only
+        } else if ( keyword === abstractKeyword || keyword === immutableKeyword) { //Those options available for parsing code from file only
             result = false;
         } else {
             result = true;

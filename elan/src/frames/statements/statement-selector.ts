@@ -3,6 +3,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
+import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword } from "../keywords";
 
 export class StatementSelector extends AbstractSelector  {
     isStatement = true;
@@ -14,37 +15,37 @@ export class StatementSelector extends AbstractSelector  {
     }
 
     defaultOptions: [string, (parent: Parent) => Frame][] = [
-        ["assert", (parent: Parent) => this.factory.newAssert(parent)],
-        ["call", (parent: Parent) => this.factory.newCall(parent)],
-        ["case", (parent: Parent) => this.factory.newCase(parent)],
-        ["catch", (parent: Parent) => this.factory.newCatch(parent)],
-        ["default", (parent: Parent) => this.factory.newDefault(parent)],
-        ["each", (parent: Parent) => this.factory.newEach(parent)],
-        ["else", (parent: Parent) => this.factory.newElse(parent)],
-        ["for", (parent: Parent) => this.factory.newFor(parent)],
-        ["if", (parent: Parent) => this.factory.newIf(parent)],
-        ["print", (parent: Parent) => this.factory.newPrint(parent)],
-        ["repeat", (parent: Parent) => this.factory.newRepeat(parent)],
-        ["return", (parent: Parent) => this.factory.newReturn(parent)],
-        ["set", (parent: Parent) => this.factory.newSet(parent)],
-        ["switch", (parent: Parent) => this.factory.newSwitch(parent)],
-        ["throw", (parent: Parent) => this.factory.newThrow(parent)],
-        ["try", (parent: Parent) => this.factory.newTryCatch(parent)],
-        ["var", (parent: Parent) => this.factory.newVar(parent)],
-        ["while", (parent: Parent) => this.factory.newWhile(parent)],
+        [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
+        [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
+        [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
+        [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
+        [defaultKeyword, (parent: Parent) => this.factory.newDefault(parent)],
+        [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
+        [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
+        [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
+        [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
+        [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
+        [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
+        [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
+        [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
+        [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
+        [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
+        [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
+        [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
+        [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
         ["#", (parent: Parent) => this.factory.newComment(parent)]
     ];
 
     validForEditorWithin(keyword: string): boolean {
-        if (this.getParent().getIdPrefix() === "test" ) {
-            return keyword === "assert" ||keyword === "call" || keyword === "var";
-        } else if (this.getParent().getIdPrefix() === "switch") {
-            return keyword === "case";     
-        } else if (keyword === "return" || keyword === "assert" || keyword === "case" || keyword === "catch" || keyword === "default") {
+        if (this.getParent().getIdPrefix() === testKeyword ) {
+            return keyword === assertKeyword ||keyword === callKeyword || keyword === varKeyword;
+        } else if (this.getParent().getIdPrefix() === switchKeyword) {
+            return keyword === caseKeyword;     
+        } else if (keyword === returnKeyword || keyword === assertKeyword || keyword === caseKeyword || keyword === catchKeyword || keyword === defaultKeyword) {
             return false;
-        } else if (keyword === "else" ) {
-            return this.getParent().getIdPrefix() === "if" ;
-        } else if (keyword === "print" || keyword === "call") {
+        } else if (keyword === elseKeyword ) {
+            return this.getParent().getIdPrefix() === ifKeyword ;
+        } else if (keyword === printKeyword || keyword === callKeyword) {
             return !this.isWithinAFunction(this.getParent());
         } else {
             return true;

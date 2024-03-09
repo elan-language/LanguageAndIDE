@@ -4,6 +4,7 @@ import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
+import { functionKeyword, procedureKeyword, propertyKeyword, privateKeyword, abstractKeyword, commentMarker } from "../keywords";
 
 export class MemberSelector extends AbstractSelector implements Member  {
     isMember: boolean = true;
@@ -13,30 +14,34 @@ export class MemberSelector extends AbstractSelector implements Member  {
         super(parent);
         this.class = parent as Class;
     }
+
+    private abstractProp = abstractKeyword + " " + propertyKeyword;
+    private abstractProc = abstractKeyword + " " + procedureKeyword;
+    private abstractFunc = abstractKeyword + " " + functionKeyword;
    
     defaultOptions: [string, (parent: Parent) => Frame][] = [
-        ["function", (parent: Parent) => this.class.createFunction()],
-        ["procedure", (parent: Parent) => this.class.createProcedure()],
-        ["property", (parent: Parent) => this.class.createProperty()],
-        ["#", (parent: Parent) => this.class.createComment()],
-        ["private", (parent: Parent) => this.class.createProperty()],
-        ["abstract property", (parent: Parent) => this.class.createAbstractProperty()],
-        ["abstract function", (parent: Parent) => this.class.createAbstractFunction()],
-        ["abstract procedure", (parent: Parent) => this.class.createAbstractProcedure()]
+        [functionKeyword, (parent: Parent) => this.class.createFunction()],
+        [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
+        [propertyKeyword, (parent: Parent) => this.class.createProperty()],
+        [commentMarker, (parent: Parent) => this.class.createComment()],
+        [privateKeyword, (parent: Parent) => this.class.createProperty()],
+        [this.abstractProp, (parent: Parent) => this.class.createAbstractProperty()],
+        [this.abstractFunc, (parent: Parent) => this.class.createAbstractFunction()],
+        [this.abstractProc, (parent: Parent) => this.class.createAbstractProcedure()]
     ];
 
     validForEditorWithin(keyword: string): boolean {
         var result = false;
         if (this.class.isAbstract()) {
             if (this.class.isImmutable()) {
-                result = keyword.startsWith("abstract") && keyword !== "abstract procedure";
+                result = keyword.startsWith(abstractKeyword) && keyword !== "abstract procedure";
             } else {
-                result = keyword.startsWith("abstract");
+                result = keyword.startsWith(abstractKeyword);
             }
         } else if (this.class.isImmutable()) {
-            result = !keyword.startsWith("abstract") && keyword !== "procedure" && keyword !== "private";
+            result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword && keyword !== privateKeyword;
         }  else {
-            result = !keyword.startsWith("abstract") && keyword !== "private";
+            result = !keyword.startsWith(abstractKeyword) && keyword !== privateKeyword;
         }
         return result;
     }
