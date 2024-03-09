@@ -7,7 +7,7 @@ import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
@@ -56,14 +56,10 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
     selectFirstChild(multiSelect: boolean): boolean {return parentHelper_selectFirstChild(this, multiSelect);}
     addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
     addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+    selectLastField(): boolean {return parentHelper_selectLastField(this);}
 
     protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
     protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
-
-    selectLastField(): boolean {
-        var n = this.getChildren().length;
-        return this.getChildren()[n-1].selectLastField();
-    } 
     
     selectFirstField(): boolean {
         var result = super.selectFirstField();

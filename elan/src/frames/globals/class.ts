@@ -15,7 +15,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -65,10 +65,7 @@ export class Class extends AbstractFrame implements Parent {
     insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
     moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
     moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
-    selectLastField(): boolean {
-        var n = this.getChildren().length;
-        return this.getChildren()[n-1].selectLastField();
-    } 
+    selectLastField(): boolean {return parentHelper_selectLastField(this);} 
     
     fieldUpdated(field: Field): void {
         if (field === this.abstract) {

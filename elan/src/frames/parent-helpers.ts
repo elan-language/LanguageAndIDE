@@ -134,4 +134,9 @@ function moveUpOne(parent: Parent, child: Frame): boolean {
     return result;
 }
 
+export function parentHelper_selectLastField(parent: Parent): boolean {
+    var n = parent.getChildren().length;
+    return parent.getChildren()[n-1].selectLastField();
+} 
+
 
