@@ -69,11 +69,12 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         return result;
     } 
 
-    selectFieldBefore(current: Field): boolean {
+    selectFieldBefore(current: Field): void {
         if (this.getFields().includes(current)) {
-            return super.selectFieldBefore(current);
+            super.selectFieldBefore(current);
+        } else{
+         this.getLastChild().selectLastField();
         }
-        return this.getLastChild().selectLastField();
     }
 
     selectFirstChildIfAny(): boolean {

@@ -49,36 +49,28 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().getChildAfter(this);
     }
 
-    selectFieldBefore(current: Field): boolean {
-        var result = false;
+    selectFieldBefore(current: Field) {
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i > 0) {
             fields[i-1].select(true, false);
-            result = true;
         } else {
            this.selectLastFieldAboveThisFrame();
         }
-        return result;
     }
 
-    selectFieldAfter(current: Field): boolean {
-        var result = false;
+    selectFieldAfter(current: Field) {
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i < fields.length - 1) {
             fields[i+1].select(true, false);
-            result = true;
         } else {
             if (isParent(this)){
                 this.getFirstChild().selectFirstField();
-                result = true;
             } else {
                 this.getNextFrameInTabOrder().selectFirstField();
-                result = true;
             }
         }
-        return result;
     }
 
     getNextFrameInTabOrder(): Frame {
