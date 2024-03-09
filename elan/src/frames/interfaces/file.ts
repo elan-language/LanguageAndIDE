@@ -6,7 +6,6 @@ import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 
-// Defines view of File from the internal (model) perspective, c.f. FileAPI for external (editor) view
 export interface File extends Parent {
     // external use
     isFile : boolean;
