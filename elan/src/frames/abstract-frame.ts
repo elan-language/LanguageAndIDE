@@ -1,7 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
 import { isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
-import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";

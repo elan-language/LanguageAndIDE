@@ -94,3 +94,44 @@ export function parentHelper_insertChildSelector(parent: Parent, after: boolean,
     }
     selector.select(true, false);
 }
+
+export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
+    var toMove = parent.getChildren().filter(g => g.isSelected()); 
+    var cont = true;
+    var i = 0;
+    while (cont && i < toMove.length) {
+        cont = moveUpOne(parent, toMove[i]);
+        i++;
+    }
+}
+export function parentHelper_moveSelectedChildrenDownOne(parent: Parent): void {
+    var toMove = parent.getChildren().filter(g => g.isSelected()); 
+    var cont = true;
+    var i = toMove.length - 1;
+    while (cont && i >= 0) {
+        cont = moveDownOne(parent, toMove[i]);
+        i--;
+    }
+}
+function moveDownOne(parent: Parent, child: Frame): boolean {
+    var result = false;
+    var i = parent.getChildren().indexOf(child);
+    if ((i < parent.getChildren().length - 1) && (parent.getChildren()[i+1].canInsertAfter())) {
+        parent.getChildren().splice(i,1);
+        parent.getChildren().splice(i+1,0,child);  
+        result = true;
+    }
+    return result;
+}
+function moveUpOne(parent: Parent, child: Frame): boolean {
+    var result = false;
+    var i = parent.getChildren().indexOf(child);
+    if ((i > 0) && (parent.getChildren()[i-1].canInsertBefore())) {
+        parent.getChildren().splice(i,1);
+        parent.getChildren().splice(i-1,0,child);
+        result = true;     
+    }
+    return result;
+}
+
+

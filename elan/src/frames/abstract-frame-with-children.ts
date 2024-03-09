@@ -7,7 +7,7 @@ import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 
 export abstract class AbstractFrameWithChildren extends AbstractFrame implements Parent, Collapsible{
@@ -89,48 +89,8 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
         return result;
     }
 
-
-
-    private moveDownOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
-        if ((i < this.getChildren().length - 1) && (this.getChildren()[i+1].canInsertAfter())) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i+1,0,child);  
-            result = true;
-        }
-        return result;
-    }
-    private moveUpOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
-        if ((i > 0) && (this.getChildren()[i-1].canInsertBefore())) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i-1,0,child);
-            result = true;     
-        }
-        return result;
-    }
-
-    moveSelectedChildrenUpOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected()); 
-        var cont = true;
-        var i = 0;
-        while (cont && i < toMove.length) {
-            cont = this.moveUpOne(toMove[i]);
-            i++;
-        }
-    }
-    moveSelectedChildrenDownOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected()); 
-        var cont = true;
-        var i = toMove.length - 1;
-        while (cont && i >= 0) {
-            cont = this.moveDownOne(toMove[i]);
-            i--;
-        }
-    }
-
+    moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
+    moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
 
     parseFrom(source: CodeSource): void {
         this.parseTop(source);

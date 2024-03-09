@@ -43,7 +43,6 @@ suite('Navigation', () => {
 	});
 	test('Tabbing through ALL fields (& back)', () => {
 		var file = T05_classes();
-		file.processKey(enter());
 		var fields = ["text3","type2","text4","args5","params8",
 		"select7","ident11","type12","select9","text15","type14","text16","args17",
 	"params20","select19",
@@ -53,6 +52,12 @@ suite('Navigation', () => {
 "expr31",
 "select21",
 "select0"];
+		file.processKey(enter());
+		for (var i in fields) {
+			var field = file.getById(fields[i]);
+			assert.equal(field.isSelected(), true);
+			field.processKey(enter());
+		}
 		file.processKey(esc());
 		file.processKey(shift_enter());
 		for (var i in fields.reverse()) {

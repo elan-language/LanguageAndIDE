@@ -20,13 +20,12 @@ import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
 
 export class FileImpl implements File {
-    isFrame: boolean = true;
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
@@ -152,6 +151,7 @@ export class FileImpl implements File {
     addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
     addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
     removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
+        insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
 
     defocusAll() {
         for (const f of this._map.values()) {
@@ -288,15 +288,5 @@ export class FileImpl implements File {
 
     newChildSelector(): AbstractSelector {
         return new GlobalSelector(this);
-    }
-
-    insertChildSelector(after: boolean, child: Frame) {
-        var selector = new GlobalSelector(this);
-        if (after && child.canInsertAfter()) {
-            this.addChildAfter(selector, child);
-        } else if (!after && child.canInsertBefore()) {
-            this.addChildBefore(selector, child);
-        }
-        selector.select(true, false);
     }
 }

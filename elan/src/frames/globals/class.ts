@@ -14,15 +14,21 @@ import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
-import { AbstractFrameWithChildren } from "../abstract-frame-with-children";
 import { AbstractSelector } from "../abstract-selector";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource } from "../parent-helpers";
+import { AbstractFrame } from "../abstract-frame";
+import { Parent } from "../interfaces/parent";
+import { StatementFactory } from "../interfaces/statement-factory";
+import { Regexes } from "../fields/regexes";
 
-export class Class extends AbstractFrameWithChildren {
+export class Class extends AbstractFrame implements Parent {
+    isParent: boolean = true; 
     public name: Type;
     public abstract: OptionalKeyword;
     public immutable: boolean;
     public inherits: OptionalKeyword;
     public superClasses: TypeList;
+    private _children: Array<Frame> = new Array<Frame>();
 
     constructor(parent: File) {
         super(parent);
@@ -36,6 +42,33 @@ export class Class extends AbstractFrameWithChildren {
         this.getChildren().push(new MemberSelector(this));
         this.immutable = false;
     }
+    protected setClasses() {
+        super.setClasses();
+        this.pushClass(true,"multiline");
+    };
+    getFactory(): StatementFactory {
+        return this.getParent().getFactory();
+    }
+    getChildren(): Frame[] {
+        return this._children;
+    }
+
+    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame {return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
+    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
+    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
+    getFirstSelectorAsDirectChild() : AbstractSelector {return parentHelper_getFirstSelectorAsDirectChild(this);}
+    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
+    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
+    insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
+    moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
+    moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
+    selectLastField(): boolean {
+        var n = this.getChildren().length;
+        return this.getChildren()[n-1].selectLastField();
+    } 
     
     fieldUpdated(field: Field): void {
         if (field === this.abstract) {
@@ -110,7 +143,7 @@ export class Class extends AbstractFrameWithChildren {
 
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inhertanceAsHtml()}</top>
-${this.renderChildrenAsHtml()}
+${parentHelper_renderChildrenAsHtml(this)}
 <keyword>end class</keyword>
 </classDef>`;
     }
@@ -121,7 +154,7 @@ ${this.renderChildrenAsHtml()}
 
     public renderAsSource(): string {
         return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
-${this.renderChildrenAsSource()}\r
+${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
     }
 
@@ -135,6 +168,17 @@ end class\r\n`;
 
     private getConstructor(): Constructor {
         return this.getChildren().filter(m => ('isConstructor' in m))[0] as Constructor;
+    }
+    parseFrom(source: CodeSource): void {
+        this.parseTop(source);
+        while (!this.parseBottom(source)) {
+            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                source.removeRegEx(Regexes.startsWithNewLine, false);
+                source.removeIndent();
+            } else {
+                this.getFirstSelectorAsDirectChild().parseFrom(source);
+            }
+        } 
     }
     parseTop(source: CodeSource): boolean {
         var abs = "abstract ";
