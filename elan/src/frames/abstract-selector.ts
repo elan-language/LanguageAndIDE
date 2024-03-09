@@ -46,7 +46,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
  
     getHelp(): string {
-        return this.optionsMatchingInput(this.text).map(o => o[0]).reduce((soFar, kw)=> soFar + " " + kw, "");
+        return this.optionsMatchingInput(this.text).map(o => o[0]).reduce((soFar, kw)=> `${soFar} ${kw}${kw.includes(" ")? ",":""}`, "");
     }
 
     addFrame(keyword: string): Frame {
@@ -103,7 +103,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     processOptions(key: string | undefined) {
         var options = this.optionsMatchingInput(this.text + key);
         if (options.length > 1 ) {
-            this.text += this.commonStartText(this.text+ key);
+            this.text += this.commonStartText(this.text+ key).substring(this.text.length);
         } else if (options.length === 1) {
             var typeToAdd = options[0][0];
             this.addFrame(typeToAdd);

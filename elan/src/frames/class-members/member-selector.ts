@@ -34,7 +34,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         var result = false;
         if (this.class.isAbstract()) {
             if (this.class.isImmutable()) {
-                result = keyword.startsWith(abstractKeyword) && keyword !== "abstract procedure";
+                result = keyword.startsWith(abstractKeyword) && keyword !== this.abstractProc;
             } else {
                 result = keyword.startsWith(abstractKeyword);
             }
