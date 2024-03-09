@@ -52,7 +52,4 @@ ${this.indent()}end constructor\r
     canInsertBefore(): boolean {
         return false;
     }
-    insertPeerSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
-    }
 }

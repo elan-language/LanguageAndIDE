@@ -1,18 +1,14 @@
-import { AbstractFrame } from "../abstract-frame";
 import { Type } from "../fields/type";
 import { TypeList } from "../fields/type-list";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
-import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { MemberSelector } from "../class-members/member-selector";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
-import { Regexes } from "../fields/regexes";
-import { ParseStatus } from "../parse-status";
 import { AbstractFunction as AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
@@ -21,7 +17,7 @@ import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractFrameWithChildren } from "../abstract-frame-with-children";
 import { AbstractSelector } from "../abstract-selector";
 
-export class Class extends AbstractFrameWithChildren implements Parent {
+export class Class extends AbstractFrameWithChildren {
     public name: Type;
     public abstract: OptionalKeyword;
     public immutable: boolean;
@@ -208,18 +204,6 @@ end class\r\n`;
         }
         return result;
     }
-    insertMemberSelector(after: boolean, existing: Frame): void {
-        var selector =  new MemberSelector(this);
-        var i = this.getChildren().indexOf(existing);
-        if (after && existing.canInsertAfter()) {
-                this.getChildren().splice(i+1,0, selector);
-                selector.select(true, false);
-        } else if (!after && existing.canInsertBefore()) {
-                this.getChildren().splice(i,0, selector);
-                selector.select(true, false);
-        }
-    }
-
     newChildSelector(): AbstractSelector {
         return new MemberSelector(this);
     }

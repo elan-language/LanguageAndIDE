@@ -58,7 +58,4 @@ export class AbstractFunction extends AbstractFrame implements Member {
         source.remove(") as ");
         this.returnType.parseFrom(source);
     }
-    insertPeerSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
-    }
 }

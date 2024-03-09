@@ -43,7 +43,4 @@ export class AbstractProperty extends AbstractFrame implements Member {
         source.remove(" ");
         this.type.parseFrom(source);
     }
-    insertPeerSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
-    }
 } 

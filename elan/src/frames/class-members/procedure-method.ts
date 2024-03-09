@@ -31,7 +31,4 @@ ${this.indent()}end procedure\r
     parseBottom(source: CodeSource): boolean {
         return super.parseBottom(source);
     }
-    insertPeerSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
-    }
 }
