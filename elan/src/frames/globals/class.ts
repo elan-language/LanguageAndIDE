@@ -147,41 +147,26 @@ end class\r\n`;
         var i = this.getChildren().indexOf(m);
         this.getChildren().splice(i,1);    
     }
-
-    addFunctionMethodBefore(member: Frame): Frame {
-        var p = new FunctionMethod(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createFunction(): Frame {
+        return new FunctionMethod(this);
     }
-    addPropertyBefore(member: Frame): Frame {
-        var p = new Property(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createProperty(): Frame {
+        return new Property(this);
     }
-    addProcedureMethodBefore(member: Frame): Frame {
-        var p = new ProcedureMethod(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createProcedure(): Frame {
+        return new ProcedureMethod(this);
     }
-    addAbstractFunctionBefore(member: Frame): Frame {
-        var p = new AbstractFunction(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createAbstractFunction(): Frame {
+        return new AbstractFunction(this);
     }
-    addCommentBefore(member: Frame): Frame {
-        var p = new CommentStatement(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createComment(): Frame {
+        return new CommentStatement(this);
     }
-    addAbstractPropertyBefore(member: Frame): Frame {
-        var p = new AbstractProperty(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createAbstractProperty(): Frame {
+        return new AbstractProperty(this);
     }
-    addAbstractProcedureBefore(member: Frame): Frame {
-        var p = new AbstractProcedure(this);
-        this.addMemberAndSelectFirstField(p, member);
-        return p;
+    createAbstractProcedure(): Frame {
+        return new AbstractProcedure(this);
     }
 
     private getConstructor(): Constructor {

@@ -1,5 +1,3 @@
-import { AbstractFrame } from "../abstract-frame";
-import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { Selectable } from "./selectable";
@@ -19,6 +17,7 @@ export interface Parent {
     getChildBefore(child: Frame): Frame;
     getChildRange(first: Frame, last: Frame): Frame[];
     removeChild(child: Frame): void;
+    addChildBefore(newFrame: Frame, existingChild: Frame): void;
 
     indent(): string;
 

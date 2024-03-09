@@ -15,13 +15,4 @@ export abstract class FrameWithStatements extends AbstractFrameWithChildren {
     newChildSelector(): AbstractSelector {
         return new StatementSelector(this);
     }
-    protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
-        source.removeIndent();
-        var result = false;
-        if (source.isMatch(keywords)) {
-            source.remove(keywords);
-            result = true;
-        }
-        return result;
-    }
 }

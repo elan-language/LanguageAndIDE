@@ -24,76 +24,23 @@ import { Assert } from "./statements/assert";
 
 export class StatementFactoryImpl implements StatementFactory {
 
-    private getNewStatement(frameType: string, parent: Parent): Frame{ 
-        switch(frameType) {
-            case "Assert": {
-                return new Assert(parent);
-            }
-            case "Call": {
-                return new Call(parent);
-            }
-            case "Case": {
-                return new Case(parent);
-            }
-            case "Catch": {
-                return new Catch(parent);
-            }
-            case "Default": {
-                return new Default(parent);
-            }
-            case "Each": {
-                return new Each(parent);
-            }
-            case "Else": {
-                return new Else(parent);
-            }
-            case "For": {
-                return new For(parent);
-            }
-            case "IfThen": {
-                return new IfStatement(parent);
-            }
-            case "Print": {
-                return new Print(parent);
-            }
-            case "Repeat": {
-                return new Repeat(parent);
-            }
-            case "ReturnStatement": {
-                return new ReturnStatement(parent);
-            }
-            case "SetStatement": {
-                return new SetStatement(parent);
-            }
-            case "Switch": {
-                return new Switch(parent);
-            }
-            case "Throw": {
-                return new Throw(parent);
-            }
-            case "TryCatch": {
-                return new TryCatch(parent);
-            }
-            case "Variable": {
-                return new VariableDefStatement(parent);
-            }
-            case "While": {
-                return new While(parent);
-            }
-            case "CommentStatement": {
-                return new CommentStatement(parent);
-            }
-            default: {
-                throw new Error(`Invalid frame type ${frameType}`);
-            }
-        }
-    }
-
-    addFrameBeforeAndSelectFirstField(frameType: string, selector: Frame): Frame {
-        var parent = selector.getParent() as FrameWithStatements;
-        var newS = this.getNewStatement(frameType, selector.getParent());
-        parent.addChildBefore(newS, selector);
-        newS.selectFirstField();
-        return newS;
-    }
+    public newAssert(parent: Parent) : Frame { return new Assert(parent);}
+    public newCall(parent: Parent) : Frame { return new Call(parent);}
+    public newCase(parent: Parent) : Frame { return new Case(parent);}
+    public newCatch(parent: Parent) : Frame { return new Catch(parent);}
+    public newDefault(parent: Parent) : Frame { return new Default(parent);}
+    public newEach(parent: Parent) : Frame { return new Each(parent);}
+    public newElse(parent: Parent) : Frame { return new Else(parent);}
+    public newFor(parent: Parent) : Frame { return new For(parent);}
+    public newIf(parent: Parent) : Frame { return new IfStatement(parent);}
+    public newPrint(parent: Parent) : Frame { return new Print(parent);}
+    public newRepeat(parent: Parent) : Frame { return new Repeat(parent);}
+    public newReturn(parent: Parent) : Frame { return new ReturnStatement(parent);}
+    public newSet(parent: Parent) : Frame { return new SetStatement(parent);}
+    public newSwitch(parent: Parent) : Frame { return new Switch(parent);}
+    public newThrow(parent: Parent) : Frame { return new Throw(parent);}
+    public newTryCatch(parent: Parent) : Frame { return new TryCatch(parent);}
+    public newVar(parent: Parent) : Frame { return new VariableDefStatement(parent);}
+    public newWhile(parent: Parent) : Frame { return new While(parent);}
+    public newComment(parent: Parent) : Frame { return new CommentStatement(parent);}
 }

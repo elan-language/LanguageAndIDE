@@ -195,6 +195,16 @@ export abstract class AbstractFrameWithChildren extends AbstractFrame implements
     abstract parseTop(source: CodeSource): void;
     abstract parseBottom(source: CodeSource): boolean;
 
+    protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
+        source.removeIndent();
+        var result = false;
+        if (source.isMatch(keywords)) {
+            source.remove(keywords);
+            result = true;
+        }
+        return result;
+    }
+
     abstract newChildSelector(): AbstractSelector;
 
     insertChildSelector(after: boolean, child: Frame) {

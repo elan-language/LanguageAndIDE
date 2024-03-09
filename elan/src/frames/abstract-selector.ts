@@ -10,14 +10,14 @@ export abstract class AbstractSelector extends AbstractFrame {
     isStatement = true;
     text: string = "";
     label: string = "new code";
-    protected defaultOptions: [string, string][]= new Array<[string, string]>();
+    protected defaultOptions: [string, (parent: Parent) => Frame][]= new Array<[string, () => Frame]>();
 
     constructor(parent: Parent) {
         super(parent);
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        var options = this.defaultOptions.filter(o => source.isMatch(o[1]));
+        var options = this.defaultOptions.filter(o => source.isMatch(o[0]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);
@@ -27,18 +27,18 @@ export abstract class AbstractSelector extends AbstractFrame {
         }
     }
 
-    abstract validForEditorWithin(frameType: string) : boolean;
+    abstract validForEditorWithin(keyword: string) : boolean;
 
-    optionsMatchingInput(match: string): [string, string][] {
-        return this.optionsForContext().filter(o => o[1].startsWith(match));
+    optionsMatchingInput(match: string): [string, (parent: Parent) => Frame][] {
+        return this.optionsForContext().filter(o => o[0].startsWith(match));
     }
 
-    private optionsForContext(): [string, string][] {
+    private optionsForContext(): [string, (parent: Parent) => Frame][] {
         return this.defaultOptions.filter(o => this.validForEditorWithin(o[0]));
     }
 
     commonStartText(match: string): string {
-        return this.optionsMatchingInput(match).map(o => o[1]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
+        return this.optionsMatchingInput(match).map(o => o[0]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
     }
 
     private maxCommonStart(a: string, b: string): string {
@@ -46,10 +46,17 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
  
     getHelp(): string {
-        return this.optionsMatchingInput(this.text).map(o => o[1]).reduce((soFar, kw)=> soFar + " " + kw, "");
+        return this.optionsMatchingInput(this.text).map(o => o[0]).reduce((soFar, kw)=> soFar + " " + kw, "");
     }
 
-    abstract addFrame(frameType: string): Frame;
+    addFrame(keyword: string): Frame {
+        var func = this.defaultOptions.filter(o => o[0]===keyword)[0][1]; 
+        var parent = this.getParent();
+        var newFrame: Frame = func(parent);
+        parent.addChildBefore(newFrame, this);
+        newFrame.selectFirstField();
+        return newFrame;
+    }
 
     protected setClasses() {
         super.setClasses();
@@ -59,7 +66,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     clearText() : void {
         this.text = "";
     }
-
 
     getFields(): Field[] {
         return [];
@@ -71,14 +77,12 @@ export abstract class AbstractSelector extends AbstractFrame {
         super.deselect();
         this.text = "";
     }
-    textToDisplay(): string {
+    textToDisplayAsHtml(): string {
             return `<selector><text>${this.text}</text><placeholder>${this.label}</placeholder><help class="selector">${this.getHelp()}</help></selector>`;
     }
-
     renderAsSource(): string {
         return `${this.indent()}`;
     }
-
     processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {

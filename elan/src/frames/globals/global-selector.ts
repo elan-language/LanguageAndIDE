@@ -1,7 +1,7 @@
 import { File } from "../interfaces/file";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../interfaces/frame";
-import { Class } from "./class";
+import { Parent } from "../interfaces/parent";
 
 export class GlobalSelector extends AbstractSelector  {
     isGlobal = true;
@@ -11,25 +11,25 @@ export class GlobalSelector extends AbstractSelector  {
         super(parent);
         this.file = parent;
     }
-    
-    defaultOptions: [string, string][] = [
-        ["MainFrame", "main"],
-        ["Procedure", "procedure"],
-        ["Function", "function"],
-        ["Class", "class"],
-        ["Constant", "constant"],
-        ["Enum", "enum"],
-        ["Test", "test"],
-        ["GlobalComment", "#"],
-        ["Abstract", "abstract"],
-        ["Immutable", "immutable"],
+
+    defaultOptions: [string, (parent: Parent) => Frame][] = [
+        ["main", (parent: Parent) => this.file.createMain()],
+        ["procedure", (parent: Parent) => this.file.createProcedure()],
+        ["function", (parent: Parent) => this.file.createFunction()],
+        ["class", (parent: Parent) => this.file.createClass()],
+        ["constant", (parent: Parent) => this.file.createConstant()],
+        ["enum", (parent: Parent) => this.file.createEnum()],
+        ["test", (parent: Parent) => this.file.createTest()],
+        ["#", (parent: Parent) => this.file.createGlobalComment()],
+        ["abstract", (parent: Parent) => this.file.createClass()],
+        ["immutable", (parent: Parent) => this.file.createClass()],
     ];
 
-    validForEditorWithin(frameType: string): boolean {
+    validForEditorWithin(keyword: string): boolean {
         var result = false;
-        if (frameType === "MainFrame") {
+        if (keyword === "main") {
             result = !this.file.containsMain();
-        } else if ( frameType === "Abstract" || frameType === "Immutable") { //Those options available for parsing code from file only
+        } else if ( keyword === "abstract" || keyword === "immutable") { //Those options available for parsing code from file only
             result = false;
         } else {
             result = true;
@@ -37,55 +37,11 @@ export class GlobalSelector extends AbstractSelector  {
         return result;
     }
 
-    getFile(): File {
-        return this.getParent() as File;
-    }
-
     renderAsHtml(): string {
-        return `<global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</global>`;
+        return `<global class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</global>`;
     }
 
     indent(): string {
         return "";
-    }
-
-    addFrame(frameType: string): Frame {
-        switch(frameType) {
-            case "MainFrame": {
-                return this.getFile().addMainBefore(this);
-            }
-            case "Procedure": {
-                return this.getFile().addProcedureBefore(this);
-            }
-            case "Function": {
-                return this.getFile().addFunctionBefore(this);
-            }
-            case "Class": {
-                return this.getFile().addClassBefore(this);
-            }
-            case "Abstract": {
-                var cl = this.getFile().addClassBefore(this) as Class;
-                cl.makeAbstract();
-                return cl;
-            } 
-            case "Immutable": {
-                return this.getFile().addClassBefore(this) as Class;
-            }
-            case "Constant": {
-                return this.getFile().addConstantBefore(this);
-            }
-            case "Enum": {
-                return this.getFile().addEnumBefore(this);
-            }
-            case "GlobalComment": {
-                return this.getFile().addGlobalCommentBefore(this);
-            } 
-            case "Test": {
-                return this.getFile().addTestBefore(this);
-            } 
-            default: {
-                throw new Error(`${frameType} is not a valid global frame type.`);
-            }
-        } 
     }
 } 

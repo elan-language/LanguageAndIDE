@@ -6,6 +6,7 @@ import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
 
 export class MemberSelector extends AbstractSelector implements Member  {
+    isMember: boolean = true;
     private class: Class;
 
     constructor(parent: Parent) {
@@ -13,90 +14,38 @@ export class MemberSelector extends AbstractSelector implements Member  {
         this.class = parent as Class;
     }
    
-    //TODO: this could be [() => Member, string] e.g. [() => cls.newComment(), "#"]
-    defaultOptions: [string, string][] = [
-        ["FunctionMethod", "function"],
-        ["ProcedureMethod", "procedure"],
-        ["Property", "property"],
-        ["Comment", "#"],
-        ["PrivateProperty", "private"],
-        ["AbstractProperty", "abstract property"],
-        ["AbstractFunction", "abstract function"],
-        ["AbstractProcedure", "abstract procedure"]
+    defaultOptions: [string, (parent: Parent) => Frame][] = [
+        ["function", (parent: Parent) => this.class.createFunction()],
+        ["procedure", (parent: Parent) => this.class.createProcedure()],
+        ["property", (parent: Parent) => this.class.createProperty()],
+        ["#", (parent: Parent) => this.class.createComment()],
+        ["private", (parent: Parent) => this.class.createProperty()],
+        ["abstract property", (parent: Parent) => this.class.createAbstractProperty()],
+        ["abstract function", (parent: Parent) => this.class.createAbstractFunction()],
+        ["abstract procedure", (parent: Parent) => this.class.createAbstractProcedure()]
     ];
 
-    //TODO: generic method (common to all selectors) 
-    //processNew(frame: Frame)
-    //But even this could be pushed up into AbstractSelector if we make it more generic
-    //in terms of 'children' rather than specific to Global, Member, Statement
-
-    validForEditorWithin(frameType: string): boolean {
+    validForEditorWithin(keyword: string): boolean {
         var result = false;
-        if (this.getClass().isAbstract()) {
-            if (this.getClass().isImmutable()) {
-                result = frameType.startsWith("Abstract") && frameType !== "AbstractProcedure";
+        if (this.class.isAbstract()) {
+            if (this.class.isImmutable()) {
+                result = keyword.startsWith("abstract") && keyword !== "abstract procedure";
             } else {
-                result = frameType.startsWith("Abstract");
+                result = keyword.startsWith("abstract");
             }
-        } else if (this.getClass().isImmutable()) {
-            result = !frameType.startsWith("Abstract") && frameType !== "ProcedureMethod" && frameType !== "PrivateProperty";
+        } else if (this.class.isImmutable()) {
+            result = !keyword.startsWith("abstract") && keyword !== "procedure" && keyword !== "private";
         }  else {
-            result = !frameType.startsWith("Abstract") && frameType !== "PrivateProperty";
+            result = !keyword.startsWith("abstract") && keyword !== "private";
         }
         return result;
     }
 
-    isMember: boolean = true;
-
     renderAsHtml(): string {
-        return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</member>`;
+        return `<member class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</member>`;
     }
 
     indent(): string {
         return singleIndent();
-    }
-
-    getClass(): Class {
-        return this.getParent() as Class;
-    }
-
-    addFrame(frameType: string): Frame {
-        //TODO: refactor to reduce repetition (here and on class):
-        //just get the newly-created member from the class, then call the addMemberAndSelectFirstField method here
-        //once at the end of the switch. (Same for adding globals into file impl. )
-        //N.B StatementSelector and Factory is more efficient.
-        //could even eliminate this by making the defaultOptions a dictionary holding the 
-        //string label and function (delegating to class) to create the new member.
-        var cls = this.class;
-        var newMem: Member;
-        switch(frameType) {
-            case "FunctionMethod": {
-                return cls.addFunctionMethodBefore(this);  //change to newMen = cls.newFunctionMethod();
-            }
-            case "ProcedureMethod": {
-                return cls.addProcedureMethodBefore(this);
-            }
-            case "Property": {
-                return cls.addPropertyBefore(this);
-            }
-            case "Comment": {
-                return cls.addCommentBefore(this);
-            }
-            case "PrivateProperty": {
-                return cls.addPropertyBefore(this);
-            }
-            case "AbstractProperty": {
-                return cls.addAbstractPropertyBefore(this);
-            }
-            case "AbstractProcedure": {
-                return cls.addAbstractProcedureBefore(this);
-            }
-            case "AbstractFunction": {
-                return cls.addAbstractFunctionBefore(this);
-            }
-            default: {
-                throw new Error(`${frameType} is not a valid member frame type.`);
-            }
-        }
     }
 } 

@@ -43,7 +43,7 @@ export class FileImpl implements File {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
- 
+
     getChildren(): Frame[] {
         return this._children;
     }
@@ -257,43 +257,14 @@ export class FileImpl implements File {
         return this._factory;
     }
 
-    addMainBefore(g: Frame): Frame {
-        var m = new MainFrame(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addFunctionBefore(g: Frame): Frame {
-        var m = new Function(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addProcedureBefore(g: Frame): Frame {
-        var m = new Procedure(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addEnumBefore(g: Frame): Frame {
-        var m = new Enum(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addClassBefore(g: Frame): Frame {
-        var m = new Class(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addGlobalCommentBefore(g: Frame): Frame {
-        var m = new GlobalComment(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addConstantBefore(g: Frame): Frame {
-        var m = new Constant(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    addTestBefore(g: Frame): Frame {
-        var m = new Test(this);
-        return this.addChildBeforeAndSelectFirstField(m,g);
-    }
-    private addChildBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
-        this.addChildBefore(g, before);
-        g.selectFirstField();
-        return g;
-    }
+    createMain(): Frame {return new MainFrame(this);}
+    createFunction(): Frame {return  new Function(this);}
+    createProcedure(): Frame {return  new Procedure(this);}
+    createEnum(): Frame {return  new Enum(this);}
+    createClass(): Frame {return  new Class(this);}
+    createGlobalComment(): Frame {return  new GlobalComment(this);}
+    createConstant(): Frame {return  new Constant(this);}
+    createTest(): Frame {return  new Test(this);}
 
     parseFrom(source: CodeSource): void {
         try {

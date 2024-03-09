@@ -26,15 +26,17 @@ export interface File extends Parent {
     status(): ParseStatus;
 
     //Internal use only
-    addMainBefore(global: Frame): Frame;
-    addFunctionBefore(global: Frame): Frame;
-    addProcedureBefore(global: Frame): Frame;
-    addEnumBefore(global: Frame): Frame;
-    addClassBefore(global: Frame): Frame;
-    addGlobalCommentBefore(global: Frame): Frame;
-    addConstantBefore(global: Frame): Frame;
-    addTestBefore(global: Frame): Frame;
+    createMain(): Frame;
+    createFunction(): Frame;
+    createProcedure(): Frame;
+    createEnum(): Frame;
+    createClass(): Frame;
+    createGlobalComment(): Frame;
+    createConstant(): Frame;
+    createTest(): Frame;
+
     parseFrom(source: CodeSource): void;
+
     containsMain(): boolean;
 
     parseError?: string;
