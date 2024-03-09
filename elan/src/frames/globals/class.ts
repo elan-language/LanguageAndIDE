@@ -127,43 +127,13 @@ ${this.renderChildrenAsSource()}\r
 end class\r\n`;
     }
 
-
-    public addMemberAndSelectFirstField(newM: Frame, existing: Frame, after: boolean = false) {
-        var i = this.getChildren().indexOf(existing);
-        if (after) {
-            this.getChildren().splice(i+1,0, newM);
-        } else {
-            this.getChildren().splice(i,0, newM);
-        }
-        newM.selectFirstField();
-    }
-
-
-    public removeMember(m: Frame) {
-        var i = this.getChildren().indexOf(m);
-        this.getChildren().splice(i,1);    
-    }
-    createFunction(): Frame {
-        return new FunctionMethod(this);
-    }
-    createProperty(): Frame {
-        return new Property(this);
-    }
-    createProcedure(): Frame {
-        return new ProcedureMethod(this);
-    }
-    createAbstractFunction(): Frame {
-        return new AbstractFunction(this);
-    }
-    createComment(): Frame {
-        return new CommentStatement(this);
-    }
-    createAbstractProperty(): Frame {
-        return new AbstractProperty(this);
-    }
-    createAbstractProcedure(): Frame {
-        return new AbstractProcedure(this);
-    }
+    createFunction(): Frame {return new FunctionMethod(this);}
+    createProperty(): Frame {return new Property(this);}
+    createProcedure(): Frame {return new ProcedureMethod(this);}
+    createAbstractFunction(): Frame {return new AbstractFunction(this);}
+    createComment(): Frame {return new CommentStatement(this);}
+    createAbstractProperty(): Frame {return new AbstractProperty(this);}
+    createAbstractProcedure(): Frame {return new AbstractProcedure(this);}
 
     private getConstructor(): Constructor {
         return this.getChildren().filter(m => ('isConstructor' in m))[0] as Constructor;
