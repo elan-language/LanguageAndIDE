@@ -23,11 +23,11 @@ export class MemberSelector extends AbstractSelector implements Member  {
         [functionKeyword, (parent: Parent) => this.class.createFunction()],
         [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
         [propertyKeyword, (parent: Parent) => this.class.createProperty()],
-        [commentMarker, (parent: Parent) => this.class.createComment()],
         [privateKeyword, (parent: Parent) => this.class.createProperty()],
-        [this.abstractProp, (parent: Parent) => this.class.createAbstractProperty()],
         [this.abstractFunc, (parent: Parent) => this.class.createAbstractFunction()],
-        [this.abstractProc, (parent: Parent) => this.class.createAbstractProcedure()]
+        [this.abstractProc, (parent: Parent) => this.class.createAbstractProcedure()],
+        [this.abstractProp, (parent: Parent) => this.class.createAbstractProperty()],
+        [commentMarker, (parent: Parent) => this.class.createComment()]
     ];
 
     validForEditorWithin(keyword: string): boolean {
@@ -36,12 +36,12 @@ export class MemberSelector extends AbstractSelector implements Member  {
             if (this.class.isImmutable()) {
                 result = keyword.startsWith(abstractKeyword) && keyword !== this.abstractProc;
             } else {
-                result = keyword.startsWith(abstractKeyword);
+                result = keyword.startsWith(abstractKeyword) || keyword === commentMarker;
             }
         } else if (this.class.isImmutable()) {
             result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword && keyword !== privateKeyword;
         }  else {
-            result = !keyword.startsWith(abstractKeyword) && keyword !== privateKeyword;
+            result = !keyword.startsWith(abstractKeyword) && keyword !== privateKeyword; //private is for use by parser only
         }
         return result;
     }

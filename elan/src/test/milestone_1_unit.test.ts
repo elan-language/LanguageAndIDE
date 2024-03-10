@@ -132,9 +132,30 @@ suite('Milestone 1 - Unit tests', () => {
 		var help = s.getHelp();
 		assert.equal(help, " function procedure property #");
 		s.processKey(key('p'));
+		assert.equal(s.text, "pro");
 		help = s.getHelp();
 		assert.equal(help, " procedure property");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
+	});	
+
+	test("Selection Filtering - abstract class", () => {
+		const f = new FileImpl(hash);
+		var c = new Class(f);
+		c.makeAbstract();		
+		var s = new MemberSelector(c);
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property, #");
+		s.processKey(key('a'));
+		assert.equal(s.text, "abstract ");
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		s.processKey(key('a'));
+		assert.equal(s.text, "abstract ");
+		s.processKey(key('b'));
+		assert.equal(s.text, "abstract ");
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		s.processKey(key('p'));
+		assert.equal(s.text, "abstract pro");
+		assert.equal(s.getHelp(), " abstract procedure, abstract property,");
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {
