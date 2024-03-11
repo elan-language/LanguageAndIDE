@@ -5,24 +5,25 @@ import { File } from "../frames/interfaces/file";
 
 const codeContainer = document.querySelector('.elan-code');
 var file : File = new FileImpl((s) => "", true);
-//const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
+const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 var doOnce = true;
 
-// if (codeFile) {
-// 	const req = new XMLHttpRequest();
-// 	req.addEventListener("load", (r : any) => {
-// 		const code = new CodeSourceFromString(r.currentTarget.responseText);
-// 		file.parseFrom(code);
-// 		updateContent(file.renderAsHtml());
-// 	});
-// 	req.open("GET", codeFile);
-// 	req.send();
-// }
-// else {
-// 	updateContent(file.renderAsHtml());
-// }
-
-updateContent(file.renderAsHtml());
+if (codeFile) {
+	fetch(codeFile, { mode: "same-origin" })
+		.then((f) => f.text())
+		.then((text) => {
+			const code = new CodeSourceFromString(text);
+			file.parseFrom(code);
+			updateContent(file.renderAsHtml());
+		})
+		.catch((e) => {
+			console.error(e);
+			updateContent(file.renderAsHtml());
+		});
+}
+else {
+	updateContent(file.renderAsHtml());
+}
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
 	return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
