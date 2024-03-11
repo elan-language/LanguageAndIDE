@@ -22,6 +22,8 @@ var doOnce = true;
 // 	updateContent(file.renderAsHtml());
 // }
 
+updateContent(file.renderAsHtml());
+
 function getModKey(e: KeyboardEvent | MouseEvent) {
 	return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
