@@ -57,8 +57,8 @@ ${this.renderStatementsAsSource()}`;
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}else${this.ifClauseAsObjectCode()}\r
-${this.renderStatementsAsSource()}`;
+        return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
+${this.renderStatementsAsObjectCode()}`;
     }
 
     parseTopOfFrame(source: CodeSource): void {

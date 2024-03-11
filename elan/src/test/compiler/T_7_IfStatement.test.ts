@@ -3,7 +3,7 @@ import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, asser
 import { createHash } from "node:crypto";
 
 suite('T_7_IfStatement', () => {
-  ignore_test('Pass_1', async () => {
+  test('Pass_1', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -20,9 +20,8 @@ export async function main() {
   var a = true;
   if (a) {
     system.print(system.asString("yes"));
-  }
-  else {
-    system.print(system.asString("no"));
+    } else {
+      system.print(system.asString("no"));
   }
 }
 `;
