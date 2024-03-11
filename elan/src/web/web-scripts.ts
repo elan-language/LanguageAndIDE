@@ -11,7 +11,7 @@ var doOnce = true;
 if (hash) {
 	const initialFile = hash.substring(1);
 
-	fetch(initialFile)
+	fetch(initialFile, { mode : "same-origin"})
 		.then((f) => f.text())
 		.then((text) => {
 			const code = new CodeSourceFromString(text);
