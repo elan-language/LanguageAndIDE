@@ -5,19 +5,17 @@ import { File } from "../frames/interfaces/file";
 
 const codeContainer = document.querySelector('.elan-code');
 var file : File = new FileImpl((s) => "", true);
-const hash = window.location.hash;
+const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 var doOnce = true;
 
-if (hash) {
-	const initialFile = hash.substring(1);
-
+if (codeFile) {
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", (r : any) => {
 		const code = new CodeSourceFromString(r.currentTarget.responseText);
 		file.parseFrom(code);
 		updateContent(file.renderAsHtml());
 	});
-	req.open("GET", initialFile);
+	req.open("GET", codeFile);
 	req.send();
 }
 else {
