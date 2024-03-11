@@ -20,8 +20,10 @@ import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { Regexes } from "../fields/regexes";
+import { Collapsible } from "../interfaces/collapsible";
 
-export class Class extends AbstractFrame implements Parent {
+export class Class extends AbstractFrame implements Parent, Collapsible {
+    isCollapsible: boolean = true;
     isParent: boolean = true; 
     public name: Type;
     public abstract: OptionalKeyword;
