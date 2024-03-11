@@ -1,4 +1,3 @@
-import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
@@ -15,10 +14,13 @@ export interface Parent {
     expand(): void;
     collapse(): void;
     
+    getChildren(): Frame[];
     getChildAfter(child: Frame): Frame;
     getChildBefore(child: Frame): Frame;
     getChildRange(first: Frame, last: Frame): Frame[];
     removeChild(child: Frame): void;
+    addChildBefore(newFrame: Frame, existingChild: Frame): void;
+    addChildAfter(newFrame: Frame, existingChild: Frame): void;
 
     indent(): string;
 
@@ -34,5 +36,8 @@ export interface Parent {
     moveSelectedChildrenDownOne(): void;
     moveSelectedChildrenUpOne(): void;
 
+    insertChildSelector(after: boolean, child: Frame): void;
+    newChildSelector(): AbstractSelector;
 
+    getFactory(): StatementFactory;
 }

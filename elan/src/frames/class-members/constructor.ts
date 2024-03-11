@@ -5,6 +5,7 @@ import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractSelector } from "../abstract-selector";
+import { Collapsible } from "../interfaces/collapsible";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -16,7 +17,6 @@ export class Constructor extends FrameWithStatements implements Member {
         super(parent);
         this.class = parent as Class;
         this.movable = false;
-        this.multiline = true;
         this.params = new ParamList(this);
     }
 
@@ -30,29 +30,26 @@ export class Constructor extends FrameWithStatements implements Member {
     public renderAsHtml(): string {
         return `<constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>constructor</keyword>(${this.params.renderAsHtml()})</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end constructor</keyword>
 </constructor>`;
     }
     public renderAsSource(): string {
         return `${this.indent()}constructor(${this.params.renderAsSource()})\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.removeIndent();
         source.remove("constructor(");
         this.params.parseFrom(source);
         source.remove(")");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end constructor");
     }
     canInsertBefore(): boolean {
         return false;
-    }
-    insertSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
     }
 }

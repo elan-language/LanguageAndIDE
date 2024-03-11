@@ -2,7 +2,7 @@ import { Selectable } from "../interfaces/selectable";
 import { ParseStatus } from "../parse-status";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
-import { KeyEvent } from "../interfaces/key-event";
+import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
 import { error } from "console";
 import { AbstractFrame } from "../abstract-frame";
@@ -86,14 +86,14 @@ export abstract class AbstractField implements Selectable, Field {
         return status;
     }
 
-    processKey(e: KeyEvent): void {
+    processKey(e: editorEvent): void {
         var key = e.key;
         var textLen = this.text.length;
         switch (key) {
         case "Home": {this.cursorPos = 0; break; } 
         case "End": {this.cursorPos = textLen; break;} 
-        case "Tab": {this.tabOrEnter(e.shift); break; } 
-        case "Enter": {this.tabOrEnter(e.shift); break;} 
+        case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
+        case "Enter": {this.tabOrEnter(e.modKey.shift); break;} 
         case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
         case "ArrowRight": {if (this.cursorPos < textLen) { this.cursorPos ++; } break; } 
         case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 

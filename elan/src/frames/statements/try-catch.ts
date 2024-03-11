@@ -2,19 +2,19 @@ import { Catch } from "./catch";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
 
-export class TryCatch extends MultiLineStatement  {
+export class TryCatch extends FrameWithStatements  {
     private catch: Catch;
     
     constructor(parent: Parent) {
         super(parent);
         this.catch =new Catch(this);
-        this.statements.push(this.catch);
+        this.getChildren().push(this.catch);
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.getNoOfStatements() > 2; //catch +
+        return this.getChildren().length > 2; //catch +
     }
 
     getFields(): Field[] {
@@ -28,19 +28,19 @@ export class TryCatch extends MultiLineStatement  {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>try </keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end try</keyword>
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}try\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end try`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("try");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         if (source.isMatch("catch ")) {
             result = true;

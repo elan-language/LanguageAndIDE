@@ -6,11 +6,6 @@ import { Parent } from "./parent";
 export interface Frame extends Selectable {
     isFrame: boolean;
     
-    getFirstPeerFrame(): Frame;
-    getLastPeerFrame(): Frame;
-    getPreviousPeerFrame(): Frame;
-    getNextPeerFrame(): Frame;
-
     getParent(): Parent;
     getMap(): Map<string, Selectable>;
 
@@ -24,8 +19,8 @@ export interface Frame extends Selectable {
 
     selectFirstField() : boolean;
     selectLastField() : boolean;
-    selectFieldBefore(current: Field) : boolean;
-    selectFieldAfter(current: Field): boolean;
+    selectFieldBefore(current: Field): void;
+    selectFieldAfter(current: Field): void;
 
     //If none, return this
     getNextFrameInTabOrder(): Frame;

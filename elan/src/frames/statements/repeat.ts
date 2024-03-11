@@ -2,9 +2,11 @@ import { Expression } from "../fields/expression";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Repeat extends MultiLineStatement {
+export class Repeat extends FrameWithStatements implements Statement {
+    isStatement: boolean = true;
     condition: Expression;
 
     constructor(parent: Parent) {
@@ -23,19 +25,19 @@ export class Repeat extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>repeat</keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
 </statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}repeat\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("repeat");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         if (this.parseStandardEnding(source, "end repeat when ")) {
             this.condition.parseFrom(source);

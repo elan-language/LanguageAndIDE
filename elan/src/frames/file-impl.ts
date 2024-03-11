@@ -18,6 +18,9 @@ import { CodeSource, CodeSourceFromString } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
+import { editorEvent } from "./interfaces/editor-event";
+import { AbstractSelector } from "./abstract-selector";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -26,9 +29,9 @@ export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
-    parseError?: string;
+    parseError? : string;
 
-    private _globals: Array<Frame> = new Array<Frame>();
+    private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
     private ignoreHashOnParsing: boolean = false;
@@ -36,33 +39,38 @@ export class FileImpl implements File {
     constructor(private hash: (toHash: string) => string, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
-        this._globals.push(new GlobalSelector(this));
+        this.getChildren().push(new GlobalSelector(this));
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
     }
+
+    getChildren(): Frame[] {
+        return this._children;
+    }
+
     private moveDownOne(child: Frame): boolean {
         var result = false;
-        var i = this._globals.indexOf(child);
-        if (i < this._globals.length - 1) {
-            this._globals.splice(i,1);
-            this._globals.splice(i+1,0,child);
+        var i = this.getChildren().indexOf(child);
+        if (i < this.getChildren().length - 1) {
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i+1,0,child);
             result = true;
         }  
         return result;
     }
     private moveUpOne(child: Frame): boolean {
         var result = false;
-        var i = this._globals.indexOf(child);
+        var i = this.getChildren().indexOf(child);
         if (i > 0) {
-            this._globals.splice(i,1);
-            this._globals.splice(i-1,0,child); 
+            this.getChildren().splice(i,1);
+            this.getChildren().splice(i-1,0,child); 
             return result = true;  
         }  
         return result;
     }
     moveSelectedChildrenUpOne(): void {
-        var toMove = this._globals.filter(g => g.isSelected()); 
+        var toMove = this.getChildren().filter(g => g.isSelected()); 
         var cont = true;
         var i = 0;
         while (cont && i < toMove.length) {
@@ -71,7 +79,7 @@ export class FileImpl implements File {
         }
     }
     moveSelectedChildrenDownOne(): void {
-        var toMove = this._globals.filter(g => g.isSelected());
+        var toMove = this.getChildren().filter(g => g.isSelected());
         var cont = true;
         var i = toMove.length - 1;
         while (cont && i >= 0) {
@@ -80,12 +88,7 @@ export class FileImpl implements File {
         }
     }
     minimumNumberOfChildrenExceeded(): boolean {
-        return this._globals.length > 1;
-    }
-
-    removeChild(child: Frame): void {
-        var i = this._globals.indexOf(child);
-        this._globals.splice(i,1);
+        return this.getChildren().length > 1;
     }
 
     hasParent(): boolean {
@@ -105,15 +108,7 @@ export class FileImpl implements File {
     }
 
     public renderAsHtml(): string {
-        if (this.parseError){
-            return `<parseError>${this.parseError}</parseError>`;
-        }
-
-        const ss: Array<string> = [];
-        for (var global of this._globals) {
-            ss.push(global.renderAsHtml());
-        }
-        const globals = ss.join("\n");
+        var globals = parentHelper_renderChildrenAsHtml(this);
         return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
     }
 
@@ -130,74 +125,33 @@ export class FileImpl implements File {
         return "Elan v0.1";
     }
 
-    renderGlobalsAsSource() : string{
-        var result = "";
-        if (this._globals.length > 0) {
-            const ss: Array<string> = [];
-            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
-                ss.push(frame.renderAsSource());
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
-    }
-
     renderAsSource(): string {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
     }
 
     renderHashableContent(): string {
-        const globals = this.renderGlobalsAsSource();
+        const globals = parentHelper_renderChildrenAsSource(this);
         return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
 
-    public addGlobal(g: Frame) : void {
-        this._globals.push(g);
+    public getFirstSelectorAsDirectChild() : AbstractSelector {
+        return this.getChildren().filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
-    public getFirstGlobalSelector() : GlobalSelector {
-        return this._globals.filter(g => ('isSelector' in g))[0] as GlobalSelector;
-    }
-
-    public addGlobalBefore(g: Frame, before: Frame): void {
-        var i = this._globals.indexOf(before);
-        this._globals.splice(i,0,g);
-    }
-
-    public addGlobalAfter(g: Frame, after: Frame) {
-        var i = this._globals.indexOf(after)+1;
-        this._globals.splice(i,0,g);     
-    }
-
-    public removeGlobal(g: Frame) {
-        var i = this._globals.indexOf(g);
-        this._globals.splice(i,1);    
+    getChildNumber(n: number): Frame {
+        return this.getChildren()[n];
     }
     
-    getFirstChild(): Frame {
-        return this._globals[0]; //Should always be one - at minimum a SelectGlobal
-    }
-
-    getLastChild(): Frame {
-        return this._globals[this._globals.length - 1];
-    }
-
-    getChildAfter(g: Frame): Frame {
-        const index = this._globals.indexOf(g);
-        return index < this._globals.length - 1 ? this._globals[index +1] : g;
-    }
-
-    getChildBefore(g: Frame): Frame {
-        const index = this._globals.indexOf(g);
-        return index > 0 ? this._globals[index -1] : g;
-    }
-
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this._globals.indexOf(first);
-        var lst = this._globals.indexOf(last);
-        return fst < lst ? this._globals.slice(fst, lst + 1) : this._globals.slice(lst, fst + 1);
-    }
+    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame {return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
+    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
+    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
+    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
+    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
+        insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
 
     defocusAll() {
         for (const f of this._map.values()) {
@@ -223,17 +177,20 @@ export class FileImpl implements File {
     }
 
     status(): ParseStatus {
-        return this._globals.map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        return parentHelper_worstStatusOfChildren(this);
     }
 
     statusAsString() : string {
         return ParseStatus[this.status()];
     }
 
-    deselectAll(): void {
+    getAllSelected(): Selectable[] {
         const v = this.getMap().values()!;
-        var selected =  [...v].filter(s => s.isSelected());
-        selected.forEach(s => s.deselect());
+        return  [...v].filter(s => s.isSelected());
+    }
+
+    deselectAll(): void {
+        this.getAllSelected().forEach(s => s.deselect());
     }
 
     getMap(): Map<string, Selectable> {
@@ -243,43 +200,14 @@ export class FileImpl implements File {
         return this._factory;
     }
 
-    addMainBefore(g: Frame): Frame {
-        var m = new MainFrame(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addFunctionBefore(g: Frame): Frame {
-        var m = new Function(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addProcedureBefore(g: Frame): Frame {
-        var m = new Procedure(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addEnumBefore(g: Frame): Frame {
-        var m = new Enum(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addClassBefore(g: Frame): Frame {
-        var m = new Class(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addGlobalCommentBefore(g: Frame): Frame {
-        var m = new GlobalComment(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addConstantBefore(g: Frame): Frame {
-        var m = new Constant(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    addTestBefore(g: Frame): Frame {
-        var m = new Test(this);
-        return this.addGlobalBeforeAndSelectFirstField(m,g);
-    }
-    private addGlobalBeforeAndSelectFirstField(g: Frame, before: Frame): Frame {
-        this.addGlobalBefore(g, before);
-        g.selectFirstField();
-        return g;
-    }
+    createMain(): Frame {return new MainFrame(this);}
+    createFunction(): Frame {return  new Function(this);}
+    createProcedure(): Frame {return  new Procedure(this);}
+    createEnum(): Frame {return  new Enum(this);}
+    createClass(): Frame {return  new Class(this);}
+    createGlobalComment(): Frame {return  new GlobalComment(this);}
+    createConstant(): Frame {return  new Constant(this);}
+    createTest(): Frame {return  new Test(this);}
 
     parseFrom(source: CodeSource): void {
         try {
@@ -294,7 +222,7 @@ export class FileImpl implements File {
                 if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                     source.removeNewLine();
                 } else {
-                    this.getFirstGlobalSelector().parseFrom(source);
+                    this.getFirstSelectorAsDirectChild().parseFrom(source);
                 }
             }
         } catch (e) {
@@ -303,7 +231,7 @@ export class FileImpl implements File {
     }
 
     containsMain(): boolean {
-        var mains = this._globals.filter(g => 'isMain' in g);
+        var mains = this.getChildren().filter(g => 'isMain' in g);
         return mains.length > 0;
     }
 
@@ -330,18 +258,35 @@ export class FileImpl implements File {
         return matches !== null && matches.length > 0;
     }
 
-    insertGlobalSelector(after: boolean, existing: Frame): void {
-        var selector =  new GlobalSelector(this);
-        if (after && existing.canInsertAfter()) {
-            this.addGlobalAfter(selector, existing);
-            selector.select(true, false);
-        } else if (!after && existing.canInsertBefore()) {
-            this.addGlobalBefore(selector, existing);
-            selector.select(true, false);
+    getFields(): Field[] {
+        return [];
+    }
+
+    processKey(e: editorEvent): void {
+        switch (e.key) {
+            case 'Home': {this.selectFirstGlobal(); break;}
+            case 'End': {this.getLastChild().select(true, false); break;}
+            case 'Tab': {this.tabOrEnter(e.modKey.shift); break;}
+            case 'Enter': {this.tabOrEnter(e.modKey.shift); break;}
+            case 'ArrowDown':  {this.selectFirstGlobal(); break;}
+            case 'ArrowRight':  {this.selectFirstGlobal(); break;}
+            case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
         }
     }
 
-    getFields(): Field[] {
-        return [];
+    private selectFirstGlobal(): void {
+        this.getFirstChild().select(true, false);
+    }
+
+    private tabOrEnter(back: boolean) {
+        if (back) {
+            this.getLastChild().selectLastField();
+        } else {
+            this.getFirstChild().selectFirstField();
+        }
+    }
+
+    newChildSelector(): AbstractSelector {
+        return new GlobalSelector(this);
     }
 }

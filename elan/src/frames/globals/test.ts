@@ -15,13 +15,12 @@ export class Test extends FrameWithStatements {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.multiline = true;
-        this.statements.slice(0,1); //remove statement selector
+        this.getChildren().splice(0,1); //remove statement selector
         this.name = new Identifier(this);
         var result = new VariableDefStatement(this);
         result.name.setText("result");
-        this.statements.push(result);
-        this.statements.push( new Assert(this));
+        this.getChildren().push(result);
+        this.getChildren().push( new Assert(this));
     }
 
     getFields(): Field[] {
@@ -34,7 +33,7 @@ export class Test extends FrameWithStatements {
     public renderAsHtml() : string {
         return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>test </keyword>${this.name.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;
     }
@@ -43,18 +42,15 @@ ${this.renderStatementsAsHtml()}
     }
     public renderAsSource() : string {
         return `test ${this.name.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end test\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("test ");
         this.name.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
     }
 }

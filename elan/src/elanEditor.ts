@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
 import { getNonce, hash } from './util';
 import { File } from './frames/interfaces/file';
+import { editorEvent } from './frames/interfaces/editor-event';
 import { ParseStatus } from './frames/parse-status';
 import { Uri } from 'vscode';
 import { FileImpl } from './frames/file-impl';
 import { CodeSourceFromString } from './frames/code-source';
-import { editorEvent, handleClick, handleDblClick, handleKey } from './editorHandlers';
+import { handleClick, handleDblClick } from './editorHandlers';
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -103,15 +104,26 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					updateWebview(this.file!);
 					return;
 				case 'key':
-					handleKey(e, this.file!);
+					switch (e.key) {
+						case 'Shift': break;  //Short circuit repeat from modifier held-down before other key
+						case 'Control': break;
+						case 'Alt': break; 
+						default: {
+							if (e.target === "frame") {
+								this.file!.getById(e.id!).processKey(e);
+							} else {
+								this.file!.processKey(e);
+							}
+						}				
+					}
 					updateWebview(this.file!);
 					updateSource(this.file!);
 					return;
 			}
 		});
-
 		updateWebview(this.file!);
 	}
+
 
 	/**
 	 * Get the static html used for the editor webviews.

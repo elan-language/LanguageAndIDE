@@ -1,5 +1,5 @@
 import { Frame } from "../interfaces/frame";
-import { KeyEvent } from "../interfaces/key-event";
+import { editorEvent } from "../interfaces/editor-event";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { optional, genericString } from "./parse-functions";
@@ -29,7 +29,7 @@ export class OptionalKeyword extends AbstractField {
        return optional(input, kw);
     }
 
-    processKey(e: KeyEvent): void {
+    processKey(e: editorEvent): void {
         var key = e.key;
         if (key && key.length ===1 && this.keyword.startsWith(key.toLowerCase())) {
             this.text = this.keyword;

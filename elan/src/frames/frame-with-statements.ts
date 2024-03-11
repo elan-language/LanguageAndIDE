@@ -1,47 +1,47 @@
 import { AbstractFrame } from "./abstract-frame";
-import { Parent } from "./interfaces/parent";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { Collapsible } from "./interfaces/collapsible";
-import { ParseStatus } from "./parse-status";
-import { StatementSelector } from "./statements/statement-selector";
+import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
-import { AbstractSelector } from "./abstract-selector";
+import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
+import { Frame } from "./interfaces/frame";
+import { Parent } from "./interfaces/parent";
+import { StatementFactory } from "./interfaces/statement-factory";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import { ParseStatus } from "./parse-status";
+import { StatementSelector } from "./statements/statement-selector";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
     isParent: boolean = true;
-    multiline:boolean = true;
-    protected statements: Array<Frame> = new Array<Frame>();
+    private _children: Array<Frame> = new Array<Frame>();
 
-    constructor(parent: File | Parent) {
+    constructor(parent: Parent) {
         super(parent);   
-        this.statements.push(this.newStatementSelector());
+        this.getChildren().push(new StatementSelector(this));
     }
 
-    newStatementSelector(): StatementSelector {
-        return new StatementSelector(this);
-    }
+    protected setClasses() {
+        super.setClasses();
+        this.pushClass(true,"multiline");
+    };
 
-    protected getNoOfStatements(): number {
-        return this.statements.length;
-    }
-
-    minimumNumberOfChildrenExceeded(): boolean {
-        return this.statements.length > 1;
-    }
-
-    removeChild(child: Frame): void {
-        var i = this.statements.indexOf(child);
-        this.statements.splice(i,1);
+    getFactory(): StatementFactory {
+        return this.getParent().getFactory();
     }
 
     getStatus(): ParseStatus {
         var fieldStatus = this.worstStatusOfFields();
-        var statementsStatus = this.statements.map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+        var statementsStatus = parentHelper_worstStatusOfChildren(this);
         return fieldStatus < statementsStatus ? fieldStatus : statementsStatus;
+    }
+
+    getChildren(): Frame[] {
+        return this._children;
+    }
+
+    minimumNumberOfChildrenExceeded(): boolean {
+        return this.getChildren().length > 1;
     }
 
     expandCollapse(): void {
@@ -51,111 +51,69 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             this.collapse();
         }
     }
-    public getFirstStatementSelector() : StatementSelector {
-        return this.statements.filter(g => ('isSelector' in g))[0] as StatementSelector;
-    }
 
-    getFirstChild(): Frame {
-        return this.statements[0]; //Should always be one - if only a Selector
+    newChildSelector(): AbstractSelector {
+        return new StatementSelector(this);
     }
+    insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after, child);}
 
-    getLastChild(): Frame {
-        return this.statements[this.statements.length - 1];
-    }
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
+    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame {return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
+    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
+    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
+    getFirstSelectorAsDirectChild() : AbstractSelector {return parentHelper_getFirstSelectorAsDirectChild(this);}
+    selectFirstChild(multiSelect: boolean): boolean {return parentHelper_selectFirstChild(this, multiSelect);}
+    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
+    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
+    selectLastField(): boolean {return parentHelper_selectLastField(this);}
 
-    getChildAfter(g: Frame): Frame {
-        const index = this.statements.indexOf(g);
-        return index < this.statements.length -1 ? this.statements[index +1] : g;
-    }
-
-    getChildBefore(g: Frame): Frame {
-        const index = this.statements.indexOf(g);
-        return index > 0 ? this.statements[index -1] : g;
-    }
-
-    getChildRange(first: Frame, last: Frame): Frame[] {
-        var fst = this.statements.indexOf(first);
-        var lst = this.statements.indexOf(last);
-        return fst < lst ? this.statements.slice(fst, lst + 1) : this.statements.slice(lst, fst + 1);
-    }
-
+    protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
+    protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
+    
     selectFirstField(): boolean {
         var result = super.selectFirstField();
         if (!result) {
-            result = this.statements[0].selectFirstField();
+            result = this.getChildren()[0].selectFirstField();
         }
         return result;
     } 
 
-    selectLastField(): boolean {
-        var n = this.statements.length;
-        return this.statements[n-1].selectLastField();
-    } 
-
-    selectFieldBefore(current: Field): boolean {
+    selectFieldBefore(current: Field): void {
         if (this.getFields().includes(current)) {
-            return super.selectFieldBefore(current);
+            super.selectFieldBefore(current);
+        } else{
+         this.getLastChild().selectLastField();
         }
-        return this.getLastChild().selectLastField();
     }
 
     selectFirstChildIfAny(): boolean {
         var result = false;
-        if (this.statements.length > 0) {
-            this.statements[0].select(true, false);
+        if (this.getChildren().length > 0) {
+            this.getChildren()[0].select(true, false);
             result = true;
         }
         return result;
     }
 
-    protected renderStatementsAsHtml() : string {
-        const ss: Array<string> = [];
-        for (var frame of this.statements) {
-            ss.push(frame.renderAsHtml());
-        }
-        return ss.join("\n");
-    }
-
-    protected renderStatementsAsSource() : string {
-        var result = "";
-        if (this.statements.length > 0 ) {
-            const ss: Array<string> = [];
-            for (var frame of this.statements.filter(s => !('isSelector' in s))) {
-                ss.push(frame.renderAsSource());
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
-    }
-
-    public addStatementBefore(s: Frame, before: Frame) {
-        var i = this.statements.indexOf(before);
-        this.statements.splice(i, 0, s);
-    }
-
-    public addStatementAfter(s: Frame, after: Frame) {
-        var i = this.statements.indexOf(after) + 1;
-        this.statements.splice(i, 0, s);   
-    }
-
-    public removeStatement(s: Frame) {
-        var i = this.statements.indexOf(s);
-        this.statements.splice(i, 1);   
-    }
+    moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
+    moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
 
     parseFrom(source: CodeSource): void {
-        this.parseTopOfFrame(source);
-        while (!this.parseBottomOfFrame(source)) {
+        this.parseTop(source);
+        while (!this.parseBottom(source)) {
             if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
                 source.removeRegEx(Regexes.startsWithNewLine, false);
                 source.removeIndent();
             } else {
-                this.getFirstStatementSelector().parseFrom(source);
+                this.getFirstSelectorAsDirectChild().parseFrom(source);
             }
         } 
     }
-    abstract parseTopOfFrame(source: CodeSource): void;
-    abstract parseBottomOfFrame(source: CodeSource): boolean;
+
+    abstract parseTop(source: CodeSource): void;
+    abstract parseBottom(source: CodeSource): boolean;
 
     protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
         source.removeIndent();
@@ -165,60 +123,5 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             result = true;
         }
         return result;
-    }
-    getSelectorToInsertAboveBelow(): AbstractSelector { //Overridden by Global frames that inherit from this
-        return new StatementSelector(this.getParent() as FrameWithStatements);
-    }
-
-    insertSelector(after: boolean): void { //Overridden by Global frames that inherit from this
-        var selector = this.getSelectorToInsertAboveBelow();
-        var parent =(this.getParent() as FrameWithStatements);
-        if (after && this.canInsertAfter()) {
-            parent.addStatementAfter(selector, this);
-            selector.select(true, false);
-        } else if (!after && this.canInsertBefore()) {
-            parent.addStatementBefore(selector, this);
-            selector.select(true, false);
-        } 
-    }
-
-    private moveDownOne(child: Frame): boolean {
-        var result = false;
-        var i = this.statements.indexOf(child);
-        if ((i < this.statements.length - 1) && (this.statements[i+1].canInsertAfter())) {
-            this.statements.splice(i,1);
-            this.statements.splice(i+1,0,child);  
-            result = true;
-        }
-        return result;
-    }
-    private moveUpOne(child: Frame): boolean {
-        var result = false;
-        var i = this.statements.indexOf(child);
-        if ((i > 0) && (this.statements[i-1].canInsertBefore())) {
-            this.statements.splice(i,1);
-            this.statements.splice(i-1,0,child);
-            result = true;     
-        }
-        return result;
-    }
-
-    moveSelectedChildrenUpOne(): void {
-        var toMove = this.statements.filter(g => g.isSelected()); 
-        var cont = true;
-        var i = 0;
-        while (cont && i < toMove.length) {
-            cont = this.moveUpOne(toMove[i]);
-            i++;
-        }
-    }
-    moveSelectedChildrenDownOne(): void {
-        var toMove = this.statements.filter(g => g.isSelected()); 
-        var cont = true;
-        var i = toMove.length - 1;
-        while (cont && i >= 0) {
-            cont = this.moveDownOne(toMove[i]);
-            i--;
-        }
     }
 }

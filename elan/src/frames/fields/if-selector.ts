@@ -1,5 +1,5 @@
 import { AbstractField } from "./abstract-field";
-import { KeyEvent } from "../interfaces/key-event";
+import { editorEvent } from "../interfaces/editor-event";
 import { Else } from "../statements/else";
 import { CodeSource } from "../code-source";
 import { ParseStatus } from "../parse-status";
@@ -31,7 +31,7 @@ export class IfSelector extends AbstractField {
         return ``;
     } 
 
-    processKey(keyEvent: KeyEvent): void {
+    processKey(keyEvent: editorEvent): void {
         var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='i')) {

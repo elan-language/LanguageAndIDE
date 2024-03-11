@@ -1,22 +1,18 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { isCollapsible, isFrame, isParent, singleIndent } from "./helpers";
-import { StatementFactory } from "./interfaces/statement-factory";
+import { isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
-import { KeyEvent } from "./interfaces/key-event";
+import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
-import { MainFrame } from "./globals/main-frame";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
     private _parent: File | Parent;
     private _map?: Map<string, Selectable>;
-    private _factory: StatementFactory;
-    protected multiline: boolean = false;
-    private selected: boolean = false;
+      private selected: boolean = false;
     private focused: boolean = false;
     private collapsed: boolean = false;
     private _classes = new Array<string>;
@@ -29,15 +25,10 @@ export abstract class AbstractFrame implements Frame {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
-        this._factory = parent.getFactory();
     }
 
     fieldUpdated(field: Field): void {
         //Does nothing - for sub-classes to override as needed
-    }
-
-    getFactory(): StatementFactory {
-        return this._factory;
     }
 
     abstract getFields(): Field[];
@@ -58,36 +49,28 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().getChildAfter(this);
     }
 
-    selectFieldBefore(current: Field): boolean {
-        var result = false;
+    selectFieldBefore(current: Field) {
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i > 0) {
             fields[i-1].select(true, false);
-            result = true;
         } else {
            this.selectLastFieldAboveThisFrame();
         }
-        return result;
     }
 
-    selectFieldAfter(current: Field): boolean {
-        var result = false;
+    selectFieldAfter(current: Field) {
         var fields = this.getFields();
         var i = fields.indexOf(current);
         if (i < fields.length - 1) {
             fields[i+1].select(true, false);
-            result = true;
         } else {
             if (isParent(this)){
                 this.getFirstChild().selectFirstField();
-                result = true;
             } else {
                 this.getNextFrameInTabOrder().selectFirstField();
-                result = true;
             }
         }
-        return result;
     }
 
     getNextFrameInTabOrder(): Frame {
@@ -136,28 +119,29 @@ export abstract class AbstractFrame implements Frame {
         return result;
     }
 
-    processKey(e: KeyEvent): void {
+    processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {
+          case 'Escape': {this.deselectAll(); break;}
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
-          case "Tab": {this.tabOrEnter(e.shift); break;} 
-          case "Enter": {this.tabOrEnter(e.shift); break;}  
-          case "Insert": {this.insertSelector(e.shift); break;} 
-          case "o": {if (e.control && isCollapsible(this)) {this.expandCollapse();} break;}
+          case "Tab": {this.tabOrEnter(e.modKey.shift); break;} 
+          case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
+          case "Insert": {this.insertPeerSelector(e.modKey.shift); break;} 
+          case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "ArrowUp": {
-            if (e.control && this.movable) {
+            if (e.modKey.control && this.movable) {
                 this.getParent().moveSelectedChildrenUpOne();
             } else {
-                this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.shift);
+                this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
             }
             break;
           }
           case "ArrowDown": {
-            if (e.control && this.movable) {
+            if (e.modKey.control && this.movable) {
                   this.getParent().moveSelectedChildrenDownOne();         
             } else {
-                this.selectSingleOrMulti(this.getNextPeerFrame(), e.shift);
+                this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
             }
             break;
           }
@@ -172,7 +156,14 @@ export abstract class AbstractFrame implements Frame {
         }
     }
 
-    abstract insertSelector(after: boolean): void;
+    insertPeerSelector(after: boolean): void { //Overridden by Global frames that inherit from this
+        var parent =this.getParent();
+        if (after && this.canInsertAfter()) {
+            parent.insertChildSelector(true, this);
+        } else if (!after && this.canInsertBefore()) {
+            parent.insertChildSelector(false, this)
+        } 
+    }
 
     canInsertBefore(): boolean { return true; }
 
@@ -198,15 +189,23 @@ export abstract class AbstractFrame implements Frame {
             if (n > 0) {
                 fields[n -1].select(true, false);
                 result = true;
-            } else { //should only occur if the parent is 'main'
-                var main = parent as MainFrame;
-                var file = main.getParent() as File;
-                var prior = file.getChildBefore(main);
-                if (prior !== main ) {
-                    prior.selectLastField();  
-                    result = true;
-                }                
+            } else {
+                if (isMain(parent)) {
+                    result =  this.selectLastFieldInPreviousGlobal(parent.getParent() as File, parent);
+                } else if (isFile(parent)) {
+                    result = this.selectLastFieldInPreviousGlobal(parent, this);
+                }               
             }
+        }
+        return result;
+    }
+
+    private selectLastFieldInPreviousGlobal(file: File, frame: Frame) : boolean {
+        var result = false;
+        var prior = file.getChildBefore(frame);
+        if (prior !== frame ) {
+            prior.selectLastField();  
+            result = true;
         }
         return result;
     }
@@ -232,10 +231,6 @@ export abstract class AbstractFrame implements Frame {
         this._map = Map;
     }
 
-    setFactory(factory: StatementFactory) {
-        this._factory = factory;
-    }
-
     abstract getIdPrefix(): string;
 
     protected pushClass(flag: boolean, cls: string) {
@@ -246,7 +241,6 @@ export abstract class AbstractFrame implements Frame {
 
     protected setClasses() {
         this._classes = new Array<string>();
-        this.pushClass(this.multiline, "multiline");
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
@@ -272,10 +266,6 @@ export abstract class AbstractFrame implements Frame {
 
     isSelected(): boolean {
         return this.selected;
-    }
-
-    isMultiline(): boolean {
-        return this.multiline;
     }
 
     select(withFocus : boolean,  multiSelect: boolean): void {
@@ -329,13 +319,15 @@ export abstract class AbstractFrame implements Frame {
     }
 
     collapse(): void {
-        if (this.multiline) {
+        if ('isCollapsible' in this) {
             this.collapsed = true;
         }
     }
 
     expand(): void {
-        this.collapsed = false;
+        if ('isCollapsible' in this) {
+            this.collapsed = false;
+        }
     }
 
     isFocused(): boolean {

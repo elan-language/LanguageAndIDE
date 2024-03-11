@@ -52,7 +52,7 @@ suite('Milestone 1 - Unit tests', () => {
 					mn.collapse();
 				}
 			},
-			["main4", "multiline valid", "multiline collapsed valid"]);
+			["main4", "valid multiline", "collapsed valid multiline"]);
 	});
 
 	test('Invalid identifier', () => {
@@ -132,9 +132,30 @@ suite('Milestone 1 - Unit tests', () => {
 		var help = s.getHelp();
 		assert.equal(help, " function procedure property #");
 		s.processKey(key('p'));
+		assert.equal(s.text, "pro");
 		help = s.getHelp();
 		assert.equal(help, " procedure property");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
+	});	
+
+	test("Selection Filtering - abstract class", () => {
+		const f = new FileImpl(hash);
+		var c = new Class(f);
+		c.makeAbstract();		
+		var s = new MemberSelector(c);
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property, #");
+		s.processKey(key('a'));
+		assert.equal(s.text, "abstract ");
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		s.processKey(key('a'));
+		assert.equal(s.text, "abstract ");
+		s.processKey(key('b'));
+		assert.equal(s.text, "abstract ");
+		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		s.processKey(key('p'));
+		assert.equal(s.text, "abstract pro");
+		assert.equal(s.getHelp(), " abstract procedure, abstract property,");
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {
@@ -202,7 +223,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var help = gs.getHelp();
 		assert.equal(help, " main procedure function class constant enum test #");
 		var m = new MainFrame(fl);	
-		fl.addGlobal(m);
+		fl.getChildren().push(m);
 		gs = new GlobalSelector(fl);
 		help = gs.getHelp();
 		assert.equal(help, " procedure function class constant enum test #");

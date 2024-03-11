@@ -3,13 +3,13 @@ import { Selectable } from '../frames/interfaces/selectable';
 import assert from 'assert';
 import { File } from '../frames/interfaces/file';
 import * as jsdom from 'jsdom';
-import { KeyEvent } from '../frames/interfaces/key-event';
+import { editorEvent } from '../frames/interfaces/editor-event';
 import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
@@ -115,6 +115,19 @@ export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     }
 }
 
+export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
+    const ws = vscode.workspace.workspaceFolders![0].uri;
+    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+    var codeSource = new CodeSourceFromString(sourceDoc.getText());
+    var fl = new FileImpl(hash);
+    fl.parseFrom(codeSource);
+    if (fl.parseError) {
+        throw new Error(fl.parseError);
+    }
+   return fl;
+}
+
 export async function assertAreEqualByFile<T extends Selectable>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
     const ws = vscode.workspace.workspaceFolders![0].uri;
 
@@ -182,8 +195,8 @@ export function assertHtml(setupFn : () => File, testFn : (f: File) => void, ass
     assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
-export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): KeyEvent {
-    return { key: k, shift: !!shift, control: !!control, alt: !!alt };
+export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): editorEvent {
+    return { key: k, modKey: {shift: !!shift, control: !!control, alt: !!alt }, type: "key", target: "frame"};
 }
 
 export async function activate(docUri: vscode.Uri) {
@@ -207,4 +220,60 @@ export async function activate(docUri: vscode.Uri) {
   
   async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  //Keys
+  export function enter() {
+    return key("Enter");
+  }
+  export function shift_enter() {
+    return key("Enter", true);
+  }
+  export function tab() {
+    return key("Tab");
+  }
+  export function shift_tab() {
+    return key("Tab", true);
+  }
+  export function up() {
+    return key("ArrowUp");
+  }
+  export function shift_up() {
+    return key("ArrowUp",true);
+  }
+  export function ctrl_up() {
+    return key("ArrowUp",false,true);
+  }
+  export function down() {
+    return key("ArrowDown");
+  }
+  export function shift_down() {
+    return key("ArrowDown",true);
+  }
+  export function ctrl_down() {
+    return key("ArrowDown",false,true);
+  }
+  export function left() {
+    return key("ArrowLeft");
+  }
+  export function right() {
+    return key("ArrowRight");
+  }
+  export function home() {
+    return key("Home");
+  }
+  export function end() {
+    return key("End");
+  }
+  export function esc() {
+    return key("Escape");
+  }
+  export function ins() {
+    return key("Insert");
+  }
+  export function del() {
+    return key("Delete");
+  }
+  export function shift_ins() {
+    return key("Insert",true);
   }

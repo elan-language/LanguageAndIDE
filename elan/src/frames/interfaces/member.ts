@@ -1,5 +1,3 @@
-import { Selectable } from "./selectable";
-
-export interface Member extends Selectable {
+export interface Member {
     isMember : boolean;
 }

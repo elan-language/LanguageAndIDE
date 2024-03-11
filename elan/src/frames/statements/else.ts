@@ -4,9 +4,11 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
 import { Expression } from "../fields/expression";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Else extends MultiLineStatement  {
+export class Else extends FrameWithStatements implements Statement {
+    isStatement: boolean = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
     condition: Expression;
@@ -38,7 +40,7 @@ export class Else extends MultiLineStatement  {
     }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 </statement>`;
     }
 
@@ -48,10 +50,10 @@ ${this.renderStatementsAsHtml()}
 
     renderAsSource(): string {
         return `${this.indent()}else${this.ifClauseAsSource()}\r
-${this.renderStatementsAsSource()}`;
+${this.renderChildrenAsSource()}`;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("else");
         if (source.isMatch(" if ")) {
             this.hasIf = true;
@@ -59,7 +61,7 @@ ${this.renderStatementsAsSource()}`;
             this.condition.parseFrom(source);
         }
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         source.removeIndent();
         if (source.isMatch("else")) {

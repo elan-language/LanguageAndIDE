@@ -19,18 +19,15 @@ export class FunctionMethod extends Function implements Member {
     }
     public override renderAsSource() : string {
         return `${this.indent()}function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end function\r
 `;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.removeIndent();
-        super.parseTopOfFrame(source);
+        super.parseTop(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
-        return super.parseBottomOfFrame(source);
-    }
-    insertSelector(after: boolean): void {
-        this.class.insertMemberSelector(after, this);
+    parseBottom(source: CodeSource): boolean {
+        return super.parseBottom(source);
     }
 }

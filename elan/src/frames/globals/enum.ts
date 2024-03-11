@@ -15,7 +15,6 @@ export class Enum extends AbstractFrame {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.multiline = true;
         this.name = new Type(this);
         this.name.setPlaceholder("Name");
         this.values = new EnumValues(this);
@@ -51,8 +50,5 @@ end enum\r
         this.values.parseFrom(source);
         source.removeNewLine();
         source.remove("end enum");
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
     }
 } 

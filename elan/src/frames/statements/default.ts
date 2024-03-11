@@ -1,9 +1,11 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Default extends MultiLineStatement {
+export class Default extends FrameWithStatements implements Statement {
+    isStatement = true;
     constructor(parent: Parent) {
         super(parent);
         this.movable = false;
@@ -17,18 +19,18 @@ export class Default extends MultiLineStatement {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>default </keyword></top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}default\r
-${this.renderStatementsAsSource()}`;
+${this.renderChildrenAsSource()}`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("default");
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return source.isMatch("end switch");
     }
     canInsertAfter(): boolean {

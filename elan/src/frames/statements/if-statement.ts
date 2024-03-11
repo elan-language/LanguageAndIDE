@@ -2,9 +2,11 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Expression } from "../fields/expression";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class IfStatement extends MultiLineStatement{
+export class IfStatement extends FrameWithStatements implements Statement {
+    isStatement = true;
     condition: Expression;
 
     constructor(parent: Parent) {
@@ -23,20 +25,20 @@ export class IfStatement extends MultiLineStatement{
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end if</keyword>
 </statement>`;
     }
     renderAsSource(): string {
     return `${this.indent()}if ${this.condition.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("if ");
         this.condition.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         source.removeIndent();
         return this.parseStandardEnding(source, "end if");
     }

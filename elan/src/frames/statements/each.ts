@@ -4,15 +4,16 @@ import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Each extends MultiLineStatement  {
+export class Each extends FrameWithStatements implements Statement {
+    isStatement = true;
     variable: Identifier;
     iter: Expression;
 
     constructor(parent: File | Parent) {
         super(parent);
-        this.multiline = true;
         this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.iter = new Expression(this);
@@ -29,23 +30,23 @@ export class Each extends MultiLineStatement  {
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>each </keyword>${this.variable.renderAsHtml()}<keyword> in </keyword>${this.iter.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end each</keyword>
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("each ");
         this.variable.parseFrom(source);
         source.remove(" in ");
         this.iter.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end each");
     }
 } 

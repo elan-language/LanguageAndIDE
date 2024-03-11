@@ -3,9 +3,11 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
-import { MultiLineStatement } from "./multi-line-statement";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Statement } from "../interfaces/statement";
 
-export class Catch extends MultiLineStatement {
+export class Catch extends FrameWithStatements implements Statement {
+    isStatement = true;
     variable: Identifier;
 
     constructor(parent: Parent) {
@@ -27,20 +29,20 @@ export class Catch extends MultiLineStatement {
 
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}
-${this.renderStatementsAsHtml()}        
+${this.renderChildrenAsHtml()}        
 </statement>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}catch ${this.variable.renderAsSource()}\r
-${this.renderStatementsAsSource()}`;;
+${this.renderChildrenAsSource()}`;;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("catch ");
         this.variable.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end try");
     }
 } 

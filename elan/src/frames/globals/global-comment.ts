@@ -41,7 +41,4 @@ export class GlobalComment extends AbstractFrame {
         this.text.parseFrom(source);
         source.removeNewLine();
     }
-    insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
-    }
 } 

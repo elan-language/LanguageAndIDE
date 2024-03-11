@@ -19,16 +19,15 @@ export class Function extends FrameWithStatements implements Parent {
     constructor(parent: Parent) {
         super(parent);
         this.file = parent as File;
-        this.multiline = true;
         this.name = new Identifier(this);
         this.params = new ParamList(this);
         this.returnType = new Type(this);
         this.returnType.setPlaceholder("return type");
-        this.statements.push(new ReturnStatement(this));
+        this.getChildren().push(new ReturnStatement(this));
     }
 
     minimumNumberOfChildrenExceeded(): boolean {
-        return this.getNoOfStatements() > 1; // return may be the only statement
+        return this.getChildren().length > 1; // return may be the only statement
     }
 
     getFields(): Field[] {
@@ -41,7 +40,7 @@ export class Function extends FrameWithStatements implements Parent {
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> as </keyword>${this.returnType.renderAsHtml()}</top>
-${this.renderStatementsAsHtml()}
+${this.renderChildrenAsHtml()}
 <keyword>end function</keyword>
 </function>`;
     }
@@ -52,12 +51,12 @@ ${this.renderStatementsAsHtml()}
 
     public renderAsSource() : string {
         return `function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
-${this.renderStatementsAsSource()}\r
+${this.renderChildrenAsSource()}\r
 end function\r
 `;
     }
 
-    parseTopOfFrame(source: CodeSource): void {
+    parseTop(source: CodeSource): void {
         source.remove("function ");
         this.name.parseFrom(source);
         source.remove("(");
@@ -65,7 +64,7 @@ end function\r
         source.remove(") as ");
         this.returnType.parseFrom(source);
     }
-    parseBottomOfFrame(source: CodeSource): boolean {
+    parseBottom(source: CodeSource): boolean {
         var result = false;
         var keyword = "return ";
         source.removeIndent();
@@ -78,9 +77,6 @@ end function\r
         return result;
     }
     private getReturnStatement() : ReturnStatement {
-        return this.statements.filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
-    }
-    insertSelector(after: boolean): void {
-        this.file.insertGlobalSelector(after, this);
+        return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
 }

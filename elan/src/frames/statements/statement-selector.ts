@@ -3,51 +3,49 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
+import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword } from "../keywords";
 
 export class StatementSelector extends AbstractSelector  {
+    isStatement = true;
+    private factory: StatementFactory;
 
     constructor(parent: FrameWithStatements) {
         super(parent);
         this.factory = (parent.getFactory());
     }
-    private assert: [string, string] = ["Assert", "assert"];
-    private call: [string, string] = ["Call", "call"];
-    private case: [string, string] = ["Case", "case"];
-    private catch: [string, string] = ["Catch", "catch"];
-    private each: [string, string] = ["Each", "each"];
-    private else: [string, string] = ["Else", "else"];
-    private for: [string, string] = ["For", "for"];
-    private if: [string, string] = ["IfThen", "if"];
-    private print: [string, string] = ["Print", "print"];
-    private repeat: [string, string] = ["Repeat", "repeat"];
-    private set: [string, string] = ["SetStatement", "set"];
-    private switch: [string, string] = ["Switch", "switch"];
-    private throw: [string, string] = ["Throw", "throw"];
-    private try: [string, string] = ["TryCatch", "try"];
-    private var: [string, string] = ["Variable", "var"];
-    private while: [string, string] = ["While", "while"];
-    private comment: [string, string] = ["CommentStatement", "#"];
-    private return: [string, string] = ["ReturnStatement", "return"];
 
-    
-    //call each for if print repeat set switch throw try var while #";
-    defaultOptions: [string, string][] = [this.assert, this.call, this.case, this.catch, this.each, this.else, this.for, 
-        this.if, this.print, this.repeat, this.set, this.switch, this.throw, this.try, this.var, this.while, this.comment, this.return];
+    defaultOptions: [string, (parent: Parent) => Frame][] = [
+        [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
+        [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
+        [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
+        [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
+        [defaultKeyword, (parent: Parent) => this.factory.newDefault(parent)],
+        [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
+        [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
+        [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
+        [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
+        [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
+        [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
+        [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
+        [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
+        [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
+        [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
+        [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
+        [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
+        [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
+        ["#", (parent: Parent) => this.factory.newComment(parent)]
+    ];
 
-    addFrame(frameType: string): Frame {
-        return this.factory.addFrameBeforeAndSelectFirstField(frameType, this);
-    }
-
-    validForEditorWithin(frameType: string): boolean {
-        if (this.getParent().getIdPrefix() === "test" ) {
-            return frameType === "Assert" ||frameType === "Call" || frameType === "Variable";
-        } else if (this.getParent().getIdPrefix() === "switch") {
-            return frameType === "Case";     
-        } else if (frameType === "ReturnStatement" || frameType === "Assert" || frameType === "Case" ||frameType === "Catch" ) {
+    validForEditorWithin(keyword: string): boolean {
+        if (this.getParent().getIdPrefix() === testKeyword ) {
+            return keyword === assertKeyword ||keyword === callKeyword || keyword === varKeyword;
+        } else if (this.getParent().getIdPrefix() === switchKeyword) {
+            return keyword === caseKeyword;     
+        } else if (keyword === returnKeyword || keyword === assertKeyword || keyword === caseKeyword || keyword === catchKeyword || keyword === defaultKeyword) {
             return false;
-        } else if (frameType === "Else" ) {
-            return this.getParent().getIdPrefix() === "if" ;
-        } else if (frameType === "Print" || frameType === "Call") {
+        } else if (keyword === elseKeyword ) {
+            return this.getParent().getIdPrefix() === ifKeyword ;
+        } else if (keyword === printKeyword || keyword === callKeyword) {
             return !this.isWithinAFunction(this.getParent());
         } else {
             return true;
@@ -56,13 +54,8 @@ export class StatementSelector extends AbstractSelector  {
 
     private isWithinAFunction(parent: Parent): boolean {
         return parent.getIdPrefix() === 'func' ? true : parent.hasParent() && this.isWithinAFunction(parent.getParent());
-
     }
-
-    isStatement = true;
-    private factory: StatementFactory;
-
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplay()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</statement>`;
     }
 } 

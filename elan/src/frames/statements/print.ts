@@ -4,9 +4,10 @@ import { AbstractFrame} from "../abstract-frame";
 
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { SingleLineStatement } from "./single-line-statement";
+import { Statement } from "../interfaces/statement";
 
-export class Print extends SingleLineStatement  {
+export class Print extends AbstractFrame implements Statement {
+    isStatement = true;  
     expr: Expression;
 
     constructor(parent: Parent) {

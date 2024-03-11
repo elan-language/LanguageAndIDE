@@ -2,10 +2,11 @@ import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Value } from "../fields/value";
-import { SingleLineStatement } from "./single-line-statement";
+import { AbstractFrame } from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-
-export class Assert extends SingleLineStatement {
+export class Assert extends AbstractFrame implements Statement{
+    isStatement = true;
     expected: Value;
 
     constructor(parent: Parent) {

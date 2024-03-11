@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
 import { ParseStatus } from "../parse-status";
-import { KeyEvent } from "./key-event";
+import { editorEvent } from "./editor-event";
 
 export interface Selectable  {
 
@@ -12,7 +12,7 @@ export interface Selectable  {
     focus(): void;
     defocus(): void;
 
-    processKey(keyEvent: KeyEvent): void;
+    processKey(keyEvent: editorEvent): void;
 
     renderAsHtml(): string;
     renderAsSource(): string;

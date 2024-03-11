@@ -3,10 +3,11 @@ import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ProcedureRef } from "../fields/procedureRef";
-import { SingleLineStatement } from "./single-line-statement";
-import { FrameWithStatements } from "../frame-with-statements";
+import { AbstractFrame } from "../abstract-frame";
+import { Statement } from "../interfaces/statement";
 
-export class Call extends SingleLineStatement {
+export class Call extends AbstractFrame implements Statement{
+    isStatement = true;
     proc: ProcedureRef;
     args: ArgList;
 
