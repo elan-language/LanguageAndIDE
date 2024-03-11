@@ -5,6 +5,7 @@ import { Parent } from "./interfaces/parent";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
+import { AbstractSelector } from "./abstract-selector";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -30,6 +31,10 @@ export function isMember(f?: any): f is Member {
 
 export function isField(f?: any): f is Field {
     return !!f && 'isField' in f;
+} 
+
+export function isSelector(f?: any): f is AbstractSelector {
+    return !!f && 'isSelector' in f;
 } 
 
 export function singleIndent() {

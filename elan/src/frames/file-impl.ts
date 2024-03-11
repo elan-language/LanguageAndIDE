@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { Test } from "./globals/test";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { isCollapsible } from "./helpers";
+import { isCollapsible, isSelector } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -225,6 +225,7 @@ export class FileImpl implements File {
                     this.getFirstSelectorAsDirectChild().parseFrom(source);
                 }
             }
+            this.removeAllSelectorsThatCanBe();
         } catch (e) {
             this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }
@@ -272,7 +273,7 @@ export class FileImpl implements File {
             case 'ArrowRight':  {this.selectFirstGlobal(); break;}
             case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
         }
-    }
+    } 
 
     private selectFirstGlobal(): void {
         this.getFirstChild().select(true, false);
@@ -288,5 +289,13 @@ export class FileImpl implements File {
 
     newChildSelector(): AbstractSelector {
         return new GlobalSelector(this);
+    }
+
+    removeAllSelectorsThatCanBe(): void {
+        for (const f of this.getMap().values()) {
+            if (isSelector(f)) {
+                f.deleteIfPermissible();
+            }
+        }
     }
 }
