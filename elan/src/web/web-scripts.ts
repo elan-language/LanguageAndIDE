@@ -1,4 +1,4 @@
-import { handleClick, handleDblClick} from "../editorHandlers";
+import { handleClick, handleDblClick, handleKey} from "../editorHandlers";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
@@ -26,12 +26,6 @@ if (hash) {
 else {
 	updateContent(file.renderAsHtml());
 }
-
-
-
-
-
-
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
 	return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
@@ -154,7 +148,7 @@ function postMessage(e: editorEvent) {
 			updateContent(file.renderAsHtml());
 			return;
 		case 'key':
-			file.processKey(e);
+			handleKey(e, file);
 			updateContent(file.renderAsHtml());
 			return;
 	}

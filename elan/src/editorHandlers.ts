@@ -58,3 +58,18 @@ export function handleDblClick(e: editorEvent, file: File) {
         }
     }
 }
+
+export function handleKey(e: editorEvent, file: File) {
+    switch (e.key) {
+        case 'Shift': break;  //Short circuit repeat from modifier held-down before other key
+        case 'Control': break;
+        case 'Alt': break; 
+        default: {
+            if (e.target === "frame") {
+                file.getById(e.id!).processKey(e);
+            } else {
+                file.processKey(e);
+            }
+        }				
+    }
+}

@@ -6,7 +6,7 @@ import { ParseStatus } from './frames/parse-status';
 import { Uri } from 'vscode';
 import { FileImpl } from './frames/file-impl';
 import { CodeSourceFromString } from './frames/code-source';
-import { handleClick, handleDblClick } from './editorHandlers';
+import { handleClick, handleDblClick, handleKey } from './editorHandlers';
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -104,18 +104,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 					updateWebview(this.file!);
 					return;
 				case 'key':
-					switch (e.key) {
-						case 'Shift': break;  //Short circuit repeat from modifier held-down before other key
-						case 'Control': break;
-						case 'Alt': break; 
-						default: {
-							if (e.target === "frame") {
-								this.file!.getById(e.id!).processKey(e);
-							} else {
-								this.file!.processKey(e);
-							}
-						}				
-					}
+					handleKey(e, this.file!);
 					updateWebview(this.file!);
 					updateSource(this.file!);
 					return;
