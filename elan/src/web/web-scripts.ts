@@ -5,9 +5,27 @@ import { File } from "../frames/interfaces/file";
 
 const codeContainer = document.querySelector('.elan-code');
 var file : File = new FileImpl((s) => "", true);
-
+const hash = window.location.hash;
 var doOnce = true;
 
+if (hash) {
+	const initialFile = hash.substring(1);
+
+	fetch(initialFile)
+		.then((f) => f.text())
+		.then((text) => {
+			const code = new CodeSourceFromString(text);
+			file.parseFrom(code);
+			updateContent(file.renderAsHtml());
+		})
+		.catch((e) => {
+			console.error(e);
+			updateContent(file.renderAsHtml());
+		});
+}
+else {
+	updateContent(file.renderAsHtml());
+}
 
 
 
