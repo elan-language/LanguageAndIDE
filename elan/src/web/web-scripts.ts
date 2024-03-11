@@ -11,17 +11,14 @@ var doOnce = true;
 if (hash) {
 	const initialFile = hash.substring(1);
 
-	fetch(initialFile, { mode : "same-origin"})
-		.then((f) => f.text())
-		.then((text) => {
-			const code = new CodeSourceFromString(text);
-			file.parseFrom(code);
-			updateContent(file.renderAsHtml());
-		})
-		.catch((e) => {
-			console.error(e);
-			updateContent(file.renderAsHtml());
-		});
+	const req = new XMLHttpRequest();
+	req.addEventListener("load", (r : any) => {
+		const code = new CodeSourceFromString(r.currentTarget.responseText);
+		file.parseFrom(code);
+		updateContent(file.renderAsHtml());
+	});
+	req.open("GET", initialFile);
+	req.send();
 }
 else {
 	updateContent(file.renderAsHtml());
