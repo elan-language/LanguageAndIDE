@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { Test } from "./globals/test";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { isCollapsible, isSelector } from "./helpers";
+import { expandCollapseAll, isCollapsible, isSelector } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -162,11 +162,7 @@ export class FileImpl implements File {
     }
 
     expandCollapseAll() {
-        for (const f of this._map.values()) {
-            if (isCollapsible(f)) {
-               f.expandCollapse();
-            }
-        }
+        expandCollapseAll(this._map);
     }
 
     expand(): void {

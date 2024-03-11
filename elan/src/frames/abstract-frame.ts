@@ -1,6 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
+import { expandCollapseAll, isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
@@ -129,6 +129,7 @@ export abstract class AbstractFrame implements Frame {
           case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
           case "Insert": {this.insertPeerSelector(e.modKey.shift); break;} 
           case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
+          case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
           case "ArrowUp": {
             if (e.modKey.control && this.movable) {
                 this.getParent().moveSelectedChildrenUpOne();
@@ -153,7 +154,13 @@ export abstract class AbstractFrame implements Frame {
             break;
           }
           case "ArrowRight": {if (isParent(this)) { this.getFirstChild().select(true, false);} break;}
-        }
+          case "Delete": {if (e.modKey.control) {this.deleteFrame();} break;}
+        } 
+    }
+
+    deleteFrame() {
+        this.getParent().removeChild(this);
+        this.getMap().delete(this.htmlId);
     }
 
     insertPeerSelector(after: boolean): void { //Overridden by Global frames that inherit from this
@@ -312,6 +319,18 @@ export abstract class AbstractFrame implements Frame {
             return this._parent;
         }
         throw new Error(`Frame : ${this.htmlId} has no Parent`);
+    }
+
+    expandCollapse(): void {
+        if (this.isCollapsed()) {
+            this.expand();
+        } else {
+            this.collapse();
+        }
+    }
+
+    expandCollapseAll() {
+        expandCollapseAll(this.getMap());
     }
 
     isCollapsed(): boolean {

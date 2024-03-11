@@ -6,6 +6,7 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
+import { Selectable } from "./interfaces/selectable";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -39,4 +40,12 @@ export function isSelector(f?: any): f is AbstractSelector {
 
 export function singleIndent() {
     return "  ";
+}
+
+export function expandCollapseAll(map: Map<string, Selectable>) {
+    for (const f of map.values()) {
+        if (isCollapsible(f)) {
+           f.expandCollapse();
+        }
+    }
 }
