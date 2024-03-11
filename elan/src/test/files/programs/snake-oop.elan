@@ -1,4 +1,4 @@
-# 39a55ae17ed40c6dac43ede468a2c20a7c2c03c3127f5b88d260450037048b87 Elan v0.1 valid
+# ae73d23981f4d77f96956d252113b14a11f042a8564bf87c849bc8526efffc10 Elan v0.1 valid
 
 main
   print welcome
@@ -135,9 +135,6 @@ class Square
     switch d
       case Direction.left
         set newX to newX - 1     
-        each x in y
-
-        end each
       case Direction.right
         set newX to newX + 1
       case Direction.up
