@@ -89,7 +89,7 @@ export abstract class AbstractSelector extends AbstractFrame {
             case "Tab" : {this.tabOrEnter(e.modKey.shift); break}
             case "Enter" : {this.tabOrEnter(e.modKey.shift); break}
             case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
-            case "Delete": {if(this.getParent().minimumNumberOfChildrenExceeded()) {this.getParent().removeChild(this);} break;}
+            case "Delete": {this.deleteIfPermissible(); break;}
             default: {
                 if (!key || key.length === 1) {
                     this.processOptions(key);
@@ -98,6 +98,13 @@ export abstract class AbstractSelector extends AbstractFrame {
                 } 
             }
         }  
+    }
+
+    deleteIfPermissible(): void {
+        if(this.getParent().minimumNumberOfChildrenExceeded()) {
+            this.getParent().removeChild(this);
+            this.getMap().delete(this.htmlId);
+        }
     }
 
     processOptions(key: string | undefined) {
