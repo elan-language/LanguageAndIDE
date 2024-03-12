@@ -1,6 +1,7 @@
 import { Expression } from "./expression";
 import { BinOp } from "./bin-op";
 import { AbstractSequence } from "./abstract-sequence";
+import { VariableNode } from "./variable-node";
 
 export class BinaryOperation extends AbstractSequence {
     
@@ -10,7 +11,7 @@ export class BinaryOperation extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        this.subNodes.push(new Expression());
+        this.subNodes.push(new VariableNode());
         this.subNodes.push(new BinOp());
         this.subNodes.push(new Expression());
         return super.parseText(text);

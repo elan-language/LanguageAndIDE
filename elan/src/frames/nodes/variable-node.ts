@@ -1,6 +1,5 @@
 import { identifier } from "../fields/parse-functions";
 import { Regexes } from "../fields/regexes";
-import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
@@ -12,8 +11,7 @@ export class VariableNode extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        text = text.trimStart();
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.identifier );
+        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*[a-z]\w*/);
     }
 
     renderAsHtml(): string {

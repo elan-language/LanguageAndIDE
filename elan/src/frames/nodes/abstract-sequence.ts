@@ -11,17 +11,24 @@ export class AbstractSequence extends AbstractParseNode {
         this.placeholder = "op";
     }
 
-    parseText(text: string): void {
-        text = text.trimStart();        
+    parseText(text: string): void {    
         var i = 0; //Index
         var remaining = text;
         var worstStatus: ParseStatus = ParseStatus.notParsed;
         while (i < this.subNodes.length && worstStatus >= ParseStatus.valid) { 
-            var node = this.subNodes[i];
-            node.parseText(remaining);
-            remaining = node.remainingText;
-            worstStatus = node.status < worstStatus ? node.status : worstStatus;
+            if (remaining.length === 0) {
+                worstStatus = ParseStatus.incomplete;
+            } else {
+                var node = this.subNodes[i];
+                node.parseText(remaining);
+                remaining = node.remainingText;
+                worstStatus = node.status < worstStatus ? node.status : worstStatus;
+                i++;
+            }
         }
+        this.status = worstStatus;
+        this.remainingText = remaining;
+        this.matchedText = text.substring(0, text.length - this.remainingText.length); //WRONG! due to spaces
     }
     renderAsHtml(): string {
         throw new Error("Method not implemented.");

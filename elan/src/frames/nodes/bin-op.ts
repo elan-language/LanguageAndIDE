@@ -4,8 +4,7 @@ import { matchRegEx } from "./parse-node-helpers";
 
 export class BinOp extends AbstractParseNode {
     parseText(text: string): void {
-        text = text.trimStart();
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.identifier );
+    [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*\+|\-|\*|\// );
     }
     renderAsHtml(): string {
         throw new Error("Method not implemented.");
