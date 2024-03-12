@@ -32,6 +32,14 @@ ${this.renderStatementsAsHtml()}
 ${this.renderStatementsAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}do {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}} while (!(${this.condition.renderAsObjectCode()}));`;
+    }
+
+
     parseTopOfFrame(source: CodeSource): void {
         source.remove("repeat");
     }
