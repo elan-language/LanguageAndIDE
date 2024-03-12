@@ -32,10 +32,10 @@ export async function main() {
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "55");
-});
+  });
 
-test('Pass_withStep', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Pass_withStep', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
 var tot set to 0
@@ -45,7 +45,7 @@ end for
 print tot
 end main`;
 
-  const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
 export async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 2) {
@@ -55,12 +55,75 @@ export async function main() {
 }
 `;
 
-  const fileImpl = new FileImpl(() => "", true);
-  fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertStatusIsValid(fileImpl);
-  assertObjectCodeIs(fileImpl, objectCode);
-  await assertObjectCodeExecutes(fileImpl, "25");
-});
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
+  });
+
+  ignore_test('Pass_negativeStep', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var tot set to 0
+  for i from 10 to 3 step -1
+    set tot to tot + i
+  end for
+  print tot
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var tot = 0;
+  for (var i = 10; i >= 3; i = i - 1) {
+    tot = tot + i;
+  }
+  system.print(system.asString(tot));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "52");
+  });
+
+  test('Pass_innerLoop', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var tot set to 0
+  for i from 1 to 3 step 1
+    for j from 1 to 4 step 1
+      set tot to tot + 1
+    end for
+  end for
+  print tot
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var tot = 0;
+  for (var i = 1; i <= 3; i = i + 1) {
+    for (var j = 1; j <= 4; j = j + 1) {
+      tot = tot + 1;
+    }
+  }
+  system.print(system.asString(tot));
+}
+`;
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
 });
