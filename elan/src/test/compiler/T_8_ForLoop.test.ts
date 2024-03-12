@@ -4,12 +4,12 @@ import { createHash } from "node:crypto";
 
 suite('T_8_ForLoop', () => {
 
-  ignore_test('Pass_minimal', async () => {
+  test('Pass_minimal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var tot set to 0
-  for i from 1 to 10
+  for i from 1 to 10 step 1
     set tot to tot + i
   end for
   print tot
@@ -17,7 +17,11 @@ end main`;
 
     const objectCode = `var system : any; export function _inject(l : any) { system = l; };
 export async function main() {
-system.print(system.asString("Hello World!"));
+  var tot = 0;
+  for (var i = 1; i <= 10; i = i + 1) {
+    tot = tot + i;
+  }
+  system.print(system.asString(tot));
 }
 `;
 
@@ -27,6 +31,6 @@ system.print(system.asString("Hello World!"));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+    await assertObjectCodeExecutes(fileImpl, "55");
 });
 });
