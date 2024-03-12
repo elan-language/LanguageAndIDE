@@ -7,6 +7,8 @@ import { editorEvent } from '../frames/interfaces/editor-event';
 import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
+import { ParseStatus } from '../frames/parse-status';
+import { ParseNode } from '../frames/nodes/parse-node';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -276,4 +278,11 @@ export async function activate(docUri: vscode.Uri) {
   }
   export function shift_ins() {
     return key("Insert",true);
+  }
+
+  export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, matchedText: string, remainingText: string) {
+    node.parseText(text);
+    assert.equal(node.status, status, );
+    assert.equal(node.matchedText, matchedText);
+    assert.equal( node.remainingText, remainingText);
   }

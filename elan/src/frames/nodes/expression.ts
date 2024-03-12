@@ -1,9 +1,7 @@
 import { Alternatives } from "./abstract-alternatives";
-import { BinaryOperation } from "./binary-operation";
-import { VariableNode } from "./variable-node";
+import { BinaryExpression } from "./binary-expression";
+import { Term } from "./term";
 
-
-//TODO: factor out the general capability of SequenceParseNode
 export class Expression extends Alternatives {
     constructor() {
         super();
@@ -11,9 +9,8 @@ export class Expression extends Alternatives {
     }
 
     parseText(text: string): void {
-        //Sub nodes added only when asked to parse
-        this.alternatives.push(new VariableNode());
-        this.alternatives.push(new BinaryOperation());
+        this.alternatives.push(new Term());
+        this.alternatives.push(new BinaryExpression());
         super.parseText(text);
     }
     renderAsHtml(): string {
