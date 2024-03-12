@@ -143,4 +143,109 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "neither");
   });
 
+  test('Pass_5', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to true
+  if a
+    print "yes"
+  end if
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = true;
+  if (a) {
+    system.print(system.asString("yes"));
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "yes");
+  });
+
+  ignore_test('Pass_6', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a is 1
+    print "one"
+  else if a is 2
+    print "two"
+  else if a is 3
+    print "three"
+  else
+    print "neither"
+  end if
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 3;
+  if (a === 1) {
+    system.print(system.asString("one"));
+    } else if (a === 2) {
+      system.print(system.asString("two"));
+    } else if (a === 3) {
+      system.print(system.asString("three"));
+    } else {
+      system.print(system.asString("neither"));
+    }
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "three");
+  });
+
+  test('Fail_noEndIf', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to true
+  if a
+    print "yes"
+end main`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+});
+
+ignore_test('Fail_ElseIfAfterElse', () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a is 1
+    print "one"
+  else
+    print "not one"
+  else if a is 2
+    print "two"
+  end if
+end main`;
+
+  const fileImpl = new FileImpl(() => "", true);
+  fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertDoesNotParse(fileImpl);
+});
+
+
 });
