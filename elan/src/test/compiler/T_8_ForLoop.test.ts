@@ -126,4 +126,37 @@ export async function main() {
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "12");
   });
+
+  test('Pass_canUseExistingVariablesOfRightType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var lower set to 1
+  var upper set to 10
+  var tot set to 0
+  for i from lower to upper step 2 
+      set tot to tot + i
+  end for
+  print tot
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var lower = 1;
+  var upper = 10;
+  var tot = 0;
+  for (var i = lower; i <= upper; i = i + 2) {
+    tot = tot + i;
+  }
+  system.print(system.asString(tot));
+}
+`;
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
+  });
 });
