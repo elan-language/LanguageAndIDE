@@ -38,7 +38,7 @@ export class Else extends MultiLineStatement  {
     }
 
     private ifClauseAsObjectCode() : string {
-        return this.hasIf ? ` if (${this.condition.renderAsSource()}) {`: `{`;
+        return this.hasIf ? `if (${this.condition.renderAsSource()}) {`: `{`;
     }
 
     renderAsHtml(): string {
@@ -58,7 +58,8 @@ ${this.renderStatementsAsSource()}`;
 
     renderAsObjectCode(): string {
         return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
-${this.renderStatementsAsObjectCode()}`;
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}`;
     }
 
     parseTopOfFrame(source: CodeSource): void {

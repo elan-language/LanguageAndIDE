@@ -22,6 +22,7 @@ export async function main() {
     system.print(system.asString("yes"));
     } else {
       system.print(system.asString("no"));
+    }
   }
 }
 `;
@@ -33,6 +34,113 @@ export async function main() {
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "yes");
+  });
+
+  test('Pass_2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to false
+  if a
+    print "yes"
+  else
+    print "no"
+  end if
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = false;
+  if (a) {
+    system.print(system.asString("yes"));
+    } else {
+      system.print(system.asString("no"));
+    }
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "no");
+  });
+
+  ignore_test('Pass_3', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  if a is 1
+    print "one"
+  else if a is 2
+    print "two"
+  else
+    print "neither"
+  end if
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 2;
+  if (a === 1) {
+    system.print(system.asString("one"));
+    } else if (a === 2) {
+      system.print(system.asString("two"));
+    } else {
+      system.print(system.asString("neither"));
+    }
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "two");
+  });
+
+  ignore_test('Pass_4', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a is 1
+    print "one"
+  else if a is 2
+    print "two"
+  else
+    print "neither"
+  end if
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 3;
+  if (a === 1) {
+    system.print(system.asString("one"));
+    } else if (a === 2) {
+      system.print(system.asString("two"));
+    } else {
+      system.print(system.asString("neither"));
+    }
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "neither");
   });
 
 });
