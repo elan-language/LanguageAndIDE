@@ -3,6 +3,7 @@ import { Field } from "../interfaces/field";
 import { LiteralValue } from "../fields/literal-value";
 import { CodeSource } from "../code-source";
 import { MultiLineStatement } from "./multi-line-statement";
+import { singleIndent } from "../helpers";
 
 export class Case extends MultiLineStatement {
     value: LiteralValue;
@@ -29,6 +30,13 @@ ${this.renderStatementsAsHtml()}
         return `${this.indent()}case ${this.value.renderAsSource()}\r
 ${this.renderStatementsAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}case ${this.value.renderAsObjectCode()}:\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}${singleIndent()}break;`;
+    }
+
     parseTopOfFrame(source: CodeSource): void {
         source.remove("case ");
         this.value.parseFrom(source);
