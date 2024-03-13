@@ -88,7 +88,7 @@ export abstract class AbstractField implements Selectable, Field {
         var key = e.key;
         var textLen = this.text.length;
         switch (key) {
-        case 'Escape': {this.deselectAll(); break;}
+        case 'Escape': {this.holder.select(true, false); break;}
         case "Home": {this.cursorPos = 0; break; } 
         case "End": {this.cursorPos = textLen; break;} 
         case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
@@ -161,6 +161,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.deselectAll();
         this.selected = true;
         this.focus();
+        this.cursorPos = this.text.length;
     }
 
     isSelected() : boolean {
