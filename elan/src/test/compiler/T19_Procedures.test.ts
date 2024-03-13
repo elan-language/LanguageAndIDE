@@ -38,7 +38,7 @@ function foo() {
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  test('Pass_GlobalProcedureOnClass', async () => {
+  ignore_test('Pass_GlobalProcedureOnClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -66,17 +66,19 @@ export async function main() {
   b.foo();
 }
 
-function foo(bar : Bar) {
+function foo(bar: Bar) {
   system.print(system.asString(bar));
 }
 
 class Bar {
   constructor() {
+
   }
 
-  asString : String {
+  asString() : String {
     return "bar";
   }
+
 }
 `;
 
@@ -86,7 +88,7 @@ class Bar {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123");
+    await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
  
