@@ -9,15 +9,15 @@ suite('T_16_SwitchCase', () => {
 
 main
   for i from 1 to 3 step 1
-  switch i
-    case 1
+    switch i
+      case 1
         print 'a'
-    case 2
+      case 2
         print 'b'
-    case 3
+      case 3
         print 'c'
-    default
-  end switch
+      default
+    end switch
   end for
 end main`;
 
@@ -58,11 +58,11 @@ main
   for i from 1 to 3 step 1
     switch (i)
       case 1
-          print 'a'
+        print 'a'
       case 2
-          print 'b'
+        print 'b'
       case 3
-          print 'c'
+        print 'c'
       default
     end switch
   end for
@@ -141,14 +141,14 @@ export async function main() {
 
 main
   for i from 1 to 3 step 1
-  switch i + 1
-    case 1
+    switch i + 1
+      case 1
         print 'a'
-    case 2
+      case 2
         print 'b'
-    default
+      default
         print 'c'
-  end switch
+    end switch
   end for
 end main`;
 
@@ -178,5 +178,225 @@ export async function main() {
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "bcc");
   });
+
+  test('Fail_NoDefault', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 4 step 1
+    switch i
+      case 1
+        print 'a'
+      case 2
+        print 'b'
+      case 3
+        print 'c'   
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_NoCase', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 4 step 1
+      switch i
+        default
+          print 'a' 
+      end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_IncompatibleCaseType', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch i
+      case 1
+        print 'a'
+      case 2
+        print 'b'
+      case 3.1
+        print 'c' 
+      default
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_UseOfVariableForCase', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  for i from 1 to 3 step 1
+      switch i
+        case 1
+          print 'a'
+        case a
+          print 'b'
+        case 3
+          print 'c'        
+      end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_UseOfExpression', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch i
+      case 1
+        print 'a'
+      case 1 + 1
+        print 'b'
+      case 3
+        print 'c'        
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_CaseAfterDefault', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch i
+      case 1
+        print 'a'
+      default
+        print 'b'
+      case 3
+        print 'c'        
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_WithColons', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 4 step 1
+    switch i
+      case 1:
+        print 'a'
+      case 2:
+        print 'b'
+      case 3:
+        print 'c'        
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_actionOnSameLineAsCase', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch i
+      case 1 print 'a'
+      case 2 print 'b'       
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_missingExpression', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch
+      case 1 
+        print 'a'
+      case 2 
+        print 'b'       
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_caseValueMissing', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  for i from 1 to 3 step 1
+    switch
+      case
+          print 'a'
+      case 2 
+          print 'b'       
+    end switch
+  end for
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 
 });
