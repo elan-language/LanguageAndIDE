@@ -38,5 +38,56 @@ function foo() {
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
+  test('Pass_GlobalProcedureOnClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  call b.foo()
+end main
+
+procedure foo(bar Bar)
+    print bar
+end procedure
+
+class Bar
+    constructor()
+    end constructor
+
+    function asString() as String
+        return "bar"
+    end function
+
+end class`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var b = new Bar();
+  b.foo();
+}
+
+function foo(bar : Bar) {
+  system.print(system.asString(bar));
+}
+
+class Bar {
+  constructor() {
+  }
+
+  asString : String {
+    return "bar";
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
+
  
 });

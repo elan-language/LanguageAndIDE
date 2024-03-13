@@ -120,6 +120,10 @@ export class Class extends AbstractFrame implements Parent {
         return `${this.inherits ? " inherits " + this.superClasses.renderAsSource() : ""}`;
     }
 
+    private inheritanceAsObjectCode(): string {
+        return `${this.inherits ? " implements " + this.superClasses.renderAsObjectCode() : ""}`;
+    }
+
     public renderAsHtml(): string {
         const ss: Array<string> = [];
         for (var m of this._members) {
@@ -143,12 +147,31 @@ ${this.membersAsSource()}\r
 end class\r\n`;
     }
 
+    public renderAsObjectCode(): string {
+        return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
+${this.membersAsObjectCode()}\r
+}\r\n`;
+    }
+
     private membersAsSource(): string {
         var result = "";
         if (this._members.length > 0) {
         const ss: Array<string> = [];
         for (var m of this._members.filter(m  => !('isSelector' in m))) {
             var s = m.renderAsSource();
+            ss.push(s);
+        }
+        result = ss.join("\r\n");
+        }
+        return result;
+    }
+
+    private membersAsObjectCode(): string {
+        var result = "";
+        if (this._members.length > 0) {
+        const ss: Array<string> = [];
+        for (var m of this._members.filter(m  => !('isSelector' in m))) {
+            var s = m.renderAsObjectCode();
             ss.push(s);
         }
         result = ss.join("\r\n");

@@ -28,6 +28,11 @@ export class ReturnStatement extends SingleLineStatement  {
     renderAsSource(): string {
         return `${this.indent()}return ${this.expr.renderAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}return ${this.expr.renderAsObjectCode()};`;
+    }
+
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("return ");
