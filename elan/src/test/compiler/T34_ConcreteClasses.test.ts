@@ -62,6 +62,62 @@ class Foo {
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
+  ignore_test('Pass_Class_SimpleInstantiation_PropertyAccess_Methods', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Foo(7, ""Apple"")
+  print x.p1
+  print x.p2
+end main
+
+class Foo
+    constructor(p_1 Int, p_2 String)
+        set p1 to p_1
+        set p2 to p_2
+    end constructor
+
+    property p1 Int
+    property p2 String
+    function asString() as String
+        return """"
+    end function
+
+end class`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var x = new Foo();
+  system.print(system.asString(x.p1));
+  system.print(system.asString(x.p2));
+  system.print(system.asString(x.asString()));
+}
+
+class Foo {
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 : number;
+
+  p2 : string;
+
+  asString() : string {
+    return "";
+  }
+
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
+
  
 
 });
