@@ -35,12 +35,20 @@ export class Property extends AbstractFrame implements Member {
         return this.private ? `private `: "";
     }
 
+    private modifierAsObjectCode(): string {
+        return this.private ? `private `: "";
+    }
+
     renderAsHtml(): string {
         return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>property </keyword>${this.name.renderAsHtml()}<keyword> </keyword>${this.type.renderAsHtml()}</property>`;
     }
 
     renderAsSource(): string {
         return `${this.indent()}${this.modifierAsSource()}property ${this.name.renderAsSource()} ${this.type.renderAsSource()}\r\n`;
+    }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}${this.modifierAsObjectCode()}${this.name.renderAsObjectCode()} : ${this.type.renderAsObjectCode()};\r\n`;
     }
 
     parseFrom(source: CodeSource): void {
