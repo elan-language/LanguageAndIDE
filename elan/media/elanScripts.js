@@ -118,7 +118,7 @@
 		if (input) {
 			const cursor = input.dataset.cursor;
 			const pIndex = parseInt(cursor);
-			const cursorIndex = pIndex === NaN ? input.value.length : pIndex;
+			const cursorIndex = Number.isNaN(pIndex) ? input.value.length : pIndex;
 
 			input.setSelectionRange(cursorIndex, cursorIndex);
 			input.focus();
