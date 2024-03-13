@@ -75,7 +75,7 @@ class Bar {
 
   }
 
-  asString() : String {
+  asString() : string {
     return "bar";
   }
 
@@ -91,5 +91,326 @@ class Bar {
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
+  test('Pass_SystemProcedure', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call system.pause(1)
+  print 1
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  system.pause(1);
+  system.print(system.asString(1));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_WithParamsPassingVariables', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  var b set to "hello"
+  call foo(a, b)
+end main
+
+procedure foo(a Int, b String)
+    print a
+    print b
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 2;
+  var b = "hello";
+  foo(a, b);
+}
+
+function foo(a: number, b: string) {
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_WithParamsPassingRefVariables', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  var b set to "hello"
+  call foo(a, b)
+end main
+
+procedure foo(out a Int, out b String)
+    print a
+    print b
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 2;
+  var b = "hello";
+  foo(a, b);
+}
+
+function foo(a: number, b: string) {
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_WithMixedRefParams', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  var b set to "hello"
+  call foo(a, b)
+end main
+
+procedure foo(a Int, out b String)
+    print a
+    print b
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 2;
+  var b = "hello";
+  foo(a, b);
+}
+
+function foo(a: number, b: string) {
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_CallingWithDotSyntax', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  var b set to ""hello""
+  call a.foo(b)
+end main
+
+procedure foo(a Int, b String)
+  print a
+  print b
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 2;
+  var b = "hello";
+  foo(a, b);
+}
+
+function foo(a: number, b: string) {
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_WithParamsPassingLiteralsOrExpressions', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  call foo(a + 1, ""hello"")
+end main
+
+procedure foo(a Int, b String)
+  print a
+  print b
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 1;
+  foo(a + 1, "hello);
+}
+
+function foo(a: number, b: string) {
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  ignore_test('Pass_RefParamsCanBeUpdated', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  var b set to ""hello""
+  call foo(a, b)
+  print a
+  print b
+end main
+
+procedure foo (out a Int, out b String)
+  set a to a + 1
+  set b to b + "!"
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  var a = 1;
+  var b = "hello";
+  foo(a, b);
+  system.print(system.asString(a));
+  system.print(system.asString(b));
+}
+
+function foo(a: number, b: string) {
+  a = a + 1;
+  b = b + "!";
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test('Pass_NestedCalls', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo()
+  print 3
+end main
+
+procedure foo()
+  print 1
+  call bar()
+end procedure
+
+procedure bar()
+  print 2
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  foo();
+  system.print(system.asString(3));
+}
+
+function foo() {
+  system.print(system.asString(1));
+  bar();
+}
+
+function bar() {
+  system.print(system.asString(2));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
+
+  test('Pass_Recursion', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo(3)
+end main
+
+procedure foo(a Int)
+  if a > 0
+    print a
+    var b set to a - 1
+    call foo(b)
+  end if
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  foo(3);
+}
+
+function foo(a: number) {
+  if (a > 0) {
+    system.print(system.asString(a));
+    var b = a - 1;
+    foo(b);
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
  
 });

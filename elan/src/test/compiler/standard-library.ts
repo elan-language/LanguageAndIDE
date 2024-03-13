@@ -18,4 +18,8 @@ export class _stdlib {
     print(s: string) {
         this.printed = this.printed + s;
     }
+
+    pause(n: number) {
+        return new Promise(r => setTimeout(r, n));
+    }
 }
