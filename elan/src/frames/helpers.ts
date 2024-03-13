@@ -7,6 +7,7 @@ import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Selectable } from "./interfaces/selectable";
+import { Default } from "./statements/default";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -18,6 +19,7 @@ export function isFile(f?: any): f is File {
 export function isMain(f?: any): f is MainFrame {
     return !!f && 'isMain' in f;
 }
+
 export function isFrame(f?: any): f is Frame {
     return !!f && 'isFrame' in f;
 }

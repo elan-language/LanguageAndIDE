@@ -1,6 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { expandCollapseAll, isCollapsible, isFile, isFrame, isMain, isParent, singleIndent } from "./helpers";
+import { expandCollapseAll, isCollapsible, isFile, isFrame, isParent, singleIndent } from "./helpers";
 import { ParseStatus } from "./parse-status";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
@@ -203,7 +203,7 @@ export abstract class AbstractFrame implements Frame {
                 fields[n -1].select(true, false);
                 result = true;
             } else {
-                if (isMain(parent)) {
+                if (isFrame(parent) && parent.getFields().length === 0) { //e.g. main or default
                     result =  this.selectLastFieldInPreviousGlobal(parent.getParent() as File, parent);
                 } else if (isFile(parent)) {
                     result = this.selectLastFieldInPreviousGlobal(parent, this);

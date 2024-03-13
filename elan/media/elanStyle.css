@@ -56,13 +56,13 @@ header, header * {
     color: green;
 }
 header .invalid {
-    background-color: var(--invalid)
+    color: var(--invalid)
 }
 header .incomplete {
-    background-color: var(--incomplete)
+    color: var(--incomplete)
 }
 header .valid {
-    background-color: var(--valid)
+    color: var(--valid)
 }
 
 /* Horizontal and vertical spacing */

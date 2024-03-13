@@ -120,7 +120,7 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     tabOrEnter(shift: boolean): void {
         if (shift) {
-            this.selectLastFieldAboveThisFrame();
+            this.   selectLastFieldAboveThisFrame();
         } else {
             var next = this.getNextFrameInTabOrder();
             if (next !== this) {
