@@ -41,4 +41,8 @@ export class Call extends SingleLineStatement {
     renderAsSource(): string {
         return `${this.indent()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}${this.proc.renderAsObjectCode()}(${this.args.renderAsObjectCode()});`;
+    }
 } 

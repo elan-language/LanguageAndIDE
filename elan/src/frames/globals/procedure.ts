@@ -43,6 +43,15 @@ ${this.renderStatementsAsSource()}\r
 end procedure\r
 `;
     }
+
+    public renderAsObjectCode() : string {
+        return `function ${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+}\r
+`;
+    }
+
+
     parseTopOfFrame(source: CodeSource): void {
         source.remove("procedure ");
         this.name.parseFrom(source);
