@@ -1,14 +1,13 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { T03_mainWithAllStatements, T05_classes } from './milestone_1.functions.';
 import {ctrl_down, ctrl_up, del, down, end, enter, esc, home, ins, key, loadFileAsModel, readAsDOM, right, shift_down, shift_enter, shift_ins, shift_tab, shift_up, tab, up } from './testHelpers';
 import assert from 'assert';
 import { Identifier } from '../frames/fields/identifier';
 import { Expression } from '../frames/fields/expression';
 import { Function } from '../frames/globals/function';
-import { Frame } from '../frames/interfaces/frame';
+
 import { Constructor } from '../frames/class-members/constructor';
-import { Field } from '../frames/interfaces/field';
-import { Selectable } from '../frames/interfaces/selectable';
+
 
 suite('Navigation', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -72,6 +71,8 @@ suite('Navigation', () => {
 		//Check that one more tab does not move beyond first field
 		field.processKey(shift_enter());
 		assert.equal(field.isSelected(), true);
+		field.processKey(esc());
+		assert.equal(field.isSelected(), false);
 	});
 
 	test('Shift-Enter from first field in first global', () => {

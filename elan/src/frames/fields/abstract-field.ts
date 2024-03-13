@@ -4,8 +4,6 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
-import { error } from "console";
-import { AbstractFrame } from "../abstract-frame";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -90,6 +88,7 @@ export abstract class AbstractField implements Selectable, Field {
         var key = e.key;
         var textLen = this.text.length;
         switch (key) {
+        case 'Escape': {this.deselectAll(); break;}
         case "Home": {this.cursorPos = 0; break; } 
         case "End": {this.cursorPos = textLen; break;} 
         case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
