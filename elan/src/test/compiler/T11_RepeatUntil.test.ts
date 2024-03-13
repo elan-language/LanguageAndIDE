@@ -2,25 +2,25 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T_10_WhileLoop', () => {
+suite('T11_RepeatUntil', () => {
 
   test('Pass_minimal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to 0
-  while x < 10
+  repeat
     set x to x + 1
-  end while
+  end repeat when x >= 10
   print x
 end main`;
 
     const objectCode = `var system : any; export function _inject(l : any) { system = l; };
 export async function main() {
   var x = 0;
-  while (x < 10) {
+  do {
     x = x + 1;
-  }
+  } while (!(x >= 10));
   system.print(system.asString(x));
 }
 `;
@@ -40,14 +40,14 @@ export async function main() {
 main
   var t set to 0
   var x set to 0
-  while x < 3
+  repeat
     var y set to 0
-      while y < 4
+      repeat
         set y to y + 1
         set t to t + 1
-      end while
-      set x to x + 1
-  end while
+      end repeat when y > 4
+    set x to x + 1
+  end repeat when x > 3
   print t
 end main`;
 
@@ -55,14 +55,14 @@ end main`;
 export async function main() {
   var t = 0;
   var x = 0;
-  while (x < 3) {
+  do {
     var y = 0;
-    while (y < 4) {
+    do {
       y = y + 1;
       t = t + 1;
-    }
+    } while (!(y > 4));
     x = x + 1;
-  }
+  } while (!(x > 3));
   system.print(system.asString(t));
 }
 `;
@@ -73,17 +73,18 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "12");
+    await assertObjectCodeExecutes(fileImpl, "20");
   });
 
-  test('Fail_noEnd', () => {
+  ignore_test('Fail_variableRedeclaredInTest', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x = 0
-  while x < 10
+  var x set to 0
+  repeat
     set x to x + 1
- end main
+  end repeat when var x >= 10
+end main
 `;
 
     const fileImpl = new FileImpl(() => "", true);
@@ -92,14 +93,14 @@ main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_variableNotPredefined', () => {
+  ignore_test('Fail_variableDefinedInLoop', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  while x < 10
-    set x to x + 1
-  end while
- end main
+  repeat
+    var x set to x + 1
+  end repeat when  x >= 10
+end main
 `;
 
     const fileImpl = new FileImpl(() => "", true);
@@ -108,14 +109,15 @@ main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_variableDefinedInWhile', () => {
+  test('Fail_testPutOnRepeat', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  while var x < 10
+  var x set to 0
+  repeat x >= 10
     set x to x + 1
-  end while
- end main
+  end repeat 
+end main
 `;
 
     const fileImpl = new FileImpl(() => "", true);
@@ -129,10 +131,10 @@ main
 
 main
   var x set to 0
-  while
+  repeat
     set x to x + 1
-  end while
- end main
+  end repeat when 
+end main
 `;
 
     const fileImpl = new FileImpl(() => "", true);
@@ -141,15 +143,15 @@ main
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_while_do', () => {
+  ignore_test('Fail_invalidCondition', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to 0
-  while x < 10
+  repeat
     set x to x + 1
-  do
- end main
+  end repeat when >= 10
+end main
 `;
 
     const fileImpl = new FileImpl(() => "", true);
@@ -157,5 +159,6 @@ main
 
     assertDoesNotParse(fileImpl);
   });
+
 
 });

@@ -31,4 +31,8 @@ export class Throw extends SingleLineStatement  {
     renderAsSource(): string {
         return `${this.indent()}throw ${this.text.renderAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}throw new Error(${this.text.renderAsObjectCode()});`;
+    }
 } 

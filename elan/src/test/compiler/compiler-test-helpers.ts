@@ -69,13 +69,21 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string) {
     }
 }
 
-export async function assertObjectCodeDoesNotExecute(file: FileImpl) {
+export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg? : string) {
 
     try {
         await executeCode(file);
         assert.fail();
     }
     catch (e) {
+        if (msg) {
+            if (e instanceof Error) {
+                assert.strictEqual(e.message, msg);
+            }
+            else {
+                assert.fail();
+            }
+        }
         // ok
     }
 }

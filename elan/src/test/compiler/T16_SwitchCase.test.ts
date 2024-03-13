@@ -2,7 +2,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T_16_SwitchCase', () => {
+suite('T16_SwitchCase', () => {
 
   test('Pass_minimal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
