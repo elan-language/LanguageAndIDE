@@ -103,4 +103,83 @@ function foo() {
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
+
+  ignore_test('Pass_CatchException', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  try
+    call foo()
+    print "not caught"
+  catch e
+    print e
+  end try
+end main
+  
+procedure foo()
+  throw "Foo"
+end procedure`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  try
+    foo()
+    print "not caught";
+  catch (_e) {
+    var e = _e as Error;
+    system.print(system.asString(e));
+  }
+}
+
+function foo() {
+  throw new Error("Foo");
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
+  });
+
+  ignore_test('Pass_CatchSystemGeneratedException', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  try
+    var x set to 1
+    var y set to 0
+    var z set to x div y
+    print "not caught";
+  catch e
+    print e
+  end try
+end main`;
+
+    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+export async function main() {
+  try {
+    var x = 1;
+    var y = 0;
+    var z = x / y;
+    system.print(system.asString("not caught"));
+  }
+  catch (_e) {
+    var e = _e as Error;
+    system.print(system.asString(e));
+  }
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
+  });
 });
