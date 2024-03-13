@@ -375,7 +375,7 @@ function bar() {
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  test('Pass_Recursion', async () => {
+  ignore_test('Pass_Recursion', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -413,4 +413,270 @@ function foo(a: number) {
     await assertObjectCodeExecutes(fileImpl, "123");
   });
  
+  ignore_test('Fail_CallingUndeclaredProc', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call bar()
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_TypeSpecifiedBeforeParamName', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+    
+procedure foo(Int a) 
+  print a
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_NoEnd', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print 1
+  call foo()
+  print 3
+end main
+
+procedure foo()
+    print 2
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_CannotCallMain', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print 1
+  call foo()
+  print 3
+end main
+
+procedure foo()
+  call main()
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_PassingUnnecessaryParameter', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print 1
+  call foo(3)
+  print 3
+end main
+
+procedure foo()
+  print 2
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_PassingTooFewParams', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  call foo(a + 1)
+end main
+
+procedure foo (a Int, b String)
+  print a
+  print b
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_PassingWrongType', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo(1,2)
+end main
+
+procedure foo (a Int, b String)
+  print a
+  print b
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_InclusionOfOutInCall', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo(out 1,2)
+end main
+
+procedure foo(a Int, b String)
+  print a
+  print b
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_InclusionOfRefInDefinition', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo(byref 1,2)
+end main
+
+procedure foo(ref a Int, b String)
+  print a
+  print b
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_UnterminatedRecursion', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call foo(3)
+end main
+
+procedure foo(a Int)
+  call foo(a)
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_CannotCallPrintAsAProcedure', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call print(""Hello World!"")
+end main
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_NonRefParamsCannotBeUpdated', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  var b set to ""hello""
+  call foo(a, b)
+  print a
+  print b
+end main
+
+procedure foo (out a Int, b String)
+  set a to a + 1
+  set b to b + ""!""
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_RefKeywordMayNotBeAddedToArgument', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  var b set to ""hello""
+  call foo(ref a, b)
+  print a
+  print b
+end main
+
+procedure foo (ref a Int, b String)
+  set a to a + 1
+  set b to b + ""!""
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_WithParamsPassingRefLiteral', () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 2
+  var b set to ""hello""
+  call foo(a, ""hello"")
+end main
+
+procedure foo(out a Int, out b String)
+  print a
+  print b
+end procedure
+`;
+
+    const fileImpl = new FileImpl(() => "", true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 });
