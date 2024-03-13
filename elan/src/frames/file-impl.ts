@@ -222,6 +222,7 @@ export class FileImpl implements File {
                 }
             }
             this.removeAllSelectorsThatCanBe();
+            this.deselectAll();
         } catch (e) {
             this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }

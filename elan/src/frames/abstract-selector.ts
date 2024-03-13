@@ -122,7 +122,10 @@ export abstract class AbstractSelector extends AbstractFrame {
         if (shift) {
             this.selectLastFieldAboveThisFrame();
         } else {
-            this.getNextFrameInTabOrder().selectFirstField();
+            var next = this.getNextFrameInTabOrder();
+            if (next !== this) {
+                next.selectFirstField();
+            }
         }
     }
 

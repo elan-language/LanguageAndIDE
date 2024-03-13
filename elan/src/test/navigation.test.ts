@@ -53,18 +53,25 @@ suite('Navigation', () => {
 "select21",
 "select0"];
 		file.processKey(enter());
+		var field = file.getById(fields[0]);
 		for (var i in fields) {
-			var field = file.getById(fields[i]);
+			field = file.getById(fields[i]);
 			assert.equal(field.isSelected(), true);
 			field.processKey(enter());
 		}
+		//Check that one more tab does not move beyond last field
+		field.processKey(enter());
+		assert.equal(field.isSelected(), true);
 		file.processKey(esc());
 		file.processKey(shift_enter());
 		for (var i in fields.reverse()) {
-			var field = file.getById(fields[i]);
+			field = file.getById(fields[i]);
 			assert.equal(field.isSelected(), true);
 			field.processKey(shift_enter());
 		}
+		//Check that one more tab does not move beyond first field
+		field.processKey(shift_enter());
+		assert.equal(field.isSelected(), true);
 	});
 
 	test('Shift-Enter from first field in first global', () => {

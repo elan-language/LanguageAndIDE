@@ -68,7 +68,10 @@ export abstract class AbstractFrame implements Frame {
             if (isParent(this)){
                 this.getFirstChild().selectFirstField();
             } else {
-                this.getNextFrameInTabOrder().selectFirstField();
+                var next = this.getNextFrameInTabOrder();
+                if (next !== this) {
+                    next.selectFirstField();
+                }
             }
         }
     }
@@ -80,7 +83,10 @@ export abstract class AbstractFrame implements Frame {
         } else {
             var parent = this.getParent();
             if (isFrame(parent)) {
-                result = parent.getNextFrameInTabOrder();
+                var parentNextPeer = parent.getNextFrameInTabOrder();
+                if (parentNextPeer !== parent) {
+                    result = parentNextPeer;
+                }
             }
         }
         return result;
