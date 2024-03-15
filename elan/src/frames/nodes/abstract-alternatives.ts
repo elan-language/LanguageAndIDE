@@ -39,12 +39,12 @@ export abstract class Alternatives extends AbstractParseNode {
         }
     }
 
-    renderAsHtml(): string {
+    textAsHtml(): string {
         //Delegates to best match only
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         //Delegates to best match only
-        return this.bestMatch ? this.bestMatch.renderAsSource() : "";
+        return this.bestMatch ? this.bestMatch.textAsSource() : "";
     }
 }

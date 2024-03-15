@@ -1,4 +1,4 @@
-import { Expression } from "./expression";
+import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { FixedText } from "./fixed-text";
 
@@ -12,15 +12,15 @@ export class BracketedExpression extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.subNodes.push(new FixedText("("));
-            this.subNodes.push(new Expression());
+            this.subNodes.push(new ExprNode());
             this.subNodes.push(new FixedText(")"));
             super.parseText(text);
         }
     }
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
 

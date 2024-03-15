@@ -18,10 +18,10 @@ export class Literal extends Alternatives {
         this.alternatives.push(new LitBool());
         super.parseText(text);
     }
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
     

@@ -30,11 +30,10 @@ export class AbstractSequence extends AbstractParseNode {
         this.remainingText = remaining;
         this.matchedText = text.substring(0, text.length - this.remainingText.length); //WRONG! due to spaces
     }
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
-
 }

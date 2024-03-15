@@ -10,7 +10,8 @@ remainingText: string;
 //returns any unused text
 parseText(text: string): void;
 
-renderAsHtml(): string;
-renderAsSource(): string;
+textAsHtml(selected: boolean | undefined): string;
+textAsSource(): string;
+textAsObjectCode(): string;
 
 }

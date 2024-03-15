@@ -1,4 +1,4 @@
-import { Expression } from "./expression";
+import { ExprNode } from "./expr-node";
 import { BinOp } from "./bin-op";
 import { AbstractSequence } from "./abstract-sequence";
 import { VariableNode } from "./variable-node";
@@ -14,13 +14,13 @@ export class BinaryExpression extends AbstractSequence {
     parseText(text: string): void {
         this.subNodes.push(new Term());
         this.subNodes.push(new BinOp());
-        this.subNodes.push(new Expression());
+        this.subNodes.push(new ExprNode());
         return super.parseText(text);
     }
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
 

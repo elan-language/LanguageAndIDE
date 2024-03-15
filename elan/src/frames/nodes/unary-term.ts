@@ -16,10 +16,10 @@ export class UnaryTerm extends AbstractSequence {
             return super.parseText(text);
         }
     }
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
 

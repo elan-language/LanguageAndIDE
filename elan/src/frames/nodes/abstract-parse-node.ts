@@ -8,8 +8,9 @@ export abstract class AbstractParseNode implements ParseNode{
     remainingText: string = "";
 
     abstract parseText(text: string): void;
-    abstract renderAsHtml(): string;
-    abstract renderAsSource(): string;
+    abstract textAsHtml(selected: boolean | undefined): string;
+    abstract textAsSource(): string;
+    textAsObjectCode(): string {return "To be implemented"; } ; //TODO make abstract
 
     protected set(status: ParseStatus, matched: string, remaining: string) {
         this.status = status;

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Expression } from '../frames/nodes/expression';
+import { ExprNode } from '../frames/nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
 import { testNodeParse } from './testHelpers';
 import { LitBool } from '../frames/nodes/lit-bool';
@@ -51,15 +51,15 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BinOp(),"%", ParseStatus.invalid, "", "%");
 	});
 	test('Expression', () => {
-		testNodeParse(new Expression(),"", ParseStatus.notParsed, "", "");
-		testNodeParse(new Expression(),"a", ParseStatus.valid, "a", "");
-		testNodeParse(new Expression(),"a + b", ParseStatus.valid, "a + b", "");
-		testNodeParse(new Expression(), "a + b-c", ParseStatus.valid, "a + b-c", "");
-		testNodeParse(new Expression(), "+", ParseStatus.invalid, "", "+");
-		testNodeParse(new Expression(),"+b", ParseStatus.invalid, "", "+b");
-		testNodeParse(new Expression(), "a +", ParseStatus.incomplete, "a +", "");
-		testNodeParse(new Expression(), "a %", ParseStatus.valid, "a", " %");
-		testNodeParse(new Expression(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "");
+		testNodeParse(new ExprNode(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new ExprNode(),"a", ParseStatus.valid, "a", "");
+		testNodeParse(new ExprNode(),"a + b", ParseStatus.valid, "a + b", "");
+		testNodeParse(new ExprNode(), "a + b-c", ParseStatus.valid, "a + b-c", "");
+		testNodeParse(new ExprNode(), "+", ParseStatus.invalid, "", "+");
+		testNodeParse(new ExprNode(),"+b", ParseStatus.invalid, "", "+b");
+		testNodeParse(new ExprNode(), "a +", ParseStatus.incomplete, "a +", "");
+		testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %");
+		testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "");
 	});
 	test('LitBool', () => {
 		testNodeParse(new LitBool(), "", ParseStatus.notParsed, "", "");

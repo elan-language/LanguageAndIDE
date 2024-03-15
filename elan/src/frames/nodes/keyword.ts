@@ -24,10 +24,10 @@ export class Keyword extends AbstractParseNode {
         }
     }
 
-    renderAsHtml(): string {
+    textAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    renderAsSource(): string {
+    textAsSource(): string {
         throw new Error("Method not implemented.");
     }
 }
