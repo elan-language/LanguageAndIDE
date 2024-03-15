@@ -7,7 +7,7 @@ import { SingleLineStatement } from "./single-line-statement";
 
 export class SetStatement extends SingleLineStatement  {
     isStatement = true;
-    name: Value;;
+    name: Value;
     expr: Expression;
 
     constructor(parent: Parent) {

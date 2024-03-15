@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import {CodeSourceFromString } from '../frames/code-source';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
-import { VariableDefStatement } from '../frames/statements/variable-def-statement';
+import { VarStatement } from '../frames/statements/var-statement';
 import { ParseStatus } from '../frames/parse-status';
 import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
@@ -15,7 +15,7 @@ suite('Field Parsing Tests', () => {
 
 	test('parse Frames - VariableDefStatement', () => { 
 		var main = new MainFrame(new FileImpl(hash));
-		var variable = new VariableDefStatement(main);
+		var variable = new VarStatement(main);
         var id = variable.name;
 		assert.equal(id.textAsSource(), "");
 		assert.equal(id.getStatus(), ParseStatus.incomplete);

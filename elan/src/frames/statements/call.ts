@@ -2,17 +2,16 @@ import { ArgList } from "../fields/arg-list";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { ProcedureRef } from "../fields/procedureRef";
 import { SingleLineStatement } from "./single-line-statement";
-import { FrameWithStatements } from "../frame-with-statements";
+import { ProcNameUse } from "../fields/proc-name-use";
 
 export class Call extends SingleLineStatement {
-    proc: ProcedureRef;
+    proc: ProcNameUse;
     args: ArgList;
 
     constructor(parent: Parent) {
         super(parent);
-        this.proc = new ProcedureRef(this);
+        this.proc = new ProcNameUse(this);
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgList(this);
     }

@@ -1,28 +1,28 @@
 
-import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
-import { Type } from "../fields/type";
+import { TypeUse } from "../fields/type-use";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
+import { FuncNameDef } from "../fields/func-name-def";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
-    public name : Identifier;
+    public name : FuncNameDef;
     public params: ParamList;
-    public returnType: Type;
+    public returnType: TypeUse;
     file: File;
 
     constructor(parent: Parent) {
         super(parent);
         this.file = parent as File;
         this.multiline = true;
-        this.name = new Identifier(this);
+        this.name = new FuncNameDef(this);
         this.params = new ParamList(this);
-        this.returnType = new Type(this);
+        this.returnType = new TypeUse(this);
         this.returnType.setPlaceholder("return type");
         this.statements.push(new ReturnStatement(this));
     }

@@ -1,20 +1,20 @@
-import { Identifier } from "../fields/identifier";
 import { Integer } from "../fields/integer";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Value } from "../fields/value";
 import { MultiLineStatement } from "./multi-line-statement";
+import { VarDef } from "../fields/var-def";
 
 export class For extends MultiLineStatement  {
-    variable: Identifier;
+    variable: VarDef;
     from: Value;
     to: Value;
     step: Integer;
 
     constructor(parent: Parent) {
         super(parent);
-        this.variable = new Identifier(this);
+        this.variable = new VarDef(this);
         this.variable.setPlaceholder("variableName");
         this.from = new Value(this);
         this.from.setPlaceholder("integer value or expression");

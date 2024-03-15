@@ -1,24 +1,23 @@
 import { AbstractFrame } from "../abstract-frame";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
-import { Identifier } from "../fields/identifier";
-import { Type } from "../fields/type";
+import { PropNameDef } from "../fields/prop-name-def";
+import { TypeUse } from "../fields/type-use";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 
 export class Property extends AbstractFrame implements Member {
     isMember = true;
-    name: Identifier;
-    type: Type;
+    name: PropNameDef;
+    type: TypeUse;
     public private: boolean = false;
     private class: Class;
 
     constructor(parent: Class) {
         super(parent);
         this.class = parent as Class;
-        this.name = new Identifier(this);
-        this.type = new Type(this);
+        this.name = new PropNameDef(this);
+        this.type = new TypeUse(this);
     }
 
     getFields(): Field[] {

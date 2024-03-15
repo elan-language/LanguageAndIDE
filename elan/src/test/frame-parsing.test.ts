@@ -5,7 +5,7 @@ import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
 import { StatementSelector } from '../frames/statements/statement-selector';
-import { VariableDefStatement } from '../frames/statements/variable-def-statement';
+import { VarStatement } from '../frames/statements/var-statement';
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
@@ -43,7 +43,7 @@ suite('File Parsing Tests', () => {
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl(hash);
 		var m = new MainFrame(fl);	
-		var v = new VariableDefStatement(m);
+		var v = new VarStatement(m);
 		v.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(v.renderAsSource(), code);

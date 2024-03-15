@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { Type } from "../fields/type";
+import { TypeDef } from "../fields/type-def";
 import { TypeList } from "../fields/type-list";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
@@ -22,7 +22,7 @@ export class Class extends AbstractFrame implements Parent {
 
     isParent: boolean = true;
     isGlobal = true;
-    public name: Type;
+    public name: TypeDef;
     private _members: Array<Frame> = new Array<Frame>();
     private abstract: boolean = false;
     public immutable: boolean = false;
@@ -34,7 +34,7 @@ export class Class extends AbstractFrame implements Parent {
         super(parent);
         this.file = parent;
         this.multiline = true;
-        this.name = new Type(this);
+        this.name = new TypeDef(this);
         this.name.setPlaceholder("class name");
         this.superClasses  = new TypeList(this);
         this._members.push(new Constructor(this));
