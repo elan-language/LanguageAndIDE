@@ -11,6 +11,11 @@ import { BinOp } from '../frames/nodes/bin-op';
 import { UnaryOp } from '../frames/nodes/unary-op';
 import { UnaryTerm } from '../frames/nodes/unary-term';
 import { BracketedExpression } from '../frames/nodes/bracketed-expression';
+import { Optional } from '../frames/nodes/optional';
+import { LitString } from '../frames/nodes/lit-string';
+import { LitList } from '../frames/nodes/lit-list';
+import { Multiple } from '../frames/nodes/multiple';
+import { CommaNode } from '../frames/nodes/comma-node';
 
 
 suite('FieldNode parsing', () => {
@@ -108,5 +113,33 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BracketedExpression(),"(a and not b", ParseStatus.incomplete, "(a and not b", "");
 		testNodeParse(new BracketedExpression(),"(", ParseStatus.incomplete, "(", "");
 		testNodeParse(new BracketedExpression(),"()", ParseStatus.invalid, "(", ")");
+	});
+	test('Optional', () => {
+		testNodeParse(new Optional(new LitInt()),"123 a", ParseStatus.valid, "123", " a");
+		testNodeParse(new Optional(new LitInt()), "abc", ParseStatus.valid, "", "abc");
+		testNodeParse(new Optional(new FixedText("abstract")), "abs", ParseStatus.incomplete, "abs", "");
+		testNodeParse(new Optional(new FixedText("abstract")), "abscract", ParseStatus.valid, "", "abscract");
+	});
+	test('LitString', () => {
+		testNodeParse(new LitString(),`"abc"`, ParseStatus.valid, `"abc"`, "");
+		testNodeParse(new LitString(),`"abc`, ParseStatus.incomplete, `"abc`, "");
+		testNodeParse(new LitString(),`"`, ParseStatus.incomplete, `"`, "");
+		testNodeParse(new LitString(),`abc`, ParseStatus.invalid, "", "abc");
+		testNodeParse(new LitString(),`'abc'`, ParseStatus.invalid, "", "'abc'");
+	});
+	test('LitList', () => {
+		testNodeParse(new LitList(),`{123}`, ParseStatus.valid, `{123}`, "");
+		testNodeParse(new LitList(),`{123`, ParseStatus.incomplete, `{123`, "");
+	});
+	test('Multiple', () => {
+		testNodeParse(new Multiple(() => new LitInt(), 1),`1 0 33`, ParseStatus.valid, `1 0 33`, "");
+		testNodeParse(new Multiple(() => new LitInt(), 1),`1`, ParseStatus.valid, `1`, "");
+		testNodeParse(new Multiple(() => new LitInt(), 0),``, ParseStatus.valid, ``, "");
+		testNodeParse(new Multiple(() => new LitInt(), 1),``, ParseStatus.invalid, ``, "");
+	});
+	test('CommaNode', () => {
+		testNodeParse(new CommaNode(new LitInt()),`, 1`, ParseStatus.valid, `, 1`, "");
+		testNodeParse(new CommaNode(new LitInt()),`1,`, ParseStatus.invalid, ``, "1,");
+		//testNodeParse(new CommaNode(new LitInt()),`,  `, ParseStatus.incomplete, ` `, "");
 	});
 });

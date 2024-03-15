@@ -21,4 +21,10 @@ export abstract class AbstractParseNode implements ParseNode{
     protected numLeadingSpaces(text: string): number {
         return text.length - text.trimStart().length;
     }
+
+    protected updateFrom(other: ParseNode) {
+        this.status = other.status;
+        this.matchedText = other.matchedText;
+        this.remainingText = other.remainingText;
+    }
 }

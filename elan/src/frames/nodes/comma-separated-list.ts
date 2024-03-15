@@ -1,8 +1,9 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { AnyTextExceptQuotes } from "./anyTextExceptQuotes";
 import { FixedText } from "./fixed-text";
+import { Optional } from "./optional";
+import { Literal } from "./literal";
 
-export class LitString extends AbstractSequence {
+export class CommaSeparatedList extends AbstractSequence {
     constructor() {
         super();
         this.placeholder = `"string"`;
@@ -10,9 +11,9 @@ export class LitString extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.subNodes.push(new FixedText(`"`));
-            this.subNodes.push(new AnyTextExceptQuotes());
-            this.subNodes.push(new FixedText(`"`));
+            this.subNodes.push(new FixedText(`{`));
+            this.subNodes.push(new Optional(new Literal()));
+            this.subNodes.push(new FixedText(`}`));
             super.parseText(text);
         }
     }
