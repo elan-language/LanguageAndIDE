@@ -14,7 +14,8 @@ export abstract class Alternatives extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        if (text.length > 0) {
+        this.remainingText = text;
+        if (text.trimStart().length > 0) {
             var cont = true;
             var i = 0;
             while (i < this.alternatives.length && cont) {
@@ -33,7 +34,7 @@ export abstract class Alternatives extends AbstractParseNode {
             this.matchedText = this.bestMatch!.matchedText;
             this.remainingText = this.bestMatch!.remainingText;
         } else {
-            this.status = ParseStatus.notParsed;
+            this.status = ParseStatus.empty;
             this.matchedText = "";
             this.remainingText = "";
         }

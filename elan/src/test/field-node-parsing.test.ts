@@ -21,20 +21,20 @@ import { CommaNode } from '../frames/nodes/comma-node';
 suite('FieldNode parsing', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 	test('UnaryOp', () => {
-		testNodeParse(new UnaryOp(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new UnaryOp(),"", ParseStatus.empty, "", "");
 		testNodeParse(new UnaryOp(),"-", ParseStatus.valid, "-", "");
 		testNodeParse(new UnaryOp()," not", ParseStatus.valid, " not", "");
 		testNodeParse(new UnaryOp(),"+", ParseStatus.invalid, "", "+");
 	});
 	test('UnaryTerm', () => {
-		testNodeParse(new UnaryTerm(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new UnaryTerm(),"", ParseStatus.empty, "", "");
 		testNodeParse(new UnaryTerm(),"-3", ParseStatus.valid, "-3", "");
 		testNodeParse(new UnaryTerm()," not foo", ParseStatus.valid, " not foo", "");
 		testNodeParse(new UnaryTerm(),"-", ParseStatus.incomplete, "-", "");
 		testNodeParse(new UnaryTerm(),"+4", ParseStatus.invalid, "", "+4");
 	});
 	test('BinOp', () => {
-		testNodeParse(new BinOp(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new BinOp(),"", ParseStatus.empty, "", "");
 		testNodeParse(new BinOp(),"+", ParseStatus.valid, "+", "");
 		testNodeParse(new BinOp(),"-", ParseStatus.valid, "-", "");
 		testNodeParse(new BinOp(),"*", ParseStatus.valid, "*", "");
@@ -56,7 +56,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BinOp(),"%", ParseStatus.invalid, "", "%");
 	});
 	test('Expression', () => {
-		testNodeParse(new ExprNode(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new ExprNode(),"", ParseStatus.empty, "", "");
 		testNodeParse(new ExprNode(),"a", ParseStatus.valid, "a", "");
 		testNodeParse(new ExprNode(),"a + b", ParseStatus.valid, "a + b", "");
 		testNodeParse(new ExprNode(), "a + b-c", ParseStatus.valid, "a + b-c", "");
@@ -67,7 +67,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "");
 	});
 	test('LitBool', () => {
-		testNodeParse(new LitBool(), "", ParseStatus.notParsed, "", "");
+		testNodeParse(new LitBool(), "", ParseStatus.empty, "", "");
 		testNodeParse(new LitBool(), " true", ParseStatus.valid, " true", "");
 		testNodeParse(new LitBool(), " trueX", ParseStatus.valid, " true", "X");
 		testNodeParse(new LitBool(), " false", ParseStatus.valid, " false", "");
@@ -76,41 +76,44 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new LitBool(), " tr", ParseStatus.incomplete, " tr", "");
 	});
 	test('LitChar', () => {
-		testNodeParse(new LitChar(), "", ParseStatus.notParsed, "", "");
+		testNodeParse(new LitChar(), "", ParseStatus.empty, "", "");
 		testNodeParse(new LitChar(), "'a'", ParseStatus.valid, "'a'", "");
 		testNodeParse(new LitChar(), " '9'", ParseStatus.valid, " '9'", "");
 		testNodeParse(new LitChar(), "'ab'", ParseStatus.invalid, "", "'ab'");
 		testNodeParse(new LitChar(), `"a"`, ParseStatus.invalid, "", `"a"`);
 	});
 	test('LitInt', () => {
-		testNodeParse(new LitInt(), "", ParseStatus.notParsed, "", "");
+		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "");
+		testNodeParse(new LitInt(), "   ", ParseStatus.empty, "", "   ");
 		testNodeParse(new LitInt(), "123", ParseStatus.valid, "123", "");
+		testNodeParse(new LitInt(), "456  ", ParseStatus.valid, "456", "  ");
 		testNodeParse(new LitInt(), " 123a", ParseStatus.valid, " 123", "a");
 		testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23");
 		testNodeParse(new LitInt(), "a", ParseStatus.invalid, "", "a");
 	});
 	test('LitFloat', () => {
-		testNodeParse(new LitFloat(), "", ParseStatus.notParsed, "", "");
+		testNodeParse(new LitFloat(), "", ParseStatus.empty, "", "");
 		testNodeParse(new LitFloat(), "1.0", ParseStatus.valid, "1.0", "");
 		testNodeParse(new LitFloat(), " 1.0a", ParseStatus.valid, " 1.0", "a");
 		testNodeParse(new LitFloat(), "1", ParseStatus.incomplete, "1", "");
 		testNodeParse(new LitFloat(), "1.", ParseStatus.incomplete, "1.", "");
-		testNodeParse(new LitFloat(), "1. ", ParseStatus.invalid, "1.", " ");
+		testNodeParse(new LitFloat(), "1. ", ParseStatus.incomplete, "1.", " ");
 	});
 	test('FixedText', () => {
-		testNodeParse(new FixedText("abstract"), "", ParseStatus.notParsed, "", "");
+		testNodeParse(new FixedText("abstract"), "", ParseStatus.empty, "", "");
 		testNodeParse(new FixedText("abstract"), "abstract", ParseStatus.valid, "abstract", "");
 		testNodeParse(new FixedText("abstract"), "abstract immutable", ParseStatus.valid, "abstract", " immutable");
 		testNodeParse(new FixedText("abstract"), " abs", ParseStatus.incomplete, " abs", "");
 	});
 	test('BracketedExpression', () => {
-		testNodeParse(new BracketedExpression(),"", ParseStatus.notParsed, "", "");
+		testNodeParse(new BracketedExpression(),"", ParseStatus.empty, "", "");
 		testNodeParse(new BracketedExpression(),"(3)", ParseStatus.valid, "(3)", "");
 		testNodeParse(new BracketedExpression(),"(3 + 4)", ParseStatus.valid, "(3 + 4)", "");
 		testNodeParse(new BracketedExpression(),"(a and not b)", ParseStatus.valid, "(a and not b)", "");
 		testNodeParse(new BracketedExpression(),"(3 * 4 + x)", ParseStatus.valid, "(3 * 4 + x)", "");
 		testNodeParse(new BracketedExpression(),"(3 * (4 + x))", ParseStatus.valid, "(3 * (4 + x))", "");
 		testNodeParse(new BracketedExpression(),"(a and not b", ParseStatus.incomplete, "(a and not b", "");
+		testNodeParse(new BracketedExpression(),"(a and not b  ", ParseStatus.incomplete, "(a and not b", "  ");
 		testNodeParse(new BracketedExpression(),"(", ParseStatus.incomplete, "(", "");
 		testNodeParse(new BracketedExpression(),"()", ParseStatus.invalid, "(", ")");
 	});
@@ -140,6 +143,6 @@ suite('FieldNode parsing', () => {
 	test('CommaNode', () => {
 		testNodeParse(new CommaNode(new LitInt()),`, 1`, ParseStatus.valid, `, 1`, "");
 		testNodeParse(new CommaNode(new LitInt()),`1,`, ParseStatus.invalid, ``, "1,");
-		//testNodeParse(new CommaNode(new LitInt()),`,  `, ParseStatus.incomplete, ` `, "");
+		testNodeParse(new CommaNode(new LitInt()),`,  `, ParseStatus.incomplete, `,`, "  ");
 	});
 });

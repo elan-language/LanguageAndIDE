@@ -9,7 +9,7 @@ export class LitString extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        if (text.length > 0) {
+        if (text.trimStart().length > 0) {
             this.subNodes.push(new FixedText(`"`));
             this.subNodes.push(new AnyTextExceptQuotes());
             this.subNodes.push(new FixedText(`"`));

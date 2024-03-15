@@ -2,7 +2,7 @@ import { ParseStatus } from "../parse-status";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode{
-    status: ParseStatus = ParseStatus.notParsed;
+    status: ParseStatus = ParseStatus.empty;
     matchedText: string = "";
     placeholder: string = "";
     remainingText: string = "";

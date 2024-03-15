@@ -9,7 +9,8 @@ export class LitBool extends Alternatives {
     }
 
     parseText(text: string): void {
-        if (text.length > 0) {
+        this.remainingText = text;
+        if (text.trimStart().length > 0) {
             this.alternatives.push(new FixedText("true"));
             this.alternatives.push(new FixedText("false"));
             super.parseText(text);

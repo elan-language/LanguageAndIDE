@@ -9,7 +9,8 @@ export class LitChar extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        if (text.length > 0) {
+        this.remainingText = text;
+        if (text.trimStart().length > 0) {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*'[\w]'/);
         }
     }

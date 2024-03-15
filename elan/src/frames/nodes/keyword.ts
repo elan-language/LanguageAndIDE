@@ -10,9 +10,10 @@ export class Keyword extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        var trimmed = text.trimStart();
-        var target = this.fixedText;
-        if (text.length > 0) {
+        this.remainingText = text;
+        if (text.trimStart().length > 0) {
+            var target = this.fixedText;
+            var trimmed = text.trimStart();
             if (trimmed.startsWith(target)) {
                 var n = this.numLeadingSpaces(text)+ this.fixedText.length;
                 this.set(ParseStatus.valid, text.substring(0, n) , text.substring(n));

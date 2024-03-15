@@ -39,7 +39,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     parseFrom(source: CodeSource): void {
         var rol = source.readToEndOfLine();
-        var result = this.parseFunction([ParseStatus.notParsed, rol]);
+        var result = this.parseFunction([ParseStatus.empty, rol]);
         if (result[0] === ParseStatus.valid || this._optional) {
             var taken = rol.length - result[1].length;
             this.text = rol.substring(0, taken);
@@ -72,11 +72,11 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     parseCurrentText() : ParseStatus {
-        var status: ParseStatus = ParseStatus.notParsed;
+        var status: ParseStatus = ParseStatus.empty;
         if (this.text === "") {
             status = this._optional ? ParseStatus.valid : ParseStatus.incomplete;
         } else {
-            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+            var result = this.parseFunction([ParseStatus.empty, this.text]);
             if (result[1].length > 0) {
                 status = ParseStatus.invalid;
             } else {
