@@ -1,8 +1,8 @@
-import { Alternatives } from "./abstract-alternatives";
+import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { Term } from "./term";
 
-export class ExprNode extends Alternatives {
+export class ExprNode extends AbstractAlternatives {
     constructor() {
         super();
         this.placeholder = "expression";

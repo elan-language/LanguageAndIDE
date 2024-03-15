@@ -1,10 +1,10 @@
-import { Alternatives } from "./abstract-alternatives";
+import { AbstractAlternatives } from "./abstract-alternatives";
 import { VariableNode } from "./variable-node";
 import { Literal } from "./literal";
 import { UnaryTerm } from "./unary-term";
 import { BracketedExpression } from "./bracketed-expression";
 
-export class Term extends Alternatives {
+export class Term extends AbstractAlternatives {
     constructor() {
         super();
         this.placeholder = "expression";

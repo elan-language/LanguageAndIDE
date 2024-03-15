@@ -4,7 +4,7 @@ import { ParseNode } from "./parse-node";
 
 export class AbstractSequence extends AbstractParseNode {
     
-    subNodes: ParseNode[] = [];
+    elements: ParseNode[] = [];
 
     constructor() {
         super();
@@ -15,11 +15,11 @@ export class AbstractSequence extends AbstractParseNode {
         var i = 0; //Index
         var remaining = text;
         var worstStatus: ParseStatus = ParseStatus.empty;
-        while (i < this.subNodes.length && worstStatus >= ParseStatus.valid) { 
+        while (i < this.elements.length && worstStatus >= ParseStatus.valid) { 
             if (remaining.trimStart().length === 0) {
                 worstStatus = ParseStatus.incomplete;
             } else {
-                var node = this.subNodes[i];
+                var node = this.elements[i];
                 node.parseText(remaining);
                 remaining = node.remainingText;
                 worstStatus = node.status < worstStatus ? node.status : worstStatus;

@@ -12,9 +12,9 @@ export class BinaryExpression extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        this.subNodes.push(new Term());
-        this.subNodes.push(new BinOp());
-        this.subNodes.push(new ExprNode());
+        this.elements.push(new Term());
+        this.elements.push(new BinOp());
+        this.elements.push(new ExprNode());
         return super.parseText(text);
     }
     textAsHtml(): string {

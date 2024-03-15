@@ -1,12 +1,12 @@
 import { Regexes } from "../fields/regexes";
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
-import { Alternatives } from "./abstract-alternatives";
+import { AbstractAlternatives } from "./abstract-alternatives";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { FixedText } from "./fixed-text";
 import { Keyword } from "./keyword";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class BinOp extends Alternatives {
+export class BinOp extends AbstractAlternatives {
     parseText(text: string): void {
         //TODO ? this.alternatives.push(new FixedText("**"));  
         this.alternatives.push(new FixedText("+"));

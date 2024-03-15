@@ -1,11 +1,11 @@
-import { Alternatives } from "./abstract-alternatives";
+import { AbstractAlternatives } from "./abstract-alternatives";
 import { LitBool } from "./lit-bool";
 import { LitChar } from "./lit-char";
 import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
 import { LitString } from "./lit-string";
 
-export class Literal extends Alternatives {
+export class Literal extends AbstractAlternatives {
     constructor() {
         super();
         this.placeholder = "";

@@ -16,6 +16,7 @@ import { LitString } from '../frames/nodes/lit-string';
 import { LitList } from '../frames/nodes/lit-list';
 import { Multiple } from '../frames/nodes/multiple';
 import { CommaNode } from '../frames/nodes/comma-node';
+import { CSV } from '../frames/nodes/csv';
 
 
 suite('FieldNode parsing', () => {
@@ -118,10 +119,10 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BracketedExpression(),"()", ParseStatus.invalid, "(", ")");
 	});
 	test('Optional', () => {
-		testNodeParse(new Optional(new LitInt()),"123 a", ParseStatus.valid, "123", " a");
-		testNodeParse(new Optional(new LitInt()), "abc", ParseStatus.valid, "", "abc");
-		testNodeParse(new Optional(new FixedText("abstract")), "abs", ParseStatus.incomplete, "abs", "");
-		testNodeParse(new Optional(new FixedText("abstract")), "abscract", ParseStatus.valid, "", "abscract");
+		testNodeParse(new Optional(() => new LitInt()),"123 a", ParseStatus.valid, "123", " a");
+		testNodeParse(new Optional(() => new LitInt()), "abc", ParseStatus.valid, "", "abc");
+		testNodeParse(new Optional(() => new FixedText("abstract")), "abs", ParseStatus.incomplete, "abs", "");
+		testNodeParse(new Optional(() => new FixedText("abstract")), "abscract", ParseStatus.valid, "", "abscract");
 	});
 	test('LitString', () => {
 		testNodeParse(new LitString(),`"abc"`, ParseStatus.valid, `"abc"`, "");
@@ -141,8 +142,17 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new Multiple(() => new LitInt(), 1),``, ParseStatus.invalid, ``, "");
 	});
 	test('CommaNode', () => {
-		testNodeParse(new CommaNode(new LitInt()),`, 1`, ParseStatus.valid, `, 1`, "");
-		testNodeParse(new CommaNode(new LitInt()),`1,`, ParseStatus.invalid, ``, "1,");
-		testNodeParse(new CommaNode(new LitInt()),`,  `, ParseStatus.incomplete, `,`, "  ");
+		testNodeParse(new CommaNode(() => new LitInt()),`, 1`, ParseStatus.valid, `, 1`, "");
+		testNodeParse(new CommaNode(() => new LitInt()),`1,`, ParseStatus.invalid, ``, "1,");
+		testNodeParse(new CommaNode(() => new LitInt()),`,  `, ParseStatus.incomplete, `,`, "  ");
 	});
+	test('CSV', () => {
+		testNodeParse(new CSV(() => new LitInt(),0),`2, 4,3 , 1 `, ParseStatus.valid, `2, 4,3 , 1`, " ");
+		//No yet passing
+/* 		testNodeParse(new CSV(() => new LitInt(),0),`2`, ParseStatus.valid, `2`, "");
+		testNodeParse(new CSV(() => new LitInt(),0),``, ParseStatus.empty, `2`, "");
+		testNodeParse(new CSV(() => new LitInt(),1),`2`, ParseStatus.valid, `2`, "");
+		testNodeParse(new CSV(() => new LitInt(),1),``, ParseStatus.invalid, ``, ""); */
+	});
+
 });

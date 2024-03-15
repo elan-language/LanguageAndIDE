@@ -1,11 +1,9 @@
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 import { ParseStatus } from "../parse-status";
-import { stat } from "fs";
 
-export abstract class Alternatives extends AbstractParseNode {
+export abstract class AbstractAlternatives extends AbstractParseNode {
     alternatives: ParseNode[] = [];
-
     bestMatch?: ParseNode;
 
     constructor() {

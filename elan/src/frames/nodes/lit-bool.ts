@@ -1,7 +1,7 @@
-import { Alternatives } from "./abstract-alternatives";
+import { AbstractAlternatives } from "./abstract-alternatives";
 import { FixedText } from "./fixed-text";
 
-export class LitBool extends Alternatives {
+export class LitBool extends AbstractAlternatives {
 
     constructor() {
         super();

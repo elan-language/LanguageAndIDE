@@ -11,8 +11,8 @@ export class UnaryTerm extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.subNodes.push(new UnaryOp());
-            this.subNodes.push(new Term());
+            this.elements.push(new UnaryOp());
+            this.elements.push(new Term());
             return super.parseText(text);
         }
     }

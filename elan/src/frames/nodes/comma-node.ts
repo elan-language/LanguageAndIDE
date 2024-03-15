@@ -3,17 +3,17 @@ import { FixedText } from "./fixed-text";
 import { ParseNode } from "./parse-node";
 
 export class CommaNode extends AbstractSequence {
-    node: ParseNode;
+    nodeConstructor: () => ParseNode;
 
-    constructor(node: ParseNode) {
+    constructor(nodeConstructor: () => ParseNode) {
         super();
-        this.node = node;
+        this.nodeConstructor = nodeConstructor;
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.subNodes.push(new FixedText(","));
-            this.subNodes.push(this.node);
+            this.elements.push(new FixedText(","));
+            this.elements.push(this.nodeConstructor());
             super.parseText(text);
         }
     }
