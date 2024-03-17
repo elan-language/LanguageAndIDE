@@ -6,10 +6,10 @@
         <link href="elanStyle.css" rel="stylesheet" />
         <title>Using the Elan editor</title>
     </head>
-    <body style="font-family: Arial, Helvetica, sans-serif;">
+    <body style="font-family: Arial, Helvetica, sans-serif; padding-left: 20px; padding-right: 20px;">
         <h1>
             Using the Elan editor
-        </h1>>
+        </h1>
         <h2>
             Editor keys – quick reference
         </h2><p>If the action for a key is not possible
@@ -18,7 +18,7 @@
             </em>
             , pressing the key will have no effect.  (Greyed-out options are not yet
             implemented).</p>
-        <table border="1" cellspacing="0" cellpadding="5px">
+        <table border="1" cellspacing="0" cellpadding="2px">
             <tbody>
 <tr>
 <td rowspan="2"><p align="center"><strong>Key</strong></p></td><td colspan="3"><p align="center"><strong>Currently selected …</strong></p></td>
@@ -45,13 +45,13 @@
 </tr>
 <tr>
      <td><p align="center"><strong>Enter</strong>or <br/><strong>Tab</strong></p></td>
-     <td><p>Select first <em>field</em> in file.</p></td><td<p>First <em>field</em> in frame.</p><p>If no fields, next frame.</p></td>
+     <td><p>Select first <em>field</em> in file.</p></td><td><p>Select first <em>field</em> in frame. If no fields, next frame.</p></td>
      <td><p>Select next field.</p></td>
 </tr>
 <tr>
-     <td><p align="center"><strong>Shift-Enter</strong>or <br/><strong>Shift-Tab</strong></p></td>
+     <td><p align="center"><strong>Shift-Enter</strong> or <br/><strong>Shift-Tab</strong></p></td>
      <td><p>Select last <em>field</em> in file.</p></td>
-     <td><p>Select last <em>field</em> in previous frame – or frameitself if none.</p></td>
+     <td><p>Select last <em>field</em> in previous frame, or frame itself if none.</p></td>
      <td><p>Select previous field.</p></td>
 </tr>
 <tr>
@@ -69,12 +69,12 @@
 <tr>
      <td><p align="center"><strong>←</strong></p></td>
      <td><p align="center">-</p></td>
-     <td><p>Select <em>parent</em> frame (if any).</p></td><td<p>Move text-cursor left within field.</p></td>
+     <td><p>Select <em>parent</em> frame (if any).</p></td><td><p>Move text-cursor left within field.</p></td>
 </tr>
 <tr>
      <td><p align="center"><strong>→</strong></p></td>
      <td><p align="center">Same as <strong>Home.</strong></p></td>
-     <td><p>Select first <em>child</em> frame (if any).</p></td><td<p>Move text-cursor right within field.</p></td>
+     <td><p>Select first <em>child</em> frame (if any).</p></td><td><p>Move text-cursor right within field.</p></td>
 </tr>
 <tr>
      <td><p align="center"><strong>Shift-↑</strong></p></td>
@@ -90,8 +90,8 @@
 </tr>
 <tr>
      <td><p align="center"><strong>Esc</strong></p></td>
-     <td><p align="center">Escape frames (unselect    everything)</p></td>
-     <td><p align="center">Escape from field – select    enclosing frame</p></td>
+     <td colspan="2"><p align="center">Escape frames (unselect everything)</p></td>
+     <td><p align="center">Escape from field – selectenclosing frame</p></td>
 </tr>
 <tr><td valign="top" colspan="4"><p align="center"><strong>Outlining</strong></p></td>
 </tr>
@@ -148,7 +148,7 @@
 <tr>
      <td><p align="center"><strong>Ctrl-c</strong></p></td>
      <td><p align="center">-</p></td>
-     <td><p>Copy    selected frame to the scratchpad</p></td>
+     <td><p>Copy selected frame to the scratchpad</p></td>
      <td><p align="center">-</p></td>
 </tr>
 <tr>
@@ -165,69 +165,30 @@
 </tr>
 </tbody>
 </table>
-        <br clear="all"/>
-        <h2>
-            Mouse operation – quick reference
-        </h2>
-        <ul>
-            <li>
-                To select a <em>frame</em>, click on a <em>keyword</em> in the frame.
-                (You can successfully click in several other places within the  frame,
-                but the simplest rule to remember is click on any keyword).
-            </li>
-        </ul<p>·          To select an additional frame (‘multi-select’),  hold down the
-            Shift key on the keyboard and click on the frame to add. Note  that all the
-            multi-selected frames must be at the same peer-level.</p<p>·          To select a field, click on the text (or, if  empty, the prompt)
-            shown for that field</p<p>·          To collapse a multi-line frame, double-click on  the keyword at
-            the start of the frame</p<p>·          To expand a collapsed frame, double-click on the  keyword at the
-            start of the frame (or the ‘+’ symbol in front of it)</p<p>(Greyed-out options are not yet implemented).</p>
-        <ul>
-            <li>
-                To move selected frame, or frames, up or down
-                <em>
-                    within the  same peer level
-                </em>
-                hold down the <strong>Ctrl</strong> key and drag the mouse, or move  the
-                scroll wheel
-            </li>
-        </ul<p>·          For all other editing operations, right-click on the  selected
-            frame or field and select option from the pop-up menu.</p>
-        <ul>
-            <li>
-                Positioning the cursor <em>within a field</em> by mouse-click
-            </li>
-        </ul>
-        <h1>
-            Important features planned but <em>not yet implemented</em>
-        </h1>
-        <ul>
-            <li>
-                Validation of syntax for <em>all fields</em> (currently only a few are
-                properly validated) including expressions (currently  ‘anything goes’
-                for expressions!)
-            </li>
-        </ul<p>·          Validation of identifiers &amp; Types (with  reference to the
-            symbol table)</p>
-        <ul>
-            <li>
-                Auto-complete options for identifiers and types
-            </li>
-            <li>
-                Deletion of frames
-            </li>
-            <li>
-                Line numbers shown in the editor window
-            </li>
-            <li>
-                Colouring of code in fields
-            </li>
-        </ul<p>·          Cut and Paste to scratchpad (which can hold  multiple entries)</p>
-        <ul>
-            <li>
-                Undo and Redo
-            </li>
-        </ul<p>·          Option to use a non-existent variable, function,  procedure and
-            from that use create the signature for a definition (programming  ‘top down’
-            or ‘by procrastination’)</p>
+
+<h2>Mouse operation – quick reference</h2>
+<ul>
+    <li>To select a <em>frame</em>, click on a <em>keyword</em> in the frame. (You can successfully click in several other places within the frame, but the simplest rule to remember is click on any keyword).</li>
+    <li>To select an additional frame (‘multi-select’), hold down the Shift key on the keyboard and click on the frame to add. Note  that all the multi-selected frames must be at the same peer-level.
+    <li>To select a field, click on the text (or, if  empty, the prompt) shown for that field
+    <li>To collapse a multi-line frame, double-click on  the keyword at the start of the frame
+    <li>To expand a collapsed frame, double-click on the  keyword at the start of the frame (or the ‘+’ symbol in front of it)</p<p>(Greyed-out options are not yet implemented).</p>
+    <li>To move selected frame, or frames, up or down <em> within the  same peer level </em> hold down the <strong>Ctrl</strong> key and drag the mouse, or move  the scroll wheel
+    </li> For all other editing operations, right-click on the  selected frame or field and select option from the pop-up menu.</p>
+</ul>
+<h3>Positioning the cursor <em>within a field</em> by mouse-click</h3>
+<h1>Important features planned but <em>not yet implemented</em></h1>
+<ul>
+    <li>Validation of syntax for <em>all fields</em> (currently only a few are properly validated) including expressions (currently  ‘anything goes’ for expressions!)</li>
+    <li>Validation of identifiers &amp; Types (with  reference to the symbol table)</li>
+    <li>Auto-complete options for identifiers and types</li>
+    <li>Deletion of frames</li>
+    <li>Line numbers shown in the editor window</li>
+    <li>Colouring of code in fields</li>
+    <li>Cut and Paste to scratchpad (which can hold  multiple entries)
+    <li>Undo and Redo</li>
+    <li>Option to use a non-existent variable, function,  procedure and from that use create the signature for a definition (programming  ‘top down’ or ‘by procrastination’)</p>
+</ul>
+    
     </body>
 </html>
