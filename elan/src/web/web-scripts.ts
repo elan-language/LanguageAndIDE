@@ -149,6 +149,7 @@ function updateContent(text: string) {
 		elanCode!.addEventListener('keydown', (event: Event) => {
 			const ke = event as KeyboardEvent;
 			const msg: editorEvent = {
+	
 				type: 'key',
 				target: "window",
 				key: ke.key,
