@@ -5,7 +5,7 @@ import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
 import { LitString } from "./lit-string";
 
-export class Literal extends AbstractAlternatives {
+export class LiteralValue extends AbstractAlternatives {
     constructor() {
         super();
         this.placeholder = "";

@@ -13,7 +13,7 @@ import { UnaryTerm } from '../frames/nodes/unary-term';
 import { BracketedExpression } from '../frames/nodes/bracketed-expression';
 import { Optional } from '../frames/nodes/optional';
 import { LitString } from '../frames/nodes/lit-string';
-import { LitList } from '../frames/nodes/lit-list';
+import { LitListOfT } from '../frames/nodes/lit-list-of-t';
 import { Multiple } from '../frames/nodes/multiple';
 import { CommaNode } from '../frames/nodes/comma-node';
 import { CSV } from '../frames/nodes/csv';
@@ -149,10 +149,6 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new LitString(),`abc`, ParseStatus.invalid, "", "abc");
 		testNodeParse(new LitString(),`'abc'`, ParseStatus.invalid, "", "'abc'");
 	});
-	test('LitList', () => {
-		testNodeParse(new LitList(),`{123}`, ParseStatus.valid, `{123}`, "");
-		testNodeParse(new LitList(),`{123`, ParseStatus.incomplete, `{123`, "");
-	});
 	test('Multiple', () => {
 		testNodeParse(new Multiple(() => new LitInt(), 0),`)`, ParseStatus.valid, ``, ")");
 		testNodeParse(new Multiple(() => new LitInt(), 1),`1 0 33`, ParseStatus.valid, `1 0 33`, "");
@@ -192,5 +188,17 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new MethodCallNode(),`Foo()`, ParseStatus.invalid, ``, "Foo()");
 		testNodeParse(new MethodCallNode(),`foo[]`, ParseStatus.invalid, ``, "foo[]");
 	});
-
+	test('Literal List of T', () => {
+		testNodeParse(new LitListOfT(() => new LitInt()),``, ParseStatus.incomplete, ``, "");
+		testNodeParse(new LitListOfT(() => new LitInt()),`{1,2,3 ,4 , 5}`, ParseStatus.valid, `{1,2,3 ,4 , 5}`, "");
+		testNodeParse(new LitListOfT(() => new LitInt()),`{}`, ParseStatus.valid, `{}`, "");
+		testNodeParse(new LitListOfT(() => new LitInt()),`{`, ParseStatus.incomplete, `{`, "");
+		testNodeParse(new LitListOfT(() => new LitInt()),`{1,2,3.1}`, ParseStatus.invalid, ``, "{1,2,3.1}");
+		// list of list
+		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),``, ParseStatus.incomplete, ``, "");
+		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{}, {}, { }}`, ParseStatus.valid, `{{}, {}, { }}`, "");
+		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}}`, ParseStatus.valid, `{{1,2}, {}, {3,4}}`, "");
+		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}`, ParseStatus.incomplete, `{{1,2}, {}, {3,4}`, "");
+		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2, {}, {3,4}}`, ParseStatus.invalid, ``, `{{1,2, {}, {3,4}}`);
+	});
 });

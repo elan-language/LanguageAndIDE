@@ -1,18 +1,20 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { FixedText } from "./fixed-text";
-import { Optional } from "./optional";
-import { Literal } from "./literal";
+import { CSV } from "./csv";
+import { ParseNode } from "./parse-node";
 
-export class LitList extends AbstractSequence {
-    constructor() {
+export class LitListOfT extends AbstractSequence {
+    elementConstructor: () => ParseNode;
+
+    constructor(elementConstructor: () => ParseNode) {
         super();
-        this.placeholder = `"string"`;
+        this.elementConstructor = elementConstructor;
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(new FixedText(`{`));
-            this.elements.push(new Optional(() => new Literal()));
+            this.elements.push(new CSV(this.elementConstructor,0));
             this.elements.push(new FixedText(`}`));
             super.parseText(text);
         }
