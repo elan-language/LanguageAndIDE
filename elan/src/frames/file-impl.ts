@@ -21,7 +21,7 @@ import { GlobalSelector } from "./globals/global-selector";
 // for web editor bundle
 export { CodeSourceFromString };
 
-var system : any; export function _inject(l : any) { system = l; };
+//var system; export function _inject(l) { system = l; };
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -138,7 +138,7 @@ export class FileImpl implements File {
     }
 
     renderAsObjectCode(): string {
-        const stdLib = 'var system : any; export function _inject(l : any) { system = l; };';
+        const stdLib = 'var system; export function _inject(l) { system = l; };';
         return `${stdLib}\n${this.renderGlobalsAsObjectCode()}`; 
     }
 

@@ -39,11 +39,11 @@ function doImport(str: string) {
 
 function executeCode(file: FileImpl) {
 
-    const tsCode = file.renderAsObjectCode();
-    const jsCode = ts.transpile(tsCode, {
-        "module": ts.ModuleKind.ES2022,
-        "target": ts.ScriptTarget.ES2022,
-    });
+    const jsCode = file.renderAsObjectCode();
+    // const jsCode = ts.transpile(tsCode, {
+    //     "module": ts.ModuleKind.ES2022,
+    //     "target": ts.ScriptTarget.ES2022,
+    // });
 
     const stdlib = new StdLib();
 

@@ -15,7 +15,7 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 1) {
@@ -45,7 +45,7 @@ end for
 print tot
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 2) {
@@ -75,7 +75,7 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
@@ -107,7 +107,7 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var tot = 0;
   for (var i = 1; i <= 3; i = i + 1) {
@@ -140,7 +140,7 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var lower = 1;
   var upper = 10;

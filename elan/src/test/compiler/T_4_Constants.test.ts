@@ -13,7 +13,7 @@ main
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = 3;
 
 export async function main() {
@@ -39,7 +39,7 @@ print a
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = 3.1;
 
 export async function main() {
@@ -65,7 +65,7 @@ print a
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = "hell0";
 
 export async function main() {
@@ -91,7 +91,7 @@ main
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = 'a';
 
 export async function main() {
@@ -118,7 +118,7 @@ main
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = '';
 
 export async function main() {
@@ -145,7 +145,7 @@ main
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = ' ';
 
 export async function main() {
@@ -171,7 +171,7 @@ main
 end main
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = true;
 
 export async function main() {
@@ -202,7 +202,7 @@ enum Fruit
 end enum
 `;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 enum Fruit {
   apple = "apple", orange = "orange", pear = "pear"
 }

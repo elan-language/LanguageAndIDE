@@ -13,7 +13,7 @@ main
   print 3 < 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 < 4));
   system.print(system.asString(3 < 2));
@@ -39,7 +39,7 @@ main
   print 3 > 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 > 4));
   system.print(system.asString(3 > 2));
@@ -65,7 +65,7 @@ main
   print 3 <= 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 <= 4));
   system.print(system.asString(3 <= 2));
@@ -91,7 +91,7 @@ main
   print 3 >= 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 >= 4));
   system.print(system.asString(3 >= 2));
@@ -117,7 +117,7 @@ main
   print 3 is not 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 !== 4));
   system.print(system.asString(3 !== 2));
@@ -143,7 +143,7 @@ main
   print 3 is 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 === 4));
   system.print(system.asString(3 === 2));
@@ -169,7 +169,7 @@ main
   print 3.1 < 3
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 < 3.1));
   system.print(system.asString(3 === 3.0));

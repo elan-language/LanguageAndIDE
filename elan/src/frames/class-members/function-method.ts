@@ -25,7 +25,7 @@ ${this.indent()}end function\r
     }
 
     public override renderAsObjectCode() : string {
-        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) : ${this.returnType.renderAsObjectCode()} {\r
+        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}\r
 `;

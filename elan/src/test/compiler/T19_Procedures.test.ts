@@ -17,7 +17,7 @@ procedure foo()
   print 2
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(1));
   foo();
@@ -60,7 +60,7 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var b = new Bar();
   b.foo();
@@ -99,7 +99,7 @@ main
   print 1
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.pause(1);
   system.print(system.asString(1));
@@ -129,7 +129,7 @@ procedure foo(a Int, b String)
     print b
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 2;
   var b = "hello";
@@ -165,7 +165,7 @@ procedure foo(out a Int, out b String)
     print b
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 2;
   var b = "hello";
@@ -201,7 +201,7 @@ procedure foo(a Int, out b String)
     print b
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 2;
   var b = "hello";
@@ -237,7 +237,7 @@ procedure foo(a Int, b String)
   print b
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 2;
   var b = "hello";
@@ -272,7 +272,7 @@ procedure foo(a Int, b String)
   print b
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 1;
   foo(a + 1, "hello);
@@ -309,7 +309,7 @@ procedure foo (out a Int, out b String)
   set b to b + "!"
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 1;
   var b = "hello";
@@ -350,7 +350,7 @@ procedure bar()
   print 2
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   foo();
   system.print(system.asString(3));
@@ -390,7 +390,7 @@ procedure foo(a Int)
   end if
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   foo(3);
 }

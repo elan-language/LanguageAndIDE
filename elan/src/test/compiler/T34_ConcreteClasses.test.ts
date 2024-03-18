@@ -29,7 +29,7 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var x = new Foo();
   system.print(system.asString(x.p1));
@@ -85,7 +85,7 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var x = new Foo();
   system.print(system.asString(x.p1));

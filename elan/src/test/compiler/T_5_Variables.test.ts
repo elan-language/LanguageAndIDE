@@ -11,7 +11,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3;
   system.print(system.asString(a));
@@ -35,7 +35,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3 + 4;
   system.print(system.asString(a));
@@ -60,7 +60,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3;
   a = 4;
@@ -86,7 +86,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3.1;
   a = 4;
@@ -112,7 +112,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 const a = 3;
 
 export async function main() {
@@ -152,7 +152,7 @@ main
   print h
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3 - 4;
   var b = 3 < 4;
@@ -193,7 +193,7 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 enum Fruit {
     apple = "apple", orange = "orange", pear = "pear"
 }

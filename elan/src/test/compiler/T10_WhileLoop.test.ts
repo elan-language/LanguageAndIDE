@@ -15,7 +15,7 @@ main
   print x
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var x = 0;
   while (x < 10) {
@@ -51,7 +51,7 @@ main
   print t
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var t = 0;
   var x = 0;

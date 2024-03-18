@@ -47,7 +47,7 @@ export class Property extends AbstractFrame implements Member {
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}${this.modifierAsObjectCode()}${this.name.renderAsObjectCode()} : ${this.type.renderAsObjectCode()};\r\n`;
+        return `${this.indent()}${this.modifierAsObjectCode()}${this.name.renderAsObjectCode()};\r\n`;
     }
 
     parseFrom(source: CodeSource): void {

@@ -15,14 +15,13 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = true;
   if (a) {
     system.print(system.asString("yes"));
     } else {
       system.print(system.asString("no"));
-    }
   }
 }
 `;
@@ -48,14 +47,13 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = false;
   if (a) {
     system.print(system.asString("yes"));
     } else {
       system.print(system.asString("no"));
-    }
   }
 }
 `;
@@ -83,7 +81,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 2;
   if (a === 1) {
@@ -120,7 +118,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3;
   if (a === 1) {
@@ -153,7 +151,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = true;
   if (a) {
@@ -187,7 +185,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var a = 3;
   if (a === 1) {

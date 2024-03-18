@@ -11,7 +11,7 @@ main
     throw "Foo"
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   throw new Error("Foo");
 }
@@ -34,7 +34,7 @@ main
   throw msg
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var msg = "Foo";
   throw new Error(msg);
@@ -58,7 +58,7 @@ main
   throw "{bar}"
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   var bar = 1;
   throw new Error("{bar}");
@@ -85,7 +85,7 @@ procedure foo()
   throw "Foo"
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   foo();
 }
@@ -120,7 +120,7 @@ procedure foo()
   throw "Foo"
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   try
     foo()
@@ -159,7 +159,7 @@ main
   end try
 end main`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   try {
     var x = 1;
@@ -199,7 +199,7 @@ procedure foo()
   throw "Foo"
 end procedure`;
 
-    const objectCode = `var system : any; export function _inject(l : any) { system = l; };
+    const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   try
     foo()
