@@ -282,7 +282,7 @@ export async function activate(docUri: vscode.Uri) {
 
   export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, matchedText: string, remainingText: string) {
     node.parseText(text);
-    assert.equal(node.status, status, );
+    assert.equal(node.status, status);
     assert.equal(node.matchedText, matchedText);
     assert.equal( node.remainingText, remainingText);
   }

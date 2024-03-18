@@ -17,6 +17,8 @@ import { LitList } from '../frames/nodes/lit-list';
 import { Multiple } from '../frames/nodes/multiple';
 import { CommaNode } from '../frames/nodes/comma-node';
 import { CSV } from '../frames/nodes/csv';
+import { IdentifierNode } from '../frames/nodes/identifier-node';
+import { MethodCallNode } from '../frames/nodes/method-call-node';
 
 
 suite('FieldNode parsing', () => {
@@ -68,6 +70,16 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ExprNode(), "a +", ParseStatus.incomplete, "a +", "");
 		testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %");
 		testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "");
+		testNodeParse(new ExprNode(), "3 * foo(5)", ParseStatus.valid, "3 * foo(5)", "");
+	});
+	test('VariableNode', () => {
+		testNodeParse(new IdentifierNode(),``, ParseStatus.incomplete, ``, "");
+		testNodeParse(new IdentifierNode(),`  `, ParseStatus.incomplete, ``, "  ");
+		testNodeParse(new IdentifierNode(),`a`, ParseStatus.valid, `a`, "");
+		testNodeParse(new IdentifierNode(),`aB_d`, ParseStatus.valid, `aB_d`, "");
+		testNodeParse(new IdentifierNode(),`abc `, ParseStatus.valid, `abc`, " ");
+		testNodeParse(new IdentifierNode(),`Abc`, ParseStatus.invalid, ``, "Abc");
+		testNodeParse(new IdentifierNode(),`abc-de`, ParseStatus.valid, `abc`, "-de");
 	});
 	test('LitBool', () => {
 		testNodeParse(new LitBool(), "", ParseStatus.incomplete, "", "");
@@ -120,7 +132,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BracketedExpression(),"(a and not b", ParseStatus.incomplete, "(a and not b", "");
 		testNodeParse(new BracketedExpression(),"(a and not b  ", ParseStatus.incomplete, "(a and not b", "  ");
 		testNodeParse(new BracketedExpression(),"(", ParseStatus.incomplete, "(", "");
-		testNodeParse(new BracketedExpression(),"()", ParseStatus.invalid, "(", ")");
+		testNodeParse(new BracketedExpression(),"()", ParseStatus.invalid, "", "()");
 	});
 	test('Optional', () => {
 		testNodeParse(new Optional(() => new LitInt()),"123 a", ParseStatus.valid, "123", " a");
@@ -142,6 +154,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new LitList(),`{123`, ParseStatus.incomplete, `{123`, "");
 	});
 	test('Multiple', () => {
+		testNodeParse(new Multiple(() => new LitInt(), 0),`)`, ParseStatus.valid, ``, ")");
 		testNodeParse(new Multiple(() => new LitInt(), 1),`1 0 33`, ParseStatus.valid, `1 0 33`, "");
 		testNodeParse(new Multiple(() => new LitInt(), 1),`1`, ParseStatus.valid, `1`, "");
 		testNodeParse(new Multiple(() => new LitInt(), 0),``, ParseStatus.valid, ``, "");
@@ -160,6 +173,24 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new LitInt(),1),`2`, ParseStatus.valid, `2`, "");
 		testNodeParse(new CSV(() => new LitInt(),0),``, ParseStatus.valid, ``, "");
 		testNodeParse(new CSV(() => new LitInt(),1),``, ParseStatus.incomplete, ``, "");
+		testNodeParse(new CSV(() => new LitString(),0),`"apple","orange" , "pear"`, ParseStatus.valid, `"apple","orange" , "pear"`, "");
+		testNodeParse(new CSV(() => new IdentifierNode(),0),`a,b,c`, ParseStatus.valid, `a,b,c`, "");
+		testNodeParse(new CSV(() => new IdentifierNode(),0),`a,b,1`, ParseStatus.valid, `a,b`, ",1");
+		testNodeParse(new CSV(() => new ExprNode(),0),`a + b,c, 1`, ParseStatus.valid, `a + b,c, 1`, "");
+		testNodeParse(new CSV(() => new ExprNode(),0),`)`, ParseStatus.valid, ``, ")");
+	});
+	test('Function Call', () => {
+		testNodeParse(new MethodCallNode(),``, ParseStatus.incomplete, ``, "");
+		testNodeParse(new MethodCallNode(),`  `, ParseStatus.incomplete, ``, "  ");
+		testNodeParse(new MethodCallNode(),`foo()`, ParseStatus.valid, `foo()`, "");
+		testNodeParse(new MethodCallNode(),`bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "");	
+		testNodeParse(new MethodCallNode(),`yon`, ParseStatus.incomplete, `yon`, "");
+		testNodeParse(new MethodCallNode(),`yon `, ParseStatus.incomplete, `yon`, " ");
+		testNodeParse(new MethodCallNode(),`yon(`, ParseStatus.incomplete, `yon(`, "");
+		testNodeParse(new MethodCallNode(),`yon(a`, ParseStatus.incomplete, `yon(a`, "");
+		testNodeParse(new MethodCallNode(),`yon(a,`, ParseStatus.incomplete, `yon(a,`, "");
+		testNodeParse(new MethodCallNode(),`Foo()`, ParseStatus.invalid, ``, "Foo()");
+		testNodeParse(new MethodCallNode(),`foo[]`, ParseStatus.invalid, ``, "foo[]");
 	});
 
 });

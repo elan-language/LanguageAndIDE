@@ -37,7 +37,10 @@ export class Multiple extends AbstractParseNode {
                     cont = false;
                 }
             }
-            if (this.elements.length >= this.minimum) {
+            if (this.elements.length === 0 && this.minimum === 0) {
+                this.status = ParseStatus.valid;
+                this.remainingText = toParse;
+            } else if (this.elements.length >= this.minimum) {
                 var last = this.elements[this.elements.length - 1];
                 this.status = last.status;
                 var matchedLength = text.length - toParse.length;

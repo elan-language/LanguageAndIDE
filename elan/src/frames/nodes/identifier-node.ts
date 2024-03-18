@@ -1,17 +1,18 @@
-import { identifier } from "../fields/parse-functions";
-import { Regexes } from "../fields/regexes";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class VariableNode extends AbstractParseNode {
+export class IdentifierNode extends AbstractParseNode {
 
     constructor() {
         super();
-        this.placeholder = "variable name";
+        this.placeholder = "name";
     }
 
     parseText(text: string): void {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*[a-z]\w*/);
+        this.remainingText = text;
+        if (text.trimStart().length > 0) {
+          [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*[a-z]\w*/);
+        }
     }
 
     textAsHtml(): string {

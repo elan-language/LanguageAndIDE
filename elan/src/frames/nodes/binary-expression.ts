@@ -1,7 +1,7 @@
 import { ExprNode } from "./expr-node";
 import { BinOp } from "./bin-op";
 import { AbstractSequence } from "./abstract-sequence";
-import { VariableNode } from "./variable-node";
+import { IdentifierNode } from "./identifier-node";
 import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {

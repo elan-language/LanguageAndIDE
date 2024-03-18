@@ -1,8 +1,9 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { VariableNode } from "./variable-node";
+import { IdentifierNode } from "./identifier-node";
 import { Literal } from "./literal";
 import { UnaryTerm } from "./unary-term";
 import { BracketedExpression } from "./bracketed-expression";
+import { MethodCallNode } from "./method-call-node";
 
 export class Term extends AbstractAlternatives {
     constructor() {
@@ -12,10 +13,11 @@ export class Term extends AbstractAlternatives {
 
     parseText(text: string): void {
         //Sub nodes added only when asked to parse
-        this.alternatives.push(new VariableNode());
+        this.alternatives.push(new IdentifierNode());
         this.alternatives.push(new Literal());
         this.alternatives.push(new UnaryTerm());
         this.alternatives.push(new BracketedExpression());
+        this.alternatives.push(new MethodCallNode());
         super.parseText(text);
     }
     textAsHtml(): string {
