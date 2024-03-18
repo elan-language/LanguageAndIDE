@@ -1,0 +1,12 @@
+{
+    "profiles": [
+        {
+            "name": "profile1",
+            "keywords": []
+        },
+        {
+            "name": "profile2",
+            "keywords": []
+        }
+    ]
+}

@@ -21,6 +21,7 @@ import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import * as Profiles from "../profile.json";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -30,6 +31,7 @@ export class FileImpl implements File {
     hasFields: boolean = true;
     isFile: boolean = true;
     parseError? : string;
+    profiles = Profiles;
 
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
