@@ -1,7 +1,7 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { FixedText } from "./fixed-text";
+import { Punctuation } from "./punctuation";
 import { IdentifierNode } from "./identifier-node";
 
 export class MethodCallNode extends AbstractSequence {
@@ -12,16 +12,13 @@ export class MethodCallNode extends AbstractSequence {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             this.elements.push(new IdentifierNode());
-            this.elements.push(new FixedText("("));
+            this.elements.push(new Punctuation("("));
             this.elements.push(new CSV(() => new ExprNode(),0)); //arg list
-            this.elements.push(new FixedText(")"));
+            this.elements.push(new Punctuation(")"));
             super.parseText(text);
         }
     }
-    textAsHtml(): string {
-        throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
 }

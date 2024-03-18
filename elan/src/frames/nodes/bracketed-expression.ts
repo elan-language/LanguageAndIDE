@@ -1,6 +1,6 @@
 import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { FixedText } from "./fixed-text";
+import { Punctuation } from "./punctuation";
 
 export class BracketedExpression extends AbstractSequence {
     
@@ -11,17 +11,13 @@ export class BracketedExpression extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new FixedText("("));
+            this.elements.push(new Punctuation("("));
             this.elements.push(new ExprNode());
-            this.elements.push(new FixedText(")"));
+            this.elements.push(new Punctuation(")"));
             super.parseText(text);
         }
     }
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-
 }

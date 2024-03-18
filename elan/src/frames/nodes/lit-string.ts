@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { AnyTextExceptQuotes } from "./anyTextExceptQuotes";
-import { FixedText } from "./fixed-text";
+import { Punctuation } from "./punctuation";
 
 export class LitString extends AbstractSequence {
     constructor() {
@@ -10,16 +10,13 @@ export class LitString extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new FixedText(`"`));
+            this.elements.push(new Punctuation(`"`));
             this.elements.push(new AnyTextExceptQuotes());
-            this.elements.push(new FixedText(`"`));
+            this.elements.push(new Punctuation(`"`));
             super.parseText(text);
         }
     }
-    textAsHtml(): string {
-        throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
 }

@@ -30,10 +30,10 @@ export class AbstractSequence extends AbstractParseNode {
             this.remainingText = text;
         }
     }
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
+    renderAsSource(): string {
+       return this.elements.reduce((result, current) => result + current.renderAsSource(),"");
     }
 }

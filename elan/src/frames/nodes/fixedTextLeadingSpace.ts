@@ -1,12 +1,13 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 
-export class Keyword extends AbstractParseNode {
+export class FixedTextLeadingSpace extends AbstractParseNode {
     fixedText: string;
+    renderWithLeadingSpace = false;
 
-    constructor(keyword: string) {
+    constructor(fixedText: string) {
         super();
-        this.fixedText = keyword;
+        this.fixedText = fixedText;
     }
 
     parseText(text: string): void {

@@ -1,5 +1,7 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { FixedText } from "./fixed-text";
+import { Punctuation } from "./punctuation";
+import { Keyword } from "./keyword";
+import { singleLeadingSpace } from "./node-helpers";
 
 export class LitBool extends AbstractAlternatives {
 
@@ -11,24 +13,21 @@ export class LitBool extends AbstractAlternatives {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            this.alternatives.push(new FixedText("true"));
-            this.alternatives.push(new FixedText("false"));
+            this.alternatives.push(new Keyword("true"));
+            this.alternatives.push(new Keyword("false"));
             super.parseText(text);
         }
     }
 
-    textAsHtml(): string {
-        throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
 }
 
-export class True extends FixedText {
+export class True extends Punctuation {
 
 }
 
-export class False extends FixedText {
+export class False extends Punctuation {
     
 }

@@ -15,11 +15,7 @@ export class AnyTextExceptQuotes extends AbstractParseNode {
         }
     }
 
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-
 }

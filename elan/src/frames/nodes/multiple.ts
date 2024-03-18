@@ -53,12 +53,11 @@ export class Multiple extends AbstractParseNode {
         }; 
     }
 
-    textAsHtml(): string {
+    renderAsHtml(): string {
         //Delegates to best match only
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        //Delegates to best match only
-        throw new Error("Method not implemented.");
-    }
+    renderAsSource(): string {
+        return this.elements.reduce((result, current) => result + current.renderAsSource(),"");
+     }
 }

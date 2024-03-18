@@ -25,11 +25,10 @@ export class Optional extends AbstractParseNode {
             this.status = ParseStatus.valid;
         }
     }
-    textAsHtml(selected: boolean | undefined): string {
+    renderAsHtml(selected: boolean | undefined): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
+    renderAsSource(): string {
+        return this.matchedText.length > 0 ? ` ${this.matchedText}` : ``;
     }
-
 }

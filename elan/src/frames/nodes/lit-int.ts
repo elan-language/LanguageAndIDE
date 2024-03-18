@@ -1,4 +1,5 @@
 import { AbstractParseNode } from "./abstract-parse-node";
+import { singleLeadingSpace } from "./node-helpers";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class LitInt extends AbstractParseNode {
@@ -15,11 +16,7 @@ export class LitInt extends AbstractParseNode {
         }
     }
 
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-
 }

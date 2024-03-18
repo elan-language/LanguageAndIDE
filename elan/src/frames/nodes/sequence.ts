@@ -19,10 +19,7 @@ export class Sequence extends AbstractSequence {
         super.parseText(text);
     }
 
-    textAsHtml(): string {
-        throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
 }

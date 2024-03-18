@@ -1,4 +1,5 @@
 import { ParseStatus } from "../parse-status";
+import { singleLeadingSpace as singleLeadingSpaceIfNotEmpty } from "./node-helpers";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode{
@@ -8,9 +9,13 @@ export abstract class AbstractParseNode implements ParseNode{
     remainingText: string = "";
 
     abstract parseText(text: string): void;
-    abstract textAsHtml(selected: boolean | undefined): string;
-    abstract textAsSource(): string;
-    textAsObjectCode(): string {return "To be implemented"; } ; //TODO make abstract
+    abstract renderAsHtml(selected: boolean | undefined): string;
+
+    renderAsSource(): string {
+        return singleLeadingSpaceIfNotEmpty(this);
+    }
+
+    renderAsObjectCode(): string {return "To be implemented"; } //TODO make abstract
 
     protected set(status: ParseStatus, matched: string, remaining: string) {
         this.status = status;

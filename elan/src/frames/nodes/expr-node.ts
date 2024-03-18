@@ -13,11 +13,7 @@ export class ExprNode extends AbstractAlternatives {
         this.alternatives.push(new BinaryExpression());
         super.parseText(text);
     }
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-    
 }

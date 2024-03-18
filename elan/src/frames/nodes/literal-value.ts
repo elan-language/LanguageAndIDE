@@ -20,11 +20,7 @@ export class LiteralValue extends AbstractAlternatives {
         this.alternatives.push(new LitString());
         super.parseText(text);
     }
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-    
+    }   
 }

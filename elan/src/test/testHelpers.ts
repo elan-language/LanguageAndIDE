@@ -280,9 +280,13 @@ export async function activate(docUri: vscode.Uri) {
     return key("Insert",true);
   }
 
-  export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, matchedText: string, remainingText: string) {
+  export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, 
+        matchedText: string, remainingText: string, source = "") {
     node.parseText(text);
     assert.equal(node.status, status);
     assert.equal(node.matchedText, matchedText);
     assert.equal( node.remainingText, remainingText);
+    if (source !== "") {
+      assert.equal( node.renderAsSource(), source);
+    }
   }

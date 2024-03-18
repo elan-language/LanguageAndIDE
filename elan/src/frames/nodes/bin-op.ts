@@ -1,22 +1,22 @@
 import { Regexes } from "../fields/regexes";
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { AbstractParseNode } from "./abstract-parse-node";
-import { FixedText } from "./fixed-text";
+import { Punctuation } from "./punctuation";
 import { Keyword } from "./keyword";
-import { matchRegEx } from "./parse-node-helpers";
+import { FixedTextLeadingSpace } from "./fixedTextLeadingSpace";
+
 
 export class BinOp extends AbstractAlternatives {
     parseText(text: string): void {
         //TODO ? this.alternatives.push(new FixedText("**"));  
-        this.alternatives.push(new FixedText("+"));
-        this.alternatives.push(new FixedText("-"));
-        this.alternatives.push(new FixedText("*"));
-        this.alternatives.push(new FixedText("/"));
-        this.alternatives.push(new FixedText(">"));
-        this.alternatives.push(new FixedText("<"));
-        this.alternatives.push(new FixedText(">="));
-        this.alternatives.push(new FixedText("<="));
+        this.alternatives.push(new FixedTextLeadingSpace("+"));
+        this.alternatives.push(new FixedTextLeadingSpace("-"));
+        this.alternatives.push(new FixedTextLeadingSpace("*"));
+        this.alternatives.push(new FixedTextLeadingSpace("/"));
+        this.alternatives.push(new FixedTextLeadingSpace(">"));
+        this.alternatives.push(new FixedTextLeadingSpace("<"));
+        this.alternatives.push(new FixedTextLeadingSpace(">="));
+        this.alternatives.push(new FixedTextLeadingSpace("<="));
         this.alternatives.push(new Keyword(isKeyword));
         this.alternatives.push(new Keyword(isKeyword + " " + notKeyword));
         this.alternatives.push(new Keyword(andKeyword));
@@ -26,10 +26,7 @@ export class BinOp extends AbstractAlternatives {
         this.alternatives.push(new Keyword(divKeyword));;
         super.parseText(text)
     }
-    textAsHtml(): string {
-        throw new Error("Method not implemented.");
-    }
-    textAsSource(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
 }

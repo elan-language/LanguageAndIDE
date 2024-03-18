@@ -17,11 +17,7 @@ export class BinaryExpression extends AbstractSequence {
         this.elements.push(new ExprNode());
         return super.parseText(text);
     }
-    textAsHtml(): string {
+    renderAsHtml(): string {
         throw new Error("Method not implemented.");
     }
-    textAsSource(): string {
-        throw new Error("Method not implemented.");
-    }
-
 }
