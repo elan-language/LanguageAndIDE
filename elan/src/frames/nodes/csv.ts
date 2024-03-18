@@ -18,16 +18,14 @@ export class CSV extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         var commaNodesMin = 0;
-        if (text.trimStart().length > 0) {
-            if (this.minimum === 0) {
-                this.elements.push(new Optional(this.elementConstructor));
-            } else {
-                this.elements.push(this.elementConstructor());
-                commaNodesMin = this.minimum -1;
-            }
-            this.elements.push(new Multiple(() => new CommaNode(this.elementConstructor), commaNodesMin));
-            super.parseText(text);
+        if (this.minimum === 0) {
+            this.elements.push(new Optional(this.elementConstructor));
+        } else {
+            this.elements.push(this.elementConstructor());
+            commaNodesMin = this.minimum -1;
         }
+        this.elements.push(new Multiple(() => new CommaNode(this.elementConstructor), commaNodesMin));
+        super.parseText(text);
     }
 
     textAsHtml(): string {

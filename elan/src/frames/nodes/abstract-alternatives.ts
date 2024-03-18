@@ -31,10 +31,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
             this.status = this.bestMatch!.status;
             this.matchedText = this.bestMatch!.matchedText;
             this.remainingText = this.bestMatch!.remainingText;
-        } else {
-            this.status = ParseStatus.empty;
-            this.matchedText = "";
-            this.remainingText = "";
         }
     }
 

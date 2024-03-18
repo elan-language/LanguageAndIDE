@@ -16,7 +16,7 @@ export class LitFloat extends AbstractSequence {
             this.elements.push(new FixedText("."));
             this.elements.push(new LitInt());
             super.parseText(text);
-        }
+        } 
     }
 
     textAsHtml(): string {

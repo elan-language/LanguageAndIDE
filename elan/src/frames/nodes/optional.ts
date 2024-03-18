@@ -21,6 +21,8 @@ export class Optional extends AbstractParseNode {
                 this.status = ParseStatus.valid;
                 this.remainingText = text;
             }
+        } else {
+            this.status = ParseStatus.valid;
         }
     }
     textAsHtml(selected: boolean | undefined): string {
