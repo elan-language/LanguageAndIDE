@@ -1,4 +1,4 @@
-# ae73d23981f4d77f96956d252113b14a11f042a8564bf87c849bc8526efffc10 Elan v0.1 valid
+# 2526f511d352c7d44aafde2826edd6643a7573d64de71d14ae6aff9b5e38cc74 Elan v0.1 valid
 
 main
   print welcome
@@ -89,8 +89,8 @@ class Snake
   end function
 
   procedure clockTick(d Direction, out continue Boolean)
-    set body to body + head;
-    set head to head.getAdjacentSquare(d);
+    set body to body + head
+    set head to head.getAdjacentSquare(d)
     if head is apple
       call setNewApplePosition()
       else
