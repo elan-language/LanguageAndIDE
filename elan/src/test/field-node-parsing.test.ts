@@ -13,13 +13,21 @@ import { UnaryTerm } from '../frames/nodes/unary-term';
 import { BracketedExpression } from '../frames/nodes/bracketed-expression';
 import { Optional } from '../frames/nodes/optional';
 import { LitString } from '../frames/nodes/lit-string';
-import { LitListOfT } from '../frames/nodes/lit-list-of-t';
+import { ListOfT } from '../frames/nodes/list-of-t';
 import { Multiple } from '../frames/nodes/multiple';
 import { CommaNode } from '../frames/nodes/comma-node';
 import { CSV } from '../frames/nodes/csv';
 import { IdentifierNode } from '../frames/nodes/identifier-node';
-import { MethodCallNode } from '../frames/nodes/method-call-node';
+import { FunctionCallNode } from '../frames/nodes/function-call-node';
 import { Keyword } from '../frames/nodes/keyword';
+import { IndexedTerm } from '../frames/nodes/indexed-term';
+import { ListOfExpr } from '../frames/nodes/listOfExpr';
+import { TypeNode } from '../frames/nodes/type-node';
+import { TypeWithOptGenerics } from '../frames/nodes/type-with-opt-generics';
+import { TypeSimpleNode } from '../frames/nodes/type-simple-node';
+import { TupleDefNode } from '../frames/nodes/tuple-def-node';
+import { Lambda } from '../frames/nodes/lambda';
+import { IfExpr } from '../frames/nodes/if-expr';
 
 
 suite('FieldNode parsing', () => {
@@ -72,6 +80,8 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %"," a");
 		testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", ""," 3 * 4 + x");
 		testNodeParse(new ExprNode(), "3*foo(5)", ParseStatus.valid, "3*foo(5)", ""," 3 * foo( 5)");
+		testNodeParse(new ExprNode(), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "","");
+		testNodeParse(new ExprNode(), "points.reduct(0.0, lambda s,p -> s + p.first() * p.first())", ParseStatus.valid, "points.reduct(0.0, lambda s,p -> s + p.first() * p.first())", "","");
 	});
 	test('VariableNode', () => {
 		testNodeParse(new IdentifierNode(),``, ParseStatus.incomplete, ``, "","");
@@ -177,29 +187,78 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new ExprNode(),0),`)`, ParseStatus.valid, ``, ")","");
 	});
 	test('Function Call', () => {
-		testNodeParse(new MethodCallNode(),``, ParseStatus.incomplete, ``, "","");
-		testNodeParse(new MethodCallNode(),`  `, ParseStatus.incomplete, ``, "  ","");
-		testNodeParse(new MethodCallNode(),`foo()`, ParseStatus.valid, `foo()`, "","");
-		testNodeParse(new MethodCallNode(),`bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "","");	
-		testNodeParse(new MethodCallNode(),`yon`, ParseStatus.incomplete, `yon`, "","");
-		testNodeParse(new MethodCallNode(),`yon `, ParseStatus.incomplete, `yon`, " ","");
-		testNodeParse(new MethodCallNode(),`yon(`, ParseStatus.incomplete, `yon(`, "","");
-		testNodeParse(new MethodCallNode(),`yon(a`, ParseStatus.incomplete, `yon(a`, "","");
-		testNodeParse(new MethodCallNode(),`yon(a,`, ParseStatus.incomplete, `yon(a,`, "","");
-		testNodeParse(new MethodCallNode(),`Foo()`, ParseStatus.invalid, ``, "Foo()","");
-		testNodeParse(new MethodCallNode(),`foo[]`, ParseStatus.invalid, ``, "foo[]","");
+		testNodeParse(new FunctionCallNode(),``, ParseStatus.incomplete, ``, "","");
+		testNodeParse(new FunctionCallNode(),`  `, ParseStatus.incomplete, ``, "  ","");
+		testNodeParse(new FunctionCallNode(),`foo()`, ParseStatus.valid, `foo()`, "","");
+		testNodeParse(new FunctionCallNode(),`bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "","");	
+		testNodeParse(new FunctionCallNode(),`yon`, ParseStatus.incomplete, `yon`, "","");
+		testNodeParse(new FunctionCallNode(),`yon `, ParseStatus.incomplete, `yon`, " ","");
+		testNodeParse(new FunctionCallNode(),`yon(`, ParseStatus.incomplete, `yon(`, "","");
+		testNodeParse(new FunctionCallNode(),`yon(a`, ParseStatus.incomplete, `yon(a`, "","");
+		testNodeParse(new FunctionCallNode(),`yon(a,`, ParseStatus.incomplete, `yon(a,`, "","");
+		testNodeParse(new FunctionCallNode(),`Foo()`, ParseStatus.invalid, ``, "Foo()","");
+		testNodeParse(new FunctionCallNode(),`foo[]`, ParseStatus.invalid, ``, "foo[]","");
 	});
 	test('Literal List of T', () => {
-		testNodeParse(new LitListOfT(() => new LitInt()),``, ParseStatus.incomplete, ``, "","");
-		testNodeParse(new LitListOfT(() => new LitInt()),`{1,2,3 ,4 , 5}`, ParseStatus.valid, `{1,2,3 ,4 , 5}`, "","");
-		testNodeParse(new LitListOfT(() => new LitInt()),`{}`, ParseStatus.valid, `{}`, "","");
-		testNodeParse(new LitListOfT(() => new LitInt()),`{`, ParseStatus.incomplete, `{`, "","");
-		testNodeParse(new LitListOfT(() => new LitInt()),`{1,2,3.1}`, ParseStatus.invalid, ``, "{1,2,3.1}","");
+		testNodeParse(new ListOfT(() => new LitInt()),``, ParseStatus.incomplete, ``, "","");
+		testNodeParse(new ListOfT(() => new LitInt()),`{1,2,3 ,4 , 5}`, ParseStatus.valid, `{1,2,3 ,4 , 5}`, "","");
+		testNodeParse(new ListOfT(() => new LitInt()),`{}`, ParseStatus.valid, `{}`, "","");
+		testNodeParse(new ListOfT(() => new LitInt()),`{`, ParseStatus.incomplete, `{`, "","");
+		testNodeParse(new ListOfT(() => new LitInt()),`{1,2,3.1}`, ParseStatus.invalid, ``, "{1,2,3.1}","");
 		// list of list
-		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),``, ParseStatus.incomplete, ``, "","");
-		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{}, {}, { }}`, ParseStatus.valid, `{{}, {}, { }}`, "","");
-		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}}`, ParseStatus.valid, `{{1,2}, {}, {3,4}}`, "","");
-		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}`, ParseStatus.incomplete, `{{1,2}, {}, {3,4}`, "","");
-		testNodeParse(new LitListOfT(() => new LitListOfT(() => new LitInt())),`{{1,2, {}, {3,4}}`, ParseStatus.invalid, ``, `{{1,2, {}, {3,4}}`,"");
+		testNodeParse(new ListOfT(() => new ListOfT(() => new LitInt())),``, ParseStatus.incomplete, ``, "","");
+		testNodeParse(new ListOfT(() => new ListOfT(() => new LitInt())),`{{}, {}, { }}`, ParseStatus.valid, `{{}, {}, { }}`, "","");
+		testNodeParse(new ListOfT(() => new ListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}}`, ParseStatus.valid, `{{1,2}, {}, {3,4}}`, "","");
+		testNodeParse(new ListOfT(() => new ListOfT(() => new LitInt())),`{{1,2}, {}, {3,4}`, ParseStatus.incomplete, `{{1,2}, {}, {3,4}`, "","");
+		testNodeParse(new ListOfT(() => new ListOfT(() => new LitInt())),`{{1,2, {}, {3,4}}`, ParseStatus.invalid, ``, `{{1,2, {}, {3,4}}`,"");
+	});
+	test('Indexed term', () => {
+		testNodeParse(new IndexedTerm(),`foo[3]`, ParseStatus.valid, "foo[3]","","");
+		testNodeParse(new IndexedTerm(),`foo[bar]`, ParseStatus.valid, "foo[bar]","","");
+		testNodeParse(new IndexedTerm(),`foo[3..4]`, ParseStatus.valid, "foo[3..4]","","");
+		testNodeParse(new IndexedTerm(),`foo[3..]`, ParseStatus.valid, "foo[3..]","","");
+		testNodeParse(new IndexedTerm(),`foo[..4]`, ParseStatus.valid, "foo[..4]","","");
+	});
+	test('ListOfExpr', () => {
+		testNodeParse(new ListOfExpr(),`{a, 3+ 4 , func(a, 3) -1, new Foo()}`, ParseStatus.valid, "{a, 3+ 4 , func(a, 3) -1, new Foo()}","","");
+	});
+	test('TypeSimpleNode', () => {
+		testNodeParse(new TypeSimpleNode(),`Foo`, ParseStatus.valid, "Foo","","");
+		testNodeParse(new TypeSimpleNode(),`foo`, ParseStatus.invalid, "","foo","");
+	});
+	test('TypeSingleNode', () => {
+		testNodeParse(new TypeWithOptGenerics(),`Foo`, ParseStatus.valid, "Foo","","");
+		testNodeParse(new TypeWithOptGenerics(),`foo`, ParseStatus.invalid, "","foo","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<`, ParseStatus.incomplete, "Foo<","","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of`, ParseStatus.incomplete, "Foo<of","","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of Bar`, ParseStatus.incomplete, "Foo<of Bar","","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>","","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>","","");
+	});
+	test('TypeNode', () => {
+		testNodeParse(new TypeNode(),`Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>","","");//Single
+		testNodeParse(new TypeNode(),`(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)","","");
+		testNodeParse(new TypeNode(),`(Foo)`, ParseStatus.invalid, "","(Foo)","");
+		testNodeParse(new TypeNode(),`(Foo, Bar, Yon`, ParseStatus.incomplete, "(Foo, Bar, Yon","","");
+		testNodeParse(new TypeNode(),`(Foo, (Bar, Yon, Qux))`, ParseStatus.valid, "(Foo, (Bar, Yon, Qux))","","");
+		testNodeParse(new TypeNode(),`(Foo, Bar< of Yon>)`, ParseStatus.valid, "(Foo, Bar< of Yon>)","","");
+		testNodeParse(new TypeNode(),`Foo<of List<of (Bar, Qux)>>`, ParseStatus.valid, "Foo<of List<of (Bar, Qux)>>","","");
+	});
+	test('TupleDefNode', () => {
+		testNodeParse(new TupleDefNode(),`(foo, 3, bar(a), x)`, ParseStatus.valid, "(foo, 3, bar(a), x)","","");
+		testNodeParse(new TupleDefNode(),`(foo)`, ParseStatus.invalid, "","(foo)","");
+		testNodeParse(new TupleDefNode(),`(foo, 3, bar(a), x`, ParseStatus.incomplete, "(foo, 3, bar(a), x","","");
+	});
+	test('Lambda', () => {
+		testNodeParse(new Lambda(),`lambda x -> x * x`, ParseStatus.valid, "lambda x -> x * x","","");
+		testNodeParse(new Lambda(),`lambda x ->`, ParseStatus.incomplete, "lambda x ->","","");
+		testNodeParse(new Lambda(),`lambda x = x * x`, ParseStatus.invalid, "","lambda x = x * x","");
+		testNodeParse(new Lambda(),`lambda s,p -> s + p.first()`, ParseStatus.valid, "lambda s,p -> s + p.first()","","");
+	});
+	test('IfExpr', () => {
+		testNodeParse(new IfExpr(),`if cell then Colour.green else Colour.black)`, ParseStatus.valid, "","","");
+		testNodeParse(new IfExpr(),`if cell then Colour.amber`, ParseStatus.incomplete, "","","");
+		testNodeParse(new IfExpr(),`if attempt[n] is '*' then attempt  else if attempt.isYellow(target, n) then (attempt.setChar(n, '+')  else attempt.setChar(n, '_')`, ParseStatus.valid, "","","");
+		testNodeParse(new IfExpr(),`if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then (target.setChar(target.indexOf(attempt[n]), '.') else target))`, ParseStatus.valid, "","","");
 	});
 });

@@ -4,7 +4,7 @@ import { ExprNode } from "./expr-node";
 import { Punctuation } from "./punctuation";
 import { IdentifierNode } from "./identifier-node";
 
-export class MethodCallNode extends AbstractSequence {
+export class FunctionCallNode extends AbstractSequence {
     constructor() {
         super();
     }

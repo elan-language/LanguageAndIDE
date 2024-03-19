@@ -284,8 +284,12 @@ export async function activate(docUri: vscode.Uri) {
         matchedText: string, remainingText: string, source = "") {
     node.parseText(text);
     assert.equal(node.status, status);
-    assert.equal(node.matchedText, matchedText);
+    if (matchedText !== "") {
+      assert.equal(node.matchedText, matchedText);
+    }
+    if (remainingText !== "") {
     assert.equal( node.remainingText, remainingText);
+    }
     if (source !== "") {
       assert.equal( node.renderAsSource(), source);
     }

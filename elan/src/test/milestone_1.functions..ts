@@ -96,7 +96,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	
 	const ea = new Each(m);
 	ea.variable.setText("letter");
-	ea.iter.setText("Charlie Duke");
+	ea.iter.setText(`"Charlie Duke"`);
 	m.addChildBefore(ea,ssm);
 	const if1 = new IfStatement(m);
     if1.condition.setText("y > 4");

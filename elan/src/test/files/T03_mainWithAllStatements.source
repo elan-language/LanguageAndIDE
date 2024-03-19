@@ -1,4 +1,4 @@
-# 2864f1ad4f09c00d5b96c3e4b6f7cdcb1f28faa7d9f1023820a87cd2da820b55 Elan v0.1 incomplete
+# dab1b326fd92e5c21bea3de5666b9196910e89cfdd62cdc9739b4a21447b98c1 Elan v0.1 incomplete
 
 main
   var  set to 
@@ -15,7 +15,7 @@ main
   for i from 1 to 10 step 1
 
   end for
-  each letter in Charlie Duke
+  each letter in "Charlie Duke"
 
   end each
   if y > 4

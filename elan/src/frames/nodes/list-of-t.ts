@@ -3,7 +3,7 @@ import { Punctuation } from "./punctuation";
 import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
 
-export class LitListOfT extends AbstractSequence {
+export class ListOfT extends AbstractSequence {
     elementConstructor: () => ParseNode;
 
     constructor(elementConstructor: () => ParseNode) {

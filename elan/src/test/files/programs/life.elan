@@ -1,4 +1,4 @@
-﻿# e5728bf08c5fd0242321297b7d1252d8ed0b3102c0504b445f06b56cd466bcfa Elan v0.1 valid
+﻿# 102bf99051c388ef0ddafc751b271e4120769a0b5c1bf74c555b331eee47a663 Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -14,7 +14,7 @@ procedure drawGrid(cm CharMap, grid List<of Bool>)
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
       var cell set to grid[col * 20 + row]
-      var colour set to Colour.white  if cell  else Colour.black
+      var colour set to if cell then Colour.white else Colour.black
       call cm.putBlockWithColour((col * 2), row, colour)
       call cm.putBlockWithColour((col * 2 + 1), row, colour)
       # because square block is 2 chars wide
@@ -23,19 +23,19 @@ procedure drawGrid(cm CharMap, grid List<of Bool>)
 end procedure
 
 function north(c Int) as Int
-  return c - 20 if c > 19 else   c + 380
+  return if c > 19 then c - 20 else   c + 380
 end function
 
 function south(c Int) as Int
-  return c + 20 if c < 380 else c - 380
+  return if c < 380 then c + 20 else c - 380
 end function
 
 function east(c Int) as Int
-  return c + 1 if c mod 20 < 19 else c - 19
+  return if c mod 20 < 19 then c + 1 else c - 19
 end function
 
 function west(c Int) as Int
-  return c - 1 if c mod 20 > 0 else c + 19
+  return if c mod 20 > 0 then c - 1 else c + 1
 end function
 
 function northEast(c Int) as Int
@@ -63,7 +63,7 @@ function liveNeighbours(cells List<of Bool>, c Int) as Int
 end function
 
 function willLive(currentlyAlive Bool, liveNeighbours Int) as Bool
-  return liveNeighbours > 1 and liveNeighbours < 4 if currentlyAlive  else liveNeighbours is 3
+  return if currentlyAlive then liveNeighbours > 1 and liveNeighbours < 4 else liveNeighbours is 3
 end function
 
 function nextCellValue(cells List<of Bool>, c Int) as Bool
