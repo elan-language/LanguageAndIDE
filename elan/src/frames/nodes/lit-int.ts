@@ -1,5 +1,4 @@
 import { AbstractParseNode } from "./abstract-parse-node";
-import { singleLeadingSpace } from "./node-helpers";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class LitInt extends AbstractParseNode {

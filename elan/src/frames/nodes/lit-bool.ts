@@ -1,7 +1,6 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { Punctuation } from "./punctuation";
 import { Keyword } from "./keyword";
-import { singleLeadingSpace } from "./node-helpers";
 
 export class LitBool extends AbstractAlternatives {
 

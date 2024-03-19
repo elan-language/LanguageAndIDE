@@ -1,5 +1,4 @@
 import { ParseStatus } from "../parse-status";
-import { singleLeadingSpace as singleLeadingSpaceIfNotEmpty } from "./node-helpers";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode{
@@ -12,7 +11,7 @@ export abstract class AbstractParseNode implements ParseNode{
     abstract renderAsHtml(selected: boolean | undefined): string;
 
     renderAsSource(): string {
-        return singleLeadingSpaceIfNotEmpty(this);
+        throw new Error("Not implemented");
     }
 
     renderAsObjectCode(): string {return "To be implemented"; } //TODO make abstract

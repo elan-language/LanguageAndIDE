@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { AnyTextExceptQuotes } from "./anyTextExceptQuotes";
 import { Punctuation } from "./punctuation";
+import { RegExMatchNode } from "./regex-match-node";
 
 export class LitString extends AbstractSequence {
     constructor() {
@@ -11,7 +11,7 @@ export class LitString extends AbstractSequence {
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(new Punctuation(`"`));
-            this.elements.push(new AnyTextExceptQuotes());
+            this.elements.push(new RegExMatchNode(/^[^"]*/));
             this.elements.push(new Punctuation(`"`));
             super.parseText(text);
         }

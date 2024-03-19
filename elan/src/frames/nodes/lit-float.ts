@@ -1,7 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Punctuation } from "./punctuation";
 import { LitInt } from "./lit-int";
-import { singleLeadingSpace } from "./node-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class LitFloat extends AbstractSequence {
