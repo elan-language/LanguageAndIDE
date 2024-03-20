@@ -6,6 +6,7 @@ import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
@@ -19,6 +20,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     constructor(parent: Parent) {
         super(parent);   
         this.getChildren().push(new StatementSelector(this));
+    }
+    getProfile(): Profile {
+        return this.getParent().getProfile();
     }
 
     protected setClasses() {

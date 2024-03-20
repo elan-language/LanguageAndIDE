@@ -1,6 +1,7 @@
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
+import { Profile } from "./profile";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 
@@ -26,6 +27,7 @@ export interface Parent {
 
     getMap(): Map<string, Selectable>;
     getFactory() : StatementFactory;
+    getProfile() : Profile;
 
     getIdPrefix(): string;
     hasParent(): boolean;

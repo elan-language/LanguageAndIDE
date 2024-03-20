@@ -21,7 +21,9 @@ import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
-import * as Profiles from "../profile.json";
+import * as ProfileFromFile from "../profile.json";
+import { Profile } from "./interfaces/profile";
+import { DefaultProfile } from "./default-profile";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -31,7 +33,7 @@ export class FileImpl implements File {
     hasFields: boolean = true;
     isFile: boolean = true;
     parseError? : string;
-    profiles = Profiles;
+    private profile?: Profile;
 
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
@@ -45,6 +47,17 @@ export class FileImpl implements File {
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
+    }
+
+    getProfile() : Profile {
+        if (!this.profile) {
+            if (ProfileFromFile) {
+                this.profile = ProfileFromFile as unknown as Profile;
+            } else {
+                this.profile = new DefaultProfile();
+            }
+        }
+        return this.profile;
     }
 
     getChildren(): Frame[] {
@@ -111,7 +124,7 @@ export class FileImpl implements File {
 
     public renderAsHtml(): string {
         var globals = parentHelper_renderChildrenAsHtml(this);
-        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
+        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
     }
 
     public indent(): string {
@@ -127,6 +140,11 @@ export class FileImpl implements File {
         return "Elan v0.1";
     }
 
+    private getProfileName() {
+        var profile = this.getProfile();
+        return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
+    }
+
     renderAsSource(): string {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
@@ -134,7 +152,7 @@ export class FileImpl implements File {
 
     renderHashableContent(): string {
         const globals = parentHelper_renderChildrenAsSource(this);
-        return `${this.getVersion()} ${this.statusAsString()}\r\n\r\n${globals}`; 
+        return `${this.getVersion()}${this.getProfileName()} ${this.statusAsString()}\r\n\r\n${globals}`; 
     }
 
     public getFirstSelectorAsDirectChild() : AbstractSelector {

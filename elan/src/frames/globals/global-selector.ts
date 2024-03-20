@@ -13,7 +13,8 @@ export class GlobalSelector extends AbstractSelector  {
         this.file = parent;
     }
 
-    defaultOptions: [string, (parent: Parent) => Frame][] = [
+    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+        return [
         [mainKeyword, (parent: Parent) => this.file.createMain()],
         [procedureKeyword, (parent: Parent) => this.file.createProcedure()],
         [functionKeyword, (parent: Parent) => this.file.createFunction()],
@@ -24,7 +25,12 @@ export class GlobalSelector extends AbstractSelector  {
         [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
         [abstractKeyword, (parent: Parent) => this.file.createClass()],
         [immutableKeyword, (parent: Parent) => this.file.createClass()],
-    ];
+        ];
+    }
+
+    profileAllows(keyword: string): boolean {
+        return this.profile.globals.includes(keyword);
+    }
 
     validForEditorWithin(keyword: string): boolean {
         var result = false;

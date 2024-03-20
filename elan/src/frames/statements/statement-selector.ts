@@ -3,7 +3,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
-import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword } from "../keywords";
+import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword, commentMarker } from "../keywords";
 
 export class StatementSelector extends AbstractSelector  {
     isStatement = true;
@@ -14,7 +14,8 @@ export class StatementSelector extends AbstractSelector  {
         this.factory = (parent.getFactory());
     }
 
-    defaultOptions: [string, (parent: Parent) => Frame][] = [
+    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+        return [
         [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
         [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
         [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
@@ -33,8 +34,13 @@ export class StatementSelector extends AbstractSelector  {
         [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
         [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
         [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
-        ["#", (parent: Parent) => this.factory.newComment(parent)]
-    ];
+        [commentMarker, (parent: Parent) => this.factory.newComment(parent)]
+        ];
+    }
+
+    profileAllows(keyword: string): boolean {
+        return this.profile.statements.includes(keyword);
+    }
 
     validForEditorWithin(keyword: string): boolean {
         if (this.getParent().getIdPrefix() === testKeyword ) {

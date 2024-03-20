@@ -8,6 +8,7 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
+import { Profile } from "../interfaces/profile";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -24,6 +25,9 @@ export class Function extends FrameWithStatements implements Parent {
         this.returnType = new Type(this);
         this.returnType.setPlaceholder("return type");
         this.getChildren().push(new ReturnStatement(this));
+    }
+    getProfile(): Profile {
+        return this.getParent().getProfile();
     }
 
     minimumNumberOfChildrenExceeded(): boolean {

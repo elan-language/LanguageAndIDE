@@ -4,20 +4,27 @@ import { editorEvent } from "./interfaces/editor-event";
 import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
 import { AbstractFrame } from "./abstract-frame";
+import { Profile } from "./interfaces/profile";
 
 export abstract class AbstractSelector extends AbstractFrame {
     isSelector = true;
     isStatement = true;
     text: string = "";
     label: string = "new code";
-    protected defaultOptions: [string, (parent: Parent) => Frame][]= new Array<[string, () => Frame]>();
+    protected profile: Profile;
+    profileOptions: [string, (parent: Parent) => Frame][];
 
     constructor(parent: Parent) {
         super(parent);
+        this.profile = parent.getProfile();
+        this.profileOptions = this.getDefaultOptions().filter(opt => this.profileAllows(opt[0]));
     }
+
+    abstract getDefaultOptions():  [string, (parent: Parent) => Frame][];
+
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        var options = this.defaultOptions.filter(o => source.isMatch(o[0]));
+        var options = this.getDefaultOptions().filter(o => source.isMatch(o[0]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);
@@ -33,8 +40,10 @@ export abstract class AbstractSelector extends AbstractFrame {
         return this.optionsForContext().filter(o => o[0].startsWith(match));
     }
 
+    abstract profileAllows(keyword: string): boolean;
+
     private optionsForContext(): [string, (parent: Parent) => Frame][] {
-        return this.defaultOptions.filter(o => this.validForEditorWithin(o[0]));
+        return this.profileOptions.filter(o => this.validForEditorWithin(o[0]));
     }
 
     commonStartText(match: string): string {
@@ -50,7 +59,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     addFrame(keyword: string): Frame {
-        var func = this.defaultOptions.filter(o => o[0]===keyword)[0][1]; 
+        var func = this.getDefaultOptions().filter(o => o[0]===keyword)[0][1]; 
         var parent = this.getParent();
         var newFrame: Frame = func(parent);
         parent.addChildBefore(newFrame, this);

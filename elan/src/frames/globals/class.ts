@@ -21,6 +21,7 @@ import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
+import { Profile } from "../interfaces/profile";
 
 export class Class extends AbstractFrame implements Parent, Collapsible {
     isCollapsible: boolean = true;
@@ -43,6 +44,9 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
         this.getChildren().push(new Constructor(this));
         this.getChildren().push(new MemberSelector(this));
         this.immutable = false;
+    }
+    getProfile(): Profile {
+        return this.getParent().getProfile();
     }
     protected setClasses() {
         super.setClasses();

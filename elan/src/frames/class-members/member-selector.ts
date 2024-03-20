@@ -19,16 +19,23 @@ export class MemberSelector extends AbstractSelector implements Member  {
     private abstractProc = abstractKeyword + " " + procedureKeyword;
     private abstractFunc = abstractKeyword + " " + functionKeyword;
    
-    defaultOptions: [string, (parent: Parent) => Frame][] = [
+    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+        var options:  [string, (parent: Parent) => Frame][] = [
         [functionKeyword, (parent: Parent) => this.class.createFunction()],
         [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
         [propertyKeyword, (parent: Parent) => this.class.createProperty()],
         [privateKeyword, (parent: Parent) => this.class.createProperty()],
-        [this.abstractFunc, (parent: Parent) => this.class.createAbstractFunction()],
-        [this.abstractProc, (parent: Parent) => this.class.createAbstractProcedure()],
-        [this.abstractProp, (parent: Parent) => this.class.createAbstractProperty()],
-        [commentMarker, (parent: Parent) => this.class.createComment()]
-    ];
+        ["abstract function", (parent: Parent) => this.class.createAbstractFunction()],
+        ["abstract procedure", (parent: Parent) => this.class.createAbstractProcedure()],
+        ["abstract property", (parent: Parent) => this.class.createAbstractProperty()],
+        [commentMarker, (parent: Parent) => this.class.createComment()],
+        ];
+        return options;
+    }
+
+    profileAllows(keyword: string): boolean {
+        return  this.profile.class_members.includes(keyword);
+    }
 
     validForEditorWithin(keyword: string): boolean {
         var result = false;
