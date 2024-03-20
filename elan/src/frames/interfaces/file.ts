@@ -5,6 +5,7 @@ import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
+import { Profile } from "./profile";
 
 export interface File extends Parent {
     // external use
@@ -42,4 +43,6 @@ export interface File extends Parent {
 
     deselectAll(): void;
     processKey(e: editorEvent): void;
+
+    setProfile(profile: Profile): void;
 }

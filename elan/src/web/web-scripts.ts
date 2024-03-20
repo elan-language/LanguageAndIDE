@@ -1,7 +1,9 @@
 import { handleClick, handleDblClick, handleKey} from "../editorHandlers";
+import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
+import { Profile } from "../frames/interfaces/profile";
 
 const codeContainer = document.querySelector('.elan-code');
 var file : File = new FileImpl((s) => "", true);
@@ -105,6 +107,12 @@ function updateContent(text: string) {
 
 	if (doOnce) {
 		doOnce = false;
+
+		fetch("profile.json", { mode: "same-origin" })
+			.then(f => f.json())
+			.then(j => file.setProfile(j as Profile))
+			.catch((e) => file.setProfile(new DefaultProfile()));
+
 		elanCode!.addEventListener('keydown', (event: Event) => {
 			const ke = event as KeyboardEvent;
 			const msg: editorEvent = {

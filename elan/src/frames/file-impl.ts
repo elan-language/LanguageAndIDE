@@ -21,7 +21,6 @@ import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
-import * as ProfileFromFile from "../profile.json";
 import { Profile } from "./interfaces/profile";
 import { DefaultProfile } from "./default-profile";
 
@@ -49,13 +48,13 @@ export class FileImpl implements File {
         }
     }
 
+    setProfile(profile : Profile) {
+        this.profile = profile;
+    }
+
     getProfile() : Profile {
         if (!this.profile) {
-            if (ProfileFromFile) {
-                this.profile = ProfileFromFile as unknown as Profile;
-            } else {
-                this.profile = new DefaultProfile();
-            }
+            this.profile = new DefaultProfile();
         }
         return this.profile;
     }
