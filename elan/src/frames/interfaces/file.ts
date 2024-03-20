@@ -43,6 +43,4 @@ export interface File extends Parent {
 
     deselectAll(): void;
     processKey(e: editorEvent): void;
-
-    setProfile(profile: Profile): void;
 }

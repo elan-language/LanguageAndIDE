@@ -12,13 +12,14 @@ import { Call } from '../frames/statements/call';
 import { Regexes } from '../frames/fields/regexes';
 import { assertFileParses } from './testHelpers';
 import { hash } from '../util';
+import { DefaultProfile } from '../frames/default-profile';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('parse Frames - empty file', () => {
         var source = new CodeSourceFromString("");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
@@ -30,7 +31,7 @@ suite('File Parsing Tests', () => {
     test('parse Frames - set statement', () => {
 		var code = "  set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var setTo = new SetStatement(m);
 		setTo.parseFrom(source);
@@ -41,7 +42,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - variable', () => {
 		var code = "  var fooBar set to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var v = new VariableDefStatement(m);
 		v.parseFrom(source);
@@ -52,7 +53,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - print', () => {
 		var code = `  print "Hello World!"`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var p = new Print(m);
 		p.parseFrom(source);
@@ -62,7 +63,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - throw', () => {
 		var code = `  throw "Failure"`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
 		setTo.parseFrom(source);
@@ -72,7 +73,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - throw with variable', () => {
 		var code = `  throw message1`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
 		setTo.parseFrom(source);
@@ -82,7 +83,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - call', () => {
 		var code = `  call foo()`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var setTo = new Call(m);
 		setTo.parseFrom(source);
@@ -92,7 +93,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - call with args', () => {
 		var code = `  call foo(3, a, "hello")`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var setTo = new Call(m);
 		setTo.parseFrom(source);
@@ -102,7 +103,7 @@ suite('File Parsing Tests', () => {
 	test('parse Frames - StatementSelector', () => {
 		var code = "set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
 		var ss = new StatementSelector(m);
 		ss.parseFrom(source);
@@ -114,7 +115,7 @@ suite('File Parsing Tests', () => {
 
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -126,7 +127,7 @@ suite('File Parsing Tests', () => {
 constant pi set to 3.142
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -141,7 +142,7 @@ constant pi set to 3.142
 constant e set to 2.718
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -155,7 +156,7 @@ main
 end main
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -171,7 +172,7 @@ main
 end main
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
@@ -193,7 +194,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -222,7 +223,7 @@ end enum
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -250,7 +251,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -270,7 +271,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -290,7 +291,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -308,7 +309,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -357,7 +358,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash);
+		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));

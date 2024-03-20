@@ -32,14 +32,13 @@ export class FileImpl implements File {
     hasFields: boolean = true;
     isFile: boolean = true;
     parseError? : string;
-    private profile?: Profile;
-
+ 
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
     private ignoreHashOnParsing: boolean = false;
 
-    constructor(private hash: (toHash: string) => string, ignoreHashOnParsing?: boolean) {
+    constructor(private hash: (toHash: string) => string, private profile : Profile, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this.getChildren().push(new GlobalSelector(this));
@@ -48,14 +47,7 @@ export class FileImpl implements File {
         }
     }
 
-    setProfile(profile : Profile) {
-        this.profile = profile;
-    }
-
     getProfile() : Profile {
-        if (!this.profile) {
-            this.profile = new DefaultProfile();
-        }
         return this.profile;
     }
 

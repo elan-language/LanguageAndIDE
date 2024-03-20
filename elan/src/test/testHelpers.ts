@@ -7,6 +7,7 @@ import { editorEvent } from '../frames/interfaces/editor-event';
 import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
+import { DefaultProfile } from '../frames/default-profile';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -98,7 +99,7 @@ export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl(hash);
+    var fl = new FileImpl(hash, new DefaultProfile());
     fl.parseFrom(codeSource);
     if (fl.parseError) {
         throw new Error(fl.parseError);
@@ -120,7 +121,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
     const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
     const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
     var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl(hash);
+    var fl = new FileImpl(hash, new DefaultProfile());
     fl.parseFrom(codeSource);
     if (fl.parseError) {
         throw new Error(fl.parseError);

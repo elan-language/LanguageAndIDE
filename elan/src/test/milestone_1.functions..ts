@@ -25,14 +25,15 @@ import { FileImpl } from "../frames/file-impl";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { Switch } from "../frames/statements/switch";
 import { hash } from "../util";
+import { DefaultProfile } from "../frames/default-profile";
 
 export function T00_emptyFile() {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	return f;
 }
 
 export function T01_helloWorld() {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
@@ -47,7 +48,7 @@ export function T01_helloWorld() {
 }
 
 export function T02_comments() {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	const gc = new GlobalComment(f);
 	gc.text.setText("Comment 1");
@@ -62,7 +63,7 @@ export function T02_comments() {
 }
 
 export function T03_mainWithAllStatements(): FileImpl {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
@@ -145,7 +146,7 @@ export function T08_collapseAll(f : FileImpl) {
 }
 
 export function T04_allGlobalsExceptClass(): FileImpl {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	const con = new Constant(f);
 	con.name.setText("phi");
@@ -172,7 +173,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 }
 
 export function T05_classes() {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	const cl1 = new Class(f);
 	var ms = cl1.getFirstSelectorAsDirectChild();
@@ -210,7 +211,7 @@ main
 end main */
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
-	const f = new FileImpl(hash);
+	const f = new FileImpl(hash, new DefaultProfile());
 	var gs = f.getFirstSelectorAsDirectChild();
 	f.addChildBefore(new MainFrame(f), gs);
 	f.addChildBefore(new Class(f), gs);
@@ -222,6 +223,6 @@ export function getTestFrame(fn : string) : FileImpl {
     	return eval(`${fn}()`);
 	}
 	catch (e){
-		return new FileImpl(hash);
+		return new FileImpl(hash, new DefaultProfile());
 	}
 }

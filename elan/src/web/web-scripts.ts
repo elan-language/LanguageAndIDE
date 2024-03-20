@@ -6,25 +6,38 @@ import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 
 const codeContainer = document.querySelector('.elan-code');
-var file : File = new FileImpl((s) => "", true);
+var file : File;
 const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 var doOnce = true;
 
-if (codeFile) {
-	fetch(codeFile, { mode: "same-origin" })
-		.then((f) => f.text())
-		.then((text) => {
-			const code = new CodeSourceFromString(text);
-			file.parseFrom(code);
-			updateContent(file.renderAsHtml());
-		})
-		.catch((e) => {
-			console.error(e);
-			updateContent(file.renderAsHtml());
-		});
-}
-else {
-	updateContent(file.renderAsHtml());
+fetch("profile.json", { mode: "same-origin" })
+	.then(f => f.json())
+	.then(j => {
+		file = new FileImpl((s) => "", j as Profile, true);
+		displayFile();
+	})
+	.catch((e) => {
+		file = new FileImpl((s) => "", new DefaultProfile(), true);
+		displayFile();
+	});
+
+function displayFile() {
+	if (codeFile) {
+		fetch(codeFile, { mode: "same-origin" })
+			.then((f) => f.text())
+			.then((text) => {
+				const code = new CodeSourceFromString(text);
+				file.parseFrom(code);
+				updateContent(file.renderAsHtml());
+			})
+			.catch((e) => {
+				console.error(e);
+				updateContent(file.renderAsHtml());
+			});
+	}
+	else {
+		updateContent(file.renderAsHtml());
+	}
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
@@ -107,11 +120,6 @@ function updateContent(text: string) {
 
 	if (doOnce) {
 		doOnce = false;
-
-		fetch("profile.json", { mode: "same-origin" })
-			.then(f => f.json())
-			.then(j => file.setProfile(j as Profile))
-			.catch((e) => file.setProfile(new DefaultProfile()));
 
 		elanCode!.addEventListener('keydown', (event: Event) => {
 			const ke = event as KeyboardEvent;

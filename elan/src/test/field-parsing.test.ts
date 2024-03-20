@@ -9,12 +9,13 @@ import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
 import { Call } from '../frames/statements/call';
 import { hash } from '../util';
+import { DefaultProfile } from '../frames/default-profile';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('parse Frames - VariableDefStatement', () => { 
-		var main = new MainFrame(new FileImpl(hash));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 		var variable = new VariableDefStatement(main);
         var id = variable.name;
 		assert.equal(id.textAsSource(), "");
@@ -29,7 +30,7 @@ suite('Field Parsing Tests', () => {
 		}); 
 
 	test('parse Frames - literalValue', () => { 
-		var main = new MainFrame(new FileImpl(hash));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 		var sw = new Switch(main);
 		var c = new Case(sw);
 		var f = c.value;
@@ -47,7 +48,7 @@ suite('Field Parsing Tests', () => {
 		}); 
 
 		test('parse Frames - argsList', () => { 
-			var main = new MainFrame(new FileImpl(hash));
+			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 			var call = new Call(main);
 			var args = call.args; 
 			args.setText("3,4,5");

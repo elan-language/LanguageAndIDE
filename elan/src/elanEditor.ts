@@ -7,6 +7,7 @@ import { Uri } from 'vscode';
 import { FileImpl } from './frames/file-impl';
 import { CodeSourceFromString } from './frames/code-source';
 import { handleClick, handleDblClick, handleKey } from './editorHandlers';
+import { DefaultProfile } from './frames/default-profile';
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
@@ -41,7 +42,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
 		if (this.currentFileUri !== document.uri || !this.file) {
-			this.file = new FileImpl(hash);
+			this.file = new FileImpl(hash, new DefaultProfile());
 			this.file.parseFrom(new CodeSourceFromString(document.getText()));   
 			this.file.deselectAll();
 			this.currentFileUri = document.uri;
