@@ -1,32 +1,32 @@
 import * as vscode from 'vscode';
-import { ExprNode } from '../frames/nodes/expr-node';
+import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
 import { testNodeParse } from './testHelpers';
-import { LitBool } from '../frames/nodes/lit-bool';
-import { LitChar } from '../frames/nodes/lit-char';
-import { LitInt } from '../frames/nodes/lit-int';
-import { LitFloat } from '../frames/nodes/lit-float';
-import { Symbol } from '../frames/nodes/symbol';
-import { BinaryOperation } from '../frames/nodes/binary-operation';
-import { UnaryOp } from '../frames/nodes/unary-op';
-import { UnaryTerm } from '../frames/nodes/unary-term';
-import { BracketedExpression } from '../frames/nodes/bracketed-expression';
-import { Optional } from '../frames/nodes/optional';
-import { LitString } from '../frames/nodes/lit-string';
-import { ListOfT } from '../frames/nodes/list-of-t';
-import { Multiple } from '../frames/nodes/multiple';
-import { CSV } from '../frames/nodes/csv';
-import { IdentifierNode } from '../frames/nodes/identifier-node';
-import { FunctionCallNode } from '../frames/nodes/function-call-node';
-import { Keyword } from '../frames/nodes/keyword';
-import { IndexedTerm } from '../frames/nodes/indexed-term';
-import { ListOfExpr } from '../frames/nodes/listOfExpr';
-import { TypeNode } from '../frames/nodes/type-node';
-import { TypeWithOptGenerics } from '../frames/nodes/type-with-opt-generics';
-import { TypeSimpleNode } from '../frames/nodes/type-simple-node';
-import { TupleDefNode } from '../frames/nodes/tuple-def-node';
-import { Lambda } from '../frames/nodes/lambda';
-import { IfExpr } from '../frames/nodes/if-expr';
+import { LitBool } from '../frames/parse-nodes/lit-bool';
+import { LitChar } from '../frames/parse-nodes/lit-char';
+import { LitInt } from '../frames/parse-nodes/lit-int';
+import { LitFloat } from '../frames/parse-nodes/lit-float';
+import { Symbol } from '../frames/parse-nodes/symbol';
+import { BinaryOperation } from '../frames/parse-nodes/binary-operation';
+import { UnaryOp } from '../frames/parse-nodes/unary-op';
+import { UnaryTerm } from '../frames/parse-nodes/unary-term';
+import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
+import { Optional } from '../frames/parse-nodes/optional';
+import { LitString } from '../frames/parse-nodes/lit-string';
+import { ListOfT } from '../frames/parse-nodes/list-of-t';
+import { Multiple } from '../frames/parse-nodes/multiple';
+import { CSV } from '../frames/parse-nodes/csv';
+import { IdentifierNode } from '../frames/parse-nodes/identifier-node';
+import { FunctionCallNode } from '../frames/parse-nodes/function-call-node';
+import { Keyword } from '../frames/parse-nodes/keyword';
+import { IndexedTerm } from '../frames/parse-nodes/indexed-term';
+import { ListOfExpr } from '../frames/parse-nodes/listOfExpr';
+import { TypeNode } from '../frames/parse-nodes/type-node';
+import { TypeWithOptGenerics } from '../frames/parse-nodes/type-with-opt-generics';
+import { TypeSimpleNode } from '../frames/parse-nodes/type-simple-node';
+import { TupleDefNode } from '../frames/parse-nodes/tuple-def-node';
+import { Lambda } from '../frames/parse-nodes/lambda';
+import { IfExpr } from '../frames/parse-nodes/if-expr';
 
 
 suite('FieldNode parsing', () => {
@@ -147,14 +147,14 @@ suite('FieldNode parsing', () => {
 	test('Optional', () => {
 		testNodeParse(new Optional(() => new LitInt()),"123 a", ParseStatus.valid, "123", " a","123");
 		testNodeParse(new Optional(() => new LitInt()), "abc", ParseStatus.valid, "", "abc","");
-		testNodeParse(new Optional(() => new Keyword("abstract")), " abstract", ParseStatus.valid, " abstract", "","abstract ");
+		testNodeParse(new Optional(() => new Keyword("abstract")), " abstract", ParseStatus.valid, " abstract", "","abstract ","<keyword>abstract </keyword>");
 		testNodeParse(new Optional(() => new Keyword("abstract")), "abs", ParseStatus.incomplete, "abs", "","");
 		testNodeParse(new Optional(() => new Keyword("abstract")), "abscract", ParseStatus.valid, "", "abscract","");
 		testNodeParse(new Optional(() => new Keyword("abstract")), "", ParseStatus.valid, "", "","");
 		testNodeParse(new Optional(() => new Keyword("abstract")), "  ", ParseStatus.valid, "", "  ","");
 	});
 	test('LitString', () => {
-		testNodeParse(new LitString(),`"abc"`, ParseStatus.valid, `"abc"`, "","");
+		testNodeParse(new LitString(),`"abc"`, ParseStatus.valid, `"abc"`, "","",`<string>"abc"</string>`);
 		testNodeParse(new LitString(),`"abc`, ParseStatus.incomplete, `"abc`, "","");
 		testNodeParse(new LitString(),`"`, ParseStatus.incomplete, `"`, "","");
 		testNodeParse(new LitString(),`abc`, ParseStatus.invalid, "", "abc","");
@@ -218,17 +218,17 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ListOfExpr(),`{a, 3+ 4 , func(a, 3) -1, new Foo()}`, ParseStatus.valid, "{a, 3+ 4 , func(a, 3) -1, new Foo()}","","");
 	});
 	test('TypeSimpleNode', () => {
-		testNodeParse(new TypeSimpleNode(),`Foo`, ParseStatus.valid, "Foo","","");
+		testNodeParse(new TypeSimpleNode(),`Foo`, ParseStatus.valid, "Foo","","","<type>Foo</type>");
 		testNodeParse(new TypeSimpleNode(),`foo`, ParseStatus.invalid, "","foo","");
 	});
-	test('TypeSingleNode', () => {
+	test('TypeWithOptGenerics', () => {
 		testNodeParse(new TypeWithOptGenerics(),`Foo`, ParseStatus.valid, "Foo","","");
 		testNodeParse(new TypeWithOptGenerics(),`foo`, ParseStatus.invalid, "","foo","");
 		testNodeParse(new TypeWithOptGenerics(),`Foo<`, ParseStatus.incomplete, "Foo<","","");
 		testNodeParse(new TypeWithOptGenerics(),`Foo<of`, ParseStatus.incomplete, "Foo<of","","");
 		testNodeParse(new TypeWithOptGenerics(),`Foo<of Bar`, ParseStatus.incomplete, "Foo<of Bar","","");
-		testNodeParse(new TypeWithOptGenerics(),`Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>","","");
-		testNodeParse(new TypeWithOptGenerics(),`Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>","","");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>","","","<type>Foo</type>&lt;<keyword>of </keyword><type>Bar</type>&gt;");
+		testNodeParse(new TypeWithOptGenerics(),`Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>","","","<type>Foo</type>&lt;<keyword>of </keyword><type>List</type>&lt;<keyword>of </keyword><type>Bar</type>&gt;&gt;");
 	});
 	test('TypeNode', () => {
 		testNodeParse(new TypeNode(),`Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>","","");//Single

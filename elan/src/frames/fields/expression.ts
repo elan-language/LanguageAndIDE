@@ -1,10 +1,12 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ExprNode } from "../nodes/expr-node";
+import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { anythingToNewline } from "./parse-functions";
 
-export class Expression extends AbstractField  {   
+export class Expression extends AbstractField  { 
+    node?: ExprNode;  
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value or expression");
@@ -18,11 +20,35 @@ export class Expression extends AbstractField  {
 
     parseCurrentText() : void {
         var status = ParseStatus.invalid;
-        var node = new ExprNode();
-        node.parseText(this.text);
-        if (node.remainingText.trim().length === 0) { //i.e. valid or incomplete
-            status = node.status;
+        this.node = new ExprNode();
+        this.node.parseText(this.text);
+        if (this.node.remainingText.trim().length === 0) { //i.e. valid or incomplete
+            status = this.node.status;
         }
         this.setStatus(status);
+    }
+
+    parseFrom(source: CodeSource): void {
+        //TODO: generalise this into an implementation for any field that uses ParseNodes
+        // c.f. an alternate implementation for using a ParseFunction
+        var rol = source.readToEndOfLine();
+        this.setText(rol);
+        this.parseCurrentText();
+        if (this.getStatus() === ParseStatus.valid || this.isOptional()) {
+            this.text = this.node!.matchedText;
+            rol = rol.substring(this.text.length);
+            source.pushBackOntoFrontOfCode(rol);
+        } else {
+            throw new Error(`Parse ${this.getStatus().toString()} at ${rol}`);
+        } 
+    }
+
+    public textAsHtml(): string {
+        if (this.selected) {
+            return super.textAsHtml();
+        }
+        else{ 
+            return this.node ? this.node.renderAsHtml() : super.textAsHtml();
+        } 
     }
 }

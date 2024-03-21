@@ -1,4 +1,4 @@
-# 2526f511d352c7d44aafde2826edd6643a7573d64de71d14ae6aff9b5e38cc74 Elan v0.1 valid
+# c6aa20d37b351625f83949efab3ee7d3ae9211859d9e6e9e4f3cc3a126b5497d Elan v0.1 valid
 
 main
   print welcome
@@ -109,7 +109,7 @@ class Snake
       var h set to boardHeight - 1
       var ranW set to system.random(w)
       var ranH set to system.random(h)
-      set apple to new Square(ranW, ranH) 
+      set apple to new Square(ranW, ranH)
     end repeat when not bodyCovers(apple)
   end procedure
 
@@ -134,11 +134,11 @@ class Square
     var newY set to y
     switch d
       case Direction.left
-        set newX to newX - 1     
+        set newX to newX - 1
       case Direction.right
         set newX to newX + 1
       case Direction.up
-        set newY to newY - 1 
+        set newY to newY - 1
       case Direction.down
         set newY to newY + 1
       default

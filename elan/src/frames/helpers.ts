@@ -35,3 +35,9 @@ export function isField(f?: any): f is Field {
 export function singleIndent() {
     return "  ";
 }
+
+export function escapeAngleBrackets(str: string) : string {
+    return str
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}

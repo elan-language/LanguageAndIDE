@@ -6,6 +6,7 @@ import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
 import { error } from "console";
 import { AbstractFrame } from "../abstract-frame";
+import { escapeAngleBrackets } from "../helpers";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -189,7 +190,7 @@ export abstract class AbstractField implements Selectable, Field {
             return `<input data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
-            var c = this.escapeAngleBrackets(this.text);
+            var c = escapeAngleBrackets(this.text);
             return c;
         } 
     }
@@ -203,26 +204,10 @@ export abstract class AbstractField implements Selectable, Field {
             .replace(/"/g, '&quot;');
     }
 
-    protected escapeAngleBrackets(str: string) : string {
-        return str
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
+
 
     public textAsSource() : string {
         return this.text;
-    }
-
-    private tagTypeNames(c: string) : string {
-        return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');
-    } 
-
-    private tagKeywords(c: string) : string {
-        var keywords = ["new ", "of ", "with "];
-        keywords.forEach(kw => {
-            c = c.replaceAll(kw,`<keyword>${kw}</keyword>`);
-        });
-        return c;
     }
 
     protected setClasses() {
