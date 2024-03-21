@@ -1,7 +1,7 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { Punctuation } from "./punctuation";
+import { Symbol } from "./symbol";
 import { IdentifierNode } from "./identifier-node";
 
 export class FunctionCallNode extends AbstractSequence {
@@ -12,9 +12,9 @@ export class FunctionCallNode extends AbstractSequence {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             this.elements.push(new IdentifierNode());
-            this.elements.push(new Punctuation("("));
+            this.elements.push(new Symbol("("));
             this.elements.push(new CSV(() => new ExprNode(),0)); //arg list
-            this.elements.push(new Punctuation(")"));
+            this.elements.push(new Symbol(")"));
             super.parseText(text);
         }
     }

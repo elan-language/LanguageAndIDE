@@ -1,6 +1,6 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { CSV } from "./csv";
-import { Punctuation } from "./punctuation";
+import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
@@ -14,7 +14,7 @@ export class TypeNode extends AbstractAlternatives {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             var single = new TypeWithOptGenerics();
-            var tuple = new Sequence([() => new Punctuation("("),() => new CSV(() => new TypeNode(), 2), () => new Punctuation(")") ]);
+            var tuple = new Sequence([() => new Symbol("("),() => new CSV(() => new TypeNode(), 2), () => new Symbol(")") ]);
             this.alternatives.push(single);
             this.alternatives.push(tuple);
             super.parseText(text);

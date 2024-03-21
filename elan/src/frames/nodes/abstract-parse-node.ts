@@ -11,7 +11,7 @@ export abstract class AbstractParseNode implements ParseNode{
     abstract renderAsHtml(selected: boolean | undefined): string;
 
     renderAsSource(): string {
-        throw new Error("Not implemented");
+        return this.matchedText.trim();
     }
 
     renderAsObjectCode(): string {return "To be implemented"; } //TODO make abstract

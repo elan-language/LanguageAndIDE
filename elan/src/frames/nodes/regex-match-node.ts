@@ -3,12 +3,10 @@ import { matchRegEx } from "./parse-node-helpers";
 
 export class RegExMatchNode extends AbstractParseNode {
     regx: RegExp;
-    addLeadingSpace: boolean;
 
-    constructor(regx: RegExp, addLeadingSpace = false) {
+    constructor(regx: RegExp) {
         super();
         this.regx = regx;
-        this.addLeadingSpace = addLeadingSpace;
     }
 
     parseText(text: string): void {
@@ -20,8 +18,5 @@ export class RegExMatchNode extends AbstractParseNode {
 
     renderAsHtml(): string {
         throw new Error("Method not implemented.");
-    }
-    renderAsSource(): string {
-        return this.addLeadingSpace ? ` ${this.matchedText}`: this.matchedText;
     }
 }

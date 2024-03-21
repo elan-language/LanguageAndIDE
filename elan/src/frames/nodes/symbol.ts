@@ -1,10 +1,9 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 
-// Punctuation is rendered with no leading space
-export class Punctuation extends AbstractParseNode {
+export class Symbol extends AbstractParseNode {
     fixedText: string;
-    renderWithLeadingSpace = false;
+    isSymbol = true;
 
     constructor(fixedText: string) {
         super();
@@ -29,9 +28,5 @@ export class Punctuation extends AbstractParseNode {
 
     renderAsHtml(): string {
         throw new Error("Method not implemented.");
-    }
-
-    renderAsSource(): string {
-        return this.matchedText;
     }
 }

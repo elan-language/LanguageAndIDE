@@ -290,4 +290,7 @@ export async function activate(docUri: vscode.Uri) {
     if (remainingText !== "") {
     assert.equal( node.remainingText, remainingText);
     }
+    if (source !== "") {
+      assert.equal(node.renderAsSource(), source,);
+    }
   }

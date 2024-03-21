@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { Punctuation } from "./punctuation";
+import { Symbol } from "./symbol";
 import { Keyword } from "./keyword";
 
 export class LitBool extends AbstractAlternatives {
@@ -23,10 +23,10 @@ export class LitBool extends AbstractAlternatives {
     }
 }
 
-export class True extends Punctuation {
+export class True extends Symbol {
 
 }
 
-export class False extends Punctuation {
+export class False extends Symbol {
     
 }

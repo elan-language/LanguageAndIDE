@@ -4,6 +4,7 @@ import { ParseNode } from "./parse-node";
 
 export class Optional extends AbstractParseNode {
     elementConstructor: () => ParseNode;
+    matchedNode?: ParseNode;
 
     constructor(elementConstructor: () => ParseNode) {
         super();
@@ -17,6 +18,7 @@ export class Optional extends AbstractParseNode {
             option.parseText(text);
             if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText === "")) {
                 this.updateFrom(option);
+                this.matchedNode = option;
             } else {
                 this.status = ParseStatus.valid;
                 this.remainingText = text;
@@ -29,6 +31,6 @@ export class Optional extends AbstractParseNode {
         throw new Error("Method not implemented.");
     }
     renderAsSource(): string {
-        return this.matchedText.length > 0 ? ` ${this.matchedText}` : ``;
+        return this.matchedNode ? this.matchedNode.renderAsSource() : "";
     }
 }

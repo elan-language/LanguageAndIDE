@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Punctuation } from "./punctuation";
+import { Symbol } from "./symbol";
 import { Keyword } from "./keyword";
 import { ExprNode } from "./expr-node";
 

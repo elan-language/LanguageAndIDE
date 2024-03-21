@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
-import { Punctuation } from "./punctuation";
+import { Symbol } from "./symbol";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class EnumVal extends AbstractSequence {
@@ -10,7 +10,7 @@ export class EnumVal extends AbstractSequence {
 
     parseText(text: string): void {
         this.elements.push(new RegExMatchNode(/^\s*[A-Z]\w*/));
-        this.elements.push(new Punctuation(".")); 
+        this.elements.push(new Symbol(".")); 
         this.elements.push(new IdentifierNode()); 
         super.parseText(text);
     }

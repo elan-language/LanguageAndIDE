@@ -1,30 +1,20 @@
-import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
-import { AbstractAlternatives } from "./abstract-alternatives";
-import { Keyword } from "./keyword";
-import { Punctuation } from "./punctuation";
+import { ParseStatus } from "../parse-status";
+import { AbstractParseNode } from "./abstract-parse-node";
+import { Symbol } from "./symbol";
 
+//BinOps are distinct from other symbols as they are rendered with a space before and after
+export class BinOp extends Symbol {
 
-export class BinOp extends AbstractAlternatives {
-    parseText(text: string): void {
-        //TODO ? this.alternatives.push(new FixedText("**"));  
-        this.alternatives.push(new Punctuation("+"));
-        this.alternatives.push(new Punctuation("-"));
-        this.alternatives.push(new Punctuation("*"));
-        this.alternatives.push(new Punctuation("/"));
-        this.alternatives.push(new Punctuation(">"));
-        this.alternatives.push(new Punctuation("<"));
-        this.alternatives.push(new Punctuation(">="));
-        this.alternatives.push(new Punctuation("<="));
-        this.alternatives.push(new Keyword(isKeyword));
-        this.alternatives.push(new Keyword(isKeyword + " " + notKeyword));
-        this.alternatives.push(new Keyword(andKeyword));
-        this.alternatives.push(new Keyword(orKeyword));
-        this.alternatives.push(new Keyword(xorKeyword));
-        this.alternatives.push(new Keyword(modKeyword));
-        this.alternatives.push(new Keyword(divKeyword));;
-        super.parseText(text)
+    constructor(symbol: string) {
+        super(symbol);
+        this.fixedText = symbol;
     }
+
     renderAsHtml(): string {
         throw new Error("Method not implemented.");
+    }
+
+    renderAsSource(): string {
+        return ` ${this.matchedText.trim()} `;
     }
 }
