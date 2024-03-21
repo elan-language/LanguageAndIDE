@@ -1,4 +1,4 @@
-# 872646b9ac8776079d24a2706c5a4435e1dac7e620f8719e9a7a6eef30a54bcd Elan v0.1 valid
+# c6aa20d37b351625f83949efab3ee7d3ae9211859d9e6e9e4f3cc3a126b5497d Elan v0.1 valid
 
 main
   print welcome
@@ -144,7 +144,7 @@ class Square
       default
 
     end switch
-    return new Square(newX, newY)s
+    return new Square(newX, newY)
   end function
 
 end class
