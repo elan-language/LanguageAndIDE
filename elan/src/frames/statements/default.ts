@@ -10,6 +10,8 @@ export class Default extends FrameWithStatements implements Statement {
         super(parent);
         this.movable = false;
     }
+    deleteIfPermissible(): void {}; //Does nothing as default cannot be deleted
+
     getFields(): Field[] {
         return [];
     }   

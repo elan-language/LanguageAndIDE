@@ -17,6 +17,8 @@ export class ReturnStatement extends AbstractFrame implements Statement{
         this.expr.setText("default");
     }
 
+    deleteIfPermissible(): void {}; //Does nothing as return cannot be deleted
+
     getFields(): Field[] {
         return [this.expr];
     }

@@ -15,7 +15,10 @@ export class Catch extends FrameWithStatements implements Statement {
         this.variable  = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.variable.setText("e");
-    }
+    } 
+
+    deleteIfPermissible(): void {}; //Does nothing as catch cannot be deleted
+
     getFields(): Field[] {
         return [this.variable];
     }

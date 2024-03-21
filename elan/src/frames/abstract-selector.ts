@@ -99,6 +99,7 @@ export abstract class AbstractSelector extends AbstractFrame {
             case "Enter" : {this.tabOrEnter(e.modKey.shift); break}
             case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
             case "Delete": {this.deleteIfPermissible(); break;}
+            case "d": {if (e.modKey.control) {this.deleteIfPermissible(); break;}}
             default: {
                 if (!key || key.length === 1) {
                     this.processOptions(key);

@@ -160,11 +160,15 @@ export abstract class AbstractFrame implements Frame {
             break;
           }
           case "ArrowRight": {if (isParent(this)) { this.getFirstChild().select(true, false);} break;}
-          case "Delete": {if (e.modKey.control) {this.deleteFrame();} break;}
+          case "Delete": {if (e.modKey.control) {this.deleteIfPermissible();} break;}
+          case "d": {if (e.modKey.control) {this.deleteIfPermissible();} break;}
         } 
     }
 
-    deleteFrame() {
+    deleteIfPermissible(): void {
+        if(! this.getParent().minimumNumberOfChildrenExceeded()) {
+            this.insertPeerSelector(true);
+        }
         this.getParent().removeChild(this);
         this.getMap().delete(this.htmlId);
     }

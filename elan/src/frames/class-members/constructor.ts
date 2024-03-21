@@ -20,6 +20,8 @@ export class Constructor extends FrameWithStatements implements Member {
         this.params = new ParamList(this);
     }
 
+    deleteIfPermissible(): void {}; //Does nothing as constructor cannot be deleted
+
     getFields(): Field[] {
         return [this.params];
     }
