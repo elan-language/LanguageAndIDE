@@ -1,6 +1,5 @@
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { BinOp } from "./bin-op";
 import { Keyword } from "./keyword";
 import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
