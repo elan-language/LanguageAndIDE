@@ -179,7 +179,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
             var c = this.escapeAngleBrackets(this.text);
@@ -204,18 +204,6 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsSource() : string {
         return this.text;
-    }
-
-    private tagTypeNames(c: string) : string {
-        return c.replaceAll(/([A-Z][A-Za-z0-9_]*)/g,'<type>$1</type>');
-    } 
-
-    private tagKeywords(c: string) : string {
-        var keywords = ["new ", "of ", "with "];
-        keywords.forEach(kw => {
-            c = c.replaceAll(kw,`<keyword>${kw}</keyword>`);
-        });
-        return c;
     }
 
     protected setClasses() {
