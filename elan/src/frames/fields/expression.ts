@@ -16,13 +16,13 @@ export class Expression extends AbstractField  {
         return anythingToNewline(input);
     }   
 
-    parseCurrentText() : ParseStatus {
+    parseCurrentText() : void {
         var status = ParseStatus.invalid;
         var node = new ExprNode();
         node.parseText(this.text);
         if (node.remainingText.trim().length === 0) { //i.e. valid or incomplete
             status = node.status;
         }
-        return status;
+        this.setStatus(status);
     }
 }

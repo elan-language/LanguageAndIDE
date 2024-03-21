@@ -9,6 +9,7 @@ import { AbstractFrame } from "../abstract-frame";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
+    private _status: ParseStatus = ParseStatus.invalid; 
     protected text: string = "";
     protected placeholder: string = "";
     protected useHtmlTags: boolean = false;
@@ -19,7 +20,7 @@ export abstract class AbstractField implements Selectable, Field {
     private holder;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
-    private status: ParseStatus = ParseStatus.incomplete;
+    private status: ParseStatus | undefined;
     private cursorPos: number = 0; //Relative to LH end of text
 
     constructor(holder: Frame) {
@@ -28,7 +29,6 @@ export abstract class AbstractField implements Selectable, Field {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
-        this.parseCurrentText();
     }
 
     alertHolderToUpdate():void {
@@ -40,6 +40,7 @@ export abstract class AbstractField implements Selectable, Field {
     parseFrom(source: CodeSource): void {
         var rol = source.readToEndOfLine();
         var result = this.parseFunction([ParseStatus.empty, rol]);
+        this.setStatus(result[0]);
         if (result[0] === ParseStatus.valid || this._optional) {
             var taken = rol.length - result[1].length;
             this.text = rol.substring(0, taken);
@@ -71,7 +72,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this._optional;
     }
 
-    parseCurrentText() : ParseStatus {
+    parseCurrentText() : void {
         var status: ParseStatus = ParseStatus.empty;
         if (this.text === "") {
             status = this._optional ? ParseStatus.valid : ParseStatus.incomplete;
@@ -83,7 +84,7 @@ export abstract class AbstractField implements Selectable, Field {
                 status = result[0];
             }
         }
-        return status;
+        this.setStatus(status);
     }
 
     processKey(e: editorEvent): void {
@@ -155,7 +156,13 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
     getStatus(): ParseStatus {
-        return this.parseCurrentText();
+        if (!this._status) {
+            this.parseCurrentText();
+        }
+        return this._status;
+    }
+    protected setStatus(newStatus: ParseStatus) {
+        this._status = newStatus;
     }
 
     select(): void {

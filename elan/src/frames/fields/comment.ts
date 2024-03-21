@@ -16,7 +16,7 @@ export class Comment extends AbstractField {
         return anythingToNewline(input);
     }
 
-    parseCurrentText() : ParseStatus {
-        return ParseStatus.valid;
+    parseCurrentText() : void {
+        this.setStatus(ParseStatus.valid);
     }
 }
