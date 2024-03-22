@@ -1,4 +1,6 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { paramsList } from "./parse-functions";
@@ -24,4 +26,6 @@ export class ParamList extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return paramsList(input);
     }   
+    getNewRootNode(): ParseNode | undefined { return undefined; }
+    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

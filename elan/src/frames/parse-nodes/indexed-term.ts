@@ -5,7 +5,7 @@ import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
 import { Multiple } from "./multiple";
 
-export class IndexedTerm extends AbstractSequence {
+export class IndexableTerm extends AbstractSequence {
     constructor() {
         super();
     }

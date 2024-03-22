@@ -1,6 +1,7 @@
 export enum ParseStatus {
     invalid,
+    empty,
     incomplete, 
     valid,    
-    empty
+    notParsed
 }

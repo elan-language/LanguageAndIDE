@@ -1,4 +1,4 @@
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
@@ -10,13 +10,13 @@ import { Statement } from "../interfaces/statement";
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
     variable: Identifier;
-    iter: Expression;
+    iter: ExpressionField;
 
     constructor(parent: File | Parent) {
         super(parent);
         this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
-        this.iter = new Expression(this);
+        this.iter = new ExpressionField(this);
         this.iter.setPlaceholder("iterable value or expression");
     }
 

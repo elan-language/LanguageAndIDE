@@ -11,7 +11,7 @@ import { ParseStatus } from '../frames/parse-status';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();

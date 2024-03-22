@@ -16,11 +16,7 @@ export class Multiple extends AbstractParseNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length === 0 ) {
-            if (this.minimum === 0) {
-                this.status = ParseStatus.valid;
-            } else {
-                this.status = ParseStatus.invalid;
-            }
+           this.status = this.minimum === 0 ? ParseStatus.valid : ParseStatus.empty;
         } else {
             var toParse = text;
             var cont = true;

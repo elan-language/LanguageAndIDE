@@ -18,5 +18,7 @@ export class FunctionCallNode extends AbstractSequence {
             super.parseText(text);
         }
     }
-    
+    renderAsHtml(): string {
+        return `<method>${this.elements[0]}</method>(${this.elements[2]})`;
+    }    
 }

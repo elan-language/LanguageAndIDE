@@ -3,6 +3,8 @@ import { editorEvent } from "../interfaces/editor-event";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { optional, genericString } from "./parse-functions";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { CodeSource } from "../code-source";
 
 export class OptionalKeyword extends AbstractField {
     private optionalKeyword = true;
@@ -53,4 +55,6 @@ export class OptionalKeyword extends AbstractField {
             return c;
         } 
     }
+    getNewRootNode(): ParseNode | undefined { return undefined; }
+    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

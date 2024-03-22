@@ -1,11 +1,11 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { LiteralValue } from "./literal-value";
-import { UnaryTerm } from "./unary-term";
+import { UnaryExpression } from "./unary-expression";
 import { BracketedExpression } from "./bracketed-expression";
 import { DottedTerm } from "./dotted-term";
 import { NewInstance } from "./new-instance";
 import { EnumVal } from "./enum-val";
-import { IndexedTerm } from "./indexed-term";
+import { IndexableTerm } from "./indexed-term";
 import { ListOfExpr } from "./listOfExpr";
 import { TupleDefNode } from "./tuple-def-node";
 import { Lambda } from "./lambda";
@@ -20,8 +20,8 @@ export class Term extends AbstractAlternatives {
     parseText(text: string): void {
         //Sub nodes added only when asked to parse
         this.alternatives.push(new LiteralValue());
-        this.alternatives.push(new UnaryTerm());
-        this.alternatives.push(new IndexedTerm());
+        this.alternatives.push(new UnaryExpression());
+        this.alternatives.push(new IndexableTerm());
         this.alternatives.push(new DottedTerm());
         this.alternatives.push(new NewInstance());
         this.alternatives.push(new EnumVal());

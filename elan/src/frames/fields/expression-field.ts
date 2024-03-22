@@ -1,11 +1,13 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ExprNode } from "../parse-nodes/expr-node";
+import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { anythingToNewline } from "./parse-functions";
 
-export class Expression extends AbstractField  { 
+export class ExpressionField extends AbstractField  {
+
     node?: ExprNode;  
     constructor(holder: Frame) {
         super(holder);
@@ -18,7 +20,12 @@ export class Expression extends AbstractField  {
         return anythingToNewline(input);
     }   
 
-    parseCurrentText() : void {
+    getNewRootNode(): ParseNode | undefined {
+        return new ExprNode();
+    }
+    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readToEndOfLine();
+
+/*     parseCurrentText() : void {
         var status = ParseStatus.invalid;
         this.node = new ExprNode();
         this.node.parseText(this.text);
@@ -26,9 +33,9 @@ export class Expression extends AbstractField  {
             status = this.node.status;
         }
         this.setStatus(status);
-    }
+    } */
 
-    parseFrom(source: CodeSource): void {
+/*     parseFrom(source: CodeSource): void {
         //TODO: generalise this into an implementation for any field that uses ParseNodes
         // c.f. an alternate implementation for using a ParseFunction
         var rol = source.readToEndOfLine();
@@ -41,7 +48,7 @@ export class Expression extends AbstractField  {
         } else {
             throw new Error(`Parse ${this.getStatus().toString()} at ${rol}`);
         } 
-    }
+    } */
 
     public textAsHtml(): string {
         if (this.selected) {

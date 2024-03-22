@@ -3,7 +3,7 @@ import { IfSelector } from "../fields/if-selector";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 
@@ -11,11 +11,11 @@ export class Else extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
     selectIfClause: IfSelector;
     hasIf: boolean = false;
-    condition: Expression;
+    condition: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Expression(this);
+        this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
         this.selectIfClause = new IfSelector(this);
     }

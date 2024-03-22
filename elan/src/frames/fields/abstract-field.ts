@@ -7,6 +7,7 @@ import {CodeSource } from "../code-source";
 import { error } from "console";
 import { AbstractFrame } from "../abstract-frame";
 import { escapeAngleBrackets } from "../helpers";
+import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -36,21 +37,72 @@ export abstract class AbstractField implements Selectable, Field {
         this.getHolder().fieldUpdated(this);
     }
     
-    abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];
+    parseCurrentText() : void {
+        var root = this.getNewRootNode();
+        if (root) {
+            this.parseCompleteTextUsingNode(this.text, root);
+        } else {
+            //Temp option until all fields know their root Parse node
+            this.parseCompleteTextUsingFunction(this.text);
+        }
+    }
+
+    abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];  //TODO: temporary solution  
+    abstract getNewRootNode(): ParseNode | undefined; //Eventual solution - then drop undefined option
+    abstract readToDelimeter: ((source: CodeSource) => string ) | undefined;
 
     parseFrom(source: CodeSource): void {
-        var rol = source.readToEndOfLine();
-        var result = this.parseFunction([ParseStatus.empty, rol]);
-        this.setStatus(result[0]);
-        if (result[0] === ParseStatus.valid || this._optional) {
-            var taken = rol.length - result[1].length;
-            this.text = rol.substring(0, taken);
-            rol = rol.substring(taken);
-            source.pushBackOntoFrontOfCode(rol);
-        } else {
-            throw new Error(`Parse ${result[0].toString()} at ${rol}`);
-        } 
+        var root = this.getNewRootNode();
+        if (root && this.readToDelimeter) {
+            var text = this.readToDelimeter(source); //NB reads & removes it from source
+            this.parseCompleteTextUsingNode(text, root);
+        } else {  //Temporary solution          
+            var rol = source.readToEndOfLine();
+            var result = this.parseFunction([ParseStatus.notParsed, rol]); //To be replaced by root ParseNode      
+            this.setStatus(result[0]);
+            if (result[0] === ParseStatus.valid || this._optional) {
+                var taken = rol.length - result[1].length;
+                this.text = rol.substring(0, taken);
+                rol = rol.substring(taken);
+                source.pushBackOntoFrontOfCode(rol);
+            } else {
+                throw new Error(`Parse ${result[0].toString()} at ${rol}`);
+            } 
+        }
     }
+
+    parseCompleteTextUsingFunction(text: string) : void {
+        var status: ParseStatus = ParseStatus.notParsed;
+        if (text.length === 0) {
+            status = this.isOptional()? ParseStatus.valid : ParseStatus.incomplete;
+        } else {
+            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+            if (result[1].length > 0) {
+                status = ParseStatus.invalid;
+            } else {
+                status = result[0];
+            }
+        }
+        this.setStatus(status);
+    }
+
+     parseCompleteTextUsingNode(text: string, root: ParseNode): void {
+        this.text = text;
+        if (text.length === 0) {
+            this.setStatus(this.isOptional()? ParseStatus.empty : ParseStatus.incomplete);
+        } else {
+            root.parseText(text);
+            if (root.remainingText.trim().length > 0) {
+                this.setStatus(ParseStatus.invalid);
+            } else {
+                this.setStatus(root.status);
+            }
+        }
+    }
+
+
+
+
 
     getHelp(): string {
         return "";
@@ -73,20 +125,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this._optional;
     }
 
-    parseCurrentText() : void {
-        var status: ParseStatus = ParseStatus.empty;
-        if (this.text === "") {
-            status = this._optional ? ParseStatus.valid : ParseStatus.incomplete;
-        } else {
-            var result = this.parseFunction([ParseStatus.empty, this.text]);
-            if (result[1].length > 0) {
-                status = ParseStatus.invalid;
-            } else {
-                status = result[0];
-            }
-        }
-        this.setStatus(status);
-    }
+
 
     processKey(e: editorEvent): void {
         var key = e.key;

@@ -3,6 +3,7 @@ import { editorEvent } from "../interfaces/editor-event";
 import { Else } from "../statements/else";
 import { CodeSource } from "../code-source";
 import { ParseStatus } from "../parse-status";
+import { ParseNode } from "../parse-nodes/parse-node";
 
 export class IfSelector extends AbstractField {
     private else: Else;
@@ -13,12 +14,6 @@ export class IfSelector extends AbstractField {
         this.setPlaceholder("if");
         this.setOptional(true);
     }
-    parseFrom(source: CodeSource): void {
-        throw new Error("Not implemented.");
-    }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        throw new Error("Not implemented.");
-    }   
     getIdPrefix(): string {
         return 'elif';
     }
@@ -41,4 +36,12 @@ export class IfSelector extends AbstractField {
         }
         super.processKey(keyEvent);
     }
+    parseFrom(source: CodeSource): void {
+        throw new Error("Not implemented.");
+    }
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        throw new Error("Not implemented.");
+    }  
+    getNewRootNode(): ParseNode | undefined { return undefined; }
+    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

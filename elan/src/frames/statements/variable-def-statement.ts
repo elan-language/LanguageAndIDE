@@ -1,4 +1,4 @@
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
@@ -9,12 +9,12 @@ import { Statement } from "../interfaces/statement";
 export class VariableDefStatement extends AbstractFrame implements Statement  {
     isStatement = true;
     name: VariableDef;
-    expr: Expression;
+    expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
         this.name = new VariableDef(this);
-        this.expr = new Expression(this);
+        this.expr = new ExpressionField(this);
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
