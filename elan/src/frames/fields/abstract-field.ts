@@ -89,7 +89,7 @@ export abstract class AbstractField implements Selectable, Field {
 
      parseCompleteTextUsingNode(text: string, root: ParseNode): void {
         if (text.length === 0) {
-            this.setStatus(this.isOptional()? ParseStatus.empty : ParseStatus.incomplete);
+            this.setStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
         } else {
             root.parseText(text);
             if (root.remainingText.trim().length > 0) {

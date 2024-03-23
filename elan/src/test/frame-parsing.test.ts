@@ -9,12 +9,30 @@ import { VariableDefStatement } from '../frames/statements/variable-def-statemen
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { Call } from '../frames/statements/call';
-import { Regexes } from '../frames/fields/regexes';
 import { assertFileParses } from './testHelpers';
 import { hash } from '../util';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
+
+	test('code source - readToNonMatchingCloseBracket1', () => {
+		var source = new CodeSourceFromString("foo, bar, yon) ");
+		var read = source.readToNonMatchingCloseBracket();
+		assert.equal(read, "foo, bar, yon");
+		assert.equal(source.getRemainingCode(), ") ");
+	});
+	test('code source - readToNonMatchingCloseBracket2', () => {
+		var source = new CodeSourceFromString(`"x)y" ) `);
+		var read = source.readToNonMatchingCloseBracket();
+		assert.equal(read, `"x)y" `);
+		assert.equal(source.getRemainingCode(), ") ");
+	});
+	test('code source - readToNonMatchingCloseBracket3', () => {
+		var source = new CodeSourceFromString(`x() ) `);
+		var read = source.readToNonMatchingCloseBracket();
+		assert.equal(read, `x() `);
+		assert.equal(source.getRemainingCode(), ") ");
+	});
 
 	test('parse Frames - empty file', () => {
         var source = new CodeSourceFromString("");

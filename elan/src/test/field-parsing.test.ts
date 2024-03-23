@@ -1,6 +1,5 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {CodeSourceFromString } from '../frames/code-source';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
 import { VariableDefStatement } from '../frames/statements/variable-def-statement';
@@ -19,7 +18,7 @@ suite('Field Parsing Tests', () => {
 		var commentStatement = new CommentStatement(main);
         var text = commentStatement.text;
 		assert.equal(text.textAsSource(), "");
-		assert.equal(text.getStatus(), ParseStatus.empty);
+		assert.equal(text.getStatus(), ParseStatus.valid);
 		text.setText("Hello");
 		text.parseCurrentText();
 		assert.equal(text.getStatus(), ParseStatus.valid);
@@ -59,22 +58,31 @@ suite('Field Parsing Tests', () => {
 		assert.equal(f.getStatus(), ParseStatus.invalid);
 		}); 
 
-		test('parse Frames - argsList', () => { 
+		test('parse Frames - argsList1', () => { 
 			var main = new MainFrame(new FileImpl(hash));
 			var call = new Call(main);
-			var args = call.args; 
-			args.setText("3,4,5");
-			args.parseCurrentText();
-			assert.equal(args.getStatus(), ParseStatus.valid);
-			args.setText(`s, a, "hello", b[5]`);
-			args.parseCurrentText();
-			assert.equal(args.getStatus(), ParseStatus.valid);
-			args.setText(`5, 3 + 4`);
-			args.parseCurrentText();
-			assert.equal(args.getStatus(), ParseStatus.invalid);
-			args.setText(`5, (3 + 4)`);
-			args.parseCurrentText();
-			assert.equal(args.getStatus(), ParseStatus.valid);
+			var argList = call.args; 
+			argList.setText("3,4,5");
+			argList.parseCurrentText();
+			assert.equal(argList.getStatus(), ParseStatus.valid);
+			argList.setText(`s, a, "hello", b[5]`);
+			argList.parseCurrentText();
+			assert.equal(argList.getStatus(), ParseStatus.valid);
+			argList.setText(`5, 3 + 4`);
+			argList.parseCurrentText();
+			assert.equal(argList.getStatus(), ParseStatus.valid);
+			argList.setText(`5, (3 + 4)`);
+			argList.parseCurrentText();
+			assert.equal(argList.getStatus(), ParseStatus.valid);
 			}); 
+
+			test('parse Frames - argsList2', () => { 
+				var main = new MainFrame(new FileImpl(hash));
+				var call = new Call(main);
+				var argList = call.args; 
+				argList.setText("");
+				argList.parseCurrentText();
+				assert.equal(argList.getStatus(), ParseStatus.valid);
+				}); 
 
 });

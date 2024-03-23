@@ -200,6 +200,8 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new Keyword("foo"),1),`fook `, ParseStatus.invalid, "","");
 		testNodeParse(new CSV(() => new Keyword("foo"),0),`fo`, ParseStatus.incomplete, "fo","");
 		testNodeParse(new CSV(() => new Keyword("foo"),2),`foo, fo`, ParseStatus.incomplete, "foo, fo","");
+
+		testNodeParse(new CSV(() => new ExprNode(),0),``, ParseStatus.valid, "","");
 	});
 	test('Function Call', () => {
 		testNodeParse(new FunctionCallNode(),``, ParseStatus.empty, ``, "","");
