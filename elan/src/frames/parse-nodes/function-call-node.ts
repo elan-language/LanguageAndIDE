@@ -19,6 +19,6 @@ export class FunctionCallNode extends AbstractSequence {
         }
     }
     renderAsHtml(): string {
-        return `<method>${this.elements[0]}</method>(${this.elements[2]})`;
+        return `<method>${this.elements[0].renderAsHtml()}</method>(${this.elements[2].renderAsHtml()})`;
     }    
 }

@@ -28,6 +28,7 @@ import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node copy';
 import { Term } from '../frames/parse-nodes/term';
 import { ParamListNode } from '../frames/parse-nodes/param-list-node';
+import { DottedTerm } from '../frames/parse-nodes/dotted-term';
 
 
 suite('FieldNode parsing', () => {
@@ -283,20 +284,16 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ParamDefNode(),`a string`, ParseStatus.invalid, "","a string","");
 	});
 	test('ParamListNode', () => {
-		//Failing
 		testNodeParse(new ParamListNode(),`A string`, ParseStatus.valid, "","A string","");
 		testNodeParse(new ParamListNode(),`a string`, ParseStatus.valid, "","a string","");
-
-		//Passing
  		testNodeParse(new ParamListNode(),``, ParseStatus.empty, "","","");
 		testNodeParse(new ParamListNode(),`a String`, ParseStatus.valid, "","","");
 		testNodeParse(new ParamListNode(),`a String, bb Int, foo Bar`, ParseStatus.valid, "","","");
-
 		testNodeParse(new ParamListNode(),`a`, ParseStatus.incomplete, "a","","");
 		testNodeParse(new ParamListNode(),`a String,`, ParseStatus.incomplete, "a String,","","");
 		testNodeParse(new ParamListNode(),`a String, bb`, ParseStatus.incomplete, "a String, bb","","");
-
-
-
+	});
+	test('DottedTerm', () => {
+		testNodeParse(new DottedTerm(),`system.readKey()`, ParseStatus.valid, "system.readKey()","","system.readKey()","system.<method>readKey</method>()");
 	});
 });
