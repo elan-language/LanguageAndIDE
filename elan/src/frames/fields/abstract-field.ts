@@ -24,6 +24,7 @@ export abstract class AbstractField implements Selectable, Field {
     protected map: Map<string, Selectable>;
     private status: ParseStatus | undefined;
     private cursorPos: number = 0; //Relative to LH end of text
+    protected rootNode?: ParseNode;
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -49,7 +50,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];  //TODO: temporary solution  
     abstract initialiseRoot(): ParseNode | undefined; //Eventual solution - then drop undefined option
-    abstract readToDelimeter: ((source: CodeSource) => string ) | undefined;
+    abstract readToDelimeter: ((source: CodeSource) => string)  | undefined;
 
     parseFrom(source: CodeSource): void {
         var root = this.initialiseRoot();
@@ -87,7 +88,6 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
      parseCompleteTextUsingNode(text: string, root: ParseNode): void {
-        this.text = text;
         if (text.length === 0) {
             this.setStatus(this.isOptional()? ParseStatus.empty : ParseStatus.incomplete);
         } else {
@@ -96,6 +96,7 @@ export abstract class AbstractField implements Selectable, Field {
                 this.setStatus(ParseStatus.invalid);
             } else {
                 this.setStatus(root.status);
+                this.text = root.matchedText;
             }
         }
     }

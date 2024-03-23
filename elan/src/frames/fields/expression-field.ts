@@ -8,7 +8,6 @@ import { anythingToNewline } from "./parse-functions";
 
 export class ExpressionField extends AbstractField  {
 
-    node?: ExprNode;  
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value or expression");
@@ -21,42 +20,16 @@ export class ExpressionField extends AbstractField  {
     }   
 
     initialiseRoot(): ParseNode | undefined {
-        this.node = new ExprNode();
-        return this.node;
+        this.rootNode = new ExprNode();
+        return this.rootNode;
     }
     readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readToEndOfLine();
-
-/*     parseCurrentText() : void {
-        var status = ParseStatus.invalid;
-        this.node = new ExprNode();
-        this.node.parseText(this.text);
-        if (this.node.remainingText.trim().length === 0) { //i.e. valid or incomplete
-            status = this.node.status;
-        }
-        this.setStatus(status);
-    } */
-
-/*     parseFrom(source: CodeSource): void {
-        //TODO: generalise this into an implementation for any field that uses ParseNodes
-        // c.f. an alternate implementation for using a ParseFunction
-        var rol = source.readToEndOfLine();
-        this.setText(rol);
-        this.parseCurrentText();
-        if (this.getStatus() === ParseStatus.valid || this.isOptional()) {
-            this.text = this.node!.matchedText;
-            rol = rol.substring(this.text.length);
-            source.pushBackOntoFrontOfCode(rol);
-        } else {
-            throw new Error(`Parse ${this.getStatus().toString()} at ${rol}`);
-        } 
-    } */
-
     public textAsHtml(): string {
         if (this.selected) {
             return super.textAsHtml();
         }
         else{ 
-            return this.node ? this.node.renderAsHtml() : super.textAsHtml();
+            return this.rootNode ? this.rootNode.renderAsHtml() : super.textAsHtml();
         } 
     }
 }

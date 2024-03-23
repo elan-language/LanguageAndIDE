@@ -20,7 +20,7 @@ export class CodeSourceFromString implements CodeSource {
         this.remainingCode = code;
     }
     readToEndOfLine(): string {
-        return this.removeRegEx(new RegExp(`^[^\n]*`),false);
+        return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
     }
     pushBackOntoFrontOfCode(pushBack: string): void {
         this.remainingCode = pushBack + this.remainingCode;

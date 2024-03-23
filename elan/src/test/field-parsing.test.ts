@@ -9,9 +9,22 @@ import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
 import { Call } from '../frames/statements/call';
 import { hash } from '../util';
+import { CommentStatement } from '../frames/statements/comment-statement';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
+
+	test('parse Frames - Comment', () => { 
+		var main = new MainFrame(new FileImpl(hash));
+		var commentStatement = new CommentStatement(main);
+        var text = commentStatement.text;
+		assert.equal(text.textAsSource(), "");
+		assert.equal(text.getStatus(), ParseStatus.empty);
+		text.setText("Hello");
+		text.parseCurrentText();
+		assert.equal(text.getStatus(), ParseStatus.valid);
+		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><help></help></field>`);
+		}); 
 
 	test('parse Frames - VariableDefStatement', () => { 
 		var main = new MainFrame(new FileImpl(hash));

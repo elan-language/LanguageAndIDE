@@ -1,5 +1,5 @@
-# ad1e5eadc036e254279618cae33ed878db89980c47c0b4f86a8da7fe8130b257 Elan v0.1 valid
+# 6e34aedfbd1564d5ab20a8e8a8e01df78c82f9c444242731f66f0714aaac7d60 Elan v0.1 valid
 
 main
-  var a set to body + head
+  var a set to a+b
 end main
