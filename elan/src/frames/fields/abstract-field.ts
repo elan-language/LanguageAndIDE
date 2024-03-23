@@ -38,7 +38,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
     
     parseCurrentText() : void {
-        var root = this.getNewRootNode();
+        var root = this.initialiseRoot();
         if (root) {
             this.parseCompleteTextUsingNode(this.text, root);
         } else {
@@ -48,11 +48,11 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];  //TODO: temporary solution  
-    abstract getNewRootNode(): ParseNode | undefined; //Eventual solution - then drop undefined option
+    abstract initialiseRoot(): ParseNode | undefined; //Eventual solution - then drop undefined option
     abstract readToDelimeter: ((source: CodeSource) => string ) | undefined;
 
     parseFrom(source: CodeSource): void {
-        var root = this.getNewRootNode();
+        var root = this.initialiseRoot();
         if (root && this.readToDelimeter) {
             var text = this.readToDelimeter(source); //NB reads & removes it from source
             this.parseCompleteTextUsingNode(text, root);

@@ -16,6 +16,6 @@ export class ExceptionMessage extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return firstValidMatchOrLongestIncomplete(input, [literalString, identifier]);
     }
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

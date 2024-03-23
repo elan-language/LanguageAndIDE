@@ -17,6 +17,6 @@ export class Type extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return type(input);
     } 
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;  
 }

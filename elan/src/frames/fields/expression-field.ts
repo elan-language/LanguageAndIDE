@@ -20,8 +20,9 @@ export class ExpressionField extends AbstractField  {
         return anythingToNewline(input);
     }   
 
-    getNewRootNode(): ParseNode | undefined {
-        return new ExprNode();
+    initialiseRoot(): ParseNode | undefined {
+        this.node = new ExprNode();
+        return this.node;
     }
     readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readToEndOfLine();
 

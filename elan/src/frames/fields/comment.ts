@@ -17,7 +17,7 @@ export class Comment extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return anythingToNewline(input);
     }
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 
     parseCurrentText() : void {

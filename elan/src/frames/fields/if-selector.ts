@@ -42,6 +42,6 @@ export class IfSelector extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         throw new Error("Not implemented.");
     }  
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

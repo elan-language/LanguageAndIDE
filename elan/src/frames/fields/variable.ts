@@ -16,6 +16,6 @@ export class VariableDef extends AbstractField  {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return variableDef(input);
     }
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined; 
 }

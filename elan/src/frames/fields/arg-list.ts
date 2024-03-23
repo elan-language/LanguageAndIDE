@@ -24,6 +24,6 @@ export class ArgList extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return argsList(input);
     }  
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

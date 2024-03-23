@@ -16,6 +16,6 @@ export class ProcedureRef extends AbstractField {
     getIdPrefix(): string {
         return 'ident';
     }
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

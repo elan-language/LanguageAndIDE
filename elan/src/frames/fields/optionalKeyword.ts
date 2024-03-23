@@ -55,6 +55,6 @@ export class OptionalKeyword extends AbstractField {
             return c;
         } 
     }
-    getNewRootNode(): ParseNode | undefined { return undefined; }
+    initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }
