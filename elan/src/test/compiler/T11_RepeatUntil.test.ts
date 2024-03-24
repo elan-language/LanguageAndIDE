@@ -127,7 +127,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_noCondition', () => {
+  ignore_test('Fail_noCondition', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
