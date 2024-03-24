@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
+import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
-import { ProcNameDef } from "../fields/proc-name-def";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
@@ -8,7 +8,7 @@ import { Parent } from "../interfaces/parent";
 
 export class Procedure extends FrameWithStatements {
     isGlobal = true;
-    public name : ProcNameDef;
+    public name : Identifier;
     public params: ParamList;
     file: File;
 
@@ -16,7 +16,7 @@ export class Procedure extends FrameWithStatements {
         super(parent);
         this.file = parent as File;
         this.multiline = true;
-        this.name = new ProcNameDef(this);
+        this.name = new Identifier(this);
         this.params = new ParamList(this);
     }
 

@@ -2,17 +2,17 @@ import { Expression } from "../fields/expression";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { VariableDef } from "../fields/variable";
 import { SingleLineStatement } from "./single-line-statement";
-import { VarDef } from "../fields/var-def";
 
-export class VarStatement extends SingleLineStatement  {
+export class VariableDefStatement extends SingleLineStatement  {
     isStatement = true;
-    name: VarDef;
+    name: VariableDef;
     expr: Expression;
 
     constructor(parent: Parent) {
         super(parent);
-        this.name = new VarDef(this);
+        this.name = new VariableDef(this);
         this.expr = new Expression(this);
     }
     parseFrom(source: CodeSource): void {

@@ -1,8 +1,9 @@
 import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
-import { FuncNameDef } from "../fields/func-name-def";
+import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
-import { TypeUse } from "../fields/type-use";
+import { Type } from "../fields/type";
 import { Class } from "../globals/class";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
@@ -12,18 +13,18 @@ import { Parent } from "../interfaces/parent";
 export class AbstractFunction extends AbstractFrame implements Member {
     isAbstract = true;
     isMember: boolean = true;
-    public name : FuncNameDef;
+    public name : Identifier;
     public params: ParamList;
-    public returnType: TypeUse;
+    public returnType: Type;
     private class: Class;
 
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
         this.multiline = true;
-        this.name = new FuncNameDef(this);
+        this.name = new Identifier(this);
         this.params = new ParamList(this);
-        this.returnType = new TypeUse(this);
+        this.returnType = new Type(this);
         this.returnType.setPlaceholder("return type");
     }
 

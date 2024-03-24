@@ -1,19 +1,19 @@
 import { Expression } from "../fields/expression";
+import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { MultiLineStatement } from "./multi-line-statement";
-import { VarDef } from "../fields/var-def";
 
 export class Each extends MultiLineStatement  {
-    variable: VarDef;
+    variable: Identifier;
     iter: Expression;
 
     constructor(parent: File | Parent) {
         super(parent);
         this.multiline = true;
-        this.variable = new VarDef(this);
+        this.variable = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.iter = new Expression(this);
         this.iter.setPlaceholder("iterable value or expression");

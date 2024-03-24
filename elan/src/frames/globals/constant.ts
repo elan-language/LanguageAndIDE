@@ -1,21 +1,23 @@
+import { Identifier } from "../fields/identifier";
 import { AbstractFrame } from "../abstract-frame";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Literal } from "../fields/literal";
 import { PlainText } from "../fields/plain-text";
-import { ConstNameDef } from "../fields/constNameDef";
+import { AbstractSelector } from "../abstract-selector";
+import { GlobalSelector } from "./global-selector";
 
 export class Constant extends AbstractFrame {
     isGlobal = true;
-    name: ConstNameDef;
+    name: Identifier;
     literal: Literal;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.name  = new ConstNameDef(this);
+        this.name  = new Identifier(this);
         this.literal = new PlainText(this); //TODO: temp kludge - should be a literal value or data structure
         this.literal.setPlaceholder("literal value or data structure");
     }

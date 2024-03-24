@@ -1,15 +1,15 @@
 import { CodeSource } from "../code-source";
-import { TestNameDef } from "../fields/test-name-def";
+import { Identifier } from "../fields/identifier";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Assert } from "../statements/assert";
-import { VarStatement } from "../statements/var-statement";
+import { VariableDefStatement } from "../statements/variable-def-statement";
 
 export class Test extends FrameWithStatements {
     isTest = true;
     isGlobal = true;
-    public name : TestNameDef;
+    public name : Identifier;
     file: File;
 
     constructor(parent: File) {
@@ -17,8 +17,8 @@ export class Test extends FrameWithStatements {
         this.file = parent;
         this.multiline = true;
         this.statements.slice(0,1); //remove statement selector
-        this.name = new TestNameDef(this);
-        var result = new VarStatement(this);
+        this.name = new Identifier(this);
+        var result = new VariableDefStatement(this);
         result.name.setText("result");
         this.statements.push(result);
         this.statements.push( new Assert(this));

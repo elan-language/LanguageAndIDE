@@ -1,16 +1,16 @@
+import { Identifier } from "../fields/identifier";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
 import { MultiLineStatement } from "./multi-line-statement";
-import { VarUse } from "../fields/var-use";
 
 export class Catch extends MultiLineStatement {
-    variable: VarUse;
+    variable: Identifier;
 
     constructor(parent: Parent) {
         super(parent);
-        this.variable  = new VarUse(this);
+        this.variable  = new Identifier(this);
         this.variable.setPlaceholder("variableName");
         this.variable.setText("e");
     }

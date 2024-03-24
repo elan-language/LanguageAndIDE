@@ -8,7 +8,7 @@ import { Repeat } from "./statements/repeat";
 import { Throw } from "./statements/throw";
 import { While } from "./statements/while";
 import { TryCatch } from "./statements/try-catch";
-import { VarStatement } from "./statements/var-statement";
+import { VariableDefStatement } from "./statements/variable-def-statement";
 import { SetStatement } from "./statements/set-statement";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Frame } from "./interfaces/frame";
@@ -75,7 +75,7 @@ export class StatementFactoryImpl implements StatementFactory {
                 return new TryCatch(parent);
             }
             case "Variable": {
-                return new VarStatement(parent);
+                return new VariableDefStatement(parent);
             }
             case "While": {
                 return new While(parent);
