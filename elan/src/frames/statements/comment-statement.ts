@@ -1,4 +1,4 @@
-import { Comment } from "../fields/comment";
+import { CommentField } from "../fields/comment-field";
 import { Member} from "../interfaces/member";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
@@ -9,11 +9,11 @@ import { Statement } from "../interfaces/statement";
 export class CommentStatement extends AbstractFrame implements Statement, Member {
     isStatement = true;
     isMember = true;
-    public text: Comment;
+    public text: CommentField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.text= new Comment(this);
+        this.text= new CommentField(this);
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();

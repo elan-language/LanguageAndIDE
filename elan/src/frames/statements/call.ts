@@ -1,4 +1,4 @@
-import { ArgList } from "../fields/arg-list";
+import { ArgListField } from "../fields/arg-list-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
@@ -9,13 +9,13 @@ import { Statement } from "../interfaces/statement";
 export class Call extends AbstractFrame implements Statement{
     isStatement = true;
     proc: ProcedureRef;
-    args: ArgList;
+    args: ArgListField;
 
     constructor(parent: Parent) {
         super(parent);
         this.proc = new ProcedureRef(this);
         this.proc.setPlaceholder("procedureName");
-        this.args = new ArgList(this);
+        this.args = new ArgListField(this);
     }
     
     parseFrom(source: CodeSource): void {

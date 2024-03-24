@@ -3,7 +3,7 @@ import { T03_mainWithAllStatements, T05_classes } from './milestone_1.functions.
 import {ctrl_down, ctrl_up, del, down, end, enter, esc, home, ins, key, loadFileAsModel, readAsDOM, right, shift_down, shift_enter, shift_ins, shift_tab, shift_up, tab, up } from './testHelpers';
 import assert from 'assert';
 import { Identifier } from '../frames/fields/identifier';
-import { Expression } from '../frames/fields/expression';
+import { ExpressionField } from '../frames/fields/expression-field';
 import { Function } from '../frames/globals/function';
 
 import { Constructor } from '../frames/class-members/constructor';
@@ -19,16 +19,16 @@ suite('Navigation', () => {
 		assert.equal(var4.isSelected(), false);
 		file.processKey(enter());
 		assert.equal(var4.isSelected(), true);
-		var expr5 = file.getById("expr5") as Expression;
+		var expr5 = file.getById("expr5") as ExpressionField;
 		assert.equal(expr5.isSelected(), false);
 		var4.processKey(tab());
 		assert.equal(var4.isSelected(), false);
 		assert.equal(expr5.isSelected(), true);
 		expr5.processKey(tab());
-		var expr7 = file.getById("expr7") as Expression;
+		var expr7 = file.getById("expr7") as ExpressionField;
 		assert.equal(expr7.isSelected(), true);
 		expr7.processKey(enter());
-		var expr8 = file.getById("expr8") as Expression;
+		var expr8 = file.getById("expr8") as ExpressionField;
 		assert.equal(expr8.isSelected(), true);
 		expr8.processKey(shift_tab());
 		assert.equal(expr8.isSelected(), false);

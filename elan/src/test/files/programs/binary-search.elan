@@ -19,7 +19,7 @@ end main
 
 function binarySearch(li List<of String>, item String) as Bool
   var result set to false
-  if li.length() > 0  
+  if li.length() > 0
     var mid set to li.length() div 2
     var value set to li[mid]
     if item is value

@@ -4,9 +4,12 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
+import { escapeAngleBrackets } from "../helpers";
+import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
+    private _status: ParseStatus = ParseStatus.invalid; 
     protected text: string = "";
     protected placeholder: string = "";
     protected useHtmlTags: boolean = false;
@@ -17,8 +20,9 @@ export abstract class AbstractField implements Selectable, Field {
     private holder;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
-    private status: ParseStatus = ParseStatus.incomplete;
+    private status: ParseStatus | undefined;
     private cursorPos: number = 0; //Relative to LH end of text
+    protected rootNode?: ParseNode;
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -26,27 +30,80 @@ export abstract class AbstractField implements Selectable, Field {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
-        this.parseCurrentText();
     }
 
     alertHolderToUpdate():void {
         this.getHolder().fieldUpdated(this);
     }
     
-    abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];
+    parseCurrentText() : void {
+        var root = this.initialiseRoot();
+        if (root) {
+            this.parseCompleteTextUsingNode(this.text, root);
+        } else {
+            //Temp option until all fields know their root Parse node
+            this.parseCompleteTextUsingFunction(this.text);
+        }
+    }
+
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        throw new Error("Method to be deleted, eventually");
+    }    
+    abstract initialiseRoot(): ParseNode | undefined; //Eventual solution - then drop undefined option
+    abstract readToDelimeter: ((source: CodeSource) => string)  | undefined;
 
     parseFrom(source: CodeSource): void {
-        var rol = source.readToEndOfLine();
-        var result = this.parseFunction([ParseStatus.notParsed, rol]);
-        if (result[0] === ParseStatus.valid || this._optional) {
-            var taken = rol.length - result[1].length;
-            this.text = rol.substring(0, taken);
-            rol = rol.substring(taken);
-            source.pushBackOntoFrontOfCode(rol);
-        } else {
-            throw new Error(`Parse ${result[0].toString()} at ${rol}`);
-        } 
+        var root = this.initialiseRoot();
+        if (root && this.readToDelimeter) {
+            var text = this.readToDelimeter(source); //NB reads & removes it from source
+            this.parseCompleteTextUsingNode(text, root);
+        } else {  //Temporary solution          
+            var rol = source.readToEndOfLine();
+            var result = this.parseFunction([ParseStatus.notParsed, rol]); //To be replaced by root ParseNode      
+            this.setStatus(result[0]);
+            if (result[0] === ParseStatus.valid || this._optional) {
+                var taken = rol.length - result[1].length;
+                this.text = rol.substring(0, taken);
+                rol = rol.substring(taken);
+                source.pushBackOntoFrontOfCode(rol);
+            } else {
+                throw new Error(`Parse ${result[0].toString()} at ${rol}`);
+            } 
+        }
     }
+
+    parseCompleteTextUsingFunction(text: string) : void {
+        var status: ParseStatus = ParseStatus.notParsed;
+        if (text.length === 0) {
+            status = this.isOptional()? ParseStatus.valid : ParseStatus.incomplete;
+        } else {
+            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+            if (result[1].length > 0) {
+                status = ParseStatus.invalid;
+            } else {
+                status = result[0];
+            }
+        }
+        this.setStatus(status);
+    }
+
+     parseCompleteTextUsingNode(text: string, root: ParseNode): void {
+        if (text.length === 0) {
+            this.setStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
+        } else {
+            root.parseText(text);
+            if (root.remainingText.trim().length > 0) {
+                this.setStatus(ParseStatus.invalid);
+            } else {
+                this.setStatus(root.status);
+                this.text = root.matchedText;
+            }
+        }
+    }
+
+
+
+
 
     getHelp(): string {
         return "";
@@ -69,20 +126,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this._optional;
     }
 
-    parseCurrentText() : ParseStatus {
-        var status: ParseStatus = ParseStatus.notParsed;
-        if (this.text === "") {
-            status = this._optional ? ParseStatus.valid : ParseStatus.incomplete;
-        } else {
-            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
-            if (result[1].length > 0) {
-                status = ParseStatus.invalid;
-            } else {
-                status = result[0];
-            }
-        }
-        return status;
-    }
+
 
     processKey(e: editorEvent): void {
         var key = e.key;
@@ -154,7 +198,13 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
     getStatus(): ParseStatus {
-        return this.parseCurrentText();
+        if (!this._status) {
+            this.parseCurrentText();
+        }
+        return this._status;
+    }
+    protected setStatus(newStatus: ParseStatus) {
+        this._status = newStatus;
     }
 
     select(): void {
@@ -182,7 +232,7 @@ export abstract class AbstractField implements Selectable, Field {
             return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
-            var c = this.escapeAngleBrackets(this.text);
+            var c = escapeAngleBrackets(this.text);
             return c;
         } 
     }
@@ -196,11 +246,7 @@ export abstract class AbstractField implements Selectable, Field {
             .replace(/"/g, '&quot;');
     }
 
-    protected escapeAngleBrackets(str: string) : string {
-        return str
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
+
 
     public textAsSource() : string {
         return this.text;

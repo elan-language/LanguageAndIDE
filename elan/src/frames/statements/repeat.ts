@@ -1,4 +1,4 @@
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
@@ -7,11 +7,11 @@ import { Statement } from "../interfaces/statement";
 
 export class Repeat extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
-    condition: Expression;
+    condition: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Expression(this);
+        this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
     }
 

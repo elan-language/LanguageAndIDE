@@ -1,7 +1,6 @@
 import { Regexes } from "./fields/regexes";
 
 export interface CodeSource {
-    readToEndOfLine(): string;
     pushBackOntoFrontOfCode(push: string): void;
     removeNewLine(): CodeSource;
     removeIndent(): CodeSource;
@@ -11,6 +10,10 @@ export interface CodeSource {
     removeRegEx(regx: RegExp, optionally: boolean): string;
     hasMoreCode(): boolean;
     getRemainingCode(): string;
+    peekNextChar(): string;
+
+    readToEndOfLine(): string;
+    readToNonMatchingCloseBracket(): string;
 }
 
 export class CodeSourceFromString implements CodeSource {
@@ -20,7 +23,7 @@ export class CodeSourceFromString implements CodeSource {
         this.remainingCode = code;
     }
     readToEndOfLine(): string {
-        return this.removeRegEx(new RegExp(`^[^\n]*`),false);
+        return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
     }
     pushBackOntoFrontOfCode(pushBack: string): void {
         this.remainingCode = pushBack + this.remainingCode;
@@ -66,5 +69,44 @@ export class CodeSourceFromString implements CodeSource {
     }
     getRemainingCode(): string {
         return this.remainingCode;
+    }
+    peekNextChar(): string {
+        return this.remainingCode[0];
+    }
+    readToNonMatchingCloseBracket(): string {
+        var insideDoubleQuotes = false;
+        var insideSingleQuotes = false;
+        var openBracketCount = 0;
+        var cont = true;
+        var result = "";
+        while (cont) {
+            var c = this.peekNextChar();
+            if (insideDoubleQuotes) {   
+                if (c === `"`) {
+                    insideDoubleQuotes = false;
+                } 
+            } else if (insideSingleQuotes) {
+                if (c === `'`) {
+                    insideSingleQuotes = false;
+                } 
+            }else  if (c === `"`) {
+                insideDoubleQuotes = true;
+            } else if (c === `'`) {
+                insideSingleQuotes = true;
+            } else if (c ==='(') { 
+                openBracketCount ++;
+            } else if (c ===')') { 
+                if (openBracketCount === 0) {
+                    cont = false;
+                } else {
+                    openBracketCount --;
+                } 
+            } 
+            if (cont) {
+                result += c;
+                this.remove(c);
+            }
+        }
+        return result;
     }
 }

@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent} from "../interfaces/parent";
@@ -7,12 +7,12 @@ import { Default } from "./default";
 
 export class Switch extends FrameWithStatements { 
     isStatement = true;
-    expr: Expression;
+    expr: ExpressionField;
     default: Default;
 
     constructor(parent: Parent) {
         super(parent);
-        this.expr = new Expression(this);
+        this.expr = new ExpressionField(this);
         this.default = new Default(this);
         this.getChildren().push(this.default);
     }

@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
-import { Comment } from "../fields/comment";
+import { CommentField } from "../fields/comment-field";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { GlobalSelector } from "./global-selector";
@@ -9,13 +9,13 @@ import { File } from "../interfaces/file";
 
 export class GlobalComment extends AbstractFrame {
     isGlobal = true;
-    public text: Comment;
+    public text: CommentField;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.text = new Comment(this);
+        this.text = new CommentField(this);
     }
 
     getFields(): Field[] {

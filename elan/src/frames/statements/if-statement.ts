@@ -1,17 +1,17 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 
 export class IfStatement extends FrameWithStatements implements Statement {
     isStatement = true;
-    condition: Expression;
+    condition: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.condition = new Expression(this);
+        this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
     }
 

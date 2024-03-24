@@ -51,3 +51,8 @@ export function expandCollapseAll(map: Map<string, Selectable>) {
         }
     }
 }
+export function escapeAngleBrackets(str: string) : string {
+    return str
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}

@@ -1,4 +1,4 @@
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import {CodeSource } from "../code-source";
@@ -9,13 +9,13 @@ import { Statement } from "../interfaces/statement";
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
     name: Value;;
-    expr: Expression;
+    expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
         this.name = new Value(this);
         this.name.setPlaceholder("variableName");
-        this.expr = new Expression(this);
+        this.expr = new ExpressionField(this);
     }
 
     parseFrom(source: CodeSource): void {

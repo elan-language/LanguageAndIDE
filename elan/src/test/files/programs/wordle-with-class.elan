@@ -1,15 +1,15 @@
-# 1cae7a719f258495aec7350d8969e2bfac9b6a25b8adbcb86bce5d42a73fdf56 Elan v0.1 valid
+# 6eda6233cf491426e6f4e672fdec5548c496e4f1a2bcf3e5d0206cacb7d9eb9d Elan v0.1 valid
 
 function isYellow(attempt String, target String, n Int) as Bool
   return target.contains(attempt[n])
 end function
 
 function setAttemptIfYellow(attempt String, target String, n Int) as String
-  return attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
+  return if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')
 end function
 
 function setTargetIfYellow(attempt String, target String, n Int) as String
-  return target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
+  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target
 end function
 
 constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
@@ -37,11 +37,11 @@ function setChar(word String, n Int, newChar Char) as String
 end function
 
 function setAttemptIfGreen(attempt String, target String, n Int) as String
-  return attempt.setChar(n, '*') if attempt.isGreen(target, n)  else attempt
+  return if  attempt.isGreen(target, n) then attempt.setChar(n, '*')  else attempt
 end function
 
 function setTargetIfGreen(attempt String, target String, n Int) as String
-  return target.setChar(n, '.') if attempt.isGreen(target, n) else target
+  return if  attempt.isGreen(target, n) then target.setChar(n, '.') else target
 end function
 
 function isAlreadyMarkedGreen(attempt String, n Int) as Bool
@@ -79,7 +79,7 @@ end function
 function betterOf(wc1 WordCount, wc2 WordCount, possAnswers Iter<of String>) as WordCount
   var isBetter set to wc2.count < wc1.count
   var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
-  return wc2  if isBetter or isEqualAndPossAnswer  else wc1
+  return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
 function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String

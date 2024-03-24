@@ -8,9 +8,11 @@ import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
+import { ParseStatus } from '../frames/parse-status';
+import { ParseNode } from '../frames/parse-nodes/parse-node';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
@@ -277,4 +279,22 @@ export async function activate(docUri: vscode.Uri) {
   }
   export function shift_ins() {
     return key("Insert",true);
+  }
+
+  export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, 
+        matchedText: string, remainingText: string, source = "", html="") {
+    node.parseText(text);
+    assert.equal(node.status, status);
+    if (matchedText !== "") {
+      assert.equal(node.matchedText, matchedText);
+    }
+    if (remainingText !== "") {
+    assert.equal( node.remainingText, remainingText);
+    }
+    if (source !== "") {
+      assert.equal(node.renderAsSource(), source);
+    }
+    if (html && html !== "") {
+      assert.equal(node.renderAsHtml(), html);
+    }
   }

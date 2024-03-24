@@ -1,4 +1,4 @@
-import { Expression } from "../fields/expression";
+import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
 
@@ -8,11 +8,11 @@ import { Statement } from "../interfaces/statement";
 
 export class Print extends AbstractFrame implements Statement {
     isStatement = true;  
-    expr: Expression;
+    expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.expr = new Expression(this);
+        this.expr = new ExpressionField(this);
         this.expr.setOptional(true);
         this.expr.setPlaceholder("expression");
     }
