@@ -114,7 +114,7 @@ export function comma(input: [ParseStatus, string]): [ParseStatus, string] {
 export function SEQ(input: [ParseStatus, string], funcs: Array<(input: [ParseStatus, string]) => [ParseStatus, string]>): [ParseStatus, string]
 {
     var i = 0; //Index
-    var result: [ParseStatus, string] = [ ParseStatus.empty, input[1]];
+    var result: [ParseStatus, string] = [ ParseStatus.notParsed, input[1]];
     while (i < funcs.length && result[0] >= ParseStatus.valid) { 
         var prev = result[0]; 
         result = funcs[i](result);     
@@ -150,7 +150,7 @@ export function STAR(input: [ParseStatus, string], func: (input: [ParseStatus, s
     while (result[0] > ParseStatus.incomplete && result[1].length > 0) {  
         result = func(result);     
     }
-    return result[0] === ParseStatus.empty ? [ParseStatus.valid, result[1]] : result;
+    return result[0] === ParseStatus.notParsed ? [ParseStatus.valid, result[1]] : result;
 }
 
 // 'one or more'

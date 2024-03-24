@@ -112,34 +112,34 @@ suite('Parse Function Tests', () => {
 
 	test('parse functions - generic string', () => {
 		var kw = "var";
-		assert.deepEqual(genericString([ParseStatus.empty, "var a set to 3"],kw), [ParseStatus.valid,  " a set to 3"]);
-		assert.deepEqual(genericString([ParseStatus.empty, "var"],kw), [ParseStatus.valid,  ""]);
-		assert.deepEqual(genericString([ParseStatus.empty, "variable"],kw), [ParseStatus.valid,  "iable"]);
-		assert.deepEqual(genericString([ParseStatus.empty, "v"],kw), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(genericString([ParseStatus.empty, "vax"],kw), [ParseStatus.invalid, "vax"]);
-		assert.deepEqual(genericString([ParseStatus.empty, "tvar"],kw), [ParseStatus.invalid, "tvar"]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "var a set to 3"],kw), [ParseStatus.valid,  " a set to 3"]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "var"],kw), [ParseStatus.valid,  ""]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "variable"],kw), [ParseStatus.valid,  "iable"]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "v"],kw), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "vax"],kw), [ParseStatus.invalid, "vax"]);
+		assert.deepEqual(genericString([ParseStatus.notParsed, "tvar"],kw), [ParseStatus.invalid, "tvar"]);
 	}); 
 
 	test('parse functions - identifier', () => {
-		assert.deepEqual(identifier([ParseStatus.empty, "foo"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(identifier([ParseStatus.empty, "foo "]), [ParseStatus.valid,  " "]);
-		assert.deepEqual(identifier([ParseStatus.empty, "f set to"]), [ParseStatus.valid,  " set to"]);
-		assert.deepEqual(identifier([ParseStatus.empty, "Foo"]), [ParseStatus.invalid,  "Foo"]);
+		assert.deepEqual(identifier([ParseStatus.notParsed, "foo"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(identifier([ParseStatus.notParsed, "foo "]), [ParseStatus.valid,  " "]);
+		assert.deepEqual(identifier([ParseStatus.notParsed, "f set to"]), [ParseStatus.valid,  " set to"]);
+		assert.deepEqual(identifier([ParseStatus.notParsed, "Foo"]), [ParseStatus.invalid,  "Foo"]);
 		//Bad starting points:
 		assert.deepEqual(identifier([ParseStatus.invalid, "foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(identifier([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
-		assert.deepEqual(identifier([ParseStatus.empty, ""]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(identifier([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
 		assert.deepEqual(identifier([ParseStatus.invalid, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
 	test('parse functions - type', () => {
-		assert.deepEqual(type([ParseStatus.empty, "Foo"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "Foo "]), [ParseStatus.valid,  " "]);
-		assert.deepEqual(type([ParseStatus.empty, "foo"]), [ParseStatus.invalid,  "foo"]);
-		assert.deepEqual(type([ParseStatus.empty, "Foo<of Bar>"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "Foo<"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "Foo<of "]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "Foo<of Bar"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo "]), [ParseStatus.valid,  " "]);
+		assert.deepEqual(type([ParseStatus.notParsed, "foo"]), [ParseStatus.invalid,  "foo"]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar>"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of "]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar"]), [ParseStatus.incomplete,  ""]);
 		//assert.deepEqual(type([ParseStatus.notParsed, "Foo<of Bar<of Qux>>"]), [ParseStatus.valid,  ""]); TODO
 		assert.deepEqual(type([ParseStatus.invalid, "(Foo, Bar)"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.invalid, "(Foo, Foo<of Bar>, Yon)"]), [ParseStatus.valid, ""]);
@@ -149,279 +149,279 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(type([ParseStatus.invalid, "Foo"]), [ParseStatus.valid, ""]);
 		assert.deepEqual(type([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
 
-		assert.deepEqual(type([ParseStatus.empty, "List<of (Float, Float)>"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "List<of (Float, Float)"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "List<of (Float>"]), [ParseStatus.incomplete,  ">"]);
-		assert.deepEqual(type([ParseStatus.empty, "List<of Point, Point>"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "List<of Point, Point"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(type([ParseStatus.empty, "List<of Point,>"]), [ParseStatus.incomplete,  ">"]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float, Float)>"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float, Float)"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of (Float>"]), [ParseStatus.incomplete,  ">"]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point, Point>"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point, Point"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(type([ParseStatus.notParsed, "List<of Point,>"]), [ParseStatus.incomplete,  ">"]);
 	}); 
 
 	test('parse functions - sp', () => {
-		assert.deepEqual(sp([ParseStatus.empty, " abc"]), [ParseStatus.valid,  "abc"]);
-		assert.deepEqual(sp([ParseStatus.empty, "   def"]), [ParseStatus.valid,  "def"]);
-		assert.deepEqual(sp([ParseStatus.empty, "ghi"]), [ParseStatus.invalid,  "ghi"]);
+		assert.deepEqual(sp([ParseStatus.notParsed, " abc"]), [ParseStatus.valid,  "abc"]);
+		assert.deepEqual(sp([ParseStatus.notParsed, "   def"]), [ParseStatus.valid,  "def"]);
+		assert.deepEqual(sp([ParseStatus.notParsed, "ghi"]), [ParseStatus.invalid,  "ghi"]);
 		//Bad starting points:
 		assert.deepEqual(sp([ParseStatus.invalid, " abc"]), [ParseStatus.valid, "abc"]);
 		assert.deepEqual(sp([ParseStatus.incomplete, ""]), [ParseStatus.invalid, ""]);
-		assert.deepEqual(sp([ParseStatus.empty, ""]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(sp([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
 	test('parse functions - optSp', () => {
-		assert.deepEqual(optSp([ParseStatus.empty, " abc"]), [ParseStatus.valid,  "abc"]);
-		assert.deepEqual(optSp([ParseStatus.empty, "   def"]), [ParseStatus.valid,  "def"]);
-		assert.deepEqual(optSp([ParseStatus.empty, "ghi"]), [ParseStatus.valid,  "ghi"]);
-		assert.deepEqual(optSp([ParseStatus.empty, ""]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(optSp([ParseStatus.notParsed, " abc"]), [ParseStatus.valid,  "abc"]);
+		assert.deepEqual(optSp([ParseStatus.notParsed, "   def"]), [ParseStatus.valid,  "def"]);
+		assert.deepEqual(optSp([ParseStatus.notParsed, "ghi"]), [ParseStatus.valid,  "ghi"]);
+		assert.deepEqual(optSp([ParseStatus.notParsed, ""]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - comma', () => {
-		assert.deepEqual(comma([ParseStatus.empty, ","]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(comma([ParseStatus.empty, "   ,    "]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(comma([ParseStatus.empty, " "]), [ParseStatus.invalid,  " "]);
-		assert.deepEqual(comma([ParseStatus.empty, ", ,"]), [ParseStatus.valid,  ","]);
+		assert.deepEqual(comma([ParseStatus.notParsed, ","]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(comma([ParseStatus.notParsed, "   ,    "]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(comma([ParseStatus.notParsed, " "]), [ParseStatus.invalid,  " "]);
+		assert.deepEqual(comma([ParseStatus.notParsed, ", ,"]), [ParseStatus.valid,  ","]);
 	}); 
 
 	test('parse functions - sequence', () => {
-		assert.deepEqual(SEQ([ParseStatus.empty, ", bar"], [comma, identifier]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(SEQ([ParseStatus.empty, ", ,"], [comma, identifier]), [ParseStatus.incomplete,  ","]);
-		assert.deepEqual(SEQ([ParseStatus.empty, "bar "], [comma, identifier]), [ParseStatus.invalid,  "bar "]);
+		assert.deepEqual(SEQ([ParseStatus.notParsed, ", bar"], [comma, identifier]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(SEQ([ParseStatus.notParsed, ", ,"], [comma, identifier]), [ParseStatus.incomplete,  ","]);
+		assert.deepEqual(SEQ([ParseStatus.notParsed, "bar "], [comma, identifier]), [ParseStatus.invalid,  "bar "]);
 	});
 
 	test('parse functions - paramDef', () => {
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo Bar"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo   Bar"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo Bar more"]), [ParseStatus.valid, " more"]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo "]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "fooBar"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "Foo bar"]), [ParseStatus.invalid,  "Foo bar"]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "foo, "]), [ParseStatus.incomplete,  ", "]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "out foo Bar"]), [ParseStatus.valid,  ""]); 
-		assert.deepEqual(paramDef([ParseStatus.empty, "out foo"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramDef([ParseStatus.empty, "out Foo"]), [ParseStatus.incomplete,  "Foo"]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo Bar"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo   Bar"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo Bar more"]), [ParseStatus.valid, " more"]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo "]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "fooBar"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "Foo bar"]), [ParseStatus.invalid,  "Foo bar"]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "foo, "]), [ParseStatus.incomplete,  ", "]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo Bar"]), [ParseStatus.valid,  ""]); 
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out foo"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramDef([ParseStatus.notParsed, "out Foo"]), [ParseStatus.incomplete,  "Foo"]);
 	}); 
 
 	test('parse functions - optional', () => {
-		assert.deepEqual(optional([ParseStatus.empty, "foo"], identifier), [ParseStatus.valid,  ""]);
-		assert.deepEqual(optional([ParseStatus.empty, ""], identifier), [ParseStatus.empty,  ""]);
-		assert.deepEqual(optional([ParseStatus.empty, "foo set to"], identifier), [ParseStatus.valid,  " set to"]);
-		assert.deepEqual(optional([ParseStatus.empty, "Foo"], identifier), [ParseStatus.empty,  "Foo"]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "foo"], identifier), [ParseStatus.valid,  ""]);
+		assert.deepEqual(optional([ParseStatus.notParsed, ""], identifier), [ParseStatus.notParsed,  ""]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "foo set to"], identifier), [ParseStatus.valid,  " set to"]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "Foo"], identifier), [ParseStatus.notParsed,  "Foo"]);
 
-		assert.deepEqual(optional([ParseStatus.empty, "foo"], paramDef), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(optional([ParseStatus.empty, "foo Bar"], paramDef), [ParseStatus.valid,  ""]);
-		assert.deepEqual(optional([ParseStatus.empty, "Foo Bar"], paramDef), [ParseStatus.empty,  "Foo Bar"]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "foo"], paramDef), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "foo Bar"], paramDef), [ParseStatus.valid,  ""]);
+		assert.deepEqual(optional([ParseStatus.notParsed, "Foo Bar"], paramDef), [ParseStatus.notParsed,  "Foo Bar"]);
 	}); 
 
 	test('parse functions - zeroOrMore', () => {
-		assert.deepEqual(STAR([ParseStatus.empty, " , ,, ,   ,,,  "], comma), [ParseStatus.valid,  ""]);
-		assert.deepEqual(STAR([ParseStatus.empty, ""], comma), [ParseStatus.valid,  ""]);
+		assert.deepEqual(STAR([ParseStatus.notParsed, " , ,, ,   ,,,  "], comma), [ParseStatus.valid,  ""]);
+		assert.deepEqual(STAR([ParseStatus.notParsed, ""], comma), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - oneOrMore', () => {
-		assert.deepEqual(PLUS([ParseStatus.empty, " , ,, ,   ,,,  "], comma), [ParseStatus.valid,  ""]);
-		assert.deepEqual(PLUS([ParseStatus.empty, ""], comma), [ParseStatus.invalid,  ""]);
-		assert.deepEqual(PLUS([ParseStatus.empty, "x,y"], comma), [ParseStatus.invalid,  "x,y"]);
+		assert.deepEqual(PLUS([ParseStatus.notParsed, " , ,, ,   ,,,  "], comma), [ParseStatus.valid,  ""]);
+		assert.deepEqual(PLUS([ParseStatus.notParsed, ""], comma), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(PLUS([ParseStatus.notParsed, "x,y"], comma), [ParseStatus.invalid,  "x,y"]);
 	}); 
 
 	test('parse functions - commaSeparatedOneOrMore - identifiers', () => {
-		assert.deepEqual(CSV_1([ParseStatus.empty, "foo , bar ,a, yon"], identifier), [ParseStatus.valid,  ""]);
-		assert.deepEqual(CSV_1([ParseStatus.empty, "foo , bar ,a, yon ,"], identifier), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(CSV_1([ParseStatus.empty, "foo  bar"], identifier), [ParseStatus.valid,  "  bar"]);
-		assert.deepEqual(CSV_1([ParseStatus.empty, "1"], identifier), [ParseStatus.invalid,  "1"]);
-		assert.deepEqual(CSV_1([ParseStatus.empty, ", bar"], identifier), [ParseStatus.invalid,  ", bar"]);
-		assert.deepEqual(CSV_1([ParseStatus.empty, "foo  "], identifier), [ParseStatus.valid,  "  "]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, "foo , bar ,a, yon"], identifier), [ParseStatus.valid,  ""]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, "foo , bar ,a, yon ,"], identifier), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, "foo  bar"], identifier), [ParseStatus.valid,  "  bar"]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, "1"], identifier), [ParseStatus.invalid,  "1"]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, ", bar"], identifier), [ParseStatus.invalid,  ", bar"]);
+		assert.deepEqual(CSV_1([ParseStatus.notParsed, "foo  "], identifier), [ParseStatus.valid,  "  "]);
 	}); 
 
 	test('parse functions - commaSeparatedZeroOrMore - identifiers', () => {
-		assert.deepEqual(CSV_0([ParseStatus.empty, "foo , bar ,a, yon"], identifier), [ParseStatus.valid,  ""]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, "foo , bar ,a, yon ,"], identifier), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, "foo  bar"], identifier), [ParseStatus.valid,  "  bar"]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, "1"], identifier), [ParseStatus.valid,  "1"]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, "foo  "], identifier), [ParseStatus.valid,  "  "]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, "foo,  "], identifier), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(CSV_0([ParseStatus.empty, ", bar"], identifier), [ParseStatus.valid,  ", bar"]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "foo , bar ,a, yon"], identifier), [ParseStatus.valid,  ""]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "foo , bar ,a, yon ,"], identifier), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "foo  bar"], identifier), [ParseStatus.valid,  "  bar"]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "1"], identifier), [ParseStatus.valid,  "1"]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "foo  "], identifier), [ParseStatus.valid,  "  "]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, "foo,  "], identifier), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(CSV_0([ParseStatus.notParsed, ", bar"], identifier), [ParseStatus.valid,  ", bar"]);
 	}); 
 
 	test('parse functions - paramsList', () => {
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo String , bar Int ,a Char, yon Float"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo String"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo String , "]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo, "]), [ParseStatus.incomplete,  ", "]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo String , bar "]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo String , Bar"]), [ParseStatus.incomplete,  "Bar"]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "foo string"]), [ParseStatus.incomplete,  "string"]);
-		assert.deepEqual(paramsList([ParseStatus.empty, "Foo String"]), [ParseStatus.invalid,  "Foo String"]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , bar Int ,a Char, yon Float"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , "]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo, "]), [ParseStatus.incomplete,  ", "]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , bar "]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo String , Bar"]), [ParseStatus.incomplete,  "Bar"]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "foo string"]), [ParseStatus.incomplete,  "string"]);
+		assert.deepEqual(paramsList([ParseStatus.notParsed, "Foo String"]), [ParseStatus.invalid,  "Foo String"]);
 	}); 
 
 	test('parse functions - longestMatchFrom', () => {
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "foo"], [type, identifier]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "String"], [type, identifier]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "foo String"], [type, identifier]), [ParseStatus.valid,  " String"]);
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "123"], [type, identifier]), [ParseStatus.invalid,  "123"]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "foo"], [type, identifier]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "String"], [type, identifier]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "foo String"], [type, identifier]), [ParseStatus.valid,  " String"]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "123"], [type, identifier]), [ParseStatus.invalid,  "123"]);
 
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "3.142"], [literalInt, literalFloat]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "3.142"], [literalFloat, literalInt ]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(longestMatchFrom([ParseStatus.empty, "3142"], [literalFloat, literalInt ]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "3.142"], [literalInt, literalFloat]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "3.142"], [literalFloat, literalInt ]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(longestMatchFrom([ParseStatus.notParsed, "3142"], [literalFloat, literalInt ]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - firstMatchFrom', () => {
-		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.empty, "foo"], [identifier, paramDef]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.empty, "foo bar"], [identifier, paramDef]), [ParseStatus.valid,  " bar"]);
-		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.empty, "foo String"], [identifier, paramDef]), [ParseStatus.valid,  " String"]);
-		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.empty, "123"], [identifier, paramDef]), [ParseStatus.invalid,  "123"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo"], [identifier, paramDef]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo bar"], [identifier, paramDef]), [ParseStatus.valid,  " bar"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo String"], [identifier, paramDef]), [ParseStatus.valid,  " String"]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "123"], [identifier, paramDef]), [ParseStatus.invalid,  "123"]);
 		// functions specified in different order
-		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.empty, "foo String"], [paramDef,identifier]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(firstValidMatchOrLongestIncomplete([ParseStatus.notParsed, "foo String"], [paramDef,identifier]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - literalBoolean', () => {
-		assert.deepEqual(literalBoolean([ParseStatus.empty, "true more"]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalBoolean([ParseStatus.empty, "false"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(literalBoolean([ParseStatus.empty, "tr"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(literalBoolean([ParseStatus.empty, "f"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(literalBoolean([ParseStatus.empty, "tr ue"]), [ParseStatus.invalid,  "tr ue"]);
+		assert.deepEqual(literalBoolean([ParseStatus.notParsed, "true more"]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalBoolean([ParseStatus.notParsed, "false"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(literalBoolean([ParseStatus.notParsed, "tr"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(literalBoolean([ParseStatus.notParsed, "f"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(literalBoolean([ParseStatus.notParsed, "tr ue"]), [ParseStatus.invalid,  "tr ue"]);
 	}); 
 
 	test('parse functions - literalInt', () => {
-		assert.deepEqual(literalInt([ParseStatus.empty, "30564 more"]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalInt([ParseStatus.empty, "0 more"]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalInt([ParseStatus.empty, "-3"]), [ParseStatus.invalid,  "-3"]);
-		assert.deepEqual(literalInt([ParseStatus.empty, "3.141"]), [ParseStatus.valid,  ".141"]);
+		assert.deepEqual(literalInt([ParseStatus.notParsed, "30564 more"]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalInt([ParseStatus.notParsed, "0 more"]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalInt([ParseStatus.notParsed, "-3"]), [ParseStatus.invalid,  "-3"]);
+		assert.deepEqual(literalInt([ParseStatus.notParsed, "3.141"]), [ParseStatus.valid,  ".141"]);
 	}); 
 
 	//TODO add Exponent
 	test('parse functions - literalFloat', () => {
-		assert.deepEqual(literalFloat([ParseStatus.empty, "3.141 more"]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, "0.0"]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, "0"]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, "1."]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, "1.x"]), [ParseStatus.incomplete,  "x"]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, "a1"]), [ParseStatus.invalid,  "a1"]);
-		assert.deepEqual(literalFloat([ParseStatus.empty, ""]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "3.141 more"]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "0.0"]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "0"]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "1."]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "1.x"]), [ParseStatus.incomplete,  "x"]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, "a1"]), [ParseStatus.invalid,  "a1"]);
+		assert.deepEqual(literalFloat([ParseStatus.notParsed, ""]), [ParseStatus.invalid,  ""]);
 	}); 
 
 	//TODO: cope with unicode ?
 	test('parse functions - literalChar', () => {
-	 	assert.deepEqual(literalChar([ParseStatus.empty, `'A' more`]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalChar([ParseStatus.empty, `'z'`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(literalChar([ParseStatus.empty, `'1`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(literalChar([ParseStatus.empty, `'12`]), [ParseStatus.incomplete,  "2"]);
-		assert.deepEqual(literalChar([ParseStatus.empty, `A'`]), [ParseStatus.invalid,  "A'"]);
+	 	assert.deepEqual(literalChar([ParseStatus.notParsed, `'A' more`]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalChar([ParseStatus.notParsed, `'z'`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(literalChar([ParseStatus.notParsed, `'1`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(literalChar([ParseStatus.notParsed, `'12`]), [ParseStatus.incomplete,  "2"]);
+		assert.deepEqual(literalChar([ParseStatus.notParsed, `A'`]), [ParseStatus.invalid,  "A'"]);
 	}); 
 
 	test('parse functions - literalString', () => {
-	   assert.deepEqual(literalString([ParseStatus.empty, `"" more`]), [ParseStatus.valid,  " more"]);
-	   assert.deepEqual(literalString([ParseStatus.empty, `"Hello World!"`]), [ParseStatus.valid,  ""]);
-	   assert.deepEqual(literalString([ParseStatus.empty, `"`]), [ParseStatus.incomplete,  ""]);
-	   assert.deepEqual(literalString([ParseStatus.empty, `"Hello`]), [ParseStatus.incomplete,  ""]);
-	   assert.deepEqual(literalString([ParseStatus.empty, `'Hello World!'`]), [ParseStatus.invalid,  "'Hello World!'"]);
+	   assert.deepEqual(literalString([ParseStatus.notParsed, `"" more`]), [ParseStatus.valid,  " more"]);
+	   assert.deepEqual(literalString([ParseStatus.notParsed, `"Hello World!"`]), [ParseStatus.valid,  ""]);
+	   assert.deepEqual(literalString([ParseStatus.notParsed, `"`]), [ParseStatus.incomplete,  ""]);
+	   assert.deepEqual(literalString([ParseStatus.notParsed, `"Hello`]), [ParseStatus.incomplete,  ""]);
+	   assert.deepEqual(literalString([ParseStatus.notParsed, `'Hello World!'`]), [ParseStatus.invalid,  "'Hello World!'"]);
    }); 
 
 	test('parse functions - enumValue', () => {
-		assert.deepEqual(enumValue([ParseStatus.empty, `Colour.red more`]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(enumValue([ParseStatus.empty, `Colour.`]), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(enumValue([ParseStatus.empty, `Colour.Red`]), [ParseStatus.incomplete, "Red"]);
-		assert.deepEqual(enumValue([ParseStatus.empty, `Colo`]), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(enumValue([ParseStatus.empty, `colour.red`]), [ParseStatus.invalid, "colour.red"]);
-		assert.deepEqual(enumValue([ParseStatus.empty, `.red`]), [ParseStatus.invalid, ".red"]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `Colour.red more`]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `Colour.`]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `Colour.Red`]), [ParseStatus.incomplete, "Red"]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `Colo`]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `colour.red`]), [ParseStatus.invalid, "colour.red"]);
+		assert.deepEqual(enumValue([ParseStatus.notParsed, `.red`]), [ParseStatus.invalid, ".red"]);
 	}); 
 
 	test('parse functions - literalValue', () => {
-		assert.deepEqual(literalValue([ParseStatus.empty, `Colour.red more`]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalValue([ParseStatus.empty, `'z'`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(literalValue([ParseStatus.empty, "1.x"]), [ParseStatus.incomplete,  "x"]);
-		assert.deepEqual(literalValue([ParseStatus.empty, "true more"]), [ParseStatus.valid,  " more"]);
-		assert.deepEqual(literalValue([ParseStatus.empty, "a1"]), [ParseStatus.invalid,  "a1"]);
-		assert.deepEqual(literalValue([ParseStatus.empty, `"a1"`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, `Colour.red more`]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, `'z'`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, "1.x"]), [ParseStatus.incomplete,  "x"]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, "true more"]), [ParseStatus.valid,  " more"]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, "a1"]), [ParseStatus.invalid,  "a1"]);
+		assert.deepEqual(literalValue([ParseStatus.notParsed, `"a1"`]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - scopeQualifier', () => {
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `xyz`]), [ParseStatus.empty,  "xyz"]);
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `property.more`]), [ParseStatus.valid,  "more"]);
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `global.more`]), [ParseStatus.valid,  "more"]);
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `library.more`]), [ParseStatus.valid,  "more"]);
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `myLib.more`]), [ParseStatus.empty,  "myLib.more"]);
-		assert.deepEqual(scopeQualifier_opt([ParseStatus.empty, `myLib`]), [ParseStatus.empty,  "myLib"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `xyz`]), [ParseStatus.notParsed,  "xyz"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `property.more`]), [ParseStatus.valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `global.more`]), [ParseStatus.valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `library.more`]), [ParseStatus.valid,  "more"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `myLib.more`]), [ParseStatus.notParsed,  "myLib.more"]);
+		assert.deepEqual(scopeQualifier_opt([ParseStatus.notParsed, `myLib`]), [ParseStatus.notParsed,  "myLib"]);
 	}); 
 
 	test('parse functions - index', () => {
-		assert.deepEqual(index_opt([ParseStatus.empty, `[2]`]), [ParseStatus.valid, ""]);
-		assert.deepEqual(index_opt([ParseStatus.empty, `[2`]), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(index_opt([ParseStatus.empty, `[`]), [ParseStatus.incomplete, ""]);
-		assert.deepEqual(index_opt([ParseStatus.empty, `[a]`]), [ParseStatus.valid, ""]);
-		assert.deepEqual(index_opt([ParseStatus.empty, `(2)`]), [ParseStatus.empty, "(2)"]);
+		assert.deepEqual(index_opt([ParseStatus.notParsed, `[2]`]), [ParseStatus.valid, ""]);
+		assert.deepEqual(index_opt([ParseStatus.notParsed, `[2`]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(index_opt([ParseStatus.notParsed, `[`]), [ParseStatus.incomplete, ""]);
+		assert.deepEqual(index_opt([ParseStatus.notParsed, `[a]`]), [ParseStatus.valid, ""]);
+		assert.deepEqual(index_opt([ParseStatus.notParsed, `(2)`]), [ParseStatus.notParsed, "(2)"]);
 	});
 
 	test('parse functions - variable', () => {
-		assert.deepEqual(variableUse([ParseStatus.empty, `a`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variableUse([ParseStatus.empty, `a[23]`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variableUse([ParseStatus.empty, `a[2`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variableUse([ParseStatus.empty, `a[`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variableUse([ParseStatus.empty, `a[b]`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[23]`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[2`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `a[b]`]), [ParseStatus.valid,  ""]);
 	}); 
 
 	test('parse functions - value', () => {
-		assert.deepEqual(value([ParseStatus.empty, `123`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(value([ParseStatus.empty, `a`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(value([ParseStatus.empty, `"hello"`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(value([ParseStatus.empty, `global.a1`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(value([ParseStatus.empty, `library.`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(value([ParseStatus.empty, `global.1`]), [ParseStatus.incomplete,  "1"]);
-		assert.deepEqual(value([ParseStatus.empty, `a[b]`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `123`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `"hello"`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `global.a1`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `library.`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(value([ParseStatus.notParsed, `global.1`]), [ParseStatus.incomplete,  "1"]);
+		assert.deepEqual(value([ParseStatus.notParsed, `a[b]`]), [ParseStatus.valid,  ""]);
 
 		//Problem here: why parsing as a variable. Poss error in SEQ when ends (or just has) an optional element
-		assert.deepEqual(variableUse([ParseStatus.empty, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
-		assert.deepEqual(value([ParseStatus.empty, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
+		assert.deepEqual(variableUse([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
+		assert.deepEqual(value([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
 	}); 
 
 	test('parse functions - argsList', () => {
-		assert.deepEqual(argsList([ParseStatus.empty, `1, 2, 3`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.empty, `a, b[2], c[d], "hello", 'c', true`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.empty, `a, b[2], c[d],,`]), [ParseStatus.incomplete,  ","]);
-		assert.deepEqual(argsList([ParseStatus.empty, ``]), [ParseStatus.invalid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.empty, `a b[2]`]), [ParseStatus.valid,  " b[2]"]);
-		assert.deepEqual(argsList([ParseStatus.empty, `a, `]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, `1, 2, 3`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d], "hello", 'c', true`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d],,`]), [ParseStatus.incomplete,  ","]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, ``]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, `a b[2]`]), [ParseStatus.valid,  " b[2]"]);
+		assert.deepEqual(argsList([ParseStatus.notParsed, `a, `]), [ParseStatus.incomplete,  ""]);
 	});
 
 	test('parse functions - identifierList', () => {
-		assert.deepEqual(identifierList([ParseStatus.empty, `a, bc, c1_d`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(identifierList([ParseStatus.empty, `a`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(identifierList([ParseStatus.empty, `a,`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(identifierList([ParseStatus.empty, ``]), [ParseStatus.invalid,  ""]);
-		assert.deepEqual(identifierList([ParseStatus.empty, `Foo`]), [ParseStatus.invalid,  "Foo"]);
-		assert.deepEqual(identifierList([ParseStatus.empty, `a[1]`]), [ParseStatus.valid,  "[1]"]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, `a, bc, c1_d`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, `a,`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, ``]), [ParseStatus.invalid,  ""]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, `Foo`]), [ParseStatus.invalid,  "Foo"]);
+		assert.deepEqual(identifierList([ParseStatus.notParsed, `a[1]`]), [ParseStatus.valid,  "[1]"]);
 	});
 
 	test('parse functions - variableDotIdentifier', () => {
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `foo`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `foo.bar`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `foo:bar`]), [ParseStatus.incomplete,  ":bar"]);
-		assert.deepEqual(variableDotMember([ParseStatus.empty, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo.bar`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `foo:bar`]), [ParseStatus.incomplete,  ":bar"]);
+		assert.deepEqual(variableDotMember([ParseStatus.notParsed, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
 	});
 
 	test('parse functions - procedureRef', () => {
-		assert.deepEqual(procedureRef([ParseStatus.empty, `foo`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(procedureRef([ParseStatus.empty, `foo.bar`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(procedureRef([ParseStatus.empty, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
-		assert.deepEqual(procedureRef([ParseStatus.empty, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
-		assert.deepEqual(procedureRef([ParseStatus.empty, `foo:bar`]), [ParseStatus.valid,  ":bar"]);
-		assert.deepEqual(procedureRef([ParseStatus.empty, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo.bar`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `Foo.bar`]), [ParseStatus.invalid,  "Foo.bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo.Bar`]), [ParseStatus.incomplete,  "Bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `foo:bar`]), [ParseStatus.valid,  ":bar"]);
+		assert.deepEqual(procedureRef([ParseStatus.notParsed, `charMap.fillBackground()`]), [ParseStatus.valid,  "()"]);
 	}); 
 
 	test('parse functions - anythingBetweenBrackets', () => {
-		assert.deepEqual(anythingBetweenBrackets([ParseStatus.empty, `(3 + 4)`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(anythingBetweenBrackets([ParseStatus.empty, `((3+4)*5)`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(anythingBetweenBrackets([ParseStatus.empty, `((3+4)*5)()`]), [ParseStatus.valid,  "()"]);
-		assert.deepEqual(anythingBetweenBrackets([ParseStatus.empty, `3+4)*5)()`]), [ParseStatus.invalid,  "3+4)*5)()"]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `(3 + 4)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `((3+4)*5)()`]), [ParseStatus.valid,  "()"]);
+		assert.deepEqual(anythingBetweenBrackets([ParseStatus.notParsed, `3+4)*5)()`]), [ParseStatus.invalid,  "3+4)*5)()"]);
 	});
 
 	test('parse functions - assignableValue', () => {
-		assert.deepEqual(assignableValue([ParseStatus.empty, `a`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(assignableValue([ParseStatus.empty, `(a, b)`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(assignableValue([ParseStatus.empty, `(a, b`]), [ParseStatus.incomplete,  ""]);
-		assert.deepEqual(assignableValue([ParseStatus.empty, `a, b`]), [ParseStatus.valid,  ", b"]);
-		assert.deepEqual(assignableValue([ParseStatus.empty, `{x:xs}`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(assignableValue([ParseStatus.empty, `{()`]), [ParseStatus.incomplete,  "()"]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `a`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `(a, b)`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `(a, b`]), [ParseStatus.incomplete,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `a, b`]), [ParseStatus.valid,  ", b"]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `{x:xs}`]), [ParseStatus.valid,  ""]);
+		assert.deepEqual(assignableValue([ParseStatus.notParsed, `{()`]), [ParseStatus.incomplete,  "()"]);
 	});
 });

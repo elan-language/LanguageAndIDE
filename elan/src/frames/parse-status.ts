@@ -2,5 +2,5 @@ export enum ParseStatus {
     invalid,
     incomplete, 
     valid,
-    empty
+    notParsed //Used for optional fields
 }
