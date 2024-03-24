@@ -42,6 +42,13 @@ end enum\r
 `;
     }
 
+    renderAsObjectCode(): string {
+        return `enum ${this.name.renderAsSource()} {\r
+${singleIndent()}${this.values.renderAsObjectCode()}\r
+}\r
+`;
+    }
+
     parseFrom(source: CodeSource): void {
         source.remove("enum ");
         this.name.parseFrom(source);

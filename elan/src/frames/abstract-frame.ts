@@ -26,6 +26,9 @@ export abstract class AbstractFrame implements Frame {
         map.set(this.htmlId, this);
         this.setMap(map);
     }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
+    }
 
     fieldUpdated(field: Field): void {
         //Does nothing - for sub-classes to override as needed

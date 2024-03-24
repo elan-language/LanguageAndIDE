@@ -4,6 +4,7 @@ import { LiteralValue } from "../fields/literal-value";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { singleIndent } from "../helpers";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -31,6 +32,13 @@ ${this.renderChildrenAsHtml()}
         return `${this.indent()}case ${this.value.renderAsSource()}\r
 ${this.renderChildrenAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}case ${this.value.renderAsObjectCode()}:\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}${singleIndent()}break;`;
+    }
+    
     parseTop(source: CodeSource): void {
         source.remove("case ");
         this.value.parseFrom(source);

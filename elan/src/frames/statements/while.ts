@@ -32,6 +32,13 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}while (${this.condition.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}`;
+    }
+
     parseTop(source: CodeSource): void {
         source.remove("while ");
         this.condition.parseFrom(source);

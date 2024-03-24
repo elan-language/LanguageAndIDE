@@ -1,4 +1,4 @@
-import { Parent} from "../interfaces/parent";
+import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
@@ -34,6 +34,14 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}if (${this.condition.renderAsSource()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}`;
+    }
+
+    
     parseTop(source: CodeSource): void {
         source.remove("if ");
         this.condition.parseFrom(source);

@@ -23,6 +23,12 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end function\r
 `;
     }
+    public override renderAsObjectCode() : string {
+        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}\r
+`;
+    }
     parseTop(source: CodeSource): void {
         source.removeIndent();
         super.parseTop(source);

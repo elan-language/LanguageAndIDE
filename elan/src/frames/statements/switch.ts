@@ -40,6 +40,13 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end switch`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}switch (${this.expr.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}`;
+    }
+    
     parseTop(source: CodeSource): void {
         source.remove("switch ");
         this.expr.parseFrom(source);

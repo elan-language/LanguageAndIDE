@@ -42,6 +42,13 @@ ${this.renderChildrenAsSource()}\r
 end main\r
 `;
     }
+
+    public renderAsObjectCode() : string {
+        return `export async function main() {\r
+${this.renderStatementsAsObjectCode()}\r
+}\r
+`;
+    }
     parseTop(source: CodeSource) {
         source.remove("main");
     }  

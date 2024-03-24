@@ -38,6 +38,11 @@ export class Else extends FrameWithStatements implements Statement {
     private ifClauseAsSource() : string {
         return this.hasIf ? ` if ${this.condition.renderAsSource()}`:``;
     }
+
+    private ifClauseAsObjectCode() : string {
+        return this.hasIf ? `if (${this.condition.renderAsSource()}) {`: `{`;
+    }
+
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
 ${this.renderChildrenAsHtml()}
@@ -51,6 +56,11 @@ ${this.renderChildrenAsHtml()}
     renderAsSource(): string {
         return `${this.indent()}else${this.ifClauseAsSource()}\r
 ${this.renderChildrenAsSource()}`;
+    }
+    
+    renderAsObjectCode(): string {
+        return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
+${this.renderStatementsAsObjectCode()}\r`;
     }
 
     parseTop(source: CodeSource): void {

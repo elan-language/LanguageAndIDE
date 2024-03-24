@@ -47,4 +47,10 @@ export class Constant extends AbstractFrame {
         return `constant ${this.name.renderAsSource()} set to ${this.literal.renderAsSource()}\r
 `;
     }
+
+    renderAsObjectCode(): string {
+        return `const ${this.name.renderAsSource()} = ${this.literal.renderAsSource()};\r
+`;
+    }
+
 } 

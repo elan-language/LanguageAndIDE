@@ -128,4 +128,16 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         }
         return result;
     }
+
+    protected renderStatementsAsObjectCode() : string {
+        var result = "";
+        if (this._children.length > 0 ) {
+            const ss: Array<string> = [];
+            for (var frame of this._children.filter(s => !('isSelector' in s))) {
+                ss.push(frame.renderAsObjectCode());
+            }
+            result = ss.join("\r\n");
+        }
+        return result;
+    }
 }

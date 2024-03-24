@@ -42,6 +42,12 @@ ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
     }
+    public renderAsObjectCode() : string {
+        return `function ${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+}\r
+`;
+    }
     parseTop(source: CodeSource): void {
         source.remove("procedure ");
         this.name.parseFrom(source);

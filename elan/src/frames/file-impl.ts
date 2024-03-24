@@ -27,6 +27,8 @@ import { DefaultProfile } from "./default-profile";
 // for web editor bundle
 export { CodeSourceFromString };
 
+//var system; export function _inject(l) { system = l; };
+
 export class FileImpl implements File {
     isParent: boolean = true;
     hasFields: boolean = true;
@@ -136,9 +138,26 @@ export class FileImpl implements File {
         return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
     }
 
+    renderGlobalsAsObjectCode() : string{
+        var result = "";
+        if (this._globals.length > 0) {
+            const ss: Array<string> = [];
+            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
+                ss.push(frame.renderAsObjectCode());
+            }
+            result = ss.join("\r\n");
+        }
+        return result;
+    }
+
     renderAsSource(): string {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
+    }
+
+    renderAsObjectCode(): string {
+        const stdLib = 'var system; export function _inject(l) { system = l; };';
+        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}`; 
     }
 
     renderHashableContent(): string {

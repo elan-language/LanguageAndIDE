@@ -142,6 +142,10 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
         return  this.doesInherit() ? ` ${this.inherits.renderAsSource()} ${this.superClasses.renderAsSource()}` : ``;
     }
 
+    private inheritanceAsObjectCode(): string {
+        return `${this.inherits ? " implements " + this.superClasses.renderAsObjectCode() : ""}`;
+    }
+
     public renderAsHtml(): string {
 
         return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
@@ -160,6 +164,20 @@ ${parentHelper_renderChildrenAsHtml(this)}
 ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
     }
+
+    private membersAsObjectCode(): string {
+        var result = "";
+        if (this._children.length > 0) {
+        const ss: Array<string> = [];
+        for (var m of this._children.filter(m  => !('isSelector' in m))) {
+            var s = m.renderAsObjectCode();
+            ss.push(s);
+        }
+        result = ss.join("\r\n");
+        }
+        return result;
+    }
+
 
     createFunction(): Frame {return new FunctionMethod(this);}
     createProperty(): Frame {return new Property(this);}

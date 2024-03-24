@@ -42,6 +42,14 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;
     }
+
+    public renderAsObjectCode(): string {
+        return `${this.indent()}constructor(${this.params.renderAsObjectCode()}) {\r
+${this.renderStatementsAsObjectCode()}\r
+${this.indent()}}\r
+`;
+    }
+    
     parseTop(source: CodeSource): void {
         source.removeIndent();
         source.remove("constructor(");
