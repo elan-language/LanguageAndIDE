@@ -22,9 +22,6 @@ export class ArgListField extends AbstractField {
             return "";
         }
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        throw new Error("Method to be deleted, eventually");
-    }  
     initialiseRoot(): ParseNode | undefined { 
         this.rootNode = new CSV(() => new ExprNode,0);
         return this.rootNode; 

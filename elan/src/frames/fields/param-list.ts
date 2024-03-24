@@ -1,9 +1,9 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { CSV } from "../parse-nodes/csv";
+import { ParamDefNode } from "../parse-nodes/param-def-node copy";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { paramsList } from "./parse-functions";
 
 export class ParamList extends AbstractField {
     constructor(holder: Frame) {
@@ -23,9 +23,10 @@ export class ParamList extends AbstractField {
             return "";
         }
     }    
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return paramsList(input);
-    }   
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
+    initialiseRoot(): ParseNode | undefined { 
+        this.rootNode = new CSV(() => new ParamDefNode(), 0);
+        return this.rootNode; 
+    }
+    readToDelimeter: ((source: CodeSource) => string) | undefined =
+        (source: CodeSource) => source.readToNonMatchingCloseBracket();
 }

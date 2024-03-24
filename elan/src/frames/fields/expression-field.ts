@@ -15,10 +15,6 @@ export class ExpressionField extends AbstractField  {
     getIdPrefix(): string {
         return 'expr';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return anythingToNewline(input);
-    }   
-
     initialiseRoot(): ParseNode | undefined {
         this.rootNode = new ExprNode();
         return this.rootNode;

@@ -27,7 +27,6 @@ import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node copy';
 import { Term } from '../frames/parse-nodes/term';
-import { ParamListNode } from '../frames/parse-nodes/param-list-node';
 import { DottedTerm } from '../frames/parse-nodes/dotted-term';
 
 
@@ -285,15 +284,17 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new ParamDefNode(),`A`, ParseStatus.invalid, "","","");
 		testNodeParse(new ParamDefNode(),`a string`, ParseStatus.invalid, "","a string","");
 	});
-	test('ParamListNode', () => {
-		testNodeParse(new ParamListNode(),`A string`, ParseStatus.valid, "","A string","");
-		testNodeParse(new ParamListNode(),`a string`, ParseStatus.valid, "","a string","");
- 		testNodeParse(new ParamListNode(),``, ParseStatus.empty, "","","");
-		testNodeParse(new ParamListNode(),`a String`, ParseStatus.valid, "","","");
-		testNodeParse(new ParamListNode(),`a String, bb Int, foo Bar`, ParseStatus.valid, "","","");
-		testNodeParse(new ParamListNode(),`a`, ParseStatus.incomplete, "a","","");
-		testNodeParse(new ParamListNode(),`a String,`, ParseStatus.incomplete, "a String,","","");
-		testNodeParse(new ParamListNode(),`a String, bb`, ParseStatus.incomplete, "a String, bb","","");
+	test('Param List', () => {
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`A string`, ParseStatus.valid, "","A string","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a string`, ParseStatus.valid, "","a string","");
+ 		testNodeParse(new CSV(() => new ParamDefNode(), 0),``, ParseStatus.valid, "","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String`, ParseStatus.valid, "","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb Int, foo Bar`, ParseStatus.valid, "","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a`, ParseStatus.incomplete, "a","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String,`, ParseStatus.incomplete, "a String,","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb`, ParseStatus.incomplete, "a String, bb","","");
+		//Temporary capability only
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, out bb Int`, ParseStatus.valid, "a String, out bb Int","","");
 	});
 	test('DottedTerm', () => {
 		testNodeParse(new DottedTerm(),`system.readKey()`, ParseStatus.valid, "system.readKey()","","system.readKey()","system.<method>readKey</method>()");

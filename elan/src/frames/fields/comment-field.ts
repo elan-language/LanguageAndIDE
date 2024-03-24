@@ -15,9 +15,6 @@ export class CommentField extends AbstractField {
     getIdPrefix(): string {
         return 'comment';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        throw new Error("Method to be deleted, eventually");
-    }
     initialiseRoot(): ParseNode | undefined { 
        this.rootNode =  new RegExMatchNode(/.*/);
        return this.rootNode;

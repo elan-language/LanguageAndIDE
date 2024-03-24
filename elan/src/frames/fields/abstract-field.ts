@@ -48,7 +48,9 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
 
-    abstract parseFunction(input: [ParseStatus, string]): [ParseStatus, string];  //TODO: temporary solution  
+    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
+        throw new Error("Method to be deleted, eventually");
+    }    
     abstract initialiseRoot(): ParseNode | undefined; //Eventual solution - then drop undefined option
     abstract readToDelimeter: ((source: CodeSource) => string)  | undefined;
 

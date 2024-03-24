@@ -1,5 +1,10 @@
-# 6e34aedfbd1564d5ab20a8e8a8e01df78c82f9c444242731f66f0714aaac7d60 Elan v0.1 valid
+# dd19b572f3bb16ffbcc5012a4eba5fdd14764c042987c28d6df0e951a4881cee Elan v0.1 valid
 
 main
   var a set to a+b
+  var x set to foo()
 end main
+
+function foo() as Int
+  return default
+end function
