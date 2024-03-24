@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
@@ -53,7 +54,7 @@ class Foo {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -109,7 +110,7 @@ class Foo {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -132,7 +133,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -152,7 +153,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -177,7 +178,7 @@ class Foo
   end function
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -202,7 +203,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -228,7 +229,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -254,7 +255,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -279,7 +280,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -309,7 +310,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

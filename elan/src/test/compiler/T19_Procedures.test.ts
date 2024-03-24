@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
@@ -29,7 +30,7 @@ function foo() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -82,7 +83,7 @@ class Bar {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -106,7 +107,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -142,7 +143,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -178,7 +179,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -214,7 +215,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -250,7 +251,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -284,7 +285,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -324,7 +325,7 @@ function foo(a: number, b: string) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -366,7 +367,7 @@ function bar() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -404,7 +405,7 @@ function foo(a: number) {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -421,7 +422,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -438,7 +439,7 @@ procedure foo(Int a)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -457,7 +458,7 @@ procedure foo()
     print 2
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -477,7 +478,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -497,7 +498,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -517,7 +518,7 @@ procedure foo (a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -536,7 +537,7 @@ procedure foo (a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -555,7 +556,7 @@ procedure foo(a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -574,7 +575,7 @@ procedure foo(ref a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -592,7 +593,7 @@ procedure foo(a Int)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -606,7 +607,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -629,7 +630,7 @@ procedure foo (out a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -652,7 +653,7 @@ procedure foo (ref a Int, b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -673,7 +674,7 @@ procedure foo(out a Int, out b String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

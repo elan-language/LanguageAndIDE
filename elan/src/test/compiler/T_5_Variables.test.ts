@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
@@ -18,7 +19,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -42,7 +43,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -68,7 +69,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -94,7 +95,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -121,7 +122,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -173,7 +174,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -204,7 +205,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -220,7 +221,7 @@ main
   variable a set to 3
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -234,7 +235,7 @@ main
   var a set to 4
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -248,7 +249,7 @@ main
  
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -262,7 +263,7 @@ main
   set a to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -276,7 +277,7 @@ main
   set a to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -289,7 +290,7 @@ main
   var A = 4.1
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -302,7 +303,7 @@ main
   var a@b set to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -315,7 +316,7 @@ main
   var if set to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

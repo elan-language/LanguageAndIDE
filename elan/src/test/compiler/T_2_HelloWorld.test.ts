@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
@@ -15,7 +16,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -39,7 +40,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -61,7 +62,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -83,7 +84,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -106,7 +107,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -128,7 +129,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -150,7 +151,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -172,7 +173,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -194,7 +195,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -216,7 +217,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -238,7 +239,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -260,7 +261,7 @@ export async function main() {
 }
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
@@ -274,7 +275,7 @@ export async function main() {
 
 print "hello World!"`;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertDoesNotParse(fileImpl);
@@ -287,7 +288,7 @@ main
   print "Hello World!"
 `;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertDoesNotParse(fileImpl);
@@ -300,7 +301,7 @@ MAIN
   print "Hello World!"
 end main`;
 
-        const fileImpl = new FileImpl(() => "", true);
+        const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertDoesNotParse(fileImpl);

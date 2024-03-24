@@ -140,9 +140,9 @@ export class FileImpl implements File {
 
     renderGlobalsAsObjectCode() : string{
         var result = "";
-        if (this._globals.length > 0) {
+        if (this._children.length > 0) {
             const ss: Array<string> = [];
-            for (var frame of this._globals.filter(g => !('isSelector' in g))) {
+            for (var frame of this._children.filter(g => !('isSelector' in g))) {
                 ss.push(frame.renderAsObjectCode());
             }
             result = ss.join("\r\n");

@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
@@ -25,7 +26,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -67,7 +68,7 @@ export async function main() {
 }
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -87,7 +88,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -103,7 +104,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -120,7 +121,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -137,7 +138,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -154,7 +155,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", true);
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

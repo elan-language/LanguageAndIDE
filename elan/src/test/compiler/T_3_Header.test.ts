@@ -1,3 +1,4 @@
+import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
@@ -23,7 +24,7 @@ end main`;
 }
 `;
 
-        const fileImpl = new FileImpl(hash);
+        const fileImpl = new FileImpl(hash, new DefaultProfile());
         fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);
