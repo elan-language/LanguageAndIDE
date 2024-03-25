@@ -8,7 +8,7 @@ main
    var attempt set to "RAISE"
    while marking is not "*****"
       print attempt
-      set marking to input 
+      input marking
       set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
       set attempt to bestAttempt(possible, validWords)
    end while

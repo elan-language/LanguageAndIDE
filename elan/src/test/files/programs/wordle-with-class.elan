@@ -1,4 +1,4 @@
-# 6eda6233cf491426e6f4e672fdec5548c496e4f1a2bcf3e5d0206cacb7d9eb9d Elan v0.1 valid
+# 69c627ed6672097949766f7fad4a7aed861e406a6a2d94e9f64d30a4453d3c31 Elan v0.1 valid
 
 function isYellow(attempt String, target String, n Int) as Bool
   return target.contains(attempt[n])
@@ -22,7 +22,7 @@ main
   var attempt set to "RAISE"
   while marking is not "*****"
     print attempt
-    set marking to input
+    input marking
     set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
     set attempt to bestAttempt(possible, validWords)
   end while

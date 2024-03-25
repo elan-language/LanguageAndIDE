@@ -8,7 +8,7 @@ import { Statement } from "../interfaces/statement";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    name: Value;;
+    name: Value;
     expr: ExpressionField;
 
     constructor(parent: Parent) {

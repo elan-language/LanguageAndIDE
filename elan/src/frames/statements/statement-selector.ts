@@ -3,7 +3,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
-import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword, commentMarker } from "../keywords";
+import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword, commentMarker, inputKeyword } from "../keywords";
 
 export class StatementSelector extends AbstractSelector  {
     isStatement = true;
@@ -25,6 +25,7 @@ export class StatementSelector extends AbstractSelector  {
         [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
         [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
         [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
+        [inputKeyword, (parent: Parent) => this.factory.newInput(parent)],
         [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
         [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
         [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
@@ -51,7 +52,7 @@ export class StatementSelector extends AbstractSelector  {
             return false;
         } else if (keyword === elseKeyword ) {
             return this.getParent().getIdPrefix() === ifKeyword ;
-        } else if (keyword === printKeyword || keyword === callKeyword) {
+        } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
             return !this.isWithinAFunction(this.getParent());
         } else {
             return true;
