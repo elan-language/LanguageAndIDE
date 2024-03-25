@@ -1,11 +1,10 @@
 import { ExprNode } from "./expr-node";
 import { BinaryOperation } from "./binary-operation";
 import { AbstractSequence } from "./abstract-sequence";
-import { IdentifierNode } from "./identifier-node";
 import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
-    
+
     constructor() {
         super();
         this.placeholder = "expression";
@@ -17,5 +16,5 @@ export class BinaryExpression extends AbstractSequence {
         this.elements.push(new ExprNode());
         return super.parseText(text);
     }
-    
+
 }

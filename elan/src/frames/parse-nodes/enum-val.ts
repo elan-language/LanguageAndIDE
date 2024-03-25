@@ -10,10 +10,8 @@ export class EnumVal extends AbstractSequence {
 
     parseText(text: string): void {
         this.elements.push(new RegExMatchNode(/^\s*[A-Z]\w*/));
-        this.elements.push(new Symbol(".")); 
-        this.elements.push(new IdentifierNode()); 
+        this.elements.push(new Symbol("."));
+        this.elements.push(new IdentifierNode());
         super.parseText(text);
     }
-
-    
 }

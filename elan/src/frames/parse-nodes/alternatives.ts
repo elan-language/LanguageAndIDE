@@ -3,13 +3,13 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 
 export class Alternatives extends AbstractAlternatives {
 
-    elementConstructors: (() =>ParseNode)[];
-    constructor(elementConstructors: (() =>ParseNode)[]) {
+    elementConstructors: (() => ParseNode)[];
+    constructor(elementConstructors: (() => ParseNode)[]) {
         super();
         this.elementConstructors = elementConstructors;
     }
 
-    parseText(text: string): void { 
+    parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elementConstructors.forEach(ec => {
                 this.alternatives.push(ec());

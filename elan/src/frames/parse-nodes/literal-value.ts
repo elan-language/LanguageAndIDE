@@ -12,7 +12,6 @@ export class LiteralValue extends AbstractAlternatives {
     }
 
     parseText(text: string): void {
-        //Sub nodes added only when asked to parse
         this.alternatives.push(new LitInt());
         this.alternatives.push(new LitFloat());
         this.alternatives.push(new LitChar());
@@ -20,5 +19,4 @@ export class LiteralValue extends AbstractAlternatives {
         this.alternatives.push(new LitString());
         super.parseText(text);
     }
-    
 }

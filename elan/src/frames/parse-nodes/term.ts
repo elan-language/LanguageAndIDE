@@ -18,7 +18,6 @@ export class Term extends AbstractAlternatives {
     }
 
     parseText(text: string): void {
-        //Sub nodes added only when asked to parse
         this.alternatives.push(new LiteralValue());
         this.alternatives.push(new UnaryExpression());
         this.alternatives.push(new IndexableTerm());
@@ -32,5 +31,4 @@ export class Term extends AbstractAlternatives {
         this.alternatives.push(new IfExpr());
         super.parseText(text);
     }
-    
 }

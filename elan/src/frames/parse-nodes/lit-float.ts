@@ -17,8 +17,6 @@ export class LitFloat extends AbstractSequence {
             this.elements.push(new Symbol("."));
             this.elements.push(new RegExMatchNode(/^\s*[0-9]+/));
             super.parseText(text);
-        } 
+        }
     }
-
-    
 }

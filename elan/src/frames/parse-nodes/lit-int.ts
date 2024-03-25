@@ -14,6 +14,4 @@ export class LitInt extends AbstractParseNode {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, /^\s*[0-9]+/);
         }
     }
-
-    
 }

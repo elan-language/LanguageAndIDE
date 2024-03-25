@@ -13,12 +13,12 @@ export class FunctionCallNode extends AbstractSequence {
         if (text.trimStart().length > 0) {
             this.elements.push(new IdentifierNode());
             this.elements.push(new Symbol("("));
-            this.elements.push(new CSV(() => new ExprNode(),0)); //arg list
+            this.elements.push(new CSV(() => new ExprNode(), 0)); //arg list
             this.elements.push(new Symbol(")"));
             super.parseText(text);
         }
     }
     renderAsHtml(): string {
         return `<method>${this.elements[0].renderAsHtml()}</method>(${this.elements[2].renderAsHtml()})`;
-    }    
+    }
 }

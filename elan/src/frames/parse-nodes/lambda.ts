@@ -13,13 +13,12 @@ export class Lambda extends AbstractSequence {
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(new Keyword(`lambda`));
-            this.elements.push(new CSV(() => new IdentifierNode(),1));
+            this.elements.push(new CSV(() => new IdentifierNode(), 1));
             this.elements.push(new Symbol(`->`));
             this.elements.push(new ExprNode());
             super.parseText(text);
         }
     }
-    
 
     renderAsSource(): string {
         return `lambda ${this.elements[1].renderAsSource()} -> ${this.elements[3].renderAsSource()}`;

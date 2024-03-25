@@ -9,4 +9,3 @@ export class TypeSimpleNode extends RegExMatchNode {
         return `<type>${this.renderAsSource()}</type>`;
     }
 }
-

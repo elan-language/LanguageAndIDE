@@ -14,7 +14,7 @@ export class TypeNode extends AbstractAlternatives {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             var single = new TypeWithOptGenerics();
-            var tuple = new Sequence([() => new Symbol("("),() => new CSV(() => new TypeNode(), 2), () => new Symbol(")") ]);
+            var tuple = new Sequence([() => new Symbol("("), () => new CSV(() => new TypeNode(), 2), () => new Symbol(")")]);
             this.alternatives.push(single);
             this.alternatives.push(tuple);
             super.parseText(text);

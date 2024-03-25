@@ -1,5 +1,4 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { Symbol } from "./symbol";
 import { Keyword } from "./keyword";
 
 export class LitBool extends AbstractAlternatives {
@@ -17,14 +16,4 @@ export class LitBool extends AbstractAlternatives {
             super.parseText(text);
         }
     }
-
-    
-}
-
-export class True extends Symbol {
-
-}
-
-export class False extends Symbol {
-    
 }

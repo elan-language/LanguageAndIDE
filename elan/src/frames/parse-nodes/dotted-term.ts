@@ -11,13 +11,11 @@ export class DottedTerm extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trim().length > 0) {
-            var dottableTerm = () =>  new IndexableTerm();
+            var dottableTerm = () => new IndexableTerm();
             var dottedAddition = () => new Sequence([() => new Symbol("."), dottableTerm]);
             this.elements.push(dottableTerm());
-            this.elements.push(new Multiple(dottedAddition,0)); 
+            this.elements.push(new Multiple(dottedAddition, 0));
             super.parseText(text);
         }
     }
-
-    
 }

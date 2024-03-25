@@ -1,8 +1,6 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
-import { ListOfExpr } from "./listOfExpr";
 import { Term } from "./term";
-import { TupleDefNode } from "./tuple-def-node";
 
 export class ExprNode extends AbstractAlternatives {
     constructor() {
@@ -15,5 +13,4 @@ export class ExprNode extends AbstractAlternatives {
         this.alternatives.push(new BinaryExpression());
         super.parseText(text);
     }
-    
 }

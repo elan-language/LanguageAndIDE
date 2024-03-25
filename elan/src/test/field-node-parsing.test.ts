@@ -25,7 +25,7 @@ import { TypeSimpleNode } from '../frames/parse-nodes/type-simple-node';
 import { TupleDefNode } from '../frames/parse-nodes/tuple-def-node';
 import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
-import { ParamDefNode } from '../frames/parse-nodes/param-def-node copy';
+import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
 import { DottedTerm } from '../frames/parse-nodes/dotted-term';
 

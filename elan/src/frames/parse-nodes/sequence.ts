@@ -1,16 +1,15 @@
-
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 
 export class Sequence extends AbstractSequence {
 
-    elementConstructors: (() =>ParseNode)[];
-    constructor(elementConstructors: (() =>ParseNode)[]) {
+    elementConstructors: (() => ParseNode)[];
+    constructor(elementConstructors: (() => ParseNode)[]) {
         super();
         this.elementConstructors = elementConstructors;
     }
 
-    parseText(text: string): void { 
+    parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elementConstructors.forEach(ec => {
                 this.elements.push(ec());
@@ -18,6 +17,4 @@ export class Sequence extends AbstractSequence {
         }
         super.parseText(text);
     }
-
-    
 }

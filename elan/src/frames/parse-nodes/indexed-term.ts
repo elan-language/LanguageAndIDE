@@ -11,12 +11,10 @@ export class IndexableTerm extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        var indexableTerm = () =>  new Alternatives([() => new IdentifierNode, () => new FunctionCallNode()]);
+        var indexableTerm = () => new Alternatives([() => new IdentifierNode, () => new FunctionCallNode()]);
         this.elements.push(indexableTerm());
         var index = () => new IndexNode();
-        this.elements.push(new Multiple(index, 0)); 
+        this.elements.push(new Multiple(index, 0));
         super.parseText(text);
     }
-
-    
 }

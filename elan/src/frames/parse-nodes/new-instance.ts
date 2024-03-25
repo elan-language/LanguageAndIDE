@@ -5,7 +5,6 @@ import { Keyword } from "./keyword";
 import { Symbol } from "./symbol";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
-
 export class NewInstance extends AbstractSequence {
     constructor() {
         super();
@@ -14,11 +13,9 @@ export class NewInstance extends AbstractSequence {
     parseText(text: string): void {
         this.elements.push(new Keyword("new"));
         this.elements.push(new TypeWithOptGenerics());
-        this.elements.push(new Symbol("(")); 
-        this.elements.push(new CSV(() => new ExprNode(),0)); 
-        this.elements.push(new Symbol(")")); 
+        this.elements.push(new Symbol("("));
+        this.elements.push(new CSV(() => new ExprNode(), 0));
+        this.elements.push(new Symbol(")"));
         super.parseText(text);
     }
-
-    
 }

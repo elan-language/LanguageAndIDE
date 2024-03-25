@@ -3,7 +3,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Symbol } from "./symbol";
 
 export class BracketedExpression extends AbstractSequence {
-    
+
     constructor() {
         super();
         this.placeholder = "";
@@ -17,5 +17,4 @@ export class BracketedExpression extends AbstractSequence {
             super.parseText(text);
         }
     }
-    
 }
