@@ -50,7 +50,7 @@ class GridGraph
 
   # Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
   # You may make use of existing methods such a s Neignbours, or findEdge.
-  procedure shortestPath(source Point, destination Point, alg Algorithm, out route List<of Point>)
+  procedure shortestPath(source Point, destination Point, alg Algorithm,  route List<of Point>)
     # Initialise the 'table' with three 'columns' - one 'row' per node
     var visited set to newDictionaryOfAllPointsReturningFalseValues()
     var costFromSource set to  newDictionaryOfAllPointsReturningDoublesSetToInfinity()
@@ -96,7 +96,8 @@ class GridGraph
     return dict
   end function
 
-  procedure updateCostAndViaOfEachNeighbourIfApplicable(out costFromSource Dictionary<of Point, Float>, out via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
+  # needs converting to a function as dictionaries are immutable
+  procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource Dictionary<of Point, Float>, via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
     each neighbour in neighbours(currentNode)
       var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
       if newCost < costFromSource[neighbour]

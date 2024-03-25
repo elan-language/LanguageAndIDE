@@ -1,4 +1,4 @@
-# ae73d23981f4d77f96956d252113b14a11f042a8564bf87c849bc8526efffc10 Elan v0.1 valid
+# 4c4e7814403a4d4dab9ce838e406db8e6976c06e2c780c4c3ebb1d7dea62dd70 Elan v0.1 valid
 
 main
   print welcome
@@ -29,15 +29,19 @@ procedure playGame()
     var pressed set to system.keyHasBeenPressed()
     call pause(200)
     call snake.clockTick(currentDirection, gameOn)
-    call draw(charMap, snake.head, Colour.green)
-    call draw(charMap, snake.apple, Colour.red)
-    var priorTail set to snake.tail()
-    if pressed
-      var k set to system.readKey()
-      set currentDirection to directionByKey[k]
-    end if
-    if snake.tail() is not priorTail
-      call draw(charMap, priorTail, charMap.backgroundColour)
+    if snake.hasHitEdge() or snake.bodyCovers(head)
+      set gameOn to false
+      else
+        call draw(charMap, snake.head, Colour.green)
+        call draw(charMap, snake.apple, Colour.red)
+        var priorTail set to snake.tail()
+        if pressed
+          var k set to system.readKey()
+          set currentDirection to directionByKey[k]
+        end if
+        if snake.tail() is not priorTail
+          call draw(charMap, priorTail, charMap.backgroundColour)
+        end if
     end if
   end while
   call charMap.setCursor(0, 0)
@@ -88,15 +92,14 @@ class Snake
     return result
   end function
 
-  procedure clockTick(d Direction, out continue Boolean)
-    set body to body + head;
-    set head to head.getAdjacentSquare(d);
+  procedure clockTick(d Direction)
+    set body to body + head
+    set head to head.getAdjacentSquare(d)
     if head is apple
       call setNewApplePosition()
       else
         set body to body[1..]
     end if
-    set continue to not hasHitEdge() and not bodyCovers(head)
   end procedure
 
   function hasHitEdge() as Bool
@@ -109,7 +112,7 @@ class Snake
       var h set to boardHeight - 1
       var ranW set to system.random(w)
       var ranH set to system.random(h)
-      set apple to new Square(ranW, ranH) 
+      set apple to new Square(ranW, ranH)
     end repeat when not bodyCovers(apple)
   end procedure
 
@@ -134,11 +137,11 @@ class Square
     var newY set to y
     switch d
       case Direction.left
-        set newX to newX - 1     
+        set newX to newX - 1
       case Direction.right
         set newX to newX + 1
       case Direction.up
-        set newY to newY - 1 
+        set newY to newY - 1
       case Direction.down
         set newY to newY + 1
       default

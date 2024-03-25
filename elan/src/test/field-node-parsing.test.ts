@@ -294,7 +294,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String,`, ParseStatus.incomplete, "a String,","","");
 		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb`, ParseStatus.incomplete, "a String, bb","","");
 		//Temporary capability only
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, out bb Int`, ParseStatus.valid, "a String, out bb Int","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb Int`, ParseStatus.valid, "a String, bb Int","","");
 	});
 	test('DottedTerm', () => {
 		testNodeParse(new DottedTerm(),`system.readKey()`, ParseStatus.valid, "system.readKey()","","system.readKey()","system.<method>readKey</method>()");

@@ -385,7 +385,7 @@ end main
 		assertFileParses(done, "programs/merge-sort.elan");
 	});
 	test('parse Frames - snake-oop', (done) => {
-    assertFileParses(done, "programs/snake-oop.elan");
+    assertFileParses(done, "programs/snake.elan");
   });
   test('parse Frames - wordle', (done) => {
     assertFileParses(done, "programs/wordle-with-class.elan");

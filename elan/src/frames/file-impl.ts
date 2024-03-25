@@ -238,7 +238,7 @@ export class FileImpl implements File {
     parseFrom(source: CodeSource): void {
         try {
             this.parseError = undefined;
-            //this.validateHeader(source.getRemainingCode());
+            this.validateHeader(source.getRemainingCode());
             if (source.isMatch("#")) {
                 source.removeRegEx(Regexes.startsWithComment, false);
                 source.removeRegEx(Regexes.startsWithNewLine, false);

@@ -36,7 +36,6 @@ export const notKeyword = 'not';
 export const ofKeyword = 'of';
 export const isKeyword = 'is';
 export const orKeyword = 'or';
-export const outKeyword = 'out';
 export const packageKeyword = 'package';
 export const partialKeyword = 'partial';
 export const printKeyword = 'print';
