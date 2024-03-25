@@ -428,7 +428,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_TypeSpecifiedBeforeParamName', () => {
+  test('Fail_TypeSpecifiedBeforeParamName', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -543,7 +543,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_InclusionOfOutInCall', () => {
+  test('Fail_InclusionOfOutInCall', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -562,7 +562,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_InclusionOfRefInDefinition', () => {
+  test('Fail_InclusionOfRefInDefinition', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -599,7 +599,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_CannotCallPrintAsAProcedure', () => {
+  test('Fail_CannotCallPrintAsAProcedure', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -659,7 +659,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_WithParamsPassingRefLiteral', () => {
+  test('Fail_WithParamsPassingRefLiteral', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
