@@ -6,5 +6,5 @@ main
 end main
 
 function foo() as Int
-  return default
+  return result
 end function

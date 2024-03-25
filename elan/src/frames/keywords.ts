@@ -43,6 +43,7 @@ export const privateKeyword = 'private';
 export const procedureKeyword = 'procedure';
 export const propertyKeyword = 'property';
 export const repeatKeyword = 'repeat';
+export const resultKeyword = 'result';
 export const returnKeyword = 'return';
 export const setKeyword = 'set';
 export const stepKeyword = 'step';
