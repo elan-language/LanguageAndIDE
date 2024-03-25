@@ -441,7 +441,6 @@ end procedure
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
-
     assertDoesNotParse(fileImpl);
   });
 
