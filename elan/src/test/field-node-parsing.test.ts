@@ -297,6 +297,6 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb Int`, ParseStatus.valid, "a String, bb Int","","");
 	});
 	test('DottedTerm', () => {
-		testNodeParse(new DottedTerm(),`system.readKey()`, ParseStatus.valid, "system.readKey()","","system.readKey()","system.<method>readKey</method>()");
+		testNodeParse(new DottedTerm(),`foo.bar()`, ParseStatus.valid, "foo.bar()","","foo.bar()","foo.<method>bar</method>()");
 	});
 });

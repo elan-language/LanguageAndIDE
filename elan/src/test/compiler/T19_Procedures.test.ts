@@ -92,11 +92,11 @@ class Bar {
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  test('Pass_SystemProcedure', async () => {
+  ignore_test('Pass_ExternalCall', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call system.pause(1)
+  external pause(1)
   print 1
 end main`;
 

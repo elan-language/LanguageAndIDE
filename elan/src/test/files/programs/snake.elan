@@ -1,15 +1,15 @@
-# 4c4e7814403a4d4dab9ce838e406db8e6976c06e2c780c4c3ebb1d7dea62dd70 Elan v0.1 valid
+# db7f58039026c0c2679221525996c36d794ebc14f5e4600d10fa8410f2a02fab Elan v0.1 valid
 
 main
   print welcome
-  var k set to system.readKey()
+  external readKey()
   var newGame set to true
   while newGame
     call playGame()
     print "Do you want to play again (y/n)?"
     var answer set to ' '
     repeat
-      set answer to system.readKey()
+      external readKey() into answer
     end repeat when answer is 'y' or answer is 'n'
     if answer is 'n'
       set newGame to false
@@ -26,7 +26,7 @@ procedure playGame()
   var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
   var gameOn set to true
   while gameOn
-    var pressed set to system.keyHasBeenPressed()
+    external keyHasBeenPressed() into pressed
     call pause(200)
     call snake.clockTick(currentDirection, gameOn)
     if snake.hasHitEdge() or snake.bodyCovers(head)
@@ -36,7 +36,7 @@ procedure playGame()
         call draw(charMap, snake.apple, Colour.red)
         var priorTail set to snake.tail()
         if pressed
-          var k set to system.readKey()
+          external readKey()
           set currentDirection to directionByKey[k]
         end if
         if snake.tail() is not priorTail
@@ -110,8 +110,8 @@ class Snake
     repeat
       var w set to boardWidth - 1
       var h set to boardHeight - 1
-      var ranW set to system.random(w)
-      var ranH set to system.random(h)
+      external random(w) into ranW
+      external random(h) into ranH
       set apple to new Square(ranW, ranH)
     end repeat when not bodyCovers(apple)
   end procedure

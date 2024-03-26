@@ -21,6 +21,7 @@ import { Catch } from "./statements/catch";
 import { Case } from "./statements/case";
 import { Assert } from "./statements/assert";
 import { Input } from "./statements/input";
+import { ExternalStatement } from "./statements/external-statement";
 
 export class StatementFactoryImpl implements StatementFactory {
 
@@ -31,6 +32,7 @@ export class StatementFactoryImpl implements StatementFactory {
     public newDefault(parent: Parent): Frame { return new Default(parent); }
     public newEach(parent: Parent): Frame { return new Each(parent); }
     public newElse(parent: Parent): Frame { return new Else(parent); }
+    public newExternal(parent: Parent): Frame { return new ExternalStatement(parent); }
     public newFor(parent: Parent): Frame { return new For(parent); }
     public newIf(parent: Parent): Frame { return new IfStatement(parent); }
     public newInput(parent: Parent): Frame { return new Input(parent); }

@@ -315,6 +315,36 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
+	test('parse Frames - external', () => {
+		var code = `# c6c9024aa74b80f7d1423e3d28c4318353d16034100e75d3ed1673aa76a04b2a Elan v0.1 valid
+
+main
+  external foo() into a
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
+	test('parse Frames - external (no into)', () => {
+		var code = `# 8d60cbf9747bf32d051ec9b6b3625e3accb03c91f4cebf76e9b51a7028063506 Elan v0.1 valid
+
+main
+  external foo()
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
 	test('parse Frames - abstract immutable class', () => {
 		var code = `# 254e89bdf507e1d4e0bbddeb2b5a5c0c189c04bc3c44335818762a505869426a Elan v0.1 valid
 
@@ -384,7 +414,7 @@ end main
 	test('parse Frames - merge-sort', (done) => {
 		assertFileParses(done, "programs/merge-sort.elan");
 	});
-	test('parse Frames - snake-oop', (done) => {
+	test('parse Frames - snake', (done) => {
     assertFileParses(done, "programs/snake.elan");
   });
   test('parse Frames - wordle', (done) => {
