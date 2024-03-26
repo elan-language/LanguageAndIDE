@@ -35,9 +35,6 @@ import { CharType } from '../symbols/char-type';
 import { StringType } from '../symbols/string-type';
 import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
-import { ListType } from '../symbols/list-type';
-import { TupleType } from '../symbols/tuple-type';
-
 
 suite('FieldNode parsing', () => {
 
@@ -75,7 +72,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BinaryOperation(stubField),"< =", ParseStatus.valid, "<", " ="," < ", "", boolType);
 
 		testNodeParse(new BinaryOperation(stubField),"is", ParseStatus.valid, "is", ""," is ", "", boolType);
-		//testNodeParse(new BinaryOperation(stubField),"is not", ParseStatus.valid, "is not", ""," is not ", "", boolType);
+		testNodeParse(new BinaryOperation(stubField),"is not", ParseStatus.valid, "is not", ""," is not ", "", boolType);
 		testNodeParse(new BinaryOperation(stubField),"and", ParseStatus.valid, "and", ""," and ", "", boolType);
 		testNodeParse(new BinaryOperation(stubField),"or", ParseStatus.valid, "or", ""," or ", "", boolType);
 		testNodeParse(new BinaryOperation(stubField),"xor", ParseStatus.valid, "xor", ""," xor ", "", boolType);

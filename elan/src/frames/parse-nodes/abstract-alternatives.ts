@@ -2,9 +2,10 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 import { ParseStatus } from "../parse-status";
 import { Field } from "../interfaces/field";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { UnknownType } from "../../symbols/unknown-type";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
+
 
 export abstract class AbstractAlternatives extends AbstractParseNode implements IHasSymbolType {
     alternatives: ParseNode[] = [];
