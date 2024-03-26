@@ -28,15 +28,15 @@ import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
 import { DottedTerm } from '../frames/parse-nodes/dotted-term';
 import { Field } from '../frames/interfaces/field';
-import { IntType } from '../symbols/IntType';
-import { FloatType } from '../symbols/FloatType';
-import { BooleanType } from '../symbols/BooleanType';
-import { CharType } from '../symbols/CharType';
-import { StringType } from '../symbols/StringType';
-import { UnknownType } from '../symbols/UnknownType';
-import { ClassType } from '../symbols/ClassType';
-import { ListType } from '../symbols/ListType';
-import { TupleType } from '../symbols/TupleType';
+import { IntType } from '../symbols/int-type';
+import { FloatType } from '../symbols/float-type';
+import { BooleanType } from '../symbols/boolean-type';
+import { CharType } from '../symbols/char-type';
+import { StringType } from '../symbols/string-type';
+import { UnknownType } from '../symbols/unknown-type';
+import { ClassType } from '../symbols/class-type';
+import { ListType } from '../symbols/list-type';
+import { TupleType } from '../symbols/tuple-type';
 
 
 suite('FieldNode parsing', () => {

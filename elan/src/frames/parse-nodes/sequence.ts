@@ -1,7 +1,7 @@
 
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
-import { IHasSymbolTypes } from "../../symbols/IHasSymbolTypes";
-import { UnknownType } from "../../symbols/UnknownType";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
+import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
+import { UnknownType } from "../../symbols/unknown-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";

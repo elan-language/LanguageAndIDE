@@ -1,5 +1,5 @@
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
-import { UnknownType } from "../../symbols/UnknownType";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";

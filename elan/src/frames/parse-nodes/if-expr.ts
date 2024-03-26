@@ -1,7 +1,7 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 
 export class IfExpr extends AbstractSequence {

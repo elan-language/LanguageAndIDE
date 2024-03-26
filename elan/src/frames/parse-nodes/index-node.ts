@@ -3,7 +3,7 @@ import { Alternatives } from "./alternatives";
 import { ExprNode } from "./expr-node";
 import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 
 export class IndexNode extends AbstractSequence {

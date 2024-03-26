@@ -1,9 +1,9 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Symbol } from "./symbol";
 import { RegExMatchNode } from "./regex-match-node";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
-import { StringType } from "../../symbols/StringType";
+import { StringType } from "../../symbols/string-type";
 
 export class LitString extends AbstractSequence {
     constructor(field : Field) {

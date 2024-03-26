@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { findSymbolInScope } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { AbstractParseNode } from "./abstract-parse-node";

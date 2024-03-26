@@ -2,7 +2,7 @@ import assert from "assert";
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { ISymbol } from "../../symbols/ISymbol";
+import { ISymbol } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 

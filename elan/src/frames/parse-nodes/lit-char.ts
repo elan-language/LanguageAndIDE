@@ -1,5 +1,5 @@
-import { CharType } from "../../symbols/CharType";
-import { UnknownType } from "../../symbols/UnknownType";
+import { CharType } from "../../symbols/char-type";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";

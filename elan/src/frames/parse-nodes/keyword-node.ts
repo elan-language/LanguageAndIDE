@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { rawSymbolToType } from "../../symbols/symbolHelpers";
 import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";

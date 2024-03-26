@@ -2,7 +2,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { lambdaKeyword, returnKeyword } from "../keywords";
 import { ParamDefNode } from "./param-def-node";

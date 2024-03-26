@@ -1,5 +1,5 @@
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
-import { IHasSymbolTypes } from "../../symbols/IHasSymbolTypes";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
+import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";

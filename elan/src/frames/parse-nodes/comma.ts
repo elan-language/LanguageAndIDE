@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import {Symbol} from "./symbol";
 

@@ -3,7 +3,7 @@ import { IndexableTerm } from "./indexed-term";
 import { Multiple } from "./multiple";
 import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 
 export class DottedTerm extends AbstractSequence {

@@ -4,7 +4,7 @@ import { Term } from "./term";
 import { Symbol } from "./symbol";
 import { KeywordNode } from "./keyword-node";
 import { notKeyword } from "../keywords";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 

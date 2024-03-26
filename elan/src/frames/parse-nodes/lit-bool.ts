@@ -1,8 +1,8 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { Field } from "../interfaces/field";
-import { BooleanType } from "../../symbols/BooleanType";
+import { BooleanType } from "../../symbols/boolean-type";
 import { KeywordNode } from "./keyword-node";
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
 export class LitBool extends AbstractAlternatives {
 

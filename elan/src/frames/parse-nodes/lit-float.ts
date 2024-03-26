@@ -3,7 +3,7 @@ import { Symbol } from "./symbol";
 import { LitInt } from "./lit-int";
 import { RegExMatchNode } from "./regex-match-node";
 import { Field } from "../interfaces/field";
-import { FloatType } from "../../symbols/FloatType";
+import { FloatType } from "../../symbols/float-type";
 import { Optional } from "./optional";
 import { Sequence } from "./sequence";
 

@@ -1,4 +1,4 @@
-import { IntType } from "../../symbols/IntType";
+import { IntType } from "../../symbols/int-type";
 import { Field } from "../interfaces/field";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";

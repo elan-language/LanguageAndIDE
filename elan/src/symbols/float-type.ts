@@ -1,4 +1,4 @@
-import { ISymbolType } from "./ISymbolType";
+import { ISymbolType } from "./symbol-type";
 
 export class FloatType implements ISymbolType {
     private constructor() { }

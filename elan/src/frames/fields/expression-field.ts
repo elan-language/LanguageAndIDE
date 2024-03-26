@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";

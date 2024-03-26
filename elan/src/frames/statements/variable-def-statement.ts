@@ -5,7 +5,7 @@ import { CodeSource } from "../code-source";
 import { VariableDef } from "../fields/variable";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../../symbols/ISymbol";
+import { ISymbol } from "../../symbols/symbol";
 
 export class VariableDefStatement extends AbstractFrame implements Statement, ISymbol  {
     isStatement = true;

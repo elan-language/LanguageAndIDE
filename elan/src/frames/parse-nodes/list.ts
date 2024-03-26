@@ -2,10 +2,10 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Symbol } from "./symbol";
 import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
-import { ListType } from "../../symbols/ListType";
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
+import { ListType } from "../../symbols/list-type";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 
 export class List extends AbstractSequence implements IHasSymbolType  {

@@ -2,13 +2,13 @@ import { FrameWithStatements } from "../frames/frame-with-statements";
 import { isFrame } from "../frames/helpers";
 import { Field } from "../frames/interfaces/field";
 import { Frame } from "../frames/interfaces/frame";
-import { BooleanType } from "./BooleanType";
-import { FloatType } from "./FloatType";
-import { IHasSymbolType } from "./IHasSymbolType";
-import { IHasSymbolTypes } from "./IHasSymbolTypes";
-import { ISymbol } from "./ISymbol";
-import { IntType } from "./IntType";
-import { UnknownType } from "./UnknownType";
+import { BooleanType } from "./boolean-type";
+import { FloatType } from "./float-type";
+import { IHasSymbolType } from "./has-symbol-type";
+import { IHasSymbolTypes } from "./has-symbol-types";
+import { ISymbol } from "./symbol";
+import { IntType } from "./int-type";
+import { UnknownType } from "./unknown-type";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;

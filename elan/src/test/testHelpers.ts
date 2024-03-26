@@ -10,7 +10,7 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { ParseStatus } from '../frames/parse-status';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
-import { ISymbolType } from '../symbols/ISymbolType';
+import { ISymbolType } from '../symbols/symbol-type';
 import { isHasSymbolType } from '../symbols/symbolHelpers';
 
 // flag to update test file 

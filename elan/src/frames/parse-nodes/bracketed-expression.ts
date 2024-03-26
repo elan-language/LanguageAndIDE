@@ -1,9 +1,9 @@
 import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { Symbol } from "./symbol";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
-import { IHasSymbolType } from "../../symbols/IHasSymbolType";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
 
 export class BracketedExpression extends AbstractSequence implements IHasSymbolType {

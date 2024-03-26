@@ -6,7 +6,7 @@ import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import { UnknownType } from "../../symbols/UnknownType";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 
 export class TypeWithOptGenerics extends AbstractSequence {
