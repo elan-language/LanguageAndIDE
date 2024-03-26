@@ -5,6 +5,6 @@ main
   var x set to foo()
 end main
 
-function foo() as Int
+function foo() returning Int
   return result
 end function

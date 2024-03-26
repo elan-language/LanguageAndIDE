@@ -219,7 +219,7 @@ end main
 	});
 
 	test('parse Frames - all globals except class', () => {
-		var code = `# 7769aa9d4a8e95e8c8bf6e52f8acbfd148ec61bbe9e7b21d6f04d3d17d101de4 Elan v0.1 valid
+		var code = `# ab48e4ac1da074ec9e5884d4d0c0144180d7447dfa6e6a8df3906b826bb57e78 Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -231,8 +231,8 @@ procedure signIn(password String)
 
 end procedure
 
-function hypotenuse(sideB Float, sideC Float) as Float
-  return value or expression
+function hypotenuse(sideB Float, sideC Float) returning Float
+  return 0.0
 end function
 
 enum Fruit
@@ -248,7 +248,7 @@ end enum
 	});
 
 	test('parse Frames - class', () => {
-		var code = `# 6d4d8df24c74a2072fbd05dd92278fa6219317b688fde9908f7251e5d831721c Elan v0.1 valid
+		var code = `# aa11e19644216d4289a41ffd430d9edcfcae8db0944992722437e7a8188b9144 Elan v0.1 valid
 
 class Player inherits Foo, Bar
   constructor()
@@ -261,7 +261,7 @@ class Player inherits Foo, Bar
     print 1
   end procedure
 
-  function bar() as Int
+  function bar() returning Int
     return 1
   end function
 
@@ -418,7 +418,7 @@ end main
     assertFileParses(done, "programs/snake.elan");
   });
   test('parse Frames - wordle', (done) => {
-    assertFileParses(done, "programs/wordle-with-class.elan");
+    assertFileParses(done, "programs/wordle.elan");
 	});
   test('parse Frames - life', (done) => {
     assertFileParses(done, "programs/life.elan");

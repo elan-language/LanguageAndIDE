@@ -1,34 +1,34 @@
-﻿# 3b8211ef978bc79f6b11744d9a8dee03344b9dbea0c58ef2fea04edb9f26c8c9 Elan v0.1 valid
+﻿# 62fa04f86a625fe0d5f22f432b7c5530a2d1872c836f27e94d6b220245a679c6 Elan v0.1 valid
 
-function calcA(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float
+function calcA(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) returning Float
   return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
 end function
 
-function calcSumX(points List<of (Float, Float)>) as Float
+function calcSumX(points List<of (Float, Float)>) returning Float
   return points.reduce(0.0, lambda s,p -> s + p.first())
 end function
 
-function calcSumXY(points List<of (Float, Float)>) as Float
+function calcSumXY(points List<of (Float, Float)>) returning Float
   return points.reduce(0.0, lambda s,p ->s + p.first() * p.second())
 end function
 
-function calcSumY(points List<of (Float, Float)>) as Float
+function calcSumY(points List<of (Float, Float)>) returning Float
   return points.reduce(0.0, lambda s,p -> s + p.second())
 end function
 
-function calcSumXsq(points List<of (Float, Float)>) as Float
+function calcSumXsq(points List<of (Float, Float)>) returning Float
   return points.reduce(0.0, lambda s,p -> s + p.first() * p.first())
 end function
 
-function bestFitFromPoints(points List<of (Float, Float)>) as (Float, Float)
+function bestFitFromPoints(points List<of (Float, Float)>) returning (Float, Float)
   return bestFitFromSummaryTerms(calcSumX(points), calcSumXsq(points), calcSumY(points), calcSumXY(points), points.length())
 end function
 
-function calcB(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float
+function calcB(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) returning Float
   return (n * sumXY - sumX * sumY) / (n * sumXsq - sumX * sumX)
 end function
 
-function bestFitFromSummaryTerms(sumX Float, sumX2 Float, sumY Float, sumXY Float, n Int) as (Float, Float)
+function bestFitFromSummaryTerms(sumX Float, sumX2 Float, sumY Float, sumXY Float, n Int) returning (Float, Float)
   return (calcA(sumX, sumX2, sumY, sumXY, n), calcB(sumX, sumX2, sumY, sumXY, n))
 end function
 

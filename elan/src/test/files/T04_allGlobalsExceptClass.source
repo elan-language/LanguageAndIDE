@@ -1,4 +1,4 @@
-# a4fda9fe8cd66f2835a48632219cf757c34a97844044f33ef5a49e8e69a53962 Elan v0.1 incomplete
+# 7a0c707e44cf38663e4849a1f04fb8186c4edc56f9cc64438d8a4cedd222a918 Elan v0.1 incomplete
 
 constant phi set to 1.618
 
@@ -10,7 +10,7 @@ procedure signIn()
 
 end procedure
 
-function hypotenuse(sideB Float, sideC Float) as Float
+function hypotenuse(sideB Float, sideC Float) returning Float
   return result
 end function
 

@@ -1,4 +1,4 @@
-﻿# 102bf99051c388ef0ddafc751b271e4120769a0b5c1bf74c555b331eee47a663 Elan v0.1 valid
+﻿# ef52c95fd82d33949c802d080ba90a7d614635ccce3d53fd7f58a442ca997d88 Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -22,55 +22,55 @@ procedure drawGrid(cm CharMap, grid List<of Bool>)
   end for
 end procedure
 
-function north(c Int) as Int
+function north(c Int) returning Int
   return if c > 19 then c - 20 else   c + 380
 end function
 
-function south(c Int) as Int
+function south(c Int) returning Int
   return if c < 380 then c + 20 else c - 380
 end function
 
-function east(c Int) as Int
+function east(c Int) returning Int
   return if c mod 20 < 19 then c + 1 else c - 19
 end function
 
-function west(c Int) as Int
+function west(c Int) returning Int
   return if c mod 20 > 0 then c - 1 else c + 1
 end function
 
-function northEast(c Int) as Int
+function northEast(c Int) returning Int
   return north(east(c))
 end function
 
-function southEast(c Int) as Int
+function southEast(c Int) returning Int
   return south(east(c))
 end function
 
-function northWest(c Int) as Int
+function northWest(c Int) returning Int
   return north(west(c))
 end function
 
-function southWest(c Int) as Int
+function southWest(c Int) returning Int
   return south(west(c))
 end function
 
-function neighbourCells(c Int) as List<of Int>
+function neighbourCells(c Int) returning List<of Int>
   return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 end function
 
-function liveNeighbours(cells List<of Bool>, c Int) as Int
+function liveNeighbours(cells List<of Bool>, c Int) returning Int
   return neighbourCells(c).filter(lambda i -> cells[i]).count()
 end function
 
-function willLive(currentlyAlive Bool, liveNeighbours Int) as Bool
+function willLive(currentlyAlive Bool, liveNeighbours Int) returning Bool
   return if currentlyAlive then liveNeighbours > 1 and liveNeighbours < 4 else liveNeighbours is 3
 end function
 
-function nextCellValue(cells List<of Bool>, c Int) as Bool
+function nextCellValue(cells List<of Bool>, c Int) returning Bool
   return willLive(cells[c], liveNeighbours(cells, c))
 end function
 
-function nextGeneration(cells List<of Bool>) as List<of Bool>
+function nextGeneration(cells List<of Bool>) returning List<of Bool>
   return integers(0, cells.length()-1).map(lambda n -> nextCellValue(cells, n)).asList()
 end function
 

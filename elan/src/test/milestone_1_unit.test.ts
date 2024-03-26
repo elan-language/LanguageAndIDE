@@ -94,7 +94,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select11").processKey(key("f"));
 		var v = file.getById("func12").renderAsSource();
-		assert.equal(v, '  function () as \r\n' +
+		assert.equal(v, '  function () returning \r\n' +
 		'    return result\r\n' +
 		'  end function\r\n');
  	});	
