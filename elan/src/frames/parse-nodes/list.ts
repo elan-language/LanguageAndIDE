@@ -3,7 +3,7 @@ import { Symbol } from "./symbol";
 import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
 
-export class ListOfT extends AbstractSequence {
+export class List extends AbstractSequence {
     elementConstructor: () => ParseNode;
 
     constructor(elementConstructor: () => ParseNode) {
