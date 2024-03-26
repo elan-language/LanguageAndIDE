@@ -1,3 +1,7 @@
+import { UnknownType } from "../../symbols/UnknownType";
+import { rawSymbolToType } from "../../symbols/symbolHelpers";
+import { ExpressionField } from "../fields/expression-field";
+import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 
@@ -5,8 +9,8 @@ export class KeywordNode extends AbstractParseNode {
     keyword: string;
     isKeyword = true;
 
-    constructor(keyword: string) {
-        super();
+    constructor(keyword: string, field : Field) {
+        super(field);
         this.keyword = keyword;
     }
 
@@ -34,5 +38,9 @@ export class KeywordNode extends AbstractParseNode {
     }
     renderAsSource(): string {
         return this.matchedText.trim() + " ";
+    }
+
+    get symbolType() {
+        return rawSymbolToType(this.keyword);
     }
 }

@@ -1,12 +1,16 @@
+import { IHasSymbolTypes } from "../../symbols/IHasSymbolTypes";
+import { ISymbolType } from "../../symbols/ISymbolType";
+import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
-export class AbstractSequence extends AbstractParseNode {
+export abstract class AbstractSequence extends AbstractParseNode {
+    
     elements: ParseNode[] = [];
 
-    constructor() {
-        super();
+    constructor(field : Field) {
+        super(field);
         this.placeholder = "op";
     }
 

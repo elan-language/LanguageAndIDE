@@ -9,27 +9,29 @@ import { IndexableTerm } from "./indexed-term";
 import { TupleDefNode } from "./tuple-def-node";
 import { Lambda } from "./lambda";
 import { IfExpr } from "./if-expr";
-import { ExprNode } from "./expr-node";
+import { Field } from "../interfaces/field";
 import { List } from "./list";
+import { ExprNode } from "./expr-node";
 
 export class Term extends AbstractAlternatives {
-    constructor() {
-        super();
+    constructor(field : Field) {
+        super(field);
         this.placeholder = "expression";
     }
 
     parseText(text: string): void {
-        this.alternatives.push(new LiteralValue());
-        this.alternatives.push(new UnaryExpression());
-        this.alternatives.push(new IndexableTerm());
-        this.alternatives.push(new DottedTerm());
-        this.alternatives.push(new NewInstance());
-        this.alternatives.push(new EnumVal());
-        this.alternatives.push(new BracketedExpression());
-        this.alternatives.push(new List(() => new ExprNode()));
-        this.alternatives.push(new TupleDefNode());
-        this.alternatives.push(new Lambda());
-        this.alternatives.push(new IfExpr());
+        //Sub nodes added only when asked to parse
+        this.alternatives.push(new LiteralValue(this.field));
+        this.alternatives.push(new UnaryExpression(this.field));
+        this.alternatives.push(new IndexableTerm(this.field));
+        this.alternatives.push(new DottedTerm(this.field));
+        this.alternatives.push(new NewInstance(this.field));
+        this.alternatives.push(new EnumVal(this.field));
+        this.alternatives.push(new BracketedExpression(this.field));
+        this.alternatives.push(new List(() => new ExprNode(this.field), this.field));
+        this.alternatives.push(new TupleDefNode(this.field));
+        this.alternatives.push(new Lambda(this.field));
+        this.alternatives.push(new IfExpr(this.field));
         super.parseText(text);
     }
 }

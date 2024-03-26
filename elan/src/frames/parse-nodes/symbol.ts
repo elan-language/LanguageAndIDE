@@ -1,13 +1,17 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { escapeAngleBrackets } from "../helpers";
+import { UnknownType } from "../../symbols/UnknownType";
+import { ExpressionField } from "../fields/expression-field";
+import { Field } from "../interfaces/field";
+import { rawSymbolToType } from "../../symbols/symbolHelpers";
 
 export class Symbol extends AbstractParseNode {
     fixedText: string;
     isSymbol = true;
 
-    constructor(fixedText: string) {
-        super();
+    constructor(fixedText: string, field : Field) {
+        super(field);
         this.fixedText = fixedText;
     }
 
@@ -30,4 +34,9 @@ export class Symbol extends AbstractParseNode {
     renderAsHtml(): string {
         return escapeAngleBrackets(this.renderAsSource());
     }
+    
+    get symbolType() {
+        return rawSymbolToType(this.fixedText);
+    }
+
 }

@@ -5,24 +5,24 @@ import { Symbol } from "./symbol";
 import { Sequence } from "./sequence";
 
 export class BinaryOperation extends AbstractAlternatives {
-    parseText(text: string): void {
-        this.alternatives.push(new Symbol("+"));
-        this.alternatives.push(new Symbol("-"));
-        this.alternatives.push(new Symbol("*"));
-        this.alternatives.push(new Symbol("/"));
-        this.alternatives.push(new Symbol(">"));
-        this.alternatives.push(new Symbol("<"));
-        this.alternatives.push(new Symbol(">="));
-        this.alternatives.push(new Symbol("<="));
-        this.alternatives.push(new KeywordNode(isKeyword));
-        var is = () => new KeywordNode(isKeyword);
-        var not = () => new KeywordNode(notKeyword);
-        this.alternatives.push(new Sequence([is, not]));
-        this.alternatives.push(new KeywordNode(andKeyword));
-        this.alternatives.push(new KeywordNode(orKeyword));
-        this.alternatives.push(new KeywordNode(xorKeyword));
-        this.alternatives.push(new KeywordNode(modKeyword));
-        this.alternatives.push(new KeywordNode(divKeyword));;
+    parseText(text: string): void {  
+        this.alternatives.push(new Symbol("+",this.field));
+        this.alternatives.push(new Symbol("-",this.field));
+        this.alternatives.push(new Symbol("*",this.field));
+        this.alternatives.push(new Symbol("/",this.field));
+        this.alternatives.push(new Symbol(">", this.field));
+        this.alternatives.push(new Symbol("<", this.field));
+        this.alternatives.push(new Symbol(">=", this.field));
+        this.alternatives.push(new Symbol("<=", this.field));
+        this.alternatives.push(new KeywordNode(isKeyword, this.field));
+        var is = () => new KeywordNode(isKeyword, this.field);
+        var not = () => new KeywordNode(notKeyword, this.field);
+        this.alternatives.push(new Sequence([is,not], this.field));
+        this.alternatives.push(new KeywordNode(andKeyword, this.field));
+        this.alternatives.push(new KeywordNode(orKeyword, this.field));
+        this.alternatives.push(new KeywordNode(xorKeyword, this.field));
+        this.alternatives.push(new KeywordNode(modKeyword, this.field));
+        this.alternatives.push(new KeywordNode(divKeyword, this.field));;
         super.parseText(text);
     }
 

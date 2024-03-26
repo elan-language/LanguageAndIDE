@@ -1,6 +1,5 @@
 import { ISymbolType } from "./ISymbolType";
 
-export interface ISymbol {
-    symbolId: string;
+export interface IHasSymbolType {
     symbolType?: ISymbolType;
 }
