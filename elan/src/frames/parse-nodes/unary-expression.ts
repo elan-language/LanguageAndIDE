@@ -2,7 +2,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { Term } from "./term";
 import { Symbol } from "./symbol";
-import { Keyword } from "./keyword";
+import { KeywordNode } from "./keyword-node";
 import { notKeyword } from "../keywords";
 
 export class UnaryExpression extends AbstractSequence {
@@ -14,7 +14,7 @@ export class UnaryExpression extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            var unaryOp = new Alternatives([() => new Symbol("-"), () => new Keyword(notKeyword)])
+            var unaryOp = new Alternatives([() => new Symbol("-"), () => new KeywordNode(notKeyword)])
             this.elements.push(unaryOp);
             this.elements.push(new Term());
             return super.parseText(text);

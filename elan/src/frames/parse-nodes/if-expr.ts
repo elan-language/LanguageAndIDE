@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Keyword } from "./keyword";
+import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
 
 export class IfExpr extends AbstractSequence {
@@ -9,11 +9,11 @@ export class IfExpr extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new Keyword("if"));
+            this.elements.push(new KeywordNode("if"));
             this.elements.push(new ExprNode());
-            this.elements.push(new Keyword("then"));
+            this.elements.push(new KeywordNode("then"));
             this.elements.push(new ExprNode());
-            this.elements.push(new Keyword("else"));
+            this.elements.push(new KeywordNode("else"));
             this.elements.push(new ExprNode());
             super.parseText(text);
         }

@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { Keyword } from "./keyword";
+import { KeywordNode } from "./keyword-node";
 
 export class LitBool extends AbstractAlternatives {
 
@@ -11,8 +11,8 @@ export class LitBool extends AbstractAlternatives {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            this.alternatives.push(new Keyword("true"));
-            this.alternatives.push(new Keyword("false"));
+            this.alternatives.push(new KeywordNode("true"));
+            this.alternatives.push(new KeywordNode("false"));
             super.parseText(text);
         }
     }
