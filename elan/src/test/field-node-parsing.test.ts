@@ -214,18 +214,18 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new FunctionCallNode(),`Foo()`, ParseStatus.invalid, ``, "Foo()","");
 		testNodeParse(new FunctionCallNode(),`foo[]`, ParseStatus.invalid, ``, "foo[]","");
 	});
-	test('Literal List of T', () => {
+	test('Lists', () => {
 		testNodeParse(new List(() => new LitInt()),``, ParseStatus.empty, ``, "","");
-		testNodeParse(new List(() => new LitInt()),`{1,2,3 ,4 , 5}`, ParseStatus.valid, `{1,2,3 ,4 , 5}`, "","");
-		testNodeParse(new List(() => new LitInt()),`{}`, ParseStatus.valid, `{}`, "","");
-		testNodeParse(new List(() => new LitInt()),`{`, ParseStatus.incomplete, `{`, "","");
-		testNodeParse(new List(() => new LitInt()),`{1,2,3.1}`, ParseStatus.invalid, ``, "{1,2,3.1}","");
+		testNodeParse(new List(() => new LitInt()),`[1,2,3 ,4 , 5]`, ParseStatus.valid, `[1,2,3 ,4 , 5]`, "","");
+		testNodeParse(new List(() => new LitInt()),`[]`, ParseStatus.valid, `[]`, "","");
+		testNodeParse(new List(() => new LitInt()),`[`, ParseStatus.incomplete, `[`, "","");
+		testNodeParse(new List(() => new LitInt()),`[1,2,3.1]`, ParseStatus.invalid, ``, "[1,2,3.1]","");
 		// list of list
 		testNodeParse(new List(() => new List(() => new LitInt())),``, ParseStatus.empty, ``, "","");
-		testNodeParse(new List(() => new List(() => new LitInt())),`{{}, {}, { }}`, ParseStatus.valid, `{{}, {}, { }}`, "","");
-		testNodeParse(new List(() => new List(() => new LitInt())),`{{1,2}, {}, {3,4}}`, ParseStatus.valid, `{{1,2}, {}, {3,4}}`, "","");
-		testNodeParse(new List(() => new List(() => new LitInt())),`{{1,2}, {}, {3,4}`, ParseStatus.incomplete, `{{1,2}, {}, {3,4}`, "","");
-		testNodeParse(new List(() => new List(() => new LitInt())),`{{1,2, {}, {3,4}}`, ParseStatus.invalid, ``, `{{1,2, {}, {3,4}}`,"");
+		testNodeParse(new List(() => new List(() => new LitInt())),`[[], [], [ ]]`, ParseStatus.valid, `[[], [], [ ]]`, "","");
+		testNodeParse(new List(() => new List(() => new LitInt())),`[[1,2], [], [3,4]]`, ParseStatus.valid, `[[1,2], [], [3,4]]`, "","");
+		testNodeParse(new List(() => new List(() => new LitInt())),`[[1,2], [], [3,4]`, ParseStatus.incomplete, `[[1,2], [], [3,4]`, "","");
+		testNodeParse(new List(() => new List(() => new LitInt())),`[[1,2, [], [3,4]]`, ParseStatus.invalid, ``, `[[1,2, [], [3,4]]`,"");
 	});
 	test('Indexed term', () => {
 		testNodeParse(new IndexableTerm(),`foo[3]`, ParseStatus.valid, "foo[3]","","");
@@ -234,8 +234,8 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new IndexableTerm(),`foo[3..]`, ParseStatus.valid, "foo[3..]","","");
 		testNodeParse(new IndexableTerm(),`foo[..4]`, ParseStatus.valid, "foo[..4]","","");
 	});
-	test('ListOfExpr', () => {
-		testNodeParse(new List(() => new ExprNode()),`{a, 3+ 4 , func(a, 3) -1, new Foo()}`, ParseStatus.valid, "{a, 3+ 4 , func(a, 3) -1, new Foo()}","","");
+	test('List of expressions', () => {
+		testNodeParse(new List(() => new ExprNode()),`[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]","","");
 	});
 	test('TypeSimpleNode', () => {
 		testNodeParse(new TypeSimpleNode(),`Foo`, ParseStatus.valid, "Foo","","","<type>Foo</type>");
