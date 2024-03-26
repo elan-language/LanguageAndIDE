@@ -6,7 +6,7 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { ListType } from "../../symbols/list-type";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
 
 export class List extends AbstractSequence implements IHasSymbolType  {
     elementConstructor: () => ParseNode;
@@ -29,6 +29,11 @@ export class List extends AbstractSequence implements IHasSymbolType  {
        
         if (isHasSymbolType(this.elements[1])) {
             const ofType = this.elements[1].symbolType;
+            return new ListType(ofType || UnknownType.Instance);
+        }
+
+        if (isHasSymbolTypes(this.elements[1])) {
+            const ofType = this.elements[1].symbolTypes[0];
             return new ListType(ofType || UnknownType.Instance);
         }
 
