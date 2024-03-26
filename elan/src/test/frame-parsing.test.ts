@@ -219,7 +219,7 @@ end main
 	});
 
 	test('parse Frames - all globals except class', () => {
-		var code = `# ab48e4ac1da074ec9e5884d4d0c0144180d7447dfa6e6a8df3906b826bb57e78 Elan v0.1 valid
+		var code = `# 8dfeafb5c3ac7b5950d3cc432937e3dce295a2186dd08ec7a8c77c8b212199d2 Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -227,11 +227,11 @@ main
 
 end main
 
-procedure signIn(password String)
+procedure signIn(password as String)
 
 end procedure
 
-function hypotenuse(sideB Float, sideC Float) returning Float
+function hypotenuse(sideB as Float, sideC as Float) return Float
   return 0.0
 end function
 
@@ -248,20 +248,20 @@ end enum
 	});
 
 	test('parse Frames - class', () => {
-		var code = `# aa11e19644216d4289a41ffd430d9edcfcae8db0944992722437e7a8188b9144 Elan v0.1 valid
+		var code = `# 834c9e198f709067045ddf39de7a96f9f926021b95df792d5dc55a0bae618736 Elan v0.1 valid
 
 class Player inherits Foo, Bar
   constructor()
 
   end constructor
 
-  property score Int
+  property score as Int
 
   procedure foo()
     print 1
   end procedure
 
-  function bar() returning Int
+  function bar() return Int
     return 1
   end function
 
@@ -276,14 +276,14 @@ end class
 	});
 
 	test('parse Frames - immutable class', () => {
-		var code = `# f7be3359698e8a4b584dbcb48c04b834b33800696ddd3317abf43c76b75525c8 Elan v0.1 valid
+		var code = `# c716652d0078c118b606b66848e0ea87e5618f5f0e9196cf41c34f8b8409ede2 Elan v0.1 valid
 
 immutable class Card inherits Foo, Bar
   constructor()
 
   end constructor
 
-  private property value Int
+  private property value as Int
 
 end class
 `

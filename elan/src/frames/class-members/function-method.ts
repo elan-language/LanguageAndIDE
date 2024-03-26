@@ -5,7 +5,7 @@ import { Class } from "../globals/class";
 import { Function } from "../globals/function";
 import { singleIndent } from "../helpers";
 import { Member } from "../interfaces/member";
-import { endKeyword, functionKeyword, returningKeyword } from "../keywords";
+import { endKeyword, functionKeyword,  returnKeyword } from "../keywords";
 
 export class FunctionMethod extends Function implements Member {
     isGlobal: boolean = false;
@@ -20,7 +20,7 @@ export class FunctionMethod extends Function implements Member {
         return singleIndent();
     }
     public override renderAsSource() : string {
-        return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returningKeyword} ${this.returnType.renderAsSource()}\r
+        return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${ returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;

@@ -278,23 +278,20 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new IfExpr(),`if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then (target.setChar(target.indexOf(attempt[n]), '.') else target))`, ParseStatus.valid, "","","");
 	});
 	test('ParamDefNode', () => {
-		testNodeParse(new ParamDefNode(),`a String`, ParseStatus.valid, "a String","","");
+		testNodeParse(new ParamDefNode(),`a as String`, ParseStatus.valid, "a as String","","");
 		testNodeParse(new ParamDefNode(),`a`, ParseStatus.incomplete, "a","","");
-		testNodeParse(new ParamDefNode(),`a `, ParseStatus.incomplete, "a","","");
+		testNodeParse(new ParamDefNode(),`a as`, ParseStatus.incomplete, "a as","","");
 		testNodeParse(new ParamDefNode(),`A`, ParseStatus.invalid, "","","");
-		testNodeParse(new ParamDefNode(),`a string`, ParseStatus.invalid, "","a string","");
+		testNodeParse(new ParamDefNode(),`a String`, ParseStatus.invalid, "","a String","");
 	});
 	test('Param List', () => {
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`A string`, ParseStatus.valid, "","A string","");
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a string`, ParseStatus.valid, "","a string","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`A as string`, ParseStatus.valid, "","A as string",""); //i.e. all leftover
  		testNodeParse(new CSV(() => new ParamDefNode(), 0),``, ParseStatus.valid, "","","");
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String`, ParseStatus.valid, "","","");
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb Int, foo Bar`, ParseStatus.valid, "","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a as String`, ParseStatus.valid, "","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a as String, bb as Int, foo as Bar`, ParseStatus.valid, "","","");
 		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a`, ParseStatus.incomplete, "a","","");
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String,`, ParseStatus.incomplete, "a String,","","");
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb`, ParseStatus.incomplete, "a String, bb","","");
-		//Temporary capability only
-		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a String, bb Int`, ParseStatus.valid, "a String, bb Int","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a as String,`, ParseStatus.incomplete, "a as String,","","");
+		testNodeParse(new CSV(() => new ParamDefNode(), 0),`a as String, bb as`, ParseStatus.incomplete, "","","");
 	});
 	test('DottedTerm', () => {
 		testNodeParse(new DottedTerm(),`foo.bar()`, ParseStatus.valid, "foo.bar()","","foo.bar()","foo.<method>bar</method>()");

@@ -9,7 +9,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
-import { endKeyword, functionKeyword, returnKeyword, returningKeyword } from "../keywords";
+import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 
 export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -44,7 +44,7 @@ export class Function extends FrameWithStatements implements Parent {
     }
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${functionKeyword} </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> ${returningKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>${functionKeyword} </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> ${ returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>${endKeyword} ${functionKeyword}</keyword>
 </function>`;
@@ -55,7 +55,7 @@ ${this.renderChildrenAsHtml()}
     }
 
     public renderAsSource() : string {
-        return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returningKeyword} ${this.returnType.renderAsSource()}\r
+        return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${ returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;
@@ -66,7 +66,7 @@ ${endKeyword} ${functionKeyword}\r
         this.name.parseFrom(source);
         source.remove("(");
         this.params.parseFrom(source);
-        source.remove(`) ${returningKeyword} `);
+        source.remove(`) ${ returnKeyword} `);
         this.returnType.parseFrom(source);
     }
     parseBottom(source: CodeSource): boolean {
