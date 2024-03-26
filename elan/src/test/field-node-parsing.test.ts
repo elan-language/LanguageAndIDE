@@ -125,6 +125,8 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new LitFloat(), "1", ParseStatus.incomplete, "1", "","1");
 		testNodeParse(new LitFloat(), "1.", ParseStatus.incomplete, "1.", "","1.");
 		testNodeParse(new LitFloat(), "1. ", ParseStatus.incomplete, "1.", " ","1.");
+		testNodeParse(new LitFloat(), "1.1e5", ParseStatus.valid, "1.1e5", "","1.1e5");
+		testNodeParse(new LitFloat(), "1.1e-5", ParseStatus.valid, "1.1e-5", "","1.1e-5");
 	});
 	test('Keyword', () => {
 		testNodeParse(new KeywordNode("abstract"), "", ParseStatus.empty, "", "","");
