@@ -35,7 +35,11 @@ export class Symbol extends AbstractParseNode implements IHasSymbolType {
     }
 
     override renderAsObjectCode(): string {
-        return this.fixedText;
+        switch (this.fixedText) {
+            case "^": return "**";
+            default:
+                return this.fixedText;
+        }
     } 
 
     get symbolType() {

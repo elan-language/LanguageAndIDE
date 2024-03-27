@@ -116,7 +116,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "1.5");
   });
 
-  ignore_test('Pass_IntegerDivision', async () => {
+  test('Pass_IntegerDivision', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -125,7 +125,7 @@ end main`;
 
     const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(7 div 2));
+  system.print(system.asString(Math.floor(7 / 2)));
 }
 `;
 
@@ -138,7 +138,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test('Pass_Mod', async () => {
+  test('Pass_Mod', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -147,7 +147,7 @@ end main`;
 
     const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(11 mod 3));
+  system.print(system.asString(11 % 3));
 }
 `;
 
@@ -160,7 +160,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  ignore_test('Pass_Power', async () => {
+  test('Pass_Power', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -169,7 +169,7 @@ end main`;
 
     const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(3 ^ 3));
+  system.print(system.asString(3 ** 3));
 }
 `;
 

@@ -16,6 +16,7 @@ export class BinaryOperation extends AbstractAlternatives {
         this.alternatives.push(new Symbol("<", this.field));
         this.alternatives.push(new Symbol(">=", this.field));
         this.alternatives.push(new Symbol("<=", this.field));
+        this.alternatives.push(new Symbol("^", this.field));
         this.alternatives.push(new KeywordNode(isKeyword, this.field));
         var is = () => new KeywordNode(isKeyword, this.field);
         var not = () => new KeywordNode(notKeyword, this.field);
