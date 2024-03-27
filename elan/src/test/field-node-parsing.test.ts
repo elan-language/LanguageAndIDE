@@ -37,12 +37,10 @@ import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { ListType } from '../symbols/list-type';
 import { TupleType } from '../symbols/tuple-type';
+import { Parent } from '../frames/interfaces/parent';
+import { ISymbol } from '../symbols/symbol';
 
 suite('FieldNode parsing', () => {
-
-	const stubField = {
-
-	} as Field;
 
 	const intType = IntType.Instance;
 	const floatType = FloatType.Instance;
@@ -51,6 +49,22 @@ suite('FieldNode parsing', () => {
 	const stringType = StringType.Instance;
 	const unknownType = UnknownType.Instance;
 
+	const stubSymbol = {
+		symbolId : "a",
+		symbolType : intType,
+	} as ISymbol;
+
+	const stubHolder = {
+		resolveSymbol(id, initialScope) {
+			return stubSymbol;
+		},
+	} as Parent;
+
+	const stubField = {
+		getHolder() {
+			return stubHolder;
+		}
+	} as Field;
 
 	vscode.window.showInformationMessage('Start all unit tests.');
 	test('UnaryExpression', () => {
@@ -84,7 +98,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new BinaryOperation(stubField), "%", ParseStatus.invalid, "", "%", "");
 	});
 	test('IndexableTerm', () => {
-		testNodeParse(new Term(stubField), "a", ParseStatus.valid, "a", "", "a");
+		testNodeParse(new Term(stubField), "a", ParseStatus.valid, "a", "", "a", "", intType);
 	});
 	test('Term', () => {
 		testNodeParse(new Term(stubField), "", ParseStatus.empty, "", "", "");
