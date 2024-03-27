@@ -35,6 +35,11 @@ export class GlobalComment extends AbstractFrame {
     renderAsSource(): string {
         return `# ${this.text.renderAsSource()}`;
     }
+
+    renderAsObjectCode(): string {
+        return "";
+    }
+
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("# ");

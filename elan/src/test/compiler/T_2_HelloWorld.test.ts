@@ -3,7 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
 suite('T_2_HelloWorld', () => {
-    ignore_test('Pass_CommentsOnly', async () => {
+    test('Pass_CommentsOnly', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 # comment 1
@@ -12,7 +12,10 @@ main # comment 2
 end main`;
 
         const objectCode = `var system; export function _inject(l) { system = l; };
+
 export async function main() {
+
+
 }
 `;
 
@@ -138,7 +141,7 @@ export async function main() {
         await assertObjectCodeExecutes(fileImpl, "2.1");
     });
 
-    ignore_test('Pass_FloatWithExponent', async () => {
+    test('Pass_FloatWithExponent', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -160,7 +163,7 @@ export async function main() {
         await assertObjectCodeExecutes(fileImpl, "21000");
     });
 
-    ignore_test('Pass_FloatWithExponent2', async () => {
+    test('Pass_FloatWithExponent2', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
