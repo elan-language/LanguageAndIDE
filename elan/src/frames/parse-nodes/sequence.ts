@@ -2,7 +2,7 @@
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
 import { UnknownType } from "../../symbols/unknown-type";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+import { isHasSymbolType, mapSymbolTypes } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
@@ -25,6 +25,6 @@ export class Sequence extends AbstractSequence implements IHasSymbolTypes {
     }
 
     get symbolTypes() {
-        return this.elements.filter(e => isHasSymbolType(e)).map(e => (e as IHasSymbolType).symbolType);
+        return mapSymbolTypes(this.elements);
     }
 }

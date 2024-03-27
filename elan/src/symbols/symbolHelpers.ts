@@ -9,6 +9,8 @@ import { IHasSymbolTypes } from "./has-symbol-types";
 import { ISymbol } from "./symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
+import { ParseNode } from "../frames/parse-nodes/parse-node";
+import { ISymbolType } from "./symbol-type";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
@@ -29,6 +31,25 @@ export function findSymbolInScope(id: string, field: Field): ISymbol | undefined
     }
     return undefined;
 }
+
+export function mapSymbolTypes(elements: ParseNode[]) {
+    var sts = new Array<ISymbolType>();
+
+    for (const e of elements) {
+        if (isHasSymbolType(e)) {
+            const st = e.symbolType;
+            if (st) {
+                sts.push(st);
+            }
+        }
+        if (isHasSymbolTypes(e)) {
+            const ss = e.symbolTypes.filter(st => st) as Array<ISymbolType>;
+            sts = sts.concat(ss);
+        }
+    }
+    return sts;
+}
+
 
 export function findSymbolInFrameScope(id: string, frame: Frame): ISymbol | undefined {
     var parentOfHolder = frame.getParent();
@@ -69,6 +90,8 @@ export function rawSymbolToType(s: string) {
             return IntType.Instance;
         case "/":
             return FloatType.Instance;
+        case ",":
+                return undefined;
         default:
             return UnknownType.Instance;
     }

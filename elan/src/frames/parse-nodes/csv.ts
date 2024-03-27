@@ -1,6 +1,8 @@
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+import { ISymbolType } from "../../symbols/symbol-type";
+import { isHasSymbolType, isHasSymbolTypes, mapSymbolTypes } from "../../symbols/symbolHelpers";
+import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";
 import { Comma } from "./comma";
@@ -36,6 +38,6 @@ export class CSV extends AbstractSequence implements IHasSymbolTypes {
     }
     
     get symbolTypes() {
-        return this.elements.filter(e => isHasSymbolType(e)).map(e => (e as IHasSymbolType).symbolType);
+        return mapSymbolTypes(this.elements);
     }
 }

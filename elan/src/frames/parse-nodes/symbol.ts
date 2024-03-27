@@ -1,12 +1,11 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { escapeAngleBrackets } from "../helpers";
-import { UnknownType } from "../../symbols/unknown-type";
-import { ExpressionField } from "../fields/expression-field";
 import { Field } from "../interfaces/field";
 import { rawSymbolToType } from "../../symbols/symbolHelpers";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
-export class Symbol extends AbstractParseNode {
+export class Symbol extends AbstractParseNode implements IHasSymbolType {
     fixedText: string;
     isSymbol = true;
 
@@ -38,5 +37,4 @@ export class Symbol extends AbstractParseNode {
     get symbolType() {
         return rawSymbolToType(this.fixedText);
     }
-
 }

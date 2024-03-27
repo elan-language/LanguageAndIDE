@@ -1,11 +1,11 @@
-import { UnknownType } from "../../symbols/unknown-type";
-import { ExpressionField } from "../fields/expression-field";
+import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
+import { mapSymbolTypes } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
-export class Multiple extends AbstractParseNode {
+export class Multiple extends AbstractParseNode implements IHasSymbolTypes {
     elementConstructor: () => ParseNode;
     minimum: number;
     elements: ParseNode[] = [];
@@ -59,7 +59,7 @@ export class Multiple extends AbstractParseNode {
         return this.elements.reduce((result, current) => result + current.renderAsSource(),"");
      }
 
-     get symbolType() {
-        return UnknownType.Instance;
+     get symbolTypes() {
+        return mapSymbolTypes(this.elements);
     }
 }

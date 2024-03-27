@@ -36,6 +36,7 @@ import { StringType } from '../symbols/string-type';
 import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { ListType } from '../symbols/list-type';
+import { TupleType } from '../symbols/tuple-type';
 
 suite('FieldNode parsing', () => {
 
@@ -159,7 +160,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new KeywordNode("abstract", stubField), " abscract", ParseStatus.invalid, "", " abscract", "");
 	});
 	test('BracketedExpression', () => {
-		// testNodeParse(new BracketedExpression(stubField),"", ParseStatus.empty, "", "","");
+		testNodeParse(new BracketedExpression(stubField), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new BracketedExpression(stubField), "(3)", ParseStatus.valid, "(3)", "", "(3)", "", intType);
 		testNodeParse(new BracketedExpression(stubField), "(3 + 4)", ParseStatus.valid, "(3 + 4)", "", "(3 + 4)", "", intType);
 		testNodeParse(new BracketedExpression(stubField), "(a and not b)", ParseStatus.valid, "(a and not b)", "", "(a and not b)");
@@ -283,7 +284,7 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new TypeNode(stubField), `Foo<of List<of (Bar, Qux)>>`, ParseStatus.valid, "Foo<of List<of (Bar, Qux)>>", "", "");
 	});
 	test('TupleDefNode', () => {
-		//testNodeParse(new TupleDefNode(stubField),`("foo", 3)`, ParseStatus.valid, '("foo", 3)',"","", "", new TupleType([stringType, intType]));
+		testNodeParse(new TupleDefNode(stubField), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "", new TupleType([stringType, intType]));
 		testNodeParse(new TupleDefNode(stubField), `(foo, 3, bar(a), x)`, ParseStatus.valid, "(foo, 3, bar(a), x)", "", "");
 		testNodeParse(new TupleDefNode(stubField), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
 		testNodeParse(new TupleDefNode(stubField), `(foo, 3, bar(a), x`, ParseStatus.incomplete, "(foo, 3, bar(a), x", "", "");

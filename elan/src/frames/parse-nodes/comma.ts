@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/unknown-type";
+import { ISymbolType } from "../../symbols/symbol-type";
 import { Field } from "../interfaces/field";
 import {Symbol} from "./symbol";
 
@@ -10,9 +10,5 @@ export class Comma extends Symbol {
 
     renderAsSource(): string {
         return this.matchedText.trim() + " ";
-    }
-
-    get symbolType() {
-        return UnknownType.Instance;
     }
 }
