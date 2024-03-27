@@ -109,7 +109,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "falsetruetrue");
   });
 
-  ignore_test('Pass_isNot', async () => {
+  test('Pass_isNot', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -135,7 +135,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  ignore_test('Pass_is', async () => {
+  test('Pass_is', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -161,7 +161,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "falsefalsetrue");
   });
 
-  ignore_test('Pass_canCompareCoercibleTypes', async () => {
+  test('Pass_canCompareCoercibleTypes', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -172,8 +172,8 @@ end main`;
 
     const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(3 < 3.1));
-  system.print(system.asString(3 === 3.0));
+  system.print(system.asString(3 <  3.1));
+  system.print(system.asString(3 ===  3.0));
   system.print(system.asString(3.1 < 3));
 }
 `;
