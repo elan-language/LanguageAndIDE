@@ -5,10 +5,9 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Literal } from "../fields/literal";
 import { PlainText } from "../fields/plain-text";
-import { AbstractSelector } from "../abstract-selector";
-import { GlobalSelector } from "./global-selector";
+import { ISymbol } from "../../symbols/symbol";
 
-export class Constant extends AbstractFrame {
+export class Constant extends AbstractFrame implements ISymbol {
     isGlobal = true;
     name: Identifier;
     literal: Literal;
@@ -49,8 +48,15 @@ export class Constant extends AbstractFrame {
     }
 
     renderAsObjectCode(): string {
-        return `const ${this.name.renderAsSource()} = ${this.literal.renderAsSource()};\r
+        return `const ${this.name.renderAsObjectCode()} = ${this.literal.renderAsObjectCode()};\r
 `;
     }
 
+    get symbolId() {
+        return this.name.renderAsSource();
+    }
+
+    get symbolType() {
+        return this.literal.symbolType;
+    }
 } 
