@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
+import { MainFrame } from "../../frames/globals/main-frame";
+import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
 suite('T_7_IfStatement', () => {
   test('Pass_1', async () => {
@@ -30,6 +30,8 @@ export async function main() {
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
+    var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
+    assertIsSymbol(varDef, "a", "Boolean");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -68,7 +70,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "no");
   });
 
-  ignore_test('Pass_3', async () => {
+  test('Pass_3', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -91,7 +93,6 @@ export async function main() {
       system.print(system.asString("two"));
     } else {
       system.print(system.asString("neither"));
-    }
   }
 }
 `;
@@ -105,7 +106,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "two");
   });
 
-  ignore_test('Pass_4', async () => {
+  test('Pass_4', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -128,7 +129,6 @@ export async function main() {
       system.print(system.asString("two"));
     } else {
       system.print(system.asString("neither"));
-    }
   }
 }
 `;
@@ -170,7 +170,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "yes");
   });
 
-  ignore_test('Pass_6', async () => {
+  test('Pass_6', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -197,7 +197,6 @@ export async function main() {
       system.print(system.asString("three"));
     } else {
       system.print(system.asString("neither"));
-    }
   }
 }
 `;

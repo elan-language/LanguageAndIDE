@@ -36,7 +36,7 @@ ${this.indent()}end if`;
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}if (${this.condition.renderAsSource()}) {\r
+        return `${this.indent()}if (${this.condition.renderAsObjectCode()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;
     }
