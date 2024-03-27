@@ -1,10 +1,11 @@
-import { UnknownType } from "../../symbols/unknown-type";
-import { findSymbolInScope } from "../../symbols/symbolHelpers";
+import { IHasSymbolType } from "../../symbols/has-symbol-type";
+import { isHasSymbolType } from "../../symbols/symbolHelpers";
 import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierNode extends AbstractParseNode {
+export class IdentifierNode extends AbstractParseNode implements IHasSymbolType {
 
     constructor(field : Field) {
         super(field);
@@ -19,6 +20,7 @@ export class IdentifierNode extends AbstractParseNode {
     }
 
     get symbolType() {
-        return findSymbolInScope(this.matchedText, this.field)?.symbolType;
+        var holder = this.field.getHolder();
+        return holder.resolveSymbol(this.matchedText, holder as Frame).symbolType;
     }
 }

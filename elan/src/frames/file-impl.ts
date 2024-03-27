@@ -22,6 +22,8 @@ import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
+import { ISymbol } from "../symbols/symbol";
+import { UnknownType } from "../symbols/unknown-type";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -323,5 +325,12 @@ export class FileImpl implements File {
                 f.deleteIfPermissible();
             }
         }
+    }
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        return {
+            symbolId : id,
+            symbolType: UnknownType.Instance
+        } as ISymbol;
     }
 }

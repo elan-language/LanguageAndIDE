@@ -7,6 +7,7 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
+import { ISymbol } from "../symbols/symbol";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -25,6 +26,10 @@ export abstract class AbstractFrame implements Frame {
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
+    }
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        return this.getParent().resolveSymbol(id, initialScope);
     }
 
     frameStatus(): ParseStatus {
@@ -384,7 +389,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getStatus(): ParseStatus {
-        //var frameStatus = this.frameStatus();
+        var frameStatus = this.frameStatus();
         var fieldStatus = this.worstStatusOfFields();
         //return fieldStatus < frameStatus ? fieldStatus : frameStatus;
         return fieldStatus;

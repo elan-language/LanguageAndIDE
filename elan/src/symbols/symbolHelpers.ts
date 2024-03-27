@@ -24,14 +24,6 @@ export function isHasSymbolTypes(s?: any): s is IHasSymbolTypes {
     return !!s && 'symbolTypes' in s;
 }
 
-export function findSymbolInScope(id: string, field: Field): ISymbol | undefined {
-    var holder = field.getHolder();
-    if (isFrame(holder)) {
-        return findSymbolInFrameScope(id, holder);
-    }
-    return undefined;
-}
-
 export function mapSymbolTypes(elements: ParseNode[]) {
     var sts = new Array<ISymbolType>();
 
@@ -48,29 +40,6 @@ export function mapSymbolTypes(elements: ParseNode[]) {
         }
     }
     return sts;
-}
-
-
-export function findSymbolInFrameScope(id: string, frame: Frame): ISymbol | undefined {
-    var parentOfHolder = frame.getParent();
-
-    if (parentOfHolder instanceof FrameWithStatements) {
-        var fst = parentOfHolder.getFirstChild();
-        var range = parentOfHolder.getChildRange(fst, frame as Frame);
-        if (range.length > 1) {
-            range = range.slice(0, range.length - 1);
-
-            for (var f of range) {
-                if (isSymbol(f)) {
-                    if (f.symbolId === id) {
-                        return f;
-                    }
-                }
-            }
-        }
-    }
-
-    return undefined;
 }
 
 export function rawSymbolToType(s: string) {

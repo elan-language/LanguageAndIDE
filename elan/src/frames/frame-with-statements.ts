@@ -1,3 +1,5 @@
+import { ISymbol } from "../symbols/symbol";
+import { isSymbol } from "../symbols/symbolHelpers";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
@@ -142,5 +144,21 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             result = ss.join("\r\n");
         }
         return result;
+    }
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        var fst = this.getFirstChild();
+        var range = this.getChildRange(fst, initialScope);
+        if (range.length > 1) {
+            range = range.slice(0, range.length - 1);
+
+            for (var f of range) {
+                if (isSymbol(f) && f.symbolId === id) {
+                    return f;
+                }
+            }
+        }
+
+        return this.getParent().resolveSymbol(id, this);
     }
 }

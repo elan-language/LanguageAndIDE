@@ -6,8 +6,9 @@ import { Value } from "../fields/value";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ParseStatus } from "../parse-status";
-import { findSymbolInFrameScope, findSymbolInScope } from "../../symbols/symbolHelpers";
 import { compatibleType } from "../../symbols/rules";
+import { ISymbol } from "../../symbols/symbol";
+import { Frame } from "../interfaces/frame";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -46,9 +47,13 @@ export class SetStatement extends AbstractFrame implements Statement{
     }
 
     override frameStatus() : ParseStatus {
-        const idSymbol = findSymbolInFrameScope(this.name.renderAsSource(), this);
+        const idSymbol = this.resolveSymbol(this.name.renderAsSource(), this);
         const expType = this.expr.symbolType;
 
         return compatibleType(idSymbol, expType);
+    }
+    
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        return this.getParent().resolveSymbol(id, initialScope);
     }
 } 

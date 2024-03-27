@@ -1,3 +1,4 @@
+import { ISymbol } from "../../symbols/symbol";
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
@@ -42,4 +43,6 @@ export interface Parent {
     newChildSelector(): AbstractSelector;
 
     getFactory(): StatementFactory;
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol;
 }

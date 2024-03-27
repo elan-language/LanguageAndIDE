@@ -5,6 +5,8 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { GlobalSelector } from "./global-selector";
 import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
+import { ISymbol } from "../../symbols/symbol";
 
 export class MainFrame extends FrameWithStatements {
     isMain = true;

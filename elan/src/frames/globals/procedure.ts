@@ -1,9 +1,11 @@
+import { ISymbol } from "../../symbols/symbol";
 import { CodeSource } from "../code-source";
 import { Identifier } from "../fields/identifier";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 
 export class Procedure extends FrameWithStatements {
@@ -57,5 +59,11 @@ ${this.renderStatementsAsObjectCode()}\r
     }
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end procedure");
+    }
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        // todo parameters 
+
+        return super.resolveSymbol(id, initialScope);
     }
 }
