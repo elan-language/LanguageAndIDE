@@ -2,9 +2,8 @@ import assert from "assert";
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { ISymbol } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 
 suite('T_5_Variables', () => {
 
@@ -27,15 +26,7 @@ export async function main() {
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
-
-    if (isSymbol(varDef)) {
-      var sid = varDef.symbolId;
-      var st = varDef.symbolType;
-
-      assert.strictEqual(sid, 'a');
-      assert.strictEqual(st?.name, 'Int');
-    }
-
+    assertIsSymbol(varDef, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -62,19 +53,8 @@ export async function main() {
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
-
-    var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[1];
-
-    if (isSymbol(varDef)) {
-      var sid = varDef.symbolId;
-      var st = varDef.symbolType;
-
-      assert.strictEqual(sid, 'b');
-      assert.strictEqual(st?.name, 'Int');
-    }
-
-
-
+    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[1];
+    assertIsSymbol(varDef, "b", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -99,6 +79,8 @@ export async function main() {
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
+    var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
+    assertIsSymbol(varDef, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -151,6 +133,8 @@ export async function main() {
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
+    var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
+    assertIsSymbol(varDef, "a", "Float");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -229,6 +213,16 @@ export async function main() {
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[0], "a", "Int");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[1], "b", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[2], "c", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[3], "d", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[4], "e", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[5], "f", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[6], "g", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[7], "h", "Boolean");
+
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);

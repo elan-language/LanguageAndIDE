@@ -1,10 +1,9 @@
 import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
-import * as ts from "typescript";
 import { Done } from "mocha";
-import * as fs from 'fs';
 import { _stdlib as StdLib } from "./standard-library";
+import { isSymbol } from "../../symbols/symbolHelpers";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -31,6 +30,19 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
     const expected = objectCode.replaceAll("\r", "");
     assert.strictEqual(actual, expected);
 }
+
+export function assertIsSymbol(toTest: any, id: string, name: string) {
+    if (isSymbol(toTest)) {
+        var sid = toTest.symbolId;
+        var st = toTest.symbolType;
+
+        assert.strictEqual(sid, id);
+        assert.strictEqual(st?.name, name);
+    }
+    else {
+        assert.fail("expected symbol");
+    }
+} 
 
 function doImport(str: string) {
     const url = "data:text/javascript;base64," + btoa(str);
