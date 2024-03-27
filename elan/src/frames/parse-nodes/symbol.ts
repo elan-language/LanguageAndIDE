@@ -33,7 +33,11 @@ export class Symbol extends AbstractParseNode implements IHasSymbolType {
     renderAsHtml(): string {
         return escapeAngleBrackets(this.renderAsSource());
     }
-    
+
+    override renderAsObjectCode(): string {
+        return this.fixedText;
+    } 
+
     get symbolType() {
         return rawSymbolToType(this.fixedText);
     }

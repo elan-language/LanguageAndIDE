@@ -168,7 +168,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  ignore_test('Pass_OperatorCoverage', async () => {
+  test('Pass_OperatorCoverage', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -180,6 +180,9 @@ main
   var f set to 3 is 4
   var g set to 3 is not 4
   var h set to not false
+  var i set to 4 div 3
+  var j set to 4 mod 3
+  var k set to 4 / 3
   print a
   print b
   print c
@@ -188,6 +191,9 @@ main
   print f
   print g
   print h
+  print i
+  print j
+  print k
 end main`;
 
     const objectCode = `var system; export function _inject(l) { system = l; };
@@ -197,9 +203,12 @@ export async function main() {
   var c = 3 <= 4;
   var d = 3 > 4;
   var e = 3 >= 4;
-  var f = 3 is 4;
-  var g = 3 is not 4;
-  var h = not false;
+  var f = 3 === 4;
+  var g = 3 !== 4;
+  var h = ! false;
+  var i = Math.floor(4 / 3);
+  var j = 4 % 3;
+  var k = 4 / 3;
   system.print(system.asString(a));
   system.print(system.asString(b));
   system.print(system.asString(c));
@@ -208,6 +217,9 @@ export async function main() {
   system.print(system.asString(f));
   system.print(system.asString(g));
   system.print(system.asString(h));
+  system.print(system.asString(i));
+  system.print(system.asString(j));
+  system.print(system.asString(k));
 }
 `;
 
@@ -222,12 +234,15 @@ export async function main() {
     assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[5], "f", "Boolean");
     assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[6], "g", "Boolean");
     assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[7], "h", "Boolean");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[8], "i", "Int");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[9], "j", "Int");
+    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[10], "k", "Float");
 
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
+    await assertObjectCodeExecutes(fileImpl, "-1truetruefalsefalsefalsetruetrue111.3333333333333333");
   });
 
   ignore_test('Pass_Enum', async () => {

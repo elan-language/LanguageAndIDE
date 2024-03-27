@@ -39,4 +39,16 @@ export class BinaryExpression extends AbstractSequence implements IHasSymbolType
         return FloatType.Instance;
     }
 
+    renderAsObjectCode(): string {
+        const codeArray = this.elements.map(e => e.renderAsObjectCode());
+        const code = codeArray.join(" ");
+
+        // kludges
+        if ((this.elements[1] as BinaryOperation).matchedText.trim() === "div"){
+            return `Math.floor(${code})`;
+        }
+
+        return code;
+    }
+
 }

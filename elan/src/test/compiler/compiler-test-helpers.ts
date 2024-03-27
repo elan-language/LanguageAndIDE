@@ -71,14 +71,16 @@ function executeCode(file: FileImpl) {
 
 
 export async function assertObjectCodeExecutes(file: FileImpl, output: string) {
-
+    var actual;
+    
     try {
         const sl = await executeCode(file);
-        assert.strictEqual(sl?.printed, output);
+        actual = sl?.printed; 
     }
     catch (e) {
         assert.fail();
     }
+    assert.strictEqual(actual, output);
 }
 
 export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg? : string) {

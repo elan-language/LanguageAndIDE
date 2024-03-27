@@ -39,6 +39,20 @@ export class KeywordNode extends AbstractParseNode {
     renderAsSource(): string {
         return this.matchedText.trim() + " ";
     }
+    renderAsObjectCode() : string {
+        switch (this.keyword) {
+            case "is": return "===";
+            case "is not": return "!==";
+            case "not": return "!";
+            case "and": return "&&";
+            case "or": return "||";
+            case "xor": return "^";
+            case "div": return "/";
+            case "mod": return "%";
+            default:
+                return this.matchedText;
+        }
+    }
 
     get symbolType() {
         return rawSymbolToType(this.keyword);

@@ -36,6 +36,17 @@ export class BinaryOperation extends AbstractAlternatives {
         return ` ${this.bestMatch?.renderAsHtml()}${this.trailingSpace()}`;
     }
 
+    renderAsObjectCode(): string {
+        const code = super.renderAsObjectCode();
+
+        if (this.bestMatch instanceof Sequence) {
+            // kludge
+            return code.replace("===!", "!==");
+        }
+       
+        return code;
+    }
+
     private trailingSpace(): string {
         return ("isSymbol" in this.bestMatch!) ? " " : "";
     }

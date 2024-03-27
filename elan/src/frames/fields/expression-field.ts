@@ -31,6 +31,10 @@ export class ExpressionField extends AbstractField  {
         } 
     }
 
+    renderAsObjectCode(): string {
+        return this.rootNode ? this.rootNode.renderAsObjectCode() : super.renderAsObjectCode();
+    }
+
     get symbolType() {
         if (isHasSymbolType(this.rootNode)) {
             return this.rootNode.symbolType;
