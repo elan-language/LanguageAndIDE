@@ -59,7 +59,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     }
 
     private intoClauseAsHtml() : string {
-        return this.hasInto ? ` <keyword>${intoKeyword} </keyword>${this.target.renderAsHtml()}`: `${this.selectIntoClause.renderAsHtml()}`;
+        return this.hasInto ? ` <keyword>${intoKeyword} </keyword>${this.target.renderAsHtml()}`: ` ${this.selectIntoClause.renderAsHtml()}`;
     }
 
     private intoClauseAsSource() : string {
@@ -71,7 +71,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     }
    
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>external </keyword>${this.method.renderAsHtml()}(${this.args.renderAsHtml()})${this.intoClauseAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>external </keyword>${this.method.renderAsHtml()}(${this.args.renderAsHtml()})${this.intoClauseAsHtml()}</top></statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}external ${this.method.renderAsSource()}(${this.args.renderAsSource()})${this.intoClauseAsSource()}`;
