@@ -32,7 +32,7 @@ export class IntoSelector extends AbstractField {
         var empty = this.text ==="";
         if (empty && (char ==='i')) {
             this.ext.setIntoExtension(true);
-            this.getHolder().select(true, false);
+            this.getHolder().selectLastField();
             return;
         }
         super.processKey(keyEvent);

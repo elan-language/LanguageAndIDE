@@ -2,7 +2,6 @@ import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
 import { Else } from "../statements/else";
 import { CodeSource } from "../code-source";
-import { ParseStatus } from "../parse-status";
 import { ParseNode } from "../parse-nodes/parse-node";
 
 export class IfSelector extends AbstractField {
@@ -31,7 +30,7 @@ export class IfSelector extends AbstractField {
         var empty = this.text ==="";
         if (empty && (char ==='i')) {
             this.else.setIfExtension(true);
-            this.getHolder().select(true, false);
+            this.else.getFields()[0].select(true, false); //First field will now be the condition
             return;
         }
         super.processKey(keyEvent);
