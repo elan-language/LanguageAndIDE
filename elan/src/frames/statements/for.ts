@@ -1,4 +1,4 @@
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { Integer } from "../fields/integer";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
@@ -9,14 +9,14 @@ import { Statement } from "../interfaces/statement";
 
 export class For extends FrameWithStatements implements Statement  {
     isStatement: boolean = true;
-    variable: Identifier;
+    variable: IdentifierField;
     from: Value;
     to: Value;
     step: Integer;
 
     constructor(parent: Parent) {
         super(parent);
-        this.variable = new Identifier(this);
+        this.variable = new IdentifierField(this);
         this.variable.setPlaceholder("variableName");
         this.from = new Value(this);
         this.from.setPlaceholder("integer value or expression");

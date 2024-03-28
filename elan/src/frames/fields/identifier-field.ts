@@ -5,7 +5,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { identifier } from "./parse-functions";
 
-export class Identifier extends AbstractField { 
+export class IdentifierField extends AbstractField { 
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");

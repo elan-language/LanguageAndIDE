@@ -1,4 +1,4 @@
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
@@ -8,11 +8,11 @@ import { Statement } from "../interfaces/statement";
 
 export class Catch extends FrameWithStatements implements Statement {
     isStatement = true;
-    variable: Identifier;
+    variable: IdentifierField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.variable  = new Identifier(this);
+        this.variable  = new IdentifierField(this);
         this.variable.setPlaceholder("variableName");
         this.variable.setText("e");
     } 

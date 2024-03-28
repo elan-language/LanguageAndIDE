@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { Type } from "../fields/type";
 import { Class } from "../globals/class";
@@ -13,7 +13,7 @@ import { Parent } from "../interfaces/parent";
 export class AbstractFunction extends AbstractFrame implements Member {
     isAbstract = true;
     isMember: boolean = true;
-    public name : Identifier;
+    public name : IdentifierField;
     public params: ParamList;
     public returnType: Type;
     private class: Class;
@@ -21,7 +21,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
-        this.name = new Identifier(this);
+        this.name = new IdentifierField(this);
         this.params = new ParamList(this);
         this.returnType = new Type(this);
         this.returnType.setPlaceholder("return type");

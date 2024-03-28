@@ -1,4 +1,4 @@
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { AbstractFrame } from "../abstract-frame";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
@@ -8,14 +8,14 @@ import { ISymbol } from "../../symbols/symbol";
 
 export class Constant extends AbstractFrame implements ISymbol {
     isGlobal = true;
-    name: Identifier;
+    name: IdentifierField;
     literal: LiteralField;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.name  = new Identifier(this);
+        this.name  = new IdentifierField(this);
         this.literal = new LiteralField(this); 
         this.literal.setPlaceholder("literal value or data structure");
     }

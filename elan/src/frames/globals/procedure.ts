@@ -1,6 +1,6 @@
 import { ISymbol } from "../../symbols/symbol";
 import { CodeSource } from "../code-source";
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
@@ -10,14 +10,14 @@ import { Parent } from "../interfaces/parent";
 
 export class Procedure extends FrameWithStatements {
     isGlobal = true;
-    public name : Identifier;
+    public name : IdentifierField;
     public params: ParamList;
     file: File;
 
     constructor(parent: Parent) {
         super(parent);
         this.file = parent as File;
-        this.name = new Identifier(this);
+        this.name = new IdentifierField(this);
         this.params = new ParamList(this);
     }
 

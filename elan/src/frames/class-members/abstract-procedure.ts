@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { Class } from "../globals/class";
 import { singleIndent } from "../helpers";
@@ -12,14 +12,14 @@ import { Parent } from "../interfaces/parent";
 export class AbstractProcedure extends AbstractFrame implements Member {
     isAbstract = true;
     isMember: boolean = true;
-    public name : Identifier;
+    public name : IdentifierField;
     public params: ParamList;
     private class: Class;
 
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
-        this.name = new Identifier(this);
+        this.name = new IdentifierField(this);
         this.params = new ParamList(this);
     }
 

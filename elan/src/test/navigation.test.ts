@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './milestone_1.functions.';
 import {ctrl_down, ctrl_up, del, down, end, enter, esc, home, ins, key, loadFileAsModel, readAsDOM, right, shift_down, shift_enter, shift_ins, shift_tab, shift_up, tab, up } from './testHelpers';
 import assert from 'assert';
-import { Identifier } from '../frames/fields/identifier';
+import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
 import { Function } from '../frames/globals/function';
 
@@ -15,7 +15,7 @@ suite('Navigation', () => {
 	test('Tabbing through fields (& back)', () => {
 
 		var file = T03_mainWithAllStatements();
-		var var4 = file.getById("var4") as Identifier;
+		var var4 = file.getById("var4") as IdentifierField;
 		assert.equal(var4.isSelected(), false);
 		file.processKey(enter());
 		assert.equal(var4.isSelected(), true);

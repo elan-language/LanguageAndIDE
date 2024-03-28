@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
@@ -9,14 +9,14 @@ import { VariableDefStatement } from "../statements/variable-def-statement";
 export class Test extends FrameWithStatements {
     isTest = true;
     isGlobal = true;
-    public name : Identifier;
+    public name : IdentifierField;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
         this.getChildren().splice(0,1); //remove statement selector
-        this.name = new Identifier(this);
+        this.name = new IdentifierField(this);
         var result = new VariableDefStatement(this);
         result.name.setText("result");
         this.getChildren().push(result);

@@ -1,10 +1,9 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { CSV } from "../parse-nodes/csv";
+import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { identifierList } from "./parse-functions";
-
 
 export class EnumValues extends AbstractField {
     constructor(holder: Frame) {
@@ -14,9 +13,10 @@ export class EnumValues extends AbstractField {
     getIdPrefix(): string {
         return 'enumVals';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return identifierList(input);
+    initialiseRoot(): ParseNode | undefined { 
+        this.rootNode = new CSV(() => new IdentifierNode(this), 1, this);
+        return this.rootNode; 
     }
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
+    readToDelimeter: ((source: CodeSource) => string) | undefined =
+        (source: CodeSource) => source.readToEndOfLine();
 }

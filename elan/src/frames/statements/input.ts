@@ -5,15 +5,15 @@ import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
-import { Identifier } from "../fields/identifier";
+import { IdentifierField } from "../fields/identifier-field";
 
 export class Input extends AbstractFrame implements Statement {
     isStatement = true;  
-    varName: Identifier;
+    varName: IdentifierField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.varName = new Identifier(this);
+        this.varName = new IdentifierField(this);
         this.varName.setPlaceholder("variable name");
     }
     parseFrom(source: CodeSource): void {
