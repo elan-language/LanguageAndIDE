@@ -39,7 +39,6 @@ export class ExpressionField extends AbstractField  {
         if (isHasSymbolType(this.rootNode)) {
             return this.rootNode.symbolType;
         }
-
         return UnknownType.Instance;
     }
 }

@@ -31,6 +31,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
+  //Failing on the symbol - type is unknown
   test('Pass_IntVariable', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

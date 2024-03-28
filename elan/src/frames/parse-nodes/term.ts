@@ -12,6 +12,7 @@ import { IfExpr } from "./if-expr";
 import { Field } from "../interfaces/field";
 import { List } from "./list";
 import { ExprNode } from "./expr-node";
+import { VarRefNode } from "./var-ref-node";
 
 export class Term extends AbstractAlternatives {
     constructor(field : Field) {
@@ -26,7 +27,7 @@ export class Term extends AbstractAlternatives {
         this.alternatives.push(new IndexableTerm(this.field));
         this.alternatives.push(new DottedTerm(this.field));
         this.alternatives.push(new NewInstance(this.field));
-        this.alternatives.push(new EnumVal(this.field));
+        this.alternatives.push(new VarRefNode(this.field));
         this.alternatives.push(new BracketedExpression(this.field));
         this.alternatives.push(new List(() => new ExprNode(this.field), this.field));
         this.alternatives.push(new TupleDefNode(this.field));
