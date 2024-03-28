@@ -166,7 +166,7 @@ suite('FieldNode parsing', () => {
 	});
 	test('Keyword', () => {
 		testNodeParse(new KeywordNode("abstract", stubField), "", ParseStatus.empty, "", "", "");
-		testNodeParse(new KeywordNode("abstract", stubField), "abstract ", ParseStatus.valid, "abstract", "", "");
+		testNodeParse(new KeywordNode("abstract", stubField), "abstract ", ParseStatus.valid, "abstract", " ", "");
 		testNodeParse(new KeywordNode("abstract", stubField), "abstract(x", ParseStatus.valid, "abstract", "(x", "");
 		testNodeParse(new KeywordNode("abstract", stubField), "abstractx", ParseStatus.invalid, "", "abstractx", "");
 		testNodeParse(new KeywordNode("abstract", stubField), "abstract immutable", ParseStatus.valid, "abstract", " immutable", "abstract ");
@@ -231,9 +231,9 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new CSV(() => new ExprNode(stubField), 0, stubField), `a + b,c, 1`, ParseStatus.valid, `a + b,c, 1`, "", "");
 		testNodeParse(new CSV(() => new ExprNode(stubField), 0, stubField), `)`, ParseStatus.valid, ``, ")", "");
 
-		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `foo, foo `, ParseStatus.valid, "", "");
-		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `foo `, ParseStatus.valid, "", "");
-		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 1, stubField), `fook `, ParseStatus.invalid, "", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `foo, foo `, ParseStatus.valid, "", " ");
+		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `foo `, ParseStatus.valid, "", " ");
+		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 1, stubField), `fook `, ParseStatus.invalid, "", "fook ");
 		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `fo`, ParseStatus.incomplete, "fo", "");
 		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 2, stubField), `foo, fo`, ParseStatus.incomplete, "foo, fo", "");
 
@@ -310,16 +310,16 @@ suite('FieldNode parsing', () => {
 		testNodeParse(new Lambda(stubField), `lambda s as Int, p as List<of Int> return s + p.first()`, ParseStatus.valid, "", "", "");
 	});
 	test('IfExpr', () => {
-		testNodeParse(new IfExpr(stubField), `if cell then Colour.green else Colour.black)`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(stubField), `if cell then Colour.green else Colour.black`, ParseStatus.valid, "", "", "");
 		testNodeParse(new IfExpr(stubField), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new IfExpr(stubField), `if attempt[n] is '*' then attempt  else if attempt.isYellow(target, n) then (attempt.setChar(n, '+')  else attempt.setChar(n, '_')`, ParseStatus.valid, "", "", "");
-		testNodeParse(new IfExpr(stubField), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then (target.setChar(target.indexOf(attempt[n]), '.') else target))`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(stubField), `if attempt[n] is '*' then attempt  else if attempt.isYellow(target, n) then attempt.setChar(n, '+')  else attempt.setChar(n, '_')`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(stubField), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ParseStatus.valid, "", "", "");
 	});
 	test('ParamDefNode', () => {
 		testNodeParse(new ParamDefNode(stubField), `a as String`, ParseStatus.valid, "a as String", "", "");
 		testNodeParse(new ParamDefNode(stubField), `a`, ParseStatus.incomplete, "a", "", "");
 		testNodeParse(new ParamDefNode(stubField), `a as`, ParseStatus.incomplete, "a as", "", "");
-		testNodeParse(new ParamDefNode(stubField), `A`, ParseStatus.invalid, "", "", "");
+		testNodeParse(new ParamDefNode(stubField), `A`, ParseStatus.invalid, "", "A", "");
 		testNodeParse(new ParamDefNode(stubField), `a String`, ParseStatus.invalid, "", "a String", "");
 	});
 	test('Param List', () => {

@@ -8,7 +8,7 @@ import { LitInt } from "./lit-int";
 import { LitString } from "./lit-string";
 import { LitTuple } from "./lit-tuple";
 
-export class LitValue extends AbstractAlternatives {
+export class LitValueNode extends AbstractAlternatives {
     constructor(field : Field) {
         super(field);
         this.placeholder = "";

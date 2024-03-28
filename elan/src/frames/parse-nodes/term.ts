@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { LitValue } from "./lit-value";
+import { LitValueNode } from "./lit-value";
 import { UnaryExpression } from "./unary-expression";
 import { BracketedExpression } from "./bracketed-expression";
 import { DottedTerm } from "./dotted-term";
@@ -21,7 +21,7 @@ export class Term extends AbstractAlternatives {
 
     parseText(text: string): void {
         //Sub nodes added only when asked to parse
-        this.alternatives.push(new LitValue(this.field));
+        this.alternatives.push(new LitValueNode(this.field));
         this.alternatives.push(new UnaryExpression(this.field));
         this.alternatives.push(new IndexableTerm(this.field));
         this.alternatives.push(new DottedTerm(this.field));

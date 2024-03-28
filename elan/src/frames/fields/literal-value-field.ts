@@ -1,9 +1,8 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { LitValueNode } from "../parse-nodes/lit-value";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { literalValue } from "./parse-functions";
 
 export class LiteralValueField extends AbstractField {   
     constructor(holder: Frame) {
@@ -13,9 +12,10 @@ export class LiteralValueField extends AbstractField {
     getHelp(): string {
         return "Literal value (e.g. number or string)";
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return literalValue(input);
-    }  
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined; 
+    initialiseRoot(): ParseNode | undefined { 
+        this.rootNode = new LitValueNode(this);
+        return this.rootNode; 
+    }
+    readToDelimeter: ((source: CodeSource) => string) | undefined = 
+     (source: CodeSource) => source.readToEndOfLine();
 }

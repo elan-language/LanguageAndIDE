@@ -39,7 +39,7 @@ import { ListType } from '../symbols/list-type';
 import { TupleType } from '../symbols/tuple-type';
 import { KVPnode } from '../frames/parse-nodes/kvp-node';
 import { Dictionary } from '../frames/parse-nodes/dictionary';
-import { LitValue } from '../frames/parse-nodes/lit-value';
+import { LitValueNode } from '../frames/parse-nodes/lit-value';
 import { LiteralNode } from '../frames/parse-nodes/literal-node';
 import { LitTuple } from '../frames/parse-nodes/lit-tuple';
 
@@ -339,8 +339,8 @@ suite('ParseNodes', () => {
 		testNodeParse(new Dictionary(() => new LitChar(stubField), () => new LitInt(stubField), stubField), `['a':37, 42:'b']`, ParseStatus.invalid, "", "['a':37, 42:'b']", "");
 		testNodeParse(new Dictionary(() => new LitChar(stubField), () => new LitInt(stubField), stubField), `['a':37, 'b':42)`, ParseStatus.invalid, "", "['a':37, 'b':42)", "");
 
-		testNodeParse(new Dictionary(() => new LitValue(stubField), () => new LitValue(stubField), stubField), `['a':37, 'b':42]`, ParseStatus.valid, "", "", "");
-		testNodeParse(new Dictionary(() => new LitValue(stubField), () => new LitValue(stubField), stubField), `['a':1.0, 5:"abc"]`, ParseStatus.valid, "", "", "");//But should fail type tests
+		testNodeParse(new Dictionary(() => new LitValueNode(stubField), () => new LitValueNode(stubField), stubField), `['a':37, 'b':42]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Dictionary(() => new LitValueNode(stubField), () => new LitValueNode(stubField), stubField), `['a':1.0, 5:"abc"]`, ParseStatus.valid, "", "", "");//But should fail type tests
 	});
 	test('LitTuple', () => {
 		testNodeParse(new LitTuple(stubField), `(3,4)`, ParseStatus.valid, "", "", "");
