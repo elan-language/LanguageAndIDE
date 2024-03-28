@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
-import { escapeAngleBrackets } from "../helpers";
+import { escapeAngleBrackets, isCollapsible } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
@@ -17,7 +17,7 @@ export abstract class AbstractField implements Selectable, Field {
     protected selected: boolean = false;
     private focused: boolean = false;
     private _classes = new Array<string>;
-    private holder;
+    private holder: Frame;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
     private status: ParseStatus | undefined;
@@ -135,39 +135,47 @@ export abstract class AbstractField implements Selectable, Field {
         var key = e.key;
         var textLen = this.text.length;
         switch (key) {
-        case 'Escape': {this.holder.select(true, false); break;}
-        case "Home": {this.cursorPos = 0; break; } 
-        case "End": {this.cursorPos = textLen; break;} 
-        case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
-        case "Enter": {this.tabOrEnter(e.modKey.shift); break;} 
-        case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
-        case "ArrowRight": {if (this.cursorPos < textLen) { this.cursorPos ++; } break; } 
-        case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
-        case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
-        case "Backspace": {
-            if (this.cursorPos > 0) {
-                this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
-                this.cursorPos --;
-                this.parseCurrentText();
-            }
-            break;
-        } 
-        case "Delete": {
-            if (this.cursorPos < textLen) {
-                this.text = this.text.slice(0,this.cursorPos) + this.text.slice(this.cursorPos+1);
-                this.parseCurrentText();
-            }
-            break;
-        } 
-        default: {
-            if (key?.length === 1) {
-                this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
-                this.cursorPos ++;
-                this.parseCurrentText();
+            case 'Escape': {this.holder.select(true, false); break;}
+            case "Home": {this.cursorPos = 0; break; } 
+            case "End": {this.cursorPos = textLen; break;} 
+            case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
+            case "Enter": {this.tabOrEnter(e.modKey.shift); break;} 
+            case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
+            case "ArrowRight": {if (this.cursorPos < textLen) { this.cursorPos ++; } break; } 
+            case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
+            case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
+            case "Backspace": {
+                if (this.cursorPos > 0) {
+                    this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                    this.cursorPos --;
+                    this.parseCurrentText();
+                }
+                break;
+            } 
+            case "Delete": {
+                if (this.cursorPos < textLen) {
+                    this.text = this.text.slice(0,this.cursorPos) + this.text.slice(this.cursorPos+1);
+                    this.parseCurrentText();
+                }
+                break;
+            } 
+            default: {
+                if(key === "o") {
+                    if (e.modKey.control && isCollapsible(this.holder)) {
+                        this.holder.expandCollapse(); 
+                    }
+                } else if ( key === 'O') {
+                    if (e.modKey.control) {
+                        this.holder.expandCollapseAll();
+                    }
+                } else if (key?.length === 1) {
+                    this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
+                    this.cursorPos ++;
+                    this.parseCurrentText();
+                }
             }
         }
     }
-}
 
     private tabOrEnter(back: boolean) {  
         if (back) {
@@ -248,8 +256,6 @@ export abstract class AbstractField implements Selectable, Field {
         return str
             .replace(/"/g, '&quot;');
     }
-
-
 
     public textAsSource() : string {
         return this.text;

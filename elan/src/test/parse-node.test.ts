@@ -258,6 +258,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new List(() => new List(() => new LitInt(stubField), stubField), stubField), `[[1,2], [], [3,4]]`, ParseStatus.valid, `[[1,2], [], [3,4]]`, "", "", "", new ListType(new ListType(intType)));
 		testNodeParse(new List(() => new List(() => new LitInt(stubField), stubField), stubField), `[[1,2], [], [3,4]`, ParseStatus.incomplete, `[[1,2], [], [3,4]`, "", "");
 		testNodeParse(new List(() => new List(() => new LitInt(stubField), stubField), stubField), `[[1,2, [], [3,4]]`, ParseStatus.invalid, ``, `[[1,2, [], [3,4]]`, "", "");
+	
+		testNodeParse(new List(() => new LitString(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
+		testNodeParse(new List(() => new LiteralNode(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 	});
 	test('Indexed term', () => {
 		testNodeParse(new IndexableTerm(stubField), `foo[3]`, ParseStatus.valid, "foo[3]", "", "");
@@ -369,6 +372,8 @@ suite('ParseNodes', () => {
 		testNodeParse(new LiteralNode(stubField), `123`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(stubField), `['a':37, 42:'b']`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(stubField), `[(3,4), (5,6)]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new LiteralNode(stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
+
 	});
 	test('VarRef', () => {
 		testNodeParse(new VarRefNode(stubField), `foo`, ParseStatus.valid, "", "", "");

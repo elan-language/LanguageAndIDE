@@ -36,4 +36,5 @@ export interface Frame extends Selectable {
     fieldUpdated(field: Field): void;
 
     resolveSymbol(id: string, initialScope : Frame): ISymbol;
+    expandCollapseAll(): void;
 }
