@@ -367,7 +367,7 @@ export function literalDataStructure(input: [ParseStatus, string]): [ParseStatus
 }
 
 export function anythingToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
-    return genericRegEx(input, `^${Regexes.expression}`);
+    return genericRegEx(input, `^${Regexes.anythingToNewLine}`);
 }
 
 export function atLeast1CharThenToNewline(input: [ParseStatus, string]): [ParseStatus, string] {
