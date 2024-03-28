@@ -1,4 +1,4 @@
-import { Type } from "../fields/type";
+import { TypeField } from "../fields/type-field";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
@@ -22,11 +22,12 @@ import { StatementFactory } from "../interfaces/statement-factory";
 import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
+import { ClassNameField } from "../fields/class-name-field";
 
 export class Class extends AbstractFrame implements Parent, Collapsible {
     isCollapsible: boolean = true;
     isParent: boolean = true; 
-    public name: Type;
+    public name: ClassNameField;
     public abstract: OptionalKeyword;
     public immutable: boolean;
     public inherits: OptionalKeyword;
@@ -35,8 +36,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
 
     constructor(parent: File) {
         super(parent);
-        this.name = new Type(this);
-        this.name.setPlaceholder("name");
+        this.name = new ClassNameField(this);
         this.abstract = new OptionalKeyword(this, "abstract");
         this.inherits = new OptionalKeyword(this, "inherits");
         this.superClasses  = new InheritsFrom(this);

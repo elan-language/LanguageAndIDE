@@ -29,9 +29,9 @@ export class Multiple extends AbstractParseNode implements IHasSymbolTypes {
                 if (node.status === ParseStatus.valid) {
                     this.elements.push(node);
                     toParse = node.remainingText;
-                } else if (node.status === ParseStatus.incomplete && node.remainingText === "") {
+                } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
                     this.elements.push(node);
-                    toParse = "";
+                    toParse = node.remainingText;
                 } else {
                     cont = false;
                 }

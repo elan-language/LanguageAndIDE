@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
-import { Type } from "../fields/type";
+import { TypeField } from "../fields/type-field";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -10,7 +10,7 @@ import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 export class Property extends AbstractFrame implements Member {
     isMember = true;
     name: IdentifierField;
-    type: Type;
+    type: TypeField;
     public private: boolean = false;
     private class: Class;
 
@@ -18,7 +18,7 @@ export class Property extends AbstractFrame implements Member {
         super(parent);
         this.class = parent as Class;
         this.name = new IdentifierField(this);
-        this.type = new Type(this);
+        this.type = new TypeField(this);
     }
 
     getFields(): Field[] {

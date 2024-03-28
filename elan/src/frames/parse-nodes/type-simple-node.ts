@@ -1,5 +1,4 @@
 import { ClassType } from "../../symbols/class-type";
-import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { RegExMatchNode } from "./regex-match-node";
 

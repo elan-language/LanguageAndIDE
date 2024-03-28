@@ -1,10 +1,12 @@
-# dd19b572f3bb16ffbcc5012a4eba5fdd14764c042987c28d6df0e951a4881cee Elan v0.1 valid
+# cb59dc07925cafeee59cc0b354e1d4926af1b5f18790e7cc16dcfe7b12762904 Elan v0.1 valid
+
+class Foo inherits Bar
+  constructor()
+
+  end constructor
+
+end class
 
 main
-  var a set to a+b
-  var x set to foo()
+  set t to [3, 4]
 end main
-
-function foo() return Int
-  return result
-end function

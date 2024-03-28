@@ -1,22 +1,33 @@
 import { CodeSource } from "../code-source";
+import { escapeAngleBrackets } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { type } from "./parse-functions";
+import { simpleType } from "./parse-functions";
 
-export class Type extends AbstractField {
+export class ClassNameField extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
-        this.placeholder = "Type";
+        this.placeholder = "Name";
     }
     getIdPrefix(): string {
         return 'type';
     }
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return type(input);
+        return simpleType(input);
     } 
     initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;  
+
+    public textAsHtml(): string {
+        if (this.selected) {
+            return super.textAsHtml();
+        }
+        else{ 
+            return `<type>${this.text}</type>`;
+        } 
+    }
+
 }

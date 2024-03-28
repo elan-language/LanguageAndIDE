@@ -22,6 +22,10 @@ export class Lambda extends AbstractSequence {
         }
     }
 
+    renderAsHtml(): string {
+        return `<keyword>${lambdaKeyword} </keyword>${this.elements[1].renderAsSource()}<keyword> ${returnKeyword} </keyword>${this.elements[3].renderAsSource()}`;
+    }
+
     renderAsSource(): string {
         return `${lambdaKeyword} ${this.elements[1].renderAsSource()} ${returnKeyword} ${this.elements[3].renderAsSource()}`;
     }

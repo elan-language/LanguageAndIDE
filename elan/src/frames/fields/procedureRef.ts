@@ -18,4 +18,12 @@ export class ProcedureRef extends AbstractField {
     }
     initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
+
+    public textAsHtml(): string {
+        if (this.selected) {
+            return super.textAsHtml();
+        } else { 
+            return `<method>${this.text}</method>`;
+        } 
+    }
 }

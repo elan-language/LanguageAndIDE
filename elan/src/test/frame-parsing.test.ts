@@ -432,20 +432,4 @@ end main
   test('parse Frames - pathfinder', (done) => {
     assertFileParses(done, "programs/binary-search.elan");
 	});
-
-/*   test('parse Frames - temp - next test example', () => {
-
-  var code = `# FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF Elan v0.1 valid
-
-`;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(true);
-		fl.parseFrom(source);
-    if (fl.parseError) {
-      throw new Error(fl.parseError);
-    }
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); */
-
 });

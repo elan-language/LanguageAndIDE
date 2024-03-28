@@ -1,4 +1,3 @@
-import { ISymbolType } from "../../symbols/symbol-type";
 import { Field } from "../interfaces/field";
 import {SymbolNode} from "./symbol-node";
 

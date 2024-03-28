@@ -3,7 +3,7 @@ import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
-import { Type } from "../fields/type";
+import { TypeField } from "../fields/type-field";
 import { Class } from "../globals/class";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
@@ -15,7 +15,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
     isMember: boolean = true;
     public name : IdentifierField;
     public params: ParamList;
-    public returnType: Type;
+    public returnType: TypeField;
     private class: Class;
 
     constructor(parent: Parent) {
@@ -23,7 +23,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
         this.class = parent as Class;
         this.name = new IdentifierField(this);
         this.params = new ParamList(this);
-        this.returnType = new Type(this);
+        this.returnType = new TypeField(this);
         this.returnType.setPlaceholder("return type");
     }
 
@@ -41,7 +41,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
 
     renderAsHtml(): string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract function </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()}) as ${this.returnType.renderAsHtml()}</function>
+<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) as ${this.returnType.renderAsHtml()}</function>
 `;
     }
 

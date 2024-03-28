@@ -24,4 +24,15 @@ export class ParamDefNode extends AbstractSequence {
     get symbolType() {
         return UnknownType.Instance;
     }
+
+    renderAsHtml(): string {
+        var ident = this.elements[0].renderAsHtml();
+        var type = this.elements[2].renderAsHtml();
+        return `${ident}<keyword> as </keyword>${type}`;
+    }
+    renderAsSource(): string {
+        var ident = this.elements[0].renderAsSource();
+        var type = this.elements[2].renderAsSource();
+        return `${ident}<keyword> as </keyword>${type}`;   
+    }
 }

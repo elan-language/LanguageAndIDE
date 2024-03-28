@@ -1,5 +1,5 @@
 import { EnumValues } from "../fields/enum-values";
-import { Type } from "../fields/type";
+import { TypeField } from "../fields/type-field";
 import { AbstractFrame } from "../abstract-frame";
 import { File } from "../interfaces/file";
 import { singleIndent } from "../helpers";
@@ -8,14 +8,14 @@ import { CodeSource } from "../code-source";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
-    name: Type;
+    name: TypeField;
     values: EnumValues;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.name = new Type(this);
+        this.name = new TypeField(this);
         this.name.setPlaceholder("Name");
         this.values = new EnumValues(this);
     }

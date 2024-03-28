@@ -37,7 +37,7 @@ export class AbstractProcedure extends AbstractFrame implements Member {
 
     renderAsHtml(): string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract procedure </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})</procedure>
+<keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</procedure>
 `;
     }
 

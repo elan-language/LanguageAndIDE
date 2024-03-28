@@ -1,7 +1,7 @@
 
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
-import { Type } from "../fields/type";
+import { TypeField } from "../fields/type-field";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Parent} from "../interfaces/parent";
@@ -15,7 +15,7 @@ export class Function extends FrameWithStatements implements Parent {
     isGlobal = true;
     public name : IdentifierField;
     public params: ParamList;
-    public returnType: Type;
+    public returnType: TypeField;
     file: File;
 
     constructor(parent: Parent) {
@@ -23,7 +23,7 @@ export class Function extends FrameWithStatements implements Parent {
         this.file = parent as File;
         this.name = new IdentifierField(this);
         this.params = new ParamList(this);
-        this.returnType = new Type(this);
+        this.returnType = new TypeField(this);
         this.returnType.setPlaceholder("return type");
         this.getChildren().push(new ReturnStatement(this));
     }
@@ -44,7 +44,7 @@ export class Function extends FrameWithStatements implements Parent {
     }
     public renderAsHtml() : string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${functionKeyword} </keyword>${this.name.renderAsHtml()}(${this.params.renderAsHtml()})<keyword> ${ returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${ returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>${endKeyword} ${functionKeyword}</keyword>
 </function>`;

@@ -1,5 +1,4 @@
 import { CharType } from "../../symbols/char-type";
-import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
@@ -20,4 +19,9 @@ export class LitChar extends AbstractParseNode {
     get symbolType() {
         return CharType.Instance;
     }
+
+    renderAsHtml(): string {
+        return `<string>${this.matchedText}</string>`;
+    }
+
 }

@@ -160,14 +160,10 @@ export abstract class AbstractField implements Selectable, Field {
                 break;
             } 
             default: {
-                if(key === "o") {
-                    if (e.modKey.control && isCollapsible(this.holder)) {
-                        this.holder.expandCollapse(); 
-                    }
-                } else if ( key === 'O') {
-                    if (e.modKey.control) {
+                if(key === "o" && e.modKey.control && isCollapsible(this.holder)) {
+                    this.holder.expandCollapse(); 
+                } else if ( key === 'O' && e.modKey.control) {
                         this.holder.expandCollapseAll();
-                    }
                 } else if (key?.length === 1) {
                     this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
                     this.cursorPos ++;
@@ -241,8 +237,7 @@ export abstract class AbstractField implements Selectable, Field {
     public textAsHtml(): string {
         if (this.selected) {
             return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
-        }
-        else{ 
+        } else { 
             return this.rootNode ? this.rootNode.renderAsHtml() : escapeAngleBrackets(this.text);
         } 
     }

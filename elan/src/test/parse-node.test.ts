@@ -230,6 +230,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 1, stubField), `fook `, ParseStatus.invalid, "", "fook ");
 		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 0, stubField), `fo`, ParseStatus.incomplete, "fo", "");
 		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 2, stubField), `foo, fo`, ParseStatus.incomplete, "foo, fo", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo", stubField), 2, stubField), `foo, `, ParseStatus.incomplete, "foo,", " ");
 
 		testNodeParse(new CSV(() => new ExprNode(stubField), 0, stubField), ``, ParseStatus.valid, "", "");
 	});
