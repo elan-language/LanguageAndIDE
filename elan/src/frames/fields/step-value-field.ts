@@ -5,7 +5,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { literalInt } from "./parse-functions";
 
-export class Integer extends AbstractField {  
+export class StepValueField extends AbstractField {  
     constructor(holder: Frame) {
         super(holder);
         this.placeholder = "integer";

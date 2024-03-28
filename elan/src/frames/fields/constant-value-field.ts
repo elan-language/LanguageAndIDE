@@ -5,12 +5,9 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { LiteralNode } from "../parse-nodes/literal-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { literal } from "./parse-functions";
 
-//Literal value or data structure
-export class LiteralField extends AbstractField implements IHasSymbolType {   
+export class ConstantValueField extends AbstractField implements IHasSymbolType {   
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("lit");
@@ -18,9 +15,6 @@ export class LiteralField extends AbstractField implements IHasSymbolType {
     getHelp(): string {
         return "";
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return literal(input);
-    } 
     initialiseRoot(): ParseNode | undefined { 
         this.rootNode = new LiteralNode(this);
         return this.rootNode; 
@@ -32,7 +26,6 @@ export class LiteralField extends AbstractField implements IHasSymbolType {
         if (isHasSymbolType(this.rootNode)) {
             return this.rootNode.symbolType;
         }
-
         return UnknownType.Instance;
     }
 }

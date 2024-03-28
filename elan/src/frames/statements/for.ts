@@ -1,5 +1,5 @@
 import { IdentifierField } from "../fields/identifier-field";
-import { Integer } from "../fields/integer";
+import { StepValueField } from "../fields/step-value-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
@@ -12,7 +12,7 @@ export class For extends FrameWithStatements implements Statement  {
     variable: IdentifierField;
     from: Value;
     to: Value;
-    step: Integer;
+    step: StepValueField;
 
     constructor(parent: Parent) {
         super(parent);
@@ -22,7 +22,7 @@ export class For extends FrameWithStatements implements Statement  {
         this.from.setPlaceholder("integer value or expression");
         this.to = new Value(this);
         this.to.setPlaceholder("integer value or expression");
-        this.step = new Integer(this);
+        this.step = new StepValueField(this);
         this.step.setText("1");
     }
 

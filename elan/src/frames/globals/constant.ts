@@ -3,20 +3,20 @@ import { AbstractFrame } from "../abstract-frame";
 import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { LiteralField } from "../fields/literal-field";
+import { ConstantValueField } from "../fields/constant-value-field";
 import { ISymbol } from "../../symbols/symbol";
 
 export class Constant extends AbstractFrame implements ISymbol {
     isGlobal = true;
     name: IdentifierField;
-    literal: LiteralField;
+    literal: ConstantValueField;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
         this.name  = new IdentifierField(this);
-        this.literal = new LiteralField(this); 
+        this.literal = new ConstantValueField(this); 
         this.literal.setPlaceholder("literal value or data structure");
     }
 
