@@ -1,9 +1,10 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { Alternatives } from "../parse-nodes/alternatives";
+import { IdentifierNode } from "../parse-nodes/identifier-node";
+import { LitString } from "../parse-nodes/lit-string";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { firstValidMatchOrLongestIncomplete, identifier, literalString } from "./parse-functions";
 
 export class ExceptionMessage extends AbstractField {
     constructor(holder: Frame) {
@@ -13,9 +14,10 @@ export class ExceptionMessage extends AbstractField {
     getIdPrefix(): string {
         return 'msg';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return firstValidMatchOrLongestIncomplete(input, [literalString, identifier]);
+    initialiseRoot(): ParseNode | undefined { 
+        this.rootNode = new Alternatives([() => new LitString(this),() => new IdentifierNode(this) ], this);
+        return this.rootNode; 
     }
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
+    readToDelimeter: ((source: CodeSource) => string) | undefined = 
+    (source: CodeSource) => source.readToEndOfLine();
 }
