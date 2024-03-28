@@ -243,8 +243,7 @@ export abstract class AbstractField implements Selectable, Field {
             return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
         }
         else{ 
-            var c = escapeAngleBrackets(this.text);
-            return c;
+            return this.rootNode ? this.rootNode.renderAsHtml() : escapeAngleBrackets(this.text);
         } 
     }
 
