@@ -5,7 +5,7 @@ import { Field } from "../interfaces/field";
 import { rawSymbolToType } from "../../symbols/symbolHelpers";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
-export class Symbol extends AbstractParseNode implements IHasSymbolType {
+export class SymbolNode extends AbstractParseNode implements IHasSymbolType {
     fixedText: string;
     isSymbol = true;
 

@@ -287,7 +287,7 @@ end main
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
+    assertDoesNotParse(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl);
   });
 

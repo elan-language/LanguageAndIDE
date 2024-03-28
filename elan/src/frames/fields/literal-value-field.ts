@@ -5,7 +5,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { literalValue } from "./parse-functions";
 
-export class LiteralValue extends AbstractField {   
+export class LiteralValueField extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value");

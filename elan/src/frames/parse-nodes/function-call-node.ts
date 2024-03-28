@@ -1,7 +1,7 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { IdentifierNode } from "./identifier-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
@@ -14,9 +14,9 @@ export class FunctionCallNode extends AbstractSequence {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             this.elements.push(new IdentifierNode(this.field));
-            this.elements.push(new Symbol("(",this.field));
+            this.elements.push(new SymbolNode("(",this.field));
             this.elements.push(new CSV(() => new ExprNode(this.field),0,this.field)); //arg list
-            this.elements.push(new Symbol(")",this.field));
+            this.elements.push(new SymbolNode(")",this.field));
             super.parseText(text);
         }
     }

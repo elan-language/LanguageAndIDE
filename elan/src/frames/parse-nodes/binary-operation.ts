@@ -1,22 +1,22 @@
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
 import { UnknownType } from "../../symbols/unknown-type";
 
 export class BinaryOperation extends AbstractAlternatives {
     parseText(text: string): void {  
-        this.alternatives.push(new Symbol("+",this.field));
-        this.alternatives.push(new Symbol("-",this.field));
-        this.alternatives.push(new Symbol("*",this.field));
-        this.alternatives.push(new Symbol("/",this.field));
-        this.alternatives.push(new Symbol(">", this.field));
-        this.alternatives.push(new Symbol("<", this.field));
-        this.alternatives.push(new Symbol(">=", this.field));
-        this.alternatives.push(new Symbol("<=", this.field));
-        this.alternatives.push(new Symbol("^", this.field));
+        this.alternatives.push(new SymbolNode("+",this.field));
+        this.alternatives.push(new SymbolNode("-",this.field));
+        this.alternatives.push(new SymbolNode("*",this.field));
+        this.alternatives.push(new SymbolNode("/",this.field));
+        this.alternatives.push(new SymbolNode(">", this.field));
+        this.alternatives.push(new SymbolNode("<", this.field));
+        this.alternatives.push(new SymbolNode(">=", this.field));
+        this.alternatives.push(new SymbolNode("<=", this.field));
+        this.alternatives.push(new SymbolNode("^", this.field));
         this.alternatives.push(new KeywordNode(isKeyword, this.field));
         var is = () => new KeywordNode(isKeyword, this.field);
         var not = () => new KeywordNode(notKeyword, this.field);

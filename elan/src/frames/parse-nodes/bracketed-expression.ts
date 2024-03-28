@@ -1,6 +1,6 @@
 import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
@@ -15,9 +15,9 @@ export class BracketedExpression extends AbstractSequence implements IHasSymbolT
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new Symbol("(", this.field));
+            this.elements.push(new SymbolNode("(", this.field));
             this.elements.push(new ExprNode(this.field));
-            this.elements.push(new Symbol(")", this.field));
+            this.elements.push(new SymbolNode(")", this.field));
             super.parseText(text);
         }
     }

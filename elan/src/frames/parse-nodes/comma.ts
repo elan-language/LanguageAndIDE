@@ -1,9 +1,9 @@
 import { ISymbolType } from "../../symbols/symbol-type";
 import { Field } from "../interfaces/field";
-import {Symbol} from "./symbol";
+import {SymbolNode} from "./symbol-node";
 
 //Comma is distinct from other symbols because it is always followed by a space
-export class Comma extends Symbol {
+export class Comma extends SymbolNode {
     constructor(field : Field) {
         super(",", field);
     }

@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { RegExMatchNode } from "./regex-match-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
@@ -13,9 +13,9 @@ export class LitString extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new Symbol(`"`, this.field));
+            this.elements.push(new SymbolNode(`"`, this.field));
             this.elements.push(new RegExMatchNode(/^[^"]*/, this.field));
-            this.elements.push(new Symbol(`"`, this.field));
+            this.elements.push(new SymbolNode(`"`, this.field));
             super.parseText(text);
         }
     }

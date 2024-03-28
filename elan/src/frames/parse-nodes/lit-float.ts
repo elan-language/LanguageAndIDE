@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { LitInt } from "./lit-int";
 import { RegExMatchNode } from "./regex-match-node";
 import { Field } from "../interfaces/field";
@@ -18,10 +18,10 @@ export class LitFloat extends AbstractSequence {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             this.elements.push(new LitInt(this.field));
-            this.elements.push(new Symbol(".", this.field));
+            this.elements.push(new SymbolNode(".", this.field));
             this.elements.push(new RegExMatchNode(/^\s*[0-9]+/, this.field));
             var exponent = new Optional(() => new Sequence([
-                () => new Symbol('e', this.field),
+                () => new SymbolNode('e', this.field),
                 () => new RegExMatchNode(/^-?[0-9]+/, this.field)
                 ], this.field), this.field);
             this.elements.push(exponent);

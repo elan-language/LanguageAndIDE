@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { UnknownType } from "../../symbols/unknown-type";
@@ -13,9 +13,9 @@ export class TupleDefNode extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new Symbol(`(`, this.field));
+            this.elements.push(new SymbolNode(`(`, this.field));
             this.elements.push(new CSV(() => new ExprNode(this.field),2, this.field));
-            this.elements.push(new Symbol(`)`, this.field));
+            this.elements.push(new SymbolNode(`)`, this.field));
             super.parseText(text);
         }
     }

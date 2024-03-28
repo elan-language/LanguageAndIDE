@@ -1,6 +1,6 @@
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
-import { LiteralValue } from "../fields/literal-value";
+import { LiteralValueField } from "../fields/literal-value-field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
@@ -8,11 +8,11 @@ import { singleIndent } from "../helpers";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
-    value: LiteralValue;
+    value: LiteralValueField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.value  = new LiteralValue(this);
+        this.value  = new LiteralValueField(this);
     }
     
     getFields(): Field[] {

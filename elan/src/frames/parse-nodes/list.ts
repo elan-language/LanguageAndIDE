@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { Symbol } from "./symbol";
+import { SymbolNode } from "./symbol-node";
 import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
 import { UnknownType } from "../../symbols/unknown-type";
@@ -18,9 +18,9 @@ export class List extends AbstractSequence implements IHasSymbolType  {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new Symbol(`[`, this.field));
+            this.elements.push(new SymbolNode(`[`, this.field));
             this.elements.push(new CSV(this.elementConstructor, 0, this.field));
-            this.elements.push(new Symbol(`]`, this.field));
+            this.elements.push(new SymbolNode(`]`, this.field));
             super.parseText(text);
         }
     }
