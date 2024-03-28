@@ -1,5 +1,5 @@
 import { Type } from "../fields/type";
-import { TypeList } from "../fields/type-list";
+import { InheritsFrom } from "../fields/inheritsFrom";
 import { FunctionMethod } from "../class-members/function-method";
 import { Property } from "../class-members/property";
 import { ProcedureMethod } from "../class-members/procedure-method";
@@ -30,7 +30,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
     public abstract: OptionalKeyword;
     public immutable: boolean;
     public inherits: OptionalKeyword;
-    public superClasses: TypeList;
+    public superClasses: InheritsFrom;
     private _children: Array<Frame> = new Array<Frame>();
 
     constructor(parent: File) {
@@ -39,7 +39,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
         this.name.setPlaceholder("name");
         this.abstract = new OptionalKeyword(this, "abstract");
         this.inherits = new OptionalKeyword(this, "inherits");
-        this.superClasses  = new TypeList(this);
+        this.superClasses  = new InheritsFrom(this);
         this.superClasses.setOptional(true);
         this.getChildren().push(new Constructor(this));
         this.getChildren().push(new MemberSelector(this));

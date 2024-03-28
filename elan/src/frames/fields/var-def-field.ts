@@ -5,7 +5,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { variableDef } from "./parse-functions";
 
-export class VariableDef extends AbstractField  {   
+export class VarDefField extends AbstractField  {   
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");

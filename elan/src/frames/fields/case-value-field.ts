@@ -4,7 +4,7 @@ import { LitValueNode } from "../parse-nodes/lit-value";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
-export class LiteralValueField extends AbstractField {   
+export class CaseValueField extends AbstractField {   
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value");

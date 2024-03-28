@@ -5,7 +5,7 @@ import { BracketedExpression } from "./bracketed-expression";
 import { DottedTerm } from "./dotted-term";
 import { NewInstance } from "./new-instance";
 import { EnumVal } from "./enum-val";
-import { IndexableTerm } from "./indexed-term";
+import { IndexableTerm } from "./indexable-term";
 import { TupleDefNode } from "./tuple-def-node";
 import { Lambda } from "./lambda";
 import { IfExpr } from "./if-expr";

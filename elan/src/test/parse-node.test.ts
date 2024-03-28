@@ -17,7 +17,7 @@ import { CSV } from '../frames/parse-nodes/csv';
 import { IdentifierNode } from '../frames/parse-nodes/identifier-node';
 import { FunctionCallNode } from '../frames/parse-nodes/function-call-node';
 import { KeywordNode } from '../frames/parse-nodes/keyword-node';
-import { IndexableTerm } from '../frames/parse-nodes/indexed-term';
+import { IndexableTerm } from '../frames/parse-nodes/indexable-term';
 import { TypeNode } from '../frames/parse-nodes/type-node';
 import { TypeWithOptGenerics } from '../frames/parse-nodes/type-with-opt-generics';
 import { TypeSimpleNode } from '../frames/parse-nodes/type-simple-node';
@@ -42,6 +42,9 @@ import { Dictionary } from '../frames/parse-nodes/dictionary';
 import { LitValueNode } from '../frames/parse-nodes/lit-value';
 import { LiteralNode } from '../frames/parse-nodes/literal-node';
 import { LitTuple } from '../frames/parse-nodes/lit-tuple';
+import { VarRefNode } from '../frames/parse-nodes/var-ref-node';
+import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
+import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 
 suite('ParseNodes', () => {
 
@@ -349,11 +352,39 @@ suite('ParseNodes', () => {
 		testNodeParse(new LitTuple(stubField), `(3,'a', "hello", 4.1, true`, ParseStatus.incomplete, "", "", "");
 		testNodeParse(new LitTuple(stubField), `(3,'a', "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
 		testNodeParse(new LitTuple(stubField), `[3,4]`, ParseStatus.invalid, "", "[3,4]", "");
+		testNodeParse(new LitTuple(stubField), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");
+		testNodeParse(new LitTuple(stubField), `(`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new LitTuple(stubField), `(3`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new LitTuple(stubField), `(3)`, ParseStatus.invalid, "", "(3)", "");
+		testNodeParse(new LitTuple(stubField), `()`, ParseStatus.invalid, "", "()", "");
+	});
+	test('DeconstructedTuple', () => {
+		testNodeParse(new DeconstructedTuple(stubField), `(a,b)`, ParseStatus.valid, "", "", "");
+		testNodeParse(new DeconstructedTuple(stubField), `(a,b`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new DeconstructedTuple(stubField), `(3,4)`, ParseStatus.invalid, "", "(3,4)", "");
+		testNodeParse(new DeconstructedTuple(stubField), `(a[2],b)`, ParseStatus.invalid, "", "(a[2],b)", "");
 	});
 	test('Literal', () => {
 		testNodeParse(new LiteralNode(stubField), `"hello"`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(stubField), `123`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(stubField), `['a':37, 42:'b']`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(stubField), `[(3,4), (5,6)]`, ParseStatus.valid, "", "", "");
+	});
+	test('VarRef', () => {
+		testNodeParse(new VarRefNode(stubField), `foo`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `foo[3]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `library.foo`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `global.foo[3]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `property.foo[3..4]`, ParseStatus.valid, "", "", "");
+	});
+	test('DeconstructedList', () => {
+		testNodeParse(new DeconstructedList(stubField), `[a:b]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new DeconstructedList(stubField), `[a:b`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new DeconstructedList(stubField), `[a:`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new DeconstructedList(stubField), `[a`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new DeconstructedList(stubField), `[`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new DeconstructedList(stubField), `[a,b]`, ParseStatus.invalid, "", "[a,b]", "");
+		testNodeParse(new DeconstructedList(stubField), `[a:3]`, ParseStatus.invalid, "", "[a:3]", "");
+		testNodeParse(new DeconstructedList(stubField), `(a:b)`, ParseStatus.invalid, "", "(a:b)", "");
 	});
 });

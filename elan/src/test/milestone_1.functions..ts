@@ -1,7 +1,7 @@
 import { Constant } from "../frames/globals/constant";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
-import { VariableDefStatement } from "../frames/statements/variable-def-statement";
+import { VarStatement } from "../frames/statements/var-statement";
 import { Procedure } from "../frames/globals/procedure";
 import { Function } from "../frames/globals/function";
 import { FunctionMethod } from "../frames/class-members/function-method";
@@ -68,7 +68,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
 	var ssm = m.getFirstSelectorAsDirectChild();
-	const v = new VariableDefStatement(m);
+	const v = new VarStatement(m);
 	m.addChildBefore(v,ssm);
 	const s = new SetStatement(m);
 	s.name.setText("a");

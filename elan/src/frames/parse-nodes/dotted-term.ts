@@ -1,5 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
-import { IndexableTerm } from "./indexed-term";
+import { IndexableTerm } from "./indexable-term";
 import { Multiple } from "./multiple";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";

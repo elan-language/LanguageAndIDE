@@ -4,7 +4,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Assert } from "../statements/assert";
-import { VariableDefStatement } from "../statements/variable-def-statement";
+import { VarStatement } from "../statements/var-statement";
 
 export class Test extends FrameWithStatements {
     isTest = true;
@@ -17,7 +17,7 @@ export class Test extends FrameWithStatements {
         this.file = parent;
         this.getChildren().splice(0,1); //remove statement selector
         this.name = new IdentifierField(this);
-        var result = new VariableDefStatement(this);
+        var result = new VarStatement(this);
         result.name.setText("result");
         this.getChildren().push(result);
         this.getChildren().push( new Assert(this));

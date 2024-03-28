@@ -1,6 +1,5 @@
 import { ParseStatus } from "../parse-status";
 import { Regexes } from "./regexes";
-import { TypeList } from "./type-list";
 
 function isMatchRegEx(code: string, regEx: RegExp): boolean {
     var matches = code.match(regEx);
@@ -332,38 +331,8 @@ export function listDecomp(input: [ParseStatus, string]): [ParseStatus, string] 
     return SEQ(input, [openBrace, identifier, colon, identifier, closeBrace]); 
 }
 
-export function argsList(input: [ParseStatus, string]): [ParseStatus, string] {
-    return CSV_1(input, value);
-}
-
-export function typesList(input: [ParseStatus, string]): [ParseStatus, string] {
-    return CSV_1(input, type);
-}
-
 export function identifierList(input: [ParseStatus, string]): [ParseStatus, string] {
     return CSV_1(input, identifier);
-}
-
-export function literalList(input: [ParseStatus, string]): [ParseStatus, string] {
-    throw new Error("Not implemented");
-    //short circuit for starting with open brace
-    //Test first for specific types of list i.e. litListString, litListInt etc
-    //Maybe we should disallow literal lists except of literal values. i.e. if
-    // you want to build list from expressions, need to define list and add to it.
-    // Similarly for dictionaries
-
-}
-
-export function literalTuple(input: [ParseStatus, string]): [ParseStatus, string] {
-  throw new Error("Not implemented");
-}
-
-export function literalDictionary(input: [ParseStatus, string]): [ParseStatus, string] {
-    throw new Error("Not implemented");
-}
-
-export function literalDataStructure(input: [ParseStatus, string]): [ParseStatus, string] {
-    return LongestMatchFrom(input, [literalString, literalList, literalTuple, literalDictionary]);
 }
 
 export function anythingToNewline(input: [ParseStatus, string]): [ParseStatus, string] {

@@ -7,7 +7,7 @@ import { Repeat } from "./statements/repeat";
 import { Throw } from "./statements/throw";
 import { While } from "./statements/while";
 import { TryCatch } from "./statements/try-catch";
-import { VariableDefStatement } from "./statements/variable-def-statement";
+import { VarStatement } from "./statements/var-statement";
 import { SetStatement } from "./statements/set-statement";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Frame } from "./interfaces/frame";
@@ -43,7 +43,7 @@ export class StatementFactoryImpl implements StatementFactory {
     public newSwitch(parent: Parent): Frame { return new Switch(parent); }
     public newThrow(parent: Parent): Frame { return new Throw(parent); }
     public newTryCatch(parent: Parent): Frame { return new TryCatch(parent); }
-    public newVar(parent: Parent): Frame { return new VariableDefStatement(parent); }
+    public newVar(parent: Parent): Frame { return new VarStatement(parent); }
     public newWhile(parent: Parent): Frame { return new While(parent); }
     public newComment(parent: Parent): Frame { return new CommentStatement(parent); }
 }

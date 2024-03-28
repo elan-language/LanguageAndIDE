@@ -2,19 +2,19 @@ import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { VariableDef } from "../fields/variable";
+import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ISymbol } from "../../symbols/symbol";
 
-export class VariableDefStatement extends AbstractFrame implements Statement, ISymbol  {
+export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     isStatement = true;
-    name: VariableDef;
+    name: VarDefField;
     expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.name = new VariableDef(this);
+        this.name = new VarDefField(this);
         this.expr = new ExpressionField(this);
     }
     parseFrom(source: CodeSource): void {

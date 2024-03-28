@@ -1,6 +1,6 @@
 import assert from 'assert';
 import * as vscode from 'vscode';
-import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variableUse, index_opt, argsList, firstValidMatchOrLongestIncomplete, identifierList, procedureRef, variableDotMember, anythingBetweenBrackets, assignableValue } from '../frames/fields/parse-functions';
+import {genericString, identifier, type, sp, paramDef, optional, optSp, comma, STAR, PLUS, CSV_1, paramsList, CSV_0, SEQ, LongestMatchFrom as longestMatchFrom, literalBoolean, literalInt, literalFloat, literalChar, enumValue, literalValue, scopeQualifier_opt, value, literalString, variableUse, index_opt, firstValidMatchOrLongestIncomplete, identifierList, procedureRef, variableDotMember, anythingBetweenBrackets, assignableValue } from '../frames/fields/parse-functions';
 import { ParseStatus } from '../frames/parse-status';
 import { Regexes } from '../frames/fields/regexes';
 
@@ -372,15 +372,6 @@ suite('Parse Function Tests', () => {
 		assert.deepEqual(variableUse([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
 		assert.deepEqual(value([ParseStatus.notParsed, `{a,b}`]), [ParseStatus.invalid,  "{a,b}"]);
 	}); 
-
-	test('parse functions - argsList', () => {
-		assert.deepEqual(argsList([ParseStatus.notParsed, `1, 2, 3`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d], "hello", 'c', true`]), [ParseStatus.valid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, `a, b[2], c[d],,`]), [ParseStatus.incomplete,  ","]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, ``]), [ParseStatus.invalid,  ""]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, `a b[2]`]), [ParseStatus.valid,  " b[2]"]);
-		assert.deepEqual(argsList([ParseStatus.notParsed, `a, `]), [ParseStatus.incomplete,  ""]);
-	});
 
 	test('parse functions - identifierList', () => {
 		assert.deepEqual(identifierList([ParseStatus.notParsed, `a, bc, c1_d`]), [ParseStatus.valid,  ""]);
