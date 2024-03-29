@@ -1,3 +1,4 @@
+import { allKeywords, resultKeyword } from "../keywords";
 import { ParseStatus } from "../parse-status";
 import { Regexes } from "./regexes";
 
@@ -293,7 +294,13 @@ export function variableUse(input: [ParseStatus, string]): [ParseStatus, string]
 }
 
 export function variableDef(input: [ParseStatus, string]): [ParseStatus, string] {
-    return firstValidMatchOrLongestIncomplete(input, [identifier, deconstructedTuple, listDecomp]);
+    var match = firstValidMatchOrLongestIncomplete(input, [identifier, deconstructedTuple, listDecomp]);
+    //variable def cannot be any keyword
+    if (match[0] === ParseStatus.valid && allKeywords.indexOf(input[1].trim()) > -1) {
+        match[0] = ParseStatus.invalid;
+        match[1]= input[1];
+    }
+    return match;
 }
 
 export function literalValue(input: [ParseStatus, string]): [ParseStatus, string] {

@@ -11,29 +11,32 @@ import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordNode } from "./keyword-node";
 import { Sequence } from "./sequence";
 import { SymbolNode } from "./symbol-node";
+import { AbstractAlternatives } from "./abstract-alternatives";
 
-export class VarRefNode extends AbstractSequence implements IHasSymbolType {
+export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
     constructor(field : Field) {
         super(field);
     }
 
     parseText(text: string): void {
+        var simple = () => new IdentifierNode(this.field);
         var prop = () => new KeywordNode(propertyKeyword, this.field);
         var global = () => new KeywordNode(globalKeyword, this.field);
         var lib = () => new KeywordNode(libraryKeyword, this.field);
         var qualifier = () => new Alternatives([prop, global, lib], this.field);
         var dot = () => new SymbolNode(".", this.field);
         var qualDot = () => new Sequence([qualifier, dot], this.field);
-        var optQualifier = new Optional(qualDot, this.field);
-        this.elements.push(optQualifier);
-        this.elements.push(new IdentifierNode(this.field));
-        this.elements.push(new Optional(() => new IndexNode(this.field), this.field));
+        var optQualifier = () => new Optional(qualDot, this.field);
+        var optIndex = () => new Optional(() => new IndexNode(this.field), this.field)
+        var compound = () => new Sequence( [optQualifier, simple, optIndex ], this.field);
+        this.alternatives.push(simple());
+        this.alternatives.push(compound());
         super.parseText(text);
     }
 
     get symbolType() {
         // kludge 
-        var id = (this.elements[0] as Alternatives).bestMatch;
+        var id = this.bestMatch;
 
         if (isHasSymbolType(id)){
             return id.symbolType;

@@ -7,7 +7,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
 
-export class SetField extends AbstractField { 
+export class AssignableField extends AbstractField { 
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
@@ -22,5 +22,5 @@ export class SetField extends AbstractField {
         this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readUpToFirstMatch(/\s*to\s*/);
+    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readUpToFirstMatch(/(\s+to\s+)|\r|\n/);
 } 

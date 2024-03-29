@@ -71,7 +71,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const v = new VarStatement(m);
 	m.addChildBefore(v,ssm);
 	const s = new SetStatement(m);
-	s.name.setText("a");
+	s.assignable.setText("a");
 	s.expr.setText("3 + 4");
 	m.addChildBefore(s,ssm);
 	const t = new Throw(m);

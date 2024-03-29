@@ -39,6 +39,12 @@ suite('Field Parsing Tests', () => {
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.invalid);
+		id.setText("result");
+		id.parseCurrentText();
+		assert.equal(id.getStatus(), ParseStatus.invalid);
+		id.setText("class");
+		id.parseCurrentText();
+		assert.equal(id.getStatus(), ParseStatus.invalid);
 		}); 
 
 	test('parse Frames - literalValue', () => { 

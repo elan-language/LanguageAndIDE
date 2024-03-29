@@ -1,14 +1,13 @@
-import { ExpressionField } from "../fields/expression-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import {CodeSource } from "../code-source";
-import { Value } from "../fields/value";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { IntoSelector } from "../fields/into-selector";
 import { externalKeyword, intoKeyword } from "../keywords";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcedureRef } from "../fields/procedureRef";
+import { AssignableField } from "../fields/assignableField";
 
 export class ExternalStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -16,22 +15,22 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     args: ArgListField;
     selectIntoClause: IntoSelector;
     hasInto: boolean = false;
-    target: Value;
+    assignable: AssignableField;
 
     constructor(parent: Parent) {
         super(parent);
         this.method = new ProcedureRef(this);
         this.args = new ArgListField(this);
         this.selectIntoClause = new IntoSelector(this);
-        this.target = new Value(this);
-        this.target.setPlaceholder("variableName");
+        this.assignable = new AssignableField(this);
+        this.assignable.setPlaceholder("variableName");
     }
 
     setIntoExtension(to: boolean) {
         this.hasInto = to;
     }
 
-    parseFrom(source: CodeSource): void {
+     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove(`${externalKeyword} `);
         this.method.parseFrom(source);
@@ -42,7 +41,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
         if (source.isMatch(into)) {
             this.hasInto = true;
             source.remove(into);
-            this.target.parseFrom(source);
+            this.assignable.parseFrom(source);
         }
         source.removeNewLine();
     }
@@ -50,7 +49,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
         var fields = [];
         fields.push(this.method);
         fields.push(this.args);
-        fields.push(this.hasInto ? this.target : this.selectIntoClause);
+        fields.push(this.hasInto ? this.assignable : this.selectIntoClause);
         return fields;
     } 
 
@@ -59,11 +58,11 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     }
 
     private intoClauseAsHtml() : string {
-        return this.hasInto ? ` <keyword>${intoKeyword} </keyword>${this.target.renderAsHtml()}`: ` ${this.selectIntoClause.renderAsHtml()}`;
+        return this.hasInto ? ` <keyword>${intoKeyword} </keyword>${this.assignable.renderAsHtml()}`: ` ${this.selectIntoClause.renderAsHtml()}`;
     }
 
     private intoClauseAsSource() : string {
-        return this.hasInto ? ` ${intoKeyword} ${this.target.renderAsSource()}`:``;
+        return this.hasInto ? ` ${intoKeyword} ${this.assignable.renderAsSource()}`:``;
     }
 
     private intoClauseAsObjectCode() : string {

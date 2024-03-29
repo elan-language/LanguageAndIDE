@@ -1,4 +1,4 @@
-# e739254ad0bc1c027485f144af60c4bd4809f466459ffc25321a940934b8225d Elan v0.1 incomplete
+# 6ab07fe953c047e704c8b276b8873056fa1feec47c00696e20d77cb254535126 Elan v0.1 incomplete
 
 constant phi set to 1.618
 
@@ -19,6 +19,6 @@ enum Fruit
 end enum
 
 test test1
-  var result set to 
+  set result to 
   assert result is 
 end test

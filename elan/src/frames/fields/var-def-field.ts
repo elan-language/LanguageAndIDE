@@ -3,7 +3,7 @@ import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { variableDef } from "./parse-functions";
+import { variableDef as variableDefFunction } from "./parse-functions";
 
 export class VarDefField extends AbstractField  {   
     constructor(holder: Frame) {
@@ -14,7 +14,7 @@ export class VarDefField extends AbstractField  {
         return 'var';
     }
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return variableDef(input);
+        return variableDefFunction(input);
     }
     initialiseRoot(): ParseNode | undefined { return undefined; }
     readToDelimeter: ((source: CodeSource) => string) | undefined = undefined; 

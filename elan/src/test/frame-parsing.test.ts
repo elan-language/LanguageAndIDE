@@ -57,6 +57,27 @@ suite('File Parsing Tests', () => {
 		assert.equal(setTo.renderAsSource(), code);
 	}); 
 
+	test('parse Frames - set statement 2', () => {
+		var code = "  set tot to tot";
+        var source = new CodeSourceFromString(code + "\n");
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var m = new MainFrame(fl);	
+		var setTo = new SetStatement(m);
+		setTo.parseFrom(source);
+		assert.equal(source.hasMoreCode(), false);
+		assert.equal(setTo.renderAsSource(), code);
+	}); 
+	test('parse Frames - set statement 3', () => {
+		var code = "  set result to 3 + 4";
+        var source = new CodeSourceFromString(code + "\n");
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var m = new MainFrame(fl);	
+		var setTo = new SetStatement(m);
+		setTo.parseFrom(source);
+		assert.equal(source.hasMoreCode(), false);
+		assert.equal(setTo.renderAsSource(), code);
+	}); 
+
 	test('parse Frames - variable', () => {
 		var code = "  var fooBar set to 3.141";
         var source = new CodeSourceFromString(code + "\n");

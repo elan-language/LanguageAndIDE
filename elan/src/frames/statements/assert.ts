@@ -1,17 +1,17 @@
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { Value } from "../fields/value";
+import { ValueRefField } from "../fields/value-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 
 export class Assert extends AbstractFrame implements Statement{
     isStatement = true;
-    expected: Value;
+    expected: ValueRefField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.expected = new Value(this);
+        this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
     }
     

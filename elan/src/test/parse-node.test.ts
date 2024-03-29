@@ -377,6 +377,11 @@ suite('ParseNodes', () => {
 
 	});
 	test('VarRef', () => {
+		testNodeParse(new VarRefNode(stubField), `g`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `result`, ParseStatus.valid, "", "", "");	//only keyword that is OK
+		testNodeParse(new VarRefNode(stubField), `new`, ParseStatus.invalid, "", "new", "");	
+		testNodeParse(new VarRefNode(stubField), `global.`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `global`, ParseStatus.incomplete, "", "", "");			
 		testNodeParse(new VarRefNode(stubField), `foo`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(stubField), `foo[3]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(stubField), `library.foo`, ParseStatus.valid, "", "", "");
