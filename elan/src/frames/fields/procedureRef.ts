@@ -1,5 +1,6 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -8,7 +9,8 @@ import { SymbolNode } from "../parse-nodes/symbol-node";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
 
-export class ProcedureRef extends AbstractField { 
+export class ProcedureRef extends AbstractField implements ParseByNodes {
+    isParseByNodes = true;
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
@@ -16,7 +18,7 @@ export class ProcedureRef extends AbstractField {
     getIdPrefix(): string {
         return 'ident';
     }
-    initialiseRoot(): ParseNode | undefined { 
+    initialiseRoot(): ParseNode { 
         var instance = () => new VarRefNode(this);
         var dot = () => new SymbolNode(".", this);        
         var proc = () => new IdentifierNode(this);
@@ -24,7 +26,7 @@ export class ProcedureRef extends AbstractField {
         this.rootNode =  new Alternatives([proc, qualProc], this);    
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readUpToFirstMatch(/\(/);
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUpToFirstMatch(/\(/);
 
     public textAsHtml(): string {
         if (this.selected) {

@@ -1,4 +1,3 @@
-import { allKeywords } from "../keywords";
 import { ParseStatus } from "../parse-status";
 import { Regexes } from "./regexes";
 

@@ -8,6 +8,8 @@ import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Selectable } from "./interfaces/selectable";
 import { Default } from "./statements/default";
+import { ParseByFunction } from "./interfaces/parse-by-function";
+import { ParseByNodes } from "./interfaces/parse-by-nodes";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -38,6 +40,13 @@ export function isField(f?: any): f is Field {
 
 export function isSelector(f?: any): f is AbstractSelector {
     return !!f && 'isSelector' in f;
+} 
+
+export function isParseByFunction(f?: any): f is ParseByFunction {
+    return !!f && 'isParseByFunction' in f;
+} 
+export function isParseByNodes(f?: any): f is ParseByNodes {
+    return !!f && 'isParseByNodes' in f;
 } 
 
 export function singleIndent() {

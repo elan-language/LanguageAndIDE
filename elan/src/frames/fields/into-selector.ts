@@ -1,10 +1,7 @@
 import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
-import { Else } from "../statements/else";
-import { CodeSource } from "../code-source";
-import { ParseStatus } from "../parse-status";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { ExternalStatement } from "../statements/external-statement";
+import { ParseStatus } from "../parse-status";
 
 export class IntoSelector extends AbstractField {
     private ext: ExternalStatement;
@@ -14,6 +11,7 @@ export class IntoSelector extends AbstractField {
         this.ext = holder;
         this.setPlaceholder("into");
         this.setOptional(true);
+        this.setStatus(ParseStatus.valid);
     }
     getIdPrefix(): string {
         return 'into';
@@ -37,6 +35,4 @@ export class IntoSelector extends AbstractField {
         }
         super.processKey(keyEvent);
     }
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
 }

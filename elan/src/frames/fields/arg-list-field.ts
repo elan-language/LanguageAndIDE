@@ -1,12 +1,14 @@
 import { AbstractField } from "./abstract-field";
 import { Frame } from "../interfaces/frame";
-import { ParseStatus } from "../parse-status";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { CSV } from "../parse-nodes/csv";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
 
-export class ArgListField extends AbstractField {
+export class ArgListField extends AbstractField implements ParseByNodes {
+    isParseByNodes = true;
+
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("arguments");
@@ -22,10 +24,10 @@ export class ArgListField extends AbstractField {
             return "";
         }
     }
-    initialiseRoot(): ParseNode | undefined { 
+    initialiseRoot(): ParseNode  { 
         this.rootNode = new CSV(() => new ExprNode(this),0, this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = 
+    readToDelimeter: ((source: CodeSource) => string)  = 
       (source: CodeSource) => source.readToNonMatchingCloseBracket();
 }

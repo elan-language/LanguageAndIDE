@@ -9,7 +9,7 @@ import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
-import { Test } from "./globals/test";
+import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { expandCollapseAll, isCollapsible, isSelector } from "./helpers";
 import { Frame } from "./interfaces/frame";
@@ -234,12 +234,12 @@ export class FileImpl implements File {
     createClass(): Frame {return  new Class(this);}
     createGlobalComment(): Frame {return  new GlobalComment(this);}
     createConstant(): Frame {return  new Constant(this);}
-    createTest(): Frame {return  new Test(this);}
+    createTest(): Frame {return  new TestFrame(this);}
 
     parseFrom(source: CodeSource): void {
         try {
             this.parseError = undefined;
-            this.validateHeader(source.getRemainingCode());
+            //this.validateHeader(source.getRemainingCode());
             if (source.isMatch("#")) {
                 source.removeRegEx(Regexes.startsWithComment, false);
                 source.removeRegEx(Regexes.startsWithNewLine, false);

@@ -1,11 +1,11 @@
-import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../parse-nodes/parse-node";
+import { ParseByFunction as ParseByFunction } from "../interfaces/parse-by-function";
 import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { anythingToNewline } from "./parse-functions";
 
-export class CommentField extends AbstractField {
+export class CommentField extends AbstractField implements ParseByFunction {
+    isParseByFunction = true; 
 
     constructor(holder: Frame) {
         super(holder);
@@ -19,7 +19,4 @@ export class CommentField extends AbstractField {
     parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
         return anythingToNewline(input);
     }  
-
-    initialiseRoot(): ParseNode | undefined {return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined;
 }

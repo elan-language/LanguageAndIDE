@@ -1,11 +1,13 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { AbstractField } from "./abstract-field";
 
-export class InheritsFrom extends AbstractField {
+export class InheritsFrom extends AbstractField implements ParseByNodes {
+    isParseByNodes = true;
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("type(s)");
@@ -13,9 +15,9 @@ export class InheritsFrom extends AbstractField {
     getIdPrefix(): string {
         return 'args';
     }
-    initialiseRoot(): ParseNode | undefined {
+    initialiseRoot(): ParseNode {
         this.rootNode = new CSV(() => new TypeNode(this) ,1, this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readToEndOfLine();
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine();
 }

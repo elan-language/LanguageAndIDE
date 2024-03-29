@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
-import { escapeAngleBrackets, isCollapsible } from "../helpers";
+import { escapeAngleBrackets, isCollapsible, isParseByFunction, isParseByNodes } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
@@ -36,31 +36,35 @@ export abstract class AbstractField implements Selectable, Field {
         this.getHolder().fieldUpdated(this);
     }
     
-    parseCurrentText() : void {
-        var root = this.initialiseRoot();
-        if (root) {
+    parseCurrentText() : void {    
+        if (isParseByNodes(this)) {
+            var root = this.initialiseRoot();
             this.parseCompleteTextUsingNode(this.text, root);
-        } else {
-            //Temp option until all fields know their root Parse node
-            this.parseCompleteTextUsingFunction(this.text);
+        } else if (isParseByFunction(this)) {
+            var status: ParseStatus = ParseStatus.notParsed;
+            if (this.text.length === 0) {
+                status = this.isOptional()? ParseStatus.valid : ParseStatus.incomplete;
+            } else {
+                var result = this.parseFunction([ParseStatus.notParsed, this.text]);
+                if (result[1].length > 0) {
+                    status = ParseStatus.invalid;
+                } else {
+                    status = result[0];
+                }
+            }
+            this.setStatus(status);
         }
     }
 
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        throw new Error("Method to be deleted, eventually");
-    }    
-    abstract initialiseRoot(): ParseNode | undefined; //Eventual solution - then drop undefined option
-    abstract readToDelimeter: ((source: CodeSource) => string)  | undefined;
-
-    parseFrom(source: CodeSource): void {
-        var root = this.initialiseRoot();
-        if (root && this.readToDelimeter) {
-            var text = this.readToDelimeter(source); //NB reads & removes it from source
+     parseFrom(source: CodeSource): void {
+        if (isParseByNodes(this)) {
+            var text = this.readToDelimeter(source); 
+            var root = this.initialiseRoot();
             this.parseCompleteTextUsingNode(text, root);
             if (this._status !== ParseStatus.valid) { 
                 throw new Error(`Parse error at ${source.getRemainingCode()}`);
             }
-        } else {  //Temporary solution          
+        } else if (isParseByFunction(this)) {       
             var rol = source.readToEndOfLine();
             var result = this.parseFunction([ParseStatus.notParsed, rol]); //To be replaced by root ParseNode      
             this.setStatus(result[0]);
@@ -72,22 +76,9 @@ export abstract class AbstractField implements Selectable, Field {
             } else {
                 throw new Error(`Parse ${result[0].toString()} at ${rol}`);
             } 
-        }
-    }
-
-    parseCompleteTextUsingFunction(text: string) : void {
-        var status: ParseStatus = ParseStatus.notParsed;
-        if (text.length === 0) {
-            status = this.isOptional()? ParseStatus.valid : ParseStatus.incomplete;
         } else {
-            var result = this.parseFunction([ParseStatus.notParsed, this.text]);
-            if (result[1].length > 0) {
-                status = ParseStatus.invalid;
-            } else {
-                status = result[0];
-            }
+            throw new Error(`${this} does not implement ParseByNodes or ParseByFunction, nor is overriding ParseFrom`)
         }
-        this.setStatus(status);
     }
 
      parseCompleteTextUsingNode(text: string, root: ParseNode): void {
@@ -103,10 +94,6 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
     }
-
-
-
-
 
     getHelp(): string {
         return "";
@@ -128,9 +115,6 @@ export abstract class AbstractField implements Selectable, Field {
     isOptional(): boolean {
         return this._optional;
     }
-
-
-
     processKey(e: editorEvent): void {
         var key = e.key;
         var textLen = this.text.length;

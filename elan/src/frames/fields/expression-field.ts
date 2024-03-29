@@ -5,8 +5,10 @@ import { Frame } from "../interfaces/frame";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
 
-export class ExpressionField extends AbstractField  {
+export class ExpressionField extends AbstractField implements ParseByNodes {
+    isParseByNodes = true;
 
     constructor(holder: Frame) {
         super(holder);
@@ -15,11 +17,11 @@ export class ExpressionField extends AbstractField  {
     getIdPrefix(): string {
         return 'expr';
     }
-    initialiseRoot(): ParseNode | undefined {
+    initialiseRoot(): ParseNode {
         this.rootNode = new ExprNode(this);
         return this.rootNode;
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readToEndOfLine();
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine();
 
     renderAsObjectCode(): string {
         return this.rootNode ? this.rootNode.renderAsObjectCode() : super.renderAsObjectCode();

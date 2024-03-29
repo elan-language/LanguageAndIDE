@@ -14,7 +14,7 @@ import { ISymbolType } from '../symbols/symbol-type';
 import { isHasSymbolType } from '../symbols/symbolHelpers';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
