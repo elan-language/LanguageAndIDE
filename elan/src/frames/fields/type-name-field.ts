@@ -6,7 +6,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
 import { simpleType } from "./parse-functions";
 
-export class ClassNameField extends AbstractField {
+export class TypeNameField extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
