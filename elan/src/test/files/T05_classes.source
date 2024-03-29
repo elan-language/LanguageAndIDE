@@ -1,4 +1,4 @@
-# 27b5f284d6d637b767702b5598d4c3f40e5b9147038964cfd1a31b337927dac8 Elan v0.1 valid
+# f749a2429494a829c1077e847423f0427ac8103b1ea9c011d99a828739f63ae5 Elan v0.1 valid
 
 class Player
   constructor()
@@ -17,7 +17,7 @@ immutable class Card inherits Foo, Bar
   private property value as Int
 
   function reset() return Player
-    return result
+    return 
   end function
 
 end class

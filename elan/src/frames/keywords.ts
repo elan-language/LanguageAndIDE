@@ -46,7 +46,6 @@ export const privateKeyword = 'private';
 export const procedureKeyword = 'procedure';
 export const propertyKeyword = 'property';
 export const repeatKeyword = 'repeat';
-export const resultKeyword = 'result';
 export const returnKeyword = 'return';
 export const setKeyword = 'set';
 export const stepKeyword = 'step';
@@ -65,4 +64,4 @@ export const xorKeyword = 'xor';
 
 export const commentMarker = '#';
 
-export const allKeywords = [abstractKeyword, andKeyword, asKeyword, assertKeyword, beKeyword, callKeyword, caseKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, curryKeyword, defaultKeyword, divKeyword, eachKeyword, elseKeyword, endKeyword, enumKeyword, externalKeyword, falseKeyword, forKeyword, fromKeyword, functionKeyword, globalKeyword, ifKeyword, immutableKeyword, importKeyword, inKeyword, intoKeyword, inheritsKeyword, inputKeyword, lambdaKeyword, letKeyword, libraryKeyword, mainKeyword, modKeyword, newKeyword, notKeyword, ofKeyword, isKeyword, orKeyword, packageKeyword, partialKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, repeatKeyword, resultKeyword, returnKeyword, setKeyword, stepKeyword, switchKeyword, testKeyword, thisKeyword, throwKeyword, toKeyword, trueKeyword, tryKeyword, varKeyword, whenKeyword, whileKeyword, withKeyword, xorKeyword];
+export const allKeywords = [abstractKeyword, andKeyword, asKeyword, assertKeyword, beKeyword, callKeyword, caseKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, curryKeyword, defaultKeyword, divKeyword, eachKeyword, elseKeyword, endKeyword, enumKeyword, externalKeyword, falseKeyword, forKeyword, fromKeyword, functionKeyword, globalKeyword, ifKeyword, immutableKeyword, importKeyword, inKeyword, intoKeyword, inheritsKeyword, inputKeyword, lambdaKeyword, letKeyword, libraryKeyword, mainKeyword, modKeyword, newKeyword, notKeyword, ofKeyword, isKeyword, orKeyword, packageKeyword, partialKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, repeatKeyword, returnKeyword, setKeyword, stepKeyword, switchKeyword, testKeyword, thisKeyword, throwKeyword, toKeyword, trueKeyword, tryKeyword, varKeyword, whenKeyword, whileKeyword, withKeyword, xorKeyword];

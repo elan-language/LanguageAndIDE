@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { AbstractFrame } from "../abstract-frame";
-import { resultKeyword } from "../keywords";
+import { defaultKeyword } from "../keywords";
 
 export class ReturnStatement extends AbstractFrame implements Statement{
     isStatement = true; 
@@ -15,7 +15,6 @@ export class ReturnStatement extends AbstractFrame implements Statement{
         super(parent);
         this.movable = false;
         this.expr = new ExpressionField(this);
-        this.expr.setText(resultKeyword);
     }
 
     deleteIfPermissible(): void {}; //Does nothing as return cannot be deleted

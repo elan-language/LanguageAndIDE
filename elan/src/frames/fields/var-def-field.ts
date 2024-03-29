@@ -1,9 +1,11 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { Alternatives } from "../parse-nodes/alternatives";
+import { DeconstructedList } from "../parse-nodes/deconstructed-list";
+import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
+import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { variableDef as variableDefFunction } from "./parse-functions";
 
 export class VarDefField extends AbstractField  {   
     constructor(holder: Frame) {
@@ -13,9 +15,12 @@ export class VarDefField extends AbstractField  {
     getIdPrefix(): string {
         return 'var';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return variableDefFunction(input);
+    initialiseRoot(): ParseNode | undefined { 
+        var varRef = () => new IdentifierNode(this);
+        var deconTup = () => new DeconstructedTuple(this);
+        var deconList = () => new DeconstructedList(this);
+        this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
+        return this.rootNode; 
     }
-    initialiseRoot(): ParseNode | undefined { return undefined; }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined; 
+    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readUpToFirstMatch(/(\s+set to\s+)|\r|\n/);
 }

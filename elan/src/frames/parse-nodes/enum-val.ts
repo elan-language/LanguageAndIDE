@@ -1,10 +1,8 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { SymbolNode } from "./symbol-node";
-import { RegExMatchNode } from "./regex-match-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
-import { simpleType } from "../fields/parse-functions";
 import { TypeSimpleNode } from "./type-simple-node";
 
 export class EnumVal extends AbstractSequence {

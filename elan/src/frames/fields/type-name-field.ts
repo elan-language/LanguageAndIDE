@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { escapeAngleBrackets } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
