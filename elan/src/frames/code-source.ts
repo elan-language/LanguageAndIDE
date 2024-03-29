@@ -13,6 +13,7 @@ export interface CodeSource {
     peekNextChar(): string;
 
     readToEndOfLine(): string;
+    readUpToFirstMatch(regx: RegExp): string;
     readToNonMatchingCloseBracket(): string;
 }
 
@@ -22,9 +23,7 @@ export class CodeSourceFromString implements CodeSource {
     constructor(code: string) {
         this.remainingCode = code;
     }
-    readToEndOfLine(): string {
-        return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
-    }
+
     pushBackOntoFrontOfCode(pushBack: string): void {
         this.remainingCode = pushBack + this.remainingCode;
     }
@@ -72,6 +71,15 @@ export class CodeSourceFromString implements CodeSource {
     }
     peekNextChar(): string {
         return this.remainingCode[0];
+    }
+    readToEndOfLine(): string {
+        return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
+    }
+    readUpToFirstMatch(regx: RegExp): string {
+        var matchIndex = regx.exec(this.remainingCode)?.index;
+        var uptoMatch =  this.remainingCode.substring(0, matchIndex);
+        this.remainingCode = this.remainingCode.slice(matchIndex);
+        return uptoMatch;
     }
     readToNonMatchingCloseBracket(): string {
         var insideDoubleQuotes = false;
