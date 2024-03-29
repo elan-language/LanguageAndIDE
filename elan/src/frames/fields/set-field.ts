@@ -22,5 +22,5 @@ export class SetField extends AbstractField {
         this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) | undefined = undefined;
-}
+    readToDelimeter: ((source: CodeSource) => string) | undefined = (source: CodeSource) => source.readUpToFirstMatch(/\s*to\s*/);
+} 
