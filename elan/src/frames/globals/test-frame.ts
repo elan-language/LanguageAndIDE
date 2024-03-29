@@ -3,28 +3,29 @@ import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { Assert } from "../statements/assert";
+import { AssertStatement } from "../statements/assert-statement";
 import { SetStatement } from "../statements/set-statement";
 
-export class Test extends FrameWithStatements {
+export class TestFrame extends FrameWithStatements {
     isTest = true;
     isGlobal = true;
-    public name : IdentifierField;
+    public testName : IdentifierField;
     file: File;
 
     constructor(parent: File) {
         super(parent);
         this.file = parent;
         this.getChildren().splice(0,1); //remove statement selector
-        this.name = new IdentifierField(this);
+        this.testName = new IdentifierField(this);
         var setResult = new SetStatement(this);
-        setResult.assignable.setText("result");
+        setResult.assignable.setText("actual");
+        setResult.expr.setPlaceholder("function call or expression to be tested");
         this.getChildren().push(setResult);
-        this.getChildren().push( new Assert(this));
+        this.getChildren().push( new AssertStatement(this));
     }
 
     getFields(): Field[] {
-        return [this.name];
+        return [this.testName];
     }
 
     getIdPrefix(): string {
@@ -32,7 +33,7 @@ export class Test extends FrameWithStatements {
     }
     public renderAsHtml() : string {
         return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>test </keyword>${this.name.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;
@@ -41,14 +42,14 @@ ${this.renderChildrenAsHtml()}
         return "";
     }
     public renderAsSource() : string {
-        return `test ${this.name.renderAsSource()}\r
+        return `test ${this.testName.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;
     }
     parseTop(source: CodeSource): void {
         source.remove("test ");
-        this.name.parseFrom(source);
+        this.testName.parseFrom(source);
     }
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");

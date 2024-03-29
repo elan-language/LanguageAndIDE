@@ -19,13 +19,13 @@ import { Else } from "./statements/else";
 import { Default } from "./statements/default";
 import { Catch } from "./statements/catch";
 import { Case } from "./statements/case";
-import { Assert } from "./statements/assert";
+import { AssertStatement } from "./statements/assert-statement";
 import { Input } from "./statements/input";
 import { ExternalStatement } from "./statements/external-statement";
 
 export class StatementFactoryImpl implements StatementFactory {
 
-    public newAssert(parent: Parent): Frame { return new Assert(parent); }
+    public newAssert(parent: Parent): Frame { return new AssertStatement(parent); }
     public newCall(parent: Parent): Frame { return new Call(parent); }
     public newCase(parent: Parent): Frame { return new Case(parent); }
     public newCatch(parent: Parent): Frame { return new Catch(parent); }

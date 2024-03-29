@@ -5,19 +5,25 @@ import { ValueRefField } from "../fields/value-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 
-export class Assert extends AbstractFrame implements Statement{
+export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
+    actual: ValueRefField;
     expected: ValueRefField;
 
     constructor(parent: Parent) {
         super(parent);
+        this.actual = new ValueRefField(this);
+        this.actual.setText("actual");
+        this.actual.setPlaceholder("variable")
         this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
     }
     
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        source.remove("assert result is ");
+        source.remove("assert ");
+        this.actual.parseFrom(source);
+        source.remove(" is ");
         this.expected.parseFrom(source);
         source.removeNewLine();
     }
@@ -30,10 +36,10 @@ export class Assert extends AbstractFrame implements Statement{
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>assert </keyword><span>result</span><keyword> is </keyword>${this.expected.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>assert </keyword>${this.actual.renderAsHtml()}<keyword> is </keyword>${this.expected.renderAsHtml()}</statement>`;
     }
    
     renderAsSource(): string {
-        return `${this.indent()}assert result is ${this.expected.renderAsSource()}`;
+        return `${this.indent()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
     }
 } 

@@ -12,6 +12,8 @@ import { Call } from '../frames/statements/call';
 import { assertFileParses } from './testHelpers';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
+import { TestFrame } from '../frames/globals/test-frame';
+import { AssertStatement } from '../frames/statements/assert-statement';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -76,6 +78,17 @@ suite('File Parsing Tests', () => {
 		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
+	}); 
+
+	test('parse Frames - assert statement 3', () => {
+		var code = "  assert foo is 7";
+        var source = new CodeSourceFromString(code + "\n");
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var t = new TestFrame(fl);	
+		var ass = new AssertStatement(t);
+		ass.parseFrom(source);
+		assert.equal(source.hasMoreCode(), false);
+		assert.equal(ass.renderAsSource(), code);
 	}); 
 
 	test('parse Frames - variable', () => {
