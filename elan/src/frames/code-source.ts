@@ -13,7 +13,8 @@ export interface CodeSource {
     peekNextChar(): string;
 
     readToEndOfLine(): string;
-    readUpToFirstMatch(regx: RegExp): string;
+    readUntil(regx: RegExp): string;
+    readMatching(regx: RegExp): string;
     readToNonMatchingCloseBracket(): string;
 }
 
@@ -75,11 +76,14 @@ export class CodeSourceFromString implements CodeSource {
     readToEndOfLine(): string {
         return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
     }
-    readUpToFirstMatch(regx: RegExp): string {
+    readUntil(regx: RegExp): string {
         var matchIndex = regx.exec(this.remainingCode)?.index;
         var uptoMatch =  this.remainingCode.substring(0, matchIndex);
         this.remainingCode = this.remainingCode.slice(matchIndex);
         return uptoMatch;
+    }
+    readMatching(regx: RegExp): string {
+        return this.removeRegEx(regx, true);
     }
     readToNonMatchingCloseBracket(): string {
         var insideDoubleQuotes = false;

@@ -26,7 +26,7 @@ export class ProcedureRef extends AbstractField implements ParseByNodes {
         this.rootNode =  new Alternatives([proc, qualProc], this);    
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUpToFirstMatch(/\(/);
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);
 
     public textAsHtml(): string {
         if (this.selected) {

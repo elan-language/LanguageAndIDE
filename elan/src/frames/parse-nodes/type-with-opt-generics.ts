@@ -1,7 +1,7 @@
 
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
-import { Optional } from "./optional";
+import { OptionalNode } from "./optional-node";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { TypeNode } from "./type-node";
@@ -19,7 +19,7 @@ export class TypeWithOptGenerics extends AbstractSequence {
         if (text.trimStart().length > 0) {
             var simpleType = () => new TypeSimpleNode(this.field);
             var genericNode = () => new Sequence([() => new SymbolNode("<", this.field), () => new KeywordNode("of", this.field), () => new TypeNode(this.field),() => new SymbolNode(">", this.field)], this.field);
-            var optGeneric = () => new Optional(genericNode, this.field);
+            var optGeneric = () => new OptionalNode(genericNode, this.field);
             this.elements.push(simpleType());
             this.elements.push(optGeneric());
             super.parseText(text);

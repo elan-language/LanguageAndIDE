@@ -7,7 +7,7 @@ import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";
 import { Comma } from "./comma";
 import { Multiple } from "./multiple";
-import { Optional } from "./optional";
+import { OptionalNode } from "./optional-node";
 import { ParseNode } from "./parse-node";
 import { Sequence } from "./sequence";
 
@@ -28,7 +28,7 @@ export class CSV extends AbstractSequence implements IHasSymbolTypes {
         var commaNode = () => new Sequence([() => new Comma(this.field), this.elementConstructor], this.field);
 
         if (this.minimum === 0) {
-            this.elements.push(new Optional(this.elementConstructor, this.field));
+            this.elements.push(new OptionalNode(this.elementConstructor, this.field));
         } else {
             this.elements.push(this.elementConstructor());
             commaNodesMin = this.minimum - 1;

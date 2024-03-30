@@ -66,7 +66,7 @@ export abstract class AbstractField implements Selectable, Field {
             }
         } else if (isParseByFunction(this)) {       
             var rol = source.readToEndOfLine();
-            var result = this.parseFunction([ParseStatus.notParsed, rol]); //To be replaced by root ParseNode      
+            var result = this.parseFunction([ParseStatus.notParsed, rol]);  
             this.setStatus(result[0]);
             if (result[0] === ParseStatus.valid || this._optional) {
                 var taken = rol.length - result[1].length;

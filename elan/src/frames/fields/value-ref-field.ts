@@ -22,5 +22,5 @@ export class ValueRefField extends AbstractField implements ParseByNodes {
         this.rootNode = new Alternatives([variableRef, literal], this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUpToFirstMatch(/\s|\r|\n/);
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\s|\r|\n/);
 }

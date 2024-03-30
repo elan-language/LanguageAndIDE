@@ -1,12 +1,14 @@
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
-import { ParseStatus } from "../parse-status";
 import { AbstractField } from "./abstract-field";
-import { optional, genericString } from "./parse-functions";
-import { ParseByFunction } from "../interfaces/parse-by-function";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
+import { CodeSource } from "../code-source";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { OptionalNode } from "../parse-nodes/optional-node";
+import { KeywordNode } from "../parse-nodes/keyword-node";
 
-export class OptionalKeyword extends AbstractField implements ParseByFunction {
-    isParseByFunction = true;
+export class OptionalKeyword extends AbstractField implements ParseByNodes {
+    isParseByNodes = true;
     private optionalKeyword = true;
     private keyword: string;
 
@@ -17,18 +19,20 @@ export class OptionalKeyword extends AbstractField implements ParseByFunction {
         this.placeholder = keyword;
     }
 
-    isSpecified(): boolean {
-        return this.text === this.keyword;
+    initialiseRoot(): ParseNode {
+        var kw = () => new KeywordNode(this.keyword, this);
+        this.rootNode = new OptionalNode(kw,this);
+        return this.rootNode;
+    }
+    readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => source.readMatching(/[^\S\r\n]*[a-z]*/);
+
+    keywordExists(): boolean {
+        return this.text.trim() === this.keyword;
     }
 
     specify(): void {
         this.text = this.keyword;
         this.alertHolderToUpdate();
-    }
-
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        var kw = (input: [ParseStatus, string]) => genericString(input, this.keyword);
-       return optional(input, kw);
     }
 
     processKey(e: editorEvent): void {
@@ -51,7 +55,7 @@ export class OptionalKeyword extends AbstractField implements ParseByFunction {
             return super.textAsHtml();
         }
         else{ 
-            var c = this.isSpecified() ? `<keyword> ${this.text}</keyword>` : ``;
+            var c = this.keywordExists() ? `<keyword> ${this.text}</keyword>` : ``;
             return c;
         } 
     }

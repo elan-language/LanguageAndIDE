@@ -24,5 +24,5 @@ export class VarDefField extends AbstractField implements ParseByNodes {
         this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUpToFirstMatch(/(\s+set to\s+)|\r|\n/);
+    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/(\s+set to\s+)|\r|\n/);
 }

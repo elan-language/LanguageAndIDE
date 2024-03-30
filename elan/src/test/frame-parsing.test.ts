@@ -349,7 +349,7 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - external', () => {
+	test('parse Frames - external with into', () => {
 		var code = `# c6c9024aa74b80f7d1423e3d28c4318353d16034100e75d3ed1673aa76a04b2a Elan v0.1 valid
 
 main

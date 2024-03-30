@@ -6,7 +6,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
-import { Optional } from "./optional";
+import { OptionalNode } from "./optional-node";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordNode } from "./keyword-node";
 import { Sequence } from "./sequence";
@@ -26,8 +26,8 @@ export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
         var qualifier = () => new Alternatives([prop, global, lib], this.field);
         var dot = () => new SymbolNode(".", this.field);
         var qualDot = () => new Sequence([qualifier, dot], this.field);
-        var optQualifier = () => new Optional(qualDot, this.field);
-        var optIndex = () => new Optional(() => new IndexNode(this.field), this.field)
+        var optQualifier = () => new OptionalNode(qualDot, this.field);
+        var optIndex = () => new OptionalNode(() => new IndexNode(this.field), this.field)
         var compound = () => new Sequence( [optQualifier, simple, optIndex ], this.field);
         this.alternatives.push(simple());
         this.alternatives.push(compound());

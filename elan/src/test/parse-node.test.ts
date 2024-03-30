@@ -9,7 +9,7 @@ import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { BinaryOperation } from '../frames/parse-nodes/binary-operation';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
 import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
-import { Optional } from '../frames/parse-nodes/optional';
+import { OptionalNode } from '../frames/parse-nodes/optional-node';
 import { LitString } from '../frames/parse-nodes/lit-string';
 import { List } from '../frames/parse-nodes/list';
 import { Multiple } from '../frames/parse-nodes/multiple';
@@ -180,13 +180,13 @@ suite('ParseNodes', () => {
 		testNodeParse(new BracketedExpression(stubField), "()", ParseStatus.invalid, "", "()", "(");// TODO - change this?
 	});
 	test('Optional', () => {
-		testNodeParse(new Optional(() => new LitInt(stubField), stubField), "123 a", ParseStatus.valid, "123", " a", "123");
-		testNodeParse(new Optional(() => new LitInt(stubField), stubField), "abc", ParseStatus.valid, "", "abc", "");
-		testNodeParse(new Optional(() => new KeywordNode("abstract", stubField), stubField), " abstract", ParseStatus.valid, " abstract", "", "abstract ", "<keyword>abstract </keyword>");
-		testNodeParse(new Optional(() => new KeywordNode("abstract", stubField), stubField), "abs", ParseStatus.incomplete, "abs", "", "");
-		testNodeParse(new Optional(() => new KeywordNode("abstract", stubField), stubField), "abscract", ParseStatus.valid, "", "abscract", "");
-		testNodeParse(new Optional(() => new KeywordNode("abstract", stubField), stubField), "", ParseStatus.valid, "", "", "");
-		testNodeParse(new Optional(() => new KeywordNode("abstract", stubField), stubField), "  ", ParseStatus.valid, "", "  ", "");
+		testNodeParse(new OptionalNode(() => new LitInt(stubField), stubField), "123 a", ParseStatus.valid, "123", " a", "123");
+		testNodeParse(new OptionalNode(() => new LitInt(stubField), stubField), "abc", ParseStatus.valid, "", "abc", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), " abstract", ParseStatus.valid, " abstract", "", "abstract ", "<keyword>abstract </keyword>");
+		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "abs", ParseStatus.incomplete, "abs", "", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "abscract", ParseStatus.valid, "", "abscract", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "", ParseStatus.valid, "", "", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "  ", ParseStatus.valid, "", "  ", "");
 	});
 	test('LitString', () => {
 		testNodeParse(new LitString(stubField), `"abc"`, ParseStatus.valid, `"abc"`, "", "", `<string>"abc"</string>`, stringType);

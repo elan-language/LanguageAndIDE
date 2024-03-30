@@ -6,7 +6,7 @@ import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
-export class Optional extends AbstractParseNode implements IHasSymbolType {
+export class OptionalNode extends AbstractParseNode implements IHasSymbolType {
     elementConstructor: () => ParseNode;
     matchedNode?: ParseNode;
 

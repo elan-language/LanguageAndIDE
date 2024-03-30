@@ -25,5 +25,5 @@ export class AssignableField extends AbstractField implements ParseByNodes {
         this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
         return this.rootNode; 
     }
-    readToDelimeter: ((source: CodeSource) => string)  = (source: CodeSource) => source.readUpToFirstMatch(/(\s+to\s+)|\r|\n/);
+    readToDelimeter: ((source: CodeSource) => string)  = (source: CodeSource) => source.readUntil(/(\s+to\s+)|\r|\n/);
 } 

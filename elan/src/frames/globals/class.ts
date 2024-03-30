@@ -74,7 +74,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
     
     fieldUpdated(field: Field): void {
         if (field === this.abstract) {
-            if (this.abstract.isSpecified()) {
+            if (this.abstract.keywordExists()) {
                 if ('isConstructor' in this.getChildren()[0]) {
                     this.getChildren().splice(0,1);
                 }
@@ -82,7 +82,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
                 this.getChildren().splice(0,0,new Constructor(this));
             }
         } else if (field === this.inherits) {
-            if (this.inherits.isSpecified()) {
+            if (this.inherits.keywordExists()) {
                 this.superClasses.setOptional(false);
             } else {
                 this.superClasses.setText("");
@@ -96,7 +96,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
     }
 
     isAbstract(): boolean {
-        return this.abstract.isSpecified();
+        return this.abstract.keywordExists();
     }
     makeAbstract(): void {
         this.abstract.specify();
@@ -108,7 +108,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
         this.immutable = true;
     }
     doesInherit(): boolean {
-        return this.inherits.isSpecified();
+        return this.inherits.keywordExists();
     }
     makeInherits(): void {
         this.inherits.specify();
