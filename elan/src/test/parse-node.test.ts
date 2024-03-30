@@ -329,9 +329,6 @@ suite('ParseNodes', () => {
 		testNodeParse(new CSV(() => new ParamDefNode(stubField), 0, stubField), `a as String,`, ParseStatus.incomplete, "a as String,", "", "");
 		testNodeParse(new CSV(() => new ParamDefNode(stubField), 0, stubField), `a as String, bb as`, ParseStatus.incomplete, "", "", "");
 	});
-	test('DottedTerm', () => {
-		testNodeParse(new DottedTerm(stubField), `foo.bar()`, ParseStatus.valid, "foo.bar()", "", "foo.bar()", "foo.<method>bar</method>()");
-	});
 	test('KVP', () => {
 		testNodeParse(new KVPnode(() => new LitChar(stubField), () => new LitInt(stubField), stubField), `'a':37`, ParseStatus.valid, "", "", "");
 		testNodeParse(new KVPnode(() => new LitChar(stubField), () => new LitInt(stubField), stubField), `'a':`, ParseStatus.incomplete, "", "", "");

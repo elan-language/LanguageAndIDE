@@ -5,6 +5,11 @@ import { SymbolNode } from "./symbol-node";
 import { IdentifierNode } from "./identifier-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
+import { propertyKeyword, globalKeyword, libraryKeyword } from "../keywords";
+import { Alternatives } from "./alternatives";
+import { KeywordNode } from "./keyword-node";
+import { OptionalNode } from "./optional-node";
+import { Sequence } from "./sequence";
 
 export class FunctionCallNode extends AbstractSequence {
     constructor(field : Field) {
@@ -13,6 +18,15 @@ export class FunctionCallNode extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
+            var global = () => new KeywordNode(globalKeyword, this.field);
+            var lib = () => new KeywordNode(libraryKeyword, this.field);
+            var instance = () => new IdentifierNode(this.field);
+            var qualifier = () => new Alternatives([global, lib, instance], this.field);
+            var dot = () => new SymbolNode(".", this.field);
+            var qualDot = () => new Sequence([qualifier, dot], this.field);
+            var optQualifier =  new OptionalNode(qualDot, this.field);
+
+            this.elements.push(optQualifier);
             this.elements.push(new IdentifierNode(this.field));
             this.elements.push(new SymbolNode("(",this.field));
             this.elements.push(new CSV(() => new ExprNode(this.field),0,this.field)); //arg list
