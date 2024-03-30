@@ -22,7 +22,7 @@ export class IdentifierNode extends AbstractParseNode implements IHasSymbolType 
             if (this.status === ParseStatus.valid && allKeywords.indexOf(match) > -1) {
                 this.status = ParseStatus.invalid;
                 this.matchedText = "";
-                this.remainingText = this.remainingText;
+                this.remainingText = text;
             }
         }
     }

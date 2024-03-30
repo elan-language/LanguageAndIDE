@@ -26,7 +26,6 @@ import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
-import { DottedTerm } from '../frames/parse-nodes/dotted-term';
 import { Field } from '../frames/interfaces/field';
 import { IntType } from '../symbols/int-type';
 import { FloatType } from '../symbols/float-type';
@@ -113,7 +112,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new ExprNode(stubField), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "", "points.foo(0.0)");
 		testNodeParse(new ExprNode(stubField), "reduce(0.0, lambda s as String, p as List<of String> return s + p.first() * p.first())", ParseStatus.valid, "reduce(0.0, lambda s as String, p as List<of String> return s + p.first() * p.first())", "", "");
 	});
-	test('VariableNode', () => {
+	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(stubField), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new IdentifierNode(stubField), `  `, ParseStatus.empty, ``, "  ", "");
 		testNodeParse(new IdentifierNode(stubField), `a`, ParseStatus.valid, `a`, "", "a");
@@ -121,6 +120,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new IdentifierNode(stubField), `abc `, ParseStatus.valid, `abc`, " ", "abc");
 		testNodeParse(new IdentifierNode(stubField), `Abc`, ParseStatus.invalid, ``, "Abc", "");
 		testNodeParse(new IdentifierNode(stubField), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+		// Cannot be a keyword
+		testNodeParse(new IdentifierNode(stubField), `new`, ParseStatus.invalid, ``, "new", "");
+		testNodeParse(new IdentifierNode(stubField), `global`, ParseStatus.invalid, ``, "global", "");
 	});
 	test('LitBool', () => {
 		testNodeParse(new LitBool(stubField), "", ParseStatus.empty, "", "", "", "", boolType);
@@ -246,6 +248,10 @@ suite('ParseNodes', () => {
 		testNodeParse(new FunctionCallNode(stubField), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
 		testNodeParse(new FunctionCallNode(stubField), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
+		testNodeParse(new FunctionCallNode(stubField), `bar.foo()`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `global.foo()`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `library.foo()`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
 	});
 	test('Lists', () => {
 		testNodeParse(new List(() => new LitInt(stubField), stubField), ``, ParseStatus.empty, ``, "", "");
