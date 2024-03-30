@@ -3,6 +3,7 @@ import { SymbolNode } from "./symbol-node";
 import { ParseNode } from "./parse-node";
 import { Field } from "../interfaces/field";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
+import { COLON } from "../symbols";
 
 export class KVPnode extends AbstractSequence implements IHasSymbolType  {
     keyConstructor: () => ParseNode;
@@ -17,7 +18,7 @@ export class KVPnode extends AbstractSequence implements IHasSymbolType  {
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(this.keyConstructor());
-            this.elements.push(new SymbolNode(`:`, this.field));
+            this.elements.push(new SymbolNode(COLON, this.field));
             this.elements.push(this.valueConstructor());
             super.parseText(text);
         }

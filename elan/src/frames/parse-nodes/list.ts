@@ -7,6 +7,7 @@ import { Field } from "../interfaces/field";
 import { ListType } from "../../symbols/list-type";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
+import { CLOSE_SQ_BRACKET, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 
 export class List extends AbstractSequence implements IHasSymbolType  {
     elementConstructor: () => ParseNode;
@@ -18,9 +19,9 @@ export class List extends AbstractSequence implements IHasSymbolType  {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(`[`, this.field));
+            this.elements.push(new SymbolNode(OPEN_SQ_BRACKET, this.field));
             this.elements.push(new CSV(this.elementConstructor, 0, this.field));
-            this.elements.push(new SymbolNode(`]`, this.field));
+            this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET, this.field));
             super.parseText(text);
         }
     }

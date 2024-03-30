@@ -7,7 +7,7 @@ import { Field } from "../interfaces/field";
 import { lambdaKeyword, returnKeyword } from "../keywords";
 import { ParamDefNode } from "./param-def-node";
 import { SymbolNode } from "./symbol-node";
-import { ARROW } from "../language-symbols";
+import { ARROW } from "../symbols";
 
 export class Lambda extends AbstractSequence {
     constructor(field : Field) {

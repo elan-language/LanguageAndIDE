@@ -5,18 +5,19 @@ import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
 import { UnknownType } from "../../symbols/unknown-type";
+import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
 
 export class BinaryOperation extends AbstractAlternatives {
     parseText(text: string): void {  
-        this.alternatives.push(new SymbolNode("+",this.field));
-        this.alternatives.push(new SymbolNode("-",this.field));
-        this.alternatives.push(new SymbolNode("*",this.field));
-        this.alternatives.push(new SymbolNode("/",this.field));
-        this.alternatives.push(new SymbolNode(">", this.field));
-        this.alternatives.push(new SymbolNode("<", this.field));
-        this.alternatives.push(new SymbolNode(">=", this.field));
-        this.alternatives.push(new SymbolNode("<=", this.field));
-        this.alternatives.push(new SymbolNode("^", this.field));
+        this.alternatives.push(new SymbolNode(PLUS,this.field));
+        this.alternatives.push(new SymbolNode(MINUS,this.field));
+        this.alternatives.push(new SymbolNode(MULT,this.field));
+        this.alternatives.push(new SymbolNode(DIVIDE,this.field));
+        this.alternatives.push(new SymbolNode(GT, this.field));
+        this.alternatives.push(new SymbolNode(LT, this.field));
+        this.alternatives.push(new SymbolNode(GE, this.field));
+        this.alternatives.push(new SymbolNode(LE, this.field));
+        this.alternatives.push(new SymbolNode(POWER, this.field));
         this.alternatives.push(new KeywordNode(isKeyword, this.field));
         var is = () => new KeywordNode(isKeyword, this.field);
         var not = () => new KeywordNode(notKeyword, this.field);

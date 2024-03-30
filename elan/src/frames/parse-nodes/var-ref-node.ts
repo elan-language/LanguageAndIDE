@@ -13,6 +13,7 @@ import { Sequence } from "./sequence";
 import { SymbolNode } from "./symbol-node";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { Multiple } from "./multiple";
+import { DOT } from "../symbols";
 
 export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
     constructor(field : Field) {
@@ -26,7 +27,7 @@ export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
         var global = () => new KeywordNode(globalKeyword, this.field);
         var lib = () => new KeywordNode(libraryKeyword, this.field);
         var qualifier = () => new Alternatives([prop, global, lib, instance], this.field);
-        var dot = () => new SymbolNode(".", this.field);
+        var dot = () => new SymbolNode(DOT, this.field);
         var qualDot = () => new Sequence([qualifier, dot], this.field);
         var optQualifier = () => new OptionalNode(qualDot, this.field);
 

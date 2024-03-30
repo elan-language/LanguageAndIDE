@@ -4,6 +4,7 @@ import { SymbolNode } from "./symbol-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { TypeSimpleNode } from "./type-simple-node";
+import { DOT } from "../symbols";
 
 export class EnumVal extends AbstractSequence {
     constructor(field: Field) {
@@ -12,7 +13,7 @@ export class EnumVal extends AbstractSequence {
 
     parseText(text: string): void {
         this.elements.push(new TypeSimpleNode(this.field));
-        this.elements.push(new SymbolNode(".", this.field));
+        this.elements.push(new SymbolNode(DOT, this.field));
         this.elements.push(new IdentifierNode(this.field));
         super.parseText(text);
     }

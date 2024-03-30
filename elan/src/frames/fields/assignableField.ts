@@ -15,6 +15,7 @@ import { Sequence } from "../parse-nodes/sequence";
 import { SymbolNode } from "../parse-nodes/symbol-node";
 import { IndexNode } from "../parse-nodes/index-node";
 import { Multiple } from "../parse-nodes/multiple";
+import { DOT } from "../symbols";
 
 export class AssignableField extends AbstractField implements ParseByNodes { 
     isParseByNodes = true;
@@ -29,7 +30,7 @@ export class AssignableField extends AbstractField implements ParseByNodes {
     initialiseRoot(): ParseNode  { 
         var simple = () => new IdentifierNode(this);
         var prop = () => new KeywordNode(propertyKeyword, this); //global & library not applicable because no assignables there
-        var dot = () => new SymbolNode(".", this);
+        var dot = () => new SymbolNode(DOT, this);
         var qualDot = () => new Sequence([prop, dot], this);
         var optQualifier = () => new OptionalNode(qualDot, this);
         var indexes = () => new Multiple(() => new IndexNode(this), 0,this);

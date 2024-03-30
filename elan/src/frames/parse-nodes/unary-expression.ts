@@ -7,6 +7,7 @@ import { notKeyword } from "../keywords";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
+import { MINUS } from "../symbols";
 
 export class UnaryExpression extends AbstractSequence {
     
@@ -17,7 +18,7 @@ export class UnaryExpression extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            var unaryOp = new Alternatives([() => new SymbolNode("-", this.field), () => new KeywordNode(notKeyword, this.field) ], this.field);
+            var unaryOp = new Alternatives([() => new SymbolNode(MINUS, this.field), () => new KeywordNode(notKeyword, this.field) ], this.field);
             this.elements.push(unaryOp);
             this.elements.push(new Term(this.field));
             return super.parseText(text);

@@ -5,6 +5,7 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { isHasSymbolType } from "../../symbols/symbolHelpers";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
 export class BracketedExpression extends AbstractSequence implements IHasSymbolType {
     
@@ -15,9 +16,9 @@ export class BracketedExpression extends AbstractSequence implements IHasSymbolT
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode("(", this.field));
+            this.elements.push(new SymbolNode(OPEN_BRACKET, this.field));
             this.elements.push(new ExprNode(this.field));
-            this.elements.push(new SymbolNode(")", this.field));
+            this.elements.push(new SymbolNode(CLOSE_BRACKET, this.field));
             super.parseText(text);
         }
     }

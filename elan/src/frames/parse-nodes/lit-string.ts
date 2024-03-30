@@ -4,6 +4,7 @@ import { RegExMatchNode } from "./regex-match-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { StringType } from "../../symbols/string-type";
+import { DOUBLE_QUOTES } from "../symbols";
 
 export class LitString extends AbstractSequence {
     constructor(field : Field) {
@@ -13,9 +14,9 @@ export class LitString extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(`"`, this.field));
+            this.elements.push(new SymbolNode(DOUBLE_QUOTES, this.field));
             this.elements.push(new RegExMatchNode(/^[^"]*/, this.field));
-            this.elements.push(new SymbolNode(`"`, this.field));
+            this.elements.push(new SymbolNode(DOUBLE_QUOTES, this.field));
             super.parseText(text);
         }
     }
