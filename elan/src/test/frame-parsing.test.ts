@@ -8,7 +8,7 @@ import { StatementSelector } from '../frames/statements/statement-selector';
 import { VarStatement } from '../frames/statements/var-statement';
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
-import { Call } from '../frames/statements/call';
+import { CallStatement } from '../frames/statements/call-statement';
 import { assertFileParses } from './testHelpers';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
@@ -137,7 +137,7 @@ suite('File Parsing Tests', () => {
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
-		var setTo = new Call(m);
+		var setTo = new CallStatement(m);
 		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
@@ -147,7 +147,7 @@ suite('File Parsing Tests', () => {
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(fl);	
-		var setTo = new Call(m);
+		var setTo = new CallStatement(m);
 		setTo.parseFrom(source);
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);

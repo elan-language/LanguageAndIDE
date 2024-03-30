@@ -6,7 +6,7 @@ import { ProcedureRef } from "../fields/procedureRef";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 
-export class Call extends AbstractFrame implements Statement{
+export class CallStatement extends AbstractFrame implements Statement{
     isStatement = true;
     proc: ProcedureRef;
     args: ArgListField;

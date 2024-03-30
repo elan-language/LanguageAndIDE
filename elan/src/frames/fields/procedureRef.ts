@@ -6,7 +6,6 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SymbolNode } from "../parse-nodes/symbol-node";
-import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
 
 export class ProcedureRef extends AbstractField implements ParseByNodes {
@@ -19,7 +18,7 @@ export class ProcedureRef extends AbstractField implements ParseByNodes {
         return 'ident';
     }
     initialiseRoot(): ParseNode { 
-        var instance = () => new VarRefNode(this);
+        var instance = () => new IdentifierNode(this);
         var dot = () => new SymbolNode(".", this);        
         var proc = () => new IdentifierNode(this);
         var qualProc = () => new Sequence([instance, dot, proc], this);

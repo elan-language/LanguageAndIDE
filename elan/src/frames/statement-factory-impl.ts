@@ -1,5 +1,5 @@
 import { Each } from "./statements/each";
-import { Call } from "./statements/call";
+import { CallStatement } from "./statements/call-statement";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { Print } from "./statements/print";
@@ -26,7 +26,7 @@ import { ExternalStatement } from "./statements/external-statement";
 export class StatementFactoryImpl implements StatementFactory {
 
     public newAssert(parent: Parent): Frame { return new AssertStatement(parent); }
-    public newCall(parent: Parent): Frame { return new Call(parent); }
+    public newCall(parent: Parent): Frame { return new CallStatement(parent); }
     public newCase(parent: Parent): Frame { return new Case(parent); }
     public newCatch(parent: Parent): Frame { return new Catch(parent); }
     public newDefault(parent: Parent): Frame { return new Default(parent); }

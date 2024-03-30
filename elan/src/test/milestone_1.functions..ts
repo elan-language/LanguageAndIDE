@@ -10,7 +10,7 @@ import { TestFrame } from "../frames/globals/test-frame";
 import { Class } from "../frames/globals/class";
 import { Property } from "../frames/class-members/property";
 import { Throw } from "../frames/statements/throw";
-import { Call } from "../frames/statements/call";
+import { CallStatement } from "../frames/statements/call-statement";
 import { Print } from "../frames/statements/print";
 import { While } from "../frames/statements/while";
 import { Repeat } from "../frames/statements/repeat";
@@ -76,7 +76,7 @@ export function T03_mainWithAllStatements(): FileImpl {
 	m.addChildBefore(s,ssm);
 	const t = new Throw(m);
 	m.addChildBefore(t,ssm);
-	const ca = new Call(m);
+	const ca = new CallStatement(m);
 	ca.proc.setText("signIn");
 	ca.args.setText(`rwp, password`);
 	m.addChildBefore(ca,ssm);

@@ -6,7 +6,7 @@ import { VarStatement } from '../frames/statements/var-statement';
 import { ParseStatus } from '../frames/parse-status';
 import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
-import { Call } from '../frames/statements/call';
+import { CallStatement } from '../frames/statements/call-statement';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
@@ -67,7 +67,7 @@ suite('Field Parsing Tests', () => {
 
 		test('parse Frames - argsList1', () => { 
 			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
-			var call = new Call(main);
+			var call = new CallStatement(main);
 			var argList = call.args; 
 			argList.setText("3,4,5");
 			argList.parseCurrentText();
@@ -85,7 +85,7 @@ suite('Field Parsing Tests', () => {
 
 			test('parse Frames - argsList2', () => { 
 				var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
-				var call = new Call(main);
+				var call = new CallStatement(main);
 				var argList = call.args; 
 				argList.setText("");
 				argList.parseCurrentText();

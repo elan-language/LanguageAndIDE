@@ -387,6 +387,8 @@ suite('ParseNodes', () => {
 		testNodeParse(new VarRefNode(stubField), `library.foo`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(stubField), `global.foo[3]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(stubField), `property.foo[3..4]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `bar.foo[3..4]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(stubField), `property.bar.foo`, ParseStatus.valid, "property.bar", ".foo", "");
 	});
 	test('DeconstructedList', () => {
 		testNodeParse(new DeconstructedList(stubField), `[a:b]`, ParseStatus.valid, "", "", "");

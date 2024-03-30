@@ -12,6 +12,7 @@ import { KeywordNode } from "./keyword-node";
 import { Sequence } from "./sequence";
 import { SymbolNode } from "./symbol-node";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { Multiple } from "./multiple";
 
 export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
     constructor(field : Field) {
@@ -20,15 +21,17 @@ export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
 
     parseText(text: string): void {
         var simple = () => new IdentifierNode(this.field);
+        var instance = () => new IdentifierNode(this.field);
         var prop = () => new KeywordNode(propertyKeyword, this.field);
         var global = () => new KeywordNode(globalKeyword, this.field);
         var lib = () => new KeywordNode(libraryKeyword, this.field);
-        var qualifier = () => new Alternatives([prop, global, lib], this.field);
+        var qualifier = () => new Alternatives([prop, global, lib, instance], this.field);
         var dot = () => new SymbolNode(".", this.field);
         var qualDot = () => new Sequence([qualifier, dot], this.field);
         var optQualifier = () => new OptionalNode(qualDot, this.field);
-        var optIndex = () => new OptionalNode(() => new IndexNode(this.field), this.field)
-        var compound = () => new Sequence( [optQualifier, simple, optIndex ], this.field);
+
+        var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field)
+        var compound = () => new Sequence( [optQualifier, simple, indexes ], this.field);
         this.alternatives.push(simple());
         this.alternatives.push(compound());
         super.parseText(text);
