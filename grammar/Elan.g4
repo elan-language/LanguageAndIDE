@@ -20,19 +20,23 @@ test:
     ;
 
 // STATEMENTS
-statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | throwException | printStatement)*;
+statementBlock:  (varDef | let | assignment | proceduralControlFlow | callStatement | throwException | printStatement | inputStatement | externalStatement)*;
 
 testStatements: (assert | varDef | callStatement)*;
 
 assert: NL ASSERT expression IS value;
 
-callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));
+callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));//TODO -update
 
-throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
+externalStatement: NL EXT_ (procedureCall | (assignableValue DOT procedureCall)) (INTO_ assignableValue)?;  //TODO -update
+ 
+throwException: NL THROW (LITERAL_STRING | IDENTIFIER ); //TODO - needs to explicitly define interpolated fields
 
 printStatement: NL PRINT expression?;
 
 varDef: NL VAR assignableValue SET TO expression;
+
+let: NL LET assignableValue BE_ expression;
 
 assignment: NL SET assignableValue TO expression;
 
@@ -44,9 +48,7 @@ procedureCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRA
 
 functionCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
-systemCall: SYSTEM DOT IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
-
-input: INPUT LITERAL_STRING?;
+inputStatement: INPUT assignableValue;
 
 argument: (expression | lambda);
 
@@ -65,9 +67,9 @@ procedureParameterList: procedureParameter (COMMA procedureParameter)*;
 
 parameterList: parameter (COMMA parameter)*;
 
-parameter: IDENTIFIER type;
+parameter: IDENTIFIER AS type;
 
-procedureParameter: OUT? IDENTIFIER type;
+procedureParameter: IDENTIFIER AS type;
 
 // FUNCTIONS
 functionDef: 
@@ -77,7 +79,7 @@ functionDef:
     NL END FUNCTION
 	;
    
-functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
+functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET RETURN type;
 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER SET TO (literal | newInstance);
@@ -123,7 +125,7 @@ abstractImmutableClass:
  
 inherits: INHERITS type (COMMA type)*;
 
-property: PRIVATE? PROPERTY IDENTIFIER type; 
+property: PRIVATE? PROPERTY IDENTIFIER AS type; 
 
 constructor: 
 	NL CONSTRUCTOR OPEN_BRACKET parameterList? CLOSE_BRACKET
@@ -210,13 +212,10 @@ expression:
 	| expression DOT functionCall
 	| expression DOT IDENTIFIER 
 	| unaryOp expression
-	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)
 	| expression binaryOp expression
 	| newInstance
 	| expression ifExpression elseExpression 
 	| expression withClause
-	| input
-	| systemCall
 	;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly
@@ -225,7 +224,7 @@ ifExpression: IF expression;
 
 elseExpression : ELSE expression;
 
-lambda: LAMBDA argumentList ARROW expression;
+lambda: LAMBDA parameterList ARROW expression;
 
 index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_SQ_BRACKET;
 
@@ -251,17 +250,17 @@ literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET
 
 deconstructedTuple: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
  
-listDefinition: OPEN_BRACE (expression (COMMA expression)*) CLOSE_BRACE;
+listDefinition: OPEN_SQ_BRACKET (expression (COMMA expression)*) CLOSE_SQ_BRACKET;
 
-literalList: OPEN_BRACE (literal (COMMA literal)* ) CLOSE_BRACE;
+literalList: OPEN_SQ_BRACKET (literal (COMMA literal)* ) CLOSE_SQ_BRACKET;
 
-listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
+listDecomp: OPEN_SQ_BRACKET IDENTIFIER COLON IDENTIFIER CLOSE_SQ_BRACKET;
 
 arrayDefinition: ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET;
 
-dictionaryDefinition: OPEN_BRACE (kvp (COMMA kvp)* ) CLOSE_BRACE;
+dictionaryDefinition: OPEN_SQ_BRACKET (kvp (COMMA kvp)* ) CLOSE_SQ_BRACKET;
 
-literalDictionary: OPEN_BRACE (literalKvp (COMMA literalKvp)*) CLOSE_BRACE;
+literalDictionary: OPEN_SQ_BRACKET (literalKvp (COMMA literalKvp)*) CLOSE_SQ_BRACKET;
 
 kvp: expression COLON expression;
 

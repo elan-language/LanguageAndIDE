@@ -121,6 +121,16 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitCallStatement([NotNull] ElanParser.CallStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.externalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExternalStatement([NotNull] ElanParser.ExternalStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.externalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExternalStatement([NotNull] ElanParser.ExternalStatementContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.throwException"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -150,6 +160,16 @@ public interface IElanListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitVarDef([NotNull] ElanParser.VarDefContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.let"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLet([NotNull] ElanParser.LetContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.let"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLet([NotNull] ElanParser.LetContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.assignment"/>.
 	/// </summary>
@@ -201,25 +221,15 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionCall([NotNull] ElanParser.FunctionCallContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.inputStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSystemCall([NotNull] ElanParser.SystemCallContext context);
+	void EnterInputStatement([NotNull] ElanParser.InputStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.inputStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSystemCall([NotNull] ElanParser.SystemCallContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.input"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterInput([NotNull] ElanParser.InputContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.input"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitInput([NotNull] ElanParser.InputContext context);
+	void ExitInputStatement([NotNull] ElanParser.InputStatementContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.argument"/>.
 	/// </summary>

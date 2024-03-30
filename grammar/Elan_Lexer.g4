@@ -9,7 +9,7 @@ COMMENT_MARKER: '#';
 ABSTRACT:      'abstract';
 AND:           'and';
 AS:			   'as';
-BE:			   'be';
+BE_:			'be';
 ASSERT:		   'assert';
 CALL:		   'call';
 CASE: 		   'case';
@@ -22,6 +22,7 @@ DEFAULT: 	   'default';
 DIV: 		   'div';
 EACH:		   'each';
 ELSE:          'else';
+EXT_:          'external';
 END:		   'end'; 
 ENUM:          'enum';
 FOR:           'for';
@@ -32,6 +33,7 @@ IF:            'if';
 IMMUTABLE:	   'immutable';
 IMPORT: 	   'import';
 IN:            'in';
+INTO_:          'into';
 INHERITS:      'inherits';
 INPUT:         'input';
 LAMBDA:		   'lambda';
@@ -44,7 +46,6 @@ NOT:           'not';
 OF:			   'of';
 IS:            'is';
 OR:            'or';
-OUT:		   'out';
 PACKAGE:       'package';
 PARTIAL: 	   'partial';
 PRINT:		   'print';
@@ -120,7 +121,7 @@ fragment NewLineCharacter
 	| '\u0085' // Next Line 
 	;
 
-fragment ExponentPart:   [eE] (PLUS | MINUS)? LITERAL_INTEGER;
+fragment ExponentPart:   [e] (PLUS | MINUS)? LITERAL_INTEGER;
 
 fragment CommonCharacter
 	: SimpleEscapeSequence
