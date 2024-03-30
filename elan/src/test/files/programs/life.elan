@@ -1,4 +1,4 @@
-﻿# 8ef2fbee46c386dadda63db6a8f33d7f7ab965aaf6cbe8fd6e0c18716a87be2b Elan v0.1 valid
+﻿# 5b2d1d7fdfb9060c8d86753177c1b1a4c84dcc00fb501d002b66541a0081e758 Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -60,7 +60,7 @@ end function
 
 function liveNeighbours(cells as List<of Bool>, c as Int) return Int
   var neighbours set to neighbourCells(c)
-  var live set to neighbours.filter(lambda i as Int return cells[i])
+  var live set to neighbours.filter(lambda i as Int => cells[i])
   return live.count()
 end function
 
@@ -74,7 +74,7 @@ end function
 
 function nextGeneration(cells as List<of Bool>) return List<of Bool>
   var cellRange set to integers(0, cells.length()-1)
-  var next set to cellRange.map(lambda n as Int return nextCellValue(cells, n))
+  var next set to cellRange.map(lambda n as Int => nextCellValue(cells, n))
   return next.asList()
 end function
 

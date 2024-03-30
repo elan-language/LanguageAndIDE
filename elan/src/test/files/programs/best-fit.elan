@@ -1,23 +1,23 @@
-﻿# ba507184715b402cc19a1af9b4d20c768efa79bd3d46e371f4be79e6f1b0c86d Elan v0.1 valid
+﻿# 593b1f4f2d38ea5f0e154683670fa17ad3e9b1a544440e9525a279b842519ccb Elan v0.1 valid
 
 function calcA(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
   return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
 end function
 
 function calcSumX(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float return s + p.first())
+  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first())
 end function
 
 function calcSumXY(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float return s + p.first() * p.second())
+  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first() * p.second())
 end function
 
 function calcSumY(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float return s + p.second())
+  return points.reduce(0.0, lambda s as Float, p as Float => s + p.second())
 end function
 
 function calcSumXsq(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float return s + p.first() * p.first())
+  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first() * p.first())
 end function
 
 function bestFitFromPoints(points as List<of (Float, Float)>) return (Float, Float)

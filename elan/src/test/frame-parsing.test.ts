@@ -463,7 +463,4 @@ end main
   test('parse Frames - binary-search', (done) => {
     assertFileParses(done, "programs/binary-search.elan");
 	});
-  test('parse Frames - pathfinder', (done) => {
-    assertFileParses(done, "programs/binary-search.elan");
-	});
 });

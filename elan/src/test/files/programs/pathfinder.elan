@@ -45,7 +45,7 @@ class GridGraph
   # Returns a list of nodes that can be reached from the specified node
   function neighbours(p Point) return List<of Point>
     var list set to [ new Point(p.x, p.y-1),new* Point(p.x+1, p.y-1),new* Point(p.x+1, p.y),new* Point(p.x+1, p.y+1),new* Point(p.x, p.y+1),new* Point(p.x-1, p.y+1), new Point(p.x-1, p.y),new* Point(p.x-1, p.y-1) ]
-    return list.filter(lambda n -> nodeExists(n)).asList()
+    return list.filter(lambda n => nodeExists(n)).asList()
   end function
 
   # Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
@@ -114,7 +114,7 @@ class GridGraph
   function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) return Point
     var lowestCostSoFar set to infinity
     var lowestCostNode set to nodes.element(0)
-    var possibilities set to nodes.filter(lambda n ->  not visited[n] and costFromSource[n] < infinity)
+    var possibilities set to nodes.filter(lambda n =>  not visited[n] and costFromSource[n] < infinity)
     each p in possibilities
       var cost set to 0.0
       switch alg

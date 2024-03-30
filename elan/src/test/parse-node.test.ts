@@ -107,7 +107,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new ExprNode(stubField), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3 * 4 + x");
 		testNodeParse(new ExprNode(stubField), "3*foo(5)", ParseStatus.valid, "3*foo(5)", "", "3 * foo(5)");
 		testNodeParse(new ExprNode(stubField), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "", "points.foo(0.0)");
-		testNodeParse(new ExprNode(stubField), "reduce(0.0, lambda s as String, p as List<of String> return s + p.first() * p.first())", ParseStatus.valid, "reduce(0.0, lambda s as String, p as List<of String> return s + p.first() * p.first())", "", "");
+		testNodeParse(new ExprNode(stubField), "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ParseStatus.valid, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(stubField), ``, ParseStatus.empty, ``, "", "");
@@ -302,11 +302,11 @@ suite('ParseNodes', () => {
 		testNodeParse(new TupleDefNode(stubField), `(foo, 3, bar(a), x`, ParseStatus.incomplete, "(foo, 3, bar(a), x", "", "");
 	});
 	test('Lambda', () => {
-		testNodeParse(new Lambda(stubField), `lambda x as Int return x * x`, ParseStatus.valid, "lambda x as Int return x * x", "", "");
+		testNodeParse(new Lambda(stubField), `lambda x as Int => x * x`, ParseStatus.valid, "lambda x as Int => x * x", "", "");
 		testNodeParse(new Lambda(stubField), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
-		testNodeParse(new Lambda(stubField), `lambda x return x * x`, ParseStatus.invalid, "", "lambda x return x * x", "");
-		testNodeParse(new Lambda(stubField), `lambda s as Int, p as List<of Int> return s + p.first()`, ParseStatus.valid, "", "", "");
-		testNodeParse(new Lambda(stubField), `lambda bestSoFar as String, newWord as String return betterOf(bestSoFar, newWord, possAnswers)`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Lambda(stubField), `lambda x => x * x`, ParseStatus.invalid, "", "lambda x => x * x", "");
+		testNodeParse(new Lambda(stubField), `lambda s as Int, p as List<of Int> => s + p.first()`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Lambda(stubField), `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`, ParseStatus.valid, "", "", "");
 	});
 	test('IfExpr', () => {
 		testNodeParse(new IfExpr(stubField), `if cell then Colour.green else Colour.black)`, ParseStatus.valid, "", ")", "");

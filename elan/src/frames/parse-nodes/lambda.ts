@@ -6,6 +6,8 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { lambdaKeyword, returnKeyword } from "../keywords";
 import { ParamDefNode } from "./param-def-node";
+import { SymbolNode } from "./symbol-node";
+import { ARROW } from "../language-symbols";
 
 export class Lambda extends AbstractSequence {
     constructor(field : Field) {
@@ -16,18 +18,18 @@ export class Lambda extends AbstractSequence {
         if (text.trimStart().length > 0) {
             this.elements.push(new KeywordNode(lambdaKeyword, this.field));
             this.elements.push(new CSV(() => new ParamDefNode(this.field), 1, this.field));
-            this.elements.push(new KeywordNode(returnKeyword, this.field));
+            this.elements.push(new SymbolNode(ARROW, this.field));
             this.elements.push(new ExprNode(this.field));
             super.parseText(text);
         }
     }
 
     renderAsHtml(): string {
-        return `<keyword>${lambdaKeyword} </keyword>${this.elements[1].renderAsSource()}<keyword> ${returnKeyword} </keyword>${this.elements[3].renderAsSource()}`;
+        return `<keyword>${lambdaKeyword} </keyword>${this.elements[1].renderAsSource()}<keyword> ${ARROW} </keyword>${this.elements[3].renderAsSource()}`;
     }
 
     renderAsSource(): string {
-        return `${lambdaKeyword} ${this.elements[1].renderAsSource()} ${returnKeyword} ${this.elements[3].renderAsSource()}`;
+        return `${lambdaKeyword} ${this.elements[1].renderAsSource()} ${ARROW} ${this.elements[3].renderAsSource()}`;
     }
 
     get symbolType() {
