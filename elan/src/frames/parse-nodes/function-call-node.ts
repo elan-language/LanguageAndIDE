@@ -10,6 +10,8 @@ import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { Sequence } from "./sequence";
+import { IndexNode } from "./index-node";
+import { Multiple } from "./multiple";
 
 export class FunctionCallNode extends AbstractSequence {
     constructor(field : Field) {
@@ -20,7 +22,9 @@ export class FunctionCallNode extends AbstractSequence {
         if (text.trimStart().length > 0) {
             var global = () => new KeywordNode(globalKeyword, this.field);
             var lib = () => new KeywordNode(libraryKeyword, this.field);
-            var instance = () => new IdentifierNode(this.field);
+            var variable = () => new IdentifierNode(this.field);
+            var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field);
+            var instance = () => new Sequence([variable, indexes],this.field);
             var qualifier = () => new Alternatives([global, lib, instance], this.field);
             var dot = () => new SymbolNode(".", this.field);
             var qualDot = () => new Sequence([qualifier, dot], this.field);

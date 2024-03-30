@@ -2,9 +2,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { LitValueNode } from "./lit-value";
 import { UnaryExpression } from "./unary-expression";
 import { BracketedExpression } from "./bracketed-expression";
-import { DottedTerm } from "./dotted-term";
 import { NewInstance } from "./new-instance";
-import { IndexableTerm } from "./indexable-term";
 import { TupleDefNode } from "./tuple-def-node";
 import { Lambda } from "./lambda";
 import { IfExpr } from "./if-expr";
@@ -26,8 +24,6 @@ export class Term extends AbstractAlternatives {
         this.alternatives.push(new VarRefNode(this.field));
         this.alternatives.push(new FunctionCallNode(this.field));
         this.alternatives.push(new UnaryExpression(this.field));
-        this.alternatives.push(new IndexableTerm(this.field));
-        this.alternatives.push(new DottedTerm(this.field));
         this.alternatives.push(new NewInstance(this.field));
 
         this.alternatives.push(new BracketedExpression(this.field));

@@ -17,7 +17,6 @@ import { CSV } from '../frames/parse-nodes/csv';
 import { IdentifierNode } from '../frames/parse-nodes/identifier-node';
 import { FunctionCallNode } from '../frames/parse-nodes/function-call-node';
 import { KeywordNode } from '../frames/parse-nodes/keyword-node';
-import { IndexableTerm } from '../frames/parse-nodes/indexable-term';
 import { TypeNode } from '../frames/parse-nodes/type-node';
 import { TypeWithOptGenerics } from '../frames/parse-nodes/type-with-opt-generics';
 import { TypeSimpleNode } from '../frames/parse-nodes/type-simple-node';
@@ -47,9 +46,7 @@ import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 
 suite('ParseNodes', () => {
 
-	const stubField = {
-
-	} as Field;
+	const stubField = {} as Field;
 
 	const intType = IntType.Instance;
 	const floatType = FloatType.Instance;
@@ -252,6 +249,10 @@ suite('ParseNodes', () => {
 		testNodeParse(new FunctionCallNode(stubField), `global.foo()`, ParseStatus.valid, ``, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `library.foo()`, ParseStatus.valid, ``, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
+		testNodeParse(new FunctionCallNode(stubField), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
+		testNodeParse(new FunctionCallNode(stubField), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `a.isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `a[0].isBefore(b[0])`, ParseStatus.valid, ``, "", "");
 	});
 	test('Lists', () => {
 		testNodeParse(new List(() => new LitInt(stubField), stubField), ``, ParseStatus.empty, ``, "", "");
@@ -268,13 +269,6 @@ suite('ParseNodes', () => {
 	
 		testNodeParse(new List(() => new LitString(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 		testNodeParse(new List(() => new LiteralNode(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
-	});
-	test('Indexed term', () => {
-		testNodeParse(new IndexableTerm(stubField), `foo[3]`, ParseStatus.valid, "foo[3]", "", "");
-		testNodeParse(new IndexableTerm(stubField), `foo[bar]`, ParseStatus.valid, "foo[bar]", "", "");
-		testNodeParse(new IndexableTerm(stubField), `foo[3..4]`, ParseStatus.valid, "foo[3..4]", "", "");
-		testNodeParse(new IndexableTerm(stubField), `foo[3..]`, ParseStatus.valid, "foo[3..]", "", "");
-		testNodeParse(new IndexableTerm(stubField), `foo[..4]`, ParseStatus.valid, "foo[..4]", "", "");
 	});
 	test('List of expressions', () => {
 		testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
@@ -312,6 +306,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new Lambda(stubField), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
 		testNodeParse(new Lambda(stubField), `lambda x return x * x`, ParseStatus.invalid, "", "lambda x return x * x", "");
 		testNodeParse(new Lambda(stubField), `lambda s as Int, p as List<of Int> return s + p.first()`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Lambda(stubField), `lambda bestSoFar as String, newWord as String return betterOf(bestSoFar, newWord, possAnswers)`, ParseStatus.valid, "", "", "");
 	});
 	test('IfExpr', () => {
 		testNodeParse(new IfExpr(stubField), `if cell then Colour.green else Colour.black)`, ParseStatus.valid, "", ")", "");

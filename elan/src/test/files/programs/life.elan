@@ -1,4 +1,4 @@
-﻿# 03f0596eaa3102f273f27586d61e6579d1422d7a36b79b29e574b52f95a69111 Elan v0.1 valid
+﻿# 8ef2fbee46c386dadda63db6a8f33d7f7ab965aaf6cbe8fd6e0c18716a87be2b Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -59,7 +59,9 @@ function neighbourCells(c as Int) return List<of Int>
 end function
 
 function liveNeighbours(cells as List<of Bool>, c as Int) return Int
-  return neighbourCells(c).filter(lambda i as Int return cells[i]).count()
+  var neighbours set to neighbourCells(c)
+  var live set to neighbours.filter(lambda i as Int return cells[i])
+  return live.count()
 end function
 
 function willLive(currentlyAlive as Bool, liveNeighbours as Int) return Bool
@@ -71,7 +73,9 @@ function nextCellValue(cells as List<of Bool>, c as Int) return Bool
 end function
 
 function nextGeneration(cells as List<of Bool>) return List<of Bool>
-  return integers(0, cells.length()-1).map(lambda n as Int return nextCellValue(cells, n)).asList()
+  var cellRange set to integers(0, cells.length()-1)
+  var next set to cellRange.map(lambda n as Int return nextCellValue(cells, n))
+  return next.asList()
 end function
 
 constant exampleCells set to [false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false]
