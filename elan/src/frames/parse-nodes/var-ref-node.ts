@@ -30,7 +30,7 @@ export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
         var qualDot = () => new Sequence([qualifier, dot], this.field);
         var optQualifier = () => new OptionalNode(qualDot, this.field);
 
-        var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field)
+        var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field);
         var compound = () => new Sequence( [optQualifier, simple, indexes ], this.field);
         this.alternatives.push(simple());
         this.alternatives.push(compound());
