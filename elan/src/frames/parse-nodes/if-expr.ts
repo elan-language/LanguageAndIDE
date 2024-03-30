@@ -3,6 +3,7 @@ import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
+import { ifKeyword, elseKeyword, thenKeyword } from "../keywords";
 
 export class IfExpr extends AbstractSequence {
     constructor(field : Field) {
@@ -11,11 +12,11 @@ export class IfExpr extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new KeywordNode("if", this.field));
+            this.elements.push(new KeywordNode(ifKeyword, this.field));
             this.elements.push(new ExprNode(this.field));
-            this.elements.push(new KeywordNode("then", this.field));
+            this.elements.push(new KeywordNode(thenKeyword, this.field));
             this.elements.push(new ExprNode(this.field));
-            this.elements.push(new KeywordNode("else", this.field));
+            this.elements.push(new KeywordNode(elseKeyword, this.field));
             this.elements.push(new ExprNode(this.field)); 
             super.parseText(text);
         }

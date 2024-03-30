@@ -601,16 +601,6 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIfExpression([NotNull] ElanParser.IfExpressionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.elseExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterElseExpression([NotNull] ElanParser.ElseExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.elseExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitElseExpression([NotNull] ElanParser.ElseExpressionContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.lambda"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

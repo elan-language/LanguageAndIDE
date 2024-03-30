@@ -208,21 +208,19 @@ expression:
 	  bracketedExpression
 	| functionCall 
 	| value
-	| expression index
-	| expression DOT functionCall
-	| expression DOT IDENTIFIER 
+	| expression index //TODO simpler now
+	| expression DOT functionCall  //TODO simpler now
+	| expression DOT IDENTIFIER //TODO simpler now
 	| unaryOp expression
 	| expression binaryOp expression
 	| newInstance
-	| expression ifExpression elseExpression 
+	| ifExpression 
 	| expression withClause
 	;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly
 
-ifExpression: IF expression;
-
-elseExpression : ELSE expression;
+ifExpression: IF expression THEN expression ELSE expression;
 
 lambda: LAMBDA parameterList ARROW expression;
 

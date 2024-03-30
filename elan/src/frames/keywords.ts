@@ -51,6 +51,7 @@ export const setKeyword = 'set';
 export const stepKeyword = 'step';
 export const switchKeyword = 'switch';
 export const testKeyword = 'test';
+export const thenKeyword = 'then';
 export const thisKeyword = 'this';
 export const throwKeyword = 'throw';
 export const toKeyword = 'to';

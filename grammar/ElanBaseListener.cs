@@ -720,18 +720,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIfExpression([NotNull] ElanParser.IfExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.elseExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterElseExpression([NotNull] ElanParser.ElseExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.elseExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitElseExpression([NotNull] ElanParser.ElseExpressionContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.lambda"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

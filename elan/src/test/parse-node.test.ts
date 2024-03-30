@@ -43,6 +43,7 @@ import { LitTuple } from '../frames/parse-nodes/lit-tuple';
 import { VarRefNode } from '../frames/parse-nodes/var-ref-node';
 import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
 import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
+import { abstractKeyword } from '../frames/keywords';
 
 suite('ParseNodes', () => {
 
@@ -158,13 +159,13 @@ suite('ParseNodes', () => {
 		testNodeParse(new LitFloat(stubField), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
 	});
 	test('Keyword', () => {
-		testNodeParse(new KeywordNode("abstract", stubField), "", ParseStatus.empty, "", "", "");
-		testNodeParse(new KeywordNode("abstract", stubField), "abstract ", ParseStatus.valid, "abstract", " ", "");
-		testNodeParse(new KeywordNode("abstract", stubField), "abstract(x", ParseStatus.valid, "abstract", "(x", "");
-		testNodeParse(new KeywordNode("abstract", stubField), "abstractx", ParseStatus.invalid, "", "abstractx", "");
-		testNodeParse(new KeywordNode("abstract", stubField), "abstract immutable", ParseStatus.valid, "abstract", " immutable", "abstract ");
-		testNodeParse(new KeywordNode("abstract", stubField), " abs", ParseStatus.incomplete, " abs", "", "abs ");
-		testNodeParse(new KeywordNode("abstract", stubField), " abscract", ParseStatus.invalid, "", " abscract", "");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), "", ParseStatus.empty, "", "", "");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), "abstract ", ParseStatus.valid, "abstract", " ", "");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), "abstract(x", ParseStatus.valid, "abstract", "(x", "");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), "abstractx", ParseStatus.invalid, "", "abstractx", "");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), "abstract immutable", ParseStatus.valid, "abstract", " immutable", "abstract ");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), " abs", ParseStatus.incomplete, " abs", "", "abs ");
+		testNodeParse(new KeywordNode(abstractKeyword, stubField), " abscract", ParseStatus.invalid, "", " abscract", "");
 	});
 	test('BracketedExpression', () => {
 		testNodeParse(new BracketedExpression(stubField), "", ParseStatus.empty, "", "", "");
@@ -181,11 +182,11 @@ suite('ParseNodes', () => {
 	test('Optional', () => {
 		testNodeParse(new OptionalNode(() => new LitInt(stubField), stubField), "123 a", ParseStatus.valid, "123", " a", "123");
 		testNodeParse(new OptionalNode(() => new LitInt(stubField), stubField), "abc", ParseStatus.valid, "", "abc", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), " abstract", ParseStatus.valid, " abstract", "", "abstract ", "<keyword>abstract </keyword>");
-		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "abs", ParseStatus.incomplete, "abs", "", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "abscract", ParseStatus.valid, "", "abscract", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "", ParseStatus.valid, "", "", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode("abstract", stubField), stubField), "  ", ParseStatus.valid, "", "  ", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword, stubField), stubField), " abstract", ParseStatus.valid, " abstract", "", "abstract ", "<keyword>abstract </keyword>");
+		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword, stubField), stubField), "abs", ParseStatus.incomplete, "abs", "", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword, stubField), stubField), "abscract", ParseStatus.valid, "", "abscract", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword, stubField), stubField), "", ParseStatus.valid, "", "", "");
+		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword, stubField), stubField), "  ", ParseStatus.valid, "", "  ", "");
 	});
 	test('LitString', () => {
 		testNodeParse(new LitString(stubField), `"abc"`, ParseStatus.valid, `"abc"`, "", "", `<string>"abc"</string>`, stringType);
