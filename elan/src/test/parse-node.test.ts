@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
-import { testNodeParse } from './testHelpers';
+import { testAST, testNodeParse } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
 import { LitChar } from '../frames/parse-nodes/lit-char';
 import { LitInt } from '../frames/parse-nodes/lit-int';
@@ -72,6 +72,11 @@ suite('ParseNodes', () => {
 		symbolType : stringType,
 	} as ISymbol;
 
+	const stubBoolSymbol = {
+		symbolId : "bar",
+		symbolType : boolType,
+	} as ISymbol;
+
 	const stubHolder = {
 		resolveSymbol(id, initialScope) {
 			switch (id) {
@@ -81,6 +86,7 @@ suite('ParseNodes', () => {
 				case 'x' : return stubIntSymbol;
 				case 'foo' : return stubIntSymbol;
 				case 'bar' : return stubStringSymbol;
+				case 'boo' : return stubBoolSymbol;
 			}
 
 			return undefined;
@@ -437,4 +443,13 @@ suite('ParseNodes', () => {
 		testNodeParse(new DeconstructedList(stubField), `[a:3]`, ParseStatus.invalid, "", "[a:3]", "");
 		testNodeParse(new DeconstructedList(stubField), `(a:b)`, ParseStatus.invalid, "", "(a:b)", "");
 	});
+
+	test("AST", () => {
+		testAST(new ExprNode(stubField), stubField, "1 + 2", "Add (1) (2)", intType);
+
+		testAST(new UnaryExpression(stubField), stubField, "-3", "Minus (3)", intType);
+		testAST(new UnaryExpression(stubField), stubField, " not true", "Not (true)", boolType);
+		testAST(new UnaryExpression(stubField), stubField, " not boo", "Not (boo)", boolType);
+	});
+
 });

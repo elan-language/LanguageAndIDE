@@ -12,6 +12,8 @@ import { ParseStatus } from '../frames/parse-status';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
 import { ISymbolType } from '../symbols/symbol-type';
 import { isHasSymbolType } from '../symbols/symbolHelpers';
+import { transform } from '../frames/syntax-nodes/transformer';
+import { Field } from '../frames/interfaces/field';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -301,3 +303,13 @@ export async function activate(docUri: vscode.Uri) {
       assert.strictEqual(node.symbolType?.name, symbolType.name, text);
     }
   }
+
+export function testAST(node: ParseNode, field : Field, text: string, astAsString : string, st : ISymbolType) {
+  node.parseText(text);
+  if (node.status === ParseStatus.valid) {
+    const ast = transform(node, field);
+
+    assert.strictEqual(ast?.toString(), astAsString);
+    assert.strictEqual(ast.symbolType?.name, st.name, text);
+  }
+}
