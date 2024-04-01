@@ -16,7 +16,7 @@ import { transform } from '../frames/syntax-nodes/transformer';
 import { Field } from '../frames/interfaces/field';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();

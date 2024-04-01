@@ -9,7 +9,7 @@ COMMENT_MARKER: '#';
 ABSTRACT:      'abstract';
 AND:           'and';
 AS:			   'as';
-BE_:			'be';
+BE:			'be';
 ASSERT:		   'assert';
 CALL:		   'call';
 CASE: 		   'case';
@@ -22,7 +22,7 @@ DEFAULT: 	   'default';
 DIV: 		   'div';
 EACH:		   'each';
 ELSE:          'else';
-EXT_:          'external';
+EXTERNAL:      'external';
 END:		   'end'; 
 ENUM:          'enum';
 FOR:           'for';
@@ -33,7 +33,7 @@ IF:            'if';
 IMMUTABLE:	   'immutable';
 IMPORT: 	   'import';
 IN:            'in';
-INTO_:          'into';
+INTO:          'into';
 INHERITS:      'inherits';
 INPUT:         'input';
 LAMBDA:		   'lambda';
@@ -113,6 +113,7 @@ LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'' |
 LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES:   (Whitespace)+  -> skip;
+TEXT: CommonCharacter+;
 
 fragment InputCharacter: ~[\r\n\u0085];
 

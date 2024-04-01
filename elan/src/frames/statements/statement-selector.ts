@@ -3,7 +3,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
-import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword, commentMarker, inputKeyword, externalKeyword } from "../keywords";
+import { assertKeyword, callKeyword, caseKeyword, catchKeyword, defaultKeyword, eachKeyword, elseKeyword, forKeyword, ifKeyword, printKeyword, repeatKeyword, returnKeyword, setKeyword, switchKeyword, throwKeyword, tryKeyword, varKeyword, whileKeyword, testKeyword, commentMarker, inputKeyword, externalKeyword, letKeyword } from "../keywords";
 
 export class StatementSelector extends AbstractSelector  {
     isStatement = true;
@@ -27,6 +27,7 @@ export class StatementSelector extends AbstractSelector  {
         [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
         [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
         [inputKeyword, (parent: Parent) => this.factory.newInput(parent)],
+        [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
         [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
         [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
         [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],

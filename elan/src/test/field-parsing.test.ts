@@ -10,6 +10,7 @@ import { CallStatement } from '../frames/statements/call-statement';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
+import { LetStatement } from '../frames/statements/let-statement';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -92,4 +93,25 @@ suite('Field Parsing Tests', () => {
 				assert.equal(argList.getStatus(), ParseStatus.valid);
 				}); 
 
+			test('parse Frames - LetStatement', () => { 
+				var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+				var letSt = new LetStatement(main);
+				var id = letSt.name;
+				assert.equal(id.textAsSource(), "");
+				assert.equal(id.getStatus(), ParseStatus.incomplete);
+				id.setText("ab_1");
+				id.parseCurrentText();
+				assert.equal(id.getStatus(), ParseStatus.valid);
+				assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><help></help></field>`);
+				id.setText("Ab_1");
+				id.parseCurrentText();
+				assert.equal(id.getStatus(), ParseStatus.invalid);
+				id.setText("result");
+				id.parseCurrentText();
+				assert.equal(id.getStatus(), ParseStatus.valid);
+				id.setText("default");
+				id.parseCurrentText();
+				assert.equal(id.getStatus(), ParseStatus.invalid);
+				}); 
+			
 });

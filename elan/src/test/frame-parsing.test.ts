@@ -14,6 +14,7 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
 import { AssertStatement } from '../frames/statements/assert-statement';
+import { LetStatement } from '../frames/statements/let-statement';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -79,6 +80,29 @@ suite('File Parsing Tests', () => {
 		assert.equal(source.hasMoreCode(), false);
 		assert.equal(setTo.renderAsSource(), code);
 	}); 
+
+	test('parse Frames - let statement 1', () => {
+		var code = "  let result be 3 + 4";
+        var source = new CodeSourceFromString(code + "\n");
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var m = new MainFrame(fl);	
+		var setTo = new LetStatement(m);
+		setTo.parseFrom(source);
+		assert.equal(source.hasMoreCode(), false);
+		assert.equal(setTo.renderAsSource(), code);
+	}); 
+
+	test('parse Frames - let statement 2', () => {
+		var code = "  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)";
+        var source = new CodeSourceFromString(code + "\n");
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var m = new MainFrame(fl);	
+		var setTo = new LetStatement(m);
+		setTo.parseFrom(source);
+		assert.equal(source.hasMoreCode(), false);
+		assert.equal(setTo.renderAsSource(), code);
+	}); 
+
 
 	test('parse Frames - assert statement 3', () => {
 		var code = "  assert foo is 7";
