@@ -66,6 +66,11 @@ suite('ParseNodes', () => {
 		symbolType : floatType,
 	} as ISymbol;
 
+	const stubStringSymbol = {
+		symbolId : "bar",
+		symbolType : stringType,
+	} as ISymbol;
+
 	const stubHolder = {
 		resolveSymbol(id, initialScope) {
 			switch (id) {
@@ -74,6 +79,7 @@ suite('ParseNodes', () => {
 				case 'c' : return stubFloatSymbol;
 				case 'x' : return stubIntSymbol;
 				case 'foo' : return stubIntSymbol;
+				case 'bar' : return stubStringSymbol;
 			}
 
 			return undefined;
@@ -126,24 +132,24 @@ suite('ParseNodes', () => {
 		testNodeParse(new Term(stubField), "a", ParseStatus.valid, "a", "", "a", "", intType);
 	});
 	test('Expression', () => {
-		// testNodeParse(new ExprNode(stubField), "", ParseStatus.empty, "", "", "");
-		// testNodeParse(new ExprNode(stubField), "  ", ParseStatus.empty, "", "  ", "");
-		// testNodeParse(new ExprNode(stubField), "a", ParseStatus.valid, "a", "", "a", "", intType);
-		// testNodeParse(new ExprNode(stubField), "a + b", ParseStatus.valid, "a + b", "", "a + b", "", floatType);
-		// testNodeParse(new ExprNode(stubField), "a + b-c", ParseStatus.valid, "a + b-c", "", "a + b - c", "", floatType);
-		// testNodeParse(new ExprNode(stubField), "+", ParseStatus.invalid, "", "+", "");
-		// testNodeParse(new ExprNode(stubField), "+b", ParseStatus.invalid, "", "+b", "");
-		// testNodeParse(new ExprNode(stubField), "a +", ParseStatus.incomplete, "a +", "", "a + ");
-		// testNodeParse(new ExprNode(stubField), "a %", ParseStatus.valid, "a", " %", "a");
-		// testNodeParse(new ExprNode(stubField), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3 * 4 + x", "", intType);
+		testNodeParse(new ExprNode(stubField), "", ParseStatus.empty, "", "", "");
+		testNodeParse(new ExprNode(stubField), "  ", ParseStatus.empty, "", "  ", "");
+		testNodeParse(new ExprNode(stubField), "a", ParseStatus.valid, "a", "", "a", "", intType);
+		testNodeParse(new ExprNode(stubField), "a + b", ParseStatus.valid, "a + b", "", "a + b", "", floatType);
+		testNodeParse(new ExprNode(stubField), "a + b-c", ParseStatus.valid, "a + b-c", "", "a + b - c", "", floatType);
+		testNodeParse(new ExprNode(stubField), "+", ParseStatus.invalid, "", "+", "");
+		testNodeParse(new ExprNode(stubField), "+b", ParseStatus.invalid, "", "+b", "");
+		testNodeParse(new ExprNode(stubField), "a +", ParseStatus.incomplete, "a +", "", "a + ");
+		testNodeParse(new ExprNode(stubField), "a %", ParseStatus.valid, "a", " %", "a");
+		testNodeParse(new ExprNode(stubField), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3 * 4 + x", "", intType);
 		testNodeParse(new ExprNode(stubField), "3*foo(5)", ParseStatus.valid, "3*foo(5)", "", "3 * foo(5)", "", intType);
-		testNodeParse(new ExprNode(stubField), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "", "points.foo(0.0)");
+		testNodeParse(new ExprNode(stubField), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "", "points.foo(0.0)", "", intType);
 		testNodeParse(new ExprNode(stubField), "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ParseStatus.valid, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(stubField), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new IdentifierNode(stubField), `  `, ParseStatus.empty, ``, "  ", "");
-		testNodeParse(new IdentifierNode(stubField), `a`, ParseStatus.valid, `a`, "", "a");
+		testNodeParse(new IdentifierNode(stubField), `a`, ParseStatus.valid, `a`, "", "a", "", intType);
 		testNodeParse(new IdentifierNode(stubField), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
 		testNodeParse(new IdentifierNode(stubField), `abc `, ParseStatus.valid, `abc`, " ", "abc");
 		testNodeParse(new IdentifierNode(stubField), `Abc`, ParseStatus.invalid, ``, "Abc", "");
@@ -201,9 +207,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new BracketedExpression(stubField), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new BracketedExpression(stubField), "(3)", ParseStatus.valid, "(3)", "", "(3)", "", intType);
 		testNodeParse(new BracketedExpression(stubField), "(3 + 4)", ParseStatus.valid, "(3 + 4)", "", "(3 + 4)", "", intType);
-		testNodeParse(new BracketedExpression(stubField), "(a and not b)", ParseStatus.valid, "(a and not b)", "", "(a and not b)");
-		testNodeParse(new BracketedExpression(stubField), "(3 * 4 + x)", ParseStatus.valid, "(3 * 4 + x)", "", "(3 * 4 + x)");
-		testNodeParse(new BracketedExpression(stubField), "(3 * (4 + x))", ParseStatus.valid, "(3 * (4 + x))", "", "(3 * (4 + x))");
+		testNodeParse(new BracketedExpression(stubField), "(a and not b)", ParseStatus.valid, "(a and not b)", "", "(a and not b)", "", boolType);
+		testNodeParse(new BracketedExpression(stubField), "(3 * 4 + x)", ParseStatus.valid, "(3 * 4 + x)", "", "(3 * 4 + x)", "", intType);
+		testNodeParse(new BracketedExpression(stubField), "(3 * (4 + x))", ParseStatus.valid, "(3 * (4 + x))", "", "(3 * (4 + x))", "", intType);
 		testNodeParse(new BracketedExpression(stubField), "(a and not b", ParseStatus.incomplete, "(a and not b", "", "(a and not b");
 		testNodeParse(new BracketedExpression(stubField), "(a and not b  ", ParseStatus.incomplete, "(a and not b", "  ", "(a and not b");
 		testNodeParse(new BracketedExpression(stubField), "(", ParseStatus.incomplete, "(", "", "(");
@@ -267,8 +273,8 @@ suite('ParseNodes', () => {
 	test('Function Call', () => {
 		testNodeParse(new FunctionCallNode(stubField), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `  `, ParseStatus.empty, ``, "  ", "");
-		testNodeParse(new FunctionCallNode(stubField), `foo()`, ParseStatus.valid, `foo()`, "", "");
-		testNodeParse(new FunctionCallNode(stubField), `bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `foo()`, ParseStatus.valid, `foo()`, "", "", "", intType);
+		testNodeParse(new FunctionCallNode(stubField), `bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "", "", "", stringType);
 		testNodeParse(new FunctionCallNode(stubField), `yon`, ParseStatus.incomplete, `yon`, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `yon `, ParseStatus.incomplete, `yon`, " ", "");
 		testNodeParse(new FunctionCallNode(stubField), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
@@ -276,9 +282,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new FunctionCallNode(stubField), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
 		testNodeParse(new FunctionCallNode(stubField), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
 		testNodeParse(new FunctionCallNode(stubField), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-		testNodeParse(new FunctionCallNode(stubField), `bar.foo()`, ParseStatus.valid, ``, "", "");
-		testNodeParse(new FunctionCallNode(stubField), `global.foo()`, ParseStatus.valid, ``, "", "");
-		testNodeParse(new FunctionCallNode(stubField), `library.foo()`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(stubField), `bar.foo()`, ParseStatus.valid, ``, "", "", "", intType);
+		testNodeParse(new FunctionCallNode(stubField), `global.foo()`, ParseStatus.valid, ``, "", "", "", intType);
+		testNodeParse(new FunctionCallNode(stubField), `library.foo()`, ParseStatus.valid, ``, "", "", "", intType);
 		testNodeParse(new FunctionCallNode(stubField), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
 		testNodeParse(new FunctionCallNode(stubField), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
 		testNodeParse(new FunctionCallNode(stubField), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
@@ -302,7 +308,8 @@ suite('ParseNodes', () => {
 		testNodeParse(new List(() => new LiteralNode(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 	});
 	test('List of expressions', () => {
-		testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
+		//testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
+		testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , foo(a, 3) -1]`, ParseStatus.valid, "[a, 3+ 4 , foo(a, 3) -1]", "", "", "", new ListType(intType));
 	});
 	test('TypeSimpleNode', () => {
 		testNodeParse(new TypeSimpleNode(stubField), `Foo`, ParseStatus.valid, "Foo", "", "", "<type>Foo</type>", new ClassType("Foo"));

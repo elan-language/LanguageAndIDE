@@ -46,6 +46,6 @@ export class FunctionCallNode extends AbstractSequence {
     
     get symbolType() {
         var holder = this.field.getHolder();
-        return holder.resolveSymbol((this.elements[1] as IdentifierNode).matchedText, holder as Frame).symbolType;
+        return holder.resolveSymbol((this.elements[1] as IdentifierNode).matchedText.trim(), holder as Frame).symbolType;
     }
 }
