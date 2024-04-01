@@ -7,7 +7,7 @@ import { Field } from "../interfaces/field";
 import { TupleType } from "../../symbols/tuple-type";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
-export class TupleDefNode extends AbstractSequence {
+export class TupleNode extends AbstractSequence {
     constructor(field : Field) {
         super(field);
     }
