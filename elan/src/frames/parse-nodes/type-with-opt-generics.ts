@@ -10,6 +10,8 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { GT, LT } from "../symbols";
 import { ofKeyword } from "../keywords";
+import { ClassType } from "../../symbols/class-type";
+import { GenericClassType } from "../../symbols/generic-class-type";
 
 export class TypeWithOptGenerics extends AbstractSequence {
 
@@ -29,6 +31,11 @@ export class TypeWithOptGenerics extends AbstractSequence {
     }
 
     get symbolType() {
-        return UnknownType.Instance;
+        const mn = (this.elements[1] as OptionalNode).matchedNode; 
+        if (mn instanceof Sequence){
+            const gt = (mn.elements[2] as TypeNode).symbolType;
+            return new GenericClassType(this.elements[0].matchedText, gt!);
+        }
+        return new ClassType(this.matchedText);
     }
 }

@@ -7,6 +7,6 @@ export class ClassType implements ISymbolType {
     }
 
     get name() {
-        return `Class ${this.className}`;
+        return `Class ${this.className.trim()}`;
     }
 }

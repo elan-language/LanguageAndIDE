@@ -46,6 +46,7 @@ import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 import { abstractKeyword } from '../frames/keywords';
 import { ISymbol } from '../symbols/symbol';
 import { Parent } from '../frames/interfaces/parent';
+import { GenericClassType } from '../symbols/generic-class-type';
 
 suite('ParseNodes', () => {
 
@@ -308,7 +309,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new List(() => new LiteralNode(stubField), stubField), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 	});
 	test('List of expressions', () => {
-		//testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
+		testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
 		testNodeParse(new List(() => new ExprNode(stubField), stubField), `[a, 3+ 4 , foo(a, 3) -1]`, ParseStatus.valid, "[a, 3+ 4 , foo(a, 3) -1]", "", "", "", new ListType(intType));
 	});
 	test('TypeSimpleNode', () => {
@@ -316,12 +317,12 @@ suite('ParseNodes', () => {
 		testNodeParse(new TypeSimpleNode(stubField), `foo`, ParseStatus.invalid, "", "foo", "");
 	});
 	test('TypeWithOptGenerics', () => {
-		testNodeParse(new TypeWithOptGenerics(stubField), `Foo`, ParseStatus.valid, "Foo", "", "");
+		testNodeParse(new TypeWithOptGenerics(stubField), `Foo`, ParseStatus.valid, "Foo", "", "", "", new ClassType("Foo"));
 		testNodeParse(new TypeWithOptGenerics(stubField), `foo`, ParseStatus.invalid, "", "foo", "");
 		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<`, ParseStatus.incomplete, "Foo<", "", "");
 		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<of`, ParseStatus.incomplete, "Foo<of", "", "");
 		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<of Bar`, ParseStatus.incomplete, "Foo<of Bar", "", "");
-		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>", "", "", "<type>Foo</type>&lt;<keyword>of </keyword><type>Bar</type>&gt;");
+		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>", "", "", "<type>Foo</type>&lt;<keyword>of </keyword><type>Bar</type>&gt;", new GenericClassType("Foo", new ClassType("Bar")));
 		testNodeParse(new TypeWithOptGenerics(stubField), `Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>", "", "", "<type>Foo</type>&lt;<keyword>of </keyword><type>List</type>&lt;<keyword>of </keyword><type>Bar</type>&gt;&gt;");
 	});
 	test('TypeNode', () => {
