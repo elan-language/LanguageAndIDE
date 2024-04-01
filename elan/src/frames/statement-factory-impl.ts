@@ -22,6 +22,7 @@ import { Case } from "./statements/case";
 import { AssertStatement } from "./statements/assert-statement";
 import { Input } from "./statements/input";
 import { ExternalStatement } from "./statements/external-statement";
+import { LetStatement } from "./statements/let-statement";
 
 export class StatementFactoryImpl implements StatementFactory {
 
@@ -36,6 +37,7 @@ export class StatementFactoryImpl implements StatementFactory {
     public newFor(parent: Parent): Frame { return new For(parent); }
     public newIf(parent: Parent): Frame { return new IfStatement(parent); }
     public newInput(parent: Parent): Frame { return new Input(parent); }
+    public newLet(parent: Parent): Frame { return new LetStatement(parent); }
     public newPrint(parent: Parent): Frame { return new Print(parent); }
     public newRepeat(parent: Parent): Frame { return new Repeat(parent); }
     public newReturn(parent: Parent): Frame { return new ReturnStatement(parent); }

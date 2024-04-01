@@ -56,7 +56,7 @@ print: NL PRINT expression?;
 input: INPUT assignableValue;
 external: NL EXTERNAL (methodCall | (assignableValue DOT methodCall)) (INTO assignableValue)?;
 assert: NL ASSERT expression IS literal;
-let: NL LET IDENTIFIER BE expression; // Not implemented yet
+let: NL LET IDENTIFIER BE expression;
 
 assignableValue: (PROPERTY DOT)?  IDENTIFIER index? | deconstructedTuple | deconstructedList;
 methodCall: (PROPERTY|GLOBAL|LIBRARY|IDENTIFIER DOT)? IDENTIFIER OPEN_BRACKET (argList)? CLOSE_BRACKET;

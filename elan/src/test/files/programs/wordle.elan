@@ -1,4 +1,4 @@
-# ce7d2f9af0886ea554e712d5c3235537aec501c516c58a087b513a4dbe0d732e Elan v0.1 valid
+# 0912eee085db627bf66cb281d4a8a82860711a7a4a3c54eed8b2cccd27a721f3 Elan v0.1 valid
 
 function isYellow(attempt as String, target as String, n as Int) return Bool
   return target.contains(attempt[n])
@@ -59,8 +59,8 @@ function evaluateYellows(attempt as String, target as String) return (String, St
 end function
 
 function markAttempt(attempt as String, target as String) return String
-  var (attemptAfterGreens, targetAfterGreens) set to evaluateGreens(attempt, target)
-  var markedAttempt set to attemptAfterGreens.evaluateYellows(targetAfterGreens)
+  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)
+  let markedAttempt be attemptAfterGreens.evaluateYellows(targetAfterGreens)
   return markedAttempt.first()
 end function
 
@@ -69,32 +69,32 @@ function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String
 end function
 
 function wordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return WordCount
-  var groups set to possibleAnswers.groupBy(lambda w as String => markAttempt(attempt, w))
-  var largest set to groups.maxBy(size)
-  var members set to largest.members
-  var count set to members.count()
+  let groups be possibleAnswers.groupBy(lambda w as String => markAttempt(attempt, w))
+  let largest be groups.maxBy(size)
+  let members be largest.members
+  let count be members.count()
   return new WordCount(attempt, count)
 end function
 
 function size(g as Group<of String>) return Int
-  var members set to g.members
+  let members be g.members
   return members.count
 end function
 
 function allRemainingWordCounts(possAnswers as List<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
-  var parallel set to possAttempts.asParallel()
+  let parallel be possAttempts.asParallel()
   return parallel.map(lambda w as String => wordCountRemainingAfterAttempt(possAnswers, w))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
-  var isBetter set to wc2.count < wc1.count
-  var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
+  let isBetter be wc2.count < wc1.count
+  let isEqualAndPossAnswer be wc2.count is wc1.count and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
 function bestAttempt(possAnswers as List<of String>,possAttempts as List<of String>) return String
-  var wordCounts set to allRemainingWordCounts(possAnswers, possAttempts)
-  var best set to wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
+  let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
+  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 

@@ -2,13 +2,13 @@ import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ISymbol } from "../../symbols/symbol";
-import { setKeyword, toKeyword, varKeyword } from "../keywords";
+import { beKeyword, letKeyword } from "../keywords";
+import { VarDefField } from "../fields/var-def-field";
 
-export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
+export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;
     name: VarDefField;
     expr: ExpressionField;
@@ -20,9 +20,9 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        source.remove("var ");
+        source.remove(`${letKeyword} `);
         this.name.parseFrom(source);
-        source.remove(" set to ");
+        source.remove(` ${beKeyword} `);
         this.expr.parseFrom(source);
         source.removeNewLine();
     }
@@ -30,15 +30,15 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
         return [this.name, this.expr];
     } 
     getIdPrefix(): string {
-        return 'var';
+        return 'let';
     }
 
-   renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${varKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${setKeyword} ${toKeyword} </keyword>${this.expr.renderAsHtml()}</statement>`;
+    renderAsHtml(): string {
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${letKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${beKeyword} </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {
-        return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
+        return `${this.indent()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
     }
 
     renderAsObjectCode(): string {

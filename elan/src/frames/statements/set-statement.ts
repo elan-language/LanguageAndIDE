@@ -8,16 +8,17 @@ import { ParseStatus } from "../parse-status";
 import { compatibleType } from "../../symbols/rules";
 import { ISymbol } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
-import { AssignableField } from "../fields/assignableField";
+import { setKeyword, toKeyword } from "../keywords";
+import { SetTargetField } from "../fields/setTargetField";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    assignable: AssignableField;
+    assignable: SetTargetField;
     expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.assignable = new AssignableField(this);
+        this.assignable = new SetTargetField(this);
         this.assignable.setPlaceholder("variableName");
         this.expr = new ExpressionField(this);
     }
@@ -37,10 +38,10 @@ export class SetStatement extends AbstractFrame implements Statement{
         return 'set';
     }
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>set </keyword>${this.assignable.renderAsHtml()}<keyword> to </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${this.assignable.renderAsHtml()}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}</statement>`;
     }
     renderAsSource(): string {
-        return `${this.indent()}set ${this.assignable.renderAsSource()} to ${this.expr.renderAsSource()}`;
+        return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
     }
     renderAsObjectCode(): string {
         return `${this.indent()}${this.assignable.renderAsObjectCode()} = ${this.expr.renderAsObjectCode()};`;

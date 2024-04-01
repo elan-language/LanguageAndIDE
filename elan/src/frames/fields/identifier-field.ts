@@ -1,18 +1,24 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseByFunction } from "../interfaces/parse-by-function";
-import { ParseStatus } from "../parse-status";
+import { ParseByNodes } from "../interfaces/parse-by-nodes";
+import { IdentifierNode } from "../parse-nodes/identifier-node";
+import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
-import { identifier } from "./parse-functions";
 
-export class IdentifierField extends AbstractField implements ParseByFunction {
-    isParseByFunction = true;
+export class IdentifierField extends AbstractField implements ParseByNodes {
+    isParseByNodes: boolean = true;
+
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return identifier(input);
-    }   
+
+    initialiseRoot(): ParseNode {
+        this.rootNode = new IdentifierNode(this);
+        return this.rootNode;
+    }
+    readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/);
+
     getIdPrefix(): string {
         return 'ident';
     }

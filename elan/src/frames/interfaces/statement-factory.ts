@@ -13,6 +13,7 @@ export interface StatementFactory {
     newFor(parent: Parent) : Frame;
     newIf(parent: Parent) : Frame;
     newInput(parent: Parent): Frame;
+    newLet(parent: Parent) : Frame;
     newPrint(parent: Parent) : Frame;
     newRepeat(parent: Parent) : Frame;
     newReturn(parent: Parent) : Frame;
