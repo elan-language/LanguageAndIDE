@@ -29,6 +29,6 @@ export class IdentifierNode extends AbstractParseNode implements IHasSymbolType 
 
     get symbolType() {
         var holder = this.field.getHolder();
-        return holder.resolveSymbol(this.matchedText, holder as Frame).symbolType;
+        return holder.resolveSymbol(this.matchedText.trim(), holder as Frame).symbolType;
     }
 }

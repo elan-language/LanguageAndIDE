@@ -13,6 +13,7 @@ import { Sequence } from "./sequence";
 import { IndexNode } from "./index-node";
 import { Multiple } from "./multiple";
 import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
+import { Frame } from "../interfaces/frame";
 
 export class FunctionCallNode extends AbstractSequence {
     constructor(field : Field) {
@@ -44,6 +45,7 @@ export class FunctionCallNode extends AbstractSequence {
     }
     
     get symbolType() {
-        return UnknownType.Instance;
+        var holder = this.field.getHolder();
+        return holder.resolveSymbol((this.elements[1] as IdentifierNode).matchedText, holder as Frame).symbolType;
     }
 }
