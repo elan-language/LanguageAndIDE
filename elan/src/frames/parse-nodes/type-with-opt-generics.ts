@@ -31,11 +31,16 @@ export class TypeWithOptGenerics extends AbstractSequence {
     }
 
     get symbolType() {
+        const typeName = this.elements[0].matchedText.trim();
+
+
+
         const mn = (this.elements[1] as OptionalNode).matchedNode; 
         if (mn instanceof Sequence){
             const gt = (mn.elements[2] as TypeNode).symbolType;
-            return new GenericClassType(this.elements[0].matchedText, gt!);
+            return new GenericClassType(typeName, gt!);
         }
-        return new ClassType(this.matchedText);
+
+        return new ClassType(typeName);
     }
 }
