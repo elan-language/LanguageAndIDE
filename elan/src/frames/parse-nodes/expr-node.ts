@@ -1,7 +1,9 @@
 import { Field } from "../interfaces/field";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
+import { Sequence } from "./sequence";
 import { Term } from "./term";
+import { WithClause } from "./with-clause";
 
 export class ExprNode extends AbstractAlternatives {
     constructor(field : Field) {
@@ -12,6 +14,10 @@ export class ExprNode extends AbstractAlternatives {
     parseText(text: string): void {
         this.alternatives.push(new Term(this.field));
         this.alternatives.push(new BinaryExpression(this.field));
+        // Term with 'with' clause:
+        var term = () => new Term(this.field);
+        var withClause = () => new WithClause(this.field);
+        this.alternatives.push(new Sequence([term, withClause], this.field));
         super.parseText(text);
     }
 }

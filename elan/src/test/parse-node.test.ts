@@ -149,7 +149,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new ExprNode(stubField), "this", ParseStatus.valid, "this", "", "this ", "<keyword>this </keyword>");
 		testNodeParse(new ExprNode(stubField), "default String", ParseStatus.valid, "default String", "", "", "<keyword>default </keyword><type>String</type>");
 		testNodeParse(new ExprNode(stubField), "default Lit<of Int>", ParseStatus.valid, "", "", "", "");
-
+		testNodeParse(new ExprNode(stubField), "p with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(stubField), ``, ParseStatus.empty, ``, "", "");
