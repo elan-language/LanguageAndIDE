@@ -20,7 +20,7 @@ import { KeywordNode } from '../frames/parse-nodes/keyword-node';
 import { TypeNode } from '../frames/parse-nodes/type-node';
 import { TypeWithOptGenerics } from '../frames/parse-nodes/type-with-opt-generics';
 import { TypeSimpleNode } from '../frames/parse-nodes/type-simple-node';
-import { TupleDefNode } from '../frames/parse-nodes/tuple-def-node';
+import { TupleNode } from '../frames/parse-nodes/tuple-node';
 import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
@@ -152,6 +152,10 @@ suite('ParseNodes', () => {
 		testNodeParse(new ExprNode(stubField), "3*foo(5)", ParseStatus.valid, "3*foo(5)", "", "3 * foo(5)", "", intType);
 		testNodeParse(new ExprNode(stubField), "points.foo(0.0)", ParseStatus.valid, "points.foo(0.0)", "", "points.foo(0.0)", "", intType);
 		testNodeParse(new ExprNode(stubField), "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ParseStatus.valid, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", "", "");
+		testNodeParse(new ExprNode(stubField), "this", ParseStatus.valid, "this", "", "this ", "<keyword>this </keyword>");
+		testNodeParse(new ExprNode(stubField), "default String", ParseStatus.valid, "default String", "", "", "<keyword>default </keyword><type>String</type>");
+		testNodeParse(new ExprNode(stubField), "default Lit<of Int>", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new ExprNode(stubField), "p with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(stubField), ``, ParseStatus.empty, ``, "", "");
@@ -341,10 +345,10 @@ suite('ParseNodes', () => {
 		testNodeParse(new TypeNode(stubField), `Foo<of List<of (Bar, Qux)>>`, ParseStatus.valid, "Foo<of List<of (Bar, Qux)>>", "", "");
 	});
 	test('TupleDefNode', () => {
-		testNodeParse(new TupleDefNode(stubField), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "", new TupleType([stringType, intType]));
-		testNodeParse(new TupleDefNode(stubField), `(foo, 3, bar(a), x)`, ParseStatus.valid, "(foo, 3, bar(a), x)", "", "");
-		testNodeParse(new TupleDefNode(stubField), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
-		testNodeParse(new TupleDefNode(stubField), `(foo, 3, bar(a), x`, ParseStatus.incomplete, "(foo, 3, bar(a), x", "", "");
+		testNodeParse(new TupleNode(stubField), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "", new TupleType([stringType, intType]));
+		testNodeParse(new TupleNode(stubField), `(foo, 3, bar(a), x)`, ParseStatus.valid, "(foo, 3, bar(a), x)", "", "");
+		testNodeParse(new TupleNode(stubField), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
+		testNodeParse(new TupleNode(stubField), `(foo, 3, bar(a), x`, ParseStatus.incomplete, "(foo, 3, bar(a), x", "", "");
 	});
 	test('Lambda', () => {
 		testNodeParse(new Lambda(stubField), `lambda x as Int => x * x`, ParseStatus.valid, "lambda x as Int => x * x", "", "");
