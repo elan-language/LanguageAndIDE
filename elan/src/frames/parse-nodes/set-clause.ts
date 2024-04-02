@@ -11,20 +11,22 @@ import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
 import { Sequence } from "./sequence";
 import { List } from "./list";
-import { SetClause } from "./set-clause";
 
-export class WithClause extends AbstractSequence implements IHasSymbolType {
+export class SetClause extends AbstractSequence implements IHasSymbolType {
     
     constructor(field : Field) {
         super(field);
     }
 
     parseText(text: string): void {
-        var withKw = new KeywordNode(withKeyword, this.field);
-        var setClause = () => new SetClause(this.field);
-        var changes = new List(setClause, this.field);
-        this.elements.push(withKw);
-        this.elements. push(changes);
+        var property = new IdentifierNode(this.field);
+        var set = new KeywordNode(setKeyword, this.field);
+        var to = new KeywordNode(toKeyword, this.field);
+        var expr = new ExprNode(this.field);
+        this.elements.push(property);
+        this.elements. push(set);
+        this.elements. push(to);
+        this.elements. push(expr);
         return super.parseText(text);
     }
     

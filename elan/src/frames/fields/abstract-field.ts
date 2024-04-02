@@ -78,7 +78,7 @@ export abstract class AbstractField implements Selectable, Field {
                 throw new Error(`Parse ${result[0].toString()} at ${rol}`);
             } 
         } else {
-            throw new Error(`${this} does not implement ParseByNodes or ParseByFunction, nor is overriding ParseFrom`)
+            throw new Error(`${this} does not implement ParseByNodes or ParseByFunction, nor is overriding ParseFrom`);
         }
     }
 

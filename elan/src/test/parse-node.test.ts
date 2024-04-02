@@ -410,8 +410,8 @@ suite('ParseNodes', () => {
 		testAST(new ExprNode(stubField), stubField, "default String", "Default (Type String)", stringType);
 		testAST(new ExprNode(stubField), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 		
-		// const ast1 = "With (p) (Set (x) (Add (p.x) (3)),(Set (y) (Minus (p.y) (1)))";
-		// testAST(new ExprNode(stubField), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, intType);
+		const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
+		testAST(new ExprNode(stubField), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 
 
 	});

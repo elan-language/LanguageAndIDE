@@ -40,6 +40,7 @@ import { setKeyword } from "../keywords";
 import { SetAsn } from "./set-asn";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { VarAsn } from "./var-asn";
+import { SetClause } from "../parse-nodes/set-clause";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -171,7 +172,12 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
         return undefined;
     }
 
+    if (node instanceof SetClause) {
+        const id = node.elements[0].matchedText;
+        const to = transform(node.elements[3], field) as ExprAsn;
 
+        return new SetAsn(id, to, field);
+    }
 
     if (node instanceof SymbolNode || node instanceof KeywordNode) {
         return undefined;
@@ -187,13 +193,6 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
             const changes = transformMany(node.elements[1].elements[1] as List, field);
 
             return new WithAsn(obj, changes, field);
-        }
-
-        if (node.elements[1].matchedText.trim() === setKeyword) {
-            const id = node.elements[0].matchedText;
-            const to = transform(node.elements[3], field) as ExprAsn;
-
-            return new SetAsn(id, to, field);
         }
 
         if (node.elements[1] instanceof IdentifierNode) {
