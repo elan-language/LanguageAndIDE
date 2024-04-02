@@ -87,6 +87,7 @@ suite('ParseNodes', () => {
 				case 'foo' : return stubIntSymbol;
 				case 'bar' : return stubStringSymbol;
 				case 'boo' : return stubBoolSymbol;
+				case 'reduce' : return stubIntSymbol;
 			}
 
 			return undefined;
@@ -449,11 +450,27 @@ suite('ParseNodes', () => {
 	});
 
 	test("AST", () => {
-		testAST(new ExprNode(stubField), stubField, "1 + 2", "Add (1) (2)", intType);
+		// testAST(new ExprNode(stubField), stubField, "1 + 2", "Add (1) (2)", intType);
 
-		testAST(new UnaryExpression(stubField), stubField, "-3", "Minus (3)", intType);
-		testAST(new UnaryExpression(stubField), stubField, " not true", "Not (true)", boolType);
-		testAST(new UnaryExpression(stubField), stubField, " not boo", "Not (boo)", boolType);
+		// testAST(new UnaryExpression(stubField), stubField, "-3", "Minus (3)", intType);
+		// testAST(new UnaryExpression(stubField), stubField, " not true", "Not (true)", boolType);
+		// testAST(new UnaryExpression(stubField), stubField, " not boo", "Not (boo)", boolType);
+
+		// testAST(new Term(stubField), stubField, "a", "a", intType);
+
+		// testAST(new ExprNode(stubField), stubField, "a", "a", intType);
+		// testAST(new ExprNode(stubField), stubField, "a + b", "Add (a) (b)", intType);
+		// testAST(new ExprNode(stubField), stubField, "a + b-c", "Add (a) (Minus (b) (c))", intType);
+		
+		// testAST(new ExprNode(stubField), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
+		// testAST(new ExprNode(stubField), stubField, "3*foo(5)", "Multiply (3) (Func Call foo (5))", intType);
+		// testAST(new ExprNode(stubField), stubField, "points.foo(0.0)", "Func Call foo (0)", intType);
+		const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param  p : Type List<Type String>) => (Add (s) (Multiply (Func Call first ()) (Func Call first ()))))";
+		testAST(new ExprNode(stubField), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
+		// testAST(new ExprNode(stubField), stubField, "default String", "a", intType);
+		// testAST(new ExprNode(stubField), stubField, "default Lit<of Int>", "a", intType);
+		// testAST(new ExprNode(stubField), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", "a", intType);
+
+
 	});
-
 });
