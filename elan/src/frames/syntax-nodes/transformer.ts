@@ -31,6 +31,8 @@ import { TypeWithOptGenerics } from "../parse-nodes/type-with-opt-generics";
 import { TypeAsn } from "./type-asn";
 import { SymbolNode } from "../parse-nodes/symbol-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
+import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
+import { DefaultTypeAsn } from "./default-type-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -131,6 +133,11 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
         }
 
         return new TypeAsn(type, gp, field);
+    }
+
+    if (node instanceof DefaultOfTypeNode) {
+        const type = transform(node.elements[1], field)!;
+        return new DefaultTypeAsn(type, field);
     }
 
     if (node instanceof OptionalNode) {
