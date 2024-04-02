@@ -12,6 +12,7 @@ export class BinaryExprAsn implements AstNode {
 
     get symbolType() {
         switch (this.op) {
+            case OperationSymbol.And : return BooleanType.Instance;
             case OperationSymbol.Not : return BooleanType.Instance;
             default: return this.lhs.symbolType;
         }

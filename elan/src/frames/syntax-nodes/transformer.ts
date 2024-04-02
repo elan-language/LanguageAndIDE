@@ -36,23 +36,27 @@ import { DefaultTypeAsn } from "./default-type-asn";
 import { WithClause } from "../parse-nodes/with-clause";
 import { WithAsn } from "./with-asn";
 import { List } from "../parse-nodes/list";
-import { setKeyword } from "../keywords";
 import { SetAsn } from "./set-asn";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { VarAsn } from "./var-asn";
 import { SetClause } from "../parse-nodes/set-clause";
+import { LitChar } from "../parse-nodes/lit-char";
+import { LiteralCharAsn } from "./literal-char-asn";
+import { BracketedExpression } from "../parse-nodes/bracketed-expression";
+import { BracketedAsn } from "./bracketed-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
         case "+": return OperationSymbol.Add;
         case "-": return OperationSymbol.Minus;
         case "*": return OperationSymbol.Multiply;
+        case "and": return OperationSymbol.And;
         case "not": return OperationSymbol.Not;
         default: throw new Error("Not implemented");
     }
 }
 
-function transformMany(node : CSV | Multiple | Sequence | List, field: Field) : Array<AstNode> {
+function transformMany(node: CSV | Multiple | Sequence | List, field: Field): Array<AstNode> {
     const ast = new Array<AstNode>();
 
     for (const elem of node.elements) {
@@ -77,16 +81,20 @@ function transformMany(node : CSV | Multiple | Sequence | List, field: Field) : 
 }
 
 
-export function transform(node : ParseNode | undefined, field : Field) : AstNode | undefined {
-   
-    if (node instanceof UnaryExpression){
+export function transform(node: ParseNode | undefined, field: Field): AstNode | undefined {
+
+    if (node instanceof BracketedExpression) {
+        return new BracketedAsn(transform(node.elements[1], field)!, field);
+    }
+
+    if (node instanceof UnaryExpression) {
         const op = mapOperation(node.elements[0].matchedText);
         const operand = transform(node.elements[1], field) as ExprAsn;
 
         return new UnaryExprAsn(op, operand, field);
     }
 
-    if (node instanceof BinaryExpression){
+    if (node instanceof BinaryExpression) {
         const lhs = transform(node.elements[0], field) as ExprAsn;
         const rhs = transform(node.elements[2], field) as ExprAsn;
         const op = mapOperation(node.elements[1].matchedText);
@@ -106,18 +114,22 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
         return new LiteralFloatAsn(node.matchedText);
     }
 
-    if (node instanceof IdentifierNode){
+    if (node instanceof LitChar) {
+        return new LiteralCharAsn(node.matchedText);
+    }
+
+    if (node instanceof IdentifierNode) {
         return new IdAsn(node.matchedText, field);
     }
 
-    if (node instanceof FunctionCallNode){
+    if (node instanceof FunctionCallNode) {
         const id = node.elements[1].matchedText;
         const parameters = transformMany(node.elements[3] as CSV, field) as Array<ExprAsn>;
 
         return new FuncCallAsn(id, parameters, field);
     }
 
-    if (node instanceof Lambda){
+    if (node instanceof Lambda) {
         const parameters = transformMany(node.elements[1] as CSV, field) as Array<ExprAsn>;
         const body = transform(node.elements[3], field) as ExprAsn;
 
@@ -127,7 +139,7 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
     if (node instanceof ParamDefNode) {
         const id = node.elements[0].matchedText;
         const type = transform(node.elements[2], field)!;
-     
+
         return new ParamDefAsn(id, type, field);
     }
 
@@ -183,11 +195,11 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
         return undefined;
     }
 
-    if (node instanceof AbstractAlternatives){
+    if (node instanceof AbstractAlternatives) {
         return transform(node.bestMatch, field);
     }
 
-    if (node instanceof Sequence){
+    if (node instanceof Sequence) {
         if (node.elements[1] instanceof WithClause) {
             const obj = transform(node.elements[0], field) as ExprAsn;
             const changes = transformMany(node.elements[1].elements[1] as List, field);
