@@ -112,8 +112,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     parseFrom(source: CodeSource): void {
         this.parseTop(source);
         while (!this.parseBottom(source)) {
-            if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
-                source.removeRegEx(Regexes.startsWithNewLine, false);
+            if (source.isMatchRegEx(Regexes.newLine)) {
+                source.removeRegEx(Regexes.newLine, false);
                 source.removeIndent();
             } else {
                 this.getFirstSelectorAsDirectChild().parseFrom(source);

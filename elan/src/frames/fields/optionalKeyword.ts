@@ -1,13 +1,13 @@
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { AbstractField } from "./abstract-field";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
+
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 
-export class OptionalKeyword extends AbstractField implements ParseByNodes {
+export class OptionalKeyword extends AbstractField {
     isParseByNodes = true;
     private optionalKeyword = true;
     private keyword: string;

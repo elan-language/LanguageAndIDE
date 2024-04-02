@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
-import { escapeAngleBrackets, isCollapsible, isParseByFunction, isParseByNodes } from "../helpers";
+import { escapeAngleBrackets, isCollapsible} from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
@@ -32,53 +32,24 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
+    abstract initialiseRoot(): ParseNode ;
+    abstract readToDelimeter: (source: CodeSource) => string;
 
     alertHolderToUpdate():void {
         this.getHolder().fieldUpdated(this);
     }
     
     parseCurrentText() : void {    
-        if (isParseByNodes(this)) {
-            var root = this.initialiseRoot();
-            this.parseCompleteTextUsingNode(this.text, root);
-        } else if (isParseByFunction(this)) {
-            var status: ParseStatus = ParseStatus.notParsed;
-            if (this.text.length === 0) {
-                status = this.isOptional()? ParseStatus.valid : ParseStatus.incomplete;
-            } else {
-                var result = this.parseFunction([ParseStatus.notParsed, this.text]);
-                if (result[1].length > 0) {
-                    status = ParseStatus.invalid;
-                } else {
-                    status = result[0];
-                }
-            }
-            this.setStatus(status);
-        }
+        var root = this.initialiseRoot();
+        this.parseCompleteTextUsingNode(this.text, root);
     }
 
-     parseFrom(source: CodeSource): void {
-        if (isParseByNodes(this)) {
-            var text = this.readToDelimeter(source); 
-            var root = this.initialiseRoot();
-            this.parseCompleteTextUsingNode(text, root);
-            if (this._status !== ParseStatus.valid) { 
-                throw new Error(`Parse error at ${source.getRemainingCode()}`);
-            }
-        } else if (isParseByFunction(this)) {       
-            var rol = source.readToEndOfLine();
-            var result = this.parseFunction([ParseStatus.notParsed, rol]);  
-            this.setStatus(result[0]);
-            if (result[0] === ParseStatus.valid || this._optional) {
-                var taken = rol.length - result[1].length;
-                this.text = rol.substring(0, taken);
-                rol = rol.substring(taken);
-                source.pushBackOntoFrontOfCode(rol);
-            } else {
-                throw new Error(`Parse ${result[0].toString()} at ${rol}`);
-            } 
-        } else {
-            throw new Error(`${this} does not implement ParseByNodes or ParseByFunction, nor is overriding ParseFrom`);
+    parseFrom(source: CodeSource): void {
+        var text = this.readToDelimeter(source); 
+        var root = this.initialiseRoot();
+        this.parseCompleteTextUsingNode(text, root);
+        if (this._status !== ParseStatus.valid) { 
+            throw new Error(`Parse error at ${source.getRemainingCode()}`);
         }
     }
 
@@ -92,13 +63,12 @@ export abstract class AbstractField implements Selectable, Field {
             } else {
                 this.setStatus(root.status);
                 this.text = root.matchedText + root.remainingText;
-                this.completion = root.getCompletion();
             }
         }
     }
 
     getCompletion(): string {
-        return this.completion;
+        return this.rootNode? this.rootNode.getCompletion() : "";
     }
 
     setOptional(optional: boolean) : void {
@@ -222,14 +192,14 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" placeholder="${this.placeholder}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else { 
             return this.rootNode ? this.rootNode.renderAsHtml() : escapeAngleBrackets(this.text);
         } 
     }
 
     public width(): number {
-        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): this.placeholder.length-1;
+        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): 1;
     }
 
     private escapeDoubleQuotes(str: string): string {

@@ -241,12 +241,12 @@ export class FileImpl implements File {
             this.parseError = undefined;
             this.validateHeader(source.getRemainingCode());
             if (source.isMatch("#")) {
-                source.removeRegEx(Regexes.startsWithComment, false);
-                source.removeRegEx(Regexes.startsWithNewLine, false);
-                source.removeRegEx(Regexes.startsWithNewLine, false);
+                source.removeRegEx(Regexes.comment, false);
+                source.removeRegEx(Regexes.newLine, false);
+                source.removeRegEx(Regexes.newLine, false);
             }
             while (source.hasMoreCode()) {
-                if (source.isMatchRegEx(Regexes.startsWithNewLine)) {
+                if (source.isMatchRegEx(Regexes.newLine)) {
                     source.removeNewLine();
                 } else {
                     this.getFirstSelectorAsDirectChild().parseFrom(source);

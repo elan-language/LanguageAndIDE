@@ -28,8 +28,6 @@ input, input:focus , input:active{
     caret-color: black;
 }
 
-
-
 /* Basic Colour scheme */
 
 hash {
@@ -192,7 +190,7 @@ field completion, global completion, member completion, statement completion  {
 field.selected completion {
     display: inline;
     color: white;
-    background-color: lightgrey;
+    background-color: var(--incomplete);
 }
 
 /* selector completion */

@@ -29,12 +29,11 @@ export class CodeSourceFromString implements CodeSource {
         this.remainingCode = pushBack + this.remainingCode;
     }
     removeNewLine(): CodeSource {
-        this.removeRegEx(Regexes.startsWithNewLine, false);
+        this.removeRegEx(Regexes.newLine, false);
         return this;
     }
     removeIndent(): CodeSource {
-        var indent = /^\s*/;
-        this.removeRegEx(indent, false);
+        this.removeRegEx(Regexes.indent, false);
         return this;
     }
     remove(match: string): CodeSource {

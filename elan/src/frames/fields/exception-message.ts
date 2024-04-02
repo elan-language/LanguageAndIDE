@@ -1,13 +1,13 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
+
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { LitString } from "../parse-nodes/lit-string";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
-export class ExceptionMessage extends AbstractField implements ParseByNodes {
+export class ExceptionMessage extends AbstractField {
     isParseByNodes = true;
     constructor(holder: Frame) {
         super(holder);

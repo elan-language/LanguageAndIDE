@@ -1,11 +1,11 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
+
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
-export class IdentifierField extends AbstractField implements ParseByNodes {
+export class IdentifierField extends AbstractField {
     isParseByNodes: boolean = true;
 
     constructor(holder: Frame) {
