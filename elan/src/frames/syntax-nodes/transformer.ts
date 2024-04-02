@@ -33,6 +33,13 @@ import { SymbolNode } from "../parse-nodes/symbol-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
 import { DefaultTypeAsn } from "./default-type-asn";
+import { WithClause } from "../parse-nodes/with-clause";
+import { WithAsn } from "./with-asn";
+import { List } from "../parse-nodes/list";
+import { setKeyword } from "../keywords";
+import { SetAsn } from "./set-asn";
+import { VarRefNode } from "../parse-nodes/var-ref-node";
+import { VarAsn } from "./var-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -44,11 +51,11 @@ function mapOperation(op: string) {
     }
 }
 
-function transformMany(node : CSV | Multiple | Sequence, field: Field) : Array<AstNode> {
+function transformMany(node : CSV | Multiple | Sequence | List, field: Field) : Array<AstNode> {
     const ast = new Array<AstNode>();
 
     for (const elem of node.elements) {
-        if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
+        if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence || elem instanceof List) {
             const asns = transformMany(elem, field);
 
             for (const asn of asns) {
@@ -147,12 +154,54 @@ export function transform(node : ParseNode | undefined, field : Field) : AstNode
         return undefined;
     }
 
+    if (node instanceof VarRefNode) {
+        if (node.bestMatch instanceof Sequence) {
+            const q = node.bestMatch.elements[0].matchedText;
+            const id = node.bestMatch.elements[1].matchedText;
+
+            return new VarAsn(id, q, field);
+        }
+
+        if (node.bestMatch instanceof IdentifierNode) {
+            const id = node.bestMatch.matchedText;
+
+            return new VarAsn(id, "", field);
+        }
+
+        return undefined;
+    }
+
+
+
     if (node instanceof SymbolNode || node instanceof KeywordNode) {
         return undefined;
     }
 
     if (node instanceof AbstractAlternatives){
         return transform(node.bestMatch, field);
+    }
+
+    if (node instanceof Sequence){
+        if (node.elements[1] instanceof WithClause) {
+            const obj = transform(node.elements[0], field) as ExprAsn;
+            const changes = transformMany(node.elements[1].elements[1] as List, field);
+
+            return new WithAsn(obj, changes, field);
+        }
+
+        if (node.elements[1].matchedText.trim() === setKeyword) {
+            const id = node.elements[0].matchedText;
+            const to = transform(node.elements[3], field) as ExprAsn;
+
+            return new SetAsn(id, to, field);
+        }
+
+        if (node.elements[1] instanceof IdentifierNode) {
+            const id = node.elements[0].matchedText;
+            const to = transform(node.elements[3], field) as ExprAsn;
+
+            return new SetAsn(id, to, field);
+        }
     }
 
     throw new Error("Not implemented " + typeof node);
