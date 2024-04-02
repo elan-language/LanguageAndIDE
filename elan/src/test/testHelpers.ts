@@ -22,6 +22,7 @@ import { IntType } from '../symbols/int-type';
 import { StringType } from '../symbols/string-type';
 import { ISymbol } from '../symbols/symbol';
 import { UnknownType } from '../symbols/unknown-type';
+import { ClassType } from '../symbols/class-type';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -346,6 +347,11 @@ const stubBoolSymbol = {
   symbolType : boolType,
 } as ISymbol;
 
+const stubClassSymbol = {
+  symbolId : "p",
+  symbolType : new ClassType("p"),
+} as ISymbol;
+
 const stubHolder = {
   resolveSymbol(id, initialScope) {
     switch (id) {
@@ -357,6 +363,7 @@ const stubHolder = {
       case 'bar' : return stubStringSymbol;
       case 'boo' : return stubBoolSymbol;
       case 'reduce' : return stubIntSymbol;
+      case 'p' : return stubClassSymbol;
     }
 
     return undefined;

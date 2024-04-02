@@ -14,7 +14,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
         super(parent);
         this.actual = new ValueRefField(this);
         this.actual.setText("actual");
-        this.actual.setPlaceholder("variable")
+        this.actual.setPlaceholder("variable");
         this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
     }
