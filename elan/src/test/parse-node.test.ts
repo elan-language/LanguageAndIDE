@@ -431,5 +431,15 @@ suite('ParseNodes', () => {
 		testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
 		testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
 
+		testAST(new LitString(), stubField, `"abc"`,  `"abc"`, stringType);
+
+		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
+		// testAST(new FunctionCallNode(), stubField, `bar.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `global.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "", intType);
 	});
 });
