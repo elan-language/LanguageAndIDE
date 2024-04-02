@@ -1,22 +1,29 @@
+import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseByFunction } from "../interfaces/parse-by-function";
-import { ParseStatus } from "../parse-status";
-import { AbstractField } from "./abstract-field";
-import { simpleType } from "./parse-functions";
 
-export class TypeNameField extends AbstractField implements ParseByFunction {
-    isParseByFunction = true;
+import { ParseNode } from "../parse-nodes/parse-node";
+import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { AbstractField } from "./abstract-field";
+
+export class TypeNameField extends AbstractField {
+    isParseByNodes = true;
     constructor(holder: Frame) {
         super(holder);
         this.useHtmlTags = true;
         this.placeholder = "Name";
     }
+
+    initialiseRoot(): ParseNode {
+        this.rootNode = new TypeSimpleNode(this);
+        return this.rootNode;
+    }
+
+    readToDelimeter: (source: CodeSource) => string =  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/);
+
+
     getIdPrefix(): string {
         return 'type';
     }
-    parseFunction(input: [ParseStatus, string]): [ParseStatus, string] {
-        return simpleType(input);
-    } 
     public textAsHtml(): string {
         if (this.selected) {
             return super.textAsHtml();

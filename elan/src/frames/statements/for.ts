@@ -18,9 +18,7 @@ export class For extends FrameWithStatements implements Statement  {
         this.variable = new IdentifierField(this);
         this.variable.setPlaceholder("variableName");
         this.from = new ValueRefField(this);
-        this.from.setPlaceholder("integer value or expression");
         this.to = new ValueRefField(this);
-        this.to.setPlaceholder("integer value or expression");
         this.step = new ValueRefField(this);
         this.step.setText("1");
     }

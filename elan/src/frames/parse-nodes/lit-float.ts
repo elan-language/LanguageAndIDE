@@ -7,6 +7,7 @@ import { FloatType } from "../../symbols/float-type";
 import { OptionalNode } from "./optional-node";
 import { Sequence } from "./sequence";
 import { DOT } from "../symbols";
+import { Regexes } from "../fields/regexes";
 
 export class LitFloat extends AbstractSequence {
 
@@ -20,10 +21,10 @@ export class LitFloat extends AbstractSequence {
         if (text.trimStart().length > 0) {
             this.elements.push(new LitInt(this.field));
             this.elements.push(new SymbolNode(DOT, this.field));
-            this.elements.push(new RegExMatchNode(/^\s*[0-9]+/, this.field));
+            this.elements.push(new RegExMatchNode(Regexes.literalInt, this.field));
             var exponent = new OptionalNode(() => new Sequence([
                 () => new RegExMatchNode(/e/, this.field),
-                () => new RegExMatchNode(/^-?[0-9]+/, this.field)
+                () => new RegExMatchNode(Regexes.negatableLitInt, this.field)
                 ], this.field), this.field);
             this.elements.push(exponent);
             super.parseText(text);

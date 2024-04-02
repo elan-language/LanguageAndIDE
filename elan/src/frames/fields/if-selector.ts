@@ -2,8 +2,26 @@ import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
 import { Else } from "../statements/else";
 import { ParseStatus } from "../parse-status";
+import { CodeSource } from "../code-source";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { Regexes } from "./regexes";
 
 export class IfSelector extends AbstractField {
+    //TODO: IfSelector should be eliminated - replaced by an optionalKeyword (as was the IntoSelector)
+    initialiseRoot(): ParseNode {
+        throw new Error("Method not implemented.");
+    }
+    readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => "";
+
+    //Temporary fix
+    parseFrom(source: CodeSource): void {
+        if (source.isMatchRegEx(Regexes.ifClause)) {
+            source.remove("if ");
+            this.else.setIfExtension(true);
+        }
+    }
+
+
     private else: Else;
 
     constructor(holder: Else) {

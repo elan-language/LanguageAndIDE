@@ -6,7 +6,7 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
+
 import { propertyKeyword, globalKeyword, libraryKeyword } from "../keywords";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
@@ -17,7 +17,7 @@ import { IndexNode } from "../parse-nodes/index-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { DOT } from "../symbols";
 
-export class AssignableField extends AbstractField implements ParseByNodes { 
+export class AssignableField extends AbstractField { 
     isParseByNodes = true;
 
     constructor(holder: Frame) {

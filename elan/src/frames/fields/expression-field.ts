@@ -5,9 +5,9 @@ import { Frame } from "../interfaces/frame";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
 
-export class ExpressionField extends AbstractField implements ParseByNodes {
+
+export class ExpressionField extends AbstractField {
     isParseByNodes = true;
 
     constructor(holder: Frame) {

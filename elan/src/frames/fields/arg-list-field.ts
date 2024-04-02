@@ -4,9 +4,9 @@ import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { CSV } from "../parse-nodes/csv";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
 
-export class ArgListField extends AbstractField implements ParseByNodes {
+
+export class ArgListField extends AbstractField {
     isParseByNodes = true;
 
     constructor(holder: Frame) {

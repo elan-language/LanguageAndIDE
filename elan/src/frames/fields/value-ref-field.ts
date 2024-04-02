@@ -1,17 +1,17 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ParseByNodes } from "../interfaces/parse-by-nodes";
+
 import { Alternatives } from "../parse-nodes/alternatives";
 import { LiteralNode } from "../parse-nodes/literal-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
 
-export class ValueRefField extends AbstractField implements ParseByNodes {
+export class ValueRefField extends AbstractField {
     isParseByNodes = true;
     constructor(holder: Frame) {
         super(holder);
-        this.setPlaceholder("value or expression");
+        this.setPlaceholder("value");
     }
     getIdPrefix(): string {
         return 'expr';
