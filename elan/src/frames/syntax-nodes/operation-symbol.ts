@@ -3,5 +3,6 @@ export enum OperationSymbol {
     Add,
     Minus,
     Not,
-    Multiply
+    Multiply,
+    And
 }
