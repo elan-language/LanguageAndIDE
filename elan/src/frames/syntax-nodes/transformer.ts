@@ -44,6 +44,8 @@ import { LitChar } from "../parse-nodes/lit-char";
 import { LiteralCharAsn } from "./literal-char-asn";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
+import { LitString } from "../parse-nodes/lit-string";
+import { LiteralStringAsn } from "./literal-string-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -116,6 +118,10 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof LitChar) {
         return new LiteralCharAsn(node.matchedText);
+    }
+
+    if (node instanceof LitString) {
+        return new LiteralStringAsn(node.matchedText);
     }
 
     if (node instanceof IdentifierNode) {

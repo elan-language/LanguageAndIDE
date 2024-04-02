@@ -413,23 +413,33 @@ suite('ParseNodes', () => {
 		const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
 		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 
-		testAST(new IdentifierNode(stubField), stubField, `a`, "a", intType);
+		testAST(new IdentifierNode(), stubField, `a`, "a", intType);
 
-		testAST(new LitBool(stubField), stubField, " true", "true", boolType);
-		testAST(new LitBool(stubField), stubField, " false", "false", boolType);
+		testAST(new LitBool(), stubField, " true", "true", boolType);
+		testAST(new LitBool(), stubField, " false", "false", boolType);
 
-		testAST(new LitChar(stubField), stubField, "'a'", "'a'", charType);
-		testAST(new LitChar(stubField), stubField, " '9'", "'9'", charType);
+		testAST(new LitChar(), stubField, "'a'", "'a'", charType);
+		testAST(new LitChar(), stubField, " '9'", "'9'", charType);
 
-		testAST(new LitInt(stubField), stubField, " 123", "123", intType);
+		testAST(new LitInt(), stubField, " 123", "123", intType);
 
-		testAST(new LitFloat(stubField), stubField, " 1.1", "1.1", floatType);
+		testAST(new LitFloat(), stubField, " 1.1", "1.1", floatType);
 
-		testAST(new BracketedExpression(stubField), stubField, "(3)", "(3)", intType);
-		testAST(new BracketedExpression(stubField), stubField, "(3 + 4)", "(Add (3) (4))", intType);
-		testAST(new BracketedExpression(stubField), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
-		testAST(new BracketedExpression(stubField), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
-		testAST(new BracketedExpression(stubField), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
+		testAST(new BracketedExpression(), stubField, "(3)", "(3)", intType);
+		testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", intType);
+		testAST(new BracketedExpression(), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
+		testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
+		testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
 
+		testAST(new LitString(), stubField, `"abc"`,  `"abc"`, stringType);
+
+		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
+		// testAST(new FunctionCallNode(), stubField, `bar.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `global.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "", intType);
 	});
 });
