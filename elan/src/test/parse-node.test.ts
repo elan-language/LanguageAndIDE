@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
-import { testAST, testNodeParse } from './testHelpers';
+import { testAST, testNodeParse, stubField, boolType, charType, floatType, intType, stringType, unknownType } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
 import { LitChar } from '../frames/parse-nodes/lit-char';
 import { LitInt } from '../frames/parse-nodes/lit-int';
@@ -25,13 +25,6 @@ import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
-import { Field } from '../frames/interfaces/field';
-import { IntType } from '../symbols/int-type';
-import { FloatType } from '../symbols/float-type';
-import { BooleanType } from '../symbols/boolean-type';
-import { CharType } from '../symbols/char-type';
-import { StringType } from '../symbols/string-type';
-import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { ListType } from '../symbols/list-type';
 import { TupleType } from '../symbols/tuple-type';
@@ -44,62 +37,9 @@ import { VarRefNode } from '../frames/parse-nodes/var-ref-node';
 import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
 import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 import { abstractKeyword } from '../frames/keywords';
-import { ISymbol } from '../symbols/symbol';
-import { Parent } from '../frames/interfaces/parent';
 import { GenericClassType } from '../symbols/generic-class-type';
 
 suite('ParseNodes', () => {
-
-	const intType = IntType.Instance;
-	const floatType = FloatType.Instance;
-	const boolType = BooleanType.Instance;
-	const charType = CharType.Instance;
-	const stringType = StringType.Instance;
-	const unknownType = UnknownType.Instance;
-
-	const stubIntSymbol = {
-		symbolId : "a",
-		symbolType : intType,
-	} as ISymbol;
-
-	const stubFloatSymbol = {
-		symbolId : "b",
-		symbolType : floatType,
-	} as ISymbol;
-
-	const stubStringSymbol = {
-		symbolId : "bar",
-		symbolType : stringType,
-	} as ISymbol;
-
-	const stubBoolSymbol = {
-		symbolId : "bar",
-		symbolType : boolType,
-	} as ISymbol;
-
-	const stubHolder = {
-		resolveSymbol(id, initialScope) {
-			switch (id) {
-				case 'a' : return stubIntSymbol;
-				case 'b' : return stubFloatSymbol;
-				case 'c' : return stubFloatSymbol;
-				case 'x' : return stubIntSymbol;
-				case 'foo' : return stubIntSymbol;
-				case 'bar' : return stubStringSymbol;
-				case 'boo' : return stubBoolSymbol;
-				case 'reduce' : return stubIntSymbol;
-			}
-
-			return undefined;
-		},
-	} as Parent;
-
-	const stubField = {
-		getHolder() {
-			return stubHolder;
-		}
-	} as Field;
-
 
 	vscode.window.showInformationMessage('Start all unit tests.');
 	test('UnaryExpression', () => {

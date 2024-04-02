@@ -23,6 +23,7 @@ export abstract class AbstractField implements Selectable, Field {
     private status: ParseStatus | undefined;
     private cursorPos: number = 0; //Relative to LH end of text
     protected rootNode?: ParseNode;
+    protected completion: string = "";
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -91,12 +92,13 @@ export abstract class AbstractField implements Selectable, Field {
             } else {
                 this.setStatus(root.status);
                 this.text = root.matchedText + root.remainingText;
+                this.completion = root.getCompletion();
             }
         }
     }
 
-    getHelp(): string {
-        return "";
+    getCompletion(): string {
+        return this.completion;
     }
 
     setOptional(optional: boolean) : void {
@@ -260,7 +262,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><help>${this.getHelp()}</help></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion></field>`;
     }
 
     indent(): string {

@@ -14,6 +14,14 @@ import { ISymbolType } from '../symbols/symbol-type';
 import { isHasSymbolType } from '../symbols/symbolHelpers';
 import { transform } from '../frames/syntax-nodes/transformer';
 import { Field } from '../frames/interfaces/field';
+import { FloatType } from '../symbols/float-type';
+import { Parent } from '../frames/interfaces/parent';
+import { BooleanType } from '../symbols/boolean-type';
+import { CharType } from '../symbols/char-type';
+import { IntType } from '../symbols/int-type';
+import { StringType } from '../symbols/string-type';
+import { ISymbol } from '../symbols/symbol';
+import { UnknownType } from '../symbols/unknown-type';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -303,6 +311,63 @@ export async function activate(docUri: vscode.Uri) {
       assert.strictEqual(node.symbolType?.name, symbolType.name, text);
     }
   }
+
+export function testCompletion(node: ParseNode, text: string, status: ParseStatus, completion: string) {
+  node.parseText(text);
+  assert.equal(node.status, status);
+  assert.equal(node.getCompletion(), completion);
+}
+
+
+export const intType = IntType.Instance;
+export const floatType = FloatType.Instance;
+export const boolType = BooleanType.Instance;
+export const charType = CharType.Instance;
+export const stringType = StringType.Instance;
+export const unknownType = UnknownType.Instance;
+
+const stubIntSymbol = {
+  symbolId : "a",
+  symbolType : intType,
+} as ISymbol;
+
+const stubFloatSymbol = {
+  symbolId : "b",
+  symbolType : floatType,
+} as ISymbol;
+
+const stubStringSymbol = {
+  symbolId : "bar",
+  symbolType : stringType,
+} as ISymbol;
+
+const stubBoolSymbol = {
+  symbolId : "bar",
+  symbolType : boolType,
+} as ISymbol;
+
+const stubHolder = {
+  resolveSymbol(id, initialScope) {
+    switch (id) {
+      case 'a' : return stubIntSymbol;
+      case 'b' : return stubFloatSymbol;
+      case 'c' : return stubFloatSymbol;
+      case 'x' : return stubIntSymbol;
+      case 'foo' : return stubIntSymbol;
+      case 'bar' : return stubStringSymbol;
+      case 'boo' : return stubBoolSymbol;
+      case 'reduce' : return stubIntSymbol;
+    }
+
+    return undefined;
+  },
+} as Parent;
+
+export const stubField = {
+  getHolder() {
+    return stubHolder;
+  }
+} as Field;
 
 export function testAST(node: ParseNode, field : Field, text: string, astAsString : string, st : ISymbolType) {
   node.parseText(text);

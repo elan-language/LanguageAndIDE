@@ -6,6 +6,7 @@ export class TypeSimpleNode extends RegExMatchNode {
 
     constructor(field : Field) {
         super(/^\s*[A-Z]\w*/, field);
+        this.placeholder = "Type";
     }
     renderAsHtml(): string {
         return `<type>${this.renderAsSource()}</type>`;

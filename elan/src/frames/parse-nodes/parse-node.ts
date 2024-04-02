@@ -5,9 +5,12 @@ export interface ParseNode {
     matchedText: string;
     remainingText: string;
 
+
     parseText(text: string): void;
 
     renderAsHtml(): string;
     renderAsSource(): string;
     renderAsObjectCode(): string;
+
+    getCompletion(): string;
 }

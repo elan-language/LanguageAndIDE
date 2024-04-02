@@ -1,5 +1,3 @@
-import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
-import { ISymbolType } from "../../symbols/symbol-type";
 import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
@@ -11,7 +9,6 @@ export abstract class AbstractSequence extends AbstractParseNode {
 
     constructor(field : Field) {
         super(field);
-        this.placeholder = "op";
     }
 
     parseText(text: string): void {
@@ -43,8 +40,10 @@ export abstract class AbstractSequence extends AbstractParseNode {
     renderAsSource(): string {
         return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
     }
-
     renderAsObjectCode(): string {
         return this.elements.reduce((result, current) => result + current.renderAsObjectCode(), "");
+    }
+    getCompletion(): string {
+        return this.elements.reduce((result, current) => `${result}${current.getCompletion()}`, "");
     }
 }

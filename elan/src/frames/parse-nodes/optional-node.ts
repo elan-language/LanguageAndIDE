@@ -20,7 +20,7 @@ export class OptionalNode extends AbstractParseNode implements IHasSymbolType {
         if (text.trimStart().length > 0) {
             var option = this.elementConstructor();
             option.parseText(text);
-            if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText === "")) {
+            if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")) {
                 this.updateFrom(option);
                 this.matchedNode = option;
             } else {
@@ -36,6 +36,10 @@ export class OptionalNode extends AbstractParseNode implements IHasSymbolType {
     }
     renderAsSource(): string {
         return this.matchedNode ? this.matchedNode.renderAsSource() : "";
+    }
+
+    getCompletion(): string {
+        return this.matchedNode? this.matchedNode.getCompletion() : super.getCompletion();
     }
 
     get symbolType() {

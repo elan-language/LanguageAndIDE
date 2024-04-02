@@ -18,6 +18,7 @@ import { DOT } from "../symbols";
 export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
     constructor(field : Field) {
         super(field);
+        this.placeholder = "variable";
     }
 
     parseText(text: string): void {

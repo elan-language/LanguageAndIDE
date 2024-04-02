@@ -17,6 +17,7 @@ export class TypeWithOptGenerics extends AbstractSequence {
 
     constructor(field : Field) {
         super(field);
+        this.placeholder = "Type";
     }
     parseText(text: string): void {
         this.remainingText = text;

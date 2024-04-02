@@ -16,9 +16,6 @@ export class ConstantValueField extends AbstractField implements ParseByNodes, I
         this.setPlaceholder("lit");
     }
 
-    getHelp(): string {
-        return "";
-    }
     initialiseRoot(): ParseNode { 
         this.rootNode = new LiteralNode(this);
         return this.rootNode; 

@@ -118,10 +118,10 @@ suite('Milestone 1 - Unit tests', () => {
 	 test("Selection Filtering - globals", () => {
 		const f = new FileImpl(hash, new DefaultProfile());
 		var g = new GlobalSelector(f);
-		var help = g.getHelp();
+		var help = g.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
 		g.processKey(key('c'));
-		help = g.getHelp();
+		help = g.getCompletion();
 		assert.equal(help, " class constant");
         assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`);
 	});	
@@ -130,11 +130,11 @@ suite('Milestone 1 - Unit tests', () => {
 		const f = new FileImpl(hash, new DefaultProfile());
 		var c = new Class(f);		
 		var s = new MemberSelector(c);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " function procedure property #");
 		s.processKey(key('p'));
 		assert.equal(s.text, "pro");
-		help = s.getHelp();
+		help = s.getCompletion();
 		assert.equal(help, " procedure property");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
 	});	
@@ -144,18 +144,18 @@ suite('Milestone 1 - Unit tests', () => {
 		var c = new Class(f);
 		c.makeAbstract();		
 		var s = new MemberSelector(c);
-		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property, #");
+		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
 		s.processKey(key('a'));
 		assert.equal(s.text, "abstract ");
-		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
 		s.processKey(key('a'));
 		assert.equal(s.text, "abstract ");
 		s.processKey(key('b'));
 		assert.equal(s.text, "abstract ");
-		assert.equal(s.getHelp(), " abstract function, abstract procedure, abstract property,");
+		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
 		s.processKey(key('p'));
 		assert.equal(s.text, "abstract pro");
-		assert.equal(s.getHelp(), " abstract procedure, abstract property,");
+		assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
 	});	
 
@@ -163,10 +163,10 @@ suite('Milestone 1 - Unit tests', () => {
 		const f = new FileImpl(hash, new DefaultProfile());
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " call each external for if input let print repeat set switch throw try var while #");
 		s.processKey(key('s'));
-		help = s.getHelp();
+		help = s.getCompletion();
 		assert.equal(help, " set switch");
         assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`);
 	});	
@@ -175,7 +175,7 @@ suite('Milestone 1 - Unit tests', () => {
 		const fl = new FileImpl(hash, new DefaultProfile());
 		var func = new Function(fl);		
 		var s = new StatementSelector(func);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");
 	});	
 
@@ -185,7 +185,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var if1 = new IfStatement(func);
         var wh = new While(if1);
 		var s = new StatementSelector(wh);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");//no else, print, call
 	});	
 
@@ -195,7 +195,7 @@ suite('Milestone 1 - Unit tests', () => {
         var fm = new FunctionMethod(c);
 		var if1 = new IfStatement(fm);
 		var s = new StatementSelector(if1);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " each else for if let repeat set switch throw try var while #");//else, but no print, call
 	});	
 
@@ -204,7 +204,7 @@ suite('Milestone 1 - Unit tests', () => {
 		var m = new MainFrame(fl);	
 		var sw = new Switch(m);
 		var s = new StatementSelector(sw);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " case");
 	});	
 	test("Selection Context - in an IfThen", () => {
@@ -212,21 +212,21 @@ suite('Milestone 1 - Unit tests', () => {
 		var m = new MainFrame(fl);	
 		var ifThen = new IfStatement(m);
 		var s = new StatementSelector(ifThen);
-		var help = s.getHelp();
+		var help = s.getCompletion();
 		assert.equal(help, " call each else external for if input let print repeat set switch throw try var while #");
 		s.processKey(key('e'));
-		help = s.getHelp();
+		help = s.getCompletion();
 		assert.equal(help, " each else external");
 	});	
 	test("Selection Context - selector prevents more than one main", () => {
 		const fl = new FileImpl(hash, new DefaultProfile());
 		var gs = new GlobalSelector(fl);
-		var help = gs.getHelp();
+		var help = gs.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
 		var m = new MainFrame(fl);	
 		fl.getChildren().push(m);
 		gs = new GlobalSelector(fl);
-		help = gs.getHelp();
+		help = gs.getCompletion();
 		assert.equal(help, " procedure function class constant enum test #");
 	});	
 });	
