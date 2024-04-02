@@ -10,16 +10,16 @@ import { SymbolNode } from "./symbol-node";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
 export class NewInstance extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
-        this.elements.push(new KeywordNode(newKeyword, this.field));
-        this.elements.push(new TypeWithOptGenerics(this.field));
-        this.elements.push(new SymbolNode(OPEN_BRACKET, this.field)); 
-        this.elements.push(new CSV(() => new ExprNode(this.field),0, this.field)); 
-        this.elements.push(new SymbolNode(CLOSE_BRACKET, this.field)); 
+        this.elements.push(new KeywordNode(newKeyword));
+        this.elements.push(new TypeWithOptGenerics());
+        this.elements.push(new SymbolNode(OPEN_BRACKET)); 
+        this.elements.push(new CSV(() => new ExprNode(),0)); 
+        this.elements.push(new SymbolNode(CLOSE_BRACKET)); 
         super.parseText(text);
     }
 

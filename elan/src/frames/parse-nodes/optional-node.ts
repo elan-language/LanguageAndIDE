@@ -10,8 +10,8 @@ export class OptionalNode extends AbstractParseNode implements IHasSymbolType {
     elementConstructor: () => ParseNode;
     matchedNode?: ParseNode;
 
-    constructor(elementConstructor: () => ParseNode, field : Field) {
-        super(field);
+    constructor(elementConstructor: () => ParseNode) {
+        super();
         this.elementConstructor = elementConstructor;
     }
 

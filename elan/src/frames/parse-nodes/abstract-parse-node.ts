@@ -4,9 +4,6 @@ import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode {
 
-    constructor(protected field: Field) {
-    }
-
     status: ParseStatus = ParseStatus.empty;
     matchedText: string = "";
     placeholder: string = "";

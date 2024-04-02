@@ -7,16 +7,16 @@ import { RegExMatchNode } from "./regex-match-node";
 import { SymbolNode } from "./symbol-node";
 
 export class LitChar extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "";
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(SINGLE_QUOTE, this.field));
-            this.elements.push(new RegExMatchNode(Regexes.charValue, this.field));
-            this.elements.push(new SymbolNode(SINGLE_QUOTE, this.field));
+            this.elements.push(new SymbolNode(SINGLE_QUOTE));
+            this.elements.push(new RegExMatchNode(Regexes.charValue));
+            this.elements.push(new SymbolNode(SINGLE_QUOTE));
             super.parseText(text);
         }
     }

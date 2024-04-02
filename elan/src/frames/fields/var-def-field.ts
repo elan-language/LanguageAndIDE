@@ -18,10 +18,10 @@ export class VarDefField extends AbstractField {
         return 'var';
     }
     initialiseRoot(): ParseNode { 
-        var varRef = () => new IdentifierNode(this);
-        var deconTup = () => new DeconstructedTuple(this);
-        var deconList = () => new DeconstructedList(this);
-        this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
+        var varRef = () => new IdentifierNode();
+        var deconTup = () => new DeconstructedTuple();
+        var deconList = () => new DeconstructedList();
+        this.rootNode = new Alternatives([varRef, deconTup, deconList]);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/(\s+((set to)|(be))\s+)|\r|\n/);

@@ -1,7 +1,6 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { escapeAngleBrackets } from "../helpers";
-import { Field } from "../interfaces/field";
 import { rawSymbolToType } from "../../symbols/symbolHelpers";
 import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
@@ -9,8 +8,8 @@ export class SymbolNode extends AbstractParseNode implements IHasSymbolType {
     fixedText: string;
     isSymbol = true;
 
-    constructor(fixedText: string, field : Field) {
-        super(field);
+    constructor(fixedText: string) {
+        super();
         this.fixedText = fixedText;
         this.placeholder = fixedText;
     }

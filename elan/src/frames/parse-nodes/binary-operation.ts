@@ -9,24 +9,24 @@ import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
 
 export class BinaryOperation extends AbstractAlternatives {
     parseText(text: string): void {  
-        this.alternatives.push(new SymbolNode(PLUS,this.field));
-        this.alternatives.push(new SymbolNode(MINUS,this.field));
-        this.alternatives.push(new SymbolNode(MULT,this.field));
-        this.alternatives.push(new SymbolNode(DIVIDE,this.field));
-        this.alternatives.push(new SymbolNode(GT, this.field));
-        this.alternatives.push(new SymbolNode(LT, this.field));
-        this.alternatives.push(new SymbolNode(GE, this.field));
-        this.alternatives.push(new SymbolNode(LE, this.field));
-        this.alternatives.push(new SymbolNode(POWER, this.field));
-        this.alternatives.push(new KeywordNode(isKeyword, this.field));
-        var is = () => new KeywordNode(isKeyword, this.field);
-        var not = () => new KeywordNode(notKeyword, this.field);
-        this.alternatives.push(new Sequence([is,not], this.field));
-        this.alternatives.push(new KeywordNode(andKeyword, this.field));
-        this.alternatives.push(new KeywordNode(orKeyword, this.field));
-        this.alternatives.push(new KeywordNode(xorKeyword, this.field));
-        this.alternatives.push(new KeywordNode(modKeyword, this.field));
-        this.alternatives.push(new KeywordNode(divKeyword, this.field));;
+        this.alternatives.push(new SymbolNode(PLUS));
+        this.alternatives.push(new SymbolNode(MINUS));
+        this.alternatives.push(new SymbolNode(MULT));
+        this.alternatives.push(new SymbolNode(DIVIDE));
+        this.alternatives.push(new SymbolNode(GT));
+        this.alternatives.push(new SymbolNode(LT));
+        this.alternatives.push(new SymbolNode(GE));
+        this.alternatives.push(new SymbolNode(LE));
+        this.alternatives.push(new SymbolNode(POWER));
+        this.alternatives.push(new KeywordNode(isKeyword));
+        var is = () => new KeywordNode(isKeyword);
+        var not = () => new KeywordNode(notKeyword);
+        this.alternatives.push(new Sequence([is,not]));
+        this.alternatives.push(new KeywordNode(andKeyword));
+        this.alternatives.push(new KeywordNode(orKeyword));
+        this.alternatives.push(new KeywordNode(xorKeyword));
+        this.alternatives.push(new KeywordNode(modKeyword));
+        this.alternatives.push(new KeywordNode(divKeyword));;
         super.parseText(text);
     }
 

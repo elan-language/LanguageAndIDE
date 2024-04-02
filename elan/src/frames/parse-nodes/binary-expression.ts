@@ -9,15 +9,15 @@ import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
 export class BinaryExpression extends AbstractSequence implements IHasSymbolType {
     
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "expression";
     }
 
     parseText(text: string): void {
-        this.elements.push(new Term(this.field));
-        this.elements.push(new BinaryOperation(this.field));
-        this.elements.push(new ExprNode(this.field));
+        this.elements.push(new Term());
+        this.elements.push(new BinaryOperation());
+        this.elements.push(new ExprNode());
         return super.parseText(text);
     }
     

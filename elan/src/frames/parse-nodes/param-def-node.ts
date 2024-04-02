@@ -8,15 +8,15 @@ import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
         if (text.trim().length > 0) {
-            this.elements.push(new IdentifierNode(this.field));
-            this.elements.push(new KeywordNode(asKeyword, this.field));
-            this.elements.push(new TypeNode(this.field));
+            this.elements.push(new IdentifierNode());
+            this.elements.push(new KeywordNode(asKeyword));
+            this.elements.push(new TypeNode());
             super.parseText(text);
         }
     }

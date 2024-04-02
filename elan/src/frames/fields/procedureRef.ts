@@ -19,11 +19,11 @@ export class ProcedureRef extends AbstractField {
         return 'ident';
     }
     initialiseRoot(): ParseNode { 
-        var instance = () => new IdentifierNode(this);
-        var dot = () => new SymbolNode(DOT, this);        
-        var proc = () => new IdentifierNode(this);
-        var qualProc = () => new Sequence([instance, dot, proc], this);
-        this.rootNode =  new Alternatives([proc, qualProc], this);  
+        var instance = () => new IdentifierNode();
+        var dot = () => new SymbolNode(DOT);        
+        var proc = () => new IdentifierNode();
+        var qualProc = () => new Sequence([instance, dot, proc]);
+        this.rootNode =  new Alternatives([proc, qualProc]);  
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);

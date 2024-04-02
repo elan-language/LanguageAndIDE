@@ -17,7 +17,7 @@ export class ExceptionMessage extends AbstractField {
         return 'msg';
     }
     initialiseRoot(): ParseNode { 
-        this.rootNode = new Alternatives([() => new LitString(this),() => new IdentifierNode(this) ], this);
+        this.rootNode = new Alternatives([() => new LitString(),() => new IdentifierNode() ]);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = 

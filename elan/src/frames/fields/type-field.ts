@@ -16,7 +16,7 @@ export class TypeField extends AbstractField  {
         return 'type';
     }
     initialiseRoot(): ParseNode { 
-        this.rootNode = new TypeNode(this);
+        this.rootNode = new TypeNode();
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine(); 

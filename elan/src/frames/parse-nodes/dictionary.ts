@@ -10,10 +10,10 @@ export class Dictionary extends AbstractParseNode implements IHasSymbolType  {
     listConstructor: () => ParseNode;
     kvpConstructor: () => ParseNode;
 
-    constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode , field : Field) {
-        super(field);
-        this.kvpConstructor = () => new KVPnode(keyConstructor, valueConstructor,field);
-        this.listConstructor = () => new List(this.kvpConstructor, field);
+    constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode ) {
+        super();
+        this.kvpConstructor = () => new KVPnode(keyConstructor, valueConstructor);
+        this.listConstructor = () => new List(this.kvpConstructor);
     }
 
     parseText(text: string): void {

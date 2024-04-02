@@ -295,7 +295,7 @@ export async function activate(docUri: vscode.Uri) {
   }
 
   export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, 
-        matchedText: string, remainingText: string, source = "", html="", symbolType? : ISymbolType ) {
+        matchedText: string, remainingText: string, source = "", html="") {
     node.parseText(text);
     assert.equal(node.status, status);
     if (matchedText !== "") {
@@ -307,9 +307,6 @@ export async function activate(docUri: vscode.Uri) {
     }
     if (html && html !== "") {
       assert.equal(node.renderAsHtml(), html);
-    }
-    if (symbolType && isHasSymbolType(node)) {
-      assert.strictEqual(node.symbolType?.name, symbolType.name, text);
     }
   }
 

@@ -8,15 +8,15 @@ import { TupleType } from "../../symbols/tuple-type";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
 export class TupleNode extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACKET, this.field));
-            this.elements.push(new CSV(() => new ExprNode(this.field),2, this.field));
-            this.elements.push(new SymbolNode(CLOSE_BRACKET, this.field));
+            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.elements.push(new CSV(() => new ExprNode(),2));
+            this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

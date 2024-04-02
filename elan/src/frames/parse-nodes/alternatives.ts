@@ -5,8 +5,8 @@ import { Field } from "../interfaces/field";
 export class Alternatives extends AbstractAlternatives {
 
     elementConstructors: (() =>ParseNode)[];
-    constructor(elementConstructors: (() =>ParseNode)[], field : Field) {
-        super(field);
+    constructor(elementConstructors: (() =>ParseNode)[]) {
+        super();
         this.elementConstructors = elementConstructors;
     }
 

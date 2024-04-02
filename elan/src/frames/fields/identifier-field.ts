@@ -14,7 +14,7 @@ export class IdentifierField extends AbstractField {
     }
 
     initialiseRoot(): ParseNode {
-        this.rootNode = new IdentifierNode(this);
+        this.rootNode = new IdentifierNode();
         return this.rootNode;
     }
     readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/);

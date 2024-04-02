@@ -7,8 +7,8 @@ export abstract class AbstractSequence extends AbstractParseNode {
     
     elements: ParseNode[] = [];
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {

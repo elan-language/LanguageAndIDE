@@ -26,7 +26,7 @@ export class ParamList extends AbstractField {
         }
     }    
     initialiseRoot(): ParseNode { 
-        this.rootNode = new CSV(() => new ParamDefNode(this), 0, this);
+        this.rootNode = new CSV(() => new ParamDefNode(), 0);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) =

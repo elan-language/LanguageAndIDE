@@ -8,16 +8,16 @@ import { DOUBLE_QUOTES } from "../symbols";
 import { Regexes } from "../fields/regexes";
 
 export class LitString extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = `"string"`;
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES, this.field));
-            this.elements.push(new RegExMatchNode(Regexes.stringContent, this.field));
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES, this.field));
+            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
+            this.elements.push(new RegExMatchNode(Regexes.stringContent));
+            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
             super.parseText(text);
         }
     }

@@ -8,15 +8,15 @@ import { SymbolNode } from "./symbol-node";
 
 export class LitTuple extends AbstractSequence {
 
-    constructor(field: Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACKET, this.field));
-            this.elements.push(new CSV(() => new LiteralNode(this.field),2, this.field));
-            this.elements.push(new SymbolNode(CLOSE_BRACKET, this.field));
+            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.elements.push(new CSV(() => new LiteralNode(),2));
+            this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

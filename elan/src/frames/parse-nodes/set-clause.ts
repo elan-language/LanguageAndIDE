@@ -14,15 +14,15 @@ import { List } from "./list";
 
 export class SetClause extends AbstractSequence implements IHasSymbolType {
     
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
-        var property = new IdentifierNode(this.field);
-        var set = new KeywordNode(setKeyword, this.field);
-        var to = new KeywordNode(toKeyword, this.field);
-        var expr = new ExprNode(this.field);
+        var property = new IdentifierNode();
+        var set = new KeywordNode(setKeyword);
+        var to = new KeywordNode(toKeyword);
+        var expr = new ExprNode();
         this.elements.push(property);
         this.elements. push(set);
         this.elements. push(to);

@@ -6,8 +6,8 @@ import { matchRegEx } from "./parse-node-helpers";
 export class RegExMatchNode extends AbstractParseNode {
     regx: RegExp;
 
-    constructor(regx: RegExp, field : Field) {
-        super(field);
+    constructor(regx: RegExp) {
+        super();
         this.regx = regx;
     }
 

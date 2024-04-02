@@ -17,9 +17,9 @@ export class ValueRefField extends AbstractField {
         return 'expr';
     }
     initialiseRoot(): ParseNode { 
-        var variableRef = () => new VarRefNode(this);
-        var literal = () => new LiteralNode(this);
-        this.rootNode = new Alternatives([variableRef, literal], this);
+        var variableRef = () => new VarRefNode();
+        var literal = () => new LiteralNode();
+        this.rootNode = new Alternatives([variableRef, literal]);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\s|\r|\n/);

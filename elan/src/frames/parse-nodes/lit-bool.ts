@@ -7,16 +7,16 @@ import { falseKeyword, trueKeyword } from "../keywords";
 
 export class LitBool extends AbstractAlternatives {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "true or false";
     }
 
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            this.alternatives.push(new KeywordNode(trueKeyword, this.field));
-            this.alternatives.push(new KeywordNode(falseKeyword, this.field));
+            this.alternatives.push(new KeywordNode(trueKeyword));
+            this.alternatives.push(new KeywordNode(falseKeyword));
             super.parseText(text);
         }
     }

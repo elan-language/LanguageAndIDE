@@ -8,16 +8,16 @@ import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
 export class TypeNode extends AbstractAlternatives {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "Type";
     }
 
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            var single = new TypeWithOptGenerics(this.field);
-            var tuple = new Sequence([() => new SymbolNode(OPEN_BRACKET, this.field),() => new CSV(() => new TypeNode(this.field), 2, this.field), () => new SymbolNode(CLOSE_BRACKET, this.field) ], this.field);
+            var single = new TypeWithOptGenerics();
+            var tuple = new Sequence([() => new SymbolNode(OPEN_BRACKET),() => new CSV(() => new TypeNode(), 2), () => new SymbolNode(CLOSE_BRACKET) ]);
             this.alternatives.push(single);
             this.alternatives.push(tuple);
             super.parseText(text);

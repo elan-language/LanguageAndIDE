@@ -9,16 +9,16 @@ import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
 export class BracketedExpression extends AbstractSequence implements IHasSymbolType {
     
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "";
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACKET, this.field));
-            this.elements.push(new ExprNode(this.field));
-            this.elements.push(new SymbolNode(CLOSE_BRACKET, this.field));
+            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.elements.push(new ExprNode());
+            this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

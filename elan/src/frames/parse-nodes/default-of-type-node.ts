@@ -6,13 +6,13 @@ import { KeywordNode } from "./keyword-node";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
 export class DefaultOfTypeNode extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
-        this.elements.push(new KeywordNode(defaultKeyword, this.field));
-        this.elements.push(new TypeWithOptGenerics(this.field)); 
+        this.elements.push(new KeywordNode(defaultKeyword));
+        this.elements.push(new TypeWithOptGenerics()); 
         super.parseText(text);
     }
 

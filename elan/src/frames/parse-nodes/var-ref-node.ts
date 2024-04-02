@@ -16,24 +16,24 @@ import { Multiple } from "./multiple";
 import { DOT } from "../symbols";
 
 export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "variable";
     }
 
     parseText(text: string): void {
-        var simple = () => new IdentifierNode(this.field);
-        var instance = () => new IdentifierNode(this.field);
-        var prop = () => new KeywordNode(propertyKeyword, this.field);
-        var global = () => new KeywordNode(globalKeyword, this.field);
-        var lib = () => new KeywordNode(libraryKeyword, this.field);
-        var qualifier = () => new Alternatives([prop, global, lib, instance], this.field);
-        var dot = () => new SymbolNode(DOT, this.field);
-        var qualDot = () => new Sequence([qualifier, dot], this.field);
-        var optQualifier = () => new OptionalNode(qualDot, this.field);
+        var simple = () => new IdentifierNode();
+        var instance = () => new IdentifierNode();
+        var prop = () => new KeywordNode(propertyKeyword);
+        var global = () => new KeywordNode(globalKeyword);
+        var lib = () => new KeywordNode(libraryKeyword);
+        var qualifier = () => new Alternatives([prop, global, lib, instance]);
+        var dot = () => new SymbolNode(DOT);
+        var qualDot = () => new Sequence([qualifier, dot]);
+        var optQualifier = () => new OptionalNode(qualDot);
 
-        var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field);
-        var compound = () => new Sequence( [optQualifier, simple, indexes ], this.field);
+        var indexes = () => new Multiple(() => new IndexNode(), 0);
+        var compound = () => new Sequence( [optQualifier, simple, indexes ]);
         this.alternatives.push(simple());
         this.alternatives.push(compound());
         super.parseText(text);

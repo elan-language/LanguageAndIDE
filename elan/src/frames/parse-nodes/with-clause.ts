@@ -15,14 +15,14 @@ import { SetClause } from "./set-clause";
 
 export class WithClause extends AbstractSequence implements IHasSymbolType {
     
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
-        var withKw = new KeywordNode(withKeyword, this.field);
-        var setClause = () => new SetClause(this.field);
-        var changes = new List(setClause, this.field);
+        var withKw = new KeywordNode(withKeyword);
+        var setClause = () => new SetClause();
+        var changes = new List(setClause);
         this.elements.push(withKw);
         this.elements. push(changes);
         return super.parseText(text);

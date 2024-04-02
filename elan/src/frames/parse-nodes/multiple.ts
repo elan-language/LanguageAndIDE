@@ -10,8 +10,8 @@ export class Multiple extends AbstractParseNode implements IHasSymbolTypes {
     minimum: number;
     elements: ParseNode[] = [];
 
-    constructor(elementConstructor: () => ParseNode, minimum: number, field : Field) {
-        super(field);
+    constructor(elementConstructor: () => ParseNode, minimum: number) {
+        super();
         this.elementConstructor = elementConstructor;
         this.minimum = minimum;
     }

@@ -9,19 +9,19 @@ import { LitString } from "./lit-string";
 import { LitTuple } from "./lit-tuple";
 
 export class LitValueNode extends AbstractAlternatives {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "";
     }
 
     parseText(text: string): void {
-        this.alternatives.push(new LitInt(this.field));
-        this.alternatives.push(new LitFloat(this.field));
-        this.alternatives.push(new LitChar(this.field));
-        this.alternatives.push(new LitBool(this.field));
-        this.alternatives.push(new LitString(this.field));
-        this.alternatives.push(new EnumVal(this.field));
-        this.alternatives.push(new LitTuple(this.field));
+        this.alternatives.push(new LitInt());
+        this.alternatives.push(new LitFloat());
+        this.alternatives.push(new LitChar());
+        this.alternatives.push(new LitBool());
+        this.alternatives.push(new LitString());
+        this.alternatives.push(new EnumVal());
+        this.alternatives.push(new LitTuple());
         super.parseText(text);
     }
 }

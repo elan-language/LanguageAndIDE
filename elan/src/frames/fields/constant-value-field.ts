@@ -17,7 +17,7 @@ export class ConstantValueField extends AbstractField implements IHasSymbolType 
     }
 
     initialiseRoot(): ParseNode { 
-        this.rootNode = new LiteralNode(this);
+        this.rootNode = new LiteralNode();
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) =>

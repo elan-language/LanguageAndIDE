@@ -9,23 +9,23 @@ import { CLOSE_SQ_BRACKET, DOUBLE_DOT, OPEN_SQ_BRACKET } from "../symbols";
 
 export class IndexNode extends AbstractSequence {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "name";
     }
 
     parseText(text: string): void {
         this.remainingText = text;
-        var expr = () => new ExprNode(this.field);
-        var symbol = () => new SymbolNode(DOUBLE_DOT, this.field);
-        var rangeFrom = () => new Sequence([expr, symbol], this.field);
-        var rangeBetween = () => new Sequence([expr, symbol,expr], this.field);
-        var rangeTo = () => new Sequence([symbol,expr], this.field);
-        var range = () => new Alternatives([rangeFrom, rangeBetween, rangeTo], this.field);
+        var expr = () => new ExprNode();
+        var symbol = () => new SymbolNode(DOUBLE_DOT);
+        var rangeFrom = () => new Sequence([expr, symbol]);
+        var rangeBetween = () => new Sequence([expr, symbol,expr]);
+        var rangeTo = () => new Sequence([symbol,expr]);
+        var range = () => new Alternatives([rangeFrom, rangeBetween, rangeTo]);
         if (text.trimStart().length > 0) {
-          this.elements.push(new SymbolNode(OPEN_SQ_BRACKET, this.field));
-          this.elements.push(new Alternatives([expr, range], this.field));
-          this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET, this.field));
+          this.elements.push(new SymbolNode(OPEN_SQ_BRACKET));
+          this.elements.push(new Alternatives([expr, range]));
+          this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));
           super.parseText(text);
         }
     }

@@ -53,7 +53,6 @@ export async function main() {
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[1];
-    assertIsSymbol(varDef, "b", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

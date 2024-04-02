@@ -16,8 +16,8 @@ export class CSV extends AbstractSequence implements IHasSymbolTypes {
     elementConstructor: () => ParseNode;
     minimum: number;
 
-    constructor(elementConstructor: () => ParseNode, minimum: number, field : Field) {
-        super(field);
+    constructor(elementConstructor: () => ParseNode, minimum: number) {
+        super();
         this.elementConstructor = elementConstructor;
         this.minimum = minimum;
     }
@@ -25,15 +25,15 @@ export class CSV extends AbstractSequence implements IHasSymbolTypes {
     parseText(text: string): void {
         this.remainingText = text;
         var commaNodesMin = 0;
-        var commaNode = () => new Sequence([() => new Comma(this.field), this.elementConstructor], this.field);
+        var commaNode = () => new Sequence([() => new Comma(), this.elementConstructor]);
 
         if (this.minimum === 0) {
-            this.elements.push(new OptionalNode(this.elementConstructor, this.field));
+            this.elements.push(new OptionalNode(this.elementConstructor));
         } else {
             this.elements.push(this.elementConstructor());
             commaNodesMin = this.minimum - 1;
         }
-        this.elements.push(new Multiple(commaNode, commaNodesMin, this.field));
+        this.elements.push(new Multiple(commaNode, commaNodesMin));
         super.parseText(text);
     }
     

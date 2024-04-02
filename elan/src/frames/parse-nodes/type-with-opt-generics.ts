@@ -15,16 +15,16 @@ import { GenericClassType } from "../../symbols/generic-class-type";
 
 export class TypeWithOptGenerics extends AbstractSequence {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "Type";
     }
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            var simpleType = () => new TypeSimpleNode(this.field);
-            var genericNode = () => new Sequence([() => new SymbolNode(LT, this.field), () => new KeywordNode(ofKeyword, this.field), () => new TypeNode(this.field),() => new SymbolNode(GT, this.field)], this.field);
-            var optGeneric = () => new OptionalNode(genericNode, this.field);
+            var simpleType = () => new TypeSimpleNode();
+            var genericNode = () => new Sequence([() => new SymbolNode(LT), () => new KeywordNode(ofKeyword), () => new TypeNode(),() => new SymbolNode(GT)]);
+            var optGeneric = () => new OptionalNode(genericNode);
             this.elements.push(simpleType());
             this.elements.push(optGeneric());
             super.parseText(text);

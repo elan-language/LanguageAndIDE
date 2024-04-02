@@ -27,16 +27,16 @@ export class SetTargetField extends AbstractField {
         return 'ident';
     }
     initialiseRoot(): ParseNode  { 
-        var simple = () => new IdentifierNode(this);
-        var prop = () => new KeywordNode(propertyKeyword, this); //global & library not applicable because no assignables there
-        var dot = () => new SymbolNode(DOT, this);
-        var qualDot = () => new Sequence([prop, dot], this);
-        var optQualifier = () => new OptionalNode(qualDot, this);
-        var indexes = () => new Multiple(() => new IndexNode(this), 0,this);
-        var varRef = () => new Sequence([optQualifier, simple, indexes], this);
-        var deconTup = () => new DeconstructedTuple(this);
-        var deconList = () => new DeconstructedList(this);
-        this.rootNode = new Alternatives([varRef, deconTup, deconList], this);
+        var simple = () => new IdentifierNode();
+        var prop = () => new KeywordNode(propertyKeyword); //global & library not applicable because no assignables there
+        var dot = () => new SymbolNode(DOT);
+        var qualDot = () => new Sequence([prop, dot]);
+        var optQualifier = () => new OptionalNode(qualDot);
+        var indexes = () => new Multiple(() => new IndexNode(), 0);
+        var varRef = () => new Sequence([optQualifier, simple, indexes]);
+        var deconTup = () => new DeconstructedTuple();
+        var deconList = () => new DeconstructedList();
+        this.rootNode = new Alternatives([varRef, deconTup, deconList]);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string)  = (source: CodeSource) => source.readUntil(/(\s+to\s+)|\r|\n/);

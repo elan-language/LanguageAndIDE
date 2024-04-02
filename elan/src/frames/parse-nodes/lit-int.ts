@@ -7,8 +7,8 @@ import { matchRegEx } from "./parse-node-helpers";
 export class LitInt extends AbstractParseNode {
 
 
-    constructor(field: Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "integer value";
     }
 

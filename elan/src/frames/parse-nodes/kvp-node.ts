@@ -10,8 +10,8 @@ export class KVPnode extends AbstractSequence implements IHasSymbolType  {
     keyConstructor: () => ParseNode;
     valueConstructor: () => ParseNode;
 
-    constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode , field : Field) {
-        super(field);
+    constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode) {
+        super();
         this.keyConstructor = keyConstructor;
         this.valueConstructor = valueConstructor;
     }
@@ -19,7 +19,7 @@ export class KVPnode extends AbstractSequence implements IHasSymbolType  {
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(this.keyConstructor());
-            this.elements.push(new SymbolNode(COLON, this.field));
+            this.elements.push(new SymbolNode(COLON));
             this.elements.push(this.valueConstructor());
             super.parseText(text);
         }

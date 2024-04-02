@@ -20,8 +20,8 @@ export class OptionalKeyword extends AbstractField {
     }
 
     initialiseRoot(): ParseNode {
-        var kw = () => new KeywordNode(this.keyword, this);
-        this.rootNode = new OptionalNode(kw,this);
+        var kw = () => new KeywordNode(this.keyword);
+        this.rootNode = new OptionalNode(kw);
         return this.rootNode;
     }
     readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => source.readMatching(/[^\S\r\n]*[a-z]*/);

@@ -12,7 +12,7 @@ export class CaseValueField extends AbstractField {
         this.setPlaceholder("value");
     }
     initialiseRoot(): ParseNode { 
-        this.rootNode = new LitValueNode(this);
+        this.rootNode = new LitValueNode();
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = 

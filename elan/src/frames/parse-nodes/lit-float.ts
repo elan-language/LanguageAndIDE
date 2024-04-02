@@ -11,21 +11,21 @@ import { Regexes } from "../fields/regexes";
 
 export class LitFloat extends AbstractSequence {
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "float value";
     }
 
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            this.elements.push(new LitInt(this.field));
-            this.elements.push(new SymbolNode(DOT, this.field));
-            this.elements.push(new RegExMatchNode(Regexes.literalInt, this.field));
+            this.elements.push(new LitInt());
+            this.elements.push(new SymbolNode(DOT));
+            this.elements.push(new RegExMatchNode(Regexes.literalInt));
             var exponent = new OptionalNode(() => new Sequence([
-                () => new RegExMatchNode(/e/, this.field),
-                () => new RegExMatchNode(Regexes.negatableLitInt, this.field)
-                ], this.field), this.field);
+                () => new RegExMatchNode(/e/),
+                () => new RegExMatchNode(Regexes.negatableLitInt)
+                ]));
             this.elements.push(exponent);
             super.parseText(text);
         }

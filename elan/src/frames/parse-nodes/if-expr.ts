@@ -6,18 +6,18 @@ import { Field } from "../interfaces/field";
 import { ifKeyword, elseKeyword, thenKeyword } from "../keywords";
 
 export class IfExpr extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new KeywordNode(ifKeyword, this.field));
-            this.elements.push(new ExprNode(this.field));
-            this.elements.push(new KeywordNode(thenKeyword, this.field));
-            this.elements.push(new ExprNode(this.field));
-            this.elements.push(new KeywordNode(elseKeyword, this.field));
-            this.elements.push(new ExprNode(this.field)); 
+            this.elements.push(new KeywordNode(ifKeyword));
+            this.elements.push(new ExprNode());
+            this.elements.push(new KeywordNode(thenKeyword));
+            this.elements.push(new ExprNode());
+            this.elements.push(new KeywordNode(elseKeyword));
+            this.elements.push(new ExprNode()); 
             super.parseText(text);
         }
     }

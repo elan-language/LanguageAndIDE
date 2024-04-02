@@ -4,8 +4,8 @@ import { RegExMatchNode } from "./regex-match-node";
 
 export class TypeSimpleNode extends RegExMatchNode {
 
-    constructor(field : Field) {
-        super(/^\s*[A-Z]\w*/, field);
+    constructor() {
+        super(/^\s*[A-Z]\w*/);
         this.placeholder = "Type";
     }
     renderAsHtml(): string {

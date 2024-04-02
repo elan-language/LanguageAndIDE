@@ -11,8 +11,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode implements 
     alternatives: ParseNode[] = [];
     bestMatch?: ParseNode;
 
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "expression";
     }
 

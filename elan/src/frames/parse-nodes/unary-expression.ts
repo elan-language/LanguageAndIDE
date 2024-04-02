@@ -11,16 +11,16 @@ import { MINUS } from "../symbols";
 
 export class UnaryExpression extends AbstractSequence {
     
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "op";
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            var unaryOp = new Alternatives([() => new SymbolNode(MINUS, this.field), () => new KeywordNode(notKeyword, this.field) ], this.field);
+            var unaryOp = new Alternatives([() => new SymbolNode(MINUS), () => new KeywordNode(notKeyword) ]);
             this.elements.push(unaryOp);
-            this.elements.push(new Term(this.field));
+            this.elements.push(new Term());
             return super.parseText(text);
         }
     }

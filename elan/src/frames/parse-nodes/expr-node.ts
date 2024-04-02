@@ -6,18 +6,18 @@ import { Term } from "./term";
 import { WithClause } from "./with-clause";
 
 export class ExprNode extends AbstractAlternatives {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
         this.placeholder = "expression";
     }
 
     parseText(text: string): void {
-        this.alternatives.push(new Term(this.field));
-        this.alternatives.push(new BinaryExpression(this.field));
+        this.alternatives.push(new Term());
+        this.alternatives.push(new BinaryExpression());
         // Term with 'with' clause:
-        var term = () => new Term(this.field);
-        var withClause = () => new WithClause(this.field);
-        this.alternatives.push(new Sequence([term, withClause], this.field));
+        var term = () => new Term();
+        var withClause = () => new WithClause();
+        this.alternatives.push(new Sequence([term, withClause]));
         super.parseText(text);
     }
 }

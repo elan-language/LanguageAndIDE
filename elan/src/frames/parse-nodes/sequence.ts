@@ -10,8 +10,8 @@ import { ParseNode } from "./parse-node";
 export class Sequence extends AbstractSequence implements IHasSymbolTypes {
 
     elementConstructors: (() => ParseNode)[];
-    constructor(elementConstructors: (() => ParseNode)[], field : Field) {
-        super(field);
+    constructor(elementConstructors: (() => ParseNode)[]) {
+        super();
         this.elementConstructors = elementConstructors;
     }
 

@@ -10,16 +10,16 @@ import { SymbolNode } from "./symbol-node";
 import { ARROW } from "../symbols";
 
 export class Lambda extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
 
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
-            this.elements.push(new KeywordNode(lambdaKeyword, this.field));
-            this.elements.push(new CSV(() => new ParamDefNode(this.field), 1, this.field));
-            this.elements.push(new SymbolNode(ARROW, this.field));
-            this.elements.push(new ExprNode(this.field));
+            this.elements.push(new KeywordNode(lambdaKeyword));
+            this.elements.push(new CSV(() => new ParamDefNode(), 1));
+            this.elements.push(new SymbolNode(ARROW));
+            this.elements.push(new ExprNode());
             super.parseText(text);
         }
     }

@@ -16,36 +16,32 @@ import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
 import { Frame } from "../interfaces/frame";
 
 export class FunctionCallNode extends AbstractSequence {
-    constructor(field : Field) {
-        super(field);
+    constructor() {
+        super();
     }
     parseText(text: string): void {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
-            var global = () => new KeywordNode(globalKeyword, this.field);
-            var lib = () => new KeywordNode(libraryKeyword, this.field);
-            var variable = () => new IdentifierNode(this.field);
-            var indexes = () => new Multiple(() => new IndexNode(this.field), 0,this.field);
-            var instance = () => new Sequence([variable, indexes],this.field);
-            var qualifier = () => new Alternatives([global, lib, instance], this.field);
-            var dot = () => new SymbolNode(DOT, this.field);
-            var qualDot = () => new Sequence([qualifier, dot], this.field);
-            var optQualifier =  new OptionalNode(qualDot, this.field);
+            var global = () => new KeywordNode(globalKeyword);
+            var lib = () => new KeywordNode(libraryKeyword);
+            var variable = () => new IdentifierNode();
+            var indexes = () => new Multiple(() => new IndexNode(), 0);
+            var instance = () => new Sequence([variable, indexes]);
+            var qualifier = () => new Alternatives([global, lib, instance]);
+            var dot = () => new SymbolNode(DOT);
+            var qualDot = () => new Sequence([qualifier, dot]);
+            var optQualifier =  new OptionalNode(qualDot);
 
             this.elements.push(optQualifier);
-            this.elements.push(new IdentifierNode(this.field));
-            this.elements.push(new SymbolNode(OPEN_BRACKET,this.field));
-            this.elements.push(new CSV(() => new ExprNode(this.field),0,this.field)); //arg list
-            this.elements.push(new SymbolNode(CLOSE_BRACKET,this.field));
+            this.elements.push(new IdentifierNode());
+            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.elements.push(new CSV(() => new ExprNode(),0)); //arg list
+            this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }
     renderAsHtml(): string {
         return `<method>${this.elements[0].renderAsHtml()}</method>(${this.elements[2].renderAsHtml()})`;
     }
-    
-    get symbolType() {
-        var holder = this.field.getHolder();
-        return holder.resolveSymbol((this.elements[1] as IdentifierNode).matchedText.trim(), holder as Frame).symbolType;
-    }
+
 }
