@@ -85,7 +85,7 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     border-left-color: var(--selection);
 }
 
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > help {
+.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > completion {
     background-color: var(--selection);
     border-right-color: var(--selection);
 }
@@ -185,21 +185,21 @@ global.empty.selected placeholder, member.empty.selected placeholder, statement.
     display: none;
 }
 
-/* field-help */
-field help, global help, member help, statement help  {
+/* field-completion */
+field completion, global completion, member completion, statement completion  {
     display: none;
 }
-field.selected help {
+field.selected completion {
     display: inline;
     color: white;
     background-color: lightgrey;
 }
 
-/* selector help */
-global help, member help, statement help  {
+/* selector completion */
+global completion, member completion, statement completion  {
     display: none;
 }
- global.selected help, member.selected help, statement.selected help {
+ global.selected completion, member.selected completion, statement.selected completion {
     display: inline;
     color: white;
  }

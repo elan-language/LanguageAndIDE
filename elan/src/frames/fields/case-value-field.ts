@@ -12,10 +12,6 @@ export class CaseValueField extends AbstractField implements ParseByNodes {
         super(holder);
         this.setPlaceholder("value");
     }
-
-    getHelp(): string {
-        return "Literal value (e.g. number or string)";
-    }
     initialiseRoot(): ParseNode { 
         this.rootNode = new LitValueNode(this);
         return this.rootNode; 

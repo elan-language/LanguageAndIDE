@@ -12,6 +12,7 @@ export class SymbolNode extends AbstractParseNode implements IHasSymbolType {
     constructor(fixedText: string, field : Field) {
         super(field);
         this.fixedText = fixedText;
+        this.placeholder = fixedText;
     }
 
     parseText(text: string): void {

@@ -1,6 +1,6 @@
-# 79118a269943b02c5e6750c9a1848c9d4e2124e822023ecdac902932439ad204 Elan v0.1 valid
+# fb9d3f968b0ee3fa4646afd606d2c1ac104f04892fe0d15fe53dacd6c3692856 Elan v0.1 valid
 
-class Foo inherits Bar
+class 
   constructor()
 
   end constructor
@@ -8,6 +8,7 @@ class Foo inherits Bar
 end class
 
 main
-  set t to [3, 4]
-  external foo(3)
+  set  to 
+  set  to 
+  external ()
 end main

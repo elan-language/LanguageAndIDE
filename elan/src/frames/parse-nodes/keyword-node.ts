@@ -10,6 +10,7 @@ export class KeywordNode extends AbstractParseNode {
     constructor(keyword: string, field : Field) {
         super(field);
         this.keyword = keyword;
+        this.placeholder = keyword+" ";
     }
 
     parseText(text: string): void {

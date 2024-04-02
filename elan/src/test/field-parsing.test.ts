@@ -24,7 +24,7 @@ suite('Field Parsing Tests', () => {
 		text.setText("Hello");
 		text.parseCurrentText();
 		assert.equal(text.getStatus(), ParseStatus.valid);
-		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><help></help></field>`);
+		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion></field>`);
 		}); 
 
 	test('parse Frames - VariableDefStatement', () => { 
@@ -36,7 +36,7 @@ suite('Field Parsing Tests', () => {
 		id.setText("ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.valid);
-		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><help></help></field>`);
+		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion></field>`);
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getStatus(), ParseStatus.invalid);
@@ -102,7 +102,7 @@ suite('Field Parsing Tests', () => {
 				id.setText("ab_1");
 				id.parseCurrentText();
 				assert.equal(id.getStatus(), ParseStatus.valid);
-				assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><help></help></field>`);
+				assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion></field>`);
 				id.setText("Ab_1");
 				id.parseCurrentText();
 				assert.equal(id.getStatus(), ParseStatus.invalid);

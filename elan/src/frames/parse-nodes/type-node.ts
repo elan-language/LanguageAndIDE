@@ -5,12 +5,12 @@ import { Sequence } from "./sequence";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 import { Field } from "../interfaces/field";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
-import { ClassType } from "../../symbols/class-type";
 
 export class TypeNode extends AbstractAlternatives {
 
     constructor(field : Field) {
         super(field);
+        this.placeholder = "Type";
     }
 
     parseText(text: string): void {

@@ -59,6 +59,10 @@ export class Multiple extends AbstractParseNode implements IHasSymbolTypes {
         return this.elements.reduce((result, current) => result + current.renderAsSource(),"");
      }
 
+     getCompletion(): string {
+        return this.elements.reduce((result, current) => `${result}${current.getCompletion()}`, "");
+    }
+
      get symbolTypes() {
         return mapSymbolTypes(this.elements);
     }

@@ -54,7 +54,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         return a !== "" && b !=="" &&  a[0] === b[0] ? a[0] + this.maxCommonStart(a.slice(1), b.slice(1)): "";          
     }
  
-    getHelp(): string {
+    getCompletion(): string {
         return this.optionsMatchingInput(this.text).map(o => o[0]).reduce((soFar, kw)=> `${soFar} ${kw}${kw.includes(" ")? ",":""}`, "");
     }
 
@@ -87,7 +87,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         this.text = "";
     }
     textToDisplayAsHtml(): string {
-            return `<selector><text>${this.text}</text><placeholder>${this.label}</placeholder><help class="selector">${this.getHelp()}</help></selector>`;
+            return `<selector><text>${this.text}</text><placeholder>${this.label}</placeholder><help class="selector">${this.getCompletion()}</help></selector>`;
     }
     renderAsSource(): string {
         return `${this.indent()}`;

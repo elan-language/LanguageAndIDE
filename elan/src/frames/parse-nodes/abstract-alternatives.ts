@@ -54,6 +54,9 @@ export abstract class AbstractAlternatives extends AbstractParseNode implements 
     renderAsObjectCode(): string {
         return this.bestMatch ? this.bestMatch.renderAsObjectCode() : "";
     }
+    getCompletion(): string {
+        return this.bestMatch ? this.bestMatch.getCompletion() : super.getCompletion();
+    }
 
     get symbolType() {
         if (isHasSymbolType(this.bestMatch)) {
