@@ -3,11 +3,11 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+
+
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
-export class BracketedExpression extends AbstractSequence implements IHasSymbolType {
+export class BracketedExpression extends AbstractSequence {
     
     constructor() {
         super();
@@ -21,13 +21,5 @@ export class BracketedExpression extends AbstractSequence implements IHasSymbolT
             this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
-    }
-
-    get symbolType() {
-        if (isHasSymbolType(this.elements[1])) {
-            return this.elements[1].symbolType;
-        }
-
-        return UnknownType.Instance;
     }
 }

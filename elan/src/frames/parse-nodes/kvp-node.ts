@@ -2,11 +2,11 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { ParseNode } from "./parse-node";
 import { Field } from "../interfaces/field";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
+
 import { COLON } from "../symbols";
 import { ParseStatus } from "../parse-status";
 
-export class KVPnode extends AbstractSequence implements IHasSymbolType  {
+export class KVPnode extends AbstractSequence  {
     keyConstructor: () => ParseNode;
     valueConstructor: () => ParseNode;
 

@@ -46,15 +46,4 @@ export class SetStatement extends AbstractFrame implements Statement{
     renderAsObjectCode(): string {
         return `${this.indent()}${this.assignable.renderAsObjectCode()} = ${this.expr.renderAsObjectCode()};`;
     }
-
-    override frameStatus() : ParseStatus {
-        const idSymbol = this.resolveSymbol(this.assignable.renderAsSource(), this);
-        const expType = this.expr.symbolType;
-
-        return compatibleType(idSymbol, expType);
-    }
-    
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        return this.getParent().resolveSymbol(id, initialScope);
-    }
 } 

@@ -24,7 +24,6 @@ export async function main() {
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
-    assertIsSymbol(varDef, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -78,7 +77,6 @@ export async function main() {
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
-    assertIsSymbol(varDef, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -132,7 +130,6 @@ export async function main() {
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
-    assertIsSymbol(varDef, "a", "Float");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -223,20 +220,6 @@ export async function main() {
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[0], "a", "Int");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[1], "b", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[2], "c", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[3], "d", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[4], "e", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[5], "f", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[6], "g", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[7], "h", "Boolean");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[8], "i", "Int");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[9], "j", "Int");
-    assertIsSymbol((fileImpl.getChildNumber(0) as MainFrame).getChildren()[10], "k", "Float");
-
-
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

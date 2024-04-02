@@ -1,13 +1,7 @@
-
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
-import { IHasSymbolTypes } from "../../symbols/has-symbol-types";
-import { UnknownType } from "../../symbols/unknown-type";
-import { isHasSymbolType, mapSymbolTypes } from "../../symbols/symbolHelpers";
-import { Field } from "../interfaces/field";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 
-export class Sequence extends AbstractSequence implements IHasSymbolTypes {
+export class Sequence extends AbstractSequence {
 
     elementConstructors: (() => ParseNode)[];
     constructor(elementConstructors: (() => ParseNode)[]) {
@@ -22,9 +16,5 @@ export class Sequence extends AbstractSequence implements IHasSymbolTypes {
             });
         }
         super.parseText(text);
-    }
-
-    get symbolTypes() {
-        return mapSymbolTypes(this.elements);
     }
 }

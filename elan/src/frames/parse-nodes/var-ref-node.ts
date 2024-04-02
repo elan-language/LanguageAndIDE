@@ -1,8 +1,6 @@
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
+
 import { UnknownType } from "../../symbols/unknown-type";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
-import { Field } from "../interfaces/field";
-import { AbstractSequence } from "./abstract-sequence";
+
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
@@ -15,7 +13,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { Multiple } from "./multiple";
 import { DOT } from "../symbols";
 
-export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
+export class VarRefNode extends AbstractAlternatives {
     constructor() {
         super();
         this.placeholder = "variable";
@@ -31,22 +29,10 @@ export class VarRefNode extends AbstractAlternatives implements IHasSymbolType {
         var dot = () => new SymbolNode(DOT);
         var qualDot = () => new Sequence([qualifier, dot]);
         var optQualifier = () => new OptionalNode(qualDot);
-
         var indexes = () => new Multiple(() => new IndexNode(), 0);
         var compound = () => new Sequence( [optQualifier, simple, indexes ]);
         this.alternatives.push(simple());
         this.alternatives.push(compound());
         super.parseText(text);
-    }
-
-    get symbolType() {
-        // kludge 
-        var id = this.bestMatch;
-
-        if (isHasSymbolType(id)){
-            return id.symbolType;
-        }
-
-        return UnknownType.Instance;
     }
 }

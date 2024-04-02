@@ -54,8 +54,4 @@ export class Constant extends AbstractFrame implements ISymbol {
     get symbolId() {
         return this.name.renderAsSource();
     }
-
-    get symbolType() {
-        return this.literal.symbolType;
-    }
 } 

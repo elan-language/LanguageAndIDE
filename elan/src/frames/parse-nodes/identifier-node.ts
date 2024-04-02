@@ -1,4 +1,4 @@
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
+
 import { Regexes } from "../fields/regexes";
 import { allKeywords } from "../keywords";
 import { ParseStatus } from "../parse-status";

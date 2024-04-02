@@ -2,12 +2,12 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 import { ParseStatus } from "../parse-status";
 import { Field } from "../interfaces/field";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+
 import { UnknownType } from "../../symbols/unknown-type";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
 
-export abstract class AbstractAlternatives extends AbstractParseNode implements IHasSymbolType {
+
+export abstract class AbstractAlternatives extends AbstractParseNode {
     alternatives: ParseNode[] = [];
     bestMatch?: ParseNode;
 
@@ -58,11 +58,4 @@ export abstract class AbstractAlternatives extends AbstractParseNode implements 
         return this.    bestMatch ? this.bestMatch.getCompletion() : super.getCompletion();
     }
 
-    get symbolType() {
-        if (isHasSymbolType(this.bestMatch)) {
-            return this.bestMatch.symbolType;
-        }
-
-        return UnknownType.Instance;
-    }
 }

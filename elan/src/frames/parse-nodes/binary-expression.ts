@@ -5,9 +5,9 @@ import { Term } from "./term";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 import { FloatType } from "../../symbols/float-type";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
-export class BinaryExpression extends AbstractSequence implements IHasSymbolType {
+
+export class BinaryExpression extends AbstractSequence {
     
     constructor() {
         super();
@@ -19,24 +19,6 @@ export class BinaryExpression extends AbstractSequence implements IHasSymbolType
         this.elements.push(new BinaryOperation());
         this.elements.push(new ExprNode());
         return super.parseText(text);
-    }
-    
-    get symbolType() {
-        const nodes = this.elements as [Term, BinaryOperation, ExprNode];
-        const opType = nodes[1].symbolType;
-        if (opType && opType !== UnknownType.Instance) {
-            return opType;
-        }
-
-        const lhsType =  nodes[0].symbolType;
-        const rhsType =  nodes[2].symbolType;
-
-        // both int or both float
-        if (lhsType?.name === rhsType?.name) {
-            return lhsType;
-        }
-        // either was float so float
-        return FloatType.Instance;
     }
 
     renderAsObjectCode(): string {

@@ -1,11 +1,9 @@
 import { ParseNode } from "./parse-node";
-import { Field } from "../interfaces/field";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
 import { KVPnode } from "./kvp-node";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { List } from "./list";
 
-export class Dictionary extends AbstractParseNode implements IHasSymbolType  {
+export class Dictionary extends AbstractParseNode  {
 
     listConstructor: () => ParseNode;
     kvpConstructor: () => ParseNode;

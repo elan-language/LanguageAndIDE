@@ -1,5 +1,5 @@
 import { UnknownType } from "../../symbols/unknown-type";
-import { isHasSymbolType } from "../../symbols/symbolHelpers";
+
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ExprNode } from "../parse-nodes/expr-node";
@@ -25,12 +25,5 @@ export class ExpressionField extends AbstractField {
 
     renderAsObjectCode(): string {
         return this.rootNode ? this.rootNode.renderAsObjectCode() : super.renderAsObjectCode();
-    }
-
-    get symbolType() {
-        if (isHasSymbolType(this.rootNode)) {
-            return this.rootNode.symbolType;
-        }
-        return UnknownType.Instance;
     }
 }

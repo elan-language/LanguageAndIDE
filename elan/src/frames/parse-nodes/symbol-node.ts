@@ -2,9 +2,9 @@ import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { escapeAngleBrackets } from "../helpers";
 import { rawSymbolToType } from "../../symbols/symbolHelpers";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
 
-export class SymbolNode extends AbstractParseNode implements IHasSymbolType {
+
+export class SymbolNode extends AbstractParseNode {
     fixedText: string;
     isSymbol = true;
 

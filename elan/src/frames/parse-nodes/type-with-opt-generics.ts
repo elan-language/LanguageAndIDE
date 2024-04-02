@@ -30,18 +30,4 @@ export class TypeWithOptGenerics extends AbstractSequence {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        const typeName = this.elements[0].matchedText.trim();
-
-
-
-        const mn = (this.elements[1] as OptionalNode).matchedNode; 
-        if (mn instanceof Sequence){
-            const gt = (mn.elements[2] as TypeNode).symbolType;
-            return new GenericClassType(typeName, gt!);
-        }
-
-        return new ClassType(typeName);
-    }
 }

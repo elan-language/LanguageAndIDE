@@ -20,10 +20,4 @@ export class TupleNode extends AbstractSequence {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        const types = (this.elements[1] as CSV).symbolTypes.map(e => e ?? UnknownType.Instance);
-        return new TupleType(types);
-    }
-    
 }

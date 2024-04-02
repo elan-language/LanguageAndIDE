@@ -11,7 +11,6 @@ import { DefaultProfile } from '../frames/default-profile';
 import { ParseStatus } from '../frames/parse-status';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
 import { ISymbolType } from '../symbols/symbol-type';
-import { isHasSymbolType } from '../symbols/symbolHelpers';
 import { transform } from '../frames/syntax-nodes/transformer';
 import { Field } from '../frames/interfaces/field';
 import { FloatType } from '../symbols/float-type';

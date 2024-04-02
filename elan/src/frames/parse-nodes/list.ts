@@ -2,14 +2,9 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
-import { ListType } from "../../symbols/list-type";
-import { IHasSymbolType } from "../../symbols/has-symbol-type";
-import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
-import { CLOSE_SQ_BRACKET, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
+import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 
-export class List extends AbstractSequence implements IHasSymbolType  {
+export class List extends AbstractSequence  {
     elementConstructor: () => ParseNode;
 
     constructor(elementConstructor: () => ParseNode) {
@@ -24,20 +19,5 @@ export class List extends AbstractSequence implements IHasSymbolType  {
             this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));
             super.parseText(text);
         }
-    }
-    
-    get symbolType() {
-       
-        if (isHasSymbolType(this.elements[1])) {
-            const ofType = this.elements[1].symbolType;
-            return new ListType(ofType || UnknownType.Instance);
-        }
-
-        if (isHasSymbolTypes(this.elements[1])) {
-            const ofType = this.elements[1].symbolTypes[0];
-            return new ListType(ofType || UnknownType.Instance);
-        }
-
-        return new ListType(UnknownType.Instance);
     }
 }

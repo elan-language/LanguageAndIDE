@@ -3,8 +3,6 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
-import { isHasSymbolType, isHasSymbolTypes } from "../../symbols/symbolHelpers";
-import { UnknownType } from "../../symbols/unknown-type";
 import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
 
 export class BinaryOperation extends AbstractAlternatives {
@@ -51,17 +49,5 @@ export class BinaryOperation extends AbstractAlternatives {
 
     private trailingSpace(): string {
         return ("isSymbol" in this.bestMatch!) ? " " : "";
-    }
-
-    get symbolType() {
-        if (isHasSymbolType(this.bestMatch)) {
-            return this.bestMatch.symbolType;
-        }
-
-        if (isHasSymbolTypes(this.bestMatch)) {
-            return this.bestMatch.symbolTypes[0];
-        }
-
-        return UnknownType.Instance;
     }
 }
