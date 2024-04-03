@@ -14,6 +14,7 @@ import { IndexNode } from "./index-node";
 import { Multiple } from "./multiple";
 import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
 import { Frame } from "../interfaces/frame";
+import { RuleNames } from "./rule-names";
 
 export class FunctionCallNode extends AbstractSequence {
     constructor() {
@@ -26,10 +27,10 @@ export class FunctionCallNode extends AbstractSequence {
             var lib = () => new KeywordNode(libraryKeyword);
             var variable = () => new IdentifierNode();
             var indexes = () => new Multiple(() => new IndexNode(), 0);
-            var instance = () => new Sequence([variable, indexes]);
+            var instance = () => new Sequence([variable, indexes], RuleNames.instance);
             var qualifier = () => new Alternatives([global, lib, instance]);
             var dot = () => new SymbolNode(DOT);
-            var qualDot = () => new Sequence([qualifier, dot]);
+            var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
             var optQualifier =  new OptionalNode(qualDot);
 
             this.elements.push(optQualifier);

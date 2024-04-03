@@ -1,13 +1,10 @@
-import { BooleanType } from "../../symbols/boolean-type";
 import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
-import { ExprAsn } from "./expr-asn";
-import { OperationSymbol } from "./operation-symbol";
 
-export class QualifierAsn implements AstNode {
+export class QualifierAsn {
 
-    constructor(field : Field) {
-
+    constructor(private qualifier : AstNode[], private field : Field) {
+        
     }
 
     get symbolType() {
@@ -15,6 +12,7 @@ export class QualifierAsn implements AstNode {
     }
 
     toString() {
-        return ``;
+        return  `${this.qualifier.map(p => p.toString()).join(".")}.`;
     }
+
 }

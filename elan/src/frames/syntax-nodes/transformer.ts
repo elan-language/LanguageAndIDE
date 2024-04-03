@@ -47,6 +47,7 @@ import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { Alternatives } from "../parse-nodes/alternatives";
+import { QualifierAsn } from "./qualifier-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -130,16 +131,16 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof FunctionCallNode) {
-        var qualifier : AstNode[] | undefined;
+        var qualifier : QualifierAsn | undefined;
         const qualNode = (node.elements[0] as OptionalNode).matchedNode;
         if (qualNode instanceof Sequence) {
             if (qualNode.elements[0] instanceof Alternatives) {
                 const prefixNode = qualNode.elements[0].bestMatch;
                 if (prefixNode instanceof Sequence) {
-                    qualifier = transformMany(prefixNode, field);
+                    qualifier = new QualifierAsn (transformMany(prefixNode, field), field);
                 }
                 else if (prefixNode instanceof IdentifierNode){
-                    qualifier = [transform(prefixNode, field)!];
+                    qualifier = new QualifierAsn ([transform(prefixNode, field)!], field);
                 }
             }
         }
