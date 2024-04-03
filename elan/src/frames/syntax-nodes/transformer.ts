@@ -132,7 +132,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof FunctionCallNode) {
-        const qualifier = transform(node.elements[0], field) as QualifierAsn | undefined;
+        const qualifier = transform(node.elements[0], field);
         const id = node.elements[1].matchedText;
         const parameters = transformMany(node.elements[3] as CSV, field) as Array<ExprAsn>;
 
@@ -210,30 +210,19 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof Sequence) {
-        if (node.elements[1] instanceof WithClause) {
+        if (node.ruleName === RuleNames.with) {
             const obj = transform(node.elements[0], field) as ExprAsn;
-            const changes = transformMany(node.elements[1].elements[1] as List, field);
+            const changes = transformMany((node.elements[1] as WithClause).elements[1] as List, field);
 
             return new WithAsn(obj, changes, field);
         }
 
-        if (node.elements[1] instanceof IdentifierNode) {
-            const id = node.elements[0].matchedText;
-            const to = transform(node.elements[3], field) as ExprAsn;
-
-            return new SetAsn(id, to, field);
+        if (node.ruleName === RuleNames.qualDot) {
+            return transform(node.elements[0], field);
         }
 
-        if (node.ruleName === RuleNames.qualDot) {
-            if (node.elements[0] instanceof Alternatives) {
-                const prefixNode = node.elements[0].bestMatch;
-                if (prefixNode instanceof Sequence) {
-                    return new QualifierAsn (transformMany(prefixNode, field), field);
-                }
-                else if (prefixNode instanceof IdentifierNode){
-                    return new QualifierAsn ([transform(prefixNode, field)!], field);
-                }
-            }
+        if (node.ruleName === RuleNames.instance) {
+            return new QualifierAsn(transformMany(node, field), field);
         }
     }
 

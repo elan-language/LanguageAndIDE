@@ -9,7 +9,6 @@ import { FloatType } from "../../symbols/float-type";
 import { withKeyword, setKeyword, toKeyword } from "../keywords";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
-import { Sequence } from "./sequence";
 import { List } from "./list";
 import { SetClause } from "./set-clause";
 

@@ -6,7 +6,7 @@ import { QualifierAsn } from "./qualifier-asn";
 
 export class FuncCallAsn {
 
-    constructor(private id: string, private qualifier : QualifierAsn | undefined, private parameters: Array<ExprAsn>, private field : Field) {
+    constructor(private id: string, private qualifier : AstNode | undefined, private parameters: Array<ExprAsn>, private field : Field) {
         this.id = id.trim();
     }
 

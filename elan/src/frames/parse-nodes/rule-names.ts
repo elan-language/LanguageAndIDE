@@ -1,4 +1,5 @@
 export enum RuleNames {
     instance,
-    qualDot
+    qualDot,
+    with
 }
