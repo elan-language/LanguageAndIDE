@@ -25,7 +25,7 @@ export function rawSymbolToType(s: string) {
         case "/":
             return FloatType.Instance;
         case ",":
-                return undefined;
+            return undefined;
         default:
             return UnknownType.Instance;
     }
