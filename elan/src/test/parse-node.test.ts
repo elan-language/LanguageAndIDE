@@ -436,8 +436,8 @@ suite('ParseNodes', () => {
 		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
 		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
-		// testAST(new FunctionCallNode(), stubField, `global.foo()`, "", intType);
-		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "", intType);
+		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call global.foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call library.foo ()", intType);
 		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "", intType);
 		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "", intType);
 		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "", intType);

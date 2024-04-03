@@ -49,6 +49,7 @@ import { LiteralStringAsn } from "./literal-string-asn";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { QualifierAsn } from "./qualifier-asn";
 import { RuleNames } from "../parse-nodes/rule-names";
+import { globalKeyword, libraryKeyword } from "../keywords";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -201,9 +202,19 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         return new SetAsn(id, to, field);
     }
 
-    if (node instanceof SymbolNode || node instanceof KeywordNode) {
+    if (node instanceof SymbolNode) {
+
         return undefined;
     }
+
+    if (node instanceof KeywordNode) {
+        if (node.keyword === globalKeyword || node.keyword === libraryKeyword) {
+            return new IdAsn(node.keyword, field);
+        }
+
+        return undefined;
+    }
+
 
     if (node instanceof AbstractAlternatives) {
         return transform(node.bestMatch, field);
