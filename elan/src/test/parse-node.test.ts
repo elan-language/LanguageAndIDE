@@ -25,9 +25,7 @@ import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
-import { ClassType } from '../symbols/class-type';
 import { ListType } from '../symbols/list-type';
-import { TupleType } from '../symbols/tuple-type';
 import { KVPnode } from '../frames/parse-nodes/kvp-node';
 import { Dictionary } from '../frames/parse-nodes/dictionary';
 import { LitValueNode } from '../frames/parse-nodes/lit-value';
@@ -37,7 +35,7 @@ import { VarRefNode } from '../frames/parse-nodes/var-ref-node';
 import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
 import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 import { abstractKeyword } from '../frames/keywords';
-import { GenericClassType } from '../symbols/generic-class-type';
+import { ClassType } from '../symbols/class-type';
 
 suite('ParseNodes', () => {
 
@@ -412,7 +410,7 @@ suite('ParseNodes', () => {
 		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
 		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 		
-		const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
+		const ast1 = "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
 		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 
 		testAST(new IdentifierNode(), stubField, `a`, "a", intType);
@@ -443,5 +441,12 @@ suite('ParseNodes', () => {
 		testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
 		testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
 		testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
+
+		
+		testAST(new List(() => new LitInt()), stubField, `[1,2,3 ,4 , 5]`, "[1, 2, 3, 4, 5]", new ListType(intType));
+		testAST(new List(() => new List(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(intType)));
+		testAST(new List(() => new LitString()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
+		testAST(new List(() => new LiteralNode()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
+
 	});
 });

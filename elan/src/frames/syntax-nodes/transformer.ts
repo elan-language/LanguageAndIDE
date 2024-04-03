@@ -22,7 +22,6 @@ import { Multiple } from "../parse-nodes/multiple";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LiteralFloatAsn } from "./literal-float-asn";
 import { Sequence } from "../parse-nodes/sequence";
-import { Comma } from "../parse-nodes/comma";
 import { Lambda } from "../parse-nodes/lambda";
 import { LambdaAsn } from "./lambda-asn";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
@@ -46,11 +45,11 @@ import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { QualifierAsn } from "./qualifier-asn";
 import { RuleNames } from "../parse-nodes/rule-names";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -63,11 +62,11 @@ function mapOperation(op: string) {
     }
 }
 
-function transformMany(node: CSV | Multiple | Sequence | List, field: Field): Array<AstNode> {
+function transformMany(node: CSV | Multiple | Sequence, field: Field): Array<AstNode> {
     const ast = new Array<AstNode>();
 
     for (const elem of node.elements) {
-        if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence || elem instanceof List) {
+        if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
             const asns = transformMany(elem, field);
 
             for (const asn of asns) {
@@ -213,10 +212,19 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         return transform(node.bestMatch, field);
     }
 
+    if (node instanceof List) {
+        const items = transformMany(node.elements[1] as CSV, field);
+        return new LiteralListAsn(items, field);
+    }
+
+    if (node instanceof WithClause) {
+        return transform(node.elements[1], field);
+    }
+
     if (node instanceof Sequence) {
         if (node.ruleName === RuleNames.with) {
             const obj = transform(node.elements[0], field) as ExprAsn;
-            const changes = transformMany((node.elements[1] as WithClause).elements[1] as List, field);
+            const changes = transform(node.elements[1], field) as LiteralListAsn;
 
             return new WithAsn(obj, changes, field);
         }

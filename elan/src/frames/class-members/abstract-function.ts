@@ -18,6 +18,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
     public returnType: TypeField;
     private class: Class;
 
+    
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
