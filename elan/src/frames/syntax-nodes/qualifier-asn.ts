@@ -12,7 +12,7 @@ export class QualifierAsn {
     }
 
     toString() {
-        return  `${this.qualifier.map(p => p.toString()).join(".")}.`;
+        return  `${this.qualifier.map(p => p.toString()).join(".")}`;
     }
 
 }
