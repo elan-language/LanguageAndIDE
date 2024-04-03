@@ -196,8 +196,8 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof KeywordNode) {
-        if (node.keyword === globalKeyword || node.keyword === libraryKeyword) {
-            return new IdAsn(node.keyword, field);
+        if (node.fixedText === globalKeyword || node.fixedText === libraryKeyword) {
+            return new IdAsn(node.fixedText, field);
         }
 
         return undefined;
