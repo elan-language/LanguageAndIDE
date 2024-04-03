@@ -24,8 +24,4 @@ export class LitString extends AbstractSequence {
     renderAsHtml(): string {
         return `<string>${this.renderAsSource()}</string>`;
     }
-
-    get symbolType() {
-        return StringType.Instance;
-    }
 }

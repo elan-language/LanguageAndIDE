@@ -30,9 +30,5 @@ export class LitFloat extends AbstractSequence {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        return FloatType.Instance;
-    }
     renderAsObjectCode(): string { return this.matchedText.toUpperCase(); } //For the exponent e -> E
 }

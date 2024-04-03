@@ -15,8 +15,4 @@ export class DefaultOfTypeNode extends AbstractSequence {
         this.elements.push(new TypeWithOptGenerics()); 
         super.parseText(text);
     }
-
-    get symbolType() {
-        return  UnknownType.Instance;
-    }
 }

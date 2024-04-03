@@ -21,8 +21,4 @@ export class Dictionary extends AbstractParseNode  {
             this.updateFrom(list);
         }
     }
-    
-    get symbolType() {
-       return undefined;
-    }
 }

@@ -22,8 +22,4 @@ export class NewInstance extends AbstractSequence {
         this.elements.push(new SymbolNode(CLOSE_BRACKET)); 
         super.parseText(text);
     }
-
-    get symbolType() {
-        return  UnknownType.Instance;
-    }
 }

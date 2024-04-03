@@ -2,10 +2,6 @@ import { ExprNode } from "./expr-node";
 import { BinaryOperation } from "./binary-operation";
 import { AbstractSequence } from "./abstract-sequence";
 import { Term } from "./term";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
-import { FloatType } from "../../symbols/float-type";
-
 
 export class BinaryExpression extends AbstractSequence {
     

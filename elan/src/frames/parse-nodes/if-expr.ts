@@ -21,11 +21,6 @@ export class IfExpr extends AbstractSequence {
             super.parseText(text);
         }
     }
-    
-    get symbolType() {
-        return UnknownType.Instance;
-    }
-
     renderAsHtml(): string {
         var condition = this.elements[1].renderAsHtml();
         var ifTrue = this.elements[3].renderAsHtml();

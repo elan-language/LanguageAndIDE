@@ -17,8 +17,4 @@ export class RegExMatchNode extends AbstractParseNode {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.regx);
         }
     }
-
-    get symbolType() {
-        return UnknownType.Instance;
-    }
 }

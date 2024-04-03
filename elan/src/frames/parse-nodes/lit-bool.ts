@@ -20,9 +20,4 @@ export class LitBool extends AbstractAlternatives {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        return BooleanType.Instance;
-    }
-    
 }

@@ -11,7 +11,6 @@ export class LitChar extends AbstractSequence {
         super();
         this.placeholder = "";
     }
-
     parseText(text: string): void {
         if (text.trimStart().length > 0) {
             this.elements.push(new SymbolNode(SINGLE_QUOTE));
@@ -20,13 +19,7 @@ export class LitChar extends AbstractSequence {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        return CharType.Instance;
-    }
-
     renderAsHtml(): string {
         return `<string>${this.matchedText}</string>`;
     }
-
 }
