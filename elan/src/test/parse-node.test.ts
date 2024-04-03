@@ -463,7 +463,9 @@ suite('ParseNodes', () => {
 		testAST(new TypeNode(), stubField, `(Foo, Bar< of Yon>)`, "Type Tuple<Type Foo, Type Bar<Type Yon>>", new TupleType([new ClassType("Foo"), new GenericClassType("Bar", new ClassType("Yon"))]));
 		testAST(new TypeNode(), stubField, `Foo<of List<of (Bar, Qux)>>`, "Type Foo<Type List<Type Tuple<Type Bar, Type Qux>>>", new GenericClassType("Foo", new ListType(new TupleType([new ClassType("Bar"), new ClassType("Qux")]))));
 
-	
+		testAST(new TupleNode(), stubField, `("foo", 3)`, '("foo", 3)', new TupleType([stringType, intType]));
+		testAST(new TupleNode(), stubField, `(foo, 3, bar(a), x)`,  '(foo, 3, Func Call bar (a), x)', new TupleType([intType, intType, stringType, intType]));
+		
 	
 	});
 });

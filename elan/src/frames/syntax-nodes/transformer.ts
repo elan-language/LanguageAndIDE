@@ -53,6 +53,8 @@ import { LiteralListAsn } from "./literal-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { TupleNode } from "../parse-nodes/tuple-node";
+import { LiteralTupleAsn } from "./literal-tuple-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -224,6 +226,11 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     if (node instanceof List) {
         const items = transformMany(node.elements[1] as CSV, field);
         return new LiteralListAsn(items, field);
+    }
+
+    if (node instanceof TupleNode) {
+        const items = transformMany(node.elements[1] as CSV, field);
+        return new LiteralTupleAsn(items, field);
     }
 
     if (node instanceof WithClause) {
