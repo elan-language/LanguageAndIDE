@@ -13,23 +13,23 @@ import { AstNode } from "./ast-node";
 
 export class TypeAsn {
 
-    constructor(private type: string, private genericParameters : Array<AstNode>, private field : Field) {
+    constructor(private type: string, private genericParameters: Array<AstNode>, private field: Field) {
         this.type = type.trim();
     }
 
     get symbolType() {
         switch (this.type) {
-            case ("Int") : return IntType.Instance;
-            case ("Float") : return FloatType.Instance;
-            case ("Boolean") : return BooleanType.Instance;
-            case ("String") : return StringType.Instance;
-            case ("Char") : return CharType.Instance;
-            case ("List") : return new ListType(this.genericParameters[0].symbolType!);
-            case ("Dictionary") : return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
-            case ("Tuple") : return new TupleType(this.genericParameters.map(p => p.symbolType!));
-            case ("Iter") : throw new Error("Not impl");
+            case ("Int"): return IntType.Instance;
+            case ("Float"): return FloatType.Instance;
+            case ("Boolean"): return BooleanType.Instance;
+            case ("String"): return StringType.Instance;
+            case ("Char"): return CharType.Instance;
+            case ("List"): return new ListType(this.genericParameters[0].symbolType!);
+            case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
+            case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
+            case ("Iter"): throw new Error("Not impl");
             default: {
-                if (this.genericParameters.length === 0){   
+                if (this.genericParameters.length === 0) {
                     return new ClassType(this.type);
                 }
                 return new GenericClassType(this.type, this.genericParameters[0].symbolType!);
@@ -38,7 +38,7 @@ export class TypeAsn {
     }
 
     toString() {
-        const pp = this.genericParameters.map(p => p.toString()).join(", "); 
+        const pp = this.genericParameters.map(p => p.toString()).join(", ");
         const gp = pp ? `<${pp}>` : "";
         return `Type ${this.type}${gp}`;
     }

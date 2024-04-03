@@ -3,8 +3,8 @@ import { AstNode } from "./ast-node";
 
 export class QualifierAsn {
 
-    constructor(private qualifier : AstNode[], private field : Field) {
-        
+    constructor(private qualifier: AstNode[], private field: Field) {
+
     }
 
     get symbolType() {
@@ -12,7 +12,7 @@ export class QualifierAsn {
     }
 
     toString() {
-        return  `${this.qualifier.map(p => p.toString()).join(".")}`;
+        return `${this.qualifier.map(p => p.toString()).join(".")}`;
     }
 
 }

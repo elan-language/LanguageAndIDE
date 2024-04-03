@@ -3,7 +3,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class LambdaAsn {
 
-    constructor(private parameters: Array<ExprAsn>, private body : ExprAsn, private field : Field) {
+    constructor(private parameters: Array<ExprAsn>, private body: ExprAsn, private field: Field) {
     }
 
     get symbolType() {
@@ -13,7 +13,7 @@ export class LambdaAsn {
     toString() {
         const pp = this.parameters.map(p => p.toString()).join(", ");
 
-        return  `Lambda (${pp}) => (${this.body})`;
+        return `Lambda (${pp}) => (${this.body})`;
     }
 
 }

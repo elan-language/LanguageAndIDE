@@ -3,7 +3,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class BracketedAsn {
 
-    constructor(private body : ExprAsn, private field : Field) {
+    constructor(private body: ExprAsn, private field: Field) {
     }
 
     get symbolType() {
@@ -11,7 +11,7 @@ export class BracketedAsn {
     }
 
     toString() {
-        return  `(${this.body})`;
+        return `(${this.body})`;
     }
 
 }

@@ -3,7 +3,7 @@ import { AstNode } from "./ast-node";
 
 export class ParamDefAsn {
 
-    constructor(private id: string, private type : AstNode, private field : Field) {
+    constructor(private id: string, private type: AstNode, private field: Field) {
     }
 
     get symbolType() {
@@ -11,7 +11,7 @@ export class ParamDefAsn {
     }
 
     toString() {
-        return  `Param ${this.id} : ${this.type}`;
+        return `Param ${this.id} : ${this.type}`;
     }
 
 }

@@ -3,7 +3,7 @@ import { Frame } from "../interfaces/frame";
 
 export class IdAsn {
 
-    constructor(private id: string, private field : Field) {
+    constructor(private id: string, private field: Field) {
         this.id = id.trim();
     }
 

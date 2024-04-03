@@ -2,11 +2,11 @@ import { BooleanType } from "../../symbols/boolean-type";
 import { trueKeyword } from "../keywords";
 
 export class LiteralBoolAsn {
-    constructor(rawValue : string) {
+    constructor(rawValue: string) {
         this.value = rawValue.trim() === trueKeyword;
     }
 
-    value : boolean;
+    value: boolean;
 
     get symbolType() {
         return BooleanType.Instance;
