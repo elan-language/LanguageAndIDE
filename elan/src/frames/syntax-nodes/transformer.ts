@@ -46,7 +46,6 @@ import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { Alternatives } from "../parse-nodes/alternatives";
 import { QualifierAsn } from "./qualifier-asn";
 import { RuleNames } from "../parse-nodes/rule-names";
 import { globalKeyword, libraryKeyword } from "../keywords";
@@ -179,20 +178,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof VarRefNode) {
-        if (node.bestMatch instanceof Sequence) {
-            const q = node.bestMatch.elements[0].matchedText;
-            const id = node.bestMatch.elements[1].matchedText;
-
-            return new VarAsn(id, q, field);
-        }
-
-        if (node.bestMatch instanceof IdentifierNode) {
-            const id = node.bestMatch.matchedText;
-
-            return new VarAsn(id, "", field);
-        }
-
-        return undefined;
+        return transform(node.bestMatch, field);
     }
 
     if (node instanceof SetClause) {
@@ -234,6 +220,13 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
         if (node.ruleName === RuleNames.instance) {
             return new QualifierAsn(transformMany(node, field), field);
+        }
+
+        if (node.ruleName === RuleNames.compound) {
+            const q = node.elements[0].matchedText;
+            const id = node.elements[1].matchedText;
+
+            return new VarAsn(id, q, field);
         }
     }
 

@@ -1,5 +1,6 @@
 export enum RuleNames {
     instance,
     qualDot,
-    with
+    with,
+    compound
 }

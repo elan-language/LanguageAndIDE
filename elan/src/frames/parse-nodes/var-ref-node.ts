@@ -12,6 +12,7 @@ import { SymbolNode } from "./symbol-node";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { Multiple } from "./multiple";
 import { DOT } from "../symbols";
+import { RuleNames } from "./rule-names";
 
 export class VarRefNode extends AbstractAlternatives {
     constructor() {
@@ -27,10 +28,10 @@ export class VarRefNode extends AbstractAlternatives {
         var lib = () => new KeywordNode(libraryKeyword);
         var qualifier = () => new Alternatives([prop, global, lib, instance]);
         var dot = () => new SymbolNode(DOT);
-        var qualDot = () => new Sequence([qualifier, dot]);
+        var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
         var optQualifier = () => new OptionalNode(qualDot);
         var indexes = () => new Multiple(() => new IndexNode(), 0);
-        var compound = () => new Sequence( [optQualifier, simple, indexes ]);
+        var compound = () => new Sequence( [optQualifier, simple, indexes ], RuleNames.compound);
         this.alternatives.push(simple());
         this.alternatives.push(compound());
         super.parseText(text);
