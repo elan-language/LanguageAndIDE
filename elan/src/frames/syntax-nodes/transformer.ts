@@ -48,6 +48,7 @@ import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { QualifierAsn } from "./qualifier-asn";
+import { RuleNames } from "../parse-nodes/rule-names";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -131,20 +132,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof FunctionCallNode) {
-        var qualifier : QualifierAsn | undefined;
-        const qualNode = (node.elements[0] as OptionalNode).matchedNode;
-        if (qualNode instanceof Sequence) {
-            if (qualNode.elements[0] instanceof Alternatives) {
-                const prefixNode = qualNode.elements[0].bestMatch;
-                if (prefixNode instanceof Sequence) {
-                    qualifier = new QualifierAsn (transformMany(prefixNode, field), field);
-                }
-                else if (prefixNode instanceof IdentifierNode){
-                    qualifier = new QualifierAsn ([transform(prefixNode, field)!], field);
-                }
-            }
-        }
-
+        const qualifier = transform(node.elements[0], field) as QualifierAsn | undefined;
         const id = node.elements[1].matchedText;
         const parameters = transformMany(node.elements[3] as CSV, field) as Array<ExprAsn>;
 
@@ -234,6 +222,18 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
             const to = transform(node.elements[3], field) as ExprAsn;
 
             return new SetAsn(id, to, field);
+        }
+
+        if (node.ruleName === RuleNames.qualDot) {
+            if (node.elements[0] instanceof Alternatives) {
+                const prefixNode = node.elements[0].bestMatch;
+                if (prefixNode instanceof Sequence) {
+                    return new QualifierAsn (transformMany(prefixNode, field), field);
+                }
+                else if (prefixNode instanceof IdentifierNode){
+                    return new QualifierAsn ([transform(prefixNode, field)!], field);
+                }
+            }
         }
     }
 
