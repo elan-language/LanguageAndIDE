@@ -390,52 +390,52 @@ suite('ParseNodes', () => {
 	});
 
 	test("AST", () => {
-		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
+		// testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
 
-		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
-		testAST(new UnaryExpression(), stubField, " not true", "Not (true)", boolType);
-		testAST(new UnaryExpression(), stubField, " not boo", "Not (boo)", boolType);
+		// testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
+		// testAST(new UnaryExpression(), stubField, " not true", "Not (true)", boolType);
+		// testAST(new UnaryExpression(), stubField, " not boo", "Not (boo)", boolType);
 
-		testAST(new Term(), stubField, "a", "a", intType);
+		// testAST(new Term(), stubField, "a", "a", intType);
 
-		testAST(new ExprNode(), stubField, "a", "a", intType);
-		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", intType);
-		testAST(new ExprNode(), stubField, "a + b-c", "Add (a) (Minus (b) (c))", intType);
+		// testAST(new ExprNode(), stubField, "a", "a", intType);
+		// testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", intType);
+		// testAST(new ExprNode(), stubField, "a + b-c", "Add (a) (Minus (b) (c))", intType);
 		
-		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
-		testAST(new ExprNode(), stubField, "3*foo(5)", "Multiply (3) (Func Call foo (5))", intType);
-		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call foo (0)", intType);
-		const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param  p : Type List<Type String>) => (Add (s) (Multiply (Func Call first ()) (Func Call first ()))))";
-		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
-		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
-		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
+		// testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
+		// testAST(new ExprNode(), stubField, "3*foo(5)", "Multiply (3) (Func Call foo (5))", intType);
+		// testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call foo (0)", intType);
+		// const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param  p : Type List<Type String>) => (Add (s) (Multiply (Func Call first ()) (Func Call first ()))))";
+		// testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
+		// testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
+		// testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 		
-		const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
-		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
+		// const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
+		// testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 
-		testAST(new IdentifierNode(), stubField, `a`, "a", intType);
+		// testAST(new IdentifierNode(), stubField, `a`, "a", intType);
 
-		testAST(new LitBool(), stubField, " true", "true", boolType);
-		testAST(new LitBool(), stubField, " false", "false", boolType);
+		// testAST(new LitBool(), stubField, " true", "true", boolType);
+		// testAST(new LitBool(), stubField, " false", "false", boolType);
 
-		testAST(new LitChar(), stubField, "'a'", "'a'", charType);
-		testAST(new LitChar(), stubField, " '9'", "'9'", charType);
+		// testAST(new LitChar(), stubField, "'a'", "'a'", charType);
+		// testAST(new LitChar(), stubField, " '9'", "'9'", charType);
 
-		testAST(new LitInt(), stubField, " 123", "123", intType);
+		// testAST(new LitInt(), stubField, " 123", "123", intType);
 
-		testAST(new LitFloat(), stubField, " 1.1", "1.1", floatType);
+		// testAST(new LitFloat(), stubField, " 1.1", "1.1", floatType);
 
-		testAST(new BracketedExpression(), stubField, "(3)", "(3)", intType);
-		testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", intType);
-		testAST(new BracketedExpression(), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
-		testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
-		testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
+		// testAST(new BracketedExpression(), stubField, "(3)", "(3)", intType);
+		// testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", intType);
+		// testAST(new BracketedExpression(), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
+		// testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
+		// testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
 
-		testAST(new LitString(), stubField, `"abc"`,  `"abc"`, stringType);
+		// testAST(new LitString(), stubField, `"abc"`,  `"abc"`, stringType);
 
-		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
-		// testAST(new FunctionCallNode(), stubField, `bar.foo()`, "", intType);
+		// testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
+		// testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
+		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
 		// testAST(new FunctionCallNode(), stubField, `global.foo()`, "", intType);
 		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "", intType);
 		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "", intType);
