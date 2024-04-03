@@ -4,7 +4,6 @@ import { AstNode } from "./ast-node";
 export class DefaultTypeAsn {
 
     constructor(private type: AstNode, private field: Field) {
-
     }
 
     get symbolType() {
@@ -12,8 +11,6 @@ export class DefaultTypeAsn {
     }
 
     toString() {
-
         return `Default (${this.type})`;
     }
-
 }

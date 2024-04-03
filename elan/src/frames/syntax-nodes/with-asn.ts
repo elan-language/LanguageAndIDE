@@ -6,7 +6,6 @@ import { LiteralListAsn } from "./literal-list-asn";
 export class WithAsn implements AstNode {
 
     constructor(private obj: ExprAsn, private withClause: LiteralListAsn, field: Field) {
-
     }
 
     get symbolType() {

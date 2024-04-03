@@ -3,8 +3,8 @@ import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
 export class LiteralTupleAsn {
-    constructor(private readonly items: AstNode[], field: Field) {
 
+    constructor(private readonly items: AstNode[], field: Field) {
     }
 
     get symbolType() {

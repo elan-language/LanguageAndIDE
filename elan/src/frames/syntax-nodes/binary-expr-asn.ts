@@ -7,7 +7,6 @@ import { OperationSymbol } from "./operation-symbol";
 export class BinaryExprAsn implements AstNode {
 
     constructor(private op: OperationSymbol, private lhs: ExprAsn, private rhs: ExprAsn, field: Field) {
-
     }
 
     get symbolType() {

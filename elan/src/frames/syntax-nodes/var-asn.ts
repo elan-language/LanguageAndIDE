@@ -1,11 +1,3 @@
-import { BooleanType } from "../../symbols/boolean-type";
-import { CharType } from "../../symbols/char-type";
-import { DictionaryType } from "../../symbols/dictionary-type";
-import { FloatType } from "../../symbols/float-type";
-import { IntType } from "../../symbols/int-type";
-import { ListType } from "../../symbols/list-type";
-import { StringType } from "../../symbols/string-type";
-import { TupleType } from "../../symbols/tuple-type";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { AstNode } from "./ast-node";
@@ -17,7 +9,6 @@ export class VarAsn {
     }
 
     get symbolType() {
-
         var holder = this.field.getHolder();
         return holder.resolveSymbol(this.id, holder as Frame).symbolType;
     }
@@ -27,5 +18,4 @@ export class VarAsn {
         const idx = this.index ? `${this.index}` : "";
         return `${q}${this.id}${idx}`;
     }
-
 }

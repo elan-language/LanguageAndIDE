@@ -13,5 +13,4 @@ export class BracketedAsn {
     toString() {
         return `(${this.body})`;
     }
-
 }

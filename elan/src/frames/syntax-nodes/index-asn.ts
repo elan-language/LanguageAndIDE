@@ -4,7 +4,6 @@ import { ExprAsn } from "./expr-asn";
 export class IndexAsn {
 
     constructor(private index: ExprAsn, private field: Field) {
-
     }
 
     get symbolType() {

@@ -13,5 +13,4 @@ export class ParamDefAsn {
     toString() {
         return `Param ${this.id} : ${this.type}`;
     }
-
 }

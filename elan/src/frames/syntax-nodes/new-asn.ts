@@ -4,7 +4,6 @@ import { AstNode } from "./ast-node";
 export class NewAsn {
 
     constructor(private type: AstNode, private parameters: AstNode[], private field: Field) {
-
     }
 
     get symbolType() {
@@ -15,5 +14,4 @@ export class NewAsn {
         const pp = this.parameters.map(p => p.toString()).join(", ");
         return `new ${this.type}(${pp})`;
     }
-
 }

@@ -15,5 +15,4 @@ export class LambdaAsn {
 
         return `Lambda (${pp}) => (${this.body})`;
     }
-
 }

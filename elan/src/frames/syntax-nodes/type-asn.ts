@@ -42,5 +42,4 @@ export class TypeAsn {
         const gp = pp ? `<${pp}>` : "";
         return `Type ${this.type}${gp}`;
     }
-
 }

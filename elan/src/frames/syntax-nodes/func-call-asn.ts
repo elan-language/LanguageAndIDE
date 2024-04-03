@@ -17,8 +17,6 @@ export class FuncCallAsn {
     toString() {
         const pp = this.parameters.map(p => p.toString()).join(", ");
         const q = this.qualifier ? `${this.qualifier}.` : "";
-
         return `Func Call ${q}${this.id} (${pp})`;
     }
-
 }

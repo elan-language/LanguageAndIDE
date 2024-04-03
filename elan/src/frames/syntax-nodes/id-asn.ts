@@ -15,5 +15,4 @@ export class IdAsn {
     toString() {
         return this.id;
     }
-
 }
