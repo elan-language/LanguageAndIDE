@@ -29,9 +29,4 @@ export class IndexNode extends AbstractSequence {
           super.parseText(text);
         }
     }
-    
-    get symbolType() {
-        return UnknownType.Instance;
-    }
-    
 }

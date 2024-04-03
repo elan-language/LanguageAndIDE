@@ -17,8 +17,4 @@ export class EnumVal extends AbstractSequence {
         this.elements.push(new IdentifierNode());
         super.parseText(text);
     }
-
-    get symbolType() {
-        return UnknownType.Instance;
-    }
 }

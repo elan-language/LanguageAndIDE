@@ -18,8 +18,4 @@ export class LitInt extends AbstractParseNode {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.literalInt);
         }
     }
-    get symbolType() {
-        return IntType.Instance;
-    }
-
 }

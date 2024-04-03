@@ -11,9 +11,5 @@ export class TypeSimpleNode extends RegExMatchNode {
     renderAsHtml(): string {
         return `<type>${this.renderAsSource()}</type>`;
     }
-
-    get symbolType() {
-        return new ClassType(this.matchedText);
-    }
 }
 

@@ -1,4 +1,6 @@
 import { ParseStatus } from "../parse-status";
+import { FixedTextNode } from "./fixed-text-node";
+import { ParseNode } from "./parse-node";
 
 export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, string] {
     var status = ParseStatus.invalid;
@@ -12,3 +14,7 @@ export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, st
     }
     return [status, match, remaining];
 }
+
+export function isFixedText(f?: ParseNode): f is FixedTextNode {
+    return !!f && 'fixedText' in f;
+} 

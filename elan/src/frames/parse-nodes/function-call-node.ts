@@ -3,9 +3,7 @@ import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { SymbolNode } from "./symbol-node";
 import { IdentifierNode } from "./identifier-node";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
-import { propertyKeyword, globalKeyword, libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword } from "../keywords";
 import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
@@ -13,7 +11,6 @@ import { Sequence } from "./sequence";
 import { IndexNode } from "./index-node";
 import { Multiple } from "./multiple";
 import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
-import { Frame } from "../interfaces/frame";
 import { RuleNames } from "./rule-names";
 
 export class FunctionCallNode extends AbstractSequence {

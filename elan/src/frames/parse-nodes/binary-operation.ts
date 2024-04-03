@@ -4,18 +4,19 @@ import { KeywordNode } from "./keyword-node";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
+import { OperatorNode } from "./operator-node";
 
 export class BinaryOperation extends AbstractAlternatives {
     parseText(text: string): void {  
-        this.alternatives.push(new SymbolNode(PLUS));
-        this.alternatives.push(new SymbolNode(MINUS));
-        this.alternatives.push(new SymbolNode(MULT));
-        this.alternatives.push(new SymbolNode(DIVIDE));
-        this.alternatives.push(new SymbolNode(GT));
-        this.alternatives.push(new SymbolNode(LT));
-        this.alternatives.push(new SymbolNode(GE));
-        this.alternatives.push(new SymbolNode(LE));
-        this.alternatives.push(new SymbolNode(POWER));
+        this.alternatives.push(new OperatorNode(PLUS));
+        this.alternatives.push(new OperatorNode(MINUS));
+        this.alternatives.push(new OperatorNode(MULT));
+        this.alternatives.push(new OperatorNode(DIVIDE));
+        this.alternatives.push(new OperatorNode(GT));
+        this.alternatives.push(new OperatorNode(LT));
+        this.alternatives.push(new OperatorNode(GE));
+        this.alternatives.push(new OperatorNode(LE));
+        this.alternatives.push(new OperatorNode(POWER));
         this.alternatives.push(new KeywordNode(isKeyword));
         var is = () => new KeywordNode(isKeyword);
         var not = () => new KeywordNode(notKeyword);
@@ -29,11 +30,11 @@ export class BinaryOperation extends AbstractAlternatives {
     }
 
     renderAsSource(): string {
-        return ` ${this.bestMatch?.renderAsSource()}${this.trailingSpace()}`;
+        return ` ${this.bestMatch?.renderAsSource()}`;
     }
 
     renderAsHtml(): string {
-        return ` ${this.bestMatch?.renderAsHtml()}${this.trailingSpace()}`;
+        return ` ${this.bestMatch?.renderAsHtml()}`;
     }
 
     renderAsObjectCode(): string {
@@ -45,9 +46,5 @@ export class BinaryOperation extends AbstractAlternatives {
         }
        
         return code;
-    }
-
-    private trailingSpace(): string {
-        return ("isSymbol" in this.bestMatch!) ? " " : "";
     }
 }

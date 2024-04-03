@@ -156,9 +156,11 @@ suite('ParseNodes', () => {
 		testNodeParse(new KeywordNode(abstractKeyword), " abscract", ParseStatus.invalid, "", " abscract", "");
 	});
 	test('BracketedExpression', () => {
+		testNodeParse(new BracketedExpression(), "(3 + 4)", ParseStatus.valid, "(3 + 4)", "", "(3 + 4)", "");
+
 		testNodeParse(new BracketedExpression(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new BracketedExpression(), "(3)", ParseStatus.valid, "(3)", "", "(3)", "");
-		testNodeParse(new BracketedExpression(), "(3 + 4)", ParseStatus.valid, "(3 + 4)", "", "(3 + 4)", "");
+
 		testNodeParse(new BracketedExpression(), "(a and not b)", ParseStatus.valid, "(a and not b)", "", "(a and not b)", "");
 		testNodeParse(new BracketedExpression(), "(3 * 4 + x)", ParseStatus.valid, "(3 * 4 + x)", "", "(3 * 4 + x)", "");
 		testNodeParse(new BracketedExpression(), "(3 * (4 + x))", ParseStatus.valid, "(3 * (4 + x))", "", "(3 * (4 + x))", "");

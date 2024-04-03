@@ -31,8 +31,4 @@ export class Lambda extends AbstractSequence {
     renderAsSource(): string {
         return `${lambdaKeyword} ${this.elements[1].renderAsSource()} ${ARROW} ${this.elements[3].renderAsSource()}`;
     }
-
-    get symbolType() {
-        return UnknownType.Instance;
-    }
 }

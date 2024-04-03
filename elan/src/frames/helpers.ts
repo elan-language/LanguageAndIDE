@@ -7,6 +7,7 @@ import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Selectable } from "./interfaces/selectable";
+import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;

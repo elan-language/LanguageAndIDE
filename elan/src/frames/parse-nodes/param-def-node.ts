@@ -1,5 +1,4 @@
 import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
 import { asKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
@@ -20,19 +19,14 @@ export class ParamDefNode extends AbstractSequence {
             super.parseText(text);
         }
     }
-
-    get symbolType() {
-        return UnknownType.Instance;
-    }
-
     renderAsHtml(): string {
         var ident = this.elements[0].renderAsHtml();
         var type = this.elements[2].renderAsHtml();
-        return `${ident}<keyword> as </keyword>${type}`;
+        return `${ident}<keyword> ${asKeyword} </keyword>${type}`;
     }
     renderAsSource(): string {
         var ident = this.elements[0].renderAsSource();
         var type = this.elements[2].renderAsSource();
-        return `${ident}<keyword> as </keyword>${type}`;   
+        return `${ident}<keyword> ${asKeyword} </keyword>${type}`;   
     }
 }

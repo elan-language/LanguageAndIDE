@@ -32,8 +32,4 @@ export class KVPnode extends AbstractSequence  {
         comp += this.elements[2].status === ParseStatus.empty? " value": "";
         return comp;
     }
-    
-    get symbolType() {
-         return undefined;
-    }
 }

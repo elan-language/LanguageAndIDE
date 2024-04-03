@@ -20,8 +20,4 @@ export class LitTuple extends AbstractSequence {
             super.parseText(text);
         }
     }
-    get symbolType() {
-        return IntType.Instance;
-    }
-
 }

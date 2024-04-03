@@ -1,17 +1,10 @@
-import { ParseStatus } from "../parse-status";
-import { AbstractParseNode } from "./abstract-parse-node";
 import { escapeAngleBrackets } from "../helpers";
-import { rawSymbolToType } from "../../symbols/symbolHelpers";
+import { ParseStatus } from "../parse-status";
+import { FixedTextNode } from "./fixed-text-node";
 
-
-export class SymbolNode extends AbstractParseNode {
-    fixedText: string;
-    isSymbol = true;
-
-    constructor(fixedText: string) {
-        super();
-        this.fixedText = fixedText;
-        this.placeholder = fixedText;
+export class SymbolNode extends FixedTextNode {
+    constructor(symbol: string) {
+        super(symbol);
     }
 
     parseText(text: string): void {
@@ -32,17 +25,5 @@ export class SymbolNode extends AbstractParseNode {
 
     renderAsHtml(): string {
         return escapeAngleBrackets(this.renderAsSource());
-    }
-
-    override renderAsObjectCode(): string {
-        switch (this.fixedText) {
-            case "^": return "**";
-            default:
-                return this.fixedText;
-        }
-    } 
-
-    get symbolType() {
-        return rawSymbolToType(this.fixedText);
     }
 }
