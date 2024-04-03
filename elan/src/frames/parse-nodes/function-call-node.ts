@@ -23,7 +23,7 @@ export class FunctionCallNode extends AbstractSequence {
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
             var variable = () => new IdentifierNode();
-            var indexes = () => new Multiple(() => new IndexNode(), 0);
+            var indexes = () => new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
             var instance = () => new Sequence([variable, indexes], RuleNames.instance);
             var qualifier = () => new Alternatives([global, lib, instance]);
             var dot = () => new SymbolNode(DOT);

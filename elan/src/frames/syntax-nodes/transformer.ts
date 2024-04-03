@@ -226,7 +226,11 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         }
 
         if (node.ruleName === RuleNames.instance) {
-            return new QualifierAsn(transformMany(node, field), field);
+            //return new QualifierAsn(transformMany(node, field), field);
+            var id = node.elements[0].matchedText;
+            var index = transform(node.elements[1], field);
+
+            return new VarAsn(id, undefined, index, field);
         }
 
         if (node.ruleName === RuleNames.compound) {
@@ -240,8 +244,8 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof Multiple) {
         if (node.ruleName === RuleNames.indexes) {
-            return transform(node.elements[0], field);
-        }   
+            return node.elements.length > 0 ? transform(node.elements[0], field) : undefined;
+        }
     }
 
     throw new Error("Not implemented " + typeof node);
