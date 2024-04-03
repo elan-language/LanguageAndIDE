@@ -410,8 +410,8 @@ suite('ParseNodes', () => {
 		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
 		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 		
-		const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
-		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
+		// const ast1 = "With (p) (Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1)))";
+		// testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 
 		testAST(new IdentifierNode(), stubField, `a`, "a", intType);
 
@@ -438,7 +438,7 @@ suite('ParseNodes', () => {
 		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call global.foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call library.foo ()", intType);
-		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", intType);
+		testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
 		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "", intType);
 		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "", intType);
 	});

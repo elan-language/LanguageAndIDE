@@ -30,7 +30,7 @@ export class VarRefNode extends AbstractAlternatives {
         var dot = () => new SymbolNode(DOT);
         var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
         var optQualifier = () => new OptionalNode(qualDot);
-        var indexes = () => new Multiple(() => new IndexNode(), 0);
+        var indexes = () => new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
         var compound = () => new Sequence( [optQualifier, simple, indexes ], RuleNames.compound);
         this.alternatives.push(simple());
         this.alternatives.push(compound());

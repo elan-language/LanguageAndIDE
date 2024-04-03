@@ -12,9 +12,8 @@ import { AstNode } from "./ast-node";
 
 export class VarAsn {
 
-    constructor(private id: string, private qualifier: string, private field: Field) {
+    constructor(private id: string, private qualifier : AstNode | undefined, private index : AstNode | undefined, private field: Field) {
         this.id = id.trim();
-        this.qualifier = qualifier.trim();
     }
 
     get symbolType() {
@@ -24,8 +23,9 @@ export class VarAsn {
     }
 
     toString() {
-        const qual = this.qualifier ? `${this.qualifier}` : "";
-        return `${qual}${this.id}`;
+        const q = this.qualifier ? `${this.qualifier}.` : "";
+        const idx = this.index ? `${this.index}` : "";
+        return `${q}${this.id}${idx}`;
     }
 
 }

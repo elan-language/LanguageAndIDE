@@ -49,6 +49,8 @@ import { LiteralStringAsn } from "./literal-string-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RuleNames } from "../parse-nodes/rule-names";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { IndexNode } from "../parse-nodes/index-node";
+import { IndexAsn } from "./index-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -201,6 +203,11 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         return undefined;
     }
 
+    if (node instanceof IndexNode) {
+        const index = transform(node.elements[1], field) as ExprAsn;
+        return new IndexAsn(index, field);
+    }
+
 
     if (node instanceof AbstractAlternatives) {
         return transform(node.bestMatch, field);
@@ -223,11 +230,18 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         }
 
         if (node.ruleName === RuleNames.compound) {
-            const q = node.elements[0].matchedText;
+            const q = transform(node.elements[0], field);
             const id = node.elements[1].matchedText;
+            const index = transform(node.elements[2], field);
 
-            return new VarAsn(id, q, field);
+            return new VarAsn(id, q, index, field);
         }
+    }
+
+    if (node instanceof Multiple) {
+        if (node.ruleName === RuleNames.indexes) {
+            return transform(node.elements[0], field);
+        }   
     }
 
     throw new Error("Not implemented " + typeof node);

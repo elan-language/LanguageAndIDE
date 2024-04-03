@@ -360,6 +360,7 @@ const stubHolder = {
       case 'boo' : return stubBoolSymbol;
       case 'reduce' : return stubIntSymbol;
       case 'p' : return stubClassSymbol;
+      case 'isBefore' : return stubBoolSymbol;
     }
 
     return undefined;
