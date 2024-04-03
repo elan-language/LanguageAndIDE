@@ -3,5 +3,6 @@ export enum RuleNames {
     qualDot,
     with,
     compound,
-    indexes
+    indexes,
+    tuple
 }

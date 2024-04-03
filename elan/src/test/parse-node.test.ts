@@ -36,6 +36,8 @@ import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
 import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 import { abstractKeyword } from '../frames/keywords';
 import { ClassType } from '../symbols/class-type';
+import { GenericClassType } from '../symbols/generic-class-type';
+import { TupleType } from '../symbols/tuple-type';
 
 suite('ParseNodes', () => {
 
@@ -450,5 +452,18 @@ suite('ParseNodes', () => {
 
 		testAST(new List(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(intType));
 		testAST(new List(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(intType));
+	
+		testAST(new TypeSimpleNode(), stubField, `Foo`, "Type Foo", new ClassType("Foo"));
+		testAST(new TypeWithOptGenerics(), stubField, `Foo`, "Type Foo", new ClassType("Foo"));
+		testAST(new TypeWithOptGenerics(), stubField, `Foo<of Bar>`, "Type Foo<Type Bar>",  new GenericClassType("Foo", new ClassType("Bar")));
+		testAST(new TypeWithOptGenerics(), stubField, `Foo<of List<of Bar>>`, "Type Foo<Type List<Type Bar>>", new GenericClassType("Foo", new ListType(new ClassType("Bar"))));
+		testAST(new TypeNode(), stubField, `Foo<of List<of Bar>>`, "Type Foo<Type List<Type Bar>>", new GenericClassType("Foo", new ListType(new ClassType("Bar"))));
+		testAST(new TypeNode(), stubField, `(Foo, Bar)`, "Type Tuple<Type Foo, Type Bar>", new TupleType([new ClassType("Foo"), new ClassType("Bar")]));
+		testAST(new TypeNode(), stubField, `(Foo, (Bar, Yon, Qux))`, "Type Tuple<Type Foo, Type Tuple<Type Bar, Type Yon, Type Qux>>", new TupleType([new ClassType("Foo"), new TupleType([new ClassType("Bar"),new ClassType("Yon"),new ClassType("Qux")])]));
+		testAST(new TypeNode(), stubField, `(Foo, Bar< of Yon>)`, "Type Tuple<Type Foo, Type Bar<Type Yon>>", new TupleType([new ClassType("Foo"), new GenericClassType("Bar", new ClassType("Yon"))]));
+		testAST(new TypeNode(), stubField, `Foo<of List<of (Bar, Qux)>>`, "Type Foo<Type List<Type Tuple<Type Bar, Type Qux>>>", new GenericClassType("Foo", new ListType(new TupleType([new ClassType("Bar"), new ClassType("Qux")]))));
+
+	
+	
 	});
 });

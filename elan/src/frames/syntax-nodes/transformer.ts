@@ -52,6 +52,7 @@ import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
+import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -168,6 +169,12 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         return new TypeAsn(type, gp, field);
     }
 
+    if (node instanceof TypeSimpleNode) {
+        const type = node.matchedText;
+
+        return new TypeAsn(type, [], field);
+    }
+
     if (node instanceof DefaultOfTypeNode) {
         const type = transform(node.elements[1], field)!;
         return new DefaultTypeAsn(type, field);
@@ -256,6 +263,11 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
             const index = transform(node.elements[2], field);
 
             return new VarAsn(id, q, index, field);
+        }
+
+        if (node.ruleName === RuleNames.tuple) {
+            const gp = transformMany(node.elements[1] as CSV, field);
+            return new TypeAsn("Tuple", gp, field);
         }
     }
 

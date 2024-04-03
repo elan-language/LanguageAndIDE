@@ -7,6 +7,6 @@ export class TupleType implements ISymbolType {
     }
 
     get name() {
-        return `Tuple <${this.ofTypes.map(t => t.name).join(",")}>`;
+        return `Tuple <${this.ofTypes.map(t => t.name).join(", ")}>`;
     }
 }

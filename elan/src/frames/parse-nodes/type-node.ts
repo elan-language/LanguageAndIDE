@@ -5,6 +5,7 @@ import { Sequence } from "./sequence";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 import { Field } from "../interfaces/field";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
+import { RuleNames } from "./rule-names";
 
 export class TypeNode extends AbstractAlternatives {
 
@@ -17,7 +18,7 @@ export class TypeNode extends AbstractAlternatives {
         this.remainingText = text;
         if (text.trimStart().length > 0) {
             var single = new TypeWithOptGenerics();
-            var tuple = new Sequence([() => new SymbolNode(OPEN_BRACKET),() => new CSV(() => new TypeNode(), 2), () => new SymbolNode(CLOSE_BRACKET) ]);
+            var tuple = new Sequence([() => new SymbolNode(OPEN_BRACKET),() => new CSV(() => new TypeNode(), 2), () => new SymbolNode(CLOSE_BRACKET) ], RuleNames.tuple);
             this.alternatives.push(single);
             this.alternatives.push(tuple);
             super.parseText(text);
