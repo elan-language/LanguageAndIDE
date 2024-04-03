@@ -50,6 +50,8 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
+import { NewInstance } from "../parse-nodes/new-instance";
+import { NewAsn } from "./new-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -219,6 +221,13 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof WithClause) {
         return transform(node.elements[1], field);
+    }
+
+    if (node instanceof NewInstance) {
+        const type = transform(node.elements[1], field)!;
+        const pp = transformMany(node.elements[3] as CSV, field);
+
+        return new NewAsn(type, pp, field);
     }
 
     if (node instanceof Sequence) {
