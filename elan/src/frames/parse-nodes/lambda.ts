@@ -15,7 +15,7 @@ export class Lambda extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(new KeywordNode(lambdaKeyword));
             this.elements.push(new CSV(() => new ParamDefNode(), 1));
             this.elements.push(new SymbolNode(ARROW));

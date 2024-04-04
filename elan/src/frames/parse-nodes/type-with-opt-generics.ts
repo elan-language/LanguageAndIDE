@@ -6,12 +6,10 @@ import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
 import { GT, LT } from "../symbols";
 import { ofKeyword } from "../keywords";
-import { ClassType } from "../../symbols/class-type";
-import { GenericClassType } from "../../symbols/generic-class-type";
+import { SpaceNode } from "./space-node";
+import { Space } from "./parse-node-helpers";
 
 export class TypeWithOptGenerics extends AbstractSequence {
 
@@ -21,9 +19,14 @@ export class TypeWithOptGenerics extends AbstractSequence {
     }
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             var simpleType = () => new TypeSimpleNode();
-            var genericNode = () => new Sequence([() => new SymbolNode(LT), () => new KeywordNode(ofKeyword), () => new TypeNode(),() => new SymbolNode(GT)]);
+            var lt = () => new SymbolNode(LT);
+            var of = () => new KeywordNode(ofKeyword);
+            var sp = () => new SpaceNode(Space.required);
+            var type = () => new TypeNode();
+            var gt =() => new SymbolNode(GT);
+            var genericNode = () => new Sequence([lt,of,sp,type,gt]);
             var optGeneric = () => new OptionalNode(genericNode);
             this.elements.push(simpleType());
             this.elements.push(optGeneric());

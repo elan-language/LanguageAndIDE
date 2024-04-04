@@ -11,6 +11,8 @@ import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
 import { List } from "./list";
 import { SetClause } from "./set-clause";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
 
 export class WithClause extends AbstractSequence {
     
@@ -19,10 +21,14 @@ export class WithClause extends AbstractSequence {
     }
 
     parseText(text: string): void {
+        var sp0 = new SpaceNode(Space.required);
         var withKw = new KeywordNode(withKeyword);
+        var sp1 = new SpaceNode(Space.required);
         var setClause = () => new SetClause();
         var changes = new List(setClause);
+        this.elements.push(sp0);
         this.elements.push(withKw);
+        this.elements.push(sp1);
         this.elements. push(changes);
         return super.parseText(text);
     }

@@ -1,32 +1,28 @@
 import { ExprNode } from "./expr-node";
 import { BinaryOperation } from "./binary-operation";
 import { AbstractSequence } from "./abstract-sequence";
-import { Term } from "./term";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
-import { FloatType } from "../../symbols/float-type";
-
-import { withKeyword, setKeyword, toKeyword } from "../keywords";
+import { setKeyword, toKeyword } from "../keywords";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";
-import { Sequence } from "./sequence";
-import { List } from "./list";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
 
 export class SetClause extends AbstractSequence {
-    
-    constructor() {
-        super();
-    }
-
     parseText(text: string): void {
         var property = new IdentifierNode();
+        var sp0 =new SpaceNode(Space.required);
         var set = new KeywordNode(setKeyword);
+        var sp1 =new SpaceNode(Space.required);
         var to = new KeywordNode(toKeyword);
+        var sp2 =new SpaceNode(Space.required);
         var expr = new ExprNode();
         this.elements.push(property);
-        this.elements. push(set);
-        this.elements. push(to);
-        this.elements. push(expr);
+        this.elements.push(sp0);
+        this.elements.push(set);
+        this.elements.push(sp1);
+        this.elements.push(to);
+        this.elements.push(sp2);
+        this.elements.push(expr);
         return super.parseText(text);
     }
      renderAsObjectCode(): string {

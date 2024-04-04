@@ -12,7 +12,7 @@ export class LitChar extends AbstractSequence {
         this.placeholder = "";
     }
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(new SymbolNode(SINGLE_QUOTE));
             this.elements.push(new RegExMatchNode(Regexes.charValue));
             this.elements.push(new SymbolNode(SINGLE_QUOTE));

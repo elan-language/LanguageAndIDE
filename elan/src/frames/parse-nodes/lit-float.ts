@@ -18,7 +18,7 @@ export class LitFloat extends AbstractSequence {
 
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(new LitInt());
             this.elements.push(new SymbolNode(DOT));
             this.elements.push(new RegExMatchNode(Regexes.literalInt));

@@ -19,7 +19,7 @@ export class FunctionCallNode extends AbstractSequence {
     }
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
             var variable = () => new IdentifierNode();

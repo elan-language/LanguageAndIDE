@@ -9,7 +9,7 @@ export class SymbolNode extends FixedTextNode {
 
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             var target = this.fixedText;
             var trimmed = text.trimStart();
             if (trimmed.startsWith(target)) {

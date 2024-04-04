@@ -22,7 +22,7 @@ export class IndexNode extends AbstractSequence {
         var rangeBetween = () => new Sequence([expr, symbol,expr]);
         var rangeTo = () => new Sequence([symbol,expr]);
         var range = () => new Alternatives([rangeFrom, rangeBetween, rangeTo]);
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
           this.elements.push(new SymbolNode(OPEN_SQ_BRACKET));
           this.elements.push(new Alternatives([expr, range]));
           this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));

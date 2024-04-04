@@ -13,7 +13,7 @@ export class OperatorNode extends SymbolNode {
     }
 
     renderAsSource() : string {
-        return `${this.fixedText} `;
+        return `${this.fixedText}`;
     }
 
     override renderAsObjectCode(): string {

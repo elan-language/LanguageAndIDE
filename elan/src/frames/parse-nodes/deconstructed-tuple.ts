@@ -13,7 +13,7 @@ export class DeconstructedTuple extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(new SymbolNode(OPEN_BRACKET));
             this.elements.push(new CSV(() => new IdentifierNode(),2));
             this.elements.push(new SymbolNode(CLOSE_BRACKET));

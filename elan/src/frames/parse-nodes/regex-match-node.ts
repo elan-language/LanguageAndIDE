@@ -13,7 +13,7 @@ export class RegExMatchNode extends AbstractParseNode {
 
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.regx);
         }
     }

@@ -1,4 +1,3 @@
-import { isKeyObject } from "util/types";
 import { ParseStatus } from "../parse-status";
 import { FixedTextNode } from "./fixed-text-node";
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
@@ -6,12 +5,12 @@ import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, x
 export class KeywordNode extends FixedTextNode {
     constructor(keyword: string) {
         super(keyword);
-        this.placeholder = keyword+" ";
+        this.placeholder = keyword;
     }
 
     parseText(text: string): void {
         this.remainingText = text;
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             var target = this.fixedText;
             var trimmed = text.trimStart();
             var lcLetters = trimmed.match(/^[a-z]*/);
@@ -28,11 +27,25 @@ export class KeywordNode extends FixedTextNode {
         }
     }
 
+    getCompletion(): string {
+        var comp = ``;
+        var matched = this.matchedText.length;
+        var kw = this.fixedText.length;
+        if (this.status === ParseStatus.empty) {
+            comp = `${this.fixedText}`;
+        } else if (matched === kw && this.remainingText === "") {
+            comp = ``;
+        } else if (matched < kw) {
+            comp = `${this.fixedText.substring(this.matchedText.length)}`;
+        } 
+        return comp;
+    }
+
     renderAsHtml(): string {
         return `<keyword>${this.renderAsSource()}</keyword>`;
     }
     renderAsSource(): string {
-        return this.matchedText.trim() + " ";
+        return this.matchedText.trim();
     }
     renderAsObjectCode() : string {
         switch (this.fixedText) {

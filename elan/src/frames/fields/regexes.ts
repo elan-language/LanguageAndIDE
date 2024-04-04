@@ -11,4 +11,5 @@ export class Regexes {
     static readonly negatableLitInt = /^-?[0-9]+/;
     static readonly charValue =/[^']/;
     static readonly stringContent = /^[^"]*/;
+    static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
 }

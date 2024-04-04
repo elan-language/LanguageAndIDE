@@ -17,7 +17,7 @@ export class KVPnode extends AbstractSequence  {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(this.keyConstructor());
             this.elements.push(new SymbolNode(COLON));
             this.elements.push(this.valueConstructor());

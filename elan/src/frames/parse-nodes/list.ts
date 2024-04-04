@@ -13,7 +13,7 @@ export class List extends AbstractSequence  {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elements.push(new SymbolNode(OPEN_SQ_BRACKET));
             this.elements.push(new CSV(this.elementConstructor, 0));
             this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));

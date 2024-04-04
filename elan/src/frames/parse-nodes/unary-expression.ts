@@ -4,10 +4,11 @@ import { Term } from "./term";
 import { SymbolNode } from "./symbol-node";
 import { KeywordNode } from "./keyword-node";
 import { notKeyword } from "../keywords";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
 
 import { MINUS } from "../symbols";
+import { SpaceNode } from "./space-node";
+import { Space } from "./parse-node-helpers";
+import { Sequence } from "./sequence";
 
 export class UnaryExpression extends AbstractSequence {
     
@@ -17,8 +18,12 @@ export class UnaryExpression extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
-            var unaryOp = new Alternatives([() => new SymbolNode(MINUS), () => new KeywordNode(notKeyword) ]);
+        if (text.length > 0) {
+            var minus = () => new SymbolNode(MINUS);
+            var not = () => new KeywordNode(notKeyword);
+            var sp = () => new SpaceNode(Space.required);
+            var notSp = () => new Sequence([not, sp]);
+            var unaryOp = new Alternatives([minus,notSp]);
             this.elements.push(unaryOp);
             this.elements.push(new Term());
             return super.parseText(text);

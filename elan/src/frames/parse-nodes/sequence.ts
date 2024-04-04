@@ -11,7 +11,7 @@ export class Sequence extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        if (text.trimStart().length > 0) {
+        if (text.length > 0) {
             this.elementConstructors.forEach(ec => {
                 this.elements.push(ec());
             });
