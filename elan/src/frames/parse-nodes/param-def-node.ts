@@ -7,10 +7,6 @@ import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
 
-    constructor() {
-        super();
-    }
-
     parseText(text: string): void {
         if (text.trim().length > 0) {
             this.elements.push(new IdentifierNode());

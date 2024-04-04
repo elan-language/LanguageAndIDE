@@ -18,9 +18,6 @@ export abstract class AbstractSequence extends AbstractParseNode {
         var worstStatus: ParseStatus = ParseStatus.notParsed;
         while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
             var node = this.elements[i];
-            if (remaining.trim() === "" && isFixedText(node)) { //Has do be done here to ensure that fixed text is DIRECTLY within sequence
-                this.remainingText += node.getCompletion();
-            }
             node.parseText(remaining);
             remaining = node.remainingText;
             if (node.status === ParseStatus.empty) {
