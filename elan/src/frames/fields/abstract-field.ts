@@ -192,14 +192,18 @@ export abstract class AbstractField implements Selectable, Field {
 
     public textAsHtml(): string {
         if (this.selected) {
-            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.width()}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else { 
             return this.rootNode ? this.rootNode.renderAsHtml() : escapeAngleBrackets(this.text);
         } 
     }
 
-    public width(): number {
+    public charCount(): number {
         return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): 1;
+    }
+
+    public fieldWidth(): string {
+        return this.text.length === 0 ? "2px" : `${this.text.length}ch`;
     }
 
     private escapeDoubleQuotes(str: string): string {
