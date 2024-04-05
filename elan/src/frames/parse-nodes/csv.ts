@@ -1,6 +1,6 @@
 
 import { AbstractSequence } from "./abstract-sequence";
-import { Comma } from "./comma";
+import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 import { OptionalNode } from "./optional-node";
 import { ParseNode } from "./parse-node";
@@ -20,7 +20,7 @@ export class CSV extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         var commaNodesMin = 0;
-        var commaNode = () => new Sequence([() => new Comma(), this.elementConstructor]);
+        var commaNode = () => new Sequence([() => new CommaNode(), this.elementConstructor]);
 
         if (this.minimum === 0) {
             this.elements.push(new OptionalNode(this.elementConstructor));

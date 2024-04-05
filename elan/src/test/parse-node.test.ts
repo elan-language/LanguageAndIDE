@@ -41,6 +41,7 @@ import { TupleType } from '../symbols/tuple-type';
 import { SpaceNode } from '../frames/parse-nodes/space-node';
 import { Space } from '../frames/parse-nodes/parse-node-helpers';
 import { ignore_test } from './compiler/compiler-test-helpers';
+import { CommaNode } from '../frames/parse-nodes/comma-node';
 
 suite('ParseNodes', () => {
 
@@ -206,6 +207,14 @@ suite('ParseNodes', () => {
 		testNodeParse(new Multiple(() => new KeywordNode("foo"), 1), `fo`, ParseStatus.incomplete, "", "", "");
 		testNodeParse(new Multiple(() => new KeywordNode("foo"), 1), `foo,foo`, ParseStatus.valid, "", ",foo", "");
 		testNodeParse(new Multiple(() => new KeywordNode("foo"), 1), `foofoo`, ParseStatus.invalid, "", "foofoo", "");
+	});
+	test('CommaNode', () => {
+		testNodeParse(new CommaNode(), ``, ParseStatus.incomplete, ``, "", "");
+		testNodeParse(new CommaNode(), `,`, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), ` ,`, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), `  ,    `, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), `.`, ParseStatus.invalid, ``, ".", "");
+		testNodeParse(new CommaNode(), `,,`, ParseStatus.valid, `,`, ",", "");
 	});
 	test('CSV', () => {
 		testNodeParse(new CSV(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");
