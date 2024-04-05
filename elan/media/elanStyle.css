@@ -1,19 +1,31 @@
 :root {
+    --defaultBackground: white;
+    --defaultText: black;
+    --reverseText: white;
+
     --selection:rgb(173, 214, 255);
     --valid: rgb(169, 247, 169); 
     --incomplete: rgb(246, 193, 94);
     --invalid:  rgb(248, 74, 74);
+    --optional:  lightgrey;
+
+    --keyword: rgb(56,0,255);
+    --method: rgb(152, 118, 49);
+    --type:  rgb(38,127,153);
+    --string:  rgb(165, 2, 2);
+    --comment: green;
 }
+
 code { 
     padding: 0px;
 }
 
 * {
-    color: black;
+    color: var(--defaultText);
     font-family: consolas;
     font-size: 11pt;
-    background-color: white;
-    border-color: white;
+    background-color: var(--defaultBackground);
+    border-color: var(--defaultBackground);
 }
 
 *:focus {
@@ -25,7 +37,7 @@ input, input:focus , input:active{
     outline: none;
     padding: 0px;
     margin: 0px;
-    caret-color: black;
+    caret-color: var(--defaultText);
 }
 
 /* Basic Colour scheme */
@@ -37,23 +49,31 @@ hash {
 span {
     background-color: inherit;
 }
-
 keyword {
-    color: rgb(56,0,255);
-}
+    color: var(--keyword);
+} 
 method, method field.valid text {
-    color: rgb(152, 118, 49);
+    color: var(--method);
 }
 type {
-    color: rgb(38,127,153
-    );
+    color: var(--type);
 }
 string {
-    color: rgb(165, 2, 2);
+    color: var(--string);
 }
-/* Header */
+field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incomplete  string, field.incomplete method {
+    color: var(--incomplete);
+}
+.invalid field, field.invalid  keyword, field.invalid  type, field.invalid  string, field.invalid method {
+    color: var(--invalid);
+}
+/* Header & comments */
+comment * {
+    color: var(--comment);
+}
+
 header, header * {
-    color: green;
+    color: var(--comment);
 }
 header .invalid {
     color: var(--invalid)
@@ -65,10 +85,11 @@ header .valid {
     color: var(--valid)
 }
 
+
 /* Horizontal and vertical spacing */
 statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
     display: block;
-    background-color: white;
+    background-color: var(--defaultBackground);
     border-left-style: solid;
     border-left-width: 2ch;
 }
@@ -98,7 +119,7 @@ expand {
 .multiline.collapsed expand {
     display:inline;
     font-weight: bold;
-    color: white;
+    color: var(--reverseText);
     margin-right: 1ch;
     /* cursor: pointer; why only this? */
 }
@@ -121,23 +142,23 @@ field.incomplete text {
     color: var(--incomplete);
 }
 field.valid text {
-    color: black; /* redundant rule - as black by default - but included for clarity */
+    color: var(--defaultText);
 }
 field.selected.invalid text, field.selected.invalid input  {
     background-color: var(--invalid);
-    color: black;
+    color: var(--defaultText);
 }
 field.selected.incomplete text, field.selected.incomplete input {
     background-color: var(--incomplete);
-    color: black;
+    color: var(--defaultText);
 }
 field.selected.valid text, field.selected.valid input {
     background-color: var(--valid);
-    color: black;
+    color: var(--defaultText);
 }
 field.selected.valid.optional.empty text, field.selected.valid.optional.empty input {
-    background-color: lightgrey;
-    color: white;
+    background-color: var(--optional);
+    color: var(--reverseText);
 }
 
 /* field-placeholder */
@@ -156,14 +177,14 @@ field.empty.optional placeholder {
 
 field.empty.selected placeholder {
     display: inline;
-    color: white;
+    color: var(--reverseText);
     background-color: var(--incomplete);
 }
 
 field.empty.optional.selected placeholder {
     display:inline;
-    color: white;
-    background-color: lightgrey;
+    color: var(--reverseText);
+    background-color: var(--optional);
 }
 
 .selected > top field.empty placeholder, .selected > field.empty placeholder {
@@ -172,7 +193,7 @@ field.empty.optional.selected placeholder {
 }
 .selected > top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
     display:inline;
-    color: white;
+    color: var(--reverseText);
 }
 field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional placeholder{
     display: inline;
@@ -184,7 +205,7 @@ completion  {
 }
 field.selected completion{
     display: inline;
-    color: white;
+    color: var(--reverseText);
     background-color: var(--incomplete);
 }
 field.selected.empty completion {
@@ -193,19 +214,19 @@ field.selected.empty completion {
 
 /* Selectors */
   selector * {
-    background-color: white;
-    color: lightgrey;
+    background-color: var(--reverseText);
+    color: var(--optional);
   }
   selector help {
     display: none; 
   }
   .selected > selector help {
     display: inline;
-    background-color: lightgrey;
-    color: white;
+    background-color: var(--optional);
+    color: var(--reverseText);
   }
   .selected > selector text {
-    color: black;
+    color: var(--defaultText);
   }
 
   /* placeholder */
@@ -214,20 +235,17 @@ selector placeholder  {
 }
 .empty > selector placeholder {
     display: inline;
-    color: lightgrey;
+    color: var(--optional);
 }
 .selected > selector placeholder {
     display: none;
 }
 
 
- /* Comments */
- comment, comment top, comment field.valid text, comment keyword {
-    color: green;
-}
+
 
 parseError {
-    color: red;
+    color: var(--invalid);
 }
 
 

@@ -19,9 +19,14 @@ export class ParamDefNode extends AbstractSequence {
         }
     }
     renderAsHtml(): string {
-        var ident = this.elements[0].renderAsHtml();
-        var type = this.elements[4].renderAsHtml();
-        return `${ident}<keyword> ${asKeyword} </keyword>${type}`;
+        //Not safe - method may be called before there are any elements set up
+        if(this.matchedText.length > 0) {
+            var ident = this.elements[0].renderAsHtml();
+            var type = this.elements[4].renderAsHtml();
+            return `${ident}<keyword> ${asKeyword} </keyword>${type}`;
+        }else {
+            return super.renderAsHtml();
+        }
     }
     renderAsSource(): string {
         var ident = this.elements[0].renderAsSource();
