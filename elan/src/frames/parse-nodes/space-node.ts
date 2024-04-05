@@ -41,4 +41,8 @@ export class SpaceNode extends AbstractParseNode {
     getCompletion() : string {
         return this.status === ParseStatus.empty && this.type === Space.required ? " " : "";
     }
+
+    renderAsObjectCode(): string { 
+        return ""; 
+    }
 }
