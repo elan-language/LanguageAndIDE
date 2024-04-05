@@ -43,6 +43,6 @@ export class SpaceNode extends AbstractParseNode {
     }
 
     renderAsObjectCode(): string { 
-        return ""; 
+        return this.type === Space.ignored ? "" : " "; 
     }
 }

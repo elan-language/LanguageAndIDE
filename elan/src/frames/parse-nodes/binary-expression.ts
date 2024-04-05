@@ -23,10 +23,10 @@ export class BinaryExpression extends AbstractSequence {
 
     renderAsObjectCode(): string {
         const codeArray = this.elements.map(e => e.renderAsObjectCode());
-        const code = codeArray.join(" ");
+        const code = codeArray.join("");
 
         // kludges
-        if ((this.elements[1] as BinaryOperation).matchedText.trim() === "div"){
+        if ((this.elements[2] as BinaryOperation).matchedText.trim() === "div"){
             return `Math.floor(${code})`;
         }
 

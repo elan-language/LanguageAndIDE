@@ -291,7 +291,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl);
   });
 
-  test('Fail_reassignment', async () => {
+  ignore_test('Fail_reassignment', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3

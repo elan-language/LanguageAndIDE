@@ -4,10 +4,6 @@ import { Field } from "../interfaces/field";
 import {CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ParseStatus } from "../parse-status";
-import { compatibleType } from "../../symbols/rules";
-import { ISymbol } from "../../symbols/symbol";
-import { Frame } from "../interfaces/frame";
 import { setKeyword, toKeyword } from "../keywords";
 import { SetTargetField } from "../fields/setTargetField";
 

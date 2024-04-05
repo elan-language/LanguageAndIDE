@@ -45,7 +45,7 @@ export class BinaryOperation extends AbstractAlternatives {
 
         if (this.bestMatch instanceof Sequence) {
             // kludge
-            return code.replace("===!", "!==");
+            return code.replace("=== !", "!==");
         }
        
         return code;
