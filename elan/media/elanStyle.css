@@ -139,21 +139,33 @@ field.selected.valid.optional.empty text, field.selected.valid.optional.empty in
     background-color: lightgrey;
     color: white;
 }
-input::placeholder {
-    color: white;
-}
+
 /* field-placeholder */
 field placeholder {
   display: none;
 }
+
 field.empty placeholder {
-    display:inline;
+    display: inline;
     color: var(--incomplete);
 }
+
 field.empty.optional placeholder {
-    display:none;
-    color: lightgrey;
+    display: none;
 }
+
+field.empty.selected placeholder {
+    display: inline;
+    color: white;
+    background-color: var(--incomplete);
+}
+
+field.empty.optional.selected placeholder {
+    display:inline;
+    color: white;
+    background-color: lightgrey;
+}
+
 .selected > top field.empty placeholder, .selected > field.empty placeholder {
     display:inline;
     color: var(--incomplete);
@@ -162,45 +174,52 @@ field.empty.optional placeholder {
     display:inline;
     color: white;
 }
-
-field.selected placeholder { 
-    display: none; /* because contents of placeholder will be put into placeholder */
-}
 field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional placeholder{
     display: inline;
 }
 
-/* selector placeholder */
-global placeholder, member placeholder, statement placeholder  {
-    display: none;
-}
-global.empty placeholder, member.empty placeholder, statement.empty placeholder {
-    display: inline;
-    color: lightgrey;
-}
-
-global.empty.selected placeholder, member.empty.selected placeholder, statement.empty.selected placeholder {
-    display: none;
-}
-
 /* field-completion */
-field completion, global completion, member completion, statement completion  {
+completion  {
     display: none;
 }
-field.selected completion {
+field.selected completion{
     display: inline;
     color: white;
     background-color: var(--incomplete);
 }
-
-/* selector completion */
-global completion, member completion, statement completion  {
+field.selected.empty completion {
     display: none;
 }
- global.selected completion, member.selected completion, statement.selected completion {
+
+/* Selectors */
+  selector * {
+    background-color: white;
+    color: lightgrey;
+  }
+  selector help {
+    display: none; 
+  }
+  .selected > selector help {
     display: inline;
+    background-color: lightgrey;
     color: white;
- }
+  }
+  .selected > selector text {
+    color: black;
+  }
+
+  /* placeholder */
+selector placeholder  {
+    display: none;
+}
+.empty > selector placeholder {
+    display: inline;
+    color: lightgrey;
+}
+.selected > selector placeholder {
+    display: none;
+}
+
 
  /* Comments */
  comment, comment top, comment field.valid text, comment keyword {
@@ -211,15 +230,4 @@ parseError {
     color: red;
 }
 
-/* Selectors */
-selector * {
-  background-color: white;
-  color: lightgrey;
-}
-.selected > selector * {
-  background-color: lightgrey;
-  color: white;
-}
-.selected > selector text {
-  color: black;
-}
+
