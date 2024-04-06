@@ -2,6 +2,7 @@ import assert from 'assert';
 import * as vscode from 'vscode';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
+import { Function } from '../frames/globals/function';
 import { VarStatement } from '../frames/statements/var-statement';
 import { ParseStatus } from '../frames/parse-status';
 import { Switch } from '../frames/statements/switch';
@@ -114,4 +115,14 @@ suite('Field Parsing Tests', () => {
 				assert.equal(id.getStatus(), ParseStatus.invalid);
 				}); 
 			
+			test('parse Frames - Invalid field', () => { 
+				var func = new Function(new FileImpl(hash, new DefaultProfile()));
+				var type = func.returnType;
+				type.setText("Foo<of bar");
+				type.parseCurrentText();
+				assert.equal(type.getStatus(), ParseStatus.invalid);
+				assert.equal(type.textAsSource(), "Foo<of bar");
+				assert.equal(type.textAsHtml(), "Foo&lt;of bar");
+
+			});
 });

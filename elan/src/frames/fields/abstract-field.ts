@@ -9,7 +9,6 @@ import { ParseNode } from "../parse-nodes/parse-node";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
-    private _status: ParseStatus = ParseStatus.invalid; 
     protected text: string = "";
     protected placeholder: string = "";
     protected useHtmlTags: boolean = false;
@@ -48,7 +47,7 @@ export abstract class AbstractField implements Selectable, Field {
         var text = this.readToDelimeter(source); 
         var root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(text, root);
-        if (this._status !== ParseStatus.valid) { 
+        if (this.status !== ParseStatus.valid) { 
             throw new Error(`Parse error at ${source.getRemainingCode()}`);
         }
     }
@@ -58,8 +57,9 @@ export abstract class AbstractField implements Selectable, Field {
             this.setStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
         } else {
             root.parseText(text);
-            if (root.remainingText.trim().length > 0) {
+            if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
                 this.setStatus(ParseStatus.invalid);
+                this.text = text;
             } else {
                 this.setStatus(root.status);
                 this.text = root.matchedText + root.remainingText;
@@ -161,13 +161,13 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
     getStatus(): ParseStatus {
-        if (!this._status) {
+        if (!this.status) {
             this.parseCurrentText();
         }
-        return this._status;
+        return this.status!;
     }
     protected setStatus(newStatus: ParseStatus) {
-        this._status = newStatus;
+        this.status = newStatus;
     }
 
     select(): void {
@@ -191,11 +191,17 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     public textAsHtml(): string {
+        var html ="";
         if (this.selected) {
-            return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
+            html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else { 
-            return this.rootNode ? this.rootNode.renderAsHtml() : escapeAngleBrackets(this.text);
-        } 
+            if (this.rootNode && this.status !== ParseStatus.invalid) {
+                html = this.rootNode.renderAsHtml();
+            } else {
+                html = escapeAngleBrackets(this.text);
+            }
+        }
+        return html;
     }
 
     public charCount(): number {
