@@ -56,7 +56,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (text.length === 0) {
             this.setStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
         } else {
-            root.parseText(text);
+            root.parseText(text.trimStart());
             if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
                 this.setStatus(ParseStatus.invalid);
                 this.text = text;

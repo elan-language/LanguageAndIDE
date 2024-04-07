@@ -55,11 +55,11 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     }
 
     private intoClauseAsHtml() : string {
-        return this.hasInto() ? `${this.into.textAsHtml()} ${this.assignable.renderAsHtml()}`: ` ${this.into.textAsHtml()}`;
+        return this.hasInto() ? ` ${this.into.textAsHtml()} ${this.assignable.renderAsHtml()}`: ` ${this.into.textAsHtml()}`;
     }
 
     private intoClauseAsSource() : string {
-        return this.hasInto() ? `${this.into.renderAsSource()}${this.assignable.renderAsSource()}`:``;
+        return this.hasInto() ? ` ${this.into.renderAsSource()} ${this.assignable.renderAsSource()}`:``;
     }
 
     private intoClauseAsObjectCode() : string {
