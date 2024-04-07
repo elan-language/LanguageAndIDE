@@ -24,7 +24,7 @@ import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
