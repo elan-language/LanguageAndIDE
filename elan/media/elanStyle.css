@@ -68,7 +68,7 @@ field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incom
     color: var(--invalid);
 }
 /* Header & comments */
-comment * {
+comment *, comment field.valid text  {
     color: var(--comment);
 }
 
