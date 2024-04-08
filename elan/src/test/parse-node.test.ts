@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import assert from 'assert';
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
 import { testAST, testNodeParse, stubField, boolType, charType, floatType, intType, stringType, unknownType } from './testHelpers';
@@ -45,6 +44,8 @@ import { ignore_test } from './compiler/compiler-test-helpers';
 import { CommaNode } from '../frames/parse-nodes/comma-node';
 import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
+import { NewInstance } from '../frames/parse-nodes/new-instance';
+import { EnumType } from '../symbols/enum-type';
 
 suite('ParseNodes', () => {
 
