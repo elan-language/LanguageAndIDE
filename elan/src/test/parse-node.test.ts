@@ -552,8 +552,12 @@ suite('ParseNodes', () => {
 			new TupleType([charType, boolType])
 		]));
 		
+		testAST(new DeconstructedTuple(), stubField, `(a,b)`, "(a, b)", new TupleType([intType, floatType]));
 
-
-
+		testAST(new LiteralNode(), stubField, `"hello"`, `"hello"`, stringType);
+		testAST(new LiteralNode(), stubField, `123`, "123", intType);
+		//testAST(new LiteralNode(), stubField, `['a':37, 42:'b']`, "", intType);
+		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([intType, intType])));
+		testAST(new LiteralNode(), stubField, `["apple", "pear"]`, `["apple", "pear"]`, new ListType(stringType));
 	});
 });

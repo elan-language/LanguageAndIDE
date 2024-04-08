@@ -66,6 +66,7 @@ import { LiteralEnumAsn } from "./literal-enum-asn";
 import { EnumType } from "../../symbols/enum-type";
 import { Dictionary } from "../parse-nodes/dictionary";
 import { LitTuple } from "../parse-nodes/lit-tuple";
+import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -260,6 +261,11 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof LitTuple) {
+        const items = transformMany(node.elements[1] as CSV, scope);
+        return new LiteralTupleAsn(items, scope);
+    }
+
+    if (node instanceof DeconstructedTuple) {
         const items = transformMany(node.elements[1] as CSV, scope);
         return new LiteralTupleAsn(items, scope);
     }
