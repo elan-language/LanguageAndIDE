@@ -363,6 +363,8 @@ const stubHolder = {
       case 'p' : return stubClassSymbol;
       case 'isBefore' : return stubBoolSymbol;
       case 'betterOf' : return stubStringSymbol;
+      case "attempt" : return stubBoolSymbol;
+      case "target" : return stubStringSymbol;
     }
 
     return undefined;

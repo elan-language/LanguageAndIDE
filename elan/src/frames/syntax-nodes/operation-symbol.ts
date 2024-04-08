@@ -4,5 +4,6 @@ export enum OperationSymbol {
     Minus,
     Not,
     Multiply,
-    And
+    And,
+    Equals
 }

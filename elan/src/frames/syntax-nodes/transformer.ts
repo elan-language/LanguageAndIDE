@@ -59,6 +59,11 @@ import { CommaNode } from "../parse-nodes/comma-node";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { Scope } from "../interfaces/scope";
 import { LambdaSigAsn } from "./lambda-sig-asn";
+import { IfExpr } from "../parse-nodes/if-expr";
+import { IfExprAsn } from "./if-expr-asn";
+import { EnumVal } from "../parse-nodes/enum-val";
+import { LiteralEnumAsn } from "./literal-enum-asn";
+import { EnumType } from "../../symbols/enum-type";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -67,6 +72,7 @@ function mapOperation(op: string) {
         case "*": return OperationSymbol.Multiply;
         case "and": return OperationSymbol.And;
         case "not": return OperationSymbol.Not;
+        case "is": return OperationSymbol.Equals;
         default: throw new Error("Not implemented");
     }
 }
@@ -295,6 +301,21 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
             return node.elements.length > 0 ? transform(node.elements[0], scope) : undefined;
         }
     }
+
+    if (node instanceof IfExpr) {
+       const condition = transform(node.elements[1], scope) as ExprAsn;
+       const e1 = transform(node.elements[3], scope) as ExprAsn;
+       const e2 = transform(node.elements[5], scope) as ExprAsn;
+
+       return new IfExprAsn(condition, e1, e2, scope);
+    }
+
+    if (node instanceof EnumVal) {
+        var id = node.elements[2].matchedText;
+        var type = new EnumType(node.elements[0].matchedText);
+ 
+        return new LiteralEnumAsn(id, type, scope);
+     }
 
     throw new Error("Not implemented " + typeof node);
 }
