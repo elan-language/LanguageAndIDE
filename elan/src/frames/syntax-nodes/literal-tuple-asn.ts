@@ -1,11 +1,13 @@
 import { TupleType } from "../../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
-import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
-export class LiteralTupleAsn {
+export class LiteralTupleAsn implements AstNode {
 
     constructor(private readonly items: AstNode[], scope : Scope) {
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

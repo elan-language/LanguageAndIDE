@@ -1,10 +1,13 @@
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
-export class RangeAsn {
+export class RangeAsn implements AstNode {
 
     constructor(private from : AstNode | undefined, private to : AstNode | undefined,  private scope : Scope) {
         
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

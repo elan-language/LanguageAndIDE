@@ -1,10 +1,12 @@
 import { Scope } from "../interfaces/scope";
-import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
-export class QualifierAsn {
+export class QualifierAsn implements AstNode {
 
     constructor(private qualifier: AstNode[], private scope : Scope) {
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

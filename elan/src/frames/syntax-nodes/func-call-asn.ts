@@ -1,12 +1,14 @@
 import { Scope } from "../interfaces/scope";
-import { Frame } from "../interfaces/frame";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
 
-export class FuncCallAsn {
+export class FuncCallAsn implements AstNode {
 
     constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<ExprAsn>, private scope : Scope) {
         this.id = id.trim();
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

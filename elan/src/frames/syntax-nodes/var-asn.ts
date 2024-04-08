@@ -2,10 +2,13 @@ import { ListType } from "../../symbols/list-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
-export class VarAsn {
+export class VarAsn implements AstNode {
 
     constructor(private id: string, private qualifier: AstNode | undefined, private index: AstNode | undefined, private scope : Scope) {
         this.id = id.trim();
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

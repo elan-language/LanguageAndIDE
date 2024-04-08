@@ -8,6 +8,9 @@ export class UnaryExprAsn implements AstNode {
 
     constructor(private op: OperationSymbol, private operand: ExprAsn, scope : Scope) {
     }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
+    }
 
     get symbolType() {
         switch (this.op) {

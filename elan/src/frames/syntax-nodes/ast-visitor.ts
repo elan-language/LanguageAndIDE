@@ -13,7 +13,6 @@ import { LitBool } from "../parse-nodes/lit-bool";
 import { LiteralBoolAsn } from "./literal-bool-asn";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IdAsn } from "./id-asn";
-import { Field } from "../interfaces/field";
 import { FunctionCallNode } from "../parse-nodes/function-call-node";
 import { FuncCallAsn } from "./func-call-asn";
 import { CSV } from "../parse-nodes/csv";
