@@ -7,7 +7,7 @@ export class LiteralBoolAsn implements AstNode {
         this.value = rawValue.trim() === trueKeyword;
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.value ? "true" : "false";
     }
 
     value: boolean;

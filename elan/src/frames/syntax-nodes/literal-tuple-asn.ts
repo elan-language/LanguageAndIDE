@@ -7,7 +7,8 @@ export class LiteralTupleAsn implements AstNode {
     constructor(private readonly items: AstNode[], scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
+        return `[${it}]`;
     }
 
     get symbolType() {

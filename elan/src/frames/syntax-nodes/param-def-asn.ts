@@ -6,7 +6,7 @@ export class ParamDefAsn implements AstNode {
     constructor(public id: string, private type: AstNode, private scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `${this.id}`;
     }
 
     get symbolType() {

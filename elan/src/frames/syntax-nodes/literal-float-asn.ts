@@ -6,7 +6,7 @@ export class LiteralFloatAsn implements AstNode {
         this.value = parseFloat(rawValue.trim());
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.value.toString();
     }
 
     value: number;

@@ -8,8 +8,37 @@ export class BinaryExprAsn implements AstNode {
 
     constructor(private op: OperationSymbol, private lhs: ExprAsn, private rhs: ExprAsn, scope: Scope) {
     }
+
+    private opToJs() {
+        switch (this.op) {
+            case OperationSymbol.Add : return "+";
+            case OperationSymbol.Minus : return "-";
+            case OperationSymbol.Not : return "!";
+            case OperationSymbol.Multiply : return "*";
+            case OperationSymbol.And : return "&&";
+            case OperationSymbol.Equals : return "===";
+            case OperationSymbol.NotEquals : return "!==";
+            case OperationSymbol.LT : return "<";
+            case OperationSymbol.GT : return ">";
+            case OperationSymbol.GTE : return ">=";
+            case OperationSymbol.LTE : return "<=";
+            case OperationSymbol.Div : return "/";
+            case OperationSymbol.Mod : return "%";
+            case OperationSymbol.Divide : return "/";
+            case OperationSymbol.Pow : return "**";
+        }
+    }
+  
+
+
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        const code = `${this.lhs} ${this.opToJs()} ${this.rhs}`;
+
+        if (this.op === OperationSymbol.Div) {
+            return `Math.floor(${code})`;
+        }
+
+        return code;
     }
 
     get symbolType() {

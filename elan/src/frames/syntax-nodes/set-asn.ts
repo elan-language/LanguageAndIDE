@@ -9,7 +9,7 @@ export class SetAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `${this.id} = ${this.to}`;
     }
 
     get symbolType() {

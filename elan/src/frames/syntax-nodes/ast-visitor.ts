@@ -76,9 +76,18 @@ function mapOperation(op: string) {
         case "+": return OperationSymbol.Add;
         case "-": return OperationSymbol.Minus;
         case "*": return OperationSymbol.Multiply;
+        case "<": return OperationSymbol.LT;
+        case ">": return OperationSymbol.GT;
+        case ">=": return OperationSymbol.GTE;
+        case "<=": return OperationSymbol.LTE;
         case "and": return OperationSymbol.And;
         case "not": return OperationSymbol.Not;
         case "is": return OperationSymbol.Equals;
+        case "is not": return OperationSymbol.NotEquals;
+        case "div": return OperationSymbol.Div;
+        case "mod": return OperationSymbol.Mod;
+        case "/": return OperationSymbol.Divide;
+        case "^": return OperationSymbol.Pow;
         default: throw new Error("Not implemented");
     }
 }

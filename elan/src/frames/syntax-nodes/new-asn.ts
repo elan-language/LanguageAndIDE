@@ -6,7 +6,8 @@ export class NewAsn implements AstNode {
     constructor(private type: AstNode, private parameters: AstNode[], private scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
+        return `new ${this.type.renderAsObjectCode()}{${pp}}`;
     }
 
     get symbolType() {

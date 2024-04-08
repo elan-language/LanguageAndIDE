@@ -6,7 +6,7 @@ export class LiteralIntAsn implements AstNode {
         this.value = parseInt(rawValue.trim());
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.value.toString();
     }
 
     value: number;

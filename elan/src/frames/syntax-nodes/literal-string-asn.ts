@@ -7,7 +7,7 @@ export class LiteralStringAsn implements AstNode {
         this.value = rawValue.trim();
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `${this.value}`;
     }
 
     value: string;
