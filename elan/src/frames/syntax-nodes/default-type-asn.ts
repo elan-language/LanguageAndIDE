@@ -1,9 +1,9 @@
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class DefaultTypeAsn {
 
-    constructor(private type: AstNode, private field: Field) {
+    constructor(private type: AstNode, private scope : Scope) {
     }
 
     get symbolType() {

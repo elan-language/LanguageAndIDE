@@ -2,7 +2,6 @@ import { Field } from "./field";
 import { Selectable } from "./selectable";
 import { ParseStatus } from "../parse-status";
 import { Parent } from "./parent";
-import { ISymbol } from "../../symbols/symbol";
 
 export interface Frame extends Selectable {
     isFrame: boolean;
@@ -35,6 +34,5 @@ export interface Frame extends Selectable {
 
     fieldUpdated(field: Field): void;
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol;
     expandCollapseAll(): void;
 }

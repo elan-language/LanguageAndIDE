@@ -1,9 +1,9 @@
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { ExprAsn } from "./expr-asn";
 
 export class BracketedAsn {
 
-    constructor(private body: ExprAsn, private field: Field) {
+    constructor(private body: ExprAsn, private scope: Scope) {
     }
 
     get symbolType() {

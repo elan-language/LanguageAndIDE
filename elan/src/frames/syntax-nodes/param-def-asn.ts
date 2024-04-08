@@ -1,9 +1,10 @@
+import { Scope } from "../interfaces/scope";
 import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
 export class ParamDefAsn {
 
-    constructor(private id: string, private type: AstNode, private field: Field) {
+    constructor(public id: string, private type: AstNode, private scope : Scope) {
     }
 
     get symbolType() {

@@ -1,9 +1,10 @@
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { ExprAsn } from "./expr-asn";
+import { LambdaSigAsn } from "./lambda-sig-asn";
 
 export class LambdaAsn {
 
-    constructor(private parameters: Array<ExprAsn>, private body: ExprAsn, private field: Field) {
+    constructor(private signature:LambdaSigAsn, private body: ExprAsn, private scope : Scope) {
     }
 
     get symbolType() {
@@ -11,8 +12,6 @@ export class LambdaAsn {
     }
 
     toString() {
-        const pp = this.parameters.map(p => p.toString()).join(", ");
-
-        return `Lambda (${pp}) => (${this.body})`;
+        return `Lambda (${this.signature}) => (${this.body})`;
     }
 }

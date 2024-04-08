@@ -57,6 +57,13 @@ import { TupleNode } from "../parse-nodes/tuple-node";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { CommaNode } from "../parse-nodes/comma-node";
 import { SpaceNode } from "../parse-nodes/space-node";
+import { Scope } from "../interfaces/scope";
+import { LambdaSigAsn } from "./lambda-sig-asn";
+import { IfExpr } from "../parse-nodes/if-expr";
+import { IfExprAsn } from "./if-expr-asn";
+import { EnumVal } from "../parse-nodes/enum-val";
+import { LiteralEnumAsn } from "./literal-enum-asn";
+import { EnumType } from "../../symbols/enum-type";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -65,16 +72,17 @@ function mapOperation(op: string) {
         case "*": return OperationSymbol.Multiply;
         case "and": return OperationSymbol.And;
         case "not": return OperationSymbol.Not;
+        case "is": return OperationSymbol.Equals;
         default: throw new Error("Not implemented");
     }
 }
 
-function transformMany(node: CSV | Multiple | Sequence, field: Field): Array<AstNode> {
+function transformMany(node: CSV | Multiple | Sequence, scope : Scope): Array<AstNode> {
     const ast = new Array<AstNode>();
 
     for (const elem of node.elements) {
         if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
-            const asns = transformMany(elem, field);
+            const asns = transformMany(elem, scope);
 
             for (const asn of asns) {
                 if (asn) {
@@ -83,7 +91,7 @@ function transformMany(node: CSV | Multiple | Sequence, field: Field): Array<Ast
             }
         }
         else {
-            const asn = transform(elem, field);
+            const asn = transform(elem, scope);
             if (asn) {
                 ast.push(asn);
             }
@@ -94,25 +102,25 @@ function transformMany(node: CSV | Multiple | Sequence, field: Field): Array<Ast
 }
 
 
-export function transform(node: ParseNode | undefined, field: Field): AstNode | undefined {
+export function transform(node: ParseNode | undefined, scope : Scope): AstNode | undefined {
 
     if (node instanceof BracketedExpression) {
-        return new BracketedAsn(transform(node.elements[1], field)!, field);
+        return new BracketedAsn(transform(node.elements[1], scope)!, scope);
     }
 
     if (node instanceof UnaryExpression) {
         const op = mapOperation(node.elements[0].matchedText);
-        const operand = transform(node.elements[1], field) as ExprAsn;
+        const operand = transform(node.elements[1], scope) as ExprAsn;
 
-        return new UnaryExprAsn(op, operand, field);
+        return new UnaryExprAsn(op, operand, scope);
     }
 
     if (node instanceof BinaryExpression) {
-        const lhs = transform(node.elements[0], field) as ExprAsn;
-        const rhs = transform(node.elements[4], field) as ExprAsn;
+        const lhs = transform(node.elements[0], scope) as ExprAsn;
+        const rhs = transform(node.elements[4], scope) as ExprAsn;
         const op = mapOperation(node.elements[2].matchedText);
 
-        return new BinaryExprAsn(op, lhs, rhs, field);
+        return new BinaryExprAsn(op, lhs, rhs, scope);
     }
 
     if (node instanceof LitInt) {
@@ -136,29 +144,30 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof IdentifierNode) {
-        return new IdAsn(node.matchedText, field);
+        return new IdAsn(node.matchedText, scope);
     }
 
     if (node instanceof FunctionCallNode) {
-        const qualifier = transform(node.elements[0], field);
+        const qualifier = transform(node.elements[0], scope);
         const id = node.elements[1].matchedText;
-        const parameters = transformMany(node.elements[3] as CSV, field) as Array<ExprAsn>;
+        const parameters = transformMany(node.elements[3] as CSV, scope) as Array<ExprAsn>;
 
-        return new FuncCallAsn(id, qualifier, parameters, field);
+        return new FuncCallAsn(id, qualifier, parameters, scope);
     }
 
     if (node instanceof Lambda) {
-        const parameters = transformMany(node.elements[1] as CSV, field) as Array<ExprAsn>;
-        const body = transform(node.elements[3], field) as ExprAsn;
+        const parameters = transformMany(node.elements[1] as CSV, scope) as Array<ParamDefAsn>;
+        const sig = new LambdaSigAsn(parameters, scope);
+        const body = transform(node.elements[3], sig) as ExprAsn;
 
-        return new LambdaAsn(parameters, body, field);
+        return new LambdaAsn(sig, body, scope);
     }
 
     if (node instanceof ParamDefNode) {
         const id = node.elements[0].matchedText;
-        const type = transform(node.elements[4], field)!;
+        const type = transform(node.elements[4], scope)!;
 
-        return new ParamDefAsn(id, type, field);
+        return new ParamDefAsn(id, type, scope);
     }
 
     if (node instanceof TypeWithOptGenerics) {
@@ -167,39 +176,39 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
         var gp = new Array<AstNode>();
 
         if (opt) {
-            gp = transformMany(opt as Sequence, field)!;
+            gp = transformMany(opt as Sequence, scope)!;
         }
 
-        return new TypeAsn(type, gp, field);
+        return new TypeAsn(type, gp, scope);
     }
 
     if (node instanceof TypeSimpleNode) {
         const type = node.matchedText;
 
-        return new TypeAsn(type, [], field);
+        return new TypeAsn(type, [], scope);
     }
 
     if (node instanceof DefaultOfTypeNode) {
-        const type = transform(node.elements[2], field)!;
-        return new DefaultTypeAsn(type, field);
+        const type = transform(node.elements[2], scope)!;
+        return new DefaultTypeAsn(type, scope);
     }
 
     if (node instanceof OptionalNode) {
         if (node.matchedNode) {
-            return transform(node.matchedNode, field);
+            return transform(node.matchedNode, scope);
         }
         return undefined;
     }
 
     if (node instanceof VarRefNode) {
-        return transform(node.bestMatch, field);
+        return transform(node.bestMatch, scope);
     }
 
     if (node instanceof SetClause) {
         const id = node.elements[0].matchedText;
-        const to = transform(node.elements[6], field) as ExprAsn;
+        const to = transform(node.elements[6], scope) as ExprAsn;
 
-        return new SetAsn(id, to, field);
+        return new SetAsn(id, to, scope);
     }
 
     if (node instanceof SymbolNode) {
@@ -216,82 +225,97 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof KeywordNode) {
         if (node.fixedText === globalKeyword || node.fixedText === libraryKeyword) {
-            return new IdAsn(node.fixedText, field);
+            return new IdAsn(node.fixedText, scope);
         }
 
         return undefined;
     }
 
     if (node instanceof IndexNode) {
-        const index = transform(node.elements[1], field) as ExprAsn;
-        return new IndexAsn(index, field);
+        const index = transform(node.elements[1], scope) as ExprAsn;
+        return new IndexAsn(index, scope);
     }
 
 
     if (node instanceof AbstractAlternatives) {
-        return transform(node.bestMatch, field);
+        return transform(node.bestMatch, scope);
     }
 
     if (node instanceof List) {
-        const items = transformMany(node.elements[1] as CSV, field);
-        return new LiteralListAsn(items, field);
+        const items = transformMany(node.elements[1] as CSV, scope);
+        return new LiteralListAsn(items, scope);
     }
 
     if (node instanceof TupleNode) {
-        const items = transformMany(node.elements[1] as CSV, field);
-        return new LiteralTupleAsn(items, field);
+        const items = transformMany(node.elements[1] as CSV, scope);
+        return new LiteralTupleAsn(items, scope);
     }
 
     if (node instanceof WithClause) {
-        return transform(node.elements[3], field);
+        return transform(node.elements[3], scope);
     }
 
     if (node instanceof NewInstance) {
-        const type = transform(node.elements[1], field)!;
-        const pp = transformMany(node.elements[3] as CSV, field);
+        const type = transform(node.elements[1], scope)!;
+        const pp = transformMany(node.elements[3] as CSV, scope);
 
-        return new NewAsn(type, pp, field);
+        return new NewAsn(type, pp, scope);
     }
 
     if (node instanceof Sequence) {
         if (node.ruleName === RuleNames.with) {
-            const obj = transform(node.elements[0], field) as ExprAsn;
-            const changes = transform(node.elements[1], field) as LiteralListAsn;
+            const obj = transform(node.elements[0], scope) as ExprAsn;
+            const changes = transform(node.elements[1], scope) as LiteralListAsn;
 
-            return new WithAsn(obj, changes, field);
+            return new WithAsn(obj, changes, scope);
         }
 
         if (node.ruleName === RuleNames.qualDot) {
-            return transform(node.elements[0], field);
+            return transform(node.elements[0], scope);
         }
 
         if (node.ruleName === RuleNames.instance) {
-            //return new QualifierAsn(transformMany(node, field), field);
+            //return new QualifierAsn(transformMany(node, scope), scope);
             var id = node.elements[0].matchedText;
-            var index = transform(node.elements[1], field);
+            var index = transform(node.elements[1], scope);
 
-            return new VarAsn(id, undefined, index, field);
+            return new VarAsn(id, undefined, index, scope);
         }
 
         if (node.ruleName === RuleNames.compound) {
-            const q = transform(node.elements[0], field);
+            const q = transform(node.elements[0], scope);
             const id = node.elements[1].matchedText;
-            const index = transform(node.elements[2], field);
+            const index = transform(node.elements[2], scope);
 
-            return new VarAsn(id, q, index, field);
+            return new VarAsn(id, q, index, scope);
         }
 
         if (node.ruleName === RuleNames.tuple) {
-            const gp = transformMany(node.elements[1] as CSV, field);
-            return new TypeAsn("Tuple", gp, field);
+            const gp = transformMany(node.elements[1] as CSV, scope);
+            return new TypeAsn("Tuple", gp, scope);
         }
     }
 
     if (node instanceof Multiple) {
         if (node.ruleName === RuleNames.indexes) {
-            return node.elements.length > 0 ? transform(node.elements[0], field) : undefined;
+            return node.elements.length > 0 ? transform(node.elements[0], scope) : undefined;
         }
     }
+
+    if (node instanceof IfExpr) {
+       const condition = transform(node.elements[1], scope) as ExprAsn;
+       const e1 = transform(node.elements[3], scope) as ExprAsn;
+       const e2 = transform(node.elements[5], scope) as ExprAsn;
+
+       return new IfExprAsn(condition, e1, e2, scope);
+    }
+
+    if (node instanceof EnumVal) {
+        var id = node.elements[2].matchedText;
+        var type = new EnumType(node.elements[0].matchedText);
+ 
+        return new LiteralEnumAsn(id, type, scope);
+     }
 
     throw new Error("Not implemented " + typeof node);
 }

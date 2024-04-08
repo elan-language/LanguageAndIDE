@@ -45,7 +45,6 @@ import { ignore_test } from './compiler/compiler-test-helpers';
 import { CommaNode } from '../frames/parse-nodes/comma-node';
 import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
-import { NewInstance } from '../frames/parse-nodes/new-instance';
 
 suite('ParseNodes', () => {
 
@@ -522,6 +521,18 @@ suite('ParseNodes', () => {
 		testAST(new TupleNode(), stubField, `("foo", 3)`, '("foo", 3)', new TupleType([stringType, intType]));
 		testAST(new TupleNode(), stubField, `(foo, 3, bar(a), x)`,  '(foo, 3, Func Call bar (a), x)', new TupleType([intType, intType, stringType, intType]));
 		
-	
+		testAST(new Lambda(), stubField, `lambda x as Int => x * x`, "Lambda (Param x : Type Int) => (Multiply (x) (x))", intType);
+		testAST(new Lambda(), stubField, `lambda s as Int, p as List<of Int> => s + p.first()`, "Lambda (Param s : Type Int, Param p : Type List<Type Int>) => (Add (s) (Func Call p.first ()))", intType);
+		testAST(new Lambda(), stubField, `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`, "Lambda (Param bestSoFar : Type String, Param newWord : Type String) => (Func Call betterOf (bestSoFar, newWord, possAnswers))", stringType);
+
+
+		testAST(new IfExpr(), stubField, `if cell then Colour.green else Colour.black)`, "Ternary (cell) ? ((Enum Colour).green) : ((Enum Colour).black)", new EnumType("Colour"));
+		
+		const ast2 = "Ternary (Equals (attempt[n]) ('*')) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, '+')) : (Func Call attempt.setChar (n, '_')))";
+		testAST(new IfExpr(), stubField, `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ast2, boolType);
+		
+		const ast3 = "Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), '.')) : (target))";
+		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ast3, stringType);
+
 	});
 });
