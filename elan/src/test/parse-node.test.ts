@@ -447,7 +447,8 @@ suite('ParseNodes', () => {
 		testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
 		testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
 	});
-	ignore_test("AST", () => {
+	
+	test("AST", () => {
 		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
 
 		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
