@@ -15,13 +15,9 @@ import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
 export class WithClause extends AbstractSequence {
-    
-    constructor() {
-        super();
-    }
 
     parseText(text: string): void {
-        var sp0 = new SpaceNode(Space.required);
+        var sp0 = new SpaceNode(Space.added);
         var withKw = new KeywordNode(withKeyword);
         var sp1 = new SpaceNode(Space.required);
         var setClause = () => new SetClause();

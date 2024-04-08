@@ -14,12 +14,9 @@ import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
 import { RuleNames } from "./rule-names";
 
 export class FunctionCallNode extends AbstractSequence {
-    constructor() {
-        super();
-    }
+
     parseText(text: string): void {
-        this.remainingText = text;
-        if (text.length > 0) {
+        if (text.trim().length > 0) {
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
             var variable = () => new IdentifierNode();
