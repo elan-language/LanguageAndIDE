@@ -514,7 +514,7 @@ suite('ParseNodes', () => {
 		testAST(new TupleNode(), stubField, `(foo, 3, bar(a), x)`,  '(foo, 3, Func Call bar (a), x)', new TupleType([intType, intType, stringType, intType]));
 		
 	
-		testAST(new Lambda(),stubField,`lambda x as Int => x * x`, "Lambda (Param  x : Type Int) => (Multiply (x) (x))", intType);
+		testAST(new Lambda(),stubField,`lambda x as Int => x * x`, "Lambda (Param x : Type Int) => (Multiply (x) (x))", intType);
 		// testAST(new Lambda(),stubField,`lambda s as Int, p as List<of Int> => s + p.first()`, "Lambda (Param  s : Type Int, Param p : Type List<Type Int>) => (Add (s) (Func Call p.first ()))", intType);
 		// testAST(new Lambda(),stubField,`lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`, "", intType);
 
