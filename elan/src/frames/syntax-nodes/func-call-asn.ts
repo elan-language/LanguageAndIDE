@@ -1,17 +1,17 @@
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { Frame } from "../interfaces/frame";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
 
 export class FuncCallAsn {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<ExprAsn>, private field: Field) {
+    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<ExprAsn>, private scope : Scope) {
         this.id = id.trim();
     }
 
     get symbolType() {
-        var holder = this.field.getHolder();
-        return holder.resolveSymbol(this.id, holder as Frame).symbolType;
+      
+        return this.scope.resolveSymbol(this.id, this.scope).symbolType;
     }
 
     toString() {

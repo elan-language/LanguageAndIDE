@@ -1,12 +1,12 @@
 import { BooleanType } from "../../symbols/boolean-type";
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn implements AstNode {
 
-    constructor(private op: OperationSymbol, private operand: ExprAsn, field: Field) {
+    constructor(private op: OperationSymbol, private operand: ExprAsn, scope : Scope) {
     }
 
     get symbolType() {

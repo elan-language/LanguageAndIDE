@@ -8,12 +8,12 @@ import { IntType } from "../../symbols/int-type";
 import { ListType } from "../../symbols/list-type";
 import { StringType } from "../../symbols/string-type";
 import { TupleType } from "../../symbols/tuple-type";
-import { Field } from "../interfaces/field";
+import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class TypeAsn {
 
-    constructor(private type: string, private genericParameters: Array<AstNode>, private field: Field) {
+    constructor(private type: string, private genericParameters: Array<AstNode>, private scope : Scope) {
         this.type = type.trim();
     }
 

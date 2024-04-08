@@ -1,10 +1,11 @@
 import { TupleType } from "../../symbols/tuple-type";
+import { Scope } from "../interfaces/scope";
 import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
 export class LiteralTupleAsn {
 
-    constructor(private readonly items: AstNode[], field: Field) {
+    constructor(private readonly items: AstNode[], scope : Scope) {
     }
 
     get symbolType() {

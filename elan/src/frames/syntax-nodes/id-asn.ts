@@ -1,15 +1,13 @@
-import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
 
 export class IdAsn {
 
-    constructor(private id: string, private field: Field) {
+    constructor(private id: string, private scope : Scope) {
         this.id = id.trim();
     }
 
     get symbolType() {
-        var holder = this.field.getHolder();
-        return holder.resolveSymbol(this.id, holder as Frame).symbolType;
+        return this.scope.resolveSymbol(this.id, this.scope).symbolType;
     }
 
     toString() {

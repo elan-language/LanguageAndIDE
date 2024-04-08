@@ -22,6 +22,7 @@ import { StringType } from '../symbols/string-type';
 import { ISymbol } from '../symbols/symbol';
 import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
+import { Scope } from '../frames/interfaces/scope';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -376,7 +377,7 @@ export const stubField = {
 export function testAST(node: ParseNode, field : Field, text: string, astAsString : string, st : ISymbolType) {
   node.parseText(text);
   if (node.status === ParseStatus.valid) {
-    const ast = transform(node, field);
+    const ast = transform(node, field.getHolder() as unknown as Scope);
 
     assert.strictEqual(ast?.toString(), astAsString);
     assert.strictEqual(ast.symbolType?.name, st.name, text);
