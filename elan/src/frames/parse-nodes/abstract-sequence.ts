@@ -14,7 +14,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
 
     parseText(text: string): void {
         var i = 0; //Index
-        var remaining = text;
+        var remaining = text.trimStart();
         var worstStatus: ParseStatus = ParseStatus.notParsed;
         while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
             var node = this.elements[i];

@@ -42,6 +42,8 @@ import { SpaceNode } from '../frames/parse-nodes/space-node';
 import { Space } from '../frames/parse-nodes/parse-node-helpers';
 import { ignore_test } from './compiler/compiler-test-helpers';
 import { CommaNode } from '../frames/parse-nodes/comma-node';
+import { SetClause } from '../frames/parse-nodes/set-clause';
+import { WithClause } from '../frames/parse-nodes/with-clause';
 
 suite('ParseNodes', () => {
 
@@ -55,7 +57,7 @@ suite('ParseNodes', () => {
 	});
 	test('BinOp', () => {
 		testNodeParse(new BinaryOperation(), "", ParseStatus.empty, "", "", "");
-		testNodeParse(new BinaryOperation(), "  ", ParseStatus.incomplete, "  ", "", "");
+		testNodeParse(new BinaryOperation(), "  ", ParseStatus.empty, "", "", "");
 		testNodeParse(new BinaryOperation(), "+", ParseStatus.valid, "+", "", "+", "");
 		testNodeParse(new BinaryOperation(), "-", ParseStatus.valid, "-", "", "-", "");
 		testNodeParse(new BinaryOperation(), "*", ParseStatus.valid, "*", "", "*", "");
@@ -85,7 +87,7 @@ suite('ParseNodes', () => {
 	});
 	test('Expression', () => {
 		testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
-		testNodeParse(new ExprNode(), "  ", ParseStatus.incomplete, "  ", "", "");
+		testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new ExprNode(), "a", ParseStatus.valid, "a", "", "a", "");
 		testNodeParse(new ExprNode(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
 		testNodeParse(new ExprNode(), "a + b-c", ParseStatus.valid, "a + b-c", "", "a + b - c", "");
@@ -100,7 +102,19 @@ suite('ParseNodes', () => {
 		testNodeParse(new ExprNode(), "this", ParseStatus.valid, "this", "", "this", "<keyword>this</keyword>");
 		testNodeParse(new ExprNode(), "default String", ParseStatus.valid, "default String", "", "", "<keyword>default</keyword> <type>String</type>");
 		testNodeParse(new ExprNode(), "default Lit<of Int>", ParseStatus.valid, "", "", "", "");
-		testNodeParse(new ExprNode(), "p with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "p with [x set to p.x + 3, y set to p.y - 1]", "");
+	});
+	test('Set Clause', () => {
+		testNodeParse(new SetClause(), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new SetClause(), "y set to p.y - 1", ParseStatus.valid, "", "", "", "");
+	});
+	test('List of set clauses', () => {
+		testNodeParse(new List(() => new SetClause), "[x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
+	});
+	test('with clause', () => {
+		testNodeParse(new WithClause(), " with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
+	});
+	test('Expression + with clause', () => {
+		testNodeParse(new ExprNode(), "p with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(), ``, ParseStatus.empty, ``, "", "");
@@ -117,13 +131,13 @@ suite('ParseNodes', () => {
 	});
 	test('LitBool', () => {
 		testNodeParse(new LitBool(), "", ParseStatus.empty, "", "", "", "");
-		testNodeParse(new LitBool(), " true", ParseStatus.valid, " true", "", "true", "<keyword>true</keyword>");
-		testNodeParse(new LitBool(), " trueX", ParseStatus.valid, " true", "X", "true", "");
-		testNodeParse(new LitBool(), " false", ParseStatus.valid, " false", "", "false", "");
-		testNodeParse(new LitBool(), " True", ParseStatus.invalid, "", " True", "", "");
+		testNodeParse(new LitBool(), " true", ParseStatus.valid, "true", "", "true", "<keyword>true</keyword>");
+		testNodeParse(new LitBool(), " trueX", ParseStatus.valid, "true", "X", "true", "");
+		testNodeParse(new LitBool(), " false", ParseStatus.valid, "false", "", "false", "");
+		testNodeParse(new LitBool(), " True", ParseStatus.invalid, "", "True", "", "");
 		testNodeParse(new LitBool(), "is True", ParseStatus.invalid, "", "is True", "", "");
-		testNodeParse(new LitBool(), " tr", ParseStatus.incomplete, " tr", "", "tr", "");
-		testNodeParse(new LitBool(), " tr ", ParseStatus.invalid, "", " tr ", "", "");
+		testNodeParse(new LitBool(), " tr", ParseStatus.incomplete, "tr", "", "tr", "");
+		testNodeParse(new LitBool(), " tr ", ParseStatus.invalid, "", "tr ", "", "");
 	});
 	test('LitChar', () => {
 		testNodeParse(new LitChar(), "", ParseStatus.empty, "", "", "", "");
@@ -239,7 +253,7 @@ suite('ParseNodes', () => {
 	});
 	test('Function Call', () => {
 		testNodeParse(new FunctionCallNode(), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new FunctionCallNode(), `  `, ParseStatus.incomplete, `  `, "", "");
+		testNodeParse(new FunctionCallNode(), `  `, ParseStatus.empty, ``, "", "");
 		testNodeParse(new FunctionCallNode(), `foo()`, ParseStatus.valid, `foo()`, "", "", "");
 		testNodeParse(new FunctionCallNode(), `bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "", "", "");
 		testNodeParse(new FunctionCallNode(), `yon`, ParseStatus.incomplete, `yon`, "", "");
@@ -435,7 +449,7 @@ suite('ParseNodes', () => {
 		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
 		testAST(new ExprNode(), stubField, "3*foo(5)", "Multiply (3) (Func Call foo (5))", intType);
 		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
-		const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
+		const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
 		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
 		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
 		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
