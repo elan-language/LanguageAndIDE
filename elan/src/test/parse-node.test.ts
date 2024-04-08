@@ -523,9 +523,16 @@ suite('ParseNodes', () => {
 		
 		const ast2 = "Ternary (Equals (attempt[n]) ('*')) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, '+')) : (Func Call attempt.setChar (n, '_')))";
 		testAST(new IfExpr(), stubField, `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ast2, boolType);
-		
+
 		const ast3 = "Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), '.')) : (target))";
 		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ast3, stringType);
 
+		testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
+
+		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()),stubField, `['a':37]`, "", intType);
+		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "", intType);
+		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "", intType);
+		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.0, 5:"abc"]`, "", intType);
+	
 	});
 });
