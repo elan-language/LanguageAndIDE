@@ -24,13 +24,13 @@ export class IfExpr extends AbstractSequence {
     renderAsHtml(): string {
         var condition = this.elements[1].renderAsHtml();
         var ifTrue = this.elements[3].renderAsHtml();
-        var ifFalse = this.elements[1].renderAsHtml();
+        var ifFalse = this.elements[5].renderAsHtml();
         return `<keyword>if </keyword>${condition}<keyword> then </keyword>${ifTrue}<keyword> else </keyword>${ifFalse}`;
     }
     renderAsSource(): string {
         var condition = this.elements[1].renderAsSource();
         var ifTrue = this.elements[3].renderAsSource();
-        var ifFalse = this.elements[1].renderAsSource();
+        var ifFalse = this.elements[5].renderAsSource();
         return `if ${condition} then ${ifTrue} else ${ifFalse}`;    
     }
 }

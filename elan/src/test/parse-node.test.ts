@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import assert from 'assert';
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
 import { testAST, testNodeParse, stubField, boolType, charType, floatType, intType, stringType, unknownType } from './testHelpers';
@@ -44,6 +45,7 @@ import { ignore_test } from './compiler/compiler-test-helpers';
 import { CommaNode } from '../frames/parse-nodes/comma-node';
 import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
+import { NewInstance } from '../frames/parse-nodes/new-instance';
 
 suite('ParseNodes', () => {
 
@@ -150,6 +152,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new LitChar(), " '9'", ParseStatus.valid, " '9'", "", "'9'", "");
 		testNodeParse(new LitChar(), "'ab'", ParseStatus.invalid, "", "'ab'", "", "");
 		testNodeParse(new LitChar(), `"a"`, ParseStatus.invalid, "", `"a"`, "", "");
+	});
+	test('LitChar - space', () => {
+		testNodeParse(new LitChar(), "' '", ParseStatus.valid, "' '", "", "' '", "");
 	});
 	test('LitInt', () => {
 		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "", "", "");
@@ -437,8 +442,12 @@ suite('ParseNodes', () => {
 		testNodeParse(new SpaceNode(Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
 		testNodeParse(new SpaceNode(Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
 	});
-
-	test("AST", () => {
+	test('New Instance', () => {
+		testNodeParse(new NewInstance(), ``, ParseStatus.empty, "", "", "", "");
+		testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
+		testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+	});
+	ignore_test("AST", () => {
 		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
 
 		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);

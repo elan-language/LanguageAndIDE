@@ -1,16 +1,10 @@
-import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
-import { isFixedText } from "./parse-node-helpers";
 
 export abstract class AbstractSequence extends AbstractParseNode {
     
     elements: ParseNode[] = [];
-
-    constructor() {
-        super();
-    }
 
     parseText(text: string): void {
         var i = 0; //Index

@@ -62,7 +62,7 @@ export abstract class AbstractField implements Selectable, Field {
                 this.text = text.trimStart();
             } else {
                 this.setStatus(root.status);
-                this.text = root.matchedText + root.remainingText;
+                this.text = root.renderAsSource();
             }
         }
     }
