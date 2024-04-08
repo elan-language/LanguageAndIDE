@@ -419,7 +419,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new SpaceNode(Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
 	});
 
-	ignore_test("AST", () => {
+	test("AST", () => {
 		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
 
 		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
@@ -435,7 +435,7 @@ suite('ParseNodes', () => {
 		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
 		testAST(new ExprNode(), stubField, "3*foo(5)", "Multiply (3) (Func Call foo (5))", intType);
 		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
-		const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param  p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
+		const ast = "Func Call reduce (0, Lambda (Param  s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
 		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
 		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
 		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));

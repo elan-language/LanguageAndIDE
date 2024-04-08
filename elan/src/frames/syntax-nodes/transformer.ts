@@ -55,6 +55,8 @@ import { NewAsn } from "./new-asn";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
+import { CommaNode } from "../parse-nodes/comma-node";
+import { SpaceNode } from "../parse-nodes/space-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -107,8 +109,8 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof BinaryExpression) {
         const lhs = transform(node.elements[0], field) as ExprAsn;
-        const rhs = transform(node.elements[2], field) as ExprAsn;
-        const op = mapOperation(node.elements[1].matchedText);
+        const rhs = transform(node.elements[4], field) as ExprAsn;
+        const op = mapOperation(node.elements[2].matchedText);
 
         return new BinaryExprAsn(op, lhs, rhs, field);
     }
@@ -154,7 +156,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof ParamDefNode) {
         const id = node.elements[0].matchedText;
-        const type = transform(node.elements[2], field)!;
+        const type = transform(node.elements[4], field)!;
 
         return new ParamDefAsn(id, type, field);
     }
@@ -178,7 +180,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof DefaultOfTypeNode) {
-        const type = transform(node.elements[1], field)!;
+        const type = transform(node.elements[2], field)!;
         return new DefaultTypeAsn(type, field);
     }
 
@@ -195,13 +197,20 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
 
     if (node instanceof SetClause) {
         const id = node.elements[0].matchedText;
-        const to = transform(node.elements[3], field) as ExprAsn;
+        const to = transform(node.elements[6], field) as ExprAsn;
 
         return new SetAsn(id, to, field);
     }
 
     if (node instanceof SymbolNode) {
+        return undefined;
+    }
 
+    if (node instanceof CommaNode) {
+        return undefined;
+    }
+
+    if (node instanceof SpaceNode) {
         return undefined;
     }
 
@@ -234,7 +243,7 @@ export function transform(node: ParseNode | undefined, field: Field): AstNode | 
     }
 
     if (node instanceof WithClause) {
-        return transform(node.elements[1], field);
+        return transform(node.elements[3], field);
     }
 
     if (node instanceof NewInstance) {
