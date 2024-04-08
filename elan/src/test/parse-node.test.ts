@@ -536,5 +536,24 @@ suite('ParseNodes', () => {
 		const ast3 = "Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), '.')) : (target))";
 		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ast3, stringType);
 
+		testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
+
+		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()),stubField, `['a':37]`, "", intType);
+		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "", intType);
+		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "", intType);
+		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.0, 5:"abc"]`, "", intType);
+	
+
+		testAST(new LitTuple(),stubField, `(3,4)`, "(3, 4)", new TupleType([intType, intType]));
+		testAST(new LitTuple(),stubField, `(3,'a', "hello", 4.1, true)`, `(3, 'a', "hello", 4.1, true)`, new TupleType([intType, charType, stringType, floatType, boolType]));
+		testAST(new LitTuple(),stubField, `((3,4), ('a', true))`, "((3, 4), ('a', true))", 
+		new TupleType([
+			new TupleType([intType, intType]),
+			new TupleType([charType, boolType])
+		]));
+		
+
+
+
 	});
 });
