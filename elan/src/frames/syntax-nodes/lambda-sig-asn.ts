@@ -13,7 +13,7 @@ export class LambdaSigAsn implements Scope {
                 return {symbolId : id, symbolType : p.symbolType};
             }
         }
-        return scope.resolveSymbol(id, this);
+        return this.scope.resolveSymbol(id, this);
     }
 
     toString() {

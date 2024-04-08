@@ -362,6 +362,7 @@ const stubHolder = {
       case 'reduce' : return stubIntSymbol;
       case 'p' : return stubClassSymbol;
       case 'isBefore' : return stubBoolSymbol;
+      case 'betterOf' : return stubStringSymbol;
     }
 
     return undefined;
