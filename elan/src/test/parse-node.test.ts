@@ -106,15 +106,20 @@ suite('ParseNodes', () => {
 	test('Set Clause', () => {
 		testNodeParse(new SetClause(), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
 		testNodeParse(new SetClause(), "y set to p.y - 1", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new SetClause(), "y setto p.y - 1", ParseStatus.invalid, "", "y setto p.y - 1", "", "");
+		testNodeParse(new SetClause(), "yset to p.y - 1", ParseStatus.invalid, "", "yset to p.y - 1", "", "");
+		testNodeParse(new SetClause(), "x set top.x + 3", ParseStatus.invalid, "", "x set top.x + 3", "", "");
 	});
 	test('List of set clauses', () => {
 		testNodeParse(new List(() => new SetClause), "[x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('with clause', () => {
 		testNodeParse(new WithClause(), " with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new WithClause(), "with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('Expression + with clause', () => {
 		testNodeParse(new ExprNode(), "p with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new ExprNode(), "pwith [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "pwith", " [x set to p.x + 3, y set to p.y - 1]", "", "");
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(), ``, ParseStatus.empty, ``, "", "");
