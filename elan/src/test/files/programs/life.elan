@@ -1,4 +1,4 @@
-﻿# f7af640d9f429b76645cec657720e130b6ab5f5a6ada46cd4abc61adcc570d48 Elan v0.1 valid
+﻿# 767a404b5587db4adb7ef635e86b71c8bc8488fc8ccfdd9d15b1d68cb3ff0b2a Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -23,7 +23,7 @@ procedure drawGrid(cm as CharMap, grid as List<of Bool>)
 end procedure
 
 function north(c as Int) return Int
-  return if c > 19 then c - 20 else   c + 380
+  return if c > 19 then c - 20 else c + 380
 end function
 
 function south(c as Int) return Int
@@ -73,7 +73,7 @@ function nextCellValue(cells as List<of Bool>, c as Int) return Bool
 end function
 
 function nextGeneration(cells as List<of Bool>) return List<of Bool>
-  let cellRange be integers(0, cells.length()-1)
+  let cellRange be integers(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
   return next.asList()
 end function

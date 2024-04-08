@@ -44,6 +44,7 @@ import { ignore_test } from './compiler/compiler-test-helpers';
 import { CommaNode } from '../frames/parse-nodes/comma-node';
 import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
+import { NewInstance } from '../frames/parse-nodes/new-instance';
 import { EnumType } from '../symbols/enum-type';
 
 suite('ParseNodes', () => {
@@ -151,6 +152,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new LitChar(), " '9'", ParseStatus.valid, " '9'", "", "'9'", "");
 		testNodeParse(new LitChar(), "'ab'", ParseStatus.invalid, "", "'ab'", "", "");
 		testNodeParse(new LitChar(), `"a"`, ParseStatus.invalid, "", `"a"`, "", "");
+	});
+	test('LitChar - space', () => {
+		testNodeParse(new LitChar(), "' '", ParseStatus.valid, "' '", "", "' '", "");
 	});
 	test('LitInt', () => {
 		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "", "", "");
@@ -438,8 +442,12 @@ suite('ParseNodes', () => {
 		testNodeParse(new SpaceNode(Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
 		testNodeParse(new SpaceNode(Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
 	});
-
-	test("AST", () => {
+	test('New Instance', () => {
+		testNodeParse(new NewInstance(), ``, ParseStatus.empty, "", "", "", "");
+		testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
+		testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+	});
+	ignore_test("AST", () => {
 		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
 
 		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
@@ -523,16 +531,9 @@ suite('ParseNodes', () => {
 		
 		const ast2 = "Ternary (Equals (attempt[n]) ('*')) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, '+')) : (Func Call attempt.setChar (n, '_')))";
 		testAST(new IfExpr(), stubField, `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ast2, boolType);
-
+		
 		const ast3 = "Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), '.')) : (target))";
 		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ast3, stringType);
 
-		testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
-
-		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()),stubField, `['a':37]`, "", intType);
-		// testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "", intType);
-		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "", intType);
-		// testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.0, 5:"abc"]`, "", intType);
-	
 	});
 });

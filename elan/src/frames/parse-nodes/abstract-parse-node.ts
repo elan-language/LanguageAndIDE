@@ -1,4 +1,3 @@
-import { Field } from "../interfaces/field";
 import { ParseStatus } from "../parse-status";
 import { ParseNode } from "./parse-node";
 

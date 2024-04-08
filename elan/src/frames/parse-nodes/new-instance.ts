@@ -6,6 +6,8 @@ import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
 import { SymbolNode } from "./symbol-node";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
@@ -16,6 +18,7 @@ export class NewInstance extends AbstractSequence {
 
     parseText(text: string): void {
         this.elements.push(new KeywordNode(newKeyword));
+        this.elements.push(new SpaceNode(Space.required));
         this.elements.push(new TypeWithOptGenerics());
         this.elements.push(new SymbolNode(OPEN_BRACKET)); 
         this.elements.push(new CSV(() => new ExprNode(),0)); 
