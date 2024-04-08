@@ -559,5 +559,23 @@ suite('ParseNodes', () => {
 		//testAST(new LiteralNode(), stubField, `['a':37, 42:'b']`, "", intType);
 		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([intType, intType])));
 		testAST(new LiteralNode(), stubField, `["apple", "pear"]`, `["apple", "pear"]`, new ListType(stringType));
+
+		testAST(new VarRefNode(), stubField, `a`, "a", intType);
+		//testAST(new VarRefNode(), stubField, `result`, "", intType);
+		testAST(new VarRefNode(), stubField, `lst`, "lst", new ListType(intType));
+		testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
+		testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
+		testAST(new VarRefNode(), stubField, `global.lst[3]`, "global.lst[3]", intType);
+		testAST(new VarRefNode(), stubField, `property.lst[3..4]`, "property.lst[Range 3..4]", intType);
+		testAST(new VarRefNode(), stubField, `bar.lst[..4]`, "bar.lst[Range ..4]", intType);
+		//testAST(new VarRefNode(), stubField, `property.bar.foo`, "property.bar.foo", intType);
+
+		//testAST(new DeconstructedList(), stubField, `[a:b]`, "[a:b]");
+
+		testAST(new NewInstance(), stubField, `new Foo()`, "new Type Foo()", new ClassType("Foo"));
+	});
+
+	test("Debug", () => {
+		testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
 	});
 });

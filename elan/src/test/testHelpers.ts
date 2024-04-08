@@ -23,6 +23,7 @@ import { ISymbol } from '../symbols/symbol';
 import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { Scope } from '../frames/interfaces/scope';
+import { ListType } from '../symbols/list-type';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -350,7 +351,7 @@ const stubClassSymbol = {
 } as ISymbol;
 
 const stubHolder = {
-  resolveSymbol(id, initialScope) {
+  resolveSymbol(id, initialScope) : ISymbol | undefined {
     switch (id) {
       case 'a' : return stubIntSymbol;
       case 'b' : return stubFloatSymbol;
@@ -365,6 +366,7 @@ const stubHolder = {
       case 'betterOf' : return stubStringSymbol;
       case "attempt" : return stubBoolSymbol;
       case "target" : return stubStringSymbol;
+      case "lst": return { symbolId: "", symbolType: new ListType(intType) };
     }
 
     return undefined;

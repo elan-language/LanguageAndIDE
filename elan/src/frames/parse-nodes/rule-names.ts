@@ -4,5 +4,8 @@ export enum RuleNames {
     with,
     compound,
     indexes,
-    tuple
+    tuple,
+    rangeFrom,
+    rangeBetween,
+    rangeTo
 }
