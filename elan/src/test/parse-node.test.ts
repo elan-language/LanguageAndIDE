@@ -11,7 +11,7 @@ import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
 import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
 import { OptionalNode } from '../frames/parse-nodes/optional-node';
 import { LitString } from '../frames/parse-nodes/lit-string';
-import { List } from '../frames/parse-nodes/list';
+import { ListNode } from '../frames/parse-nodes/list-node';
 import { Multiple } from '../frames/parse-nodes/multiple';
 import { CSV } from '../frames/parse-nodes/csv';
 import { IdentifierNode } from '../frames/parse-nodes/identifier-node';
@@ -107,7 +107,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new SetClause(), "x set top.x + 3", ParseStatus.invalid, "", "x set top.x + 3", "", "");
 	});
 	test('List of set clauses', () => {
-		testNodeParse(new List(() => new SetClause), "[x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
+		testNodeParse(new ListNode(() => new SetClause), "[x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
 	});
 	test('with clause', () => {
 		testNodeParse(new WithClause(), " with [x set to p.x + 3, y set to p.y - 1]", ParseStatus.valid, "", "", "", "");
@@ -278,24 +278,24 @@ suite('ParseNodes', () => {
 		testNodeParse(new FunctionCallNode(), `a[0].isBefore(b[0])`, ParseStatus.valid, ``, "", "");
 	});
 	test('Lists', () => {
-		testNodeParse(new List(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new List(() => new LitInt()), `[1,2,3 ,4 , 5]`, ParseStatus.valid, `[1,2,3 ,4 , 5]`, "", "", "");
-		testNodeParse(new List(() => new LitInt()), `[]`, ParseStatus.valid, `[]`, "", "");
-		testNodeParse(new List(() => new LitInt()), `[`, ParseStatus.incomplete, `[`, "", "");
-		testNodeParse(new List(() => new LitInt()), `[1,2,3.1]`, ParseStatus.invalid, ``, "[1,2,3.1]", "");
+		testNodeParse(new ListNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
+		testNodeParse(new ListNode(() => new LitInt()), `[1,2,3 ,4 , 5]`, ParseStatus.valid, `[1,2,3 ,4 , 5]`, "", "", "");
+		testNodeParse(new ListNode(() => new LitInt()), `[]`, ParseStatus.valid, `[]`, "", "");
+		testNodeParse(new ListNode(() => new LitInt()), `[`, ParseStatus.incomplete, `[`, "", "");
+		testNodeParse(new ListNode(() => new LitInt()), `[1,2,3.1]`, ParseStatus.invalid, ``, "[1,2,3.1]", "");
 		// list of list
-		testNodeParse(new List(() => new List(() => new LitInt())), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new List(() => new List(() => new LitInt())), `[[], [], [ ]]`, ParseStatus.valid, `[[], [], [ ]]`, "", "");
-		testNodeParse(new List(() => new List(() => new LitInt())), `[[1,2], [], [3,4]]`, ParseStatus.valid, `[[1,2], [], [3,4]]`, "", "", "");
-		testNodeParse(new List(() => new List(() => new LitInt())), `[[1,2], [], [3,4]`, ParseStatus.incomplete, `[[1,2], [], [3,4]`, "", "");
-		testNodeParse(new List(() => new List(() => new LitInt())), `[[1,2, [], [3,4]]`, ParseStatus.invalid, ``, `[[1,2, [], [3,4]]`, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), ``, ParseStatus.empty, ``, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[], [], [ ]]`, ParseStatus.valid, `[[], [], [ ]]`, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [], [3,4]]`, ParseStatus.valid, `[[1,2], [], [3,4]]`, "", "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [], [3,4]`, ParseStatus.incomplete, `[[1,2], [], [3,4]`, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2, [], [3,4]]`, ParseStatus.invalid, ``, `[[1,2, [], [3,4]]`, "", "");
 
-		testNodeParse(new List(() => new LitString()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
-		testNodeParse(new List(() => new LiteralNode()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
+		testNodeParse(new ListNode(() => new LitString()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
+		testNodeParse(new ListNode(() => new LiteralNode()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 	});
 	test('List of expressions', () => {
-		testNodeParse(new List(() => new ExprNode()), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
-		testNodeParse(new List(() => new ExprNode()), `[a, 3+ 4 , foo(a, 3) -1]`, ParseStatus.valid, "[a, 3+ 4 , foo(a, 3) -1]", "", "", "");
+		testNodeParse(new ListNode(() => new ExprNode()), `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, ParseStatus.valid, "[a, 3+ 4 , func(a, 3) -1, new Foo()]", "", "");
+		testNodeParse(new ListNode(() => new ExprNode()), `[a, 3+ 4 , foo(a, 3) -1]`, ParseStatus.valid, "[a, 3+ 4 , foo(a, 3) -1]", "", "", "");
 	});
 	test('TypeSimpleNode', () => {
 		testNodeParse(new TypeSimpleNode(), `Foo`, ParseStatus.valid, "Foo", "", "", "<type>Foo</type>");
