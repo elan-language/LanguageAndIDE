@@ -28,11 +28,9 @@ export class BinaryExprAsn implements AstNode {
             case OperationSymbol.Pow : return "**";
         }
     }
-  
-
 
     renderAsObjectCode(): string {
-        const code = `${this.lhs} ${this.opToJs()} ${this.rhs}`;
+        const code = `${this.lhs.renderAsObjectCode()} ${this.opToJs()} ${this.rhs.renderAsObjectCode()}`;
 
         if (this.op === OperationSymbol.Div) {
             return `Math.floor(${code})`;
