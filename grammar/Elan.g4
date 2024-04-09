@@ -71,7 +71,7 @@ if:		NL IF expression
 else:	ELSE (IF expression)?
 		statementBlock;
 
-for:	NL FOR IDENTIFIER FROM expression TO expression (STEP MINUS? LITERAL_INTEGER)?
+for:	NL FOR IDENTIFIER FROM expression TO expression STEP MINUS? LITERAL_INTEGER
 		statementBlock
 		NL END FOR;
 
