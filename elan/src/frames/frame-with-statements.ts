@@ -10,7 +10,7 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -80,6 +80,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
     protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
+    protected renderChildrenAsObjectCode() : string {return parentHelper_renderChildrenAsObjectCode(this);}
     
     selectFirstField(): boolean {
         var result = super.selectFirstField();

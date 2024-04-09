@@ -61,6 +61,13 @@ ${endKeyword} ${functionKeyword}\r
 `;
     }
 
+    public renderAsObjectCode() : string {
+        return `function ${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.renderChildrenAsObjectCode()}\r
+}\r
+`;
+    }
+
     parseTop(source: CodeSource): void {
         source.remove(`${functionKeyword} `);
         this.name.parseFrom(source);

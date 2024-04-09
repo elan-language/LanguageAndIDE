@@ -8,7 +8,9 @@ export class FuncCallAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
+        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : "";
+        return `${q}${this.id}(${pp})`;
     }
 
     get symbolType() {

@@ -92,7 +92,7 @@ function mapOperation(op: string) {
     }
 }
 
-function transformMany(node: CSV | Multiple | Sequence, scope : Scope): Array<AstNode> {
+export function transformMany(node: CSV | Multiple | Sequence, scope : Scope): Array<AstNode> {
     const ast = new Array<AstNode>();
 
     for (const elem of node.elements) {

@@ -79,6 +79,18 @@ export function parentHelper_renderChildrenAsSource(parent: Parent) : string {
     return result;
 }
 
+export function parentHelper_renderChildrenAsObjectCode(parent: Parent) : string {
+    var result = "";
+    if (parent.getChildren().length > 0 ) {
+        const ss: Array<string> = [];
+        for (var frame of parent.getChildren().filter(s => !('isSelector' in s))) {
+            ss.push(frame.renderAsObjectCode());
+        }
+        result = ss.join("\r\n");
+    }
+    return result;
+}
+
 export function parentHelper_insertChildSelector(parent: Parent, after: boolean, child: Frame) {
     var selector = parent.newChildSelector();
     if (after && child.canInsertAfter()) {
