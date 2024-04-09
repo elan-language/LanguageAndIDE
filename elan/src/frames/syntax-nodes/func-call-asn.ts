@@ -1,3 +1,4 @@
+import { SymbolScope } from "../../symbols/symbol";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
@@ -8,8 +9,10 @@ export class FuncCallAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
+        const sl = this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib ? "_stdlib." : "";
+
         const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
-        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : "";
+        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : sl;
         return `${q}${this.id}(${pp})`;
     }
 

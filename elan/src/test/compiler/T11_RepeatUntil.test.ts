@@ -16,7 +16,7 @@ main
   print x
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = 0;
   do {
@@ -52,7 +52,7 @@ main
   print t
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var t = 0;
   var x = 0;

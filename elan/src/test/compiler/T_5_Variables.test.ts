@@ -13,7 +13,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   system.print(system.asString(a));
@@ -40,7 +40,7 @@ main
   print b
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   var b = a;
@@ -66,7 +66,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3 + 4;
   system.print(system.asString(a));
@@ -92,7 +92,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   a = 4;
@@ -118,7 +118,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3.1;
   a = 4;
@@ -145,7 +145,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 const a = 3;
 
 export async function main() {
@@ -191,7 +191,7 @@ main
   print k
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3 - 4;
   var b = 3 < 4;
@@ -237,7 +237,7 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 enum Fruit {
     apple = "apple", orange = "orange", pear = "pear"
 }

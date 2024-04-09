@@ -16,7 +16,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = true;
   if (a) {
@@ -49,7 +49,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = false;
   if (a) {
@@ -83,7 +83,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 2;
   if (a === 1) {
@@ -119,7 +119,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   if (a === 1) {
@@ -151,7 +151,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = true;
   if (a) {
@@ -185,7 +185,7 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   if (a === 1) {

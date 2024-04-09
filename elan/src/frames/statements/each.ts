@@ -40,6 +40,13 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
+
+    renderAsObjectCode(): string {
+        return `${this.indent()}for (const ${this.variable.renderAsObjectCode()} of ${this.iter.renderAsObjectCode()}) {\r
+${this.renderChildrenAsObjectCode()}\r
+${this.indent()}}`;
+    }
+
     parseTop(source: CodeSource): void {
         source.remove("each ");
         this.variable.parseFrom(source);
