@@ -340,7 +340,7 @@ suite('ParseNodes', () => {
 		testNodeParse(new IfExpr(), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ParseStatus.valid, "", "", "");
 	});
 	test('ParamDefNode', () => {
-		testNodeParse(new ParamDefNode(), `x as String`, ParseStatus.valid, "x as String", "", "x as String", "x<keyword> as </keyword><type>String</type>");
+		testNodeParse(new ParamDefNode(), `x as String`, ParseStatus.valid, "x as String", "", "x as String", "x <keyword>as</keyword> <type>String</type>");
 		testNodeParse(new ParamDefNode(), `y asString`, ParseStatus.invalid, "", "y asString", "");
 		testNodeParse(new ParamDefNode(), `z`, ParseStatus.incomplete, "z", "", "");
 		testNodeParse(new ParamDefNode(), `w as`, ParseStatus.incomplete, "w as", "", "");

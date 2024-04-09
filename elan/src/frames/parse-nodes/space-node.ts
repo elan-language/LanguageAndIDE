@@ -35,7 +35,7 @@ export class SpaceNode extends AbstractParseNode {
     }
 
     renderAsSource(): string {
-        return this.type === Space.ignored ? "" : " ";
+        return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
     }
         
     getCompletion() : string {

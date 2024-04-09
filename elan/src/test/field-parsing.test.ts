@@ -12,6 +12,7 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
 import { LetStatement } from '../frames/statements/let-statement';
+import { editorEvent } from '../frames/interfaces/editor-event';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -124,5 +125,31 @@ suite('Field Parsing Tests', () => {
 				assert.equal(type.textAsSource(), "Foo<of bar");
 				assert.equal(type.textAsHtml(), "Foo&lt;of bar");
 
+			});
+			test('process keys', () => { 
+				var func = new Function(new FileImpl(hash, new DefaultProfile()));
+				var params = func.params;
+				var modKey =  { control:false, shift: false, alt: false}
+				var event: editorEvent = {
+					type: 'key',
+					target: "frame",
+					id: '',
+					key: 'a',
+					modKey:modKey
+				};
+				params.processKey(event);
+				assert.equal(params.renderAsSource(),"a");
+				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a<keyword></keyword></text><placeholder>parameter definitions</placeholder><completion> as Type</completion></field>`);
+				event = {
+					type: 'key',
+					target: "frame",
+					id: '',
+					key: ' ',
+					modKey:modKey
+				};
+				params.processKey(event);
+				assert.equal(params.renderAsSource(),"a ");
+				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a <keyword></keyword></text><placeholder>parameter definitions</placeholder><completion>as Type</completion></field>`);
+			
 			});
 });
