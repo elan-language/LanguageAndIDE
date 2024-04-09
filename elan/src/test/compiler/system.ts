@@ -1,4 +1,4 @@
-export class _stdlib {
+export class System {
     asString(v: any): string {
         if (typeof v === "boolean") {
             return v ? "true" : "false";

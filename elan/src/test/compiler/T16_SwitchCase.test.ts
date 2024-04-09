@@ -22,7 +22,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
@@ -69,7 +69,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
@@ -113,7 +113,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
@@ -153,7 +153,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {

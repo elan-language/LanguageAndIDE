@@ -16,7 +16,7 @@ function foo(a as Int, b as Int) return Int
   return a * b
 end function`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(foo(3, 4)));
 }
@@ -46,7 +46,7 @@ function foo(a as Int, b as Int) return Int
     return default
 end function`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(foo(3, 4)));
 }
@@ -81,7 +81,7 @@ class Foo
   end constructor
 end class`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(foo(3, 4)));
 }
@@ -111,7 +111,7 @@ function foo(a Int, b Int) as Array<of Int>
     return default
 end function`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(foo(3, 4)));
 }
@@ -147,7 +147,7 @@ function factorial(a as Int) return Int
     return result
 end function`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(factorial(5)));
 }
@@ -194,7 +194,7 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var b = new Bar();
   system.print(system.asString(foo(b)));

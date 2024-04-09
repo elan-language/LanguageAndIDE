@@ -23,12 +23,14 @@ import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ISymbol } from "../symbols/symbol";
-import { UnknownType } from "../symbols/unknown-type";
+import { StdLibSymbols } from "./std-lib-symbols";
+import { isSymbol } from "../symbols/symbolHelpers";
+import { Scope } from "./interfaces/scope";
 
 // for web editor bundle
 export { CodeSourceFromString };
 
-//var system; export function _inject(l) { system = l; };
+//var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 
 export class FileImpl implements File {
     isParent: boolean = true;
@@ -40,6 +42,7 @@ export class FileImpl implements File {
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
     private ignoreHashOnParsing: boolean = false;
+    private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts 
 
     constructor(private hash: (toHash: string) => string, private profile : Profile, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
@@ -157,7 +160,7 @@ export class FileImpl implements File {
     }
 
     renderAsObjectCode(): string {
-        const stdLib = 'var system; export function _inject(l) { system = l; };';
+        const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };';
         return `${stdLib}\n${this.renderGlobalsAsObjectCode()}`; 
     }
 
@@ -328,9 +331,15 @@ export class FileImpl implements File {
     }
 
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        return {
-            symbolId : id,
-            symbolType: UnknownType.Instance
-        } as ISymbol;
+
+        const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as Array<ISymbol>;
+
+        for (const s of globalSymbols){
+            if (s.symbolId === id){
+                return s;
+            }
+        }
+
+        return this._stdLibSymbols.resolveSymbol(id, this as unknown as Scope);
     }
 }

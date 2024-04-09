@@ -11,7 +11,7 @@ main
   print 3 + 4
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(3 + 4));
 }
@@ -33,7 +33,7 @@ main
   print 3 - 4
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(3 - 4));
 }
@@ -55,7 +55,7 @@ main
   print 3 * 4
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(3 * 4));
 }
@@ -78,7 +78,7 @@ main
   print a + 4
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   system.print(system.asString(a + 4));
@@ -101,7 +101,7 @@ main
   print 3 / 2
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(3 / 2));
 }
@@ -123,7 +123,7 @@ main
   print 7 div 2
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(Math.floor(7 / 2)));
 }
@@ -145,7 +145,7 @@ main
   print 11 mod 3
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(11 % 3));
 }
@@ -167,7 +167,7 @@ main
   print 3 ^ 3
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.print(system.asString(3 ** 3));
 }
@@ -191,7 +191,7 @@ main
   print a
 end main`;
 
-    const objectCode = `var system; export function _inject(l) { system = l; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
   a = a + 1;

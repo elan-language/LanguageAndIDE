@@ -2,8 +2,9 @@ import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
 import { Done } from "mocha";
-import { _stdlib as StdLib } from "./standard-library";
+import { System } from "./system";
 import { isSymbol } from "../../symbols/symbolHelpers";
+import { StdLib } from "../../std-lib";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -57,13 +58,14 @@ function executeCode(file: FileImpl) {
     //     "target": ts.ScriptTarget.ES2022,
     // });
 
+    const system = new System();
     const stdlib = new StdLib();
 
     return doImport(jsCode).then(async (elan) => {
         if (elan.main) {
-            elan._inject(stdlib);
+            elan._inject(system, stdlib);
             await elan.main();
-            return stdlib;
+            return system;
         }
         return undefined;
     });
