@@ -225,5 +225,6 @@ class Bar {
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
+  // TODO fails
 
 });
