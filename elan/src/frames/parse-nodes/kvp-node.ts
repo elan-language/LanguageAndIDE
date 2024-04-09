@@ -1,14 +1,18 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { ParseNode } from "./parse-node";
-import { Field } from "../interfaces/field";
+
 
 import { COLON } from "../symbols";
 import { ParseStatus } from "../parse-status";
 
 export class KVPnode extends AbstractSequence  {
-    keyConstructor: () => ParseNode;
-    valueConstructor: () => ParseNode;
+
+    key: ParseNode | undefined;
+    value: ParseNode | undefined;
+
+    private keyConstructor: () => ParseNode;
+    private valueConstructor: () => ParseNode;
 
     constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode) {
         super();
@@ -18,9 +22,11 @@ export class KVPnode extends AbstractSequence  {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(this.keyConstructor());
+            this.key = this.keyConstructor();
+            this.value = this.valueConstructor();
+            this.elements.push(this.key);
             this.elements.push(new SymbolNode(COLON));
-            this.elements.push(this.valueConstructor());
+            this.elements.push(this.value);
             super.parseText(text);
         }
     }
