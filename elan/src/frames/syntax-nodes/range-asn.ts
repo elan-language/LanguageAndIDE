@@ -7,7 +7,13 @@ export class RangeAsn implements AstNode {
         
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        const f = this.from ? `${this.from.renderAsObjectCode()}` : "0";
+        const t = this.to ? `${this.to.renderAsObjectCode()}` : undefined;
+
+        if (t) {
+            return `${f}, ${t}`;
+        }
+        return f;
     }
 
     get symbolType() {

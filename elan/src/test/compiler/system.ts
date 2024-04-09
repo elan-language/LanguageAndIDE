@@ -10,7 +10,11 @@ export class System {
             return v.toString();
         }
 
-        throw new Error("Not implemented");
+        if (Array.isArray(v)) {
+            return `List [${v.map(i => this.asString(i)).join(", ")}]`;
+        }
+
+        throw new Error("Not implemented" + typeof v);
     }
 
     printed : string = "";

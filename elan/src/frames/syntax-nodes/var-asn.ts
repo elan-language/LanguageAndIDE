@@ -8,7 +8,8 @@ export class VarAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        return this.id;
+        var idx = this.index ? this.index.renderAsObjectCode() : ""; 
+        return `${this.id}${idx}`;
     }
 
     get symbolType() {
