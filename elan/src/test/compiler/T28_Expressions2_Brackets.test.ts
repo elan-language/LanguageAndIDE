@@ -181,6 +181,62 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "-4.7-15");
   });
 
+  test('Pass_OperatorPrecedenceForMod', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to 11 mod 3
+  var y set to 5 + 6 mod 3
+  print x
+  print y
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var x = 11 % 3;
+  var y = 5 + 6 % 3;
+  system.print(system.asString(x));
+  system.print(system.asString(y));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
+  });
+
+  test('Pass_OperatorPrecedenceForDiv', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to 11 div 3
+  var y set to 5 + 6 div 3
+  print x
+  print y
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var x = Math.floor(11 / 3);
+  var y = 5 + Math.floor(6 / 3);
+  system.print(system.asString(x));
+  system.print(system.asString(y));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "37");
+  });
+
  
 
   // TODO fails
