@@ -1,24 +1,26 @@
 import { ParseNode } from "./parse-node";
 import { KVPnode } from "./kvp-node";
 import { AbstractParseNode } from "./abstract-parse-node";
-import { List } from "./list";
+import { ListNode } from "./list-node";
 
 export class Dictionary extends AbstractParseNode  {
 
-    listConstructor: () => ParseNode;
-    kvpConstructor: () => ParseNode;
+    kvps: ListNode |undefined;
+    private keyConstructor: () => ParseNode;
+    private valueConstructor: () => ParseNode;
 
     constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode ) {
         super();
-        this.kvpConstructor = () => new KVPnode(keyConstructor, valueConstructor);
-        this.listConstructor = () => new List(this.kvpConstructor);
+        this.keyConstructor = keyConstructor;
+        this.valueConstructor = valueConstructor;
     }
 
     parseText(text: string): void {
         if (text.length > 0) {
-            var list = this.listConstructor();
-            list.parseText(text);
-            this.updateFrom(list);
+             var kvpConstructor = () => new KVPnode(this.keyConstructor, this.valueConstructor);
+            this.kvps = new ListNode(kvpConstructor);
+            this.kvps.parseText(text);
+            this.updateFrom(this.kvps);
         }
     }
 }

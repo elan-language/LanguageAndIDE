@@ -7,7 +7,7 @@ import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
 import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
 import { LitString } from '../frames/parse-nodes/lit-string';
-import { List } from '../frames/parse-nodes/list';
+import { ListNode } from '../frames/parse-nodes/list-node';
 import { IdentifierNode } from '../frames/parse-nodes/identifier-node';
 import { FunctionCallNode } from '../frames/parse-nodes/function-call-node';
 import { TypeNode } from '../frames/parse-nodes/type-node';
@@ -110,13 +110,13 @@ suite('ASTNodes', () => {
 	});
 
 	test("List", () => {
-		testAST(new List(() => new LitInt()), stubField, `[1,2,3 ,4 , 5]`, "[1, 2, 3, 4, 5]", new ListType(intType));
-		testAST(new List(() => new List(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(intType)));
-		testAST(new List(() => new LitString()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
-		testAST(new List(() => new LiteralNode()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
+		testAST(new ListNode(() => new LitInt()), stubField, `[1,2,3 ,4 , 5]`, "[1, 2, 3, 4, 5]", new ListType(intType));
+		testAST(new ListNode(() => new ListNode(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(intType)));
+		testAST(new ListNode(() => new LitString()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
+		testAST(new ListNode(() => new LiteralNode()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
 
-		testAST(new List(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(intType));
-		testAST(new List(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(intType));
+		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(intType));
+		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(intType));
 	});
 
 	test("Types", () => {
