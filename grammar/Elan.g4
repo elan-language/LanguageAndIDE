@@ -22,7 +22,7 @@ procedure:	NL PROCEDURE procedureSignature
 
 function: 	NL FUNCTION functionSignature
 			statementBlock
-			NL RETURN (expression | DEFAULT)
+			NL RETURN expression
     		NL END FUNCTION;
 
 constant: NL CONSTANT IDENTIFIER SET TO literal;
