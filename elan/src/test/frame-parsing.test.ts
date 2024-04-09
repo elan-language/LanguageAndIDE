@@ -305,21 +305,6 @@ end enum
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - function returning default', () => {
-		var code = `# 848bc09b111d28c60ec0cb8f23812123d7f96e31b5fae288024e02a8f7c2a286 Elan v0.1 valid
-
-function foo(x as Int) return Int
-  return default
-end function
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
 	test('parse Frames - class', () => {
 		var code = `# 834c9e198f709067045ddf39de7a96f9f926021b95df792d5dc55a0bae618736 Elan v0.1 valid
 
