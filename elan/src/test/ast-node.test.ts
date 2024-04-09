@@ -31,6 +31,7 @@ import { EnumType } from '../symbols/enum-type';
 import { Dictionary } from '../frames/parse-nodes/dictionary';
 import { LitValueNode } from '../frames/parse-nodes/lit-value';
 import { ignore_test } from './compiler/compiler-test-helpers';
+import { DictionaryType } from '../symbols/dictionary-type';
 
 suite('ASTNodes', () => {
 
@@ -154,12 +155,12 @@ suite('ASTNodes', () => {
 		testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
 	});
 
-	ignore_test("Dictionary", () => {
+	test("Dictionary", () => {
 
-		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37]`, "", intType);
-		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "", intType);
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "", intType);
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.0, 5:"abc"]`, "", intType);
+		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37]`, "[('a':37)]", new DictionaryType(charType, intType));
+		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "[('a':37), ('b':42)]", new DictionaryType(charType, intType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "[('a':37), ('b':42)]", new DictionaryType(charType, intType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.1, 5:"abc"]`, `[('a':1.1), (5:"abc")]`, new DictionaryType(charType, floatType));
 	});
 
 	test("LitTuple", () => {

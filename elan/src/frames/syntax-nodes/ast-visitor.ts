@@ -70,6 +70,9 @@ import { ResultAsn } from "./result-asn";
 import { RangeAsn } from "./range-asn";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
+import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
+import { KVPnode } from "../parse-nodes/kvp-node";
+import { KvpAsn } from "./kvp-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -265,9 +268,8 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof Dictionary) {
-        //const items = transformMany(node.elements[1] as CSV, scope);
-        //return new LiteralListAsn(items, scope);
-        return undefined;
+        const items = transform(node.kvps, scope) as LiteralListAsn;
+        return new LiteralDictionaryAsn(items, scope);
     }
 
     if (node instanceof TupleNode) {
@@ -368,6 +370,13 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         var type = new EnumType(node.type!.matchedText);
  
         return new LiteralEnumAsn(id, type, scope);
+     }
+
+     if (node instanceof KVPnode) {
+        var key = transform(node.key, scope)!;
+        var value = transform(node.value, scope)!;
+ 
+        return new KvpAsn(key, value, scope);
      }
 
     throw new Error("Not implemented " + typeof node);
