@@ -200,7 +200,7 @@ export async function main() {
   var e = 3 >= 4;
   var f = 3 === 4;
   var g = 3 !== 4;
-  var h = ! false;
+  var h = !false;
   var i = Math.floor(4 / 3);
   var j = 4 % 3;
   var k = 4 / 3;

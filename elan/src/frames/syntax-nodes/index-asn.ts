@@ -7,7 +7,7 @@ export class IndexAsn implements AstNode {
     constructor(private index: ExprAsn, private scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `.slice(${this.index.renderAsObjectCode()})`;
     }
 
     get symbolType() {

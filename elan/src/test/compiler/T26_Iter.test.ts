@@ -113,7 +113,7 @@ function printEach(target) {
     await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
-  ignore_test('Pass_Printing', async () => {
+  test('Pass_Printing', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -127,20 +127,24 @@ procedure printAsIter(target as Iter<of Int>)
 end procedure
   
 procedure printAsList(target as Iter<of Int>)
-  var some set to asList(target)[3..]
-  print some
+  var some set to asList(target)
+  print some[3..]
 end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var s = "Foo";
-  printEach(s);
+  var it = [1, 2, 3, 4, 5, 6, 7];
+  printAsIter(it);
+  printAsList(it);
 }
 
-function printEach(target) {
-  for (const x of target) {
-    system.print(system.asString(x));
-  }
+function printAsIter(target) {
+  system.print(system.asString(target));
+}
+
+function printAsList(target) {
+  var some = _stdlib.asList(target);
+  system.print(system.asString(some.slice(3)));
 }
 `;
 
@@ -150,7 +154,7 @@ function printEach(target) {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Foo");
+    await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3, 4, 5, 6, 7]List [4, 5, 6, 7]");
   });
 
   ignore_test('Pass_Default', async () => {

@@ -4,7 +4,7 @@ import { AstNode } from "./ast-node";
 
 export class LiteralListAsn implements AstNode {
     
-    constructor(private readonly items: AstNode[], scope : Scope) {
+    constructor(public readonly items: AstNode[], scope : Scope) {
     }
     renderAsObjectCode(): string {
         const it = this.items.map(p => p.renderAsObjectCode()).join(", ");

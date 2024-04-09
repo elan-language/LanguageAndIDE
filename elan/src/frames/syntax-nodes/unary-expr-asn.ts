@@ -12,11 +12,12 @@ export class UnaryExprAsn implements AstNode {
     private opToJs() {
         switch (this.op) {
             case OperationSymbol.Not : return "!";
+            case OperationSymbol.Minus : return "-";
         }
     }
 
     renderAsObjectCode(): string {
-       return `${this.opToJs()} ${this.operand.renderAsObjectCode()}`;
+       return `${this.opToJs()}${this.operand.renderAsObjectCode()}`;
     }
 
     get symbolType() {
