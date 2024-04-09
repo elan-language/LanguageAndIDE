@@ -1,47 +1,46 @@
-import { ExpressionField } from "../fields/expression-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { AbstractFrame } from "../abstract-frame";
-import { defaultKeyword } from "../keywords";
+import { ReturnExprField } from "../fields/return-expr-field";
 
 export class ReturnStatement extends AbstractFrame implements Statement{
     isStatement = true; 
     isReturnStatement = true;  
-    expr: ExpressionField;
+    returnExpr: ReturnExprField;
 
     constructor(parent: Parent) {
         super(parent);
         this.movable = false;
-        this.expr = new ExpressionField(this);
+        this.returnExpr = new ReturnExprField(this);
     }
 
     deleteIfPermissible(): void {}; //Does nothing as return cannot be deleted
 
     getFields(): Field[] {
-        return [this.expr];
+        return [this.returnExpr];
     }
 
     getIdPrefix(): string {
         return 'return';
     }
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.returnExpr.renderAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {
-        return `${this.indent()}return ${this.expr.renderAsSource()}`;
+        return `${this.indent()}return ${this.returnExpr.renderAsSource()}`;
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}return ${this.expr.renderAsObjectCode()};`;
+        return `${this.indent()}return ${this.returnExpr.renderAsObjectCode()};`;
     }
 
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("return ");
-        this.expr.parseFrom(source);
+        this.returnExpr.parseFrom(source);
     }
 
     canInsertAfter(): boolean {
