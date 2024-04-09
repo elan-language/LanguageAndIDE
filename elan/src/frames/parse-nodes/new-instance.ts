@@ -1,5 +1,3 @@
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
 import { newKeyword } from "../keywords";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -12,16 +10,17 @@ import { SymbolNode } from "./symbol-node";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
 export class NewInstance extends AbstractSequence {
-    constructor() {
-        super();
-    }
+    type: TypeWithOptGenerics | undefined;
+    args: CSV | undefined;
 
     parseText(text: string): void {
         this.elements.push(new KeywordNode(newKeyword));
         this.elements.push(new SpaceNode(Space.required));
-        this.elements.push(new TypeWithOptGenerics());
+        this.type = new TypeWithOptGenerics();
+        this.elements.push(this.type);
         this.elements.push(new SymbolNode(OPEN_BRACKET)); 
-        this.elements.push(new CSV(() => new ExprNode(),0)); 
+        this.args = new CSV(() => new ExprNode(),0);
+        this.elements.push(this.args); 
         this.elements.push(new SymbolNode(CLOSE_BRACKET)); 
         super.parseText(text);
     }

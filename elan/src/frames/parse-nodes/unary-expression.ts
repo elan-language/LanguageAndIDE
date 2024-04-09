@@ -11,6 +11,8 @@ import { Space } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
 
 export class UnaryExpression extends AbstractSequence {
+    unaryOp: Alternatives | undefined;
+    term: Term |undefined;
     
     constructor() {
         super();
@@ -23,9 +25,10 @@ export class UnaryExpression extends AbstractSequence {
             var not = () => new KeywordNode(notKeyword);
             var sp = () => new SpaceNode(Space.required);
             var notSp = () => new Sequence([not, sp]);
-            var unaryOp = new Alternatives([minus,notSp]);
-            this.elements.push(unaryOp);
-            this.elements.push(new Term());
+            this.unaryOp = new Alternatives([minus,notSp]);
+            this.elements.push(this.unaryOp);
+            this.term = new Term();
+            this.elements.push(this.term);
             return super.parseText(text);
         }
     }

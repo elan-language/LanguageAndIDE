@@ -2,14 +2,15 @@ import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
-import { UnknownType } from "../../symbols/unknown-type";
-import { Field } from "../interfaces/field";
 import { lambdaKeyword, returnKeyword } from "../keywords";
 import { ParamDefNode } from "./param-def-node";
 import { SymbolNode } from "./symbol-node";
 import { ARROW } from "../symbols";
 
 export class Lambda extends AbstractSequence {
+    params: CSV | undefined;
+    expr: ExprNode | undefined;
+
     constructor() {
         super();
     }
@@ -17,9 +18,11 @@ export class Lambda extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.elements.push(new KeywordNode(lambdaKeyword));
-            this.elements.push(new CSV(() => new ParamDefNode(), 1));
+            this.params = new CSV(() => new ParamDefNode(), 1);
+            this.elements.push(this.params);
             this.elements.push(new SymbolNode(ARROW));
-            this.elements.push(new ExprNode());
+            this.expr = new ExprNode();
+            this.elements.push(this.expr);
             super.parseText(text);
         }
     }

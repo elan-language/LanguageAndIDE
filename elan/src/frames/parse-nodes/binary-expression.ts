@@ -6,6 +6,9 @@ import { SpaceNode } from "./space-node";
 import { Space as Space } from "./parse-node-helpers";
 
 export class BinaryExpression extends AbstractSequence {
+    lhs: Term | undefined;
+    op: BinaryOperation | undefined;
+    rhs: Term | undefined;
     
     constructor() {
         super();
@@ -13,11 +16,14 @@ export class BinaryExpression extends AbstractSequence {
     }
 
     parseText(text: string): void {
-        this.elements.push(new Term());
+        this.lhs =new Term();
+        this.elements.push(this.lhs);
         this.elements.push(new SpaceNode(Space.added));
-        this.elements.push(new BinaryOperation());
+        this.op = new BinaryOperation();
+        this.elements.push(this.op);
         this.elements.push(new SpaceNode(Space.added));
-        this.elements.push(new ExprNode());
+        this.rhs = new ExprNode();
+        this.elements.push(this.rhs);
         return super.parseText(text);
     }
 

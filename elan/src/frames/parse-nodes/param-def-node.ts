@@ -8,13 +8,18 @@ import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
 
+    name: IdentifierNode | undefined;
+    type: TypeNode | undefined;
+
     parseText(text: string): void {
         if (text.trim().length > 0) {
-            this.elements.push(new IdentifierNode());
+            this.name = new IdentifierNode();
+            this.elements.push(this.name);
             this.elements.push(new SpaceNode(Space.required));
             this.elements.push(new KeywordNode(asKeyword));
             this.elements.push(new SpaceNode(Space.required));
-            this.elements.push(new TypeNode());
+            this.type = new TypeNode()
+            this.elements.push(this.type);
             super.parseText(text);
         }
     }
