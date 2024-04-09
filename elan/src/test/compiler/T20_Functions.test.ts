@@ -172,5 +172,58 @@ function factorial(a) {
     await assertObjectCodeExecutes(fileImpl, "120");
   });
 
+  test('Pass_GlobalFunctionOnClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  print foo(b)
+end main
+
+function foo(bar as Bar) return String
+    return bar.asString()
+end function
+
+class Bar
+    constructor()
+    end constructor
+
+    function asString() return String
+        return "bar"
+    end function
+
+end class`;
+
+    const objectCode = `var system; export function _inject(l) { system = l; };
+export async function main() {
+  var b = new Bar();
+  system.print(system.asString(foo(b)));
+}
+
+function foo(bar) {
+  return bar.asString();
+}
+
+class Bar {
+  constructor() {
+
+  }
+
+  asString() {
+    return "bar";
+  }
+
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "bar");
+  });
+
 
 });

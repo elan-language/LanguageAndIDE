@@ -8,7 +8,7 @@ export class VarAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.id;
     }
 
     get symbolType() {

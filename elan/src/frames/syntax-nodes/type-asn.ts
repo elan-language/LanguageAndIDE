@@ -17,7 +17,7 @@ export class TypeAsn implements AstNode {
         this.type = type.trim();
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.type;
     }
 
     get symbolType() {

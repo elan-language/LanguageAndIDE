@@ -14,7 +14,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -142,7 +142,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
     }
 
     private inheritanceAsObjectCode(): string {
-        return `${this.inherits ? " implements " + this.superClasses.renderAsObjectCode() : ""}`;
+        return ``;
     }
 
     public renderAsHtml(): string {
@@ -164,17 +164,10 @@ ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
     }
 
-    private membersAsObjectCode(): string {
-        var result = "";
-        if (this._children.length > 0) {
-        const ss: Array<string> = [];
-        for (var m of this._children.filter(m  => !('isSelector' in m))) {
-            var s = m.renderAsObjectCode();
-            ss.push(s);
-        }
-        result = ss.join("\r\n");
-        }
-        return result;
+    public renderAsObjectCode(): string {
+        return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
+${parentHelper_renderChildrenAsObjectCode(this)}\r
+}\r\n`;
     }
 
 
