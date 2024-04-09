@@ -12,6 +12,8 @@ import { SpaceNode } from "./space-node";
 import { Space } from "./parse-node-helpers";
 
 export class TypeWithOptGenerics extends AbstractSequence {
+    simpleType: TypeSimpleNode | undefined;
+    generic: OptionalNode | undefined;
 
     constructor() {
         super();
@@ -20,16 +22,16 @@ export class TypeWithOptGenerics extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            var simpleType = () => new TypeSimpleNode();
+           this.simpleType = new TypeSimpleNode();
             var lt = () => new SymbolNode(LT);
             var of = () => new KeywordNode(ofKeyword);
             var sp = () => new SpaceNode(Space.required);
             var type = () => new TypeNode();
             var gt =() => new SymbolNode(GT);
             var genericNode = () => new Sequence([lt,of,sp,type,gt]);
-            var optGeneric = () => new OptionalNode(genericNode);
-            this.elements.push(simpleType());
-            this.elements.push(optGeneric());
+            this.generic = new OptionalNode(genericNode);
+            this.elements.push(this.simpleType);
+            this.elements.push(this.generic);
             super.parseText(text);
         }
     }

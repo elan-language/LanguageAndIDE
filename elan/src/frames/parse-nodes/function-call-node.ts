@@ -14,6 +14,9 @@ import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
 import { RuleNames } from "./rule-names";
 
 export class FunctionCallNode extends AbstractSequence {
+    qualifier: OptionalNode | undefined;
+    name : IdentifierNode |undefined;
+    args : CSV | undefined;
 
     parseText(text: string): void {
         if (text.trim().length > 0) {
@@ -25,12 +28,14 @@ export class FunctionCallNode extends AbstractSequence {
             var qualifier = () => new Alternatives([global, lib, instance]);
             var dot = () => new SymbolNode(DOT);
             var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
-            var optQualifier =  new OptionalNode(qualDot);
+            this.qualifier =  new OptionalNode(qualDot);
+            this.name = new IdentifierNode();
+            this.args =new CSV(() => new ExprNode(),0);
 
-            this.elements.push(optQualifier);
-            this.elements.push(new IdentifierNode());
+            this.elements.push(this.qualifier);
+            this.elements.push(this.name);
             this.elements.push(new SymbolNode(OPEN_BRACKET));
-            this.elements.push(new CSV(() => new ExprNode(),0)); //arg list
+            this.elements.push(this.args); //arg list
             this.elements.push(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
