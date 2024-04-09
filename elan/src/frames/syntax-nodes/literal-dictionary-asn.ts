@@ -10,7 +10,7 @@ export class LiteralDictionaryAsn implements AstNode {
     }
     renderAsObjectCode(): string {
         var lst = this.list.renderAsObjectCode();
-        return `new map(${lst})`;
+        return `new Map(${lst})`;
     }
 
     get symbolType() {
