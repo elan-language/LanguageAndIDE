@@ -150,7 +150,7 @@ end main`;
 
         const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(2.1E4));
+  system.print(system.asString(21000));
 }
 `;
 
@@ -172,7 +172,7 @@ end main`;
 
         const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
-  system.print(system.asString(2.1E100));
+  system.print(system.asString(2.1e+100));
 }
 `;
 

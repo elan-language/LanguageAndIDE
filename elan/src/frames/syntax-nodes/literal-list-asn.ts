@@ -1,11 +1,14 @@
 import { ListType } from "../../symbols/list-type";
 import { Scope } from "../interfaces/scope";
-import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
-export class LiteralListAsn {
+export class LiteralListAsn implements AstNode {
     
     constructor(private readonly items: AstNode[], scope : Scope) {
+    }
+    renderAsObjectCode(): string {
+        const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
+        return `[${it}]`;
     }
 
     get symbolType() {

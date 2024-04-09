@@ -11,10 +11,13 @@ import { TupleType } from "../../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
-export class TypeAsn {
+export class TypeAsn implements AstNode {
 
     constructor(private type: string, private genericParameters: Array<AstNode>, private scope : Scope) {
         this.type = type.trim();
+    }
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     get symbolType() {

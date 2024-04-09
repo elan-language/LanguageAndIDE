@@ -1,19 +1,20 @@
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
-export class DefaultTypeAsn implements AstNode {
+export class ResultAsn implements AstNode {
 
-    constructor(private type: AstNode, private scope : Scope) {
+    constructor(private scope : Scope) {
+        
     }
     renderAsObjectCode(): string {
         throw new Error("Method not implemented.");
     }
 
     get symbolType() {
-        return this.type.symbolType;
+        return undefined;
     }
 
     toString() {
-        return `Default (${this.type})`;
+        return "Result";
     }
 }

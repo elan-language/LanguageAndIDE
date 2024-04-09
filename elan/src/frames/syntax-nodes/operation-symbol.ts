@@ -5,5 +5,14 @@ export enum OperationSymbol {
     Not,
     Multiply,
     And,
-    Equals
+    Equals,
+    LT,
+    GT,
+    GTE,
+    LTE,
+    Div,
+    Mod,
+    Divide,
+    NotEquals,
+    Pow
 }

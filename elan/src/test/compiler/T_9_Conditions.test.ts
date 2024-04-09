@@ -173,7 +173,7 @@ end main`;
     const objectCode = `var system; export function _inject(l) { system = l; };
 export async function main() {
   system.print(system.asString(3 < 3.1));
-  system.print(system.asString(3 === 3.0));
+  system.print(system.asString(3 === 3));
   system.print(system.asString(3.1 < 3));
 }
 `;

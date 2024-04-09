@@ -13,7 +13,6 @@ import { LitBool } from "../parse-nodes/lit-bool";
 import { LiteralBoolAsn } from "./literal-bool-asn";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IdAsn } from "./id-asn";
-import { Field } from "../interfaces/field";
 import { FunctionCallNode } from "../parse-nodes/function-call-node";
 import { FuncCallAsn } from "./func-call-asn";
 import { CSV } from "../parse-nodes/csv";
@@ -46,7 +45,7 @@ import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { RuleNames } from "../parse-nodes/rule-names";
-import { globalKeyword, libraryKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
@@ -64,15 +63,31 @@ import { IfExprAsn } from "./if-expr-asn";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { EnumType } from "../../symbols/enum-type";
+import { Dictionary } from "../parse-nodes/dictionary";
+import { LitTuple } from "../parse-nodes/lit-tuple";
+import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
+import { ResultAsn } from "./result-asn";
+import { RangeAsn } from "./range-asn";
+import { DeconstructedList } from "../parse-nodes/deconstructed-list";
+import { DeconstructedListAsn } from "./deconstructed-list-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
         case "+": return OperationSymbol.Add;
         case "-": return OperationSymbol.Minus;
         case "*": return OperationSymbol.Multiply;
+        case "<": return OperationSymbol.LT;
+        case ">": return OperationSymbol.GT;
+        case ">=": return OperationSymbol.GTE;
+        case "<=": return OperationSymbol.LTE;
         case "and": return OperationSymbol.And;
         case "not": return OperationSymbol.Not;
         case "is": return OperationSymbol.Equals;
+        case "is not": return OperationSymbol.NotEquals;
+        case "div": return OperationSymbol.Div;
+        case "mod": return OperationSymbol.Mod;
+        case "/": return OperationSymbol.Divide;
+        case "^": return OperationSymbol.Pow;
         default: throw new Error("Not implemented");
     }
 }
@@ -224,8 +239,12 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof KeywordNode) {
-        if (node.fixedText === globalKeyword || node.fixedText === libraryKeyword) {
+        if (node.fixedText === globalKeyword || node.fixedText === libraryKeyword || node.fixedText === propertyKeyword) {
             return new IdAsn(node.fixedText, scope);
+        }
+
+        if (node.fixedText === "result") {
+            return new ResultAsn(scope);
         }
 
         return undefined;
@@ -246,9 +265,31 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         return new LiteralListAsn(items, scope);
     }
 
+    if (node instanceof Dictionary) {
+        //const items = transformMany(node.elements[1] as CSV, scope);
+        //return new LiteralListAsn(items, scope);
+        return undefined;
+    }
+
     if (node instanceof TupleNode) {
         const items = transformMany(node.elements[1] as CSV, scope);
         return new LiteralTupleAsn(items, scope);
+    }
+
+    if (node instanceof LitTuple) {
+        const items = transformMany(node.elements[1] as CSV, scope);
+        return new LiteralTupleAsn(items, scope);
+    }
+
+    if (node instanceof DeconstructedTuple) {
+        const items = transformMany(node.elements[1] as CSV, scope);
+        return new LiteralTupleAsn(items, scope);
+    }
+
+    if (node instanceof DeconstructedList) {
+        const hd = node.elements[1].matchedText;
+        const tl = node.elements[3].matchedText;
+        return new DeconstructedListAsn(hd, tl, scope);
     }
 
     if (node instanceof WithClause) {
@@ -256,8 +297,8 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof NewInstance) {
-        const type = transform(node.elements[1], scope)!;
-        const pp = transformMany(node.elements[3] as CSV, scope);
+        const type = transform(node.elements[2], scope)!;
+        const pp = transformMany(node.elements[4] as CSV, scope);
 
         return new NewAsn(type, pp, scope);
     }
@@ -275,7 +316,6 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         }
 
         if (node.ruleName === RuleNames.instance) {
-            //return new QualifierAsn(transformMany(node, scope), scope);
             var id = node.elements[0].matchedText;
             var index = transform(node.elements[1], scope);
 
@@ -293,6 +333,22 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         if (node.ruleName === RuleNames.tuple) {
             const gp = transformMany(node.elements[1] as CSV, scope);
             return new TypeAsn("Tuple", gp, scope);
+        }
+
+        if (node.ruleName === RuleNames.rangeTo) {
+            const to = transform(node.elements[1], scope);
+            return new RangeAsn(undefined, to, scope);
+        }
+
+        if (node.ruleName === RuleNames.rangeFrom) {
+            const from = transform(node.elements[0], scope);
+            return new RangeAsn(from, undefined, scope);
+        }
+
+        if (node.ruleName === RuleNames.rangeBetween) {
+            const to = transform(node.elements[2], scope);
+            const from = transform(node.elements[0], scope);
+            return new RangeAsn(from, to, scope);
         }
     }
 

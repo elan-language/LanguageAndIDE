@@ -1,10 +1,16 @@
 import { ISymbol } from "../../symbols/symbol";
+import { ISymbolType } from "../../symbols/symbol-type";
 import { Scope } from "../interfaces/scope";
+import { AstNode } from "./ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 
-export class LambdaSigAsn implements Scope {
+export class LambdaSigAsn implements Scope, AstNode {
 
     constructor(private parameters: Array<ParamDefAsn>, private scope : Scope) {
+    }
+    symbolType: ISymbolType | undefined;
+    renderAsObjectCode(): string {
+        throw new Error("Method not implemented.");
     }
 
     resolveSymbol(id: string, scope: Scope): ISymbol {

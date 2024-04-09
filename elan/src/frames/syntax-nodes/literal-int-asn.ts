@@ -1,8 +1,12 @@
 import { IntType } from "../../symbols/int-type";
+import { AstNode } from "./ast-node";
 
-export class LiteralIntAsn {
+export class LiteralIntAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = parseInt(rawValue.trim());
+    }
+    renderAsObjectCode(): string {
+        return this.value.toString();
     }
 
     value: number;

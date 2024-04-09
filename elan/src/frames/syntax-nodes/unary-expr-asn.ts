@@ -9,6 +9,16 @@ export class UnaryExprAsn implements AstNode {
     constructor(private op: OperationSymbol, private operand: ExprAsn, scope : Scope) {
     }
 
+    private opToJs() {
+        switch (this.op) {
+            case OperationSymbol.Not : return "!";
+        }
+    }
+
+    renderAsObjectCode(): string {
+       return `${this.opToJs()} ${this.operand}`;
+    }
+
     get symbolType() {
         switch (this.op) {
             case OperationSymbol.Not: return BooleanType.Instance;

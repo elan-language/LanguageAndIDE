@@ -11,7 +11,7 @@ import { DefaultProfile } from '../frames/default-profile';
 import { ParseStatus } from '../frames/parse-status';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
 import { ISymbolType } from '../symbols/symbol-type';
-import { transform } from '../frames/syntax-nodes/transformer';
+import { transform } from '../frames/syntax-nodes/ast-visitor';
 import { Field } from '../frames/interfaces/field';
 import { FloatType } from '../symbols/float-type';
 import { Parent } from '../frames/interfaces/parent';
@@ -23,6 +23,7 @@ import { ISymbol } from '../symbols/symbol';
 import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { Scope } from '../frames/interfaces/scope';
+import { ListType } from '../symbols/list-type';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -350,7 +351,7 @@ const stubClassSymbol = {
 } as ISymbol;
 
 const stubHolder = {
-  resolveSymbol(id, initialScope) {
+  resolveSymbol(id, initialScope) : ISymbol | undefined {
     switch (id) {
       case 'a' : return stubIntSymbol;
       case 'b' : return stubFloatSymbol;
@@ -365,6 +366,7 @@ const stubHolder = {
       case 'betterOf' : return stubStringSymbol;
       case "attempt" : return stubBoolSymbol;
       case "target" : return stubStringSymbol;
+      case "lst": return { symbolId: "", symbolType: new ListType(intType) };
     }
 
     return undefined;

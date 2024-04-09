@@ -1,8 +1,12 @@
 import { FloatType } from "../../symbols/float-type";
+import { AstNode } from "./ast-node";
 
-export class LiteralFloatAsn {
+export class LiteralFloatAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = parseFloat(rawValue.trim());
+    }
+    renderAsObjectCode(): string {
+        return this.value.toString();
     }
 
     value: number;

@@ -1,9 +1,13 @@
 import { BooleanType } from "../../symbols/boolean-type";
 import { trueKeyword } from "../keywords";
+import { AstNode } from "./ast-node";
 
-export class LiteralBoolAsn {
+export class LiteralBoolAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = rawValue.trim() === trueKeyword;
+    }
+    renderAsObjectCode(): string {
+        return this.value ? "true" : "false";
     }
 
     value: boolean;

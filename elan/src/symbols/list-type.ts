@@ -2,7 +2,7 @@ import { ISymbolType } from "./symbol-type";
 
 export class ListType implements ISymbolType {
 
-    constructor(private ofType: ISymbolType) {
+    constructor(public readonly ofType: ISymbolType) {
 
     }
 

@@ -1,10 +1,13 @@
 import { Scope } from "../interfaces/scope";
-import { Field } from "../interfaces/field";
 import { AstNode } from "./ast-node";
 
-export class NewAsn {
+export class NewAsn implements AstNode {
 
     constructor(private type: AstNode, private parameters: AstNode[], private scope : Scope) {
+    }
+    renderAsObjectCode(): string {
+        const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
+        return `new ${this.type.renderAsObjectCode()}{${pp}}`;
     }
 
     get symbolType() {

@@ -1,9 +1,13 @@
 import { StringType } from "../../symbols/string-type";
+import { AstNode } from "./ast-node";
 
-export class LiteralStringAsn {
+export class LiteralStringAsn implements AstNode {
     
     constructor(rawValue: string) {
         this.value = rawValue.trim();
+    }
+    renderAsObjectCode(): string {
+        return `${this.value}`;
     }
 
     value: string;
