@@ -1,6 +1,7 @@
 import { ArrayType } from "../symbols/array-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
+import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
@@ -21,7 +22,8 @@ export class StdLibSymbols implements Scope {
             ["hasKey", BooleanType.Instance],
             ["length", IntType.Instance],
             ["setItem", new DictionaryType(StringType.Instance, IntType.Instance)],
-            ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)]
+            ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)],
+            ["pi", FloatType.Instance]
         ]
     );
 

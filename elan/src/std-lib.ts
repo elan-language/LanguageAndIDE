@@ -31,4 +31,6 @@ export class StdLib {
         delete newDict[key];
         return newDict;
     }
+
+    pi = Math.PI;
 }
