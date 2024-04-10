@@ -23,7 +23,10 @@ export class StdLibSymbols implements Scope {
             ["length", IntType.Instance],
             ["setItem", new DictionaryType(StringType.Instance, IntType.Instance)],
             ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)],
-            ["pi", FloatType.Instance]
+            ["pi", FloatType.Instance],
+            ["sin", FloatType.Instance],
+            ["cos", FloatType.Instance],
+            ["min", FloatType.Instance]
         ]
     );
 

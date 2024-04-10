@@ -33,4 +33,10 @@ export class StdLib {
     }
 
     pi = Math.PI;
+
+    sin = Math.sin;
+
+    cos = Math.cos;
+
+    min = Math.min;
 }
