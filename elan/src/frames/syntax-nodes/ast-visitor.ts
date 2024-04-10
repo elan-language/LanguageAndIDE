@@ -84,6 +84,8 @@ function mapOperation(op: string) {
         case ">=": return OperationSymbol.GTE;
         case "<=": return OperationSymbol.LTE;
         case "and": return OperationSymbol.And;
+        case "or": return OperationSymbol.Or;
+        case "xor": return OperationSymbol.Xor;
         case "not": return OperationSymbol.Not;
         case "is": return OperationSymbol.Equals;
         case "is not": return OperationSymbol.NotEquals;
