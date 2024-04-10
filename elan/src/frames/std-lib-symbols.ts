@@ -4,6 +4,7 @@ import { ListType } from "../symbols/list-type";
 import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
+import { boolType } from "../test/testHelpers";
 import { Scope } from "./interfaces/scope";
 
 export class StdLibSymbols implements Scope {
@@ -12,7 +13,9 @@ export class StdLibSymbols implements Scope {
     private symbols = new Map<string, ISymbolType>(
         [
             ["asArray", new ArrayType(IntType.Instance)],
-            ["asList", new ListType(IntType.Instance)]
+            ["asList", new ListType(IntType.Instance)],
+            ["keys", new ListType(IntType.Instance)],
+            ["hasKey", boolType]
         ]
     );
 
