@@ -80,6 +80,7 @@ suite('ParseNodes', () => {
 	test('Term', () => {
 		testNodeParse(new Term(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
+		//testNodeParse(new Term(), "Array<of String>(3)", ParseStatus.valid, "Array<of String>(3)", "");
 	});
 	test('Expression', () => {
 		testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
