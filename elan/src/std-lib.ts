@@ -12,7 +12,23 @@ export class StdLib {
         return Object.getOwnPropertyNames(dict);
     }
 
+    values(dict: { [key: string]: number }): Array<number> {
+        return this.keys(dict).map(k => dict[k]);
+    }
+
     hasKey(dict: { [key: string]: number }, key: string): boolean {
         return this.keys(dict).includes(key);
+    }
+
+    setItem(dict: { [key: string]: number }, key: string, value : number){
+        var newDict = {...dict};
+        newDict[key] = value;
+        return newDict;
+    }
+
+    removeItem(dict: { [key: string]: number }, key: string){
+        var newDict = {...dict};
+        delete newDict[key];
+        return newDict;
     }
 }

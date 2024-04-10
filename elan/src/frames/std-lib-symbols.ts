@@ -1,10 +1,12 @@
 import { ArrayType } from "../symbols/array-type";
+import { BooleanType } from "../symbols/boolean-type";
+import { DictionaryType } from "../symbols/dictionary-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
+import { StringType } from "../symbols/string-type";
 import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
-import { boolType } from "../test/testHelpers";
 import { Scope } from "./interfaces/scope";
 
 export class StdLibSymbols implements Scope {
@@ -14,8 +16,12 @@ export class StdLibSymbols implements Scope {
         [
             ["asArray", new ArrayType(IntType.Instance)],
             ["asList", new ListType(IntType.Instance)],
-            ["keys", new ListType(IntType.Instance)],
-            ["hasKey", boolType]
+            ["keys", new ListType(StringType.Instance)],
+            ["values", new ListType(IntType.Instance)],
+            ["hasKey", BooleanType.Instance],
+            ["length", IntType.Instance],
+            ["setItem", new DictionaryType(StringType.Instance, IntType.Instance)],
+            ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)]
         ]
     );
 
