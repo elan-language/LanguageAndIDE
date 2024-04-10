@@ -11,9 +11,9 @@ export class RangeAsn implements AstNode {
         const t = this.to ? `${this.to.renderAsObjectCode()}` : undefined;
 
         if (t) {
-            return `${f}, ${t}`;
+            return `.slice(${f}, ${t})`;
         }
-        return f;
+        return `.slice(${f})`;
     }
 
     get symbolType() {

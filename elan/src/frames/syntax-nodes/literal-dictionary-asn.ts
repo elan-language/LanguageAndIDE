@@ -6,11 +6,15 @@ import { LiteralListAsn } from "./literal-list-asn";
 
 export class LiteralDictionaryAsn implements AstNode {
     
+    a  = {'a' : 10, 'z' : 1};
+
+    b = this.a['a'];
+
     constructor(private readonly list: LiteralListAsn, scope : Scope) {
     }
     renderAsObjectCode(): string {
-        var lst = this.list.renderAsObjectCode();
-        return `new Map(${lst})`;
+        const items = this.list.items.map(p => p.renderAsObjectCode()).join(", ");
+        return `{${items}}`;
     }
 
     get symbolType() {

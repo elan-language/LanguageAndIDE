@@ -7,7 +7,7 @@ export class KvpAsn implements AstNode {
     }
 
     renderAsObjectCode(): string {
-        return `[${this.key.renderAsObjectCode()}, ${this.value.renderAsObjectCode()}]`;
+        return `${this.key.renderAsObjectCode()} : ${this.value.renderAsObjectCode()}`;
     }
 
     get keySymbolType() {

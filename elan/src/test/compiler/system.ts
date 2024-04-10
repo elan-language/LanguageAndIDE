@@ -14,9 +14,8 @@ export class System {
             return `List [${v.map(i => this.asString(i)).join(", ")}]`;
         }
 
-        if (v instanceof Map) {
-            var kvp = (k : any) => `${k[0]}:${k[1]}`;
-            return `Dictionary [${Array.from(v.entries()).map(i => kvp(i)).join(", ")}]`;
+        if (typeof v === "object") {
+            return `Dictionary [${Object.getOwnPropertyNames(v).map(n => `${n}:${v[n]}`).join(", ")}]`;
         }
 
         throw new Error("Not implemented" + typeof v);

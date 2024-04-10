@@ -1,13 +1,19 @@
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
+import { RangeAsn } from "./range-asn";
 
 export class IndexAsn implements AstNode {
 
     constructor(private index: ExprAsn, private scope : Scope) {
     }
+
     renderAsObjectCode(): string {
-        return `.slice(${this.index.renderAsObjectCode()})`;
+        if (this.index instanceof RangeAsn){
+            return `${this.index.renderAsObjectCode()}`;
+        }
+
+        return `[${this.index.renderAsObjectCode()}]`;
     }
 
     get symbolType() {
