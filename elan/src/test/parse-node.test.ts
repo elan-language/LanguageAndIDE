@@ -310,7 +310,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new TypeWithOptGenerics(), `Foo<ofBar`, ParseStatus.valid, "", "<ofBar", "");
 		testNodeParse(new TypeWithOptGenerics(), `Foo<of Bar>`, ParseStatus.valid, "Foo<of Bar>", "", "", "<type>Foo</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;");
 		testNodeParse(new TypeWithOptGenerics(), `Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>", "", "", "<type>Foo</type>&lt;<keyword>of</keyword> <type>List</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;&gt;");
-		//testNodeParse(new TypeWithOptGenerics(), `Foo<of Bar, Yon>`, ParseStatus.valid, "Foo<of Bar, Yon>", "", "", "<type>Foo</type>&lt;<keyword>of</keyword>, <type>Yon</type>&gt;");
+		testNodeParse(new TypeWithOptGenerics(), `Dictionary<of Bar, Yon>`, ParseStatus.valid, "Dictionary<of Bar, Yon>", "", "", "<type>Dictionary</type>&lt;<keyword>of</keyword> <type>Bar</type>, <type>Yon</type>&gt;");
+		testNodeParse(new TypeWithOptGenerics(), `List<of (Bar, Yon)>`, ParseStatus.valid, "List<of (Bar, Yon)>", "", "", "<type>List</type>&lt;<keyword>of</keyword> (<type>Bar</type>, <type>Yon</type>)&gt;");
+
 	});
 	test('TypeNode', () => {
 		testNodeParse(new TypeNode(), `Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>", "", "");//Single
