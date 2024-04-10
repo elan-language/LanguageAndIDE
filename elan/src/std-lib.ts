@@ -32,6 +32,10 @@ export class StdLib {
         return newDict;
     }
 
+    length(dict: { [key: string]: number }){
+        return this.keys(dict).length;
+    }
+
     pi = Math.PI;
 
     sin = Math.sin;

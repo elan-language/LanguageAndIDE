@@ -16,7 +16,12 @@ export class TypeAsn implements AstNode {
     constructor(private type: string, private genericParameters: Array<AstNode>, private scope : Scope) {
         this.type = type.trim();
     }
+
     renderAsObjectCode(): string {
+        if (this.type === "Dictionary"){
+            return "Object";
+        }
+
         return this.type;
     }
 

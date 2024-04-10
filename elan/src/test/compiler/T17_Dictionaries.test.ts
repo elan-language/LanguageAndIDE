@@ -219,7 +219,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
-  ignore_test('Pass_CreateEmptyDictionary', async () => {
+  test('Pass_CreateEmptyDictionary', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -232,9 +232,8 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-
 export async function main() {
-  var a = {};
+  var a = new Object();
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
   system.print(system.asString(_stdlib.length(b)));
@@ -249,7 +248,7 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "213");
   });
 
  // fails TODO
