@@ -852,18 +852,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitListDefinition([NotNull] ElanParser.ListDefinitionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.arrayDefinition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterArrayDefinition([NotNull] ElanParser.ArrayDefinitionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.arrayDefinition"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitArrayDefinition([NotNull] ElanParser.ArrayDefinitionContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.tupleDefinition"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
