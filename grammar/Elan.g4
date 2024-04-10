@@ -171,9 +171,8 @@ enumValue: TYPENAME DOT IDENTIFIER;
 literalDataStructure: LITERAL_STRING | literalTuple | literalList | literalDictionary;
 literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET; 
 
-dataStructureDefinition:  listDefinition | arrayDefinition | tupleDefinition | dictionaryDefinition  ;
+dataStructureDefinition:  listDefinition | tupleDefinition | dictionaryDefinition  ;
 listDefinition: OPEN_SQ_BRACKET (expression (COMMA expression)*) CLOSE_SQ_BRACKET;
-arrayDefinition: ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET;
 tupleDefinition:  OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET; 
 dictionaryDefinition: OPEN_SQ_BRACKET (kvp (COMMA kvp)* ) CLOSE_SQ_BRACKET;
 kvp: expression COLON expression;

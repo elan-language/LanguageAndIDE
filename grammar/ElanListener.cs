@@ -711,16 +711,6 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitListDefinition([NotNull] ElanParser.ListDefinitionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.arrayDefinition"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterArrayDefinition([NotNull] ElanParser.ArrayDefinitionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.arrayDefinition"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitArrayDefinition([NotNull] ElanParser.ArrayDefinitionContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.tupleDefinition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
