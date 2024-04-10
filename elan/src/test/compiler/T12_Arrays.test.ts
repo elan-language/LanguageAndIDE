@@ -5,18 +5,18 @@ import { createHash } from "node:crypto";
 
 suite('T12_Arrays', () => {
 
-  ignore_test('Pass_DeclareAnEmptyArrayBySizeAndCheckLength', async () => {
+  test('Pass_DeclareAnEmptyArrayBySizeAndCheckLength', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to Array<of String>(3)
-  print a
+  var a set to new Array<of String>(3)
+  print length(a)
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var a = [];
-  system.print(_stdlib.asString(x));
+  var a = new Array(3);
+  system.print(_stdlib.asString(_stdlib.length(a)));
 }
 `;
 
@@ -26,7 +26,33 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "10");
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  ignore_test('Pass_ConfirmStringElementsInitializedToEmptyStringNotNull', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3)
+  print length(a[0])
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = new Array(3);
+  system.print(_stdlib.asString(_stdlib.length(a[0])));
+  system.print(_stdlib.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0List[, , ]");
   });
 
   // Fails TODO

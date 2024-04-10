@@ -8,7 +8,7 @@ export class StdLib {
         if (typeof v === "string") {
             return v.toString();
         }
-        
+
         if (typeof v === "number") {
             return v.toString();
         }
@@ -57,6 +57,9 @@ export class StdLib {
     }
 
     length(dict: { [key: string]: number }){
+        if (Array.isArray(dict)) {
+            return dict.length;
+        }
         return this.keys(dict).length;
     }
 
