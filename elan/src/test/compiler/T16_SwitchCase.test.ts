@@ -27,13 +27,13 @@ export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(system.asString('a'));
+        system.print(_stdlib.asString('a'));
         break;
       case 2:
-        system.print(system.asString('b'));
+        system.print(_stdlib.asString('b'));
         break;
       case 3:
-        system.print(system.asString('c'));
+        system.print(_stdlib.asString('c'));
         break;
       default:
 
@@ -74,13 +74,13 @@ export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
       case 1:
-        system.print(system.asString('a'));
+        system.print(_stdlib.asString('a'));
         break;
       case 2:
-        system.print(system.asString('b'));
+        system.print(_stdlib.asString('b'));
         break;
       case 3:
-        system.print(system.asString('c'));
+        system.print(_stdlib.asString('c'));
         break;
       default:
 
@@ -118,10 +118,10 @@ export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(system.asString('a'));
+        system.print(_stdlib.asString('a'));
         break;
       default:
-        system.print(system.asString('b'));
+        system.print(_stdlib.asString('b'));
         break;
     }
   }
@@ -158,13 +158,13 @@ export async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {
       case 1:
-        system.print(system.asString('a'));
+        system.print(_stdlib.asString('a'));
         break;
       case 2:
-        system.print(system.asString('b'));
+        system.print(_stdlib.asString('b'));
         break;
       default:
-        system.print(system.asString('c'));
+        system.print(_stdlib.asString('c'));
         break;
     }
   }

@@ -22,9 +22,9 @@ export async function main() {
   var x = 2 + 3 * 5 + 1;
   var y = (2 + 3) * 5 + 1;
   var z = (2 + 3) * (5 + 1);
-  system.print(system.asString(x));
-  system.print(system.asString(y));
-  system.print(system.asString(z));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
+  system.print(_stdlib.asString(z));
 }
 `;
 
@@ -54,9 +54,9 @@ export async function main() {
   var x = 2 + (3 * 5) + 1;
   var y = ((2 + 3)) * 5 + (1);
   var z = ((2 + 3) * (5 + 1));
-  system.print(system.asString(x));
-  system.print(system.asString(y));
-  system.print(system.asString(z));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
+  system.print(_stdlib.asString(z));
 }
 `;
 
@@ -83,8 +83,8 @@ end main`;
 export async function main() {
   var x = 2 + 3 ** 2;
   var y = (2 + 3) ** 2;
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -111,8 +111,8 @@ end main`;
 export async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -139,8 +139,8 @@ end main`;
 export async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -167,8 +167,8 @@ end main`;
 export async function main() {
   var x = -4.7;
   var y = 5 * -3;
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -195,8 +195,8 @@ end main`;
 export async function main() {
   var x = 11 % 3;
   var y = 5 + 6 % 3;
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -223,8 +223,8 @@ end main`;
 export async function main() {
   var x = Math.floor(11 / 3);
   var y = 5 + Math.floor(6 / 3);
-  system.print(system.asString(x));
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
 }
 `;
 

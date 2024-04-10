@@ -27,7 +27,7 @@ export async function main() {
 
 function printEach(target) {
   for (const x of target) {
-    system.print(system.asString(x));
+    system.print(_stdlib.asString(x));
   }
 }
 `;
@@ -63,7 +63,7 @@ export async function main() {
 
 function printEach(target) {
   for (const x of target) {
-    system.print(system.asString(x));
+    system.print(_stdlib.asString(x));
   }
 }
 `;
@@ -99,7 +99,7 @@ export async function main() {
 
 function printEach(target) {
   for (const x of target) {
-    system.print(system.asString(x));
+    system.print(_stdlib.asString(x));
   }
 }
 `;
@@ -139,12 +139,12 @@ export async function main() {
 }
 
 function printAsIter(target) {
-  system.print(system.asString(target));
+  system.print(_stdlib.asString(target));
 }
 
 function printAsList(target) {
   var some = _stdlib.asList(target);
-  system.print(system.asString(some.slice(3)));
+  system.print(_stdlib.asString(some.slice(3)));
 }
 `;
 
@@ -179,7 +179,7 @@ end class`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var f = new Foo();
-  system.print(system.asString(it));
+  system.print(_stdlib.asString(it));
 }
 
 class Foo {

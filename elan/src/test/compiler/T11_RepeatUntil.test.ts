@@ -22,7 +22,7 @@ export async function main() {
   do {
     x = x + 1;
   } while (!(x >= 10));
-  system.print(system.asString(x));
+  system.print(_stdlib.asString(x));
 }
 `;
 
@@ -64,7 +64,7 @@ export async function main() {
     } while (!(y > 4));
     x = x + 1;
   } while (!(x > 3));
-  system.print(system.asString(t));
+  system.print(_stdlib.asString(t));
 }
 `;
 

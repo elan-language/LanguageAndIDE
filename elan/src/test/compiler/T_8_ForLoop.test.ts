@@ -22,7 +22,7 @@ export async function main() {
   for (var i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.print(system.asString(tot));
+  system.print(_stdlib.asString(tot));
 }
 `;
 
@@ -52,7 +52,7 @@ export async function main() {
   for (var i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
-  system.print(system.asString(tot));
+  system.print(_stdlib.asString(tot));
 }
 `;
 
@@ -82,7 +82,7 @@ export async function main() {
   for (var i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
-  system.print(system.asString(tot));
+  system.print(_stdlib.asString(tot));
 }
 `;
 
@@ -116,7 +116,7 @@ export async function main() {
       tot = tot + 1;
     }
   }
-  system.print(system.asString(tot));
+  system.print(_stdlib.asString(tot));
 }
 `;
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
@@ -149,7 +149,7 @@ export async function main() {
   for (var i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
-  system.print(system.asString(tot));
+  system.print(_stdlib.asString(tot));
 }
 `;
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);

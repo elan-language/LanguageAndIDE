@@ -61,7 +61,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString("Hello World!"));
+  system.print(_stdlib.asString("Hello World!"));
 }
 `;
 
@@ -83,7 +83,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(("Hello World!")));
+  system.print(_stdlib.asString(("Hello World!")));
 }
 `;
 
@@ -106,7 +106,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(1));
+  system.print(_stdlib.asString(1));
 }
 `;
 
@@ -128,7 +128,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(2.1));
+  system.print(_stdlib.asString(2.1));
 }
 `;
 
@@ -150,7 +150,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(21000));
+  system.print(_stdlib.asString(21000));
 }
 `;
 
@@ -172,7 +172,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(2.1e+100));
+  system.print(_stdlib.asString(2.1e+100));
 }
 `;
 
@@ -194,7 +194,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(2.1e-4));
+  system.print(_stdlib.asString(2.1e-4));
 }
 `;
 
@@ -216,7 +216,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString('%'));
+  system.print(_stdlib.asString('%'));
 }
 `;
 
@@ -238,7 +238,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(true));
+  system.print(_stdlib.asString(true));
 }
 `;
 
@@ -260,7 +260,7 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(""));
+  system.print(_stdlib.asString(""));
 }
 `;
 

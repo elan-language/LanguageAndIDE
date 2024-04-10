@@ -128,7 +128,7 @@ export async function main() {
     print "not caught";
   catch (_e) {
     var e = _e as Error;
-    system.print(system.asString(e));
+    system.print(_stdlib.asString(e));
   }
 }
 
@@ -166,11 +166,11 @@ export async function main() {
     var x = 1;
     var y = 0;
     var z = x / y;
-    system.print(system.asString("not caught"));
+    system.print(_stdlib.asString("not caught"));
   }
   catch (_e) {
     var e = _e as Error;
-    system.print(system.asString(e));
+    system.print(_stdlib.asString(e));
   }
 }
 `;
@@ -207,7 +207,7 @@ export async function main() {
     print "not caught";
   catch (_e) {
     var e = _e as Error;
-    system.print(system.asString(e));
+    system.print(_stdlib.asString(e));
   }
 }
 

@@ -20,13 +20,13 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(1));
+  system.print(_stdlib.asString(1));
   foo();
-  system.print(system.asString(3));
+  system.print(_stdlib.asString(3));
 }
 
 function foo() {
-  system.print(system.asString(2));
+  system.print(_stdlib.asString(2));
 }
 `;
 
@@ -68,7 +68,7 @@ export async function main() {
 }
 
 function foo(bar: Bar) {
-  system.print(system.asString(bar));
+  system.print(_stdlib.asString(bar));
 }
 
 class Bar {
@@ -103,7 +103,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   system.pause(1);
-  system.print(system.asString(1));
+  system.print(_stdlib.asString(1));
 }
 `;
 
@@ -138,8 +138,8 @@ export async function main() {
 }
 
 function foo(a: number, b: string) {
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -174,8 +174,8 @@ export async function main() {
 }
 
 function foo(a: number, b: string) {
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -210,8 +210,8 @@ export async function main() {
 }
 
 function foo(a: number, b: string) {
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -246,8 +246,8 @@ export async function main() {
 }
 
 function foo(a: number, b: string) {
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -280,8 +280,8 @@ export async function main() {
 }
 
 function foo(a: number, b: string) {
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -315,8 +315,8 @@ export async function main() {
   var a = 1;
   var b = "hello";
   foo(a, b);
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 
 function foo(a: number, b: string) {
@@ -354,16 +354,16 @@ end procedure`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   foo();
-  system.print(system.asString(3));
+  system.print(_stdlib.asString(3));
 }
 
 function foo() {
-  system.print(system.asString(1));
+  system.print(_stdlib.asString(1));
   bar();
 }
 
 function bar() {
-  system.print(system.asString(2));
+  system.print(_stdlib.asString(2));
 }
 `;
 
@@ -398,7 +398,7 @@ export async function main() {
 
 function foo(a: number) {
   if (a > 0) {
-    system.print(system.asString(a));
+    system.print(_stdlib.asString(a));
     var b = a - 1;
     foo(b);
   }

@@ -14,7 +14,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(_stdlib.pi));
+  system.print(_stdlib.asString(_stdlib.pi));
 }
 `;
 
@@ -38,7 +38,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = _stdlib.sin(_stdlib.pi / 180 * 30);
-  system.print(system.asString(x));
+  system.print(_stdlib.asString(x));
 }
 `;
 
@@ -65,7 +65,7 @@ end main`;
 export async function main() {
   var x = _stdlib.pi / 180 * 30;
   var y set to sin(x);
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -91,7 +91,7 @@ end main`;
 export async function main() {
   var x = _stdlib.pi / 180 * 30;
   var y set to 2 + sin(x);
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -117,7 +117,7 @@ end main`;
 export async function main() {
   var x = 0.7;
   var y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
-  system.print(system.asString(y));
+  system.print(_stdlib.asString(y));
 }
 `;
 
@@ -141,7 +141,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = _stdlib.min(3.1, 3);
-  system.print(system.asString(x));
+  system.print(_stdlib.asString(x));
 }
 `;
 
@@ -166,7 +166,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = _stdlib.min(3, 3.1);
-  system.print(system.asString(x));
+  system.print(_stdlib.asString(x));
 }
 `;
 
