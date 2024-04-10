@@ -13,6 +13,7 @@ import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
 import { LetStatement } from '../frames/statements/let-statement';
 import { editorEvent } from '../frames/interfaces/editor-event';
+import { ExternalStatement } from '../frames/statements/external-statement';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -151,5 +152,11 @@ suite('Field Parsing Tests', () => {
 				assert.equal(params.renderAsSource(),"a ");
 				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a <keyword></keyword></text><placeholder>parameter definitions</placeholder><completion>as Type</completion></field>`);
 			
+			});
+			test('parse Frames - External frame with optional into', () => { 
+				var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+				var ext = new ExternalStatement(main);
+				var html = ext.renderAsHtml();
+				assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>procedure</placeholder><completion></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder>into</placeholder><completion></completion></field></top></statement>`);
 			});
 });

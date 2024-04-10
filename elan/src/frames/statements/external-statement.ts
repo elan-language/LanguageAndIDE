@@ -7,22 +7,27 @@ import { externalKeyword, intoKeyword } from "../keywords";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcedureRef } from "../fields/procedureRef";
 import { AssignableField } from "../fields/assignableField";
-import { OptionalKeyword } from "../fields/optionalKeyword";
+import { IntoSelector } from "../fields/into-selector";
 
 export class ExternalStatement extends AbstractFrame implements Statement{
     isStatement = true;
     method: ProcedureRef;
     args: ArgListField;
-    into: OptionalKeyword;
+    selectIntoClause: IntoSelector;
+    hasInto: boolean = false;
     assignable: AssignableField;
 
     constructor(parent: Parent) {
         super(parent);
         this.method = new ProcedureRef(this);
         this.args = new ArgListField(this);
-        this.into = new OptionalKeyword(this, intoKeyword);
+        this.selectIntoClause = new IntoSelector(this);
         this.assignable = new AssignableField(this);
         this.assignable.setPlaceholder("variableName");
+    }
+
+    setIntoExtension(to: boolean) {
+        this.hasInto = to;
     }
 
      parseFrom(source: CodeSource): void {
@@ -32,8 +37,10 @@ export class ExternalStatement extends AbstractFrame implements Statement{
         source.remove(`(`);
         this.args.parseFrom(source);
         source.remove(`)`);
-        this.into.parseFrom(source);
-        if (this.into.keywordExists()) {
+        var into = ` ${intoKeyword} `;
+        if (source.isMatch(into)) {
+            this.hasInto = true;
+            source.remove(into);
             this.assignable.parseFrom(source);
         }
         source.removeNewLine();
@@ -42,24 +49,20 @@ export class ExternalStatement extends AbstractFrame implements Statement{
         var fields = [];
         fields.push(this.method);
         fields.push(this.args);
-        fields.push(this.hasInto() ? this.assignable : this.into);
+        fields.push(this.hasInto ? this.assignable : this.selectIntoClause);
         return fields;
     } 
-
-    private hasInto(): boolean {
-        return this.into.keywordExists();
-    }
 
     getIdPrefix(): string {
         return 'ext';
     }
 
     private intoClauseAsHtml() : string {
-        return this.hasInto() ? ` ${this.into.textAsHtml()} ${this.assignable.renderAsHtml()}`: ` ${this.into.textAsHtml()}`;
+        return this.hasInto ? ` <keyword>${intoKeyword} </keyword>${this.assignable.renderAsHtml()}`: ` ${this.selectIntoClause.renderAsHtml()}`;
     }
 
     private intoClauseAsSource() : string {
-        return this.hasInto() ? ` ${this.into.renderAsSource()} ${this.assignable.renderAsSource()}`:``;
+        return this.hasInto ? ` ${intoKeyword} ${this.assignable.renderAsSource()}`:``;
     }
 
     private intoClauseAsObjectCode() : string {

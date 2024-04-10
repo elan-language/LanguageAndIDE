@@ -5,8 +5,9 @@ import { ParseStatus } from "../parse-status";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Regexes } from "./regexes";
+import { ExternalStatement } from "../statements/external-statement";
 
-export class IfSelector extends AbstractField {
+export class IntoSelector extends AbstractField {
 
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
@@ -14,24 +15,24 @@ export class IfSelector extends AbstractField {
     readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => "";
 
     parseFrom(source: CodeSource): void {
-        if (source.isMatchRegEx(Regexes.ifClause)) {
-            source.remove("if ");
-            this.else.setIfExtension(true);
+        if (source.isMatchRegEx(Regexes.intoClause)) {
+            source.remove("into ");
+            this.ext.setIntoExtension(true);
         }
     }
 
 
-    private else: Else;
+    private ext: ExternalStatement;
 
-    constructor(holder: Else) {
+    constructor(holder: ExternalStatement) {
         super(holder);
-        this.else = holder;
-        this.setPlaceholder("if");
+        this.ext = holder;
+        this.setPlaceholder("into");
         this.setOptional(true);
         this.setStatus(ParseStatus.valid);
     }
     getIdPrefix(): string {
-        return 'elif';
+        return 'into';
     }
 
     indent(): string {
@@ -46,8 +47,8 @@ export class IfSelector extends AbstractField {
         var char = keyEvent.key;
         var empty = this.text ==="";
         if (empty && (char ==='i')) {
-            this.else.setIfExtension(true);
-            this.else.getFields()[0].select(true, false); //First field will now be the condition
+            this.ext.setIntoExtension(true);
+            this.ext.getFields()[1].select(true, false); //Second field will now be the condition
             return;
         }
         super.processKey(keyEvent);

@@ -172,7 +172,8 @@ field.empty placeholder {
 }
 
 field.empty.optional placeholder {
-    display: none;
+    display: none; /* overridden when selected */
+    color: var(--optional);
 }
 
 field.empty.selected placeholder {
