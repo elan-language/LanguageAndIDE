@@ -71,6 +71,12 @@ export abstract class AbstractField implements Selectable, Field {
         return this.rootNode? this.rootNode.getCompletionAsHtml() : "";
     }
 
+    getPlainTextCompletion() : string {
+        var comps = this.getCompletion();
+        var i = comps.indexOf("<pr>");
+        return i === -1 ? comps : comps.substring(0,i);
+    }
+
     setOptional(optional: boolean) : void {
         this._optional = optional;
         if (this.text ==='' && optional ) {
@@ -97,7 +103,7 @@ export abstract class AbstractField implements Selectable, Field {
             case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
             case "Enter": {this.tabOrEnter(e.modKey.shift); break;} 
             case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
-            case "ArrowRight": {if (this.cursorPos < textLen) { this.cursorPos ++; } break; } 
+            case "ArrowRight": {this.cursorRight(); break; } 
             case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
             case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
             case "Backspace": {
@@ -132,6 +138,20 @@ export abstract class AbstractField implements Selectable, Field {
                         this.cursorPos ++;
                     }                   
                 }
+            }
+        }
+    }
+
+    private cursorRight() {
+        var textLen = this.text.length;
+        if (this.cursorPos < textLen) { 
+            this.cursorPos ++; 
+        } else {
+            var completions = this.getPlainTextCompletion();
+            if (completions.length > 0) {
+                this.text = this.text + completions;
+                this.parseCurrentText();
+                this.cursorPos = this.text.length;
             }
         }
     }

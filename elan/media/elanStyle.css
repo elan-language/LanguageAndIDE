@@ -204,10 +204,13 @@ field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional 
 completion  {
     display: none;
 }
-field.selected completion{
+field.selected completion, field.selected completion pr{
     display: inline;
     color: var(--reverseText);
     background-color: var(--incomplete);
+}
+field.selected completion pr{
+    font-style: italic;
 }
 field.selected.empty completion {
     display: none;
