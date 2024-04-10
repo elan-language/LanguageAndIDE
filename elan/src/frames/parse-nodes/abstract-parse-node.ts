@@ -9,7 +9,7 @@ export abstract class AbstractParseNode implements ParseNode {
     remainingText: string = "";
 
     getCompletionAsHtml(): string {
-        return this.status === ParseStatus.empty ? `<i>${this.placeholder}</i>` : "";
+        return this.status === ParseStatus.empty ? `<pr>${this.placeholder}</pr>` : "";
     }
 
     renderAsSource(): string {
