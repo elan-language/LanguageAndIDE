@@ -17,11 +17,13 @@ suite('Completions', () => {
     test('Generic Type', () => {
         testCompletion(new TypeNode(), "", ParseStatus.empty, "Type");
         testCompletion(new TypeNode(), "Foo", ParseStatus.valid, "");
+        testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "Type>");
         testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of Type>");
         testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " Type>");
-        testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "Type>");
         testCompletion(new TypeNode(), "Foo<of Bar", ParseStatus.incomplete, ">");
         testCompletion(new TypeNode(), "Foo<of Bar>", ParseStatus.valid, "");
+        testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "Type>");
+        testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "Type)>");
     });
 
     test('Tuple Type', () => {
