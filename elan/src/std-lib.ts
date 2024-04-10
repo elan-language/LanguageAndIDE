@@ -1,5 +1,29 @@
 export class StdLib {
 
+    asString(v: any): string {
+        if (typeof v === "boolean") {
+            return v ? "true" : "false";
+        }
+
+        if (typeof v === "string") {
+            return v.toString();
+        }
+        
+        if (typeof v === "number") {
+            return v.toString();
+        }
+
+        if (Array.isArray(v)) {
+            return `List [${v.map(i => this.asString(i)).join(", ")}]`;
+        }
+
+        if (typeof v === "object") {
+            return `Dictionary [${Object.getOwnPropertyNames(v).map(n => `${n}:${v[n]}`).join(", ")}]`;
+        }
+
+        throw new Error("Not implemented" + typeof v);
+    }
+
     asArray(list: Array<number>): Array<number> {
         return list;
     }
@@ -35,6 +59,23 @@ export class StdLib {
     length(dict: { [key: string]: number }){
         return this.keys(dict).length;
     }
+
+    isBefore(s1 : string, s2 : string){
+        return s1 < s2;
+    }
+
+    isAfter(s1 : string, s2 : string){
+        return s1 > s2;
+    }
+
+    isAfterOrSameAs(s1 : string, s2 : string){
+        return s1 > s2 || s1 === s2;
+    }
+
+    isBeforeOrSameAs(s1 : string, s2 : string){
+        return s1 < s2 || s1 === s2;
+    }
+   
 
     pi = Math.PI;
 
