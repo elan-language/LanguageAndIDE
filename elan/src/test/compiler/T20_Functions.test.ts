@@ -18,7 +18,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(foo(3, 4)));
+  system.print(_stdlib.asString(foo(3, 4)));
 }
 
 function foo(a, b) {
@@ -48,7 +48,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(foo(3, 4)));
+  system.print(_stdlib.asString(foo(3, 4)));
 }
 
 function foo(a, b) {
@@ -83,7 +83,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(foo(3, 4)));
+  system.print(_stdlib.asString(foo(3, 4)));
 }
 
 function foo(a, b) {
@@ -113,7 +113,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(foo(3, 4)));
+  system.print(_stdlib.asString(foo(3, 4)));
 }
 
 function foo(a, b) {
@@ -149,7 +149,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(factorial(5)));
+  system.print(_stdlib.asString(factorial(5)));
 }
 
 function factorial(a) {
@@ -197,7 +197,7 @@ end class`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var b = new Bar();
-  system.print(system.asString(foo(b)));
+  system.print(_stdlib.asString(foo(b)));
 }
 
 function foo(bar) {

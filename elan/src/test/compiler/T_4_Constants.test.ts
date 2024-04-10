@@ -18,7 +18,7 @@ end main
 const a = 3;
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -47,7 +47,7 @@ end main
 const a = 3.1;
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -73,7 +73,7 @@ end main
 const a = "hell0";
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -99,7 +99,7 @@ end main
 const a = 'a';
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -126,8 +126,8 @@ end main
 const a = '';
 
 export async function main() {
-  system.print(system.asString(a));
-  system.print(system.asString(a is default Char));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(a is default Char));
 }
 `;
 
@@ -153,7 +153,7 @@ end main
 const a = ' ';
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -179,7 +179,7 @@ end main
 const a = true;
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -214,7 +214,7 @@ enum Fruit {
 const a = Fruit.apple;
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 

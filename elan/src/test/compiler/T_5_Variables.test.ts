@@ -16,7 +16,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -44,7 +44,7 @@ end main`;
 export async function main() {
   var a = 3;
   var b = a;
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -69,7 +69,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3 + 4;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -96,7 +96,7 @@ end main`;
 export async function main() {
   var a = 3;
   a = 4;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -122,7 +122,7 @@ end main`;
 export async function main() {
   var a = 3.1;
   a = 4;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -150,7 +150,7 @@ const a = 3;
 
 export async function main() {
   var a = 4;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -204,17 +204,17 @@ export async function main() {
   var i = Math.floor(4 / 3);
   var j = 4 % 3;
   var k = 4 / 3;
-  system.print(system.asString(a));
-  system.print(system.asString(b));
-  system.print(system.asString(c));
-  system.print(system.asString(d));
-  system.print(system.asString(e));
-  system.print(system.asString(f));
-  system.print(system.asString(g));
-  system.print(system.asString(h));
-  system.print(system.asString(i));
-  system.print(system.asString(j));
-  system.print(system.asString(k));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+  system.print(_stdlib.asString(d));
+  system.print(_stdlib.asString(e));
+  system.print(_stdlib.asString(f));
+  system.print(_stdlib.asString(g));
+  system.print(_stdlib.asString(h));
+  system.print(_stdlib.asString(i));
+  system.print(_stdlib.asString(j));
+  system.print(_stdlib.asString(k));
 }
 `;
 
@@ -244,7 +244,7 @@ enum Fruit {
 
 export async function main() {
   var a = Fruit.apple;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 

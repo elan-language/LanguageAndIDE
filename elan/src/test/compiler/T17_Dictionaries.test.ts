@@ -17,7 +17,7 @@ end main`;
 const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 
@@ -42,7 +42,7 @@ end main`;
 const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
-  system.print(system.asString(a['z']));
+  system.print(_stdlib.asString(a['z']));
 }
 `;
 
@@ -67,7 +67,7 @@ end main`;
 const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
-  system.print(system.asString(_stdlib.keys(a)));
+  system.print(_stdlib.asString(_stdlib.keys(a)));
 }
 `;
 
@@ -93,8 +93,8 @@ end main`;
 const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
-  system.print(system.asString(_stdlib.hasKey(a, 'b')));
-  system.print(system.asString(_stdlib.hasKey(a, 'd')));
+  system.print(_stdlib.asString(_stdlib.hasKey(a, 'b')));
+  system.print(_stdlib.asString(_stdlib.hasKey(a, 'd')));
 }
 `;
 
@@ -119,7 +119,7 @@ end main`;
 const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
-  system.print(system.asString(_stdlib.values(a)));
+  system.print(_stdlib.asString(_stdlib.values(a)));
 }
 `;
 
@@ -149,8 +149,8 @@ const a = {'a' : 1, 'b' : 3, 'z' : 10};
 export async function main() {
   var b = _stdlib.setItem(a, 'b', 4);
   var c = _stdlib.setItem(b, 'd', 2);
-  system.print(system.asString(a));
-  system.print(system.asString(c));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(c));
 }
 `;
 
@@ -178,8 +178,8 @@ const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
   var b = _stdlib.removeItem(a, 'b');
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -206,7 +206,7 @@ const a = {'a' : 1, 'b' : 3, 'z' : 10};
 
 export async function main() {
   var b = _stdlib.removeItem(a, 'c');
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(b));
 }
 `;
 
@@ -236,9 +236,9 @@ export async function main() {
   var a = new Object();
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
-  system.print(system.asString(_stdlib.length(b)));
-  system.print(system.asString(b["Foo"]));
-  system.print(system.asString(b["Bar"]));
+  system.print(_stdlib.asString(_stdlib.length(b)));
+  system.print(_stdlib.asString(b["Foo"]));
+  system.print(_stdlib.asString(b["Bar"]));
 }
 `;
 

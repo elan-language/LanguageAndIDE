@@ -13,7 +13,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(3 + 4));
+  system.print(_stdlib.asString(3 + 4));
 }
 `;
 
@@ -35,7 +35,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(3 - 4));
+  system.print(_stdlib.asString(3 - 4));
 }
 `;
 
@@ -57,7 +57,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(3 * 4));
+  system.print(_stdlib.asString(3 * 4));
 }
 `;
 
@@ -81,7 +81,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var a = 3;
-  system.print(system.asString(a + 4));
+  system.print(_stdlib.asString(a + 4));
 }
 `;
 
@@ -103,7 +103,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(3 / 2));
+  system.print(_stdlib.asString(3 / 2));
 }
 `;
 
@@ -125,7 +125,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(Math.floor(7 / 2)));
+  system.print(_stdlib.asString(Math.floor(7 / 2)));
 }
 `;
 
@@ -147,7 +147,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(11 % 3));
+  system.print(_stdlib.asString(11 % 3));
 }
 `;
 
@@ -169,7 +169,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  system.print(system.asString(3 ** 3));
+  system.print(_stdlib.asString(3 ** 3));
 }
 `;
 
@@ -195,7 +195,7 @@ end main`;
 export async function main() {
   var a = 3;
   a = a + 1;
-  system.print(system.asString(a));
+  system.print(_stdlib.asString(a));
 }
 `;
 

@@ -25,10 +25,10 @@ export async function main() {
   var b = false && true;
   var c = true && false;
   var d = true && true;
-  system.print(system.asString(a));
-  system.print(system.asString(b));
-  system.print(system.asString(c));
-  system.print(system.asString(d));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+  system.print(_stdlib.asString(d));
 }
 `;
 
@@ -61,10 +61,10 @@ export async function main() {
   var b = false || true;
   var c = true || false;
   var d = true || true;
-  system.print(system.asString(a));
-  system.print(system.asString(b));
-  system.print(system.asString(c));
-  system.print(system.asString(d));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+  system.print(_stdlib.asString(d));
 }
 `;
 
@@ -97,10 +97,10 @@ export async function main() {
   var b = false != true;
   var c = true != false;
   var d = true != true;
-  system.print(system.asString(a));
-  system.print(system.asString(b));
-  system.print(system.asString(c));
-  system.print(system.asString(d));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+  system.print(_stdlib.asString(d));
 }
 `;
 
@@ -133,10 +133,10 @@ export async function main() {
   var b = !true;
   var c = !!true;
   var d = !!false;
-  system.print(system.asString(a));
-  system.print(system.asString(b));
-  system.print(system.asString(c));
-  system.print(system.asString(d));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+  system.print(_stdlib.asString(d));
 }
 `;
 
@@ -163,8 +163,8 @@ end main`;
 export async function main() {
   var a = !false && true;
   var b = !(false && true);
-  system.print(system.asString(a));
-  system.print(system.asString(b));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
 }
 `;
 

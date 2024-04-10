@@ -33,9 +33,9 @@ end class`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = new Foo();
-  system.print(system.asString(x.p1));
-  system.print(system.asString(x.p2));
-  system.print(system.asString(x.asString()));
+  system.print(_stdlib.asString(x.p1));
+  system.print(_stdlib.asString(x.p2));
+  system.print(_stdlib.asString(x.asString()));
 }
 
 class Foo {
@@ -89,8 +89,8 @@ end class`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var x = new Foo(7, "Apple");
-  system.print(system.asString(x.p1));
-  system.print(system.asString(x.p2));
+  system.print(_stdlib.asString(x.p1));
+  system.print(_stdlib.asString(x.p2));
 }
 
 class Foo {

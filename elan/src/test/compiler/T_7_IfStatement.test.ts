@@ -20,9 +20,9 @@ end main`;
 export async function main() {
   var a = true;
   if (a) {
-    system.print(system.asString("yes"));
+    system.print(_stdlib.asString("yes"));
     } else {
-      system.print(system.asString("no"));
+      system.print(_stdlib.asString("no"));
   }
 }
 `;
@@ -53,9 +53,9 @@ end main`;
 export async function main() {
   var a = false;
   if (a) {
-    system.print(system.asString("yes"));
+    system.print(_stdlib.asString("yes"));
     } else {
-      system.print(system.asString("no"));
+      system.print(_stdlib.asString("no"));
   }
 }
 `;
@@ -87,11 +87,11 @@ end main`;
 export async function main() {
   var a = 2;
   if (a === 1) {
-    system.print(system.asString("one"));
+    system.print(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(system.asString("two"));
+      system.print(_stdlib.asString("two"));
     } else {
-      system.print(system.asString("neither"));
+      system.print(_stdlib.asString("neither"));
   }
 }
 `;
@@ -123,11 +123,11 @@ end main`;
 export async function main() {
   var a = 3;
   if (a === 1) {
-    system.print(system.asString("one"));
+    system.print(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(system.asString("two"));
+      system.print(_stdlib.asString("two"));
     } else {
-      system.print(system.asString("neither"));
+      system.print(_stdlib.asString("neither"));
   }
 }
 `;
@@ -155,7 +155,7 @@ end main`;
 export async function main() {
   var a = true;
   if (a) {
-    system.print(system.asString("yes"));
+    system.print(_stdlib.asString("yes"));
   }
 }
 `;
@@ -189,13 +189,13 @@ end main`;
 export async function main() {
   var a = 3;
   if (a === 1) {
-    system.print(system.asString("one"));
+    system.print(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(system.asString("two"));
+      system.print(_stdlib.asString("two"));
     } else if (a === 3) {
-      system.print(system.asString("three"));
+      system.print(_stdlib.asString("three"));
     } else {
-      system.print(system.asString("neither"));
+      system.print(_stdlib.asString("neither"));
   }
 }
 `;
