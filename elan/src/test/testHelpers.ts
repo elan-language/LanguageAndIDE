@@ -314,7 +314,7 @@ export async function activate(docUri: vscode.Uri) {
 export function testCompletion(node: ParseNode, text: string, status: ParseStatus, completion: string) {
   node.parseText(text);
   assert.equal(node.status, status);
-  assert.equal(node.getCompletion(), completion);
+  assert.equal(node.getCompletionAsHtml(), completion);
 }
 
 

@@ -57,7 +57,7 @@ export class Multiple extends AbstractParseNode {
         return this.elements.reduce((result, current) => result + current.renderAsSource(),"");
      }
 
-     getCompletion(): string {
-        return this.elements.reduce((result, current) => `${result}${current.getCompletion()}`, "");
+     getCompletionAsHtml(): string {
+        return this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "");
     }
 }

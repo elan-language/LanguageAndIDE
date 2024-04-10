@@ -68,7 +68,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     getCompletion(): string {
-        return this.rootNode? this.rootNode.getCompletion() : "";
+        return this.rootNode? this.rootNode.getCompletionAsHtml() : "";
     }
 
     setOptional(optional: boolean) : void {

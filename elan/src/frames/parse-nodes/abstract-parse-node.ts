@@ -8,8 +8,8 @@ export abstract class AbstractParseNode implements ParseNode {
     placeholder: string = "";
     remainingText: string = "";
 
-    getCompletion(): string {
-        return this.status === ParseStatus.empty ? this.placeholder : "";
+    getCompletionAsHtml(): string {
+        return this.status === ParseStatus.empty ? `<i>${this.placeholder}</i>` : "";
     }
 
     renderAsSource(): string {

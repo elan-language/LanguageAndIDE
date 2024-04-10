@@ -31,11 +31,11 @@ export class KVPnode extends AbstractSequence  {
         }
     }
 
-    getCompletion(): string {
+    getCompletionAsHtml(): string {
         var comp = "";
-        comp += this.elements[0].status === ParseStatus.empty? "key": "";
-        comp += this.elements[1].getCompletion();
-        comp += this.elements[2].status === ParseStatus.empty? " value": "";
+        comp += this.elements[0].status === ParseStatus.empty? "<i>key</i>": "";
+        comp += this.elements[1].getCompletionAsHtml();
+        comp += this.elements[2].status === ParseStatus.empty? " <i>value</i>": "";
         return comp;
     }
 }

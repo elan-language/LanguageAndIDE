@@ -54,8 +54,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     renderAsObjectCode(): string {
         return this.bestMatch ? this.bestMatch.renderAsObjectCode() : "";
     }
-    getCompletion(): string {
-        return this.    bestMatch ? this.bestMatch.getCompletion() : super.getCompletion();
+    getCompletionAsHtml(): string {
+        return this.    bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
     }
 
 }
