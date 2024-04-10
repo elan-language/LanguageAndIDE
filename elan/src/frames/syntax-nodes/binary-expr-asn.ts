@@ -16,6 +16,8 @@ export class BinaryExprAsn implements AstNode {
             case OperationSymbol.Not : return "!";
             case OperationSymbol.Multiply : return "*";
             case OperationSymbol.And : return "&&";
+            case OperationSymbol.Or : return "||";
+            case OperationSymbol.Xor : return "!=";
             case OperationSymbol.Equals : return "===";
             case OperationSymbol.NotEquals : return "!==";
             case OperationSymbol.LT : return "<";

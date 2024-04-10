@@ -14,5 +14,7 @@ export enum OperationSymbol {
     Mod,
     Divide,
     NotEquals,
-    Pow
+    Pow,
+    Or,
+    Xor
 }
