@@ -140,7 +140,7 @@ suite('Field Parsing Tests', () => {
 				};
 				params.processKey(event);
 				assert.equal(params.renderAsSource(),"a");
-				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a<keyword></keyword></text><placeholder>parameter definitions</placeholder><completion> as Type</completion></field>`);
+				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a<keyword></keyword></text><placeholder>parameter definitions</placeholder><completion> as <i>Type</i></completion></field>`);
 				event = {
 					type: 'key',
 					target: "frame",
@@ -150,13 +150,13 @@ suite('Field Parsing Tests', () => {
 				};
 				params.processKey(event);
 				assert.equal(params.renderAsSource(),"a ");
-				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a <keyword></keyword></text><placeholder>parameter definitions</placeholder><completion>as Type</completion></field>`);
+				assert.equal(params.renderAsHtml(),`<field id="params4" class="optional incomplete" tabindex=0><text>a <keyword></keyword></text><placeholder>parameter definitions</placeholder><completion>as <i>Type</i></completion></field>`);
 			
 			});
 			test('parse Frames - External frame with optional into', () => { 
 				var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 				var ext = new ExternalStatement(main);
 				var html = ext.renderAsHtml();
-				assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>procedure</placeholder><completion></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder>into</placeholder><completion></completion></field></top></statement>`);
+				assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>procedure</placeholder><completion><i></i></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder>into</placeholder><completion></completion></field></top></statement>`);
 			});
 });

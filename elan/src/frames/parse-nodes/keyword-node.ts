@@ -27,7 +27,7 @@ export class KeywordNode extends FixedTextNode {
         }
     }
 
-    getCompletion(): string {
+    getCompletionAsHtml(): string {
         var comp = ``;
         var matched = this.matchedText.length;
         var kw = this.fixedText.length;

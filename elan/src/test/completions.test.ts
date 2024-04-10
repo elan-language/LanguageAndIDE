@@ -15,38 +15,38 @@ suite('Completions', () => {
     //TODO - merge the completions tests into the parse node tests
 
     test('Generic Type', () => {
-        testCompletion(new TypeNode(), "", ParseStatus.empty, "Type");
+        testCompletion(new TypeNode(), "", ParseStatus.empty, "<i>Type</i>");
         testCompletion(new TypeNode(), "Foo", ParseStatus.valid, "");
-        testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "Type>");
-        testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of Type>");
-        testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " Type>");
+        testCompletion(new TypeNode(), "Foo<of ", ParseStatus.incomplete, "<i>Type</i>>");
+        testCompletion(new TypeNode(), "Foo<", ParseStatus.incomplete, "of <i>Type</i>>");
+        testCompletion(new TypeNode(), "Foo<of", ParseStatus.incomplete, " <i>Type</i>>");
         testCompletion(new TypeNode(), "Foo<of Bar", ParseStatus.incomplete, ">");
         testCompletion(new TypeNode(), "Foo<of Bar>", ParseStatus.valid, "");
-        testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "Type>");
-        testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "Type)>");
+        testCompletion(new TypeNode(), "Foo<of Bar,", ParseStatus.incomplete, "<i>Type</i>>");
+        testCompletion(new TypeNode(), "Foo<of (Bar,", ParseStatus.incomplete, "<i>Type</i>)>");
     });
 
     test('Tuple Type', () => {
         testCompletion(new TypeNode(), "(Foo, Bar)", ParseStatus.valid, "");
-        testCompletion(new TypeNode(), "(", ParseStatus.incomplete, "Type)");
+        testCompletion(new TypeNode(), "(", ParseStatus.incomplete, "<i>Type</i>)");
         testCompletion(new TypeNode(), "(Foo", ParseStatus.incomplete, ")");
-         testCompletion(new TypeNode(), "(Foo,", ParseStatus.incomplete, "Type)");
-       //testCompletion(new TypeNode(), "(Foo, ", ParseStatus.incomplete, "Type)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
+        testCompletion(new TypeNode(), "(Foo,", ParseStatus.incomplete, "<i>Type</i>)");
+        testCompletion(new TypeNode(), "(Foo, ", ParseStatus.incomplete, "<i>Type</i>)"); //TODO Stangely failing - completion shows '))' - even though it is working correctly in the web editor
         testCompletion(new TypeNode(), "(Foo,Bar", ParseStatus.incomplete, ")");
     });
 
     test('ExprNode', () => {
         testCompletion(new ExprNode(), "a + b", ParseStatus.valid, "");
-        testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "expression");
-        testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "expression");
-        testCompletion(new ExprNode(), "(", ParseStatus.incomplete, "expression)");
-        testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "expression)");
+        testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new ExprNode(), "(", ParseStatus.incomplete, "<i>expression</i>)");
+        testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<i>expression</i>)");
         testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
-        testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "expression");
+        testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<i>expression</i>");
     });
 
     test('CSV of Identifier', () => {
-        testCompletion(new CSV(() => new IdentifierNode(), 0), "foo,", ParseStatus.incomplete, "name");
+        testCompletion(new CSV(() => new IdentifierNode(), 0), "foo,", ParseStatus.incomplete, "<i>name</i>");
         testCompletion(new CSV(() => new IdentifierNode(), 0), "foo, bar, yon", ParseStatus.valid, "");
     });
 
@@ -64,19 +64,25 @@ suite('Completions', () => {
 
     test('ParamDef', () => {
 		testCompletion(new ParamDefNode(), "", ParseStatus.empty, "");
-        testCompletion(new ParamDefNode(), "a", ParseStatus.incomplete, " as Type");
-        testCompletion(new ParamDefNode(), "ax", ParseStatus.incomplete, " as Type");
-        testCompletion(new ParamDefNode(), "ax ", ParseStatus.incomplete, "as Type");
-        testCompletion(new ParamDefNode(), "ax a", ParseStatus.incomplete, "s Type");
-        testCompletion(new ParamDefNode(), "ax as", ParseStatus.incomplete, " Type");
-        testCompletion(new ParamDefNode(), "ax as ", ParseStatus.incomplete, "Type");
+        testCompletion(new ParamDefNode(), "a", ParseStatus.incomplete, " as <i>Type</i>");
+        testCompletion(new ParamDefNode(), "ax", ParseStatus.incomplete, " as <i>Type</i>");
+        testCompletion(new ParamDefNode(), "ax ", ParseStatus.incomplete, "as <i>Type</i>");
+        testCompletion(new ParamDefNode(), "ax a", ParseStatus.incomplete, "s <i>Type</i>");
+        testCompletion(new ParamDefNode(), "ax as", ParseStatus.incomplete, " <i>Type</i>");
+        testCompletion(new ParamDefNode(), "ax as ", ParseStatus.incomplete, "<i>Type</i>");
         testCompletion(new ParamDefNode(), "ax as Int", ParseStatus.valid, "");
     });
 
     test('BinaryExpression', () => {
-        testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "expression");
-        testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "expression");
-        testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "expression");
+        testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<i>expression</i>");
+    });
+
+    test('NewInstance', () => {
+        testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<i>expression</i>");
+        testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<i>expression</i>");
     });
 
 });

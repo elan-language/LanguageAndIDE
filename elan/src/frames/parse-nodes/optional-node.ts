@@ -37,7 +37,7 @@ export class OptionalNode extends AbstractParseNode {
         return this.matchedNode ? this.matchedNode.renderAsSource() : "";
     }
 
-    getCompletion(): string {
-        return this.matchedNode? this.matchedNode.getCompletion() : super.getCompletion();
+    getCompletionAsHtml(): string {
+        return this.matchedNode? this.matchedNode.getCompletionAsHtml() : super.getCompletionAsHtml();
     }
 }
