@@ -38,6 +38,6 @@ export class Input extends AbstractFrame implements Statement {
     }
 
     renderAsObjectCode(): string {
-        throw new Error("Not implemented");
+        return `${this.indent()}var ${this.varName.renderAsObjectCode()} = await system.input();`;
     }
 } 

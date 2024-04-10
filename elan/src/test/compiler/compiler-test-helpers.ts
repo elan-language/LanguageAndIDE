@@ -50,7 +50,7 @@ function doImport(str: string) {
     return import(url);
 }
 
-function executeCode(file: FileImpl) {
+function executeCode(file: FileImpl, input? : string) {
 
     const jsCode = file.renderAsObjectCode();
     // const jsCode = ts.transpile(tsCode, {
@@ -60,6 +60,10 @@ function executeCode(file: FileImpl) {
 
     const system = new System();
     const stdlib = new StdLib();
+
+    if (input) {
+        system.inputed = input;
+    }
 
     return doImport(jsCode).then(async (elan) => {
         if (elan.main) {
@@ -72,11 +76,11 @@ function executeCode(file: FileImpl) {
 }
 
 
-export async function assertObjectCodeExecutes(file: FileImpl, output: string) {
+export async function assertObjectCodeExecutes(file: FileImpl, output: string, input? : string) {
     var actual;
     
     try {
-        const sl = await executeCode(file);
+        const sl = await executeCode(file, input);
         actual = sl?.printed; 
     }
     catch (e) {

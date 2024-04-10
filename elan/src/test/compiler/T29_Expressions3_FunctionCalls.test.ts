@@ -154,6 +154,31 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
+  // not implemented
+  ignore_test('Pass_MultiParamCallUsingDotSyntax', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to 3.max(3.1)
+  print x
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var x = _stdlib.min(3, 3.1);
+  system.print(system.asString(x));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
  
 
   // TODO fails
