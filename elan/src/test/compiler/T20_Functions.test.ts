@@ -196,7 +196,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var b = new Bar();
+  var b = system.initialise(new Bar());
   system.print(_stdlib.asString(foo(b)));
 }
 

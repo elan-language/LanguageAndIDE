@@ -15,7 +15,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var a = new Array(3);
+  var a = system.initialise(new Array(3), ["String"]);
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 `;
@@ -29,7 +29,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test('Pass_ConfirmStringElementsInitializedToEmptyStringNotNull', async () => {
+  test('Pass_ConfirmStringElementsInitializedToEmptyStringNotNull', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -40,7 +40,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var a = new Array(3);
+  var a = system.initialise(new Array(3), ["String"]);
   system.print(_stdlib.asString(_stdlib.length(a[0])));
   system.print(_stdlib.asString(a));
 }
@@ -52,7 +52,7 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0List[, , ]");
+    await assertObjectCodeExecutes(fileImpl, "0List [, , ]");
   });
 
   // Fails TODO

@@ -233,7 +233,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var a = new Object();
+  var a = system.initialise(new Object(), ["String", "Int"]);
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
   system.print(_stdlib.asString(_stdlib.length(b)));

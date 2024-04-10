@@ -1,13 +1,16 @@
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
+import { TypeAsn } from "./type-asn";
 
 export class NewAsn implements AstNode {
 
-    constructor(private type: AstNode, private parameters: AstNode[], private scope : Scope) {
+    constructor(private type: TypeAsn, private parameters: AstNode[], private scope : Scope) {
     }
     renderAsObjectCode(): string {
+        var gt = this.type.genericParameters.map(p => `"${p.renderAsObjectCode()}"`).join(", ");
+        gt = gt ? `, [${gt}]` : "";
         const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
-        return `new ${this.type.renderAsObjectCode()}(${pp})`;
+        return `system.initialise(new ${this.type.renderAsObjectCode()}(${pp})${gt})`;
     }
 
     get symbolType() {

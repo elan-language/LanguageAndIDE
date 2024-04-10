@@ -56,11 +56,14 @@ export class StdLib {
         return newDict;
     }
 
-    length(dict: { [key: string]: number }){
-        if (Array.isArray(dict)) {
-            return dict.length;
+    length(coll : any){
+        if (typeof coll === "string") {
+            return coll.length;
         }
-        return this.keys(dict).length;
+        if (Array.isArray(coll)) {
+            return coll.length;
+        }
+        return this.keys(coll).length;
     }
 
     isBefore(s1 : string, s2 : string){
