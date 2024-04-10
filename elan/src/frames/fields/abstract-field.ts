@@ -123,7 +123,14 @@ export abstract class AbstractField implements Selectable, Field {
                 } else if (key?.length === 1) {
                     this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
                     this.cursorPos ++;
+                    var preParse = this.text.length;
                     this.parseCurrentText();
+                    var afterParse = this.text.length;
+                    if (afterParse > preParse ) {
+                        this.cursorPos = this.cursorPos + afterParse - preParse + 1;
+                    } else {
+                        this.cursorPos ++;
+                    }                   
                 }
             }
         }
