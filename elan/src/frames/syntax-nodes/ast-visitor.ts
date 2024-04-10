@@ -300,7 +300,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof NewInstance) {
-        const type = transform(node.type, scope)!;
+        const type = transform(node.type, scope) as TypeAsn;
         const pp = transformMany(node.args as CSV, scope);
         return new NewAsn(type, pp, scope);
     }
