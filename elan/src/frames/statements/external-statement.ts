@@ -20,6 +20,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     constructor(parent: Parent) {
         super(parent);
         this.method = new ProcedureRef(this);
+        this.method.setPlaceholder("method");
         this.args = new ArgListField(this);
         this.selectIntoClause = new IntoSelector(this);
         this.assignable = new AssignableField(this);
