@@ -1,4 +1,4 @@
-# 357e82ff30464791003b9a8c09e5b3b38338d359a6edb128958300c531d7243d Elan v0.1 incomplete
+# dc260f1147143cf437e0471768f4a5a16d862f6e1fc6f84ff23d8fe7ee2ef8cf Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -11,14 +11,9 @@ procedure signIn()
 end procedure
 
 function hypotenuse(sideB as Float, sideC as Float) return Float
-  return default
+  return sqrt(sideB ^ 2 + sideC ^ 2)
 end function
 
 enum Fruit
   apple, orange, pear
 end enum
-
-test test1
-  set actual to 
-  assert actual is 
-end test

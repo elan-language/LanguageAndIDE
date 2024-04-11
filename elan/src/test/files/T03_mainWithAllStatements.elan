@@ -1,9 +1,9 @@
-# dab1b326fd92e5c21bea3de5666b9196910e89cfdd62cdc9739b4a21447b98c1 Elan v0.1 incomplete
+# 23f99ba36c9e006f80e2f9d573940ed99a3d6d7e4d4eee8f98d85ee906a9be6b Elan v0.1 valid
 
 main
-  var  set to 
+  var a set to 3
   set a to 3 + 4
-  throw 
+  throw "error"
   call signIn(rwp, password)
   print "Hello World!"
   while newGame
@@ -35,7 +35,7 @@ main
     catch e
 
   end try
-  switch 
+  switch result
     default
 
   end switch

@@ -18,25 +18,22 @@ suite('Milestone 1 - Html rendering of code from model', () => {
 		assertGeneratesHtmlandSameSource(done, "T02_comments.elan", "T02_comments.html");
 	});
 
-// ----------------------------------------------------------
 	test('Test Main With All Statements', (done) => {
-		assertAreEqualByHtml(done, "T03_mainWithAllStatements.html", T03_mainWithAllStatements);
+		assertGeneratesHtmlandSameSource(done, "T03_mainWithAllStatements.elan", "T03_mainWithAllStatements.html");
 	});
-	test('Test Main With All Statements Source', (done) => {
-		assertAreEqualBySource(done, "T03_mainWithAllStatements.source", T03_mainWithAllStatements);
-	});
+
 	test('Test All Globals Except Class', (done) => {
-		assertAreEqualByHtml(done, "T04_allGlobalsExceptClass.html", T04_allGlobalsExceptClass);
+		assertGeneratesHtmlandSameSource(done, "T04_allGlobalsExceptClass.elan", "T04_allGlobalsExceptClass.html");
 	});
-	test('Test All Globals Except Class Source', (done) => {
-		assertAreEqualBySource(done, "T04_allGlobalsExceptClass.source", T04_allGlobalsExceptClass);
-	});
+
 	test('Test Classes', (done) => {
-		assertAreEqualByHtml(done, "T05_classes.html", T05_classes);
+		assertGeneratesHtmlandSameSource(done, "T05_classes.elan", "T05_classes.html");
 	});
-	test('Test Classes Source', (done) => {
-		assertAreEqualBySource(done, "T05_classes.source", T05_classes);
-	});
+
+
+// ----------------------------------------------------------
+
+
 	test('Test Select Main By Id', (done) => {
 		const ff = T03_mainWithAllStatements();
 		assertAreEqualByHtml(done, "T07_mainSelected.html", T07_mainWithAllStatementsSelectMainById(ff));

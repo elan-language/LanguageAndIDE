@@ -8,7 +8,7 @@
 </head>
 <body>
 <elan-code>
-<header># <hash>8df561117e4f531946b2aa910b423a9bff35ec64c634168d8c11b9019041f221</hash> Elan v0.1 <span id="fileStatus" class="incomplete">incomplete</span></header>
+<header># <hash>dc260f1147143cf437e0471768f4a5a16d862f6e1fc6f84ff23d8fe7ee2ef8cf</hash> Elan v0.1 <span id="fileStatus" class="valid">valid</span></header>
 <constant class="valid" id='const1' tabindex="0"><keyword>constant </keyword><field id="ident2" class="valid" tabindex=0><text>phi</text><placeholder>name</placeholder><completion></completion></field><keyword> set to </keyword><field id="text3" class="valid" tabindex=0><text>1.618</text><placeholder>literal value or data structure</placeholder><completion></completion></field></constant>
 <main class="valid multiline" id='main4' tabindex="0">
 <top><expand>+</expand><keyword>main</keyword></top>
@@ -16,14 +16,13 @@
 <keyword>end main</keyword>
 </main>
 <procedure class="valid multiline" id='proc6' tabindex="0">
-<top><expand>+</expand><keyword>procedure </keyword><method><field id="ident8" class="valid" tabindex=0><text>signIn</text><placeholder>name</placeholder><completion></completion></field></method>(<field id="params9" class="empty optional valid" tabindex=0><text></text><placeholder>parameter definitions</placeholder><completion></completion></field>)</top>
+<top><expand>+</expand><keyword>procedure </keyword><method><field id="ident8" class="valid" tabindex=0><text>signIn</text><placeholder>name</placeholder><completion></completion></field></method>(<field id="params9" class="empty optional valid" tabindex=0><text></text><placeholder>parameter definitions</placeholder><completion><pr></pr></completion></field>)</top>
 <statement class="valid empty" id='select7' tabindex="0"><selector><text></text><placeholder>new code</placeholder><help class="selector"> call each external for if input let print repeat set switch throw try var while #</help></selector></statement>
 <keyword>end procedure</keyword>
 </procedure>
-<function class="incomplete multiline" id='func10' tabindex="0">
-<top><expand>+</expand><keyword>function </keyword><method><field id="ident12" class="valid" tabindex=0><text>hypotenuse</text><placeholder>name</placeholder><completion></completion></field></method>(<field id="params13" class="optional valid" tabindex=0><text>sideB as Float, sideC as Float</text><placeholder>parameter definitions</placeholder><completion></completion></field>)<keyword> return </keyword><field id="type14" class="valid" tabindex=0><text><type>Float</type></text><placeholder>return type</placeholder><completion></completion></field></top>
-<statement class="valid empty" id='select11' tabindex="0"><selector><text></text><placeholder>new code</placeholder><help class="selector"> each for if let repeat set switch throw try var while #</help></selector></statement>
-<statement class="incomplete" id='return15' tabindex="0"><keyword>return </keyword><field id="expr16" class="empty incomplete" tabindex=0><text></text><placeholder>value or expression</placeholder><completion><pr>expression</pr></completion></field></statement>
+<function class="valid multiline" id='func10' tabindex="0">
+<top><expand>+</expand><keyword>function </keyword><method><field id="ident12" class="valid" tabindex=0><text>hypotenuse</text><placeholder>name</placeholder><completion></completion></field></method>(<field id="params13" class="optional valid" tabindex=0><text>sideB <keyword>as</keyword> <type>Float</type>, sideC <keyword>as</keyword> <type>Float</type></text><placeholder>parameter definitions</placeholder><completion></completion></field>)<keyword> return </keyword><field id="type14" class="valid" tabindex=0><text><type>Float</type></text><placeholder>return type</placeholder><completion></completion></field></top>
+<statement class="valid" id='return15' tabindex="0"><keyword>return </keyword><field id="expr16" class="valid" tabindex=0><text><method></method>(()</text><placeholder>value or expression</placeholder><completion></completion></field></statement>
 <keyword>end function</keyword>
 </function>
 <enum class="valid" id='enum17' tabindex="0">
@@ -31,13 +30,6 @@
 <statement><field id="enumVals19" class="valid" tabindex=0><text>apple, orange, pear</text><placeholder>values</placeholder><completion></completion></field></statement>       
 <keyword>end enum</keyword>
 </enum>
-<test class="incomplete multiline" id='test20' tabindex="0">
-<top><expand>+</expand><keyword>test </keyword><field id="ident22" class="valid" tabindex=0><text>test1</text><placeholder>name</placeholder><completion></completion></field></top>
-<statement class="incomplete" id='set23' tabindex="0"><keyword>set </keyword><field id="ident24" class="valid" tabindex=0><text>actual</text><placeholder>variableName</placeholder><completion></completion></field><keyword> to </keyword><field id="expr25" class="empty incomplete" tabindex=0><text></text><placeholder>function call or expression to be tested</placeholder><completion><pr>expression</pr></completion></field></statement>
-<statement class="incomplete" id='assert26' tabindex="0"><keyword>assert </keyword><field id="expr27" class="valid" tabindex=0><text>actual</text><placeholder>variable</placeholder><completion></completion></field><keyword> is </keyword><field id="expr28" class="empty incomplete" tabindex=0><text></text><placeholder>expected value</placeholder><completion><pr></pr></completion></field></statement>
-<keyword>end test</keyword>
-</test>
-<global class="valid empty" id='select0' tabindex="0"><selector><text></text><placeholder>new code</placeholder><help class="selector"> procedure function class constant enum test #</help></selector></global>
 </elan-code>
 </body>
 </html>
