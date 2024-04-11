@@ -1,30 +1,24 @@
 import * as vscode from 'vscode';
-import { assertAreEqualByHtml, assertAreEqualBySource } from './testHelpers';
+import { assertAreEqualByHtml, assertAreEqualBySource, assertGeneratesHtmlandSameSource } from './testHelpers';
 import { T00_emptyFile, T01_helloWorld, T02_comments, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes, T07_mainWithAllStatementsSelectMainById, T07_mainWithAllStatementsSelectStatementById, T08_collapseAll, T08_expandAll, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
-import assert from 'assert';
-import { createHash } from "node:crypto";
+
 
 suite('Milestone 1 - Html rendering of code from model', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
  	test('Test Empty File', (done) => {
-		assertAreEqualByHtml(done, "T00_emptyFile.html", T00_emptyFile);
+		assertGeneratesHtmlandSameSource(done, "T00_emptyFile.elan",  "T00_emptyFile.html");
 	}); 
-	test('Test Empty File Source', (done) => {
-		assertAreEqualBySource(done, "T00_emptyFile.source", T00_emptyFile);
-	}); 
+
 	test('Test Hello World', (done) => {
-		assertAreEqualByHtml(done, "T01_helloWorld.html", T01_helloWorld);
+		assertGeneratesHtmlandSameSource(done, "T01_helloWorld.elan", "T01_helloWorld.html");
 	});
-	test('Test Hello World Source', (done) => {
-		assertAreEqualBySource(done, "T01_helloWorld.source", T01_helloWorld);
-	});
+
 	test('Test Comments', (done) => {
-		assertAreEqualByHtml(done, "T02_comments.html", T02_comments);
+		assertGeneratesHtmlandSameSource(done, "T02_comments.elan", "T02_comments.html");
 	});
-	test('Test Comments Source', (done) => {
-		assertAreEqualBySource(done, "T02_comments.source", T02_comments);
-	});
+
+// ----------------------------------------------------------
 	test('Test Main With All Statements', (done) => {
 		assertAreEqualByHtml(done, "T03_mainWithAllStatements.html", T03_mainWithAllStatements);
 	});

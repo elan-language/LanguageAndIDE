@@ -26,7 +26,40 @@ import { Scope } from '../frames/interfaces/scope';
 import { ListType } from '../symbols/list-type';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
+
+export async function assertGeneratesHtmlandSameSource(done: Mocha.Done, sourceFile: string, htmlFile: string) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
+  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
+
+  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+
+  var fl = new FileImpl(hash, new DefaultProfile());
+  fl.parseFrom(codeSource);
+  if (fl.parseError) {
+      throw new Error(fl.parseError);
+  }
+  const actualSource = fl.renderAsSource().replaceAll("\r", "");
+  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
+  const actualHtml = wrap(fl.renderAsHtml()).replaceAll("\r", "");
+  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
+  try {
+      assert.strictEqual(actualSource, expectedSource);
+      assert.strictEqual(actualHtml, expectedHtml);
+      done();
+  }
+  catch (e) {
+      if (updateTestFiles) {
+        updateTestFile(sourceDoc, actualSource);
+        updateTestFile(htmlDoc, actualHtml);
+      }
+      done(e);
+      throw e;
+  }
+}
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
     const edit = new vscode.WorkspaceEdit();
