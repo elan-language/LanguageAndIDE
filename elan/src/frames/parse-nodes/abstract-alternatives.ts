@@ -1,11 +1,6 @@
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 import { ParseStatus } from "../parse-status";
-import { Field } from "../interfaces/field";
-
-import { UnknownType } from "../../symbols/unknown-type";
-
-
 
 export abstract class AbstractAlternatives extends AbstractParseNode {
     alternatives: ParseNode[] = [];
