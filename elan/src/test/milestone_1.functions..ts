@@ -125,24 +125,20 @@ export function T03_mainWithAllStatements(): FileImpl {
 	return f;
 }
 
-export function T07_mainWithAllStatementsSelectMainById(f : FileImpl) {
+export function SelectMainById(f : FileImpl)  {
 	f.getById("main1").select(true, false);
-	return () => f;
 }
 
-export function T07_mainWithAllStatementsSelectStatementById(f : FileImpl) {
+export function SelectStatementById(f : FileImpl) {
 	f.getById("for22").select(true, false);
-	return () => f;
 }
 
-export function T08_expandAll(f : FileImpl) {
+export function ExpandAll(f : FileImpl) {
 	f.expandCollapseAll();
-	return () => f;
 }
 
-export function T08_collapseAll(f : FileImpl) {
+export function CollapseAll(f : FileImpl) {
 	f.expandCollapseAll();
-	return () => f;
 }
 
 export function T04_allGlobalsExceptClass(): FileImpl {
@@ -203,12 +199,6 @@ export function T05_classes() {
 	m1.returnType.setText("Player");
 	return f;
 }
-
-/*
-main
-  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
-  print mergeSort(li)
-end main */
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl(hash, new DefaultProfile());

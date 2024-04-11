@@ -26,7 +26,39 @@ import { Scope } from '../frames/interfaces/scope';
 import { ListType } from '../symbols/list-type';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
+
+export async function assertEffectOfAction(done: Mocha.Done, sourceFile: string, action: (f: FileImpl) => void , htmlFile: string) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
+  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
+
+  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+
+  var fl = new FileImpl(hash, new DefaultProfile());
+  fl.parseFrom(codeSource);
+  if (fl.parseError) {
+      throw new Error(fl.parseError);
+  }
+  action(fl);
+ 
+  const actualHtml = wrap(fl.renderAsHtml()).replaceAll("\r", "");
+  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
+  try {
+      assert.strictEqual(actualHtml, expectedHtml);
+      done();
+  }
+  catch (e) {
+      if (updateTestFiles) {
+        updateTestFile(htmlDoc, actualHtml);
+      }
+      done(e);
+      throw e;
+  }
+
+}
 
 export async function assertGeneratesHtmlandSameSource(done: Mocha.Done, sourceFile: string, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
