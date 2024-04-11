@@ -8,6 +8,8 @@ import { Regexes } from "./regexes";
 
 export class IfSelector extends AbstractField {
 
+    protected placeholderIsCode: boolean = true;
+    
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
     }

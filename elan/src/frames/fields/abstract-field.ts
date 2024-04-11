@@ -11,6 +11,7 @@ export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
     protected text: string = "";
     protected placeholder: string = "";
+    protected placeholderIsCode: boolean = false;
     protected useHtmlTags: boolean = false;
     protected htmlId: string = "";
     protected selected: boolean = false;
@@ -266,8 +267,12 @@ export abstract class AbstractField implements Selectable, Field {
         return this._classes.join(" ");
     };
 
+    placeholderKind() : string {
+        return this.placeholderIsCode ? ` class="code"` : ``;
+    }
+
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder${this.placeholderKind()}>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion></field>`;
     }
 
     indent(): string {

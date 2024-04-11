@@ -1,6 +1,5 @@
 import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
-import { Else } from "../statements/else";
 import { ParseStatus } from "../parse-status";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -9,6 +8,8 @@ import { ExternalStatement } from "../statements/external-statement";
 
 export class IntoSelector extends AbstractField {
 
+    protected placeholderIsCode: boolean = true;
+    
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
     }

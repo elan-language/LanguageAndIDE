@@ -163,7 +163,11 @@ field.selected.valid.optional.empty text, field.selected.valid.optional.empty in
 
 /* field-placeholder */
 field placeholder {
-  display: none;
+  display: none; /* overrridden where appropriate */
+  font-style: italic;
+}
+field placeholder.code {
+    font-style: normal;
 }
 
 field.empty placeholder {
