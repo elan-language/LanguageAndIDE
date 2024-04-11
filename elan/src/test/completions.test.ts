@@ -81,7 +81,7 @@ suite('Completions', () => {
     });
 
     test('NewInstance', () => {
-        testCompletion(new NewInstance(), "new ", ParseStatus.incomplete, "<pr>Type</pr>(<pr></pr>)");
+        testCompletion(new NewInstance(), "new ", ParseStatus.incomplete, "<pr>Type</pr>(<pr>arguments</pr>)");
     });
 
 });
