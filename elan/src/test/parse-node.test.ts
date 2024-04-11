@@ -324,6 +324,9 @@ suite('ParseNodes', () => {
 		testNodeParse(new TypeNode(), `(Foo, Bar< of Yon>)`, ParseStatus.valid, "(Foo, Bar< of Yon>)", "", "");
 		testNodeParse(new TypeNode(), `Foo<of List<of (Bar, Qux)>>`, ParseStatus.valid, "Foo<of List<of (Bar, Qux)>>", "", "");
 	});
+	test('TypeNode - Func', () => {
+		testNodeParse(new TypeNode(), `Func<of Foo, Bar => Yon>`, ParseStatus.valid, "Func<of Foo, Bar => Yon>", "", "");//Single
+	});
 	test('TupleDefNode', () => {
 		testNodeParse(new TupleNode(), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "");
 		testNodeParse(new TupleNode(), `(foo, 3, bar(a), x)`, ParseStatus.valid, "(foo, 3, bar(a), x)", "", "");

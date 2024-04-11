@@ -196,5 +196,5 @@ dataStructureType: (ARRAY | LIST | DICTIONARY | ITERABLE ) genericSpecifier;
 genericSpecifier: LT OF type (COMMA type)* GT;
 tupleType: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET; 
 typeList: type (COMMA type)*;
-funcType: OPEN_BRACKET typeList  ARROW type CLOSE_BRACKET; 
+funcType: OPEN_BRACKET typeList ARROW type CLOSE_BRACKET; 
 
