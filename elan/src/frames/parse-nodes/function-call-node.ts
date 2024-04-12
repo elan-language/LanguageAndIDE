@@ -9,7 +9,6 @@ import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { Sequence } from "./sequence";
 import { IndexNode } from "./index-node";
-import { Multiple } from "./multiple";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { RuleNames } from "./rule-names";
 import { QualifierDot } from "./qualifierDot";
@@ -24,8 +23,8 @@ export class FunctionCallNode extends AbstractSequence {
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
             var variable = () => new IdentifierNode();
-            var indexes = () => new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
-            var instance = () => new Sequence([variable, indexes], RuleNames.instance);
+            var index = () => new OptionalNode(() => new IndexNode());
+            var instance = () => new Sequence([variable, index], RuleNames.instance);
             var qualifiers = new Alternatives([global, lib, instance]);
             var qualDot = () => new QualifierDot(qualifiers);
             this.qualifier =  new OptionalNode(qualDot);

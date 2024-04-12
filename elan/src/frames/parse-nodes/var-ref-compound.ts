@@ -19,7 +19,7 @@ import { QualifierDot } from "./qualifierDot";
 export class VarRefCompound extends AbstractSequence {
     optQualifier: OptionalNode | undefined;
     simple: IdentifierNode | undefined;
-    indexes: Multiple | undefined;
+    index: OptionalNode | undefined;
 
     constructor() {
         super();
@@ -37,10 +37,10 @@ export class VarRefCompound extends AbstractSequence {
             var qualDot = () => new QualifierDot(qualifiers);
             this.simple = new IdentifierNode();
             this.optQualifier =  new OptionalNode(qualDot);
-            this.indexes = new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
+            this.index = new OptionalNode(() => new IndexNode());
             this.elements.push(this.optQualifier!);
             this.elements.push(this.simple!);
-            this.elements.push(this.indexes!);
+            this.elements.push(this.index!);
             super.parseText(text);
         }
     }

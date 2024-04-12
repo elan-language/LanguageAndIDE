@@ -156,7 +156,7 @@ lambda: LAMBDA paramList ARROW expression;
 ifExpression: IF expression THEN expression ELSE expression;
 newInstance: (NEW type OPEN_BRACKET argList? CLOSE_BRACKET);
 unaryOp: (MINUS | NOT) term;
-varRef: ((PROPERTY|GLOBAL|LIBRARY|IDENTIFIER) DOT)? IDENTIFIER index*;
+varRef: ((PROPERTY|GLOBAL|LIBRARY|IDENTIFIER) DOT)? IDENTIFIER index?;
 defaultType: DEFAULT type;
 index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_SQ_BRACKET;
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 

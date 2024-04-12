@@ -313,7 +313,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     if (node instanceof VarRefCompound) {
         const q = transform(node.optQualifier, scope);
         const id = node.simple!.matchedText;
-        const index = transform(node.indexes, scope);
+        const index = transform(node.index, scope);
         return new VarAsn(id, q, index, scope);
     }
 
@@ -345,12 +345,6 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
             var id = node.elements[0].matchedText;
             var index = transform(node.elements[1], scope);
             return new VarAsn(id, undefined, index, scope);
-        }
-    }
-
-    if (node instanceof Multiple) {
-        if (node.ruleName === RuleNames.indexes) {
-            return node.elements.length > 0 ? transform(node.elements[0], scope) : undefined;
         }
     }
 

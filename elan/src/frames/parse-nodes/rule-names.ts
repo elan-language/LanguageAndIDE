@@ -1,4 +1,3 @@
 export enum RuleNames {
-    instance,
-    indexes
+    instance
 }

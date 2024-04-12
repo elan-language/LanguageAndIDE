@@ -33,8 +33,8 @@ export class AssignableField extends AbstractField {
         var dot = () => new SymbolNode(DOT);
         var qualDot = () => new Sequence([prop, dot]);
         var optQualifier = () => new OptionalNode(qualDot);
-        var indexes = () => new Multiple(() => new IndexNode(), 0);
-        var varRef = () => new Sequence([optQualifier, simple, indexes]);
+        var index = () => new OptionalNode(() => new IndexNode());
+        var varRef = () => new Sequence([optQualifier, simple, index]);
         var deconTup = () => new DeconstructedTuple();
         var deconList = () => new DeconstructedList();
         this.rootNode = new Alternatives([varRef, deconTup, deconList]);
