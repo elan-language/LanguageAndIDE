@@ -73,6 +73,7 @@ import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { KvpAsn } from "./kvp-asn";
+import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -305,6 +306,13 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         return new NewAsn(type, pp, scope);
     }
 
+    if (node instanceof VarRefCompound) {
+        const q = transform(node.optQualifier, scope);
+        const id = node.simple!.matchedText;
+        const index = transform(node.indexes, scope);
+        return new VarAsn(id, q, index, scope);
+    }
+
     if (node instanceof Sequence) {
         if (node.ruleName === RuleNames.with) {
             const obj = transform(node.elements[0], scope) as ExprAsn;
@@ -324,13 +332,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
             return new VarAsn(id, undefined, index, scope);
         }
 
-        if (node.ruleName === RuleNames.compound) {
-            const q = transform(node.elements[0], scope);
-            const id = node.elements[1].matchedText;
-            const index = transform(node.elements[2], scope);
 
-            return new VarAsn(id, q, index, scope);
-        }
 
         if (node.ruleName === RuleNames.tuple) {
             const gp = transformMany(node.elements[1] as CSV, scope);
