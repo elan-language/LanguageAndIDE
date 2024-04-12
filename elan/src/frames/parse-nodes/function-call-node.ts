@@ -10,8 +10,9 @@ import { OptionalNode } from "./optional-node";
 import { Sequence } from "./sequence";
 import { IndexNode } from "./index-node";
 import { Multiple } from "./multiple";
-import { CLOSE_BRACKET, DOT, OPEN_BRACKET } from "../symbols";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { RuleNames } from "./rule-names";
+import { QualifierDot } from "./qualifierDot";
 
 export class FunctionCallNode extends AbstractSequence {
     qualifier: OptionalNode | undefined;
@@ -25,9 +26,8 @@ export class FunctionCallNode extends AbstractSequence {
             var variable = () => new IdentifierNode();
             var indexes = () => new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
             var instance = () => new Sequence([variable, indexes], RuleNames.instance);
-            var qualifier = () => new Alternatives([global, lib, instance]);
-            var dot = () => new SymbolNode(DOT);
-            var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
+            var qualifiers = new Alternatives([global, lib, instance]);
+            var qualDot = () => new QualifierDot(qualifiers);
             this.qualifier =  new OptionalNode(qualDot);
             this.name = new IdentifierNode();
             this.args =new CSV(() => new ExprNode(),0);

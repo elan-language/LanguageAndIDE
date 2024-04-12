@@ -77,6 +77,7 @@ import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { TermWith } from "../parse-nodes/term-with";
 import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
+import { QualifierDot } from "../parse-nodes/qualifierDot";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -334,11 +335,12 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         const to = toNode ? transform(toNode, scope) : undefined;
         return new RangeAsn(from, to, scope);
     }
+    if (node instanceof QualifierDot) {
+        return transform(node.qualifier, scope);
+    }
 
     if (node instanceof Sequence) {
-        if (node.ruleName === RuleNames.qualDot) {
-            return transform(node.elements[0], scope);
-        }
+
         if (node.ruleName === RuleNames.instance) {
             var id = node.elements[0].matchedText;
             var index = transform(node.elements[1], scope);

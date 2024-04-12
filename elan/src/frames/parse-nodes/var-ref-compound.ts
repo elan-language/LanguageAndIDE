@@ -14,6 +14,7 @@ import { Multiple } from "./multiple";
 import { DOT } from "../symbols";
 import { RuleNames } from "./rule-names";
 import { AbstractSequence } from "./abstract-sequence";
+import { QualifierDot } from "./qualifierDot";
 
 export class VarRefCompound extends AbstractSequence {
     optQualifier: OptionalNode | undefined;
@@ -32,10 +33,8 @@ export class VarRefCompound extends AbstractSequence {
             var prop = () => new KeywordNode(propertyKeyword);
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
-            var qualifier = () => new Alternatives([prop, global, lib, instance]);
-            var dot = () => new SymbolNode(DOT);
-            var qualDot = () => new Sequence([qualifier, dot], RuleNames.qualDot);
-            
+            var qualifiers = new Alternatives([prop, global, lib, instance]);
+            var qualDot = () => new QualifierDot(qualifiers);
             this.simple = new IdentifierNode();
             this.optQualifier =  new OptionalNode(qualDot);
             this.indexes = new Multiple(() => new IndexNode(), 0, RuleNames.indexes);
