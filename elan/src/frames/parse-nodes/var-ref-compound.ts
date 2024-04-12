@@ -1,18 +1,10 @@
 
-import { UnknownType } from "../../symbols/unknown-type";
-
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
 import { OptionalNode } from "./optional-node";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordNode } from "./keyword-node";
-import { Sequence } from "./sequence";
-import { SymbolNode } from "./symbol-node";
-import { AbstractAlternatives } from "./abstract-alternatives";
-import { Multiple } from "./multiple";
-import { DOT } from "../symbols";
-import { RuleNames } from "./rule-names";
 import { AbstractSequence } from "./abstract-sequence";
 import { QualifierDot } from "./qualifierDot";
 

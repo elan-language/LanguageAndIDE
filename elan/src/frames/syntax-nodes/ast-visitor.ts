@@ -44,7 +44,6 @@ import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { RuleNames } from "../parse-nodes/rule-names";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
@@ -78,6 +77,7 @@ import { TermWith } from "../parse-nodes/term-with";
 import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
 import { QualifierDot } from "../parse-nodes/qualifierDot";
+import { InstanceNode } from "../parse-nodes/instanceNode";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -338,14 +338,10 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     if (node instanceof QualifierDot) {
         return transform(node.qualifier, scope);
     }
-
-    if (node instanceof Sequence) {
-
-        if (node.ruleName === RuleNames.instance) {
-            var id = node.elements[0].matchedText;
-            var index = transform(node.elements[1], scope);
-            return new VarAsn(id, undefined, index, scope);
-        }
+    if (node instanceof InstanceNode) {
+        var id = node.variable!.matchedText;
+        var index = transform(node.index, scope);
+        return new VarAsn(id, undefined, index, scope);
     }
 
     if (node instanceof IfExpr) {

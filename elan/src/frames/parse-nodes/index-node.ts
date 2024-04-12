@@ -2,9 +2,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ExprNode } from "./expr-node";
 import { SymbolNode } from "./symbol-node";
-import { Sequence } from "./sequence";
-import { CLOSE_SQ_BRACKET, DOUBLE_DOT, OPEN_SQ_BRACKET } from "../symbols";
-import { RuleNames } from "./rule-names";
+import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { RangeNode } from "./range-node";
 
 export class IndexNode extends AbstractSequence {

@@ -1,14 +1,13 @@
 import { ParseStatus } from "../parse-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
-import { RuleNames } from "./rule-names";
 
 export class Multiple extends AbstractParseNode {
     elementConstructor: () => ParseNode;
     minimum: number;
     elements: ParseNode[] = [];
 
-    constructor(elementConstructor: () => ParseNode, minimum: number, public ruleName? : RuleNames) {
+    constructor(elementConstructor: () => ParseNode, minimum: number) {
         super();
         this.elementConstructor = elementConstructor;
         this.minimum = minimum;

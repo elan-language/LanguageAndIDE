@@ -7,11 +7,9 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
-import { Sequence } from "./sequence";
-import { IndexNode } from "./index-node";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
-import { RuleNames } from "./rule-names";
 import { QualifierDot } from "./qualifierDot";
+import { InstanceNode } from "./instanceNode";
 
 export class FunctionCallNode extends AbstractSequence {
     qualifier: OptionalNode | undefined;
@@ -22,9 +20,7 @@ export class FunctionCallNode extends AbstractSequence {
         if (text.trim().length > 0) {
             var global = () => new KeywordNode(globalKeyword);
             var lib = () => new KeywordNode(libraryKeyword);
-            var variable = () => new IdentifierNode();
-            var index = () => new OptionalNode(() => new IndexNode());
-            var instance = () => new Sequence([variable, index], RuleNames.instance);
+            var instance = () => new InstanceNode();;
             var qualifiers = new Alternatives([global, lib, instance]);
             var qualDot = () => new QualifierDot(qualifiers);
             this.qualifier =  new OptionalNode(qualDot);

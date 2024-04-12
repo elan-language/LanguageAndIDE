@@ -40,6 +40,7 @@ import { CommaNode } from '../frames/parse-nodes/comma-node';
 import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
 import { NewInstance } from '../frames/parse-nodes/new-instance';
+import { InstanceNode } from '../frames/parse-nodes/instanceNode';
 
 suite('ParseNodes', () => {
 
@@ -256,6 +257,13 @@ suite('ParseNodes', () => {
 
 		testNodeParse(new CSV(() => new ExprNode(), 0), ``, ParseStatus.valid, "", "");
 	});
+	test('Instance', () => {
+		testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
+		testNodeParse(new InstanceNode(), `bar`, ParseStatus.valid, `bar`, "", "");
+		testNodeParse(new InstanceNode(), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
+		testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo]`, "[0]", "");
+	});
+
 	test('Function Call', () => {
 		testNodeParse(new FunctionCallNode(), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new FunctionCallNode(), `  `, ParseStatus.empty, ``, "", "");

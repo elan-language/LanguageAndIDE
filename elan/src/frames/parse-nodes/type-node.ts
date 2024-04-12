@@ -1,12 +1,9 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { CSV } from "./csv";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
-import { ARROW, CLOSE_BRACKET, GT, LT, OPEN_BRACKET } from "../symbols";
-import { RuleNames } from "./rule-names";
-import { FixedTextNode } from "./fixed-text-node";
-import { ofKeyword, returnKeyword } from "../keywords";
+import { ARROW, GT, LT } from "../symbols";
+import { ofKeyword } from "../keywords";
 import { CommaNode } from "./comma-node";
 import { KeywordNode } from "./keyword-node";
 import { Multiple } from "./multiple";
