@@ -75,6 +75,7 @@ import { KVPnode } from "../parse-nodes/kvp-node";
 import { KvpAsn } from "./kvp-asn";
 import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { TermWith } from "../parse-nodes/term-with";
+import { TypeTuple } from "../parse-nodes/type-tuple";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -320,37 +321,28 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         return new WithAsn(obj, changes, scope);
     }
 
+    if (node instanceof TypeTuple) {
+        const gp = transformMany(node.types as CSV, scope);
+        return new TypeAsn("Tuple", gp, scope);
+    }
+
     if (node instanceof Sequence) {
-
-
         if (node.ruleName === RuleNames.qualDot) {
             return transform(node.elements[0], scope);
         }
-
         if (node.ruleName === RuleNames.instance) {
             var id = node.elements[0].matchedText;
             var index = transform(node.elements[1], scope);
-
             return new VarAsn(id, undefined, index, scope);
         }
-
-
-
-        if (node.ruleName === RuleNames.tuple) {
-            const gp = transformMany(node.elements[1] as CSV, scope);
-            return new TypeAsn("Tuple", gp, scope);
-        }
-
         if (node.ruleName === RuleNames.rangeTo) {
             const to = transform(node.elements[1], scope);
             return new RangeAsn(undefined, to, scope);
         }
-
         if (node.ruleName === RuleNames.rangeFrom) {
             const from = transform(node.elements[0], scope);
             return new RangeAsn(from, undefined, scope);
         }
-
         if (node.ruleName === RuleNames.rangeBetween) {
             const to = transform(node.elements[2], scope);
             const from = transform(node.elements[0], scope);

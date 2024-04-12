@@ -3,7 +3,7 @@ import { assertAreEqualByHtml, assertAreEqualBySource, assertEffectOfAction, ass
 import { CollapseAll, ExpandAll, SelectMainById, SelectStatementById, T03_mainWithAllStatements, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
 
 
-suite('Milestone 1 - Html rendering of code from model', () => {
+suite('Parse source and generate Html', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
  	test('Test Empty File', (done) => {
