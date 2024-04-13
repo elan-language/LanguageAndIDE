@@ -229,12 +229,12 @@ suite('ParseNodes', () => {
 		testNodeParse(new Multiple(() => new KeywordNode("foo"), 1), `foofoo`, ParseStatus.invalid, "", "foofoo", "");
 	});
 	test('CommaNode', () => {
-		var int = () => new LitInt();
-		testNodeParse(new CommaNode(int()), ``, ParseStatus.incomplete, ``, "", "");
-		testNodeParse(new CommaNode(int()), `, 3`, ParseStatus.valid, ``, "", ", 3");
-		testNodeParse(new CommaNode(int()), ` ,3`, ParseStatus.valid, ``, "", ", 3");
-		testNodeParse(new CommaNode(int()), `.`, ParseStatus.invalid, ``, ".", "");
-		testNodeParse(new CommaNode(int()), `,,`, ParseStatus.invalid, ``, ",,", "");
+		testNodeParse(new CommaNode(), ``, ParseStatus.incomplete, ``, "", "");
+		testNodeParse(new CommaNode(), `,`, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), ` ,`, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), `  ,    `, ParseStatus.valid, ``, "", ", ");
+		testNodeParse(new CommaNode(), `.`, ParseStatus.invalid, ``, ".", "");
+		testNodeParse(new CommaNode(), `,,`, ParseStatus.valid, `,`, ",", "");
 	});
 	test('CSV', () => {
 		testNodeParse(new CSV(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");

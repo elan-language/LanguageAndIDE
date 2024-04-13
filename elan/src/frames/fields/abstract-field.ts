@@ -69,12 +69,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     getCompletion(): string {
-        var comp = "";
-        if (this.isSelected()) {
-            this.parseCurrentText();
-            comp = this.rootNode? `completion>${this.rootNode.getCompletionAsHtml()}</completion>` : ""; 
-        } 
-        return comp;
+        return this.rootNode? this.rootNode.getCompletionAsHtml() : "";
     }
 
     getPlainTextCompletion() : string {
@@ -272,16 +267,12 @@ export abstract class AbstractField implements Selectable, Field {
         return this._classes.join(" ");
     };
 
-    private placeholderKind() : string {
+    placeholderKind() : string {
         return this.placeholderIsCode ? ` class="code"` : ``;
     }
 
-    getPlaceholder() : string {
-        return this.isSelected()? `` : `<placeholder${this.placeholderKind()}>${this.placeholder}</placeholder>`;
-    }
-
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text>${this.getPlaceholder()}${this.getCompletion()}</field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder${this.placeholderKind()}>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion></field>`;
     }
 
     indent(): string {

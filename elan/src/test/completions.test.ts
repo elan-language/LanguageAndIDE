@@ -1,10 +1,8 @@
 
 import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
-import { CommaNode } from "../frames/parse-nodes/comma-node";
 import { CSV } from "../frames/parse-nodes/csv";
 import { ExprNode } from "../frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
-import { LitInt } from "../frames/parse-nodes/lit-int";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { Space } from "../frames/parse-nodes/parse-node-helpers";
@@ -91,15 +89,6 @@ suite('Completions', () => {
         testCompletion(new TypeNode(), "Func<", ParseStatus.incomplete, "of <pr>Type</pr> => <pr>Type</pr>>");
         testCompletion(new TypeNode(), "Func<of Foo", ParseStatus.incomplete, " => <pr>Type</pr>>");
         testCompletion(new TypeNode(), "Func<of Foo,", ParseStatus.incomplete, "<pr>Type</pr> => <pr>Type</pr>>");
-    });
-
-    test('CommaNode', () => {
-        var int = () => new LitInt();
-        testCompletion(new CommaNode(int()), "", ParseStatus.incomplete, ",<pr>integer value</pr>");
-        testCompletion(new CommaNode(int()), ",", ParseStatus.incomplete, "<pr>integer value</pr>");
-        testCompletion(new CommaNode(int()), ", ", ParseStatus.incomplete, "<pr>integer value</pr>");
-        testCompletion(new CommaNode(int()), ", 3", ParseStatus.valid, "");
-        testCompletion(new CommaNode(int()), ",3", ParseStatus.valid, "");
     });
 
 });

@@ -78,7 +78,6 @@ import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
 import { QualifierDot } from "../parse-nodes/qualifierDot";
 import { InstanceNode } from "../parse-nodes/instanceNode";
-import { transcode } from "buffer";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -242,7 +241,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof CommaNode) {
-        return transform(node.node, scope);
+        return undefined;
     }
 
     if (node instanceof SpaceNode) {
