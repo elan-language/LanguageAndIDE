@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements, T05_classes } from './milestone_1.functions.';
+import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
 import {ctrl_down, ctrl_up, del, down, enter, ins, shift_down, shift_enter, shift_ins, up } from './testHelpers';
 import assert from 'assert';
 import { Function } from '../frames/globals/function';

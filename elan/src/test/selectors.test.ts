@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { T09_emptyMainAndClassWithGlobalSelector } from './model-generating-functions.';
 import { key } from './testHelpers';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';

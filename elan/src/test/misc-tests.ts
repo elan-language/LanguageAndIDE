@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements } from './milestone_1.functions.';
+import { T03_mainWithAllStatements } from './model-generating-functions.';
 import { assertElementHasClasses, key } from './testHelpers';
 import assert from 'assert';
 import { Regexes } from '../frames/fields/regexes';

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from './milestone_1.functions.';
+import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from './model-generating-functions.';
 import {assertClasses, down, end, enter, esc, home, ins, right, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { IdentifierField } from '../frames/fields/identifier-field';
