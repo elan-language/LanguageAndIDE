@@ -28,7 +28,7 @@ export class TypeNode extends AbstractAlternatives {
                 var of = () => new KeywordNode(ofKeyword);
                 var sp0 = () => new SpaceNode(Space.required);
                 var type = () => new TypeNode();
-                var commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
+                var commaType = () => new CommaNode(new TypeNode());
                 var commaTypes = () => new Multiple(commaType, 0);
                 var sp1 = () => new SpaceNode(Space.required);
                 var arrow = () => new SymbolNode(ARROW);;

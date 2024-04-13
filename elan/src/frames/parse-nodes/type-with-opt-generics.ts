@@ -30,7 +30,7 @@ export class TypeWithOptGenerics extends AbstractSequence {
             var of = () => new KeywordNode(ofKeyword);
             var sp = () => new SpaceNode(Space.required);
             var type = () => new TypeNode();
-            var commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
+            var commaType = () => new CommaNode(new TypeNode());
             var commaTypes = () => new Multiple(commaType, 0);
             var gt =() => new SymbolNode(GT);
             var genericNode = () => new Sequence([lt,of,sp,type,commaTypes,gt]);
