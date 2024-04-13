@@ -42,7 +42,7 @@ import { WithClause } from '../frames/parse-nodes/with-clause';
 import { NewInstance } from '../frames/parse-nodes/new-instance';
 import { InstanceNode } from '../frames/parse-nodes/instanceNode';
 
-suite('ParseNodes', () => {
+suite('Parsing Nodes', () => {
 
 	vscode.window.showInformationMessage('Start all unit tests.');
 	test('UnaryExpression', () => {

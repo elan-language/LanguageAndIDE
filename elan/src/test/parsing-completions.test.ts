@@ -11,7 +11,7 @@ import { TypeNode } from "../frames/parse-nodes/type-node";
 import { ParseStatus } from "../frames/parse-status";
 import { testCompletion } from "./testHelpers";
 
-suite('Completions', () => {
+suite('Parsing - Completions', () => {
 
     //TODO - merge the completions tests into the parse node tests
 

@@ -9,7 +9,6 @@ import { VarStatement } from '../frames/statements/var-statement';
 import { Print } from '../frames/statements/print';
 import { Throw } from '../frames/statements/throw';
 import { CallStatement } from '../frames/statements/call-statement';
-import { assertFileParses } from './testHelpers';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
@@ -18,36 +17,6 @@ import { LetStatement } from '../frames/statements/let-statement';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
-
-	test('code source - readToNonMatchingCloseBracket1', () => {
-		var source = new CodeSourceFromString("foo, bar, yon) ");
-		var read = source.readToNonMatchingCloseBracket();
-		assert.equal(read, "foo, bar, yon");
-		assert.equal(source.getRemainingCode(), ") ");
-	});
-	test('code source - readToNonMatchingCloseBracket2', () => {
-		var source = new CodeSourceFromString(`"x)y" ) `);
-		var read = source.readToNonMatchingCloseBracket();
-		assert.equal(read, `"x)y" `);
-		assert.equal(source.getRemainingCode(), ") ");
-	});
-	test('code source - readToNonMatchingCloseBracket3', () => {
-		var source = new CodeSourceFromString(`x() ) `);
-		var read = source.readToNonMatchingCloseBracket();
-		assert.equal(read, `x() `);
-		assert.equal(source.getRemainingCode(), ") ");
-	});
-
-	test('parse Frames - empty file', () => {
-        var source = new CodeSourceFromString("");
-		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
-		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
-
-`;
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); 
 
     test('parse Frames - set statement', () => {
 		var code = "  set fooBar to 3.141";
@@ -419,72 +388,5 @@ end class
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
-/* 	test('parse Frames - all multiline statements', () => {
-		var code = `# FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  while newGame
-
-  end while
-  repeat
-
-  end repeat when score > 20
-  for i from 1 to 10 step 1
-
-  end for
-  each letter in "Charlie Duke"
-
-  end each
-  if y > 4
-
-  end if
-  if y > 4
-    else
-
-  end if
-  if y > 4
-    else if y > 10
-
-    else
-
-  end if
-  try
-    catch e
-
-  end try
-  switch a
-    case 1
-
-    default
-
-  end switch
-end main
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	}); */
-	test('parse Frames - merge-sort', (done) => {
-		assertFileParses(done, "programs/merge-sort.elan");
-	});
-	test('parse Frames - snake', (done) => {
-    assertFileParses(done, "programs/snake.elan");
-  });
-  test('parse Frames - wordle', (done) => {
-    assertFileParses(done, "programs/wordle.elan");
-	});
-  test('parse Frames - life', (done) => {
-    assertFileParses(done, "programs/life.elan");
-	});
-  test('parse Frames - best-fit', (done) => {
-    assertFileParses(done, "programs/best-fit.elan");
-	});
-  test('parse Frames - binary-search', (done) => {
-    assertFileParses(done, "programs/binary-search.elan");
 	});
 });

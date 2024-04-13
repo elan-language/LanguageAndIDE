@@ -8,7 +8,6 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { transform } from "../syntax-nodes/ast-visitor";
 import { AbstractField } from "./abstract-field";
 
-
 export class ExpressionField extends AbstractField {
     isParseByNodes = true;
 

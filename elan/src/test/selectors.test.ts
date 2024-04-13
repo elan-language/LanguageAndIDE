@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
-import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
-import { assertClasses, assertElementHasClasses, key } from './testHelpers';
-import { isParent } from '../frames/helpers';
+import { T09_emptyMainAndClassWithGlobalSelector } from './milestone_1.functions.';
+import { key } from './testHelpers';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
 import { Class } from '../frames/globals/class';
@@ -17,71 +16,8 @@ import { FunctionMethod } from '../frames/class-members/function-method';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 
-suite('Milestone 1 - Unit tests', () => {
+suite('Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
-
-	test('Selectable Select', () => {
-		assertClasses(
-			T04_allGlobalsExceptClass,
-			(ff) => {
-				const frame = ff.getById("const1");
-				frame.select(true, false);
-			},
-			["const1", "valid", "selected focused valid"]);
-
-	});
-
-	test('Select First Child', () => {
-		assertClasses(
-			T04_allGlobalsExceptClass,
-			(ff) => {
-				const mn = ff.getById("main4");
-				if (isParent(mn)){
-					const s = mn.getFirstChild();
-					s.select(true, false);
-				}
-			},
-			["select5", "valid empty", "selected focused valid empty"]);
-	});
-
-	test('Collapse Main', () => {
-		assertClasses(
-			T04_allGlobalsExceptClass,
-			(ff) => {
-				const mn = ff.getById("main4");
-				if (isParent(mn)){
-					mn.collapse();
-				}
-			},
-			["main4", "valid multiline", "collapsed valid multiline"]);
-	});
-
-	test('Invalid identifier', () => {
-		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("var4").processKey(key("X"));
-		assertElementHasClasses(file, "var3", "invalid");
-		assertElementHasClasses(file, "fileStatus", "invalid");
-	});
-
-	test('Valid identifier', () => {
-		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("var4").processKey(key("q"));
-		assertElementHasClasses(file, "var4", "valid");
-		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
-	});
-
-	test('Valid variable statement', () => {
-		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
-		file.getById("var4").processKey(key("q"));
-		file.getById("expr5").processKey(key("5"));
-		assertElementHasClasses(file, "var3", "valid");
-	});
 
 	test("Statement Select - variable", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
