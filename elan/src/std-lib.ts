@@ -93,6 +93,14 @@ export class StdLib {
     isBeforeOrSameAs(s1 : string, s2 : string){
         return s1 < s2 || s1 === s2;
     }
+
+    first<T>(st : Array<T>){
+        return st[0];
+    }
+
+    second<T>(st : Array<T>){
+        return st[1];
+    }
    
 
     pi = Math.PI;
