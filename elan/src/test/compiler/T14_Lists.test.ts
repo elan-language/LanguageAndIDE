@@ -296,6 +296,94 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, 'List [6, 7, 8]List [5, 6]List [4, 5]');
   });
 
+  test('Pass_addElementToList', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [4,5,6,7,8]
+  var b set to a + 9
+  print a
+  print b
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = [4, 5, 6, 7, 8];
+  var b = system.concat(a, 9);
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]List [4, 5, 6, 7, 8, 9]');
+  });
+
+  test('Pass_addListToElement', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [4,5,6,7,8]
+  var b set to 9 + a
+  print a
+  print b
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = [4, 5, 6, 7, 8];
+  var b = system.concat(9, a);
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]List [9, 4, 5, 6, 7, 8]');
+  });
+
+  test('Pass_addListToListUsingPlus', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to [4,5,6,7,8]
+    var b set to [1,2,3]
+    var c set to a + b
+    print a
+    print b
+    print c
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = [4, 5, 6, 7, 8];
+  var b = [1, 2, 3];
+  var c = system.concat(a, b);
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]List [1, 2, 3]List [4, 5, 6, 7, 8, 1, 2, 3]');
+  });
+
   
 
   // Fails TODO

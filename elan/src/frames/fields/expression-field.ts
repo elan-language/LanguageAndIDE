@@ -5,6 +5,7 @@ import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { ParseStatus } from "../parse-status";
 import { transform } from "../syntax-nodes/ast-visitor";
 import { AbstractField } from "./abstract-field";
 
@@ -25,11 +26,18 @@ export class ExpressionField extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine();
 
     renderAsObjectCode(): string {
-        if (this.rootNode){
-            const ast = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
-            return ast?.renderAsObjectCode() ?? super.renderAsObjectCode();
+        if (this.rootNode && this.rootNode.status === ParseStatus.valid){
+            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
+            return this.astNode?.renderAsObjectCode() ?? super.renderAsObjectCode();
         }
 
         return super.renderAsObjectCode();
+    }
+
+    get symbolType() {
+        if (this.astNode) {
+            return this.astNode.symbolType;
+        }
+        return UnknownType.Instance;
     }
 }

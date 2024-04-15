@@ -34,4 +34,17 @@ export class System {
     pause(n: number) {
         return new Promise(r => setTimeout(r, n));
     }
+
+    concat<T>(lhs : Array<T> | T, rhs : Array<T> | T) {
+        if (Array.isArray(lhs) && Array.isArray(rhs)){
+            return lhs.concat(rhs);
+        }
+
+        if (Array.isArray(lhs)){
+            return lhs.concat([rhs as T]);
+        }
+
+        // if (Array.isArray(rhs)){
+        return [lhs as T].concat(rhs);
+    }
 }

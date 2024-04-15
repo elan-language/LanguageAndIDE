@@ -48,4 +48,8 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     get symbolId() {
         return this.name.renderAsSource();
     }
+
+    get symbolType() {
+        return this.expr.symbolType;
+    }
 } 
