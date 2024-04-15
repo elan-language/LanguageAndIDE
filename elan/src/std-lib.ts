@@ -17,6 +17,10 @@ export class StdLib {
             return `List [${v.map(i => this.asString(i)).join(", ")}]`;
         }
 
+        if (typeof v === "object" && "asString" in v) {
+            return v.asString();
+        }
+
         if (typeof v === "object") {
             return `Dictionary [${Object.getOwnPropertyNames(v).map(n => `${n}:${v[n]}`).join(", ")}]`;
         }

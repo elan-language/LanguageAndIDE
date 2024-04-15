@@ -6,6 +6,7 @@ import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
 import { escapeAngleBrackets, isCollapsible} from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { AstNode } from "../syntax-nodes/ast-node";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -23,6 +24,7 @@ export abstract class AbstractField implements Selectable, Field {
     private status: ParseStatus | undefined;
     private cursorPos: number = 0; //Relative to LH end of text
     protected rootNode?: ParseNode;
+    protected astNode?: AstNode;
     protected completion: string = "";
 
     constructor(holder: Frame) {
