@@ -10,7 +10,7 @@ import { AstNode } from "../syntax-nodes/ast-node";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
-    protected text: string = "";
+    text: string = "";
     protected placeholder: string = "";
     protected placeholderIsCode: boolean = false;
     protected useHtmlTags: boolean = false;
@@ -22,7 +22,7 @@ export abstract class AbstractField implements Selectable, Field {
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
     private status: ParseStatus | undefined;
-    private cursorPos: number = 0; //Relative to LH end of text
+    cursorPos: number = 0; //Relative to LH end of text
     protected rootNode?: ParseNode;
     protected astNode?: AstNode;
     protected completion: string = "";
@@ -111,9 +111,16 @@ export abstract class AbstractField implements Selectable, Field {
             case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
             case "Backspace": {
                 if (this.cursorPos > 0) {
-                    this.text = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                    var reduced = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                    this.text = reduced;
                     this.cursorPos --;
+                    var cursorBeforeParse = this.cursorPos;
                     this.parseCurrentText();
+                    var afterParse = this.text.length;
+                    if (this.text.length > reduced.length) {
+                        this.text = reduced;
+                        this.cursorPos = cursorBeforeParse;
+                    }
                 }
                 break;
             } 

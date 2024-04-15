@@ -35,7 +35,7 @@ export async function main() {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print '_'+"Hello"+'!'
+  print '_' + "Hello" + '!'
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
@@ -57,7 +57,7 @@ export async function main() {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print "Hello"+3.1
+  print "Hello" + 3.1
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };

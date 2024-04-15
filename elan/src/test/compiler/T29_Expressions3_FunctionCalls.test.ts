@@ -31,7 +31,7 @@ export async function main() {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to sin(pi/180*30)
+  var x set to sin(pi / 180 * 30)
   print x
 end main`;
 

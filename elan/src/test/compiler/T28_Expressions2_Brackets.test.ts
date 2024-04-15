@@ -102,7 +102,7 @@ export async function main() {
 
 main
   var x set to 16.0 / 2 ^ 3
-  var y set to (16.0/2) ^ 3
+  var y set to (16.0 / 2) ^ 3
   print x
   print y
 end main`;

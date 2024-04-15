@@ -9,6 +9,11 @@ import { SpaceNode } from "./space-node";
 import { Space } from "./parse-node-helpers";
 
 export class BinaryOperation extends AbstractAlternatives {
+
+    constructor() {
+        super();
+        this.placeholder = "operator";
+    }
     parseText(text: string): void {  
         this.alternatives.push(new OperatorNode(PLUS));
         this.alternatives.push(new OperatorNode(MINUS));
@@ -30,14 +35,6 @@ export class BinaryOperation extends AbstractAlternatives {
         this.alternatives.push(new KeywordNode(modKeyword));
         this.alternatives.push(new KeywordNode(divKeyword));;
         super.parseText(text.trimStart());
-    }
-
-    renderAsSource(): string {
-        return `${this.bestMatch?.renderAsSource()}`;
-    }
-
-    renderAsHtml(): string {
-        return `${this.bestMatch?.renderAsHtml()}`;
     }
 
     renderAsObjectCode(): string {

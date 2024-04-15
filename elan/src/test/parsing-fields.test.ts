@@ -133,7 +133,7 @@ suite('Field Parsing Tests', () => {
 			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 			var v = new VarStatement(main);
 			var expr = v.expr;
-			expr.setText(`"{op} times {op2} equals {op1*op2}"`);
+			expr.setText(`"{op} times {op2} equals {op1 * op2}"`);
 			expr.parseCurrentText();
 			assert.equal(expr.getStatus(), ParseStatus.valid);
 			assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1 * op2}"`);

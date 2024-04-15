@@ -6,6 +6,8 @@ import { lambdaKeyword, returnKeyword } from "../keywords";
 import { ParamDefNode } from "./param-def-node";
 import { SymbolNode } from "./symbol-node";
 import { ARROW } from "../symbols";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
 
 export class Lambda extends AbstractSequence {
     params: CSV | undefined;
@@ -20,7 +22,9 @@ export class Lambda extends AbstractSequence {
             this.elements.push(new KeywordNode(lambdaKeyword));
             this.params = new CSV(() => new ParamDefNode(), 1);
             this.elements.push(this.params);
+            this.elements.push(new SpaceNode(Space.required));
             this.elements.push(new SymbolNode(ARROW));
+            this.elements.push(new SpaceNode(Space.required));
             this.expr = new ExprNode();
             this.elements.push(this.expr);
             super.parseText(text);
@@ -32,6 +36,6 @@ export class Lambda extends AbstractSequence {
     }
 
     renderAsSource(): string {
-        return `${lambdaKeyword} ${this.elements[1].renderAsSource()} ${ARROW} ${this.elements[3].renderAsSource()}`;
+        return `${lambdaKeyword} ${this.params!.renderAsSource()} ${ARROW} ${this.expr!.renderAsSource()}`;
     }
 }
