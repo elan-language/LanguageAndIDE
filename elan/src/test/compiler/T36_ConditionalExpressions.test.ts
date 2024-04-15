@@ -28,7 +28,7 @@ export async function main() {
 }
 
 function grade(score) {
-  return score > 80 ?  "Distinction" : score > 60 ?  "Merit" : score > 40 ?  "Pass" :  "Fail";
+  return score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
 }
 `;
 
@@ -54,7 +54,7 @@ end main
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
   var score = 70;
-  var grade = score > 80 ?  "Distinction" : score > 60 ?  "Merit" : score > 40 ?  "Pass" :  "Fail";
+  var grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
   system.print(_stdlib.asString(grade));
 }
 `;

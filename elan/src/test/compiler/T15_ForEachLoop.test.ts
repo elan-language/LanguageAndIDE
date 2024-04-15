@@ -103,7 +103,7 @@ export async function main() {
 main
   each x in "12"
     each y in "34"
-      print "{x}{y }"
+      print "{x}{y}"
     end each
   end each
 end main`;

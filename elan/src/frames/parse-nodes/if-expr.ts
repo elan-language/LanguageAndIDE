@@ -2,6 +2,8 @@ import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
 import { ifKeyword, elseKeyword, thenKeyword } from "../keywords";
+import { SpaceNode } from "./space-node";
+import { Space } from "./parse-node-helpers";
 
 export class IfExpr extends AbstractSequence {
     condition: ExprNode | undefined;
@@ -11,12 +13,17 @@ export class IfExpr extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.elements.push(new KeywordNode(ifKeyword));
+            this.elements.push(new SpaceNode(Space.required));
             this.condition = new ExprNode();
             this.elements.push(this.condition);
+            this.elements.push(new SpaceNode(Space.required));
             this.elements.push(new KeywordNode(thenKeyword));
+            this.elements.push(new SpaceNode(Space.required));
             this.whenTrue = new ExprNode();
             this.elements.push(this.whenTrue);
+            this.elements.push(new SpaceNode(Space.required));
             this.elements.push(new KeywordNode(elseKeyword));
+            this.elements.push(new SpaceNode(Space.required));
             this.whenFalse = new ExprNode();
             this.elements.push(this.whenFalse);
             super.parseText(text);

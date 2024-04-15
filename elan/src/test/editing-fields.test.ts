@@ -104,7 +104,7 @@ test('Simple entry & editing of text in a name', () => {
         assert.equal(expr.cursorPos, 0); 
     });
 
-    test('Entry of text with formatting ', () => { 
+    test('Entry of text with formatting 2', () => { 
         var f = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
         var t = f.returnType;
         t.processKey(key("F"));
@@ -127,7 +127,81 @@ test('Simple entry & editing of text in a name', () => {
         assert.equal(t.text, "F<of B>");
         assert.equal(t.getCompletion(), "");
         assert.equal(t.cursorPos, 7);
-
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F<of B");
+        assert.equal(t.getCompletion(), ">");
+        assert.equal(t.cursorPos, 6);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F<of ");
+        assert.equal(t.getCompletion(), "<pr>Type</pr>>");
+        assert.equal(t.cursorPos, 5);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F<of");
+        assert.equal(t.getCompletion(), " <pr>Type</pr>>");
+        assert.equal(t.cursorPos, 4);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F<o");
+        assert.equal(t.getCompletion(), "f <pr>Type</pr>>");
+        assert.equal(t.cursorPos, 3);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F<");
+        assert.equal(t.getCompletion(), "of <pr>Type</pr>>");
+        assert.equal(t.cursorPos, 2);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "F");
+        assert.equal(t.getCompletion(), "");
+        assert.equal(t.cursorPos, 1);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "");
+        assert.equal(t.getCompletion(), "<pr>Type</pr>");
+        assert.equal(t.cursorPos, 0);
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "");
+        assert.equal(t.getCompletion(), "<pr>Type</pr>");
+        assert.equal(t.cursorPos, 0);
     });
 
+    test('Entry of text with formatting 3', () => { 
+        var f = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
+        var t = f.returnType;
+        t.processKey(key("("));
+        assert.equal(t.text, "(");
+        assert.equal(t.cursorPos, 1);
+        assert.equal(t.getCompletion(), "<pr>Type</pr>)"); 
+        t.processKey(key("F"));
+        t.processKey(key("o"));
+        t.processKey(key("o"));
+        t.processKey(key(","));
+        assert.equal(t.text, "(Foo, ");
+        assert.equal(t.cursorPos, 6); 
+        assert.equal(t.getCompletion(), "<pr>Type</pr>)");
+        t.processKey(key("B"));
+        t.processKey(key("a"));
+        t.processKey(key("r"));
+        assert.equal(t.text, "(Foo, Bar");
+        assert.equal(t.cursorPos, 9);
+        assert.equal(t.getCompletion(), ")");
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "(Foo, Ba"); 
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "(Foo, B"); 
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "(Foo, "); 
+        assert.equal(t.cursorPos, 6);
+        assert.equal(t.getCompletion(), "<pr>Type</pr>)");
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "(Foo,");
+        assert.equal(t.cursorPos, 5);
+        assert.equal(t.getCompletion(), "<pr>Type</pr>)");
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, "(Foo"); 
+        assert.equal(t.cursorPos, 4);
+        assert.equal(t.getCompletion(), ")");
+        t.processKey(key("Backspace"));
+        t.processKey(key("Backspace"));
+        t.processKey(key("Backspace"));
+        t.processKey(key("Backspace"));
+        assert.equal(t.text, ""); //i.e. does not accept a prompt as text
+        assert.equal(t.cursorPos, 0);
+    });
 });
