@@ -13,7 +13,7 @@ suite('Editing Fields Tests', () => {
 test('process keys', () => { 
     var func = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
     var params = func.params;
-    var modKey =  { control:false, shift: false, alt: false}
+    var modKey = { control: false, shift: false, alt: false };
     var event: editorEvent = {
         type: 'key',
         target: "frame",
