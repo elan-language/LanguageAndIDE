@@ -11,7 +11,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        var trimmed = text.trimStart();
+        var trimmed = text;
         this.remainingText = trimmed;
         if (this.remainingText.length > 0) {
             var cont = true;

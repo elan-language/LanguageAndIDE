@@ -78,6 +78,8 @@ import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
 import { QualifierDot } from "../parse-nodes/qualifierDot";
 import { InstanceNode } from "../parse-nodes/instanceNode";
+import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
+import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -164,7 +166,10 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         return new LiteralCharAsn(node.matchedText);
     }
 
-    if (node instanceof LitString) {
+    if (node instanceof LitStringEmpty) {
+        return new LiteralStringAsn(node.matchedText);
+    }
+    if (node instanceof LitStringNonEmpty) {
         return new LiteralStringAsn(node.matchedText);
     }
 

@@ -14,6 +14,6 @@ export class EnumVal extends AbstractSequence {
         this.elements.push(new SymbolNode(DOT));
         this.val = new IdentifierNode();
         this.elements.push(this.val);
-        super.parseText(text);
+        super.parseText(text.trimStart());
     }
 }

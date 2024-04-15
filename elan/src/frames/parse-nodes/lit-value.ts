@@ -5,7 +5,8 @@ import { LitBool } from "./lit-bool";
 import { LitChar } from "./lit-char";
 import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
-import { LitString } from "./lit-string";
+import { LitStringEmpty } from "./lit-string-empty";
+import { LitStringNonEmpty } from "./lit-string-non-empty";
 import { LitTuple } from "./lit-tuple";
 
 export class LitValueNode extends AbstractAlternatives {
@@ -19,7 +20,8 @@ export class LitValueNode extends AbstractAlternatives {
         this.alternatives.push(new LitFloat());
         this.alternatives.push(new LitChar());
         this.alternatives.push(new LitBool());
-        this.alternatives.push(new LitString());
+        this.alternatives.push(new LitStringEmpty());
+        this.alternatives.push(new LitStringNonEmpty());
         this.alternatives.push(new EnumVal());
         this.alternatives.push(new LitTuple());
         super.parseText(text);

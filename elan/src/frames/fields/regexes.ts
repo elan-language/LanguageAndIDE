@@ -11,6 +11,6 @@ export class Regexes {
     static readonly literalInt =/^\s*[0-9]+/;
     static readonly negatableLitInt = /^-?[0-9]+/;
     static readonly charValue =/[^']/;
-    static readonly stringContent = /^[^"]*/;
+    static readonly nonEmptyStringContent = /^[^{"]+/;
     static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
 }

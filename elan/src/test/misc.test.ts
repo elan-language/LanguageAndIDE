@@ -8,7 +8,7 @@ import { FileImpl } from '../frames/file-impl';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 
-suite('Unit tests', () => {
+suite('Misc Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	

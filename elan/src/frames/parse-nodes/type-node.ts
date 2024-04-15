@@ -22,7 +22,7 @@ export class TypeNode extends AbstractAlternatives {
         this.remainingText = text;
         if (text.length > 0) {
             // Func - tested first because 'Func' is syntactically valid as a simple type name
-            if (text.trimStart().startsWith("F")) {
+            if (text.trimStart().startsWith("Func")) {
                 var f = () => new SymbolNode("Func");
                 var lt = () => new SymbolNode(LT);
                 var of = () => new KeywordNode(ofKeyword);
@@ -43,7 +43,7 @@ export class TypeNode extends AbstractAlternatives {
             } 
             var single = new TypeWithOptGenerics();
             this.alternatives.push(single);
-            super.parseText(text);
+            super.parseText(text.trimStart());
         }
     }
 }

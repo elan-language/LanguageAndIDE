@@ -29,7 +29,7 @@ export class BinaryOperation extends AbstractAlternatives {
         this.alternatives.push(new KeywordNode(xorKeyword));
         this.alternatives.push(new KeywordNode(modKeyword));
         this.alternatives.push(new KeywordNode(divKeyword));;
-        super.parseText(text);
+        super.parseText(text.trimStart());
     }
 
     renderAsSource(): string {

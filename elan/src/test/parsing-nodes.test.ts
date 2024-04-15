@@ -41,6 +41,10 @@ import { SetClause } from '../frames/parse-nodes/set-clause';
 import { WithClause } from '../frames/parse-nodes/with-clause';
 import { NewInstance } from '../frames/parse-nodes/new-instance';
 import { InstanceNode } from '../frames/parse-nodes/instanceNode';
+import { StringInterpolation } from '../frames/parse-nodes/string-interpolation';
+import { Regexes } from '../frames/fields/regexes';
+import { Alternatives } from '../frames/parse-nodes/alternatives';
+import { RegExMatchNode } from '../frames/parse-nodes/regex-match-node';
 
 suite('Parsing Nodes', () => {
 
@@ -121,7 +125,7 @@ suite('Parsing Nodes', () => {
 	});
 	test('Identifier', () => {
 		testNodeParse(new IdentifierNode(), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new IdentifierNode(), `  `, ParseStatus.invalid, ``, "  ", "");
+		testNodeParse(new IdentifierNode(), `  `, ParseStatus.invalid, ``, "", "");
 		testNodeParse(new IdentifierNode(), `a`, ParseStatus.valid, `a`, "", "a", "");
 		testNodeParse(new IdentifierNode(), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
 		testNodeParse(new IdentifierNode(), `abc `, ParseStatus.valid, `abc`, " ", "abc");
@@ -203,13 +207,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "", ParseStatus.valid, "", "", "");
 		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "  ", ParseStatus.incomplete, "  ", "", "");
 	});
-	test('LitString', () => {
-		testNodeParse(new LitString(), `"abc"`, ParseStatus.valid, `"abc"`, "", "", `<string>"abc"</string>`);
-		testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
-		testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
-		testNodeParse(new LitString(), `abc`, ParseStatus.invalid, "", "abc", "", "");
-		testNodeParse(new LitString(), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
-	});
+
 	test('Multiple', () => {
 		testNodeParse(new Multiple(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");
 		testNodeParse(new Multiple(() => new LitInt(), 1), ``, ParseStatus.empty, ``, "", "");
@@ -456,4 +454,31 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
 		testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
 	});
+	test('String Interpolation', () => {
+		testNodeParse(new StringInterpolation(), ``, ParseStatus.empty, "", "", "", "");
+		testNodeParse(new StringInterpolation(), "{x + 1}", ParseStatus.valid, "{x + 1}", "", "", "");
+		testNodeParse(new StringInterpolation(), "{x", ParseStatus.incomplete, "{x", "", "", "");
+		testNodeParse(new StringInterpolation(), "{}", ParseStatus.invalid, "", "{}", "", "");
+	});
+	test('LitString', () => {
+		testNodeParse(new LitString(), `""`, ParseStatus.valid, `""`, "", "", `<string>""</string>`);
+		testNodeParse(new LitString(), `"abc"`, ParseStatus.valid, `"abc"`, "", "", `<string>"abc"</string>`);
+		testNodeParse(new LitString(), `"abc def"`, ParseStatus.valid, `"abc def"`, "", "", `<string>"abc def"</string>`);
+		testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
+		testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
+		testNodeParse(new LitString(), `abc`, ParseStatus.invalid, "", "abc", "", "");
+		testNodeParse(new LitString(), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
+	});
+	test('Interpolated strings', () => {
+        var field = () => new StringInterpolation();
+        var plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
+        var segment = () => new Alternatives([field, plainText]);
+        testNodeParse(segment(), `abc`, ParseStatus.valid, "abc","");
+		testNodeParse(segment(), `{x}`, ParseStatus.valid, "{x}","");
+		testNodeParse(segment(), `"`, ParseStatus.invalid, "",`"`);
+
+		testNodeParse(new LitString(), `"{x}{y}"`, ParseStatus.valid, "","");
+		testNodeParse(new LitString(), `"{a} times {b} equals{c}"`, ParseStatus.valid, "","");
+	});
+
 });
