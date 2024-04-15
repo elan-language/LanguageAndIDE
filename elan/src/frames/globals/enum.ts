@@ -43,9 +43,9 @@ end enum\r
     }
 
     renderAsObjectCode(): string {
-        return `enum ${this.name.renderAsSource()} {\r
+        return `var ${this.name.renderAsSource()} = {\r
 ${singleIndent()}${this.values.renderAsObjectCode()}\r
-}\r
+};\r
 `;
     }
 

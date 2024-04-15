@@ -219,7 +219,7 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "5.5");
   });
 
-  ignore_test('Pass_Interpolation', async () => {
+  test('Pass_Interpolation', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -245,6 +245,84 @@ export async function main() {
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
+  });
+  
+  // not supported
+  ignore_test('Pass_UseBracesInString', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  var b set to 4
+  var c set to "{{{a} x {b}}} = {a * b}"
+  print c
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = 3;
+  var b = 4;
+  var c = \`\${a} x \${b} = \${a * b}\`;
+  system.print(_stdlib.asString(c));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
+  });
+
+
+  test('Pass_newLineConstant', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var c set to "Hello " + newline + "World!"
+  print c
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var c = "Hello " + _stdlib.newline + "World!";
+  system.print(_stdlib.asString(c));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello \nWorld!");
+  });
+
+  test('Pass_AppendStringToNumber', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3.1 + "Hello"
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = 3.1 + "Hello";
+  system.print(_stdlib.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.1Hello");
   });
 
   // more TODO pending interpolation

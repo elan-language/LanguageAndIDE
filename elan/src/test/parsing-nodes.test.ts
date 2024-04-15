@@ -354,6 +354,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new IfExpr(), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
 		testNodeParse(new IfExpr(), `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ParseStatus.valid, "", "", "");
 		testNodeParse(new IfExpr(), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(), `if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"`, ParseStatus.valid, "", "", "");
 	});
 	test('ParamDefNode', () => {
 		testNodeParse(new ParamDefNode(), `x as String`, ParseStatus.valid, "x as String", "", "x as String", "x <keyword>as</keyword> <type>String</type>");

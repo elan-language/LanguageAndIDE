@@ -102,4 +102,6 @@ export class StdLib {
     cos = Math.cos;
 
     min = Math.min;
+
+    newline = "\n";
 }
