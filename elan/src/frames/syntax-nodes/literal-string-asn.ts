@@ -3,14 +3,13 @@ import { AstNode } from "./ast-node";
 
 export class LiteralStringAsn implements AstNode {
     
-    constructor(rawValue: string) {
-        this.value = rawValue.trim();
+    constructor(private value: string) {
+        
     }
+
     renderAsObjectCode(): string {
         return `${this.value}`;
     }
-
-    value: string;
 
     get symbolType() {
         return StringType.Instance;

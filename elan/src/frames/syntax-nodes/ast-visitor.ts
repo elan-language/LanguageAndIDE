@@ -80,6 +80,10 @@ import { QualifierDot } from "../parse-nodes/qualifierDot";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
+import { StringInterpolation } from "../parse-nodes/string-interpolation";
+import { InterpolatedAsn } from "./interpolated-asn";
+import { RegExMatchNode } from "../parse-nodes/regex-match-node";
+import { SegmentedStringAsn } from "./segmented-string-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -169,7 +173,14 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     if (node instanceof LitStringEmpty) {
         return new LiteralStringAsn(node.matchedText);
     }
+
     if (node instanceof LitStringNonEmpty) {
+        const ss = node.segments ? transformMany(node.segments, scope) : [];
+
+        if (ss.map(i => i instanceof InterpolatedAsn).reduce((i, s) => i || s)){
+            return new SegmentedStringAsn(ss, scope);
+        }
+
         return new LiteralStringAsn(node.matchedText);
     }
 
@@ -368,6 +379,16 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         var value = transform(node.value, scope)!;
  
         return new KvpAsn(key, value, scope);
+     }
+
+     if (node instanceof StringInterpolation) {
+        var value = transform(node.expr, scope)!;
+ 
+        return new InterpolatedAsn(value, scope);
+     }
+
+     if (node instanceof RegExMatchNode) {
+        return new LiteralStringAsn(node.matchedText);
      }
 
     throw new Error("Not implemented " + typeof node);
