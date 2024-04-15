@@ -20,11 +20,11 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  property p2 String
+  property p2 as String
 
-  function asString() as String
+  function asString() return String
         return ""
   end function
 
@@ -32,7 +32,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var x = new Foo();
+  var x = system.initialise(new Foo());
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.asString()));
@@ -43,9 +43,9 @@ class Foo {
     this.p1 = 5;
   }
 
-  p1;
+  p1 = 0;
 
-  p2;
+  p2 = "";
 
   asString() {
     return "";
@@ -60,7 +60,7 @@ class Foo {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123");
+    await assertObjectCodeExecutes(fileImpl, "5");
   });
 
   ignore_test('Pass_ConstructorWithParm', async () => {

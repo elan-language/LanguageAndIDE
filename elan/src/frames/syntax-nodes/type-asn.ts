@@ -34,7 +34,7 @@ export class TypeAsn implements AstNode {
             case "Int" :
             case "Float" : return "0";
             case "Char" :
-            case "String" : return "";
+            case "String" : return '""';
             case "Boolean" : return "false";
             case "List" : return "system.defaultList()";
             case "Array" : return "system.defaultArray()";
