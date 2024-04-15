@@ -7,7 +7,7 @@ export class LiteralEnumAsn implements AstNode {
 
     }
     renderAsObjectCode(): string {
-        return `(${this.type.name}).${this.value}`;
+        return `${this.type.name}.${this.value}`;
     }
 
     get symbolType() {

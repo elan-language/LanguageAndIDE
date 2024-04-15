@@ -144,7 +144,7 @@ suite('ASTNodes', () => {
 	});
 
 	test("If", () => {
-		testAST(new IfExpr(), stubField, `if cell then Colour.green else Colour.black)`, "Ternary (cell) ? ((Enum Colour).green) : ((Enum Colour).black)", new EnumType("Colour"));
+		testAST(new IfExpr(), stubField, `if cell then Colour.green else Colour.black)`, "Ternary (cell) ? ((Colour).green) : ((Colour).black)", new EnumType("Colour"));
 
 		const ast2 = "Ternary (Equals (attempt[n]) ('*')) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, '+')) : (Func Call attempt.setChar (n, '_')))";
 		testAST(new IfExpr(), stubField, `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ast2, boolType);
