@@ -41,7 +41,33 @@ function grade(score) {
     await assertObjectCodeExecutes(fileImpl, "DistinctionMeritPassFail");
   });
 
-  
+  test('Pass_InVariableDeclaration', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var score set to 70
+  var grade set to if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"
+  print grade
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var score = 70;
+  var grade = score > 80 ?  "Distinction" : score > 60 ?  "Merit" : score > 40 ?  "Pass" :  "Fail";
+  system.print(_stdlib.asString(grade));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Merit");
+  });
+
 
   // TODO fails
 });
