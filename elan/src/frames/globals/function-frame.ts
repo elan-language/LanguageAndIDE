@@ -11,7 +11,7 @@ import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 
-export class Function extends FrameWithStatements implements Parent {
+export class FunctionFrame extends FrameWithStatements implements Parent {
     isGlobal = true;
     public name : IdentifierField;
     public params: ParamList;

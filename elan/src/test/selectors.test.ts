@@ -6,7 +6,7 @@ import { FileImpl } from '../frames/file-impl';
 import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { MainFrame } from '../frames/globals/main-frame';
-import { Function } from '../frames/globals/function';
+import { FunctionFrame } from '../frames/globals/function-frame';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { GlobalSelector } from '../frames/globals/global-selector';
 import { Switch } from '../frames/statements/switch';
@@ -109,7 +109,7 @@ suite('Unit tests', () => {
 
 	test("Selection Context - in a Function", () => {
 		const fl = new FileImpl(hash, new DefaultProfile());
-		var func = new Function(fl);		
+		var func = new FunctionFrame(fl);		
 		var s = new StatementSelector(func);
 		var help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");
@@ -117,7 +117,7 @@ suite('Unit tests', () => {
 
 	test("Selection Context - deeper nesting 1", () => {
 		const fl = new FileImpl(hash, new DefaultProfile());
-		var func = new Function(fl);
+		var func = new FunctionFrame(fl);
 		var if1 = new IfStatement(func);
         var wh = new While(if1);
 		var s = new StatementSelector(wh);

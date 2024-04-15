@@ -14,6 +14,7 @@ import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
 import { AssertStatement } from '../frames/statements/assert-statement';
 import { LetStatement } from '../frames/statements/let-statement';
+import { ExternalStatement } from '../frames/statements/external-statement';
 
 suite('File Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -388,5 +389,12 @@ end class
 		fl.parseFrom(source);
 		var elan = fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+
+	test('parse Frames - External frame with optional into', () => { 
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+		var ext = new ExternalStatement(main);
+		var html = ext.renderAsHtml();
+		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>method</placeholder><completion><pr></pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
 	});
 });

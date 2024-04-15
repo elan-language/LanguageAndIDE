@@ -2,12 +2,12 @@ import { end } from "../../test/testHelpers";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
-import { Function } from "../globals/function";
+import { FunctionFrame } from "../globals/function-frame";
 import { singleIndent } from "../helpers";
 import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword,  returnKeyword } from "../keywords";
 
-export class FunctionMethod extends Function implements Member {
+export class FunctionMethod extends FunctionFrame implements Member {
     isGlobal: boolean = false;
     isMember: boolean = true;
     private class: Class;

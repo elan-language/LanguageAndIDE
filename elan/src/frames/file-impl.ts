@@ -3,7 +3,7 @@ import { StatementFactory } from "./interfaces/statement-factory";
 import { ParseStatus } from "./parse-status";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
-import { Function } from "./globals/function";
+import { FunctionFrame } from "./globals/function-frame";
 import { Procedure } from "./globals/procedure";
 import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
@@ -231,7 +231,7 @@ export class FileImpl implements File {
     }
 
     createMain(): Frame {return new MainFrame(this);}
-    createFunction(): Frame {return  new Function(this);}
+    createFunction(): Frame {return  new FunctionFrame(this);}
     createProcedure(): Frame {return  new Procedure(this);}
     createEnum(): Frame {return  new Enum(this);}
     createClass(): Frame {return  new Class(this);}
