@@ -159,4 +159,14 @@ suite('Field Parsing Tests', () => {
 				var html = ext.renderAsHtml();
 				assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>method</placeholder><completion><pr></pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
 			});
+			test('parse literal string with interpolations', () => { 
+				var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+				var v = new VarStatement(main);
+				var expr = v.expr;
+				expr.setText(`"{op} times {op2} equals {op1*op2}"`);
+				expr.parseCurrentText();
+				assert.equal(expr.getStatus(), ParseStatus.valid);
+				assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1 * op2}"`);
+				assert.equal(expr.textAsHtml(), `<string>"</string>{op}<string> times </string>{op2}<string> equals </string>{op1 * op2}<string>"</string>`);
+			});
 });

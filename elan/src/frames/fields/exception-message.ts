@@ -3,7 +3,7 @@ import { Frame } from "../interfaces/frame";
 
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
-import { LitString } from "../parse-nodes/lit-string";
+import { LitString as LitStringNonEmpty } from "../parse-nodes/lit-string";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
@@ -17,7 +17,7 @@ export class ExceptionMessage extends AbstractField {
         return 'msg';
     }
     initialiseRoot(): ParseNode { 
-        this.rootNode = new Alternatives([() => new LitString(),() => new IdentifierNode() ]);
+        this.rootNode = new Alternatives([() => new LitStringNonEmpty(),() => new IdentifierNode() ]);
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = 

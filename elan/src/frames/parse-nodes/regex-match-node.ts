@@ -17,4 +17,8 @@ export class RegExMatchNode extends AbstractParseNode {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text, this.regx);
         }
     }
+
+    renderAsSource(): string {
+        return this.matchedText; // Overridden to avoid trimming
+    }
 }

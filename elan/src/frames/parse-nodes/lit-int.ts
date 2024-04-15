@@ -1,11 +1,8 @@
-import { IntType } from "../../symbols/int-type";
 import { Regexes } from "../fields/regexes";
-import { Field } from "../interfaces/field";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
 export class LitInt extends AbstractParseNode {
-
 
     constructor() {
         super();
