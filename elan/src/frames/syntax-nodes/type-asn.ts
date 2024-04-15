@@ -22,6 +22,10 @@ export class TypeAsn implements AstNode {
             return "Object";
         }
 
+        if (this.type === "List"){
+            return "Array";
+        }
+
         return this.type;
     }
 
