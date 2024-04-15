@@ -10,6 +10,24 @@ export class System {
         }
     }
 
+    private default_array = [];
+    private default_list = [];
+    private default_dictionary = [];
+
+    defaultList() {
+        return this.default_list;
+    }
+
+    defaultArray() {
+        return this.default_array;
+    }
+
+    defaultDictionary() {
+        return this.default_dictionary;
+    }
+
+
+
     initialise(toInit: any, toType? : string[]) {
         if (toType && Array.isArray(toInit) && toInit.length > 0) {
             for (var i = 0; i < toInit.length; i++) {

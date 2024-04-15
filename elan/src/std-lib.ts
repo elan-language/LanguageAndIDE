@@ -14,6 +14,9 @@ export class StdLib {
         }
 
         if (Array.isArray(v)) {
+            if (v.length === 0){
+                return "empty List";
+            }
             return `List [${v.map(i => this.asString(i)).join(", ")}]`;
         }
 
@@ -22,7 +25,12 @@ export class StdLib {
         }
 
         if (typeof v === "object") {
-            return `Dictionary [${Object.getOwnPropertyNames(v).map(n => `${n}:${v[n]}`).join(", ")}]`;
+            const items = Object.getOwnPropertyNames(v);
+            if (items.length === 0) {
+                return "empty Dictionary";
+            }
+
+            return `Dictionary [${items.map(n => `${n}:${v[n]}`).join(", ")}]`;
         }
 
         throw new Error("Not implemented" + typeof v);

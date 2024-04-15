@@ -29,6 +29,21 @@ export class TypeAsn implements AstNode {
         return this.type;
     }
 
+    renderAsDefaultObjectCode(): string {
+        switch (this.type) {
+            case "Int" :
+            case "Float" : return "0";
+            case "Char" :
+            case "String" : return "";
+            case "Boolean" : return "false";
+            case "List" : return "system.defaultList()";
+            case "Array" : return "system.defaultArray()";
+            case "Dictionary" : return "system.defaultDictionary()";
+        }
+        return this.type;
+    }
+
+
     get symbolType() {
         switch (this.type) {
             case ("Int"): return IntType.Instance;
