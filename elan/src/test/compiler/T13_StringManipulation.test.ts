@@ -246,7 +246,8 @@ export async function main() {
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
-
+  
+  // not supported
   ignore_test('Pass_UseBracesInString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -275,20 +276,18 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
 
-  ignore_test('Pass_literalNewline', async () => {
+
+  test('Pass_newLineConstant', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var c set to "Hello
- World!"
-    print c
+  var c set to "Hello " + newline + "World!"
+  print c
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var a = 3;
-  var b = 4;
-  var c = \`\${a} x \${b} = \${a * b}\`;
+  var c = "Hello " + _stdlib.newline + "World!";
   system.print(_stdlib.asString(c));
 }
 `;
@@ -299,7 +298,31 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
+    await assertObjectCodeExecutes(fileImpl, "Hello \nWorld!");
+  });
+
+  test('Pass_AppendStringToNumber', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3.1 + "Hello"
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = 3.1 + "Hello";
+  system.print(_stdlib.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.1Hello");
   });
 
   // more TODO pending interpolation

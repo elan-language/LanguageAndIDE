@@ -31,7 +31,8 @@ export class StdLibSymbols implements Scope {
             ["isBefore", BooleanType.Instance],
             ["isAfter", BooleanType.Instance],
             ["isBeforeOrSameAs", BooleanType.Instance],
-            ["isAfterOrSameAs", BooleanType.Instance]
+            ["isAfterOrSameAs", BooleanType.Instance],
+            ["newline", StringType.Instance]
         ]
     );
 
