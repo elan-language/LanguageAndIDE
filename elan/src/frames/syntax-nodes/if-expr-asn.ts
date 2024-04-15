@@ -6,8 +6,9 @@ export class IfExprAsn implements AstNode {
 
     constructor(private condition: ExprAsn, private expr1: ExprAsn, private expr2: ExprAsn, scope: Scope) {
     }
+    
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `${this.condition.renderAsObjectCode()} ? ${this.expr1.renderAsObjectCode()} : ${this.expr2.renderAsObjectCode()}`;
     }
 
     get symbolType() {
