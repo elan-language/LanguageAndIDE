@@ -384,6 +384,103 @@ export async function main() {
     await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]List [1, 2, 3]List [4, 5, 6, 7, 8, 1, 2, 3]');
   });
 
+  test('Pass_constantLists', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to [4,5,6,7,8]
+main
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+const a = [4, 5, 6, 7, 8];
+
+export async function main() {
+  system.print(_stdlib.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]');
+  });
+
+  test('Pass_createEmptyListUsingConstructor', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new List<of Int>()
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var a = system.initialise(new Array(), ["Int"]);
+  system.print(_stdlib.asString(a));
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'empty List');
+  });
+
+  test('Pass_Default', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print f.it
+end main
+  
+class Foo
+  constructor()
+  end constructor
+  
+  property it as List<of Int>
+  
+  function asString() return String
+    return "A Foo"
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var f = system.initialise(new Foo());
+  system.print(_stdlib.asString(f.it));
+}
+
+class Foo {
+  constructor() {
+
+  }
+
+  it = system.defaultList();
+
+  asString() {
+    return "A Foo";
+  }
+
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, 'empty List');
+  });
+
   
 
   // Fails TODO

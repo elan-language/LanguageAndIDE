@@ -1,5 +1,5 @@
-import { UnknownType } from "../../symbols/unknown-type";
 
+import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
@@ -28,10 +28,10 @@ export class ExpressionField extends AbstractField {
     renderAsObjectCode(): string {
         if (this.rootNode && this.rootNode.status === ParseStatus.valid){
             this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
-            return this.astNode?.renderAsObjectCode() ?? super.renderAsObjectCode();
+            return this.astNode?.renderAsObjectCode() ?? "";
         }
 
-        return super.renderAsObjectCode();
+        return "";
     }
 
     get symbolType() {
