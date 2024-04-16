@@ -99,7 +99,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "abc");
   });
 
-  ignore_test('Pass_DefaultIsUsed', async () => {
+  test('Pass_DefaultIsUsed', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -108,7 +108,8 @@ main
       case 1
           print 'a'
       default
-          print 'b'      
+          print 'b'
+
     end switch
   end for
 end main`;
@@ -137,7 +138,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "abb");
   });
 
-  ignore_test('Pass_switchOnExpression', async () => {
+  test('Pass_switchOnExpression', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -149,6 +150,7 @@ main
         print 'b'
       default
         print 'c'
+
     end switch
   end for
 end main`;
