@@ -8,7 +8,7 @@ export class LiteralListAsn implements AstNode {
     }
     renderAsObjectCode(): string {
         const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
-        return `[${it}]`;
+        return `system.list([${it}])`;
     }
 
     get symbolType() {

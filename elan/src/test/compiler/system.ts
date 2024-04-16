@@ -10,9 +10,9 @@ export class System {
         }
     }
 
-    private default_array = [];
-    private default_list = [];
-    private default_dictionary = [];
+    private default_array = this.array([]);
+    private default_list = this.list([]);
+    private default_dictionary = {};
 
     defaultList() {
         return this.default_list;
@@ -26,7 +26,25 @@ export class System {
         return this.default_dictionary;
     }
 
+    tuple(t : Array<any>) {
+        (<any>t)._type = "Tuple"; 
+        return t;
+    }
 
+    list(t : Array<any>) {
+        (<any>t)._type = "List"; 
+        return t;
+    }
+
+    array(t : Array<any>) {
+        (<any>t)._type = "Array"; 
+        return t;
+    }
+
+    dictionary(t : Array<any>) {
+        (<any>t)._type = "Dictionary"; 
+        return t;
+    }
 
     initialise(toInit: any, toType? : string[]) {
         if (toType && Array.isArray(toInit) && toInit.length > 0) {
@@ -55,14 +73,14 @@ export class System {
 
     concat<T>(lhs : Array<T> | T, rhs : Array<T> | T) {
         if (Array.isArray(lhs) && Array.isArray(rhs)){
-            return lhs.concat(rhs);
+            return this.list(lhs.concat(rhs));
         }
 
         if (Array.isArray(lhs)){
-            return lhs.concat([rhs as T]);
+            return this.list(lhs.concat([rhs as T]));
         }
 
         // if (Array.isArray(rhs)){
-        return [lhs as T].concat(rhs);
+        return this.list([lhs as T].concat(rhs));
     }
 }

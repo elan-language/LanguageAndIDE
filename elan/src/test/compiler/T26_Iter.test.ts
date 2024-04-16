@@ -21,7 +21,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var it = [1, 5, 6];
+  var it = system.list([1, 5, 6]);
   printEach(it);
 }
 
@@ -57,7 +57,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var it = _stdlib.asArray([1, 3, 6]);
+  var it = _stdlib.asArray(system.list([1, 3, 6]));
   printEach(it);
 }
 
@@ -133,7 +133,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var it = [1, 2, 3, 4, 5, 6, 7];
+  var it = system.list([1, 2, 3, 4, 5, 6, 7]);
   printAsIter(it);
   printAsList(it);
 }
@@ -144,7 +144,7 @@ function printAsIter(target) {
 
 function printAsList(target) {
   var some = _stdlib.asList(target);
-  system.print(_stdlib.asString(some.slice(3)));
+  system.print(_stdlib.asString(system.list(some.slice(3))));
 }
 `;
 

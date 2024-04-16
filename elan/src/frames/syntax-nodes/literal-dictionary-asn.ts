@@ -6,10 +6,6 @@ import { LiteralListAsn } from "./literal-list-asn";
 
 export class LiteralDictionaryAsn implements AstNode {
     
-    a  = {'a' : 10, 'z' : 1};
-
-    b = this.a['a'];
-
     constructor(private readonly list: LiteralListAsn, scope : Scope) {
     }
     renderAsObjectCode(): string {

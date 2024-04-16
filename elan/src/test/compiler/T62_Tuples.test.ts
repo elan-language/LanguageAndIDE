@@ -17,7 +17,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var x = [3, "Apple"];
+  var x = system.tuple([3, "Apple"]);
   system.print(_stdlib.asString(x));
   system.print(_stdlib.asString(_stdlib.first(x)));
   system.print(_stdlib.asString(_stdlib.second(x)));
@@ -30,7 +30,43 @@ export async function main() {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [3, Apple]3Apple");
+    await assertObjectCodeExecutes(fileImpl, "Tuple (3, Apple)3Apple");
+  });
+
+  test('Pass_FunctionReturnsTuple', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to f()
+  print x
+  print first(x)
+  print second(x)
+end main
+
+function f() return (String, String)
+   return ("1", "2")
+end function`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+export async function main() {
+  var x = f();
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(_stdlib.first(x)));
+  system.print(_stdlib.asString(_stdlib.second(x)));
+}
+
+function f() {
+  return system.tuple(["1", "2"]);
+}
+`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Tuple (1, 2)12");
   });
 
   

@@ -13,7 +13,7 @@ import { AstNode } from "./ast-node";
 
 export class TypeAsn implements AstNode {
 
-    constructor(private type: string, public genericParameters: Array<AstNode>, private scope : Scope) {
+    constructor(public readonly type: string, public genericParameters: Array<AstNode>, private scope : Scope) {
         this.type = type.trim();
     }
 

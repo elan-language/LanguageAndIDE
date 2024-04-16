@@ -5,7 +5,7 @@ import { RangeAsn } from "./range-asn";
 
 export class IndexAsn implements AstNode {
 
-    constructor(private index: ExprAsn, private scope : Scope) {
+    constructor(public readonly index: ExprAsn, private scope : Scope) {
     }
 
     renderAsObjectCode(): string {

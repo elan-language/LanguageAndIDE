@@ -1,4 +1,9 @@
 export class StdLib {
+    private Array = "Array";
+    private List = "List";
+    private Tuple = "Tuple";
+    private Dictionary = "Dictionary";
+
 
     asString(v: any): string {
         if (typeof v === "boolean") {
@@ -14,10 +19,24 @@ export class StdLib {
         }
 
         if (Array.isArray(v)) {
-            if (v.length === 0){
-                return "empty List";
+            const type = (<any>v)._type;
+
+            switch (type) {
+                case this.List:
+                    if (v.length === 0) {
+                        return "empty List";
+                    }
+                    return `List [${v.map(i => this.asString(i)).join(", ")}]`;
+                case this.Tuple:
+                    return `Tuple (${v.map(i => this.asString(i)).join(", ")})`;
+                case this.Array:
+                    if (v.length === 0) {
+                        return "empty Array";
+                    }
+                    return `Array [${v.map(i => this.asString(i)).join(", ")}]`;
+                default:
+                    throw new Error("_type not set"); 
             }
-            return `List [${v.map(i => this.asString(i)).join(", ")}]`;
         }
 
         if (typeof v === "object" && "asString" in v) {
@@ -37,19 +56,27 @@ export class StdLib {
     }
 
     asArray(list: Array<number>): Array<number> {
-        return list;
+        const arr = [...list] as any;
+        arr._type = this.Array;
+        return arr;
     }
 
-    asList(list: Array<number>): Array<number> {
+    asList(arr: Array<number>): Array<number> {
+        const list = [...arr] as any;
+        list._type = this.List;
         return list;
     }
 
     keys(dict: { [key: string]: number }): Array<string> {
-        return Object.getOwnPropertyNames(dict);
+        const lst = Object.getOwnPropertyNames(dict) as any;
+        lst._type = this.List;
+        return lst;
     }
 
     values(dict: { [key: string]: number }): Array<number> {
-        return this.keys(dict).map(k => dict[k]);
+        const lst =  this.keys(dict).map(k => dict[k]) as any;
+        lst._type = this.List;
+        return lst;
     }
 
     hasKey(dict: { [key: string]: number }, key: string): boolean {

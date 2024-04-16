@@ -8,7 +8,7 @@ export class LiteralTupleAsn implements AstNode {
     }
     renderAsObjectCode(): string {
         const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
-        return `[${it}]`;
+        return `system.tuple([${it}])`;
     }
 
     get symbolType() {
