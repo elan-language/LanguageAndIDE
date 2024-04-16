@@ -1,4 +1,4 @@
-# 0d1f0a1ddaa13f7212762c0cfb1de287b3ee0a0e0948f129124f9ae1dd7a1602 Elan v0.1 valid
+# ced136595824cdf727e0d1ac349862f1ed38655cbc54fc1ef66321db72ce8680 Elan v0.1 valid
 
 main
   print welcome
@@ -27,7 +27,7 @@ procedure playGame()
   var gameOn set to true
   while gameOn
     external keyHasBeenPressed() into pressed
-    call pause(200)
+    external pause(200)
     call snake.clockTick(currentDirection, gameOn)
     if snake.hasHitEdge() or snake.bodyCovers(head)
       set gameOn to false
