@@ -134,6 +134,10 @@ export class StdLib {
     second<T>(st : Array<T>){
         return st[1];
     }
+
+    indexOf(s1 : string, s2 : string){
+        return s1.indexOf(s2);
+    }
    
 
     pi = Math.PI;
