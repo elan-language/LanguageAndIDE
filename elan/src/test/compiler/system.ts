@@ -13,9 +13,14 @@ export class System {
     private default_array = this.array([]);
     private default_list = this.list([]);
     private default_dictionary = {};
+    private default_iter = this.iter([]);
 
     defaultList() {
         return this.default_list;
+    }
+
+    defaultIter() {
+        return this.default_iter;
     }
 
     defaultArray() {
@@ -33,6 +38,11 @@ export class System {
 
     list(t : Array<any>) {
         (<any>t)._type = "List"; 
+        return t;
+    }
+
+    iter(t : Array<any>) {
+        (<any>t)._type = "Iter"; 
         return t;
     }
 

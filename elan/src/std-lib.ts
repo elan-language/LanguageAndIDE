@@ -2,6 +2,7 @@ export class StdLib {
     private Array = "Array";
     private List = "List";
     private Tuple = "Tuple";
+    private Iter = "Iter";
     private Dictionary = "Dictionary";
 
 
@@ -34,6 +35,11 @@ export class StdLib {
                         return "empty Array";
                     }
                     return `Array [${v.map(i => this.asString(i)).join(", ")}]`;
+                case this.Iter:
+                    if (v.length === 0) {
+                        return "empty Iter";
+                    }
+                    return `Iter [${v.map(i => this.asString(i)).join(", ")}]`;
                 default:
                     throw new Error("_type not set"); 
             }

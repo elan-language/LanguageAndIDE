@@ -157,7 +157,7 @@ function printAsList(target) {
     await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3, 4, 5, 6, 7]List [4, 5, 6, 7]");
   });
 
-  ignore_test('Pass_Default', async () => {
+  test('Pass_Default', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -178,8 +178,8 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 export async function main() {
-  var f = new Foo();
-  system.print(_stdlib.asString(it));
+  var f = system.initialise(new Foo());
+  system.print(_stdlib.asString(f.it));
 }
 
 class Foo {
@@ -187,7 +187,7 @@ class Foo {
 
   }
 
-  it;
+  it = system.defaultIter();
 
   asString() {
     return "A Foo";
@@ -202,7 +202,7 @@ class Foo {
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Foo");
+    await assertObjectCodeExecutes(fileImpl, "empty Iter");
   });
 
 

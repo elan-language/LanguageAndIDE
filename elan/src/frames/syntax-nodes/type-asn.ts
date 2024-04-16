@@ -39,6 +39,7 @@ export class TypeAsn implements AstNode {
             case "List" : return "system.defaultList()";
             case "Array" : return "system.defaultArray()";
             case "Dictionary" : return "system.defaultDictionary()";
+            case "Iter" : return "system.defaultIter()";
         }
         return this.type;
     }
