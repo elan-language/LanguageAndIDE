@@ -1,4 +1,4 @@
-// Generated from c://Elan//Repository//Parser//Elan.g4 by ANTLR 4.13.1
+// Generated from c://Elan//IDE//grammar//Elan.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -16,6 +16,16 @@ public interface ElanListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFile(ElanParser.FileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#comment}.
+	 * @param ctx the parse tree
+	 */
+	void enterComment(ElanParser.CommentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#comment}.
+	 * @param ctx the parse tree
+	 */
+	void exitComment(ElanParser.CommentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#importStatement}.
 	 * @param ctx the parse tree
@@ -37,6 +47,16 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitNamespace(ElanParser.NamespaceContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ElanParser#global}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobal(ElanParser.GlobalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#global}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobal(ElanParser.GlobalContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ElanParser#main}.
 	 * @param ctx the parse tree
 	 */
@@ -46,6 +66,56 @@ public interface ElanListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMain(ElanParser.MainContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#procedure}.
+	 * @param ctx the parse tree
+	 */
+	void enterProcedure(ElanParser.ProcedureContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#procedure}.
+	 * @param ctx the parse tree
+	 */
+	void exitProcedure(ElanParser.ProcedureContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(ElanParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(ElanParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#constant}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstant(ElanParser.ConstantContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#constant}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstant(ElanParser.ConstantContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#class}.
+	 * @param ctx the parse tree
+	 */
+	void enterClass(ElanParser.ClassContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#class}.
+	 * @param ctx the parse tree
+	 */
+	void exitClass(ElanParser.ClassContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#enum}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnum(ElanParser.EnumContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#enum}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnum(ElanParser.EnumContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#test}.
 	 * @param ctx the parse tree
@@ -57,176 +127,6 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitTest(ElanParser.TestContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#statementBlock}.
-	 * @param ctx the parse tree
-	 */
-	void enterStatementBlock(ElanParser.StatementBlockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#statementBlock}.
-	 * @param ctx the parse tree
-	 */
-	void exitStatementBlock(ElanParser.StatementBlockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#testStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterTestStatement(ElanParser.TestStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#testStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitTestStatement(ElanParser.TestStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#assert}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssert(ElanParser.AssertContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#assert}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssert(ElanParser.AssertContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#callStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterCallStatement(ElanParser.CallStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#callStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitCallStatement(ElanParser.CallStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#throwException}.
-	 * @param ctx the parse tree
-	 */
-	void enterThrowException(ElanParser.ThrowExceptionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#throwException}.
-	 * @param ctx the parse tree
-	 */
-	void exitThrowException(ElanParser.ThrowExceptionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#printStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrintStatement(ElanParser.PrintStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#printStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrintStatement(ElanParser.PrintStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#varDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterVarDef(ElanParser.VarDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#varDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitVarDef(ElanParser.VarDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#assignment}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignment(ElanParser.AssignmentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#assignment}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignment(ElanParser.AssignmentContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#inlineAsignment}.
-	 * @param ctx the parse tree
-	 */
-	void enterInlineAsignment(ElanParser.InlineAsignmentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#inlineAsignment}.
-	 * @param ctx the parse tree
-	 */
-	void exitInlineAsignment(ElanParser.InlineAsignmentContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#assignableValue}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignableValue(ElanParser.AssignableValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#assignableValue}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignableValue(ElanParser.AssignableValueContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#procedureCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterProcedureCall(ElanParser.ProcedureCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#procedureCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitProcedureCall(ElanParser.ProcedureCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionCall(ElanParser.FunctionCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionCall(ElanParser.FunctionCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#systemCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterSystemCall(ElanParser.SystemCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#systemCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitSystemCall(ElanParser.SystemCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#input}.
-	 * @param ctx the parse tree
-	 */
-	void enterInput(ElanParser.InputContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#input}.
-	 * @param ctx the parse tree
-	 */
-	void exitInput(ElanParser.InputContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#argument}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgument(ElanParser.ArgumentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#argument}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgument(ElanParser.ArgumentContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#argumentList}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgumentList(ElanParser.ArgumentListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#argumentList}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgumentList(ElanParser.ArgumentListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#procedureDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterProcedureDef(ElanParser.ProcedureDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#procedureDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitProcedureDef(ElanParser.ProcedureDefContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ElanParser#procedureSignature}.
 	 * @param ctx the parse tree
 	 */
@@ -237,75 +137,25 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitProcedureSignature(ElanParser.ProcedureSignatureContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#procedureParameterList}.
+	 * Enter a parse tree produced by {@link ElanParser#paramList}.
 	 * @param ctx the parse tree
 	 */
-	void enterProcedureParameterList(ElanParser.ProcedureParameterListContext ctx);
+	void enterParamList(ElanParser.ParamListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#procedureParameterList}.
+	 * Exit a parse tree produced by {@link ElanParser#paramList}.
 	 * @param ctx the parse tree
 	 */
-	void exitProcedureParameterList(ElanParser.ProcedureParameterListContext ctx);
+	void exitParamList(ElanParser.ParamListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#parameterList}.
+	 * Enter a parse tree produced by {@link ElanParser#paramDef}.
 	 * @param ctx the parse tree
 	 */
-	void enterParameterList(ElanParser.ParameterListContext ctx);
+	void enterParamDef(ElanParser.ParamDefContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#parameterList}.
+	 * Exit a parse tree produced by {@link ElanParser#paramDef}.
 	 * @param ctx the parse tree
 	 */
-	void exitParameterList(ElanParser.ParameterListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterParameter(ElanParser.ParameterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitParameter(ElanParser.ParameterContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#procedureParameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterProcedureParameter(ElanParser.ProcedureParameterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#procedureParameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitProcedureParameter(ElanParser.ProcedureParameterContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#functionDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionDef(ElanParser.FunctionDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#functionDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionDef(ElanParser.FunctionDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#functionWithBody}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionWithBody(ElanParser.FunctionWithBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#functionWithBody}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionWithBody(ElanParser.FunctionWithBodyContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#expressionFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionFunction(ElanParser.ExpressionFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#expressionFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionFunction(ElanParser.ExpressionFunctionContext ctx);
+	void exitParamDef(ElanParser.ParamDefContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#functionSignature}.
 	 * @param ctx the parse tree
@@ -317,155 +167,155 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitFunctionSignature(ElanParser.FunctionSignatureContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#constantDef}.
+	 * Enter a parse tree produced by {@link ElanParser#statementBlock}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstantDef(ElanParser.ConstantDefContext ctx);
+	void enterStatementBlock(ElanParser.StatementBlockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#constantDef}.
+	 * Exit a parse tree produced by {@link ElanParser#statementBlock}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstantDef(ElanParser.ConstantDefContext ctx);
+	void exitStatementBlock(ElanParser.StatementBlockContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#enumDef}.
+	 * Enter a parse tree produced by {@link ElanParser#singleLineStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterEnumDef(ElanParser.EnumDefContext ctx);
+	void enterSingleLineStatement(ElanParser.SingleLineStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#enumDef}.
+	 * Exit a parse tree produced by {@link ElanParser#singleLineStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitEnumDef(ElanParser.EnumDefContext ctx);
+	void exitSingleLineStatement(ElanParser.SingleLineStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#enumType}.
+	 * Enter a parse tree produced by {@link ElanParser#multiLineStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterEnumType(ElanParser.EnumTypeContext ctx);
+	void enterMultiLineStatement(ElanParser.MultiLineStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#enumType}.
+	 * Exit a parse tree produced by {@link ElanParser#multiLineStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitEnumType(ElanParser.EnumTypeContext ctx);
+	void exitMultiLineStatement(ElanParser.MultiLineStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#enumValue}.
+	 * Enter a parse tree produced by {@link ElanParser#var}.
 	 * @param ctx the parse tree
 	 */
-	void enterEnumValue(ElanParser.EnumValueContext ctx);
+	void enterVar(ElanParser.VarContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#enumValue}.
+	 * Exit a parse tree produced by {@link ElanParser#var}.
 	 * @param ctx the parse tree
 	 */
-	void exitEnumValue(ElanParser.EnumValueContext ctx);
+	void exitVar(ElanParser.VarContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#classDef}.
+	 * Enter a parse tree produced by {@link ElanParser#set}.
 	 * @param ctx the parse tree
 	 */
-	void enterClassDef(ElanParser.ClassDefContext ctx);
+	void enterSet(ElanParser.SetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#classDef}.
+	 * Exit a parse tree produced by {@link ElanParser#set}.
 	 * @param ctx the parse tree
 	 */
-	void exitClassDef(ElanParser.ClassDefContext ctx);
+	void exitSet(ElanParser.SetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#mutableClass}.
+	 * Enter a parse tree produced by {@link ElanParser#call}.
 	 * @param ctx the parse tree
 	 */
-	void enterMutableClass(ElanParser.MutableClassContext ctx);
+	void enterCall(ElanParser.CallContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#mutableClass}.
+	 * Exit a parse tree produced by {@link ElanParser#call}.
 	 * @param ctx the parse tree
 	 */
-	void exitMutableClass(ElanParser.MutableClassContext ctx);
+	void exitCall(ElanParser.CallContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#abstractClass}.
+	 * Enter a parse tree produced by {@link ElanParser#throw}.
 	 * @param ctx the parse tree
 	 */
-	void enterAbstractClass(ElanParser.AbstractClassContext ctx);
+	void enterThrow(ElanParser.ThrowContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#abstractClass}.
+	 * Exit a parse tree produced by {@link ElanParser#throw}.
 	 * @param ctx the parse tree
 	 */
-	void exitAbstractClass(ElanParser.AbstractClassContext ctx);
+	void exitThrow(ElanParser.ThrowContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#immutableClass}.
+	 * Enter a parse tree produced by {@link ElanParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void enterImmutableClass(ElanParser.ImmutableClassContext ctx);
+	void enterPrint(ElanParser.PrintContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#immutableClass}.
+	 * Exit a parse tree produced by {@link ElanParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void exitImmutableClass(ElanParser.ImmutableClassContext ctx);
+	void exitPrint(ElanParser.PrintContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#abstractImmutableClass}.
+	 * Enter a parse tree produced by {@link ElanParser#input}.
 	 * @param ctx the parse tree
 	 */
-	void enterAbstractImmutableClass(ElanParser.AbstractImmutableClassContext ctx);
+	void enterInput(ElanParser.InputContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#abstractImmutableClass}.
+	 * Exit a parse tree produced by {@link ElanParser#input}.
 	 * @param ctx the parse tree
 	 */
-	void exitAbstractImmutableClass(ElanParser.AbstractImmutableClassContext ctx);
+	void exitInput(ElanParser.InputContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#inherits}.
+	 * Enter a parse tree produced by {@link ElanParser#external}.
 	 * @param ctx the parse tree
 	 */
-	void enterInherits(ElanParser.InheritsContext ctx);
+	void enterExternal(ElanParser.ExternalContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#inherits}.
+	 * Exit a parse tree produced by {@link ElanParser#external}.
 	 * @param ctx the parse tree
 	 */
-	void exitInherits(ElanParser.InheritsContext ctx);
+	void exitExternal(ElanParser.ExternalContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#property}.
+	 * Enter a parse tree produced by {@link ElanParser#assert}.
 	 * @param ctx the parse tree
 	 */
-	void enterProperty(ElanParser.PropertyContext ctx);
+	void enterAssert(ElanParser.AssertContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#property}.
+	 * Exit a parse tree produced by {@link ElanParser#assert}.
 	 * @param ctx the parse tree
 	 */
-	void exitProperty(ElanParser.PropertyContext ctx);
+	void exitAssert(ElanParser.AssertContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#constructor}.
+	 * Enter a parse tree produced by {@link ElanParser#let}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstructor(ElanParser.ConstructorContext ctx);
+	void enterLet(ElanParser.LetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#constructor}.
+	 * Exit a parse tree produced by {@link ElanParser#let}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstructor(ElanParser.ConstructorContext ctx);
+	void exitLet(ElanParser.LetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#newInstance}.
+	 * Enter a parse tree produced by {@link ElanParser#assignableValue}.
 	 * @param ctx the parse tree
 	 */
-	void enterNewInstance(ElanParser.NewInstanceContext ctx);
+	void enterAssignableValue(ElanParser.AssignableValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#newInstance}.
+	 * Exit a parse tree produced by {@link ElanParser#assignableValue}.
 	 * @param ctx the parse tree
 	 */
-	void exitNewInstance(ElanParser.NewInstanceContext ctx);
+	void exitAssignableValue(ElanParser.AssignableValueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#withClause}.
+	 * Enter a parse tree produced by {@link ElanParser#methodCall}.
 	 * @param ctx the parse tree
 	 */
-	void enterWithClause(ElanParser.WithClauseContext ctx);
+	void enterMethodCall(ElanParser.MethodCallContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#withClause}.
+	 * Exit a parse tree produced by {@link ElanParser#methodCall}.
 	 * @param ctx the parse tree
 	 */
-	void exitWithClause(ElanParser.WithClauseContext ctx);
+	void exitMethodCall(ElanParser.MethodCallContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#proceduralControlFlow}.
+	 * Enter a parse tree produced by {@link ElanParser#argList}.
 	 * @param ctx the parse tree
 	 */
-	void enterProceduralControlFlow(ElanParser.ProceduralControlFlowContext ctx);
+	void enterArgList(ElanParser.ArgListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#proceduralControlFlow}.
+	 * Exit a parse tree produced by {@link ElanParser#argList}.
 	 * @param ctx the parse tree
 	 */
-	void exitProceduralControlFlow(ElanParser.ProceduralControlFlowContext ctx);
+	void exitArgList(ElanParser.ArgListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#if}.
 	 * @param ctx the parse tree
@@ -476,6 +326,16 @@ public interface ElanListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIf(ElanParser.IfContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse(ElanParser.ElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse(ElanParser.ElseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#for}.
 	 * @param ctx the parse tree
@@ -547,15 +407,85 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitCase(ElanParser.CaseContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#caseDefault}.
+	 * Enter a parse tree produced by {@link ElanParser#defaultCase}.
 	 * @param ctx the parse tree
 	 */
-	void enterCaseDefault(ElanParser.CaseDefaultContext ctx);
+	void enterDefaultCase(ElanParser.DefaultCaseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#caseDefault}.
+	 * Exit a parse tree produced by {@link ElanParser#defaultCase}.
 	 * @param ctx the parse tree
 	 */
-	void exitCaseDefault(ElanParser.CaseDefaultContext ctx);
+	void exitDefaultCase(ElanParser.DefaultCaseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#mutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void enterMutableClass(ElanParser.MutableClassContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#mutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void exitMutableClass(ElanParser.MutableClassContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#abstractClass}.
+	 * @param ctx the parse tree
+	 */
+	void enterAbstractClass(ElanParser.AbstractClassContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#abstractClass}.
+	 * @param ctx the parse tree
+	 */
+	void exitAbstractClass(ElanParser.AbstractClassContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#immutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void enterImmutableClass(ElanParser.ImmutableClassContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#immutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void exitImmutableClass(ElanParser.ImmutableClassContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#abstractImmutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void enterAbstractImmutableClass(ElanParser.AbstractImmutableClassContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#abstractImmutableClass}.
+	 * @param ctx the parse tree
+	 */
+	void exitAbstractImmutableClass(ElanParser.AbstractImmutableClassContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#inherits}.
+	 * @param ctx the parse tree
+	 */
+	void enterInherits(ElanParser.InheritsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#inherits}.
+	 * @param ctx the parse tree
+	 */
+	void exitInherits(ElanParser.InheritsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#constructor}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructor(ElanParser.ConstructorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#constructor}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructor(ElanParser.ConstructorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterProperty(ElanParser.PropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitProperty(ElanParser.PropertyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#expression}.
 	 * @param ctx the parse tree
@@ -567,6 +497,16 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitExpression(ElanParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ElanParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterTerm(ElanParser.TermContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitTerm(ElanParser.TermContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ElanParser#bracketedExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -576,6 +516,16 @@ public interface ElanListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBracketedExpression(ElanParser.BracketedExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#lambda}.
+	 * @param ctx the parse tree
+	 */
+	void enterLambda(ElanParser.LambdaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#lambda}.
+	 * @param ctx the parse tree
+	 */
+	void exitLambda(ElanParser.LambdaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#ifExpression}.
 	 * @param ctx the parse tree
@@ -587,25 +537,45 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitIfExpression(ElanParser.IfExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#elseExpression}.
+	 * Enter a parse tree produced by {@link ElanParser#newInstance}.
 	 * @param ctx the parse tree
 	 */
-	void enterElseExpression(ElanParser.ElseExpressionContext ctx);
+	void enterNewInstance(ElanParser.NewInstanceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#elseExpression}.
+	 * Exit a parse tree produced by {@link ElanParser#newInstance}.
 	 * @param ctx the parse tree
 	 */
-	void exitElseExpression(ElanParser.ElseExpressionContext ctx);
+	void exitNewInstance(ElanParser.NewInstanceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#lambda}.
+	 * Enter a parse tree produced by {@link ElanParser#unaryOp}.
 	 * @param ctx the parse tree
 	 */
-	void enterLambda(ElanParser.LambdaContext ctx);
+	void enterUnaryOp(ElanParser.UnaryOpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#lambda}.
+	 * Exit a parse tree produced by {@link ElanParser#unaryOp}.
 	 * @param ctx the parse tree
 	 */
-	void exitLambda(ElanParser.LambdaContext ctx);
+	void exitUnaryOp(ElanParser.UnaryOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#varRef}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarRef(ElanParser.VarRefContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#varRef}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarRef(ElanParser.VarRefContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#defaultType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDefaultType(ElanParser.DefaultTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#defaultType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDefaultType(ElanParser.DefaultTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#index}.
 	 * @param ctx the parse tree
@@ -627,25 +597,25 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitRange(ElanParser.RangeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#value}.
+	 * Enter a parse tree produced by {@link ElanParser#withClause}.
 	 * @param ctx the parse tree
 	 */
-	void enterValue(ElanParser.ValueContext ctx);
+	void enterWithClause(ElanParser.WithClauseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#value}.
+	 * Exit a parse tree produced by {@link ElanParser#withClause}.
 	 * @param ctx the parse tree
 	 */
-	void exitValue(ElanParser.ValueContext ctx);
+	void exitWithClause(ElanParser.WithClauseContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#scopeQualifier}.
+	 * Enter a parse tree produced by {@link ElanParser#inlineAsignment}.
 	 * @param ctx the parse tree
 	 */
-	void enterScopeQualifier(ElanParser.ScopeQualifierContext ctx);
+	void enterInlineAsignment(ElanParser.InlineAsignmentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#scopeQualifier}.
+	 * Exit a parse tree produced by {@link ElanParser#inlineAsignment}.
 	 * @param ctx the parse tree
 	 */
-	void exitScopeQualifier(ElanParser.ScopeQualifierContext ctx);
+	void exitInlineAsignment(ElanParser.InlineAsignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#literal}.
 	 * @param ctx the parse tree
@@ -667,15 +637,15 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitLiteralValue(ElanParser.LiteralValueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#dataStructureDefinition}.
+	 * Enter a parse tree produced by {@link ElanParser#enumValue}.
 	 * @param ctx the parse tree
 	 */
-	void enterDataStructureDefinition(ElanParser.DataStructureDefinitionContext ctx);
+	void enterEnumValue(ElanParser.EnumValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#dataStructureDefinition}.
+	 * Exit a parse tree produced by {@link ElanParser#enumValue}.
 	 * @param ctx the parse tree
 	 */
-	void exitDataStructureDefinition(ElanParser.DataStructureDefinitionContext ctx);
+	void exitEnumValue(ElanParser.EnumValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#literalDataStructure}.
 	 * @param ctx the parse tree
@@ -687,16 +657,6 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitLiteralDataStructure(ElanParser.LiteralDataStructureContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#tupleDefinition}.
-	 * @param ctx the parse tree
-	 */
-	void enterTupleDefinition(ElanParser.TupleDefinitionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#tupleDefinition}.
-	 * @param ctx the parse tree
-	 */
-	void exitTupleDefinition(ElanParser.TupleDefinitionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ElanParser#literalTuple}.
 	 * @param ctx the parse tree
 	 */
@@ -707,15 +667,15 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitLiteralTuple(ElanParser.LiteralTupleContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#deconstructedTuple}.
+	 * Enter a parse tree produced by {@link ElanParser#dataStructureDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeconstructedTuple(ElanParser.DeconstructedTupleContext ctx);
+	void enterDataStructureDefinition(ElanParser.DataStructureDefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#deconstructedTuple}.
+	 * Exit a parse tree produced by {@link ElanParser#dataStructureDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeconstructedTuple(ElanParser.DeconstructedTupleContext ctx);
+	void exitDataStructureDefinition(ElanParser.DataStructureDefinitionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#listDefinition}.
 	 * @param ctx the parse tree
@@ -727,35 +687,15 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitListDefinition(ElanParser.ListDefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#literalList}.
+	 * Enter a parse tree produced by {@link ElanParser#tupleDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void enterLiteralList(ElanParser.LiteralListContext ctx);
+	void enterTupleDefinition(ElanParser.TupleDefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#literalList}.
+	 * Exit a parse tree produced by {@link ElanParser#tupleDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void exitLiteralList(ElanParser.LiteralListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#listDecomp}.
-	 * @param ctx the parse tree
-	 */
-	void enterListDecomp(ElanParser.ListDecompContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#listDecomp}.
-	 * @param ctx the parse tree
-	 */
-	void exitListDecomp(ElanParser.ListDecompContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ElanParser#arrayDefinition}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayDefinition(ElanParser.ArrayDefinitionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#arrayDefinition}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayDefinition(ElanParser.ArrayDefinitionContext ctx);
+	void exitTupleDefinition(ElanParser.TupleDefinitionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#dictionaryDefinition}.
 	 * @param ctx the parse tree
@@ -767,16 +707,6 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitDictionaryDefinition(ElanParser.DictionaryDefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#literalDictionary}.
-	 * @param ctx the parse tree
-	 */
-	void enterLiteralDictionary(ElanParser.LiteralDictionaryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#literalDictionary}.
-	 * @param ctx the parse tree
-	 */
-	void exitLiteralDictionary(ElanParser.LiteralDictionaryContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ElanParser#kvp}.
 	 * @param ctx the parse tree
 	 */
@@ -786,6 +716,26 @@ public interface ElanListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitKvp(ElanParser.KvpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#literalList}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralList(ElanParser.LiteralListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#literalList}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralList(ElanParser.LiteralListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#literalDictionary}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralDictionary(ElanParser.LiteralDictionaryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#literalDictionary}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralDictionary(ElanParser.LiteralDictionaryContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#literalKvp}.
 	 * @param ctx the parse tree
@@ -797,15 +747,25 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitLiteralKvp(ElanParser.LiteralKvpContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#unaryOp}.
+	 * Enter a parse tree produced by {@link ElanParser#deconstructedTuple}.
 	 * @param ctx the parse tree
 	 */
-	void enterUnaryOp(ElanParser.UnaryOpContext ctx);
+	void enterDeconstructedTuple(ElanParser.DeconstructedTupleContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ElanParser#unaryOp}.
+	 * Exit a parse tree produced by {@link ElanParser#deconstructedTuple}.
 	 * @param ctx the parse tree
 	 */
-	void exitUnaryOp(ElanParser.UnaryOpContext ctx);
+	void exitDeconstructedTuple(ElanParser.DeconstructedTupleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ElanParser#deconstructedList}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeconstructedList(ElanParser.DeconstructedListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ElanParser#deconstructedList}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeconstructedList(ElanParser.DeconstructedListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElanParser#binaryOp}.
 	 * @param ctx the parse tree
