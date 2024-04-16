@@ -5,6 +5,7 @@ export class DeconstructedListAsn implements AstNode {
     
     constructor(private head : string, private tail : string,  scope : Scope) {
     }
+    
     renderAsObjectCode(): string {
         throw new Error("Method not implemented.");
     }
