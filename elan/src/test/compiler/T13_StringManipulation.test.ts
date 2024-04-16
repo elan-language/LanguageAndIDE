@@ -233,7 +233,7 @@ end main`;
 async function main() {
   var a = 3;
   var b = 4;
-  var c = \`\${a} x \${b} = \${a * b}\`;
+  var c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
   system.print(_stdlib.asString(c));
 }
 return main;}`;

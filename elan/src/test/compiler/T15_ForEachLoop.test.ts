@@ -112,7 +112,7 @@ end main`;
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.print(_stdlib.asString(\`\${x}\${y}\`));
+      system.print(_stdlib.asString(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`));
     }
   }
 }
