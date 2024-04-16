@@ -397,4 +397,43 @@ end class
 		var html = ext.renderAsHtml();
 		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>method</placeholder><completion><pr></pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
 	});
+
+	test('parse Frames - switch 1', () => {
+		var code = `# 2083bf5a7760e3b7115a81a337fddf23c13699b347855be17818bfed4eccec96 Elan v0.1 valid
+
+main
+  switch i
+    case 1
+      print 'a'
+    default
+
+  end switch
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+	test('parse Frames - switch 2', () => {
+		var code = `# cea6cdc7ee252b7d3bef59d737cb0a8aa25bb53e485105264a561060c589cea2 Elan v0.1 valid
+
+main
+  switch i
+    case 1
+      print "a"
+    default
+      print "b"
+  end switch
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		fl.parseFrom(source);
+		var elan = fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 });
