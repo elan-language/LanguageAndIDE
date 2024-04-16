@@ -160,8 +160,8 @@ export class FileImpl implements File {
     }
 
     renderAsObjectCode(): string {
-        const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };';
-        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}`; 
+        const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {';
+        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}return main;}`; 
     }
 
     renderHashableContent(): string {

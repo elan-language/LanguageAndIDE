@@ -22,7 +22,7 @@ end main`;
         const objectCode = `export async function main(system : any) {
   system.print ("Hello World!");
 }
-`;
+return main;}`;
 
         const fileImpl = new FileImpl(hash, new DefaultProfile());
         fileImpl.parseFrom(new CodeSourceFromString(code));

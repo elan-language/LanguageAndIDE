@@ -16,8 +16,8 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = true;
   if (a) {
     system.print(_stdlib.asString("yes"));
@@ -25,7 +25,7 @@ export async function main() {
       system.print(_stdlib.asString("no"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -49,8 +49,8 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = false;
   if (a) {
     system.print(_stdlib.asString("yes"));
@@ -58,7 +58,7 @@ export async function main() {
       system.print(_stdlib.asString("no"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -83,8 +83,8 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 2;
   if (a === 1) {
     system.print(_stdlib.asString("one"));
@@ -94,7 +94,7 @@ export async function main() {
       system.print(_stdlib.asString("neither"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -119,8 +119,8 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 3;
   if (a === 1) {
     system.print(_stdlib.asString("one"));
@@ -130,7 +130,7 @@ export async function main() {
       system.print(_stdlib.asString("neither"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -151,14 +151,14 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = true;
   if (a) {
     system.print(_stdlib.asString("yes"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -185,8 +185,8 @@ main
   end if
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 3;
   if (a === 1) {
     system.print(_stdlib.asString("one"));
@@ -198,7 +198,7 @@ export async function main() {
       system.print(_stdlib.asString("neither"));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));

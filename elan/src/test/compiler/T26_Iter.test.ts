@@ -19,8 +19,8 @@ procedure printEach(target as Iter<of Int>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var it = system.list([1, 5, 6]);
   printEach(it);
 }
@@ -30,7 +30,7 @@ function printEach(target) {
     system.print(_stdlib.asString(x));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -55,8 +55,8 @@ procedure printEach(target as Iter<of Int>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var it = _stdlib.asArray(system.list([1, 3, 6]));
   printEach(it);
 }
@@ -66,7 +66,7 @@ function printEach(target) {
     system.print(_stdlib.asString(x));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -91,8 +91,8 @@ procedure printEach(target as Iter<of Char>)
   end each
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var s = "Foo";
   printEach(s);
 }
@@ -102,7 +102,7 @@ function printEach(target) {
     system.print(_stdlib.asString(x));
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -131,8 +131,8 @@ procedure printAsList(target as Iter<of Int>)
   print some[3..]
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var it = system.list([1, 2, 3, 4, 5, 6, 7]);
   printAsIter(it);
   printAsList(it);
@@ -146,7 +146,7 @@ function printAsList(target) {
   var some = _stdlib.asList(target);
   system.print(_stdlib.asString(system.list(some.slice(3))));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -176,8 +176,8 @@ class Foo
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var f = system.initialise(new Foo());
   system.print(_stdlib.asString(f.it));
 }
@@ -194,7 +194,7 @@ class Foo {
   }
 
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));

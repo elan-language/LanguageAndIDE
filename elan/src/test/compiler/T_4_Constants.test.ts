@@ -14,13 +14,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = 3;
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -43,13 +43,13 @@ print a
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = 3.1;
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -69,13 +69,13 @@ print a
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = "hell0";
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -95,13 +95,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = 'a';
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -122,14 +122,14 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = '';
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(a is default Char));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -149,13 +149,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = ' ';
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -175,13 +175,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = true;
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -206,17 +206,17 @@ enum Fruit
 end enum
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 enum Fruit {
   apple = "apple", orange = "orange", pear = "pear"
 }
 
 const a = Fruit.apple;
 
-export async function main() {
+async function main() {
   system.print(_stdlib.asString(a));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -225,6 +225,34 @@ export async function main() {
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "apple");
+  });
+
+  test('Pass_List', async () => {
+    // enums need to be declared before use - so need to move to top of file in ts code. also we will need to set the value of
+    // each enum to the appropriate string
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to [1,2,3]
+main
+  print a
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const a = system.list([1, 2, 3]);
+
+async function main() {
+  system.print(_stdlib.asString(a));
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
   });
 
   test('Fail_useInsideMain', () => {

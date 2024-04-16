@@ -15,14 +15,14 @@ main
     print second(x)
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = system.tuple([3, "Apple"]);
   system.print(_stdlib.asString(x));
   system.print(_stdlib.asString(_stdlib.first(x)));
   system.print(_stdlib.asString(_stdlib.second(x)));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -47,8 +47,8 @@ function f() return (String, String)
    return ("1", "2")
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = f();
   system.print(_stdlib.asString(x));
   system.print(_stdlib.asString(_stdlib.first(x)));
@@ -58,7 +58,7 @@ export async function main() {
 function f() {
   return system.tuple(["1", "2"]);
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -80,15 +80,15 @@ function f() return (String, String)
    return ("1", "2")
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   system.print(_stdlib.asString(_stdlib.first(f())));
 }
 
 function f() {
   return system.tuple(["1", "2"]);
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -108,15 +108,15 @@ main
 end main
 constant a set to [(1,2)]`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   system.print(_stdlib.asString(_stdlib.first(f())));
 }
 
 function f() {
   return system.tuple(["1", "2"]);
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -140,8 +140,8 @@ function f(t as (String, String)) return String
    return first(t)
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = "one";
   var y = "two";
   system.print(_stdlib.asString(f(system.tuple([x, y]))));
@@ -150,7 +150,7 @@ export async function main() {
 function f(t) {
   return _stdlib.first(t);
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -175,8 +175,8 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = system.tuple([3, "Apple"]);
   var y = 0;
   var z = "";
@@ -184,7 +184,7 @@ export async function main() {
   system.print(_stdlib.asString(y));
   system.print(_stdlib.asString(z));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -206,14 +206,14 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = system.tuple([3, "Apple"]);
   var [y, z] = x;
   system.print(_stdlib.asString(y));
   system.print(_stdlib.asString(z));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -234,13 +234,13 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = system.tuple([3, "Apple"]);
   x = system.tuple([4, "Pear"]);
   system.print(_stdlib.asString(x));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));

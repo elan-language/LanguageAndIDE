@@ -18,8 +18,8 @@ procedure foo()
   print 2
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   system.print(_stdlib.asString(1));
   foo();
   system.print(_stdlib.asString(3));
@@ -28,7 +28,7 @@ export async function main() {
 function foo() {
   system.print(_stdlib.asString(2));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -61,8 +61,8 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var b = new Bar();
   b.foo();
 }
@@ -81,7 +81,7 @@ class Bar {
   }
 
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -100,12 +100,12 @@ main
   print 1
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   system.pause(1);
   system.print(_stdlib.asString(1));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -130,8 +130,8 @@ procedure foo(a Int, b String)
     print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 2;
   var b = "hello";
   foo(a, b);
@@ -141,7 +141,7 @@ function foo(a: number, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -166,8 +166,8 @@ procedure foo(out a Int, out b String)
     print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 2;
   var b = "hello";
   foo(a, b);
@@ -177,7 +177,7 @@ function foo(a: number, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -202,8 +202,8 @@ procedure foo(a Int, out b String)
     print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 2;
   var b = "hello";
   foo(a, b);
@@ -213,7 +213,7 @@ function foo(a: number, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -238,8 +238,8 @@ procedure foo(a Int, b String)
   print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 2;
   var b = "hello";
   foo(a, b);
@@ -249,7 +249,7 @@ function foo(a: number, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -273,8 +273,8 @@ procedure foo(a Int, b String)
   print b
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 1;
   foo(a + 1, "hello);
 }
@@ -283,7 +283,7 @@ function foo(a: number, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -310,8 +310,8 @@ procedure foo (out a Int, out b String)
   set b to b + "!"
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = 1;
   var b = "hello";
   foo(a, b);
@@ -323,7 +323,7 @@ function foo(a: number, b: string) {
   a = a + 1;
   b = b + "!";
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -351,8 +351,8 @@ procedure bar()
   print 2
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   foo();
   system.print(_stdlib.asString(3));
 }
@@ -365,7 +365,7 @@ function foo() {
 function bar() {
   system.print(_stdlib.asString(2));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -391,8 +391,8 @@ procedure foo(a Int)
   end if
 end procedure`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   foo(3);
 }
 
@@ -403,7 +403,7 @@ function foo(a: number) {
     foo(b);
   }
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));

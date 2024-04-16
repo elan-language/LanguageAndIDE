@@ -18,8 +18,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   system.print(_stdlib.asString(Fruit.apple));
   system.print(_stdlib.asString(Fruit.orange));
   system.print(_stdlib.asString(Fruit.pear));
@@ -28,7 +28,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -52,8 +52,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = Fruit.apple;
   x = Fruit.pear;
   system.print(_stdlib.asString(x));
@@ -62,7 +62,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -86,8 +86,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = Fruit.apple;
   var y = x;
   system.print(_stdlib.asString(y));
@@ -96,7 +96,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -120,8 +120,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var x = Fruit.apple;
   system.print(_stdlib.asString(x === Fruit.apple));
   system.print(_stdlib.asString(x === Fruit.pear));
@@ -130,7 +130,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -161,8 +161,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var f = Fruit.orange;
   switch (f) {
     case Fruit.apple:
@@ -183,7 +183,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -206,8 +206,8 @@ enum Fruit
   apple, orange, pear
 end enum`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var a = "Eat more " + Fruit.apple + "s!";
   system.print(_stdlib.asString(a));
 }
@@ -215,7 +215,7 @@ export async function main() {
 var Fruit = {
   apple : "apple", orange : "orange", pear : "pear"
 };
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));

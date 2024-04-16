@@ -16,15 +16,15 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
   system.print(_stdlib.asString(tot));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -46,15 +46,15 @@ end for
 print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var tot = 0;
   for (var i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
   system.print(_stdlib.asString(tot));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -76,15 +76,15 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
   system.print(_stdlib.asString(tot));
 }
-`;
+return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -108,8 +108,8 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var tot = 0;
   for (var i = 1; i <= 3; i = i + 1) {
     for (var j = 1; j <= 4; j = j + 1) {
@@ -118,7 +118,7 @@ export async function main() {
   }
   system.print(_stdlib.asString(tot));
 }
-`;
+return main;}`;
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
@@ -141,8 +141,8 @@ main
   print tot
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
-export async function main() {
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
   var lower = 1;
   var upper = 10;
   var tot = 0;
@@ -151,7 +151,7 @@ export async function main() {
   }
   system.print(_stdlib.asString(tot));
 }
-`;
+return main;}`;
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
     fileImpl.parseFrom(new CodeSourceFromString(code));
 
