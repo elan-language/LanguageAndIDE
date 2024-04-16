@@ -84,6 +84,7 @@ import { StringInterpolation } from "../parse-nodes/string-interpolation";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { FuncTypeNode } from "../parse-nodes/func-type-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -221,6 +222,14 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         }
 
         return new TypeAsn(type, gp, scope);
+    }
+
+    if (node instanceof FuncTypeNode) {
+        const type = "Func";
+        var inp = node.inputTypes ? transformMany(node.inputTypes, scope) : [];
+        var oup = node.returnType ? [transform(node.returnType, scope)!] : [];
+        
+        return new TypeAsn(type, inp.concat(oup), scope);
     }
 
     if (node instanceof TypeSimpleNode) {

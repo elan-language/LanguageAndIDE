@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 
 suite('T72_PassingFunctionAsParameterOrReturn', () => {
 
-  ignore_test('Pass_PassAsParam', async () => {
+  test('Pass_PassAsParam', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
