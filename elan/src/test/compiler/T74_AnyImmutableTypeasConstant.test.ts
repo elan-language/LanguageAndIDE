@@ -109,6 +109,58 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, c:3]");
   });
 
+  // no longer supported ? 
+  ignore_test('Pass_ImmutableClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant k set to 0
+
+main 
+  print k
+end main
+
+immutable class Foo
+  constructor(p1 as Int)
+    set property.p1 to p1 * 2
+  end constructor
+    
+  property p1 as Int
+    
+  function asString() return String
+    return "{p1}"
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const k = new Foo(3);
+
+async function main() {
+  system.print(_stdlib.asString(k));
+}
+
+class Foo {
+  constructor(p1) {
+    property.p1 = p1 * 2;
+  }
+
+  p1 = 0;
+
+  asString() {
+    return \`\${p1}\`;
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, c:3]");
+  });
+
  
   
 
