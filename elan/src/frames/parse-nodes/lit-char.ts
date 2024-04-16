@@ -15,10 +15,10 @@ export class LitChar extends AbstractSequence {
         }
     }
     renderAsHtml(): string {
-        return `<string>${this.renderAsSource}</string>`;
+        return `<string>${this.renderAsSource()}</string>`;
     }
 
     renderAsSource(): string {
-        return `'${this.elements[1].matchedText}'`; //No .Trim() because might be a single space
+        return `\'${this.elements[1].matchedText}\'`; //No .Trim() because might be a single space
     }
 }

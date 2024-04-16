@@ -86,7 +86,7 @@ suite('Parsing - Completions', () => {
     test('Func', () => {
         testCompletion(new TypeNode(), "Fu", ParseStatus.valid, "");
         testCompletion(new TypeNode(), "Func", ParseStatus.valid, "");
-        testCompletion(new TypeNode(), "Func<", ParseStatus.incomplete, "of <pr>Type</pr> => <pr>Type</pr>>");
+        testCompletion(new TypeNode(), "Func<", ParseStatus.incomplete, "of <pr>Type(s)</pr> => <pr>Type</pr>>");
         testCompletion(new TypeNode(), "Func<of Foo", ParseStatus.incomplete, " => <pr>Type</pr>>");
         testCompletion(new TypeNode(), "Func<of Foo,", ParseStatus.incomplete, "<pr>Type</pr> => <pr>Type</pr>>");
     });
