@@ -45,6 +45,7 @@ async function main() {
 }
 
 class Foo {
+  static defaultInstance = system.initialise(Foo);
   constructor(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
@@ -74,30 +75,53 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
   });
 
-  test('Pass_FunctionReturnsTuple', async () => {
+  test('Pass_EmptyDoesNotEqualDefault', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to f()
-  print x
-  print first(x)
-  print second(x)
+  var x set to new Foo()
+  print x is default Foo
 end main
 
-function f() return (String, String)
-   return ("1", "2")
-end function`;
+class Foo
+    constructor()
+    end constructor
+    property p1 as Int
+    property p2 as String
+
+    procedure setP1(v as Int)
+        set p1 to v
+    end procedure
+
+    function asString() return String
+      return "{p1} {p2}"
+    end function
+end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = f();
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(_stdlib.first(x)));
-  system.print(_stdlib.asString(_stdlib.second(x)));
+  var x = system.initialise(new Foo());
+  system.print(_stdlib.asString(system.objectEquals(x, Foo.defaultInstance)));
 }
 
-function f() {
-  return system.tuple(["1", "2"]);
+class Foo {
+  static defaultInstance = system.initialise(Foo);
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  p2 = "";
+
+  setP1(v) {
+    this.p1 = v;
+  }
+
+  asString() {
+    return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
+  }
+
 }
 return main;}`;
 
@@ -107,10 +131,9 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Tuple (1, 2)12");
+    await assertObjectCodeExecutes(fileImpl, "false");
   });
 
- 
   
 
   // Fails TODO

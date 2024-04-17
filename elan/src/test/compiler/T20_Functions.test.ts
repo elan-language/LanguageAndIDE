@@ -205,6 +205,7 @@ function foo(bar) {
 }
 
 class Bar {
+  static defaultInstance = system.initialise(Bar);
   constructor() {
 
   }
