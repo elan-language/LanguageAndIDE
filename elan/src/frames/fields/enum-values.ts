@@ -7,6 +7,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../parse-status";
 import { transform, transformMany } from "../syntax-nodes/ast-visitor";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { AbstractField } from "./abstract-field";
 
 export class EnumValues extends AbstractField {
@@ -27,9 +28,10 @@ export class EnumValues extends AbstractField {
         (source: CodeSource) => source.readToEndOfLine();
 
     renderAsObjectCode(): string {
-        if (this.rootNode && this.rootNode.status === ParseStatus.valid){
-            const astNodes = transformMany(this.rootNode as CSV, this.getHolder());
-            return astNodes.map(n =>  `${n.renderAsObjectCode()} : "${n.renderAsObjectCode()}"`).join(", ");
+        const ast = this.getOrTransformAstNode as CsvAsn;
+
+        if (ast) {
+            return ast.items.map(n =>  `${n.renderAsObjectCode()} : "${n.renderAsObjectCode()}"`).join(", ");
         }
 
         return "";
