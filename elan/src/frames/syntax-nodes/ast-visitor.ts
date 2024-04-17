@@ -87,6 +87,7 @@ import { SegmentedStringAsn } from "./segmented-string-asn";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
+import { AssignableNode } from "../parse-nodes/assignable-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -405,20 +406,12 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         return new LiteralStringAsn(node.matchedText);
      }
 
-     if (node instanceof Sequence) {
-        // temp workaround 
-        if (node.getElements().length === 3) {
-            const q = transform(node.getElements()[0], scope);
-            const id = node.getElements()[1]!.matchedText;
-            const index = transform(node.getElements()[2], scope);
-            return new VarAsn(id, q, index, scope);
-        }
-        if (node.getElements().length === 2) {
-            const q = transformMany(node, scope);
-            return new QualifierAsn(q, scope);
-        }
-     }
-
+    if (node instanceof AssignableNode) {
+        const q = transform(node.qualifier, scope);
+        const id = node.simple.matchedText;
+        const index = transform(node.index, scope);
+        return new VarAsn(id, q, index, scope);
+    }
 
     throw new Error("Not implemented " + typeof node);
 }
