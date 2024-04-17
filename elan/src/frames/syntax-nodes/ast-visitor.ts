@@ -76,7 +76,7 @@ import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { TermWith } from "../parse-nodes/term-with";
 import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
-import { QualifierDot } from "../parse-nodes/qualifierDot";
+import { Qualifier } from "../parse-nodes/qualifierDot";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
@@ -365,7 +365,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         const to = toNode ? transform(toNode, scope) : undefined;
         return new RangeAsn(from, to, scope);
     }
-    if (node instanceof QualifierDot) {
+    if (node instanceof Qualifier) {
         return transform(node.qualifier, scope);
     }
     if (node instanceof InstanceNode) {
