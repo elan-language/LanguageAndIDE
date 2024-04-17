@@ -45,7 +45,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.initialise(Foo);
+  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
   constructor(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
@@ -105,7 +105,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.initialise(Foo);
+  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
   constructor() {
 
   }
@@ -131,7 +131,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "false");
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
   

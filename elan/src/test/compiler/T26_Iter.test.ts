@@ -183,7 +183,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.initialise(Foo);
+  static defaultInstance = system.defaultClass(Foo, [["it", "Iter<of Int>"]]);
   constructor() {
 
   }

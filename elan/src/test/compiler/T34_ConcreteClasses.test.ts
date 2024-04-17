@@ -39,7 +39,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.initialise(Foo);
+  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
   constructor() {
     this.p1 = 5;
   }
@@ -95,7 +95,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.initialise(Foo);
+  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
   constructor(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;

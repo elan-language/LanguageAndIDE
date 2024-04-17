@@ -75,4 +75,8 @@ export class Property extends AbstractFrame implements Member {
     get symbolScope(): SymbolScope {
         return SymbolScope.property;
     }
+
+    public initCode() {
+        return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
+    }
 } 

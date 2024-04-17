@@ -166,9 +166,16 @@ ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
     }
 
+    private propertiesToInit() {
+        const pp = this.getChildren().filter(c => c instanceof Property ) as Property[];
+        const ps = pp.map(p => p.initCode()).join(", ");
+        return `[${ps}]`;
+    }
+
+
     public renderAsObjectCode(): string {
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
-  static defaultInstance = system.initialise(${this.name.renderAsObjectCode()});\r
+  static defaultInstance = system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});\r
 ${parentHelper_renderChildrenAsObjectCode(this)}\r
 }\r\n`;
     }

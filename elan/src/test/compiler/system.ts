@@ -65,6 +65,17 @@ export class System {
         return toInit;
     }
 
+    defaultClass(type : any, properties : [string, string][]){
+        const t = Object.create(type.prototype);
+
+        for(const p of properties) {
+            t[p[0]] = this.default(p[1]);
+        }
+
+        return t;
+    }
+
+
     printed : string = "";
 
     inputed : string = "";
