@@ -1,14 +1,14 @@
 import { DOT } from "../symbols";
-import { AbstractAlternatives } from "./abstract-alternatives";
 import { AbstractSequence } from "./abstract-sequence";
+import { ParseNode } from "./parse-node";
 import { SymbolNode } from "./symbol-node";
 
-export class QualifierDot extends AbstractSequence {
-    qualifier: AbstractAlternatives;
+export class Qualifier extends AbstractSequence {
+    qualifier: ParseNode;
 
-    constructor(qualAlts: AbstractAlternatives) {
+    constructor(qual: ParseNode) {
         super();
-        this.qualifier = qualAlts;
+        this.qualifier = qual;
     }
 
     parseText(text: string): void {

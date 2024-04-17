@@ -426,6 +426,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new VarRefNode(), `foo`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(), `foo[3]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(), `library.foo`, ParseStatus.valid, "", "", "");
+		testNodeParse(new VarRefNode(), `property.foo`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(), `global.foo[3]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(), `property.foo[3..4]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new VarRefNode(), `bar.foo[3..4]`, ParseStatus.valid, "", "", "");

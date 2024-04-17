@@ -6,8 +6,8 @@ import { Statement } from "../interfaces/statement";
 import { externalKeyword, intoKeyword } from "../keywords";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcedureRef } from "../fields/procedureRef";
-import { AssignableField } from "../fields/assignableField";
 import { IntoSelector } from "../fields/into-selector";
+import { AssignableField } from "../fields/assignableField";
 
 export class ExternalStatement extends AbstractFrame implements Statement{
     isStatement = true;
