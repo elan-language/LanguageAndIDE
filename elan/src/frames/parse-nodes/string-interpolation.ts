@@ -9,10 +9,10 @@ export class StringInterpolation extends AbstractSequence{
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACE));
+            this.addElement(new SymbolNode(OPEN_BRACE));
             this.expr = new ExprNode();
-            this.elements.push(this.expr);
-            this.elements.push(new SymbolNode(CLOSE_BRACE));
+            this.addElement(this.expr);
+            this.addElement(new SymbolNode(CLOSE_BRACE));
             super.parseText(text);
         }
     }

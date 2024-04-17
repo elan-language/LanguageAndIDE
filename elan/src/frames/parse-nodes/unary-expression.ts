@@ -26,9 +26,9 @@ export class UnaryExpression extends AbstractSequence {
             var sp = () => new SpaceNode(Space.required);
             var notSp = () => new Sequence([not, sp]);
             this.unaryOp = new Alternatives([minus,notSp]);
-            this.elements.push(this.unaryOp);
+            this.addElement(this.unaryOp);
             this.term = new Term();
-            this.elements.push(this.term);
+            this.addElement(this.term);
             return super.parseText(text);
         }
     }

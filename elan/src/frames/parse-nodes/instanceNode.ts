@@ -11,8 +11,8 @@ export class InstanceNode extends AbstractSequence {
         if (text.length > 0) {
             this.variable =  new IdentifierNode();
             this.index = new OptionalNode(() => new IndexNode());
-            this.elements.push(this.variable);
-            this.elements.push(this.index);
+            this.addElement(this.variable);
+            this.addElement(this.index);
             super.parseText(text);
         }
     }

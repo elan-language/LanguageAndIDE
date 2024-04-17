@@ -35,8 +35,8 @@ export class TypeWithOptGenerics extends AbstractSequence {
             var gt =() => new SymbolNode(GT);
             var genericNode = () => new Sequence([lt,of,sp,type,commaTypes,gt]);
             this.generic = new OptionalNode(genericNode);
-            this.elements.push(this.simpleType);
-            this.elements.push(this.generic);
+            this.addElement(this.simpleType);
+            this.addElement(this.generic);
             super.parseText(text);
         }
     }

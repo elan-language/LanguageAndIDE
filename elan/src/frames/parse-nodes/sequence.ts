@@ -12,7 +12,7 @@ export class Sequence extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.elementConstructors.forEach(ec => {
-                this.elements.push(ec());
+                this.addElement(ec());
             });
         }
         super.parseText(text);

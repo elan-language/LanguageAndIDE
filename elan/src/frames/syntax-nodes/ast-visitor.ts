@@ -114,7 +114,7 @@ function mapOperation(op: string) {
 export function transformMany(node: CSV | Multiple | Sequence, scope : Scope): Array<AstNode> {
     const ast = new Array<AstNode>();
 
-    for (const elem of node.elements) {
+    for (const elem of node.getElements()) {
         if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
             const asns = transformMany(elem, scope);
 
@@ -407,13 +407,13 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
 
      if (node instanceof Sequence) {
         // temp workaround 
-        if (node.elements.length === 3) {
-            const q = transform(node.elements[0], scope);
-            const id = node.elements[1]!.matchedText;
-            const index = transform(node.elements[2], scope);
+        if (node.getElements().length === 3) {
+            const q = transform(node.getElements()[0], scope);
+            const id = node.getElements()[1]!.matchedText;
+            const index = transform(node.getElements()[2], scope);
             return new VarAsn(id, q, index, scope);
         }
-        if (node.elements.length === 2) {
+        if (node.getElements().length === 2) {
             const q = transformMany(node, scope);
             return new QualifierAsn(q, scope);
         }

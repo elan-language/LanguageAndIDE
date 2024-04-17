@@ -15,10 +15,10 @@ export class ListNode extends AbstractSequence  {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(new SymbolNode(OPEN_SQ_BRACKET));
+            this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
             this.csv = new CSV(this.elementConstructor, 0);
-            this.elements.push(this.csv);
-            this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));
+            this.addElement(this.csv);
+            this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
             super.parseText(text);
         }
     }

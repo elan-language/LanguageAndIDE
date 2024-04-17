@@ -10,9 +10,9 @@ export class CommaNode extends AbstractSequence {
         var ignoreSpace =  new SpaceNode(Space.ignored);
         var comma =  new SymbolNode(COMMA);
         var addSpace = new SpaceNode(Space.added);
-        this.elements.push(ignoreSpace);
-        this.elements.push(comma);
-        this.elements.push(addSpace);
+        this.addElement(ignoreSpace);
+        this.addElement(comma);
+        this.addElement(addSpace);
         super.parseText(text);
     }
 }

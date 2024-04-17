@@ -10,9 +10,9 @@ export class TypeTuple extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.types = new CSV(() => new TypeNode(), 2);
-            this.elements.push(new SymbolNode(OPEN_BRACKET));
-            this.elements.push(this.types);
-            this.elements.push(new SymbolNode(CLOSE_BRACKET));
+            this.addElement(new SymbolNode(OPEN_BRACKET));
+            this.addElement(this.types);
+            this.addElement(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

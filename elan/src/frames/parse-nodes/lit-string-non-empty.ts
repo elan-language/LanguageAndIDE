@@ -21,9 +21,9 @@ export class LitStringNonEmpty extends AbstractSequence {
             var plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
             var segment = () => new Alternatives([field, plainText]);
             this.segments = new Multiple(segment, 1);
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
-            this.elements.push(this.segments);
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
+            this.addElement(new SymbolNode(DOUBLE_QUOTES));
+            this.addElement(this.segments);
+            this.addElement(new SymbolNode(DOUBLE_QUOTES));
             super.parseText(text);
         }
     }

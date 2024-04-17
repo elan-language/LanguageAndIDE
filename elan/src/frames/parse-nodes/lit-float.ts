@@ -17,14 +17,14 @@ export class LitFloat extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            this.elements.push(new LitInt());
-            this.elements.push(new SymbolNode(DOT));
-            this.elements.push(new RegExMatchNode(Regexes.literalInt));
+            this.addElement(new LitInt());
+            this.addElement(new SymbolNode(DOT));
+            this.addElement(new RegExMatchNode(Regexes.literalInt));
             var exponent = new OptionalNode(() => new Sequence([
                 () => new RegExMatchNode(/e/),
                 () => new RegExMatchNode(Regexes.negatableLitInt)
                 ]));
-            this.elements.push(exponent);
+            this.addElement(exponent);
             super.parseText(text);
         }
     }

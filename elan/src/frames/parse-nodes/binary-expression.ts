@@ -17,22 +17,22 @@ export class BinaryExpression extends AbstractSequence {
 
     parseText(text: string): void {
         this.lhs =new Term();
-        this.elements.push(this.lhs);
-        this.elements.push(new SpaceNode(Space.added));
+        this.addElement(this.lhs);
+        this.addElement(new SpaceNode(Space.added));
         this.op = new BinaryOperation();
-        this.elements.push(this.op);
-        this.elements.push(new SpaceNode(Space.required));
+        this.addElement(this.op);
+        this.addElement(new SpaceNode(Space.required));
         this.rhs = new ExprNode();
-        this.elements.push(this.rhs);
+        this.addElement(this.rhs);
         return super.parseText(text);
     }
 
     renderAsObjectCode(): string {
-        const codeArray = this.elements.map(e => e.renderAsObjectCode());
+        const codeArray = this.getElements().map(e => e.renderAsObjectCode());
         const code = codeArray.join("");
 
         // kludges
-        if ((this.elements[2] as BinaryOperation).matchedText.trim() === "div"){
+        if ((this.rhs as BinaryOperation).matchedText.trim() === "div"){
             return `Math.floor(${code})`;
         }
 

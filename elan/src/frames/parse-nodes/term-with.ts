@@ -14,9 +14,9 @@ export class TermWith extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.term = new Term();
-            this.elements.push(this.term);
+            this.addElement(this.term);
             this.with = new WithClause();
-            this.elements.push(this.with);
+            this.addElement(this.with);
             return super.parseText(text);
         }
     }

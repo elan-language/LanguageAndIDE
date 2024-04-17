@@ -9,10 +9,10 @@ export class DefaultOfTypeNode extends AbstractSequence {
     type: TypeWithOptGenerics |undefined;
 
     parseText(text: string): void {
-        this.elements.push(new KeywordNode(defaultKeyword));
-        this.elements.push(new SpaceNode(Space.required));
+        this.addElement(new KeywordNode(defaultKeyword));
+        this.addElement(new SpaceNode(Space.required));
         this.type =new TypeWithOptGenerics();
-        this.elements.push(this.type); 
+        this.addElement(this.type); 
         super.parseText(text);
     }
 }

@@ -5,12 +5,16 @@ import { ParseNode } from "./parse-node";
 export class Multiple extends AbstractParseNode {
     elementConstructor: () => ParseNode;
     minimum: number;
-    elements: ParseNode[] = [];
+    private elements: ParseNode[] = [];
 
     constructor(elementConstructor: () => ParseNode, minimum: number) {
         super();
         this.elementConstructor = elementConstructor;
         this.minimum = minimum;
+    }
+
+    public getElements(): ParseNode[] {
+        return this.elements;
     }
 
     parseText(text: string): void {
