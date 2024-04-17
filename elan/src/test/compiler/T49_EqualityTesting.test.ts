@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 
 suite('T49_EqualityTesting', () => {
 
-  ignore_test('Pass_DifferentInstancesWithSameValuesAreEqual', async () => {
+  test('Pass_DifferentInstancesWithSameValuesAreEqual', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -39,9 +39,9 @@ async function main() {
   var x = system.initialise(new Foo(7, "Apple"));
   var y = system.initialise(new Foo(7, "Orange"));
   var z = system.initialise(new Foo(7, "Orange"));
-  system.print(_stdlib.asString(x === x));
-  system.print(_stdlib.asString(x === y));
-  system.print(_stdlib.asString(y === z));
+  system.print(_stdlib.asString(system.objectEquals(x, x)));
+  system.print(_stdlib.asString(system.objectEquals(x, y)));
+  system.print(_stdlib.asString(system.objectEquals(y, z)));
 }
 
 class Foo {
