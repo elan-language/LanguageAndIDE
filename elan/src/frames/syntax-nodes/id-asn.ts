@@ -1,4 +1,6 @@
 import { SymbolScope } from "../../symbols/symbol";
+import { Property } from "../class-members/property";
+import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
@@ -8,11 +10,15 @@ export class IdAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib){
-            return `_stdlib.${this.id}`;    
+        if (isMember(this.scope)) {
+            // don't prefix properties with this
+            return this.id;
         }
-        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.property){
-            return `this.${this.id}`;    
+        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib) {
+            return `_stdlib.${this.id}`;
+        }
+        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.property) {
+            return `this.${this.id}`;
         }
         return this.id;
     }

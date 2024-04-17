@@ -28,13 +28,4 @@ export class AssignableField extends AbstractField {
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string)  = (source: CodeSource) => source.readUntil(/(\s+to\s+)|\r|\n/);
-
-    renderAsObjectCode(): string {
-        if (this.rootNode && this.rootNode.status === ParseStatus.valid){
-            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
-            return this.astNode?.renderAsObjectCode() ?? "";
-        }
-
-        return "";
-    }
 } 

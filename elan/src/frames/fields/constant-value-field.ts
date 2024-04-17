@@ -21,14 +21,4 @@ export class ConstantValueField extends AbstractField {
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) =>
       source.readToEndOfLine();
-
-    renderAsObjectCode(): string {
-        // TODO extract out cloned code
-        if (this.rootNode){
-            const ast = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
-            return ast?.renderAsObjectCode() ?? super.renderAsObjectCode();
-        }
-
-        return super.renderAsObjectCode();
-    }
 }

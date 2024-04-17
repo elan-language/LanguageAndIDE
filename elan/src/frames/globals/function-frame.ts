@@ -94,7 +94,7 @@ ${this.renderChildrenAsObjectCode()}\r
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        if (this.name.renderAsObjectCode() === id){
+        if (this.name.text === id){
             return {
                 symbolId : id,
                 symbolType : undefined,

@@ -7,6 +7,8 @@ import {CodeSource } from "../code-source";
 import { escapeAngleBrackets, isCollapsible} from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../syntax-nodes/ast-node";
+import { transform } from "../syntax-nodes/ast-visitor";
+import { Scope } from "../interfaces/scope";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -292,11 +294,23 @@ export abstract class AbstractField implements Selectable, Field {
         return this.textAsSource();
     }
 
-    renderAsObjectCode(): string {
-        return this.textAsSource();
-    }
-
     setText(text: string) {
         this.text = text;
+    }
+
+    get getOrTransformAstNode() {
+        if (!this.astNode) {
+            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope);
+        }
+
+        return this.astNode;
+    }
+
+    renderAsObjectCode(): string {
+        if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
+            return this.getOrTransformAstNode?.renderAsObjectCode() ?? "";
+        }
+
+        return "";
     }
 }

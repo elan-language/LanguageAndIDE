@@ -26,16 +26,11 @@ export class TypeField extends AbstractField  {
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine(); 
 
     renderAsObjectCode(): string {
-        if (this.rootNode && this.rootNode.status === ParseStatus.valid){
-            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
-            if (this.astNode instanceof TypeAsn) {
-                return this.astNode.renderAsDefaultObjectCode();
-            }
-
-            return this.astNode?.renderAsObjectCode() ?? "";
+        const code = super.renderAsObjectCode();
+        if (this.astNode instanceof TypeAsn) {
+            return this.astNode.renderAsDefaultObjectCode();
         }
-
-        return "";
+        return code;
     }
 
     get symbolType() {

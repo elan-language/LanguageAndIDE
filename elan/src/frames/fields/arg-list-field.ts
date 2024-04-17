@@ -4,6 +4,8 @@ import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { CSV } from "../parse-nodes/csv";
+import { transformMany } from "../syntax-nodes/ast-visitor";
+import { Scope } from "../interfaces/scope";
 
 
 export class ArgListField extends AbstractField {
@@ -30,4 +32,14 @@ export class ArgListField extends AbstractField {
     }
     readToDelimeter: ((source: CodeSource) => string)  = 
       (source: CodeSource) => source.readToNonMatchingCloseBracket();
+
+    renderAsObjectCode(): string {
+        if (this.rootNode){
+            const ast = transformMany(this.rootNode as CSV, this.getHolder() as unknown as Scope); // TODO fix type
+            const pp = ast.map(p => p.renderAsObjectCode()).join(", ");
+            return pp;
+        }
+
+        return super.renderAsObjectCode(); 
+    }
 }
