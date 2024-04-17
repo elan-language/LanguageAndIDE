@@ -7,8 +7,10 @@ import {CodeSource } from "../code-source";
 import { escapeAngleBrackets, isCollapsible} from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../syntax-nodes/ast-node";
-import { transform } from "../syntax-nodes/ast-visitor";
+import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { Scope } from "../interfaces/scope";
+import { CSV } from "../parse-nodes/csv";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -300,7 +302,14 @@ export abstract class AbstractField implements Selectable, Field {
 
     get getOrTransformAstNode() {
         if (!this.astNode) {
-            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope);
+            if (this.rootNode instanceof CSV) {
+                const scope = this.getHolder() as unknown as Scope;
+                const vv = transformMany(this.rootNode as CSV, scope); // TODO fix type
+                this.astNode = new CsvAsn(vv, scope);
+            }
+            else {
+                this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope);
+            }
         }
 
         return this.astNode;

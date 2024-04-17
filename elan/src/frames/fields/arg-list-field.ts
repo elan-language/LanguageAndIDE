@@ -33,13 +33,4 @@ export class ArgListField extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string)  = 
       (source: CodeSource) => source.readToNonMatchingCloseBracket();
 
-    renderAsObjectCode(): string {
-        if (this.rootNode){
-            const ast = transformMany(this.rootNode as CSV, this.getHolder() as unknown as Scope); // TODO fix type
-            const pp = ast.map(p => p.renderAsObjectCode()).join(", ");
-            return pp;
-        }
-
-        return super.renderAsObjectCode(); 
-    }
 }
