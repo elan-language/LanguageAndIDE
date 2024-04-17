@@ -85,6 +85,8 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { SegmentedStringAsn } from "./segmented-string-asn";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
+import { QualifierAsn } from "./qualifier-asn";
+import { FixedIdAsn } from "./fixed-id-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -274,12 +276,15 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
     }
 
     if (node instanceof KeywordNode) {
-        if (node.fixedText === globalKeyword || node.fixedText === libraryKeyword || node.fixedText === propertyKeyword) {
-            return new IdAsn(node.fixedText, scope);
+        // todo decouple this from js
+        // if (node.fixedText === globalKeyword) {
+        //     return new IdAsn(node.fixedText, scope);
+        // }
+        if (node.fixedText === libraryKeyword) {
+            return new FixedIdAsn("_stdlib");
         }
-
-        if (node.fixedText === "result") {
-            return new ResultAsn(scope);
+        if (node.fixedText === propertyKeyword) {
+            return new FixedIdAsn("this");
         }
 
         return undefined;
@@ -399,6 +404,21 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
      if (node instanceof RegExMatchNode) {
         return new LiteralStringAsn(node.matchedText);
      }
+
+     if (node instanceof Sequence) {
+        // temp workaround 
+        if (node.elements.length === 3) {
+            const q = transform(node.elements[0], scope);
+            const id = node.elements[1]!.matchedText;
+            const index = transform(node.elements[2], scope);
+            return new VarAsn(id, q, index, scope);
+        }
+        if (node.elements.length === 2) {
+            const q = transformMany(node, scope);
+            return new QualifierAsn(q, scope);
+        }
+     }
+
 
     throw new Error("Not implemented " + typeof node);
 }

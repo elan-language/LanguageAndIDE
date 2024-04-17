@@ -11,6 +11,9 @@ export class IdAsn implements AstNode {
         if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib){
             return `_stdlib.${this.id}`;    
         }
+        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.property){
+            return `this.${this.id}`;    
+        }
         return this.id;
     }
 

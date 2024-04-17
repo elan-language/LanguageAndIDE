@@ -29,7 +29,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        return this.getParent().resolveSymbol(id, initialScope);
+        return this.getParent().resolveSymbol(id, this);
     }
 
     frameStatus(): ParseStatus {

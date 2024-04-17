@@ -22,6 +22,8 @@ import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
+import { ISymbol } from "../../symbols/symbol";
+import { isSymbol } from "../../symbols/symbolHelpers";
 
 export class Class extends AbstractFrame implements Parent, Collapsible {
     isCollapsible: boolean = true;
@@ -231,5 +233,16 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r
     }
     newChildSelector(): AbstractSelector {
         return new MemberSelector(this);
+    }
+
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+
+        for (var f of this.getChildren()) {
+            if (isSymbol(f) && f.symbolId === id) {
+                return f;
+            }
+        }
+
+        return this.getParent().resolveSymbol(id, this);
     }
 }

@@ -103,8 +103,8 @@ suite('ASTNodes', () => {
 		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
 		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call global.foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call library.foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call _stdlib.foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
 		testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
 		testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
@@ -189,9 +189,9 @@ suite('ASTNodes', () => {
 		//testAST(new VarRefNode(), stubField, `result`, "", intType);
 		testAST(new VarRefNode(), stubField, `lst`, "lst", new ListType(intType));
 		testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
-		testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
-		testAST(new VarRefNode(), stubField, `global.lst[3]`, "global.lst[3]", intType);
-		testAST(new VarRefNode(), stubField, `property.lst[3..4]`, "property.lst[Range 3..4]", new ListType(intType));
+		testAST(new VarRefNode(), stubField, `library.foo`, "_stdlib.foo", intType);
+		testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
+		testAST(new VarRefNode(), stubField, `property.lst[3..4]`, "this.lst[Range 3..4]", new ListType(intType));
 		testAST(new VarRefNode(), stubField, `bar.lst[..4]`, "bar.lst[Range ..4]", new ListType(intType));
 		//testAST(new VarRefNode(), stubField, `property.bar.foo`, "property.bar.foo", intType);
 	});

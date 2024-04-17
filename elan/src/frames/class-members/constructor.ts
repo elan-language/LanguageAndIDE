@@ -6,6 +6,8 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractSelector } from "../abstract-selector";
 import { Collapsible } from "../interfaces/collapsible";
+import { ISymbol } from "../../symbols/symbol";
+import { Frame } from "../interfaces/frame";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -61,5 +63,9 @@ ${this.indent()}}\r
     }
     canInsertBefore(): boolean {
         return false;
+    }
+
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        return this.params.resolveSymbol(id, this) ?? this.getParent().resolveSymbol(id, this);
     }
 }

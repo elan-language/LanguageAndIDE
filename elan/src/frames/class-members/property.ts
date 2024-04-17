@@ -1,3 +1,4 @@
+import { SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
@@ -61,5 +62,17 @@ export class Property extends AbstractFrame implements Member {
         this.name.parseFrom(source);
         source.remove(` ${asKeyword} `);
         this.type.parseFrom(source);
+    }
+
+    get symbolId() {
+        return this.name.renderAsSource();
+    }
+
+    get symbolType() {
+        return this.type.symbolType;
+    }
+
+    get symbolScope(): SymbolScope {
+        return SymbolScope.property;
     }
 } 

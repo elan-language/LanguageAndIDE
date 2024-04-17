@@ -6,7 +6,7 @@ export class QualifierAsn implements AstNode {
     constructor(private qualifier: AstNode[], private scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return `${this.qualifier.map(p => p.renderAsObjectCode()).join(".")}`;
     }
 
     get symbolType() {

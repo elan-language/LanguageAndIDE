@@ -10,6 +10,8 @@ import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { Frame } from "../interfaces/frame";
 
 export class FunctionFrame extends FrameWithStatements implements Parent {
     isGlobal = true;
@@ -90,5 +92,16 @@ ${this.renderChildrenAsObjectCode()}\r
     }
     private getReturnStatement() : ReturnStatement {
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
+    }
+    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+        if (this.name.renderAsObjectCode() === id){
+            return {
+                symbolId : id,
+                symbolType : undefined,
+                symbolScope : SymbolScope.program
+            } as ISymbol;
+        }
+
+        return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);
     }
 }

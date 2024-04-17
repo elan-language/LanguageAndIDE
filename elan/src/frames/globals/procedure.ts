@@ -1,4 +1,5 @@
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
@@ -62,8 +63,14 @@ ${this.renderStatementsAsObjectCode()}\r
     }
 
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        // todo parameters 
+        if (this.name.renderAsObjectCode() === id){
+            return {
+                symbolId : id,
+                symbolType : undefined,
+                symbolScope : SymbolScope.program
+            } as ISymbol;
+        }
 
-        return super.resolveSymbol(id, initialScope);
+        return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);
     }
 }

@@ -4,7 +4,10 @@ export enum SymbolScope {
     external, 
     system, 
     stdlib,
-    program // also undefined 
+    program, // also undefined 
+    parameter,
+    property,
+    member
 }
 
 export interface ISymbol {

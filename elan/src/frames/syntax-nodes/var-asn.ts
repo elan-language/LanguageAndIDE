@@ -1,5 +1,6 @@
 import { ArrayType } from "../../symbols/array-type";
 import { ListType } from "../../symbols/list-type";
+import { SymbolScope } from "../../symbols/symbol";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { IndexAsn } from "./index-asn";
@@ -19,9 +20,23 @@ export class VarAsn implements AstNode {
         return this.index instanceof IndexAsn && !(this.index.index instanceof RangeAsn);
     }
 
+    private getQualifier() {
+        if (this.qualifier) {
+            return `${this.qualifier.renderAsObjectCode()}.`;
+        }
+        const s = this.scope.resolveSymbol(this.id, this.scope);
+      
+        if (s && s.symbolScope === SymbolScope.property) {
+            return "this.";
+        }
+
+        return "";
+    }
+
+
 
     renderAsObjectCode(): string {
-        var q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : "";
+        var q = this.getQualifier();
         var idx = this.index ? this.index.renderAsObjectCode() : ""; 
         const code = `${q}${this.id}${idx}`;
 

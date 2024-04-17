@@ -15,6 +15,9 @@ import { SymbolNode } from "../parse-nodes/symbol-node";
 import { IndexNode } from "../parse-nodes/index-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { DOT } from "../symbols";
+import { ParseStatus } from "../parse-status";
+import { transform } from "../syntax-nodes/ast-visitor";
+import { Scope } from "../interfaces/scope";
 
 export class SetTargetField extends AbstractField { 
     isParseByNodes = true;
@@ -40,4 +43,13 @@ export class SetTargetField extends AbstractField {
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string)  = (source: CodeSource) => source.readUntil(/(\s+to\s+)|\r|\n/);
+
+    renderAsObjectCode(): string {
+        if (this.rootNode && this.rootNode.status === ParseStatus.valid){
+            this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope); // TODO fix type
+            return this.astNode?.renderAsObjectCode() ?? "";
+        }
+
+        return "";
+    }
 } 

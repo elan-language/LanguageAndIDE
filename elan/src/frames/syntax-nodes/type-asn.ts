@@ -5,6 +5,7 @@ import { DictionaryType } from "../../symbols/dictionary-type";
 import { FloatType } from "../../symbols/float-type";
 import { GenericClassType } from "../../symbols/generic-class-type";
 import { IntType } from "../../symbols/int-type";
+import { IterType } from "../../symbols/iter-type";
 import { ListType } from "../../symbols/list-type";
 import { StringType } from "../../symbols/string-type";
 import { TupleType } from "../../symbols/tuple-type";
@@ -55,7 +56,7 @@ export class TypeAsn implements AstNode {
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);
             case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
             case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
-            case ("Iter"): throw new Error("Not impl");
+            case ("Iter"): return new IterType(this.genericParameters[0].symbolType!);
             default: {
                 if (this.genericParameters.length === 0) {
                     return new ClassType(this.type);
