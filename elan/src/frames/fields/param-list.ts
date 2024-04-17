@@ -7,6 +7,7 @@ import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { transform, transformMany } from "../syntax-nodes/ast-visitor";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { ParamDefAsn } from "../syntax-nodes/param-def-asn";
 import { AbstractField } from "./abstract-field";
 
@@ -37,20 +38,22 @@ export class ParamList extends AbstractField {
         (source: CodeSource) => source.readToNonMatchingCloseBracket();
 
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol | undefined {
-        if (this.rootNode){
-            const ast = transformMany(this.rootNode as CSV, this.getHolder() as unknown as Scope); // TODO fix type
+    resolveSymbol(id: string, initialScope: Frame): ISymbol | undefined {
 
-            for (const n of ast as ParamDefAsn[]) {
+        const ast = this.getOrTransformAstNode as CsvAsn;
+
+        if (ast) {
+            for (const n of ast.items as ParamDefAsn[]) {
                 if (n.id === id) {
                     return {
-                        symbolId : id,
-                        symbolType : n.symbolType,
-                        symbolScope : SymbolScope.parameter
+                        symbolId: id,
+                        symbolType: n.symbolType,
+                        symbolScope: SymbolScope.parameter
                     };
                 }
             }
         }
+
         return undefined;
     }
 }
