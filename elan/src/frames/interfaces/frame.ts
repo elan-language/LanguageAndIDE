@@ -2,8 +2,9 @@ import { Field } from "./field";
 import { Selectable } from "./selectable";
 import { ParseStatus } from "../parse-status";
 import { Parent } from "./parent";
+import { Scope } from "./scope";
 
-export interface Frame extends Selectable {
+export interface Frame extends Selectable, Scope {
     isFrame: boolean;
     
     getParent(): Parent;

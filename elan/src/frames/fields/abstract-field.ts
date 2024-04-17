@@ -303,12 +303,12 @@ export abstract class AbstractField implements Selectable, Field {
     get getOrTransformAstNode() {
         if (!this.astNode) {
             if (this.rootNode instanceof CSV) {
-                const scope = this.getHolder() as unknown as Scope;
-                const vv = transformMany(this.rootNode as CSV, scope); // TODO fix type
+                const scope = this.getHolder();
+                const vv = transformMany(this.rootNode as CSV, scope);
                 this.astNode = new CsvAsn(vv, scope);
             }
             else {
-                this.astNode = transform(this.rootNode, this.getHolder() as unknown as Scope);
+                this.astNode = transform(this.rootNode, this.getHolder());
             }
         }
 

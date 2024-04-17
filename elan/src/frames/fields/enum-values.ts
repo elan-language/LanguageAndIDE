@@ -28,7 +28,7 @@ export class EnumValues extends AbstractField {
 
     renderAsObjectCode(): string {
         if (this.rootNode && this.rootNode.status === ParseStatus.valid){
-            const astNodes = transformMany(this.rootNode as CSV, this.getHolder() as unknown as Scope); // TODO fix type
+            const astNodes = transformMany(this.rootNode as CSV, this.getHolder());
             return astNodes.map(n =>  `${n.renderAsObjectCode()} : "${n.renderAsObjectCode()}"`).join(", ");
         }
 
