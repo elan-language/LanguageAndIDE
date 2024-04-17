@@ -5,16 +5,16 @@ import {CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { SetTargetField } from "../fields/setTargetField";
+import { AssignableField } from "../fields/assignableField";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    assignable: SetTargetField;
+    assignable: AssignableField;
     expr: ExpressionField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.assignable = new SetTargetField(this);
+        this.assignable = new AssignableField(this);
         this.assignable.setPlaceholder("variableName");
         this.expr = new ExpressionField(this);
     }
