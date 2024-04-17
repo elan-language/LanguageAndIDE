@@ -1,12 +1,13 @@
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
+import { TypeAsn } from "./type-asn";
 
 export class DefaultTypeAsn implements AstNode {
 
-    constructor(private type: AstNode, private scope : Scope) {
+    constructor(private type: TypeAsn, private scope : Scope) {
     }
     renderAsObjectCode(): string {
-        throw new Error("Method not implemented.");
+        return this.type.renderAsDefaultObjectCode();
     }
 
     get symbolType() {

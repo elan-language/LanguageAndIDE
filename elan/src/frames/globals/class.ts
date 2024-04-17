@@ -168,6 +168,7 @@ end class\r\n`;
 
     public renderAsObjectCode(): string {
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
+  static defaultInstance = system.initialise(${this.name.renderAsObjectCode()});\r
 ${parentHelper_renderChildrenAsObjectCode(this)}\r
 }\r\n`;
     }

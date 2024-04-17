@@ -183,6 +183,7 @@ async function main() {
 }
 
 class Foo {
+  static defaultInstance = system.initialise(Foo);
   constructor() {
 
   }
