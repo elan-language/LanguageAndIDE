@@ -267,8 +267,8 @@ suite('Parsing Nodes', () => {
 	test('Function Call', () => {
 		testNodeParse(new FunctionCallNode(), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new FunctionCallNode(), `  `, ParseStatus.empty, ``, "", "");
-		testNodeParse(new FunctionCallNode(), `foo()`, ParseStatus.valid, `foo()`, "", "", "");
-		testNodeParse(new FunctionCallNode(), `bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "", "", "");
+		testNodeParse(new FunctionCallNode(), `foo()`, ParseStatus.valid, `foo()`, "", "foo()", "<method>foo</method>()");
+		testNodeParse(new FunctionCallNode(), `bar(x, 1, "hello")`, ParseStatus.valid, `bar(x, 1, "hello")`, "", "","");
 		testNodeParse(new FunctionCallNode(), `yon`, ParseStatus.incomplete, `yon`, "", "");
 		testNodeParse(new FunctionCallNode(), `yon `, ParseStatus.invalid, ``, "yon ", "");
 		testNodeParse(new FunctionCallNode(), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
@@ -276,14 +276,14 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new FunctionCallNode(), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
 		testNodeParse(new FunctionCallNode(), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
 		testNodeParse(new FunctionCallNode(), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-		testNodeParse(new FunctionCallNode(), `bar.foo()`, ParseStatus.valid, ``, "", "", "");
-		testNodeParse(new FunctionCallNode(), `global.foo()`, ParseStatus.valid, ``, "", "", "");
-		testNodeParse(new FunctionCallNode(), `library.foo()`, ParseStatus.valid, ``, "", "", "");
+		testNodeParse(new FunctionCallNode(), `bar.foo(a)`, ParseStatus.valid, ``, "", "bar.foo(a)", "bar.<method>foo</method>(a)");
+		testNodeParse(new FunctionCallNode(), `global.foo()`, ParseStatus.valid, ``, "", "global.foo()", "<keyword>global</keyword>.<method>foo</method>()");
+		testNodeParse(new FunctionCallNode(), `library.foo()`, ParseStatus.valid, ``, "", "library.foo()", "<keyword>library</keyword>.<method>foo</method>()");
 		testNodeParse(new FunctionCallNode(), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
 		testNodeParse(new FunctionCallNode(), `property.foo()`, ParseStatus.invalid, ``, "property.foo()", "");
 		testNodeParse(new FunctionCallNode(), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
 		testNodeParse(new FunctionCallNode(), `a.isBefore(b[0])`, ParseStatus.valid, ``, "", "");
-		testNodeParse(new FunctionCallNode(), `a[0].isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+		testNodeParse(new FunctionCallNode(), `a[0].isBefore(b[0])`, ParseStatus.valid, ``, "", "a[0].isBefore(b[0])","a[0].<method>isBefore</method>(b[0])");
 	});
 	test('Lists', () => {
 		testNodeParse(new ListNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
