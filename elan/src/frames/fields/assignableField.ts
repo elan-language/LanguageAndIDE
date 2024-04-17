@@ -16,6 +16,7 @@ import { DOT } from "../symbols";
 import { ParseStatus } from "../parse-status";
 import { transform } from "../syntax-nodes/ast-visitor";
 import { Scope } from "../interfaces/scope";
+import { Qualifier } from "../parse-nodes/qualifier";
 
 export class AssignableField extends AbstractField { 
     isParseByNodes = true;
@@ -29,9 +30,7 @@ export class AssignableField extends AbstractField {
     }
     initialiseRoot(): ParseNode  { 
         var simple = () => new IdentifierNode();
-        var prop = () => new KeywordNode(propertyKeyword); //global & library not applicable because no assignables there
-        var dot = () => new SymbolNode(DOT);
-        var qualDot = () => new Sequence([prop, dot]);
+        var qualDot = () => new Qualifier(new KeywordNode(propertyKeyword));
         var optQualifier = () => new OptionalNode(qualDot);
         var index = () => new OptionalNode(() => new IndexNode());
         var varRef = () => new Sequence([optQualifier, simple, index]);

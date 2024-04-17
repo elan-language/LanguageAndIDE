@@ -8,7 +8,7 @@ import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
-import { Qualifier } from "./qualifierDot";
+import { Qualifier } from "./qualifier";
 import { InstanceNode } from "./instanceNode";
 
 export class FunctionCallNode extends AbstractSequence {
