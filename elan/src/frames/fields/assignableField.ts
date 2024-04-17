@@ -5,17 +5,10 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
-import { propertyKeyword } from "../keywords";
-import { IdentifierNode } from "../parse-nodes/identifier-node";
-import { KeywordNode } from "../parse-nodes/keyword-node";
-import { OptionalNode } from "../parse-nodes/optional-node";
-import { Sequence } from "../parse-nodes/sequence";
-import { SymbolNode } from "../parse-nodes/symbol-node";
-import { IndexNode } from "../parse-nodes/index-node";
-import { DOT } from "../symbols";
 import { ParseStatus } from "../parse-status";
 import { transform } from "../syntax-nodes/ast-visitor";
 import { Scope } from "../interfaces/scope";
+import { AssignableNode } from "../parse-nodes/assignable-node";
 
 export class AssignableField extends AbstractField { 
     isParseByNodes = true;
@@ -28,13 +21,7 @@ export class AssignableField extends AbstractField {
         return 'ident';
     }
     initialiseRoot(): ParseNode  { 
-        var simple = () => new IdentifierNode();
-        var prop = () => new KeywordNode(propertyKeyword); //global & library not applicable because no assignables there
-        var dot = () => new SymbolNode(DOT);
-        var qualDot = () => new Sequence([prop, dot]);
-        var optQualifier = () => new OptionalNode(qualDot);
-        var index = () => new OptionalNode(() => new IndexNode());
-        var varRef = () => new Sequence([optQualifier, simple, index]);
+        var varRef = () => new AssignableNode();
         var deconTup = () => new DeconstructedTuple();
         var deconList = () => new DeconstructedList();
         this.rootNode = new Alternatives([varRef, deconTup, deconList]);

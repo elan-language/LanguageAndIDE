@@ -6,7 +6,7 @@ import { OptionalNode } from "./optional-node";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordNode } from "./keyword-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { Qualifier } from "./qualifierDot";
+import { Qualifier } from "./qualifier";
 
 export class VarRefCompound extends AbstractSequence {
     optQualifier: OptionalNode | undefined;

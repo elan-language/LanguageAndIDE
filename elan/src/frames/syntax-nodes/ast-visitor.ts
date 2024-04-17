@@ -76,7 +76,7 @@ import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { TermWith } from "../parse-nodes/term-with";
 import { TypeTuple } from "../parse-nodes/type-tuple";
 import { RangeNode } from "../parse-nodes/range-node";
-import { Qualifier } from "../parse-nodes/qualifierDot";
+import { Qualifier } from "../parse-nodes/qualifier";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
