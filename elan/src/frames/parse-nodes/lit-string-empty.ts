@@ -11,8 +11,8 @@ export class LitStringEmpty extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) { 
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
-            this.elements.push(new SymbolNode(DOUBLE_QUOTES));
+            this.addElement(new SymbolNode(DOUBLE_QUOTES));
+            this.addElement(new SymbolNode(DOUBLE_QUOTES));
             super.parseText(text);
         }
     }

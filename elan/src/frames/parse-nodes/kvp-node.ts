@@ -1,8 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { ParseNode } from "./parse-node";
-
-
 import { COLON } from "../symbols";
 import { ParseStatus } from "../parse-status";
 
@@ -24,18 +22,16 @@ export class KVPnode extends AbstractSequence  {
         if (text.length > 0) {
             this.key = this.keyConstructor();
             this.value = this.valueConstructor();
-            this.elements.push(this.key);
-            this.elements.push(new SymbolNode(COLON));
-            this.elements.push(this.value);
+            this.addElement(this.key);
+            this.addElement(new SymbolNode(COLON));
+            this.addElement(this.value);
             super.parseText(text);
         }
     }
 
     getCompletionAsHtml(): string {
-        var comp = "";
-        comp += this.elements[0].status === ParseStatus.empty? "<pr>key</pr>": "";
-        comp += this.elements[1].getCompletionAsHtml();
-        comp += this.elements[2].status === ParseStatus.empty? " <pr>value</pr>": "";
-        return comp;
+        var k =(!this.key || this.key.status === ParseStatus.empty) ? "<pr>key</pr>": "";
+        var v = (!this.value || this.value.status === ParseStatus.empty) ? " <pr>value</pr>": "";
+        return `${k}:${v}`;
     }
 }

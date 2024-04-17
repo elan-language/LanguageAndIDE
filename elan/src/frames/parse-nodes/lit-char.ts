@@ -8,9 +8,9 @@ export class LitChar extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(new SymbolNode(SINGLE_QUOTE));
-            this.elements.push(new RegExMatchNode(Regexes.charValue));
-            this.elements.push(new SymbolNode(SINGLE_QUOTE));
+            this.addElement(new SymbolNode(SINGLE_QUOTE));
+            this.addElement(new RegExMatchNode(Regexes.charValue));
+            this.addElement(new SymbolNode(SINGLE_QUOTE));
             super.parseText(text);
         }
     }
@@ -19,6 +19,6 @@ export class LitChar extends AbstractSequence {
     }
 
     renderAsSource(): string {
-        return `\'${this.elements[1].matchedText}\'`; //No .Trim() because might be a single space
+        return `\'${this.getElements()[1].matchedText}\'`; //No .Trim() because might be a single space
     }
 }

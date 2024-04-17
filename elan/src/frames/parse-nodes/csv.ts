@@ -23,12 +23,12 @@ export class CSV extends AbstractSequence {
         var commaNode = () => new Sequence([() => new CommaNode(), this.elementConstructor]);
 
         if (this.minimum === 0) {
-            this.elements.push(new OptionalNode(this.elementConstructor));
+            this.addElement(new OptionalNode(this.elementConstructor));
         } else {
-            this.elements.push(this.elementConstructor());
+            this.addElement(this.elementConstructor());
             commaNodesMin = this.minimum - 1;
         }
-        this.elements.push(new Multiple(commaNode, commaNodesMin));
+        this.addElement(new Multiple(commaNode, commaNodesMin));
         super.parseText(text);
     }
 }

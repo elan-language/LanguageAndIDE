@@ -10,10 +10,10 @@ export class EnumVal extends AbstractSequence {
 
     parseText(text: string): void {
         this.type = new TypeSimpleNode();
-        this.elements.push(this.type);
-        this.elements.push(new SymbolNode(DOT));
+        this.addElement(this.type);
+        this.addElement(new SymbolNode(DOT));
         this.val = new IdentifierNode();
-        this.elements.push(this.val);
+        this.addElement(this.val);
         super.parseText(text.trimStart());
     }
 }

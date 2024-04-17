@@ -27,11 +27,11 @@ export class FunctionCallNode extends AbstractSequence {
             this.name = new IdentifierNode();
             this.args =new CSV(() => new ExprNode(),0);
 
-            this.elements.push(this.qualifier);
-            this.elements.push(this.name);
-            this.elements.push(new SymbolNode(OPEN_BRACKET));
-            this.elements.push(this.args); //arg list
-            this.elements.push(new SymbolNode(CLOSE_BRACKET));
+            this.addElement(this.qualifier);
+            this.addElement(this.name);
+            this.addElement(new SymbolNode(OPEN_BRACKET));
+            this.addElement(this.args); //arg list
+            this.addElement(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

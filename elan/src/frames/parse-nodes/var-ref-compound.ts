@@ -30,9 +30,9 @@ export class VarRefCompound extends AbstractSequence {
             this.simple = new IdentifierNode();
             this.optQualifier =  new OptionalNode(qualDot);
             this.index = new OptionalNode(() => new IndexNode());
-            this.elements.push(this.optQualifier!);
-            this.elements.push(this.simple!);
-            this.elements.push(this.index!);
+            this.addElement(this.optQualifier!);
+            this.addElement(this.simple!);
+            this.addElement(this.index!);
             super.parseText(text);
         }
     }

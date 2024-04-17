@@ -4,7 +4,15 @@ import { ParseNode } from "./parse-node";
 
 export abstract class AbstractSequence extends AbstractParseNode {
     
-    elements: ParseNode[] = [];
+    private elements: ParseNode[] = [];
+
+    protected addElement(node: ParseNode) {
+        this.elements.push(node);
+    }
+
+    public getElements(): ParseNode[] {
+        return this.elements;
+    }
 
     parseText(text: string): void {
         var i = 0; //Index

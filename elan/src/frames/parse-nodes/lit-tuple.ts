@@ -9,10 +9,10 @@ export class LitTuple extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.addElement(new SymbolNode(OPEN_BRACKET));
             this.csv = new CSV(() => new LiteralNode(),2);
-            this.elements.push(this.csv);
-            this.elements.push(new SymbolNode(CLOSE_BRACKET));
+            this.addElement(this.csv);
+            this.addElement(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }

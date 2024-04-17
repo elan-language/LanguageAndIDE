@@ -14,12 +14,12 @@ export class ParamDefNode extends AbstractSequence {
     parseText(text: string): void {
         if (text.trim().length > 0) {
             this.name = new IdentifierNode();
-            this.elements.push(this.name);
-            this.elements.push(new SpaceNode(Space.required));
-            this.elements.push(new KeywordNode(asKeyword));
-            this.elements.push(new SpaceNode(Space.required));
+            this.addElement(this.name);
+            this.addElement(new SpaceNode(Space.required));
+            this.addElement(new KeywordNode(asKeyword));
+            this.addElement(new SpaceNode(Space.required));
             this.type = new TypeNode();
-            this.elements.push(this.type);
+            this.addElement(this.type);
             super.parseText(text);
         }
     }

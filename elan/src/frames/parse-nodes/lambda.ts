@@ -19,20 +19,20 @@ export class Lambda extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(new KeywordNode(lambdaKeyword));
+            this.addElement(new KeywordNode(lambdaKeyword));
             this.params = new CSV(() => new ParamDefNode(), 1);
-            this.elements.push(this.params);
-            this.elements.push(new SpaceNode(Space.required));
-            this.elements.push(new SymbolNode(ARROW));
-            this.elements.push(new SpaceNode(Space.required));
+            this.addElement(this.params);
+            this.addElement(new SpaceNode(Space.required));
+            this.addElement(new SymbolNode(ARROW));
+            this.addElement(new SpaceNode(Space.required));
             this.expr = new ExprNode();
-            this.elements.push(this.expr);
+            this.addElement(this.expr);
             super.parseText(text);
         }
     }
 
     renderAsHtml(): string {
-        return `<keyword>${lambdaKeyword} </keyword>${this.elements[1].renderAsSource()}<keyword> ${ARROW} </keyword>${this.elements[3].renderAsSource()}`;
+        return `<keyword>${lambdaKeyword} </keyword>${this.params!.renderAsHtml()}<keyword> ${ARROW} </keyword>${this.expr!.renderAsHtml()}`;
     }
 
     renderAsSource(): string {

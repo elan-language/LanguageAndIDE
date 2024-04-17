@@ -19,21 +19,21 @@ export class SetClause extends AbstractSequence {
         var to = new KeywordNode(toKeyword);
         var sp2 =new SpaceNode(Space.required);
         this.expr = new ExprNode();
-        this.elements.push(this.property);
-        this.elements.push(sp0);
-        this.elements.push(set);
-        this.elements.push(sp1);
-        this.elements.push(to);
-        this.elements.push(sp2);
-        this.elements.push(this.expr);
+        this.addElement(this.property);
+        this.addElement(sp0);
+        this.addElement(set);
+        this.addElement(sp1);
+        this.addElement(to);
+        this.addElement(sp2);
+        this.addElement(this.expr);
         return super.parseText(text);
     }
      renderAsObjectCode(): string {
-        const codeArray = this.elements.map(e => e.renderAsObjectCode());
+        const codeArray = this.getElements().map(e => e.renderAsObjectCode());
         const code = codeArray.join(" ");
 
         // kludges
-        if ((this.elements[1] as BinaryOperation).matchedText.trim() === "div"){
+        if ((this.expr as BinaryOperation).matchedText.trim() === "div"){
             return `Math.floor(${code})`;
         }
 

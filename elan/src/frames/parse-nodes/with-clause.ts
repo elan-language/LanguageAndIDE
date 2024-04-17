@@ -16,22 +16,16 @@ export class WithClause extends AbstractSequence {
         var sp1 = new SpaceNode(Space.required);
         var setClause = () => new SetClause();
         this.changes = new ListNode(setClause);
-        this.elements.push(sp0);
-        this.elements.push(withKw);
-        this.elements.push(sp1);
-        this.elements. push(this.changes);
+        this.addElement(sp0);
+        this.addElement(withKw);
+        this.addElement(sp1);
+        this.addElement(this.changes);
         return super.parseText(text);
     }
 
     renderAsObjectCode(): string {
-        const codeArray = this.elements.map(e => e.renderAsObjectCode());
+        const codeArray = this.getElements().map(e => e.renderAsObjectCode());
         const code = codeArray.join(" ");
-
-        // kludges
-        if ((this.elements[1] as BinaryOperation).matchedText.trim() === "div"){
-            return `Math.floor(${code})`;
-        }
-
         return code;
     }
 

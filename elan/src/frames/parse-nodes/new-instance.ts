@@ -14,15 +14,15 @@ export class NewInstance extends AbstractSequence {
     args: CSV | undefined;
 
     parseText(text: string): void {
-        this.elements.push(new KeywordNode(newKeyword));
-        this.elements.push(new SpaceNode(Space.required));
+        this.addElement(new KeywordNode(newKeyword));
+        this.addElement(new SpaceNode(Space.required));
         this.type = new TypeWithOptGenerics();
-        this.elements.push(this.type);
-        this.elements.push(new SymbolNode(OPEN_BRACKET)); 
+        this.addElement(this.type);
+        this.addElement(new SymbolNode(OPEN_BRACKET)); 
         this.args = new CSV(() => new ExprNode(),0);
         this.args.setPlaceholder("arguments");
-        this.elements.push(this.args); 
-        this.elements.push(new SymbolNode(CLOSE_BRACKET)); 
+        this.addElement(this.args); 
+        this.addElement(new SymbolNode(CLOSE_BRACKET)); 
         super.parseText(text);
     }
 }

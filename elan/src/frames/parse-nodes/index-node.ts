@@ -19,9 +19,9 @@ export class IndexNode extends AbstractSequence {
         var range = () => new RangeNode();
         this.contents = new Alternatives([expr, range]);
         if (text.length > 0) {
-          this.elements.push(new SymbolNode(OPEN_SQ_BRACKET));
-          this.elements.push(this.contents);
-          this.elements.push(new SymbolNode(CLOSE_SQ_BRACKET));
+          this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
+          this.addElement(this.contents);
+          this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
           super.parseText(text);
         }
     }

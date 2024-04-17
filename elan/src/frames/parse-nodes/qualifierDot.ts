@@ -13,8 +13,8 @@ export class QualifierDot extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(this.qualifier);
-            this.elements.push(new SymbolNode(DOT));
+            this.addElement(this.qualifier);
+            this.addElement(new SymbolNode(DOT));
             super.parseText(text);
         }
     }

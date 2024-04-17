@@ -18,10 +18,10 @@ export class BracketedExpression extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            this.elements.push(new SymbolNode(OPEN_BRACKET));
+            this.addElement(new SymbolNode(OPEN_BRACKET));
             this.expr = new ExprNode();
-            this.elements.push(this.expr);
-            this.elements.push(new SymbolNode(CLOSE_BRACKET));
+            this.addElement(this.expr);
+            this.addElement(new SymbolNode(CLOSE_BRACKET));
             super.parseText(text);
         }
     }
