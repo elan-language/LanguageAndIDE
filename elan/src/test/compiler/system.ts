@@ -93,4 +93,44 @@ export class System {
         // if (Array.isArray(rhs)){
         return this.list([lhs as T].concat(rhs));
     }
+
+    equals(i1 : any, i2 : any) {
+        const t = typeof i1;
+
+        if (t === "boolean" || t === "string" || t === "number") {
+            return i1 === i2;
+        }
+
+        return false; // todo
+    }
+
+
+    objectEquals(o1: any, o2: any) {
+        if (o1 === o2) {
+            return true;
+        }
+
+        if (o1.constructor.name !== o2.constructor.name) {
+            return false;
+        }
+
+        const o1items = Object.getOwnPropertyNames(o1);
+        const o2items = Object.getOwnPropertyNames(o2);
+
+        if (o1items.length !== o2items.length){
+            return false;
+        }
+
+        if (o1items.join() !== o2items.join()){
+            return false;
+        }
+
+        for (const i of o1items) {
+            if (!(this.equals(o1[i], o2[i]))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

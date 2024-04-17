@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 
 suite('T34_ConcreteClasses', () => {
 
-  ignore_test('Pass_Class_SimpleInstantiation_PropertyAccess_Methods', async () => {
+  test('Pass_Class_SimpleInstantiation_PropertyAccess_Methods', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -63,7 +63,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  ignore_test('Pass_ConstructorWithParm', async () => {
+  test('Pass_ConstructorWithParm', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -73,14 +73,14 @@ main
 end main
 
 class Foo
-    constructor(p_1 Int, p_2 String)
+    constructor(p_1 as Int,  p_2 as String)
         set p1 to p_1
         set p2 to p_2
     end constructor
 
-    property p1 Int
-    property p2 String
-    function asString() as String
+    property p1 as Int
+    property p2 as String
+    function asString() return String
         return ""
     end function
 
@@ -88,20 +88,20 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = new Foo(7, "Apple");
+  var x = system.initialise(new Foo(7, "Apple"));
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
 }
 
 class Foo {
-  constructor(p_1 Int, p_2 String) {
+  constructor(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;
   }
 
-  p1;
+  p1 = 0;
 
-  p2;
+  p2 = "";
 
   asString() {
     return "";
@@ -116,7 +116,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123");
+    await assertObjectCodeExecutes(fileImpl, "7Apple");
   });
 
   test('Fail_NoConstructor', () => {

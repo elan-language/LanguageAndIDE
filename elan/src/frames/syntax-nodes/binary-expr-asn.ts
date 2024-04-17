@@ -1,4 +1,5 @@
 import { BooleanType } from "../../symbols/boolean-type";
+import { ClassType } from "../../symbols/class-type";
 import { ListType } from "../../symbols/list-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
@@ -33,8 +34,12 @@ export class BinaryExprAsn implements AstNode {
     }
 
     renderAsObjectCode(): string {
-        if ((this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType) && this.op === OperationSymbol.Add) {
+        if (this.op === OperationSymbol.Add && (this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType)) {
             return `system.concat(${this.lhs.renderAsObjectCode()}, ${this.rhs.renderAsObjectCode()})`;
+        }
+
+        if (this.op === OperationSymbol.Equals && (this.lhs.symbolType instanceof ClassType || this.rhs.symbolType instanceof ClassType)) {
+            return `system.objectEquals(${this.lhs.renderAsObjectCode()}, ${this.rhs.renderAsObjectCode()})`;
         }
 
         const code = `${this.lhs.renderAsObjectCode()} ${this.opToJs()} ${this.rhs.renderAsObjectCode()}`;
