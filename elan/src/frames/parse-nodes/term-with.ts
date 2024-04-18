@@ -8,7 +8,7 @@ export class TermWith extends AbstractSequence {
     
     constructor() {
         super();
-        this.placeholder = "expression";
+        this.completionWhenEmpty = "expression";
     }
 
     parseText(text: string): void {

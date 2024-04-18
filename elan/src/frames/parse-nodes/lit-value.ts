@@ -12,7 +12,7 @@ import { LitTuple } from "./lit-tuple";
 export class LitValueNode extends AbstractAlternatives {
     constructor() {
         super();
-        this.placeholder = "";
+        this.completionWhenEmpty = "";
     }
 
     parseText(text: string): void {

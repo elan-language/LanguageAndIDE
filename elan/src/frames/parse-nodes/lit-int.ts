@@ -6,7 +6,7 @@ export class LitInt extends AbstractParseNode {
 
     constructor() {
         super();
-        this.placeholder = "integer value";
+        this.completionWhenEmpty = "integer value";
     }
 
     parseText(text: string): void {

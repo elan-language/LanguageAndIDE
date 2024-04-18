@@ -7,7 +7,7 @@ import { VarRefCompound } from "./var-ref-compound";
 export class VarRefNode extends AbstractAlternatives {
     constructor() {
         super();
-        this.placeholder = "variable";
+        this.completionWhenEmpty = "variable";
     }
 
     parseText(text: string): void {

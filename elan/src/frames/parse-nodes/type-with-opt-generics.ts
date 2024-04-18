@@ -20,7 +20,7 @@ export class TypeWithOptGenerics extends AbstractSequence {
 
     constructor() {
         super();
-        this.placeholder = "Type";
+        this.completionWhenEmpty = "Type";
     }
     parseText(text: string): void {
         this.remainingText = text;

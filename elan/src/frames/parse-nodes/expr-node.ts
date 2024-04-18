@@ -6,7 +6,7 @@ import { TermWith } from "./term-with";
 export class ExprNode extends AbstractAlternatives {
     constructor() {
         super();
-        this.placeholder = "expression";
+        this.completionWhenEmpty = "expression";
     }
 
     parseText(text: string): void {

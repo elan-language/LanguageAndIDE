@@ -20,7 +20,7 @@ export class NewInstance extends AbstractSequence {
         this.addElement(this.type);
         this.addElement(new SymbolNode(OPEN_BRACKET)); 
         this.args = new CSV(() => new ExprNode(),0);
-        this.args.setPlaceholder("arguments");
+        this.args.setCompletionWhenEmpty("arguments");
         this.addElement(this.args); 
         this.addElement(new SymbolNode(CLOSE_BRACKET)); 
         super.parseText(text);

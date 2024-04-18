@@ -16,7 +16,7 @@ export class UnaryExpression extends AbstractSequence {
     
     constructor() {
         super();
-        this.placeholder = "op";
+        this.completionWhenEmpty = "op";
     }
 
     parseText(text: string): void {
