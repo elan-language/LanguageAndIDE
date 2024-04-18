@@ -110,6 +110,236 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "ChloeJoeList [5, 2, 4]");
   });
 
+  test('Pass_PropertiesOfAllStandardTypesHaveDefaultValues', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to new Game()
+  print g.i
+  print g.f
+  print g.b
+  print g.c
+  print g.s
+  print g.li
+  print g.dsi
+  print g.ai
+end main
+
+class Game
+    constructor()
+    end constructor
+
+    property i as Int
+    property f as Float
+    property b as Boolean
+    property c as Char
+    property s as String
+    property li as List<of Int>
+    property dsi as Dictionary<of String, Int>
+    property ai as Array<of Int>
+
+    function asString() return String
+        return "A game"
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = system.initialise(new Game());
+  system.print(_stdlib.asString(g.i));
+  system.print(_stdlib.asString(g.f));
+  system.print(_stdlib.asString(g.b));
+  system.print(_stdlib.asString(g.c));
+  system.print(_stdlib.asString(g.s));
+  system.print(_stdlib.asString(g.li));
+  system.print(_stdlib.asString(g.dsi));
+  system.print(_stdlib.asString(g.ai));
+}
+
+class Game {
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["c", "Char"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
+  constructor() {
+
+  }
+
+  i = 0;
+
+  f = 0;
+
+  b = false;
+
+  c = "";
+
+  s = "";
+
+  li = system.defaultList();
+
+  dsi = system.defaultDictionary();
+
+  ai = system.defaultArray();
+
+  asString() {
+    return "A game";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00falseempty Listempty Dictionaryempty Array");
+  });
+
+  test('Pass_DefaultValuesNotPickedUpFromDefaultConstructor', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to default Game
+  print g.i
+end main
+
+class Game
+    constructor()
+       set i to 100
+    end constructor
+
+    property i as Int
+
+    function asString() return String
+        return "A game"
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = Game.defaultInstance();
+  system.print(_stdlib.asString(g.i));
+}
+
+class Game {
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"]]);};
+  constructor() {
+    this.i = 100;
+  }
+
+  i = 0;
+
+  asString() {
+    return "A game";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
+  test('Pass_PropertiesOfClassTypesHaveDefaultValues', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to new Game()
+  print g.p1
+  print g.previousGame
+end main
+
+class Game
+  constructor()
+  end constructor
+
+  property p1 as Player
+  property previousGame as Game
+
+  function asString() return String
+    return "A game"
+  end function
+
+end class
+
+class Player
+  constructor(name as String)
+    set property.name to name
+  end constructor
+
+  property name as String
+
+  function asString() return String
+    return name
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = system.initialise(new Game());
+  system.print(_stdlib.asString(g.p1));
+  system.print(_stdlib.asString(g.previousGame));
+}
+
+class Game {
+  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
+  constructor() {
+
+  }
+
+  _p1;
+  get p1() {
+    return this._p1 ?? Player.defaultInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  _previousGame;
+  get previousGame() {
+    return this._previousGame ?? Game.defaultInstance();
+  }
+  set previousGame(previousGame) {
+    this._previousGame = previousGame;
+  }
+
+  asString() {
+    return "A game";
+  }
+
+}
+
+class Player {
+  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  constructor(name) {
+    this.name = name;
+  }
+
+  name = "";
+
+  asString() {
+    return this.name;
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "A game");
+  });
+
   
 
 });
