@@ -42,7 +42,7 @@ export class TypeAsn implements AstNode {
             case "Dictionary" : return "system.defaultDictionary()";
             case "Iter" : return "system.defaultIter()";
         }
-        return `${this.type}.defaultInstance`;
+        return `${this.type}.defaultInstance()`;
     }
 
 

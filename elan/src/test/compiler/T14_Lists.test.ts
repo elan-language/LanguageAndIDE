@@ -56,7 +56,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, []);
+  static defaultInstance() { return system.defaultClass(Foo, []);};
   constructor() {
 
   }
@@ -128,7 +128,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, []);
+  static defaultInstance() { return system.defaultClass(Foo, []);};
   constructor() {
 
   }
@@ -461,7 +461,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, [["it", "List<of Int>"]]);
+  static defaultInstance() { return system.defaultClass(Foo, [["it", "List<of Int>"]]);};
   constructor() {
 
   }

@@ -34,8 +34,9 @@ export class TypeField extends AbstractField  {
     }
 
     get symbolType() {
-        if (this.astNode) {
-            return this.astNode.symbolType;
+        const astNode = this.getOrTransformAstNode;
+        if (astNode) {
+            return astNode.symbolType;
         }
         return UnknownType.Instance;
     }

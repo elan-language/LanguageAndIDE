@@ -1,3 +1,4 @@
+import { ClassType } from "../../symbols/class-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
@@ -49,7 +50,19 @@ export class Property extends AbstractFrame implements Member {
     }
 
     renderAsObjectCode(): string {
-        return `${this.indent()}${this.modifierAsObjectCode()}${this.name.renderAsObjectCode()} = ${this.type.renderAsObjectCode()};\r\n`;
+        const pName = this.name.renderAsObjectCode();
+        const mod = this.modifierAsObjectCode();
+        if (this.type.symbolType instanceof ClassType) {
+            return `${this.indent()}_${pName};\r
+${this.indent()}${mod}get ${pName}() {\r
+${this.indent()}${this.indent()}return this._${pName} ?? ${this.type.renderAsObjectCode()};\r
+${this.indent()}}\r
+${this.indent()}${mod}set ${pName}(${pName}) {\r
+${this.indent()}${this.indent()}this._${pName} = ${pName};\r
+${this.indent()}}\r\n`;
+        }
+
+        return `${this.indent()}${mod}${pName} = ${this.type.renderAsObjectCode()};\r\n`;
     }
 
     parseFrom(source: CodeSource): void {

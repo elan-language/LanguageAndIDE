@@ -175,7 +175,7 @@ end class\r\n`;
 
     public renderAsObjectCode(): string {
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
-  static defaultInstance = system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});\r
+  static defaultInstance() { return system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});};\r
 ${parentHelper_renderChildrenAsObjectCode(this)}\r
 }\r\n`;
     }

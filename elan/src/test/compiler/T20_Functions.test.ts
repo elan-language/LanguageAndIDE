@@ -205,7 +205,7 @@ function foo(bar) {
 }
 
 class Bar {
-  static defaultInstance = system.defaultClass(Bar, []);
+  static defaultInstance() { return system.defaultClass(Bar, []);};
   constructor() {
 
   }
