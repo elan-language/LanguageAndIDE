@@ -88,6 +88,7 @@ import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { AssignableNode } from "../parse-nodes/assignable-node";
+import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -411,6 +412,12 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         const id = node.simple.matchedText;
         const index = transform(node.index, scope);
         return new VarAsn(id, q, index, scope);
+    }
+
+    if (node instanceof InstanceProcRef) {
+        const q = transform(node.qualifier, scope);
+        const id = node.simple!.matchedText;
+        return new VarAsn(id, q, undefined, scope);
     }
 
     throw new Error("Not implemented " + typeof node);

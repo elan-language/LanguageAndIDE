@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 
 suite('T43_Inheritance', () => {
 
-  ignore_test('Pass_DefineAbstractClassAndInheritFromIt', async () => {
+  test('Pass_DefineAbstractClassAndInheritFromIt', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -48,11 +48,39 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  
+  var x = system.initialise(new Bar());
+  var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
+  system.print(_stdlib.asString(x.p1));
+  system.print(_stdlib.asString(x.p2));
+  system.print(_stdlib.asString(x.product()));
+  x.setP1(4);
+  system.print(_stdlib.asString(x.product()));
 }
 
-class Foo {
-  
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  constructor() {
+    this.p1 = 3;
+    this.p2 = 4;
+  }
+
+  p1 = 0;
+
+  p2 = 0;
+
+  setP1(p1) {
+    this.p1 = p1;
+  }
+
+  product() {
+    return this.p1 * this.p2;
+  }
+
+  asString() {
+    return "";
+  }
+
 }
 return main;}`;
 
@@ -62,7 +90,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "5");
+    await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
   
