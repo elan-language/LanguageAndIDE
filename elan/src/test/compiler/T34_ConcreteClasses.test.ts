@@ -183,7 +183,7 @@ class Foo {
 
   _bar;
   get bar() {
-    return this._bar ?? Bar.defaultInstance();
+    return this._bar ??= Bar.defaultInstance();
   }
   set bar(bar) {
     this._bar = bar;
@@ -207,7 +207,7 @@ class Bar {
 
   _foo;
   get foo() {
-    return this._foo ?? Foo.defaultInstance();
+    return this._foo ??= Foo.defaultInstance();
   }
   set foo(foo) {
     this._foo = foo;

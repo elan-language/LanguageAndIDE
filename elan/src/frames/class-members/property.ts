@@ -55,7 +55,7 @@ export class Property extends AbstractFrame implements Member {
         if (this.type.symbolType instanceof ClassType) {
             return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
-${this.indent()}${this.indent()}return this._${pName} ?? ${this.type.renderAsObjectCode()};\r
+${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.renderAsObjectCode()};\r
 ${this.indent()}}\r
 ${this.indent()}${mod}set ${pName}(${pName}) {\r
 ${this.indent()}${this.indent()}this._${pName} = ${pName};\r

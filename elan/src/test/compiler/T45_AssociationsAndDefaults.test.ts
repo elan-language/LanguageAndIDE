@@ -64,7 +64,7 @@ class Game {
 
   _p1;
   get p1() {
-    return this._p1 ?? Player.defaultInstance();
+    return this._p1 ??= Player.defaultInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -72,7 +72,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ?? Player.defaultInstance();
+    return this._p2 ??= Player.defaultInstance();
   }
   set p2(p2) {
     this._p2 = p2;
@@ -296,7 +296,7 @@ class Game {
 
   _p1;
   get p1() {
-    return this._p1 ?? Player.defaultInstance();
+    return this._p1 ??= Player.defaultInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -304,7 +304,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ?? Game.defaultInstance();
+    return this._previousGame ??= Game.defaultInstance();
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
