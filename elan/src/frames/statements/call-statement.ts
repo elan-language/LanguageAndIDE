@@ -2,18 +2,18 @@ import { ArgListField } from "../fields/arg-list-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { ProcedureRef } from "../fields/procedureRef";
+import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 
 export class CallStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    proc: ProcedureRef;
+    proc: ProcRefField;
     args: ArgListField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.proc = new ProcedureRef(this);
+        this.proc = new ProcRefField(this);
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgListField(this);
     }

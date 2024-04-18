@@ -1,16 +1,14 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { Sequence } from "../parse-nodes/sequence";
-import { SymbolNode } from "../parse-nodes/symbol-node";
-import { DOT } from "../symbols";
+import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { AbstractField } from "./abstract-field";
 
-export class ProcedureRef extends AbstractField {
+export class ProcRefField extends AbstractField {
     isParseByNodes = true;
+    
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("procedure");
@@ -19,11 +17,9 @@ export class ProcedureRef extends AbstractField {
         return 'ident';
     }
     initialiseRoot(): ParseNode { 
-        var instance = () => new IdentifierNode();
-        var dot = () => new SymbolNode(DOT);        
+        var qualProc = () => new InstanceProcRef();
         var proc = () => new IdentifierNode();
-        var qualProc = () => new Sequence([instance, dot, proc]);
-        this.rootNode =  new Alternatives([proc, qualProc]);  
+        this.rootNode =  new Alternatives([proc, qualProc]);   //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);

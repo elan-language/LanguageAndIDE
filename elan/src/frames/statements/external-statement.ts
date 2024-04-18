@@ -5,13 +5,13 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { externalKeyword, intoKeyword } from "../keywords";
 import { ArgListField } from "../fields/arg-list-field";
-import { ProcedureRef } from "../fields/procedureRef";
+import { ProcRefField } from "../fields/proc-ref-field";
 import { IntoSelector } from "../fields/into-selector";
 import { AssignableField } from "../fields/assignableField";
 
 export class ExternalStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    method: ProcedureRef;
+    method: ProcRefField;
     args: ArgListField;
     selectIntoClause: IntoSelector;
     hasInto: boolean = false;
@@ -19,7 +19,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
 
     constructor(parent: Parent) {
         super(parent);
-        this.method = new ProcedureRef(this);
+        this.method = new ProcRefField(this);
         this.method.setPlaceholder("method");
         this.args = new ArgListField(this);
         this.selectIntoClause = new IntoSelector(this);

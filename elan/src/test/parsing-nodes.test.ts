@@ -46,6 +46,7 @@ import { Regexes } from '../frames/fields/regexes';
 import { Alternatives } from '../frames/parse-nodes/alternatives';
 import { RegExMatchNode } from '../frames/parse-nodes/regex-match-node';
 import { BinaryExpression } from '../frames/parse-nodes/binary-expression';
+import { InstanceProcRef } from '../frames/parse-nodes/instanceProcRef';
 
 suite('Parsing Nodes', () => {
 
@@ -495,4 +496,11 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ","","3 ");
 	});
 
+	test('ProcRefCompound', () => {
+		testNodeParse(new InstanceProcRef(), `bar.foo`, ParseStatus.valid, "","");
+		testNodeParse(new InstanceProcRef(), `bar.`, ParseStatus.incomplete, "","");
+		testNodeParse(new InstanceProcRef(), `bar.foo.yon`, ParseStatus.valid, "",".yon");
+		testNodeParse(new InstanceProcRef(), `bar.foo[2]`, ParseStatus.valid, "","[2]");
+		testNodeParse(new InstanceProcRef(), `bar`, ParseStatus.incomplete, "","");
+	});
 });
