@@ -39,7 +39,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -95,7 +95,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
   constructor(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;
@@ -120,6 +120,119 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "7Apple");
   });
+
+  test('Pass_ReferenceProperty', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to new Foo()
+  var bar set to foo.bar
+  print bar.p1
+  print bar.p2
+  var foo2 set to bar.foo
+  var bar2 set to foo2.bar
+  print bar2.p1
+  print bar2.p2
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property bar as Bar
+
+  function asString() return String
+        return ""
+  end function
+
+end class
+
+class Bar
+  constructor()
+  end constructor
+
+  property p1 as Int
+
+  property p2 as String
+
+  property foo as Foo
+
+  function asString() return String
+        return ""
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo = system.initialise(new Foo());
+  var bar = foo.bar;
+  system.print(_stdlib.asString(bar.p1));
+  system.print(_stdlib.asString(bar.p2));
+  var foo2 = bar.foo;
+  var bar2 = foo2.bar;
+  system.print(_stdlib.asString(bar2.p1));
+  system.print(_stdlib.asString(bar2.p2));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["bar", "Bar"]]);};
+  constructor() {
+
+  }
+
+  _bar;
+  get bar() {
+    return this._bar ?? Bar.defaultInstance();
+  }
+  set bar(bar) {
+    this._bar = bar;
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "String"], ["foo", "Foo"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  p2 = "";
+
+  _foo;
+  get foo() {
+    return this._foo ?? Foo.defaultInstance();
+  }
+  set foo(foo) {
+    this._foo = foo;
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00");
+  });
+
+
+
+
+
 
   test('Fail_NoConstructor', () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

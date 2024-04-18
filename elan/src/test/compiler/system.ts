@@ -8,6 +8,7 @@ export class System {
             case ("String"): return "";
             case ("Char"): return "";
         }
+        return undefined;
     }
 
     private default_array = this.array([]);
@@ -65,7 +66,7 @@ export class System {
         return toInit;
     }
 
-    defaultClass(type : any, properties : [string, string][]){
+    defaultClass(type : any, properties : [string, any][]){
         const t = Object.create(type.prototype);
 
         for(const p of properties) {

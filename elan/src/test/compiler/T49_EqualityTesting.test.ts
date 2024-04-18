@@ -45,7 +45,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
   constructor(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
@@ -101,11 +101,11 @@ end class`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
-  system.print(_stdlib.asString(system.objectEquals(x, Foo.defaultInstance)));
+  system.print(_stdlib.asString(system.objectEquals(x, Foo.defaultInstance())));
 }
 
 class Foo {
-  static defaultInstance = system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
   constructor() {
 
   }
