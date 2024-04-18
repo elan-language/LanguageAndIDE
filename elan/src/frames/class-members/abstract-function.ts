@@ -51,6 +51,13 @@ export class AbstractFunction extends AbstractFrame implements Member {
 `;
     }
 
+    public override renderAsObjectCode() : string {
+        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.indent()}${this.indent()}return ${this.returnType.renderAsObjectCode()}\r
+${this.indent()}}\r
+`;
+    }
+
     parseFrom(source: CodeSource): void {
         source.remove("abstract function ");
         this.name.parseFrom(source);

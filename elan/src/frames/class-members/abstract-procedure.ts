@@ -46,6 +46,12 @@ export class AbstractProcedure extends AbstractFrame implements Member {
 `;
     }
 
+    public override renderAsObjectCode(): string {
+        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+${this.indent()}}\r
+`;
+    }
+
     parseFrom(source: CodeSource): void {
         source.remove("abstract procedure ");
         this.name.parseFrom(source);

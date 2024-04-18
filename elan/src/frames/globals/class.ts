@@ -167,17 +167,13 @@ end class\r\n`;
     }
 
     private propertiesToInit() {
-        const pp = this.getChildren().filter(c => c instanceof Property ) as Property[];
+        const pp = this.getChildren().filter(c => c instanceof Property || c instanceof AbstractProperty) as (AbstractProperty | Property)[];
         const ps = pp.map(p => p.initCode()).join(", ");
         return `[${ps}]`;
     }
 
 
     public renderAsObjectCode(): string {
-        // don't generate code for abstract classes 
-        if (this.isAbstract()){
-            return "";
-        }
 
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
   static defaultInstance() { return system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});};\r

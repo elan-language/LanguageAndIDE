@@ -57,6 +57,18 @@ async function main() {
   system.print(_stdlib.asString(x.product()));
 }
 
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "Int"]]);};
+
+
+  setP1(v) {
+  }
+
+  product() {
+    return 0
+  }
+
+}
 
 class Bar {
   static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};

@@ -37,10 +37,18 @@ export class AbstractProperty extends AbstractFrame implements Member {
         return `${this.indent()}abstract property ${this.name.renderAsSource()} as ${this.type.renderAsSource()}\r\n`;
     }
 
+    renderAsObjectCode(): string {
+        return "";
+    }
+
     parseFrom(source: CodeSource): void {
         source.remove("abstract property ");
         this.name.parseFrom(source);
         source.remove(" as ");
         this.type.parseFrom(source);
+    }
+
+    public initCode() {
+        return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
     }
 } 

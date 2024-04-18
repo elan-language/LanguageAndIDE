@@ -96,6 +96,14 @@ async function main() {
   system.print(_stdlib.asString(f.square()));
 }
 
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+
+  square() {
+    return 0
+  }
+
+}
 
 class Foo {
   static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
