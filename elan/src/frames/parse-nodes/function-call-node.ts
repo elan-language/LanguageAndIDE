@@ -21,7 +21,7 @@ export class FunctionCallNode extends AbstractSequence {
             var global = () => new Qualifier(new KeywordNode(globalKeyword));
             var lib = () => new Qualifier(new KeywordNode(libraryKeyword));
             var instance = () => new Qualifier(new InstanceNode());
-            var qualifier = () => new Alternatives([global, lib, instance]);
+            var qualifier = new Alternatives([global, lib, instance]);
             this.qualifier =  new OptionalNode(qualifier);
             this.name = new IdentifierNode();
             this.args =new CSV(() => new ExprNode(),0);

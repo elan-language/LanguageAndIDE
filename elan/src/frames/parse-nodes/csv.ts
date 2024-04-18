@@ -23,7 +23,7 @@ export class CSV extends AbstractSequence {
         var commaNode = () => new Sequence([() => new CommaNode(), this.elementConstructor]);
 
         if (this.minimum === 0) {
-            this.addElement(new OptionalNode(this.elementConstructor));
+            this.addElement(new OptionalNode(this.elementConstructor()));
         } else {
             this.addElement(this.elementConstructor());
             commaNodesMin = this.minimum - 1;

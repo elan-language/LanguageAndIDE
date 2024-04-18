@@ -6,18 +6,18 @@ import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
 export class OptionalNode extends AbstractParseNode {
-    elementConstructor: () => ParseNode;
+    option: ParseNode;
     matchedNode?: ParseNode;
 
-    constructor(elementConstructor: () => ParseNode) {
+    constructor(option: ParseNode) {
         super();
-        this.elementConstructor = elementConstructor;
+        this.option = option;
     }
 
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            var option = this.elementConstructor();
+            var option = this.option;
             option.parseText(text);
             if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")) {
                 this.updateFrom(option);

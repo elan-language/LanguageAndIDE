@@ -34,13 +34,13 @@ export class AbstractProperty extends AbstractFrame implements Member {
     }
 
     renderAsSource(): string {
-        return `${this.indent()}abstract property ${this.name.renderAsSource()} ${this.type.renderAsSource()}\r\n`;
+        return `${this.indent()}abstract property ${this.name.renderAsSource()} as ${this.type.renderAsSource()}\r\n`;
     }
 
     parseFrom(source: CodeSource): void {
         source.remove("abstract property ");
         this.name.parseFrom(source);
-        source.remove(" ");
+        source.remove(" as ");
         this.type.parseFrom(source);
     }
 } 
