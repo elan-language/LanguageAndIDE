@@ -10,8 +10,8 @@ export class RangeNode extends AbstractSequence {
     
     parseText(text: string): void {
         if (text.length > 0) {
-            this.fromIndex = new OptionalNode(() => new ExprNode());
-            this.toIndex = new OptionalNode(() => new ExprNode());
+            this.fromIndex = new OptionalNode(new ExprNode());
+            this.toIndex = new OptionalNode(new ExprNode());
 
             this.addElement(this.fromIndex);
             this.addElement(new SymbolNode(DOUBLE_DOT));

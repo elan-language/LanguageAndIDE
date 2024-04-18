@@ -201,13 +201,13 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new BracketedExpression(), "()", ParseStatus.invalid, "", "()", "(");
 	});
 	test('Optional', () => {
-		testNodeParse(new OptionalNode(() => new LitInt()), "123 a", ParseStatus.valid, "123", " a", "123");
-		testNodeParse(new OptionalNode(() => new LitInt()), "abc", ParseStatus.valid, "", "abc", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), " abstract", ParseStatus.valid, " abstract", "", "abstract", "<keyword>abstract</keyword>");
-		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "abs", ParseStatus.incomplete, "abs", "", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "abscract", ParseStatus.valid, "", "abscract", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "", ParseStatus.valid, "", "", "");
-		testNodeParse(new OptionalNode(() => new KeywordNode(abstractKeyword)), "  ", ParseStatus.incomplete, "  ", "", "");
+		testNodeParse(new OptionalNode(new LitInt()), "123 a", ParseStatus.valid, "123", " a", "123");
+		testNodeParse(new OptionalNode(new LitInt()), "abc", ParseStatus.valid, "", "abc", "");
+		testNodeParse(new OptionalNode(new KeywordNode(abstractKeyword)), " abstract", ParseStatus.valid, " abstract", "", "abstract", "<keyword>abstract</keyword>");
+		testNodeParse(new OptionalNode(new KeywordNode(abstractKeyword)), "abs", ParseStatus.incomplete, "abs", "", "");
+		testNodeParse(new OptionalNode(new KeywordNode(abstractKeyword)), "abscract", ParseStatus.valid, "", "abscract", "");
+		testNodeParse(new OptionalNode(new KeywordNode(abstractKeyword)), "", ParseStatus.valid, "", "", "");
+		testNodeParse(new OptionalNode(new KeywordNode(abstractKeyword)), "  ", ParseStatus.incomplete, "  ", "", "");
 	});
 
 	test('Multiple', () => {

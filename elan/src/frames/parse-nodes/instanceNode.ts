@@ -10,7 +10,7 @@ export class InstanceNode extends AbstractSequence {
     parseText(text: string): void {
         if (text.length > 0) {
             this.variable =  new IdentifierNode();
-            this.index = new OptionalNode(() => new IndexNode());
+            this.index = new OptionalNode(new IndexNode());
             this.addElement(this.variable);
             this.addElement(this.index);
             super.parseText(text);

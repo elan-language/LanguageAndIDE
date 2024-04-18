@@ -1,14 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { SymbolNode } from "./symbol-node";
-import { Sequence } from "./sequence";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
-import { ARROW, GT, LT } from "../symbols";
-import { ofKeyword } from "../keywords";
-import { CommaNode } from "./comma-node";
-import { KeywordNode } from "./keyword-node";
-import { Multiple } from "./multiple";
-import { Space } from "./parse-node-helpers";
-import { SpaceNode } from "./space-node";
 import { TypeTuple } from "./type-tuple";
 import { FuncTypeNode } from "./func-type-node";
 

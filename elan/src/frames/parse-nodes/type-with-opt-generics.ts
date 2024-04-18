@@ -10,7 +10,6 @@ import { GT, LT } from "../symbols";
 import { ofKeyword } from "../keywords";
 import { SpaceNode } from "./space-node";
 import { Space } from "./parse-node-helpers";
-import { CSV } from "./csv";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 
@@ -33,7 +32,7 @@ export class TypeWithOptGenerics extends AbstractSequence {
             var commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
             var commaTypes = () => new Multiple(commaType, 0);
             var gt =() => new SymbolNode(GT);
-            var genericNode = () => new Sequence([lt,of,sp,type,commaTypes,gt]);
+            var genericNode = new Sequence([lt,of,sp,type,commaTypes,gt]);
             this.generic = new OptionalNode(genericNode);
             this.addElement(this.simpleType);
             this.addElement(this.generic);

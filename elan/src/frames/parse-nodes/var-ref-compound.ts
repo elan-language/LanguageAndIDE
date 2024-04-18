@@ -24,10 +24,10 @@ export class VarRefCompound extends AbstractSequence {
             var global = () => new Qualifier(new KeywordNode(globalKeyword));
             var lib = () => new Qualifier(new KeywordNode(libraryKeyword));
             var prop = () => new Qualifier(new KeywordNode(propertyKeyword));
-            var qualifier = () => new Alternatives([global, lib, prop, instance]);
+            var qualifier = new Alternatives([global, lib, prop, instance]);
             this.optQualifier =  new OptionalNode(qualifier);
             this.simple = new IdentifierNode();
-            this.index = new OptionalNode(() => new IndexNode());
+            this.index = new OptionalNode(new IndexNode());
             this.addElement(this.optQualifier!);
             this.addElement(this.simple!);
             this.addElement(this.index!);
