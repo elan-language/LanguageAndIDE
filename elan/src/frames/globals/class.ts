@@ -174,6 +174,11 @@ end class\r\n`;
 
 
     public renderAsObjectCode(): string {
+        // don't generate code for abstract classes 
+        if (this.isAbstract()){
+            return "";
+        }
+
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
   static defaultInstance() { return system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});};\r
 ${parentHelper_renderChildrenAsObjectCode(this)}\r

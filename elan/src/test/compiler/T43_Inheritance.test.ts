@@ -48,26 +48,11 @@ end class`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = system.initialise(new Foo());
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
-  system.print(_stdlib.asString(x.asString()));
+  
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
-  constructor() {
-    this.p1 = 5;
-  }
-
-  p1 = 0;
-
-  p2 = "";
-
-  asString() {
-    return "";
-  }
-
+  
 }
 return main;}`;
 

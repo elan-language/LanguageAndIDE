@@ -62,7 +62,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
-  ignore_test('Pass_AbstractImmutableClass', async () => {
+  test('Pass_AbstractImmutableClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -95,6 +95,7 @@ async function main() {
   system.print(_stdlib.asString(f.p1));
   system.print(_stdlib.asString(f.square()));
 }
+
 
 class Foo {
   static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
