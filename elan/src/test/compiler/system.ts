@@ -113,7 +113,7 @@ export class System {
             return i1 === i2;
         }
 
-        return false; // todo
+        return this.objectEquals(i1, i2); // todo
     }
 
 
@@ -137,7 +137,7 @@ export class System {
             return false;
         }
 
-        for (const i of o1items) {
+        for (const i of o1items.filter(i => !i.startsWith("_"))) {
             if (!(this.equals(o1[i], o2[i]))) {
                 return false;
             }
