@@ -599,6 +599,79 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
   });
 
+  ignore_test('Pass_PropertyOfAbstractType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to new Game()
+  var p set to g.p1
+  print p.ucName()
+end main
+
+class Game
+  constructor()
+  end constructor
+
+  property p1 as Player
+  property p2 as Player
+
+  function asString() return String
+    return "A game"
+  end function
+
+end class
+
+abstract class Player
+    abstract property name as String
+    abstract function ucName() return String
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = system.initialise(new Game());
+  var p = g.p1;
+  system.print(_stdlib.asString(p.ucName()));
+}
+
+class Game {
+  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
+  constructor() {
+
+  }
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Player.defaultInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  _p2;
+  get p2() {
+    return this._p2 ??= Player.defaultInstance();
+  }
+  set p2(p2) {
+    this._p2 = p2;
+  }
+
+  asString() {
+    return "A game";
+  }
+
+}
+
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
+  });
+
   
 
 });
