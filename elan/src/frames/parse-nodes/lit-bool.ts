@@ -7,7 +7,7 @@ export class LitBool extends AbstractAlternatives {
 
     constructor() {
         super();
-        this.placeholder = "true or false";
+        this.completionWhenEmpty = "true or false";
     }
 
     parseText(text: string): void {

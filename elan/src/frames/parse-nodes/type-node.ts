@@ -16,7 +16,7 @@ export class TypeNode extends AbstractAlternatives {
 
     constructor() {
         super();
-        this.placeholder = "Type";
+        this.completionWhenEmpty = "Type";
     }
 
     parseText(text: string): void {

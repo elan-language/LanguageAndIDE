@@ -9,7 +9,7 @@ export class IdentifierNode extends AbstractParseNode {
 
     constructor() {
         super();
-        this.placeholder = "name";
+        this.completionWhenEmpty = "name";
     }
 
     parseText(text: string): void {

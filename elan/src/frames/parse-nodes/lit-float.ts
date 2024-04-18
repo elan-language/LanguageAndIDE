@@ -11,7 +11,7 @@ export class LitFloat extends AbstractSequence {
 
     constructor() {
         super();
-        this.placeholder = "float value";
+        this.completionWhenEmpty = "float value";
     }
 
     parseText(text: string): void {

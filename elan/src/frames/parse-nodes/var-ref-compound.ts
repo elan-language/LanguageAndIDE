@@ -15,7 +15,7 @@ export class VarRefCompound extends AbstractSequence {
 
     constructor() {
         super();
-        this.placeholder = "variable";
+        this.completionWhenEmpty = "variable";
     }
 
     parseText(text: string): void {

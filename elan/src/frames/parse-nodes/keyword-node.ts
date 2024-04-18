@@ -5,7 +5,7 @@ import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, x
 export class KeywordNode extends FixedTextNode {
     constructor(keyword: string) {
         super(keyword);
-        this.placeholder = keyword;
+        this.completionWhenEmpty = keyword;
     }
 
     parseText(text: string): void {

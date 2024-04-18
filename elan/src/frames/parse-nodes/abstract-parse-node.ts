@@ -5,15 +5,15 @@ export abstract class AbstractParseNode implements ParseNode {
 
     status: ParseStatus = ParseStatus.empty;
     matchedText: string = "";
-    placeholder: string = "";
+    completionWhenEmpty: string = "";
     remainingText: string = "";
 
-    setPlaceholder(ph: string) {
-        this.placeholder = ph;
+    setCompletionWhenEmpty(ph: string) {
+        this.completionWhenEmpty = ph;
     }
 
     getCompletionAsHtml(): string {
-        return this.status === ParseStatus.empty ? `<pr>${this.placeholder}</pr>` : "";
+        return this.status === ParseStatus.empty ? `<pr>${this.completionWhenEmpty}</pr>` : "";
     }
 
     renderAsSource(): string {

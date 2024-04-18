@@ -13,7 +13,7 @@ export class BracketedExpression extends AbstractSequence {
     
     constructor() {
         super();
-        this.placeholder = "";
+        this.completionWhenEmpty = "";
     }
 
     parseText(text: string): void {

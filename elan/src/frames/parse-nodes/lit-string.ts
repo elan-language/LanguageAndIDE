@@ -6,7 +6,7 @@ export class LitString extends AbstractAlternatives {
 
     constructor() {
         super();
-        this.placeholder = `"string"`;
+        this.completionWhenEmpty = `"string"`;
     }
 
     parseText(text: string): void {

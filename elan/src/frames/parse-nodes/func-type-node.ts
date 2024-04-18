@@ -14,7 +14,7 @@ export class FuncTypeNode extends AbstractSequence {
 
     constructor() {
         super();
-        this.placeholder = "Type";
+        this.completionWhenEmpty = "Type";
     }
 
     parseText(text: string): void {
@@ -25,7 +25,7 @@ export class FuncTypeNode extends AbstractSequence {
             this.addElement(new KeywordNode(ofKeyword));
             this.addElement(new SpaceNode(Space.required));
             this.inputTypes = new CSV(() => new TypeNode(), 0);
-            this.inputTypes.setPlaceholder("Type(s)");
+            this.inputTypes.setCompletionWhenEmpty("Type(s)");
             this.addElement(this.inputTypes);
             this.addElement(new SpaceNode(Space.required));
             this.addElement(new SymbolNode(ARROW));

@@ -7,7 +7,7 @@ import { LitValueNode } from "./lit-value";
 export class LiteralNode extends AbstractAlternatives {
     constructor() {
         super();
-        this.placeholder = "";
+        this.completionWhenEmpty = "";
     }
 
     parseText(text: string): void {

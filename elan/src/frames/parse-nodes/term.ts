@@ -19,7 +19,7 @@ import { DefaultOfTypeNode } from "./default-of-type-node";
 export class Term extends AbstractAlternatives {
     constructor() {
         super();
-        this.placeholder = "expression";
+        this.completionWhenEmpty = "expression";
     }
 
     parseText(text: string): void {

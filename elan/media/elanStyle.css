@@ -176,22 +176,14 @@ field.empty placeholder {
 }
 
 field.empty.optional placeholder {
-    display: none; /* overridden when selected */
-    color: var(--optional);
+    display: none; 
 }
 
-field.empty.selected placeholder {
-    display: inline;
-    color: var(--reverseText);
-    background-color: var(--incomplete);
+field.selected.empty placeholder, field.selected.optional placeholder {
+    display: none; /* Because responsibility for prompting in a selected field falls to 'completion' ...*/
 }
 
-field.empty.optional.selected placeholder {
-    display:inline;
-    color: var(--reverseText);
-    background-color: var(--optional);
-}
-
+/* ... however, different rules when it is the 'holding' frame that is selected */
 .selected > top field.empty placeholder, .selected > field.empty placeholder {
     display:inline;
     color: var(--incomplete);
@@ -204,11 +196,10 @@ field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional 
     display: inline;
 }
 
-/* field-completion */
 completion  {
     display: none;
 }
-field.selected completion, field.selected completion pr{
+field.selected completion, field.selected completion * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--incomplete);
@@ -216,8 +207,8 @@ field.selected completion, field.selected completion pr{
 field.selected completion pr{
     font-style: italic;
 }
-field.selected.empty completion {
-    display: none;
+field.selected completion opt{
+    background-color: var(--optional);
 }
 
 /* Selectors */

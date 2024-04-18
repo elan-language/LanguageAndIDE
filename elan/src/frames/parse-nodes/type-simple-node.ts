@@ -6,7 +6,7 @@ export class TypeSimpleNode extends RegExMatchNode {
 
     constructor() {
         super(/^\s*[A-Z]\w*/);
-        this.placeholder = "Type";
+        this.completionWhenEmpty = "Type";
     }
     renderAsHtml(): string {
         return `<type>${this.renderAsSource()}</type>`;

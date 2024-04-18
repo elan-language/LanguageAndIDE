@@ -7,7 +7,7 @@ export abstract class FixedTextNode extends AbstractParseNode {
     constructor(fixedText: string) {
         super();
         this.fixedText = fixedText;
-        this.placeholder = fixedText;
+        this.completionWhenEmpty = fixedText;
     }
 
     getCompletionAsHtml(): string {
