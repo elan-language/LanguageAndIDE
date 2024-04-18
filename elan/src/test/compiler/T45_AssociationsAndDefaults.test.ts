@@ -464,6 +464,141 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
   });
 
+  ignore_test('Pass_defaultValueCanBeAssigned', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to new Game()
+  print g.score
+  call g.setScore(default Int)
+  print g.score
+end main
+
+class Game
+  constructor()
+    set score to 10
+  end constructor
+
+  property score as Int
+  property best as Int
+
+  property p1 as Player
+  property p2 as Player
+
+  procedure setScore(newScore as Int)
+    set score to newScore
+  end procedure
+
+  property previousGame as Game
+
+  property previousScores as List<of Int>
+
+  function asString() return String
+    return "A game"
+  end function
+
+end class
+
+class Player
+    constructor(name as String)
+      set property.name to name
+    end constructor
+
+    property name as String
+
+    function asString() return String
+      return name
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
+  });
+
+  test('Pass_defaultForStandardDataStructures', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print f.a
+  print f.b
+  print f.c
+  print f.d
+  print f.a is default List<of Int>
+  print f.b is default String
+  print f.c is default Dictionary<of String,Int>
+  print f.d is default Array<of Int>
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as List<of Int>
+  property b as String
+  property c as Dictionary<of String, Int>
+  property d as Array<of Int>
+
+  function asString() return String
+    return "A Foo"
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  system.print(_stdlib.asString(f.a));
+  system.print(_stdlib.asString(f.b));
+  system.print(_stdlib.asString(f.c));
+  system.print(_stdlib.asString(f.d));
+  system.print(_stdlib.asString(f.a === system.defaultList()));
+  system.print(_stdlib.asString(f.b === ""));
+  system.print(_stdlib.asString(f.c === system.defaultDictionary()));
+  system.print(_stdlib.asString(f.d === system.defaultArray()));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["a", "List<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "Array<of Int>"]]);};
+  constructor() {
+
+  }
+
+  a = system.defaultList();
+
+  b = "";
+
+  c = system.defaultDictionary();
+
+  d = system.defaultArray();
+
+  asString() {
+    return "A Foo";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
+  });
+
   
 
 });
