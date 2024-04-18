@@ -324,14 +324,16 @@ end class
 	});
 
 	test('parse Frames - abstract class', () => {
-		var code = `# a1cdd02909a58fceb0c51f3b484ef65f9d91a6c3aa587173069528231e7bd10c Elan v0.1 valid
+		var code = `# cc887504cf1fe1864e92e7d759fc8b8e95b0e0626c7f9b56328076222486c6e5 Elan v0.1 valid
 
-abstract class Card
-  abstract property value Int
+abstract class Foo
+  abstract property p1 as Int
 
-  abstract procedure foo()
+  abstract property p2 as Int
 
-  abstract function bar() as Qux
+  abstract procedure setP1(v as Int)
+
+  abstract function product() return Int
 
 end class
 `
@@ -374,12 +376,12 @@ end main
 	});
 
 	test('parse Frames - abstract immutable class', () => {
-		var code = `# 254e89bdf507e1d4e0bbddeb2b5a5c0c189c04bc3c44335818762a505869426a Elan v0.1 valid
+		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
 
 abstract immutable class Card
-  abstract property value Int
+  abstract property value as Int
 
-  abstract function bar() as Qux
+  abstract function bar() return Qux
 
 end class
 `

@@ -42,12 +42,12 @@ export class AbstractFunction extends AbstractFrame implements Member {
 
     renderAsHtml(): string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) as ${this.returnType.renderAsHtml()}</function>
+<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) return ${this.returnType.renderAsHtml()}</function>
 `;
     }
 
     public override renderAsSource() : string {
-        return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) as ${this.returnType.renderAsSource()}\r
+        return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) return ${this.returnType.renderAsSource()}\r
 `;
     }
 
@@ -56,7 +56,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
         this.name.parseFrom(source);
         source.remove("(");
         this.params.parseFrom(source);
-        source.remove(") as ");
+        source.remove(") return ");
         this.returnType.parseFrom(source);
     }
 }
