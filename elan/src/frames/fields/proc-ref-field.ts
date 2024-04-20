@@ -11,7 +11,7 @@ export class ProcRefField extends AbstractField {
     
     constructor(holder: Frame) {
         super(holder);
-        this.setPlaceholder("procedure");
+        this.setPlaceholder("procedureName");
     }
     getIdPrefix(): string {
         return 'ident';
@@ -19,7 +19,8 @@ export class ProcRefField extends AbstractField {
     initialiseRoot(): ParseNode { 
         var qualProc = () => new InstanceProcRef();
         var proc = () => new IdentifierNode();
-        this.rootNode =  new Alternatives([proc, qualProc]);   //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
+        this.rootNode =  new Alternatives([proc, qualProc]); 
+        this.rootNode.setCompletionWhenEmpty(this.placeholder);  //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
         return this.rootNode; 
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);

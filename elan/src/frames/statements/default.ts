@@ -40,6 +40,7 @@ ${this.indent()}${singleIndent()}break;`;
         source.remove("default");
     }
     parseBottom(source: CodeSource): boolean {
+        source.removeIndent();
         return source.isMatch("end switch");
     }
     canInsertAfter(): boolean {

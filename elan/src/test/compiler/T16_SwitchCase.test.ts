@@ -109,7 +109,6 @@ main
           print 'a'
       default
           print 'b'
-
     end switch
   end for
 end main`;
@@ -150,7 +149,7 @@ main
         print 'b'
       default
         print 'c'
-
+        
     end switch
   end for
 end main`;
