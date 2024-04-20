@@ -1,4 +1,4 @@
-# ced136595824cdf727e0d1ac349862f1ed38655cbc54fc1ef66321db72ce8680 Elan v0.1 valid
+# ac3bf2ffa423407dc34d7f7b5f5e554eb94b3bec55efbc40b2f8317b12c330d3 Elan v0.1 valid
 
 main
   print welcome
@@ -16,8 +16,6 @@ main
     end if
   end while
 end main
-
-constant welcome set to "Welcome to the Snake game."
 
 procedure playGame()
   var charMap set to new CharMap()
@@ -45,7 +43,7 @@ procedure playGame()
     end if
   end while
   call charMap.setCursor(0, 0)
-  print "Game Over! Score: [snake.length() - 2]"
+  print "Game Over! Score: {snake.length() - 2}"
 end procedure
 
 procedure draw(cm as CharMap, sq as Square, colour as Colour)
@@ -120,8 +118,6 @@ class Snake
 
 end class
 
-constant directionByKey set to ['w': Direction.up, 's': Direction.down, 'a': Direction.left, 'd': Direction.right]
-
 class Square
   constructor(x as Int, y as Int)
     set property.x to x
@@ -151,3 +147,7 @@ class Square
   end function
 
 end class
+
+constant directionByKey set to ['w': Direction.up, 's': Direction.down, 'a': Direction.left, 'd': Direction.right]
+
+constant welcome set to "Welcome to the Snake game."
