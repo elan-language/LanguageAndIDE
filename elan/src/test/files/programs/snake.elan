@@ -1,4 +1,4 @@
-# 1e41bcfe12696ce9344127ab1d3d82af8bc9cee4f4b6ecfef26b242a1f546697 Elan v0.1 valid
+# fb863ef495ec3b822945c78d326b6719130681a9a14e488aa51c0e25e42a028d Elan v0.1 valid
 
 main
   print welcome
@@ -47,11 +47,11 @@ procedure playGame()
 end procedure
 
 procedure draw(cm as CharMap, sq as Square, colour as Colour)
-  call cm.putBlockWithColour(col, row, colour)
-  var colPlus set to col + 1
-  call cm.putBlockWithColour(colPlus, row, colour)
   var col set to sq.x * 2
   var row set to sq.y
+  call cm.putBlockWithColour(col, row, colour)
+  var nextCol set to col + 1
+  call cm.putBlockWithColour(nextCol, row, colour)
 end procedure
 
 class Snake
