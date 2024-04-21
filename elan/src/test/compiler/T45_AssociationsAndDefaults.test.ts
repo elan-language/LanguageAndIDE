@@ -118,7 +118,6 @@ main
   print g.i
   print g.f
   print g.b
-  print g.c
   print g.s
   print g.li
   print g.dsi
@@ -132,7 +131,6 @@ class Game
     property i as Int
     property f as Float
     property b as Boolean
-    property c as Char
     property s as String
     property li as List<of Int>
     property dsi as Dictionary<of String, Int>
@@ -150,7 +148,6 @@ async function main() {
   system.print(_stdlib.asString(g.i));
   system.print(_stdlib.asString(g.f));
   system.print(_stdlib.asString(g.b));
-  system.print(_stdlib.asString(g.c));
   system.print(_stdlib.asString(g.s));
   system.print(_stdlib.asString(g.li));
   system.print(_stdlib.asString(g.dsi));
@@ -158,7 +155,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["c", "Char"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
   constructor() {
 
   }
@@ -168,8 +165,6 @@ class Game {
   f = 0;
 
   b = false;
-
-  c = "";
 
   s = "";
 

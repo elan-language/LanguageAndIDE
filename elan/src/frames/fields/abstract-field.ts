@@ -138,7 +138,7 @@ export abstract class AbstractField implements Selectable, Field {
             default: {
                 if(key === "o" && e.modKey.control && isCollapsible(this.holder)) {
                     this.holder.expandCollapse(); 
-                } else if ( key === 'O' && e.modKey.control) {
+                } else if ( key === "O" && e.modKey.control) {
                         this.holder.expandCollapseAll();
                 } else if (key?.length === 1) {
                     this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);

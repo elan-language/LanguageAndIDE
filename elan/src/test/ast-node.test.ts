@@ -1,7 +1,6 @@
 import { ExprNode } from '../frames/parse-nodes/expr-node';
-import { testAST, stubField, boolType, charType, floatType, intType, stringType } from './testHelpers';
+import { testAST, stubField, boolType, floatType, intType, stringType } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
-import { LitChar } from '../frames/parse-nodes/lit-char';
 import { LitInt } from '../frames/parse-nodes/lit-int';
 import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
@@ -73,11 +72,6 @@ suite('ASTNodes', () => {
 		testAST(new LitBool(), stubField, " false", "false", boolType);
 	});
 
-	test("Char", () => {
-		testAST(new LitChar(), stubField, "'a'", "'a'", charType);
-		testAST(new LitChar(), stubField, " '9'", "'9'", charType);
-	});
-
 	test("Int", () => {
 		testAST(new LitInt(), stubField, " 123", "123", intType);
 	});
@@ -95,8 +89,9 @@ suite('ASTNodes', () => {
 	});
 
 	test("String", () => {
-
 		testAST(new LitString(), stubField, `"abc"`, `"abc"`, stringType);
+		testAST(new LitString(), stubField, `"a"`, `"a"`, stringType);
+		testAST(new LitString(), stubField, ` "9"`, `"9"`, stringType);
 	});
 
 	test("Function", () => {
@@ -146,31 +141,31 @@ suite('ASTNodes', () => {
 	test("If", () => {
 		testAST(new IfExpr(), stubField, `if cell then Colour.green else Colour.black)`, "Ternary (cell) ? ((Colour).green) : ((Colour).black)", new EnumType("Colour"));
 
-		const ast2 = "Ternary (Equals (attempt[n]) ('*')) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, '+')) : (Func Call attempt.setChar (n, '_')))";
-		testAST(new IfExpr(), stubField, `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ast2, boolType);
+		const ast2 = `Ternary (Equals (attempt[n]) ("*")) ? (attempt) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call attempt.setChar (n, "+")) : (Func Call attempt.setChar (n, "_")))`;
+		testAST(new IfExpr(), stubField, `if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")`, ast2, boolType);
 
-		const ast3 = "Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), '.')) : (target))";
-		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ast3, stringType);
+		const ast3 = `Ternary (Func Call attempt.isAlreadyMarkedGreen (n)) ? (target) : (Ternary (Func Call attempt.isYellow (target, n)) ? (Func Call target.setChar (Func Call target.indexOf (attempt[n]), ".")) : (target))`;
+		testAST(new IfExpr(), stubField, `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target`, ast3, stringType);
 
 		testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
 	});
 
 	test("Dictionary", () => {
 
-		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37]`, "[('a':37)]", new DictionaryType(charType, intType));
-		testAST(new Dictionary(() => new LitChar(), () => new LitInt()), stubField, `['a':37, 'b':42]`, "[('a':37), ('b':42)]", new DictionaryType(charType, intType));
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':37, 'b':42]`, "[('a':37), ('b':42)]", new DictionaryType(charType, intType));
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `['a':1.1, 5:"abc"]`, `[('a':1.1), (5:"abc")]`, new DictionaryType(charType, floatType));
+		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37]`, `[("a":37)]`, new DictionaryType(stringType, intType));
+		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":1.1, 5:"abc"]`, `[("a":1.1), (5:"abc")]`, new DictionaryType(stringType, floatType));
 	});
 
 	test("LitTuple", () => {
 
 		testAST(new LitTuple(), stubField, `(3,4)`, "(3, 4)", new TupleType([intType, intType]));
-		testAST(new LitTuple(), stubField, `(3,'a', "hello", 4.1, true)`, `(3, 'a', "hello", 4.1, true)`, new TupleType([intType, charType, stringType, floatType, boolType]));
-		testAST(new LitTuple(), stubField, `((3,4), ('a', true))`, "((3, 4), ('a', true))",
+		testAST(new LitTuple(), stubField, `(3,"a", "hello", 4.1, true)`, `(3, "a", "hello", 4.1, true)`, new TupleType([intType, stringType, stringType, floatType, boolType]));
+		testAST(new LitTuple(), stubField, `((3,4), ("a", true))`, `((3, 4), ("a", true))`,
 			new TupleType([
 				new TupleType([intType, intType]),
-				new TupleType([charType, boolType])
+				new TupleType([stringType, boolType])
 			]));
 
 		testAST(new DeconstructedTuple(), stubField, `(a,b)`, "(a, b)", new TupleType([intType, floatType]));
@@ -179,7 +174,7 @@ suite('ASTNodes', () => {
 	test("LitNode", () => {
 		testAST(new LiteralNode(), stubField, `"hello"`, `"hello"`, stringType);
 		testAST(new LiteralNode(), stubField, `123`, "123", intType);
-		//testAST(new LiteralNode(), stubField, `['a':37, 42:'b']`, "", intType);
+		//testAST(new LiteralNode(), stubField, `["a":37, 42:"b"]`, "", intType);
 		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([intType, intType])));
 		testAST(new LiteralNode(), stubField, `["apple", "pear"]`, `["apple", "pear"]`, new ListType(stringType));
 	});

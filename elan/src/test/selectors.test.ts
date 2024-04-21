@@ -56,7 +56,7 @@ suite('Unit tests', () => {
 		var g = new GlobalSelector(f);
 		var help = g.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
-		g.processKey(key('c'));
+		g.processKey(key("c"));
 		help = g.getCompletion();
 		assert.equal(help, " class constant");
         assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`);
@@ -68,7 +68,7 @@ suite('Unit tests', () => {
 		var s = new MemberSelector(c);
 		var help = s.getCompletion();
 		assert.equal(help, " function procedure property #");
-		s.processKey(key('p'));
+		s.processKey(key("p"));
 		assert.equal(s.text, "pro");
 		help = s.getCompletion();
 		assert.equal(help, " procedure property");
@@ -81,15 +81,15 @@ suite('Unit tests', () => {
 		c.makeAbstract();		
 		var s = new MemberSelector(c);
 		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
-		s.processKey(key('a'));
+		s.processKey(key("a"));
 		assert.equal(s.text, "abstract ");
 		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
-		s.processKey(key('a'));
+		s.processKey(key("a"));
 		assert.equal(s.text, "abstract ");
-		s.processKey(key('b'));
+		s.processKey(key("b"));
 		assert.equal(s.text, "abstract ");
 		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
-		s.processKey(key('p'));
+		s.processKey(key("p"));
 		assert.equal(s.text, "abstract pro");
 		assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
         assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
@@ -101,7 +101,7 @@ suite('Unit tests', () => {
 		var s = new StatementSelector(m);
 		var help = s.getCompletion();
 		assert.equal(help, " call each external for if input let print repeat set switch throw try var while #");
-		s.processKey(key('s'));
+		s.processKey(key("s"));
 		help = s.getCompletion();
 		assert.equal(help, " set switch");
         assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`);
@@ -150,7 +150,7 @@ suite('Unit tests', () => {
 		var s = new StatementSelector(ifThen);
 		var help = s.getCompletion();
 		assert.equal(help, " call each else external for if input let print repeat set switch throw try var while #");
-		s.processKey(key('e'));
+		s.processKey(key("e"));
 		help = s.getCompletion();
 		assert.equal(help, " each else external");
 	});	

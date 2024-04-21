@@ -104,9 +104,9 @@ export class CodeSourceFromString implements CodeSource {
                 insideDoubleQuotes = true;
             } else if (c === `'`) {
                 insideSingleQuotes = true;
-            } else if (c ==='(') { 
+            } else if (c ==="(") { 
                 openBracketCount ++;
-            } else if (c ===')') { 
+            } else if (c ===")") { 
                 if (openBracketCount === 0) {
                     cont = false;
                 } else {

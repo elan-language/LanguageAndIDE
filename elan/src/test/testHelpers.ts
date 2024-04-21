@@ -16,7 +16,6 @@ import { Field } from '../frames/interfaces/field';
 import { FloatType } from '../symbols/float-type';
 import { Parent } from '../frames/interfaces/parent';
 import { BooleanType } from '../symbols/boolean-type';
-import { CharType } from '../symbols/char-type';
 import { IntType } from '../symbols/int-type';
 import { StringType } from '../symbols/string-type';
 import { ISymbol } from '../symbols/symbol';
@@ -386,7 +385,6 @@ export function testCompletion(node: ParseNode, text: string, status: ParseStatu
 export const intType = IntType.Instance;
 export const floatType = FloatType.Instance;
 export const boolType = BooleanType.Instance;
-export const charType = CharType.Instance;
 export const stringType = StringType.Instance;
 export const unknownType = UnknownType.Instance;
 
@@ -418,15 +416,15 @@ const stubClassSymbol = {
 const stubHolder = {
   resolveSymbol(id, initialScope) : ISymbol | undefined {
     switch (id) {
-      case 'a' : return stubIntSymbol;
-      case 'b' : return stubFloatSymbol;
-      case 'c' : return stubFloatSymbol;
-      case 'x' : return stubIntSymbol;
+      case "a" : return stubIntSymbol;
+      case "b" : return stubFloatSymbol;
+      case "c" : return stubFloatSymbol;
+      case "x" : return stubIntSymbol;
       case 'foo' : return stubIntSymbol;
       case 'bar' : return stubStringSymbol;
       case 'boo' : return stubBoolSymbol;
       case 'reduce' : return stubIntSymbol;
-      case 'p' : return stubClassSymbol;
+      case "p" : return stubClassSymbol;
       case 'isBefore' : return stubBoolSymbol;
       case 'betterOf' : return stubStringSymbol;
       case "attempt" : return stubBoolSymbol;

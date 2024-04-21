@@ -63,6 +63,6 @@ export const whileKeyword = 'while';
 export const withKeyword = 'with';
 export const xorKeyword = 'xor';
 
-export const commentMarker = '#';
+export const commentMarker = "#";
 
 export const allKeywords = [abstractKeyword, andKeyword, asKeyword, assertKeyword, beKeyword, callKeyword, caseKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, curryKeyword, defaultKeyword, divKeyword, eachKeyword, elseKeyword, endKeyword, enumKeyword, externalKeyword, falseKeyword, forKeyword, fromKeyword, functionKeyword, globalKeyword, ifKeyword, immutableKeyword, importKeyword, inKeyword, intoKeyword, inheritsKeyword, inputKeyword, lambdaKeyword, letKeyword, libraryKeyword, mainKeyword, modKeyword, newKeyword, notKeyword, ofKeyword, isKeyword, orKeyword, packageKeyword, partialKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, repeatKeyword, returnKeyword, setKeyword, stepKeyword, switchKeyword, testKeyword, thisKeyword, throwKeyword, toKeyword, trueKeyword, tryKeyword, varKeyword, whenKeyword, whileKeyword, withKeyword, xorKeyword];

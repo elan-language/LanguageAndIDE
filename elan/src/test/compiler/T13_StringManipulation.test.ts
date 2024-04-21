@@ -35,12 +35,12 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print '_' + "Hello" + '!'
+  print "_" + "Hello" + "!"
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString('_' + "Hello" + '!'));
+  system.print(_stdlib.asString("_" + "Hello" + "!"));
 }
 return main;}`;
 

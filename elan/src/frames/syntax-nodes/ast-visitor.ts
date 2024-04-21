@@ -38,8 +38,6 @@ import { SetAsn } from "./set-asn";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { VarAsn } from "./var-asn";
 import { SetClause } from "../parse-nodes/set-clause";
-import { LitChar } from "../parse-nodes/lit-char";
-import { LiteralCharAsn } from "./literal-char-asn";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LitString } from "../parse-nodes/lit-string";
@@ -169,10 +167,6 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
 
     if (node instanceof LitFloat) {
         return new LiteralFloatAsn(node.matchedText);
-    }
-
-    if (node instanceof LitChar) {
-        return new LiteralCharAsn(node.matchedText);
     }
 
     if (node instanceof LitStringEmpty) {

@@ -211,12 +211,12 @@ return main;}`;
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print '%'
+  print "%"
 end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString('%'));
+  system.print(_stdlib.asString("%"));
 }
 return main;}`;
 
@@ -226,7 +226,7 @@ return main;}`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        await assertObjectCodeExecutes(fileImpl, '%');
+        await assertObjectCodeExecutes(fileImpl, "%");
     });
 
     test('Pass_BoolLiteral', async () => {

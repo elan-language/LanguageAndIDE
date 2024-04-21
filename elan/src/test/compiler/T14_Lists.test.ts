@@ -83,7 +83,7 @@ return main;}`;
 main
   var a set to 1
   var b set to 1.1
-  var c set to 'c'
+  var c set to "c"
   var d set to "d"
   var e set to true
   var v set to [a]
@@ -112,7 +112,7 @@ end class`;
 async function main() {
   var a = 1;
   var b = 1.1;
-  var c = 'c';
+  var c = "c";
   var d = "d";
   var e = true;
   var v = system.list([a]);
@@ -219,7 +219,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, '5');
+    await assertObjectCodeExecutes(fileImpl, "5");
   });
 
   test('Pass_emptyList', async () => {
@@ -243,7 +243,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, '0');
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test('Pass_index', async () => {
@@ -267,7 +267,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, '6');
+    await assertObjectCodeExecutes(fileImpl, "6");
   });
 
   test('Pass_range', async () => {

@@ -1,15 +1,15 @@
-# 03d10c544aff61cf9c89444dc7b09d439ef310438757aab2523a68ab66629d0d Elan v0.1 valid
+# 3fd3c98ce73b12143327b92ff2681e9ba1b63e7e86955e297f1d27cdd3b593d8 Elan v0.1 valid
 
 function isYellow(attempt as String, target as String, n as Int) return Bool
   return target.contains(attempt[n])
 end function
 
 function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')
+  return if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target
+  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
 end function
 
 constant allPossibleAnswers set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
@@ -37,15 +37,15 @@ function setChar(word as String, n as Int, newChar as Char) return String
 end function
 
 function setAttemptIfGreen(attempt as String, target as String, n as Int) return String
-  return if attempt.isGreen(target, n) then attempt.setChar(n, '*') else attempt
+  return if attempt.isGreen(target, n) then attempt.setChar(n, "*") else attempt
 end function
 
 function setTargetIfGreen(attempt as String, target as String, n as Int) return String
-  return if attempt.isGreen(target, n) then target.setChar(n, '.') else target
+  return if attempt.isGreen(target, n) then target.setChar(n, ".") else target
 end function
 
 function isAlreadyMarkedGreen(attempt as String, n as Int) return Bool
-  return attempt[n] is '*'
+  return attempt[n] is "*"
 end function
 
 constant letterPositions set to [0, 1, 2, 3, 4]

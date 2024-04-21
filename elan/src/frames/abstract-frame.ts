@@ -148,7 +148,7 @@ export abstract class AbstractFrame implements Frame {
           case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
           case "Insert": {this.insertPeerSelector(e.modKey.shift); break;} 
           case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
-          case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
+          case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
           case "ArrowUp": {
             if (e.modKey.control && this.movable) {
                 this.getParent().moveSelectedChildrenUpOne();

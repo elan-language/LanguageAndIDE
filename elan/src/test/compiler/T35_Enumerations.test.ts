@@ -148,11 +148,11 @@ main
   var f set to Fruit.orange
   switch f
     case Fruit.apple
-      print 'a'
+      print "a"
     case Fruit.orange
-      print 'o'
+      print "o"
     case Fruit.pear
-      print 'p'
+      print "p"
     default
   end switch
 end main
@@ -166,13 +166,13 @@ async function main() {
   var f = Fruit.orange;
   switch (f) {
     case Fruit.apple:
-      system.print(_stdlib.asString('a'));
+      system.print(_stdlib.asString("a"));
       break;
     case Fruit.orange:
-      system.print(_stdlib.asString('o'));
+      system.print(_stdlib.asString("o"));
       break;
     case Fruit.pear:
-      system.print(_stdlib.asString('p'));
+      system.print(_stdlib.asString("p"));
       break;
     default:
 

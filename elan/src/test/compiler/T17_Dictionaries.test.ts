@@ -8,13 +8,13 @@ suite('T17_Dictionaries', () => {
   test('Pass_LiteralConstantAndPrinting', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -33,16 +33,16 @@ return main;}`;
   test('Pass_AccessByKey', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
-  print a['z']
+  print a["z"]
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
-  system.print(_stdlib.asString(a['z']));
+  system.print(_stdlib.asString(a["z"]));
 }
 return main;}`;
 
@@ -58,13 +58,13 @@ return main;}`;
   test('Pass_keys', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
   print keys(a)
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.keys(a)));
@@ -83,18 +83,18 @@ return main;}`;
   test('Pass_hasKey', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
-  print hasKey(a, 'b')
-  print hasKey(a, 'd')
+  print hasKey(a, "b")
+  print hasKey(a, "d")
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.hasKey(a, 'b')));
-  system.print(_stdlib.asString(_stdlib.hasKey(a, 'd')));
+  system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
+  system.print(_stdlib.asString(_stdlib.hasKey(a, "d")));
 }
 return main;}`;
 
@@ -110,13 +110,13 @@ return main;}`;
   test('Pass_values', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
   print values(a)
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.values(a)));
@@ -135,20 +135,20 @@ return main;}`;
   test('Pass_set', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to setItem(a, 'b', 4)
-  var c set to setItem(b, 'd', 2)
+  var b set to setItem(a, "b", 4)
+  var c set to setItem(b, "d", 2)
   print a
   print c
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
-  var b = _stdlib.setItem(a, 'b', 4);
-  var c = _stdlib.setItem(b, 'd', 2);
+  var b = _stdlib.setItem(a, "b", 4);
+  var c = _stdlib.setItem(b, "d", 2);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(c));
 }
@@ -166,18 +166,18 @@ return main;}`;
   test('Pass_removeEntry', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to removeItem(a, 'b')
+  var b set to removeItem(a, "b")
   print a
   print b
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
-  var b = _stdlib.removeItem(a, 'b');
+  var b = _stdlib.removeItem(a, "b");
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -195,17 +195,17 @@ return main;}`;
   test('Pass_removeInvalidKey', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ['a':1, 'b':3, 'z':10]
+constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to removeItem(a, 'c')
+  var b set to removeItem(a, "c")
   print b
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {'a' : 1, 'b' : 3, 'z' : 10};
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
-  var b = _stdlib.removeItem(a, 'c');
+  var b = _stdlib.removeItem(a, "c");
   system.print(_stdlib.asString(b));
 }
 return main;}`;

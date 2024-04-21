@@ -86,14 +86,14 @@ return main;}`;
   test('Pass_Dictionary', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant k set to ['a':1, 'b':3, 'c':3]
+constant k set to ["a":1, "b":3, "c":3]
 
 main 
   print k
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = {'a' : 1, 'b' : 3, 'c' : 3};
+const k = {"a" : 1, "b" : 3, "c" : 3};
 
 async function main() {
   system.print(_stdlib.asString(k));

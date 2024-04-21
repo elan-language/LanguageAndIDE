@@ -47,7 +47,7 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call printIt("Hello", 'e', find)
+  call printIt("Hello", "e", find)
 end main
   
 procedure printIt(s as String, c as Char, f as Func<of String, Char => Int>)
@@ -60,7 +60,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  printIt("Hello", 'e', find);
+  printIt("Hello", "e", find);
 }
 
 function printIt(s, c, f) {

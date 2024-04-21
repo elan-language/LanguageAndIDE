@@ -47,7 +47,7 @@ export class IntoSelector extends AbstractField {
     processKey(keyEvent: editorEvent): void {
         var char = keyEvent.key;
         var empty = this.text ==="";
-        if (empty && (char ==='i')) {
+        if (empty && (char ==="i")) {
             this.ext.setIntoExtension(true);
             this.ext.getFields()[1].select(true, false); //Second field will now be the condition
             return;

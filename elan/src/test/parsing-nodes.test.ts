@@ -3,7 +3,6 @@ import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/parse-status';
 import { testNodeParse } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
-import { LitChar } from '../frames/parse-nodes/lit-char';
 import { LitInt } from '../frames/parse-nodes/lit-int';
 import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { BinaryOperation } from '../frames/parse-nodes/binary-operation';
@@ -149,15 +148,11 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LitBool(), " tr", ParseStatus.incomplete, "tr", "", "tr", "");
 		testNodeParse(new LitBool(), " tr ", ParseStatus.invalid, "", "tr ", "", "");
 	});
-	test('LitChar', () => {
-		testNodeParse(new LitChar(), "", ParseStatus.empty, "", "", "", "");
-		testNodeParse(new LitChar(), "'a'", ParseStatus.valid, "'a'", "", "'a'", "");
-		testNodeParse(new LitChar(), "'9'", ParseStatus.valid, "'9'", "", "'9'", "");
-		testNodeParse(new LitChar(), "'ab'", ParseStatus.invalid, "", "'ab'", "", "");
-		testNodeParse(new LitChar(), `"a"`, ParseStatus.invalid, "", `"a"`, "", "");
-	});
-	test('LitChar - space', () => {
-		testNodeParse(new LitChar(), "' '", ParseStatus.valid, "' '", "", "' '", "");
+	test('LitString - single chars', () => {
+		testNodeParse(new LitString(), "", ParseStatus.empty, "", "", "", "");
+		testNodeParse(new LitString(), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
+		testNodeParse(new LitString(), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
+		testNodeParse(new LitString(), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
 	});
 	test('LitInt', () => {
 		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "", "", "");
@@ -353,8 +348,8 @@ suite('Parsing Nodes', () => {
 	test('IfExpr', () => {
 		testNodeParse(new IfExpr(), `if cell then Colour.green else Colour.black)`, ParseStatus.valid, "", ")", "");
 		testNodeParse(new IfExpr(), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new IfExpr(), `if attempt[n] is '*' then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, '+') else attempt.setChar(n, '_')`, ParseStatus.valid, "", "", "");
-		testNodeParse(new IfExpr(), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.') else target`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(), `if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")`, ParseStatus.valid, "", "", "");
+		testNodeParse(new IfExpr(), `if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target`, ParseStatus.valid, "", "", "");
 		testNodeParse(new IfExpr(), `if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"`, ParseStatus.valid, "", "", "");
 	});
 	test('ParamDefNode', () => {
@@ -375,28 +370,28 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new CSV(() => new ParamDefNode(), 0), `a as String, bb as`, ParseStatus.incomplete, "", "", "");
 	});
 	test('KVP', () => {
-		testNodeParse(new KVPnode(() => new LitChar(), () => new LitInt()), `'a':37`, ParseStatus.valid, "", "", "");
-		testNodeParse(new KVPnode(() => new LitChar(), () => new LitInt()), `'a':`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new KVPnode(() => new LitChar(), () => new LitInt()), `'a'`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new KVPnode(() => new LitChar(), () => new LitInt()), `'a':'b'`, ParseStatus.invalid, "", "'a':'b'", "");
+		testNodeParse(new KVPnode(() => new LitString(), () => new LitInt()), `"a":37`, ParseStatus.valid, "", "", "");
+		testNodeParse(new KVPnode(() => new LitString(), () => new LitInt()), `"a":`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new KVPnode(() => new LitString(), () => new LitInt()), `"a"`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new KVPnode(() => new LitString(), () => new LitInt()), `"a":"b"`, ParseStatus.invalid, "", `"a":"b"`, "");
 	});
 	test('Dictionary', () => {
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37]`, ParseStatus.valid, "['a':37]", "", "");
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37, 'b':42]`, ParseStatus.valid, "", "", "");
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37, 'b':42`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37,`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37, 42:'b']`, ParseStatus.invalid, "", "['a':37, 42:'b']", "");
-		testNodeParse(new Dictionary(() => new LitChar(), () => new LitInt()), `['a':37, 'b':42)`, ParseStatus.invalid, "", "['a':37, 'b':42)", "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37]`, ParseStatus.valid, `["a":37]`, "", "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37, "b":42]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37, "b":42`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37,`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37, 42:"b"]`, ParseStatus.invalid, "", `["a":37, 42:"b"]`, "");
+		testNodeParse(new Dictionary(() => new LitString(), () => new LitInt()), `["a":37, "b":42)`, ParseStatus.invalid, "", `["a":37, "b":42)`, "");
 
-		testNodeParse(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), `['a':37, 'b':42]`, ParseStatus.valid, "", "", "");
-		testNodeParse(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), `['a':1.0, 5:"abc"]`, ParseStatus.valid, "", "", "");//But should fail type tests
+		testNodeParse(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), `["a":37, "b":42]`, ParseStatus.valid, "", "", "");
+		testNodeParse(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), `["a":1.0, 5:"abc"]`, ParseStatus.valid, "", "", "");//But should fail type tests
 	});
 	test('LitTuple', () => {
 		testNodeParse(new LitTuple(), `(3,4)`, ParseStatus.valid, "", "", "");
-		testNodeParse(new LitTuple(), `(3,'a', "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
-		testNodeParse(new LitTuple(), `((3,4), ('a', true))`, ParseStatus.valid, "", "", "");
-		testNodeParse(new LitTuple(), `(3,'a', "hello", 4.1, true`, ParseStatus.incomplete, "", "", "");
-		testNodeParse(new LitTuple(), `(3,'a', "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
+		testNodeParse(new LitTuple(), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
+		testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1, true`, ParseStatus.incomplete, "", "", "");
+		testNodeParse(new LitTuple(), `(3,"a", "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
 		testNodeParse(new LitTuple(), `[3,4]`, ParseStatus.invalid, "", "[3,4]", "");
 		testNodeParse(new LitTuple(), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");
 		testNodeParse(new LitTuple(), `(`, ParseStatus.incomplete, "", "", "");
@@ -413,7 +408,7 @@ suite('Parsing Nodes', () => {
 	test('Literal', () => {
 		testNodeParse(new LiteralNode(), `"hello"`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(), `123`, ParseStatus.valid, "", "", "");
-		testNodeParse(new LiteralNode(), `['a':37, 42:'b']`, ParseStatus.valid, "", "", "");
+		testNodeParse(new LiteralNode(), `["a":37, 42:"b"]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(), `[(3,4), (5,6)]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 

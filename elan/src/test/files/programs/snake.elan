@@ -1,4 +1,4 @@
-# ac3bf2ffa423407dc34d7f7b5f5e554eb94b3bec55efbc40b2f8317b12c330d3 Elan v0.1 valid
+# 1e41bcfe12696ce9344127ab1d3d82af8bc9cee4f4b6ecfef26b242a1f546697 Elan v0.1 valid
 
 main
   print welcome
@@ -7,11 +7,11 @@ main
   while newGame
     call playGame()
     print "Do you want to play again (y/n)?"
-    var answer set to ' '
+    var answer set to " "
     repeat
       external readKey() into answer
-    end repeat when answer is 'y' or answer is 'n'
-    if answer is 'n'
+    end repeat when answer is "y" or answer is "n"
+    if answer is "n"
       set newGame to false
     end if
   end while
@@ -148,6 +148,6 @@ class Square
 
 end class
 
-constant directionByKey set to ['w': Direction.up, 's': Direction.down, 'a': Direction.left, 'd': Direction.right]
+constant directionByKey set to ["w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right]
 
 constant welcome set to "Welcome to the Snake game."

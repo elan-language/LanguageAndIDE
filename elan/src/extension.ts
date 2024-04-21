@@ -149,7 +149,7 @@ export async function InstallZip(
             zipFile.on('entry', async (entry: yauzl.Entry) => {
                 const absoluteEntryPath = path.resolve(destinationInstallPath, entry.fileName);
 
-                if (entry.fileName.endsWith('/')) {
+                if (entry.fileName.endsWith("/")) {
                     // Directory - create it
                     try {
                         await mkdirp(absoluteEntryPath, 0o775);

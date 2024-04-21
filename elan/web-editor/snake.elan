@@ -7,11 +7,11 @@ main
   while newGame
     call playGame()
     print "Do you want to play again (y/n)?"
-    var answer set to ' '
+    var answer set to " "
     repeat
       external readKey() into answer
-    end repeat when answer is 'y' or answer is 'n'
-    if answer is 'n'
+    end repeat when answer is "y" or answer is "n"
+    if answer is "n"
       set newGame to false
     end if
   end while
@@ -120,7 +120,7 @@ class Snake
 
 end class
 
-constant directionByKey set to ['w': Direction.up, 's': Direction.down, 'a': Direction.left, 'd': Direction.right]
+constant directionByKey set to ["w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right]
 
 class Square
   constructor(x as Int, y as Int)

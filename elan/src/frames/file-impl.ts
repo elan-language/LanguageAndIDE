@@ -302,7 +302,7 @@ export class FileImpl implements File {
             case 'Enter': {this.tabOrEnter(e.modKey.shift); break;}
             case 'ArrowDown':  {this.selectFirstGlobal(); break;}
             case 'ArrowRight':  {this.selectFirstGlobal(); break;}
-            case 'O': {if (e.modKey.control) {this.expandCollapseAll();} break;}
+            case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
         }
     } 
 

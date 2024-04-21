@@ -1,5 +1,4 @@
 import { BooleanType } from "../../symbols/boolean-type";
-import { CharType } from "../../symbols/char-type";
 import { ClassType } from "../../symbols/class-type";
 import { DictionaryType } from "../../symbols/dictionary-type";
 import { FloatType } from "../../symbols/float-type";
@@ -52,7 +51,6 @@ export class TypeAsn implements AstNode {
             case ("Float"): return FloatType.Instance;
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
-            case ("Char"): return CharType.Instance;
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);
             case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
             case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));

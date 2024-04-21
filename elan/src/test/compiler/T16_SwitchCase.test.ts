@@ -12,11 +12,11 @@ main
   for i from 1 to 3 step 1
     switch i
       case 1
-        print 'a'
+        print "a"
       case 2
-        print 'b'
+        print "b"
       case 3
-        print 'c'
+        print "c"
       default
     end switch
   end for
@@ -27,13 +27,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(_stdlib.asString('a'));
+        system.print(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString('b'));
+        system.print(_stdlib.asString("b"));
         break;
       case 3:
-        system.print(_stdlib.asString('c'));
+        system.print(_stdlib.asString("c"));
         break;
       default:
 
@@ -59,11 +59,11 @@ main
   for i from 1 to 3 step 1
     switch (i)
       case 1
-        print 'a'
+        print "a"
       case 2
-        print 'b'
+        print "b"
       case 3
-        print 'c'
+        print "c"
       default
     end switch
   end for
@@ -74,13 +74,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
       case 1:
-        system.print(_stdlib.asString('a'));
+        system.print(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString('b'));
+        system.print(_stdlib.asString("b"));
         break;
       case 3:
-        system.print(_stdlib.asString('c'));
+        system.print(_stdlib.asString("c"));
         break;
       default:
 
@@ -106,9 +106,9 @@ main
   for i from 1 to 3 step 1
     switch i
       case 1
-          print 'a'
+          print "a"
       default
-          print 'b'
+          print "b"
     end switch
   end for
 end main`;
@@ -118,10 +118,10 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(_stdlib.asString('a'));
+        system.print(_stdlib.asString("a"));
         break;
       default:
-        system.print(_stdlib.asString('b'));
+        system.print(_stdlib.asString("b"));
         break;
     }
   }
@@ -144,11 +144,11 @@ main
   for i from 1 to 3 step 1
     switch i + 1
       case 1
-        print 'a'
+        print "a"
       case 2
-        print 'b'
+        print "b"
       default
-        print 'c'
+        print "c"
         
     end switch
   end for
@@ -159,13 +159,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {
       case 1:
-        system.print(_stdlib.asString('a'));
+        system.print(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString('b'));
+        system.print(_stdlib.asString("b"));
         break;
       default:
-        system.print(_stdlib.asString('c'));
+        system.print(_stdlib.asString("c"));
         break;
     }
   }
@@ -188,11 +188,11 @@ main
   for i from 1 to 4 step 1
     switch i
       case 1
-        print 'a'
+        print "a"
       case 2
-        print 'b'
+        print "b"
       case 3
-        print 'c'   
+        print "c"   
     end switch
   end for
 end main
@@ -211,7 +211,7 @@ main
   for i from 1 to 4 step 1
       switch i
         default
-          print 'a' 
+          print "a" 
       end switch
   end for
 end main
@@ -230,11 +230,11 @@ main
   for i from 1 to 3 step 1
     switch i
       case 1
-        print 'a'
+        print "a"
       case 2
-        print 'b'
+        print "b"
       case 3.1
-        print 'c' 
+        print "c" 
       default
     end switch
   end for
@@ -255,11 +255,11 @@ main
   for i from 1 to 3 step 1
       switch i
         case 1
-          print 'a'
+          print "a"
         case a
-          print 'b'
+          print "b"
         case 3
-          print 'c'        
+          print "c"        
       end switch
   end for
 end main
@@ -278,11 +278,11 @@ main
   for i from 1 to 3 step 1
     switch i
       case 1
-        print 'a'
+        print "a"
       case 1 + 1
-        print 'b'
+        print "b"
       case 3
-        print 'c'        
+        print "c"        
     end switch
   end for
 end main
@@ -301,11 +301,11 @@ main
   for i from 1 to 3 step 1
     switch i
       case 1
-        print 'a'
+        print "a"
       default
-        print 'b'
+        print "b"
       case 3
-        print 'c'        
+        print "c"        
     end switch
   end for
 end main
@@ -324,11 +324,11 @@ main
   for i from 1 to 4 step 1
     switch i
       case 1:
-        print 'a'
+        print "a"
       case 2:
-        print 'b'
+        print "b"
       case 3:
-        print 'c'        
+        print "c"        
   end for
 end main
 `;
@@ -345,8 +345,8 @@ end main
 main
   for i from 1 to 3 step 1
     switch i
-      case 1 print 'a'
-      case 2 print 'b'       
+      case 1 print "a"
+      case 2 print "b"       
     end switch
   end for
 end main
@@ -365,9 +365,9 @@ main
   for i from 1 to 3 step 1
     switch
       case 1 
-        print 'a'
+        print "a"
       case 2 
-        print 'b'       
+        print "b"       
     end switch
   end for
 end main
@@ -386,9 +386,9 @@ main
   for i from 1 to 3 step 1
     switch
       case
-          print 'a'
+          print "a"
       case 2 
-          print 'b'       
+          print "b"       
     end switch
   end for
 end main
