@@ -1,34 +1,34 @@
-﻿# 593b1f4f2d38ea5f0e154683670fa17ad3e9b1a544440e9525a279b842519ccb Elan v0.1 valid
+﻿# a91c1e376fec5a278fb8ff0ba9b06b83eec3a0cb567f4b9b8e29326b7898c4fc Elan v0.1 valid
 
-function calcA(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
+function calcA(sumX as Number, sumXsq as Number, sumY as Number, sumXY as Number, n as Int) return Number
   return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
 end function
 
-function calcSumX(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first())
+function calcSumX(points as List<of (Number, Number)>) return Number
+  return points.reduce(0.0, lambda s as Number, p as Number => s + p.first())
 end function
 
-function calcSumXY(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first() * p.second())
+function calcSumXY(points as List<of (Number, Number)>) return Number
+  return points.reduce(0.0, lambda s as Number, p as Number => s + p.first() * p.second())
 end function
 
-function calcSumY(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float => s + p.second())
+function calcSumY(points as List<of (Number, Number)>) return Number
+  return points.reduce(0.0, lambda s as Number, p as Number => s + p.second())
 end function
 
-function calcSumXsq(points as List<of (Float, Float)>) return Float
-  return points.reduce(0.0, lambda s as Float, p as Float => s + p.first() * p.first())
+function calcSumXsq(points as List<of (Number, Number)>) return Number
+  return points.reduce(0.0, lambda s as Number, p as Number => s + p.first() * p.first())
 end function
 
-function bestFitFromPoints(points as List<of (Float, Float)>) return (Float, Float)
+function bestFitFromPoints(points as List<of (Number, Number)>) return (Number, Number)
   return bestFitFromSummaryTerms(calcSumX(points), calcSumXsq(points), calcSumY(points), calcSumXY(points), points.length())
 end function
 
-function calcB(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
+function calcB(sumX as Number, sumXsq as Number, sumY as Number, sumXY as Number, n as Int) return Number
   return (n * sumXY - sumX * sumY) / (n * sumXsq - sumX * sumX)
 end function
 
-function bestFitFromSummaryTerms(sumX as Float, sumX2 as Float, sumY as Float, sumXY as Float, n as Int) return (Float, Float)
+function bestFitFromSummaryTerms(sumX as Number, sumX2 as Number, sumY as Number, sumXY as Number, n as Int) return (Number, Number)
   return (calcA(sumX, sumX2, sumY, sumXY, n), calcB(sumX, sumX2, sumY, sumXY, n))
 end function
 

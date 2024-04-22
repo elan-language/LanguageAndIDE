@@ -1,7 +1,7 @@
-import { FloatType } from "../../symbols/float-type";
+import { NumberType } from "../../symbols/number-type";
 import { AstNode } from "./ast-node";
 
-export class LiteralFloatAsn implements AstNode {
+export class LiteralNumberAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = parseFloat(rawValue.trim());
     }
@@ -12,7 +12,7 @@ export class LiteralFloatAsn implements AstNode {
     value: number;
 
     get symbolType() {
-        return FloatType.Instance;
+        return NumberType.Instance;
     }
 
     toString() {

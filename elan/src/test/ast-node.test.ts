@@ -1,8 +1,8 @@
 import { ExprNode } from '../frames/parse-nodes/expr-node';
-import { testAST, stubField, boolType, floatType, intType, stringType } from './testHelpers';
+import { testAST, stubField, boolType, numberType, intType, stringType } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
 import { LitInt } from '../frames/parse-nodes/lit-int';
-import { LitFloat } from '../frames/parse-nodes/lit-float';
+import { LitNumber } from '../frames/parse-nodes/lit-number';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
 import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
 import { LitString } from '../frames/parse-nodes/lit-string';
@@ -35,13 +35,13 @@ import { DictionaryType } from '../symbols/dictionary-type';
 suite('ASTNodes', () => {
 
 	test("ExprNode", () => {
-		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
+		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", numberType);
 		testAST(new ExprNode(), stubField, "a", "a", intType);
-		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", intType);
+		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", intType); //TODO: this is not doing proper type checking yet - result should be a Number (formerly Float) because b is a Number
 		testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", intType);
 
-		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
-		testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", intType);
+		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", numberType);
+		testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", numberType);
 		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
 		const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
 		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
@@ -53,7 +53,7 @@ suite('ASTNodes', () => {
 	});
 
 	test("Unary", () => {
-		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
+		testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", numberType);
 		testAST(new UnaryExpression(), stubField, " not true", "Not (true)", boolType);
 		testAST(new UnaryExpression(), stubField, " not boo", "Not (boo)", boolType);
 	});
@@ -73,19 +73,19 @@ suite('ASTNodes', () => {
 	});
 
 	test("Int", () => {
-		testAST(new LitInt(), stubField, " 123", "123", intType);
+		testAST(new LitInt(), stubField, " 123", "123", numberType);
 	});
 
 	test("Float", () => {
-		testAST(new LitFloat(), stubField, " 1.1", "1.1", floatType);
+		testAST(new LitNumber(), stubField, " 1.1", "1.1", numberType);
 	});
 
 	test("Brackets", () => {
-		testAST(new BracketedExpression(), stubField, "(3)", "(3)", intType);
-		testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", intType);
+		testAST(new BracketedExpression(), stubField, "(3)", "(3)", numberType);
+		testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", numberType);
 		testAST(new BracketedExpression(), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
-		testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", intType);
-		testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", intType);
+		testAST(new BracketedExpression(), stubField, "(3 * 4 + x)", "(Multiply (3) (Add (4) (x)))", numberType);
+		testAST(new BracketedExpression(), stubField, "(3 * (4 + x))", "(Multiply (3) ((Add (4) (x))))", numberType);
 	});
 
 	test("String", () => {
@@ -106,13 +106,13 @@ suite('ASTNodes', () => {
 	});
 
 	test("List", () => {
-		testAST(new ListNode(() => new LitInt()), stubField, `[1,2,3 ,4 , 5]`, "[1, 2, 3, 4, 5]", new ListType(intType));
-		testAST(new ListNode(() => new ListNode(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(intType)));
+		testAST(new ListNode(() => new LitInt()), stubField, `[1,2,3 ,4 , 5]`, "[1, 2, 3, 4, 5]", new ListType(numberType));
+		testAST(new ListNode(() => new ListNode(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(numberType)));
 		testAST(new ListNode(() => new LitString()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
 		testAST(new ListNode(() => new LiteralNode()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
 
-		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(intType));
-		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(intType));
+		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(numberType));
+		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(numberType));
 	});
 
 	test("Types", () => {
@@ -128,8 +128,8 @@ suite('ASTNodes', () => {
 	});
 
 	test("Tuple", () => {
-		testAST(new TupleNode(), stubField, `("foo", 3)`, '("foo", 3)', new TupleType([stringType, intType]));
-		testAST(new TupleNode(), stubField, `(foo, 3, bar(a), x)`, '(foo, 3, Func Call bar (a), x)', new TupleType([intType, intType, stringType, intType]));
+		testAST(new TupleNode(), stubField, `("foo", 3)`, '("foo", 3)', new TupleType([stringType, numberType]));
+		testAST(new TupleNode(), stubField, `(foo, 3, bar(a), x)`, '(foo, 3, Func Call bar (a), x)', new TupleType([intType, numberType, stringType, intType]));
 	});
 
 	test("Lambda", () => {
@@ -152,30 +152,30 @@ suite('ASTNodes', () => {
 
 	test("Dictionary", () => {
 
-		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37]`, `[("a":37)]`, new DictionaryType(stringType, intType));
-		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
-		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":1.1, 5:"abc"]`, `[("a":1.1), (5:"abc")]`, new DictionaryType(stringType, floatType));
+		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37]`, `[("a":37)]`, new DictionaryType(stringType, numberType));
+		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, numberType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, numberType));
+		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":1.1, 5:"abc"]`, `[("a":1.1), (5:"abc")]`, new DictionaryType(stringType, numberType));
 	});
 
 	test("LitTuple", () => {
 
-		testAST(new LitTuple(), stubField, `(3,4)`, "(3, 4)", new TupleType([intType, intType]));
-		testAST(new LitTuple(), stubField, `(3,"a", "hello", 4.1, true)`, `(3, "a", "hello", 4.1, true)`, new TupleType([intType, stringType, stringType, floatType, boolType]));
+		testAST(new LitTuple(), stubField, `(3,4)`, "(3, 4)", new TupleType([numberType, numberType]));
+		testAST(new LitTuple(), stubField, `(3,"a", "hello", 4.1, true)`, `(3, "a", "hello", 4.1, true)`, new TupleType([numberType, stringType, stringType, numberType, boolType]));
 		testAST(new LitTuple(), stubField, `((3,4), ("a", true))`, `((3, 4), ("a", true))`,
 			new TupleType([
-				new TupleType([intType, intType]),
+				new TupleType([numberType, numberType]),
 				new TupleType([stringType, boolType])
 			]));
 
-		testAST(new DeconstructedTuple(), stubField, `(a,b)`, "(a, b)", new TupleType([intType, floatType]));
+		testAST(new DeconstructedTuple(), stubField, `(a,b)`, "(a, b)", new TupleType([intType, numberType]));
 	});
 
 	test("LitNode", () => {
 		testAST(new LiteralNode(), stubField, `"hello"`, `"hello"`, stringType);
-		testAST(new LiteralNode(), stubField, `123`, "123", intType);
+		testAST(new LiteralNode(), stubField, `123`, "123", numberType);
 		//testAST(new LiteralNode(), stubField, `["a":37, 42:"b"]`, "", intType);
-		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([intType, intType])));
+		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([numberType, numberType])));
 		testAST(new LiteralNode(), stubField, `["apple", "pear"]`, `["apple", "pear"]`, new ListType(stringType));
 	});
 

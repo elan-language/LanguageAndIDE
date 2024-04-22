@@ -1,5 +1,5 @@
 import { BooleanType } from "./boolean-type";
-import { FloatType } from "./float-type";
+import { NumberType } from "./number-type";
 import { ISymbol } from "./symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
@@ -23,7 +23,7 @@ export function rawSymbolToType(s: string) {
         case "mod":
             return IntType.Instance;
         case "/":
-            return FloatType.Instance;
+            return NumberType.Instance;
         case ",":
             return undefined;
         default:

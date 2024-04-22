@@ -1,7 +1,7 @@
 import { ArrayType } from "../symbols/array-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
-import { FloatType } from "../symbols/float-type";
+import { NumberType } from "../symbols/number-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
@@ -24,10 +24,10 @@ export class StdLibSymbols implements Scope {
             ["length", IntType.Instance],
             ["setItem", new DictionaryType(StringType.Instance, IntType.Instance)],
             ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)],
-            ["pi", FloatType.Instance],
-            ["sin", FloatType.Instance],
-            ["cos", FloatType.Instance],
-            ["min", FloatType.Instance],
+            ["pi", NumberType.Instance],
+            ["sin", NumberType.Instance],
+            ["cos", NumberType.Instance],
+            ["min", NumberType.Instance],
             ["isBefore", BooleanType.Instance],
             ["isAfter", BooleanType.Instance],
             ["isBeforeOrSameAs", BooleanType.Instance],
