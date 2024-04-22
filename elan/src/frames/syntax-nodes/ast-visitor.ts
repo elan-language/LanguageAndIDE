@@ -6,7 +6,6 @@ import { OperationSymbol } from "./operation-symbol";
 import { AstNode } from "./ast-node";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { ExprAsn } from "./expr-asn";
-import { LiteralIntAsn } from "./literal-int-asn";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { LitBool } from "../parse-nodes/lit-bool";
@@ -40,9 +39,8 @@ import { VarAsn } from "./var-asn";
 import { SetClause } from "../parse-nodes/set-clause";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
-import { LitString } from "../parse-nodes/lit-string";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
+import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
@@ -63,7 +61,6 @@ import { EnumType } from "../../symbols/enum-type";
 import { Dictionary } from "../parse-nodes/dictionary";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
-import { ResultAsn } from "./result-asn";
 import { RangeAsn } from "./range-asn";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -83,7 +80,6 @@ import { InterpolatedAsn } from "./interpolated-asn";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { SegmentedStringAsn } from "./segmented-string-asn";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
-import { QualifierAsn } from "./qualifier-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -279,7 +275,7 @@ export function transform(node: ParseNode | undefined, scope : Scope): AstNode |
         if (node.fixedText === libraryKeyword) {
             return new FixedIdAsn("_stdlib");
         }
-        if (node.fixedText === propertyKeyword) {
+        if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
             return new FixedIdAsn("this");
         }
 

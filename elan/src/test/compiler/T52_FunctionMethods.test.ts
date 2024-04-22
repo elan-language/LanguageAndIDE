@@ -3,7 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T51_ProcedureMethods', () => {
+suite('T52_FunctionMethods', () => {
 
   test('Pass_HappyCase', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
