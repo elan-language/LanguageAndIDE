@@ -109,7 +109,7 @@ class Bar {
   }
 
   asString() {
-    return "empty Abstract Class";
+    return "empty Abstract Class Bar";
   }
 }
 
