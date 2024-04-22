@@ -594,7 +594,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
   });
 
-  ignore_test('Pass_PropertyOfAbstractType', async () => {
+  test('Pass_PropertyOfAbstractType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -655,6 +655,63 @@ class Game {
   }
 
 }
+
+class Player {
+  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  get name() {
+    return "";
+  }
+  set name(name) {
+  }
+
+  ucName() {
+    return "";
+  }
+
+  asString() {
+    return "empty Abstract Class Player";
+  }
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  ignore_test('Pass_defaultCannotBeReplacedUsingWith', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var p set to default Player
+  var p1 set to new Player("other player")
+  var p2 set to p with {name set to "foo", otherPlayer set to p1}
+  print type(p2)
+  print p2.name
+  print p2.otherPlayer
+  print p2.otherPlayer.name
+end main
+
+class Player
+    constructor(name String)
+        set property.name to name
+    end constructor
+
+    property name String
+
+    property otherPlayer Player
+
+    function asString() as String
+        return name
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 
 return main;}`;
 
