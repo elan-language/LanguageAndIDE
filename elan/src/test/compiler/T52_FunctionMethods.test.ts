@@ -268,5 +268,64 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
+  test('Pass_FunctionMethodNameHidesGlobalFunction', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  call f.prt()
+end main
+
+class Foo
+  constructor()
+      set p1 to 5
+  end constructor
+
+  property p1 as Int
+
+  procedure prt()
+    print asString()
+  end procedure
+
+  function asString() return String
+    return library.asString(p1)
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  f.prt();
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  prt() {
+    system.print(_stdlib.asString(this.asString()));
+  }
+
+  asString() {
+    return _stdlib.asString(this.p1);
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
 
 });
