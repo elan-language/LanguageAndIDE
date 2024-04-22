@@ -98,11 +98,19 @@ async function main() {
 
 class Bar {
   static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
-
-  square() {
-    return 0
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
   }
 
+  square() {
+    return 0;
+  }
+
+  asString() {
+    return "empty Abstract Class";
+  }
 }
 
 class Foo {

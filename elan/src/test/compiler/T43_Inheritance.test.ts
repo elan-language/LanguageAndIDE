@@ -59,15 +59,28 @@ async function main() {
 
 class Foo {
   static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
 
+  get p2() {
+    return 0;
+  }
+  set p2(p2) {
+  }
 
   setP1(v) {
   }
 
   product() {
-    return 0
+    return 0;
   }
 
+  asString() {
+    return "empty Abstract Class";
+  }
 }
 
 class Bar {

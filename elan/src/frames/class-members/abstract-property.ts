@@ -38,7 +38,15 @@ export class AbstractProperty extends AbstractFrame implements Member {
     }
 
     renderAsObjectCode(): string {
-        return "";
+        const pName = this.name.renderAsObjectCode();
+
+       
+            return `${this.indent()}get ${pName}() {\r
+${this.indent()}${this.indent()}return ${this.type.renderAsObjectCode()};\r
+${this.indent()}}\r
+${this.indent()}set ${pName}(${pName}) {\r
+${this.indent()}}\r\n`;
+        
     }
 
     parseFrom(source: CodeSource): void {

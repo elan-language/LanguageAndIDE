@@ -174,10 +174,14 @@ end class\r\n`;
 
 
     public renderAsObjectCode(): string {
+        const asString = this.isAbstract() ? `
+  asString() {
+    return "empty Abstract Class";
+  }` : "";
 
         return `class ${this.name.renderAsObjectCode()}${this.inheritanceAsObjectCode()} {\r
   static defaultInstance() { return system.defaultClass(${this.name.renderAsObjectCode()}, ${this.propertiesToInit()});};\r
-${parentHelper_renderChildrenAsObjectCode(this)}\r
+${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
 }\r\n`;
     }
 
