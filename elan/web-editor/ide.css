@@ -1,13 +1,13 @@
 :root {
-    --defaultBackground: rgb(68, 114, 196);
-    --panelBackground: white;
-    --defaultText: black;
-    --reverseText: white;;
-    --titleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif
+    --ideDefaultBackground: rgb(68, 114, 196);
+    --idePanelBackground: white;
+    --ideDefaultText: black;
+    --ideReverseText: white;;
+    --ideTitleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif
 }
 
 body {
-    background-color: var(--defaultBackground);
+    background-color: var(--ideDefaultBackground);
     display: grid;
     grid-template-columns: repeat(48, 1fr);
     grid-template-rows: repeat(36, 1fr);
@@ -20,9 +20,9 @@ body {
     gap: 15px;
   }
   .code-title, .console-title, .evaluator-title {
-    background-color: var(--defaultBackground);
-    color: var(--reverseText);
-    font-family: var(--titleFont);
+    background-color: var(--ideDefaultBackground);
+    color: var(--ideReverseText);
+    font-family: var(--ideTtleFont);
     font-size: 14pt;
   }
   .code-title, .console-title {
@@ -34,9 +34,8 @@ body {
   .console-title, .console, .evaluator-title, .evaluator {
     grid-column: 24 / 48;
   }
-  .elan-code, .console, .elan-code * {
+  .elan-code, .console, .elan-code {
     grid-row: 2/32;
-    
     padding: 2px;
   }
   .evaluator-title {
@@ -49,15 +48,15 @@ body {
 
 
   .controls {
-    background-color: var(--defaultBackground);
+    background-color: var(--ideDefaultBackground);
   }
 
   .evaluator {
-    background-color: var(--panelBackground);
+    background-color: var(--idePanelBackground);
   }
 
 button, button:hover, button:active, button:focus  {
-    background-color: var(--panelBackground);
+    background-color: var(--idePanelBackground);
     border-right: 15px;
     outline:none;
     padding: 5px;
