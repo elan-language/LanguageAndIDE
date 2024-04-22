@@ -1,3 +1,21 @@
+:root {
+    --defaultBackground: white;
+    --defaultText: black;
+    --reverseText: white;
+
+    --selection:rgb(173, 214, 255);
+    --valid: rgb(169, 247, 169); 
+    --incomplete: rgb(246, 193, 94);
+    --invalid:  rgb(248, 74, 74);
+    --optional:  lightgrey;
+
+    --keyword: rgb(56,0,255);
+    --method: rgb(152, 118, 49);
+    --type:  rgb(38,127,153);
+    --string:  rgb(165, 2, 2);
+    --comment: green;
+}
+
 code { 
     padding: 0px;
 }
