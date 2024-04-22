@@ -163,5 +163,114 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
+  test('Pass_ProcedureMethodMayCallOtherClassProcedureMethod', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  var b set to new Bar()
+  call f.times(b)
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Int
+
+    procedure times(b as Bar)
+        call b.p1PlusOne()
+        call p1PlusOne()
+        set p1 to p1 + b.p1
+        print p1
+    end procedure
+
+    procedure p1PlusOne()
+        set p1 to p1 + 1
+    end procedure
+
+    function asString() return String
+         return ""
+    end function
+
+end class
+
+class Bar
+    constructor()
+        set p1 to 1
+    end constructor
+
+    property p1 as Int
+
+    procedure p1PlusOne()
+        set p1 to p1 + 1
+    end procedure
+
+    function asString() return String
+         return ""
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  var b = system.initialise(new Bar());
+  f.times(b);
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  times(b) {
+    b.p1PlusOne();
+    this.p1PlusOne();
+    this.p1 = this.p1 + b.p1;
+    system.print(_stdlib.asString(this.p1));
+  }
+
+  p1PlusOne() {
+    this.p1 = this.p1 + 1;
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 1;
+  }
+
+  p1 = 0;
+
+  p1PlusOne() {
+    this.p1 = this.p1 + 1;
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
+    fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "8");
+  });
 
 });
