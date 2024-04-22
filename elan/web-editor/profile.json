@@ -2,7 +2,7 @@
    "name": "My Profile",
 
    "globals":["main", "procedure", "function", "class", "constant", "enum", "test", "#"],
-   "statements":["assert", "call", "case", "catch", "default", "each", "else", "for", "if", "print",
+   "statements":["assert", "call", "case", "catch", "default", "each", "else", "for", "if", "input", "print",
                  "repeat", "return", "set", "switch", "throw", "try", "var", "while", "#"],
    "class_members": ["function", "procedure", "property", "abstract function", "abstract procedure", "abstract property","#"],
 

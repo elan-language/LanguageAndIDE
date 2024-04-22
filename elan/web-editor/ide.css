@@ -16,14 +16,15 @@ body {
     grid-auto-columns: auto;
     height: 100vh;
     width: 100%;
+    overflow: hidden;
     padding: 15px;
-    gap: 15px;
+    margin: 0;
   }
   .code-title, .console-title, .evaluator-title {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
-    font-family: var(--ideTtleFont);
-    font-size: 14pt;
+    font-family: var(--ideTitleFont);
+    font-size: 12pt;
   }
   .code-title, .console-title {
     grid-row: 1;
@@ -32,42 +33,41 @@ body {
     grid-column: 1 / 24;
 }
   .console-title, .console, .evaluator-title, .evaluator {
-    grid-column: 24 / 48;
+    grid-column: 25 / 48;
   }
-  .elan-code, .console, .elan-code {
+  .elan-code {
+    grid-row: 2/34;
+    padding: 2px;
+  }
+  .console {
     grid-row: 2/32;
     padding: 2px;
   }
   .evaluator-title {
-    grid-row: 32;
-  }
-  .controls, .evaluator {
+    padding-top: 5px;
     grid-row: 33;
   }
-
-
-
+  .controls, .evaluator {
+    grid-row: 34;
+  }
   .controls {
     background-color: var(--ideDefaultBackground);
   }
 
   .evaluator {
     background-color: var(--idePanelBackground);
+    height: 20px;
+    margin-top: 5px;
   }
 
 button, button:hover, button:active, button:focus  {
     background-color: var(--idePanelBackground);
-    border-right: 15px;
+    border: none;
     outline:none;
-    padding: 5px;
+    height: 20px;
+    margin-top: 5px;
 }
 
 button:hover, button:active, button:focus {
     background-color: lightblue;
-}
-
-.controls img {
-    border: none;
-    width: 20px;
-    height: 20px;
 }
