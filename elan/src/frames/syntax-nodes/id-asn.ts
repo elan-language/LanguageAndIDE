@@ -14,10 +14,11 @@ export class IdAsn implements AstNode {
             // don't prefix properties with this
             return this.id;
         }
-        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib) {
+        const symbol = this.scope.resolveSymbol(this.id, this.scope);
+        if (symbol.symbolScope === SymbolScope.stdlib) {
             return `_stdlib.${this.id}`;
         }
-        if (this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.property) {
+        if (symbol.symbolScope === SymbolScope.property) {
             return `this.${this.id}`;
         }
         return this.id;

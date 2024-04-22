@@ -1,4 +1,5 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
@@ -50,5 +51,17 @@ ${this.indent()}}\r
         }
 
         return super.resolveSymbol(id, initialScope);
+    }
+
+    get symbolId() {
+        return this.name.renderAsSource();
+    }
+
+    get symbolType() {
+        return UnknownType.Instance;
+    }
+
+    get symbolScope(): SymbolScope {
+        return SymbolScope.property;
     }
 }

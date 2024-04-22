@@ -9,10 +9,18 @@ export class FuncCallAsn implements AstNode {
         this.id = id.trim();
     }
     renderAsObjectCode(): string {
-        const sl = this.scope.resolveSymbol(this.id, this.scope).symbolScope === SymbolScope.stdlib ? "_stdlib." : "";
+        var scopeQ = "";
+        const symbol = this.scope.resolveSymbol(this.id, this.scope);
+
+        if (symbol.symbolScope === SymbolScope.stdlib) {
+            scopeQ = `_stdlib.`;
+        }
+        if (symbol.symbolScope === SymbolScope.property) {
+            scopeQ = `this.`;
+        }
 
         const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
-        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : sl;
+        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }
 
