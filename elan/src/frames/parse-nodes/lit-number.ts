@@ -7,11 +7,11 @@ import { Sequence } from "./sequence";
 import { DOT } from "../symbols";
 import { Regexes } from "../fields/regexes";
 
-export class LitFloat extends AbstractSequence {
+export class LitNumber extends AbstractSequence {
 
     constructor() {
         super();
-        this.completionWhenEmpty = "float value";
+        this.completionWhenEmpty = "numeric value";
     }
 
     parseText(text: string): void {

@@ -1,3 +1,4 @@
+
 import { DictionaryType } from "../../symbols/dictionary-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
