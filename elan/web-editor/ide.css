@@ -1,250 +1,74 @@
 :root {
-    --defaultBackground: white;
+    --defaultBackground: rgb(68, 114, 196);
+    --panelBackground: white;
     --defaultText: black;
-    --reverseText: white;
-
-    --selection:rgb(173, 214, 255);
-    --valid: rgb(169, 247, 169); 
-    --incomplete: rgb(246, 193, 94);
-    --invalid:  rgb(248, 74, 74);
-    --optional:  lightgrey;
-
-    --keyword: rgb(56,0,255);
-    --method: rgb(152, 118, 49);
-    --type:  rgb(38,127,153);
-    --string:  rgb(165, 2, 2);
-    --comment: green;
+    --reverseText: white;;
+    --titleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif
 }
 
-code { 
-    padding: 0px;
-}
-
-* {
-    color: var(--defaultText);
-    font-family: consolas;
-    font-size: 11pt;
+body {
     background-color: var(--defaultBackground);
-    border-color: var(--defaultBackground);
+    display: grid;
+    grid-template-columns: repeat(48, 1fr);
+    grid-template-rows: repeat(36, 1fr);
+    grid-gap: 0px;
+    grid-auto-rows: auto;
+    grid-auto-columns: auto;
+    height: 100vh;
+    width: 100%;
+    padding: 15px;
+    gap: 15px;
+  }
+  .code-title, .console-title, .evaluator-title {
+    background-color: var(--defaultBackground);
+    color: var(--reverseText);
+    font-family: var(--titleFont);
+    font-size: 14pt;
+  }
+  .code-title, .console-title {
+    grid-row: 1;
+  }
+  .code-title, .elan-code, .controls {
+    grid-column: 1 / 24;
+}
+  .console-title, .console, .evaluator-title, .evaluator {
+    grid-column: 24 / 48;
+  }
+  .elan-code, .console, .elan-code * {
+    grid-row: 2/32;
+    
+    padding: 2px;
+  }
+  .evaluator-title {
+    grid-row: 32;
+  }
+  .controls, .evaluator {
+    grid-row: 33;
+  }
+
+
+
+  .controls {
+    background-color: var(--defaultBackground);
+  }
+
+  .evaluator {
+    background-color: var(--panelBackground);
+  }
+
+button, button:hover, button:active, button:focus  {
+    background-color: var(--panelBackground);
+    border-right: 15px;
+    outline:none;
+    padding: 5px;
 }
 
-*:focus {
-    outline: none;
+button:hover, button:active, button:focus {
+    background-color: lightblue;
 }
 
-input, input:focus , input:active{
+.controls img {
     border: none;
-    outline: none;
-    padding: 0px;
-    margin: 0px;
-    caret-color: var(--defaultText);
+    width: 20px;
+    height: 20px;
 }
-
-/* Basic Colour scheme */
-
-hash {
-    display: none;
-}
-
-span {
-    background-color: inherit;
-}
-keyword {
-    color: var(--keyword);
-} 
-method, method field.valid text {
-    color: var(--method);
-}
-type {
-    color: var(--type);
-}
-string {
-    color: var(--string);
-}
-field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incomplete  string, field.incomplete method {
-    color: var(--incomplete);
-}
-.invalid field, field.invalid  keyword, field.invalid  type, field.invalid  string, field.invalid method {
-    color: var(--invalid);
-}
-/* Header & comments */
-comment *, comment field.valid text  {
-    color: var(--comment);
-}
-
-header, header * {
-    color: var(--comment);
-}
-header .invalid {
-    color: var(--invalid)
-}
-header .incomplete {
-    color: var(--incomplete)
-}
-header .valid {
-    color: var(--valid)
-}
-
-
-/* Horizontal and vertical spacing */
-statement, constructor, property, classDef > function, classDef > procedure, classDef > member {
-    display: block;
-    background-color: var(--defaultBackground);
-    border-left-style: solid;
-    border-left-width: 2ch;
-}
-
-header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
-    display: block;
-    padding-bottom: 1ch;
-}
-
-/* Frame selection */
-.selected > * , .selected > clause *{
-    border-left-color: var(--selection);
-}
-
-.selected > clause *, .selected > top, .selected > top *, .selected > keyword, .selected > field, .selected > field *, .selected > text, .selected > placeholder, .selected > completion {
-    background-color: var(--selection);
-    border-right-color: var(--selection);
-}
-
-/* Multline Collapse / Expand */
-expand {
-    display: none;
-}
-.multiline.collapsed > :not(top) {
-    display: none;
-}
-.multiline.collapsed expand {
-    display:inline;
-    font-weight: bold;
-    color: var(--reverseText);
-    margin-right: 1ch;
-    /* cursor: pointer; why only this? */
-}
-.multiline.collapsed.invalid expand {
-    background-color: var(--invalid);
-}
-.multiline.collapsed.incomplete expand {
-    background-color: var(--incomplete);
-}
-.multiline.collapsed.valid expand {
-    background-color: var(--valid);
-}
-
-/* Fields */
-/* field-text*/
-field.invalid text {
-    color: var(--invalid);
-}
-field.incomplete text {
-    color: var(--incomplete);
-}
-field.valid text {
-    color: var(--defaultText);
-}
-field.selected.invalid text, field.selected.invalid input  {
-    background-color: var(--invalid);
-    color: var(--defaultText);
-}
-field.selected.incomplete text, field.selected.incomplete input {
-    background-color: var(--incomplete);
-    color: var(--defaultText);
-}
-field.selected.valid text, field.selected.valid input {
-    background-color: var(--valid);
-    color: var(--defaultText);
-}
-field.selected.valid.optional.empty text, field.selected.valid.optional.empty input {
-    background-color: var(--optional);
-    color: var(--reverseText);
-}
-
-/* field-placeholder */
-field placeholder {
-  display: none; /* overrridden where appropriate */
-  font-style: italic;
-}
-field placeholder.code {
-    font-style: normal;
-}
-
-field.empty placeholder {
-    display: inline;
-    color: var(--incomplete);
-}
-
-field.empty.optional placeholder {
-    display: none; 
-}
-
-field.selected.empty placeholder, field.selected.optional placeholder {
-    display: none; /* Because responsibility for prompting in a selected field falls to 'completion' ...*/
-}
-
-/* ... however, different rules when it is the 'holding' frame that is selected */
-.selected > top field.empty placeholder, .selected > field.empty placeholder {
-    display:inline;
-    color: var(--incomplete);
-}
-.selected > top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
-    display:inline;
-    color: var(--reverseText);
-}
-field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional placeholder{
-    display: inline;
-}
-
-completion  {
-    display: none;
-}
-field.selected completion, field.selected completion * {
-    display: inline;
-    color: var(--reverseText);
-    background-color: var(--incomplete);
-}
-field.selected completion pr{
-    font-style: italic;
-}
-field.selected completion opt{
-    background-color: var(--optional);
-}
-
-/* Selectors */
-  selector * {
-    background-color: var(--reverseText);
-    color: var(--optional);
-  }
-  selector help {
-    display: none; 
-  }
-  .selected > selector help {
-    display: inline;
-    background-color: var(--optional);
-    color: var(--reverseText);
-  }
-  .selected > selector text {
-    color: var(--defaultText);
-  }
-
-  /* placeholder */
-selector placeholder  {
-    display: none;
-}
-.empty > selector placeholder {
-    display: inline;
-    color: var(--optional);
-}
-.selected > selector placeholder {
-    display: none;
-}
-
-
-
-
-parseError {
-    color: var(--invalid);
-}
-
-
