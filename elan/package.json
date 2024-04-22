@@ -97,7 +97,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-web-scripts": "cpr ./media/colourScheme.css ./web-editor/colourScheme.css -o cpr ./media/elanStyle.css ./web-editor/elanStyle.css -o && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
+    "esbuild-web-scripts": "cpr ./media/colourScheme.css ./web-editor/colourScheme.css -o && cpr ./media/elanStyle.css ./web-editor/elanStyle.css -o && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",

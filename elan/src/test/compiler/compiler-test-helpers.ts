@@ -2,7 +2,7 @@ import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
 import { Done } from "mocha";
-import { System } from "./system";
+import { System } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { StdLib } from "../../std-lib";
 

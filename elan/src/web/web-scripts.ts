@@ -4,6 +4,8 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
+import { StdLib } from "../std-lib";
+import { System } from "../system";
 
 const codeContainer = document.querySelector('.elan-code');
 var file : File;
@@ -172,3 +174,39 @@ function postMessage(e: editorEvent) {
 			return;
 	}
 }
+
+const system = new System();
+const stdlib = new StdLib();
+
+const runButton = document.getElementById("run"); 
+
+const consoleWindow = document.getElementById("console");
+
+function doImport(str: string) {
+    const url = "data:text/javascript;base64," + btoa(str);
+    return import(url);
+}
+
+function printer(s: string) {
+	const cw = consoleWindow as any;
+    cw.textContent = s;
+}
+
+runButton?.addEventListener("click", () => {
+	const jsCode = file.renderAsObjectCode();
+	
+	system.printer = printer;
+
+    return doImport(jsCode).then(async (elan) => {
+        if (elan.program) {
+            elan._inject(system, stdlib);
+            const main = await elan.program();
+            await main();
+            return system;
+        }
+        return undefined;
+    });
+
+
+});
+
