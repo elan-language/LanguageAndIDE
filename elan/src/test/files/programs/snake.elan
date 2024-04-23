@@ -1,13 +1,13 @@
-# fb863ef495ec3b822945c78d326b6719130681a9a14e488aa51c0e25e42a028d Elan v0.1 valid
+# b12ab05594e4dc836c09fbc7502ed59a8e7dba7fc55c146eca73ef2e769577ee Elan v0.1 valid
 
 main
-  print welcome
+  print welcomeMsg
   external readKey()
   var newGame set to true
-  while newGame
+  while newGame is true
     call playGame()
     print "Do you want to play again (y/n)?"
-    var answer set to " "
+    var answer set to ""
     repeat
       external readKey() into answer
     end repeat when answer is "y" or answer is "n"
@@ -150,4 +150,4 @@ end class
 
 constant directionByKey set to ["w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right]
 
-constant welcome set to "Welcome to the Snake game."
+constant welcomeMsg set to "Welcome to the Snake game."
