@@ -57,7 +57,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		function updateSource(fm: File) {
 
-			if (fm.status() === ParseStatus.valid) {
+			if (fm.parseStatus() === ParseStatus.valid) {
 				const source = fm.renderAsSource();
 
 				const edit = new vscode.WorkspaceEdit();

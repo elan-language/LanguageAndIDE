@@ -17,9 +17,9 @@ export interface Frame extends Selectable, Scope {
     indent(): string;
 
     getFields(): Field[];
-    worstStatusOfFields(): ParseStatus;
+    worstParseStatusOfFields(): ParseStatus;
 
-    frameStatus() : ParseStatus;
+    frameParseStatus() : ParseStatus;
 
     selectFirstField() : boolean;
     selectLastField() : boolean;

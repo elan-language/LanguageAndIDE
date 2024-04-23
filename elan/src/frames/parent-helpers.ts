@@ -4,8 +4,8 @@ import { Parent } from "./interfaces/parent";
 import { ParseStatus } from "./parse-status";
 
 
-export function parentHelper_worstStatusOfChildren(parent: Parent): ParseStatus {
-        return parent.getChildren().map(s => s.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+export function parentHelper_worstParseStatusOfChildren(parent: Parent): ParseStatus {
+        return parent.getChildren().map(s => s.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
 }
 
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {

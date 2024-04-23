@@ -30,7 +30,7 @@ export class IntoSelector extends AbstractField {
         this.ext = holder;
         this.setPlaceholder("into");
         this.setOptional(true);
-        this.setStatus(ParseStatus.valid);
+        this.setParseStatus(ParseStatus.valid);
     }
     getIdPrefix(): string {
         return 'into';

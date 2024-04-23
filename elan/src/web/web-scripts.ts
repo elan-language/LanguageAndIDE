@@ -159,7 +159,7 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
-	if (file.status() === ParseStatus.valid){
+	if (file.parseStatus() === ParseStatus.valid){
 		// save to local store
 		const code = file.renderAsSource();
 		localStorage.setItem("elan-code", code);

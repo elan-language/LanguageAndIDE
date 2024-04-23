@@ -30,7 +30,7 @@ export class IfSelector extends AbstractField {
         this.else = holder;
         this.setPlaceholder("if");
         this.setOptional(true);
-        this.setStatus(ParseStatus.valid);
+        this.setParseStatus(ParseStatus.valid);
     }
     getIdPrefix(): string {
         return 'elif';

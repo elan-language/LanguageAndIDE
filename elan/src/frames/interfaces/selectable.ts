@@ -18,7 +18,7 @@ export interface Selectable  {
     renderAsSource(): string;
     compile(): string;
 
-    getStatus(): ParseStatus;
+    getParseStatus(): ParseStatus;
 
     parseFrom(source: CodeSource): void;
 }

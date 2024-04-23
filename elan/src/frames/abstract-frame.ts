@@ -32,7 +32,7 @@ export abstract class AbstractFrame implements Frame {
         return this.getParent().resolveSymbol(id, this);
     }
 
-    frameStatus(): ParseStatus {
+    frameParseStatus(): ParseStatus {
         return ParseStatus.valid;
     }
 
@@ -46,8 +46,8 @@ export abstract class AbstractFrame implements Frame {
 
     abstract getFields(): Field[];
     
-    worstStatusOfFields(): ParseStatus {
-        return this.getFields().map(g => g.getStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+    worstParseStatusOfFields(): ParseStatus {
+        return this.getFields().map(g => g.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
     }
     getFirstPeerFrame(): Frame {
         return this.getParent().getFirstChild();
@@ -274,7 +274,7 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
-        this._classes.push(ParseStatus[this.getStatus()]);
+        this._classes.push(ParseStatus[this.getParseStatus()]);
     };
 
     protected cls(): string {
@@ -388,9 +388,9 @@ export abstract class AbstractFrame implements Frame {
         return true;
     }
 
-    getStatus(): ParseStatus {
-        var frameStatus = this.frameStatus();
-        var fieldStatus = this.worstStatusOfFields();
+    getParseStatus(): ParseStatus {
+        var frameStatus = this.frameParseStatus();
+        var fieldStatus = this.worstParseStatusOfFields();
         //return fieldStatus < frameStatus ? fieldStatus : frameStatus;
         return fieldStatus;
     }

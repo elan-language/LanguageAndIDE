@@ -15,15 +15,15 @@ export function assertDoesNotParse(file: FileImpl) {
 }
 
 export function assertStatusIsValid(file: FileImpl) {
-    assert.strictEqual(file.status(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
 }
 
 export function assertStatusIsIncomplete(file: FileImpl) {
-    assert.strictEqual(file.status(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
 }
 
 export function assertStatusIsInvalid(file: FileImpl) {
-    assert.strictEqual(file.status(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
 }
 
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {

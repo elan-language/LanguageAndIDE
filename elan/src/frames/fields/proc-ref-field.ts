@@ -31,7 +31,7 @@ export class ProcRefField extends AbstractField {
         if (this.selected) {
             text = super.textAsHtml();
         } else { 
-            if (this.getStatus() === ParseStatus.valid || this.getStatus() === ParseStatus.valid) {
+            if (this.getParseStatus() === ParseStatus.valid || this.getParseStatus() === ParseStatus.valid) {
                 var bestMatch = (this.rootNode! as Alternatives).bestMatch;
                 if (bestMatch instanceof IdentifierNode) {
                     text =  `<method>${this.text}</method>`;

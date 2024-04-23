@@ -24,7 +24,7 @@ export interface File extends Parent {
     indent(): string;
     expandCollapseAll(): void;
 
-    status(): ParseStatus;
+    parseStatus(): ParseStatus;
 
     //Internal use only
     createMain(): Frame;
