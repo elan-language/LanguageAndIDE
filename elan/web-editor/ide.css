@@ -35,6 +35,9 @@ body {
   #console-title, #console {
     grid-column: 25 / 48;
   }
+  #console {
+    white-space: pre;
+  }
   .elan-code, #console {
     grid-row: 2/34;
     padding: 5px;
