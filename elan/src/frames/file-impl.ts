@@ -27,6 +27,8 @@ import { StdLibSymbols } from "./std-lib-symbols";
 import { isSymbol } from "../symbols/symbolHelpers";
 import { Scope } from "./interfaces/scope";
 import { CompileStatus } from "./compile-status";
+import { TestStatus } from "./test-status";
+import { RunStatus } from "./run-status";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -209,12 +211,20 @@ export class FileImpl implements File {
 
     compileStatus(): CompileStatus {
         switch (this.parseStatus()) {
-            case ParseStatus.invalid : return CompileStatus.pending;
-            case ParseStatus.empty : return CompileStatus.pending;
-            case ParseStatus.incomplete : return CompileStatus.pending;
-            case ParseStatus.valid : return CompileStatus.ok;
-            case ParseStatus.notParsed : return CompileStatus.pending;
+            case ParseStatus.invalid: return CompileStatus.pending;
+            case ParseStatus.empty: return CompileStatus.pending;
+            case ParseStatus.incomplete: return CompileStatus.pending;
+            case ParseStatus.valid: return CompileStatus.ok;
+            case ParseStatus.notParsed: return CompileStatus.pending;
         }
+    }
+
+    testStatus(): TestStatus {
+        return TestStatus.pending;
+    }
+
+    runStatus(): RunStatus {
+        return RunStatus.stopped;
     }
 
     parseStatus(): ParseStatus {
