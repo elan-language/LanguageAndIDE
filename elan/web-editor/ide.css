@@ -61,3 +61,7 @@ button, button:hover, button:active, button:focus  {
 button:hover, button:active, button:focus {
     background-color: lightblue;
 }
+
+#console {
+  overflow-y: auto;
+}
