@@ -26,6 +26,7 @@ import { ISymbol } from "../symbols/symbol";
 import { StdLibSymbols } from "./std-lib-symbols";
 import { isSymbol } from "../symbols/symbolHelpers";
 import { Scope } from "./interfaces/scope";
+import { CompileStatus } from "./compile-status";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -121,7 +122,7 @@ export class FileImpl implements File {
 
     public renderAsHtml(): string {
         var globals = parentHelper_renderChildrenAsHtml(this);
-        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.statusAsString()}">${this.statusAsString()}</span></header>\r\n${globals}`;
+        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
     }
 
     public indent(): string {
@@ -166,7 +167,7 @@ export class FileImpl implements File {
 
     renderHashableContent(): string {
         const globals = parentHelper_renderChildrenAsSource(this);
-        return `${this.getVersion()}${this.getProfileName()} ${this.statusAsString()}\r\n\r\n${globals}`; 
+        return `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`; 
     }
 
     public getFirstSelectorAsDirectChild() : AbstractSelector {
@@ -206,11 +207,21 @@ export class FileImpl implements File {
         //does nothing
     }
 
+    compileStatus(): CompileStatus {
+        switch (this.parseStatus()) {
+            case ParseStatus.invalid : return CompileStatus.pending;
+            case ParseStatus.empty : return CompileStatus.pending;
+            case ParseStatus.incomplete : return CompileStatus.pending;
+            case ParseStatus.valid : return CompileStatus.ok;
+            case ParseStatus.notParsed : return CompileStatus.pending;
+        }
+    }
+
     parseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     }
 
-    statusAsString() : string {
+    parseStatusAsString() : string {
         return ParseStatus[this.parseStatus()];
     }
 
