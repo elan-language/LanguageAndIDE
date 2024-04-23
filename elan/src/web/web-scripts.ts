@@ -166,6 +166,7 @@ function updateContent(text: string) {
 		// save to local store
 		const code = file.renderAsSource();
 		localStorage.setItem("elan-code", code);
+		(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
 	}
 
 	// debug check 
@@ -337,6 +338,6 @@ function handleDownload(event: Event) {
 	aElement.setAttribute('target', '_blank');
 	aElement.click();
 	URL.revokeObjectURL(href);
-
+	(download as HTMLButtonElement).classList.remove("unsaved");
 	event.preventDefault();
 }
