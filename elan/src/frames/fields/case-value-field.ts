@@ -11,7 +11,8 @@ export class CaseValueField extends AbstractField {
         super(holder);
         this.setPlaceholder("value");
     }
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         this.rootNode = new LitValueNode();
         return this.rootNode; 
     }

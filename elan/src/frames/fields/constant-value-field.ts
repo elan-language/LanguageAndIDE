@@ -15,7 +15,8 @@ export class ConstantValueField extends AbstractField {
         this.setPlaceholder("lit");
     }
 
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         this.rootNode = new LiteralNode();
         return this.rootNode; 
     }

@@ -20,6 +20,7 @@ export class OptionalKeyword extends AbstractField {
     }
 
     initialiseRoot(): ParseNode {
+        this.astNode = undefined;
         this.rootNode = new OptionalNode(new KeywordNode(this.keyword));
         return this.rootNode;
     }

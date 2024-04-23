@@ -17,7 +17,8 @@ export class VarDefField extends AbstractField {
     getIdPrefix(): string {
         return 'var';
     }
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         var varRef = () => new IdentifierNode();
         var deconTup = () => new DeconstructedTuple();
         var deconList = () => new DeconstructedList();

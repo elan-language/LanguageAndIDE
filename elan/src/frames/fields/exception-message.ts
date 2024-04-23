@@ -16,7 +16,8 @@ export class ExceptionMessage extends AbstractField {
     getIdPrefix(): string {
         return 'msg';
     }
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         this.rootNode = new Alternatives([() => new LitStringNonEmpty(),() => new IdentifierNode() ]);
         return this.rootNode; 
     }

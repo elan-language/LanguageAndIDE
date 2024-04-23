@@ -14,6 +14,7 @@ export class TypeNameField extends AbstractField {
     }
 
     initialiseRoot(): ParseNode {
+        this.astNode = undefined;
         this.rootNode = new TypeSimpleNode();
         return this.rootNode;
     }
