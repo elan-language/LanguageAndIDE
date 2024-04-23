@@ -177,11 +177,11 @@ function postMessage(e: editorEvent) {
 
 class ElanConsole {
 
-	previousContent: string = "&gt;";
+	previousContent: string = "";
 	currentInterval? : any;
 
 	printLine(line : string) {
-		this.previousContent = `${this.previousContent}${line}<br>&gt;`;
+		this.previousContent = `${this.previousContent}${line}<br>`;
 		consoleWindow.innerHTML = this.render();
 	}
 

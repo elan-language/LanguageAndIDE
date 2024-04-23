@@ -151,8 +151,13 @@ suite('Parsing Nodes', () => {
 	test('LitString - single chars', () => {
 		testNodeParse(new LitString(), "", ParseStatus.empty, "", "", "", "");
 		testNodeParse(new LitString(), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
+		testNodeParse(new LitString(), `"a`, ParseStatus.incomplete, `"a`, "", `"a`, "");
 		testNodeParse(new LitString(), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
 		testNodeParse(new LitString(), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
+	});
+	test('LitString - bug #328', () => {
+		testNodeParse(new LitString(), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
+		testNodeParse(new LitString(), `"{a} `, ParseStatus.incomplete, `"{a} `, "", `"{a} `, "");
 	});
 	test('LitInt', () => {
 		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "", "", "");
@@ -235,7 +240,7 @@ suite('Parsing Nodes', () => {
 	test('CSV', () => {
 		testNodeParse(new CSV(() => new LitInt(), 0), ``, ParseStatus.valid, ``, "", "");
 		testNodeParse(new CSV(() => new LitInt(), 1), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new CSV(() => new LitInt(), 0), `2, 4,3 , 1 `, ParseStatus.valid, `2, 4,3 , 1`, " ", "2, 4, 3, 1");
+		testNodeParse(new CSV(() => new LitInt(), 0), `2, 4,3 , 1`, ParseStatus.valid, `2, 4,3 , 1`, "", "2, 4, 3, 1");
 		testNodeParse(new CSV(() => new LitInt(), 0), `2`, ParseStatus.valid, `2`, "", "");
 		testNodeParse(new CSV(() => new LitInt(), 1), `2`, ParseStatus.valid, `2`, "", "");
 		testNodeParse(new CSV(() => new LitString(), 0), `"apple","orange" , "pear"`, ParseStatus.valid, `"apple","orange" , "pear"`, "", `"apple", "orange", "pear"`);
@@ -244,12 +249,14 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new CSV(() => new ExprNode(), 0), `a + b,c, 1`, ParseStatus.valid, `a + b,c, 1`, "", "");
 		testNodeParse(new CSV(() => new ExprNode(), 0), `)`, ParseStatus.valid, ``, ")", "");
 
-		testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo, foo `, ParseStatus.valid, "", " ");
-		testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo `, ParseStatus.valid, "", " ");
-		testNodeParse(new CSV(() => new KeywordNode("foo"), 1), `fook `, ParseStatus.invalid, "", "fook ");
+		testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo, foo`, ParseStatus.valid, "", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo`, ParseStatus.valid, "", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo"), 1), `fook`, ParseStatus.invalid, "", "fook");
 		testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `fo`, ParseStatus.incomplete, "fo", "");
 		testNodeParse(new CSV(() => new KeywordNode("foo"), 2), `foo, fo`, ParseStatus.incomplete, "foo, fo", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo"), 2), `foo,`, ParseStatus.incomplete, "foo,", "");
 		testNodeParse(new CSV(() => new KeywordNode("foo"), 2), `foo, `, ParseStatus.incomplete, "foo, ", "");
+		testNodeParse(new CSV(() => new KeywordNode("foo"), 2), `foo,fo`, ParseStatus.incomplete, "foo,fo", "", "foo, fo", );
 
 		testNodeParse(new CSV(() => new ExprNode(), 0), ``, ParseStatus.valid, "", "");
 	});

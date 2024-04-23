@@ -24,7 +24,7 @@ export class Multiple extends AbstractParseNode {
         } else {
             var toParse = text;
             var cont = true;
-            while (cont && toParse.trimStart().length > 0) {
+            while (cont && toParse.length > 0) {
                 var node = this.elementConstructor();
                 node.parseText(toParse);
                 if (node.status === ParseStatus.valid) {
