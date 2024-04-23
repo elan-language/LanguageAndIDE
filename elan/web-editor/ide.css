@@ -29,13 +29,13 @@ body {
   #code-title, #console-title {
     grid-row: 1;
   }
-  #code-title, #elan-code{
+  #code-title, .elan-code{
     grid-column: 1 / 24;
 }
   #console-title, #console {
     grid-column: 25 / 48;
   }
-  #elan-code, #console {
+  .elan-code, #console {
     grid-row: 2/34;
     padding: 2px;
   }
