@@ -229,7 +229,7 @@ class ElanConsole {
 	}
 
 	clear() {
-		this.previousContent = "&gt;";
+		this.previousContent = "";
 		consoleWindow.innerHTML = this.render();
 	}
 }
