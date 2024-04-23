@@ -29,35 +29,26 @@ body {
   .code-title, .console-title {
     grid-row: 1;
   }
-  .code-title, .elan-code, .controls {
+  .code-title, .elan-code{
     grid-column: 1 / 24;
 }
-  .console-title, .console, .evaluator-title, .evaluator {
+  .console-title, .console {
     grid-column: 25 / 48;
   }
-  .elan-code {
+  .elan-code, .console {
     grid-row: 2/34;
     padding: 2px;
   }
-  .console {
-    grid-row: 2/32;
-    padding: 2px;
-  }
-  .evaluator-title {
-    padding-top: 5px;
-    grid-row: 33;
-  }
-  .controls, .evaluator {
+ .code-controls, .console-controls {
     grid-row: 34;
-  }
-  .controls {
     background-color: var(--ideDefaultBackground);
   }
+  .code-controls {
+    grid-column: 1/24;
+  }
 
-  .evaluator {
-    background-color: var(--idePanelBackground);
-    height: 20px;
-    margin-top: 5px;
+  .console-controls {
+    grid-column: 25/48;
   }
 
 button, button:hover, button:active, button:focus  {
