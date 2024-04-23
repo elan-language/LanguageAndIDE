@@ -78,16 +78,14 @@ export class System {
 
     printer? : (s : string) => void; 
 
-    printed : string = "";
-
-    inputed : string = "";
-
+    inputter? : () => Promise<string>;
+   
     print(s: string) {
         this.printer!(s);
     }
 
     async input() {
-        return this.inputed;
+        return this.inputter!();
     }
 
     pause(n: number) {
