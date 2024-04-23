@@ -65,6 +65,6 @@ button:hover, button:active {
     background-color: lightblue;
 }
 
-#console {
+#console, .elan-code {
   overflow-y: auto;
 }
