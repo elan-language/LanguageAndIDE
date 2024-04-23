@@ -12,15 +12,18 @@ const codeContainer = document.querySelector('.elan-code');
 var file : File;
 const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 var doOnce = true;
+var profile : Profile;
 
 fetch("profile.json", { mode: "same-origin" })
 	.then(f => f.json())
 	.then(j => {
-		file = new FileImpl((s) => "", j as Profile, true);
+		profile = j as Profile;
+		file = new FileImpl((s) => "", profile, true);
 		displayFile();
 	})
 	.catch((e) => {
-		file = new FileImpl((s) => "", new DefaultProfile(), true);
+		profile = new DefaultProfile();
+		file = new FileImpl((s) => "", profile, true);
 		displayFile();
 	});
 
@@ -240,7 +243,8 @@ const system = new System();
 const stdlib = new StdLib();
 
 const runButton = document.getElementById("run"); 
-const clearButton = document.getElementById("clear"); 
+const clearButton = document.getElementById("clear");
+const newButton = document.getElementById("new"); 
 
 const consoleWindow = document.getElementById("console")!;
 
@@ -280,6 +284,59 @@ clearButton?.addEventListener("click", () => {
 	elanConsole.clear();
 });
 
+newButton?.addEventListener("click", () => {
+	file = new FileImpl((s) => "", profile, true);
+	updateContent(file.renderAsHtml());
+});
+
+const upload = document.getElementById('load') as Element;
+upload.addEventListener('click', chooser);
+
+function chooser(event: Event) {
+	var f = document.createElement('input');
+    f.style.display='none';
+    f.type='file';
+    f.name='file';
+	f.accept= ".elan";
+    (document.getElementById("code-controls") as any).appendChild(f);
+	f.addEventListener('change', handleUpload);
+    f.click();
+}
 
 
+function handleUpload(event: Event) {
+	
+	const elanFile = (event.target as any).files?.[0] as any;
 
+	if (elanFile) {
+		const reader = new FileReader();
+		reader.addEventListener('load', (event: any) => {
+			const rawCode = event.target.result;
+			const code = new CodeSourceFromString(rawCode);
+			file = new FileImpl((s) => "", profile, true);
+			file.parseFrom(code);
+			updateContent(file.renderAsHtml());
+		});
+		reader.readAsText(elanFile);
+	}
+
+	event.preventDefault();
+}
+
+const download = document.getElementById('save') as Element;
+download.addEventListener('click', handleDownload);
+
+function handleDownload(event: Event) {
+	const code = file.renderAsSource();
+	const blob = new Blob([code], { type: 'plain/text' });
+
+	const aElement = document.createElement('a');
+	aElement.setAttribute('download', "code.elan");
+	const href = URL.createObjectURL(blob);
+	aElement.href = href;
+	aElement.setAttribute('target', '_blank');
+	aElement.click();
+	URL.revokeObjectURL(href);
+
+	event.preventDefault();
+}
