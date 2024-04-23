@@ -6,6 +6,9 @@ import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 import { Profile } from "./profile";
+import { CompileStatus } from "../compile-status";
+import { TestStatus } from "../test-status";
+import { RunStatus } from "../run-status";
 
 export interface File extends Parent {
     // external use
@@ -25,6 +28,9 @@ export interface File extends Parent {
     expandCollapseAll(): void;
 
     parseStatus(): ParseStatus;
+    compileStatus(): CompileStatus;
+    testStatus(): TestStatus;
+    runStatus(): RunStatus;
 
     //Internal use only
     createMain(): Frame;

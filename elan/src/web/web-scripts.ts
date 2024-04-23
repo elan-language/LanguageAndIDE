@@ -1,4 +1,5 @@
 import { handleClick, handleDblClick, handleKey} from "../editorHandlers";
+import { CompileStatus } from "../frames/compile-status";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
@@ -54,6 +55,15 @@ function displayFile() {
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
 	return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
+}
+
+function getStatus() {
+	const parseStatus = file.parseStatus();
+	if (parseStatus === ParseStatus.incomplete || parseStatus === ParseStatus.invalid){
+		return `Parse ${ParseStatus[parseStatus]}`;
+	}
+
+	return `Compile ${CompileStatus[file.compileStatus()]}`;
 }
 
 /**
@@ -168,6 +178,8 @@ function updateContent(text: string) {
 		localStorage.setItem("elan-code", code);
 		(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
 	}
+
+	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${getStatus()}`;
 
 	// debug check 
 	if (document.querySelectorAll('.focused').length > 1) {
