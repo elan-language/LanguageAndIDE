@@ -47,7 +47,7 @@ export class StatementSelector extends AbstractSelector  {
 
     validForEditorWithin(keyword: string): boolean {
         if (this.getParent().getIdPrefix() === testKeyword ) {
-            return keyword === assertKeyword ||keyword === callKeyword || keyword === varKeyword;
+            return keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
         } else if (this.getParent().getIdPrefix() === switchKeyword) {
             return keyword === caseKeyword;     
         } else if (keyword === returnKeyword || keyword === assertKeyword || keyword === caseKeyword || keyword === catchKeyword || keyword === defaultKeyword) {

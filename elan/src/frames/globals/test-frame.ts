@@ -4,7 +4,6 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { AssertStatement } from "../statements/assert-statement";
-import { SetStatement } from "../statements/set-statement";
 
 export class TestFrame extends FrameWithStatements {
     isTest = true;
@@ -15,13 +14,10 @@ export class TestFrame extends FrameWithStatements {
     constructor(parent: File) {
         super(parent);
         this.file = parent;
-        this.getChildren().splice(0,1); //remove statement selector
         this.testName = new IdentifierField(this);
-        var setResult = new SetStatement(this);
-        setResult.assignable.setText("actual");
-        setResult.expr.setPlaceholder("function call or expression to be tested");
-        this.getChildren().push(setResult);
-        this.getChildren().push( new AssertStatement(this));
+        var selector = this.getChildren().pop()!;
+        this.getChildren().push(new AssertStatement(this));
+        this.getChildren().push(selector);
     }
 
     getFields(): Field[] {

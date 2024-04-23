@@ -15,6 +15,7 @@ import { While } from '../frames/statements/while';
 import { FunctionMethod } from '../frames/class-members/function-method';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
+import { TestFrame } from '../frames/globals/test-frame';
 
 suite('Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -113,6 +114,14 @@ suite('Unit tests', () => {
 		var s = new StatementSelector(func);
 		var help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");
+	});	
+
+	test("Selection Context - in a Test", () => {
+		const fl = new FileImpl(hash, new DefaultProfile());
+		var test = new TestFrame(fl);		
+		var s = new StatementSelector(test);
+		var help = s.getCompletion();
+		assert.equal(help, " assert let #");
 	});	
 
 	test("Selection Context - deeper nesting 1", () => {
