@@ -9,7 +9,7 @@ import { Alternatives } from "./alternatives";
 import { OptionalNode } from "./optional-node";
 
 export class InstanceProcRef extends AbstractSequence {
-    qualifier: IdentifierNode | undefined;
+    qualifier: OptionalNode | undefined;
     simple: IdentifierNode | undefined;
 
     constructor() {
@@ -29,5 +29,9 @@ export class InstanceProcRef extends AbstractSequence {
             this.addElement(this.simple!);
             super.parseText(text);
         }
+    }
+
+    renderAsHtml(): string {
+        return `${this.qualifier!.matchedNode? this.qualifier?.matchedNode.renderAsHtml(): ""}<method>${this.simple?.renderAsHtml()}</method>`;
     }
 }

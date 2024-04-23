@@ -5,6 +5,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { AbstractField } from "./abstract-field";
+import { ParseStatus } from "../parse-status";
 
 export class ProcRefField extends AbstractField {
     isParseByNodes = true;
@@ -26,10 +27,22 @@ export class ProcRefField extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);
 
     public textAsHtml(): string {
+        var text: string;
         if (this.selected) {
-            return super.textAsHtml();
+            text = super.textAsHtml();
         } else { 
-            return `<method>${this.text}</method>`;
+            if (this.getStatus() === ParseStatus.valid || this.getStatus() === ParseStatus.valid) {
+                var bestMatch = (this.rootNode! as Alternatives).bestMatch;
+                if (bestMatch instanceof IdentifierNode) {
+                    text =  `<method>${this.text}</method>`;
+                } else {                    
+                    text =  (bestMatch as InstanceProcRef).renderAsHtml();
+                }
+
+            } else {
+                text =  super.textAsHtml();
+            }
         } 
+        return text;
     }
 }

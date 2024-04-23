@@ -397,8 +397,10 @@ end class
 	test('parse Frames - External frame with optional into', () => { 
 		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 		var ext = new ExternalStatement(main);
+		ext.method.parseCurrentText();
+		ext.args.parseCurrentText();;
 		var html = ext.renderAsHtml();
-		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text><method></method></text><placeholder>method</placeholder><completion><pr>method</pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
+		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text></text><placeholder>method</placeholder><completion><pr>method</pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion><pr></pr></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
 	});
 
 	test('parse Frames - switch 1', () => {
