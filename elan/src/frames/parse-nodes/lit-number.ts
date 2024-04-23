@@ -28,5 +28,5 @@ export class LitNumber extends AbstractSequence {
             super.parseText(text);
         }
     }
-    renderAsObjectCode(): string { return this.matchedText.toUpperCase(); } //For the exponent e -> E
+    compile(): string { return this.matchedText.toUpperCase(); } //For the exponent e -> E
 }

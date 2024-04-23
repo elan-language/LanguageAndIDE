@@ -16,7 +16,7 @@ export interface Selectable  {
 
     renderAsHtml(): string;
     renderAsSource(): string;
-    renderAsObjectCode(): string;
+    compile(): string;
 
     getStatus(): ParseStatus;
 

@@ -37,8 +37,8 @@ export class BinaryOperation extends AbstractAlternatives {
         super.parseText(text.trimStart());
     }
 
-    renderAsObjectCode(): string {
-        const code = super.renderAsObjectCode();
+    compile(): string {
+        const code = super.compile();
 
         if (this.bestMatch instanceof Sequence) {
             // kludge

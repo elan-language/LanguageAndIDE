@@ -8,12 +8,12 @@ export class IndexAsn implements AstNode {
     constructor(public readonly index: ExprAsn, private scope : Scope) {
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         if (this.index instanceof RangeAsn){
-            return `${this.index.renderAsObjectCode()}`;
+            return `${this.index.compile()}`;
         }
 
-        return `[${this.index.renderAsObjectCode()}]`;
+        return `[${this.index.compile()}]`;
     }
 
     get symbolType() {

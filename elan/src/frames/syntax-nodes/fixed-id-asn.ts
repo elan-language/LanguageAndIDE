@@ -4,7 +4,7 @@ export class FixedIdAsn implements AstNode {
 
     constructor(private id: string,) {
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return this.id;
     }
 

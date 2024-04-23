@@ -6,9 +6,9 @@ export class RangeAsn implements AstNode {
     constructor(private from : AstNode | undefined, private to : AstNode | undefined,  private scope : Scope) {
         
     }
-    renderAsObjectCode(): string {
-        const f = this.from ? `${this.from.renderAsObjectCode()}` : "0";
-        const t = this.to ? `${this.to.renderAsObjectCode()}` : undefined;
+    compile(): string {
+        const f = this.from ? `${this.from.compile()}` : "0";
+        const t = this.to ? `${this.to.compile()}` : undefined;
 
         if (t) {
             return `.slice(${f}, ${t})`;

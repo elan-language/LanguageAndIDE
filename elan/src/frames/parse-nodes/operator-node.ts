@@ -16,7 +16,7 @@ export class OperatorNode extends SymbolNode {
         return `${this.fixedText}`;
     }
 
-    override renderAsObjectCode(): string {
+    override compile(): string {
         switch (this.fixedText) {
             case POWER: return "**";
             default:

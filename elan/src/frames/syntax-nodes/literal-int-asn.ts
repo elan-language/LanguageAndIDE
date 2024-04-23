@@ -5,7 +5,7 @@ export class LiteralIntAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = parseInt(rawValue.trim());
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return this.value.toString();
     }
 

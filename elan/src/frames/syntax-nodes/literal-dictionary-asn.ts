@@ -9,8 +9,8 @@ export class LiteralDictionaryAsn implements AstNode {
     
     constructor(private readonly list: LiteralListAsn, scope : Scope) {
     }
-    renderAsObjectCode(): string {
-        const items = this.list.items.map(p => p.renderAsObjectCode()).join(", ");
+    compile(): string {
+        const items = this.list.items.map(p => p.compile()).join(", ");
         return `{${items}}`;
     }
 

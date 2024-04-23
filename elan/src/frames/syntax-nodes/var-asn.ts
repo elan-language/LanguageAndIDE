@@ -22,7 +22,7 @@ export class VarAsn implements AstNode {
 
     private getQualifier() {
         if (this.qualifier) {
-            return `${this.qualifier.renderAsObjectCode()}.`;
+            return `${this.qualifier.compile()}.`;
         }
         const s = this.scope.resolveSymbol(this.id, this.scope);
       
@@ -35,9 +35,9 @@ export class VarAsn implements AstNode {
 
 
 
-    renderAsObjectCode(): string {
+    compile(): string {
         var q = this.getQualifier();
-        var idx = this.index ? this.index.renderAsObjectCode() : ""; 
+        var idx = this.index ? this.index.compile() : ""; 
         const code = `${q}${this.id}${idx}`;
 
         if (this.isRange()) {

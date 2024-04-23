@@ -5,7 +5,7 @@ export class ParamDefAsn implements AstNode {
 
     constructor(public id: string, private type: AstNode, private scope : Scope) {
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.id}`;
     }
 

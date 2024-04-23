@@ -6,7 +6,7 @@ export class LiteralEnumAsn implements AstNode {
     constructor(private value: string, private type: EnumType, scope: Scope) {
 
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.type.name}.${this.value}`;
     }
 

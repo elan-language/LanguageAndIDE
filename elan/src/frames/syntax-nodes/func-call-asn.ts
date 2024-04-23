@@ -8,7 +8,7 @@ export class FuncCallAsn implements AstNode {
     constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<ExprAsn>, private scope : Scope) {
         this.id = id.trim();
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         var scopeQ = "";
         const symbol = this.scope.resolveSymbol(this.id, this.scope);
 
@@ -19,8 +19,8 @@ export class FuncCallAsn implements AstNode {
             scopeQ = `this.`;
         }
 
-        const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
-        const q = this.qualifier ? `${this.qualifier.renderAsObjectCode()}.` : scopeQ;
+        const pp = this.parameters.map(p => p.compile()).join(", ");
+        const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }
 

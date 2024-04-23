@@ -37,7 +37,7 @@ export class Print extends AbstractFrame implements Statement {
         return `${this.indent()}print ${this.expr.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}system.print(_stdlib.asString(${this.expr.renderAsObjectCode()}));`;
+    compile(): string {
+        return `${this.indent()}system.print(_stdlib.asString(${this.expr.compile()}));`;
     }
 } 

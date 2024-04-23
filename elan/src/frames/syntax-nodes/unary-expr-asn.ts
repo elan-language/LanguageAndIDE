@@ -16,8 +16,8 @@ export class UnaryExprAsn implements AstNode {
         }
     }
 
-    renderAsObjectCode(): string {
-       return `${this.opToJs()}${this.operand.renderAsObjectCode()}`;
+    compile(): string {
+       return `${this.opToJs()}${this.operand.compile()}`;
     }
 
     get symbolType() {

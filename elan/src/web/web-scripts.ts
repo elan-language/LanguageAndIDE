@@ -260,7 +260,7 @@ function inputter() {
 }
 
 runButton?.addEventListener("click", () => {
-	const jsCode = file.renderAsObjectCode();
+	const jsCode = file.compile();
 
 	system.printer = printer;
 	system.inputter = inputter;

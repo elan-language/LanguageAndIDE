@@ -5,7 +5,7 @@ export class LiteralNumberAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = parseFloat(rawValue.trim());
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return this.value.toString();
     }
 

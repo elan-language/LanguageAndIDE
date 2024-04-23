@@ -84,7 +84,7 @@ export function parentHelper_renderChildrenAsObjectCode(parent: Parent) : string
     if (parent.getChildren().length > 0 ) {
         const ss: Array<string> = [];
         for (var frame of parent.getChildren().filter(s => !('isSelector' in s))) {
-            ss.push(frame.renderAsObjectCode());
+            ss.push(frame.compile());
         }
         result = ss.join("\r\n");
     }

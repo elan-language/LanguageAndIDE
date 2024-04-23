@@ -35,8 +35,8 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}if (${this.condition.renderAsObjectCode()}) {\r
+    compile(): string {
+        return `${this.indent()}if (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;
     }

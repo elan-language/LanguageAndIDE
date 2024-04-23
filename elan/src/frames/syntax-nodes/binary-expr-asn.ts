@@ -33,16 +33,16 @@ export class BinaryExprAsn implements AstNode {
         }
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         if (this.op === OperationSymbol.Add && (this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType)) {
-            return `system.concat(${this.lhs.renderAsObjectCode()}, ${this.rhs.renderAsObjectCode()})`;
+            return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }
 
         if (this.op === OperationSymbol.Equals && (this.lhs.symbolType instanceof ClassType || this.rhs.symbolType instanceof ClassType)) {
-            return `system.objectEquals(${this.lhs.renderAsObjectCode()}, ${this.rhs.renderAsObjectCode()})`;
+            return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }
 
-        const code = `${this.lhs.renderAsObjectCode()} ${this.opToJs()} ${this.rhs.renderAsObjectCode()}`;
+        const code = `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
 
         if (this.op === OperationSymbol.Div) {
             return `Math.floor(${code})`;

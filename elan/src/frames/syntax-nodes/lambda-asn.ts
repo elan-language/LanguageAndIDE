@@ -7,7 +7,7 @@ export class LambdaAsn implements AstNode {
 
     constructor(private signature:LambdaSigAsn, private body: ExprAsn, private scope : Scope) {
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Method not implemented.");
     }
 

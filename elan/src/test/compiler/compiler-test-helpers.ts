@@ -27,7 +27,7 @@ export function assertStatusIsInvalid(file: FileImpl) {
 }
 
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
-    const actual = file.renderAsObjectCode().replaceAll("\r", "");
+    const actual = file.compile().replaceAll("\r", "");
     const expected = objectCode.replaceAll("\r", "");
     assert.strictEqual(actual, expected);
 }
@@ -52,7 +52,7 @@ function doImport(str: string) {
 
 function executeCode(file: FileImpl, input? : string) {
 
-    const jsCode = file.renderAsObjectCode();
+    const jsCode = file.compile();
     // const jsCode = ts.transpile(tsCode, {
     //     "module": ts.ModuleKind.ES2022,
     //     "target": ts.ScriptTarget.ES2022,

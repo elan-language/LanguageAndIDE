@@ -45,7 +45,7 @@ end main\r
 `;
     }
 
-    public renderAsObjectCode() : string {
+    public compile() : string {
         return `async function main() {\r
 ${this.renderStatementsAsObjectCode()}\r
 }\r

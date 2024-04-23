@@ -26,7 +26,7 @@ export abstract class AbstractParseNode implements ParseNode {
 
     abstract parseText(text: string): void;
 
-    renderAsObjectCode(): string { 
+    compile(): string { 
         return this.matchedText.trim(); 
     } //TODO make abstract
 

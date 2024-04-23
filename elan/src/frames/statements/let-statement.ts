@@ -41,8 +41,8 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
         return `${this.indent()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}var ${this.name.renderAsObjectCode()} = ${this.expr.renderAsObjectCode()};`;
+    compile(): string {
+        return `${this.indent()}var ${this.name.compile()} = ${this.expr.compile()};`;
     }
 
     get symbolId() {

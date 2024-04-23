@@ -18,7 +18,7 @@ export class TypeAsn implements AstNode {
         this.type = type.trim();
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         if (this.type === "Dictionary"){
             return "Object";
         }

@@ -8,8 +8,8 @@ export class SegmentedStringAsn implements AstNode {
        
     }
     
-    renderAsObjectCode(): string {
-        return  `\`${this.segments.map(s => s.renderAsObjectCode()).join("")}\``; 
+    compile(): string {
+        return  `\`${this.segments.map(s => s.compile()).join("")}\``; 
     }
 
     get symbolType() {

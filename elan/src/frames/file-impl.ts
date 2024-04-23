@@ -147,7 +147,7 @@ export class FileImpl implements File {
         if (this._children.length > 0) {
             const ss: Array<string> = [];
             for (var frame of this._children.filter(g => !('isSelector' in g))) {
-                ss.push(frame.renderAsObjectCode());
+                ss.push(frame.compile());
             }
             result = ss.join("\r\n");
         }
@@ -159,7 +159,7 @@ export class FileImpl implements File {
         return `# ${this.getHash(content)} ${content}`; 
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {';
         return `${stdLib}\n${this.renderGlobalsAsObjectCode()}return main;}`; 
     }

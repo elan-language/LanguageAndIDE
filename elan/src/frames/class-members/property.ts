@@ -49,20 +49,20 @@ export class Property extends AbstractFrame implements Member {
         return `${this.indent()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
     }
 
-    renderAsObjectCode(): string {
-        const pName = this.name.renderAsObjectCode();
+    compile(): string {
+        const pName = this.name.compile();
         const mod = this.modifierAsObjectCode();
         if (this.type.symbolType instanceof ClassType) {
             return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
-${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.renderAsObjectCode()};\r
+${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile()};\r
 ${this.indent()}}\r
 ${this.indent()}${mod}set ${pName}(${pName}) {\r
 ${this.indent()}${this.indent()}this._${pName} = ${pName};\r
 ${this.indent()}}\r\n`;
         }
 
-        return `${this.indent()}${mod}${pName} = ${this.type.renderAsObjectCode()};\r\n`;
+        return `${this.indent()}${mod}${pName} = ${this.type.compile()};\r\n`;
     }
 
     parseFrom(source: CodeSource): void {

@@ -6,8 +6,8 @@ export class KvpAsn implements AstNode {
     constructor(private key: AstNode, private value: AstNode, scope: Scope) {
     }
 
-    renderAsObjectCode(): string {
-        return `${this.key.renderAsObjectCode()} : ${this.value.renderAsObjectCode()}`;
+    compile(): string {
+        return `${this.key.compile()} : ${this.value.compile()}`;
     }
 
     get keySymbolType() {

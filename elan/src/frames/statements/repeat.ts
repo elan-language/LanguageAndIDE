@@ -35,10 +35,10 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.indent()}do {\r
 ${this.renderStatementsAsObjectCode()}\r
-${this.indent()}} while (!(${this.condition.renderAsObjectCode()}));`;
+${this.indent()}} while (!(${this.condition.compile()}));`;
     }
 
     parseTop(source: CodeSource): void {

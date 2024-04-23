@@ -46,8 +46,8 @@ export class Constant extends AbstractFrame implements ISymbol {
 `;
     }
 
-    renderAsObjectCode(): string {
-        return `const ${this.name.renderAsObjectCode()} = ${this.literal.renderAsObjectCode()};\r
+    compile(): string {
+        return `const ${this.name.compile()} = ${this.literal.compile()};\r
 `;
     }
 

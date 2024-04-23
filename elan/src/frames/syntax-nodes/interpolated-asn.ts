@@ -6,8 +6,8 @@ export class InterpolatedAsn implements AstNode {
 
     constructor(private body: ExprAsn, private scope: Scope) {
     }
-    renderAsObjectCode(): string {
-        return `\${_stdlib.asString(${this.body.renderAsObjectCode()})}`;
+    compile(): string {
+        return `\${_stdlib.asString(${this.body.compile()})}`;
     }
 
     get symbolType() {

@@ -41,8 +41,8 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end switch`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}switch (${this.expr.renderAsObjectCode()}) {\r
+    compile(): string {
+        return `${this.indent()}switch (${this.expr.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;
     }

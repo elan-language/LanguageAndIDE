@@ -33,8 +33,8 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}case ${this.value.renderAsObjectCode()}:\r
+    compile(): string {
+        return `${this.indent()}case ${this.value.compile()}:\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}${singleIndent()}break;`;
     }

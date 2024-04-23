@@ -6,7 +6,7 @@ export class LiteralBoolAsn implements AstNode {
     constructor(rawValue: string) {
         this.value = rawValue.trim() === trueKeyword;
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return this.value ? "true" : "false";
     }
 

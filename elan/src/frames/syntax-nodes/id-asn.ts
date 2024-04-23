@@ -9,7 +9,7 @@ export class IdAsn implements AstNode {
     constructor(private id: string, private scope : Scope) {
         this.id = id.trim();
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         if (isMember(this.scope)) {
             // don't prefix properties with this
             return this.id;

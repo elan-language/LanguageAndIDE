@@ -41,8 +41,8 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}for (const ${this.variable.renderAsObjectCode()} of ${this.iter.renderAsObjectCode()}) {\r
+    compile(): string {
+        return `${this.indent()}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
 ${this.indent()}}`;
     }

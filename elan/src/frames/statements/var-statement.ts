@@ -41,8 +41,8 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
         return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}var ${this.name.renderAsObjectCode()} = ${this.expr.renderAsObjectCode()};`;
+    compile(): string {
+        return `${this.indent()}var ${this.name.compile()} = ${this.expr.compile()};`;
     }
 
     get symbolId() {

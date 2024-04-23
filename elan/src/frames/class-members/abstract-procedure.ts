@@ -46,8 +46,8 @@ export class AbstractProcedure extends AbstractFrame implements Member {
 `;
     }
 
-    public override renderAsObjectCode(): string {
-        return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+    public override compile(): string {
+        return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
 ${this.indent()}}\r
 `;
     }

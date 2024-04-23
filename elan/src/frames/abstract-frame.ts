@@ -36,7 +36,7 @@ export abstract class AbstractFrame implements Frame {
         return ParseStatus.valid;
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Method not implemented.");
     }
 

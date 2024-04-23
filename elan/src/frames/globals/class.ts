@@ -173,8 +173,8 @@ end class\r\n`;
     }
 
 
-    public renderAsObjectCode(): string {
-        const name = this.name.renderAsObjectCode();
+    public compile(): string {
+        const name = this.name.compile();
         const asString = this.isAbstract() ? `
   asString() {
     return "empty Abstract Class ${name}";

@@ -6,7 +6,7 @@ export class DefaultTypeAsn implements AstNode {
 
     constructor(private type: TypeAsn, private scope : Scope) {
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return this.type.renderAsDefaultObjectCode();
     }
 

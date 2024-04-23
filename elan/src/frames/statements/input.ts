@@ -37,7 +37,7 @@ export class Input extends AbstractFrame implements Statement {
         return `${this.indent()}input ${this.varName.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}var ${this.varName.renderAsObjectCode()} = await system.input();`;
+    compile(): string {
+        return `${this.indent()}var ${this.varName.compile()} = await system.input();`;
     }
 } 

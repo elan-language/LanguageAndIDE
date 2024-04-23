@@ -33,8 +33,8 @@ export class ReturnStatement extends AbstractFrame implements Statement{
         return `${this.indent()}return ${this.expr.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}return ${this.expr.renderAsObjectCode()};`;
+    compile(): string {
+        return `${this.indent()}return ${this.expr.compile()};`;
     }
 
     parseFrom(source: CodeSource): void {

@@ -9,7 +9,7 @@ export class LambdaSigAsn implements Scope, AstNode {
     constructor(private parameters: Array<ParamDefAsn>, private scope : Scope) {
     }
     symbolType: ISymbolType | undefined;
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Method not implemented.");
     }
 

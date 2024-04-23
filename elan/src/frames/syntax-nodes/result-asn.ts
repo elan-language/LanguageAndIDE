@@ -6,7 +6,7 @@ export class ResultAsn implements AstNode {
     constructor(private scope : Scope) {
         
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Method not implemented.");
     }
 

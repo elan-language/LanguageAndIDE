@@ -63,8 +63,8 @@ ${endKeyword} ${functionKeyword}\r
 `;
     }
 
-    public renderAsObjectCode() : string {
-        return `function ${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+    public compile() : string {
+        return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
 }\r
 `;

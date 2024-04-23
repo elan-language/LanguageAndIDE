@@ -6,8 +6,8 @@ export class BracketedAsn implements AstNode {
 
     constructor(private body: ExprAsn, private scope: Scope) {
     }
-    renderAsObjectCode(): string {
-        return `(${this.body.renderAsObjectCode()})`;
+    compile(): string {
+        return `(${this.body.compile()})`;
     }
 
     get symbolType() {

@@ -33,8 +33,8 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}while (${this.condition.renderAsObjectCode()}) {\r
+    compile(): string {
+        return `${this.indent()}while (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;
     }

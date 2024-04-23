@@ -10,7 +10,7 @@ export interface ParseNode {
 
     renderAsHtml(): string;
     renderAsSource(): string;
-    renderAsObjectCode(): string;
+    compile(): string;
 
     getCompletionAsHtml(): string;
     setCompletionWhenEmpty(ph: string): void;

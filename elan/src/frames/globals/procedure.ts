@@ -45,8 +45,8 @@ ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
     }
-    public renderAsObjectCode() : string {
-        return `function ${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
+    public compile() : string {
+        return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 }\r
 `;

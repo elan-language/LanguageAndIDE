@@ -6,8 +6,8 @@ export class LiteralListAsn implements AstNode {
     
     constructor(public readonly items: AstNode[], scope : Scope) {
     }
-    renderAsObjectCode(): string {
-        const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
+    compile(): string {
+        const it = this.items.map(p => p.compile()).join(", ");
         return `system.list([${it}])`;
     }
 

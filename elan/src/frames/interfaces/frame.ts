@@ -12,7 +12,7 @@ export interface Frame extends Selectable, Scope {
 
     renderAsHtml(): string;
     renderAsSource(): string;
-    renderAsObjectCode(): string;
+    compile(): string;
 
     indent(): string;
 

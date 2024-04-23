@@ -8,7 +8,7 @@ export class SetAsn implements AstNode {
     constructor(private id: string, private to: ExprAsn, scope : Scope) {
         this.id = id.trim();
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.id} = ${this.to}`;
     }
 

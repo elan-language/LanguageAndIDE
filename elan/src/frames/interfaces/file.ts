@@ -13,7 +13,7 @@ export interface File extends Parent {
     getById(id: string) : Selectable;
     renderAsHtml(): string;
     renderAsSource(): string;
-    renderAsObjectCode(): string;
+    compile(): string;
 
     addChildBefore(g: Frame, before: Frame): void;
     addChildAfter(g: Frame, after: Frame): void;

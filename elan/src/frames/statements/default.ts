@@ -30,7 +30,7 @@ ${this.renderChildrenAsHtml()}
         return `${this.indent()}default\r
 ${this.renderChildrenAsSource()}`;
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.indent()}default:\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}${singleIndent()}break;`;

@@ -33,7 +33,7 @@ export class Throw extends AbstractFrame implements Statement{
         return `${this.indent()}throw ${this.text.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
-        return `${this.indent()}throw new Error(${this.text.renderAsObjectCode()});`;
+    compile(): string {
+        return `${this.indent()}throw new Error(${this.text.compile()});`;
     }
 } 

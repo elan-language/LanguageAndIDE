@@ -7,8 +7,8 @@ export class IfExprAsn implements AstNode {
     constructor(private condition: ExprAsn, private expr1: ExprAsn, private expr2: ExprAsn, scope: Scope) {
     }
     
-    renderAsObjectCode(): string {
-        return `${this.condition.renderAsObjectCode()} ? ${this.expr1.renderAsObjectCode()} : ${this.expr2.renderAsObjectCode()}`;
+    compile(): string {
+        return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
     }
 
     get symbolType() {

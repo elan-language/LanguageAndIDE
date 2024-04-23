@@ -140,7 +140,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         if (this._children.length > 0 ) {
             const ss: Array<string> = [];
             for (var frame of this._children.filter(s => !('isSelector' in s))) {
-                ss.push(frame.renderAsObjectCode());
+                ss.push(frame.compile());
             }
             result = ss.join("\r\n");
         }

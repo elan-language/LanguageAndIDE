@@ -315,9 +315,9 @@ export abstract class AbstractField implements Selectable, Field {
         return this.astNode;
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-            return this.getOrTransformAstNode?.renderAsObjectCode() ?? "";
+            return this.getOrTransformAstNode?.compile() ?? "";
         }
 
         return "";

@@ -36,7 +36,7 @@ export class GlobalComment extends AbstractFrame {
         return `# ${this.text.renderAsSource()}`;
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         return "";
     }
 

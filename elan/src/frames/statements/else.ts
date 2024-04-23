@@ -40,7 +40,7 @@ export class Else extends FrameWithStatements implements Statement {
     }
 
     private ifClauseAsObjectCode() : string {
-        return this.hasIf ? `if (${this.condition.renderAsObjectCode()}) {`: `{`;
+        return this.hasIf ? `if (${this.condition.compile()}) {`: `{`;
     }
 
     renderAsHtml(): string {
@@ -58,7 +58,7 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
     
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
 ${this.renderStatementsAsObjectCode()}\r`;
     }

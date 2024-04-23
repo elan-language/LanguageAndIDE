@@ -7,7 +7,7 @@ export class LiteralStringAsn implements AstNode {
         
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         return `${this.value}`;
     }
 

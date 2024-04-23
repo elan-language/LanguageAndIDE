@@ -51,11 +51,11 @@ export class AbstractFunction extends AbstractFrame implements Member {
 `;
     }
 
-    public override renderAsObjectCode(): string {
-        const name = this.name.renderAsObjectCode();
+    public override compile(): string {
+        const name = this.name.compile();
         if (name !== "asString") {
-            return `${this.indent()}${this.name.renderAsObjectCode()}(${this.params.renderAsObjectCode()}) {\r
-${this.indent()}${this.indent()}return ${this.returnType.renderAsObjectCode()};\r
+            return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
+${this.indent()}${this.indent()}return ${this.returnType.compile()};\r
 ${this.indent()}}\r
 `;
         }

@@ -76,7 +76,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     renderAsSource(): string {
         return `${this.indent()}external ${this.method.renderAsSource()}(${this.args.renderAsSource()})${this.intoClauseAsSource()}`;
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Not implemented");
     }
 } 

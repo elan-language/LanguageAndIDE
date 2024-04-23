@@ -6,11 +6,11 @@ export class NewAsn implements AstNode {
 
     constructor(private typeNode: TypeAsn, private parameters: AstNode[], private scope : Scope) {
     }
-    renderAsObjectCode(): string {
-        var gt = this.typeNode.genericParameters.map(p => `"${p.renderAsObjectCode()}"`).join(", ");
+    compile(): string {
+        var gt = this.typeNode.genericParameters.map(p => `"${p.compile()}"`).join(", ");
         gt = gt ? `, [${gt}]` : "";
-        const pp = this.parameters.map(p => p.renderAsObjectCode()).join(", ");
-        const t = this.typeNode.renderAsObjectCode();
+        const pp = this.parameters.map(p => p.compile()).join(", ");
+        const t = this.typeNode.compile();
         if (this.typeNode.type === "Array"){
             return `system.initialise(system.array(new ${t}(${pp}))${gt})`;
         }

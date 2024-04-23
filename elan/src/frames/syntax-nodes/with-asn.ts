@@ -7,7 +7,7 @@ export class WithAsn implements AstNode {
 
     constructor(private obj: ExprAsn, private withClause: LiteralListAsn, scope : Scope) {
     }
-    renderAsObjectCode(): string {
+    compile(): string {
         throw new Error("Method not implemented.");
     }
 

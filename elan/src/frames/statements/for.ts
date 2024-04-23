@@ -44,11 +44,11 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
     }
 
-    renderAsObjectCode(): string {
-        const v = this.variable.renderAsObjectCode();
-        const f = this.from.renderAsObjectCode();
-        const t = this.to.renderAsObjectCode();
-        const s = this.step.renderAsObjectCode();
+    compile(): string {
+        const v = this.variable.compile();
+        const f = this.from.compile();
+        const t = this.to.compile();
+        const s = this.step.compile();
         return `${this.indent()}for (var ${v} = ${f}; ${v} <= ${t}; ${v} = ${v} + ${s}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;

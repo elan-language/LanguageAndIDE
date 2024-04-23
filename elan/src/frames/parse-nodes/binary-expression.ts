@@ -27,8 +27,8 @@ export class BinaryExpression extends AbstractSequence {
         return super.parseText(text);
     }
 
-    renderAsObjectCode(): string {
-        const codeArray = this.getElements().map(e => e.renderAsObjectCode());
+    compile(): string {
+        const codeArray = this.getElements().map(e => e.compile());
         const code = codeArray.join("");
 
         // kludges

@@ -47,7 +47,7 @@ export class KeywordNode extends FixedTextNode {
     renderAsSource(): string {
         return this.matchedText.trim();
     }
-    renderAsObjectCode() : string {
+    compile() : string {
         switch (this.fixedText) {
             case isKeyword: return "===";
             case `${isKeyword} ${notKeyword}`: return "!==";

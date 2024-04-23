@@ -28,11 +28,11 @@ export class EnumValues extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string)  =
         (source: CodeSource) => source.readToEndOfLine();
 
-    renderAsObjectCode(): string {
+    compile(): string {
         const ast = this.getOrTransformAstNode as CsvAsn;
 
         if (ast) {
-            return ast.items.map(n =>  `${n.renderAsObjectCode()} : "${n.renderAsObjectCode()}"`).join(", ");
+            return ast.items.map(n =>  `${n.compile()} : "${n.compile()}"`).join(", ");
         }
 
         return "";

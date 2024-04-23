@@ -42,9 +42,9 @@ end enum\r
 `;
     }
 
-    renderAsObjectCode(): string {
+    compile(): string {
         return `var ${this.name.renderAsSource()} = {\r
-${singleIndent()}${this.values.renderAsObjectCode()}\r
+${singleIndent()}${this.values.compile()}\r
 };\r
 `;
     }

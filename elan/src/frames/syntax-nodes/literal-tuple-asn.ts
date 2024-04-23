@@ -6,8 +6,8 @@ export class LiteralTupleAsn implements AstNode {
 
     constructor(private readonly items: AstNode[], scope : Scope) {
     }
-    renderAsObjectCode(): string {
-        const it = this.items.map(p => p.renderAsObjectCode()).join(", ");
+    compile(): string {
+        const it = this.items.map(p => p.compile()).join(", ");
         return `system.tuple([${it}])`;
     }
 

@@ -45,8 +45,8 @@ ${this.indent()}end constructor\r
 `;
     }
 
-    public renderAsObjectCode(): string {
-        return `${this.indent()}constructor(${this.params.renderAsObjectCode()}) {\r
+    public compile(): string {
+        return `${this.indent()}constructor(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}\r
 `;
