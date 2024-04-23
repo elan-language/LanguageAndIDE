@@ -340,11 +340,17 @@ const download = document.getElementById('save') as Element;
 download.addEventListener('click', handleDownload);
 
 function handleDownload(event: Event) {
+	var fileName = prompt("Please enter your file name","code.elan") || "code.elan";
+
+	if (!fileName.endsWith(".elan")){
+		fileName = fileName + ".elan";
+	}
+
 	const code = file.renderAsSource();
 	const blob = new Blob([code], { type: 'plain/text' });
 
 	const aElement = document.createElement('a');
-	aElement.setAttribute('download', "code.elan");
+	aElement.setAttribute('download', fileName);
 	const href = URL.createObjectURL(blob);
 	aElement.href = href;
 	aElement.setAttribute('target', '_blank');
