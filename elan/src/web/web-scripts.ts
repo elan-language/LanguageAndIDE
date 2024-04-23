@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
+import { ParseStatus } from "../frames/parse-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
 
@@ -38,6 +39,12 @@ function displayFile() {
 			});
 	}
 	else {
+		const previousCode = localStorage.getItem("elan-code");
+		if (previousCode) {
+			const code = new CodeSourceFromString(previousCode);
+			file.parseFrom(code);
+		}
+
 		updateContent(file.renderAsHtml());
 	}
 }
@@ -150,6 +157,12 @@ function updateContent(text: string) {
 	}
 	else {
 		elanCode.focus();
+	}
+
+	if (file.status() === ParseStatus.valid){
+		// save to local store
+		const code = file.renderAsSource();
+		localStorage.setItem("elan-code", code);
 	}
 
 	// debug check 
