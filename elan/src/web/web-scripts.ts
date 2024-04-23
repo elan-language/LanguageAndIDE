@@ -175,12 +175,57 @@ function postMessage(e: editorEvent) {
 	}
 }
 
+class ElanConsole {
+
+	previousContent: string = "&gt;";
+	currentInterval? : any;
+
+	printLine(line : string) {
+		this.previousContent = `${this.previousContent}${line}<br>&gt;`;
+		consoleWindow.innerHTML = this.render();
+	}
+
+	stopReading() {
+		clearInterval(this.currentInterval);
+		this.previousContent = `${this.previousContent.slice(0, -48)}`;
+	}
+
+	readLine() {
+		this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus></input>`;
+		consoleWindow.innerHTML = this.render();
+		const inp = document.getElementById("inp") as HTMLInputElement;
+		inp.focus();
+		
+		return new Promise<string>((rs, rj) => {
+			var entered = false;
+			inp.addEventListener("keydown", (k: KeyboardEvent) => {
+				entered = k.key === "Enter";
+			});
+			this.currentInterval = setInterval(() => {
+				if (entered) {
+					rs(inp.value);
+					this.stopReading();
+					this.printLine(inp.value);
+				}
+			}, 250);
+		});
+	}
+
+	render() {
+		return `<div>${this.previousContent}</div>`;
+	}
+}
+
+const elanConsole = new ElanConsole();
+
 const system = new System();
 const stdlib = new StdLib();
 
 const runButton = document.getElementById("run"); 
 
-const consoleWindow = document.getElementById("console");
+const consoleWindow = document.getElementById("console")!;
+
+consoleWindow.innerHTML = elanConsole.render();
 
 function doImport(str: string) {
     const url = "data:text/javascript;base64," + btoa(str);
@@ -188,14 +233,18 @@ function doImport(str: string) {
 }
 
 function printer(s: string) {
-	const cw = consoleWindow as any;
-    cw.textContent = s;
+	elanConsole.printLine(s);
+}
+
+function inputter() {
+	return elanConsole.readLine();
 }
 
 runButton?.addEventListener("click", () => {
 	const jsCode = file.renderAsObjectCode();
 	
 	system.printer = printer;
+	system.inputter = inputter;
 
     return doImport(jsCode).then(async (elan) => {
         if (elan.program) {
