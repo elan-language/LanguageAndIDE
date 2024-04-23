@@ -227,6 +227,11 @@ class ElanConsole {
 	render() {
 		return `<div>${this.previousContent}</div>`;
 	}
+
+	clear() {
+		this.previousContent = "&gt;";
+		consoleWindow.innerHTML = this.render();
+	}
 }
 
 const elanConsole = new ElanConsole();
@@ -235,6 +240,7 @@ const system = new System();
 const stdlib = new StdLib();
 
 const runButton = document.getElementById("run"); 
+const clearButton = document.getElementById("clear"); 
 
 const consoleWindow = document.getElementById("console")!;
 
@@ -255,20 +261,25 @@ function inputter() {
 
 runButton?.addEventListener("click", () => {
 	const jsCode = file.renderAsObjectCode();
-	
+
 	system.printer = printer;
 	system.inputter = inputter;
 
-    return doImport(jsCode).then(async (elan) => {
-        if (elan.program) {
-            elan._inject(system, stdlib);
-            const main = await elan.program();
-            await main();
-            return system;
-        }
-        return undefined;
-    });
-
-
+	return doImport(jsCode).then(async (elan) => {
+		if (elan.program) {
+			elan._inject(system, stdlib);
+			const main = await elan.program();
+			await main();
+			return system;
+		}
+		return undefined;
+	});
 });
+
+clearButton?.addEventListener("click", () => {
+	elanConsole.clear();
+});
+
+
+
 
