@@ -37,7 +37,7 @@ body {
   }
   .elan-code, #console {
     grid-row: 2/34;
-    padding: 2px;
+    padding: 5px;
   }
  #code-controls, #console-controls {
     grid-row: 34;
@@ -58,7 +58,7 @@ button, button:hover, button:active, button:focus  {
     margin-top: 5px;
 }
 
-button:hover, button:active, button:focus {
+button:hover, button:active {
     background-color: lightblue;
 }
 
