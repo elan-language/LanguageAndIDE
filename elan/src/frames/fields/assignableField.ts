@@ -20,7 +20,8 @@ export class AssignableField extends AbstractField {
     getIdPrefix(): string {
         return 'ident';
     }
-    initialiseRoot(): ParseNode  { 
+    initialiseRoot(): ParseNode  {
+        this.astNode = undefined; 
         var varRef = () => new AssignableNode();
         var deconTup = () => new DeconstructedTuple();
         var deconList = () => new DeconstructedList();

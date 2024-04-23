@@ -30,7 +30,8 @@ export class ParamList extends AbstractField {
             return "";
         }
     }    
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         this.rootNode = new CSV(() => new ParamDefNode(), 0);
         return this.rootNode; 
     }

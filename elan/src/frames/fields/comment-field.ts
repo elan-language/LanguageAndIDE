@@ -15,6 +15,7 @@ export class CommentField extends AbstractField  {
         this.setPlaceholder("comment");
     }
     initialiseRoot(): ParseNode {
+        this.astNode = undefined;
         this.rootNode = new RegExMatchNode(Regexes.anythingToNewLineAsRegExp);
         return this.rootNode;
     }

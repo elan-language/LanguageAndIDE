@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
+import { ParseStatus } from "../frames/parse-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
 
@@ -38,6 +39,12 @@ function displayFile() {
 			});
 	}
 	else {
+		const previousCode = localStorage.getItem("elan-code");
+		if (previousCode) {
+			const code = new CodeSourceFromString(previousCode);
+			file.parseFrom(code);
+		}
+
 		updateContent(file.renderAsHtml());
 	}
 }
@@ -152,6 +159,12 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
+	if (file.status() === ParseStatus.valid){
+		// save to local store
+		const code = file.renderAsSource();
+		localStorage.setItem("elan-code", code);
+	}
+
 	// debug check 
 	if (document.querySelectorAll('.focused').length > 1) {
 		console.warn("multiple focused");
@@ -214,6 +227,11 @@ class ElanConsole {
 	render() {
 		return `<div>${this.previousContent}</div>`;
 	}
+
+	clear() {
+		this.previousContent = "&gt;";
+		consoleWindow.innerHTML = this.render();
+	}
 }
 
 const elanConsole = new ElanConsole();
@@ -222,6 +240,7 @@ const system = new System();
 const stdlib = new StdLib();
 
 const runButton = document.getElementById("run"); 
+const clearButton = document.getElementById("clear"); 
 
 const consoleWindow = document.getElementById("console")!;
 
@@ -242,20 +261,25 @@ function inputter() {
 
 runButton?.addEventListener("click", () => {
 	const jsCode = file.renderAsObjectCode();
-	
+
 	system.printer = printer;
 	system.inputter = inputter;
 
-    return doImport(jsCode).then(async (elan) => {
-        if (elan.program) {
-            elan._inject(system, stdlib);
-            const main = await elan.program();
-            await main();
-            return system;
-        }
-        return undefined;
-    });
-
-
+	return doImport(jsCode).then(async (elan) => {
+		if (elan.program) {
+			elan._inject(system, stdlib);
+			const main = await elan.program();
+			await main();
+			return system;
+		}
+		return undefined;
+	});
 });
+
+clearButton?.addEventListener("click", () => {
+	elanConsole.clear();
+});
+
+
+
 

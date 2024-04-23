@@ -16,7 +16,8 @@ export class ValueRefField extends AbstractField {
     getIdPrefix(): string {
         return 'expr';
     }
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         var variableRef = () => new VarRefNode();
         var literal = () => new LiteralNode();
         this.rootNode = new Alternatives([variableRef, literal]);

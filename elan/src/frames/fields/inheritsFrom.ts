@@ -16,6 +16,7 @@ export class InheritsFrom extends AbstractField {
         return 'args';
     }
     initialiseRoot(): ParseNode {
+        this.astNode = undefined;
         this.rootNode = new CSV(() => new TypeNode() ,1);
         return this.rootNode; 
     }

@@ -17,6 +17,7 @@ export class ExpressionField extends AbstractField {
         return 'expr';
     }
     initialiseRoot(): ParseNode {
+        this.astNode = undefined;
         this.rootNode = new ExprNode();
         return this.rootNode;
     }

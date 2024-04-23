@@ -20,7 +20,8 @@ export class EnumValues extends AbstractField {
     getIdPrefix(): string {
         return 'enumVals';
     }
-    initialiseRoot(): ParseNode { 
+    initialiseRoot(): ParseNode {
+        this.astNode = undefined; 
         this.rootNode = new CSV(() => new IdentifierNode(), 1);
         return this.rootNode; 
     }
