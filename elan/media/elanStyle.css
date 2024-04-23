@@ -42,6 +42,7 @@ type {
 }
 string {
     color: var(--string);
+    white-space: pre;
 }
 field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incomplete  string, field.incomplete method {
     color: var(--incomplete);
