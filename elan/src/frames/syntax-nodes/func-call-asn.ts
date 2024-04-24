@@ -1,3 +1,4 @@
+import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
@@ -5,7 +6,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class FuncCallAsn implements AstNode {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<ExprAsn>, private scope : Scope) {
+    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, private scope : Scope) {
         this.id = id.trim();
     }
     compile(): string {
@@ -17,6 +18,12 @@ export class FuncCallAsn implements AstNode {
         }
         if (symbol.symbolScope === SymbolScope.property) {
             scopeQ = `this.`;
+        }
+        if (symbol.symbolType instanceof FunctionType) {
+            if (symbol.symbolType.isExtension && this.qualifier) {
+                this.parameters = [this.qualifier].concat(this.parameters);
+                this.qualifier = undefined;
+            }
         }
 
         const pp = this.parameters.map(p => p.compile()).join(", ");

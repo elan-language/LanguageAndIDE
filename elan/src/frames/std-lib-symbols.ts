@@ -9,42 +9,55 @@ import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { Scope } from "./interfaces/scope";
+import { FunctionType } from "../symbols/function-type";
 
 export class StdLibSymbols implements Scope {
 
+    private getSymbol(id : string, st : ISymbolType){
+        return {
+            symbolId: id,
+            symbolType: st,
+            symbolScope: SymbolScope.stdlib
+        };
+    }
+
+
     // todo - we need to load this from a .d.ts file also work out how to do generics
-    private symbols = new Map<string, ISymbolType>(
+    private symbols = new Map<string, ISymbol>(
         [
-            ["asString", StringType.Instance],
-            ["asArray", new ArrayType(IntType.Instance)],
-            ["asList", new ListType(IntType.Instance)],
-            ["keys", new ListType(StringType.Instance)],
-            ["values", new ListType(IntType.Instance)],
-            ["hasKey", BooleanType.Instance],
-            ["length", IntType.Instance],
-            ["setItem", new DictionaryType(StringType.Instance, IntType.Instance)],
-            ["removeItem", new DictionaryType(StringType.Instance, IntType.Instance)],
-            ["pi", NumberType.Instance],
-            ["sin", NumberType.Instance],
-            ["cos", NumberType.Instance],
-            ["min", NumberType.Instance],
-            ["isBefore", BooleanType.Instance],
-            ["isAfter", BooleanType.Instance],
-            ["isBeforeOrSameAs", BooleanType.Instance],
-            ["isAfterOrSameAs", BooleanType.Instance],
-            ["newline", StringType.Instance],
-            ["first", StringType.Instance],
-            ["second", StringType.Instance],
-            ["indexOf", IntType.Instance]
+            ["asString", this.getSymbol("asString", StringType.Instance)],
+            ["asArray", this.getSymbol("asArray", new FunctionType(new ArrayType(IntType.Instance), true))],
+            ["asList", this.getSymbol("asList", new ListType(IntType.Instance))],
+            ["keys", this.getSymbol("keys", new ListType(StringType.Instance))],
+            ["values", this.getSymbol("values", new ListType(IntType.Instance))],
+            ["hasKey", this.getSymbol("hasKey", BooleanType.Instance)],
+            ["length", this.getSymbol("length", IntType.Instance)],
+            ["setItem", this.getSymbol("setItem", new DictionaryType(StringType.Instance, IntType.Instance))],
+            ["removeItem", this.getSymbol("removeItem", new DictionaryType(StringType.Instance, IntType.Instance))],
+            ["pi", this.getSymbol("pi", NumberType.Instance)],
+            ["sin", this.getSymbol("sin", NumberType.Instance)],
+            ["cos", this.getSymbol("cos", NumberType.Instance)],
+            ["min", this.getSymbol("min", NumberType.Instance)],
+            ["isBefore", this.getSymbol("isBefore", BooleanType.Instance)],
+            ["isAfter", this.getSymbol("isAfter", BooleanType.Instance)],
+            ["isBeforeOrSameAs", this.getSymbol("isBeforeOrSameAs", BooleanType.Instance)],
+            ["isAfterOrSameAs", this.getSymbol("isAfterOrSameAs", BooleanType.Instance)],
+            ["newline", this.getSymbol("newline", StringType.Instance)],
+            ["first", this.getSymbol("first", StringType.Instance)],
+            ["second", this.getSymbol("second", StringType.Instance)],
+            ["indexOf", this.getSymbol("indexOf", IntType.Instance)]
         ]
     );
 
-    resolveSymbol(id: string, scope: Scope): ISymbol {
-        const st = this.symbols.get(id);
+    undefinedSymbol(id: string) {
         return {
             symbolId: id,
-            symbolType: st ?? UnknownType.Instance,
-            symbolScope: st ? SymbolScope.stdlib : undefined
+            symbolType: UnknownType.Instance,
+            symbolScope: undefined
         };
+    }
+
+    resolveSymbol(id: string, scope: Scope): ISymbol {
+        return this.symbols.get(id) ?? this.undefinedSymbol(id);
     }
 }
