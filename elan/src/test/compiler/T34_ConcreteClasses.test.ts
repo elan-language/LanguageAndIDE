@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T34_ConcreteClasses', () => {
@@ -55,8 +55,8 @@ class Foo {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -112,8 +112,8 @@ class Foo {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -220,8 +220,8 @@ class Bar {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -234,7 +234,7 @@ return main;}`;
 
 
 
-  test('Fail_NoConstructor', () => {
+  test('Fail_NoConstructor', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -248,13 +248,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_InitialisePropertyInLine', () => {
+  test('Fail_InitialisePropertyInLine', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -268,13 +268,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_AttemptToModifyAPropertyDirectly', () => {
+  ignore_test('Fail_AttemptToModifyAPropertyDirectly', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -293,13 +293,13 @@ class Foo
   end function
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_OverloadedConstructor', () => {
+  test('Fail_OverloadedConstructor', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -318,13 +318,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_InstantiateWithoutRequiredArgs', () => {
+  ignore_test('Fail_InstantiateWithoutRequiredArgs', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -344,13 +344,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_InstantiateWithWrongArgType', () => {
+  ignore_test('Fail_InstantiateWithWrongArgType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -370,13 +370,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_SupplyingArgumentNotSpecified', () => {
+  ignore_test('Fail_SupplyingArgumentNotSpecified', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -395,13 +395,13 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_MissingNewOnInstantiation', () => {
+  ignore_test('Fail_MissingNewOnInstantiation', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -425,8 +425,8 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });

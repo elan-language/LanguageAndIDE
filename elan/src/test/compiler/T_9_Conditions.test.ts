@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T_9_Conditions', () => {
@@ -22,8 +22,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -48,8 +48,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -74,8 +74,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -100,8 +100,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -126,8 +126,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -152,8 +152,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -178,8 +178,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -187,7 +187,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  ignore_test('Fail_not_is', () => {
+  ignore_test('Fail_not_is', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -195,13 +195,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_not', () => {
+  ignore_test('Fail_not', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -209,13 +209,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_notEqual', () => {
+  ignore_test('Fail_notEqual', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -223,13 +223,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_EqualToOrLessThan', () => {
+  ignore_test('Fail_EqualToOrLessThan', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -237,13 +237,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_Greater_Or_Equal', () => {
+  ignore_test('Fail_Greater_Or_Equal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -251,13 +251,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_SingleEquals', () => {
+  ignore_test('Fail_SingleEquals', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -265,13 +265,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_compareDifferentTypes', () => {
+  ignore_test('Fail_compareDifferentTypes', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -279,13 +279,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_greaterOrLessThan', () => {
+  ignore_test('Fail_greaterOrLessThan', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -293,13 +293,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_doubleEquals', () => {
+  ignore_test('Fail_doubleEquals',async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -307,8 +307,8 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });

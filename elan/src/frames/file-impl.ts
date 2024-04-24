@@ -49,7 +49,7 @@ export class FileImpl implements File {
     private ignoreHashOnParsing: boolean = false;
     private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts 
 
-    constructor(private hash: (toHash: string) => string, private profile : Profile, ignoreHashOnParsing?: boolean) {
+    constructor(private hash: (toHash: string) => Promise<string>, private profile : Profile, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         this.getChildren().push(new GlobalSelector(this));
@@ -126,14 +126,15 @@ export class FileImpl implements File {
 
     public async renderAsHtml(): Promise<string> {
         var globals = parentHelper_renderChildrenAsHtml(this);
-        return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
+        const hash = await this.getHash();
+        return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
     }
 
     public indent(): string {
         return "";
     }
 
-    private getHash(body? : string): string {
+    private getHash(body? : string): Promise<string> {
         body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
         return this.hash(body);
     }
@@ -161,7 +162,8 @@ export class FileImpl implements File {
 
     async renderAsSource(): Promise<string> {
         const content = this.renderHashableContent();
-        return `# ${this.getHash(content)} ${content}`; 
+        const hash = await this.getHash(content);
+        return `# ${hash} ${content}`; 
     }
 
     compile(): string {
@@ -262,10 +264,10 @@ export class FileImpl implements File {
     createConstant(): Frame {return  new Constant(this);}
     createTest(): Frame {return  new TestFrame(this);}
 
-    parseFrom(source: CodeSource): void {
+    async parseFrom(source: CodeSource): Promise<void> {
         try {
             this.parseError = undefined;
-            this.validateHeader(source.getRemainingCode());
+            await this.validateHeader(source.getRemainingCode());
             if (source.isMatch("#")) {
                 source.removeRegEx(Regexes.comment, false);
                 source.removeRegEx(Regexes.newLine, false);
@@ -290,7 +292,7 @@ export class FileImpl implements File {
         return mains.length > 0;
     }
 
-    validateHeader(code: string) {
+    async validateHeader(code: string) {
         if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
             const eol = code.indexOf("\n");
             const header = code.substring(0, eol > 0 ? eol : undefined);
@@ -300,7 +302,7 @@ export class FileImpl implements File {
             }
             const fileHash = tokens[1];
             const toHash = code.substring(code.indexOf("Elan"));
-            const newHash = this.getHash(toHash);
+            const newHash = await this.getHash(toHash);
 
             if (fileHash !== newHash) {
                 throw new Error("Code does not match the hash in the file header");

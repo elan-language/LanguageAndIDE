@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T_7_IfStatement', () => {
   test('Pass_1', async () => {
@@ -27,8 +27,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
@@ -60,8 +60,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -96,8 +96,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -132,8 +132,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -160,8 +160,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -200,8 +200,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -209,7 +209,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "three");
   });
 
-  test('Fail_noEndIf', () => {
+  test('Fail_noEndIf', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -218,13 +218,13 @@ main
     print "yes"
 end main`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
 });
 
-ignore_test('Fail_ElseIfAfterElse', () => {
+ignore_test('Fail_ElseIfAfterElse', async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -238,8 +238,8 @@ main
   end if
 end main`;
 
-  const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-  fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
   assertDoesNotParse(fileImpl);
 });

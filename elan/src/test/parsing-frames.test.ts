@@ -17,7 +17,7 @@ import { LetStatement } from '../frames/statements/let-statement';
 import { ExternalStatement } from '../frames/statements/external-statement';
 import { ignore_test } from './compiler/compiler-test-helpers';
 
-suite('File Parsing Tests', () => {
+suite('File Parsing Tests', async () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
     test('parse Frames - set statement', () => {
@@ -163,7 +163,7 @@ suite('File Parsing Tests', () => {
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -175,7 +175,7 @@ constant pi set to 3.142
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -190,7 +190,7 @@ constant e set to 2.718
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -204,7 +204,7 @@ end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -220,7 +220,7 @@ end main
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
@@ -242,7 +242,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -271,7 +271,7 @@ end enum
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -299,7 +299,7 @@ end class
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -319,7 +319,7 @@ end class
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -341,7 +341,7 @@ end class
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -356,7 +356,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -371,7 +371,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -389,7 +389,7 @@ end class
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -418,7 +418,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
@@ -437,7 +437,7 @@ end main
 		;
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});

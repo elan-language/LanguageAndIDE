@@ -9,8 +9,8 @@ export function getNonce() {
 	return text;
 }
 
-export function hash(toHash : string) {
+export function hash(toHash: string) {
 	const hash = createHash('sha256');
 	hash.update(toHash);
-	return  hash.digest('hex');
+	return Promise.resolve(hash.digest('hex'));
 }

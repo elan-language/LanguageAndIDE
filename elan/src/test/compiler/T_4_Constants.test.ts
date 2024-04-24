@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertIsSymbol, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertIsSymbol, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 
 suite('T_4_Constants', () => {
@@ -22,8 +22,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     //const symbols not yet implemented
     //const varConst = fileImpl.getChildNumber(0);
@@ -51,8 +51,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -77,8 +77,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -103,8 +103,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -131,8 +131,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -157,8 +157,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -183,8 +183,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -218,8 +218,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -246,8 +246,8 @@ async function main() {
 }
 return main;}`;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -255,7 +255,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
   });
 
-  test('Fail_useInsideMain', () => {
+  test('Fail_useInsideMain', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -264,13 +264,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_incorrectKeyword', () => {
+  test('Fail_incorrectKeyword', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 const a set to 3
@@ -280,13 +280,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_invalidLiteralString', () => {
+  ignore_test('Fail_invalidLiteralString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 'hello'
@@ -296,8 +296,8 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
@@ -312,8 +312,8 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl);
@@ -330,14 +330,14 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl);
   });
 
-  ignore_test('Fail_expression', () => {
+  ignore_test('Fail_expression', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3 + 4
@@ -348,13 +348,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_referenceToOtherConstant', () => {
+  ignore_test('Fail_referenceToOtherConstant', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
@@ -365,8 +365,8 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);
-    fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });

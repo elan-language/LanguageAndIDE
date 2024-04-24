@@ -43,7 +43,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		if (this.currentFileUri !== document.uri || !this.file) {
 			this.file = new FileImpl(hash, new DefaultProfile());
-			this.file.parseFrom(new CodeSourceFromString(document.getText()));   
+			await this.file.parseFrom(new CodeSourceFromString(document.getText()));   
 			this.file.deselectAll();
 			this.currentFileUri = document.uri;
 		}

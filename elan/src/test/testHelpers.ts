@@ -37,7 +37,7 @@ export async function assertEffectOfAction(sourceFile: string, action: (f: FileI
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
 
   var fl = new FileImpl(hash, new DefaultProfile());
-  fl.parseFrom(codeSource);
+  await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
   }
@@ -67,7 +67,7 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
 
   var fl = new FileImpl(hash, new DefaultProfile());
-  fl.parseFrom(codeSource);
+  await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
   }
@@ -172,7 +172,7 @@ export async function assertFileParses(sourceFile: string) {
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
   var fl = new FileImpl(hash, new DefaultProfile());
-  fl.parseFrom(codeSource);
+  await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
   }
@@ -189,7 +189,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
   var fl = new FileImpl(hash, new DefaultProfile());
-  fl.parseFrom(codeSource);
+  await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
   }

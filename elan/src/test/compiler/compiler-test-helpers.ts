@@ -111,3 +111,7 @@ export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg? : stri
 
 export function ignore_test(name: string, test: (done: Done) => void) {
 }
+
+export function testHash(s : string) {
+    return Promise.resolve("");
+}

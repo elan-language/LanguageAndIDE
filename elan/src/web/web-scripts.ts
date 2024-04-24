@@ -30,12 +30,12 @@ fetch("profile.json", { mode: "same-origin" })
 	.then(f => f.json())
 	.then(j => {
 		profile = j as Profile;
-		file = new FileImpl((s) => "", profile, true);
+		file = new FileImpl(hash, profile, true);
 		displayFile();
 	})
 	.catch((e) => {
 		profile = new DefaultProfile();
-		file = new FileImpl((s) => "", profile, true);
+		file = new FileImpl(hash, profile, true);
 		displayFile();
 	});
 
@@ -45,8 +45,9 @@ function displayFile() {
 			.then((f) => f.text())
 			.then((text) => {
 				const code = new CodeSourceFromString(text);
-				file.parseFrom(code);
-				file.renderAsHtml().then(c => updateContent(c));
+				file.parseFrom(code).then(() => {
+					file.renderAsHtml().then(c => updateContent(c));
+				});
 			})
 			.catch((e) => {
 				console.error(e);
@@ -58,11 +59,14 @@ function displayFile() {
 		const previousFileName = localStorage.getItem("elan-file");
 		if (previousCode) {
 			const code = new CodeSourceFromString(previousCode);
-			file.parseFrom(code);
-			file.fileName = previousFileName || file.defaultFileName;
+			file.parseFrom(code).then(() => {
+				file.fileName = previousFileName || file.defaultFileName;
+				file.renderAsHtml().then(c => updateContent(c));
+			});
 		}
-
-		file.renderAsHtml().then(c => updateContent(c));
+		else {
+			file.renderAsHtml().then(c => updateContent(c));
+		}
 	}
 }
 
@@ -313,7 +317,7 @@ clearButton?.addEventListener("click", () => {
 });
 
 newButton?.addEventListener("click", () => {
-	file = new FileImpl((s) => "", profile, true);
+	file = new FileImpl(hash, profile, true);
 	file.renderAsHtml().then(c => updateContent(c));
 });
 
@@ -342,10 +346,11 @@ function handleUpload(event: Event) {
 		reader.addEventListener('load', (event: any) => {
 			const rawCode = event.target.result;
 			const code = new CodeSourceFromString(rawCode);
-			file = new FileImpl((s) => "", profile, true);
+			file = new FileImpl(hash, profile, true);
 			file.fileName = fileName;
-			file.parseFrom(code);
-			file.renderAsHtml().then(c => updateContent(c));
+			file.parseFrom(code).then(() => {
+				file.renderAsHtml().then(c => updateContent(c));
+			});
 		});
 		reader.readAsText(elanFile);
 	}

@@ -71,7 +71,7 @@ suite('Misc Tests', () => {
 	test('parse Frames - empty file', async () => {
         var source = new CodeSourceFromString("");
 		const fl = new FileImpl(hash, new DefaultProfile());
-		fl.parseFrom(source);
+		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
 
