@@ -1,4 +1,4 @@
-﻿# 767a404b5587db4adb7ef635e86b71c8bc8488fc8ccfdd9d15b1d68cb3ff0b2a Elan v0.1 valid
+# 96310048c6aec947d7de79beced17c3233b73f27f13b6efa86ba05782a9c2614 Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -10,14 +10,12 @@ main
 end main
 
 procedure drawGrid(cm as CharMap, grid as List<of Bool>)
-  # should be re-done using buffered char map to reduce flickering.
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
       var cell set to grid[col * 20 + row]
       var colour set to if cell then Colour.white else Colour.black
       call cm.putBlockWithColour((col * 2), row, colour)
       call cm.putBlockWithColour((col * 2 + 1), row, colour)
-      # because square block is 2 chars wide
     end for
   end for
 end procedure

@@ -1,11 +1,11 @@
-# 01444604eb44b70b751bd8147cd750312c337805c0497fa13882a154b1c1669d Elan v0.1 valid
+# 290d5536f71ed02d12bbc4273060b16b43a09310de1aabe71b4393b476b6a843 Elan v0.1 valid
 
 main
   var newGame set to true
   while newGame is true
     call playGame()
-    print "Do you want to play again (y/n)?"
     repeat
+      print "Do you want to play again? (y/n)"
       input answer
     end repeat when answer is "y" or answer is "n"
     if answer is "n"

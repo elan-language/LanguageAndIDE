@@ -1,12 +1,12 @@
-# fe870db4563e964d70a1575deaeb039674806f0009ff48a5151f522f843051e0 Elan v0.1 valid
+# d34aa014d9ffbff0c62757f6a5634dcaf6628d844d38569f43d0362544f429cc Elan v0.1 valid
 
 main
-  var li set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear", "banana"]
+  var li set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   print mergeSort(li)
 end main
 
 function mergeSort(list as List<of String>) return List<of String>
-  var result set to list
+  var result set to new List<of String>()
   if list.length() > 1
     var mid set to list.length() div 2
     set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
@@ -15,6 +15,7 @@ function mergeSort(list as List<of String>) return List<of String>
 end function
 
 function merge(a as List<of String>, b as List<of String>) return List<of String>
+  var result set to new List<of String>()
   if a.isEmpty()
     set result to b
     else if b.isEmpty()

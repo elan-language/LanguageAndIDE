@@ -1,20 +1,4 @@
-# 3fd3c98ce73b12143327b92ff2681e9ba1b63e7e86955e297f1d27cdd3b593d8 Elan v0.1 valid
-
-function isYellow(attempt as String, target as String, n as Int) return Bool
-  return target.contains(attempt[n])
-end function
-
-function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")
-end function
-
-function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
-end function
-
-constant allPossibleAnswers set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
-
-constant validWords set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
+# a82b149ba51c16ac00a6366902298d73611f9dd948ecb2bbad9686c915e7e63d Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -27,6 +11,18 @@ main
     set attempt to bestAttempt(possible.asList(), validWords)
   end while
 end main
+
+function isYellow(attempt as String, target as String, n as Int) return Bool
+  return target.contains(attempt[n])
+end function
+
+function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")
+end function
+
+function setTargetIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
+end function
 
 function isGreen(attempt as String, target as String, n as Int) return Bool
   return target[n] is attempt[n]
@@ -47,8 +43,6 @@ end function
 function isAlreadyMarkedGreen(attempt as String, n as Int) return Bool
   return attempt[n] is "*"
 end function
-
-constant letterPositions set to [0, 1, 2, 3, 4]
 
 function evaluateGreens(attempt as String, target as String) return (String, String)
   return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
@@ -109,3 +103,10 @@ immutable class WordCount
   property count as Int
 
 end class
+
+constant letterPositions set to [0, 1, 2, 3, 4]
+
+# Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
+constant allPossibleAnswers set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
+
+constant validWords set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
