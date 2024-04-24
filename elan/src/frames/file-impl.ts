@@ -40,6 +40,8 @@ export class FileImpl implements File {
     hasFields: boolean = true;
     isFile: boolean = true;
     parseError? : string;
+    readonly defaultFileName = "code.elan";
+    fileName : string = this.defaultFileName;
  
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;

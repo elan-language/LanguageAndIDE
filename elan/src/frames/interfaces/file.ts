@@ -17,6 +17,8 @@ export interface File extends Parent {
     renderAsHtml(): string;
     renderAsSource(): string;
     compile(): string;
+    fileName : string;
+    readonly defaultFileName: string;
 
     addChildBefore(g: Frame, before: Frame): void;
     addChildAfter(g: Frame, after: Frame): void;
