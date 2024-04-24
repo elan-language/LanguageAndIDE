@@ -1,15 +1,12 @@
-# b12ab05594e4dc836c09fbc7502ed59a8e7dba7fc55c146eca73ef2e769577ee Elan v0.1 valid
+# 01444604eb44b70b751bd8147cd750312c337805c0497fa13882a154b1c1669d Elan v0.1 valid
 
 main
-  print welcomeMsg
-  external readKey()
   var newGame set to true
   while newGame is true
     call playGame()
     print "Do you want to play again (y/n)?"
-    var answer set to ""
     repeat
-      external readKey() into answer
+      input answer
     end repeat when answer is "y" or answer is "n"
     if answer is "n"
       set newGame to false
@@ -30,28 +27,20 @@ procedure playGame()
     if snake.hasHitEdge() or snake.bodyCovers(head)
       set gameOn to false
       else
-        call draw(charMap, snake.head, Colour.green)
-        call draw(charMap, snake.apple, Colour.red)
+        call charMap.draw(snake.head, Colour.green)
+        call charMap.draw(snake.apple, Colour.red)
         var priorTail set to snake.tail()
         if pressed
           external readKey()
           set currentDirection to directionByKey[k]
         end if
         if snake.tail() is not priorTail
-          call draw(charMap, priorTail, charMap.backgroundColour)
+          call charMap.setToBackgroundColour(priorTail)
         end if
     end if
   end while
   call charMap.setCursor(0, 0)
   print "Game Over! Score: {snake.length() - 2}"
-end procedure
-
-procedure draw(cm as CharMap, sq as Square, colour as Colour)
-  var col set to sq.x * 2
-  var row set to sq.y
-  call cm.putBlockWithColour(col, row, colour)
-  var nextCol set to col + 1
-  call cm.putBlockWithColour(nextCol, row, colour)
 end procedure
 
 class Snake
@@ -118,36 +107,4 @@ class Snake
 
 end class
 
-class Square
-  constructor(x as Int, y as Int)
-    set property.x to x
-    set property.y to y
-  end constructor
-
-  property y as Int
-
-  property x as Int
-
-  function getAdjacentSquare(d as Direction) return Square
-    var newX set to x
-    var newY set to y
-    switch d
-      case Direction.left
-        set newX to newX - 1
-      case Direction.right
-        set newX to newX + 1
-      case Direction.up
-        set newY to newY - 1
-      case Direction.down
-        set newY to newY + 1
-      default
-
-    end switch
-    return new Square(newX, newY)
-  end function
-
-end class
-
 constant directionByKey set to ["w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right]
-
-constant welcomeMsg set to "Welcome to the Snake game."
