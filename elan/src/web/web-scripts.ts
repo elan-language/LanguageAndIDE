@@ -44,9 +44,11 @@ function displayFile() {
 	}
 	else {
 		const previousCode = localStorage.getItem("elan-code");
+		const previousFileName = localStorage.getItem("elan-file");
 		if (previousCode) {
 			const code = new CodeSourceFromString(previousCode);
 			file.parseFrom(code);
+			file.fileName = previousFileName || file.defaultFileName;
 		}
 
 		updateContent(file.renderAsHtml());
@@ -176,10 +178,11 @@ function updateContent(text: string) {
 		// save to local store
 		const code = file.renderAsSource();
 		localStorage.setItem("elan-code", code);
+		localStorage.setItem("elan-file", file.fileName);
 		(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
 	}
 
-	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${getStatus()}`;
+	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
 
 	// debug check 
 	if (document.querySelectorAll('.focused').length > 1) {
@@ -322,11 +325,13 @@ function handleUpload(event: Event) {
 	const elanFile = (event.target as any).files?.[0] as any;
 
 	if (elanFile) {
+		const fileName = elanFile.name; 
 		const reader = new FileReader();
 		reader.addEventListener('load', (event: any) => {
 			const rawCode = event.target.result;
 			const code = new CodeSourceFromString(rawCode);
 			file = new FileImpl((s) => "", profile, true);
+			file.fileName = fileName;
 			file.parseFrom(code);
 			updateContent(file.renderAsHtml());
 		});
@@ -340,12 +345,22 @@ const download = document.getElementById('save') as Element;
 download.addEventListener('click', handleDownload);
 
 function handleDownload(event: Event) {
-	var fileName = prompt("Please enter your file name","code.elan") || "code.elan";
+	var fileName = prompt("Please enter your file name", file.fileName);
 
-	if (!fileName.endsWith(".elan")){
+	if (fileName === null) {
+		// cancelled
+		return;
+	}
+
+	if (!fileName) {
+		fileName = file.defaultFileName;
+	}
+
+	if (!fileName.endsWith(".elan")) {
 		fileName = fileName + ".elan";
 	}
 
+	file.fileName = fileName;
 	const code = file.renderAsSource();
 	const blob = new Blob([code], { type: 'plain/text' });
 
@@ -358,4 +373,5 @@ function handleDownload(event: Event) {
 	URL.revokeObjectURL(href);
 	(download as HTMLButtonElement).classList.remove("unsaved");
 	event.preventDefault();
+	updateContent(file.renderAsHtml());
 }

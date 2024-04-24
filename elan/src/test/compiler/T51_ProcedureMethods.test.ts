@@ -123,7 +123,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  ignore_test('Pass_CallGlobalProcedure', async () => {
+  test('Pass_CallGlobalProcedure', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -151,7 +151,32 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  
+  var f = system.initialise(new Foo());
+  f.setP1(7);
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  setP1(value) {
+    this.p1 = value;
+    setP1(value);
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+
+function setP1(value) {
+  system.print(_stdlib.asString(value));
+}
 return main;}`;
 
     const fileImpl = new FileImpl(() => "", new DefaultProfile(), true);

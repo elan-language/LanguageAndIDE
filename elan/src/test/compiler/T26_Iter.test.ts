@@ -45,8 +45,9 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var it set to asArray([1, 3, 6])
-  call printEach(it)
+  var it set to [1, 3, 6]
+  var arr set to it.asArray()
+  call printEach(arr)
 end main
   
 procedure printEach(target as Iter<of Int>)
@@ -57,8 +58,9 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = _stdlib.asArray(system.list([1, 3, 6]));
-  printEach(it);
+  var it = system.list([1, 3, 6]);
+  var arr = _stdlib.asArray(it);
+  printEach(arr);
 }
 
 function printEach(target) {
