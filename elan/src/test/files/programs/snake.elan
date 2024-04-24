@@ -1,4 +1,4 @@
-# 620b4db3b8a5bd2afc93add52f088ecb4691e75fc9886ad2927ecd687c72a42f Elan v0.1 valid
+# 01444604eb44b70b751bd8147cd750312c337805c0497fa13882a154b1c1669d Elan v0.1 valid
 
 main
   var newGame set to true
@@ -27,28 +27,20 @@ procedure playGame()
     if snake.hasHitEdge() or snake.bodyCovers(head)
       set gameOn to false
       else
-        call draw(charMap, snake.head, Colour.green)
-        call draw(charMap, snake.apple, Colour.red)
+        call charMap.draw(snake.head, Colour.green)
+        call charMap.draw(snake.apple, Colour.red)
         var priorTail set to snake.tail()
         if pressed
           external readKey()
           set currentDirection to directionByKey[k]
         end if
         if snake.tail() is not priorTail
-          call draw(charMap, priorTail, charMap.backgroundColour)
+          call charMap.setToBackgroundColour(priorTail)
         end if
     end if
   end while
   call charMap.setCursor(0, 0)
   print "Game Over! Score: {snake.length() - 2}"
-end procedure
-
-procedure draw(cm as CharMap, sq as Square, colour as Colour)
-  var col set to sq.x * 2
-  var row set to sq.y
-  call cm.putBlockWithColour(col, row, colour)
-  var nextCol set to col + 1
-  call cm.putBlockWithColour(nextCol, row, colour)
 end procedure
 
 class Snake
