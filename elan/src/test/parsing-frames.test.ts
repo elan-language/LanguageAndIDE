@@ -75,7 +75,7 @@ suite('File Parsing Tests', async () => {
 	}); 
 
 
-	ignore_test('parse Frames - assert statement 3', () => {
+	test('parse Frames - assert statement 3', () => {
 		var code = "  assert foo is 7";
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl(hash, new DefaultProfile());

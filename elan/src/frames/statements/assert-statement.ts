@@ -5,16 +5,16 @@ import { ValueRefField } from "../fields/value-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ExpressionField } from "../fields/expression-field";
+import { AssertActualField } from "../fields/assert-actual-field";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    actual: ExpressionField;
+    actual: AssertActualField;
     expected: ValueRefField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.actual = new ExpressionField(this);
-        this.actual.setPlaceholder("computed result");
+        this.actual = new AssertActualField(this);
         this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
     }
