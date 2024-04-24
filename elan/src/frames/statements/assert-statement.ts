@@ -4,17 +4,17 @@ import { CodeSource } from "../code-source";
 import { ValueRefField } from "../fields/value-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { ExpressionField } from "../fields/expression-field";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
-    actual: ValueRefField;
+    actual: ExpressionField;
     expected: ValueRefField;
 
     constructor(parent: Parent) {
         super(parent);
-        this.actual = new ValueRefField(this);
-        this.actual.setText("actual");
-        this.actual.setPlaceholder("variable");
+        this.actual = new ExpressionField(this);
+        this.actual.setPlaceholder("computed result");
         this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
     }
@@ -28,7 +28,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
         source.removeNewLine();
     }
     getFields(): Field[] {
-        return [this.expected];
+        return [this.actual, this.expected];
     }
 
     getIdPrefix(): string {
