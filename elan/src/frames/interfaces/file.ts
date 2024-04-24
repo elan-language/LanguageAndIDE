@@ -14,8 +14,8 @@ export interface File extends Parent {
     // external use
     isFile : boolean;
     getById(id: string) : Selectable;
-    renderAsHtml(): string;
-    renderAsSource(): string;
+    renderAsHtml(): Promise<string>;
+    renderAsSource(): Promise<string>;
     compile(): string;
     fileName : string;
     readonly defaultFileName: string;

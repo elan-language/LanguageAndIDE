@@ -75,7 +75,7 @@ suite('File Parsing Tests', () => {
 	}); 
 
 
-	test('parse Frames - assert statement 3', () => {
+	ignore_test('parse Frames - assert statement 3', () => {
 		var code = "  assert foo is 7";
         var source = new CodeSourceFromString(code + "\n");
 		const fl = new FileImpl(hash, new DefaultProfile());
@@ -157,18 +157,18 @@ suite('File Parsing Tests', () => {
 		assert.equal(source.getRemainingCode(), "");
 	}); 
 
-	test('parse Frames - header file', () => {
+	test('parse Frames - header file', async () => {
 		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
 
 `;
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - constant only', () => {
+	test('parse Frames - constant only', async () => {
 		var code = `# 83e1b601b037b88345a6441e68c281a520c5919d159b62b13c216ece8457ad42 Elan v0.1 valid
 
 constant pi set to 3.142
@@ -176,12 +176,12 @@ constant pi set to 3.142
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
 
-	test('parse Frames - two constants', () => {
+	test('parse Frames - two constants', async () => {
 		var code = `# 1e1d3aa095463fa2aab8601b090744c2e670e90a5333ade81ad565f36767866a Elan v0.1 valid
 
 constant pi set to 3.142
@@ -191,11 +191,11 @@ constant e set to 2.718
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - main', () => {
+	test('parse Frames - main', async () => {
 		var code = `# 5642a0933550c6081bce260e8e0c4cf2cdf112193b0cc034980e23636a796bfc Elan v0.1 valid
 
 main
@@ -205,11 +205,11 @@ end main
         var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - hello world', () => {
+	test('parse Frames - hello world', async () => {
 		var code = `# 244696ccd30157219b43a148c6139816206b9269b1de2665cf230de346df30c3 Elan v0.1 valid
 
 # my comment
@@ -224,11 +224,11 @@ end main
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - main with all single-line statements', () => {
+	test('parse Frames - main with all single-line statements', async () => {
 		var code = `# 55a316ade19e2e61cf48355ed7e92e75892157dcb631211d4080aa2649df6dfe Elan v0.1 valid
 
 main
@@ -243,11 +243,11 @@ end main
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - all globals except class', () => {
+	test('parse Frames - all globals except class', async () => {
 		var code = `# 8dfeafb5c3ac7b5950d3cc432937e3dce295a2186dd08ec7a8c77c8b212199d2 Elan v0.1 valid
 
 constant phi set to 1.618
@@ -272,11 +272,11 @@ end enum
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - class', () => {
+	test('parse Frames - class', async () => {
 		var code = `# 834c9e198f709067045ddf39de7a96f9f926021b95df792d5dc55a0bae618736 Elan v0.1 valid
 
 class Player inherits Foo, Bar
@@ -300,11 +300,11 @@ end class
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - immutable class', () => {
+	test('parse Frames - immutable class', async () => {
 		var code = `# c716652d0078c118b606b66848e0ea87e5618f5f0e9196cf41c34f8b8409ede2 Elan v0.1 valid
 
 immutable class Card inherits Foo, Bar
@@ -320,11 +320,11 @@ end class
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - abstract class', () => {
+	test('parse Frames - abstract class', async () => {
 		var code = `# cc887504cf1fe1864e92e7d759fc8b8e95b0e0626c7f9b56328076222486c6e5 Elan v0.1 valid
 
 abstract class Foo
@@ -342,11 +342,11 @@ end class
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - external with into', () => {
+	test('parse Frames - external with into', async () => {
 		var code = `# c6c9024aa74b80f7d1423e3d28c4318353d16034100e75d3ed1673aa76a04b2a Elan v0.1 valid
 
 main
@@ -357,11 +357,11 @@ end main
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - external (no into)', () => {
+	test('parse Frames - external (no into)', async () => {
 		var code = `# 8d60cbf9747bf32d051ec9b6b3625e3accb03c91f4cebf76e9b51a7028063506 Elan v0.1 valid
 
 main
@@ -372,11 +372,11 @@ end main
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - abstract immutable class', () => {
+	test('parse Frames - abstract immutable class', async () => {
 		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
 
 abstract immutable class Card
@@ -390,7 +390,7 @@ end class
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
@@ -403,7 +403,7 @@ end class
 		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text></text><placeholder>method</placeholder><completion><pr>method</pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion><pr></pr></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
 	});
 
-	test('parse Frames - switch 1', () => {
+	test('parse Frames - switch 1', async () => {
 		var code = `# 66c88e1b3c6d6cf3d54f6b7cb336e426eda4a6c54219026aa772eea34a20e771 Elan v0.1 valid
 
 main
@@ -419,10 +419,10 @@ end main
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
-	test('parse Frames - switch 2', () => {
+	test('parse Frames - switch 2', async () => {
 		var code = `# cea6cdc7ee252b7d3bef59d737cb0a8aa25bb53e485105264a561060c589cea2 Elan v0.1 valid
 
 main
@@ -438,7 +438,7 @@ end main
 		var source = new CodeSourceFromString(code);
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from './model-generating-functions.';
-import {assertClasses, down, end, enter, esc, home, ins, right, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
+import { assertClasses, down, end, enter, esc, home, ins, right, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
@@ -9,8 +9,8 @@ import { isParent } from '../frames/helpers';
 suite('Navigation', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
-	test('Selectable Select', () => {
-		assertClasses(
+	test('Selectable Select', async () => {
+		await assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
 				const frame = ff.getById("const1");
@@ -20,12 +20,12 @@ suite('Navigation', () => {
 
 	});
 
-	test('Select First Child', () => {
-		assertClasses(
+	test('Select First Child', async () => {
+		await assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
 				const mn = ff.getById("main4");
-				if (isParent(mn)){
+				if (isParent(mn)) {
 					const s = mn.getFirstChild();
 					s.select(true, false);
 				}
@@ -33,12 +33,12 @@ suite('Navigation', () => {
 			["select5", "valid empty", "selected focused valid empty"]);
 	});
 
-	test('Collapse Main', () => {
-		assertClasses(
+	test('Collapse Main', async () => {
+		await assertClasses(
 			T04_allGlobalsExceptClass,
 			(ff) => {
 				const mn = ff.getById("main4");
-				if (isParent(mn)){
+				if (isParent(mn)) {
 					mn.collapse();
 				}
 			},
@@ -76,15 +76,15 @@ suite('Navigation', () => {
 	});
 	test('Tabbing through ALL fields (& back)', () => {
 		var file = T05_classes();
-		var fields = ["text3","type2","text4","args5","params8",
-		"select7","ident11","type12","select9","text15","type14","text16","args17",
-	"params20","select19",
-"ident23", "type24", 
-"ident27", "params28", "type29",
-"select26",
-"expr31",
-"select21",
-"select0"];
+		var fields = ["text3", "type2", "text4", "args5", "params8",
+			"select7", "ident11", "type12", "select9", "text15", "type14", "text16", "args17",
+			"params20", "select19",
+			"ident23", "type24",
+			"ident27", "params28", "type29",
+			"select26",
+			"expr31",
+			"select21",
+			"select0"];
 		file.processKey(enter());
 		var field = file.getById(fields[0]);
 		for (var i in fields) {
@@ -165,20 +165,20 @@ suite('Navigation', () => {
 		assert.equal(if_st.isSelected(), false);
 		newSel2.processKey(up());
 		assert.equal(if_st.isSelected(), true);
-	});	
+	});
 
 	test('Multi-select and move', () => {
 		var file = T03_mainWithAllStatements();
 		var whil = file.getById("while16");
 		var rep = file.getById("repeat19");
 		var fr = file.getById("for22");
-		whil.select(true,false);
+		whil.select(true, false);
 		whil.processKey(shift_down());
 		rep.processKey(shift_down());
 		assert.equal(whil.isSelected(), true);
 		assert.equal(rep.isSelected(), true);
 		assert.equal(fr.isSelected(), true);
 	});
-	
-});	
+
+});
 

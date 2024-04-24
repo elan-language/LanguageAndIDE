@@ -124,7 +124,7 @@ export class FileImpl implements File {
         return 'file';
     }
 
-    public renderAsHtml(): string {
+    public async renderAsHtml(): Promise<string> {
         var globals = parentHelper_renderChildrenAsHtml(this);
         return `<header># <hash>${this.getHash()}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
     }
@@ -159,7 +159,7 @@ export class FileImpl implements File {
         return result;
     }
 
-    renderAsSource(): string {
+    async renderAsSource(): Promise<string> {
         const content = this.renderHashableContent();
         return `# ${this.getHash(content)} ${content}`; 
     }

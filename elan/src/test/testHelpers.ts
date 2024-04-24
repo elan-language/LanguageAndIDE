@@ -27,7 +27,7 @@ import { ListType } from '../symbols/list-type';
 // flag to update test file 
 var updateTestFiles = false;
 
-export async function assertEffectOfAction(done: Mocha.Done, sourceFile: string, action: (f: FileImpl) => void , htmlFile: string) {
+export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
@@ -39,27 +39,25 @@ export async function assertEffectOfAction(done: Mocha.Done, sourceFile: string,
   var fl = new FileImpl(hash, new DefaultProfile());
   fl.parseFrom(codeSource);
   if (fl.parseError) {
-      throw new Error(fl.parseError);
+    throw new Error(fl.parseError);
   }
   action(fl);
- 
-  const actualHtml = wrap(fl.renderAsHtml()).replaceAll("\r", "");
+
+  const rendered = await fl.renderAsHtml();
+  const actualHtml = wrap(rendered).replaceAll("\r", "");
   const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
   try {
-      assert.strictEqual(actualHtml, expectedHtml);
-      done();
+    assert.strictEqual(actualHtml, expectedHtml);
   }
   catch (e) {
-      if (updateTestFiles) {
-        updateTestFile(htmlDoc, actualHtml);
-      }
-      done(e);
-      throw e;
+    if (updateTestFiles) {
+      updateTestFile(htmlDoc, actualHtml);
+    }
+    throw e;
   }
-
 }
 
-export async function assertGeneratesHtmlandSameSource(done: Mocha.Done, sourceFile: string, htmlFile: string) {
+export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
@@ -71,51 +69,52 @@ export async function assertGeneratesHtmlandSameSource(done: Mocha.Done, sourceF
   var fl = new FileImpl(hash, new DefaultProfile());
   fl.parseFrom(codeSource);
   if (fl.parseError) {
-      throw new Error(fl.parseError);
+    throw new Error(fl.parseError);
   }
-  const actualSource = fl.renderAsSource().replaceAll("\r", "");
+  const renderedSource = await fl.renderAsSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-  const actualHtml = wrap(fl.renderAsHtml()).replaceAll("\r", "");
+  const renderedHtml = await fl.renderAsHtml();
+  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
   const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
   try {
-      assert.strictEqual(actualSource, expectedSource);
-      assert.strictEqual(actualHtml, expectedHtml);
-      done();
+    assert.strictEqual(actualSource, expectedSource);
+    assert.strictEqual(actualHtml, expectedHtml);
+
   }
   catch (e) {
-      if (updateTestFiles) {
-        updateTestFile(sourceDoc, actualSource);
-        updateTestFile(htmlDoc, actualHtml);
-      }
-      done(e);
-      throw e;
+    if (updateTestFiles) {
+      updateTestFile(sourceDoc, actualSource);
+      updateTestFile(htmlDoc, actualHtml);
+    }
+    throw e;
   }
 }
 
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
-    const edit = new vscode.WorkspaceEdit();
+  const edit = new vscode.WorkspaceEdit();
 
-    edit.replace(
-        testDoc.uri,
-        new vscode.Range(0, 0, testDoc.lineCount, 0),
-        newContent);
+  edit.replace(
+    testDoc.uri,
+    new vscode.Range(0, 0, testDoc.lineCount, 0),
+    newContent);
 
-    vscode.workspace.applyEdit(edit).then(ok => {
-        if (ok) {
-            testDoc.save().then(b => {
-                if (!b) {
-                    console.warn("Save failed: " + testDoc.fileName);
-                }
-            });
+  vscode.workspace.applyEdit(edit).then(ok => {
+    if (ok) {
+      testDoc.save().then(b => {
+        if (!b) {
+          console.warn("Save failed: " + testDoc.fileName);
         }
-        else {
-            console.warn("Edit failed: " + testDoc.fileName);
-        }
-    });  
+      });
+    }
+    else {
+      console.warn("Edit failed: " + testDoc.fileName);
+    }
+  });
 }
 
 export function wrap(html: string) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -131,249 +130,231 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(done: Mocha.Done, htmlFile: string, frame: () => File) {
-    const ws = vscode.workspace.workspaceFolders![0].uri;
+export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
 
-    const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-    const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-    const model = frame();
-    // get rid of \r for appveyor
-    const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-    const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
+  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
+  const model = frame();
+  // get rid of \r for appveyor
+  const renderedHtml = await model.renderAsHtml();
+  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
+  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
 
-    try {
-        assert.strictEqual(actualHtml, expectedHtml);
-        done();
+  try {
+    assert.strictEqual(actualHtml, expectedHtml);
+  }
+  catch (e) {
+    if (updateTestFiles) {
+      updateTestFile(htmlDoc, actualHtml);
     }
-    catch (e) {
-        if (updateTestFiles) {
-            updateTestFile(htmlDoc, actualHtml);
-        }
-        done(e);
-        throw e;
-    }
+    throw e;
+  }
 }
 
-export async function assertAreEqualBySource(done: Mocha.Done, sourceFile: string, frame: () => File) {
-    const ws = vscode.workspace.workspaceFolders![0].uri;
+export async function assertAreEqualBySource(sourceFile: string, frame: () => File) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
 
-    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-    const model = frame();
-    // get rid of \r for appveyor
-    const actualSource = model.renderAsSource().replaceAll("\r", "");
-    const expectedSource = sourceDoc.getText().replaceAll("\r", "");
+  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+  const model = frame();
+  // get rid of \r for appveyor
+  const renderedSource = await model.renderAsSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
+  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
 
-    try {
-        assert.strictEqual(actualSource, expectedSource);
-        done();
-    }
-    catch (e) {
-        done(e);
-        throw e;
-    }
+  assert.strictEqual(actualSource, expectedSource);
 }
 
-export async function assertFileParses(done: Mocha.Done, sourceFile: string) {
-    const ws = vscode.workspace.workspaceFolders![0].uri;
-    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-    var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl(hash, new DefaultProfile());
-    fl.parseFrom(codeSource);
-    if (fl.parseError) {
-        throw new Error(fl.parseError);
-    }
-    const actualSource = fl.renderAsSource().replaceAll("\r", "");
-    const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-    try {
-        assert.strictEqual(actualSource, expectedSource);
-        done();
-    }
-    catch (e) {
-        done(e);
-        throw e;
-    }
+export async function assertFileParses(sourceFile: string) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
+  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+  var fl = new FileImpl(hash, new DefaultProfile());
+  fl.parseFrom(codeSource);
+  if (fl.parseError) {
+    throw new Error(fl.parseError);
+  }
+  const renderedSource = await fl.renderAsSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
+  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
+
+  assert.strictEqual(actualSource, expectedSource);
 }
 
 export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
-    const ws = vscode.workspace.workspaceFolders![0].uri;
-    const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-    const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-    var codeSource = new CodeSourceFromString(sourceDoc.getText());
-    var fl = new FileImpl(hash, new DefaultProfile());
-    fl.parseFrom(codeSource);
-    if (fl.parseError) {
-        throw new Error(fl.parseError);
-    }
-   return fl;
+  const ws = vscode.workspace.workspaceFolders![0].uri;
+  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
+  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
+  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+  var fl = new FileImpl(hash, new DefaultProfile());
+  fl.parseFrom(codeSource);
+  if (fl.parseError) {
+    throw new Error(fl.parseError);
+  }
+  return fl;
 }
 
-export async function assertAreEqualByFile<T extends Selectable>(done: Mocha.Done, htmlFile: string, elanFile: string, frame: (s: string) => T) {
-    const ws = vscode.workspace.workspaceFolders![0].uri;
+export async function assertAreEqualByFile<T extends Selectable>(htmlFile: string, elanFile: string, frame: (s: string) => T) {
+  const ws = vscode.workspace.workspaceFolders![0].uri;
 
-    const elanUri = vscode.Uri.joinPath(ws, elanFile);
-    const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-    const elanDoc = await vscode.workspace.openTextDocument(elanUri);
-    const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-    const model = frame(elanDoc.getText());
-    const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-    const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
+  const elanUri = vscode.Uri.joinPath(ws, elanFile);
+  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
+  const elanDoc = await vscode.workspace.openTextDocument(elanUri);
+  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
+  const model = frame(elanDoc.getText());
+  const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
+  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
 
-    try {
-        assert.strictEqual(actualHtml, expectedHtml);
-        done();
-    }
-    catch (e) {
-        done(e);
-        throw e;
-    }
+  assert.strictEqual(actualHtml, expectedHtml);
 }
 
-export function assertElementsById(dom : jsdom.JSDOM, id: string, expected: string){
-	const e = dom.window.document.getElementById(id);
-	const c = e?.className;
-	assert.strictEqual(c, expected);
+export function assertElementsById(dom: jsdom.JSDOM, id: string, expected: string) {
+  const e = dom.window.document.getElementById(id);
+  const c = e?.className;
+  assert.strictEqual(c, expected);
 }
 
-export function assertElementHasClasses(f: File, elementId: string, classes : string){
-	const dom = readAsDOM(f);
-    assertElementsById(dom, elementId, classes);
+export async function assertElementHasClasses(f: File, elementId: string, classes: string) {
+  const dom = await readAsDOM(f);
+  assertElementsById(dom, elementId, classes);
 }
 
-export function assertElementHtmlById(dom : jsdom.JSDOM, id: string, expected: string){
-	const e = dom.window.document.getElementById(id);
-	const c = e?.innerHTML;
-	assert.strictEqual(c, expected);
+export function assertElementHtmlById(dom: jsdom.JSDOM, id: string, expected: string) {
+  const e = dom.window.document.getElementById(id);
+  const c = e?.innerHTML;
+  assert.strictEqual(c, expected);
 }
 
-export function assertElementContainsHtml(f: File, id: string, expectedHtml: string){
-    const dom = readAsDOM(f);
-	const e = dom.window.document.getElementById(id);
-	const c = e?.innerHTML;
-	assert.strictEqual(c, expectedHtml);
+export async function assertElementContainsHtml(f: File, id: string, expectedHtml: string) {
+  const dom = await readAsDOM(f);
+  const e = dom.window.document.getElementById(id);
+  const c = e?.innerHTML;
+  assert.strictEqual(c, expectedHtml);
 }
 
-export function readAsDOM(f: File) {
-	return new jsdom.JSDOM(f.renderAsHtml());
+export async function readAsDOM(f: File) {
+  const renderedHtml = await f.renderAsHtml();
+  return new jsdom.JSDOM(renderedHtml);
 }
 
-export function assertClasses(setupFn : () => File, testFn : (f: File) => void, assertClasses : [string, string, string]){
-    const ff = setupFn();
-	const preDom = readAsDOM(ff);
-    testFn(ff);
-    const postDom = readAsDOM(ff);
+export async function assertClasses(setupFn: () => File, testFn: (f: File) => void, assertClasses: [string, string, string]) {
+  const ff = setupFn();
+  const preDom = await readAsDOM(ff);
+  testFn(ff);
+  const postDom = await readAsDOM(ff);
 
-    assertElementsById(preDom, assertClasses[0], assertClasses[1]);
-    assertElementsById(postDom, assertClasses[0], assertClasses[2]);
+  assertElementsById(preDom, assertClasses[0], assertClasses[1]);
+  assertElementsById(postDom, assertClasses[0], assertClasses[2]);
 }
 
-export function assertHtml(setupFn : () => File, testFn : (f: File) => void, assertClasses : [string, string]){
-    const ff = setupFn();
-    testFn(ff);
-    const postDom = readAsDOM(ff);
+export async function assertHtml(setupFn: () => File, testFn: (f: File) => void, assertClasses: [string, string]) {
+  const ff = setupFn();
+  testFn(ff);
+  const postDom = await readAsDOM(ff);
 
-    assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
+  assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
 export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): editorEvent {
-    return { key: k, modKey: {shift: !!shift, control: !!control, alt: !!alt }, type: "key", target: "frame"};
+  return { key: k, modKey: { shift: !!shift, control: !!control, alt: !!alt }, type: "key", target: "frame" };
 }
 
 export async function activate(docUri: vscode.Uri) {
-    // The extensionId is `publisher.name` from package.json
-    const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
+  // The extensionId is `publisher.name` from package.json
+  const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
 
-    if (!ext){
-        const all = vscode.extensions.all;
-        assert.fail(all[all.length -1].id);
-    }
-
-    await ext.activate();
-    try {
-      const doc = await vscode.workspace.openTextDocument(docUri);
-      const editor = await vscode.window.showTextDocument(doc);
-      await sleep(20000); // Wait for server activation
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  
-  async function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  if (!ext) {
+    const all = vscode.extensions.all;
+    assert.fail(all[all.length - 1].id);
   }
 
-  //Keys
-  export function enter() {
-    return key("Enter");
+  await ext.activate();
+  try {
+    const doc = await vscode.workspace.openTextDocument(docUri);
+    const editor = await vscode.window.showTextDocument(doc);
+    await sleep(20000); // Wait for server activation
+  } catch (e) {
+    console.error(e);
   }
-  export function shift_enter() {
-    return key("Enter", true);
-  }
-  export function tab() {
-    return key("Tab");
-  }
-  export function shift_tab() {
-    return key("Tab", true);
-  }
-  export function up() {
-    return key("ArrowUp");
-  }
-  export function shift_up() {
-    return key("ArrowUp",true);
-  }
-  export function ctrl_up() {
-    return key("ArrowUp",false,true);
-  }
-  export function down() {
-    return key("ArrowDown");
-  }
-  export function shift_down() {
-    return key("ArrowDown",true);
-  }
-  export function ctrl_down() {
-    return key("ArrowDown",false,true);
-  }
-  export function left() {
-    return key("ArrowLeft");
-  }
-  export function right() {
-    return key("ArrowRight");
-  }
-  export function home() {
-    return key("Home");
-  }
-  export function end() {
-    return key("End");
-  }
-  export function esc() {
-    return key("Escape");
-  }
-  export function ins() {
-    return key("Insert");
-  }
-  export function del() {
-    return key("Delete");
-  }
-  export function shift_ins() {
-    return key("Insert",true);
-  }
+}
 
-  export function testNodeParse(node: ParseNode, text: string, status: ParseStatus, 
-        matchedText: string, remainingText: string, source = "", html="") {
-    node.parseText(text);
-    assert.equal(node.status, status);
-    if (matchedText !== "") {
-      assert.equal(node.matchedText, matchedText);
-    }
-    assert.equal( node.remainingText, remainingText);
-    if (source !== "") {
-      assert.equal(node.renderAsSource(), source);
-    }
-    if (html && html !== "") {
-      assert.equal(node.renderAsHtml(), html);
-    }
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+//Keys
+export function enter() {
+  return key("Enter");
+}
+export function shift_enter() {
+  return key("Enter", true);
+}
+export function tab() {
+  return key("Tab");
+}
+export function shift_tab() {
+  return key("Tab", true);
+}
+export function up() {
+  return key("ArrowUp");
+}
+export function shift_up() {
+  return key("ArrowUp", true);
+}
+export function ctrl_up() {
+  return key("ArrowUp", false, true);
+}
+export function down() {
+  return key("ArrowDown");
+}
+export function shift_down() {
+  return key("ArrowDown", true);
+}
+export function ctrl_down() {
+  return key("ArrowDown", false, true);
+}
+export function left() {
+  return key("ArrowLeft");
+}
+export function right() {
+  return key("ArrowRight");
+}
+export function home() {
+  return key("Home");
+}
+export function end() {
+  return key("End");
+}
+export function esc() {
+  return key("Escape");
+}
+export function ins() {
+  return key("Insert");
+}
+export function del() {
+  return key("Delete");
+}
+export function shift_ins() {
+  return key("Insert", true);
+}
+
+export function testNodeParse(node: ParseNode, text: string, status: ParseStatus,
+  matchedText: string, remainingText: string, source = "", html = "") {
+  node.parseText(text);
+  assert.equal(node.status, status);
+  if (matchedText !== "") {
+    assert.equal(node.matchedText, matchedText);
   }
+  assert.equal(node.remainingText, remainingText);
+  if (source !== "") {
+    assert.equal(node.renderAsSource(), source);
+  }
+  if (html && html !== "") {
+    assert.equal(node.renderAsHtml(), html);
+  }
+}
 
 export function testCompletion(node: ParseNode, text: string, status: ParseStatus, completion: string) {
   node.parseText(text);
@@ -389,46 +370,46 @@ export const stringType = StringType.Instance;
 export const unknownType = UnknownType.Instance;
 
 const stubIntSymbol = {
-  symbolId : "a",
-  symbolType : intType,
+  symbolId: "a",
+  symbolType: intType,
 } as ISymbol;
 
 const stubNumberSymbol = {
-  symbolId : "b",
-  symbolType : numberType,
+  symbolId: "b",
+  symbolType: numberType,
 } as ISymbol;
 
 const stubStringSymbol = {
-  symbolId : "bar",
-  symbolType : stringType,
+  symbolId: "bar",
+  symbolType: stringType,
 } as ISymbol;
 
 const stubBoolSymbol = {
-  symbolId : "bar",
-  symbolType : boolType,
+  symbolId: "bar",
+  symbolType: boolType,
 } as ISymbol;
 
 const stubClassSymbol = {
-  symbolId : "p",
-  symbolType : new ClassType("p"),
+  symbolId: "p",
+  symbolType: new ClassType("p"),
 } as ISymbol;
 
 const stubHolder = {
-  resolveSymbol(id, initialScope) : ISymbol | undefined {
+  resolveSymbol(id, initialScope): ISymbol | undefined {
     switch (id) {
-      case "a" : return stubIntSymbol;
-      case "b" : return stubNumberSymbol;
-      case "c" : return stubNumberSymbol;
-      case "x" : return stubIntSymbol;
-      case 'foo' : return stubIntSymbol;
-      case 'bar' : return stubStringSymbol;
-      case 'boo' : return stubBoolSymbol;
-      case 'reduce' : return stubIntSymbol;
-      case "p" : return stubClassSymbol;
-      case 'isBefore' : return stubBoolSymbol;
-      case 'betterOf' : return stubStringSymbol;
-      case "attempt" : return stubBoolSymbol;
-      case "target" : return stubStringSymbol;
+      case "a": return stubIntSymbol;
+      case "b": return stubNumberSymbol;
+      case "c": return stubNumberSymbol;
+      case "x": return stubIntSymbol;
+      case 'foo': return stubIntSymbol;
+      case 'bar': return stubStringSymbol;
+      case 'boo': return stubBoolSymbol;
+      case 'reduce': return stubIntSymbol;
+      case "p": return stubClassSymbol;
+      case 'isBefore': return stubBoolSymbol;
+      case 'betterOf': return stubStringSymbol;
+      case "attempt": return stubBoolSymbol;
+      case "target": return stubStringSymbol;
       case "lst": return { symbolId: "", symbolType: new ListType(intType) };
     }
 
@@ -442,7 +423,7 @@ export const stubField = {
   }
 } as Field;
 
-export function testAST(node: ParseNode, field : Field, text: string, astAsString : string, st : ISymbolType) {
+export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: ISymbolType) {
   node.parseText(text);
   if (node.status === ParseStatus.valid) {
     const ast = transform(node, field.getHolder() as unknown as Scope);

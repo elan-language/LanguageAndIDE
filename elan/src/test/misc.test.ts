@@ -12,31 +12,31 @@ suite('Misc Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	
-	test('Invalid identifier', () => {
+	test('Invalid identifier', async () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		await assertElementHasClasses(file, "fileStatus", "incomplete");
+		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("X"));
-		assertElementHasClasses(file, "var3", "invalid");
-		assertElementHasClasses(file, "fileStatus", "invalid");
+		await assertElementHasClasses(file, "var3", "invalid");
+		await assertElementHasClasses(file, "fileStatus", "invalid");
 	});
 
-	test('Valid identifier', () => {
+	test('Valid identifier', async () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		await assertElementHasClasses(file, "fileStatus", "incomplete");
+		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("q"));
-		assertElementHasClasses(file, "var4", "valid");
-		assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
+		await assertElementHasClasses(file, "var4", "valid");
+		await assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
 	});
 
-	test('Valid variable statement', () => {
+	test('Valid variable statement', async () => {
 		var file = T03_mainWithAllStatements();
-		assertElementHasClasses(file, "fileStatus", "incomplete");
-		assertElementHasClasses(file, "var3", "incomplete"); 
+		await assertElementHasClasses(file, "fileStatus", "incomplete");
+		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("q"));
 		file.getById("expr5").processKey(key("5"));
-		assertElementHasClasses(file, "var3", "valid");
+		await assertElementHasClasses(file, "var3", "valid");
 	});
 
 	//Regex
@@ -68,11 +68,11 @@ suite('Misc Tests', () => {
 	});
 
 	
-	test('parse Frames - empty file', () => {
+	test('parse Frames - empty file', async () => {
         var source = new CodeSourceFromString("");
 		const fl = new FileImpl(hash, new DefaultProfile());
 		fl.parseFrom(source);
-		var elan = fl.renderAsSource();
+		var elan = await fl.renderAsSource();
 		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
 
 `;

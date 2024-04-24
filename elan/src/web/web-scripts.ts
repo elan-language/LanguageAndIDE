@@ -46,11 +46,11 @@ function displayFile() {
 			.then((text) => {
 				const code = new CodeSourceFromString(text);
 				file.parseFrom(code);
-				updateContent(file.renderAsHtml());
+				file.renderAsHtml().then(c => updateContent(c));
 			})
 			.catch((e) => {
 				console.error(e);
-				updateContent(file.renderAsHtml());
+				file.renderAsHtml().then(c => updateContent(c));
 			});
 	}
 	else {
@@ -62,7 +62,7 @@ function displayFile() {
 			file.fileName = previousFileName || file.defaultFileName;
 		}
 
-		updateContent(file.renderAsHtml());
+		file.renderAsHtml().then(c => updateContent(c));
 	}
 }
 
@@ -185,12 +185,13 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
-	if (file.parseStatus() === ParseStatus.valid){
+	if (file.parseStatus() === ParseStatus.valid) {
 		// save to local store
-		const code = file.renderAsSource();
-		localStorage.setItem("elan-code", code);
-		localStorage.setItem("elan-file", file.fileName);
-		(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
+		file.renderAsSource().then(code => {
+			localStorage.setItem("elan-code", code);
+			localStorage.setItem("elan-file", file.fileName);
+			(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
+		});
 	}
 
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
@@ -205,15 +206,15 @@ function postMessage(e: editorEvent) {
 	switch (e.type) {
 		case 'click':
 			handleClick(e, file);
-			updateContent(file.renderAsHtml());
+			file.renderAsHtml().then(c => updateContent(c));
 			return;
 		case 'dblclick':
 			handleDblClick(e, file);
-			updateContent(file.renderAsHtml());
+			file.renderAsHtml().then(c => updateContent(c));
 			return;
 		case 'key':
 			handleKey(e, file);
-			updateContent(file.renderAsHtml());
+			file.renderAsHtml().then(c => updateContent(c));
 			return;
 	}
 }
@@ -313,7 +314,7 @@ clearButton?.addEventListener("click", () => {
 
 newButton?.addEventListener("click", () => {
 	file = new FileImpl((s) => "", profile, true);
-	updateContent(file.renderAsHtml());
+	file.renderAsHtml().then(c => updateContent(c));
 });
 
 const upload = document.getElementById('load') as Element;
@@ -344,7 +345,7 @@ function handleUpload(event: Event) {
 			file = new FileImpl((s) => "", profile, true);
 			file.fileName = fileName;
 			file.parseFrom(code);
-			updateContent(file.renderAsHtml());
+			file.renderAsHtml().then(c => updateContent(c));
 		});
 		reader.readAsText(elanFile);
 	}
@@ -372,17 +373,18 @@ function handleDownload(event: Event) {
 	}
 
 	file.fileName = fileName;
-	const code = file.renderAsSource();
-	const blob = new Blob([code], { type: 'plain/text' });
+	file.renderAsSource().then(code => {
+		const blob = new Blob([code], { type: 'plain/text' });
 
-	const aElement = document.createElement('a');
-	aElement.setAttribute('download', fileName);
-	const href = URL.createObjectURL(blob);
-	aElement.href = href;
-	aElement.setAttribute('target', '_blank');
-	aElement.click();
-	URL.revokeObjectURL(href);
-	(download as HTMLButtonElement).classList.remove("unsaved");
-	event.preventDefault();
-	updateContent(file.renderAsHtml());
+		const aElement = document.createElement('a');
+		aElement.setAttribute('download', fileName!);
+		const href = URL.createObjectURL(blob);
+		aElement.href = href;
+		aElement.setAttribute('target', '_blank');
+		aElement.click();
+		URL.revokeObjectURL(href);
+		(download as HTMLButtonElement).classList.remove("unsaved");
+		event.preventDefault();
+		file.renderAsHtml().then(c => updateContent(c));
+	});
 }
