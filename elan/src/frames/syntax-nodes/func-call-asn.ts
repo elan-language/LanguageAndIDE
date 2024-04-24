@@ -1,3 +1,4 @@
+import { ClassType } from "../../symbols/class-type";
 import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { Scope } from "../interfaces/scope";
@@ -10,8 +11,17 @@ export class FuncCallAsn implements AstNode {
         this.id = id.trim();
     }
     compile(): string {
+        var currentScope = this.scope;
         var scopeQ = "";
-        const symbol = this.scope.resolveSymbol(this.id, this.scope);
+
+        const classScope =  this.qualifier ? this.qualifier.symbolType : undefined;
+        if (classScope instanceof ClassType) {
+           const s = this.scope.resolveSymbol(classScope.className, this.scope);
+           // replace scope with class scope
+           currentScope = s as unknown as Scope;
+        }
+        
+        const symbol = currentScope.resolveSymbol(this.id, this.scope);
 
         if (symbol.symbolScope === SymbolScope.stdlib) {
             scopeQ = `_stdlib.`;

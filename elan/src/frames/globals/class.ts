@@ -22,10 +22,12 @@ import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
+import { ClassType } from "../../symbols/class-type";
+import { Scope } from "../interfaces/scope";
 
-export class Class extends AbstractFrame implements Parent, Collapsible {
+export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
     isParent: boolean = true; 
     public name: TypeNameField;
@@ -46,6 +48,13 @@ export class Class extends AbstractFrame implements Parent, Collapsible {
         this.getChildren().push(new MemberSelector(this));
         this.immutable = false;
     }
+    get symbolId() { 
+        return this.name.text; 
+    }
+    get symbolType() {
+        return new ClassType(this.symbolId);
+    }
+    symbolScope = SymbolScope.program;
     getProfile(): Profile {
         return this.getParent().getProfile();
     }

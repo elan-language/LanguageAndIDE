@@ -129,7 +129,7 @@ procedure printAsIter(target as Iter<of Int>)
 end procedure
   
 procedure printAsList(target as Iter<of Int>)
-  var some set to asList(target)
+  var some set to target.asList()
   print some[3..]
 end procedure`;
 

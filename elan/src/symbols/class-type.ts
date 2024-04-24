@@ -2,7 +2,7 @@ import { ISymbolType } from "./symbol-type";
 
 export class ClassType implements ISymbolType {
 
-    constructor(private className: string) {
+    constructor(public className: string) {
 
     }
 

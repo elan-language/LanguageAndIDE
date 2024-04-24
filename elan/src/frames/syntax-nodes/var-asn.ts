@@ -1,6 +1,8 @@
 import { ArrayType } from "../../symbols/array-type";
+import { FunctionType } from "../../symbols/function-type";
 import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
+import { ISymbolType } from "../../symbols/symbol-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { IndexAsn } from "./index-asn";
@@ -33,20 +35,28 @@ export class VarAsn implements AstNode {
         return "";
     }
 
-
+    wrapListOrArray(rootType : ISymbolType, code : string) : string {
+        if (rootType instanceof ListType) {
+            return `system.list(${code})`;
+        }
+        if (rootType instanceof ArrayType) {
+            return `system.array(${code})`;
+        }
+        if (rootType instanceof FunctionType){
+            return this.wrapListOrArray(rootType.returnType, code);
+        }
+        return code;
+    }
 
     compile(): string {
         var q = this.getQualifier();
-        var idx = this.index ? this.index.compile() : ""; 
-        const code = `${q}${this.id}${idx}`;
+        var idx = this.index ? this.index.compile() : "";
+        var code = `${q}${this.id}${idx}`;
 
         if (this.isRange()) {
             const rootType = this.scope.resolveSymbol(this.id, this.scope).symbolType;
-            if (rootType instanceof ListType) {
-                return `system.list(${code})`;
-            }
-            if (rootType instanceof ArrayType) {
-                return `system.array(${code})`;
+            if (rootType) {
+                code = this.wrapListOrArray(rootType, code);
             }
         }
 
