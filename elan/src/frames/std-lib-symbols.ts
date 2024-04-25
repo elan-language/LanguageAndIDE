@@ -25,9 +25,9 @@ export class StdLibSymbols implements Scope {
     // todo - we need to load this from a .d.ts file also work out how to do generics
     private symbols = new Map<string, ISymbol>(
         [
-            ["asString", this.getSymbol("asString", new FunctionType(StringType.Instance, true))],
-            ["asArray", this.getSymbol("asArray", new FunctionType(new ArrayType(IntType.Instance), true))],
-            ["asList", this.getSymbol("asList", new FunctionType(new ListType(IntType.Instance), true))],
+            ["asString", this.getSymbol("asString", new FunctionType([], StringType.Instance, true))],
+            ["asArray", this.getSymbol("asArray", new FunctionType([], new ArrayType(IntType.Instance), true))],
+            ["asList", this.getSymbol("asList", new FunctionType([], new ListType(IntType.Instance), true))],
             ["keys", this.getSymbol("keys", new ListType(StringType.Instance))],
             ["values", this.getSymbol("values", new ListType(IntType.Instance))],
             ["hasKey", this.getSymbol("hasKey", BooleanType.Instance)],

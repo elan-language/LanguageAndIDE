@@ -23,6 +23,8 @@ import { UnknownType } from '../symbols/unknown-type';
 import { ClassType } from '../symbols/class-type';
 import { Scope } from '../frames/interfaces/scope';
 import { ListType } from '../symbols/list-type';
+import { FunctionType } from '../symbols/function-type';
+import { GenericParameterType } from '../symbols/generic-parameter-type';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -411,6 +413,9 @@ const stubHolder = {
       case "attempt": return stubBoolSymbol;
       case "target": return stubStringSymbol;
       case "lst": return { symbolId: "", symbolType: new ListType(intType) };
+      case "lst1": return { symbolId: "", symbolType: new ListType(stringType) };
+      case "simpleGeneric": return { symbolId: "", symbolType: new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"))};
+      case "getItem": return { symbolId: "", symbolType: new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"))};
     }
 
     return undefined;

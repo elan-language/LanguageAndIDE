@@ -2,7 +2,7 @@ import { ISymbolType } from "./symbol-type";
 
 export class DictionaryType implements ISymbolType {
 
-    constructor(private keyType: ISymbolType, private valueType: ISymbolType) {
+    constructor(public readonly keyType: ISymbolType, public readonly valueType: ISymbolType) {
 
     }
 

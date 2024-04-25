@@ -198,4 +198,10 @@ suite('ASTNodes', () => {
 	test("New", () => {
 		testAST(new NewInstance(), stubField, `new Foo()`, "new Type Foo()", new ClassType("Foo"));
 	});
+
+	test("Generic Function", () => {
+		testAST(new FunctionCallNode(), stubField, `simpleGeneric(a)`, "Func Call simpleGeneric (a)", intType);
+		testAST(new FunctionCallNode(), stubField, `getItem(lst)`, "Func Call getItem (lst)", intType);
+		testAST(new FunctionCallNode(), stubField, `getItem(lst1)`, "Func Call getItem (lst1)", stringType);
+	});
 });

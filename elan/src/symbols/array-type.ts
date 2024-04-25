@@ -2,7 +2,7 @@ import { ISymbolType } from "./symbol-type";
 
 export class ArrayType implements ISymbolType {
 
-    constructor(private ofType: ISymbolType) {
+    constructor(public readonly ofType: ISymbolType) {
 
     }
 
