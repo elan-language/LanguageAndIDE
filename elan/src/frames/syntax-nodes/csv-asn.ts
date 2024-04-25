@@ -1,9 +1,20 @@
+import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class CsvAsn implements AstNode {
-    
-    constructor(public readonly items: AstNode[], scope : Scope) {
+
+    constructor(public readonly items: AstNode[], scope: Scope) {
+    }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        var cc: CompileError[] = [];
+        for (const i of this.items) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(cc);
     }
 
     compile(): string {

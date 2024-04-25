@@ -7,15 +7,33 @@ import { IterType } from "../../symbols/iter-type";
 import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
+import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
-import { ExprAsn } from "./expr-asn";
 
 export class FuncCallAsn implements AstNode {
 
     constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, private scope: Scope) {
         this.id = id.trim();
     }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        var cc: CompileError[] = [];
+
+        for (const i of this.parameters) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+
+        if (this.qualifier) {
+            cc.concat(this.qualifier.aggregateCompileErrors());
+        }
+
+        return this.compileErrors.concat(cc);
+    }
+
+
     compile(): string {
         var currentScope = this.scope;
         var scopeQ = "";
@@ -46,7 +64,7 @@ export class FuncCallAsn implements AstNode {
         const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }
-    
+
     flatten(p: ISymbolType): ISymbolType[] {
         if (p instanceof ArrayType || p instanceof ListType || p instanceof IterType) {
             return this.flatten(p.ofType);

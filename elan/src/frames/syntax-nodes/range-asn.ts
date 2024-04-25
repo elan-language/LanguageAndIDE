@@ -1,11 +1,25 @@
+import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class RangeAsn implements AstNode {
 
-    constructor(private from : AstNode | undefined, private to : AstNode | undefined,  private scope : Scope) {
-        
+    constructor(private from: AstNode | undefined, private to: AstNode | undefined, private scope: Scope) {
+
     }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        const fr = this.from ? this.from.aggregateCompileErrors() : [];
+        const to = this.to ? this.to.aggregateCompileErrors() : [];
+
+        return this.compileErrors
+        .concat(fr)
+        .concat(to);
+    }
+
+
     compile(): string {
         const f = this.from ? `${this.from.compile()}` : "0";
         const t = this.to ? `${this.to.compile()}` : undefined;

@@ -10,20 +10,31 @@ import { StringType } from "../../symbols/string-type";
 import { TupleType } from "../../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
+import { CompileError } from "../compile-error";
 
 
 export class TypeAsn implements AstNode {
 
-    constructor(public readonly type: string, public genericParameters: Array<AstNode>, private scope : Scope) {
+    constructor(public readonly type: string, public genericParameters: AstNode[], private scope: Scope) {
         this.type = type.trim();
     }
 
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        var cc: CompileError[] = [];
+        for (const i of this.genericParameters) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(cc);
+    }
+
     compile(): string {
-        if (this.type === "Dictionary"){
+        if (this.type === "Dictionary") {
             return "Object";
         }
 
-        if (this.type === "List"){
+        if (this.type === "List") {
             return "Array";
         }
 
@@ -32,15 +43,15 @@ export class TypeAsn implements AstNode {
 
     renderAsDefaultObjectCode(): string {
         switch (this.type) {
-            case "Int" :
-            case "Float" : return "0";
-            case "Char" :
-            case "String" : return '""';
-            case "Boolean" : return "false";
-            case "List" : return "system.defaultList()";
-            case "Array" : return "system.defaultArray()";
-            case "Dictionary" : return "system.defaultDictionary()";
-            case "Iter" : return "system.defaultIter()";
+            case "Int":
+            case "Float": return "0";
+            case "Char":
+            case "String": return '""';
+            case "Boolean": return "false";
+            case "List": return "system.defaultList()";
+            case "Array": return "system.defaultArray()";
+            case "Dictionary": return "system.defaultDictionary()";
+            case "Iter": return "system.defaultIter()";
         }
         return `${this.type}.defaultInstance()`;
     }
