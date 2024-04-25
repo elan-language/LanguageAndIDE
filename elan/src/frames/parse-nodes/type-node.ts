@@ -2,7 +2,6 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 import { TypeTuple } from "./type-tuple";
 import { FuncTypeNode } from "./func-type-node";
-import { TypeArray } from "./type-array";
 
 export class TypeNode extends AbstractAlternatives {
 
@@ -21,7 +20,6 @@ export class TypeNode extends AbstractAlternatives {
                 var tuple = new TypeTuple();
                 this.alternatives.push(tuple);
             } 
-            this.alternatives.push(new TypeArray());
             this.alternatives.push(new TypeWithOptGenerics());
             super.parseText(text.trimStart());
         }
