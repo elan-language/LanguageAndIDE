@@ -20,7 +20,7 @@ import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ISymbol } from "../symbols/symbol";
 import { StdLibSymbols } from "./std-lib-symbols";
@@ -29,6 +29,7 @@ import { Scope } from "./interfaces/scope";
 import { CompileStatus } from "./compile-status";
 import { TestStatus } from "./test-status";
 import { RunStatus } from "./run-status";
+import { CompileError } from "./compile-error";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -237,6 +238,10 @@ export class FileImpl implements File {
 
     parseStatusAsString() : string {
         return ParseStatus[this.parseStatus()];
+    }
+
+    compileErrors(): CompileError[] {
+        return parentHelper_aggregateCompileErrorsOfChildren(this);
     }
 
     getAllSelected(): Selectable[] {

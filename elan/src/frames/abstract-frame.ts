@@ -8,6 +8,7 @@ import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
 import { ISymbol } from "../symbols/symbol";
+import { CompileError } from "./compile-error";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -397,4 +398,10 @@ export abstract class AbstractFrame implements Frame {
 
     abstract parseFrom(source: CodeSource): void;
 
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        const cc = this.getFields().map(s => s.aggregateCompileErrors()).reduce((prev, cur) => prev.concat(cur), []);
+        return this.compileErrors.concat(cc);
+    }
 }

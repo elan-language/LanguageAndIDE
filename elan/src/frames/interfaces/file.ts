@@ -9,6 +9,7 @@ import { Profile } from "./profile";
 import { CompileStatus } from "../compile-status";
 import { TestStatus } from "../test-status";
 import { RunStatus } from "../run-status";
+import { CompileError } from "../compile-error";
 
 export interface File extends Parent {
     // external use
@@ -52,4 +53,6 @@ export interface File extends Parent {
 
     deselectAll(): void;
     processKey(e: editorEvent): void;
+
+    compileErrors(): CompileError[];
 }
