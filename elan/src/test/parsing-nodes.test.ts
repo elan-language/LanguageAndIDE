@@ -46,6 +46,7 @@ import { Alternatives } from '../frames/parse-nodes/alternatives';
 import { RegExMatchNode } from '../frames/parse-nodes/regex-match-node';
 import { BinaryExpression } from '../frames/parse-nodes/binary-expression';
 import { InstanceProcRef } from '../frames/parse-nodes/instanceProcRef';
+import { TypeArray } from '../frames/parse-nodes/type-array';
 
 suite('Parsing Nodes', () => {
 
@@ -325,7 +326,16 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new TypeWithOptGenerics(), `List<of (Bar, Yon)>`, ParseStatus.valid, "List<of (Bar, Yon)>", "", "", "<type>List</type>&lt;<keyword>of</keyword> (<type>Bar</type>, <type>Yon</type>)&gt;");
 
 	});
+	test('TypeArray', () => {
+		testNodeParse(new TypeArray(), `Foo[]`, ParseStatus.valid, "Foo[]", "", "");
+		testNodeParse(new TypeArray(), `Foo`, ParseStatus.incomplete, "Foo", "", "");
+		testNodeParse(new TypeArray(), `Foo[`, ParseStatus.incomplete, "Foo[", "", "");
+		testNodeParse(new TypeArray(), `Foo[][]`, ParseStatus.valid, "Foo[]", "[]", "");
+		testNodeParse(new TypeArray(), `Foo(`, ParseStatus.invalid, "", "Foo(", "");
+	});
+
 	test('TypeNode', () => {
+
 		testNodeParse(new TypeNode(), `Foo<of List<of Bar>>`, ParseStatus.valid, "Foo<of List<of Bar>>", "", "");//Single
 		testNodeParse(new TypeNode(), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
 		testNodeParse(new TypeNode(), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
@@ -333,6 +343,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new TypeNode(), `(Foo, (Bar, Yon, Qux))`, ParseStatus.valid, "(Foo, (Bar, Yon, Qux))", "", "");
 		testNodeParse(new TypeNode(), `(Foo, Bar< of Yon>)`, ParseStatus.valid, "(Foo, Bar< of Yon>)", "", "");
 		testNodeParse(new TypeNode(), `Foo<of List<of (Bar, Qux)>>`, ParseStatus.valid, "Foo<of List<of (Bar, Qux)>>", "", "");
+		testNodeParse(new TypeNode(), `Foo[]`, ParseStatus.valid, "Foo[]", "", "");
 	});
 	test('TypeNode - Func', () => {
 		testNodeParse(new TypeNode(), `Func<of Foo, Bar => Yon>`, ParseStatus.valid, "Func<of Foo, Bar => Yon>", "", "");//Single
