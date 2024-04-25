@@ -58,8 +58,8 @@ body {
     /* define internal grid */
     background-color: var(--idePanelBackground);
     display: grid;
-    grid-template-columns: 40;
-    grid-template-rows: 30;
+    grid-template-columns: 10;
+    grid-template-rows: 10;
     grid-gap: 0px;
     overflow: hidden;
     margin: 0;
@@ -91,9 +91,4 @@ button:hover, button:active {
 
 #console, .elan-code {
   overflow-y: auto;
-}
-
-#graphics div {
-  height: 0;
-  font-size: calc(1vh);
 }
