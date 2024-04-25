@@ -18,7 +18,12 @@ export class VarAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        const q = this.qualifier ? this.qualifier.aggregateCompileErrors() : [];
+        const i = this.index ? this.index.aggregateCompileErrors() : [];
+
+        return this.compileErrors
+        .concat(q)
+        .concat(i);
     }
 
     private isRange() {

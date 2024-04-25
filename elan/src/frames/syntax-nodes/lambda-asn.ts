@@ -12,7 +12,9 @@ export class LambdaAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.signature.aggregateCompileErrors())
+        .concat(this.body.aggregateCompileErrors());
     }
 
     compile(): string {

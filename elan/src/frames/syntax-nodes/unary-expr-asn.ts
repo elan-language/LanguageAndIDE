@@ -13,7 +13,8 @@ export class UnaryExprAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.operand.aggregateCompileErrors());
     }
 
     private opToJs() {

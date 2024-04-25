@@ -11,7 +11,7 @@ export class DefaultTypeAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors.concat(this.type.aggregateCompileErrors());
     }
 
     compile(): string {

@@ -11,7 +11,11 @@ export class NewAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        var cc: CompileError[] = [];
+        for (const i of this.parameters) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(this.typeNode.aggregateCompileErrors()).concat(cc);
     }
 
     compile(): string {

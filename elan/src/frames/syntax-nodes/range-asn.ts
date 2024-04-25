@@ -11,7 +11,12 @@ export class RangeAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        const fr = this.from ? this.from.aggregateCompileErrors() : [];
+        const to = this.to ? this.to.aggregateCompileErrors() : [];
+
+        return this.compileErrors
+        .concat(fr)
+        .concat(to);
     }
 
 

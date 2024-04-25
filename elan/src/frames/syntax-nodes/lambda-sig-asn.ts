@@ -7,13 +7,17 @@ import { ParamDefAsn } from "./param-def-asn";
 
 export class LambdaSigAsn implements Scope, AstNode {
 
-    constructor(private parameters: Array<ParamDefAsn>, private scope: Scope) {
+    constructor(private parameters: ParamDefAsn[], private scope: Scope) {
     }
 
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        var cc: CompileError[] = [];
+        for (const i of this.parameters) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(cc);
     }
 
     symbolType: ISymbolType | undefined;

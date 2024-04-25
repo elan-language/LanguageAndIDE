@@ -11,7 +11,10 @@ export class IfExprAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.condition.aggregateCompileErrors())
+        .concat(this.expr1.aggregateCompileErrors())
+        .concat(this.expr2.aggregateCompileErrors());
     }
 
     compile(): string {

@@ -9,7 +9,7 @@ export class FixedIdAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors;
     }
 
 

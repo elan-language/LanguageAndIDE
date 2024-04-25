@@ -14,7 +14,8 @@ export class LiteralDictionaryAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.list.aggregateCompileErrors());
     }
 
     compile(): string {

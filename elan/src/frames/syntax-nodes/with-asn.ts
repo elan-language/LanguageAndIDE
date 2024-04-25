@@ -12,7 +12,9 @@ export class WithAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.obj.aggregateCompileErrors())
+        .concat(this.withClause.aggregateCompileErrors());
     }
 
     compile(): string {

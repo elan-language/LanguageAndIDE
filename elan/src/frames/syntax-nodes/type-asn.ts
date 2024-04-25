@@ -15,14 +15,18 @@ import { CompileError } from "../compile-error";
 
 export class TypeAsn implements AstNode {
 
-    constructor(public readonly type: string, public genericParameters: Array<AstNode>, private scope: Scope) {
+    constructor(public readonly type: string, public genericParameters: AstNode[], private scope: Scope) {
         this.type = type.trim();
     }
 
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        var cc: CompileError[] = [];
+        for (const i of this.genericParameters) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(cc);
     }
 
     compile(): string {

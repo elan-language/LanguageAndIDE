@@ -10,7 +10,11 @@ export class QualifierAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        var cc: CompileError[] = [];
+        for (const i of this.qualifier) {
+            cc = cc.concat(i.aggregateCompileErrors());
+        }
+        return this.compileErrors.concat(cc);
     }
 
     compile(): string {

@@ -10,7 +10,9 @@ export class KvpAsn implements AstNode {
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        throw new Error("Method not implemented.");
+        return this.compileErrors
+        .concat(this.key.aggregateCompileErrors())
+        .concat(this.value.aggregateCompileErrors());
     }
 
     compile(): string {
