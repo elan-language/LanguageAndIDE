@@ -31,7 +31,10 @@ function fetchProfile() {
 		return localProfile ? Promise.resolve(localProfile) : Promise.reject();
 	}
 	else {
-		return fetch("profile.json", { mode: "same-origin" }).then(f => f.json()).then(j => j as Profile);
+		var scriptUrl = document.getElementsByTagName('script')[0].src;
+		var scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
+		var jsonProfile = `${scriptName}.json`;
+		return fetch(jsonProfile, { mode: "same-origin" }).then(f => f.json()).then(j => j as Profile);
 	}
 }
 
