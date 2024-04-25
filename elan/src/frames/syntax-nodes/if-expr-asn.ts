@@ -1,4 +1,6 @@
+import { BooleanType } from "../../symbols/boolean-type";
 import { CompileError } from "../compile-error";
+import { mustBeOfType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
@@ -18,6 +20,7 @@ export class IfExprAsn implements AstNode {
     }
 
     compile(): string {
+        mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors);
         return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
     }
 

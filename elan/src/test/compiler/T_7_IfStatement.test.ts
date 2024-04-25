@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T_7_IfStatement', () => {
   test('Pass_1', async () => {
@@ -243,6 +243,26 @@ end main`;
 
   assertDoesNotParse(fileImpl);
 });
+
+test('Fail_ConditionNotBool', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a
+    print "yes"
+  else
+    print "no"
+  end if
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+
+  });
 
 
 });

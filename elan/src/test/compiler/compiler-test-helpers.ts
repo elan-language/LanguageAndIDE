@@ -5,6 +5,7 @@ import { Done } from "mocha";
 import { System } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { StdLib } from "../../std-lib";
+import { CompileStatus } from "../../frames/compile-status";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -31,6 +32,20 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
     const expected = objectCode.replaceAll("\r", "");
     assert.strictEqual(actual, expected);
 }
+
+export function assertDoesNotCompile(file: FileImpl, msgs : string[]) {
+    file.compile();
+    
+    const errors = file.compileErrors();
+
+    for (var i = 0; i < msgs.length; i++) {
+        const m = msgs[i];
+        const e = errors[i];
+        assert.strictEqual(e.message, m);
+    }
+    assert.strictEqual(CompileStatus[file.compileStatus()], CompileStatus[CompileStatus.error]);
+}
+
 
 export function assertIsSymbol(toTest: any, id: string, name: string) {
     if (isSymbol(toTest)) {

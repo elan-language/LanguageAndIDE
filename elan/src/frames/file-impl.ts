@@ -219,7 +219,7 @@ export class FileImpl implements File {
             case ParseStatus.invalid: return CompileStatus.pending;
             case ParseStatus.empty: return CompileStatus.pending;
             case ParseStatus.incomplete: return CompileStatus.pending;
-            case ParseStatus.valid: return CompileStatus.ok;
+            case ParseStatus.valid: return this.compileErrors().length === 0 ? CompileStatus.ok : CompileStatus.error;
             case ParseStatus.notParsed: return CompileStatus.pending;
         }
     }
