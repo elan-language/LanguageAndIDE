@@ -1,4 +1,4 @@
-import { handleClick, handleDblClick, handleKey} from "../editorHandlers";
+import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { CompileStatus } from "../frames/compile-status";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
@@ -10,10 +10,10 @@ import { StdLib } from "../std-lib";
 import { System } from "../system";
 
 const codeContainer = document.querySelector('.elan-code');
-var file : File;
+var file: File;
 const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 var doOnce = true;
-var profile : Profile;
+var profile: Profile;
 
 async function hash(toHash: string) {
 	const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
@@ -25,18 +25,30 @@ async function hash(toHash: string) {
 	return hashHex;
 }
 
+function fetchProfile() {
+	if (window.location.protocol === "file:") {
+		const localProfile = (window as any).localProfile as Profile;
+		return localProfile ? Promise.resolve(localProfile) : Promise.reject();
+	}
+	else {
+		var scriptUrl = document.getElementsByTagName('script')[0].src;
+		var scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
+		var jsonProfile = `${scriptName}.json`;
+		return fetch(jsonProfile, { mode: "same-origin" }).then(f => f.json()).then(j => j as Profile);
+	}
+}
 
-fetch("profile.json", { mode: "same-origin" })
-	.then(f => f.json())
-	.then(j => {
-		profile = j as Profile;
-		file = new FileImpl(hash, profile, true);
-		displayFile();
-	})
+function setup(p : Profile){
+	profile = p;
+	file = new FileImpl(hash, profile, true);
+	displayFile();
+}
+
+fetchProfile()
+	.then(p =>setup(p))
 	.catch((e) => {
-		profile = new DefaultProfile();
-		file = new FileImpl(hash, profile, true);
-		displayFile();
+		console.warn("profile not found - using default");
+		setup(new DefaultProfile());
 	});
 
 function displayFile() {
@@ -76,7 +88,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 
 function getStatus() {
 	const parseStatus = file.parseStatus();
-	if (parseStatus === ParseStatus.incomplete || parseStatus === ParseStatus.invalid){
+	if (parseStatus === ParseStatus.incomplete || parseStatus === ParseStatus.invalid) {
 		return `Parse ${ParseStatus[parseStatus]}`;
 	}
 
@@ -163,7 +175,7 @@ function updateContent(text: string) {
 		elanCode!.addEventListener('keydown', (event: Event) => {
 			const ke = event as KeyboardEvent;
 			const msg: editorEvent = {
-	
+
 				type: 'key',
 				target: "window",
 				key: ke.key,
@@ -226,9 +238,9 @@ function postMessage(e: editorEvent) {
 class ElanConsole {
 
 	previousContent: string = "";
-	currentInterval? : any;
+	currentInterval?: any;
 
-	printLine(line : string) {
+	printLine(line: string) {
 		this.previousContent = `${this.previousContent}${line}<br>`;
 		consoleWindow.innerHTML = this.render();
 	}
@@ -243,7 +255,7 @@ class ElanConsole {
 		consoleWindow.innerHTML = this.render();
 		const inp = document.getElementById("inp") as HTMLInputElement;
 		inp.focus();
-		
+
 		return new Promise<string>((rs, rj) => {
 			var entered = false;
 			inp.addEventListener("keydown", (k: KeyboardEvent) => {
@@ -274,17 +286,17 @@ const elanConsole = new ElanConsole();
 const system = new System();
 const stdlib = new StdLib();
 
-const runButton = document.getElementById("run"); 
+const runButton = document.getElementById("run");
 const clearButton = document.getElementById("clear");
-const newButton = document.getElementById("new"); 
+const newButton = document.getElementById("new");
 
 const consoleWindow = document.getElementById("console")!;
 
 consoleWindow.innerHTML = elanConsole.render();
 
 function doImport(str: string) {
-    const url = "data:text/javascript;base64," + btoa(str);
-    return import(url);
+	const url = "data:text/javascript;base64," + btoa(str);
+	return import(url);
 }
 
 function printer(s: string) {
@@ -326,22 +338,22 @@ upload.addEventListener('click', chooser);
 
 function chooser(event: Event) {
 	var f = document.createElement('input');
-    f.style.display='none';
-    f.type='file';
-    f.name='file';
-	f.accept= ".elan";
-    (document.getElementById("code-controls") as any).appendChild(f);
+	f.style.display = 'none';
+	f.type = 'file';
+	f.name = 'file';
+	f.accept = ".elan";
+	(document.getElementById("code-controls") as any).appendChild(f);
 	f.addEventListener('change', handleUpload);
-    f.click();
+	f.click();
 }
 
 
 function handleUpload(event: Event) {
-	
+
 	const elanFile = (event.target as any).files?.[0] as any;
 
 	if (elanFile) {
-		const fileName = elanFile.name; 
+		const fileName = elanFile.name;
 		const reader = new FileReader();
 		reader.addEventListener('load', (event: any) => {
 			const rawCode = event.target.result;
