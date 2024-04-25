@@ -3,6 +3,7 @@ import { Selectable } from "./selectable";
 import { ParseStatus } from "../parse-status";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
+import { CompileError } from "../compile-error";
 
 export interface Frame extends Selectable, Scope {
     isFrame: boolean;
@@ -36,4 +37,7 @@ export interface Frame extends Selectable, Scope {
     fieldUpdated(field: Field): void;
 
     expandCollapseAll(): void;
+
+    compileErrors: CompileError[];
+    aggregateCompileErrors(): CompileError[];
 }

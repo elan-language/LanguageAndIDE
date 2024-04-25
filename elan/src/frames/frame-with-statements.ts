@@ -3,6 +3,7 @@ import { isSymbol } from "../symbols/symbolHelpers";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
+import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import { Collapsible } from "./interfaces/collapsible";
 import { Field } from "./interfaces/field";
@@ -10,7 +11,7 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -161,5 +162,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         }
 
         return this.getParent().resolveSymbol(id, this);
+    }
+
+    aggregateCompileErrors(): CompileError[] {
+        const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
+        return cc.concat(super.aggregateCompileErrors());
     }
 }

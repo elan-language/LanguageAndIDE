@@ -1,4 +1,5 @@
 import { AbstractSelector } from "./abstract-selector";
+import { CompileError } from "./compile-error";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { ParseStatus } from "./parse-status";
@@ -7,6 +8,11 @@ import { ParseStatus } from "./parse-status";
 export function parentHelper_worstParseStatusOfChildren(parent: Parent): ParseStatus {
         return parent.getChildren().map(s => s.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
 }
+
+export function parentHelper_aggregateCompileErrorsOfChildren(parent: Parent): CompileError[] {
+    return parent.getChildren().map(s => s.aggregateCompileErrors()).reduce((prev, cur) => prev.concat(cur), []);
+}
+
 
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {
         var i = parent.getChildren().indexOf(child);
