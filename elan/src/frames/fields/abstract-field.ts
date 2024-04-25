@@ -11,6 +11,7 @@ import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { Scope } from "../interfaces/scope";
 import { CSV } from "../parse-nodes/csv";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
+import { CompileError } from "../compile-error";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -30,6 +31,8 @@ export abstract class AbstractField implements Selectable, Field {
     protected rootNode?: ParseNode;
     protected astNode?: AstNode;
     protected completion: string = "";
+
+    protected compileError?: CompileError;
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -316,6 +319,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     compile(): string {
+        this.compileError = undefined;
         if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
             return this.getOrTransformAstNode?.compile() ?? "";
         }

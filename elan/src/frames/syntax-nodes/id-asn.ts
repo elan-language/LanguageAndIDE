@@ -1,14 +1,23 @@
 import { SymbolScope } from "../../symbols/symbol";
 import { Property } from "../class-members/property";
+import { CompileError } from "../compile-error";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class IdAsn implements AstNode {
 
-    constructor(private id: string, private scope : Scope) {
+    constructor(private id: string, private scope: Scope) {
         this.id = id.trim();
     }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        throw new Error("Method not implemented.");
+    }
+
+
     compile(): string {
         if (isMember(this.scope)) {
             // don't prefix properties with this

@@ -1,11 +1,19 @@
+import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
 export class ResultAsn implements AstNode {
 
-    constructor(private scope : Scope) {
-        
+    constructor(private scope: Scope) {
+
     }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        throw new Error("Method not implemented.");
+    }
+
     compile(): string {
         throw new Error("Method not implemented.");
     }

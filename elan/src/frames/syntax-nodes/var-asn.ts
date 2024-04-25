@@ -3,6 +3,7 @@ import { FunctionType } from "../../symbols/function-type";
 import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
+import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { IndexAsn } from "./index-asn";
@@ -10,8 +11,14 @@ import { RangeAsn } from "./range-asn";
 
 export class VarAsn implements AstNode {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private index: AstNode | undefined, private scope : Scope) {
+    constructor(private id: string, private qualifier: AstNode | undefined, private index: AstNode | undefined, private scope: Scope) {
         this.id = id.trim();
+    }
+
+    compileErrors: CompileError[] = [];
+
+    aggregateCompileErrors(): CompileError[] {
+        throw new Error("Method not implemented.");
     }
 
     private isRange() {
@@ -27,7 +34,7 @@ export class VarAsn implements AstNode {
             return `${this.qualifier.compile()}.`;
         }
         const s = this.scope.resolveSymbol(this.id, this.scope);
-      
+
         if (s && s.symbolScope === SymbolScope.property) {
             return "this.";
         }
@@ -35,14 +42,14 @@ export class VarAsn implements AstNode {
         return "";
     }
 
-    wrapListOrArray(rootType : ISymbolType, code : string) : string {
+    wrapListOrArray(rootType: ISymbolType, code: string): string {
         if (rootType instanceof ListType) {
             return `system.list(${code})`;
         }
         if (rootType instanceof ArrayType) {
             return `system.array(${code})`;
         }
-        if (rootType instanceof FunctionType){
+        if (rootType instanceof FunctionType) {
             return this.wrapListOrArray(rootType.returnType, code);
         }
         return code;
