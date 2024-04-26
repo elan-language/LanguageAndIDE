@@ -47,7 +47,7 @@ suite('Navigation', () => {
 		var file = T03_mainWithAllStatements();
 		var var4 = file.getById("var4") as IdentifierField;
 		assert.equal(var4.isSelected(), false);
-		file.processKey(enter());
+		file.processKey(tab());
 		assert.equal(var4.isSelected(), true);
 		var expr5 = file.getById("expr5") as ExpressionField;
 		assert.equal(expr5.isSelected(), false);
@@ -57,16 +57,16 @@ suite('Navigation', () => {
 		expr5.processKey(tab());
 		var ident7 = file.getById("ident7") as ExpressionField;
 		assert.equal(ident7.isSelected(), true);
-		ident7.processKey(enter());
+		ident7.processKey(tab());
 		var expr8 = file.getById("expr8") as ExpressionField;
 		assert.equal(expr8.isSelected(), true);
 		expr8.processKey(shift_tab());
 		assert.equal(expr8.isSelected(), false);
 		assert.equal(ident7.isSelected(), true);
-		ident7.processKey(shift_enter());
+		ident7.processKey(shift_tab());
 		assert.equal(ident7.isSelected(), false);
 		assert.equal(expr5.isSelected(), true);
-		expr5.processKey(shift_enter());
+		expr5.processKey(shift_tab());
 		assert.equal(expr5.isSelected(), false);
 		assert.equal(var4.isSelected(), true);
 	});
@@ -81,25 +81,25 @@ suite('Navigation', () => {
 			"expr31",
 			"select21",
 			"select0"];
-		file.processKey(enter());
+		file.processKey(tab());
 		var field = file.getById(fields[0]);
 		for (var i in fields) {
 			field = file.getById(fields[i]);
 			assert.equal(field.isSelected(), true);
-			field.processKey(enter());
+			field.processKey(tab());
 		}
 		//Check that one more tab does not move beyond last field
-		field.processKey(enter());
+		field.processKey(tab());
 		assert.equal(field.isSelected(), true);
 		file.processKey(esc());
-		file.processKey(shift_enter());
+		file.processKey(shift_tab());
 		for (var i in fields.reverse()) {
 			field = file.getById(fields[i]);
 			assert.equal(field.isSelected(), true);
-			field.processKey(shift_enter());
+			field.processKey(shift_tab());
 		}
 		//Check that one more tab does not move beyond first field
-		field.processKey(shift_enter());
+		field.processKey(shift_tab());
 		assert.equal(field.isSelected(), true);
 		field.processKey(esc());
 		assert.equal(field.isSelected(), false);
@@ -146,5 +146,7 @@ suite('Navigation', () => {
 		var def = file.getById("default62");
 		assert.equal(def.isSelected(), true);
 	});
+
+	
 });
 

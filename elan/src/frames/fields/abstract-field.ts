@@ -107,8 +107,8 @@ export abstract class AbstractField implements Selectable, Field {
             case 'Escape': {this.holder.select(true, false); break;}
             case "Home": {this.cursorPos = 0; break; } 
             case "End": {this.cursorPos = textLen; break;} 
-            case "Tab": {this.tabOrEnter(e.modKey.shift); break; } 
-            case "Enter": {this.tabOrEnter(e.modKey.shift); break;} 
+            case "Tab": {this.tab(e.modKey.shift); break; } 
+            case "Enter": {this.enter(e.modKey.shift); break;} 
             case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
             case "ArrowRight": {this.cursorRight(); break; } 
             case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
@@ -168,11 +168,22 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
 
-    private tabOrEnter(back: boolean) {  
+    private tab(back: boolean) {  
         if (back) {
             this.holder.selectFieldBefore(this);
         } else {
             this.holder.selectFieldAfter(this);
+        }
+    }
+
+    private enter(before: boolean) {
+        var peerFields =this.holder.getFields();
+        var last = peerFields.length - 1;
+        var thisField = peerFields.indexOf(this);
+        if (before && thisField === 0 || !before && thisField === last) {
+            this.holder.insertPeerSelector(before);
+        } else {
+            this.tab(before)
         }
     }
 

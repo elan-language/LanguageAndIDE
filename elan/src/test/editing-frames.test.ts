@@ -4,6 +4,8 @@ import {ctrl_down, ctrl_up, del, down, enter, ins, shift_down, shift_enter, shif
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
+import { IdentifierField } from '../frames/fields/identifier-field';
+import { ExpressionField } from '../frames/fields/expression-field';
 
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -57,6 +59,48 @@ suite('Editing Frames', () => {
 		assert.equal(newSel.isSelected(), false);
 		assert.equal(if_st.isSelected(), true);
 	});
+	test('Enter/shift-enter on a field goes to next/previous field owned by same frame (except the last/field field).', () => {
+		var file = T03_mainWithAllStatements();
+		var varStatement = file.getById("var3");
+		varStatement.select(true, false);
+		var var4 = file.getById("var4") as IdentifierField;
+		assert.equal(var4.isSelected(), false);
+		file.processKey(enter());
+		assert.equal(var4.isSelected(), true);
+		var expr5 = file.getById("expr5") as ExpressionField;
+		assert.equal(expr5.isSelected(), false);
+		var4.processKey(enter());
+		assert.equal(var4.isSelected(), false);
+		assert.equal(expr5.isSelected(), true);
+		expr5.processKey(shift_enter());
+		assert.equal(expr5.isSelected(), false);
+		assert.equal(var4.isSelected(), true);
+	});
+
+	test('Enter on last field in a frame (or shift-enter on first field) - is same effect as that key on the Frame itself', () => {
+		var file = T03_mainWithAllStatements();
+		var varStatement = file.getById("var3");
+		var expr5 = file.getById("expr5") as ExpressionField;
+		expr5.select();
+		expr5.processKey(enter());
+		var newSel = file.getById("select64"); //New selector
+		assert.equal(newSel.isSelected(), true);
+		newSel.processKey(up());
+		assert.equal(newSel.isSelected(), false);
+		assert.equal(varStatement.isSelected(), true);
+
+		var var4 = file.getById("var4") as IdentifierField;
+		var4.select();
+		var4.processKey(shift_enter());
+		var newSel2 = file.getById("select65"); //New selector
+		assert.equal(newSel2.isSelected(), true);
+		newSel2.processKey(down());
+		assert.equal(newSel2.isSelected(), false);
+		assert.equal(varStatement.isSelected(), true);
+	});
+
+
+
 	test('Move', () => {
 		var file = T03_mainWithAllStatements();
 		var if_st = file.getById("if43");
