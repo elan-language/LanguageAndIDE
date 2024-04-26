@@ -508,4 +508,15 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new InstanceProcRef(), `library.bar`, ParseStatus.valid, "","");
 		testNodeParse(new InstanceProcRef(), `x[3].bar`, ParseStatus.valid, "","");
 	});
+	test('#339 call dot function on a literal', () => {
+		testNodeParse(new FunctionCallNode(), `length(bar)`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `bar.length()`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `bar.asArray()`, ParseStatus.valid, "","");
+		testNodeParse(new LiteralNode(), `[1,2,3,4,5]`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `[1,2,3,4,5].asArray()`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `"Hello World".length()`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `12.3.asString()`, ParseStatus.valid, "","");
+		testNodeParse(new FunctionCallNode(), `bar.`, ParseStatus.incomplete, "","");
+		testNodeParse(new FunctionCallNode(), `bar`, ParseStatus.incomplete, "","");
+	});
 });

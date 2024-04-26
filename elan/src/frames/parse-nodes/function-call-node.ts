@@ -10,6 +10,8 @@ import { OptionalNode } from "./optional-node";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { Qualifier } from "./qualifier";
 import { InstanceNode } from "./instanceNode";
+import { LitValueNode } from "./lit-value";
+import { ListNode } from "./list-node";
 
 export class FunctionCallNode extends AbstractSequence {
     qualifier: OptionalNode | undefined;
@@ -18,10 +20,12 @@ export class FunctionCallNode extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.trim().length > 0) {
+            var list = () => new Qualifier(new ListNode(() => new ExprNode()));
+            var literal = () => new Qualifier(new LitValueNode());
             var global = () => new Qualifier(new KeywordNode(globalKeyword));
             var lib = () => new Qualifier(new KeywordNode(libraryKeyword));
             var instance = () => new Qualifier(new InstanceNode());
-            var qualifier = new Alternatives([global, lib, instance]);
+            var qualifier = new Alternatives([global, lib, instance, literal, list]);
             this.qualifier =  new OptionalNode(qualifier);
             this.name = new IdentifierNode();
             this.args =new CSV(() => new ExprNode(),0);
