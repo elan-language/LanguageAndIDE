@@ -180,10 +180,12 @@ export abstract class AbstractField implements Selectable, Field {
         var peerFields =this.holder.getFields();
         var last = peerFields.length - 1;
         var thisField = peerFields.indexOf(this);
-        if (before && thisField === 0 || !before && thisField === last) {
-            this.holder.insertPeerSelector(before);
+        if (before && thisField === 0) {
+           this.holder.insertPeerSelector(before);
+        } else if (!before && thisField === last) {
+            this.holder.insertSelectorAfterLastField();
         } else {
-            this.tab(before)
+            this.tab(before);
         }
     }
 

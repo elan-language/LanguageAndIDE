@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
-import {ctrl_down, ctrl_up, del, down, enter, ins, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
+import {ctrl_down, ctrl_up, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
@@ -98,7 +98,16 @@ suite('Editing Frames', () => {
 		assert.equal(varStatement.isSelected(), true);
 	});
 
-
+	test('Enter on last field in a frame with statements', () => {
+		var file = T03_mainWithAllStatements();
+		var globSel = file.getById("select0");
+		globSel.processKey(key("p"));
+		var params = file.getById("params67");
+		var stateSel = file.getById("select65");
+		assert.equal(stateSel.isSelected(), false);
+		params.processKey(enter());
+		assert.equal(stateSel.isSelected(), true);
+	});
 
 	test('Move', () => {
 		var file = T03_mainWithAllStatements();

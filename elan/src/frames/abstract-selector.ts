@@ -95,8 +95,8 @@ export abstract class AbstractSelector extends AbstractFrame {
     processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {
-            case "Tab" : {this.tabOrEnter(e.modKey.shift); break;}
-            case "Enter" : {this.tabOrEnter(e.modKey.shift); break;}
+            case "Tab" : {this.tab(e.modKey.shift); break;}
+            case "Enter" : {this.tab(e.modKey.shift); break;}
             case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
             case "Delete": {this.deleteIfPermissible(); break;}
             case "d": {if (e.modKey.control) {this.deleteIfPermissible(); break;}}
@@ -128,7 +128,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         }
     }
 
-    tabOrEnter(shift: boolean): void {
+    tab(shift: boolean): void {
         if (shift) {
             this.   selectLastFieldAboveThisFrame();
         } else {

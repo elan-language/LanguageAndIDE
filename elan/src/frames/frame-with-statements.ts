@@ -67,6 +67,16 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
     insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after, child);}
 
+    insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 
+        var firstChild = this._children[0];
+        if ("isSelector" in firstChild) {
+            firstChild.select(true, false);
+        } else {
+            var selector = this.newChildSelector();
+            this.addChildBefore(selector, firstChild);
+            selector.select(true, false);
+        }
+    }
     removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
     getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
     getLastChild(): Frame {return parentHelper_getLastChild(this); }

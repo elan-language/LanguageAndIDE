@@ -28,7 +28,6 @@ export abstract class AbstractFrame implements Frame {
         map.set(this.htmlId, this);
         this.setMap(map);
     }
-
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
         return this.getParent().resolveSymbol(id, this);
     }
@@ -145,7 +144,7 @@ export abstract class AbstractFrame implements Frame {
           case 'Escape': {this.deselectAll(); break;}
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
-          case "Tab": {this.tabOrEnter(e.modKey.shift); break;} 
+          case "Tab": {this.tab(e.modKey.shift); break;} 
           case "Enter": {this.insertPeerSelector(e.modKey.shift); break;} 
           case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
@@ -186,6 +185,10 @@ export abstract class AbstractFrame implements Frame {
         this.getMap().delete(this.htmlId);
     }
 
+    insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 
+        this.insertPeerSelector(false);
+    }
+
     insertPeerSelector(before: boolean): void {
         var parent =this.getParent();
         if (before && this.canInsertBefore()) {
@@ -199,7 +202,7 @@ export abstract class AbstractFrame implements Frame {
 
     canInsertAfter(): boolean { return true;}
 
-    tabOrEnter(back: boolean) {
+    tab(back: boolean) {
         if (back) {
            this.selectLastFieldAboveThisFrame();
         } else {
