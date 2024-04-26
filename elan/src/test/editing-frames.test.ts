@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
-import {ctrl_down, ctrl_up, del, down, enter, ins, shift_down, shift_enter, shift_ins, up } from './testHelpers';
+import {ctrl_down, ctrl_up, del, down, enter, ins, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
@@ -10,21 +10,21 @@ import { ExpressionField } from '../frames/fields/expression-field';
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
-	test('Shift-Enter from first field in first global', () => {
+	test('Tab from file to first field in first global', () => {
 			var file = T05_classes();
-			file.processKey(enter());
+			file.processKey(tab());
 			var field = file.getById("text3");
 			assert.equal(field.isSelected(), true);
-			field.processKey(shift_enter());
+			field.processKey(shift_tab());
 			assert.equal(field.isSelected(), true);
 	});
-	test('Shift-enter from first field in a main (that is also first in file', () => {
+	test('Shift-tab from file to first field in a main (that is also first in file', () => {
 		var file = T03_mainWithAllStatements();
 		var var4 = file.getById("var4");
 		assert.equal(var4.isSelected(), false);
-		file.processKey(enter());
+		file.processKey(tab());
 		assert.equal(var4.isSelected(), true);
-		var4.processKey(shift_enter());
+		var4.processKey(shift_tab());
 		assert.equal(var4.isSelected(), true);
 	});
 
@@ -64,8 +64,7 @@ suite('Editing Frames', () => {
 		var varStatement = file.getById("var3");
 		varStatement.select(true, false);
 		var var4 = file.getById("var4") as IdentifierField;
-		assert.equal(var4.isSelected(), false);
-		file.processKey(enter());
+		var4.select();
 		assert.equal(var4.isSelected(), true);
 		var expr5 = file.getById("expr5") as ExpressionField;
 		assert.equal(expr5.isSelected(), false);

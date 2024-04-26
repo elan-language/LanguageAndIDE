@@ -328,8 +328,7 @@ export class FileImpl implements File {
         switch (e.key) {
             case 'Home': {this.selectFirstGlobal(); break;}
             case 'End': {this.getLastChild().select(true, false); break;}
-            case 'Tab': {this.tabOrEnter(e.modKey.shift); break;}
-            case 'Enter': {this.tabOrEnter(e.modKey.shift); break;}
+            case 'Tab': {this.tab(e.modKey.shift); break;}
             case 'ArrowDown':  {this.selectFirstGlobal(); break;}
             case 'ArrowRight':  {this.selectFirstGlobal(); break;}
             case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
@@ -340,7 +339,7 @@ export class FileImpl implements File {
         this.getFirstChild().select(true, false);
     }
 
-    private tabOrEnter(back: boolean) {
+    private tab(back: boolean) {
         if (back) {
             this.getLastChild().selectLastField();
         } else {
