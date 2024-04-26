@@ -97,14 +97,34 @@ export function parentHelper_renderChildrenAsObjectCode(parent: Parent) : string
     return result;
 }
 
-export function parentHelper_insertChildSelector(parent: Parent, after: boolean, child: Frame) {
-    var selector = parent.newChildSelector();
+export function parentHelper_insertOrGotoChildSelector(parent: Parent, after: boolean, child: Frame) {
     if (after && child.canInsertAfter()) {
-        parent.addChildAfter(selector, child);
+       insertOrGotoChildSelectorAfter(parent, child);
     } else if (!after && child.canInsertBefore()) {
-        parent.addChildBefore(selector, child);
+        insertOrGotoChildSelectorBefore(parent, child);
     }
-    selector.select(true, false);
+}
+
+function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
+    var prev = parent.getChildBefore(child);
+    if ('isSelector' in prev) { // if there is a selector before
+        prev.select(true, false);
+     } else {
+        var selector = parent.newChildSelector();
+        parent.addChildBefore(selector, child);
+        selector.select(true, false);
+     }
+}
+
+function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame) {
+    var follow = parent.getChildAfter(child);
+    if ('isSelector' in follow) { // if there is a selector before
+        follow.select(true, false);
+     } else {
+        var selector = parent.newChildSelector();
+        parent.addChildAfter(selector, child);
+        selector.select(true, false);
+     }
 }
 
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {

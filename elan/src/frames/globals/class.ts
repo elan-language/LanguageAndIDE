@@ -14,7 +14,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -78,7 +78,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
     addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
     removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
-    insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
+    insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after,child);}
     moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
     moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
     selectLastField(): boolean {return parentHelper_selectLastField(this);} 

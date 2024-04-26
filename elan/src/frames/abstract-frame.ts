@@ -146,8 +146,7 @@ export abstract class AbstractFrame implements Frame {
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
           case "Tab": {this.tabOrEnter(e.modKey.shift); break;} 
-          case "Enter": {this.tabOrEnter(e.modKey.shift); break;}  
-          case "Insert": {this.insertPeerSelector(e.modKey.shift); break;} 
+          case "Enter": {this.insertPeerSelector(e.modKey.shift); break;} 
           case "o": {if (e.modKey.control && isCollapsible(this)) {this.expandCollapse();} break;}
           case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
           case "ArrowUp": {
@@ -187,13 +186,13 @@ export abstract class AbstractFrame implements Frame {
         this.getMap().delete(this.htmlId);
     }
 
-    insertPeerSelector(after: boolean): void { //Overridden by Global frames that inherit from this
+    insertPeerSelector(before: boolean): void {
         var parent =this.getParent();
-        if (after && this.canInsertAfter()) {
-            parent.insertChildSelector(true, this);
-        } else if (!after && this.canInsertBefore()) {
-            parent.insertChildSelector(false, this);
-        } 
+        if (before && this.canInsertBefore()) {
+            parent.insertOrGotoChildSelector(false, this);
+        } else if (!before && this.canInsertAfter()) {
+            parent.insertOrGotoChildSelector(true, this);
+        }
     }
 
     canInsertBefore(): boolean { return true; }

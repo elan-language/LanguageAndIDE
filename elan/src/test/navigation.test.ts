@@ -19,7 +19,6 @@ suite('Navigation', () => {
 			["const1", "valid", "selected focused valid"]);
 
 	});
-
 	test('Select First Child', async () => {
 		await assertClasses(
 			T04_allGlobalsExceptClass,
@@ -32,7 +31,6 @@ suite('Navigation', () => {
 			},
 			["select5", "valid empty", "selected focused valid empty"]);
 	});
-
 	test('Collapse Main', async () => {
 		await assertClasses(
 			T04_allGlobalsExceptClass,
@@ -44,8 +42,6 @@ suite('Navigation', () => {
 			},
 			["main4", "valid multiline", "collapsed valid multiline"]);
 	});
-
-
 	test('Tabbing through fields (& back)', () => {
 
 		var file = T03_mainWithAllStatements();
@@ -150,22 +146,38 @@ suite('Navigation', () => {
 		var def = file.getById("default62");
 		assert.equal(def.isSelected(), true);
 	});
-	test('Insert frame', () => {
+	test('Enter on a frame to Insert new code - creating a selector', () => {
 		var file = T03_mainWithAllStatements();
 		var if_st = file.getById("if43");
-		if_st.processKey(ins());
+		if_st.processKey(shift_enter()); //Insert above
 		var newSel = file.getById("select64");
 		assert.equal(if_st.isSelected(), false);
 		assert.equal(newSel.isSelected(), true);
 		newSel.processKey(down());
 		assert.equal(if_st.isSelected(), true);
 		assert.equal(newSel.isSelected(), false);
-		if_st.processKey(shift_ins());
+		if_st.processKey(enter()); //Insert below
 		var newSel2 = file.getById("select65");
 		assert.equal(if_st.isSelected(), false);
 		newSel2.processKey(up());
 		assert.equal(if_st.isSelected(), true);
 	});
+	test('Enter on a frame does not create a selector if there is already one there', () => {
+		var file = T03_mainWithAllStatements();
+		var if_st = file.getById("if43");
+		if_st.processKey(enter()); //Should insert selector below
+		var newSel = file.getById("select64"); //New a selector
+		assert.equal(newSel.isSelected(), true);
+		newSel.processKey(up()); //Go back up to 'if'
+		assert.equal(newSel.isSelected(), false);
+		assert.equal(if_st.isSelected(), true);
+		if_st.processKey(enter()); //Enter again should not now insert a new selector, but should go to existing
+		assert.equal(newSel.isSelected(), true); //Confirm the now-existing selector is selected
+		newSel.processKey(up()); //Go back up to confirm that selector is still immediately below
+		assert.equal(newSel.isSelected(), false);
+		assert.equal(if_st.isSelected(), true);
+	});
+
 
 	test('Multi-select and move', () => {
 		var file = T03_mainWithAllStatements();

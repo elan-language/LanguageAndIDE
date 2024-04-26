@@ -20,7 +20,7 @@ import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ISymbol } from "../symbols/symbol";
 import { StdLibSymbols } from "./std-lib-symbols";
@@ -193,7 +193,7 @@ export class FileImpl implements File {
     addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
     addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
     removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
-        insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after,child);}
+        insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after,child);}
 
     defocusAll() {
         for (const f of this._map.values()) {

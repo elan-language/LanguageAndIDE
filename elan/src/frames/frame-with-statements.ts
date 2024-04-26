@@ -11,7 +11,7 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { ParseStatus } from "./parse-status";
 import { StatementSelector } from "./statements/statement-selector";
 
@@ -65,7 +65,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     newChildSelector(): AbstractSelector {
         return new StatementSelector(this);
     }
-    insertChildSelector(after: boolean, child: Frame) {parentHelper_insertChildSelector(this, after, child);}
+    insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after, child);}
 
     removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
     getFirstChild(): Frame {return parentHelper_getFirstChild(this); }

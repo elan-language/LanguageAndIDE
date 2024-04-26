@@ -39,7 +39,7 @@ export interface Parent {
     moveSelectedChildrenDownOne(): void;
     moveSelectedChildrenUpOne(): void;
 
-    insertChildSelector(after: boolean, child: Frame): void;
+    insertOrGotoChildSelector(after: boolean, child: Frame): void;
     newChildSelector(): AbstractSelector;
 
     getFactory(): StatementFactory;
