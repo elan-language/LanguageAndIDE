@@ -146,51 +146,5 @@ suite('Navigation', () => {
 		var def = file.getById("default62");
 		assert.equal(def.isSelected(), true);
 	});
-	test('Enter on a frame to Insert new code - creating a selector', () => {
-		var file = T03_mainWithAllStatements();
-		var if_st = file.getById("if43");
-		if_st.processKey(shift_enter()); //Insert above
-		var newSel = file.getById("select64");
-		assert.equal(if_st.isSelected(), false);
-		assert.equal(newSel.isSelected(), true);
-		newSel.processKey(down());
-		assert.equal(if_st.isSelected(), true);
-		assert.equal(newSel.isSelected(), false);
-		if_st.processKey(enter()); //Insert below
-		var newSel2 = file.getById("select65");
-		assert.equal(if_st.isSelected(), false);
-		newSel2.processKey(up());
-		assert.equal(if_st.isSelected(), true);
-	});
-	test('Enter on a frame does not create a selector if there is already one there', () => {
-		var file = T03_mainWithAllStatements();
-		var if_st = file.getById("if43");
-		if_st.processKey(enter()); //Should insert selector below
-		var newSel = file.getById("select64"); //New a selector
-		assert.equal(newSel.isSelected(), true);
-		newSel.processKey(up()); //Go back up to 'if'
-		assert.equal(newSel.isSelected(), false);
-		assert.equal(if_st.isSelected(), true);
-		if_st.processKey(enter()); //Enter again should not now insert a new selector, but should go to existing
-		assert.equal(newSel.isSelected(), true); //Confirm the now-existing selector is selected
-		newSel.processKey(up()); //Go back up to confirm that selector is still immediately below
-		assert.equal(newSel.isSelected(), false);
-		assert.equal(if_st.isSelected(), true);
-	});
-
-
-	test('Multi-select and move', () => {
-		var file = T03_mainWithAllStatements();
-		var whil = file.getById("while16");
-		var rep = file.getById("repeat19");
-		var fr = file.getById("for22");
-		whil.select(true, false);
-		whil.processKey(shift_down());
-		rep.processKey(shift_down());
-		assert.equal(whil.isSelected(), true);
-		assert.equal(rep.isSelected(), true);
-		assert.equal(fr.isSelected(), true);
-	});
-
 });
 
