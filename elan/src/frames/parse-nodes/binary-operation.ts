@@ -12,7 +12,7 @@ export class BinaryOperation extends AbstractAlternatives {
 
     constructor() {
         super();
-        this.completionWhenEmpty = "operator";
+        this.completionWhenEmpty = "operator ";
     }
     parseText(text: string): void {  
         this.alternatives.push(new OperatorNode(PLUS));

@@ -38,12 +38,12 @@ suite('Parsing - Completions', () => {
 
     test('ExprNode', () => {
         testCompletion(new ExprNode(), "a + b", ParseStatus.valid, "");
-        testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, " <pr>expression</pr>");
+        testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
         testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
         testCompletion(new ExprNode(), "(", ParseStatus.incomplete, "<pr>expression</pr>)");
-        testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, " <pr>expression</pr>)");
+        testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)");
         testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
-        testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, " <pr>expression</pr>");
+        testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<pr>expression</pr>");
     });
 
     test('CSV of Identifier', () => {
@@ -76,7 +76,7 @@ suite('Parsing - Completions', () => {
 
     test('BinaryExpression', () => {
         testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
-        testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, " <pr>expression</pr>");
+        testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
         testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<pr>expression</pr>");
     });
 

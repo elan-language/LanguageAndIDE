@@ -71,11 +71,11 @@ test('Simple entry & editing of text in a name', () => {
         expr.processKey(key(" "));
         assert.equal(expr.text, "3 ");
         assert.equal(expr.cursorPos, 2); 
-        assert.equal(expr.getCompletion(), "<pr>operator</pr> <pr>expression</pr>");
+        assert.equal(expr.getCompletion(), "<pr>operator </pr><pr>expression</pr>");
         expr.processKey(key("+")); 
-        assert.equal(expr.text, "3 +");
-        assert.equal(expr.cursorPos, 3); 
-        assert.equal(expr.getCompletion(), " <pr>expression</pr>");
+        assert.equal(expr.text, "3 + ");
+        assert.equal(expr.cursorPos, 4); 
+        assert.equal(expr.getCompletion(), "<pr>expression</pr>");
         expr.processKey(key(" "));
         assert.equal(expr.text, "3 + ");
         assert.equal(expr.cursorPos, 4); 
