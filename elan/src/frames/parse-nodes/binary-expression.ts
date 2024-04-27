@@ -21,7 +21,7 @@ export class BinaryExpression extends AbstractSequence {
         this.addElement(new SpaceNode(Space.added));
         this.op = new BinaryOperation();
         this.addElement(this.op);
-        this.addElement(new SpaceNode(Space.required));
+        this.addElement(new SpaceNode(Space.added));
         this.rhs = new ExprNode();
         this.addElement(this.rhs);
         return super.parseText(text);
