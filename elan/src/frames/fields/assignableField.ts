@@ -5,9 +5,6 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
-import { ParseStatus } from "../parse-status";
-import { transform } from "../syntax-nodes/ast-visitor";
-import { Scope } from "../interfaces/scope";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 
 export class AssignableField extends AbstractField { 
@@ -16,6 +13,7 @@ export class AssignableField extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("variable");
+        this.help = `A previously defined variable, but NOT a parameter. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)`;
     }
     getIdPrefix(): string {
         return 'ident';

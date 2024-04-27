@@ -9,6 +9,16 @@ import { ExternalStatement } from "../statements/external-statement";
 export class IntoSelector extends AbstractField {
 
     protected placeholderIsCode: boolean = true;
+    private ext: ExternalStatement;
+
+    constructor(holder: ExternalStatement) {
+        super(holder);
+        this.ext = holder;
+        this.setPlaceholder("into");
+        this.setOptional(true);
+        this.setParseStatus(ParseStatus.valid);
+        this.help = `Type 'i' put the result of the external method call into a pre-defined variable of a Type able to accept the result.`;
+    }
     
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
@@ -20,17 +30,6 @@ export class IntoSelector extends AbstractField {
             source.remove("into ");
             this.ext.setIntoExtension(true);
         }
-    }
-
-
-    private ext: ExternalStatement;
-
-    constructor(holder: ExternalStatement) {
-        super(holder);
-        this.ext = holder;
-        this.setPlaceholder("into");
-        this.setOptional(true);
-        this.setParseStatus(ParseStatus.valid);
     }
     getIdPrefix(): string {
         return 'into';

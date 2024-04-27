@@ -13,6 +13,7 @@ export class VarDefField extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("name");
+        this.help = `A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)`;
     }
     getIdPrefix(): string {
         return 'var';

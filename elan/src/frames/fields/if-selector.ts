@@ -9,7 +9,18 @@ import { Regexes } from "./regexes";
 export class IfSelector extends AbstractField {
 
     protected placeholderIsCode: boolean = true;
-    
+    private else: Else;
+
+    constructor(holder: Else) {
+        super(holder);
+        this.else = holder;
+        this.setPlaceholder("if");
+        this.setOptional(true);
+        this.setParseStatus(ParseStatus.valid);
+        this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
+    }
+
+   
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
     }
@@ -22,16 +33,6 @@ export class IfSelector extends AbstractField {
         }
     }
 
-
-    private else: Else;
-
-    constructor(holder: Else) {
-        super(holder);
-        this.else = holder;
-        this.setPlaceholder("if");
-        this.setOptional(true);
-        this.setParseStatus(ParseStatus.valid);
-    }
     getIdPrefix(): string {
         return 'elif';
     }

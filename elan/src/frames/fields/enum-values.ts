@@ -1,12 +1,9 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 
 import { CSV } from "../parse-nodes/csv";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../parse-status";
-import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { AbstractField } from "./abstract-field";
 
@@ -16,6 +13,7 @@ export class EnumValues extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("values");
+        this.help = `Comma-separated list of names, each of which must start with a lower-case letter, with same possible other characters as a variable name.`;
     }
     getIdPrefix(): string {
         return 'enumVals';

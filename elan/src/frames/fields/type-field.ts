@@ -1,11 +1,8 @@
 import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
-import { ParseStatus } from "../parse-status";
-import { transform } from "../syntax-nodes/ast-visitor";
 import { TypeAsn } from "../syntax-nodes/type-asn";
 import { AbstractField } from "./abstract-field";
 
@@ -15,6 +12,7 @@ export class TypeField extends AbstractField  {
         super(holder);
         this.useHtmlTags = true;
         this.placeholder = "Type";
+        this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
     }
     getIdPrefix(): string {
         return 'type';

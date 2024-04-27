@@ -10,6 +10,7 @@ export class CaseValueField extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("value");
+        this.help = `Must be a literal value of the same type as the variable specified for the 'switch'.`;
     }
     initialiseRoot(): ParseNode {
         this.astNode = undefined; 

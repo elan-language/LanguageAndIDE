@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
@@ -11,6 +10,7 @@ export class InheritsFrom extends AbstractField {
     constructor(holder: Frame) {
         super(holder);
         this.setPlaceholder("type(s)");
+        this.help = `Enter one or more (comma-separated) Type names to inherit from.`;
     }
     getIdPrefix(): string {
         return 'args';

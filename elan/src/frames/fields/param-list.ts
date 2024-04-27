@@ -1,12 +1,9 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
-
 import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { ParamDefAsn } from "../syntax-nodes/param-def-asn";
 import { AbstractField } from "./abstract-field";
@@ -18,6 +15,7 @@ export class ParamList extends AbstractField {
         this.setPlaceholder("parameter definitions");
         this.useHtmlTags = true;
         this.setOptional(true);
+        this.help = `Zero or more parameter definitions comma-separated. Each parameter definition consists of a parameter name followed by the 'as' keyword and a Type. A parameter name follows the same rules as for a variable name - starting with a lower-case letter.`;
     }
 
     getIdPrefix(): string {

@@ -27,7 +27,7 @@ suite('Field Parsing Tests', () => {
 		text.setText("Hello");
 		text.parseCurrentText();
 		assert.equal(text.getParseStatus(), ParseStatus.valid);
-		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion><error></error><help title="help TBD">?</help></field>`);
+		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion><error></error><help title="Any text on a single line.">?</help></field>`);
 		}); 
 
 	test('parse varDefField', () => { 
@@ -39,7 +39,7 @@ suite('Field Parsing Tests', () => {
 		id.setText("ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.valid);
-		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><error></error><help title="help TBD">?</help></field>`);
+		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><error></error><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`);
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.invalid);
@@ -60,7 +60,7 @@ suite('Field Parsing Tests', () => {
 		id.setText("ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.valid);
-		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><error></error><help title="help TBD">?</help></field>`);
+		assert.equal(id.renderAsHtml(), `<field id="var4" class="valid" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><error></error><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`);
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.invalid);

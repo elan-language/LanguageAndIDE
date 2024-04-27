@@ -15,6 +15,7 @@ export class ArgListField extends AbstractField {
         super(holder);
         this.setPlaceholder("arguments");
         this.setOptional(true);
+        this.help = `list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.`;
     }
     getIdPrefix(): string {
         return 'args';

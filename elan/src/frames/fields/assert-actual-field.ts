@@ -10,7 +10,8 @@ export class AssertActualField extends AbstractField {
 
     constructor(holder: Frame) {
         super(holder);
-        this.placeholder = "function call or variable";
+        this.placeholder = "result";
+        this.help = `May be a function call, or a variable defined in a prior statement.`;
     }
     
     initialiseRoot(): ParseNode {

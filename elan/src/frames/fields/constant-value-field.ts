@@ -1,10 +1,7 @@
-import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { LiteralNode } from "../parse-nodes/literal-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { transform } from "../syntax-nodes/ast-visitor";
 import { AbstractField } from "./abstract-field";
 
 export class ConstantValueField extends AbstractField {  
@@ -12,7 +9,8 @@ export class ConstantValueField extends AbstractField {
      
     constructor(holder: Frame) {
         super(holder);
-        this.setPlaceholder("lit");
+        this.setPlaceholder("literal");
+        this.help = `A literal value (such as a number or string), or a literal List or Dictionary (consult documentation for format).`;
     }
 
     initialiseRoot(): ParseNode {

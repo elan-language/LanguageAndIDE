@@ -17,6 +17,7 @@ export class OptionalKeyword extends AbstractField {
         this.setOptional(true);
         this.keyword = keyword;
         this.placeholder = keyword;
+        this.help = `Type one or more letters of the keyword shown to add this optional keyword into the code.`;
     }
 
     initialiseRoot(): ParseNode {

@@ -13,6 +13,7 @@ export class CommentField extends AbstractField  {
         super(holder);
         this.setOptional(true);
         this.setPlaceholder("comment");
+        this.help = `Any text on a single line.`;
     }
     initialiseRoot(): ParseNode {
         this.astNode = undefined;
