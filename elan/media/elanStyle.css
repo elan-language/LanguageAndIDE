@@ -8,6 +8,12 @@ code {
     font-size: 11pt;
     background-color: var(--defaultBackground);
     border-color: var(--defaultBackground);
+    font-style: normal;
+}
+
+/*TODO - change this tag to something clearer e.g. 'it' */
+pr { 
+    font-style: italic;
 }
 
 *:focus {
@@ -144,26 +150,29 @@ field.selected.valid.optional.empty text, field.selected.valid.optional.empty in
     color: var(--reverseText);
 }
 
-/* field-placeholder */
+/* field placeholder */
 field placeholder {
-  display: none; /* overrridden where appropriate */
-  font-style: italic;
-}
-field placeholder.code {
-    font-style: normal;
+  display: none; 
 }
 
-field.empty placeholder {
+field.empty placeholder, field.empty placeholder * {
     display: inline;
     color: var(--incomplete);
 }
 
-field.empty.optional placeholder {
-    display: none; 
+field.empty.optional placeholder, field.empty.optional placeholder * {
+    display: none;
 }
 
-field.selected.empty placeholder, field.selected.optional placeholder {
-    display: none; /* Because responsibility for prompting in a selected field falls to 'completion' ...*/
+field.empty.selected placeholder, field.empty.selected placeholder * {
+    display: inline;
+    color: var(--reverseText);
+    background-color: var(--incomplete);
+}
+
+field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
+    display: inline;
+    background-color: var(--optional);
 }
 
 /* ... however, different rules when it is the 'holding' frame that is selected */
@@ -179,19 +188,41 @@ field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional 
     display: inline;
 }
 
-completion  {
+/* field help */
+field help {
     display: none;
 }
+field.selected help, field.selected help * {
+    display: inline;
+    color: var(--reverseText);
+    background-color: var(--help);
+}
+
+/* field completion */
+field completion  {
+    display: none;
+}
+
 field.selected completion, field.selected completion * {
     display: inline;
     color: var(--reverseText);
     background-color: var(--incomplete);
 }
-field.selected completion pr{
-    font-style: italic;
+
+field.selected.empty completion, field.selected.empty completion *,
+field.selected.empty.optional completion, field.selected.empty.optional completion *  {
+    display: none;
 }
-field.selected completion opt{
-    background-color: var(--optional);
+
+/* field error */
+field error {
+    display: none;
+}
+
+field.selected error, field.selected error * {
+    display: inline;
+    color: var(--reverseText);
+    background-color: var(--invalid);
 }
 
 /* Selectors */

@@ -30,6 +30,8 @@ export abstract class AbstractField implements Selectable, Field {
     protected rootNode?: ParseNode;
     protected astNode?: AstNode;
     protected completion: string = "";
+    protected errorMessage: string = "";
+    protected help: string = "help TBD";
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -293,12 +295,8 @@ export abstract class AbstractField implements Selectable, Field {
         return this._classes.join(" ");
     };
 
-    placeholderKind() : string {
-        return this.placeholderIsCode ? ` class="code"` : ``;
-    }
-
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder${this.placeholderKind()}>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion><error>${this.errorMessage}</error><help title="${this.help}">?</help></field>`;
     }
 
     indent(): string {
@@ -324,7 +322,6 @@ export abstract class AbstractField implements Selectable, Field {
                 this.astNode = transform(this.rootNode, this.getHolder());
             }
         }
-
         return this.astNode;
     }
 

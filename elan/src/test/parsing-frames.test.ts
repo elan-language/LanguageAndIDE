@@ -400,7 +400,7 @@ end class
 		ext.method.parseCurrentText();
 		ext.args.parseCurrentText();;
 		var html = ext.renderAsHtml();
-		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text></text><placeholder>method</placeholder><completion><pr>method</pr></completion></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion><pr></pr></completion></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder class="code">into</placeholder><completion></completion></field></top></statement>`);
+		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text></text><placeholder>method</placeholder><completion><pr>method</pr></completion><error></error><help title="help TBD">?</help></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion><pr></pr></completion><error></error><help title="help TBD">?</help></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder>into</placeholder><completion></completion><error></error><help title="help TBD">?</help></field></top></statement>`);
 	});
 
 	test('parse Frames - switch 1', async () => {
