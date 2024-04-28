@@ -441,6 +441,40 @@ end main
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
+	test('parse Frames - external with and without into clause', async () => {
+		var code = `# 0689659e2831b64100b411c9ab85c703343cf8f1df1c79074863928b350dcea6 Elan v0.1 valid
+
+main
+  external foo(4)
+  external bar(4) into x
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		await await fl.parseFrom(source);
+		var elan = await fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
+	test('parse Frames - else with and without if', async () => {
+		var code = `# 137e2149d84f86368994a74b51a04d7e84bfc144b3cc2810d511cdb7bdf97607 Elan v0.1 valid
+
+main
+  if true
+    else if true
+
+    else
+
+  end if
+end main
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile());
+		await await fl.parseFrom(source);
+		var elan = await fl.renderAsSource();
+		assert.equal(elan, code.replaceAll("\n", "\r\n"));
+	});
 
 	
 });

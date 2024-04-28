@@ -31,6 +31,7 @@ export class IntoSelector extends AbstractField {
             this.ext.setIntoExtension(true);
         }
     }
+
     getIdPrefix(): string {
         return 'into';
     }
@@ -48,7 +49,7 @@ export class IntoSelector extends AbstractField {
         var empty = this.text ==="";
         if (empty && (char ==="i")) {
             this.ext.setIntoExtension(true);
-            this.ext.getFields()[1].select(true, false); //Second field will now be the condition
+            this.ext.assignable.select();
             return;
         }
         super.processKey(keyEvent);

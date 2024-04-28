@@ -162,6 +162,7 @@ field.empty placeholder, field.empty placeholder * {
 
 field.empty.optional placeholder, field.empty.optional placeholder * {
     display: none;
+    color: var(--optional);
 }
 
 field.empty.selected placeholder, field.empty.selected placeholder * {
@@ -172,7 +173,12 @@ field.empty.selected placeholder, field.empty.selected placeholder * {
 
 field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
     display: inline;
+    color: var(--reverseText);
     background-color: var(--optional);
+}
+
+field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
+    display: inline;
 }
 
 /* ... however, different rules when it is the 'holding' frame that is selected */
@@ -242,7 +248,7 @@ field.selected error, field.selected error * {
     color: var(--defaultText);
   }
 
-  /* placeholder */
+  /* selector placeholder */
 selector placeholder  {
     display: none;
 }

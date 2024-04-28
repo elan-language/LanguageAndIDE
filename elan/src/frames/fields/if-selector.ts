@@ -20,7 +20,6 @@ export class IfSelector extends AbstractField {
         this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
     }
 
-   
     initialiseRoot(): ParseNode {
         throw new Error("Method not implemented.");
     }
@@ -50,7 +49,7 @@ export class IfSelector extends AbstractField {
         var empty = this.text ==="";
         if (empty && (char ==="i")) {
             this.else.setIfExtension(true);
-            this.else.getFields()[0].select(true, false); //First field will now be the condition
+            this.else.condition.select();
             return;
         }
         super.processKey(keyEvent);
