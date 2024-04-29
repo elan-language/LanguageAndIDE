@@ -40,71 +40,71 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
             compileErrors.push(new CompileError(`Too many parameters ${i}`));
         }
         else {
-            mustBeCompatibleType(p, t, compileErrors);
+            mustBeCompatibleType(t, p.symbolType!, compileErrors);
         }
     }
 }
 
 
-function FailIncompatible(lhs: AstNode, rhs: ISymbolType, compileErrors: CompileError[]) {
-    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.symbolType!.name} `));
+function FailIncompatible(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[]) {
+    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name} `));
 }
 
 function FailUnknown(lhs: AstNode, compileErrors: CompileError[]) {
     compileErrors.push(new CompileError(`Undeclared variable ${lhs}`));
 }
 
-export function mustBeCompatibleType(lhs: AstNode, rhs: ISymbolType, compileErrors: CompileError[]) {
-    if (lhs.symbolType instanceof BooleanType && !(rhs instanceof BooleanType)) {
+export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[]) {
+    if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof StringType && !(rhs instanceof StringType)) {
+    if (lhs instanceof StringType && !(rhs instanceof StringType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof IntType && !(rhs instanceof IntType)) {
+    if (lhs instanceof IntType && !(rhs instanceof IntType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof NumberType && !(rhs instanceof IntType || rhs instanceof NumberType)) {
+    if (lhs instanceof NumberType && !(rhs instanceof IntType || rhs instanceof NumberType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof ListType && lhs.symbolType.name !== rhs.name) {
+    if (lhs instanceof ListType && lhs.name !== rhs.name) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof ArrayType && lhs.symbolType.name !== rhs.name) {
+    if (lhs instanceof ArrayType && lhs.name !== rhs.name) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof DictionaryType && lhs.symbolType.name !== rhs.name) {
+    if (lhs instanceof DictionaryType && lhs.name !== rhs.name) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof TupleType && lhs.symbolType.name !== rhs?.name) {
+    if (lhs instanceof TupleType && lhs.name !== rhs?.name) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType)) {
+    if (lhs instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
-    if (lhs.symbolType instanceof IterType && (rhs instanceof ListType || rhs instanceof ArrayType)) {
-        if (lhs.symbolType.ofType.name !== rhs.ofType.name) {
+    if (lhs instanceof IterType && (rhs instanceof ListType || rhs instanceof ArrayType)) {
+        if (lhs.ofType.name !== rhs.ofType.name) {
             FailIncompatible(lhs, rhs, compileErrors);
             return;
         }
     }
 
-    if (lhs.symbolType instanceof ClassType && !(rhs instanceof ClassType)) {
+    if (lhs instanceof ClassType && !(rhs instanceof ClassType)) {
         FailIncompatible(lhs, rhs, compileErrors);
         return;
     }
 
-    if (lhs.symbolType instanceof ClassType && rhs instanceof ClassType) {
-        if (lhs.symbolType.className !== rhs.className){
+    if (lhs instanceof ClassType && rhs instanceof ClassType) {
+        if (lhs.className !== rhs.className){
             // TODO inheritance
             FailIncompatible(lhs, rhs, compileErrors);
             return;
@@ -124,6 +124,6 @@ export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: 
         return;
     }
 
-    mustBeCompatibleType(lhs, rhs.symbolType, compileErrors);
+    mustBeCompatibleType(lhs.symbolType, rhs.symbolType, compileErrors);
 }
 

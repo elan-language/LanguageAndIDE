@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T20_Functions', () => {
@@ -227,5 +227,51 @@ return main;}`;
   });
 
   // TODO fails
+
+  test('Fail_ParameterCount1', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p as Number) return Int
+  return 0
+end function
+
+main
+  var a set to f(1, 2)
+  var b set to f()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Too many parameters 1",
+      "Missing parameter 0"
+    ]);
+
+  });
+
+  test('Fail_ParameterType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p as Int) return Int
+  return 0
+end function
+
+main
+  var a set to f(true)
+  var b set to f(1)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign Boolean to Int ",
+      "Cannot assign Number to Int "
+    ]);
+
+  });
 
 });

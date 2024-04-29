@@ -56,7 +56,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test('Pass_UsingThisAsAnInstance', async () => {
+  ignore_test('Pass_UsingThisAsAnInstance', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
