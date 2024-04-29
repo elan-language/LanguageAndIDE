@@ -55,4 +55,6 @@ export interface File extends Parent {
     processKey(e: editorEvent): void;
 
     compileErrors(): CompileError[];
+
+    setRunStatus(s : RunStatus) : void;
 }

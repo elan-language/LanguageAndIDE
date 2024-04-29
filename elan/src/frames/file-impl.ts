@@ -43,6 +43,7 @@ export class FileImpl implements File {
     parseError? : string;
     readonly defaultFileName = "code.elan";
     fileName : string = this.defaultFileName;
+    private _runStatus : RunStatus = RunStatus.stopped;
  
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
@@ -229,7 +230,11 @@ export class FileImpl implements File {
     }
 
     runStatus(): RunStatus {
-        return RunStatus.stopped;
+        return this._runStatus;
+    }
+
+    setRunStatus(s : RunStatus){
+        this._runStatus = s;
     }
 
     parseStatus(): ParseStatus {
