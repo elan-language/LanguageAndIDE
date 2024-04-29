@@ -102,6 +102,7 @@ export abstract class AbstractSelector extends AbstractFrame {
             case "d": {if (e.modKey.control) {this.deleteIfPermissible(); break;}}
             default: {
                 if (!key || key.length === 1) {
+                    key = key?.toLowerCase();
                     this.processOptions(key);
                 } else {
                     super.processKey(e);
