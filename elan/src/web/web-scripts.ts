@@ -6,6 +6,7 @@ import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { ParseStatus } from "../frames/parse-status";
+import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
 
@@ -38,14 +39,14 @@ function fetchProfile() {
 	}
 }
 
-function setup(p : Profile){
+function setup(p: Profile) {
 	profile = p;
 	file = new FileImpl(hash, profile, true);
 	displayFile();
 }
 
 fetchProfile()
-	.then(p =>setup(p))
+	.then(p => setup(p))
 	.catch((e) => {
 		console.warn("profile not found - using default");
 		setup(new DefaultProfile());
@@ -92,13 +93,18 @@ function getStatus() {
 		return `Parse ${ParseStatus[parseStatus]}`;
 	}
 
-	return `Compile ${CompileStatus[file.compileStatus()]}`;
+	return `Compile ${CompileStatus[file.compileStatus()]} Run ${RunStatus[file.runStatus()]}`;
+}
+
+function updateStatus() {
+	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
 }
 
 /**
  * Render the document
  */
 function updateContent(text: string) {
+	file.setRunStatus(RunStatus.stopped);
 	doOnce = doOnce === undefined || doOnce ? true : false;
 
 	codeContainer!.innerHTML = text;
@@ -211,12 +217,12 @@ function updateContent(text: string) {
 		// compile before updating status
 		file.compile();
 
-		for(const e of file.compileErrors()){
+		for (const e of file.compileErrors()) {
 			console.warn(`Compile Error:  ${e.message}`);
 		}
 	}
 
-	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
+	updateStatus();
 
 	// debug check 
 	if (document.querySelectorAll('.focused').length > 1) {
@@ -314,20 +320,36 @@ function inputter() {
 }
 
 runButton?.addEventListener("click", () => {
-	const jsCode = file.compile();
+	try {
+		file.setRunStatus(RunStatus.running);
+		updateStatus();
+		const jsCode = file.compile();
 
-	system.printer = printer;
-	system.inputter = inputter;
+		system.printer = printer;
+		system.inputter = inputter;
 
-	return doImport(jsCode).then(async (elan) => {
-		if (elan.program) {
-			elan._inject(system, stdlib);
-			const main = await elan.program();
-			await main();
-			return system;
-		}
-		return undefined;
-	});
+		return doImport(jsCode).then(async (elan) => {
+			if (elan.program) {
+				elan._inject(system, stdlib);
+				const main = await elan.program();
+				main().then(() => {
+					console.info("elan program completed OK");
+					file.setRunStatus(RunStatus.stopped);
+					updateStatus();
+				})
+					.catch((e: any) => {
+						console.warn(e);
+						file.setRunStatus(RunStatus.error);
+						updateStatus();
+					});
+			}
+		});
+	}
+	catch (e) {
+		console.warn(e);
+		file.setRunStatus(RunStatus.error);
+		updateStatus();
+	}
 });
 
 clearButton?.addEventListener("click", () => {
