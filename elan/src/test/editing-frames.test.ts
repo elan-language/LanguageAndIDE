@@ -1,11 +1,15 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
-import {ctrl_down, ctrl_up, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
+import {ctrl_d, ctrl_del, ctrl_down, ctrl_up, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
 import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
+import { Property } from '../frames/class-members/property';
+import { Class } from '../frames/globals/class';
+import { MemberSelector } from '../frames/class-members/member-selector';
+import { StatementSelector } from '../frames/statements/statement-selector';
 
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -181,6 +185,24 @@ suite('Editing Frames', () => {
 		sel.processKey(del());
 		child1 = cons.getFirstChild();
 		assert.equal(child1, sel);
+	});
+	test('Delete frame - Ctrl-Delete', () => {
+		var file = T05_classes();
+		var cls = file.getById("class1") as Class;
+		var last = cls.getChildren()[1];
+		assert.equal(last instanceof Property, true);
+		last.processKey(ctrl_del());
+		last = cls.getChildren()[1];
+		assert.equal(last instanceof MemberSelector, true);
+	});
+	test('Delete frame  - Ctrl-d', () => {
+		var file = T05_classes();
+		var cls = file.getById("class1") as Class;
+		var last = cls.getChildren()[1];
+		assert.equal(last instanceof Property, true);
+		last.processKey(ctrl_d());
+		last = cls.getChildren()[1];
+		assert.equal(last instanceof MemberSelector, true);
 	});
 });	
 

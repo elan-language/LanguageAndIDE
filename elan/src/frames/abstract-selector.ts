@@ -112,9 +112,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     deleteIfPermissible(): void {
-        if(this.getParent().minimumNumberOfChildrenExceeded()) {
-            this.getParent().removeChild(this);
-            this.getMap().delete(this.htmlId);
+        var parent = this.getParent();
+        if(parent.minimumNumberOfChildrenExceeded()) {
+            this.delete();
         }
     }
 

@@ -54,7 +54,9 @@ export class FileImpl implements File {
     constructor(private hash: (toHash: string) => Promise<string>, private profile : Profile, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
-        this.getChildren().push(new GlobalSelector(this));
+        var selector = new GlobalSelector(this);
+        this.getChildren().push(selector);
+        selector.select(true, false);
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
@@ -295,6 +297,7 @@ export class FileImpl implements File {
         } catch (e) {
             this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
         }
+        this.getFirstChild().select(true, false);
     }
 
     containsMain(): boolean {

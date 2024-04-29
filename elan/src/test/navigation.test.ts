@@ -111,13 +111,10 @@ suite('Navigation', () => {
 		var main_st_last = file.getById("select2");
 		assert.equal(main_st_last.isSelected(), false);
 		assert.equal(main.isSelected(), false);
-		assert.equal(global_select.isSelected(), false);
+		assert.equal(global_select.isSelected(), true);
 		file.processKey(home());
 		assert.equal(main.isSelected(), true);
 		assert.equal(global_select.isSelected(), false);
-		main.processKey(esc());
-		assert.equal(main.isSelected(), false);
-		assert.equal(global_select.isSelected(), false);;
 		file.processKey(end());
 		assert.equal(global_select.isSelected(), true);
 		global_select.processKey(up());

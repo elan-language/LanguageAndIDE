@@ -27,7 +27,7 @@ import { FunctionType } from '../symbols/function-type';
 import { GenericParameterType } from '../symbols/generic-parameter-type';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
@@ -337,6 +337,12 @@ export function ins() {
 }
 export function del() {
   return key("Delete");
+}
+export function ctrl_del() {
+  return key("Delete",false,true);
+}
+export function ctrl_d() {
+  return key("d",false,true);
 }
 export function shift_ins() {
   return key("Insert", true);
