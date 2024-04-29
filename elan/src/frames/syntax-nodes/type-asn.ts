@@ -45,8 +45,7 @@ export class TypeAsn implements AstNode {
     renderAsDefaultObjectCode(): string {
         switch (this.type) {
             case "Int":
-            case "Float": return "0";
-            case "Char":
+            case "Number": return "0";
             case "String": return '""';
             case "Boolean": return "false";
             case "List": return "system.defaultList()";
@@ -61,10 +60,11 @@ export class TypeAsn implements AstNode {
     get symbolType() {
         switch (this.type) {
             case ("Int"): return IntType.Instance;
-            case ("Float"): return NumberType.Instance;
+            case ("Number"): return NumberType.Instance;
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);
+            case ("Array"): return new ListType(this.genericParameters[0].symbolType!);
             case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
             case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
             case ("Iter"): return new IterType(this.genericParameters[0].symbolType!);

@@ -129,7 +129,7 @@ class Game
     end constructor
 
     property i as Int
-    property f as Float
+    property f as Number
     property b as Boolean
     property s as String
     property li as List<of Int>
@@ -155,7 +155,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Number"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
   constructor() {
 
   }

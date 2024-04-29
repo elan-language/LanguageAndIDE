@@ -109,7 +109,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test('Pass_CoerceFloatToIntVar', async () => {
+  test('Pass_CoerceNumberToIntVar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -399,15 +399,23 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [1,2]
-  set a to [1, 2].toArray()
+  var a set to new Array<of String>(3)
+  var b set to [1, 2]
+  var c set to ["a":1, "b":3, "z":10]
+  set a to [1, 2]
+  set b to a
+  set c to b
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Boolean"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign Class Array<String> to List <Number> ",
+      "Cannot assign List <Number> to Dictionary <String,Number> ",
+      ""
+    ]);
 
   });
 

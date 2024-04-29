@@ -168,7 +168,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23", "1", "");
 		testNodeParse(new LitInt(), "a", ParseStatus.invalid, "", "a", "", "");
 	});
-	test('LitFloat', () => {
+	test('LitNumber', () => {
 		testNodeParse(new LitNumber(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new LitNumber(), "1.0", ParseStatus.valid, "1.0", "", "1.0");
 		testNodeParse(new LitNumber(), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");

@@ -77,7 +77,7 @@ suite('ASTNodes', () => {
 		testAST(new LitInt(), stubField, " 123", "123", numberType);
 	});
 
-	test("Float", () => {
+	test("Number", () => {
 		testAST(new LitNumber(), stubField, " 1.1", "1.1", numberType);
 	});
 

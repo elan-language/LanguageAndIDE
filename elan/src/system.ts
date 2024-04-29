@@ -3,7 +3,7 @@ export class System {
     private default(type : string) {
         switch (type) {
             case ("Int"): return 0;
-            case ("Float"): return 0.0;
+            case ("Number"): return 0.0;
             case ("Boolean"): return false;
             case ("String"): return "";
             case ("Char"): return "";

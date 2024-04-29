@@ -161,7 +161,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  ignore_test('Fail_useOfFloat', async () => {
+  ignore_test('Fail_useOfNumber', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

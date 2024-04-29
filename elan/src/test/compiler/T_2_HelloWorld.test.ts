@@ -119,7 +119,7 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "1");
     });
 
-    test('Pass_FloatLiteral', async () => {
+    test('Pass_NumberLiteral', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -141,7 +141,7 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "2.1");
     });
 
-    test('Pass_FloatWithExponent', async () => {
+    test('Pass_NumberWithExponent', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -163,7 +163,7 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "21000");
     });
 
-    test('Pass_FloatWithExponent2', async () => {
+    test('Pass_NumberWithExponent2', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -185,7 +185,7 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "2.1e+100");
     });
 
-    ignore_test('Pass_FloatWithExponent3', async () => {
+    ignore_test('Pass_NumberWithExponent3', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

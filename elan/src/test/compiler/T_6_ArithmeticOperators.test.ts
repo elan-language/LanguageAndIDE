@@ -94,7 +94,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test('Pass_DivideIntegersToFloat', async () => {
+  test('Pass_DivideIntegersToNumber', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

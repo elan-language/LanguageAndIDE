@@ -34,7 +34,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test('Pass_Float', async () => {
+  test('Pass_Number', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3.1

@@ -248,7 +248,7 @@ end main
 	});
 
 	test('parse Frames - all globals except class', async () => {
-		var code = `# 8dfeafb5c3ac7b5950d3cc432937e3dce295a2186dd08ec7a8c77c8b212199d2 Elan v0.1 valid
+		var code = `# d04e23623596c2023d05e48f464deddfbfa5b5a3d0d3e01cf1cc5e5f26d83735 Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -260,7 +260,7 @@ procedure signIn(password as String)
 
 end procedure
 
-function hypotenuse(sideB as Float, sideC as Float) return Float
+function hypotenuse(sideB as Number, sideC as Number) return Number
   return 0.0
 end function
 

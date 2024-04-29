@@ -97,7 +97,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
 
-  test('Pass_PowerHasHigherPrecedenceThanFloatDivision', async () => {
+  test('Pass_PowerHasHigherPrecedenceThanNumberDivision', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
