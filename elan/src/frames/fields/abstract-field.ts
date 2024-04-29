@@ -40,6 +40,9 @@ export abstract class AbstractField implements Selectable, Field {
         map.set(this.htmlId, this);
         this.map = map;
     }
+    getHtmlId(): string {
+        return this.htmlId;
+    }
     abstract initialiseRoot(): ParseNode ;
     abstract readToDelimeter: (source: CodeSource) => string;
 

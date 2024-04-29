@@ -13,7 +13,7 @@ suite('Editing Frames', () => {
 	test('Tab from file to first field in first global', () => {
 			var file = T05_classes();
 			file.processKey(tab());
-			var field = file.getById("text3");
+			var field = file.getById("type2");
 			assert.equal(field.isSelected(), true);
 			field.processKey(shift_tab());
 			assert.equal(field.isSelected(), true);
@@ -156,11 +156,11 @@ suite('Editing Frames', () => {
 	});
 	test('Remove selector frame', () => {
 		var file = T05_classes();
-		var fun = file.getById("func25") as FunctionFrame;
+		var fun = file.getById("func27") as FunctionFrame;
 		var child1 = fun.getFirstChild();
-		var sel = file.getById("select26");
+		var sel = file.getById("select28");
 		assert.equal(child1, sel);
-		var ret = file.getById("return30");
+		var ret = file.getById("return32");
 		ret.select(true, false);
 		ret.processKey(up());
 		assert.equal(ret.isSelected(), false);
@@ -174,9 +174,9 @@ suite('Editing Frames', () => {
 	});
 	test('Cannot remove selector that is only statement', () => {
 		var file = T05_classes();
-		var cons = file.getById("constructor6") as Constructor;
+		var cons = file.getById("constructor7") as Constructor;
 		var child1 = cons.getFirstChild();
-		var sel = file.getById("select7");
+		var sel = file.getById("select8");
 		assert.equal(child1, sel);
 		sel.processKey(del());
 		child1 = cons.getFirstChild();
