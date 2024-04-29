@@ -26,6 +26,13 @@ suite('Unit tests', () => {
 		var v = file.getById("var12").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
+
+	test("Statement Select - case insensitive", () => {
+		var file = T09_emptyMainAndClassWithGlobalSelector();
+		file.getById("select2").processKey(key("V"));
+		var v = file.getById("var12").renderAsSource();
+		assert.equal(v, '  var  set to ');
+	});	
 	
 	test("Member Select - function", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
