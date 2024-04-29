@@ -144,7 +144,6 @@ export abstract class AbstractFrame implements Frame {
     processKey(e: editorEvent): void {
         var key = e.key;
         switch (key) {
-          case 'Escape': {this.deselectAll(); break;}
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
           case "Tab": {this.tab(e.modKey.shift); break;} 
@@ -184,8 +183,18 @@ export abstract class AbstractFrame implements Frame {
         if(! this.getParent().minimumNumberOfChildrenExceeded()) {
             this.insertPeerSelector(true);
         }
-        this.getParent().removeChild(this);
+        this.delete();
+    }
+
+    protected delete():void {
+        var parent = this.getParent();
+        var goto = this.getParent().getChildBefore(this);
+        if (goto === this) {
+            goto = parent.getChildAfter(this);
+        }
+        parent.removeChild(this);
         this.getMap().delete(this.htmlId);
+        goto.select(true, false);
     }
 
     insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 

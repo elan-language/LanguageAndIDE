@@ -56,3 +56,4 @@ export function escapeAngleBrackets(str: string) : string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
+
