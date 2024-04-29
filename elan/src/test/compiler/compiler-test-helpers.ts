@@ -2,7 +2,7 @@ import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/parse-status";
 import { Done } from "mocha";
-import { System } from "./test-system";
+import { getTestSystem } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { StdLib } from "../../std-lib";
 import { CompileStatus } from "../../frames/compile-status";
@@ -73,11 +73,11 @@ function executeCode(file: FileImpl, input? : string) {
     //     "target": ts.ScriptTarget.ES2022,
     // });
 
-    const system = new System();
+    const system = getTestSystem();
     const stdlib = new StdLib();
 
     if (input) {
-        system.inputed = input;
+        (system as any).inputed = input;
     }
 
     return doImport(jsCode).then(async (elan) => {
@@ -96,7 +96,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
     var actual;
     
     try {
-        const sl = await executeCode(file, input);
+        const sl = await executeCode(file, input) as any;
         actual = sl?.printed; 
     }
     catch (e) {
