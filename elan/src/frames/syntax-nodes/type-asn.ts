@@ -11,6 +11,7 @@ import { TupleType } from "../../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { CompileError } from "../compile-error";
+import { ArrayType } from "../../symbols/array-type";
 
 
 export class TypeAsn implements AstNode {
@@ -64,7 +65,7 @@ export class TypeAsn implements AstNode {
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);
-            case ("Array"): return new ListType(this.genericParameters[0].symbolType!);
+            case ("Array"): return new ArrayType(this.genericParameters[0].symbolType!);
             case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
             case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
             case ("Iter"): return new IterType(this.genericParameters[0].symbolType!);

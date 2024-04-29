@@ -395,7 +395,7 @@ end main`;
 
   });
 
-  ignore_test('Fail_TypeCheck2', async () => {
+  test('Fail_TypeCheck2', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -412,9 +412,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Class Array<String> to List <Number> ",
-      "Cannot assign List <Number> to Dictionary <String,Number> ",
-      ""
+      "Cannot assign List <Number> to Array <String> ",
+      "Cannot assign Array <String> to List <Number> ",
+      "Cannot assign List <Number> to Dictionary <String,Number> "
     ]);
 
   });
