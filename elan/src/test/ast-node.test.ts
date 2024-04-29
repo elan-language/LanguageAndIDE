@@ -37,8 +37,9 @@ suite('ASTNodes', () => {
 	test("ExprNode", () => {
 		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", numberType);
 		testAST(new ExprNode(), stubField, "a", "a", intType);
-		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", intType); //TODO: this is not doing proper type checking yet - result should be a Number (formerly Float) because b is a Number
-		testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", intType);
+		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", numberType); 
+		testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", numberType);
+		testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType); 
 
 		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", numberType);
 		testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", numberType);

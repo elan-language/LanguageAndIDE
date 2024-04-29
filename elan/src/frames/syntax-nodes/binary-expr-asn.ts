@@ -1,6 +1,9 @@
 import { BooleanType } from "../../symbols/boolean-type";
 import { ClassType } from "../../symbols/class-type";
+import { IntType } from "../../symbols/int-type";
 import { ListType } from "../../symbols/list-type";
+import { NumberType } from "../../symbols/number-type";
+import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
@@ -17,6 +20,15 @@ export class BinaryExprAsn implements AstNode {
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors.concat(this.lhs.aggregateCompileErrors()).concat(this.rhs.aggregateCompileErrors());
     }
+
+    private MostPreciseSymbol(lhs : ISymbolType | undefined, rhs : ISymbolType | undefined) : ISymbolType | undefined {
+        if (lhs instanceof NumberType || rhs instanceof NumberType){
+            return NumberType.Instance;
+        }
+
+        return lhs;
+    }
+
 
     private opToJs() {
         switch (this.op) {
@@ -61,8 +73,21 @@ export class BinaryExprAsn implements AstNode {
 
     get symbolType() {
         switch (this.op) {
+            case OperationSymbol.Add: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
+            case OperationSymbol.Minus: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
+            case OperationSymbol.Multiply: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
+            case OperationSymbol.Div: return IntType.Instance;
+            case OperationSymbol.Mod: return IntType.Instance;
+            case OperationSymbol.Divide: return NumberType.Instance;
             case OperationSymbol.And: return BooleanType.Instance;
             case OperationSymbol.Not: return BooleanType.Instance;
+            case OperationSymbol.Xor: return BooleanType.Instance;
+            case OperationSymbol.Equals: return BooleanType.Instance;
+            case OperationSymbol.NotEquals: return BooleanType.Instance;
+            case OperationSymbol.LT: return BooleanType.Instance;
+            case OperationSymbol.GT: return BooleanType.Instance;
+            case OperationSymbol.LTE: return BooleanType.Instance;
+            case OperationSymbol.GTE: return BooleanType.Instance;
             default: return this.lhs.symbolType;
         }
     }

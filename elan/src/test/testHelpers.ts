@@ -412,6 +412,7 @@ const stubHolder = {
       case 'betterOf': return stubStringSymbol;
       case "attempt": return stubBoolSymbol;
       case "target": return stubStringSymbol;
+      case "first": return stubIntSymbol;
       case "lst": return { symbolId: "", symbolType: new ListType(intType) };
       case "lst1": return { symbolId: "", symbolType: new ListType(stringType) };
       case "simpleGeneric": return { symbolId: "", symbolType: new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"))};
