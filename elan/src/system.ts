@@ -6,7 +6,6 @@ export class System {
             case ("Number"): return 0.0;
             case ("Boolean"): return false;
             case ("String"): return "";
-            case ("Char"): return "";
         }
         return undefined;
     }

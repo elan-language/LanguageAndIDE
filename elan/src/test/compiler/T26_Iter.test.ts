@@ -87,7 +87,7 @@ main
   call printEach(s)
 end main
   
-procedure printEach(target as Iter<of Char>)
+procedure printEach(target as Iter<of String>)
   each x in target
     print x
   end each

@@ -50,11 +50,11 @@ main
   call printIt("Hello", "e", find)
 end main
   
-procedure printIt(s as String, c as Char, f as Func<of String, Char => Int>)
+procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
   print f(s,c)
 end procedure
   
-function find(x as String, y as Char) return Int
+function find(x as String, y as String) return Int
   return indexOf(x, y)
 end function`;
 

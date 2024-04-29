@@ -118,7 +118,7 @@ return main;}`;
 constant a set to ''
 main
   print a
-  print a is default Char
+  print a is default String
 end main
 `;
 
@@ -127,7 +127,7 @@ const a = '';
 
 async function main() {
   system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(a is default Char));
+  system.print(_stdlib.asString(a is default String));
 }
 return main;}`;
 
