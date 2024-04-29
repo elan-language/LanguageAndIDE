@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T_5_Variables', () => {
 
@@ -365,4 +365,51 @@ end main`;
     assertDoesNotParse(fileImpl);
 
   });
+
+  test('Fail_TypeCheck1', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f() return Int
+  return 0
+end function
+main
+  var a set to true
+  var b set to 1
+  var c set to ""
+  var d set to f()
+  set a to 1
+  set b to false
+  set c to [1, 2]
+  set d to 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign Number to Boolean ",
+      "Cannot assign Boolean to Number ",
+      "Cannot assign List <Number> to String ",
+      "Cannot assign Number to Int "]);
+
+  });
+
+  ignore_test('Fail_TypeCheck2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1,2]
+  set a to [1, 2].toArray()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Boolean"]);
+
+  });
+
+
 });
