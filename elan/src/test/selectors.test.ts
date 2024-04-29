@@ -23,21 +23,21 @@ suite('Unit tests', () => {
 	test("Statement Select - variable", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("v"));
-		var v = file.getById("var12").renderAsSource();
+		var v = file.getById("var13").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
 
 	test("Statement Select - case insensitive", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("V"));
-		var v = file.getById("var12").renderAsSource();
+		var v = file.getById("var13").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
 	
 	test("Member Select - function", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select11").processKey(key("f"));
-		var v = file.getById("func12").renderAsSource();
+		file.getById("select12").processKey(key("f"));
+		var v = file.getById("func13").renderAsSource();
 		assert.equal(v, '  function () return \r\n' +
 		'    return \r\n' +
 		'  end function\r\n');
@@ -45,9 +45,9 @@ suite('Unit tests', () => {
 
 	 test("Member Select - procedure", () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
-		file.getById("select11").processKey(key("p"));
-		file.getById("select11").processKey(key("c"));
-		var v = file.getById("proc12").renderAsSource();
+		file.getById("select12").processKey(key("p"));
+		file.getById("select12").processKey(key("c"));
+		var v = file.getById("proc13").renderAsSource();
 		assert.equal(v, '  procedure ()\r\n\r\n  end procedure\r\n');
  	});	
 
@@ -55,7 +55,7 @@ suite('Unit tests', () => {
 		var file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select0").processKey(key("c"));
 		file.getById("select0").processKey(key("o"));
-		var v = file.getById("const12").renderAsSource();
+		var v = file.getById("const13").renderAsSource();
 		assert.equal(v, 'constant  set to \r\n');
  	});	
 
@@ -80,7 +80,7 @@ suite('Unit tests', () => {
 		assert.equal(s.text, "pro");
 		help = s.getCompletion();
 		assert.equal(help, " procedure property");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select11' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - abstract class", () => {
@@ -100,7 +100,7 @@ suite('Unit tests', () => {
 		s.processKey(key("p"));
 		assert.equal(s.text, "abstract pro");
 		assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select10' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="valid" id='select11' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {

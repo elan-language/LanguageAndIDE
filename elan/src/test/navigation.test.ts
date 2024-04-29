@@ -5,6 +5,7 @@ import assert from 'assert';
 import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
 import { isParent } from '../frames/helpers';
+import { Selectable } from '../frames/interfaces/selectable';
 
 suite('Navigation', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -72,37 +73,30 @@ suite('Navigation', () => {
 	});
 	test('Tabbing through ALL fields (& back)', () => {
 		var file = T05_classes();
-		var fields = ["text3", "type2", "text4", "args5", "params8",
-			"select7", "ident11", "type12", "select9", "text15", "type14", "text16", "args17",
-			"params20", "select19",
-			"ident23", "type24",
-			"ident27", "params28", "type29",
-			"select26",
-			"expr31",
-			"select21",
-			"select0"];
+		var fields: string[] = ['type2','text5','args6','params9','select8','ident12','type13','select10','type15','text18','args19','params22','select21','ident25','type26','ident29','params30','type31','select28','expr33','select23','select0'];
 		file.processKey(tab());
-		var field = file.getById(fields[0]);
-		for (var i in fields) {
-			field = file.getById(fields[i]);
-			assert.equal(field.isSelected(), true);
-			field.processKey(tab());
+		var selected: Selectable = file.getAllSelected()[0];
+		for (let i = 0; i <= 21; i++) {
+			var id = selected.getHtmlId();
+			assert.equal(id, fields[i]);
+			selected.processKey(tab());
+			selected = file.getAllSelected()[0];
 		}
-		//Check that one more tab does not move beyond last field
-		field.processKey(tab());
-		assert.equal(field.isSelected(), true);
+		//Check that last tab did not move beyond last field
+		assert.equal(selected!.isSelected(), true);
 		file.processKey(esc());
 		file.processKey(shift_tab());
-		for (var i in fields.reverse()) {
-			field = file.getById(fields[i]);
-			assert.equal(field.isSelected(), true);
-			field.processKey(shift_tab());
+		var selected: Selectable = file.getAllSelected()[0];
+		for (let i = 21; i >=0; i--) {
+			var id = selected.getHtmlId();
+			assert.equal(id, fields[i]);
+			selected.processKey(shift_tab());
+			selected = file.getAllSelected()[0];
 		}
-		//Check that one more tab does not move beyond first field
-		field.processKey(shift_tab());
-		assert.equal(field.isSelected(), true);
-		field.processKey(esc());
-		assert.equal(field.isSelected(), false);
+		//Check thatlastshift tab does not move beyond first field
+		assert.equal(selected.isSelected(), true);
+		selected.processKey(esc());
+		assert.equal(selected.isSelected(), false);
 	});
 	test('Selecting frames', () => {
 		var file = T03_mainWithAllStatements();

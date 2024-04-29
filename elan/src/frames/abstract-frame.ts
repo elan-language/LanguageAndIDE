@@ -28,6 +28,9 @@ export abstract class AbstractFrame implements Frame {
         map.set(this.htmlId, this);
         this.setMap(map);
     }
+    getHtmlId(): string {
+        return this.htmlId;
+    }
     resolveSymbol(id: string, initialScope : Frame): ISymbol {
         return this.getParent().resolveSymbol(id, this);
     }

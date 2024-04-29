@@ -21,4 +21,5 @@ export interface Selectable  {
     getParseStatus(): ParseStatus;
 
     parseFrom(source: CodeSource): void;
+    getHtmlId(): string;
 }

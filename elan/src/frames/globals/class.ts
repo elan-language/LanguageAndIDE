@@ -26,13 +26,14 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
+import { abstractKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
     isParent: boolean = true; 
     public name: TypeNameField;
     public abstract: OptionalKeyword;
-    public immutable: boolean;
+    public immutable: OptionalKeyword;
     public inherits: OptionalKeyword;
     public superClasses: InheritsFrom;
     private _children: Array<Frame> = new Array<Frame>();
@@ -40,13 +41,17 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     constructor(parent: File) {
         super(parent);
         this.name = new TypeNameField(this);
-        this.abstract = new OptionalKeyword(this, "abstract");
-        this.inherits = new OptionalKeyword(this, "inherits");
+        this.abstract = new OptionalKeyword(this, abstractKeyword);
+        this.immutable = new OptionalKeyword(this, immutableKeyword);
+        this.inherits = new OptionalKeyword(this, inheritsKeyword);
         this.superClasses  = new InheritsFrom(this);
         this.superClasses.setOptional(true);
         this.getChildren().push(new Constructor(this));
         this.getChildren().push(new MemberSelector(this));
-        this.immutable = false;
+    }
+
+    private hasAddedMembers(): boolean {
+        return this.getChildren().filter(m => !('isConstructor' in m || 'isSelector' in m )).length > 0;
     }
     get symbolId() { 
         return this.name.text; 
@@ -113,10 +118,10 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         this.abstract.specify();
     }
     isImmutable(): boolean {
-        return this.immutable;
+        return this.immutable.keywordExists();
     }
     makeImmutable(): void {
-        this.immutable = true;
+        this.immutable.specify();
     }
     doesInherit(): boolean {
         return this.inherits.keywordExists();
@@ -126,19 +131,28 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     }
 
     getFields(): Field[] {
-        return [this.abstract, this.name, this.inherits, this.superClasses];
-    } 
+        return this.hasAddedMembers() ? 
+            [this.name, this.inherits, this.superClasses]
+            : [this.abstract, this.immutable, this.name, this.inherits, this.superClasses];
+    }
 
     getIdPrefix(): string {
         return 'class';
     }
     private modifiersAsHtml(): string {
-        return `${this.abstract.renderAsHtml()} `;
+        var result = "";
+        if (this.hasAddedMembers()) {
+            result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
+            result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
+        } else {
+            result +=`${this.abstract.renderAsHtml()} ${this.immutable.renderAsHtml()} `;
+        } 
+        return result;
     }
     private modifiersAsSource(): string {
         var result = "";
         if (this.isAbstract()) {
-            result += `${this.abstract.renderAsSource()} `;
+            result += `abstract `;
         }
         if (this.isImmutable()) {
             result += `immutable `;
