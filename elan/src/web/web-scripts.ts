@@ -39,14 +39,14 @@ function fetchProfile() {
 	}
 }
 
-function setup(p : Profile){
+function setup(p: Profile) {
 	profile = p;
 	file = new FileImpl(hash, profile, true);
 	displayFile();
 }
 
 fetchProfile()
-	.then(p =>setup(p))
+	.then(p => setup(p))
 	.catch((e) => {
 		console.warn("profile not found - using default");
 		setup(new DefaultProfile());
@@ -93,7 +93,7 @@ function getStatus() {
 		return `Parse ${ParseStatus[parseStatus]}`;
 	}
 
-	return `Compile ${CompileStatus[file.compileStatus()]} Run : ${RunStatus[file.runStatus()]}`;
+	return `Compile ${CompileStatus[file.compileStatus()]} Run ${RunStatus[file.runStatus()]}`;
 }
 
 function updateStatus() {
@@ -217,7 +217,7 @@ function updateContent(text: string) {
 		// compile before updating status
 		file.compile();
 
-		for(const e of file.compileErrors()){
+		for (const e of file.compileErrors()) {
 			console.warn(`Compile Error:  ${e.message}`);
 		}
 	}
@@ -337,11 +337,11 @@ runButton?.addEventListener("click", () => {
 					file.setRunStatus(RunStatus.stopped);
 					updateStatus();
 				})
-				.catch(e => {
-					console.warn(e);
-					file.setRunStatus(RunStatus.error);
-					updateStatus();
-				});
+					.catch((e: any) => {
+						console.warn(e);
+						file.setRunStatus(RunStatus.error);
+						updateStatus();
+					});
 			}
 		});
 	}
