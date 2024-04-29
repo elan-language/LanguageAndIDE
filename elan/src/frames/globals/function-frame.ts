@@ -12,8 +12,11 @@ import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
+import { FunctionType } from "../../symbols/function-type";
+import { Scope } from "../interfaces/scope";
+import { mustBeCompatibleType } from "../compile-rules";
 
-export class FunctionFrame extends FrameWithStatements implements Parent {
+export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     isGlobal = true;
     public name : IdentifierField;
     public params: ParamList;
@@ -29,6 +32,18 @@ export class FunctionFrame extends FrameWithStatements implements Parent {
         this.returnType.setPlaceholder("return type");
         this.getChildren().push(new ReturnStatement(this));
     }
+    get symbolId() { 
+        return this.name.text; 
+    }
+    
+    get symbolType() {
+        const pt = this.params.symbolTypes;
+        const rt = this.returnType.symbolType!;
+        return new FunctionType(pt, rt, false);
+    }
+
+    symbolScope = SymbolScope.program;
+
     getProfile(): Profile {
         return this.getParent().getProfile();
     }
@@ -65,6 +80,9 @@ ${endKeyword} ${functionKeyword}\r
 
     public compile() : string {
         this.compileErrors = [];
+        const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
+        mustBeCompatibleType(returnStatement!,this.returnType.symbolType!, this.compileErrors);
+
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
 }\r

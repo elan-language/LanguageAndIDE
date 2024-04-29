@@ -8,6 +8,7 @@ import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
+import { mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 
@@ -46,22 +47,34 @@ export class FuncCallAsn implements AstNode {
             currentScope = s as unknown as Scope;
         }
 
-        const symbol = currentScope.resolveSymbol(this.id, this.scope);
+        const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
 
-        if (symbol.symbolScope === SymbolScope.stdlib) {
+        if (funcSymbol.symbolScope === SymbolScope.stdlib) {
             scopeQ = `_stdlib.`;
         }
-        if (symbol.symbolScope === SymbolScope.property) {
+        if (funcSymbol.symbolScope === SymbolScope.property) {
             scopeQ = `this.`;
         }
-        if (symbol.symbolType instanceof FunctionType) {
-            if (symbol.symbolType.isExtension && this.qualifier) {
+        if (funcSymbol.symbolType instanceof FunctionType) {
+            if (funcSymbol.symbolType.isExtension && this.qualifier) {
                 this.parameters = [this.qualifier].concat(this.parameters);
                 this.qualifier = undefined;
             }
         }
 
         const pp = this.parameters.map(p => p.compile()).join(", ");
+
+        if (funcSymbol.symbolType instanceof FunctionType) {
+            mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors);
+
+            if (funcSymbol.symbolType.isExtension && this.qualifier) {
+                this.parameters = [this.qualifier].concat(this.parameters);
+                this.qualifier = undefined;
+            }
+
+            mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors);
+        }
+
         const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }

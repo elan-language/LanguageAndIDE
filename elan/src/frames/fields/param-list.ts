@@ -1,4 +1,5 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbolType } from "../../symbols/symbol-type";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
@@ -36,6 +37,10 @@ export class ParamList extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) =
         (source: CodeSource) => source.readToNonMatchingCloseBracket();
 
+    get symbolTypes() : ISymbolType[] {
+        const ast = this.getOrTransformAstNode as CsvAsn;
+        return ast ? ast.items.map(i => i.symbolType!) : [];
+    }
 
     resolveSymbol(id: string, initialScope: Frame): ISymbol | undefined {
 

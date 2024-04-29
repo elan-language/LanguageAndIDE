@@ -54,15 +54,5 @@ ${this.indent()}}\r
         return super.resolveSymbol(id, initialScope);
     }
 
-    get symbolId() {
-        return this.name.renderAsSource();
-    }
-
-    get symbolType() {
-        return this.returnType.symbolType;
-    }
-
-    get symbolScope(): SymbolScope {
-        return SymbolScope.property;
-    }
+    symbolScope = SymbolScope.property;
 }
