@@ -18,6 +18,7 @@ export class SetAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.id} = ${this.to}`;
     }
 

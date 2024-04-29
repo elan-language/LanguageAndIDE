@@ -41,6 +41,7 @@ export class BinaryExprAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         if (this.op === OperationSymbol.Add && (this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType)) {
             return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }

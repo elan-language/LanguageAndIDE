@@ -59,6 +59,7 @@ ${this.renderChildrenAsSource()}`;
     }
     
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
 ${this.renderStatementsAsObjectCode()}\r`;
     }

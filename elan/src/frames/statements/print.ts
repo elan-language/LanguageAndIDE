@@ -38,6 +38,7 @@ export class Print extends AbstractFrame implements Statement {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}system.print(_stdlib.asString(${this.expr.compile()}));`;
     }
 } 

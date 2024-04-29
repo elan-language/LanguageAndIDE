@@ -183,6 +183,7 @@ end class\r\n`;
 
 
     public compile(): string {
+        this.compileErrors = [];
         const name = this.name.compile();
         const asString = this.isAbstract() ? `
   asString() {

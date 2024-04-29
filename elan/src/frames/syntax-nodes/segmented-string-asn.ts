@@ -20,6 +20,7 @@ export class SegmentedStringAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `\`${this.segments.map(s => s.compile()).join("")}\``;
     }
 

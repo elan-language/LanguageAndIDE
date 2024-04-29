@@ -52,6 +52,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
     }
 
     public override compile(): string {
+        this.compileErrors = [];
         const name = this.name.compile();
         if (name !== "asString") {
             return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r

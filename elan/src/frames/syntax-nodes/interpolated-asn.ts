@@ -16,6 +16,7 @@ export class InterpolatedAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `\${_stdlib.asString(${this.body.compile()})}`;
     }
 

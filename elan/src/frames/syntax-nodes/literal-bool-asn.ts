@@ -15,6 +15,7 @@ export class LiteralBoolAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return this.value ? "true" : "false";
     }
 

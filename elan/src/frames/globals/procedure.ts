@@ -46,6 +46,7 @@ end procedure\r
 `;
     }
     public compile() : string {
+        this.compileErrors = [];
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 }\r

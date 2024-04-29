@@ -15,6 +15,7 @@ export class DefaultTypeAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return this.type.renderAsDefaultObjectCode();
     }
 

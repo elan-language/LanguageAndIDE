@@ -34,6 +34,7 @@ export class Throw extends AbstractFrame implements Statement{
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}throw new Error(${this.text.compile()});`;
     }
 } 

@@ -19,6 +19,7 @@ export class LiteralListAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         const it = this.items.map(p => p.compile()).join(", ");
         return `system.list([${it}])`;
     }

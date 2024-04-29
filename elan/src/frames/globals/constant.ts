@@ -47,6 +47,7 @@ export class Constant extends AbstractFrame implements ISymbol {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `const ${this.name.compile()} = ${this.literal.compile()};\r
 `;
     }

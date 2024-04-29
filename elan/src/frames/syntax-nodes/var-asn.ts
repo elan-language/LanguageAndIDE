@@ -61,6 +61,7 @@ export class VarAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         var q = this.getQualifier();
         var idx = this.index ? this.index.compile() : "";
         var code = `${q}${this.id}${idx}`;

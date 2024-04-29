@@ -45,6 +45,7 @@ ${this.indent()}end for`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         const v = this.variable.compile();
         const f = this.from.compile();
         const t = this.to.compile();

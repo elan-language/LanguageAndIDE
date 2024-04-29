@@ -36,6 +36,7 @@ ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}do {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}} while (!(${this.condition.compile()}));`;

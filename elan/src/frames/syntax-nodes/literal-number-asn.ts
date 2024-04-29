@@ -14,6 +14,7 @@ export class LiteralNumberAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return this.value.toString();
     }
 

@@ -16,6 +16,7 @@ export class KvpAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.key.compile()} : ${this.value.compile()}`;
     }
 

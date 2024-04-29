@@ -35,6 +35,7 @@ export class FuncCallAsn implements AstNode {
 
 
     compile(): string {
+        this.compileErrors = [];
         var currentScope = this.scope;
         var scopeQ = "";
 

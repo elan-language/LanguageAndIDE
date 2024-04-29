@@ -44,6 +44,7 @@ export class CallStatement extends AbstractFrame implements Statement{
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}${this.proc.compile()}(${this.args.compile()});`;
     }
 } 

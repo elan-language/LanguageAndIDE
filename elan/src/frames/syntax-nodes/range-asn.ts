@@ -21,6 +21,7 @@ export class RangeAsn implements AstNode {
 
 
     compile(): string {
+        this.compileErrors = [];
         const f = this.from ? `${this.from.compile()}` : "0";
         const t = this.to ? `${this.to.compile()}` : undefined;
 

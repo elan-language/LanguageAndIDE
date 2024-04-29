@@ -42,6 +42,7 @@ ${this.indent()}end switch`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}switch (${this.expr.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;

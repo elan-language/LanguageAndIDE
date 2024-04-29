@@ -208,6 +208,12 @@ function updateContent(text: string) {
 			localStorage.setItem("elan-file", file.fileName);
 			(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
 		});
+		// compile before updating status
+		file.compile();
+
+		for(const e of file.compileErrors()){
+			console.warn(`Compile Error:  ${e.message}`);
+		}
 	}
 
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;

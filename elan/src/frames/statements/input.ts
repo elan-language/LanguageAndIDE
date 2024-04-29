@@ -38,6 +38,7 @@ export class Input extends AbstractFrame implements Statement {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}var ${this.varName.compile()} = await system.input();`;
     }
 } 

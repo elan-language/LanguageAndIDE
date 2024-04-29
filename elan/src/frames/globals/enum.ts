@@ -43,6 +43,7 @@ end enum\r
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `var ${this.name.renderAsSource()} = {\r
 ${singleIndent()}${this.values.compile()}\r
 };\r
