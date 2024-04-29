@@ -34,6 +34,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
         return `${this.indent()}# ${this.text.renderAsSource()}`;
     }
     compile(): string {
+        this.compileErrors = [];
         return "";
     }
 }

@@ -15,6 +15,7 @@ export class LiteralEnumAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.type.name}.${this.value}`;
     }
 

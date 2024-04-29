@@ -19,6 +19,7 @@ export class LiteralDictionaryAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         const items = this.list.items.map(p => p.compile()).join(", ");
         return `{${items}}`;
     }

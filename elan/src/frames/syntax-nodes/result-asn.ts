@@ -15,6 +15,7 @@ export class ResultAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         throw new Error("Method not implemented.");
     }
 

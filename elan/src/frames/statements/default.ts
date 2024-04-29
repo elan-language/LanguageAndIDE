@@ -31,6 +31,7 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}default:\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}${singleIndent()}break;`;

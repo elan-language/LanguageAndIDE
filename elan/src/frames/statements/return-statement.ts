@@ -34,6 +34,7 @@ export class ReturnStatement extends AbstractFrame implements Statement{
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}return ${this.expr.compile()};`;
     }
 

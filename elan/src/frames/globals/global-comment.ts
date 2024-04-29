@@ -37,6 +37,7 @@ export class GlobalComment extends AbstractFrame {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return "";
     }
 

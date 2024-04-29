@@ -25,6 +25,7 @@ export class TypeField extends AbstractField  {
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine(); 
 
     compile(): string {
+        this.compileErrors = [];
         const code = super.compile();
         if (this.astNode instanceof TypeAsn) {
             return this.astNode.renderAsDefaultObjectCode();

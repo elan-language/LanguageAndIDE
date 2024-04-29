@@ -42,6 +42,7 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}var ${this.name.compile()} = ${this.expr.compile()};`;
     }
 

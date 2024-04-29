@@ -34,6 +34,7 @@ ${this.indent()}end while`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}while (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;

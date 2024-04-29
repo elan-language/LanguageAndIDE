@@ -15,6 +15,7 @@ export class ParamDefAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.id}`;
     }
 

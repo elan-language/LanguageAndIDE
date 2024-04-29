@@ -25,6 +25,7 @@ export class UnaryExprAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.opToJs()}${this.operand.compile()}`;
     }
 

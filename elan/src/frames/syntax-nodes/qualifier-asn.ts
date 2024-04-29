@@ -18,6 +18,7 @@ export class QualifierAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.qualifier.map(p => p.compile()).join(".")}`;
     }
 

@@ -42,6 +42,7 @@ ${this.indent()}end each`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
 ${this.indent()}}`;

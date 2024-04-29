@@ -30,6 +30,7 @@ export class TypeAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         if (this.type === "Dictionary") {
             return "Object";
         }

@@ -38,6 +38,7 @@ export class AbstractProperty extends AbstractFrame implements Member {
     }
 
     compile(): string {
+        this.compileErrors = [];
         const pName = this.name.compile();
 
        

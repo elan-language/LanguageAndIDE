@@ -20,6 +20,7 @@ export class IfExprAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors);
         return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
     }

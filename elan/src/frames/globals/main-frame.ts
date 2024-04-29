@@ -46,6 +46,7 @@ end main\r
     }
 
     public compile() : string {
+        this.compileErrors = [];
         return `async function main() {\r
 ${this.renderStatementsAsObjectCode()}\r
 }\r

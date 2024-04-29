@@ -17,6 +17,7 @@ export class IndexAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         if (this.index instanceof RangeAsn) {
             return `${this.index.compile()}`;
         }

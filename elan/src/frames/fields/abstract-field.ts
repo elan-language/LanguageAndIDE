@@ -323,6 +323,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     compile(): string {
+        this.compileErrors = [];
         if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
             return this.getOrTransformAstNode?.compile() ?? "";
         }

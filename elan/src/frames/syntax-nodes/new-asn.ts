@@ -19,6 +19,7 @@ export class NewAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         var gt = this.typeNode.genericParameters.map(p => `"${p.compile()}"`).join(", ");
         gt = gt ? `, [${gt}]` : "";
         const pp = this.parameters.map(p => p.compile()).join(", ");

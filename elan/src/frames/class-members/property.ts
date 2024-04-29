@@ -50,6 +50,7 @@ export class Property extends AbstractFrame implements Member {
     }
 
     compile(): string {
+        this.compileErrors = [];
         const pName = this.name.compile();
         const mod = this.modifierAsObjectCode();
         if (this.type.symbolType instanceof ClassType) {

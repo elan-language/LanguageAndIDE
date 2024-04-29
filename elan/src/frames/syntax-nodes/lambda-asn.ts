@@ -18,6 +18,7 @@ export class LambdaAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         throw new Error("Method not implemented.");
     }
 

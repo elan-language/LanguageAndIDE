@@ -46,6 +46,7 @@ ${this.indent()}end constructor\r
     }
 
     public compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}constructor(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}\r

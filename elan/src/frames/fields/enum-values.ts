@@ -27,6 +27,7 @@ export class EnumValues extends AbstractField {
         (source: CodeSource) => source.readToEndOfLine();
 
     compile(): string {
+        this.compileErrors = [];
         const ast = this.getOrTransformAstNode as CsvAsn;
 
         if (ast) {

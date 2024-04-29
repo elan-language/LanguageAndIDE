@@ -47,6 +47,7 @@ export class AbstractProcedure extends AbstractFrame implements Member {
     }
 
     public override compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
 ${this.indent()}}\r
 `;

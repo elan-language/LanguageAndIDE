@@ -34,6 +34,7 @@ ${this.renderChildrenAsSource()}`;
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}case ${this.value.compile()}:\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}${singleIndent()}break;`;

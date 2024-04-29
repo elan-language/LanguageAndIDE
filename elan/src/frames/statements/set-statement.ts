@@ -40,6 +40,7 @@ export class SetStatement extends AbstractFrame implements Statement{
         return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
     }
     compile(): string {
+        this.compileErrors = [];
         return `${this.indent()}${this.assignable.compile()} = ${this.expr.compile()};`;
     }
 } 

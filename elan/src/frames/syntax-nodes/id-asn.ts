@@ -19,6 +19,7 @@ export class IdAsn implements AstNode {
 
 
     compile(): string {
+        this.compileErrors = [];
         if (isMember(this.scope)) {
             // don't prefix properties with this
             return this.id;

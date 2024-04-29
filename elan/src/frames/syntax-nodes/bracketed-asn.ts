@@ -15,6 +15,7 @@ export class BracketedAsn implements AstNode {
     }
 
     compile(): string {
+        this.compileErrors = [];
         return `(${this.body.compile()})`;
     }
 
