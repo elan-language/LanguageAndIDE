@@ -257,6 +257,45 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
+  test('Pass_Iter', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f() return Iter<of Number>
+  return [1, 2]
+end function
+
+main
+  var a set to f()
+  set a to [1, 2]
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+function f() {
+  return system.list([1, 2]);
+}
+
+async function main() {
+  var a = f();
+  a = system.list([1, 2]);
+  system.print(_stdlib.asString(a));
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "List [1, 2]");
+  });
+
+
+
+  
+
   test('Fail_WrongKeyword', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
