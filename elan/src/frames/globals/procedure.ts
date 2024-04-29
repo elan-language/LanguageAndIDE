@@ -1,3 +1,4 @@
+import { ProcedureType } from "../../symbols/procedure-type";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
@@ -8,10 +9,11 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 
-export class Procedure extends FrameWithStatements {
+export class Procedure extends FrameWithStatements implements ISymbol, Scope {
     isGlobal = true;
-    public name : IdentifierField;
+    public name: IdentifierField;
     public params: ParamList;
     file: File;
 
@@ -22,6 +24,17 @@ export class Procedure extends FrameWithStatements {
         this.params = new ParamList(this);
     }
 
+    get symbolId() {
+        return this.name.text;
+    }
+
+    get symbolType() {
+        const pt = this.params.symbolTypes;
+        return new ProcedureType(pt);
+    }
+
+    symbolScope = SymbolScope.program;
+
     getFields(): Field[] {
         return [this.name, this.params];
     }
@@ -29,7 +42,7 @@ export class Procedure extends FrameWithStatements {
     getIdPrefix(): string {
         return 'proc';
     }
-    public renderAsHtml() : string {
+    public renderAsHtml(): string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</top>
 ${this.renderChildrenAsHtml()}
@@ -39,13 +52,13 @@ ${this.renderChildrenAsHtml()}
     indent(): string {
         return "";
     }
-    public renderAsSource() : string {
+    public renderAsSource(): string {
         return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
     }
-    public compile() : string {
+    public compile(): string {
         this.compileErrors = [];
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
@@ -60,15 +73,15 @@ ${this.renderStatementsAsObjectCode()}\r
         source.remove(")");
     }
     parseBottom(source: CodeSource): boolean {
-       return this.parseStandardEnding(source, "end procedure");
+        return this.parseStandardEnding(source, "end procedure");
     }
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        if (this.name.text=== id){
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        if (this.name.text === id) {
             return {
-                symbolId : id,
-                symbolType : undefined,
-                symbolScope : SymbolScope.program
+                symbolId: id,
+                symbolType: undefined,
+                symbolScope: SymbolScope.program
             } as ISymbol;
         }
 

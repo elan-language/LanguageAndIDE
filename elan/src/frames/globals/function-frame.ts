@@ -4,7 +4,7 @@ import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
 import { ReturnStatement } from "../statements/return-statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Parent} from "../interfaces/parent";
+import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
@@ -18,7 +18,7 @@ import { mustBeCompatibleType } from "../compile-rules";
 
 export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     isGlobal = true;
-    public name : IdentifierField;
+    public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;
     file: File;
@@ -32,10 +32,10 @@ export class FunctionFrame extends FrameWithStatements implements Parent, ISymbo
         this.returnType.setPlaceholder("return type");
         this.getChildren().push(new ReturnStatement(this));
     }
-    get symbolId() { 
-        return this.name.text; 
+    get symbolId() {
+        return this.name.text;
     }
-    
+
     get symbolType() {
         const pt = this.params.symbolTypes;
         const rt = this.returnType.symbolType!;
@@ -59,9 +59,9 @@ export class FunctionFrame extends FrameWithStatements implements Parent, ISymbo
     getIdPrefix(): string {
         return 'func';
     }
-    public renderAsHtml() : string {
+    public renderAsHtml(): string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${ returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>${endKeyword} ${functionKeyword}</keyword>
 </function>`;
@@ -71,17 +71,17 @@ ${this.renderChildrenAsHtml()}
         return "";
     }
 
-    public renderAsSource() : string {
-        return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${ returnKeyword} ${this.returnType.renderAsSource()}\r
+    public renderAsSource(): string {
+        return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;
     }
 
-    public compile() : string {
+    public compile(): string {
         this.compileErrors = [];
         const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
-        mustBeCompatibleType(returnStatement!,this.returnType.symbolType!, this.compileErrors);
+        mustBeCompatibleType(returnStatement!, this.returnType.symbolType!, this.compileErrors);
 
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
@@ -94,7 +94,7 @@ ${this.renderChildrenAsObjectCode()}\r
         this.name.parseFrom(source);
         source.remove("(");
         this.params.parseFrom(source);
-        source.remove(`) ${ returnKeyword} `);
+        source.remove(`) ${returnKeyword} `);
         this.returnType.parseFrom(source);
     }
     parseBottom(source: CodeSource): boolean {
@@ -109,15 +109,15 @@ ${this.renderChildrenAsObjectCode()}\r
         }
         return result;
     }
-    private getReturnStatement() : ReturnStatement {
+    private getReturnStatement(): ReturnStatement {
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        if (this.name.text === id){
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        if (this.name.text === id) {
             return {
-                symbolId : id,
-                symbolType : undefined,
-                symbolScope : SymbolScope.program
+                symbolId: id,
+                symbolType: undefined,
+                symbolScope: SymbolScope.program
             } as ISymbol;
         }
 

@@ -21,13 +21,13 @@ export class ProcedureMethod extends Procedure implements Member {
     public override indent(): string {
         return singleIndent();
     }
-    public override renderAsSource() : string {
+    public override renderAsSource(): string {
         return `${this.indent()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
     }
-    public override compile() : string {
+    public override compile(): string {
         this.compileErrors = [];
         return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
@@ -41,13 +41,13 @@ ${this.indent()}}\r
     parseBottom(source: CodeSource): boolean {
         return super.parseBottom(source);
     }
-    
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        if (this.name.text === id){
+
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        if (this.name.text === id) {
             return {
-                symbolId : id,
-                symbolType : undefined,
-                symbolScope : SymbolScope.member
+                symbolId: id,
+                symbolType: undefined,
+                symbolScope: SymbolScope.member
             } as ISymbol;
         }
 
@@ -58,11 +58,5 @@ ${this.indent()}}\r
         return this.name.renderAsSource();
     }
 
-    get symbolType() {
-        return UnknownType.Instance;
-    }
-
-    get symbolScope(): SymbolScope {
-        return SymbolScope.property;
-    }
+    symbolScope = SymbolScope.property;
 }

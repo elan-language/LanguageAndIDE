@@ -7,7 +7,7 @@ import { FunctionFrame } from "../globals/function-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
-import { endKeyword, functionKeyword,  returnKeyword } from "../keywords";
+import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 
 export class FunctionMethod extends FunctionFrame implements Member {
     isGlobal: boolean = false;
@@ -17,17 +17,17 @@ export class FunctionMethod extends FunctionFrame implements Member {
     constructor(parent: Class) {
         super(parent);
         this.class = parent as Class;
-    }  
+    }
     public override indent(): string {
         return singleIndent();
     }
-    public override renderAsSource() : string {
-        return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${ returnKeyword} ${this.returnType.renderAsSource()}\r
+    public override renderAsSource(): string {
+        return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
     }
-    public override compile() : string {
+    public override compile(): string {
         this.compileErrors = [];
         return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
@@ -42,12 +42,12 @@ ${this.indent()}}\r
         return super.parseBottom(source);
     }
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        if (this.name.text === id){
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        if (this.name.text === id) {
             return {
-                symbolId : id,
-                symbolType : this.returnType.symbolType,
-                symbolScope : SymbolScope.member
+                symbolId: id,
+                symbolType: this.returnType.symbolType,
+                symbolScope: SymbolScope.member
             } as ISymbol;
         }
 
