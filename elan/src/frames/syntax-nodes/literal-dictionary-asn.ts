@@ -1,5 +1,7 @@
 
 import { DictionaryType } from "../../symbols/dictionary-type";
+import { UnknownType } from "../../symbols/unknown-type";
+import { unknownType } from "../../test/testHelpers";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
@@ -25,8 +27,11 @@ export class LiteralDictionaryAsn implements AstNode {
     }
 
     get symbolType() {
-        const first = this.list.items[0] as KvpAsn;
-        return new DictionaryType(first.keySymbolType!, first.symbolType!);
+        const first = this.list.items[0] as KvpAsn | undefined;
+        if (first) {
+            return new DictionaryType(first.keySymbolType!, first.symbolType!);
+        }
+        return new DictionaryType(UnknownType.Instance, UnknownType.Instance);
     }
 
     toString() {

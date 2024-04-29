@@ -6,6 +6,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { AssignableField } from "../fields/assignableField";
+import { mustBeCompatibleType } from "../compile-rules";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -41,6 +42,8 @@ export class SetStatement extends AbstractFrame implements Statement{
     }
     compile(): string {
         this.compileErrors = [];
+        mustBeCompatibleType(this.assignable.getOrTransformAstNode!, this.expr.getOrTransformAstNode!, this.compileErrors);
+
         return `${this.indent()}${this.assignable.compile()} = ${this.expr.compile()};`;
     }
 } 
