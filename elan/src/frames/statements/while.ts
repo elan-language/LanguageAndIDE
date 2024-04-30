@@ -37,8 +37,8 @@ ${this.indent()}end while`;
 
     compile(): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors);
-        
+        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
+
         return `${this.indent()}while (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;

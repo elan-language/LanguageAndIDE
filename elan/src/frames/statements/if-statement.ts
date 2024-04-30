@@ -39,7 +39,7 @@ ${this.indent()}end if`;
 
     compile(): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors);
+        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
 
         return `${this.indent()}if (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r

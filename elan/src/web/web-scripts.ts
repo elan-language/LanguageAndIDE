@@ -1,4 +1,5 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
+import { CompileError } from "../frames/compile-error";
 import { CompileStatus } from "../frames/compile-status";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
@@ -98,6 +99,20 @@ function getStatus() {
 
 function updateStatus() {
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
+}
+
+function updateDisplay(ce : CompileError) {
+	const loc = ce.locationId;
+	console.warn(`Compile Error:  ${ce.message} ${loc}`);
+
+	if (loc){
+		const elem = document.getElementById(loc) as HTMLElement;
+		const error = elem.getElementsByTagName("error")[0] as HTMLElement;
+
+		if (error){
+			error.innerText = `${error.innerText}, ${ce.message}`; 
+		}
+	}
 }
 
 /**
@@ -218,7 +233,7 @@ function updateContent(text: string) {
 		file.compile();
 
 		for (const e of file.compileErrors()) {
-			console.warn(`Compile Error:  ${e.message}`);
+			updateDisplay(e);
 		}
 	}
 

@@ -39,7 +39,7 @@ ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
 
     compile(): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors);
+        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
         
         return `${this.indent()}do {\r
 ${this.renderStatementsAsObjectCode()}\r
