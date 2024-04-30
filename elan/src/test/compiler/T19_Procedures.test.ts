@@ -797,7 +797,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_ParameterCount', async () => {
+  test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 procedure f(p as Number)
@@ -820,7 +820,7 @@ end main`;
 
   });
 
-  ignore_test('Fail_ParameterType', async () => {
+  test('Fail_ParameterType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 procedure f(p as Int)
