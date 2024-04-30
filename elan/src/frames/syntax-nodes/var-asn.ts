@@ -5,25 +5,25 @@ import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { IndexAsn } from "./index-asn";
 import { RangeAsn } from "./range-asn";
 
-export class VarAsn implements AstNode {
+export class VarAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private index: AstNode | undefined, private scope: Scope) {
+    constructor(private id: string, private qualifier: AstNode | undefined, private index: AstNode | undefined, public fieldId: string, private scope: Scope) {
+        super();
         this.id = id.trim();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         const q = this.qualifier ? this.qualifier.aggregateCompileErrors() : [];
         const i = this.index ? this.index.aggregateCompileErrors() : [];
 
         return this.compileErrors
-        .concat(q)
-        .concat(i);
+            .concat(q)
+            .concat(i);
     }
 
     private isRange() {

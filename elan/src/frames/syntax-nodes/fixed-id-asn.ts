@@ -1,12 +1,12 @@
 import { CompileError } from "../compile-error";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class FixedIdAsn implements AstNode {
+export class FixedIdAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string,) {
+    constructor(private id: string, public fieldId: string) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

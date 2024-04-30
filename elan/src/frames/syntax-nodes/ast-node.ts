@@ -9,4 +9,6 @@ export interface AstNode {
     compileErrors: CompileError[];
 
     aggregateCompileErrors(): CompileError[];
+
+    fieldId: string;
 }

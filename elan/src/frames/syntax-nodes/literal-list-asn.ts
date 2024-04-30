@@ -2,14 +2,14 @@ import { ListType } from "../../symbols/list-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralListAsn implements AstNode {
+export class LiteralListAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly items: AstNode[], scope: Scope) {
+    constructor(public readonly items: AstNode[], public fieldId: string, scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];

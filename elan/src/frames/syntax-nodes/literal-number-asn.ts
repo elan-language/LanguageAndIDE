@@ -1,13 +1,14 @@
 import { NumberType } from "../../symbols/number-type";
 import { CompileError } from "../compile-error";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralNumberAsn implements AstNode {
-    constructor(rawValue: string) {
+export class LiteralNumberAsn extends AbstractAstNode implements AstNode {
+
+    constructor(rawValue: string, public fieldId: string,) {
+        super();
         this.value = parseFloat(rawValue.trim());
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

@@ -224,11 +224,11 @@ export abstract class AbstractField implements Selectable, Field {
         this.parseStatus = newStatus;
     }
 
-    select(): void {
+    select(withFocus?: boolean, multiSelect?: boolean, selection? : number): void {
         this.deselectAll();
         this.selected = true;
         this.focus();
-        this.cursorPos = this.text.length;
+        this.cursorPos = selection ?? this.text.length;
     }
 
     isSelected() : boolean {
@@ -315,11 +315,11 @@ export abstract class AbstractField implements Selectable, Field {
         if (!this.astNode) {
             if (this.rootNode instanceof CSV) {
                 const scope = this.getHolder();
-                const vv = transformMany(this.rootNode as CSV, scope);
-                this.astNode = new CsvAsn(vv, scope);
+                const vv = transformMany(this.rootNode as CSV, this.htmlId, scope);
+                this.astNode = new CsvAsn(vv, this.htmlId, scope);
             }
             else {
-                this.astNode = transform(this.rootNode, this.getHolder());
+                this.astNode = transform(this.rootNode, this.htmlId, this.getHolder());
             }
         }
         return this.astNode;

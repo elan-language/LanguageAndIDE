@@ -60,7 +60,7 @@ export class CallStatement extends AbstractFrame implements Statement{
         if (procSymbol.symbolType instanceof ProcedureType) {
             const argList = this.args.getOrTransformAstNode as CsvAsn;
             const params = argList.items;
-            mustMatchParameters(params, procSymbol.symbolType.parametersTypes, this.compileErrors);
+            mustMatchParameters(params, procSymbol.symbolType.parametersTypes, this.compileErrors, this.htmlId);
         }
         
         return `${this.indent()}${this.proc.compile()}(${this.args.compile()});`;

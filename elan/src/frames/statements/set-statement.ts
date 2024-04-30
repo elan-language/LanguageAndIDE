@@ -45,7 +45,7 @@ export class SetStatement extends AbstractFrame implements Statement{
     }
     compile(): string {
         this.compileErrors = [];
-        mustBeCompatibleNode(this.assignable.getOrTransformAstNode!, this.expr.getOrTransformAstNode!, this.compileErrors);
+        mustBeCompatibleNode(this.assignable.getOrTransformAstNode!, this.expr.getOrTransformAstNode!, this.compileErrors, this.expr.getHtmlId());
 
         return `${this.indent()}${this.assignable.compile()} = ${this.expr.compile()};`;
     }

@@ -1,22 +1,22 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class RangeAsn implements AstNode {
+export class RangeAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private from: AstNode | undefined, private to: AstNode | undefined, private scope: Scope) {
+    constructor(private from: AstNode | undefined, private to: AstNode | undefined, public fieldId: string, private scope: Scope) {
+        super();
 
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         const fr = this.from ? this.from.aggregateCompileErrors() : [];
         const to = this.to ? this.to.aggregateCompileErrors() : [];
 
         return this.compileErrors
-        .concat(fr)
-        .concat(to);
+            .concat(fr)
+            .concat(to);
     }
 
 

@@ -1,14 +1,14 @@
 import { TupleType } from "../../symbols/tuple-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralTupleAsn implements AstNode {
+export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private readonly items: AstNode[], scope: Scope) {
+    constructor(private readonly items: AstNode[], public fieldId: string, scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];

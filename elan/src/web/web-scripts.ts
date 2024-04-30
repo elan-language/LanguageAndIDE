@@ -1,4 +1,5 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
+import { CompileError } from "../frames/compile-error";
 import { CompileStatus } from "../frames/compile-status";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
@@ -100,6 +101,20 @@ function updateStatus() {
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
 }
 
+function updateDisplay(ce : CompileError) {
+	const loc = ce.locationId;
+	console.warn(`Compile Error:  ${ce.message} ${loc}`);
+
+	if (loc){
+		const elem = document.getElementById(loc) as HTMLElement;
+		const error = elem.getElementsByTagName("error")[0] as HTMLElement;
+
+		if (error){
+			error.innerText = `${error.innerText}, ${ce.message}`; 
+		}
+	}
+}
+
 /**
  * Render the document
  */
@@ -130,11 +145,13 @@ function updateContent(text: string) {
 
 		frame.addEventListener('click', event => {
 			const ke = event as KeyboardEvent;
+			const selection = (event.target as any)["selectionStart"] as number | undefined;
 			const msg: editorEvent = {
 				type: 'click',
 				target: "frame",
 				id: id,
-				modKey: getModKey(ke)
+				modKey: getModKey(ke),
+				selection : selection
 			};
 			postMessage(msg);
 			event.preventDefault();
@@ -155,6 +172,10 @@ function updateContent(text: string) {
 				event.preventDefault();
 				event.stopPropagation();
 			}
+		});
+
+		frame.addEventListener('mousemove', event => {
+			event.preventDefault();
 		});
 
 		frame.addEventListener('dblclick', event => {
@@ -218,7 +239,7 @@ function updateContent(text: string) {
 		file.compile();
 
 		for (const e of file.compileErrors()) {
-			console.warn(`Compile Error:  ${e.message}`);
+			updateDisplay(e);
 		}
 	}
 

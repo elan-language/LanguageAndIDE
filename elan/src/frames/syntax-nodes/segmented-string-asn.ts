@@ -1,15 +1,14 @@
 import { StringType } from "../../symbols/string-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class SegmentedStringAsn implements AstNode {
+export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private segments: AstNode[], scope: Scope) {
-
+    constructor(private segments: AstNode[], public fieldId: string, scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];

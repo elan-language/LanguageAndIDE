@@ -10,15 +10,15 @@ import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class FuncCallAsn implements AstNode {
+export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, private scope: Scope) {
+    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
+        super();
         this.id = id.trim();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];
@@ -65,14 +65,14 @@ export class FuncCallAsn implements AstNode {
         const pp = this.parameters.map(p => p.compile()).join(", ");
 
         if (funcSymbol.symbolType instanceof FunctionType) {
-            mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors);
+            mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors, this.fieldId);
 
             if (funcSymbol.symbolType.isExtension && this.qualifier) {
                 this.parameters = [this.qualifier].concat(this.parameters);
                 this.qualifier = undefined;
             }
 
-            mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors);
+            mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
         }
 
         const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;

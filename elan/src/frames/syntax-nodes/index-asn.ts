@@ -1,19 +1,19 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
 import { RangeAsn } from "./range-asn";
 
-export class IndexAsn implements AstNode {
+export class IndexAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly index: ExprAsn, private scope: Scope) {
+    constructor(public readonly index: ExprAsn, public fieldId: string, private scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors
-        .concat(this.index.aggregateCompileErrors());
+            .concat(this.index.aggregateCompileErrors());
     }
 
     compile(): string {
