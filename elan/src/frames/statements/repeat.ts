@@ -4,6 +4,8 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { mustBeOfType } from "../compile-rules";
+import { BooleanType } from "../../symbols/boolean-type";
 
 export class Repeat extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
@@ -37,6 +39,8 @@ ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
 
     compile(): string {
         this.compileErrors = [];
+        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors);
+        
         return `${this.indent()}do {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}} while (!(${this.condition.compile()}));`;

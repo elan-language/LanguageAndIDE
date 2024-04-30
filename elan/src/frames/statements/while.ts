@@ -2,6 +2,8 @@ import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";import { FrameWithStatements } from "../frame-with-statements";
+import { mustBeOfType } from "../compile-rules";
+import { BooleanType } from "../../symbols/boolean-type";
 
 export class While extends FrameWithStatements { 
     isStatement = true;
@@ -35,6 +37,8 @@ ${this.indent()}end while`;
 
     compile(): string {
         this.compileErrors = [];
+        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors);
+        
         return `${this.indent()}while (${this.condition.compile()}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;

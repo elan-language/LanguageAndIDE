@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T11_RepeatUntil', () => {
@@ -161,5 +161,23 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
+  test('Fail_ConditionNotBool', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to 0
+  repeat
+    set x to x + 1
+  end repeat when x
+  print x
+end main`;
+  
+      const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+  
+    });
 
 });
