@@ -45,6 +45,9 @@ export class CallStatement extends AbstractFrame implements Statement{
 
     compile(): string {
         this.compileErrors = [];
+
+        //mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors);
+
         return `${this.indent()}${this.proc.compile()}(${this.args.compile()});`;
     }
 } 

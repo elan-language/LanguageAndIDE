@@ -228,7 +228,7 @@ return main;}`;
 
   // TODO fails
 
-  test('Fail_ParameterCount1', async () => {
+  test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f(p as Number) return Number
