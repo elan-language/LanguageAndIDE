@@ -143,23 +143,10 @@ function updateContent(text: string) {
 			event.stopPropagation();
 		});
 
-		frame.addEventListener('click', event => {
-			const ke = event as KeyboardEvent;
-			const msg: editorEvent = {
-				type: 'click',
-				target: "frame",
-				id: id,
-				modKey: getModKey(ke)
-			};
-			postMessage(msg);
-			event.preventDefault();
-			event.stopPropagation();
-		});
-
 		frame.addEventListener('mousedown', event => {
 			// mousedown rather than click as click does not seem to pick up shift/ctrl click
 			const me = event as MouseEvent;
-			if (me.button === 0 && me.shiftKey) { // left button only
+			if (me.button === 0) { // left button only
 				const msg: editorEvent = {
 					type: 'click',
 					target: "frame",
