@@ -2,7 +2,10 @@ import { ISymbolType } from "./symbol-type";
 
 export class ClassType implements ISymbolType {
 
-    constructor(public className: string) {
+    // TODO - am I mixing up symbol types and symbols !
+
+
+    constructor(public className: string, public isAbstract?: Boolean) {
 
     }
 

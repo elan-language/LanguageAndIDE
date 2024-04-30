@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T43_Inheritance', () => {
@@ -370,7 +370,148 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
+  
 
+  test('Fail_CannotInheritFromConcreteClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+
+    property p2 as Int
+
+end class
+
+class Bar inherits Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+
+    property p2 as Int
+
+end class`;
+
+      
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
+  });
+
+test('Fail_AbstractClassCannotInheritFromConcreteClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+  
+    property p2 as Int
+
+    function asString() return String 
+        return ""
+    end function
+end class
+
+abstract class Bar inherits Foo
+    abstract property p1 as Int
+    abstract property p2 as Int
+end class`;
+
+      
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
+  });
+
+  ignore_test('Fail_MustImplementAllInheritedMethods', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+    abstract property p1 as Int
+    abstract property p2 as Int
+
+    abstract procedure setP1(v as Int)
+
+    abstract function product() return Int
+end class
+
+class Bar inherits Foo
+    constructor()
+        set p1 to 3
+        set p2 to 4
+    end constructor
+
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 as Int)
+        set property.p1 to p1
+    end procedure
+
+    function asString() return String 
+        return ""
+    end function
+end class`;
+
+      
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [""]);
+  });
+
+
+
+
+
+
+
+
+
+  test('Fail_CannotInstantiateAbstractClass', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to new Bar()
+end main
+
+abstract class Bar
+    abstract property p1 as Int
+    abstract property p2 as Int
+end class`;
+
+      
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Class Bar must be concrete to new"]);
+  });
   
 
 });

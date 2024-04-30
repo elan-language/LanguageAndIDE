@@ -1,6 +1,6 @@
 import { ClassType } from "../../symbols/class-type";
 import { CompileError } from "../compile-error";
-import { mustMatchParameters } from "../compile-rules";
+import { mustBeConcreteClass, mustMatchParameters } from "../compile-rules";
 import { Class } from "../globals/class";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -38,8 +38,13 @@ export class NewAsn extends AbstractAstNode implements AstNode {
         const cls = this.scope.resolveSymbol(this.typeNode.type, this.scope);
         
         if (cls.symbolType instanceof ClassType) {
-            const parameterTypes = (cls as Class).getConstructor().params.symbolTypes;
-            mustMatchParameters(this.parameters, parameterTypes, this.compileErrors, this.fieldId);
+            mustBeConcreteClass(cls.symbolType, this.compileErrors, this.fieldId);
+
+            if (cls.symbolType.isAbstract === false) {
+                // todo is this right - or should we resolve constructor on class scope and get constructor symbol ? 
+                const parameterTypes = (cls as Class).getConstructor().params.symbolTypes;
+                mustMatchParameters(this.parameters, parameterTypes, this.compileErrors, this.fieldId);
+            }
         }
 
         return `system.initialise(new ${t}(${pp})${gt})`;

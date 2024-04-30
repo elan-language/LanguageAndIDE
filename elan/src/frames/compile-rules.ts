@@ -20,6 +20,18 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
     }
 }
 
+export function mustBeAbstractClass(classType : ClassType, compileErrors: CompileError[], location: string) {
+    if (!classType.isAbstract) {
+        compileErrors.push(new CompileError(`Superclass ${classType.name} must be abstract`, location));
+    }
+}
+
+export function mustBeConcreteClass(classType : ClassType, compileErrors: CompileError[], location: string) {
+    if (classType.isAbstract) {
+        compileErrors.push(new CompileError(`${classType.name} must be concrete to new`, location));
+    }
+}
+
 export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNode | undefined, compileErrors: CompileError[], location: string) {
     if (ft.isExtension && qualifier === undefined) {
         compileErrors.push(new CompileError(`Cannot call extension method directly`, location));

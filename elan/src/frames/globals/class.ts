@@ -28,6 +28,10 @@ import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
 import { ScratchPad } from "../scratch-pad";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
+import { mustBeAbstractClass } from "../compile-rules";
+import { TypeNode } from "../parse-nodes/type-node";
+import { TypeAsn } from "../syntax-nodes/type-asn";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -60,7 +64,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         return this.name.text; 
     }
     get symbolType() {
-        return new ClassType(this.symbolId);
+        return new ClassType(this.symbolId, this.isAbstract());
     }
     symbolScope = SymbolScope.program;
     getProfile(): Profile {
@@ -201,6 +205,19 @@ end class\r\n`;
 
     public compile(): string {
         this.compileErrors = [];
+
+        if (this.doesInherit()) {
+            const superClasses = this.superClasses.getOrTransformAstNode as CsvAsn;
+            const nodes = superClasses.items as TypeAsn[];
+
+            for (const n of nodes) {
+                const cls = this.resolveSymbol(n.type, this);
+                const st = cls.symbolType as ClassType;
+                mustBeAbstractClass(st, this.compileErrors, this.htmlId);
+            }
+
+        }
+
         const name = this.name.compile();
         const asString = this.isAbstract() ? `
   asString() {
