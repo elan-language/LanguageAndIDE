@@ -43,7 +43,7 @@ export function handleClick(e: editorEvent, file: File) {
                 }
             }
             else {
-                s?.select(true, false);
+                s?.select(true, false, e.selection);
             }
             break;
         }

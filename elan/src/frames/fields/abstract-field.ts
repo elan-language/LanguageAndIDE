@@ -224,11 +224,11 @@ export abstract class AbstractField implements Selectable, Field {
         this.parseStatus = newStatus;
     }
 
-    select(): void {
+    select(withFocus?: boolean, multiSelect?: boolean, selection? : number): void {
         this.deselectAll();
         this.selected = true;
         this.focus();
-        this.cursorPos = this.text.length;
+        this.cursorPos = selection ?? this.text.length;
     }
 
     isSelected() : boolean {

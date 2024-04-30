@@ -145,11 +145,13 @@ function updateContent(text: string) {
 
 		frame.addEventListener('click', event => {
 			const ke = event as KeyboardEvent;
+			const selection = (event.target as any)["selectionStart"] as number | undefined;
 			const msg: editorEvent = {
 				type: 'click',
 				target: "frame",
 				id: id,
-				modKey: getModKey(ke)
+				modKey: getModKey(ke),
+				selection : selection
 			};
 			postMessage(msg);
 			event.preventDefault();

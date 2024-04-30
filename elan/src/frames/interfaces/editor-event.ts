@@ -3,5 +3,6 @@ export interface editorEvent {
     target: "frame" | "window"
     key?: string,
     modKey: { control: boolean, shift: boolean, alt: boolean },
-    id?: string
+    id?: string,
+    selection? : number
 }
