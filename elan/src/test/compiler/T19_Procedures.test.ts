@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T19_Procedures', () => {
@@ -116,7 +116,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test('Pass_WithParamsPassingVariables', async () => {
+  test('Pass_WithParamsPassingVariables', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -125,9 +125,9 @@ main
   call foo(a, b)
 end main
 
-procedure foo(a Int, b String)
-    print a
-    print b
+procedure foo(a as Int, b as String)
+  print a
+  print b
 end procedure`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -137,7 +137,7 @@ async function main() {
   foo(a, b);
 }
 
-function foo(a: number, b: string) {
+function foo(a, b) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -149,7 +149,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
   ignore_test('Pass_WithParamsPassingRefVariables', async () => {
@@ -229,7 +229,7 @@ return main;}`;
 
 main
   var a set to 2
-  var b set to ""hello""
+  var b set to "hello"
   call a.foo(b)
 end main
 
@@ -265,7 +265,7 @@ return main;}`;
 
 main
   var a set to 1
-  call foo(a + 1, ""hello"")
+  call foo(a + 1, "hello")
 end main
 
 procedure foo(a Int, b String)
@@ -276,7 +276,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 1;
-  foo(a + 1, "hello);
+  foo(a + 1, "hello");
 }
 
 function foo(a: number, b: string) {
@@ -413,6 +413,124 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "123");
   });
+
+  test('Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  call f.length()
+end main
+
+class Foo
+    constructor()
+        set p1 to new Bar()
+    end constructor
+
+    property p1 as Bar
+
+    procedure length()
+        call p1.length(2)
+    end procedure
+
+    function asString() return String
+         return ""
+    end function
+
+end class
+
+class Bar
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Int
+
+    procedure length(plus as Number)
+        print p1 + plus
+    end procedure
+
+    function asString() return String
+         return ""
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  f.length();
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Bar"]]);};
+  constructor() {
+    this.p1 = system.initialise(new Bar());
+  }
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Bar.defaultInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  length() {
+    this.p1.length(2);
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  length(plus) {
+    system.print(_stdlib.asString(this.p1 + plus));
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7");
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
   ignore_test('Fail_CallingUndeclaredProc', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -677,6 +795,52 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_ParameterCount', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+procedure f(p as Number)
+  return 0
+end procedure
+
+main
+  call f(1, 2)
+  call f()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Too many parameters 1",
+      "Missing parameter 0"
+    ]);
+
+  });
+
+  test('Fail_ParameterType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+procedure f(p as Int)
+
+end procedure
+
+main
+  call f(true)
+  call f(1)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign Boolean to Int ",
+      "Cannot assign Number to Int "
+    ]);
+
   });
 
 });

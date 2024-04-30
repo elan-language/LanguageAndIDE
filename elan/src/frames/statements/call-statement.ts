@@ -5,6 +5,9 @@ import { CodeSource } from "../code-source";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { ProcedureType } from "../../symbols/procedure-type";
+import { mustMatchParameters } from "../compile-rules";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
 
 export class CallStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -45,6 +48,16 @@ export class CallStatement extends AbstractFrame implements Statement{
 
     compile(): string {
         this.compileErrors = [];
+
+        // todo handle class scope
+        const procSymbol = this.resolveSymbol(this.proc.text, this);
+
+        if (procSymbol.symbolType instanceof ProcedureType) {
+            const argList = this.args.getOrTransformAstNode as CsvAsn;
+            const params = argList.items;
+            mustMatchParameters(params, procSymbol.symbolType.parametersTypes, this.compileErrors);
+        }
+        
         return `${this.indent()}${this.proc.compile()}(${this.args.compile()});`;
     }
 } 

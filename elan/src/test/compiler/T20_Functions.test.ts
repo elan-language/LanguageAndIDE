@@ -228,10 +228,10 @@ return main;}`;
 
   // TODO fails
 
-  test('Fail_ParameterCount1', async () => {
+  test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f(p as Number) return Int
+function f(p as Number) return Number
   return 0
 end function
 
@@ -254,7 +254,7 @@ end main`;
   test('Fail_ParameterType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f(p as Int) return Int
+function f(p as Int) return Number
   return 0
 end function
 
@@ -270,6 +270,27 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Cannot assign Boolean to Int ",
       "Cannot assign Number to Int "
+    ]);
+
+  });
+
+  test('Fail_ReturnType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p as Boolean) return Int
+  return p
+end function
+
+main
+  var a set to f(true)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign Boolean to Int "
     ]);
 
   });
