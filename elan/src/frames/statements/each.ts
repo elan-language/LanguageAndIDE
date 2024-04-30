@@ -6,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { eachKeyword } from "../keywords";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -18,6 +19,9 @@ export class Each extends FrameWithStatements implements Statement {
         this.variable.setPlaceholder("variableName");
         this.iter = new ExpressionField(this);
         this.iter.setPlaceholder("iterable value or expression");
+    }
+    initialKeywords(): string {
+        return eachKeyword;
     }
 
     getFields(): Field[] {

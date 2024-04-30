@@ -5,6 +5,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
+import { commentMarker } from "../keywords";
 
 export class CommentStatement extends AbstractFrame implements Statement, Member {
     isStatement = true;
@@ -15,6 +16,11 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
         super(parent);
         this.text= new CommentField(this);
     }
+
+    initialKeywords(): string {
+        return commentMarker;
+    }
+
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("# ");

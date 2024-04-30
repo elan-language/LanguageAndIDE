@@ -1,5 +1,6 @@
 import { ISymbol } from "../../symbols/symbol";
 import { AbstractSelector } from "../abstract-selector";
+import { ScratchPad } from "../scratch-pad";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { Profile } from "./profile";
@@ -29,6 +30,7 @@ export interface Parent {
     getMap(): Map<string, Selectable>;
     getFactory() : StatementFactory;
     getProfile() : Profile;
+    getScratchPad(): ScratchPad;
 
     getIdPrefix(): string;
     hasParent(): boolean;

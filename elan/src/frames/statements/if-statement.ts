@@ -6,6 +6,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
+import { ifKeyword } from "../keywords";
 
 export class IfStatement extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -15,6 +16,10 @@ export class IfStatement extends FrameWithStatements implements Statement {
         super(parent);
         this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
+    }
+
+    initialKeywords(): string {
+        return ifKeyword;
     }
 
     getFields(): Field[] {

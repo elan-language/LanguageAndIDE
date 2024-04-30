@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
-import {ctrl_d, ctrl_del, ctrl_down, ctrl_up, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
+import {ctrl_d, ctrl_del, ctrl_down, ctrl_up, ctrl_v, ctrl_x, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
@@ -10,6 +10,7 @@ import { Property } from '../frames/class-members/property';
 import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { StatementSelector } from '../frames/statements/statement-selector';
+import { MainFrame } from '../frames/globals/main-frame';
 
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -203,6 +204,41 @@ suite('Editing Frames', () => {
 		last.processKey(ctrl_d());
 		last = cls.getChildren()[1];
 		assert.equal(last instanceof MemberSelector, true);
+	});
+	test('Cut', () => {
+		var file = T03_mainWithAllStatements();
+		var main = file.getById("main1") as MainFrame;
+		var var3 = file.getById("var3");
+		var3.processKey(ctrl_x());
+		var firstStatement = main.getChildren()[0];
+		assert.equal(firstStatement.getHtmlId(), "set6");
+	});
+	test('Paste', () => {
+		var file = T03_mainWithAllStatements();
+		var main = file.getById("main1") as MainFrame;
+		var var3 = file.getById("var3");
+		var3.processKey(ctrl_x());
+		var set6 = file.getById("set6");
+		set6.processKey(enter());
+		var selector = main.getChildren()[1];
+		assert.equal(selector.getHtmlId(), "select64");
+		selector.processKey(ctrl_v());
+		var pasted = main.getChildren()[1];
+		assert.equal(pasted.getHtmlId(), "var3");
+		var third = main.getChildren()[2];
+		assert.equal(third.getHtmlId(), "throw9");
+	});
+	test('Paste at wrong level has no effect', () => {
+		var file = T03_mainWithAllStatements();
+		var main = file.getById("main1") as MainFrame;
+		var var3 = file.getById("var3");
+		var3.processKey(ctrl_x());
+		main.processKey(shift_enter());
+		var globalSelect = file.getChildren()[0];
+		assert.equal(globalSelect.getHtmlId(), "select64");
+		globalSelect.processKey(ctrl_v());
+		var newFirst = file.getChildren()[0];
+		assert.equal(newFirst, globalSelect);
 	});
 });	
 

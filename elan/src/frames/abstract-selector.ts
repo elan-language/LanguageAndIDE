@@ -19,6 +19,9 @@ export abstract class AbstractSelector extends AbstractFrame {
         this.profile = parent.getProfile();
         this.profileOptions = this.getDefaultOptions().filter(opt => this.profileAllows(opt[0]));
     }
+    initialKeywords(): string {
+        return ""; //Not applicable
+    }
 
     abstract getDefaultOptions():  [string, (parent: Parent) => Frame][];
 
@@ -100,6 +103,7 @@ export abstract class AbstractSelector extends AbstractFrame {
             case "Backspace": {this.text = this.text.substring(0,this.text.length-1); break; } 
             case "Delete": {this.deleteIfPermissible(); break;}
             case "d": {if (e.modKey.control) {this.deleteIfPermissible(); break;}}
+            case "v": {if (e.modKey.control) {this.paste(); break;}}
             default: {
                 if (!key || key.length === 1) {
                     key = key?.toLowerCase();
@@ -111,11 +115,27 @@ export abstract class AbstractSelector extends AbstractFrame {
         }  
     }
 
-    deleteIfPermissible(): void {
-        var parent = this.getParent();
-        if(parent.minimumNumberOfChildrenExceeded()) {
+    override deleteIfPermissible(): void {
+        if(this.getParent().minimumNumberOfChildrenExceeded()) {
             this.delete();
         }
+    }
+
+    paste(): void {
+        var parent = this.getParent();
+        var sp = this.getScratchPad();
+        var frame = sp.readSnippet();
+        if (frame && this.canBePastedIn(frame)) {
+            sp.remove(frame);
+            parent.addChildBefore(frame, this);
+            frame.setParent(parent);
+            frame.select(true, false);
+            this.deleteIfPermissible();
+        }
+    }
+
+    private canBePastedIn(frame: Frame) : boolean {
+        return this.optionsMatchingInput(frame.initialKeywords()).length === 1;
     }
 
     processOptions(key: string | undefined) {

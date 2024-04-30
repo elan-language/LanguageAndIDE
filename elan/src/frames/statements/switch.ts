@@ -3,6 +3,7 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent} from "../interfaces/parent";
+import { switchKeyword } from "../keywords";
 import { Default } from "./default";
 
 export class Switch extends FrameWithStatements { 
@@ -16,7 +17,9 @@ export class Switch extends FrameWithStatements {
         this.default = new Default(this);
         this.getChildren().push(this.default);
     }
-
+    initialKeywords(): string {
+        return switchKeyword;
+    }
     minimumNumberOfChildrenExceeded(): boolean {
         return this.getChildren().length > 2; //default +
     }

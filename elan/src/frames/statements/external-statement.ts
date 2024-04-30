@@ -27,6 +27,10 @@ export class ExternalStatement extends AbstractFrame implements Statement{
         this.assignable.setPlaceholder("variableName");
     }
 
+    initialKeywords(): string {
+        return externalKeyword;
+    }
+
     setIntoExtension(to: boolean) {
         this.hasInto = to;
     }

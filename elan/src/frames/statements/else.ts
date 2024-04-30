@@ -6,6 +6,7 @@ import { singleIndent } from "../helpers";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { elseKeyword } from "../keywords";
 
 export class Else extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
@@ -18,6 +19,10 @@ export class Else extends FrameWithStatements implements Statement {
         this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
         this.selectIfClause = new IfSelector(this);
+    }
+
+    initialKeywords(): string {
+        return elseKeyword;
     }
 
     getFields(): Field[] {

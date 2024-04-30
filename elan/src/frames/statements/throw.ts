@@ -4,6 +4,7 @@ import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
+import { throwKeyword } from "../keywords";
 
 export class Throw extends AbstractFrame implements Statement{
     isStatement = true;
@@ -12,6 +13,9 @@ export class Throw extends AbstractFrame implements Statement{
     constructor(parent: Parent) {
         super(parent);
         this.text = new ExceptionMessage(this);
+    }
+    initialKeywords(): string {
+        return throwKeyword;
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();

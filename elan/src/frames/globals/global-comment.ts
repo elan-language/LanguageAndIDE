@@ -6,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { GlobalSelector } from "./global-selector";
 import { File } from "../interfaces/file";
+import { commentMarker } from "../keywords";
 
 export class GlobalComment extends AbstractFrame {
     isGlobal = true;
@@ -17,7 +18,9 @@ export class GlobalComment extends AbstractFrame {
         this.file = parent;
         this.text = new CommentField(this);
     }
-
+    initialKeywords(): string {
+        return commentMarker;
+    }
     getFields(): Field[] {
         return [this.text];
     }

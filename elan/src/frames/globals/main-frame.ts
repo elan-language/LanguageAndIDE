@@ -7,6 +7,7 @@ import { GlobalSelector } from "./global-selector";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { ISymbol } from "../../symbols/symbol";
+import { mainKeyword } from "../keywords";
 
 export class MainFrame extends FrameWithStatements {
     isMain = true;
@@ -17,7 +18,9 @@ export class MainFrame extends FrameWithStatements {
         super(parent);
         this.file = parent;
     }
-
+    initialKeywords(): string {
+        return mainKeyword;
+    }
     getFields(): Field[] {
         return []; //no direct fields
     }

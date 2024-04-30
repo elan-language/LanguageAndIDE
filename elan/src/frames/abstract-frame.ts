@@ -9,6 +9,7 @@ import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
 import { ISymbol } from "../symbols/symbol";
 import { CompileError } from "./compile-error";
+import { ScratchPad } from "./scratch-pad";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -28,6 +29,13 @@ export abstract class AbstractFrame implements Frame {
         map.set(this.htmlId, this);
         this.setMap(map);
     }
+
+    abstract initialKeywords(): string;  
+
+    getScratchPad(): ScratchPad {
+        return this.getParent().getScratchPad();
+    }
+    
     getHtmlId(): string {
         return this.htmlId;
     }
@@ -176,27 +184,51 @@ export abstract class AbstractFrame implements Frame {
           case "ArrowRight": {if (isParent(this)) { this.getFirstChild().select(true, false);} break;}
           case "Delete": {if (e.modKey.control) {this.deleteIfPermissible();} break;}
           case "d": {if (e.modKey.control) {this.deleteIfPermissible();} break;}
+          case "x" : {if (e.modKey.control) {this.cut();} break;}
         } 
+    }
+    cut(): void {
+        if (this.movable) {
+            this.insertNewSelectorIfNecessary();
+            var newFocus = this.getAdjacentPeer();
+            this.deselect();
+            var sp = this.getScratchPad();
+            this.getParent().removeChild(this);
+            sp.addSnippet(this);
+            newFocus.select(true, false);
+        }
     }
 
     deleteIfPermissible(): void {
+        if (this.movable) {
+            this.insertNewSelectorIfNecessary();
+            this.delete();
+        }
+    }
+
+    delete(): void {
+            var parent = this.getParent();
+            var newFocus = this.getAdjacentPeer();
+            parent.removeChild(this);
+            this.getMap().delete(this.htmlId);
+            newFocus.select(true, false);
+    }
+
+    insertNewSelectorIfNecessary() {
         if(! this.getParent().minimumNumberOfChildrenExceeded()) {
             this.insertPeerSelector(true);
         }
-        this.delete();
     }
 
-    protected delete():void {
-        var parent = this.getParent();
-        var goto = this.getParent().getChildBefore(this);
-        if (goto === this) {
-            goto = parent.getChildAfter(this);
+    protected getAdjacentPeer(): Frame
+    {
+        var parent =this.getParent();
+        var adjacent = parent.getChildBefore(this);
+        if (adjacent === this) {
+            adjacent = parent.getChildAfter(this);
         }
-        parent.removeChild(this);
-        this.getMap().delete(this.htmlId);
-        goto.select(true, false);
+        return adjacent;
     }
-
     insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 
         this.insertPeerSelector(false);
     }

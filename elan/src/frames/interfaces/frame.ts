@@ -42,4 +42,7 @@ export interface Frame extends Selectable, Scope {
     aggregateCompileErrors(): CompileError[];
     insertSelectorAfterLastField(): void;
     insertPeerSelector(before: boolean): void;
+
+    initialKeywords(): string;
+    setParent(parent: Parent): void;
 }

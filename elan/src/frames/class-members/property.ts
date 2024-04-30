@@ -22,7 +22,9 @@ export class Property extends AbstractFrame implements Member {
         this.name = new IdentifierField(this);
         this.type = new TypeField(this);
     }
-
+    initialKeywords(): string {
+        return propertyKeyword;
+    }
     getFields(): Field[] {
         return [this.name, this.type];
     }

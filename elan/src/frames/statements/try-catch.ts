@@ -3,6 +3,7 @@ import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
+import { tryKeyword } from "../keywords";
 
 export class TryCatch extends FrameWithStatements  {
     private catch: Catch;
@@ -12,7 +13,9 @@ export class TryCatch extends FrameWithStatements  {
         this.catch =new Catch(this);
         this.getChildren().push(this.catch);
     }
-
+    initialKeywords(): string {
+        return tryKeyword;
+    }
     minimumNumberOfChildrenExceeded(): boolean {
         return this.getChildren().length > 2; //catch +
     }

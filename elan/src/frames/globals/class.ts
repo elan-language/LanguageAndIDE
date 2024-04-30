@@ -26,7 +26,8 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
-import { abstractKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
+import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
+import { ScratchPad } from "../scratch-pad";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -49,7 +50,9 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         this.getChildren().push(new Constructor(this));
         this.getChildren().push(new MemberSelector(this));
     }
-
+    initialKeywords(): string {
+        return classKeyword;
+    }
     private hasAddedMembers(): boolean {
         return this.getChildren().filter(m => !('isConstructor' in m || 'isSelector' in m )).length > 0;
     }

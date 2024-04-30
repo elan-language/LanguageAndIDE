@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { repeatKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
 
@@ -16,7 +17,9 @@ export class Repeat extends FrameWithStatements implements Statement {
         this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
     }
-
+    initialKeywords(): string {
+        return repeatKeyword;
+    }
     getFields(): Field[] {
         return [this.condition];
     }

@@ -3,6 +3,7 @@ import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
+import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
 
 export class TestFrame extends FrameWithStatements {
@@ -19,7 +20,9 @@ export class TestFrame extends FrameWithStatements {
         this.getChildren().push(new AssertStatement(this));
         this.getChildren().push(selector);
     }
-
+    initialKeywords(): string {
+        return testKeyword;
+    }
     getFields(): Field[] {
         return [this.testName];
     }

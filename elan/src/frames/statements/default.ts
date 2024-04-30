@@ -4,6 +4,7 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
+import { defaultKeyword } from "../keywords";
 
 export class Default extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -11,7 +12,10 @@ export class Default extends FrameWithStatements implements Statement {
         super(parent);
         this.movable = false;
     }
-    deleteIfPermissible(): void {}; //Does nothing as default cannot be deleted
+    initialKeywords(): string {
+        return defaultKeyword;
+    }
+    delete(): void {}; //Does nothing as default cannot be deleted
 
     getFields(): Field[] {
         return [];

@@ -10,6 +10,7 @@ import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
+import { procedureKeyword } from "../keywords";
 
 export class Procedure extends FrameWithStatements implements ISymbol, Scope {
     isGlobal = true;
@@ -23,7 +24,9 @@ export class Procedure extends FrameWithStatements implements ISymbol, Scope {
         this.name = new IdentifierField(this);
         this.params = new ParamList(this);
     }
-
+    initialKeywords(): string {
+        return procedureKeyword;
+    }
     get symbolId() {
         return this.name.text;
     }

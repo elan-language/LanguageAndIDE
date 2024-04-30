@@ -4,8 +4,8 @@ import { CodeSource } from "../code-source";
 import { ValueRefField } from "../fields/value-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ExpressionField } from "../fields/expression-field";
 import { AssertActualField } from "../fields/assert-actual-field";
+import { assertKeyword } from "../keywords";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -17,6 +17,10 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.actual = new AssertActualField(this);
         this.expected = new ValueRefField(this);
         this.expected.setPlaceholder("expected value");
+    }
+
+    initialKeywords(): string {
+        return assertKeyword;
     }
     
     parseFrom(source: CodeSource): void {

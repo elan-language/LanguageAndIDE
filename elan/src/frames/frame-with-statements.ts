@@ -24,6 +24,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         super(parent);   
         this.getChildren().push(new StatementSelector(this));
     }
+    
     getProfile(): Profile {
         return this.getParent().getProfile();
     }
