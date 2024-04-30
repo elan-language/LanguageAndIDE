@@ -4,7 +4,7 @@ import { Class } from "../globals/class";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
-import { functionKeyword, procedureKeyword, propertyKeyword, privateKeyword, abstractKeyword, commentMarker } from "../keywords";
+import { functionKeyword, procedureKeyword, propertyKeyword, privateKeyword, abstractKeyword, commentMarker, abstractPropertyKeywords, abstractProcedureKeywords, abstractFunctionKeywords } from "../keywords";
 
 export class MemberSelector extends AbstractSelector implements Member  {
     isMember: boolean = true;
@@ -14,20 +14,16 @@ export class MemberSelector extends AbstractSelector implements Member  {
         super(parent);
         this.class = parent as Class;
     }
-
-    private abstractProp = abstractKeyword + " " + propertyKeyword;
-    private abstractProc = abstractKeyword + " " + procedureKeyword;
-    private abstractFunc = abstractKeyword + " " + functionKeyword;
-   
+ 
     getDefaultOptions(): [string, (parent: Parent) => Frame][] {
         var options:  [string, (parent: Parent) => Frame][] = [
         [functionKeyword, (parent: Parent) => this.class.createFunction()],
         [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
         [propertyKeyword, (parent: Parent) => this.class.createProperty()],
         [privateKeyword, (parent: Parent) => this.class.createProperty()],
-        ["abstract function", (parent: Parent) => this.class.createAbstractFunction()],
-        ["abstract procedure", (parent: Parent) => this.class.createAbstractProcedure()],
-        ["abstract property", (parent: Parent) => this.class.createAbstractProperty()],
+        [abstractFunctionKeywords, (parent: Parent) => this.class.createAbstractFunction()],
+        [abstractProcedureKeywords, (parent: Parent) => this.class.createAbstractProcedure()],
+        [abstractPropertyKeywords, (parent: Parent) => this.class.createAbstractProperty()],
         [commentMarker, (parent: Parent) => this.class.createComment()],
         ];
         return options;
@@ -41,7 +37,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         var result = false;
         if (this.class.isAbstract()) {
             if (this.class.isImmutable()) {
-                result = keyword.startsWith(abstractKeyword) && keyword !== this.abstractProc;
+                result = keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords;
             } else {
                 result = keyword.startsWith(abstractKeyword) || keyword === commentMarker;
             }

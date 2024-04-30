@@ -6,6 +6,7 @@ import { TypeField } from "../fields/type-field";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
+import { abstractPropertyKeywords, propertyKeyword } from "../keywords";
 
 export class AbstractProperty extends AbstractFrame implements Member {
     isAbstract = true;
@@ -21,7 +22,9 @@ export class AbstractProperty extends AbstractFrame implements Member {
         this.name = new IdentifierField(this);
         this.type = new TypeField(this);
     }
-
+    initialKeywords(): string {
+        return abstractPropertyKeywords;
+    }
     getFields(): Field[] {
         return [this.name, this.type];
     }

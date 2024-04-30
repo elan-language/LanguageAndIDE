@@ -5,6 +5,7 @@ import { CodeSource } from "../code-source";
 import { singleIndent } from "../helpers";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { catchKeyword } from "../keywords";
 
 export class Catch extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -17,7 +18,11 @@ export class Catch extends FrameWithStatements implements Statement {
         this.variable.setText("e");
     } 
 
-    deleteIfPermissible(): void {}; //Does nothing as catch cannot be deleted
+    initialKeywords(): string {
+        return catchKeyword;
+    }
+
+    delete(): void {}; //Does nothing as catch cannot be deleted
 
     getFields(): Field[] {
         return [this.variable];

@@ -5,6 +5,7 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
+import { caseKeyword } from "../keywords";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -13,6 +14,10 @@ export class Case extends FrameWithStatements implements Statement {
     constructor(parent: Parent) {
         super(parent);
         this.value  = new CaseValueField(this);
+    }
+
+    initialKeywords(): string {
+        return caseKeyword;
     }
     
     getFields(): Field[] {

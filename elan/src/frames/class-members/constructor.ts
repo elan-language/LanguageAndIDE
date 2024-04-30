@@ -8,6 +8,7 @@ import { AbstractSelector } from "../abstract-selector";
 import { Collapsible } from "../interfaces/collapsible";
 import { ISymbol } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
+import { constructorKeyword } from "../keywords";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -22,7 +23,11 @@ export class Constructor extends FrameWithStatements implements Member {
         this.params = new ParamList(this);
     }
 
-    deleteIfPermissible(): void {}; //Does nothing as constructor cannot be deleted
+    initialKeywords(): string {
+        return constructorKeyword;
+    }
+
+    delete(): void {}; //Does nothing as constructor cannot be deleted
 
     getFields(): Field[] {
         return [this.params];

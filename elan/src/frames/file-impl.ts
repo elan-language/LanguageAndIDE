@@ -30,6 +30,8 @@ import { CompileStatus } from "./compile-status";
 import { TestStatus } from "./test-status";
 import { RunStatus } from "./run-status";
 import { CompileError } from "./compile-error";
+import { AbstractFrame } from "./abstract-frame";
+import { ScratchPad } from "./scratch-pad";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -44,6 +46,7 @@ export class FileImpl implements File {
     readonly defaultFileName = "code.elan";
     fileName : string = this.defaultFileName;
     private _runStatus : RunStatus = RunStatus.stopped;
+    private scratchPad: ScratchPad;
  
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
@@ -51,7 +54,7 @@ export class FileImpl implements File {
     private ignoreHashOnParsing: boolean = false;
     private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts 
 
-    constructor(private hash: (toHash: string) => Promise<string>, private profile : Profile, ignoreHashOnParsing?: boolean) {
+    constructor(private hash: (toHash: string) => Promise<string>, private profile : Profile,  ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         var selector = new GlobalSelector(this);
@@ -60,6 +63,11 @@ export class FileImpl implements File {
         if (ignoreHashOnParsing) {
             this.ignoreHashOnParsing = ignoreHashOnParsing;
         }
+        this.scratchPad = new ScratchPad();
+    }
+
+    getScratchPad(): ScratchPad {
+        return this.scratchPad;
     }
 
     getProfile() : Profile {

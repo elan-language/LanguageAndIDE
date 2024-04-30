@@ -57,6 +57,7 @@ export function parentHelper_selectFirstChild(parent: Parent, multiSelect: boole
 
 export function parentHelper_addChildBefore(parent: Parent, child: Frame, before: Frame) {
     var i = parent.getChildren().indexOf(before);
+    child.setParent(parent);
     parent.getChildren().splice(i, 0, child);
 }
 

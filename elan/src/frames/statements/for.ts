@@ -5,6 +5,7 @@ import { CodeSource } from "../code-source";
 import { ValueRefField } from "../fields/value-ref-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
+import { forKeyword } from "../keywords";
 
 export class For extends FrameWithStatements implements Statement  {
     isStatement: boolean = true;
@@ -21,6 +22,10 @@ export class For extends FrameWithStatements implements Statement  {
         this.to = new ValueRefField(this);
         this.step = new ValueRefField(this);
         this.step.setText("1");
+    }
+
+    initialKeywords(): string {
+        return forKeyword;
     }
 
     getFields(): Field[] {

@@ -8,6 +8,7 @@ import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { mustMatchParameters } from "../compile-rules";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
+import { callKeyword } from "../keywords";
 
 export class CallStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -19,6 +20,10 @@ export class CallStatement extends AbstractFrame implements Statement{
         this.proc = new ProcRefField(this);
         this.proc.setPlaceholder("procedureName");
         this.args = new ArgListField(this);
+    }
+
+    initialKeywords(): string {
+        return callKeyword;
     }
     
     parseFrom(source: CodeSource): void {

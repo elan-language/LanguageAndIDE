@@ -5,6 +5,7 @@ import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { TypeNameField } from "../fields/type-name-field";
+import { enumKeyword } from "../keywords";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
@@ -18,6 +19,9 @@ export class Enum extends AbstractFrame {
         this.name = new TypeNameField(this);
         this.name.setPlaceholder("Name");
         this.values = new EnumValues(this);
+    }
+    initialKeywords(): string {
+        return enumKeyword;
     }
     getFields(): Field[] {
         return [this.name, this.values];

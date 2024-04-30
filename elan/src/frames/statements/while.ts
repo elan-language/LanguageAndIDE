@@ -2,6 +2,7 @@ import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";import { FrameWithStatements } from "../frame-with-statements";
+import { whileKeyword } from "../keywords";
 
 export class While extends FrameWithStatements { 
     isStatement = true;
@@ -12,7 +13,9 @@ export class While extends FrameWithStatements {
         this.condition = new ExpressionField(this);
         this.condition.setPlaceholder("condition");
     }
-
+    initialKeywords(): string {
+        return whileKeyword;
+    }
     getFields(): Field[] {
         return [this.condition];
     }

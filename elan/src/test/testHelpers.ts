@@ -347,6 +347,12 @@ export function ctrl_d() {
 export function shift_ins() {
   return key("Insert", true);
 }
+export function ctrl_x() {
+  return key("x",false,true);
+}
+export function ctrl_v() {
+  return key("v",false,true);
+}
 
 export function testNodeParse(node: ParseNode, text: string, status: ParseStatus,
   matchedText: string, remainingText: string, source = "", html = "") {

@@ -18,6 +18,9 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
         this.name = new VarDefField(this);
         this.expr = new ExpressionField(this);
     }
+    initialKeywords(): string {
+        return letKeyword;
+    }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove(`${letKeyword} `);

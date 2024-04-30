@@ -19,6 +19,9 @@ export class SetStatement extends AbstractFrame implements Statement{
         this.assignable.setPlaceholder("variableName");
         this.expr = new ExpressionField(this);
     }
+    initialKeywords(): string {
+        return setKeyword;
+    }
 
     parseFrom(source: CodeSource): void {
         source.removeIndent();

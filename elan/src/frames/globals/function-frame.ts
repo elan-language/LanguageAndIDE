@@ -32,6 +32,9 @@ export class FunctionFrame extends FrameWithStatements implements Parent, ISymbo
         this.returnType.setPlaceholder("return type");
         this.getChildren().push(new ReturnStatement(this));
     }
+    initialKeywords(): string {
+        return functionKeyword;
+    }
     get symbolId() {
         return this.name.text;
     }

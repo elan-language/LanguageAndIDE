@@ -18,6 +18,9 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
         this.name = new VarDefField(this);
         this.expr = new ExpressionField(this);
     }
+    initialKeywords(): string {
+        return varKeyword;
+    }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("var ");

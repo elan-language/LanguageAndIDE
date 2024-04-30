@@ -5,6 +5,7 @@ import { AbstractFrame} from "../abstract-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
+import { printKeyword } from "../keywords";
 
 export class Print extends AbstractFrame implements Statement {
     isStatement = true;  
@@ -15,6 +16,9 @@ export class Print extends AbstractFrame implements Statement {
         this.expr = new ExpressionField(this);
         this.expr.setOptional(true);
         this.expr.setPlaceholder("expression");
+    }
+    initialKeywords(): string {
+        return printKeyword;
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();

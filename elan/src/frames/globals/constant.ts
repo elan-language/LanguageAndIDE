@@ -5,6 +5,8 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { ISymbol } from "../../symbols/symbol";
+import { ScratchPad } from "../scratch-pad";
+import { constantKeyword } from "../keywords";
 
 export class Constant extends AbstractFrame implements ISymbol {
     isGlobal = true;
@@ -19,7 +21,9 @@ export class Constant extends AbstractFrame implements ISymbol {
         this.literal = new ConstantValueField(this); 
         this.literal.setPlaceholder("literal value or data structure");
     }
-
+    initialKeywords(): string {
+        return constantKeyword;
+    }
     parseFrom(source: CodeSource): void {
         source.remove("constant ");
         this.name.parseFrom(source);

@@ -9,6 +9,7 @@ import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { abstractFunctionKeywords, abstractKeyword, functionKeyword } from "../keywords";
 
 export class AbstractFunction extends AbstractFrame implements Member {
     isAbstract = true;
@@ -17,8 +18,7 @@ export class AbstractFunction extends AbstractFrame implements Member {
     public params: ParamList;
     public returnType: TypeField;
     private class: Class;
-
-    
+   
     constructor(parent: Parent) {
         super(parent);
         this.class = parent as Class;
@@ -27,7 +27,9 @@ export class AbstractFunction extends AbstractFrame implements Member {
         this.returnType = new TypeField(this);
         this.returnType.setPlaceholder("return type");
     }
-
+    initialKeywords(): string {
+        return abstractFunctionKeywords;
+    }
     getFields(): Field[] {
         return [this.name, this.params, this.returnType];
     }

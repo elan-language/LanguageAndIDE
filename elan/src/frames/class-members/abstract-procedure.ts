@@ -8,6 +8,7 @@ import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { abstractKeyword, abstractProcedureKeywords, procedureKeyword } from "../keywords";
 
 export class AbstractProcedure extends AbstractFrame implements Member {
     isAbstract = true;
@@ -22,7 +23,9 @@ export class AbstractProcedure extends AbstractFrame implements Member {
         this.name = new IdentifierField(this);
         this.params = new ParamList(this);
     }
-
+    initialKeywords(): string {
+        return abstractProcedureKeywords;
+    }
     getFields(): Field[] {
         return [this.name, this.params];
     }

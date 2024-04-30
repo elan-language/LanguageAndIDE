@@ -6,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { IdentifierField } from "../fields/identifier-field";
+import { inputKeyword } from "../keywords";
 
 export class Input extends AbstractFrame implements Statement {
     isStatement = true;  
@@ -15,6 +16,9 @@ export class Input extends AbstractFrame implements Statement {
         super(parent);
         this.varName = new IdentifierField(this);
         this.varName.setPlaceholder("variable name");
+    }
+    initialKeywords(): string {
+        return inputKeyword;
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
