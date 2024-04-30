@@ -174,6 +174,10 @@ function updateContent(text: string) {
 			}
 		});
 
+		frame.addEventListener('mousemove', event => {
+			event.preventDefault();
+		});
+
 		frame.addEventListener('dblclick', event => {
 			const ke = event as KeyboardEvent;
 			const msg: editorEvent = {
