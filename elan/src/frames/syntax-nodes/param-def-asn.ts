@@ -1,17 +1,17 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class ParamDefAsn implements AstNode {
+export class ParamDefAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, private type: AstNode, private scope: Scope) {
+    constructor(public id: string, private type: AstNode, public fieldId: string, private scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors
-        .concat(this.type.aggregateCompileErrors());
+            .concat(this.type.aggregateCompileErrors());
     }
 
     compile(): string {

@@ -14,19 +14,19 @@ import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
 import { AstNode } from "./syntax-nodes/ast-node";
 
-export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location = "") {
+export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
     if (expr?.symbolType !== ofType) {
         compileErrors.push(new CompileError(`Expression must be ${ofType.name}`, location));
     }
 }
 
-export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNode | undefined, compileErrors: CompileError[], location = "") {
+export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNode | undefined, compileErrors: CompileError[], location: string) {
     if (ft.isExtension && qualifier === undefined) {
         compileErrors.push(new CompileError(`Cannot call extension method directly`, location));
     }
 }
 
-export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], compileErrors: CompileError[], location = "") {
+export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], compileErrors: CompileError[], location: string) {
     const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
 
     for (var i = 0; i < maxLen; i++) {
@@ -40,7 +40,7 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
             compileErrors.push(new CompileError(`Too many parameters ${i}`, location));
         }
         else {
-            mustBeCompatibleType(t, p.symbolType!, compileErrors);
+            mustBeCompatibleType(t, p.symbolType!, compileErrors, location);
         }
     }
 }
@@ -54,7 +54,7 @@ function FailUnknown(lhs: AstNode, compileErrors: CompileError[], location: stri
     compileErrors.push(new CompileError(`Undeclared variable ${lhs}`, location));
 }
 
-export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location = "") {
+export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
     if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
@@ -113,7 +113,7 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
 
 }
 
-export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: CompileError[], location = "") {
+export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: CompileError[], location: string) {
     if (lhs.symbolType instanceof UnknownType || lhs.symbolType === undefined) {
         FailUnknown(lhs, compileErrors, location);
         return;
@@ -126,4 +126,3 @@ export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: 
 
     mustBeCompatibleType(lhs.symbolType, rhs.symbolType, compileErrors, location);
 }
-

@@ -1,17 +1,16 @@
 import { SymbolScope } from "../../symbols/symbol";
-import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class IdAsn implements AstNode {
+export class IdAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, private scope: Scope) {
+    constructor(private id: string, public fieldId: string, private scope: Scope) {
+        super();
         this.id = id.trim();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

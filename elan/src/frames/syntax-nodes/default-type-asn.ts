@@ -1,14 +1,14 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { TypeAsn } from "./type-asn";
 
-export class DefaultTypeAsn implements AstNode {
+export class DefaultTypeAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private type: TypeAsn, private scope: Scope) {
+    constructor(private type: TypeAsn, public fieldId: string, private scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors.concat(this.type.aggregateCompileErrors());

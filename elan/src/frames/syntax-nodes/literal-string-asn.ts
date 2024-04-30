@@ -1,14 +1,13 @@
 import { StringType } from "../../symbols/string-type";
 import { CompileError } from "../compile-error";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralStringAsn implements AstNode {
+export class LiteralStringAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private value: string) {
-
+    constructor(private value: string, public fieldId: string) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

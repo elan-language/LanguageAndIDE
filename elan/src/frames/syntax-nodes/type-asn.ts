@@ -12,15 +12,15 @@ import { Scope } from "../interfaces/scope";
 import { AstNode } from "./ast-node";
 import { CompileError } from "../compile-error";
 import { ArrayType } from "../../symbols/array-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 
-export class TypeAsn implements AstNode {
+export class TypeAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly type: string, public genericParameters: AstNode[], private scope: Scope) {
+    constructor(public readonly type: string, public genericParameters: AstNode[], public fieldId: string, private scope: Scope) {
+        super();
         this.type = type.trim();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];

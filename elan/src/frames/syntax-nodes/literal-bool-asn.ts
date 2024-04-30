@@ -1,14 +1,14 @@
 import { BooleanType } from "../../symbols/boolean-type";
 import { CompileError } from "../compile-error";
 import { trueKeyword } from "../keywords";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralBoolAsn implements AstNode {
-    constructor(rawValue: string) {
+export class LiteralBoolAsn extends AbstractAstNode implements AstNode {
+    constructor(rawValue: string, public fieldId: string) {
+        super();
         this.value = rawValue.trim() === trueKeyword;
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

@@ -1,13 +1,13 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class DeconstructedListAsn implements AstNode {
+export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private head: string, private tail: string, scope: Scope) {
+    constructor(private head: string, private tail: string, public fieldId: string, scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors;

@@ -1,20 +1,20 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { ExprAsn } from "./expr-asn";
 
 
-export class SetAsn implements AstNode {
+export class SetAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, private to: ExprAsn, scope: Scope) {
+    constructor(private id: string, private to: ExprAsn, public fieldId: string, scope: Scope) {
+        super();
         this.id = id.trim();
     }
 
-    compileErrors: CompileError[] = [];
-
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors
-        .concat(this.to.aggregateCompileErrors());
+            .concat(this.to.aggregateCompileErrors());
     }
 
     compile(): string {

@@ -4,20 +4,20 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { unknownType } from "../../test/testHelpers";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { KvpAsn } from "./kvp-asn";
 import { LiteralListAsn } from "./literal-list-asn";
 
-export class LiteralDictionaryAsn implements AstNode {
+export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private readonly list: LiteralListAsn, scope: Scope) {
+    constructor(private readonly list: LiteralListAsn, public fieldId: string, scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors
-        .concat(this.list.aggregateCompileErrors());
+            .concat(this.list.aggregateCompileErrors());
     }
 
     compile(): string {

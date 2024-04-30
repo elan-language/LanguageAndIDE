@@ -2,15 +2,15 @@ import { ISymbol } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 
-export class LambdaSigAsn implements Scope, AstNode {
+export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
-    constructor(private parameters: ParamDefAsn[], private scope: Scope) {
+    constructor(private parameters: ParamDefAsn[], public fieldId: string, private scope: Scope) {
+        super();
     }
-
-    compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];

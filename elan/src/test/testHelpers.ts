@@ -438,7 +438,7 @@ export const stubField = {
 export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: ISymbolType) {
   node.parseText(text);
   if (node.status === ParseStatus.valid) {
-    const ast = transform(node, field.getHolder() as unknown as Scope);
+    const ast = transform(node, "", field.getHolder() as Scope);
 
     assert.strictEqual(ast?.toString(), astAsString);
     assert.strictEqual(ast.symbolType?.name, st.name, text);
