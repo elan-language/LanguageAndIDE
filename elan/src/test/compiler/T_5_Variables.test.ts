@@ -427,6 +427,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Cannot assign Number to Int ",
       "Cannot assign Number to Boolean ",
       "Cannot assign Boolean to Number ",
       "Cannot assign List <Number> to String ",
