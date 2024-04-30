@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T34_ConcreteClasses', () => {
 
@@ -229,21 +228,16 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "00");
   });
 
-
-
-
-
-
   test('Fail_NoConstructor', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
 
-  property p1 Int
-  property p2 String
+  property p1 as Int
+  property p2 as String
   
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 
 end class`;
@@ -259,11 +253,11 @@ end class`;
 
 class Foo
 
-    property p1 Int set to 3
-    property p2 String
+    property p1 as Int set to 3
+    property p2 as String
    
-    function asString() as String
-        return """"
+    function asString() return String
+        return ""
     end function
 
 end class`;
@@ -274,7 +268,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_AttemptToModifyAPropertyDirectly', async () => {
+  test('Fail_AttemptToModifyAPropertyDirectly', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -286,10 +280,10 @@ class Foo
   constructor()
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 end class`;
 
@@ -306,14 +300,14 @@ class Foo
   constructor()
   end constructor
 
-  constructor(val Int)
+  constructor(val as Int)
       set p1 to val
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 
 end class`;
@@ -324,7 +318,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_InstantiateWithoutRequiredArgs', async () => {
+  test('Fail_InstantiateWithoutRequiredArgs', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -332,14 +326,14 @@ main
 end main
 
 class Foo
-  constructor(val Int)
+  constructor(val as Int)
       set p1 to val
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 
 end class`;
@@ -347,10 +341,11 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Missing parameter 0"]);
   });
 
-  ignore_test('Fail_InstantiateWithWrongArgType', async () => {
+  test('Fail_InstantiateWithWrongArgType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -358,14 +353,14 @@ main
 end main
 
 class Foo
-  constructor(val Int)
+  constructor(val as Int)
       set p1 to val
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 
 end class`;
@@ -373,10 +368,11 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Int "]);
   });
 
-  ignore_test('Fail_SupplyingArgumentNotSpecified', async () => {
+  test('Fail_SupplyingArgumentNotSpecified', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -387,10 +383,10 @@ class Foo
   constructor()
   end constructor
 
-  property p1 Int
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  function asString() return String
+      return ""
   end function
 
 end class`;
@@ -398,10 +394,11 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Too many parameters 0"]);
   });
 
-  ignore_test('Fail_MissingNewOnInstantiation', async () => {
+  test('Fail_MissingNewOnInstantiation', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -415,12 +412,13 @@ class Foo
   constructor()
       set p1 to 5
   end constructor
-  property p1 Int
 
-  property p2 String
+  property p1 as Int
 
-  function asString() as String
-      return """"
+  property p2 as String
+
+  function asString() return String
+      return ""
   end function
 
 end class`;

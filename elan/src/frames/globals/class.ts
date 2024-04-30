@@ -219,7 +219,7 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
     createAbstractProperty(): Frame {return new AbstractProperty(this);}
     createAbstractProcedure(): Frame {return new AbstractProcedure(this);}
 
-    private getConstructor(): Constructor {
+    public getConstructor(): Constructor {
         return this.getChildren().filter(m => ('isConstructor' in m))[0] as Constructor;
     }
     parseFrom(source: CodeSource): void {

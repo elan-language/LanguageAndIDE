@@ -1,4 +1,7 @@
+import { ClassType } from "../../symbols/class-type";
 import { CompileError } from "../compile-error";
+import { mustMatchParameters } from "../compile-rules";
+import { Class } from "../globals/class";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -30,6 +33,13 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
         if (this.typeNode.type === "List") {
             return `system.initialise(system.list(new ${t}(${pp}))${gt})`;
+        }
+
+        const cls = this.scope.resolveSymbol(this.typeNode.type, this.scope);
+        
+        if (cls.symbolType instanceof ClassType) {
+            const parameterTypes = (cls as Class).getConstructor().params.symbolTypes;
+            mustMatchParameters(this.parameters, parameterTypes, this.compileErrors, this.fieldId);
         }
 
         return `system.initialise(new ${t}(${pp})${gt})`;
