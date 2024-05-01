@@ -14,7 +14,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -30,6 +30,7 @@ import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { TypeAsn } from "../syntax-nodes/type-asn";
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
+import { ParseStatus } from "../parse-status";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -72,6 +73,12 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         super.setClasses();
         this.pushClass(true,"multiline");
     };
+    getParseStatus(): ParseStatus {
+        var fieldStatus = this.worstParseStatusOfFields();
+        var statementsStatus = parentHelper_worstParseStatusOfChildren(this);
+        var worst = [fieldStatus, statementsStatus].sort((a, b) => a - b)[0];
+        return worst;
+    }
     getFactory(): StatementFactory {
         return this.getParent().getFactory();
     }

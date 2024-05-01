@@ -1,12 +1,7 @@
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { GlobalSelector } from "./global-selector";
 import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../../symbols/symbol";
 import { mainKeyword } from "../keywords";
 
 export class MainFrame extends FrameWithStatements {

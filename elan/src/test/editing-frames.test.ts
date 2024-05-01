@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
-import {ctrl_d, ctrl_del, ctrl_down, ctrl_up, ctrl_v, ctrl_x, del, down, enter, ins, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
+import {back, ctrl_d, ctrl_del, ctrl_down, ctrl_up, ctrl_v, ctrl_x, del, down, enter, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { Constructor } from '../frames/class-members/constructor';
@@ -11,6 +11,7 @@ import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { MainFrame } from '../frames/globals/main-frame';
+import { ParseStatus } from '../frames/parse-status';
 
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -240,5 +241,27 @@ suite('Editing Frames', () => {
 		var newFirst = file.getChildren()[0];
 		assert.equal(newFirst, globalSelect);
 	});
+	test('#364 ParseError within in class member not showing up at class level', () => {
+		var file = T05_classes();
+		var player = file.getById("class1");
+		assert.equal(player.getParseStatus(), ParseStatus.valid);
+		var field = file.getById("ident12");
+		assert.equal(field.getParseStatus(), ParseStatus.valid);
+		field.processKey(key("%"));
+		assert.equal(field.getParseStatus(), ParseStatus.invalid);
+		assert.equal(player.getParseStatus(), ParseStatus.invalid);
+		field.processKey(back());
+		assert.equal(field.getParseStatus(), ParseStatus.valid);
+		assert.equal(player.getParseStatus(), ParseStatus.valid);
+		var card = file.getById("class14");
+		var reset = file.getById("func27");
+		var ret = file.getById("return32");
+		var expr = file.getById("expr33");
+		expr.processKey(key("£"));
+		assert.equal(expr.getParseStatus(), ParseStatus.invalid);
+		assert.equal(ret.getParseStatus(), ParseStatus.invalid);
+		assert.equal(reset.getParseStatus(), ParseStatus.invalid);
+		assert.equal(card.getParseStatus(), ParseStatus.invalid);
+});
 });	
 
