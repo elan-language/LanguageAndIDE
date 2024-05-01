@@ -332,8 +332,8 @@ export function end() {
 export function esc() {
   return key("Escape");
 }
-export function ins() {
-  return key("Insert");
+export function back() {
+  return key("Backspace");
 }
 export function del() {
   return key("Delete");
