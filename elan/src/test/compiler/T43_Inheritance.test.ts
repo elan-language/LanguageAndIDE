@@ -371,7 +371,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-
   test('Fail_CannotInheritFromConcreteClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -527,6 +526,128 @@ end class`;
       "Expression must be Int",
       "Expression must be Procedure (Int)",
       "Expression must be Function () : Int"]);
+  });
+
+  test('Fail_ImplementedMethodMustHaveSameSignature', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+    abstract property p1 as Int
+    abstract property p2 as Int
+
+    abstract procedure setP1(v as Int)
+
+    abstract function product() return Int
+end class
+
+class Bar inherits Foo
+    constructor()
+        set p1 to 3
+        set p2 to 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 as Int)
+        set property.p1 to p1
+    end procedure
+
+    function product() return Number
+        return p1 * p2
+    end function
+
+    function asString() return String 
+        return ""
+    end function
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be Function () : Int"]);
+  });
+
+  test('Fail_AbstractClassDefinesMethodBody', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+    abstract property p1 as Int
+    abstract property p2 as Int
+
+    abstract procedure setP1(v as Int)
+        set property.p1 to p1
+    end procedure
+
+    abstract function product() return Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_MissingAbstractProperty', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_MissingAbstractFunction', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+    function product() return Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_MissingAbstractProcedure', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+  procedure setP1(v as Int)
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 
 
