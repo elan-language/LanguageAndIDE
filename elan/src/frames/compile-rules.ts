@@ -4,6 +4,7 @@ import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
+import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
@@ -111,11 +112,11 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof ListType && lhs.name !== rhs.name) {
+    if (lhs instanceof ListType && !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ListType).ofType).name)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof ArrayType && lhs.name !== rhs.name) {
+    if (lhs instanceof ArrayType && !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ArrayType).ofType).name)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
@@ -127,12 +128,20 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType)) {
+    if (lhs instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType || rhs instanceof StringType || rhs instanceof IterType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof IterType && (rhs instanceof ListType || rhs instanceof ArrayType)) {
-        if (lhs.ofType.name !== rhs.ofType.name) {
+
+    if (lhs instanceof IterType && (rhs instanceof ListType || rhs instanceof ArrayType || rhs instanceof IterType)) {
+        if (!(lhs.ofType instanceof GenericParameterType || lhs.ofType.name === rhs.ofType.name)) {
+            FailIncompatible(lhs, rhs, compileErrors, location);
+            return;
+        }
+    }
+
+    if (lhs instanceof IterType && (rhs instanceof StringType)) {
+        if (!(lhs.ofType instanceof StringType)) {
             FailIncompatible(lhs, rhs, compileErrors, location);
             return;
         }

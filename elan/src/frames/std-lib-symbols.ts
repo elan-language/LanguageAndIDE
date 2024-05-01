@@ -10,6 +10,8 @@ import { ISymbolType } from "../symbols/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { Scope } from "./interfaces/scope";
 import { FunctionType } from "../symbols/function-type";
+import { GenericParameterType } from "../symbols/generic-parameter-type";
+import { IterType } from "../symbols/iter-type";
 
 export class StdLibSymbols implements Scope {
 
@@ -25,9 +27,9 @@ export class StdLibSymbols implements Scope {
     // todo - we need to load this from a .d.ts file also work out how to do generics
     private symbols = new Map<string, ISymbol>(
         [
-            ["asString", this.getSymbol("asString", new FunctionType([], StringType.Instance, true))],
-            ["asArray", this.getSymbol("asArray", new FunctionType([], new ArrayType(IntType.Instance), true))],
-            ["asList", this.getSymbol("asList", new FunctionType([], new ListType(IntType.Instance), true))],
+            ["asString", this.getSymbol("asString", new FunctionType([new GenericParameterType("T")], StringType.Instance, true))],
+            ["asArray", this.getSymbol("asArray", new FunctionType([new IterType(new GenericParameterType("T"))], new ArrayType(new GenericParameterType("T")), true))],
+            ["asList", this.getSymbol("asList", new FunctionType([new IterType(new GenericParameterType("T"))], new ListType(new GenericParameterType("T")), true))],
             ["keys", this.getSymbol("keys", new ListType(StringType.Instance))],
             ["floor", this.getSymbol("floor", new FunctionType([NumberType], IntType.Instance))],
             ["ceiling", this.getSymbol("ceiling", new FunctionType([NumberType], IntType.Instance))],

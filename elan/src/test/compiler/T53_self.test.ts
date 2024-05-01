@@ -14,11 +14,11 @@ main
 end main
 
 class Foo
-  constructor(p1 as Int)
+  constructor(p1 as Number)
     set property.p1 to p1
   end constructor
 
-  property p1 as Int
+  property p1 as Number
 
   function asString() return String
     return ""
@@ -33,7 +33,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor(p1) {
     this.p1 = p1;
   }

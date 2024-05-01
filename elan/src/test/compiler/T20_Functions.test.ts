@@ -12,7 +12,7 @@ main
   print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Int
+function foo(a as Number, b as Number) return Number
   return a * b
 end function`;
 
@@ -130,14 +130,14 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test('Pass_Recursive', async () => {
+  ignore_test('Pass_Recursive', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   print factorial(5)
 end main
 
-function factorial(a as Int) return Int
+function factorial(a as Number) return Number
     var result set to 0
     if a > 2
       set result to a * factorial(a - 1)

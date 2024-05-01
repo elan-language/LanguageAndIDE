@@ -198,14 +198,16 @@ return main;}`;
 
 main
   var a set to "abcde"
-  set a to asString(2.1 + 3.4)
+  var b set to 2.1 + 3.4
+  set a to b.asString()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = "abcde";
-  a = _stdlib.asString(2.1 + 3.4);
+  var b = 2.1 + 3.4;
+  a = _stdlib.asString(b);
   system.print(_stdlib.asString(a));
 }
 return main;}`;

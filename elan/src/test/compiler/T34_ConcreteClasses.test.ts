@@ -73,12 +73,12 @@ main
 end main
 
 class Foo
-    constructor(p_1 as Int,  p_2 as String)
+    constructor(p_1 as Number,  p_2 as String)
         set p1 to p_1
         set p2 to p_2
     end constructor
 
-    property p1 as Int
+    property p1 as Number
     property p2 as String
     function asString() return String
         return ""
@@ -94,7 +94,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
   constructor(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;

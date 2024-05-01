@@ -49,13 +49,17 @@ export class StdLib {
             return v.asString();
         }
 
-        if (typeof v === "object") {
+        if (typeof v === "object" && v.constructor.name === "Object") {
             const items = Object.getOwnPropertyNames(v);
             if (items.length === 0) {
                 return "empty Dictionary";
             }
 
             return `Dictionary [${items.map(n => `${n}:${v[n]}`).join(", ")}]`;
+        }
+
+        if (typeof v === "object") {
+            return `a ${v.constructor.name}`;
         }
 
         throw new Error("Not implemented" + typeof v);

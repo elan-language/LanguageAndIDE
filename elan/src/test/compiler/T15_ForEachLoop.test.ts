@@ -41,7 +41,7 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to asArray([7,8,9])
+  var a set to [7,8,9].asArray()
   var n set to 0
   each x in a
       set n to n + x
