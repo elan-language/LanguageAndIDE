@@ -108,9 +108,21 @@ function updateDisplay(ce : CompileError) {
 	if (loc){
 		const elem = document.getElementById(loc) as HTMLElement;
 		const error = elem.getElementsByTagName("error")[0] as HTMLElement;
+		const completion = elem.getElementsByTagName("completion")[0] as HTMLElement;
 
-		if (error){
-			error.innerText = `${error.innerText}, ${ce.message}`; 
+		if (!ce.unknownType && error){
+			if (error.innerText.length === 0) {
+				error.innerText = `${error.innerText}, ${ce.message}`; 
+			} else {
+				error.innerText = ce.message;
+			}
+		}
+		if (ce.unknownType && completion){
+			if (completion.innerText.length === 0) {
+				completion.innerText = `${completion.innerText}, ${ce.message}`; 
+			} else {
+				completion.innerText = ce.message;
+			}
 		}
 	}
 }

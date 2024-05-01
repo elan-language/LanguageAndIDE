@@ -43,6 +43,9 @@ export abstract class AbstractField implements Selectable, Field {
     getHtmlId(): string {
         return this.htmlId;
     }
+    getErrorMessage(): string {
+        return this.errorMessage;
+    }
     abstract initialiseRoot(): ParseNode ;
     abstract readToDelimeter: (source: CodeSource) => string;
 
@@ -65,6 +68,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
      parseCompleteTextUsingNode(text: string, root: ParseNode): void {
+        this.errorMessage = "";
         if (text.length === 0) {
             this.setParseStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
         } else {
@@ -76,6 +80,9 @@ export abstract class AbstractField implements Selectable, Field {
                 this.setParseStatus(root.status);
                 this.text = root.renderAsSource();
             }
+        }
+        if (this.parseStatus === ParseStatus.invalid) {
+            this.errorMessage = root.errorMessage !== "" ? root.errorMessage : "parse error";
         }
     }
 

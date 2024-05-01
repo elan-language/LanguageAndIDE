@@ -43,6 +43,7 @@ suite('Field Parsing Tests', () => {
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.invalid);
+		assert.equal(id.getErrorMessage(), "parse error");
 		id.setText("result");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword

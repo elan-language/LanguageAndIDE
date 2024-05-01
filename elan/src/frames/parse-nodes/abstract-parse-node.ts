@@ -7,6 +7,7 @@ export abstract class AbstractParseNode implements ParseNode {
     matchedText: string = "";
     completionWhenEmpty: string = "";
     remainingText: string = "";
+    errorMessage: string = "";
 
     setCompletionWhenEmpty(ph: string) {
         this.completionWhenEmpty = ph;
@@ -30,10 +31,11 @@ export abstract class AbstractParseNode implements ParseNode {
         return this.matchedText.trim(); 
     } //TODO make abstract
 
-    protected set(status: ParseStatus, matched: string, remaining: string) {
+    protected set(status: ParseStatus, matched: string, remaining: string, errorMessage = "") {
         this.status = status;
         this.matchedText = matched;
         this.remainingText = remaining;
+        this.errorMessage = errorMessage;
     }
 
     protected numLeadingSpaces(text: string): number {
@@ -44,5 +46,6 @@ export abstract class AbstractParseNode implements ParseNode {
         this.status = other.status;
         this.matchedText = other.matchedText;
         this.remainingText = other.remainingText;
+        this.errorMessage = other.errorMessage;
     }
 }
