@@ -1,6 +1,5 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { CompileError } from "../frames/compile-error";
-import { CompileStatus } from "../frames/compile-status";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
@@ -89,16 +88,11 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function getStatus() {
-	const parseStatus = file.parseStatus();
-	if (parseStatus === ParseStatus.incomplete || parseStatus === ParseStatus.invalid) {
-		return `Parse ${ParseStatus[parseStatus]}`;
-	}
-
-	return `Compile ${CompileStatus[file.compileStatus()]} Run ${RunStatus[file.runStatus()]}`;
+	return file.parseStatus();
 }
 
 function updateStatus() {
-	(document.getElementById("code-title") as HTMLDivElement).innerText = `Code: ${file.fileName} ${getStatus()}`;
+	(document.getElementById("code-title") as HTMLDivElement).innerText = `Program: ${file.fileName}`; // ${getStatus()}`;
 }
 
 function updateDisplay(ce : CompileError) {
