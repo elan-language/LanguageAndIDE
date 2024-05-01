@@ -459,16 +459,10 @@ end class
 
 class Bar inherits Foo
     constructor()
-        set p1 to 3
-        set p2 to 4
+      set p1 to 3
     end constructor
 
     property p1 as Int
-    property p2 as Int
-
-    procedure setP1(p1 as Int)
-        set property.p1 to p1
-    end procedure
 
     function asString() return String 
         return ""
@@ -481,7 +475,58 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class Bar must implement Class Foo.product"]);
+    assertDoesNotCompile(fileImpl, [
+      "Class Bar must implement Class Foo.p2",
+      "Class Bar must implement Class Foo.setP1",
+      "Class Bar must implement Class Foo.product"]);
+  });
+
+  test('Fail_MustCorrectlyImplementAllInheritedMethods', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+end main
+
+abstract class Foo
+    abstract property p1 as Int
+    abstract property p2 as Int
+
+    abstract procedure setP1(v as Int)
+
+    abstract function product() return Int
+end class
+
+class Bar inherits Foo
+    constructor()
+      set p1 to 3
+    end constructor
+
+    property p1 as Int
+    property p2 as String
+
+    procedure setP1(v as String)
+    end procedure
+
+    function product() return String
+      return ""
+    end function
+
+    function asString() return String 
+        return ""
+    end function
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Expression must be Int",
+      "Expression must be Procedure (Int)",
+      "Expression must be Function () : Int"]);
   });
 
 
