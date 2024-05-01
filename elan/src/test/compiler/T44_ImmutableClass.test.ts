@@ -1,9 +1,9 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T43_Inheritance', () => {
+suite('T44_ImmutableClass', () => {
 
   test('Pass_BasicImmutableClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -141,6 +141,35 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
-  
+  ignore_test('Fail_ProcedureMethod', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+immutable class Foo
+  constructor(p1 as Int)
+    set property.p1 to p1
+  end constructor
+
+  property p1 as Int
+
+  procedure setP1(p1 as Int)
+    set property.p1 to p1
+  end procedure
+
+  function asString() return String
+    return ""
+  end function
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // remaining tests not relevant
+  // Fail_ProcedureMethodOnAbstractImmutableClass
+  // Fail_AbstractAndImmutableReversed
 
 });

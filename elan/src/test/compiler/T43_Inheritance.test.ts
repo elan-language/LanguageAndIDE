@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T43_Inheritance', () => {
 
@@ -650,14 +649,6 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-
-
-
-
-
-
-
-
   test('Fail_CannotInstantiateAbstractClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -678,6 +669,4 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Class Bar must be concrete to new"]);
   });
-
-
 });
