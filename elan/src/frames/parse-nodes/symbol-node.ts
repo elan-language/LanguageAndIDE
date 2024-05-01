@@ -17,7 +17,7 @@ export class SymbolNode extends FixedTextNode {
             } else if (target.startsWith(text)) {
                 this.set(ParseStatus.incomplete, text, "");
             } else {
-                this.set(ParseStatus.invalid, "", text);
+                this.set(ParseStatus.invalid, "", text, super.getErrorMessage());
             }
         }
     }

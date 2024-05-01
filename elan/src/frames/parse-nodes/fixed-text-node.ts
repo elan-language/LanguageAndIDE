@@ -10,6 +10,10 @@ export abstract class FixedTextNode extends AbstractParseNode {
         this.completionWhenEmpty = fixedText;
     }
 
+    protected getErrorMessage() : string {
+        return `must match ${this.fixedText}`;
+    }
+
     getCompletionAsHtml(): string {
         return this.status === ParseStatus.empty ? `${this.fixedText}` : "";
     }
