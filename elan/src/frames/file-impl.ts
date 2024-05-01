@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { expandCollapseAll, isCollapsible, isSelector } from "./helpers";
+import { expandCollapseAll, isSelector } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -26,11 +26,9 @@ import { ISymbol } from "../symbols/symbol";
 import { StdLibSymbols } from "./std-lib-symbols";
 import { isSymbol } from "../symbols/symbolHelpers";
 import { Scope } from "./interfaces/scope";
-import { CompileStatus } from "./compile-status";
 import { TestStatus } from "./test-status";
 import { RunStatus } from "./run-status";
 import { CompileError } from "./compile-error";
-import { AbstractFrame } from "./abstract-frame";
 import { ScratchPad } from "./scratch-pad";
 
 // for web editor bundle
@@ -223,16 +221,6 @@ export class FileImpl implements File {
     }
     collapse(): void {
         //does nothing
-    }
-
-    compileStatus(): CompileStatus {
-        switch (this.parseStatus()) {
-            case ParseStatus.invalid: return CompileStatus.pending;
-            case ParseStatus.empty: return CompileStatus.pending;
-            case ParseStatus.incomplete: return CompileStatus.pending;
-            case ParseStatus.valid: return this.compileErrors().length === 0 ? CompileStatus.ok : CompileStatus.error;
-            case ParseStatus.notParsed: return CompileStatus.pending;
-        }
     }
 
     testStatus(): TestStatus {
