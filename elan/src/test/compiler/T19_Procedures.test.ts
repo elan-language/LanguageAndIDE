@@ -125,7 +125,7 @@ main
   call foo(a, b)
 end main
 
-procedure foo(a as Int, b as String)
+procedure foo(a as Number, b as String)
   print a
   print b
 end procedure`;

@@ -55,14 +55,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         if (funcSymbol?.symbolScope === SymbolScope.property) {
             scopeQ = `this.`;
         }
-        if (funcSymbol?.symbolType instanceof FunctionType) {
-            if (funcSymbol?.symbolType.isExtension && this.qualifier) {
-                this.parameters = [this.qualifier].concat(this.parameters);
-                this.qualifier = undefined;
-            }
-        }
-
-        const pp = this.parameters.map(p => p.compile()).join(", ");
 
         if (funcSymbol?.symbolType instanceof FunctionType) {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors, this.fieldId);
@@ -75,6 +67,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
             mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
         }
 
+        const pp = this.parameters.map(p => p.compile()).join(", ");
         const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }

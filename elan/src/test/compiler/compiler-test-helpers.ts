@@ -30,6 +30,8 @@ export function assertStatusIsInvalid(file: FileImpl) {
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
     const actual = file.compile().replaceAll("\r", "");
     const expected = objectCode.replaceAll("\r", "");
+    const errors = file.compileErrors();
+    assert.strictEqual(errors.length, 0, errors.map(e => e.message).join(", "));
     assert.strictEqual(actual, expected);
 }
 
@@ -45,7 +47,6 @@ export function assertDoesNotCompile(file: FileImpl, msgs : string[]) {
     }
     assert.strictEqual(CompileStatus[file.compileStatus()], CompileStatus[CompileStatus.error]);
 }
-
 
 export function assertIsSymbol(toTest: any, id: string, name: string) {
     if (isSymbol(toTest)) {

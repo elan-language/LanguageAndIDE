@@ -15,7 +15,7 @@ main
   print grade(30)
 end main
 
-function grade(score as Int) return String
+function grade(score as Number) return String
   return if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"
 end function`;
 
