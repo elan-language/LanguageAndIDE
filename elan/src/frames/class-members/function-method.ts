@@ -44,11 +44,7 @@ ${this.indent()}}\r
 
     resolveSymbol(id: string, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
-            return {
-                symbolId: id,
-                symbolType: this.returnType.symbolType,
-                symbolScope: SymbolScope.member
-            } as ISymbol;
+            return this as ISymbol;
         }
 
         return super.resolveSymbol(id, initialScope);

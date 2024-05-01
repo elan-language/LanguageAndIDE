@@ -84,7 +84,8 @@ ${endKeyword} ${functionKeyword}\r
     public compile(): string {
         this.compileErrors = [];
         const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
-        mustBeCompatibleType(this.returnType?.symbolType!, returnStatement?.symbolType!, this.compileErrors, returnStatement!.fieldId);
+        const tt = returnStatement?.symbolType!;
+        mustBeCompatibleType(this.returnType?.symbolType!, tt, this.compileErrors, returnStatement!.fieldId);
 
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
@@ -117,11 +118,7 @@ ${this.renderChildrenAsObjectCode()}\r
     }
     resolveSymbol(id: string, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
-            return {
-                symbolId: id,
-                symbolType: undefined,
-                symbolScope: SymbolScope.program
-            } as ISymbol;
+            return this as ISymbol;
         }
 
         return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);

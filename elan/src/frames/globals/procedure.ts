@@ -81,11 +81,7 @@ ${this.renderStatementsAsObjectCode()}\r
 
     resolveSymbol(id: string, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
-            return {
-                symbolId: id,
-                symbolType: undefined,
-                symbolScope: SymbolScope.program
-            } as ISymbol;
+            return this as ISymbol;
         }
 
         return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);

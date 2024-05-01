@@ -23,10 +23,4 @@ export class ExpressionField extends AbstractField {
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine();
 
-    get symbolType() {
-        if (this.astNode) {
-            return this.astNode.symbolType;
-        }
-        return UnknownType.Instance;
-    }
 }

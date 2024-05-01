@@ -11,6 +11,7 @@ import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { CSV } from "../parse-nodes/csv";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { CompileError } from "../compile-error";
+import { UnknownType } from "../../symbols/unknown-type";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -346,5 +347,12 @@ export abstract class AbstractField implements Selectable, Field {
     aggregateCompileErrors(): CompileError[] {
         const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
         return this.compileErrors.concat(cc);
+    }
+    get symbolType() {
+        const astNode = this.getOrTransformAstNode;
+        if (astNode) {
+            return astNode.symbolType;
+        }
+        return UnknownType.Instance;
     }
 }

@@ -130,7 +130,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  ignore_test('Pass_Recursive', async () => {
+  test('Pass_Recursive', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
