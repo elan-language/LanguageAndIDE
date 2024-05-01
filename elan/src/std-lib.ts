@@ -138,8 +138,15 @@ export class StdLib {
     indexOf(s1 : string, s2 : string){
         return s1.indexOf(s2);
     }
-   
 
+    floor(n: number) {
+        return Math.floor(n);
+    }
+    ceiling(n: number) {
+        var fl = this.floor(n);
+        return n > fl ? fl + 1 : fl;
+    }
+   
     pi = Math.PI;
 
     sin = Math.sin;
