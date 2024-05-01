@@ -1,5 +1,6 @@
 import { ArrayType } from "../symbols/array-type";
 import { BooleanType } from "../symbols/boolean-type";
+import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
@@ -20,13 +21,13 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
     }
 }
 
-export function mustBeAbstractClass(classType : ClassType, compileErrors: CompileError[], location: string) {
+export function mustBeAbstractClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
     if (!classType.isAbstract) {
         compileErrors.push(new CompileError(`Superclass ${classType.name} must be abstract`, location));
     }
 }
 
-export function mustBeConcreteClass(classType : ClassType, compileErrors: CompileError[], location: string) {
+export function mustBeConcreteClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
     if (classType.isAbstract) {
         compileErrors.push(new CompileError(`${classType.name} must be concrete to new`, location));
     }

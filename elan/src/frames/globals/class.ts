@@ -24,14 +24,12 @@ import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
-import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
-import { ScratchPad } from "../scratch-pad";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { mustBeAbstractClass } from "../compile-rules";
-import { TypeNode } from "../parse-nodes/type-node";
 import { TypeAsn } from "../syntax-nodes/type-asn";
+import { ClassDefinitionType } from "../../symbols/class-definition-type";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -64,7 +62,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         return this.name.text; 
     }
     get symbolType() {
-        return new ClassType(this.symbolId, this.isAbstract());
+        return new ClassDefinitionType(this.symbolId, this.isAbstract(), this);
     }
     symbolScope = SymbolScope.program;
     getProfile(): Profile {
@@ -212,7 +210,7 @@ end class\r\n`;
 
             for (const n of nodes) {
                 const cls = this.resolveSymbol(n.type, this);
-                const st = cls.symbolType as ClassType;
+                const st = cls.symbolType as ClassDefinitionType;
                 mustBeAbstractClass(st, this.compileErrors, this.htmlId);
             }
 
