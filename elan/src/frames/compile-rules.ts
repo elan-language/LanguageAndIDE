@@ -12,12 +12,15 @@ import { StringType } from "../symbols/string-type";
 import { ISymbolType } from "../symbols/symbol-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
+import { unknownType } from "../test/testHelpers";
 import { CompileError } from "./compile-error";
 import { AstNode } from "./syntax-nodes/ast-node";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
+    
+    const unknown = exprType?.name === undefined || ofType.name === undefined;
     if (exprType?.name !== ofType.name) {
-        compileErrors.push(new CompileError(`Expression must be ${ofType.name}`, location));
+        compileErrors.push(new CompileError(`Expression must be ${ofType.name}`, location, unknown));
     }
 }
 
@@ -27,7 +30,7 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
 
 export function mustBeAbstractClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
     if (!classType.isAbstract) {
-        compileErrors.push(new CompileError(`Superclass ${classType.name} must be abstract`, location));
+        compileErrors.push(new CompileError(`Superclass ${classType.name} must be abstract`, location, false));
     }
 }
 
@@ -43,7 +46,7 @@ export function mustImplementSuperClasses(classType: ClassDefinitionType, superC
                 mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
             }
             else {
-                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location));
+                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
             }
         }
     }
@@ -52,13 +55,13 @@ export function mustImplementSuperClasses(classType: ClassDefinitionType, superC
 
 export function mustBeConcreteClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
     if (classType.isAbstract) {
-        compileErrors.push(new CompileError(`${classType.name} must be concrete to new`, location));
+        compileErrors.push(new CompileError(`${classType.name} must be concrete to new`, location, false));
     }
 }
 
 export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNode | undefined, compileErrors: CompileError[], location: string) {
     if (ft.isExtension && qualifier === undefined) {
-        compileErrors.push(new CompileError(`Cannot call extension method directly`, location));
+        compileErrors.push(new CompileError(`Cannot call extension method directly`, location, false));
     }
 }
 
@@ -70,10 +73,10 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
         const t = ofType[i];
 
         if (p === undefined) {
-            compileErrors.push(new CompileError(`Missing parameter ${i}`, location));
+            compileErrors.push(new CompileError(`Missing parameter ${i}`, location, false));
         }
         else if (t === undefined) {
-            compileErrors.push(new CompileError(`Too many parameters ${i}`, location));
+            compileErrors.push(new CompileError(`Too many parameters ${i}`, location, false));
         }
         else {
             mustBeCompatibleType(t, p.symbolType!, compileErrors, location);
@@ -83,11 +86,12 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
 
 
 function FailIncompatible(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
-    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name} `, location));
+    const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
+    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name} `, location, unknown));
 }
 
 function FailUnknown(lhs: AstNode, compileErrors: CompileError[], location: string) {
-    compileErrors.push(new CompileError(`Undeclared variable ${lhs}`, location));
+    compileErrors.push(new CompileError(`Undeclared variable ${lhs}`, location, true));
 }
 
 export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {

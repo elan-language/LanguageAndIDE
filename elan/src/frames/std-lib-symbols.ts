@@ -28,6 +28,7 @@ export class StdLibSymbols implements Scope {
             ["asString", this.getSymbol("asString", new FunctionType([], StringType.Instance, true))],
             ["asArray", this.getSymbol("asArray", new FunctionType([], new ArrayType(IntType.Instance), true))],
             ["asList", this.getSymbol("asList", new FunctionType([], new ListType(IntType.Instance), true))],
+            ["keys", this.getSymbol("keys", new ListType(StringType.Instance))],
             ["floor", this.getSymbol("floor", new FunctionType([NumberType], IntType.Instance))],
             ["ceiling", this.getSymbol("ceiling", new FunctionType([NumberType], IntType.Instance))],
             ["values", this.getSymbol("values", new ListType(IntType.Instance))],
