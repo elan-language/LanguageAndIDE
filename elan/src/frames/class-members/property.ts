@@ -1,5 +1,5 @@
 import { ClassType } from "../../symbols/class-type";
-import { SymbolScope } from "../../symbols/symbol";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
@@ -9,7 +9,7 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 
-export class Property extends AbstractFrame implements Member {
+export class Property extends AbstractFrame implements Member, ISymbol {
     isMember = true;
     name: IdentifierField;
     type: TypeField;

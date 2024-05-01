@@ -1,3 +1,5 @@
+import { FunctionType } from "../../symbols/function-type";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
@@ -11,7 +13,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractFunctionKeywords, abstractKeyword, functionKeyword } from "../keywords";
 
-export class AbstractFunction extends AbstractFrame implements Member {
+export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
     isMember: boolean = true;
     public name : IdentifierField;
@@ -73,4 +75,16 @@ ${this.indent()}}\r
         source.remove(") return ");
         this.returnType.parseFrom(source);
     }
+
+    get symbolId() {
+        return this.name.text;
+    }
+
+    get symbolType() {
+        const pt = this.params.symbolTypes;
+        const rt = this.returnType.symbolType!;
+        return new FunctionType(pt, rt, false);
+    }
+
+    symbolScope = SymbolScope.property;
 }

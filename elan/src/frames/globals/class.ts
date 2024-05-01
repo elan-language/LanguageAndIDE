@@ -27,7 +27,7 @@ import { isSymbol } from "../../symbols/symbolHelpers";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
-import { mustBeAbstractClass } from "../compile-rules";
+import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { TypeAsn } from "../syntax-nodes/type-asn";
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
 
@@ -207,15 +207,16 @@ end class\r\n`;
         if (this.doesInherit()) {
             const superClasses = this.superClasses.getOrTransformAstNode as CsvAsn;
             const nodes = superClasses.items as TypeAsn[];
+            const superClassSymbolTypes = nodes.map(n => this.resolveSymbol(n.type, this)).map(c => c.symbolType as ClassDefinitionType);
 
-            for (const n of nodes) {
-                const cls = this.resolveSymbol(n.type, this);
-                const st = cls.symbolType as ClassDefinitionType;
+            for (const st of superClassSymbolTypes) {
                 mustBeAbstractClass(st, this.compileErrors, this.htmlId);
             }
 
+            mustImplementSuperClasses(this.symbolType, superClassSymbolTypes, this.compileErrors, this.htmlId);
         }
 
+    
         const name = this.name.compile();
         const asString = this.isAbstract() ? `
   asString() {

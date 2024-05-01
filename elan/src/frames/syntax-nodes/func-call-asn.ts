@@ -49,14 +49,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
 
-        if (funcSymbol.symbolScope === SymbolScope.stdlib) {
+        if (funcSymbol?.symbolScope === SymbolScope.stdlib) {
             scopeQ = `_stdlib.`;
         }
-        if (funcSymbol.symbolScope === SymbolScope.property) {
+        if (funcSymbol?.symbolScope === SymbolScope.property) {
             scopeQ = `this.`;
         }
-        if (funcSymbol.symbolType instanceof FunctionType) {
-            if (funcSymbol.symbolType.isExtension && this.qualifier) {
+        if (funcSymbol?.symbolType instanceof FunctionType) {
+            if (funcSymbol?.symbolType.isExtension && this.qualifier) {
                 this.parameters = [this.qualifier].concat(this.parameters);
                 this.qualifier = undefined;
             }
@@ -64,7 +64,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
         const pp = this.parameters.map(p => p.compile()).join(", ");
 
-        if (funcSymbol.symbolType instanceof FunctionType) {
+        if (funcSymbol?.symbolType instanceof FunctionType) {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors, this.fieldId);
 
             if (funcSymbol.symbolType.isExtension && this.qualifier) {
@@ -92,7 +92,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        const type = this.scope.resolveSymbol(this.id, this.scope).symbolType;
+        const type = this.scope.resolveSymbol(this.id, this.scope)?.symbolType;
 
         if (type instanceof FunctionType) {
             const returnType = type.returnType;

@@ -15,10 +15,14 @@ import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
 import { AstNode } from "./syntax-nodes/ast-node";
 
-export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
-    if (expr?.symbolType !== ofType) {
+export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (exprType?.name !== ofType.name) {
         compileErrors.push(new CompileError(`Expression must be ${ofType.name}`, location));
     }
+}
+
+export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
+    mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
 }
 
 export function mustBeAbstractClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
@@ -26,6 +30,25 @@ export function mustBeAbstractClass(classType: ClassDefinitionType, compileError
         compileErrors.push(new CompileError(`Superclass ${classType.name} must be abstract`, location));
     }
 }
+
+export function mustImplementSuperClasses(classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[],  compileErrors: CompileError[], location: string) {
+    
+    for (const superClassType of superClassTypes) {
+        const superSymbols = superClassType.childSymbols();
+
+        for (const superSymbol of superSymbols){
+            const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
+
+            if (subSymbol) {
+                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
+            }
+            else {
+                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location));
+            }
+        }
+    }
+}
+
 
 export function mustBeConcreteClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
     if (classType.isAbstract) {

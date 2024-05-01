@@ -370,7 +370,7 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
-  
+
 
   test('Fail_CannotInheritFromConcreteClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -399,7 +399,7 @@ class Bar inherits Foo
 
 end class`;
 
-      
+
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -408,7 +408,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
   });
 
-test('Fail_AbstractClassCannotInheritFromConcreteClass', async () => {
+  test('Fail_AbstractClassCannotInheritFromConcreteClass', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -432,7 +432,7 @@ abstract class Bar inherits Foo
     abstract property p2 as Int
 end class`;
 
-      
+
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -441,7 +441,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
   });
 
-  ignore_test('Fail_MustImplementAllInheritedMethods', async () => {
+  test('Fail_MustImplementAllInheritedMethods', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -475,13 +475,13 @@ class Bar inherits Foo
     end function
 end class`;
 
-      
+
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["Class Bar must implement Class Foo.product"]);
   });
 
 
@@ -504,7 +504,7 @@ abstract class Bar
     abstract property p2 as Int
 end class`;
 
-      
+
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -512,6 +512,6 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Class Bar must be concrete to new"]);
   });
-  
+
 
 });

@@ -24,17 +24,17 @@ export class IdAsn extends AbstractAstNode implements AstNode {
             return this.id;
         }
         const symbol = this.scope.resolveSymbol(this.id, this.scope);
-        if (symbol.symbolScope === SymbolScope.stdlib) {
+        if (symbol?.symbolScope === SymbolScope.stdlib) {
             return `_stdlib.${this.id}`;
         }
-        if (symbol.symbolScope === SymbolScope.property) {
+        if (symbol?.symbolScope === SymbolScope.property) {
             return `this.${this.id}`;
         }
         return this.id;
     }
 
     get symbolType() {
-        return this.scope.resolveSymbol(this.id, this.scope).symbolType;
+        return this.scope.resolveSymbol(this.id, this.scope)?.symbolType;
     }
 
     toString() {

@@ -1,3 +1,4 @@
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
@@ -8,7 +9,7 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { abstractPropertyKeywords, propertyKeyword } from "../keywords";
 
-export class AbstractProperty extends AbstractFrame implements Member {
+export class AbstractProperty extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
     isMember = true;
     name: IdentifierField;
@@ -62,5 +63,17 @@ ${this.indent()}}\r\n`;
 
     public initCode() {
         return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
+    }
+
+    get symbolId() {
+        return this.name.renderAsSource();
+    }
+
+    get symbolType() {
+        return this.type.symbolType;
+    }
+
+    get symbolScope(): SymbolScope {
+        return SymbolScope.property;
     }
 } 

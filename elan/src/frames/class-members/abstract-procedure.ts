@@ -1,3 +1,5 @@
+import { ProcedureType } from "../../symbols/procedure-type";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
@@ -10,7 +12,7 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractKeyword, abstractProcedureKeywords, procedureKeyword } from "../keywords";
 
-export class AbstractProcedure extends AbstractFrame implements Member {
+export class AbstractProcedure extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
     isMember: boolean = true;
     public name : IdentifierField;
@@ -63,4 +65,15 @@ ${this.indent()}}\r
         this.params.parseFrom(source);
         source.remove(")");
     }
+
+    get symbolId() {
+        return this.name.text;
+    }
+
+    get symbolType() {
+        const pt = this.params.symbolTypes;
+        return new ProcedureType(pt);
+    }
+
+    symbolScope = SymbolScope.property;
 }
