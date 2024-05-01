@@ -9,6 +9,10 @@ import { ProcedureType } from "../../symbols/procedure-type";
 import { mustMatchParameters } from "../compile-rules";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { callKeyword } from "../keywords";
+import { VarAsn } from "../syntax-nodes/var-asn";
+import { ClassType } from "../../symbols/class-type";
+import { Scope } from "../interfaces/scope";
+import { SymbolScope } from "../../symbols/symbol";
 
 export class CallStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -54,15 +58,38 @@ export class CallStatement extends AbstractFrame implements Statement{
     compile(): string {
         this.compileErrors = [];
 
-        // todo handle class scope
-        const procSymbol = this.resolveSymbol(this.proc.text, this);
+        var currentScope : Scope = this;
+        var scopeQ = "";
 
-        if (procSymbol.symbolType instanceof ProcedureType) {
+        const varAsn = this.proc.getOrTransformAstNode as VarAsn;
+
+        const qualifier = varAsn.qualifier;
+        const id = varAsn.id;
+
+        const classScope = qualifier ? qualifier.symbolType : undefined;
+        if (classScope instanceof ClassType) {
+            const s = this.resolveSymbol(classScope.className, this);
+            // replace scope with class scope
+            currentScope = s as unknown as Scope;
+        }
+
+        const procSymbol = currentScope.resolveSymbol(this.proc.text, this);
+
+        if (procSymbol?.symbolScope === SymbolScope.stdlib) {
+            scopeQ = `_stdlib.`;
+        }
+        if (procSymbol?.symbolScope === SymbolScope.property) {
+            scopeQ = `this.`;
+        }
+
+        if (procSymbol?.symbolType instanceof ProcedureType) {
             const argList = this.args.getOrTransformAstNode as CsvAsn;
             const params = argList.items;
             mustMatchParameters(params, procSymbol.symbolType.parametersTypes, this.compileErrors, this.htmlId);
         }
+
+        const q = qualifier ? `${qualifier.compile()}.` : scopeQ;
         
-        return `${this.indent()}${this.proc.compile()}(${this.args.compile()});`;
+        return `${this.indent()}${q}${id}(${this.args.compile()});`;
     }
 } 

@@ -123,7 +123,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  ignore_test('Pass_CallGlobalProcedure', async () => {
+  test('Pass_CallGlobalProcedure', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
