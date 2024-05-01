@@ -2,11 +2,11 @@ import { AbstractSelector } from "./abstract-selector";
 import { CompileError } from "./compile-error";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { ParseStatus } from "./parse-status";
+import { CodeStatus } from "./code-status";
 
 
-export function parentHelper_worstParseStatusOfChildren(parent: Parent): ParseStatus {
-        return parent.getChildren().map(s => s.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+export function parentHelper_worstParseStatusOfChildren(parent: Parent): CodeStatus {
+        return parent.getChildren().map(s => s.getCodeStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CodeStatus.valid);
 }
 
 export function parentHelper_aggregateCompileErrorsOfChildren(parent: Parent): CompileError[] {

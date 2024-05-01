@@ -5,7 +5,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { ParseStatus } from "../frames/parse-status";
+import { CodeStatus } from "../frames/code-status";
 import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
@@ -234,7 +234,7 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
-	if (file.parseStatus() === ParseStatus.valid) {
+	if (file.parseStatus() === CodeStatus.valid) {
 		// save to local store
 		file.renderAsSource().then(code => {
 			localStorage.setItem("elan-code", code);

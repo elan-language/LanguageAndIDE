@@ -1,10 +1,10 @@
-import { ParseStatus } from "../frames/parse-status";
+import { CodeStatus } from "../frames/code-status";
 import { ISymbol } from "./symbol";
 import { ISymbolType } from "./symbol-type";
 
-export function compatibleType(symbol: ISymbol | undefined, symbolType: ISymbolType | undefined): ParseStatus {
+export function compatibleType(symbol: ISymbol | undefined, symbolType: ISymbolType | undefined): CodeStatus {
     if (symbol?.symbolType?.name === symbolType?.name) {
-        return ParseStatus.valid;
+        return CodeStatus.valid;
     }
-    return ParseStatus.invalid;
+    return CodeStatus.invalid;
 }

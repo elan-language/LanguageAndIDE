@@ -1,6 +1,6 @@
 import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Regexes } from "./regexes";
@@ -16,7 +16,7 @@ export class IntoSelector extends AbstractField {
         this.ext = holder;
         this.setPlaceholder("into");
         this.setOptional(true);
-        this.setParseStatus(ParseStatus.valid);
+        this.setParseStatus(CodeStatus.valid);
         this.help = `Type 'i' put the result of the external method call into a pre-defined variable of a Type able to accept the result.`;
     }
     

@@ -1,4 +1,4 @@
-export enum ParseStatus {
+export enum CodeStatus {
     invalid,
     empty,
     incomplete, 

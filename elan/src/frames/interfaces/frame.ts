@@ -1,6 +1,6 @@
 import { Field } from "./field";
 import { Selectable } from "./selectable";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { CompileError } from "../compile-error";
@@ -18,9 +18,7 @@ export interface Frame extends Selectable, Scope {
     indent(): string;
 
     getFields(): Field[];
-    worstParseStatusOfFields(): ParseStatus;
-
-    frameParseStatus() : ParseStatus;
+    worstParseStatusOfFields(): CodeStatus;
 
     selectFirstField() : boolean;
     selectLastField() : boolean;

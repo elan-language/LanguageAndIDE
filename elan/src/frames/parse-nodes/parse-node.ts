@@ -1,7 +1,7 @@
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 
 export interface ParseNode {
-    status: ParseStatus;
+    status: CodeStatus;
     matchedText: string;
     remainingText: string;
     errorMessage: string;

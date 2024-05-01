@@ -1,7 +1,7 @@
 import { AbstractField } from "./abstract-field";
 import { editorEvent } from "../interfaces/editor-event";
 import { Else } from "../statements/else";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Regexes } from "./regexes";
@@ -16,7 +16,7 @@ export class IfSelector extends AbstractField {
         this.else = holder;
         this.setPlaceholder("if");
         this.setOptional(true);
-        this.setParseStatus(ParseStatus.valid);
+        this.setParseStatus(CodeStatus.valid);
         this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
     }
 

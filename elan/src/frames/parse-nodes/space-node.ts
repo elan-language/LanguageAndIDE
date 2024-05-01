@@ -1,5 +1,5 @@
 import { Regexes } from "../fields/regexes";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { Space } from "./parse-node-helpers";
 
@@ -14,18 +14,18 @@ export class SpaceNode extends AbstractParseNode {
     parseText(text: string): void {
         if (text.length === 0) {
             if (this.type === Space.required) {
-                this.status = ParseStatus.empty;
+                this.status = CodeStatus.empty;
             } else {
-                this.status = ParseStatus.valid;
+                this.status = CodeStatus.valid;
             }
         } else {
             this.remainingText = text;
             var matches = text.match(Regexes.leadingSpaceNotNL);
             if (matches !== null && matches.length > 0) {
                 this.remainingText = text.replace(matches[0], "");
-                    this.status = ParseStatus.valid ;
+                    this.status = CodeStatus.valid ;
             } else {
-                this.status = this.type ===  Space.required ? ParseStatus.invalid : ParseStatus.valid;
+                this.status = this.type ===  Space.required ? CodeStatus.invalid : CodeStatus.valid;
             }      
         } 
     }
@@ -35,11 +35,11 @@ export class SpaceNode extends AbstractParseNode {
     }
 
     renderAsSource(): string {
-        return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
+        return this.type === Space.ignored || this.status === CodeStatus.empty ? "" : " ";
     }
         
     getCompletionAsHtml() : string {
-        return this.status === ParseStatus.empty && this.type === Space.required ? " " : "";
+        return this.status === CodeStatus.empty && this.type === Space.required ? " " : "";
     }
 
     compile(): string { 

@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { editorEvent } from "./editor-event";
 
 export interface Selectable  {
@@ -18,7 +18,7 @@ export interface Selectable  {
     renderAsSource(): string;
     compile(): string;
 
-    getParseStatus(): ParseStatus;
+    getCodeStatus(): CodeStatus;
 
     parseFrom(source: CodeSource): void;
     getHtmlId(): string;

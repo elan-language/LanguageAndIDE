@@ -1,9 +1,9 @@
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode {
 
-    status: ParseStatus = ParseStatus.empty;
+    status: CodeStatus = CodeStatus.empty;
     matchedText: string = "";
     completionWhenEmpty: string = "";
     remainingText: string = "";
@@ -14,7 +14,7 @@ export abstract class AbstractParseNode implements ParseNode {
     }
 
     getCompletionAsHtml(): string {
-        return this.status === ParseStatus.empty ? `<pr>${this.completionWhenEmpty}</pr>` : "";
+        return this.status === CodeStatus.empty ? `<pr>${this.completionWhenEmpty}</pr>` : "";
     }
 
     renderAsSource(): string {
@@ -31,7 +31,7 @@ export abstract class AbstractParseNode implements ParseNode {
         return this.matchedText.trim(); 
     } //TODO make abstract
 
-    protected set(status: ParseStatus, matched: string, remaining: string, errorMessage = "") {
+    protected set(status: CodeStatus, matched: string, remaining: string, errorMessage = "") {
         this.status = status;
         this.matchedText = matched;
         this.remainingText = remaining;

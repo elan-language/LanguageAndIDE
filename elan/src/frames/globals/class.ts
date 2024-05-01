@@ -30,7 +30,7 @@ import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { TypeAsn } from "../syntax-nodes/type-asn";
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -73,7 +73,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         super.setClasses();
         this.pushClass(true,"multiline");
     };
-    getParseStatus(): ParseStatus {
+    getCodeStatus(): CodeStatus {
         var fieldStatus = this.worstParseStatusOfFields();
         var statementsStatus = parentHelper_worstParseStatusOfChildren(this);
         var worst = [fieldStatus, statementsStatus].sort((a, b) => a - b)[0];

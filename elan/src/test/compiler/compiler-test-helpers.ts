@@ -1,6 +1,6 @@
 import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
-import { ParseStatus } from "../../frames/parse-status";
+import { CodeStatus } from "../../frames/code-status";
 import { Done } from "mocha";
 import { getTestSystem } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
@@ -15,15 +15,15 @@ export function assertDoesNotParse(file: FileImpl) {
 }
 
 export function assertStatusIsValid(file: FileImpl) {
-    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), CodeStatus.valid);
 }
 
 export function assertStatusIsIncomplete(file: FileImpl) {
-    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), CodeStatus.valid);
 }
 
 export function assertStatusIsInvalid(file: FileImpl) {
-    assert.strictEqual(file.parseStatus(), ParseStatus.valid);
+    assert.strictEqual(file.parseStatus(), CodeStatus.valid);
 }
 
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {

@@ -11,7 +11,7 @@ import { Class } from '../frames/globals/class';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { MainFrame } from '../frames/globals/main-frame';
-import { ParseStatus } from '../frames/parse-status';
+import { CodeStatus } from '../frames/code-status';
 
 suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -244,24 +244,24 @@ suite('Editing Frames', () => {
 	test('#364 ParseError within in class member not showing up at class level', () => {
 		var file = T05_classes();
 		var player = file.getById("class1");
-		assert.equal(player.getParseStatus(), ParseStatus.valid);
+		assert.equal(player.getCodeStatus(), CodeStatus.valid);
 		var field = file.getById("ident12");
-		assert.equal(field.getParseStatus(), ParseStatus.valid);
+		assert.equal(field.getCodeStatus(), CodeStatus.valid);
 		field.processKey(key("%"));
-		assert.equal(field.getParseStatus(), ParseStatus.invalid);
-		assert.equal(player.getParseStatus(), ParseStatus.invalid);
+		assert.equal(field.getCodeStatus(), CodeStatus.invalid);
+		assert.equal(player.getCodeStatus(), CodeStatus.invalid);
 		field.processKey(back());
-		assert.equal(field.getParseStatus(), ParseStatus.valid);
-		assert.equal(player.getParseStatus(), ParseStatus.valid);
+		assert.equal(field.getCodeStatus(), CodeStatus.valid);
+		assert.equal(player.getCodeStatus(), CodeStatus.valid);
 		var card = file.getById("class14");
 		var reset = file.getById("func27");
 		var ret = file.getById("return32");
 		var expr = file.getById("expr33");
 		expr.processKey(key("£"));
-		assert.equal(expr.getParseStatus(), ParseStatus.invalid);
-		assert.equal(ret.getParseStatus(), ParseStatus.invalid);
-		assert.equal(reset.getParseStatus(), ParseStatus.invalid);
-		assert.equal(card.getParseStatus(), ParseStatus.invalid);
+		assert.equal(expr.getCodeStatus(), CodeStatus.invalid);
+		assert.equal(ret.getCodeStatus(), CodeStatus.invalid);
+		assert.equal(reset.getCodeStatus(), CodeStatus.invalid);
+		assert.equal(card.getCodeStatus(), CodeStatus.invalid);
 });
 });	
 

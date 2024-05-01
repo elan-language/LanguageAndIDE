@@ -1,6 +1,6 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { ParseStatus } from "./parse-status";
+import { CodeStatus } from "./code-status";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { FunctionFrame } from "./globals/function-frame";
@@ -235,12 +235,12 @@ export class FileImpl implements File {
         this._runStatus = s;
     }
 
-    parseStatus(): ParseStatus {
+    parseStatus(): CodeStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     }
 
     parseStatusAsString() : string {
-        return ParseStatus[this.parseStatus()];
+        return CodeStatus[this.parseStatus()];
     }
 
     compileErrors(): CompileError[] {

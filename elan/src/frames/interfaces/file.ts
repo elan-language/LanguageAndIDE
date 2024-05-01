@@ -1,6 +1,6 @@
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
@@ -28,7 +28,7 @@ export interface File extends Parent {
     indent(): string;
     expandCollapseAll(): void;
 
-    parseStatus(): ParseStatus;
+    parseStatus(): CodeStatus;
     testStatus(): TestStatus;
     runStatus(): RunStatus;
 

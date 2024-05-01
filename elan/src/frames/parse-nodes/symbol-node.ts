@@ -1,5 +1,5 @@
 import { escapeAngleBrackets } from "../helpers";
-import { ParseStatus } from "../parse-status";
+import { CodeStatus } from "../code-status";
 import { FixedTextNode } from "./fixed-text-node";
 
 export class SymbolNode extends FixedTextNode {
@@ -13,11 +13,11 @@ export class SymbolNode extends FixedTextNode {
             var target = this.fixedText;
             if (text.startsWith(target)) {
                 var n = this.numLeadingSpaces(text) + this.fixedText.length;
-                this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
+                this.set(CodeStatus.valid, text.substring(0, n), text.substring(n));
             } else if (target.startsWith(text)) {
-                this.set(ParseStatus.incomplete, text, "");
+                this.set(CodeStatus.incomplete, text, "");
             } else {
-                this.set(ParseStatus.invalid, "", text, super.getErrorMessage());
+                this.set(CodeStatus.invalid, "", text, super.getErrorMessage());
             }
         }
     }
