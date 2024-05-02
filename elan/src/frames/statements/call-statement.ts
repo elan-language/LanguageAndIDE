@@ -7,7 +7,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
-import { callKeyword } from "../keywords";
+import { callKeyword, globalKeyword, libraryKeyword } from "../keywords";
 import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
 import { SymbolScope } from "../../symbols/symbol";
@@ -83,10 +83,18 @@ export class CallStatement extends AbstractFrame implements Statement{
             // replace scope with class scope
             currentScope = s as unknown as Scope;
         }
-        else if (qualifier instanceof FixedIdAsn && qualifier.id === "") {
+        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === globalKeyword) {
             // todo kludge
             currentScope = this.getGlobalScope(this);
             qualifier = undefined;
+        }
+        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === libraryKeyword) {
+            // todo kludge
+            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
+            qualifier = undefined;
+        }
+        else if (qualifier) {
+            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
         }
 
         const procSymbol = currentScope.resolveSymbol(id, this);

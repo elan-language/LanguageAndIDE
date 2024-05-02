@@ -10,17 +10,18 @@ import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
 import { NumberType } from "../symbols/number-type";
 import { StringType } from "../symbols/string-type";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
-import { unknownType } from "../test/testHelpers";
 import { CompileError } from "./compile-error";
+import { Parent } from "./interfaces/parent";
 import { AstNode } from "./syntax-nodes/ast-node";
+import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
-    
+
     const unknown = exprType?.name === undefined || ofType.name === undefined;
     if (exprType?.name !== ofType.name) {
         compileErrors.push(new CompileError(`Expression must be ${ofType.name}`, location, unknown));
@@ -43,12 +44,12 @@ export function mustBeAbstractClass(classType: ClassDefinitionType, compileError
     }
 }
 
-export function mustImplementSuperClasses(classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[],  compileErrors: CompileError[], location: string) {
-    
+export function mustImplementSuperClasses(classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[], compileErrors: CompileError[], location: string) {
+
     for (const superClassType of superClassTypes) {
         const superSymbols = superClassType.childSymbols();
 
-        for (const superSymbol of superSymbols){
+        for (const superSymbol of superSymbols) {
             const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
 
             if (subSymbol) {
@@ -182,4 +183,14 @@ export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: 
     }
 
     mustBeCompatibleType(lhs.symbolType, rhs.symbolType, compileErrors, location);
+}
+
+export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Parent, compileErrors: CompileError[], location: string) {
+    if (parent.constructor.name === "FunctionMethod") {
+        const s = assignable.symbolScope;
+
+        if (s !== SymbolScope.local){
+            compileErrors.push(new CompileError(`may not mutate non local data in function `, location, false));
+        }
+    }
 }

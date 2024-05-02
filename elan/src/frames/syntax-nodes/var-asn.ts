@@ -93,6 +93,20 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         return rootType;
     }
 
+    get symbolScope() {
+        var currentScope = this.scope;
+        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
+        if (classScope instanceof ClassType) {
+            const s = this.scope.resolveSymbol(classScope.className, this.scope);
+            // replace scope with class scope
+            currentScope = s as unknown as Scope;
+        }
+
+        const symbol = currentScope.resolveSymbol(this.id, currentScope)!;
+      
+        return symbol.symbolScope;
+    }
+
     toString() {
         const q = this.qualifier ? `${this.qualifier}` : "";
         const idx = this.index ? `${this.index}` : "";

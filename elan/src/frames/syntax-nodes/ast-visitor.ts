@@ -276,10 +276,10 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     if (node instanceof KeywordNode) {
         // todo decouple this from js
         if (node.fixedText === globalKeyword) {
-            return new FixedIdAsn("global", fieldId);
+            return new FixedIdAsn(globalKeyword, fieldId);
         }
         if (node.fixedText === libraryKeyword) {
-            return new FixedIdAsn("_stdlib", fieldId);
+            return new FixedIdAsn(libraryKeyword, fieldId);
         }
         if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
             return new FixedIdAsn("this", fieldId);

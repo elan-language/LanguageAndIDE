@@ -7,7 +7,8 @@ export enum SymbolScope {
     program, // also undefined 
     parameter,
     property,
-    member
+    member,
+    local
 }
 
 export interface ISymbol {

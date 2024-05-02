@@ -447,12 +447,12 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Int
-    abstract property p2 as Int
+    abstract property p1 as Number
+    abstract property p2 as Number
 
-    abstract procedure setP1(v as Int)
+    abstract procedure setP1(v as Number)
 
-    abstract function product() return Int
+    abstract function product() return Number
 end class
 
 class Bar inherits Foo
@@ -460,7 +460,7 @@ class Bar inherits Foo
       set p1 to 3
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
     function asString() return String 
         return ""
@@ -488,7 +488,7 @@ end main
 
 abstract class Foo
     abstract property p1 as Int
-    abstract property p2 as Int
+    abstract property p2 as String
 
     abstract procedure setP1(v as Int)
 
@@ -500,7 +500,7 @@ class Bar inherits Foo
       set p1 to 3
     end constructor
 
-    property p1 as Int
+    property p1 as Number
     property p2 as String
 
     procedure setP1(v as String)
@@ -535,10 +535,10 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Int
-    abstract property p2 as Int
+    abstract property p1 as Number
+    abstract property p2 as Number
 
-    abstract procedure setP1(v as Int)
+    abstract procedure setP1(v as Number)
 
     abstract function product() return Int
 end class
@@ -548,10 +548,10 @@ class Bar inherits Foo
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 as Number
+    property p2 as Number
 
-    procedure setP1(p1 as Int)
+    procedure setP1(p1 as Number)
         set property.p1 to p1
     end procedure
 

@@ -77,7 +77,7 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Int
+  property p1 as Number
 
   procedure display()
       print p1
@@ -96,7 +96,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -202,7 +202,7 @@ class Foo
         set p1 to 5
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
     procedure times(b as Bar)
         call b.p1PlusOne()
@@ -226,7 +226,7 @@ class Bar
         set p1 to 1
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
     procedure p1PlusOne()
         set p1 to p1 + 1
@@ -246,7 +246,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -271,7 +271,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 1;
   }

@@ -373,6 +373,8 @@ export class FileImpl implements File {
             }
         }
 
-        return this._stdLibSymbols.resolveSymbol(id, this as unknown as Scope);
+        return this.libraryScope.resolveSymbol(id, this as unknown as Scope)!;
     }
+
+    libraryScope = this._stdLibSymbols as Scope;
 }

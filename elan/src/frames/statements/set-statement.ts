@@ -6,7 +6,8 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { AssignableField } from "../fields/assignableField";
-import { mustBeCompatibleNode } from "../compile-rules";
+import { mustBeCompatibleNode, mustNotBePropertyOnFunctionMethod } from "../compile-rules";
+import { VarAsn } from "../syntax-nodes/var-asn";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -45,7 +46,11 @@ export class SetStatement extends AbstractFrame implements Statement{
     }
     compile(): string {
         this.compileErrors = [];
-        mustBeCompatibleNode(this.assignable.getOrTransformAstNode!, this.expr.getOrTransformAstNode!, this.compileErrors, this.expr.getHtmlId());
+        const assignableAstNode = this.assignable.getOrTransformAstNode! as VarAsn;
+        const exprAstNode = this.expr.getOrTransformAstNode!;
+
+        mustNotBePropertyOnFunctionMethod(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
+        mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
 
         return `${this.indent()}${this.assignable.compile()} = ${this.expr.compile()};`;
     }

@@ -25,7 +25,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as List<of Int>
+    property previousScores as List<of Number>
 
     function asString() return String
         return "A game"
@@ -55,7 +55,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "List<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "List<of Number>"]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -203,7 +203,7 @@ class Game
        set i to 100
     end constructor
 
-    property i as Int
+    property i as Number
 
     function asString() return String
         return "A game"
@@ -218,7 +218,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Number"]]);};
   constructor() {
     this.i = 100;
   }
@@ -353,15 +353,15 @@ class Game
     set score to 1
   end constructor
 
-  property score as Int
-  property best as Int
+  property score as Number
+  property best as Number
 
   property p1 as Player
   property p2 as Player
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as List<of Number>
 
   function asString() return String
     return "A game"
@@ -394,7 +394,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "List<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["score", "Number"], ["best", "Number"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "List<of Number>"]]);};
   constructor() {
     this.score = 1;
   }

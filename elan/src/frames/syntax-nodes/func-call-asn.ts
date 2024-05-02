@@ -11,6 +11,7 @@ import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { globalKeyword, libraryKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { FixedIdAsn } from "./fixed-id-asn";
@@ -51,16 +52,25 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         var qualifier = this.qualifier as QualifierAsn | undefined;
         var parameters = [...this.parameters];
 
+        // TODO fixed clone - func-call-asn also various getSymbol code
         const classScope = qualifier ? qualifier.symbolType : undefined;
         if (classScope instanceof ClassType) {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;
         }
-        else if (qualifier instanceof FixedIdAsn && qualifier.id === "") {
+        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === globalKeyword) {
             // todo kludge
             currentScope = this.getGlobalScope(currentScope as Frame);
             qualifier = undefined;
+        }
+        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === libraryKeyword) {
+            // todo kludge
+            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
+            qualifier = undefined;
+        }
+        else if (qualifier) {
+            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
         }
 
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);

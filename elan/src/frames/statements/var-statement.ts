@@ -5,7 +5,7 @@ import { CodeSource } from "../code-source";
 import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 
 export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
@@ -56,4 +56,6 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     get symbolType() {
         return this.expr.symbolType;
     }
+
+    symbolScope = SymbolScope.local;
 } 

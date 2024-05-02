@@ -14,7 +14,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField, parentHelper_worstParseStatusOfChildren } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -31,6 +31,7 @@ import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules
 import { TypeAsn } from "../syntax-nodes/type-asn";
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
 import { CodeStatus } from "../code-status";
+import { CompileError } from "../compile-error";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -308,5 +309,10 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
         }
 
         return this.getParent().resolveSymbol(id, this);
+    }
+
+    aggregateCompileErrors(): CompileError[] {
+        const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
+        return cc.concat(super.aggregateCompileErrors());
     }
 }

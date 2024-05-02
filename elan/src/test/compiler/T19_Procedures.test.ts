@@ -444,7 +444,7 @@ class Bar
         set p1 to 5
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
     procedure length(plus as Number)
         print p1 + plus
@@ -487,7 +487,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }

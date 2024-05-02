@@ -79,7 +79,7 @@ class Foo
 
     property p1 as Bar
 
-    function length() return Int
+    function length() return Number
         return p1.length() + 2
     end function
 
@@ -94,9 +94,9 @@ class Bar
         set p1 to 5
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
-    function length() return Int
+    function length() return Number
         return p1
     end function
 
@@ -137,7 +137,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -178,13 +178,13 @@ class Foo
         set p1 to 5
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
-    function times(b as Bar) return Int
+    function times(b as Bar) return Number
         return p1PlusOne() * b.p1PlusOne()
     end function
 
-    function p1PlusOne() return Int
+    function p1PlusOne() return Number
         return p1 + 1
     end function
 
@@ -199,9 +199,9 @@ class Bar
         set p1 to 1
     end constructor
 
-    property p1 as Int
+    property p1 as Number
 
-    function p1PlusOne() return Int
+    function p1PlusOne() return Number
         return p1 + 1
     end function
 
@@ -219,7 +219,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -241,7 +241,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 1;
   }
@@ -281,14 +281,14 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Int
+  property p1 as Number
 
   procedure prt()
     print asString()
   end procedure
 
   function asString() return String
-    return library.asString(p1)
+    return p1.asString()
   end function
 
 end class`;
@@ -300,7 +300,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -359,6 +359,36 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
+  test('Fail_FunctionMethodCannotMutateProperty', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+class Foo
+  constructor()
+    set p1 to 5
+  end constructor
+
+  property p1 as Number
+
+  function times(value as Number) return Number
+    set p1 to p1 * value
+    return p1
+  end function
+
+  function asString() return String
+    return ""
+  end function
+
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["may not mutate non local data in function "]);
   });
 
 

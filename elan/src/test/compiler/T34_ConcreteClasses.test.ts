@@ -19,7 +19,7 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Int
+  property p1 as Number
 
   property p2 as String
 
@@ -38,7 +38,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
   }
