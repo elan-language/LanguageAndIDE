@@ -18,7 +18,7 @@ import { QualifierAsn } from "./qualifier-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
+    constructor(public id: string, private readonly qualifier: AstNode | undefined, private readonly parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
         super();
         this.id = id.trim();
     }
@@ -49,8 +49,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         var currentScope = this.scope;
         var scopeQ = "";
         var qualifier = this.qualifier as QualifierAsn | undefined;
+        var parameters = [...this.parameters];
 
-        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
+        const classScope = qualifier ? qualifier.symbolType : undefined;
         if (classScope instanceof ClassType) {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
@@ -75,14 +76,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
 
             if (funcSymbol.symbolType.isExtension && qualifier) {
-                this.parameters = [qualifier.value].concat(this.parameters);
+                parameters = [qualifier.value].concat(parameters);
                 qualifier = undefined;
             }
 
-            mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
+            mustMatchParameters(parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
         }
 
-        const pp = this.parameters.map(p => p.compile()).join(", ");
+        const pp = parameters.map(p => p.compile()).join(", ");
         const q = qualifier ? `${qualifier.compile()}` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }
