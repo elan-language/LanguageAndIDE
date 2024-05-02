@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class CsvAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly items: AstNode[], public fieldId: string, scope: Scope) {
+    constructor(public readonly items: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
     }
 

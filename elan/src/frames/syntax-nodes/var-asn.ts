@@ -13,9 +13,8 @@ import { RangeAsn } from "./range-asn";
 
 export class VarAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, public qualifier: AstNode | undefined, private index: AstNode | undefined, public fieldId: string, private scope: Scope) {
+    constructor(public readonly id: string, public readonly qualifier: AstNode | undefined, private readonly index: AstNode | undefined, public readonly fieldId: string, private scope: Scope) {
         super();
-        this.id = id.trim();
     }
 
     aggregateCompileErrors(): CompileError[] {

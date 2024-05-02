@@ -10,7 +10,7 @@ import { TypeAsn } from "./type-asn";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private typeNode: TypeAsn, private parameters: AstNode[], public fieldId: string, private scope: Scope) {
+    constructor(private readonly typeNode: TypeAsn, private readonly parameters: AstNode[], public readonly fieldId: string, private readonly scope: Scope) {
         super();
     }
 

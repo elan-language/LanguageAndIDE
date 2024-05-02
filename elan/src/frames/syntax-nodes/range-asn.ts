@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class RangeAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private from: AstNode | undefined, private to: AstNode | undefined, public fieldId: string, private scope: Scope) {
+    constructor(private readonly from: AstNode | undefined, private readonly to: AstNode | undefined, public readonly fieldId: string, scope: Scope) {
         super();
 
     }

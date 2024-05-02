@@ -6,7 +6,7 @@ import { AstNode } from "./ast-node";
 
 export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private value: string, private type: EnumType, public fieldId: string, scope: Scope) {
+    constructor(private readonly value: string, private readonly type: EnumType, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

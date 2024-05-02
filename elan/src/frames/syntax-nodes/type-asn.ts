@@ -17,9 +17,8 @@ import { AbstractAstNode } from "./abstract-ast-node";
 
 export class TypeAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly type: string, public genericParameters: AstNode[], public fieldId: string, private scope: Scope) {
+    constructor(public readonly type: string, public readonly genericParameters: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
-        this.type = type.trim();
     }
 
     aggregateCompileErrors(): CompileError[] {

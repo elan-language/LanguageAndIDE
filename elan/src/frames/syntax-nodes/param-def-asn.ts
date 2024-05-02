@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class ParamDefAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, private type: AstNode, public fieldId: string, private scope: Scope) {
+    constructor(public readonly id: string, private readonly type: AstNode, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

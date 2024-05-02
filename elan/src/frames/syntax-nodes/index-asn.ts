@@ -7,7 +7,7 @@ import { RangeAsn } from "./range-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly index: ExprAsn, public fieldId: string, private scope: Scope) {
+    constructor(public readonly index: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

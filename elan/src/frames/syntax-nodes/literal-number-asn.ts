@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class LiteralNumberAsn extends AbstractAstNode implements AstNode {
 
-    constructor(rawValue: string, public fieldId: string,) {
+    constructor(rawValue: string, public readonly fieldId: string,) {
         super();
         this.value = parseFloat(rawValue.trim());
     }

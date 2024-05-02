@@ -6,7 +6,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class InterpolatedAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private body: ExprAsn, public fieldId: string, private scope: Scope) {
+    constructor(private readonly body: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

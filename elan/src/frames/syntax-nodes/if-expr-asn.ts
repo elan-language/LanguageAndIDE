@@ -8,7 +8,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private condition: ExprAsn, private expr1: ExprAsn, private expr2: ExprAsn, public fieldId: string, scope: Scope) {
+    constructor(private readonly condition: ExprAsn, private readonly expr1: ExprAsn, private readonly expr2: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

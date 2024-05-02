@@ -8,7 +8,7 @@ import { ParamDefAsn } from "./param-def-asn";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
-    constructor(private parameters: ParamDefAsn[], public fieldId: string, private scope: Scope) {
+    constructor(private readonly parameters: ParamDefAsn[], public readonly fieldId: string, private readonly scope: Scope) {
         super();
     }
 

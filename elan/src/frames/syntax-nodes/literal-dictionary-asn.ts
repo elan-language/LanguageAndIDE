@@ -11,7 +11,7 @@ import { LiteralListAsn } from "./literal-list-asn";
 
 export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private readonly list: LiteralListAsn, public fieldId: string, scope: Scope) {
+    constructor(private readonly list: LiteralListAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

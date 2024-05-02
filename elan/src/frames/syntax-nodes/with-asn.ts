@@ -7,7 +7,7 @@ import { LiteralListAsn } from "./literal-list-asn";
 
 export class WithAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private obj: ExprAsn, private withClause: LiteralListAsn, public fieldId: string, scope: Scope) {
+    constructor(private readonly obj: ExprAsn, private readonly withClause: LiteralListAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

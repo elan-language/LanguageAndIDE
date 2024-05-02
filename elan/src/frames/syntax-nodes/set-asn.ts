@@ -7,9 +7,8 @@ import { ExprAsn } from "./expr-asn";
 
 export class SetAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, private to: ExprAsn, public fieldId: string, scope: Scope) {
+    constructor(public readonly id: string, private readonly to: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
-        this.id = id.trim();
     }
 
     aggregateCompileErrors(): CompileError[] {

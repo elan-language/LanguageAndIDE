@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class LiteralStringAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private value: string, public fieldId: string) {
+    constructor(private readonly value: string, public readonly fieldId: string) {
         super();
     }
 

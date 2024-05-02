@@ -1,26 +1,21 @@
 import { ArrayType } from "../../symbols/array-type";
-import { ClassType } from "../../symbols/class-type";
 import { DictionaryType } from "../../symbols/dictionary-type";
 import { FunctionType } from "../../symbols/function-type";
 import { GenericParameterType } from "../../symbols/generic-parameter-type";
 import { IterType } from "../../symbols/iter-type";
 import { ListType } from "../../symbols/list-type";
-import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
-import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
-import { globalKeyword, libraryKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { scopePrefix, updateScopeAndQualifier } from "./ast-helpers";
 import { AstNode } from "./ast-node";
-import { FixedIdAsn } from "./fixed-id-asn";
 import { QualifierAsn } from "./qualifier-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public id: string, private readonly qualifier: AstNode | undefined, private readonly parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
+    constructor(public readonly id: string, private readonly qualifier: AstNode | undefined, private readonly parameters: Array<AstNode>, public readonly fieldId: string, private readonly scope: Scope) {
         super();
         this.id = id.trim();
     }

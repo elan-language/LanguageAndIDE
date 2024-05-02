@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class ResultAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public fieldId: string, private scope: Scope) {
+    constructor(public readonly fieldId: string, scope: Scope) {
         super();
 
     }

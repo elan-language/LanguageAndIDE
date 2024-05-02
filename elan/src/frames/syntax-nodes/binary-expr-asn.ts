@@ -13,7 +13,7 @@ import { OperationSymbol } from "./operation-symbol";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private op: OperationSymbol, private lhs: ExprAsn, private rhs: ExprAsn, public fieldId: string, scope: Scope) {
+    constructor(private readonly op: OperationSymbol, private readonly lhs: ExprAsn, private readonly rhs: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

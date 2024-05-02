@@ -6,7 +6,7 @@ import { ExprAsn } from "./expr-asn";
 
 export class BracketedAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private body: ExprAsn, public fieldId: string, private scope: Scope) {
+    constructor(private readonly body: ExprAsn, public readonly fieldId: string, private readonly scope: Scope) {
         super();
     }
 

@@ -5,7 +5,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
 export class LiteralBoolAsn extends AbstractAstNode implements AstNode {
-    constructor(rawValue: string, public fieldId: string) {
+    constructor(rawValue: string, public readonly fieldId: string) {
         super();
         this.value = rawValue.trim() === trueKeyword;
     }

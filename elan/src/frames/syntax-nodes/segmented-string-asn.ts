@@ -6,7 +6,7 @@ import { AstNode } from "./ast-node";
 
 export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private segments: AstNode[], public fieldId: string, scope: Scope) {
+    constructor(private readonly segments: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
     }
 

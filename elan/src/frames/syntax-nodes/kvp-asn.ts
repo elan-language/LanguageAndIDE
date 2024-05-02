@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class KvpAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private key: AstNode, private value: AstNode, public fieldId: string, scope: Scope) {
+    constructor(private readonly key: AstNode, private readonly value: AstNode, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

@@ -5,7 +5,7 @@ import { AstNode } from "./ast-node";
 
 export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private head: string, private tail: string, public fieldId: string, scope: Scope) {
+    constructor(private readonly head: string, private readonly tail: string, public readonly fieldId: string, scope: Scope) {
         super();
     }
 

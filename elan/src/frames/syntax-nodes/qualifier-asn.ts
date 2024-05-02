@@ -6,14 +6,13 @@ import { AstNode } from "./ast-node";
 
 export class QualifierAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public value: AstNode, public fieldId: string, private scope: Scope) {
+    constructor(public readonly value: AstNode, public readonly fieldId: string, private readonly scope: Scope) {
         super();
     }
 
     compileErrors: CompileError[] = [];
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
         const q = this.value.aggregateCompileErrors();
         return this.compileErrors.concat(q);
     }

@@ -6,8 +6,8 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { QualifierAsn } from "./qualifier-asn";
 
-function getGlobalScope(start : any) : Scope {
-    if (start.constructor.name === "FileImpl"){
+function getGlobalScope(start: any): Scope {
+    if (start.constructor.name === "FileImpl") {
         return start;
     }
     return getGlobalScope(start.getParent());
@@ -38,7 +38,7 @@ export function updateScopeAndQualifier(qualifier: QualifierAsn | undefined, cur
     return [qualifier, currentScope];
 }
 
-export function scopePrefix(symbolScope : SymbolScope | undefined) {
+export function scopePrefix(symbolScope: SymbolScope | undefined) {
     if (symbolScope === SymbolScope.stdlib) {
         return `_stdlib.`;
     }

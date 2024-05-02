@@ -7,7 +7,7 @@ import { LambdaSigAsn } from "./lambda-sig-asn";
 
 export class LambdaAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private signature: LambdaSigAsn, private body: ExprAsn, public fieldId: string, private scope: Scope) {
+    constructor(private readonly signature: LambdaSigAsn, private readonly body: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
     }
 
