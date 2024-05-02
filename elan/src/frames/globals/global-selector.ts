@@ -32,12 +32,12 @@ export class GlobalSelector extends AbstractSelector  {
         return this.profile.globals.includes(keyword);
     }
 
-    validForEditorWithin(keyword: string): boolean {
+    validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
         var result = false;
         if (keyword === mainKeyword) {
             result = !this.file.containsMain();
         } else if ( keyword === abstractKeyword || keyword === immutableKeyword) { //Those options available for parsing code from file only
-            result = false;
+            result = !userEntry;
         } else {
             result = true;
         }

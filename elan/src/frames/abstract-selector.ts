@@ -12,22 +12,27 @@ export abstract class AbstractSelector extends AbstractFrame {
     text: string = "";
     label: string = "new code";
     protected profile: Profile;
-    profileOptions: [string, (parent: Parent) => Frame][];
 
     constructor(parent: Parent) {
         super(parent);
         this.profile = parent.getProfile();
-        this.profileOptions = this.getDefaultOptions().filter(opt => this.profileAllows(opt[0]));
     }
+
     initialKeywords(): string {
-        return ""; //Not applicable
+        throw new Error("Should not be called on a selector"); 
     }
 
     abstract getDefaultOptions():  [string, (parent: Parent) => Frame][];
+    abstract profileAllows(keyword: string): boolean;
+    abstract validWithinCurrentContext(keyword: string, userEntry: boolean) : boolean;
+
+    private OptionsFilteredByContext(userEntry: boolean):  [string, (parent: Parent) => Frame][] {
+        return this.getDefaultOptions().filter(o => this.validWithinCurrentContext(o[0], userEntry));
+    } 
 
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        var options = this.getDefaultOptions().filter(o => source.isMatch(o[0]));
+        var options = this.OptionsFilteredByContext(false).filter(o => source.isMatch(o[0]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
             var frame = this.addFrame(typeToAdd);
@@ -37,20 +42,12 @@ export abstract class AbstractSelector extends AbstractFrame {
         }
     }
 
-    abstract validForEditorWithin(keyword: string) : boolean;
-
-    optionsMatchingInput(match: string): [string, (parent: Parent) => Frame][] {
-        return this.optionsForContext().filter(o => o[0].startsWith(match));
-    }
-
-    abstract profileAllows(keyword: string): boolean;
-
-    private optionsForContext(): [string, (parent: Parent) => Frame][] {
-        return this.profileOptions.filter(o => this.validForEditorWithin(o[0]));
+    optionsMatchingUserInput(match: string): [string, (parent: Parent) => Frame][] {
+        return this.OptionsFilteredByContext(true).filter(o => o[0].startsWith(match));
     }
 
     commonStartText(match: string): string {
-        return this.optionsMatchingInput(match).map(o => o[0]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
+        return this.optionsMatchingUserInput(match).map(o => o[0]).reduce((soFar, o)=> this.maxCommonStart(soFar, o));
     }
 
     private maxCommonStart(a: string, b: string): string {
@@ -58,7 +55,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
  
     getCompletion(): string {
-        return this.optionsMatchingInput(this.text).map(o => o[0]).reduce((soFar, kw)=> `${soFar} ${kw}${kw.includes(" ")? ",":""}`, "");
+        return this.optionsMatchingUserInput(this.text).map(o => o[0]).reduce((soFar, kw)=> `${soFar} ${kw}${kw.includes(" ")? ",":""}`, "");
     }
 
     addFrame(keyword: string): Frame {
@@ -135,11 +132,11 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     private canBePastedIn(frame: Frame) : boolean {
-        return this.optionsMatchingInput(frame.initialKeywords()).length === 1;
+        return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
     }
 
     processOptions(key: string | undefined) {
-        var options = this.optionsMatchingInput(this.text + key);
+        var options = this.optionsMatchingUserInput(this.text + key);
         if (options.length > 1 ) {
             this.text += this.commonStartText(this.text+ key).substring(this.text.length);
         } else if (options.length === 1) {

@@ -33,18 +33,18 @@ export class MemberSelector extends AbstractSelector implements Member  {
         return  this.profile.class_members.includes(keyword);
     }
 
-    validForEditorWithin(keyword: string): boolean {
+    validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
         var result = false;
         if (this.class.isAbstract()) {
             if (this.class.isImmutable()) {
-                result = keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords;
+                result = keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords  || keyword === commentMarker;
             } else {
                 result = keyword.startsWith(abstractKeyword) || keyword === commentMarker;
             }
         } else if (this.class.isImmutable()) {
-            result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword && keyword !== privateKeyword;
+            result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword;
         }  else {
-            result = !keyword.startsWith(abstractKeyword) && keyword !== privateKeyword; //private is for use by parser only
+            result = !keyword.startsWith(abstractKeyword) && (keyword !== privateKeyword || !userEntry); //private 
         }
         return result;
     }
