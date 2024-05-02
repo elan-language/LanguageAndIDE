@@ -45,20 +45,24 @@ export class StatementSelector extends AbstractSelector  {
         return this.profile.statements.includes(keyword);
     }
 
-    validForEditorWithin(keyword: string): boolean {
+    validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+        var result = false;
         if (this.getParent().getIdPrefix() === testKeyword ) {
-            return keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
+            result = keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
         } else if (this.getParent().getIdPrefix() === switchKeyword) {
-            return keyword === caseKeyword;     
-        } else if (keyword === returnKeyword || keyword === assertKeyword || keyword === caseKeyword || keyword === catchKeyword || keyword === defaultKeyword) {
-            return false;
+            result = keyword === caseKeyword;  
+        } else if (keyword === assertKeyword || keyword === caseKeyword) {
+            result = false;   
+        } else if (keyword === returnKeyword || keyword === catchKeyword || keyword === defaultKeyword) {
+            result = !userEntry;
         } else if (keyword === elseKeyword ) {
-            return this.getParent().getIdPrefix() === ifKeyword ;
+            result = this.getParent().getIdPrefix() === ifKeyword ;
         } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword || keyword === externalKeyword) {
-            return !this.isWithinAFunction(this.getParent());
+            result = !this.isWithinAFunction(this.getParent());
         } else {
-            return true;
+            result = true;
         }
+        return result;
     }
 
     private isWithinAFunction(parent: Parent): boolean {

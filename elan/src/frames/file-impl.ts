@@ -275,7 +275,7 @@ export class FileImpl implements File {
     async parseFrom(source: CodeSource): Promise<void> {
         try {
             this.parseError = undefined;
-            //await this.validateHeader(source.getRemainingCode());
+            await this.validateHeader(source.getRemainingCode());
             if (source.isMatch("#")) {
                 source.removeRegEx(Regexes.comment, false);
                 source.removeRegEx(Regexes.newLine, false);

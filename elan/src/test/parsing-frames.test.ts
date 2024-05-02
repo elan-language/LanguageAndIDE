@@ -476,5 +476,74 @@ end main
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
+	test('#367 abstract class cannot contain concrete property', async () => {
+		var code = `# Elan v0.1 valid
+
+abstract class Card
+  property value as Int
+
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		await await fl.parseFrom(source);
+		assert.equal(fl.parseError!.includes(`0 matches found at property value as Int`), true);
+	});
+
+	test('#367 abstract class cannot contain concrete method', async () => {
+		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+
+abstract class Card
+  function bar() return Int
+    return 0
+  end function
+
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		await await fl.parseFrom(source);
+		assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
+	});
+	test('#367 immutable class cannot contain procedure', async () => {
+		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+
+immutable class Card
+  constructor()
+
+  end constructor
+
+  procedure foo()
+
+  end procedure
+	  
+end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		await await fl.parseFrom(source);
+		assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
+	});
+
+	test('#367 abstract class cannot contain constructor', async () => {
+		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+
+abstract class Card
+  constructor()
+
+  end constructor
+	  
+ end class
+`
+		;
+		var source = new CodeSourceFromString(code);
+		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		await await fl.parseFrom(source);
+		assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
+	});
+	
 	
 });
