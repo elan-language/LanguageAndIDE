@@ -298,7 +298,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "8");
   });
 
-
   test('Fail_ProcedureMethodCannotBeCalledDirectly', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -317,6 +316,37 @@ class Foo
   procedure display()
     print p1
   end procedure
+
+  function asString() return String
+    return ""
+  end function
+
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
+  test('Fail_CallUnknownMethodOnInstance', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Foo()
+  call x.calculate()
+end main
+
+class Foo
+  constructor()
+      set p1 to 5
+  end constructor
+  property p1 as Int
+
+  property p2 as String
 
   function asString() return String
     return ""
