@@ -13,6 +13,7 @@ import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { scopePrefix, updateScopeAndQualifier } from "./ast-helpers";
 import { AstNode } from "./ast-node";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { QualifierAsn } from "./qualifier-asn";
@@ -38,8 +39,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         return this.compileErrors.concat(cc);
     }
 
-    getGlobalScope(start : any) : Scope {
-        if (start.constructor.name === "FileImpl"){
+    getGlobalScope(start: any): Scope {
+        if (start.constructor.name === "FileImpl") {
             return start;
         }
         return this.getGlobalScope(start.getParent());
@@ -47,42 +48,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
-        var currentScope = this.scope;
-        var scopeQ = "";
-        var qualifier = this.qualifier as QualifierAsn | undefined;
-        var parameters = [...this.parameters];
 
-        // TODO fixed clone - func-call-asn also various getSymbol code
-        const classScope = qualifier ? qualifier.symbolType : undefined;
-        if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, this.scope);
-            // replace scope with class scope
-            currentScope = s as unknown as Scope;
-        }
-        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === globalKeyword) {
-            // todo kludge
-            currentScope = this.getGlobalScope(currentScope as Frame);
-            qualifier = undefined;
-        }
-        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === libraryKeyword) {
-            // todo kludge
-            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
-            qualifier = undefined;
-        }
-        else if (qualifier) {
-            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
-        }
+        var parameters = [...this.parameters];
+        var [qualifier, currentScope] = updateScopeAndQualifier(this.qualifier as QualifierAsn | undefined, this.scope);
 
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
 
         mustBeKnownSymbol(funcSymbol!, this.compileErrors, this.fieldId);
-
-        if (funcSymbol?.symbolScope === SymbolScope.stdlib) {
-            scopeQ = `_stdlib.`;
-        }
-        if (funcSymbol?.symbolScope === SymbolScope.property) {
-            scopeQ = `this.`;
-        }
 
         if (funcSymbol?.symbolType instanceof FunctionType) {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
@@ -96,7 +68,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         }
 
         const pp = parameters.map(p => p.compile()).join(", ");
-        const q = qualifier ? `${qualifier.compile()}` : scopeQ;
+        const q = qualifier ? `${qualifier.compile()}` : scopePrefix(funcSymbol?.symbolScope);
         return `${q}${this.id}(${pp})`;
     }
 

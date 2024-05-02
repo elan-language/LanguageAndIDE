@@ -17,8 +17,9 @@ import { FixedIdAsn } from "../syntax-nodes/fixed-id-asn";
 import { VarAsn } from "../syntax-nodes/var-asn";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
+import { scopePrefix, updateScopeAndQualifier } from "../syntax-nodes/ast-helpers";
 
-export class CallStatement extends AbstractFrame implements Statement{
+export class CallStatement extends AbstractFrame implements Statement {
     isStatement = true;
     proc: ProcRefField;
     args: ArgListField;
@@ -33,7 +34,7 @@ export class CallStatement extends AbstractFrame implements Statement{
     initialKeywords(): string {
         return callKeyword;
     }
-    
+
     parseFrom(source: CodeSource): void {
         source.removeIndent();
         source.remove("call ");
@@ -54,13 +55,13 @@ export class CallStatement extends AbstractFrame implements Statement{
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>call </keyword>${this.proc.renderAsHtml()}(${this.args.renderAsHtml()})</top></statement>`;
     }
-   
+
     renderAsSource(): string {
         return `${this.indent()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
     }
 
-    getGlobalScope(start : Frame | Parent) : Scope {
-        if (start instanceof FileImpl){
+    getGlobalScope(start: Frame | Parent): Scope {
+        if (start instanceof FileImpl) {
             return start;
         }
         return this.getGlobalScope(start.getParent());
@@ -69,44 +70,14 @@ export class CallStatement extends AbstractFrame implements Statement{
     compile(): string {
         this.compileErrors = [];
 
-        var currentScope : Scope = this;
-        var scopeQ = "";
-
         const varAsn = this.proc.getOrTransformAstNode as VarAsn;
-
-        var qualifier = varAsn.qualifier as QualifierAsn | undefined;
         const id = varAsn.id;
 
-        const qualifierScope = qualifier ? qualifier.symbolType : undefined;
-        if (qualifierScope instanceof ClassType) {
-            const s = this.resolveSymbol(qualifierScope.className, this);
-            // replace scope with class scope
-            currentScope = s as unknown as Scope;
-        }
-        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === globalKeyword) {
-            // todo kludge
-            currentScope = this.getGlobalScope(this);
-            qualifier = undefined;
-        }
-        else if (qualifier?.value instanceof FixedIdAsn && qualifier.value.id === libraryKeyword) {
-            // todo kludge
-            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
-            qualifier = undefined;
-        }
-        else if (qualifier) {
-            currentScope = (this.getGlobalScope(currentScope as Frame) as any).libraryScope;
-        }
+        var [qualifier, currentScope] = updateScopeAndQualifier(varAsn.qualifier as QualifierAsn | undefined, this);
 
         const procSymbol = currentScope.resolveSymbol(id, this);
 
         mustBeKnownSymbol(procSymbol!, this.compileErrors, this.htmlId);
-
-        if (procSymbol?.symbolScope === SymbolScope.stdlib) {
-            scopeQ = `_stdlib.`;
-        }
-        if (procSymbol?.symbolScope === SymbolScope.property) {
-            scopeQ = `this.`;
-        }
 
         if (procSymbol?.symbolType instanceof ProcedureType) {
             const argList = this.args.getOrTransformAstNode as CsvAsn;
@@ -114,8 +85,8 @@ export class CallStatement extends AbstractFrame implements Statement{
             mustMatchParameters(params!, procSymbol.symbolType.parametersTypes, this.compileErrors, this.htmlId);
         }
 
-        const q = qualifier ? `${qualifier.compile()}` : scopeQ;
-        
+        const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol?.symbolScope);
+
         return `${this.indent()}${q}${id}(${this.args.compile()});`;
     }
 } 
