@@ -6,7 +6,7 @@ import { AstNode } from "./ast-node";
 
 export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private readonly items: AstNode[], public fieldId: string, scope: Scope) {
+    constructor(public readonly items: AstNode[], public fieldId: string, scope: Scope) {
         super();
     }
 

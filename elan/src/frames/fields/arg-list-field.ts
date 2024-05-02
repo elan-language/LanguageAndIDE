@@ -4,8 +4,6 @@ import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { CSV } from "../parse-nodes/csv";
-import { transformMany } from "../syntax-nodes/ast-visitor";
-import { Scope } from "../interfaces/scope";
 
 
 export class ArgListField extends AbstractField {

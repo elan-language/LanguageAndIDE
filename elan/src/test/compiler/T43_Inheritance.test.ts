@@ -18,10 +18,10 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
-  abstract property p2 as Int 
-  abstract procedure setP1(v as Int)
-  abstract function product() return Int
+  abstract property p1 as Number
+  abstract property p2 as Number 
+  abstract procedure setP1(v as Number)
+  abstract function product() return Number
 end class
 
 class Bar inherits Foo
@@ -29,14 +29,14 @@ class Bar inherits Foo
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 as Number
+    property p2 as Number
 
-    procedure setP1(p1 as Int)
+    procedure setP1(p1 as Number)
         set property.p1 to p1
     end procedure
 
-    function product() return Int
+    function product() return Number
         return p1 * p2
     end function
 
@@ -57,7 +57,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
   get p1() {
     return 0;
   }
@@ -83,7 +83,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -131,13 +131,13 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
-  abstract property p2 as Int 
+  abstract property p1 as Number
+  abstract property p2 as Number 
 end class
 
 abstract class Yon
-  abstract procedure setP1(v as Int)
-  abstract function product() return Int
+  abstract procedure setP1(v as Number)
+  abstract function product() return Number
 end class
 
 class Bar inherits Foo, Yon
@@ -145,14 +145,14 @@ class Bar inherits Foo, Yon
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 as Number
+    property p2 as Number
 
-    procedure setP1(p1 as Int)
+    procedure setP1(p1 as Number)
         set property.p1 to p1
     end procedure
 
-    function product() return Int
+    function product() return Number
         return p1 * p2
     end function
 
@@ -173,7 +173,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
   get p1() {
     return 0;
   }
@@ -206,7 +206,7 @@ class Yon {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -254,14 +254,14 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
-  abstract property p2 as Int 
+  abstract property p1 as Number
+  abstract property p2 as Number 
 end class
 
 abstract class Yon
-  abstract property p1 as Int 
-  abstract procedure setP1(v as Int)
-  abstract function product() return Int
+  abstract property p1 as Number 
+  abstract procedure setP1(v as Number)
+  abstract function product() return Number
 end class
 
 class Bar inherits Foo, Yon
@@ -269,14 +269,14 @@ class Bar inherits Foo, Yon
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 as Number
+    property p2 as Number
 
-    procedure setP1(p1 as Int)
+    procedure setP1(p1 as Number)
         set property.p1 to p1
     end procedure
 
-    function product() return Int
+    function product() return Number
         return p1 * p2
     end function
 
@@ -297,7 +297,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
   get p1() {
     return 0;
   }
@@ -316,7 +316,7 @@ class Foo {
 }
 
 class Yon {
-  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Number"]]);};
   get p1() {
     return 0;
   }
@@ -336,7 +336,7 @@ class Yon {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;

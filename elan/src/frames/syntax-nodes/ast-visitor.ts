@@ -40,7 +40,7 @@ import { SetClause } from "../parse-nodes/set-clause";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
@@ -83,6 +83,8 @@ import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
+import { CsvAsn } from "./csv-asn";
+import { QualifierAsn } from "./qualifier-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -105,6 +107,10 @@ function mapOperation(op: string) {
         case "^": return OperationSymbol.Pow;
         default: throw new Error("Not implemented");
     }
+}
+
+export function asCsv(nodes : AstNode[], id : string, scope : Scope){
+    return new CsvAsn(nodes, id, scope);
 }
 
 export function transformMany(node: CSV | Multiple | Sequence, fieldId: string, scope: Scope): Array<AstNode> {
@@ -269,9 +275,9 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
 
     if (node instanceof KeywordNode) {
         // todo decouple this from js
-        // if (node.fixedText === globalKeyword) {
-        //     return new IdAsn(node.fixedText, scope);
-        // }
+        if (node.fixedText === globalKeyword) {
+            return new FixedIdAsn("global", fieldId);
+        }
         if (node.fixedText === libraryKeyword) {
             return new FixedIdAsn("_stdlib", fieldId);
         }
@@ -357,9 +363,12 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
         const to = toNode ? transform(toNode, fieldId, scope) : undefined;
         return new RangeAsn(from, to, fieldId, scope);
     }
+
     if (node instanceof Qualifier) {
-        return transform(node.qualifier, fieldId, scope);
+        const q = transform(node.qualifier, fieldId, scope);
+        return new QualifierAsn(q!, fieldId, scope);
     }
+
     if (node instanceof InstanceNode) {
         var id = node.variable!.matchedText;
         var index = transform(node.index, fieldId, scope);

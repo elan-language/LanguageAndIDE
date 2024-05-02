@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-
 import { ParseNode } from "../parse-nodes/parse-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { AbstractField } from "./abstract-field";

@@ -9,13 +9,16 @@ import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
+import { FixedIdAsn } from "./fixed-id-asn";
+import { QualifierAsn } from "./qualifier-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
+    constructor(public id: string, private qualifier: AstNode | undefined, private parameters: Array<AstNode>, public fieldId: string, private scope: Scope) {
         super();
         this.id = id.trim();
     }
@@ -34,17 +37,29 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         return this.compileErrors.concat(cc);
     }
 
+    getGlobalScope(start : any) : Scope {
+        if (start.constructor.name === "FileImpl"){
+            return start;
+        }
+        return this.getGlobalScope(start.getParent());
+    }
 
     compile(): string {
         this.compileErrors = [];
         var currentScope = this.scope;
         var scopeQ = "";
+        var qualifier = this.qualifier as QualifierAsn | undefined;
 
         const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
         if (classScope instanceof ClassType) {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;
+        }
+        else if (qualifier instanceof FixedIdAsn && qualifier.id === "") {
+            // todo kludge
+            currentScope = this.getGlobalScope(currentScope as Frame);
+            qualifier = undefined;
         }
 
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
@@ -57,18 +72,18 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         }
 
         if (funcSymbol?.symbolType instanceof FunctionType) {
-            mustCallExtensionViaQualifier(funcSymbol.symbolType, this.qualifier, this.compileErrors, this.fieldId);
+            mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
 
-            if (funcSymbol.symbolType.isExtension && this.qualifier) {
-                this.parameters = [this.qualifier].concat(this.parameters);
-                this.qualifier = undefined;
+            if (funcSymbol.symbolType.isExtension && qualifier) {
+                this.parameters = [qualifier.value].concat(this.parameters);
+                qualifier = undefined;
             }
 
             mustMatchParameters(this.parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
         }
 
         const pp = this.parameters.map(p => p.compile()).join(", ");
-        const q = this.qualifier ? `${this.qualifier.compile()}.` : scopeQ;
+        const q = qualifier ? `${qualifier.compile()}` : scopeQ;
         return `${q}${this.id}(${pp})`;
     }
 
@@ -117,7 +132,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
     toString() {
         const pp = this.parameters.map(p => p.toString()).join(", ");
-        const q = this.qualifier ? `${this.qualifier}.` : "";
+        const q = this.qualifier ? `${this.qualifier}` : "";
         return `Func Call ${q}${this.id} (${pp})`;
     }
 }

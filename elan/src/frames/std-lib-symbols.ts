@@ -12,6 +12,7 @@ import { Scope } from "./interfaces/scope";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IterType } from "../symbols/iter-type";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class StdLibSymbols implements Scope {
 
@@ -53,15 +54,7 @@ export class StdLibSymbols implements Scope {
         ]
     );
 
-    undefinedSymbol(id: string) {
-        return {
-            symbolId: id,
-            symbolType: UnknownType.Instance,
-            symbolScope: undefined
-        };
-    }
-
     resolveSymbol(id: string, scope: Scope): ISymbol {
-        return this.symbols.get(id) ?? this.undefinedSymbol(id);
+        return this.symbols.get(id) ?? UnknownSymbol.Instance;
     }
 }

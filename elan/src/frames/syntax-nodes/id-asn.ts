@@ -7,7 +7,7 @@ import { AstNode } from "./ast-node";
 
 export class IdAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, public fieldId: string, private scope: Scope) {
+    constructor(public id: string, public fieldId: string, private scope: Scope) {
         super();
         this.id = id.trim();
     }

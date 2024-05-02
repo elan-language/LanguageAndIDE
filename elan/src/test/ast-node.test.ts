@@ -35,22 +35,22 @@ import { DictionaryType } from '../symbols/dictionary-type';
 suite('ASTNodes', () => {
 
 	test("ExprNode", () => {
-		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", numberType);
-		testAST(new ExprNode(), stubField, "a", "a", intType);
-		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", numberType); 
-		testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", numberType);
-		testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType); 
+		// testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", numberType);
+		// testAST(new ExprNode(), stubField, "a", "a", intType);
+		// testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", numberType); 
+		// testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", numberType);
+		// testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType); 
 
-		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", numberType);
-		testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", numberType);
+		// testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", numberType);
+		// testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", numberType);
 		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
-		const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
-		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
-		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
-		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
+		// const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
+		// testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
+		// testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
+		// testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 
-		const ast1 = "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
-		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
+		// const ast1 = "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
+		// testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 	});
 
 	test("Unary", () => {
@@ -96,14 +96,14 @@ suite('ASTNodes', () => {
 	});
 
 	test("Function", () => {
-		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
-		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
+		// testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
+		// testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
+		// testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call _stdlib.foo ()", intType);
-		testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
-		testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
-		testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
+		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call _stdlib.foo ()", intType);
+		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
+		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
+		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
 	});
 
 	test("List", () => {

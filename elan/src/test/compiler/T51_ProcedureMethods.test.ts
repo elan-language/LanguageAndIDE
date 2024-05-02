@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T51_ProcedureMethods', () => {
@@ -19,8 +19,8 @@ class Foo
     constructor()
         set p1 to 5
     end constructor
-    property p1 as Int
-    procedure setP1(value as Int)
+    property p1 as Number
+    procedure setP1(value as Number)
         set p1 to value
     end procedure
     function asString() return String
@@ -37,7 +37,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -135,8 +135,8 @@ class Foo
     constructor()
         set p1 to 5
     end constructor
-    property p1 as Int
-    procedure setP1(value as Int)
+    property p1 as Number
+    procedure setP1(value as Number)
         set p1 to value
         call global.setP1(value)
     end procedure
@@ -145,7 +145,7 @@ class Foo
     end function
 end class
 
-procedure setP1(value as Int)
+procedure setP1(value as Number)
   print value
 end procedure`;
 
@@ -156,7 +156,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -296,6 +296,41 @@ return main;}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "8");
+  });
+
+
+  test('Fail_ProcedureMethodCannotBeCalledDirectly', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  call display(f)
+end main
+
+class Foo
+  constructor()
+      set p1 to 5
+  end constructor
+
+  property p1 as Number
+
+  procedure display()
+    print p1
+  end procedure
+
+  function asString() return String
+    return ""
+  end function
+
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
 
 });

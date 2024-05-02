@@ -4,7 +4,7 @@ import { AstNode } from "./ast-node";
 
 export class FixedIdAsn extends AbstractAstNode implements AstNode {
 
-    constructor(private id: string, public fieldId: string) {
+    constructor(public id: string, public fieldId: string) {
         super();
     }
 

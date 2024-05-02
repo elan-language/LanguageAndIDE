@@ -36,7 +36,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
 
     private getQualifier() {
         if (this.qualifier) {
-            return `${this.qualifier.compile()}.`;
+            return `${this.qualifier.compile()}`;
         }
         const s = this.scope.resolveSymbol(this.id, this.scope);
 
@@ -85,7 +85,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     }
 
     toString() {
-        const q = this.qualifier ? `${this.qualifier}.` : "";
+        const q = this.qualifier ? `${this.qualifier}` : "";
         const idx = this.index ? `${this.index}` : "";
         return `${q}${this.id}${idx}`;
     }

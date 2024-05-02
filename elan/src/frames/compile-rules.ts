@@ -10,8 +10,10 @@ import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
 import { NumberType } from "../symbols/number-type";
 import { StringType } from "../symbols/string-type";
+import { ISymbol } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { TupleType } from "../symbols/tuple-type";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { unknownType } from "../test/testHelpers";
 import { CompileError } from "./compile-error";
@@ -27,6 +29,12 @@ export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: IS
 
 export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
     mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
+}
+
+export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[], location: string) {
+    if (symbol instanceof UnknownSymbol) {
+        compileErrors.push(new CompileError(`Undeclared id`, location, true));
+    }
 }
 
 export function mustBeAbstractClass(classType: ClassDefinitionType, compileErrors: CompileError[], location: string) {
