@@ -1,7 +1,7 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { expandCollapseAll, isCollapsible, isFile, isFrame, isParent, singleIndent } from "./helpers";
-import { CodeStatus } from "./code-status";
+import { expandCollapseAll, helper_compileMsgAsHtml, helper_getCompileStatus, helper_overallStatus, isCollapsible, isFile, isFrame, isParent, singleIndent } from "./helpers";
+import { CompileStatus, ParseStatus } from "./status-enums";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
@@ -53,8 +53,11 @@ export abstract class AbstractFrame implements Frame {
 
     abstract getFields(): Field[];
     
-    worstParseStatusOfFields(): CodeStatus {
-        return this.getFields().map(g => g.getCodeStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CodeStatus.valid);
+    worstParseStatusOfFields(): ParseStatus {
+        return this.getFields().map(g => g.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+    }
+    worstCompileStatusOfFields(): CompileStatus {
+        return this.getFields().map(g => g.getCompileStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CompileStatus.ok);
     }
     getFirstPeerFrame(): Frame {
         return this.getParent().getFirstChild();
@@ -317,8 +320,12 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
-        this._classes.push(CodeStatus[this.getCodeStatus()]);
+        this._classes.push(this.overallStatus());
     };
+
+    private overallStatus(): string {
+        return helper_overallStatus(this);
+    }
 
     protected cls(): string {
         this.setClasses();
@@ -431,10 +438,8 @@ export abstract class AbstractFrame implements Frame {
         return true;
     }
 
-    getCodeStatus(): CodeStatus {
-        var compileStatus = this.compileStatus();
-        var fieldStatus = this.worstParseStatusOfFields();
-        return fieldStatus < compileStatus ? fieldStatus : compileStatus;
+    getParseStatus(): ParseStatus {
+        return this.worstParseStatusOfFields();
     }
 
     abstract parseFrom(source: CodeSource): void;
@@ -445,15 +450,12 @@ export abstract class AbstractFrame implements Frame {
         const cc = this.getFields().map(s => s.aggregateCompileErrors()).reduce((prev, cur) => prev.concat(cur), []);
         return this.compileErrors.concat(cc);
     }
+    
+    getCompileStatus() : CompileStatus {
+       return Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
+    }
 
-    compileStatus() : CodeStatus {
-        var result = CodeStatus.notParsed;
-        var errors = this.aggregateCompileErrors();
-        if (errors.length === 0) {
-            result = CodeStatus.valid;
-        } else {
-            result = errors.some(e => !e.unknownType) ? CodeStatus.invalid : CodeStatus.incomplete;
-        }
-        return result;
+    compileMsgAsHtml() {
+      return helper_compileMsgAsHtml(this);
     }
 }

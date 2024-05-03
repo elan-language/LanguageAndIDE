@@ -2,7 +2,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { ParseNode } from "./parse-node";
 import { COLON } from "../symbols";
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 
 export class KVPnode extends AbstractSequence  {
 
@@ -30,8 +30,8 @@ export class KVPnode extends AbstractSequence  {
     }
 
     getCompletionAsHtml(): string {
-        var k =(!this.key || this.key.status === CodeStatus.empty) ? "<pr>key</pr>": "";
-        var v = (!this.value || this.value.status === CodeStatus.empty) ? " <pr>value</pr>": "";
+        var k =(!this.key || this.key.status === ParseStatus.empty) ? "<pr>key</pr>": "";
+        var v = (!this.value || this.value.status === ParseStatus.empty) ? " <pr>value</pr>": "";
         return `${k}:${v}`;
     }
 }

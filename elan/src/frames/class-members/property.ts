@@ -44,7 +44,7 @@ export class Property extends AbstractFrame implements Member, ISymbol {
     }
 
     renderAsHtml(): string {
-        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}</property>`;
+        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}</property>`;
     }
 
     renderAsSource(): string {

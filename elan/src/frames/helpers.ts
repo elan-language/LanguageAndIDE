@@ -8,6 +8,8 @@ import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Selectable } from "./interfaces/selectable";
 import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
+import { CompileStatus, ParseStatus } from "./status-enums";
+import { CompileError } from "./compile-error";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -57,3 +59,39 @@ export function escapeAngleBrackets(str: string) : string {
     .replace(/>/g, '&gt;');
 }
 
+export function helper_compileMsgAsHtml(loc: Frame | Field ) {
+    var msg = loc.compileErrors.reduce((prev, cur) => prev.concat(cur.message), "");
+    var cls = "";
+    if (loc.getCompileStatus() === CompileStatus.error ) {
+      cls = "error";
+    } else if (loc.getCompileStatus() === CompileStatus.unknownSymbol ){
+      cls = "unknown";
+    }
+    return cls === "" ? "" : ` <compile class="${cls}">${msg}</compile>`;
+}
+
+export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus {
+    var result = CompileStatus.error;
+    if (errors.length === 0) {
+        result = CompileStatus.ok;
+    } else {
+        result = errors.some(e => !e.unknownType) ? CompileStatus.error : CompileStatus.unknownSymbol;
+    }
+    return result;
+}
+
+export function helper_overallStatus(loc: Frame | Field): string {
+    var result = "";
+    var parse = loc.getParseStatus();
+    var compile = loc.getCompileStatus();
+    if (parse === ParseStatus.invalid || compile === CompileStatus.error ) {
+        result = "invalid"; //TODO: specified as literals as we might change these 
+    } else if (parse === ParseStatus.incomplete || compile === CompileStatus.unknownSymbol ) {
+        result = "incomplete";
+    } else if (parse === ParseStatus.valid && compile === CompileStatus.ok ) {
+        result = "valid";
+    } else if (parse === ParseStatus.empty) {
+        result = "empty";
+    }
+    return result;
+}

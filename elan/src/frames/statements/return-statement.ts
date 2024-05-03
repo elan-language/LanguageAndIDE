@@ -30,7 +30,7 @@ export class ReturnStatement extends AbstractFrame implements Statement{
         return 'return';
     }
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>return </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {

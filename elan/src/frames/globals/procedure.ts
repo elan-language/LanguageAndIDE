@@ -47,7 +47,7 @@ export class Procedure extends FrameWithStatements implements ISymbol, Scope {
     }
     public renderAsHtml(): string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</top>
+<top><expand>+</expand><keyword>procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;

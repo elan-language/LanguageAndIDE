@@ -33,7 +33,7 @@ export class Switch extends FrameWithStatements {
     }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end switch</keyword>
 </statement>`;

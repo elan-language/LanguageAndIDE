@@ -46,7 +46,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
 
     renderAsHtml(): string {
         return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) return ${this.returnType.renderAsHtml()}</function>
+<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) return ${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}</function>
 `;
     }
 

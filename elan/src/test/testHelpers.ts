@@ -8,7 +8,7 @@ import { FileImpl } from '../frames/file-impl';
 import { CodeSourceFromString } from '../frames/code-source';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
-import { CodeStatus } from '../frames/code-status';
+import { ParseStatus } from '../frames/status-enums';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
 import { ISymbolType } from '../symbols/symbol-type';
 import { transform } from '../frames/syntax-nodes/ast-visitor';
@@ -354,7 +354,7 @@ export function ctrl_v() {
   return key("v",false,true);
 }
 
-export function testNodeParse(node: ParseNode, text: string, status: CodeStatus,
+export function testNodeParse(node: ParseNode, text: string, status: ParseStatus,
   matchedText: string, remainingText: string, source = "", html = "") {
   node.parseText(text);
   assert.equal(node.status, status);
@@ -370,7 +370,7 @@ export function testNodeParse(node: ParseNode, text: string, status: CodeStatus,
   }
 }
 
-export function testCompletion(node: ParseNode, text: string, status: CodeStatus, completion: string) {
+export function testCompletion(node: ParseNode, text: string, status: ParseStatus, completion: string) {
   node.parseText(text);
   assert.equal(node.status, status);
   assert.equal(node.getCompletionAsHtml(), completion);
@@ -443,7 +443,7 @@ export const stubField = {
 
 export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: ISymbolType) {
   node.parseText(text);
-  if (node.status === CodeStatus.valid) {
+  if (node.status === ParseStatus.valid) {
     const ast = transform(node, "", field.getHolder() as Scope);
 
     assert.strictEqual(ast?.toString(), astAsString);

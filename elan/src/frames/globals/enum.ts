@@ -31,7 +31,7 @@ export class Enum extends AbstractFrame {
     }
     renderAsHtml(): string {
         return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>${this.compileMsgAsHtml()}
 <statement>${this.values.renderAsHtml()}</statement>       
 <keyword>end enum</keyword>
 </enum>`;

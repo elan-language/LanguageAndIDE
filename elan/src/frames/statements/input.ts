@@ -34,7 +34,7 @@ export class Input extends AbstractFrame implements Statement {
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>input </keyword>${this.varName.renderAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>input </keyword>${this.varName.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
     }
 
     renderAsSource(): string {

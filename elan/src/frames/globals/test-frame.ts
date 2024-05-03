@@ -32,7 +32,7 @@ export class TestFrame extends FrameWithStatements {
     }
     public renderAsHtml() : string {
         return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>
+<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;

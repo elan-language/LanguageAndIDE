@@ -1,5 +1,5 @@
 import { CodeSource } from "../code-source";
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 import { editorEvent } from "./editor-event";
 
 export interface Selectable  {
@@ -18,7 +18,7 @@ export interface Selectable  {
     renderAsSource(): string;
     compile(): string;
 
-    getCodeStatus(): CodeStatus;
+    getParseStatus(): ParseStatus;
 
     parseFrom(source: CodeSource): void;
     getHtmlId(): string;

@@ -32,7 +32,7 @@ export class Repeat extends FrameWithStatements implements Statement {
 <top><expand>+</expand><keyword>repeat</keyword></top>
 ${this.renderChildrenAsHtml()}
 <keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
-</statement>`;
+${this.compileMsgAsHtml()}</statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}repeat\r

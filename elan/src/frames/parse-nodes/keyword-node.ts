@@ -1,4 +1,4 @@
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 import { andKeyword, divKeyword, isKeyword, modKeyword, notKeyword, orKeyword, xorKeyword } from "../keywords";
 
@@ -17,11 +17,11 @@ export class KeywordNode extends FixedTextNode {
             if (lcLetters && lcLetters.length === 1) {
                 if (lcLetters[0] === target) {
                     var n = this.numLeadingSpaces(text) + this.fixedText.length;
-                    this.set(CodeStatus.valid, text.substring(0, n), text.substring(n));
+                    this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
                 } else if (target.startsWith(trimmed)) {
-                    this.set(CodeStatus.incomplete, text, "");
+                    this.set(ParseStatus.incomplete, text, "");
                 } else {
-                    this.set(CodeStatus.invalid, "", text, super.getErrorMessage());
+                    this.set(ParseStatus.invalid, "", text, super.getErrorMessage());
                 }
             }
         }
@@ -31,7 +31,7 @@ export class KeywordNode extends FixedTextNode {
         var comp = ``;
         var matched = this.matchedText.length;
         var kw = this.fixedText.length;
-        if (this.status === CodeStatus.empty) {
+        if (this.status === ParseStatus.empty) {
             comp = `${this.fixedText}`;
         } else if (matched === kw && this.remainingText === "") {
             comp = ``;

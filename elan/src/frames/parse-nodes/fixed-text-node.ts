@@ -1,4 +1,4 @@
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 
 export abstract class FixedTextNode extends AbstractParseNode {
@@ -15,6 +15,6 @@ export abstract class FixedTextNode extends AbstractParseNode {
     }
 
     getCompletionAsHtml(): string {
-        return this.status === CodeStatus.empty ? `${this.fixedText}` : "";
+        return this.status === ParseStatus.empty ? `${this.fixedText}` : "";
     }
 }

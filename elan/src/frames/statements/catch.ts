@@ -36,7 +36,7 @@ export class Catch extends FrameWithStatements implements Statement {
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>catch </keyword>${this.variable.renderAsHtml()}
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>catch </keyword>${this.variable.renderAsHtml()}</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}        
 </statement>`;
     }

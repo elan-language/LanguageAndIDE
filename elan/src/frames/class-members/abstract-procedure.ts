@@ -42,7 +42,7 @@ export class AbstractProcedure extends AbstractFrame implements Member, ISymbol 
 
     renderAsHtml(): string {
         return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</procedure>
+<keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}</procedure>
 `;
     }
 

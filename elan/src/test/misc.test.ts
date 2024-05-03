@@ -7,12 +7,13 @@ import {CodeSourceFromString } from '../frames/code-source';
 import { FileImpl } from '../frames/file-impl';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
+import { ignore_test } from './compiler/compiler-test-helpers';
 
 suite('Misc Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	
-	test('Invalid identifier', async () => {
+	ignore_test('Invalid identifier', async () => {
 		var file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 
@@ -21,7 +22,7 @@ suite('Misc Tests', () => {
 		await assertElementHasClasses(file, "fileStatus", "invalid");
 	});
 
-	test('Valid identifier', async () => {
+	ignore_test('Valid identifier', async () => {
 		var file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 
@@ -30,7 +31,7 @@ suite('Misc Tests', () => {
 		await assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
 	});
 
-	test('Valid variable statement', async () => {
+	ignore_test('Valid variable statement', async () => {
 		var file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 

@@ -1,7 +1,7 @@
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 
 export interface ParseNode {
-    status: CodeStatus;
+    status: ParseStatus;
     matchedText: string;
     remainingText: string;
     errorMessage: string;

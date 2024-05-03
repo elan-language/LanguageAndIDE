@@ -5,7 +5,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { AbstractField } from "./abstract-field";
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 
 export class ProcRefField extends AbstractField {
     isParseByNodes = true;
@@ -32,7 +32,7 @@ export class ProcRefField extends AbstractField {
         if (this.selected) {
             text = super.textAsHtml();
         } else { 
-            if (this.getCodeStatus() === CodeStatus.valid || this.getCodeStatus() === CodeStatus.valid) {
+            if (this.getParseStatus() === ParseStatus.valid || this.getParseStatus() === ParseStatus.valid) {
                 var bestMatch = (this.rootNode! as Alternatives).bestMatch;
                 if (bestMatch instanceof IdentifierNode) {
                     text =  `<method>${this.text}</method>`;

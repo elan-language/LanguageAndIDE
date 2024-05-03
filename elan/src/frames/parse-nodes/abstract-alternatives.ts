@@ -1,6 +1,6 @@
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 
 export abstract class AbstractAlternatives extends AbstractParseNode {
     alternatives: ParseNode[] = [];
@@ -18,7 +18,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
             while (i < this.alternatives.length && cont) {
                 var alt = this.alternatives[i];
                 alt.parseText(text);
-                if (alt.status === CodeStatus.valid && alt.remainingText.length === 0) {
+                if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
                     this.bestMatch = alt;
                     cont = false;
                 } else if (!this.bestMatch
@@ -28,13 +28,13 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
                 }
                 i++;
             };
-            if (this.bestMatch!.status > CodeStatus.invalid) {
+            if (this.bestMatch!.status > ParseStatus.invalid) {
                 this.status = this.bestMatch!.status;
                 this.matchedText = this.bestMatch!.matchedText;
                 this.remainingText = this.bestMatch!.remainingText;
             } else {
                 this.bestMatch = undefined;
-                this.status = CodeStatus.invalid;
+                this.status = ParseStatus.invalid;
             }
         }
     }

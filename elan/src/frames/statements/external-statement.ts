@@ -75,7 +75,7 @@ export class ExternalStatement extends AbstractFrame implements Statement{
     }
    
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>external </keyword>${this.method.renderAsHtml()}(${this.args.renderAsHtml()})${this.intoClauseAsHtml()}</top></statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>external </keyword>${this.method.renderAsHtml()}(${this.args.renderAsHtml()})${this.intoClauseAsHtml()}</top>${this.compileMsgAsHtml()}</statement>`;
     }
     renderAsSource(): string {
         return `${this.indent()}external ${this.method.renderAsSource()}(${this.args.renderAsSource()})${this.intoClauseAsSource()}`;

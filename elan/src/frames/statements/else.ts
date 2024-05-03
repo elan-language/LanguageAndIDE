@@ -49,7 +49,7 @@ export class Else extends FrameWithStatements implements Statement {
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>else </keyword>${this.ifClauseAsHtml()}${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 </statement>`;
     }

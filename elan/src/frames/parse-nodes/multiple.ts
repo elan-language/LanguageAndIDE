@@ -1,4 +1,4 @@
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -20,17 +20,17 @@ export class Multiple extends AbstractParseNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length === 0) {
-            this.status = this.minimum === 0 ? CodeStatus.valid : CodeStatus.empty;
+            this.status = this.minimum === 0 ? ParseStatus.valid : ParseStatus.empty;
         } else {
             var toParse = text;
             var cont = true;
             while (cont && toParse.length > 0) {
                 var node = this.elementConstructor();
                 node.parseText(toParse);
-                if (node.status === CodeStatus.valid) {
+                if (node.status === ParseStatus.valid) {
                     this.elements.push(node);
                     toParse = node.remainingText;
-                } else if (node.status === CodeStatus.incomplete && node.remainingText.trim() === "") {
+                } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
                     this.elements.push(node);
                     toParse = node.remainingText;
                 } else {
@@ -38,7 +38,7 @@ export class Multiple extends AbstractParseNode {
                 }
             }
             if (this.elements.length === 0 && this.minimum === 0) {
-                this.status = CodeStatus.valid;
+                this.status = ParseStatus.valid;
                 this.remainingText = toParse;
             } else if (this.elements.length >= this.minimum) {
                 var last = this.elements[this.elements.length - 1];
@@ -47,7 +47,7 @@ export class Multiple extends AbstractParseNode {
                 this.matchedText = text.substring(0, matchedLength);
                 this.remainingText = toParse;
             } else {
-                this.status = CodeStatus.invalid;
+                this.status = ParseStatus.invalid;
                 this.remainingText = text;
             }
         };

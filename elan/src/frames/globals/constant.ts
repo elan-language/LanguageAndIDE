@@ -39,7 +39,7 @@ export class Constant extends AbstractFrame implements ISymbol {
         return 'const';
     }
     renderAsHtml(): string {
-        return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.literal.renderAsHtml()}</constant>`;
+        return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.literal.renderAsHtml()}${this.compileMsgAsHtml()}</constant>`;
     }
 
     indent(): string {

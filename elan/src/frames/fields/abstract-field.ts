@@ -1,10 +1,10 @@
 import { Selectable } from "../interfaces/selectable";
-import { CodeStatus } from "../code-status";
+import { CompileStatus, ParseStatus } from "../status-enums";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import {CodeSource } from "../code-source";
-import { escapeAngleBrackets, isCollapsible} from "../helpers";
+import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_overallStatus, isCollapsible} from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../syntax-nodes/ast-node";
 import { transform, transformMany } from "../syntax-nodes/ast-visitor";
@@ -26,12 +26,12 @@ export abstract class AbstractField implements Selectable, Field {
     private holder: Frame;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
-    private parseStatus: CodeStatus | undefined;
+    private parseStatus: ParseStatus | undefined;
     cursorPos: number = 0; //Relative to LH end of text
     protected rootNode?: ParseNode;
     protected astNode?: AstNode;
     protected completion: string = "";
-    protected errorMessage: string = "";
+    parseErrorMsg: string = "";
     protected help: string = "help TBD";
 
     constructor(holder: Frame) {
@@ -43,9 +43,6 @@ export abstract class AbstractField implements Selectable, Field {
     }
     getHtmlId(): string {
         return this.htmlId;
-    }
-    getErrorMessage(): string {
-        return this.errorMessage;
     }
     abstract initialiseRoot(): ParseNode ;
     abstract readToDelimeter: (source: CodeSource) => string;
@@ -63,27 +60,27 @@ export abstract class AbstractField implements Selectable, Field {
         var text = this.readToDelimeter(source); 
         var root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(text, root);
-        if (this.parseStatus !== CodeStatus.valid) { 
+        if (this.parseStatus !== ParseStatus.valid) { 
             throw new Error(`Parse error at ${source.getRemainingCode()}`);
         }
     }
 
      parseCompleteTextUsingNode(text: string, root: ParseNode): void {
-        this.errorMessage = "";
+        this.parseErrorMsg = "";
         if (text.length === 0) {
-            this.setParseStatus(this.isOptional()? CodeStatus.valid : CodeStatus.incomplete);
+            this.setParseStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
         } else {
             root.parseText(text.trimStart());
-            if (root.remainingText.trim().length > 0 || root.status === CodeStatus.invalid) {
-                this.setParseStatus(CodeStatus.invalid);
+            if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
+                this.setParseStatus(ParseStatus.invalid);
                 this.text = text.trimStart();
             } else {
                 this.setParseStatus(root.status);
                 this.text = root.renderAsSource();
             }
         }
-        if (this.parseStatus === CodeStatus.invalid) {
-            this.errorMessage = root.errorMessage !== "" ? root.errorMessage : "parse error";
+        if (this.parseStatus === ParseStatus.invalid) {
+            this.parseErrorMsg = root.errorMessage !== "" ? root.errorMessage : "parse error";
         }
     }
 
@@ -100,9 +97,9 @@ export abstract class AbstractField implements Selectable, Field {
     setOptional(optional: boolean) : void {
         this._optional = optional;
         if (this.text ==='' && optional ) {
-            this.parseStatus = CodeStatus.valid;
+            this.parseStatus = ParseStatus.valid;
         } else  if (this.text ==='' && !optional ) {
-            this.parseStatus === CodeStatus.incomplete;
+            this.parseStatus === ParseStatus.incomplete;
         }
     }
 
@@ -222,13 +219,13 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
     }
-    getCodeStatus(): CodeStatus {
+    getParseStatus(): ParseStatus {
         if (!this.parseStatus) {
             this.parseCurrentText();
         }
         return this.parseStatus!;
     }
-    protected setParseStatus(newStatus: CodeStatus) {
+    protected setParseStatus(newStatus: ParseStatus) {
         this.parseStatus = newStatus;
     }
 
@@ -257,7 +254,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.selected) {
             html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else { 
-            if (this.rootNode && this.parseStatus !== CodeStatus.invalid) {
+            if (this.rootNode && this.parseStatus !== ParseStatus.invalid) {
                 html = this.rootNode.renderAsHtml();
             } else {
                 html = escapeAngleBrackets(this.text);
@@ -289,7 +286,11 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
         this.pushClass(this.isOptional(), "optional");
-        this._classes.push(CodeStatus[this.getCodeStatus()]);
+        this._classes.push(this.overallStatus());
+    }
+
+    private overallStatus(): string {
+        return helper_overallStatus(this);
     }
 
     protected pushClass(flag: boolean, cls: string) {
@@ -304,7 +305,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion><error>${this.errorMessage}</error><help title="${this.help}">?</help></field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion><error>${this.parseErrorMsg}</error><help title="${this.help}">?</help>${this.compileMsgAsHtml()}</field>`;
     }
 
     indent(): string {
@@ -335,7 +336,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     compile(): string {
         this.compileErrors = [];
-        if (this.rootNode && this.rootNode.status === CodeStatus.valid) {
+        if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
             return this.getOrTransformAstNode?.compile() ?? "";
         }
 
@@ -343,11 +344,18 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     compileErrors: CompileError[] = [];
-
     aggregateCompileErrors(): CompileError[] {
         const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
         return this.compileErrors.concat(cc);
     }
+    getCompileStatus() : CompileStatus {
+        return helper_getCompileStatus(this.compileErrors);
+    }
+
+    compileMsgAsHtml() {
+        return helper_compileMsgAsHtml(this);
+    }
+
     get symbolType() {
         const astNode = this.getOrTransformAstNode;
         if (astNode) {

@@ -1,7 +1,7 @@
 
 import { UnknownType } from "../../symbols/unknown-type";
 
-import { CodeStatus } from "../code-status";
+import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ParseNode } from "./parse-node";
 
@@ -19,15 +19,15 @@ export class OptionalNode extends AbstractParseNode {
         if (text.length > 0) {
             var option = this.option;
             option.parseText(text);
-            if (option.status === CodeStatus.valid || (option.status === CodeStatus.incomplete && option.remainingText.trim() === "")) {
+            if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")) {
                 this.updateFrom(option);
                 this.matchedNode = option;
             } else {
-                this.status = CodeStatus.valid;
+                this.status = ParseStatus.valid;
                 this.remainingText = text;
             }
         } else {
-            this.status = CodeStatus.valid;
+            this.status = ParseStatus.valid;
         }
     }
     renderAsHtml(): string {

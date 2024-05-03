@@ -1,6 +1,6 @@
 import { Field } from "./field";
 import { Selectable } from "./selectable";
-import { CodeStatus } from "../code-status";
+import { CompileStatus, ParseStatus } from "../status-enums";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { CompileError } from "../compile-error";
@@ -18,7 +18,7 @@ export interface Frame extends Selectable, Scope {
     indent(): string;
 
     getFields(): Field[];
-    worstParseStatusOfFields(): CodeStatus;
+    worstParseStatusOfFields(): ParseStatus;
 
     selectFirstField() : boolean;
     selectLastField() : boolean;
@@ -38,6 +38,7 @@ export interface Frame extends Selectable, Scope {
 
     compileErrors: CompileError[];
     aggregateCompileErrors(): CompileError[];
+    getCompileStatus(): CompileStatus;
     insertSelectorAfterLastField(): void;
     insertPeerSelector(before: boolean): void;
 

@@ -112,14 +112,15 @@ expand {
     margin-right: 1ch;
     /* cursor: pointer; why only this? */
 }
-.multiline.collapsed.invalid expand {
-    background-color: var(--invalid);
+/* colour corresponds to worst of parseStatus and compileStatus*/
+.multiline.collapsed expand {
+    background-color: var(--valid);
 }
-.multiline.collapsed.incomplete expand {
+.multiline.collapsed.incomplete expand, .multiline.collapsed.unknownSymbol expand {
     background-color: var(--incomplete);
 }
-.multiline.collapsed.valid expand {
-    background-color: var(--valid);
+.multiline.collapsed.invalid expand, .multiline.collapsed.error expand {
+    background-color: var(--invalid);
 }
 
 /* Fields */
@@ -267,4 +268,18 @@ parseError {
     color: var(--invalid);
 }
 
+/*  compile status & messages */
+compile {
+    display: none;
+}
 
+compile.error, compile.unknown {
+    display: inline;
+    color: var(--reverseText);
+}
+compile.error {
+    background-color: var(--invalid);
+}
+compile.unknown {
+    background-color: var(--incomplete);
+}

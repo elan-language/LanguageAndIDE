@@ -1,6 +1,6 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { CodeStatus } from "./code-status";
+import { CompileStatus, ParseStatus } from "./status-enums";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { FunctionFrame } from "./globals/function-frame";
@@ -20,7 +20,7 @@ import { GlobalSelector } from "./globals/global-selector";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ISymbol } from "../symbols/symbol";
 import { StdLibSymbols } from "./std-lib-symbols";
@@ -235,18 +235,16 @@ export class FileImpl implements File {
         this._runStatus = s;
     }
 
-    parseStatus(): CodeStatus {
+    parseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     }
 
     parseStatusAsString() : string {
-        return CodeStatus[this.parseStatus()];
+        return ParseStatus[this.parseStatus()];
     }
-
     compileErrors(): CompileError[] {
         return parentHelper_aggregateCompileErrorsOfChildren(this);
     }
-
     getAllSelected(): Selectable[] {
         const v = this.getMap().values()!;
         return  [...v].filter(s => s.isSelected());
@@ -377,4 +375,8 @@ export class FileImpl implements File {
     }
 
     libraryScope = this._stdLibSymbols as Scope;
+
+    getCompileStatus(): CompileStatus {
+        return parentHelper_worstCompileStatusOfChildren(this);
+    }
 }

@@ -5,7 +5,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { CodeStatus } from "../frames/code-status";
+import { ParseStatus } from "../frames/status-enums";
 import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
@@ -95,31 +95,6 @@ function updateStatus() {
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Program: ${file.fileName}`; // ${getStatus()}`;
 }
 
-function updateDisplay(ce : CompileError) {
-	const loc = ce.locationId;
-	console.warn(`Compile Error:  ${ce.message} ${loc}`);
-
-	if (loc){
-		const elem = document.getElementById(loc) as HTMLElement;
-		const error = elem.getElementsByTagName("error")[0] as HTMLElement;
-		const completion = elem.getElementsByTagName("completion")[0] as HTMLElement;
-
-		if (!ce.unknownType && error){
-			if (error.innerText.length === 0) {
-				error.innerText = `${error.innerText}, ${ce.message}`; 
-			} else {
-				error.innerText = ce.message;
-			}
-		}
-		if (ce.unknownType && completion){
-			if (completion.innerText.length === 0) {
-				completion.innerText = `${completion.innerText}, ${ce.message}`; 
-			} else {
-				completion.innerText = ce.message;
-			}
-		}
-	}
-}
 
 /**
  * Render the document
@@ -234,7 +209,7 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
-	if (file.parseStatus() === CodeStatus.valid) {
+	if (file.parseStatus() === ParseStatus.valid) {
 		// save to local store
 		file.renderAsSource().then(code => {
 			localStorage.setItem("elan-code", code);
@@ -243,10 +218,6 @@ function updateContent(text: string) {
 		});
 		// compile before updating status
 		file.compile();
-
-		for (const e of file.compileErrors()) {
-			updateDisplay(e);
-		}
 	}
 
 	updateStatus();

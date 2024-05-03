@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { getNonce, hash } from './util';
 import { File } from './frames/interfaces/file';
 import { editorEvent } from './frames/interfaces/editor-event';
-import { CodeStatus } from './frames/code-status';
+import { ParseStatus } from './frames/status-enums';
 import { Uri } from 'vscode';
 import { FileImpl } from './frames/file-impl';
 import { CodeSourceFromString } from './frames/code-source';
@@ -57,7 +57,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
 		function updateSource(fm: File) {
 
-			if (fm.parseStatus() === CodeStatus.valid) {
+			if (fm.parseStatus() === ParseStatus.valid) {
 				fm.renderAsSource().then(source => {
 
 					const edit = new vscode.WorkspaceEdit();

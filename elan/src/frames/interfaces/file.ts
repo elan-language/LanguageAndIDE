@@ -1,6 +1,6 @@
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import { CodeStatus } from "../code-status";
+import { CompileStatus, ParseStatus } from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
@@ -28,7 +28,7 @@ export interface File extends Parent {
     indent(): string;
     expandCollapseAll(): void;
 
-    parseStatus(): CodeStatus;
+    parseStatus(): ParseStatus;
     testStatus(): TestStatus;
     runStatus(): RunStatus;
 
@@ -52,6 +52,7 @@ export interface File extends Parent {
     processKey(e: editorEvent): void;
 
     compileErrors(): CompileError[];
+    getCompileStatus(): CompileStatus
 
     setRunStatus(s : RunStatus) : void;
 }
