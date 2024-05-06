@@ -28,7 +28,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
-  ignore_test('Fail_MutatingArrayParam', async () => {
+  test('Fail_MutatingArrayParam', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -45,7 +45,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["may not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
 
