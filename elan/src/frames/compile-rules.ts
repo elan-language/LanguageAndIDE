@@ -44,6 +44,12 @@ export function mustBeAbstractClass(classType: ClassDefinitionType, compileError
     }
 }
 
+export function mustBePublicProperty(property: any, compileErrors: CompileError[], location: string) {
+    if (property.constructor.name === "Property" && property.private === true) {
+        compileErrors.push(new CompileError(`Cannot reference private property`, location, false));
+    }
+}
+
 export function mustImplementSuperClasses(classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[], compileErrors: CompileError[], location: string) {
 
     for (const superClassType of superClassTypes) {

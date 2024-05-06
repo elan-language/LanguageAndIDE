@@ -40,7 +40,7 @@ export class Property extends AbstractFrame implements Member, ISymbol {
     }
 
     private modifierAsObjectCode(): string {
-        return this.private ? `private ` : "";
+        return this.private ? `#` : "";
     }
 
     renderAsHtml(): string {
