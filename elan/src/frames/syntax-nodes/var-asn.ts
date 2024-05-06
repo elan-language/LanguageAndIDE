@@ -6,6 +6,7 @@ import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
+import { mustBePublicProperty } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -64,6 +65,21 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     compile(): string {
         this.compileErrors = [];
         var q = this.getQualifier();
+
+        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
+        if (classScope instanceof ClassType) {
+            const s = this.scope.resolveSymbol(classScope.className, this.scope) as unknown as Scope;
+            const p = s.resolveSymbol(this.id, s);
+
+            mustBePublicProperty(p, this.compileErrors, this.fieldId);
+           
+        }
+
+
+
+
+
+
         var idx = this.index ? this.index.compile() : "";
         var code = `${q}${this.id}${idx}`;
 
