@@ -355,6 +355,7 @@ export abstract class AbstractField implements Selectable, Field {
         return this.compileErrors.concat(cc);
     }
     getCompileStatus() : CompileStatus {
+        this.compileErrors = this.aggregateCompileErrors();
         return helper_getCompileStatus(this.compileErrors);
     }
     get symbolType() {

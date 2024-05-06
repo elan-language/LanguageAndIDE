@@ -427,11 +427,11 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Number to Int ",
-      "Cannot assign Number to Boolean ",
-      "Cannot assign Boolean to Number ",
-      "Cannot assign List <Number> to String ",
-      "Cannot assign Number to Int "]);
+      "Cannot assign Number to Int",
+      "Cannot assign Number to Boolean",
+      "Cannot assign Boolean to Number",
+      "Cannot assign List <Number> to String",
+      "Cannot assign Number to Int"]);
 
   });
 
@@ -452,9 +452,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign List <Number> to Array <String> ",
-      "Cannot assign Array <String> to List <Number> ",
-      "Cannot assign List <Number> to Dictionary <String,Number> "
+      "Cannot assign List <Number> to Array <String>",
+      "Cannot assign Array <String> to List <Number>",
+      "Cannot assign List <Number> to Dictionary <String,Number>"
     ]);
 
   });

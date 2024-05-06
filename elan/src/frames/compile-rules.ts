@@ -103,7 +103,7 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
 
 function FailIncompatible(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
     const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name} `, location, unknown));
+    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name}`, location, unknown));
 }
 
 function FailUnknown(lhs: AstNode, compileErrors: CompileError[], location: string) {
@@ -196,7 +196,7 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
         const s = assignable.symbolScope;
 
         if (s !== SymbolScope.local){
-            compileErrors.push(new CompileError(`may not mutate non local data in function `, location, false));
+            compileErrors.push(new CompileError(`May not mutate non local data in function`, location, false));
         }
     }
 }
@@ -205,6 +205,6 @@ export function mustNotBeParameter(assignable: VarAsn, compileErrors: CompileErr
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.parameter) {
-        compileErrors.push(new CompileError(`may not mutate parameter`, location, false));
+        compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
     }
 }
