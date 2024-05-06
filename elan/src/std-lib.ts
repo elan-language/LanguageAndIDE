@@ -160,4 +160,10 @@ export class StdLib {
     min = Math.min;
 
     newline = "\n";
+
+    typeAndProperties(o: any) {
+        const type = o.constructor.name;
+        const items = Object.getOwnPropertyNames(o);
+        return `${type} [${items.map(n => `${n}:${o[n]}`).join(", ")}]`;
+    }
 }
