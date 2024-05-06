@@ -23,7 +23,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ISymbol } from "../symbols/symbol";
-import { StdLibSymbols } from "./std-lib-symbols";
+import { StdLibSymbols } from "../std-lib-symbols";
 import { isSymbol } from "../symbols/symbolHelpers";
 import { Scope } from "./interfaces/scope";
 import { TestStatus } from "./test-status";

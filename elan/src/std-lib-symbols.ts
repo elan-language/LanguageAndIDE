@@ -1,18 +1,19 @@
-import { ArrayType } from "../symbols/array-type";
-import { BooleanType } from "../symbols/boolean-type";
-import { DictionaryType } from "../symbols/dictionary-type";
-import { NumberType } from "../symbols/number-type";
-import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
-import { StringType } from "../symbols/string-type";
-import { ISymbol, SymbolScope } from "../symbols/symbol";
-import { ISymbolType } from "../symbols/symbol-type";
-import { UnknownType } from "../symbols/unknown-type";
-import { Scope } from "./interfaces/scope";
-import { FunctionType } from "../symbols/function-type";
-import { GenericParameterType } from "../symbols/generic-parameter-type";
-import { IterType } from "../symbols/iter-type";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { ArrayType } from "./symbols/array-type";
+import { BooleanType } from "./symbols/boolean-type";
+import { DictionaryType } from "./symbols/dictionary-type";
+import { NumberType } from "./symbols/number-type";
+import { IntType } from "./symbols/int-type";
+import { ListType } from "./symbols/list-type";
+import { StringType } from "./symbols/string-type";
+import { ISymbol, SymbolScope } from "./symbols/symbol";
+import { ISymbolType } from "./symbols/symbol-type";
+import { UnknownType } from "./symbols/unknown-type";
+import { Scope } from "./frames/interfaces/scope";
+import { FunctionType } from "./symbols/function-type";
+import { GenericParameterType } from "./symbols/generic-parameter-type";
+import { IterType } from "./symbols/iter-type";
+import { UnknownSymbol } from "./symbols/unknown-symbol";
+import { ClassType } from "./symbols/class-type";
 
 export class StdLibSymbols implements Scope {
 
@@ -50,7 +51,8 @@ export class StdLibSymbols implements Scope {
             ["newline", this.getSymbol("newline", StringType.Instance)],
             ["first", this.getSymbol("first", StringType.Instance)],
             ["second", this.getSymbol("second", StringType.Instance)],
-            ["indexOf", this.getSymbol("indexOf", IntType.Instance)]
+            ["indexOf", this.getSymbol("indexOf", IntType.Instance)],
+            ["typeAndProperties", this.getSymbol("typeAndProperties", new FunctionType([new ClassType("")], StringType.Instance, true))],
         ]
     );
 
