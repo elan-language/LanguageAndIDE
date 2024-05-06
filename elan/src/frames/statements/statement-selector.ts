@@ -14,7 +14,7 @@ export class StatementSelector extends AbstractSelector  {
         this.factory = (parent.getFactory());
     }
 
-    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+    defaultOptions(): [string, (parent: Parent) => Frame][] {
         return [
         [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
         [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
