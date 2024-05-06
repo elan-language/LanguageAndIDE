@@ -51,10 +51,10 @@ string {
     white-space: pre;
 }
 field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incomplete  string, field.incomplete method {
-    color: var(--incomplete);
+    color: var(--warning);
 }
 .invalid field, field.invalid  keyword, field.invalid  type, field.invalid  string, field.invalid method {
-    color: var(--invalid);
+    color: var(--error);
 }
 /* Header & comments */
 comment *, comment field.valid text  {
@@ -65,13 +65,13 @@ header, header * {
     color: var(--comment);
 }
 header .invalid {
-    color: var(--invalid)
+    color: var(--error)
 }
 header .incomplete {
-    color: var(--incomplete)
+    color: var(--warning)
 }
 header .valid {
-    color: var(--valid)
+    color: var(--ok)
 }
 
 
@@ -114,36 +114,36 @@ expand {
 }
 /* colour corresponds to worst of parseStatus and compileStatus*/
 .multiline.collapsed expand {
-    background-color: var(--valid);
+    background-color: var(--ok);
 }
 .multiline.collapsed.incomplete expand, .multiline.collapsed.unknownSymbol expand {
-    background-color: var(--incomplete);
+    background-color: var(--warning);
 }
 .multiline.collapsed.invalid expand, .multiline.collapsed.error expand {
-    background-color: var(--invalid);
+    background-color: var(--error);
 }
 
 /* Fields */
 /* field-text*/
 field.invalid text {
-    color: var(--invalid);
+    color: var(--error);
 }
 field.incomplete text {
-    color: var(--incomplete);
+    color: var(--warning);
 }
 field.valid text {
     color: var(--defaultText);
 }
 field.selected.invalid text, field.selected.invalid input  {
-    background-color: var(--invalid);
+    background-color: var(--error);
     color: var(--defaultText);
 }
 field.selected.incomplete text, field.selected.incomplete input {
-    background-color: var(--incomplete);
+    background-color: var(--warning);
     color: var(--defaultText);
 }
 field.selected.valid text, field.selected.valid input {
-    background-color: var(--valid);
+    background-color: var(--ok);
     color: var(--defaultText);
 }
 field.selected.valid.optional.empty text, field.selected.valid.optional.empty input {
@@ -158,7 +158,7 @@ field placeholder {
 
 field.empty placeholder, field.empty placeholder * {
     display: inline;
-    color: var(--incomplete);
+    color: var(--warning);
 }
 
 field.empty.optional placeholder, field.empty.optional placeholder * {
@@ -169,7 +169,7 @@ field.empty.optional placeholder, field.empty.optional placeholder * {
 field.empty.selected placeholder, field.empty.selected placeholder * {
     display: inline;
     color: var(--reverseText);
-    background-color: var(--incomplete);
+    background-color: var(--warning);
 }
 
 field.empty.optional.selected placeholder, field.empty.optional.selected placeholder * {
@@ -185,7 +185,7 @@ field.empty.optional.selected placeholder, field.empty.optional.selected placeho
 /* ... however, different rules when it is the 'holding' frame that is selected */
 .selected > top field.empty placeholder, .selected > field.empty placeholder {
     display:inline;
-    color: var(--incomplete);
+    color: var(--warning);
 }
 .selected > top field.empty.optional placeholder, .selected > field.empty.optional placeholder {
     display:inline;
@@ -213,7 +213,7 @@ field completion  {
 field.selected completion, field.selected completion * {
     display: inline;
     color: var(--reverseText);
-    background-color: var(--incomplete);
+    background-color: var(--warning);
 }
 
 field.selected.empty completion, field.selected.empty completion *,
@@ -221,15 +221,26 @@ field.selected.empty.optional completion, field.selected.empty.optional completi
     display: none;
 }
 
-/* field error */
-field error {
+/* field msg */
+field msg {
     display: none;
 }
 
-field.selected error, field.selected error * {
+field.selected msg, field.selected msg * {
     display: inline;
+}
+
+msg {
     color: var(--reverseText);
-    background-color: var(--invalid);
+}
+msg.ok {
+    background-color: var(--ok);
+}
+msg.warning {
+    background-color: var(--warning);
+}
+msg.error {
+    background-color: var(--error);
 }
 
 /* Selectors */
@@ -261,13 +272,6 @@ selector placeholder  {
     display: none;
 }
 
-
-
-
-parseError {
-    color: var(--invalid);
-}
-
 /*  compile status & messages */
 compile {
     display: none;
@@ -278,8 +282,8 @@ compile.error, compile.unknown {
     color: var(--reverseText);
 }
 compile.error {
-    background-color: var(--invalid);
+    background-color: var(--error);
 }
 compile.unknown {
-    background-color: var(--incomplete);
+    background-color: var(--warning);
 }

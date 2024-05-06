@@ -1,5 +1,5 @@
 import { Selectable } from "../interfaces/selectable";
-import { CompileStatus, ParseStatus } from "../status-enums";
+import { CompileStatus, OverallStatus, ParseStatus } from "../status-enums";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
@@ -304,8 +304,13 @@ export abstract class AbstractField implements Selectable, Field {
         return this._classes.join(" ");
     };
 
+    protected getMessage(): string {
+        var cls = this.parseErrorMsg === "" ? "" : ` class="${OverallStatus[OverallStatus.error]}"`
+        return `<msg${cls}>${this.parseErrorMsg}</msg>`;
+    }
+
     renderAsHtml(): string {
-        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion><error>${this.parseErrorMsg}</error><help title="${this.help}">?</help>${this.compileMsgAsHtml()}</field>`;
+        return `<field id="${this.htmlId}" class="${this.cls()}" tabindex=0><text>${this.textAsHtml()}</text><placeholder>${this.placeholder}</placeholder><completion>${this.getCompletion()}</completion>${this.getMessage()}<help title="${this.help}">?</help>${this.compileMsgAsHtml()}</field>`;
     }
 
     indent(): string {
