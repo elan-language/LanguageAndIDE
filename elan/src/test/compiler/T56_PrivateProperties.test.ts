@@ -3,7 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T53_PrivateProperties', () => {
+suite('T56_PrivateProperties', () => {
 
   test('Pass_PrivatePropertyCanBeDeclared', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
