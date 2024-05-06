@@ -305,7 +305,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  ignore_test('Pass_AsStringUsingDefaultHelper', async () => {
+  test('Pass_AsStringUsingDefaultHelper', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -324,7 +324,7 @@ class Foo
     property p2 as String
 
     function asString() return String
-      return property.typeAndProperties()
+      return typeAndProperties(this)
     end function
 
 end class`;
@@ -347,7 +347,7 @@ class Foo {
   p2 = "";
 
   asString() {
-    return this.p2;
+    return _stdlib.typeAndProperties(this);
   }
 
 }
@@ -359,7 +359,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Apple");
+    await assertObjectCodeExecutes(fileImpl, 'Foo ["p1":5, "p2":Apple]');
   });
 
   test('Pass_AsStringOnVariousDataTypes', async () => {

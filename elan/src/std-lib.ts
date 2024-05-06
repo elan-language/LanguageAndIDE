@@ -164,6 +164,6 @@ export class StdLib {
     typeAndProperties(o: any) {
         const type = o.constructor.name;
         const items = Object.getOwnPropertyNames(o);
-        return `${type} [${items.map(n => `${n}:${o[n]}`).join(", ")}]`;
+        return `${type} [${items.map(n => `"${n}":${o[n]}`).join(", ")}]`;
     }
 }

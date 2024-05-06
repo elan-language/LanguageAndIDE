@@ -14,6 +14,7 @@ import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IterType } from "./symbols/iter-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { ClassType } from "./symbols/class-type";
+import { GenericClassType } from "./symbols/generic-class-type";
 
 export class StdLibSymbols implements Scope {
 
@@ -52,7 +53,7 @@ export class StdLibSymbols implements Scope {
             ["first", this.getSymbol("first", StringType.Instance)],
             ["second", this.getSymbol("second", StringType.Instance)],
             ["indexOf", this.getSymbol("indexOf", IntType.Instance)],
-            ["typeAndProperties", this.getSymbol("typeAndProperties", new FunctionType([new ClassType("")], StringType.Instance, true))],
+            ["typeAndProperties", this.getSymbol("typeAndProperties", new FunctionType([new GenericParameterType("")], StringType.Instance))],
         ]
     );
 
