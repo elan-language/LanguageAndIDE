@@ -13,7 +13,7 @@ export class GlobalSelector extends AbstractSelector  {
         this.file = parent;
     }
 
-    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+    defaultOptions(): [string, (parent: Parent) => Frame][] {
         return [
         [mainKeyword, (parent: Parent) => this.file.createMain()],
         [procedureKeyword, (parent: Parent) => this.file.createProcedure()],

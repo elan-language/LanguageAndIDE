@@ -15,7 +15,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
         this.class = parent as Class;
     }
  
-    getDefaultOptions(): [string, (parent: Parent) => Frame][] {
+    defaultOptions(): [string, (parent: Parent) => Frame][] {
         var options:  [string, (parent: Parent) => Frame][] = [
         [functionKeyword, (parent: Parent) => this.class.createFunction()],
         [procedureKeyword, (parent: Parent) => this.class.createProcedure()],

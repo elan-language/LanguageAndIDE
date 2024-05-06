@@ -16,6 +16,17 @@ import { FunctionMethod } from '../frames/class-members/function-method';
 import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from '../frames/keywords';
+import { Profile } from '../frames/interfaces/profile';
+
+export class TestProfileSPJ implements Profile {
+    name: string = "SPJ";
+    globals: string[] = [functionKeyword, testKeyword];
+    statements: string[] = [assertKeyword, letKeyword];
+    class_members: string[] = [];
+    include_profile_name_in_header: boolean = false;
+    can_load_only_own_files: boolean = false;
+}
 
 suite('Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -181,5 +192,15 @@ suite('Unit tests', () => {
 		help = gs.getCompletion();
 		assert.equal(help, " procedure function class constant enum test #");
 	});	
+
+	test("#377 - Global select filtered by profile", () => {
+		const f = new FileImpl(hash, new TestProfileSPJ());
+		var gs = f.getFirstSelectorAsDirectChild();
+		var help = gs.getCompletion();
+		assert.equal(help, " function test");
+		var filtered = gs.optionsMatchingUserInput(`f`);
+		assert.equal(filtered.length, 1);
+ 	});	
+
 });	
 
