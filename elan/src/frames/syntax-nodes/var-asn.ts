@@ -81,11 +81,6 @@ export class VarAsn extends AbstractAstNode implements AstNode {
            
         }
 
-
-
-
-
-
         var idx = this.index ? this.index.compile() : "";
         var code = `${q}${this.id}${idx}`;
 
@@ -99,19 +94,28 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         return code;
     }
 
-    get symbolType() {
-        var currentScope = this.scope;
+    updateScope(currentScope: Scope) {
         const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
         if (classScope instanceof ClassType) {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;
         }
-        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof FixedIdAsn && this.qualifier.value.id === propertyKeyword) {
+        else if (classScope instanceof ClassDefinitionType) {
+            currentScope = classScope as unknown as Scope;
+        }
+        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
             // todo kludge
             currentScope = getClassScope(currentScope as Frame);
         }
 
+        return currentScope;
+    }
+
+
+
+    get symbolType() {
+        const currentScope = this.updateScope(this.scope);
         const rootType = currentScope.resolveSymbol(this.id, currentScope)?.symbolType;
         if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
@@ -120,20 +124,8 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolScope() {
-        var currentScope = this.scope;
-        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
-        if (classScope instanceof ClassDefinitionType) {
-            const s = this.scope.resolveSymbol(classScope.className, this.scope);
-            // replace scope with class scope
-            currentScope = s as unknown as Scope;
-        }
-        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
-            // todo kludge
-            currentScope = getClassScope(currentScope as Frame);
-        }
-
+        const currentScope = this.updateScope(this.scope);
         const symbol = currentScope.resolveSymbol(this.id, currentScope)!;
-      
         return symbol.symbolScope;
     }
 
