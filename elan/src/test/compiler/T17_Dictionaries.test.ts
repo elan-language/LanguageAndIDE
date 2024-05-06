@@ -226,7 +226,8 @@ main
   var a set to new Dictionary<of String, Int>()
   var b set to setItem(a, "Foo", 1)
   set b to setItem(b, "Bar", 3)
-  print length(b)
+  var k set to keys(b)
+  print k.length()
   print b["Foo"]
   print b["Bar"]
 end main`;
@@ -236,7 +237,8 @@ async function main() {
   var a = system.initialise(new Object(), ["String", "Int"]);
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
-  system.print(_stdlib.asString(_stdlib.length(b)));
+  var k = _stdlib.keys(b);
+  system.print(_stdlib.asString(_stdlib.length(k)));
   system.print(_stdlib.asString(b["Foo"]));
   system.print(_stdlib.asString(b["Bar"]));
 }

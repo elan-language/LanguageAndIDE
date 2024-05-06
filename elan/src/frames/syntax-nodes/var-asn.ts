@@ -7,11 +7,17 @@ import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBePublicProperty } from "../compile-rules";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { propertyKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { getClassScope } from "./ast-helpers";
 import { AstNode } from "./ast-node";
+import { FixedIdAsn } from "./fixed-id-asn";
 import { IndexAsn } from "./index-asn";
+import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
+import { ThisAsn } from "./this-asn";
 
 export class VarAsn extends AbstractAstNode implements AstNode {
 
@@ -101,9 +107,13 @@ export class VarAsn extends AbstractAstNode implements AstNode {
             // replace scope with class scope
             currentScope = s as unknown as Scope;
         }
+        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof FixedIdAsn && this.qualifier.value.id === propertyKeyword) {
+            // todo kludge
+            currentScope = getClassScope(currentScope as Frame);
+        }
 
         const rootType = currentScope.resolveSymbol(this.id, currentScope)?.symbolType;
-        if (this.isIndex() && rootType instanceof ListType) {
+        if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
         }
         return rootType;
@@ -116,6 +126,10 @@ export class VarAsn extends AbstractAstNode implements AstNode {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;
+        }
+        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
+            // todo kludge
+            currentScope = getClassScope(currentScope as Frame);
         }
 
         const symbol = currentScope.resolveSymbol(this.id, currentScope)!;

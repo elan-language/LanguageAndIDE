@@ -203,7 +203,7 @@ return main;}`;
 
 main
     var a set to [4,5,6,7,8]
-    print length(a)
+    print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -227,7 +227,7 @@ return main;}`;
 
 main
     var a set to new List<of Int>()
-    print length(a)
+    print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

@@ -38,7 +38,7 @@ export class StdLibSymbols implements Scope {
             ["ceiling", this.getSymbol("ceiling", new FunctionType([NumberType], IntType.Instance))],
             ["values", this.getSymbol("values", new ListType(IntType.Instance))],
             ["hasKey", this.getSymbol("hasKey", BooleanType.Instance)],
-            ["length", this.getSymbol("length", IntType.Instance)],
+            ["length", this.getSymbol("length", new FunctionType([new IterType(new GenericParameterType("T"))], NumberType.Instance, true))],
             ["setItem", this.getSymbol("setItem", new DictionaryType(StringType.Instance, IntType.Instance))],
             ["removeItem", this.getSymbol("removeItem", new DictionaryType(StringType.Instance, IntType.Instance))],
             ["pi", this.getSymbol("pi", NumberType.Instance)],

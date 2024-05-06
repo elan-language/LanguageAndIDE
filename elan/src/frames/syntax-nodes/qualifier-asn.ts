@@ -34,7 +34,8 @@ export class QualifierAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        return this.scope.resolveSymbol(this.value.compile(), this.scope)?.symbolType;
+        const id = (this.value as any).id;
+        return id ? this.scope.resolveSymbol(id, this.scope)?.symbolType : undefined;
     }
 
     toString() {

@@ -156,7 +156,7 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
     }
 
     if (lhs instanceof IterType && (rhs instanceof StringType)) {
-        if (!(lhs.ofType instanceof StringType)) {
+        if (!(lhs.ofType instanceof GenericParameterType || lhs.ofType instanceof StringType)) {
             FailIncompatible(lhs, rhs, compileErrors, location);
             return;
         }

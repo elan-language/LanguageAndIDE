@@ -13,6 +13,13 @@ function getGlobalScope(start: any): Scope {
     return getGlobalScope(start.getParent());
 }
 
+export function getClassScope(start: any): Scope {
+    if (start.constructor.name === "Class") {
+        return start;
+    }
+    return getClassScope(start.getParent());
+}
+
 export function updateScopeAndQualifier(qualifier: QualifierAsn | undefined, currentScope: Scope): [QualifierAsn | undefined, Scope] {
 
     const qualifierScope = qualifier ? qualifier.symbolType : undefined;
