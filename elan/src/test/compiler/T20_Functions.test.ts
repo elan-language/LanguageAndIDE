@@ -268,8 +268,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Boolean to Int ",
-      "Cannot assign Number to Int "
+      "Cannot assign Boolean to Int",
+      "Cannot assign Number to Int"
     ]);
 
   });
@@ -290,7 +290,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Boolean to Int "
+      "Cannot assign Boolean to Int"
     ]);
 
   });

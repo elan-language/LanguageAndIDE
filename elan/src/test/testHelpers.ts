@@ -27,7 +27,7 @@ import { FunctionType } from '../symbols/function-type';
 import { GenericParameterType } from '../symbols/generic-parameter-type';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;

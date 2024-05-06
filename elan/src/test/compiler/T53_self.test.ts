@@ -180,7 +180,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["may not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
 

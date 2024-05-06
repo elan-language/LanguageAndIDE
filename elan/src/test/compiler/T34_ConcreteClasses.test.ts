@@ -369,7 +369,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Int "]);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Int"]);
   });
 
   test('Fail_SupplyingArgumentNotSpecified', async () => {
