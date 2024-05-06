@@ -4,9 +4,9 @@
     --reverseText: white;
 
     --selection:rgb(173, 214, 255);
-    --valid: rgb(169, 247, 169); 
-    --incomplete: rgb(246, 193, 94);
-    --invalid:  rgb(248, 74, 74);
+    --ok: rgb(169, 247, 169); 
+    --warning: rgb(246, 193, 94);
+    --error:  rgb(248, 74, 74);
     --optional:  lightgrey;
     --help: rgb(56,0,255);
 

@@ -8,7 +8,7 @@ import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Selectable } from "./interfaces/selectable";
 import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
-import { CompileStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 
 export function isCollapsible(f?: any): f is Collapsible {
@@ -59,15 +59,15 @@ export function escapeAngleBrackets(str: string) : string {
     .replace(/>/g, '&gt;');
 }
 
-export function helper_compileMsgAsHtml(loc: Frame | Field ) {
+export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
     var msg = loc.compileErrors.reduce((prev, cur) => prev.concat(cur.message), "");
     var cls = "";
     if (loc.getCompileStatus() === CompileStatus.error ) {
-      cls = "error";
+      cls = OverallStatus[OverallStatus.error];
     } else if (loc.getCompileStatus() === CompileStatus.unknownSymbol ){
-      cls = "unknown";
+      cls = OverallStatus[OverallStatus.warning];
     }
-    return cls === "" ? "" : ` <compile class="${cls}">${msg}</compile>`;
+    return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
 
 export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus {

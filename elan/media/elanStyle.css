@@ -222,25 +222,24 @@ field.selected.empty.optional completion, field.selected.empty.optional completi
 }
 
 /* field msg */
+msg {
+    display: inline;
+    color: var(--reverseText);
+}
+
+msg.warning {
+    background-color: var(--warning);
+}
+msg.error {
+    background-color: var(--error);
+}
+
 field msg {
     display: none;
 }
 
 field.selected msg, field.selected msg * {
     display: inline;
-}
-
-msg {
-    color: var(--reverseText);
-}
-msg.ok {
-    background-color: var(--ok);
-}
-msg.warning {
-    background-color: var(--warning);
-}
-msg.error {
-    background-color: var(--error);
 }
 
 /* Selectors */
@@ -272,18 +271,4 @@ selector placeholder  {
     display: none;
 }
 
-/*  compile status & messages */
-compile {
-    display: none;
-}
 
-compile.error, compile.unknown {
-    display: inline;
-    color: var(--reverseText);
-}
-compile.error {
-    background-color: var(--error);
-}
-compile.unknown {
-    background-color: var(--warning);
-}
