@@ -391,5 +391,38 @@ end class`;
     assertDoesNotCompile(fileImpl, ["may not mutate non local data in function "]);
   });
 
+  test('Fail_FunctionMethodCannotCallProcedureMethod', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Number
+
+    function times(value as Number) return Number
+        call setP1(p1 * value)
+        return p1
+    end function
+
+    procedure setP1(value as Number) 
+        set p1 to value
+    end procedure
+
+    function asString() return String
+         return ""
+    end function
+
+end class`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 
 });
