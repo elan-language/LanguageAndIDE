@@ -156,12 +156,12 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         }
     }
 
-    if (lhs instanceof ClassType && !(rhs instanceof ClassType)) {
+    if (lhs instanceof ClassType && !(rhs instanceof ClassType || rhs instanceof ClassDefinitionType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
 
-    if (lhs instanceof ClassType && rhs instanceof ClassType) {
+    if (lhs instanceof ClassType && (rhs instanceof ClassType || rhs instanceof ClassDefinitionType)) {
         if (lhs.className !== rhs.className) {
             // TODO inheritance
             FailIncompatible(lhs, rhs, compileErrors, location);
@@ -192,5 +192,13 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
         if (s !== SymbolScope.local){
             compileErrors.push(new CompileError(`may not mutate non local data in function `, location, false));
         }
+    }
+}
+
+export function mustNotBeParameter(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+    const s = assignable.symbolScope;
+
+    if (s === SymbolScope.parameter) {
+        compileErrors.push(new CompileError(`may not mutate parameter`, location, false));
     }
 }

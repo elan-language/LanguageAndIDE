@@ -85,6 +85,7 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { CsvAsn } from "./csv-asn";
 import { QualifierAsn } from "./qualifier-asn";
+import { ThisAsn } from "./this-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -282,7 +283,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
             return new FixedIdAsn(libraryKeyword, fieldId);
         }
         if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
-            return new FixedIdAsn("this", fieldId);
+            return new ThisAsn(node.fixedText, fieldId, scope);
         }
 
         return undefined;

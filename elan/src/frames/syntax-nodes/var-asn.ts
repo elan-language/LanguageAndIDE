@@ -1,4 +1,5 @@
 import { ArrayType } from "../../symbols/array-type";
+import { ClassDefinitionType } from "../../symbols/class-definition-type";
 import { ClassType } from "../../symbols/class-type";
 import { FunctionType } from "../../symbols/function-type";
 import { ListType } from "../../symbols/list-type";
@@ -95,7 +96,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     get symbolScope() {
         var currentScope = this.scope;
         const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
-        if (classScope instanceof ClassType) {
+        if (classScope instanceof ClassDefinitionType) {
             const s = this.scope.resolveSymbol(classScope.className, this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;

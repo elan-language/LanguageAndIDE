@@ -25,7 +25,7 @@ import { TypeNameField } from "../fields/type-name-field";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { Scope } from "../interfaces/scope";
-import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword } from "../keywords";
+import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { TypeAsn } from "../syntax-nodes/type-asn";
@@ -297,6 +297,9 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
     }
 
     resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        if (id === thisKeyword){
+            return this;
+        }
 
         for (var f of this.getChildren()) {
             if (isSymbol(f) && f.symbolId === id) {
