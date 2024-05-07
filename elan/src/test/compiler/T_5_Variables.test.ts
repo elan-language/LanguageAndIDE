@@ -334,18 +334,19 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_AssignIncompatibleType', async () => {
+  test('Fail_AssignIncompatibleType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to 4
+  var a set to "astring"
   set a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Number to String"]);
   });
 
   test('Fail_NotInitialized', async () => {
@@ -388,7 +389,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_UseOfKeywordAsName', async () => {
+  test('Fail_UseOfKeywordAsName', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
