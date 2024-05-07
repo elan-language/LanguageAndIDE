@@ -223,6 +223,26 @@ end main`;
 
     assertDoesNotParse(fileImpl);
 });
+ignore_test('Fail_TwoElses', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a is 1
+    print "one"
+  else
+    print "not one"
+  else
+    print "two"
+  end if
+end main`;
+
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+  assertParses(fileImpl);
+  assertDoesNotCompile(fileImpl, [""]);
+});
 
 ignore_test('Fail_ElseIfAfterElse', async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -241,7 +261,8 @@ end main`;
   const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
+  assertParses(fileImpl);
+  assertDoesNotCompile(fileImpl, [""]);
 });
 
 test('Fail_ConditionNotBool', async () => {
