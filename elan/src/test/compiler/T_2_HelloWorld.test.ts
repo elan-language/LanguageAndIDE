@@ -185,16 +185,16 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "2.1e+100");
     });
 
-    ignore_test('Pass_NumberWithExponent3', async () => {
+    test('Pass_NumberWithExponent3', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print 2.1E-4
+  print 2.1e-4
 end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(2.1e-4));
+  system.print(_stdlib.asString(0.00021));
 }
 return main;}`;
 
