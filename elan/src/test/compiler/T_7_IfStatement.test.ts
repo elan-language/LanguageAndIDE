@@ -223,7 +223,8 @@ end main`;
 
     assertDoesNotParse(fileImpl);
 });
-ignore_test('Fail_TwoElses', async () => {
+
+test('Fail_TwoElses', async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -241,10 +242,10 @@ end main`;
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
   assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [""]);
+  assertDoesNotCompile(fileImpl, ["Cannot have multiple unconditional 'Else'"]);
 });
 
-ignore_test('Fail_ElseIfAfterElse', async () => {
+test('Fail_ElseIfAfterElse', async () => {
   const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -262,7 +263,7 @@ end main`;
   await fileImpl.parseFrom(new CodeSourceFromString(code));
 
   assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, [""]);
+  assertDoesNotCompile(fileImpl, ["Must end with unconditional 'Else'"]);
 });
 
 test('Fail_ConditionNotBool', async () => {

@@ -5,12 +5,12 @@ import { createHash } from "node:crypto";
 
 suite('T_8_ForLoop', () => {
 
-  ignore_test('Pass_minimal', async () => {
+  test('Pass_minimal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var tot set to 0
-  for i from 1 to 10
+  for i from 1 to 10 step 1
     set tot to tot + i
   end for
   print tot
@@ -70,7 +70,7 @@ return main;}`;
 
 main
   var tot set to 0
-  for i from 10 to 3 step -1
+  for i from 10 to 3 step - 1
     set tot to tot + i
   end for
   print tot

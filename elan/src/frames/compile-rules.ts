@@ -16,7 +16,9 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
+import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { Statement } from "./interfaces/statement";
 import { AstNode } from "./syntax-nodes/ast-node";
 import { VarAsn } from "./syntax-nodes/var-asn";
 
@@ -30,6 +32,16 @@ export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: IS
 
 export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
     mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
+}
+
+export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors: CompileError[], location: string) {
+    if (elses.filter(s => !s.hasIf).length > 1) {
+        compileErrors.push(new CompileError(`Cannot have multiple unconditional 'Else'`, location, false));
+    }
+
+    if (elses[elses.length -1].hasIf){
+        compileErrors.push(new CompileError(`Must end with unconditional 'Else'`, location, false));
+    }
 }
 
 export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[], location: string) {
