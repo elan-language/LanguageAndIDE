@@ -54,8 +54,18 @@ ${this.indent()}end for`;
         const v = this.variable.compile();
         const f = this.from.compile();
         const t = this.to.compile();
-        const s = this.step.compile();
-        return `${this.indent()}for (var ${v} = ${f}; ${v} <= ${t}; ${v} = ${v} + ${s}) {\r
+        var s = this.step.compile();
+
+        var compare = "<=";
+        var incDec = "+";
+
+        if (s.startsWith("-")){
+            compare = ">=";
+            incDec = "-";
+            s = s.slice(1);
+        }
+
+        return `${this.indent()}for (var ${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}}`;
     }

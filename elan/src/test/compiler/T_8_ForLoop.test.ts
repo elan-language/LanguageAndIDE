@@ -65,7 +65,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  ignore_test('Pass_negativeStep', async () => {
+  test('Pass_negativeStep', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -80,7 +80,7 @@ end main`;
 async function main() {
   var tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
-    tot = tot + -i;
+    tot = tot + i;
   }
   system.print(_stdlib.asString(tot));
 }
