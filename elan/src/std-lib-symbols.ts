@@ -57,7 +57,7 @@ export class StdLibSymbols implements Scope {
         ]
     );
 
-    resolveSymbol(id: string, scope: Scope): ISymbol {
-        return this.symbols.get(id) ?? UnknownSymbol.Instance;
+    resolveSymbol(id: string | undefined, scope: Scope): ISymbol {
+        return id ? this.symbols.get(id) ?? UnknownSymbol.Instance : UnknownSymbol.Instance;
     }
 }

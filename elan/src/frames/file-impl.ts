@@ -365,7 +365,7 @@ export class FileImpl implements File {
         }
     }
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
 
         const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as Array<ISymbol>;
 

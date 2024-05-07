@@ -154,7 +154,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return result;
     }
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
         var fst = this.getFirstChild();
         var range = this.getChildRange(fst, initialScope);
         if (range.length > 1) {

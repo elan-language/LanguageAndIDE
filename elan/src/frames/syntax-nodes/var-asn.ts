@@ -85,7 +85,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         var code = `${q}${this.id}${idx}`;
 
         if (this.isRange()) {
-            const rootType = this.scope.resolveSymbol(this.id, this.scope)?.symbolType;
+            const rootType = this.scope.resolveSymbol(this.id, this.scope).symbolType;
             if (rootType) {
                 code = this.wrapListOrArray(rootType, code);
             }
@@ -116,7 +116,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
 
     get symbolType() {
         const currentScope = this.updateScope(this.scope);
-        const rootType = currentScope.resolveSymbol(this.id, currentScope)?.symbolType;
+        const rootType = currentScope.resolveSymbol(this.id, currentScope).symbolType;
         if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
         }
@@ -125,7 +125,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
 
     get symbolScope() {
         const currentScope = this.updateScope(this.scope);
-        const symbol = currentScope.resolveSymbol(this.id, currentScope)!;
+        const symbol = currentScope.resolveSymbol(this.id, currentScope);
         return symbol.symbolScope;
     }
 

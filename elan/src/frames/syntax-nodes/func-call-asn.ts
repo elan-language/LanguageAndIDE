@@ -80,7 +80,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        const type = this.scope.resolveSymbol(this.id, this.scope)?.symbolType;
+        const type = this.scope.resolveSymbol(this.id, this.scope).symbolType;
 
         if (type instanceof FunctionType) {
             const returnType = type.returnType;

@@ -15,6 +15,7 @@ import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../../symbols/function-type";
 import { Scope } from "../interfaces/scope";
 import { mustBeCompatibleType } from "../compile-rules";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 
 export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     isGlobal = true;
@@ -116,11 +117,13 @@ ${this.renderChildrenAsObjectCode()}\r
     private getReturnStatement(): ReturnStatement {
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
-    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }
+        
+        const s = this.params.resolveSymbol(id, initialScope);
 
-        return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);
+        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, initialScope) : s;
     }
 }

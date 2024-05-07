@@ -58,11 +58,11 @@ export function mustImplementSuperClasses(classType: ClassDefinitionType, superC
         for (const superSymbol of superSymbols) {
             const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
 
-            if (subSymbol) {
-                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
+            if (subSymbol === UnknownSymbol.Instance) {
+                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
             }
             else {
-                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
+                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
             }
         }
     }

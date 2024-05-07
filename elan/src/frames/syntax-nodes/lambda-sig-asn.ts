@@ -25,9 +25,9 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         throw new Error("Method not implemented.");
     }
 
-    resolveSymbol(id: string, scope: Scope): ISymbol | undefined {
+    resolveSymbol(id: string | undefined, scope: Scope): ISymbol {
         for (const p of this.parameters) {
-            if (p.id.trim() === id.trim()) {
+            if (p.id.trim() === id) {
                 return { symbolId: id, symbolType: p.symbolType };
             }
         }

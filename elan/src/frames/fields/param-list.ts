@@ -1,5 +1,6 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
@@ -42,7 +43,7 @@ export class ParamList extends AbstractField {
         return ast ? ast.items.map(i => i.symbolType!) : [];
     }
 
-    resolveSymbol(id: string, initialScope: Frame): ISymbol | undefined {
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
 
         const ast = this.getOrTransformAstNode as CsvAsn;
 
@@ -58,6 +59,6 @@ export class ParamList extends AbstractField {
             }
         }
 
-        return undefined;
+        return UnknownSymbol.Instance;
     }
 }
