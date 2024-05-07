@@ -86,7 +86,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "hell0");
   });
 
-  test('Pass_Char', async () => {
+  test('Pass_SingleCharString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to "a"
@@ -112,10 +112,10 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "a");
   });
 
-  ignore_test('Pass_EmptyChar', async () => {
+  test('Pass_EmptyString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ''
+constant a set to ""
 main
   print a
   print a is default String
@@ -123,11 +123,11 @@ end main
 `;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = '';
+const a = "";
 
 async function main() {
   system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(a is default String));
+  system.print(_stdlib.asString(a === ""));
 }
 return main;}`;
 
@@ -137,10 +137,10 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test('Pass_SpaceAsChar', async () => {
+  test('Pass_SpaceAsString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to " "
