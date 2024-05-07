@@ -292,9 +292,6 @@ return main;}`;
   });
 
 
-
-  
-
   test('Fail_WrongKeyword', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -308,7 +305,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_DuplicateVar', async () => {
+  test('Fail_DuplicateVar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -319,7 +316,8 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
   });
 
   test('Fail_GlobalVariable', async () => {

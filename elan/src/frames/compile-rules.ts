@@ -216,3 +216,10 @@ export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileErro
         compileErrors.push(new CompileError(`May not mutate constant`, location, false));
     }
 }
+
+export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
+    
+    if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {
+        compileErrors.push(new CompileError(`May not reassign variable`, location, false));
+    }
+}
