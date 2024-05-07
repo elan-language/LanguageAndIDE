@@ -2,7 +2,7 @@ import { BooleanType } from "../../symbols/boolean-type";
 import { ClassType } from "../../symbols/class-type";
 import { IntType } from "../../symbols/int-type";
 import { ListType } from "../../symbols/list-type";
-import { NumberType } from "../../symbols/number-type";
+import { FloatType } from "../../symbols/number-type";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
@@ -22,8 +22,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     private MostPreciseSymbol(lhs: ISymbolType | undefined, rhs: ISymbolType | undefined): ISymbolType | undefined {
-        if (lhs instanceof NumberType || rhs instanceof NumberType) {
-            return NumberType.Instance;
+        if (lhs instanceof FloatType || rhs instanceof FloatType) {
+            return FloatType.Instance;
         }
 
         return lhs;
@@ -78,7 +78,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
             case OperationSymbol.Multiply: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
             case OperationSymbol.Div: return IntType.Instance;
             case OperationSymbol.Mod: return IntType.Instance;
-            case OperationSymbol.Divide: return NumberType.Instance;
+            case OperationSymbol.Divide: return FloatType.Instance;
             case OperationSymbol.And: return BooleanType.Instance;
             case OperationSymbol.Not: return BooleanType.Instance;
             case OperationSymbol.Xor: return BooleanType.Instance;

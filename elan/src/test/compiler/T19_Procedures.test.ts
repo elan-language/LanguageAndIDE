@@ -125,7 +125,7 @@ main
   call foo(a, b)
 end main
 
-procedure foo(a as Number, b as String)
+procedure foo(a as Float, b as String)
   print a
   print b
 end procedure`;
@@ -173,7 +173,7 @@ async function main() {
   foo(a, b);
 }
 
-function foo(a: number, b: string) {
+function foo(a: float, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -209,7 +209,7 @@ async function main() {
   foo(a, b);
 }
 
-function foo(a: number, b: string) {
+function foo(a: float, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -245,7 +245,7 @@ async function main() {
   foo(a, b);
 }
 
-function foo(a: number, b: string) {
+function foo(a: float, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -279,7 +279,7 @@ async function main() {
   foo(a + 1, "hello");
 }
 
-function foo(a: number, b: string) {
+function foo(a: float, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -319,7 +319,7 @@ async function main() {
   system.print(_stdlib.asString(b));
 }
 
-function foo(a: number, b: string) {
+function foo(a: float, b: string) {
   a = a + 1;
   b = b + "!";
 }
@@ -396,7 +396,7 @@ async function main() {
   foo(3);
 }
 
-function foo(a: number) {
+function foo(a: float) {
   if (a > 0) {
     system.print(_stdlib.asString(a));
     var b = a - 1;
@@ -444,9 +444,9 @@ class Bar
         set p1 to 5
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
-    procedure length(plus as Number)
+    procedure length(plus as Float)
         print p1 + plus
     end procedure
 
@@ -487,7 +487,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -800,7 +800,7 @@ end procedure
   test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-procedure f(p as Number)
+procedure f(p as Float)
   return 0
 end procedure
 
@@ -838,7 +838,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot assign Boolean to Int",
-      "Cannot assign Number to Int"
+      "Cannot assign Float to Int"
     ]);
 
   });

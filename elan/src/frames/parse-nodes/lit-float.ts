@@ -7,7 +7,7 @@ import { Sequence } from "./sequence";
 import { DOT } from "../symbols";
 import { Regexes } from "../fields/regexes";
 
-export class LitNumber extends AbstractSequence {
+export class LitFloat extends AbstractSequence {
 
     constructor() {
         super();

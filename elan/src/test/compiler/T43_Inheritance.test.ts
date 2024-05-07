@@ -18,10 +18,10 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Number
-  abstract property p2 as Number 
-  abstract procedure setP1(v as Number)
-  abstract function product() return Number
+  abstract property p1 as Float
+  abstract property p2 as Float 
+  abstract procedure setP1(v as Float)
+  abstract function product() return Float
 end class
 
 class Bar inherits Foo
@@ -29,14 +29,14 @@ class Bar inherits Foo
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Number
-    property p2 as Number
+    property p1 as Float
+    property p2 as Float
 
-    procedure setP1(p1 as Number)
+    procedure setP1(p1 as Float)
         set property.p1 to p1
     end procedure
 
-    function product() return Number
+    function product() return Float
         return p1 * p2
     end function
 
@@ -57,7 +57,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
   get p1() {
     return 0;
   }
@@ -83,7 +83,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -131,13 +131,13 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Number
-  abstract property p2 as Number 
+  abstract property p1 as Float
+  abstract property p2 as Float 
 end class
 
 abstract class Yon
-  abstract procedure setP1(v as Number)
-  abstract function product() return Number
+  abstract procedure setP1(v as Float)
+  abstract function product() return Float
 end class
 
 class Bar inherits Foo, Yon
@@ -145,14 +145,14 @@ class Bar inherits Foo, Yon
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Number
-    property p2 as Number
+    property p1 as Float
+    property p2 as Float
 
-    procedure setP1(p1 as Number)
+    procedure setP1(p1 as Float)
         set property.p1 to p1
     end procedure
 
-    function product() return Number
+    function product() return Float
         return p1 * p2
     end function
 
@@ -173,7 +173,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
   get p1() {
     return 0;
   }
@@ -206,7 +206,7 @@ class Yon {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -254,14 +254,14 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Number
-  abstract property p2 as Number 
+  abstract property p1 as Float
+  abstract property p2 as Float 
 end class
 
 abstract class Yon
-  abstract property p1 as Number 
-  abstract procedure setP1(v as Number)
-  abstract function product() return Number
+  abstract property p1 as Float 
+  abstract procedure setP1(v as Float)
+  abstract function product() return Float
 end class
 
 class Bar inherits Foo, Yon
@@ -269,14 +269,14 @@ class Bar inherits Foo, Yon
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Number
-    property p2 as Number
+    property p1 as Float
+    property p2 as Float
 
-    procedure setP1(p1 as Number)
+    procedure setP1(p1 as Float)
         set property.p1 to p1
     end procedure
 
-    function product() return Number
+    function product() return Float
         return p1 * p2
     end function
 
@@ -297,7 +297,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
   get p1() {
     return 0;
   }
@@ -316,7 +316,7 @@ class Foo {
 }
 
 class Yon {
-  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Float"]]);};
   get p1() {
     return 0;
   }
@@ -336,7 +336,7 @@ class Yon {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"], ["p2", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -447,12 +447,12 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Number
-    abstract property p2 as Number
+    abstract property p1 as Float
+    abstract property p2 as Float
 
-    abstract procedure setP1(v as Number)
+    abstract procedure setP1(v as Float)
 
-    abstract function product() return Number
+    abstract function product() return Float
 end class
 
 class Bar inherits Foo
@@ -460,7 +460,7 @@ class Bar inherits Foo
       set p1 to 3
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     function asString() return String 
         return ""
@@ -500,7 +500,7 @@ class Bar inherits Foo
       set p1 to 3
     end constructor
 
-    property p1 as Number
+    property p1 as Float
     property p2 as String
 
     procedure setP1(v as String)
@@ -535,10 +535,10 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Number
-    abstract property p2 as Number
+    abstract property p1 as Float
+    abstract property p2 as Float
 
-    abstract procedure setP1(v as Number)
+    abstract procedure setP1(v as Float)
 
     abstract function product() return Int
 end class
@@ -548,14 +548,14 @@ class Bar inherits Foo
         set p1 to 3
         set p2 to 4
     end constructor
-    property p1 as Number
-    property p2 as Number
+    property p1 as Float
+    property p2 as Float
 
-    procedure setP1(p1 as Number)
+    procedure setP1(p1 as Float)
         set property.p1 to p1
     end procedure
 
-    function product() return Number
+    function product() return Float
         return p1 * p2
     end function
 

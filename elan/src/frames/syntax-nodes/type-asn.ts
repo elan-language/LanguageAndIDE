@@ -1,7 +1,7 @@
 import { BooleanType } from "../../symbols/boolean-type";
 import { ClassType } from "../../symbols/class-type";
 import { DictionaryType } from "../../symbols/dictionary-type";
-import { NumberType } from "../../symbols/number-type";
+import { FloatType } from "../../symbols/number-type";
 import { GenericClassType } from "../../symbols/generic-class-type";
 import { IntType } from "../../symbols/int-type";
 import { IterType } from "../../symbols/iter-type";
@@ -45,7 +45,7 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
     renderAsDefaultObjectCode(): string {
         switch (this.type) {
             case "Int":
-            case "Number": return "0";
+            case "Float": return "0";
             case "String": return '""';
             case "Boolean": return "false";
             case "List": return "system.defaultList()";
@@ -60,7 +60,7 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
     get symbolType() {
         switch (this.type) {
             case ("Int"): return IntType.Instance;
-            case ("Number"): return NumberType.Instance;
+            case ("Float"): return FloatType.Instance;
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);

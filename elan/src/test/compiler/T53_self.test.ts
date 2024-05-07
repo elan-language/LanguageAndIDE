@@ -14,11 +14,11 @@ main
 end main
 
 class Foo
-  constructor(p1 as Number)
+  constructor(p1 as Float)
     set property.p1 to p1
   end constructor
 
-  property p1 as Number
+  property p1 as Float
 
   function asString() return String
     return ""
@@ -33,7 +33,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor(p1) {
     this.p1 = p1;
   }
@@ -64,7 +64,7 @@ main
   print f.bar()
 end main
 
-function doubled(f as Foo) return Number
+function doubled(f as Foo) return Float
     return 2 * f.p1
 end function
 
@@ -73,9 +73,9 @@ class Foo
         set p1 to 3
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
-    function bar() return Number
+    function bar() return Float
         return doubled(this)
     end function
 
@@ -96,7 +96,7 @@ function doubled(f) {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 3;
   }
@@ -132,11 +132,11 @@ main
 end main
 
 class Foo
-    constructor(p1 as Number)
+    constructor(p1 as Float)
         set property.p to p1
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     function asString() return String
         return ""
@@ -162,11 +162,11 @@ main
 end main
 
 class Foo
-    constructor(p1 as Number)
+    constructor(p1 as Float)
         set p1 to p1
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     function asString() return String
         return ""

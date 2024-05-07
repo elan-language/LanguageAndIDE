@@ -12,11 +12,11 @@ main
   call printModified(3, twice)
 end main
   
-procedure printModified(i as Number, f as Func<of Number => Number>)
+procedure printModified(i as Float, f as Func<of Float => Float>)
   print f(i)
 end procedure
   
-function twice(x as Number) return Number
+function twice(x as Float) return Float
   return x * 2
 end function`;
 
@@ -89,11 +89,11 @@ main
   print f(5)
 end main
   
-function getFunc() return Func<of Number => Number>
+function getFunc() return Func<of Float => Float>
   return twice
 end function
   
-function twice(x as Number) return Number
+function twice(x as Float) return Float
   return x * 2
 end function`;
 

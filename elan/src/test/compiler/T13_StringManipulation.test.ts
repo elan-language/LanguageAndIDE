@@ -53,7 +53,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "_Hello!");
   });
 
-  test('Pass_AppendNumber', async () => {
+  test('Pass_AppendFloat', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -303,7 +303,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "Hello \nWorld!");
   });
 
-  test('Pass_AppendStringToNumber', async () => {
+  test('Pass_AppendStringToFloat', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

@@ -19,8 +19,8 @@ class Foo
     constructor()
         set p1 to 5
     end constructor
-    property p1 as Number
-    procedure setP1(value as Number)
+    property p1 as Float
+    procedure setP1(value as Float)
         set p1 to value
     end procedure
     function asString() return String
@@ -37,7 +37,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -77,7 +77,7 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Number
+  property p1 as Float
 
   procedure display()
       print p1
@@ -96,7 +96,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -135,8 +135,8 @@ class Foo
     constructor()
         set p1 to 5
     end constructor
-    property p1 as Number
-    procedure setP1(value as Number)
+    property p1 as Float
+    procedure setP1(value as Float)
         set p1 to value
         call global.setP1(value)
     end procedure
@@ -145,7 +145,7 @@ class Foo
     end function
 end class
 
-procedure setP1(value as Number)
+procedure setP1(value as Float)
   print value
 end procedure`;
 
@@ -156,7 +156,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -202,7 +202,7 @@ class Foo
         set p1 to 5
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     procedure times(b as Bar)
         call b.p1PlusOne()
@@ -226,7 +226,7 @@ class Bar
         set p1 to 1
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     procedure p1PlusOne()
         set p1 to p1 + 1
@@ -246,7 +246,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -271,7 +271,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 1;
   }
@@ -311,7 +311,7 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Number
+  property p1 as Float
 
   procedure display()
     print p1

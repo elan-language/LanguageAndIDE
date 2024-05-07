@@ -15,11 +15,11 @@ main
 end main
 
 immutable class Foo
-    constructor(p1 as Number)
+    constructor(p1 as Float)
         set property.p1 to p1
     end constructor
-    property p1 as Number
-    function square() return Number
+    property p1 as Float
+    function square() return Float
         return p1 * p1
     end function
     function asString() return String
@@ -35,7 +35,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor(p1) {
     this.p1 = p1;
   }
@@ -72,16 +72,16 @@ main
 end main
 
 abstract immutable class Bar
-  abstract property p1 as Number
-  abstract function square() return Number
+  abstract property p1 as Float
+  abstract function square() return Float
 end class
 
 immutable class Foo inherits Bar
-    constructor(p1 as Number)
+    constructor(p1 as Float)
         set property.p1 to p1
     end constructor
-    property p1 as Number
-    function square() return Number
+    property p1 as Float
+    function square() return Float
         return p1 * p1
     end function 
     function asString() return String
@@ -97,7 +97,7 @@ async function main() {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
   get p1() {
     return 0;
   }
@@ -114,7 +114,7 @@ class Bar {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor(p1) {
     this.p1 = p1;
   }

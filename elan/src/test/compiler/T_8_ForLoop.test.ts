@@ -161,7 +161,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  test('Pass_useOfNumber', async () => {
+  test('Pass_useOfFloat', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

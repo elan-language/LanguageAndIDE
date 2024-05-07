@@ -10,7 +10,7 @@ suite('Pass_PassingTest', () => {
 main
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 
@@ -39,7 +39,7 @@ end test
 main
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 
@@ -60,13 +60,13 @@ end test
     // The test execution should stop at the first failure
   });
 
-  ignore_test('Pass_FloatRoundedToNumberOfDigitsGivenInExpectedLiteral', async () => {
+  ignore_test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 
@@ -93,7 +93,7 @@ end test
 main
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 
@@ -120,7 +120,7 @@ main
   assert square(3) is 3 * 3
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 `;
@@ -140,7 +140,7 @@ main
   call squareTest
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 
@@ -162,7 +162,7 @@ main
   var a set to squareTest
 end main
 
-function square(x as Number) return Number
+function square(x as Float) return Float
   return x ^ 2
 end function
 

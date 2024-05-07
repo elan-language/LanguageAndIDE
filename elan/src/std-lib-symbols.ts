@@ -1,7 +1,7 @@
 import { ArrayType } from "./symbols/array-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { DictionaryType } from "./symbols/dictionary-type";
-import { NumberType } from "./symbols/number-type";
+import { FloatType } from "./symbols/number-type";
 import { IntType } from "./symbols/int-type";
 import { ListType } from "./symbols/list-type";
 import { StringType } from "./symbols/string-type";
@@ -34,17 +34,17 @@ export class StdLibSymbols implements Scope {
             ["asArray", this.getSymbol("asArray", new FunctionType([new IterType(new GenericParameterType("T"))], new ArrayType(new GenericParameterType("T")), true))],
             ["asList", this.getSymbol("asList", new FunctionType([new IterType(new GenericParameterType("T"))], new ListType(new GenericParameterType("T")), true))],
             ["keys", this.getSymbol("keys", new ListType(StringType.Instance))],
-            ["floor", this.getSymbol("floor", new FunctionType([NumberType], IntType.Instance))],
-            ["ceiling", this.getSymbol("ceiling", new FunctionType([NumberType], IntType.Instance))],
+            ["floor", this.getSymbol("floor", new FunctionType([FloatType], IntType.Instance))],
+            ["ceiling", this.getSymbol("ceiling", new FunctionType([FloatType], IntType.Instance))],
             ["values", this.getSymbol("values", new ListType(IntType.Instance))],
             ["hasKey", this.getSymbol("hasKey", BooleanType.Instance)],
-            ["length", this.getSymbol("length", new FunctionType([new IterType(new GenericParameterType("T"))], NumberType.Instance, true))],
+            ["length", this.getSymbol("length", new FunctionType([new IterType(new GenericParameterType("T"))], FloatType.Instance, true))],
             ["setItem", this.getSymbol("setItem", new DictionaryType(StringType.Instance, IntType.Instance))],
             ["removeItem", this.getSymbol("removeItem", new DictionaryType(StringType.Instance, IntType.Instance))],
-            ["pi", this.getSymbol("pi", NumberType.Instance)],
-            ["sin", this.getSymbol("sin", NumberType.Instance)],
-            ["cos", this.getSymbol("cos", NumberType.Instance)],
-            ["min", this.getSymbol("min", NumberType.Instance)],
+            ["pi", this.getSymbol("pi", FloatType.Instance)],
+            ["sin", this.getSymbol("sin", FloatType.Instance)],
+            ["cos", this.getSymbol("cos", FloatType.Instance)],
+            ["min", this.getSymbol("min", FloatType.Instance)],
             ["isBefore", this.getSymbol("isBefore", BooleanType.Instance)],
             ["isAfter", this.getSymbol("isAfter", BooleanType.Instance)],
             ["isBeforeOrSameAs", this.getSymbol("isBeforeOrSameAs", BooleanType.Instance)],

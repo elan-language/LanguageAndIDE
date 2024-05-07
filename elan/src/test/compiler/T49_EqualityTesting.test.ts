@@ -18,14 +18,14 @@ main
 end main
 
 class Foo
-    constructor(p1 as Number, p2 as String)
+    constructor(p1 as Float, p2 as String)
         set property.p1 to p1
         set property.p2 to p2
     end constructor
-    property p1 as Number
+    property p1 as Float
     property p2 as String
 
-    procedure setP1(v as Number)
+    procedure setP1(v as Float)
         set p1 to v
     end procedure
 
@@ -45,7 +45,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;

@@ -13,7 +13,7 @@ import { ParseNode } from '../frames/parse-nodes/parse-node';
 import { ISymbolType } from '../symbols/symbol-type';
 import { transform } from '../frames/syntax-nodes/ast-visitor';
 import { Field } from '../frames/interfaces/field';
-import { NumberType } from '../symbols/number-type';
+import { FloatType } from '../symbols/number-type';
 import { Parent } from '../frames/interfaces/parent';
 import { BooleanType } from '../symbols/boolean-type';
 import { IntType } from '../symbols/int-type';
@@ -379,7 +379,7 @@ export function testCompletion(node: ParseNode, text: string, status: ParseStatu
 
 
 export const intType = IntType.Instance;
-export const numberType = NumberType.Instance;
+export const floatType = FloatType.Instance;
 export const boolType = BooleanType.Instance;
 export const stringType = StringType.Instance;
 export const unknownType = UnknownType.Instance;
@@ -389,9 +389,9 @@ const stubIntSymbol = {
   symbolType: intType,
 } as ISymbol;
 
-const stubNumberSymbol = {
+const stubFloatSymbol = {
   symbolId: "b",
-  symbolType: numberType,
+  symbolType: floatType,
 } as ISymbol;
 
 const stubStringSymbol = {
@@ -413,8 +413,8 @@ const stubHolder = {
   resolveSymbol(id, initialScope): ISymbol {
     switch (id) {
       case "a": return stubIntSymbol;
-      case "b": return stubNumberSymbol;
-      case "c": return stubNumberSymbol;
+      case "b": return stubFloatSymbol;
+      case "c": return stubFloatSymbol;
       case "x": return stubIntSymbol;
       case 'foo': return stubIntSymbol;
       case 'bar': return stubStringSymbol;

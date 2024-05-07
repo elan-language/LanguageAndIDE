@@ -1,9 +1,9 @@
-import { NumberType } from "../../symbols/number-type";
+import { FloatType } from "../../symbols/number-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralNumberAsn extends AbstractAstNode implements AstNode {
+export class LiteralFloatAsn extends AbstractAstNode implements AstNode {
 
     constructor(rawValue: string, public readonly fieldId: string,) {
         super();
@@ -22,7 +22,7 @@ export class LiteralNumberAsn extends AbstractAstNode implements AstNode {
     value: number;
 
     get symbolType() {
-        return NumberType.Instance;
+        return FloatType.Instance;
     }
 
     toString() {

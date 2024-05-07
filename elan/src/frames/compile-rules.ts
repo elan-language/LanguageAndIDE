@@ -8,7 +8,7 @@ import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
-import { NumberType } from "../symbols/number-type";
+import { FloatType } from "../symbols/number-type";
 import { StringType } from "../symbols/string-type";
 import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
@@ -135,7 +135,7 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof NumberType && !(rhs instanceof IntType || rhs instanceof NumberType)) {
+    if (lhs instanceof FloatType && !(rhs instanceof IntType || rhs instanceof FloatType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }

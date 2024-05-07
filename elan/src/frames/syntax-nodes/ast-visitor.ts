@@ -17,8 +17,8 @@ import { FuncCallAsn } from "./func-call-asn";
 import { CSV } from "../parse-nodes/csv";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { Multiple } from "../parse-nodes/multiple";
-import { LitNumber } from "../parse-nodes/lit-number";
-import { LiteralNumberAsn } from "./literal-number-asn";
+import { LitFloat } from "../parse-nodes/lit-float";
+import { LiteralFloatAsn } from "./literal-number-asn";
 import { Sequence } from "../parse-nodes/sequence";
 import { Lambda } from "../parse-nodes/lambda";
 import { LambdaAsn } from "./lambda-asn";
@@ -161,15 +161,15 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof LitInt) {
-        return new LiteralNumberAsn(node.matchedText, fieldId);
+        return new LiteralFloatAsn(node.matchedText, fieldId);
     }
 
     if (node instanceof LitBool) {
         return new LiteralBoolAsn(node.matchedText, fieldId);
     }
 
-    if (node instanceof LitNumber) {
-        return new LiteralNumberAsn(node.matchedText, fieldId);
+    if (node instanceof LitFloat) {
+        return new LiteralFloatAsn(node.matchedText, fieldId);
     }
 
     if (node instanceof LitStringEmpty) {

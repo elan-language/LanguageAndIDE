@@ -155,8 +155,8 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	f.addChildBefore(proc, gs);
 	const func = new FunctionFrame(f);
 	func.name.setText("hypotenuse");
-	func.params.setText("sideB as Number, sideC as Number");
-	func.returnType.setText("Number");
+	func.params.setText("sideB as Float, sideC as Float");
+	func.returnType.setText("Float");
 	f.addChildBefore(func, gs);
 	const enu = new Enum(f);
 	enu.name.setText("Fruit");

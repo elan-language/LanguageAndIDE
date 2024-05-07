@@ -19,7 +19,7 @@ class Foo
         set p2 to "Apple"
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     private property p2 as String
 
@@ -36,7 +36,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -76,7 +76,7 @@ class Foo
         set p2 to "Apple"
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     private property p2 as String
 
@@ -107,7 +107,7 @@ class Foo
         set p2 to "Apple"
     end constructor
 
-    property p1 as Number
+    property p1 as Float
 
     private property p2 as String
 

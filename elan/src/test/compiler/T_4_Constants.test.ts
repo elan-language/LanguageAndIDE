@@ -26,7 +26,7 @@ return main;}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     //const symbols not yet implemented
-    //const varConst = fileImpl.getChildNumber(0);
+    //const varConst = fileImpl.getChildFloat(0);
     //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -34,7 +34,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test('Pass_Number', async () => {
+  test('Pass_Float', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3.1

@@ -19,7 +19,7 @@ class Foo
       set p1 to 5
   end constructor
 
-  property p1 as Number
+  property p1 as Float
 
   property p2 as String
 
@@ -38,7 +38,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -73,12 +73,12 @@ main
 end main
 
 class Foo
-    constructor(p_1 as Number,  p_2 as String)
+    constructor(p_1 as Float,  p_2 as String)
         set p1 to p_1
         set p2 to p_2
     end constructor
 
-    property p1 as Number
+    property p1 as Float
     property p2 as String
     function asString() return String
         return ""
@@ -94,7 +94,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Number"], ["p2", "String"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor(p_1, p_2) {
     this.p1 = p_1;
     this.p2 = p_2;
@@ -369,7 +369,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Number to Int"]);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Float to Int"]);
   });
 
   test('Fail_SupplyingArgumentNotSpecified', async () => {

@@ -13,7 +13,7 @@ main
   call printEach(it)
 end main
   
-procedure printEach(target as Iter<of Number>)
+procedure printEach(target as Iter<of Float>)
   each x in target
     print x
   end each
@@ -50,7 +50,7 @@ main
   call printEach(arr)
 end main
   
-procedure printEach(target as Iter<of Number>)
+procedure printEach(target as Iter<of Float>)
   each x in target
     print x
   end each
@@ -124,11 +124,11 @@ main
   call printAsList(it)
 end main
   
-procedure printAsIter(target as Iter<of Number>)
+procedure printAsIter(target as Iter<of Float>)
   print target
 end procedure
   
-procedure printAsList(target as Iter<of Number>)
+procedure printAsList(target as Iter<of Float>)
   var some set to target.asList()
   print some[3..]
 end procedure`;

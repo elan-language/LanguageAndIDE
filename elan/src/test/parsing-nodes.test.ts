@@ -4,7 +4,7 @@ import { ParseStatus } from '../frames/status-enums';
 import { testNodeParse } from './testHelpers';
 import { LitBool } from '../frames/parse-nodes/lit-bool';
 import { LitInt } from '../frames/parse-nodes/lit-int';
-import { LitNumber } from '../frames/parse-nodes/lit-number';
+import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { BinaryOperation } from '../frames/parse-nodes/binary-operation';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
 import { BracketedExpression } from '../frames/parse-nodes/bracketed-expression';
@@ -172,18 +172,18 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23", "1", "");
 		testNodeParse(new LitInt(), "a", ParseStatus.invalid, "", "a", "", "");
 	});
-	test('LitNumber', () => {
-		testNodeParse(new LitNumber(), "", ParseStatus.empty, "", "", "");
-		testNodeParse(new LitNumber(), "1.0", ParseStatus.valid, "1.0", "", "1.0");
-		testNodeParse(new LitNumber(), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
-		testNodeParse(new LitNumber(), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
-		testNodeParse(new LitNumber(), "1.-0", ParseStatus.invalid, "", "1.-0", "");
-		testNodeParse(new LitNumber(), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
-		testNodeParse(new LitNumber(), "1", ParseStatus.incomplete, "1", "", "1");
-		testNodeParse(new LitNumber(), "1.", ParseStatus.incomplete, "1.", "", "1.");
-		testNodeParse(new LitNumber(), "1. ", ParseStatus.invalid, "", "1. ", "");
-		testNodeParse(new LitNumber(), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
-		testNodeParse(new LitNumber(), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
+	test('LitFloat', () => {
+		testNodeParse(new LitFloat(), "", ParseStatus.empty, "", "", "");
+		testNodeParse(new LitFloat(), "1.0", ParseStatus.valid, "1.0", "", "1.0");
+		testNodeParse(new LitFloat(), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
+		testNodeParse(new LitFloat(), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
+		testNodeParse(new LitFloat(), "1.-0", ParseStatus.invalid, "", "1.-0", "");
+		testNodeParse(new LitFloat(), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
+		testNodeParse(new LitFloat(), "1", ParseStatus.incomplete, "1", "", "1");
+		testNodeParse(new LitFloat(), "1.", ParseStatus.incomplete, "1.", "", "1.");
+		testNodeParse(new LitFloat(), "1. ", ParseStatus.invalid, "", "1. ", "");
+		testNodeParse(new LitFloat(), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
+		testNodeParse(new LitFloat(), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
 	});
 	test('Keyword', () => {
 		testNodeParse(new KeywordNode(abstractKeyword), "", ParseStatus.empty, "", "", "");

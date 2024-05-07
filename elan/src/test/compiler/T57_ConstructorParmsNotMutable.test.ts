@@ -32,7 +32,7 @@ end class`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
-    constructor(a as Array<of Number>)
+    constructor(a as Array<of Float>)
         set a[0] to 4
     end constructor
 

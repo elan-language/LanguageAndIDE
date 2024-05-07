@@ -25,7 +25,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as List<of Number>
+    property previousScores as List<of Float>
 
     function asString() return String
         return "A game"
@@ -55,7 +55,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "List<of Number>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "List<of Float>"]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -129,7 +129,7 @@ class Game
     end constructor
 
     property i as Int
-    property f as Number
+    property f as Float
     property b as Boolean
     property s as String
     property li as List<of Int>
@@ -155,7 +155,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Number"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
   constructor() {
 
   }
@@ -203,7 +203,7 @@ class Game
        set i to 100
     end constructor
 
-    property i as Number
+    property i as Float
 
     function asString() return String
         return "A game"
@@ -218,7 +218,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Number"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Float"]]);};
   constructor() {
     this.i = 100;
   }
@@ -353,15 +353,15 @@ class Game
     set score to 1
   end constructor
 
-  property score as Number
-  property best as Number
+  property score as Float
+  property best as Float
 
   property p1 as Player
   property p2 as Player
 
   property previousGame as Game
 
-  property previousScores as List<of Number>
+  property previousScores as List<of Float>
 
   function asString() return String
     return "A game"
@@ -394,7 +394,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["score", "Number"], ["best", "Number"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "List<of Number>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "List<of Float>"]]);};
   constructor() {
     this.score = 1;
   }

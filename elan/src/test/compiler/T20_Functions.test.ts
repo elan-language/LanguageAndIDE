@@ -12,7 +12,7 @@ main
   print foo(3,4)
 end main
 
-function foo(a as Number, b as Number) return Number
+function foo(a as Float, b as Float) return Float
   return a * b
 end function`;
 
@@ -137,7 +137,7 @@ main
   print factorial(5)
 end main
 
-function factorial(a as Number) return Number
+function factorial(a as Float) return Float
     var result set to 0
     if a > 2
       set result to a * factorial(a - 1)
@@ -231,7 +231,7 @@ return main;}`;
   test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f(p as Number) return Number
+function f(p as Float) return Float
   return 0
 end function
 
@@ -254,7 +254,7 @@ end main`;
   test('Fail_ParameterType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f(p as Int) return Number
+function f(p as Int) return Float
   return 0
 end function
 
@@ -269,7 +269,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot assign Boolean to Int",
-      "Cannot assign Number to Int"
+      "Cannot assign Float to Int"
     ]);
 
   });

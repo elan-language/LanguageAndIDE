@@ -108,7 +108,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test('Pass_CoerceNumberToIntVar', async () => {
+  test('Pass_CoerceFloatToIntVar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -259,7 +259,7 @@ return main;}`;
   test('Pass_Iter', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f() return Iter<of Number>
+function f() return Iter<of Float>
   return [1, 2]
 end function
 
@@ -346,7 +346,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Number to String"]);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Float to String"]);
   });
 
   test('Fail_NotInitialized', async () => {
@@ -425,11 +425,11 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Number to Int",
-      "Cannot assign Number to Boolean",
-      "Cannot assign Boolean to Number",
-      "Cannot assign List <Number> to String",
-      "Cannot assign Number to Int"]);
+      "Cannot assign Float to Int",
+      "Cannot assign Float to Boolean",
+      "Cannot assign Boolean to Float",
+      "Cannot assign List <Float> to String",
+      "Cannot assign Float to Int"]);
 
   });
 
@@ -450,9 +450,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign List <Number> to Array <String>",
-      "Cannot assign Array <String> to List <Number>",
-      "Cannot assign List <Number> to Dictionary <String,Number>"
+      "Cannot assign List <Float> to Array <String>",
+      "Cannot assign Array <String> to List <Float>",
+      "Cannot assign List <Float> to Dictionary <String,Float>"
     ]);
 
   });
