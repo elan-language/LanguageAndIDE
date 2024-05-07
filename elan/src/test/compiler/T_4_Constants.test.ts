@@ -332,7 +332,7 @@ end main
     assertDoesNotCompile(fileImpl, ["May not mutate constant"]);
   });
 
-  ignore_test('Fail_expression', async () => {
+  test('Fail_expression', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3 + 4
@@ -349,7 +349,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_referenceToOtherConstant', async () => {
+  test('Fail_referenceToOtherConstant', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
