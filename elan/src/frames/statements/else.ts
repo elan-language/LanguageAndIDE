@@ -7,6 +7,8 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { elseKeyword } from "../keywords";
+import { mustBeOfType } from "../compile-rules";
+import { BooleanType } from "../../symbols/boolean-type";
 
 export class Else extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
@@ -44,8 +46,12 @@ export class Else extends FrameWithStatements implements Statement {
         return this.hasIf ? ` if ${this.condition.renderAsSource()}`:``;
     }
 
-    private ifClauseAsObjectCode() : string {
-        return this.hasIf ? `if (${this.condition.compile()}) {`: `{`;
+    private ifClauseAsObjectCode(): string {
+        if (this.hasIf) {
+            mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
+            return `if (${this.condition.compile()}) {`;
+        }
+        return `{`;
     }
 
     renderAsHtml(): string {
