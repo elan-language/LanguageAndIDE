@@ -12,7 +12,7 @@ export class LitInt extends AbstractParseNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.literalInt);
+            [this.status, this.matchedText, this.remainingText] = matchRegEx(text, Regexes.negatableLitInt);
         }
     }
 }

@@ -70,7 +70,7 @@ return main;}`;
 
 main
   var tot set to 0
-  for i from 10 to 3 step - 1
+  for i from 10 to 3 step -1
     set tot to tot + i
   end for
   print tot
@@ -80,7 +80,7 @@ end main`;
 async function main() {
   var tot = 0;
   for (var i = 10; i >= 3; i = i - 1) {
-    tot = tot + i;
+    tot = tot + -i;
   }
   system.print(_stdlib.asString(tot));
 }

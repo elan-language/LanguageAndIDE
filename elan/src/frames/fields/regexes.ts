@@ -9,7 +9,7 @@ export class Regexes {
     static readonly intoClause = /^into[^\S\r\n]/;
     static readonly identifier =/^\s*[a-z]\w*/;
     static readonly literalInt =/^\s*[0-9]+/;
-    static readonly negatableLitInt = /^-?[0-9]+/;
+    static readonly negatableLitInt = /^\s*-?[0-9]+/;
     static readonly charValue =/[^']/;
     static readonly nonEmptyStringContent = /^[^{"]+/;
     static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;

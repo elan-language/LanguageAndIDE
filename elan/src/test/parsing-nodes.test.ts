@@ -163,6 +163,9 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LitInt(), "", ParseStatus.empty, "", "", "", "");
 		testNodeParse(new LitInt(), "   ", ParseStatus.invalid, "", "   ", "", "");
 		testNodeParse(new LitInt(), "123", ParseStatus.valid, "123", "", "123", "");
+		testNodeParse(new LitInt(), "-123", ParseStatus.valid, "-123", "", "-123", "");
+		testNodeParse(new LitInt(), "- 123", ParseStatus.invalid, "", "- 123", "", "");
+		testNodeParse(new LitInt(), "1-23", ParseStatus.valid, "1", "-23", "", "");
 		testNodeParse(new LitInt(), "456  ", ParseStatus.valid, "456", "  ", "456", "");
 		testNodeParse(new LitInt(), " 123a", ParseStatus.valid, " 123", "a", "123", "");
 		testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23", "1", "");
@@ -171,6 +174,9 @@ suite('Parsing Nodes', () => {
 	test('LitNumber', () => {
 		testNodeParse(new LitNumber(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new LitNumber(), "1.0", ParseStatus.valid, "1.0", "", "1.0");
+		testNodeParse(new LitNumber(), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
+		testNodeParse(new LitNumber(), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
+		testNodeParse(new LitNumber(), "1.-0", ParseStatus.invalid, "", "1.-0", "");
 		testNodeParse(new LitNumber(), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
 		testNodeParse(new LitNumber(), "1", ParseStatus.incomplete, "1", "", "1");
 		testNodeParse(new LitNumber(), "1.", ParseStatus.incomplete, "1.", "", "1.");
