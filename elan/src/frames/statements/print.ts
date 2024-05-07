@@ -22,7 +22,7 @@ export class Print extends AbstractFrame implements Statement {
     }
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        source.remove("print ");
+        source.remove("print");
         this.expr.parseFrom(source);
         source.removeNewLine();
     }
