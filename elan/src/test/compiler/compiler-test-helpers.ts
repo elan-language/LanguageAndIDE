@@ -99,7 +99,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
         actual = sl?.printed; 
     }
     catch (e) {
-        assert.fail();
+        assert.fail((e as any).message ?? "");
     }
     assert.strictEqual(actual, output);
 }

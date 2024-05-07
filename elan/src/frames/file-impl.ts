@@ -162,7 +162,11 @@ export class FileImpl implements File {
         var result = "";
         if (this._children.length > 0) {
             const ss: Array<string> = [];
-            for (var frame of this._children.filter(g => !('isSelector' in g))) {
+            for (var frame of this._children.filter(g => g instanceof Enum)) {
+                ss.push(frame.compile());
+            }
+
+            for (var frame of this._children.filter(g => !('isSelector' in g || g instanceof Enum))) {
                 ss.push(frame.compile());
             }
             result = ss.join("\r\n");

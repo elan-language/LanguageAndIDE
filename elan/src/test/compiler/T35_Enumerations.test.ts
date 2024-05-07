@@ -19,15 +19,15 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   system.print(_stdlib.asString(Fruit.apple));
   system.print(_stdlib.asString(Fruit.orange));
   system.print(_stdlib.asString(Fruit.pear));
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -53,15 +53,15 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   var x = Fruit.apple;
   x = Fruit.pear;
   system.print(_stdlib.asString(x));
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -87,15 +87,15 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   var x = Fruit.apple;
   var y = x;
   system.print(_stdlib.asString(y));
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -121,15 +121,15 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   var x = Fruit.apple;
   system.print(_stdlib.asString(x === Fruit.apple));
   system.print(_stdlib.asString(x === Fruit.pear));
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -162,6 +162,10 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   var f = Fruit.orange;
   switch (f) {
@@ -179,10 +183,6 @@ async function main() {
       break;
   }
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -207,14 +207,14 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
 async function main() {
   var a = "Eat more " + Fruit.apple + "s!";
   system.print(_stdlib.asString(a));
 }
-
-var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
-};
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);

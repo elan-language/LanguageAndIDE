@@ -192,9 +192,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  ignore_test('Pass_Enum', async () => {
-    // enums need to be declared before use - so need to move to top of file in ts code. also we will need to set the value of
-    // each enum to the appropriate string
+  test('Pass_Enum', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to Fruit.apple
@@ -207,9 +205,9 @@ end enum
 `;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-enum Fruit {
-  apple = "apple", orange = "orange", pear = "pear"
-}
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
 
 const a = Fruit.apple;
 
@@ -228,8 +226,6 @@ return main;}`;
   });
 
   test('Pass_List', async () => {
-    // enums need to be declared before use - so need to move to top of file in ts code. also we will need to set the value of
-    // each enum to the appropriate string
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to [1,2,3]
