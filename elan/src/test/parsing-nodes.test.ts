@@ -93,6 +93,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
 		testNodeParse(new ExprNode(), "a", ParseStatus.valid, "a", "", "a", "");
 		testNodeParse(new ExprNode(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
+		testNodeParse(new ExprNode(), "a * -b", ParseStatus.valid, "a * -b", "", "a * -b", "");
 		testNodeParse(new ExprNode(), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
 		testNodeParse(new ExprNode(), "+", ParseStatus.invalid, "", "+", "");
 		testNodeParse(new ExprNode(), "+b", ParseStatus.invalid, "", "+b", "");
