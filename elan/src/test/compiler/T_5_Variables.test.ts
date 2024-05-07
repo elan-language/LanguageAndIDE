@@ -30,7 +30,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  //Failing on the symbol - type is unknown
   test('Pass_IntVariable', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -226,7 +225,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "-1truetruefalsefalsefalsetruetrue111.3333333333333333");
   });
 
-  ignore_test('Pass_Enum', async () => {
+  test('Pass_Enum', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -238,9 +237,9 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-enum Fruit {
-    apple = "apple", orange = "orange", pear = "pear"
-}
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
 
 async function main() {
   var a = Fruit.apple;
