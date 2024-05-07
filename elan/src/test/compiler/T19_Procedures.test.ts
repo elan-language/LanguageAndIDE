@@ -829,7 +829,7 @@ end procedure
 
 main
   call f(true)
-  call f(1)
+  call f(1.0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);

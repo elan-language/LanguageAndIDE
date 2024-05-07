@@ -165,7 +165,7 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var tot set to 0
+  var tot set to 0.0
   for i from 1.5 to 10 step 1
     set tot to tot + i
   end for

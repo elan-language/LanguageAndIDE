@@ -18,7 +18,7 @@ import { CSV } from "../parse-nodes/csv";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { LitFloat } from "../parse-nodes/lit-float";
-import { LiteralFloatAsn } from "./literal-number-asn";
+import { LiteralFloatAsn } from "./literal-float-asn";
 import { Sequence } from "../parse-nodes/sequence";
 import { Lambda } from "../parse-nodes/lambda";
 import { LambdaAsn } from "./lambda-asn";
@@ -86,6 +86,7 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { CsvAsn } from "./csv-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { ThisAsn } from "./this-asn";
+import { LiteralIntAsn } from "./literal-int-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -161,7 +162,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof LitInt) {
-        return new LiteralFloatAsn(node.matchedText, fieldId);
+        return new LiteralIntAsn(node.matchedText, fieldId);
     }
 
     if (node instanceof LitBool) {

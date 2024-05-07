@@ -137,7 +137,7 @@ main
   print factorial(5)
 end main
 
-function factorial(a as Float) return Float
+function factorial(a as Int) return Int
     var result set to 0
     if a > 2
       set result to a * factorial(a - 1)
@@ -255,12 +255,12 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f(p as Int) return Float
-  return 0
+  return 0.0
 end function
 
 main
   var a set to f(true)
-  var b set to f(1)
+  var b set to f(1.0)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);

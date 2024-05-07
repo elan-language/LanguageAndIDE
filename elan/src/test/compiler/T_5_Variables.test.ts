@@ -259,7 +259,7 @@ return main;}`;
   test('Pass_Iter', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-function f() return Iter<of Float>
+function f() return Iter<of Int>
   return [1, 2]
 end function
 
@@ -414,10 +414,10 @@ main
   var b set to 1
   var c set to ""
   var d set to f()
-  set a to 1
+  set a to 1.0
   set b to false
-  set c to [1, 2]
-  set d to 1
+  set c to [1.0, 2]
+  set d to 1.0
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -425,9 +425,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Float to Int",
       "Cannot assign Float to Boolean",
-      "Cannot assign Boolean to Float",
+      "Cannot assign Boolean to Int",
       "Cannot assign List <Float> to String",
       "Cannot assign Float to Int"]);
 
@@ -438,9 +437,9 @@ end main`;
 
 main
   var a set to new Array<of String>(3)
-  var b set to [1, 2]
-  var c set to ["a":1, "b":3, "z":10]
-  set a to [1, 2]
+  var b set to [1.0, 2]
+  var c set to ["a":1.0, "b":3, "z":10]
+  set a to [1.0, 2]
   set b to a
   set c to b
 end main`;
