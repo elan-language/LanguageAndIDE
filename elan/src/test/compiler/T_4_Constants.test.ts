@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertIsSymbol, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertIsSymbol, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 
 suite('T_4_Constants', () => {
@@ -271,7 +271,7 @@ end main
 
 const a set to 3
 
-main 
+main
   print a
 end main
 `;
@@ -282,7 +282,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_invalidLiteralString', async () => {
+  test('Fail_invalidLiteralString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 'hello'
@@ -312,16 +312,15 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl);
   });
 
-  ignore_test('Fail_reassignment', async () => {
+  test('Fail_reassignment', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
 
 main
-  set a to 4 
+  set a to 4
   print a
 end main
 `;
@@ -330,7 +329,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate constant"]);
   });
 
   ignore_test('Fail_expression', async () => {

@@ -208,3 +208,11 @@ export function mustNotBeParameter(assignable: VarAsn, compileErrors: CompileErr
         compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
     }
 }
+
+export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+    const s = assignable.symbolScope;
+
+    if (s === SymbolScope.program) {
+        compileErrors.push(new CompileError(`May not mutate constant`, location, false));
+    }
+}
