@@ -1,3 +1,4 @@
+import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -24,7 +25,7 @@ export class CsvAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        return undefined;
+        return UnknownType.Instance;
     }
 
     toString() {

@@ -1,3 +1,4 @@
+import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -19,7 +20,7 @@ export class FixedIdAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        return undefined;
+        return UnknownType.Instance;
     }
 
     toString() {

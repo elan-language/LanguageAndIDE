@@ -1,5 +1,6 @@
 import { ISymbol } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -20,7 +21,10 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         return this.compileErrors.concat(cc);
     }
 
-    symbolType: ISymbolType | undefined;
+    get symbolType() {
+        return UnknownType.Instance;
+    }
+
     compile(): string {
         throw new Error("Method not implemented.");
     }

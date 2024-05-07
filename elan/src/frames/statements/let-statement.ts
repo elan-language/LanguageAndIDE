@@ -4,9 +4,11 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
+import { ISymbolType } from "../../symbols/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
 
 export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;
@@ -18,6 +20,10 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
         this.name = new VarDefField(this);
         this.expr = new ExpressionField(this);
     }
+    get symbolType() {
+        return UnknownType.Instance;
+    }
+    symbolScope?: SymbolScope | undefined;
     initialKeywords(): string {
         return letKeyword;
     }

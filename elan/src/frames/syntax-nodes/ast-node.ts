@@ -2,7 +2,7 @@ import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 
 export interface AstNode {
-    symbolType: ISymbolType | undefined;
+    symbolType:  ISymbolType;
 
     compile(): string;
 

@@ -837,8 +837,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Boolean to Int",
-      "Cannot assign Float to Int"
+      "Incompatible types Boolean to Int",
+      "Incompatible types Float to Int"
     ]);
 
   });

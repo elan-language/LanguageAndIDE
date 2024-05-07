@@ -113,11 +113,20 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
 
 function FailIncompatible(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
     const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-    compileErrors.push(new CompileError(`Cannot assign ${rhs.name} to ${lhs.name}`, location, unknown));
+    compileErrors.push(new CompileError(`Incompatible types ${rhs.name} to ${lhs.name}`, location, unknown));
 }
 
 function FailUnknown(lhs: AstNode, compileErrors: CompileError[], location: string) {
     compileErrors.push(new CompileError(`Undeclared variable ${lhs}`, location, true));
+}
+
+export function mustBeCoercibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+    // for compare allow int and floats
+    if ((lhs instanceof IntType || lhs instanceof FloatType) && (rhs instanceof IntType || rhs instanceof FloatType)) {
+        return;
+    }
+
+    mustBeCompatibleType(lhs, rhs, compileErrors, location);
 }
 
 export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {

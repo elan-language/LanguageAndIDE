@@ -1,3 +1,4 @@
+import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
@@ -35,7 +36,7 @@ export class QualifierAsn extends AbstractAstNode implements AstNode {
 
     get symbolType() {
         const id = (this.value as any).id;
-        return id ? this.scope.resolveSymbol(id, this.scope)?.symbolType : undefined;
+        return id ? this.scope.resolveSymbol(id, this.scope).symbolType : UnknownType.Instance;;
     }
 
     toString() {

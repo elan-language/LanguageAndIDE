@@ -369,7 +369,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Float to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
   test('Fail_SupplyingArgumentNotSpecified', async () => {

@@ -34,7 +34,7 @@ export class IdAsn extends AbstractAstNode implements AstNode {
     }
 
     get symbolType() {
-        return this.scope.resolveSymbol(this.id, this.scope)?.symbolType;
+        return this.scope.resolveSymbol(this.id, this.scope).symbolType;
     }
 
     toString() {

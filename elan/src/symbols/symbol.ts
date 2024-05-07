@@ -14,6 +14,6 @@ export enum SymbolScope {
 
 export interface ISymbol {
     symbolId: string;
-    symbolType?: ISymbolType;
+    symbolType: ISymbolType;
     symbolScope? : SymbolScope;
 }

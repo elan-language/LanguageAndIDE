@@ -346,7 +346,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot assign Float to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to String"]);
   });
 
   test('Fail_NotInitialized', async () => {
@@ -425,10 +425,10 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign Float to Boolean",
-      "Cannot assign Boolean to Int",
-      "Cannot assign List <Float> to String",
-      "Cannot assign Float to Int"]);
+      "Incompatible types Float to Boolean",
+      "Incompatible types Boolean to Int",
+      "Incompatible types List <Float> to String",
+      "Incompatible types Float to Int"]);
 
   });
 
@@ -449,9 +449,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot assign List <Float> to Array <String>",
-      "Cannot assign Array <String> to List <Float>",
-      "Cannot assign List <Float> to Dictionary <String,Float>"
+      "Incompatible types List <Float> to Array <String>",
+      "Incompatible types Array <String> to List <Float>",
+      "Incompatible types List <Float> to Dictionary <String,Float>"
     ]);
 
   });

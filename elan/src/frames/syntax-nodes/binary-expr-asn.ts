@@ -5,6 +5,7 @@ import { ListType } from "../../symbols/list-type";
 import { FloatType } from "../../symbols/number-type";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
+import { mustBeCoercibleType, mustBeCompatibleType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -21,12 +22,24 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return this.compileErrors.concat(this.lhs.aggregateCompileErrors()).concat(this.rhs.aggregateCompileErrors());
     }
 
-    private MostPreciseSymbol(lhs: ISymbolType | undefined, rhs: ISymbolType | undefined): ISymbolType | undefined {
+    private MostPreciseSymbol(lhs: ISymbolType, rhs: ISymbolType): ISymbolType {
         if (lhs instanceof FloatType || rhs instanceof FloatType) {
             return FloatType.Instance;
         }
 
         return lhs;
+    }
+
+    private isCoercibleOp() {
+        switch (this.op) {
+            case OperationSymbol.Equals: 
+            case OperationSymbol.NotEquals: 
+            case OperationSymbol.LT: 
+            case OperationSymbol.GT: 
+            case OperationSymbol.GTE: 
+            case OperationSymbol.LTE: return true;
+        }
+        return false;
     }
 
 
@@ -54,6 +67,11 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
+
+        if (this.isCoercibleOp()) {
+            mustBeCoercibleType(this.lhs.symbolType!, this.rhs.symbolType!, this.compileErrors, this.fieldId);
+        }
+
         if (this.op === OperationSymbol.Add && (this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType)) {
             return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }

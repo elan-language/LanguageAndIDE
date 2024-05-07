@@ -1,10 +1,10 @@
-import { ISymbol, SymbolScope } from "./symbol";
-import { ISymbolType } from "./symbol-type";
+import { ISymbol } from "./symbol";
+import { UnknownType } from "./unknown-type";
 
 export class UnknownSymbol implements ISymbol {
     private constructor() { }
     symbolId = "";
-    symbolType = undefined;
+    symbolType = UnknownType.Instance;;
     symbolScope = undefined;
 
     static Instance: ISymbol = new UnknownSymbol();

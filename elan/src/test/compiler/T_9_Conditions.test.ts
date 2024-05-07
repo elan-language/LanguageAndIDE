@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T_9_Conditions', () => {
@@ -166,15 +166,29 @@ return main;}`;
 
 main
   print 3 < 3.1
+  print 3 <= 3.1
+  print 3 > 3.1
+  print 3 >= 3.1
   print 3 is 3.0
+  print 3 is not 3.0
   print 3.1 < 3
+  print 3.1 <= 3
+  print 3.1 > 3
+  print 3.1 >= 3
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 < 3.1));
+  system.print(_stdlib.asString(3 <= 3.1));
+  system.print(_stdlib.asString(3 > 3.1));
+  system.print(_stdlib.asString(3 >= 3.1));
   system.print(_stdlib.asString(3 === 3));
+  system.print(_stdlib.asString(3 !== 3));
   system.print(_stdlib.asString(3.1 < 3));
+  system.print(_stdlib.asString(3.1 <= 3));
+  system.print(_stdlib.asString(3.1 > 3));
+  system.print(_stdlib.asString(3.1 >= 3));
 }
 return main;}`;
 
@@ -184,10 +198,10 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+    await assertObjectCodeExecutes(fileImpl, "truetruefalsefalsetruefalsefalsefalsetruetrue");
   });
 
-  ignore_test('Fail_not_is', async () => {
+  test('Fail_not_is', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -201,7 +215,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_not', async () => {
+  test('Fail_not', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -215,7 +229,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_notEqual', async () => {
+  test('Fail_notEqual', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -229,7 +243,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_EqualToOrLessThan', async () => {
+  test('Fail_EqualToOrLessThan', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -243,7 +257,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_Greater_Or_Equal', async () => {
+  test('Fail_Greater_Or_Equal', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -257,7 +271,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_SingleEquals', async () => {
+  test('Fail_SingleEquals', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -271,18 +285,31 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_compareDifferentTypes', async () => {
+  test('Fail_compareDifferentTypes', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print 3 is ""3""  
+  print 3 is "3"
+  print 3 is not "3"
+  print 3 < "3"
+  print 3 <= "3"
+  print 3 > "3"
+  print 3 >= "3"
 end main
 `;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types String to Int",
+      "Incompatible types String to Int",
+      "Incompatible types String to Int",
+      "Incompatible types String to Int",
+      "Incompatible types String to Int",
+      "Incompatible types String to Int"
+    ]);
   });
 
   ignore_test('Fail_greaterOrLessThan', async () => {

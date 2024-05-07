@@ -5,6 +5,7 @@ import { GenericParameterType } from "../../symbols/generic-parameter-type";
 import { IterType } from "../../symbols/iter-type";
 import { ListType } from "../../symbols/list-type";
 import { ISymbolType } from "../../symbols/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
@@ -102,7 +103,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
                         }
                     }
                 }
-                return undefined;
+                return UnknownType.Instance;;
             }
             return returnType;
         }
