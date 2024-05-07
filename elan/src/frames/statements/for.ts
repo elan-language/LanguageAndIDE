@@ -6,6 +6,8 @@ import { ValueRefField } from "../fields/value-ref-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
+import { Frame } from "../interfaces/frame";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 
 export class For extends FrameWithStatements implements Statement  {
     isStatement: boolean = true;
@@ -82,5 +84,20 @@ ${this.indent()}}`;
     }
     parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end for");
+    }
+
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+        const v = this.variable.text;
+        
+        if (id === v) {
+            const st = this.from.symbolType;
+            return {
+                symbolId: id,
+                symbolType: st,
+                symbolScope: SymbolScope.counter
+            };
+        }
+
+        return super.resolveSymbol(id, this);
     }
 } 

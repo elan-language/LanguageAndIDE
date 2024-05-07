@@ -221,6 +221,14 @@ export function mustNotBeParameter(assignable: VarAsn, compileErrors: CompileErr
     }
 }
 
+export function mustNotBeCounter(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+    const s = assignable.symbolScope;
+
+    if (s === SymbolScope.counter) {
+        compileErrors.push(new CompileError(`May not mutate counter`, location, false));
+    }
+}
+
 export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 

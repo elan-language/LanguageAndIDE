@@ -192,7 +192,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "49.5");
   });
 
-  ignore_test('Fail_modifyingCounter', async () => {
+  test('Fail_modifyingCounter', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -206,7 +206,8 @@ end main
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
   });
 
   test('Fail_missingEnd', async () => {

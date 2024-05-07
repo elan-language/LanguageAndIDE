@@ -8,7 +8,8 @@ export enum SymbolScope {
     parameter,
     property,
     member,
-    local
+    local,
+    counter
 }
 
 export interface ISymbol {
