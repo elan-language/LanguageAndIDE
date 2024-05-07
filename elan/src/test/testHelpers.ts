@@ -25,6 +25,7 @@ import { Scope } from '../frames/interfaces/scope';
 import { ListType } from '../symbols/list-type';
 import { FunctionType } from '../symbols/function-type';
 import { GenericParameterType } from '../symbols/generic-parameter-type';
+import { UnknownSymbol } from '../symbols/unknown-symbol';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -409,7 +410,7 @@ const stubClassSymbol = {
 } as ISymbol;
 
 const stubHolder = {
-  resolveSymbol(id, initialScope): ISymbol | undefined {
+  resolveSymbol(id, initialScope): ISymbol {
     switch (id) {
       case "a": return stubIntSymbol;
       case "b": return stubNumberSymbol;
@@ -431,7 +432,7 @@ const stubHolder = {
       case "getItem": return { symbolId: "", symbolType: new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"))};
     }
 
-    return undefined;
+    return UnknownSymbol.Instance;
   },
 } as Parent;
 

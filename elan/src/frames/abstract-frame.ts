@@ -39,7 +39,7 @@ export abstract class AbstractFrame implements Frame {
     getHtmlId(): string {
         return this.htmlId;
     }
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
         return this.getParent().resolveSymbol(id, this);
     }
 

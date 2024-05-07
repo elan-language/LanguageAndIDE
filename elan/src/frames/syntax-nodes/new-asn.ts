@@ -38,7 +38,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
         const cls = this.scope.resolveSymbol(this.typeNode.type, this.scope);
         
-        if (cls?.symbolType instanceof ClassDefinitionType) {
+        if (cls.symbolType instanceof ClassDefinitionType) {
             mustBeConcreteClass(cls.symbolType, this.compileErrors, this.fieldId);
 
             if (cls.symbolType.isAbstract === false) {

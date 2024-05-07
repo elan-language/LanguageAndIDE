@@ -264,5 +264,27 @@ end main`;
 
   });
 
+  test('Fail_ElseConditionNotBool', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+  main
+    var a set to 2
+    if a is 1
+      print "one"
+    else if a
+      print "two"
+    else
+      print "neither"
+    end if
+  end main`;
+  
+      const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+  
+    });
+
 
 });

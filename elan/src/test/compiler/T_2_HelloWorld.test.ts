@@ -28,7 +28,7 @@ return main;}`;
         await assertObjectCodeExecutes(fileImpl, "");
     });
 
-    ignore_test('Pass_PrintWithNoExpression', async () => {
+    test('Pass_PrintWithNoExpression', async () => {
         const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -38,8 +38,8 @@ end main`;
 
         const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString());
-  system.print(_stdlib.asString());
+  system.print("");
+  system.print("");
 }
 return main;}`;
 
@@ -49,7 +49,7 @@ return main;}`;
         assertParses(fileImpl);
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
-        await assertObjectCodeExecutes(fileImpl, "\r\n\r\n");
+        await assertObjectCodeExecutes(fileImpl, "");
     });
 
     test('Pass_StringLiteral', async () => {

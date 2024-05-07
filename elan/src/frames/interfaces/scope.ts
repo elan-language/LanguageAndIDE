@@ -1,5 +1,5 @@
 import { ISymbol } from "../../symbols/symbol";
 
 export interface Scope {
-    resolveSymbol(id: string, scope : Scope): ISymbol | undefined;
+    resolveSymbol(id: string | undefined, scope : Scope): ISymbol;
 }

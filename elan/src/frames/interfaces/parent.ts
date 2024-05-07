@@ -46,5 +46,5 @@ export interface Parent {
 
     getFactory(): StatementFactory;
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol;
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol;
 }

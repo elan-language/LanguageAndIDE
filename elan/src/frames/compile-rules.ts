@@ -58,11 +58,11 @@ export function mustImplementSuperClasses(classType: ClassDefinitionType, superC
         for (const superSymbol of superSymbols) {
             const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
 
-            if (subSymbol) {
-                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
+            if (subSymbol === UnknownSymbol.Instance) {
+                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
             }
             else {
-                compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
+                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
             }
         }
     }
@@ -214,5 +214,12 @@ export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileErro
 
     if (s === SymbolScope.program) {
         compileErrors.push(new CompileError(`May not mutate constant`, location, false));
+    }
+}
+
+export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
+    
+    if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {
+        compileErrors.push(new CompileError(`May not reassign variable`, location, false));
     }
 }

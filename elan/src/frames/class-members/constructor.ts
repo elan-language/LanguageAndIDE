@@ -9,6 +9,7 @@ import { Collapsible } from "../interfaces/collapsible";
 import { ISymbol } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { constructorKeyword } from "../keywords";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -71,7 +72,8 @@ ${this.indent()}}\r
         return false;
     }
 
-    resolveSymbol(id: string, initialScope : Frame): ISymbol {
-        return this.params.resolveSymbol(id, this) ?? this.getParent().resolveSymbol(id, this);
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+        const s = this.params.resolveSymbol(id, this);
+        return s === UnknownSymbol.Instance ? this.getParent().resolveSymbol(id, this) : s;
     }
 }

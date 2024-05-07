@@ -42,7 +42,7 @@ ${this.indent()}}\r
         return super.parseBottom(source);
     }
 
-    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }

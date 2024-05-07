@@ -30,7 +30,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  //Failing on the symbol - type is unknown
   test('Pass_IntVariable', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -226,7 +225,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "-1truetruefalsefalsefalsetruetrue111.3333333333333333");
   });
 
-  ignore_test('Pass_Enum', async () => {
+  test('Pass_Enum', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -238,9 +237,9 @@ enum Fruit
 end enum`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-enum Fruit {
-    apple = "apple", orange = "orange", pear = "pear"
-}
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
 
 async function main() {
   var a = Fruit.apple;
@@ -293,9 +292,6 @@ return main;}`;
   });
 
 
-
-  
-
   test('Fail_WrongKeyword', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -309,7 +305,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_DuplicateVar', async () => {
+  test('Fail_DuplicateVar', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -320,7 +316,8 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
   });
 
   test('Fail_GlobalVariable', async () => {
@@ -337,18 +334,19 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_AssignIncompatibleType', async () => {
+  test('Fail_AssignIncompatibleType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to 4
+  var a set to "astring"
   set a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot assign Number to String"]);
   });
 
   test('Fail_NotInitialized', async () => {
@@ -391,7 +389,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_UseOfKeywordAsName', async () => {
+  test('Fail_UseOfKeywordAsName', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

@@ -1,5 +1,6 @@
 import { ProcedureType } from "../../symbols/procedure-type";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
@@ -79,11 +80,12 @@ ${this.renderStatementsAsObjectCode()}\r
         return this.parseStandardEnding(source, "end procedure");
     }
 
-    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }
+        const s = this.params.resolveSymbol(id, initialScope);
 
-        return this.params.resolveSymbol(id, initialScope) ?? super.resolveSymbol(id, initialScope);
+        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, initialScope) : s;
     }
 }
