@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T_8_ForLoop', () => {
@@ -161,7 +161,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  ignore_test('Fail_useOfNumber', async () => {
+  test('Pass_useOfNumber', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -169,13 +169,27 @@ main
   for i from 1.5 to 10 step 1
     set tot to tot + i
   end for
+  print tot
 end main
 `;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var tot = 0;
+  for (var i = 1.5; i <= 10; i = i + 1) {
+    tot = tot + i;
+  }
+  system.print(_stdlib.asString(tot));
+}
+return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "49.5");
   });
 
   ignore_test('Fail_modifyingCounter', async () => {
