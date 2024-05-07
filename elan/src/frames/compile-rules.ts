@@ -16,9 +16,7 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
-import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { Statement } from "./interfaces/statement";
 import { AstNode } from "./syntax-nodes/ast-node";
 import { VarAsn } from "./syntax-nodes/var-asn";
 

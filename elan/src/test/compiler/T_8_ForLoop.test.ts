@@ -161,35 +161,23 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  test('Pass_useOfFloat', async () => {
+  test('Fail_useOfFloat', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var tot set to 0.0
-  for i from 1.5 to 10 step 1
+  for i from 1.5 to 10.1 step 1.0
     set tot to tot + i
   end for
   print tot
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var tot = 0;
-  for (var i = 1.5; i <= 10; i = i + 1) {
-    tot = tot + i;
-  }
-  system.print(_stdlib.asString(tot));
-}
-return main;}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "49.5");
+    assertDoesNotCompile(fileImpl, ["Expression must be Int","Expression must be Int","Expression must be Int"]);
   });
 
   test('Fail_modifyingCounter', async () => {
