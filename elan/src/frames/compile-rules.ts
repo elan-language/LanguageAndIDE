@@ -33,6 +33,18 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
     mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
 }
 
+export function mustBeOneOrTwoOfTypeInt(params: AstNode[],  compileErrors: CompileError[], location: string) {
+    if (params.length === 0 || params.length > 2){
+        compileErrors.push(new CompileError(`Array requires 1 or 2 parameters`, location, false));
+    }
+    if (params.length > 0) {
+        mustBeOfSymbolType(params[0].symbolType, IntType.Instance, compileErrors, location);
+    }
+    if (params.length > 1) {
+        mustBeOfSymbolType(params[1].symbolType, IntType.Instance, compileErrors, location);
+    }
+}
+
 export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors: CompileError[], location: string) {
     if (elses.filter(s => !s.hasIf).length > 1) {
         compileErrors.push(new CompileError(`Cannot have multiple unconditional 'Else'`, location, false));

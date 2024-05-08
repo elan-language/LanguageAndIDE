@@ -1,7 +1,7 @@
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
 import { ClassType } from "../../symbols/class-type";
 import { CompileError } from "../compile-error";
-import { mustBeConcreteClass, mustMatchParameters } from "../compile-rules";
+import { mustBeConcreteClass, mustBeOneOrTwoOfTypeInt, mustMatchParameters } from "../compile-rules";
 import { Class } from "../globals/class";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -29,6 +29,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
         const pp = this.parameters.map(p => p.compile()).join(", ");
         const t = this.typeNode.compile();
         if (this.typeNode.type === "Array") {
+            mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
             return `system.initialise(system.array(new ${t}(${pp}))${gt})`;
         }
 

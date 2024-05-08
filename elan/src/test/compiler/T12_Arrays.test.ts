@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T12_Arrays', () => {
@@ -166,6 +166,144 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
+  test('Fail_2DArrayCreatedByDoubleIndex', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>[3][4]
+  print a[0, 0]
+  print a[2, 3]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_1DArrayAccessedAs2D', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3)
+  set a[0,0] to "foo"
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test('Fail_OutOfRange', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3)
+  var b set to a[3]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+  });
+
+  test('Fail_TypeIncompatibility', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3)
+  set a[0] to true
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to String"]);
+  });
+
+  test('Fail_SizeNotSpecified', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Array requires 1 or 2 parameters"]);
+  });
+
+  test('Fail_SizeWrongType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(1.1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Int"]);
+  });
+
+  test('Fail_SizeSpecifiedInSquareBrackets', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>[3]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // obsolete code
+  test('Fail_SpecifySizeAndInitializer', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3) {"foo","bar","yon"}
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // duplicate
+  ignore_test('Fail_SpecifyWithoutSizeOrInitializer', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to Array<of String>()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Array requires 1 or 2 parameters"]);
+  });
 
 
 });
