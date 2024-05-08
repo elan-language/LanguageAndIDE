@@ -312,7 +312,7 @@ end main
     ]);
   });
 
-  ignore_test('Fail_greaterOrLessThan', async () => {
+  test('Fail_greaterOrLessThan', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -326,7 +326,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_doubleEquals',async () => {
+  test('Fail_doubleEquals',async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
