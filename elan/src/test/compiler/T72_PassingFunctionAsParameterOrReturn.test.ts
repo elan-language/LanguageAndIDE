@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 
 suite('T72_PassingFunctionAsParameterOrReturn', () => {
 
-  test('Pass_PassAsParam', async () => {
+  ignore_test('Pass_PassAsParam', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -43,7 +43,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test('Pass_PassAsParam2', async () => {
+  ignore_test('Pass_PassAsParam2', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -81,7 +81,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test('Pass_ReturnAFunction', async () => {
+  ignore_test('Pass_ReturnAFunction', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

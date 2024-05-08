@@ -7,7 +7,7 @@ import { ListType } from "../../symbols/list-type";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
+import { mustBeCallableSymbol, mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { scopePrefix, updateScopeAndQualifier } from "./ast-helpers";
@@ -50,9 +50,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
 
-        mustBeKnownSymbol(funcSymbol!, this.compileErrors, this.fieldId);
+        mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
+        mustBeCallableSymbol(funcSymbol.symbolType, this.compileErrors, this.fieldId);
 
-        if (funcSymbol?.symbolType instanceof FunctionType) {
+        if (funcSymbol.symbolType instanceof FunctionType) {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
 
             if (funcSymbol.symbolType.isExtension && qualifier) {
@@ -88,7 +89,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
 
             if (returnType instanceof GenericParameterType) {
                 const flattened = type.parametersTypes.map(n => this.flatten(n));
-                const pTypes = this.parameters.map(p => this.flatten(p.symbolType!));
+                var parameters = this.parameters;
+
+                if (type.isExtension && this.qualifier) {
+                    parameters = [(this.qualifier as QualifierAsn).value].concat(parameters);
+                }
+
+                const pTypes = parameters.map(p => this.flatten(p.symbolType!));
 
                 for (var i = 0; i < flattened.length; i++) {
                     const pt = flattened[i];

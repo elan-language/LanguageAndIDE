@@ -9,6 +9,7 @@ import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
 import { FloatType } from "../symbols/number-type";
+import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
@@ -45,6 +46,12 @@ export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors
 export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[], location: string) {
     if (symbol instanceof UnknownSymbol) {
         compileErrors.push(new CompileError(`Undeclared id`, location, true));
+    }
+}
+
+export function mustBeCallableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof FunctionType || symbolType instanceof ProcedureType)) {
+        compileErrors.push(new CompileError(`cannot call ${symbolType.name}`, location, true));
     }
 }
 
@@ -154,14 +161,31 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof DictionaryType && lhs.name !== rhs.name) {
+    
+    if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
+        mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location); 
+        mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location); 
+        return;
+    }
+
+    if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) { 
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof TupleType && lhs.name !== rhs?.name) {
+
+    if (lhs instanceof TupleType && rhs instanceof TupleType) { 
+        const maxLen = lhs.ofTypes.length > rhs.ofTypes.length ? lhs.ofTypes.length : rhs.ofTypes.length;
+        for (var i = 0; i < maxLen; i++) {
+            mustBeCompatibleType(lhs.ofTypes[i], rhs.ofTypes[i], compileErrors, location);   
+        }
+        return;
+    }
+
+    if (lhs instanceof TupleType && !(rhs instanceof TupleType)) { 
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
+
     if (lhs instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType || rhs instanceof StringType || rhs instanceof IterType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;

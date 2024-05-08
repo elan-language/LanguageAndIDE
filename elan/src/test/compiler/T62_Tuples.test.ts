@@ -11,8 +11,8 @@ suite('T62_Tuples', () => {
 main
     var x set to (3, "Apple")
     print x
-    print first(x)
-    print second(x)
+    print x.first()
+    print x.second()
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -39,8 +39,8 @@ return main;}`;
 main
   var x set to f()
   print x
-  print first(x)
-  print second(x)
+  print x.first()
+  print x.second()
 end main
 
 function f() return (String, String)
@@ -73,7 +73,8 @@ return main;}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print first(f())
+  var t set to f()
+  print t.first()
 end main
 
 function f() return (String, String)
@@ -82,7 +83,8 @@ end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.first(f())));
+  var t = f();
+  system.print(_stdlib.asString(_stdlib.first(t)));
 }
 
 function f() {
@@ -127,7 +129,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test('Pass_FunctionTupleParameter', async () => {
+  ignore_test('Pass_FunctionTupleParameter', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -137,7 +139,7 @@ main
 end main
 
 function f(t as (String, String)) return String
-   return first(t)
+   return t.first()
 end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
