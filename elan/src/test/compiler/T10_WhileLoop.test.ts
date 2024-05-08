@@ -93,7 +93,7 @@ main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_variableNotPredefined', async () => {
+  test('Fail_variableNotPredefined', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -106,10 +106,11 @@ main
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared variable x"]);
   });
 
-  ignore_test('Fail_variableDefinedInWhile', async () => {
+  test('Fail_variableDefinedInWhile', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
