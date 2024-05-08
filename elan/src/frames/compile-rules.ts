@@ -33,8 +33,8 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
     mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
 }
 
-export function mustBeOneOrTwoOfTypeInt(params: AstNode[],  compileErrors: CompileError[], location: string) {
-    if (params.length === 0 || params.length > 2){
+export function mustBeOneOrTwoOfTypeInt(params: AstNode[], compileErrors: CompileError[], location: string) {
+    if (params.length === 0 || params.length > 2) {
         compileErrors.push(new CompileError(`Array requires 1 or 2 parameters`, location, false));
     }
     if (params.length > 0) {
@@ -45,12 +45,12 @@ export function mustBeOneOrTwoOfTypeInt(params: AstNode[],  compileErrors: Compi
     }
 }
 
-export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors: CompileError[], location: string) {
+export function mustHaveLastSingleElse(elses: { hasIf: boolean }[], compileErrors: CompileError[], location: string) {
     if (elses.filter(s => !s.hasIf).length > 1) {
         compileErrors.push(new CompileError(`Cannot have multiple unconditional 'Else'`, location, false));
     }
 
-    if (elses[elses.length -1].hasIf){
+    if (elses[elses.length - 1].hasIf) {
         compileErrors.push(new CompileError(`Must end with unconditional 'Else'`, location, false));
     }
 }
@@ -154,6 +154,15 @@ export function mustBeCoercibleType(lhs: ISymbolType, rhs: ISymbolType, compileE
     mustBeCompatibleType(lhs, rhs, compileErrors, location);
 }
 
+export function mustBeNumberType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+    // for compare allow int and floats
+    if ((lhs instanceof IntType || lhs instanceof FloatType) && (rhs instanceof IntType || rhs instanceof FloatType)) {
+        return;
+    }
+
+    compileErrors.push(new CompileError(`Cannot compare ${lhs.name} and ${rhs.name}`, location, true));
+}
+
 export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
     if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
@@ -179,27 +188,27 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    
+
     if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
-        mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location); 
-        mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location); 
+        mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location);
+        mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location);
         return;
     }
 
-    if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) { 
+    if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
 
-    if (lhs instanceof TupleType && rhs instanceof TupleType) { 
+    if (lhs instanceof TupleType && rhs instanceof TupleType) {
         const maxLen = lhs.ofTypes.length > rhs.ofTypes.length ? lhs.ofTypes.length : rhs.ofTypes.length;
         for (var i = 0; i < maxLen; i++) {
-            mustBeCompatibleType(lhs.ofTypes[i], rhs.ofTypes[i], compileErrors, location);   
+            mustBeCompatibleType(lhs.ofTypes[i], rhs.ofTypes[i], compileErrors, location);
         }
         return;
     }
 
-    if (lhs instanceof TupleType && !(rhs instanceof TupleType)) { 
+    if (lhs instanceof TupleType && !(rhs instanceof TupleType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
@@ -256,7 +265,7 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
     if (parent.constructor.name === "FunctionMethod") {
         const s = assignable.symbolScope;
 
-        if (s !== SymbolScope.local){
+        if (s !== SymbolScope.local) {
             compileErrors.push(new CompileError(`May not mutate non local data in function`, location, false));
         }
     }
@@ -287,7 +296,7 @@ export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileErro
 }
 
 export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
-    
+
     if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {
         compileErrors.push(new CompileError(`May not reassign variable`, location, false));
     }
