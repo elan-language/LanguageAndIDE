@@ -67,10 +67,8 @@ function doImport(str: string) {
 function executeCode(file: FileImpl, input? : string) {
 
     const jsCode = file.compile();
-    // const jsCode = ts.transpile(tsCode, {
-    //     "module": ts.ModuleKind.ES2022,
-    //     "target": ts.ScriptTarget.ES2022,
-    // });
+    const errors = file.compileErrors();
+    assert.strictEqual(errors.length, 0, errors.map(e => e.message).join(", "));
 
     const system = getTestSystem();
     const stdlib = new StdLib();

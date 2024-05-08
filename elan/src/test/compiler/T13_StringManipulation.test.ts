@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T13_StringManipulation', () => {
@@ -249,7 +249,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
   
-  // not supported
+  // not supported also Pass_literalNewline
   ignore_test('Pass_UseBracesInString', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -277,7 +277,6 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
-
 
   test('Pass_newLineConstant', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -327,8 +326,21 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3.1Hello");
   });
 
-  // more TODO pending interpolation
+  test('Fail_IndexOutOfRange', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-  // Fails TODO
+main
+  var a set to "abcde"
+  print a[5]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+  });
 
 });

@@ -62,7 +62,11 @@ export class StdLib {
             return `a ${v.constructor.name}`;
         }
 
-        throw new Error("Not implemented" + typeof v);
+        if (v === undefined) {
+            throw new Error(`Out of range error`);
+        }
+
+        throw new Error("Not implemented: " + typeof v);
     }
 
     asArray(list: Array<number>): Array<number> {
