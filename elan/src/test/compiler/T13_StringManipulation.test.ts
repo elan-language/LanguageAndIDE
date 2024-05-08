@@ -370,4 +370,23 @@ end main
     ]);
   });
 
+  test('Fail_CoerceNumberToString', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to "abcde"
+  set a to 2.1 + 3.4
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Float to String"
+    ]);
+  });
+
 });
