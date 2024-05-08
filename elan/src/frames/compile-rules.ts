@@ -51,7 +51,13 @@ export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[]
 
 export function mustBeCallableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof FunctionType || symbolType instanceof ProcedureType)) {
-        compileErrors.push(new CompileError(`cannot call ${symbolType.name}`, location, true));
+        compileErrors.push(new CompileError(`Cannot call ${symbolType.name}`, location, true));
+    }
+}
+
+export function mustBeIndexableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof DictionaryType)) {
+        compileErrors.push(new CompileError(`Cannot index ${symbolType.name}`, location, true));
     }
 }
 

@@ -147,7 +147,23 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["cannot call Array <String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Array <String>"]);
+  });
+
+  test('Fail_ApplyIndexToANonIndexable', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  var b set to a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
 
