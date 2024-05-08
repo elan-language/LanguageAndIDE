@@ -87,6 +87,7 @@ import { CsvAsn } from "./csv-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { ThisAsn } from "./this-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
+import { IdDefAsn } from "./id-def-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -188,6 +189,11 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof IdentifierNode) {
+        // kludge - fix
+        if (fieldId.startsWith("var") || fieldId.startsWith("ident") || fieldId.startsWith("enumVals")) {
+            return new IdDefAsn(node.matchedText, fieldId, scope);
+        }
+
         return new IdAsn(node.matchedText, fieldId, scope);
     }
 
