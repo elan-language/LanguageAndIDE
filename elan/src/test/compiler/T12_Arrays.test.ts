@@ -109,6 +109,29 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
+  ignore_test('Pass_2DArray', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3,4)
+  set a[0, 0] to "foo"
+  set a[2, 3] to "yon"
+  print a[0, 0]
+  print a[2, 3]
+end main`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return main;}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
   // Fails TODO
 
 });
