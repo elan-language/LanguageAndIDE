@@ -7,6 +7,8 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
+import { Frame } from "../interfaces/frame";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -60,5 +62,20 @@ ${this.indent()}}`;
     }
     parseBottom(source: CodeSource): boolean {
         return this.parseStandardEnding(source, "end each");
+    }
+
+    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+        const v = this.variable.text;
+        
+        if (id === v) {
+            const st = (this.iter.symbolType as any).ofType; // todo fix type
+            return {
+                symbolId: id,
+                symbolType: st,
+                symbolScope: SymbolScope.local
+            };
+        }
+
+        return super.resolveSymbol(id, this);
     }
 } 

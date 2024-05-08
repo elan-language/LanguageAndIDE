@@ -6,6 +6,9 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { TypeNameField } from "../fields/type-name-field";
 import { enumKeyword } from "../keywords";
+import { Frame } from "../interfaces/frame";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { EnumValueType } from "../../symbols/enum-value-type";
 
 export class Enum extends AbstractFrame {
     isGlobal = true;
@@ -62,5 +65,21 @@ ${singleIndent()}${this.values.compile()}\r
         this.values.parseFrom(source);
         source.removeNewLine();
         source.remove("end enum");
+    }
+
+    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+        const names = this.values.renderAsSource().split(",").map(s => s.trim());
+
+        for (var n of names) {
+            if (n === id) {
+                return {
+                    symbolId : id,
+                    symbolType: new EnumValueType(this.name.renderAsSource(), id),
+                    symbolScope: SymbolScope.program
+                };
+            }
+        }
+
+        return this.getParent().resolveSymbol(id, this);
     }
 } 

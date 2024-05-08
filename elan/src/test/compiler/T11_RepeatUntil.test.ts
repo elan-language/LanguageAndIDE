@@ -77,7 +77,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "20");
   });
 
-  ignore_test('Fail_variableRedeclaredInTest', async () => {
+  test('Fail_variableRedeclaredInTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -94,12 +94,12 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_variableDefinedInLoop', async () => {
+  test('Fail_variableDefinedInLoop', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   repeat
-    var x set to x + 1
+    var x set to  1
   end repeat when  x >= 10
 end main
 `;
@@ -107,7 +107,8 @@ end main
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
 
   test('Fail_testPutOnRepeat', async () => {
@@ -144,7 +145,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_invalidCondition', async () => {
+  test('Fail_invalidCondition', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

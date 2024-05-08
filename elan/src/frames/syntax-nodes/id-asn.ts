@@ -1,5 +1,6 @@
 import { SymbolScope } from "../../symbols/symbol";
 import { CompileError } from "../compile-error";
+import { mustBeKnownSymbol } from "../compile-rules";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -30,6 +31,9 @@ export class IdAsn extends AbstractAstNode implements AstNode {
         if (symbol?.symbolScope === SymbolScope.property) {
             return `this.${this.id}`;
         }
+
+        mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
+
         return this.id;
     }
 

@@ -7,8 +7,11 @@ import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { IdentifierField } from "../fields/identifier-field";
 import { inputKeyword } from "../keywords";
+import { Frame } from "../interfaces/frame";
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { StringType } from "../../symbols/string-type";
 
-export class Input extends AbstractFrame implements Statement {
+export class Input extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;  
     varName: IdentifierField;
 
@@ -44,5 +47,23 @@ export class Input extends AbstractFrame implements Statement {
     compile(): string {
         this.compileErrors = [];
         return `${this.indent()}var ${this.varName.compile()} = await system.input();`;
+    }
+
+    get symbolId() {
+        return this.varName.renderAsSource();
+    }
+
+    get symbolType() {
+        return StringType.Instance;
+    }
+
+    symbolScope = SymbolScope.local;
+
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+        if (id === this.symbolId) {
+            return this;
+        }
+
+        return super.resolveSymbol(id, initialScope);
     }
 } 

@@ -7,6 +7,7 @@ import { ConstantValueField } from "../fields/constant-value-field";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { ScratchPad } from "../scratch-pad";
 import { constantKeyword } from "../keywords";
+import { Frame } from "../interfaces/frame";
 
 export class Constant extends AbstractFrame implements ISymbol {
     isGlobal = true;
@@ -65,4 +66,12 @@ export class Constant extends AbstractFrame implements ISymbol {
     }
 
     symbolScope = SymbolScope.program;
+
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+        if (id === this.symbolId) {
+            return this;
+        }
+
+        return super.resolveSymbol(id, initialScope);
+    }
 } 

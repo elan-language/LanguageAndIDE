@@ -8,6 +8,7 @@ import { Statement } from "../interfaces/statement";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { mustNotBeReassigned } from "../compile-rules";
+import { Frame } from "../interfaces/frame";
 
 export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     isStatement = true;
@@ -48,9 +49,10 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     compile(): string {
         this.compileErrors = [];
         const id =this.name.getOrTransformAstNode?.compile();
-        const symbol = this.resolveSymbol(id!, this);
+        const symbol = this.getParent().resolveSymbol(id!, this);
+       
         mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
-
+        
         return `${this.indent()}var ${id} = ${this.expr.compile()};`;
     }
 
@@ -63,4 +65,12 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     }
 
     symbolScope = SymbolScope.local;
+
+    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+        if (id === this.symbolId) {
+            return this;
+        }
+
+        return super.resolveSymbol(id, initialScope);
+    }
 } 
