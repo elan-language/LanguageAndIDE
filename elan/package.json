@@ -35,23 +35,23 @@
       "type": "object",
       "title": "Elan configuration",
       "properties": {
-          "elanLanguageServer.maxNumberOfProblems": {
-              "scope": "resource",
-              "type": "number",
-              "default": 100,
-              "description": "Controls the maximum number of problems produced by the server."
-          },
-          "elanLanguageServer.trace.server": {
-            "scope": "window",
-            "type": "string",
-            "enum": [
-              "off",
-              "messages",
-              "verbose"
-            ],
-            "default": "verbose",
-            "description": "Traces the communication between VS Code and the language server."
-          }
+        "elanLanguageServer.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "elanLanguageServer.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "Traces the communication between VS Code and the language server."
+        }
       }
     },
     "customEditors": [
@@ -84,7 +84,7 @@
             "name": "Elan Launch",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask" : "${defaultBuildTask}",
+            "preLaunchTask": "${defaultBuildTask}",
             "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
@@ -106,13 +106,14 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "format": "prettier --ignore-path .gitignore --write \"src/**/*.ts\""
   },
   "dependencies": {
     "async-file": "2.0.2",
-    "yauzl": "2.10.0",
+    "vscode-jsonrpc": "^8.2.0",
     "vscode-languageclient": "^9.0.0",
-    "vscode-jsonrpc": "^8.2.0"
+    "yauzl": "2.10.0"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.6",
@@ -124,10 +125,11 @@
     "@typescript-eslint/parser": "^6.15.0",
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.8",
+    "cpr": "~3.0.1",
     "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
     "jsdom": "^24.0.0",
-    "typescript": "^5.3.3",
-    "cpr": "~3.0.1"
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
   }
 }
