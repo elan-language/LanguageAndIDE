@@ -1,11 +1,22 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
+  "settings": {
+    "import/resolver": {
+      "node": { "extensions": [".js", ".mjs", ".ts", ".d.ts"] },
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  },
   "rules": {
     "@typescript-eslint/naming-convention": [
       "warn",
@@ -18,7 +29,11 @@
     "curly": "warn",
     "eqeqeq": "warn",
     "no-throw-literal": "warn",
-    "semi": "off"
+    "semi": "off",
+    "@typescript-eslint/no-explicit-any" : "off",
+    "@typescript-eslint/no-unused-vars" : "off",
+    "no-var" : "off",
+    "@typescript-eslint/no-this-alias" : "off"
   },
   "ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }

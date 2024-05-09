@@ -6,7 +6,7 @@ import { Frame } from './frames/interfaces/frame';
 import { Selectable } from './frames/interfaces/selectable';
 
 function getAllSelected(file: File) {
-    const v = file?.getMap().values()!;
+    const v = file.getMap().values();
     return [...v].filter(s => s.isSelected());
 }
 export function handleClick(e: editorEvent, file: File) {

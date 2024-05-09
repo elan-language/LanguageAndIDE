@@ -85,8 +85,8 @@ ${endKeyword} ${functionKeyword}\r
     public compile(): string {
         this.compileErrors = [];
         const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
-        const tt = returnStatement?.symbolType!;
-        mustBeCompatibleType(this.returnType?.symbolType!, tt, this.compileErrors, returnStatement!.fieldId);
+        const tt = returnStatement?.symbolType;
+        mustBeCompatibleType(this.returnType?.symbolType, tt!, this.compileErrors, returnStatement!.fieldId);
 
         return `function ${this.name.compile()}(${this.params.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r

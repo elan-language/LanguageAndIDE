@@ -8,7 +8,7 @@ import { UnknownType } from "./unknown-type";
 
 export class ClassDefinitionType implements ISymbolType, Scope {
 
-    constructor(public className: string, public isAbstract: Boolean, private readonly scope: Class) {
+    constructor(public className: string, public isAbstract: boolean, private readonly scope: Class) {
 
     }
 

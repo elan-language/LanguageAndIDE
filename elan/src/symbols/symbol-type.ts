@@ -1,3 +1,3 @@
 export interface ISymbolType {
-    name: String;
+    name: string;
 }
