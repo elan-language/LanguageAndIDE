@@ -3,6 +3,7 @@ import { DictionaryType } from "../../symbols/dictionary-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { unknownType } from "../../test/testHelpers";
 import { CompileError } from "../compile-error";
+import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -22,8 +23,23 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
-        const items = this.list.items.map(p => p.compile()).join(", ");
-        return `{${items}}`;
+        const items = this.list.items as KvpAsn[];
+
+        const keys = items.map(kvp => kvp.key.compile());
+        mustHaveUniqueKeys(keys, this.compileErrors, this.fieldId);
+
+        const first = items[0];
+
+        const ofKeyType = first.keySymbolType;
+        const ofValueType = first.symbolType;
+
+        for (const i of items) {
+            mustBeCompatibleType(ofKeyType, i.keySymbolType, this.compileErrors, this.fieldId);
+            mustBeCompatibleType(ofValueType, i.symbolType, this.compileErrors, this.fieldId);
+        }
+
+        const itemList = this.list.items.map(p => p.compile()).join(", ");
+        return `{${itemList}}`;
     }
 
     get symbolType() {

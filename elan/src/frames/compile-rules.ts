@@ -19,6 +19,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { AstNode } from "./syntax-nodes/ast-node";
+import { KvpAsn } from "./syntax-nodes/kvp-asn";
 import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
@@ -315,5 +316,12 @@ export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileErr
 export function mustBeIterable(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof IterType)) {
         compileErrors.push(new CompileError(`Cannot iterate ${symbolType.name}`, location, true));
+    }
+}
+
+export function mustHaveUniqueKeys(keys: string[], compileErrors: CompileError[], location: string) {
+    const set = new Set(keys);
+    if (set.size !== keys.length) {
+        compileErrors.push(new CompileError(`Duplicate Dictionary key(s)`, location, true));
     }
 }

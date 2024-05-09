@@ -224,10 +224,9 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "c");
   });
-});
 
-test('Fail_NoDefault', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_NoDefault', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -243,14 +242,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_NoCase', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_NoCase', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -262,14 +261,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_IncompatibleCaseType', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_IncompatibleCaseType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -286,15 +285,15 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
-});
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
 
-test('Fail_UseOfVariableForCase', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_UseOfVariableForCase', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to 2
@@ -311,14 +310,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_UseOfExpression', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_UseOfExpression', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -334,14 +333,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_CaseAfterDefault', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_CaseAfterDefault', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -357,14 +356,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_WithColons', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_WithColons', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -379,14 +378,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_actionOnSameLineAsCase', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_actionOnSameLineAsCase', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -398,14 +397,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_missingExpression', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_missingExpression', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -419,14 +418,14 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
-});
+    assertDoesNotParse(fileImpl);
+  });
 
-test('Fail_caseValueMissing', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test('Fail_caseValueMissing', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -440,8 +439,9 @@ main
 end main
 `;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertDoesNotParse(fileImpl);
+    assertDoesNotParse(fileImpl);
+  });
 });

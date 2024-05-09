@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T17_Dictionaries', () => {
@@ -253,6 +253,54 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
- // fails TODO
+  test('Fail_RepeatedKey', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3, "a":10]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s)"]);
+  });
+
+  test('Fail_InconsistentTypes1', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3.1, "c":10]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
+
+  test('Fail_InconsistentTypes2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3, 10:10]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+
 
 });
