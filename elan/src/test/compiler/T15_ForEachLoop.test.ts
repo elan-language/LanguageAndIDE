@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T15_eachLoop', () => {
@@ -161,8 +161,98 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "appleorangepear");
   });
 
-  
+  test('Fail_variableIsScoped', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-  // Fails TODO
+main
+  var a set to [7, 8, 9]
+  var x set to "hello"
+  each x in a
+    print x
+  end each
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
+  });
+
+  test('Fail_variableIsScoped2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [7, 8, 9]
+  each x in a
+    print x
+  end each
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
+  test('Fail_NoEndeach', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [7, 8, 9]
+  each x in a
+    print x
+  end for
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_applyToANonIterable', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var y set to 10
+  each x in y
+    print x
+  end each
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot iterate Int"]);
+  });
+
+  test('Fail_CannotAlterTheIterableWithinLoop', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1, 2, 3, 4, 5]
+  each x in a
+    set a to a + x
+  end each
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
+  });
+
 
 });

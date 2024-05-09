@@ -311,3 +311,9 @@ export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileErr
         compileErrors.push(new CompileError(`May not reassign variable`, location, false));
     }
 }
+
+export function mustBeIterable(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof IterType)) {
+        compileErrors.push(new CompileError(`Cannot iterate ${symbolType.name}`, location, true));
+    }
+}

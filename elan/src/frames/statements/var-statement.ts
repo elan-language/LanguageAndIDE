@@ -48,9 +48,9 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
 
     compile(): string {
         this.compileErrors = [];
-        const id =this.name.getOrTransformAstNode?.compile();
+        const id = this.name.getOrTransformAstNode?.compile();
         const symbol = this.getParent().resolveSymbol(id!, this);
-       
+
         mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
         
         return `${this.indent()}var ${id} = ${this.expr.compile()};`;

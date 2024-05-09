@@ -9,6 +9,7 @@ import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -49,6 +50,15 @@ ${this.indent()}end each`;
 
     compile(): string {
         this.compileErrors = [];
+
+        const id = this.variable.getOrTransformAstNode?.compile();
+        const symbol = this.getParent().resolveSymbol(id!, this);
+
+        mustNotBeReassigned(symbol, this.compileErrors, this.variable.getHtmlId());
+
+        const iterType = this.iter.getOrTransformAstNode?.symbolType;
+        mustBeIterable(iterType!, this.compileErrors, this.htmlId);
+
         return `${this.indent()}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
 ${this.renderChildrenAsObjectCode()}\r
 ${this.indent()}}`;
@@ -75,6 +85,20 @@ ${this.indent()}}`;
                 symbolScope: SymbolScope.local
             };
         }
+
+        const iter = this.iter.text;
+
+        if (id === iter) {
+            // intercept iter resolve in order to make counter so it's immutable
+            const symbol = super.resolveSymbol(id, this);
+            return {
+                symbolId: id,
+                symbolType: symbol.symbolType,
+                symbolScope: SymbolScope.counter
+            };
+        }
+
+
 
         return super.resolveSymbol(id, this);
     }
