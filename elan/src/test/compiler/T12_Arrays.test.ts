@@ -15,7 +15,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array(3)), ["String"]);
+  var a = system.initialise(system.array(3), ["String"]);
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 return main;}`;
@@ -40,7 +40,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array(3)), ["String"]);
+  var a = system.initialise(system.array(3), ["String"]);
   system.print(_stdlib.asString(_stdlib.length(a[0])));
   system.print(_stdlib.asString(a));
 }
@@ -68,7 +68,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array(3)), ["String"]);
+  var a = system.initialise(system.array(3), ["String"]);
   a[0] = "foo";
   a[2] = "yon";
   system.print(_stdlib.asString(a[0]));
@@ -109,7 +109,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test('Pass_2DArray', async () => {
+  test('Pass_2DArray', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -121,6 +121,13 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.array(3, 4), ["String"]);
+  a[0][0] = "foo";
+  a[2][3] = "yon";
+  system.print(_stdlib.asString(a[0][0]));
+  system.print(_stdlib.asString(a[2][3]));
+}
 return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
@@ -129,10 +136,8 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
-
-  // Fails TODO
 
   test('Fail_UseRoundBracketsForIndex', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -187,14 +192,31 @@ end main
 
 main
   var a set to new Array<of String>(3)
-  set a[0,0] to "foo"
+  set a[0, 0] to "foo"
 end main
 `;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot double index Array <String>"]);
+  });
+
+  test('Fail_2DArrayAccessedAs1D', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Array<of String>(3, 3)
+  set a[0] to "foo"
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot single index 2D Array <String>"]);
   });
 
   ignore_test('Fail_OutOfRange', async () => {

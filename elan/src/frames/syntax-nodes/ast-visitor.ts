@@ -88,6 +88,7 @@ import { QualifierAsn } from "./qualifier-asn";
 import { ThisAsn } from "./this-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { IdDefAsn } from "./id-def-asn";
+import { DoubleIndexNode } from "../parse-nodes/double-index-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -298,7 +299,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
 
     if (node instanceof IndexNode) {
         const index = transform(node.contents, fieldId, scope) as ExprAsn;
-        return new IndexAsn(index, fieldId, scope);
+        return new IndexAsn(index, undefined, fieldId, scope);
     }
 
     if (node instanceof AbstractAlternatives) {
@@ -372,6 +373,13 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
         return new RangeAsn(from, to, fieldId, scope);
     }
 
+    if (node instanceof DoubleIndexNode) {
+        var indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
+        var indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
+
+        return new IndexAsn(indexOne, indexTwo, fieldId, scope);
+    }
+
     if (node instanceof Qualifier) {
         const q = transform(node.qualifier, fieldId, scope);
         return new QualifierAsn(q!, fieldId, scope);
@@ -427,5 +435,5 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
         return new VarAsn(id, q, undefined, fieldId, scope);
     }
 
-    throw new Error("Not implemented " + typeof node);
+    throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
 }

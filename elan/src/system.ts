@@ -10,7 +10,7 @@ export class System {
         return undefined;
     }
 
-    private default_array = this.array([]);
+    private default_array = this.array(0);
     private default_list = this.list([]);
     private default_dictionary = {};
     private default_iter = this.iter([]);
@@ -46,9 +46,22 @@ export class System {
         return t;
     }
 
-    array(t : Array<any>) {
+    wrapArray(t : Array<any>) {
         (<any>t)._type = "Array"; 
         return t;
+    }
+
+    array(size1: number, size2?: number) {
+        const arr = new Array(size1);
+        if (size2) {
+            for (var i = 0; i <= size1; i++) {
+                const a2 = new Array(size2);
+                (<any>a2)._type = "Array";
+                arr[i] = a2;
+            }
+        }
+        (<any>arr)._type = "Array";
+        return arr;
     }
 
     dictionary(t : Array<any>) {
@@ -59,7 +72,12 @@ export class System {
     initialise(toInit: any, toType? : string[]) {
         if (toType && Array.isArray(toInit) && toInit.length > 0) {
             for (var i = 0; i < toInit.length; i++) {
-                toInit[i] = this.default(toType[0]);
+                if (Array.isArray(toInit[i])){
+                    this.initialise(toInit[i], toType);
+                }
+                else {
+                    toInit[i] = this.default(toType[0]);
+                }
             }
         }
         return toInit;

@@ -9,11 +9,9 @@ import { CompileError } from "../compile-error";
 import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
-import { propertyKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { getClassScope } from "./ast-helpers";
 import { AstNode } from "./ast-node";
-import { FixedIdAsn } from "./fixed-id-asn";
 import { IndexAsn } from "./index-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
@@ -35,11 +33,11 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     }
 
     private isRange() {
-        return this.index instanceof IndexAsn && this.index.index instanceof RangeAsn;
+        return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
     }
 
     private isIndex() {
-        return this.index instanceof IndexAsn && !(this.index.index instanceof RangeAsn);
+        return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
     }
 
     private getQualifier() {
@@ -60,7 +58,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
             return `system.list(${code})`;
         }
         if (rootType instanceof ArrayType) {
-            return `system.array(${code})`;
+            return `system.wrapArray(${code})`;
         }
         if (rootType instanceof FunctionType) {
             return this.wrapListOrArray(rootType.returnType, code);
@@ -86,7 +84,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         if (this.isRange() || this.index) {
             const rootType = this.scope.resolveSymbol(this.id, this.scope).symbolType;
             if (this.index) {
-                mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
+                mustBeIndexableSymbol(rootType, (this.index as IndexAsn).isDoubleIndex(), this.compileErrors, this.fieldId);
             }
             if (this.isRange()) {
                 code = this.wrapListOrArray(rootType, code);

@@ -8,22 +8,30 @@ import { RangeAsn } from "./range-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly index: ExprAsn, public readonly fieldId: string, scope: Scope) {
+    constructor(public readonly index1: ExprAsn, public readonly index2: ExprAsn | undefined,  public readonly fieldId: string, scope: Scope) {
         super();
     }
 
     aggregateCompileErrors(): CompileError[] {
         return this.compileErrors
-            .concat(this.index.aggregateCompileErrors());
+            .concat(this.index1.aggregateCompileErrors());
+    }
+
+    isDoubleIndex() {
+        return this.index1 instanceof IndexAsn;
     }
 
     compile(): string {
         this.compileErrors = [];
-        if (this.index instanceof RangeAsn) {
-            return `${this.index.compile()}`;
+        if (this.index1 instanceof RangeAsn || this.index1 instanceof IndexAsn) {
+            return `${this.index1.compile()}`;
         }
 
-        return `[${this.index.compile()}]`;
+        if (this.index2) {
+            return `[${this.index1.compile()}][${this.index2.compile()}]`;
+        }
+
+        return `[${this.index1.compile()}]`;
     }
 
     get symbolType() {
@@ -31,6 +39,12 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
     }
 
     toString() {
-        return `[${this.index}]`;
+        if (this.isDoubleIndex()) {
+            return `${this.index1}`;
+        }
+        if (this.index2) {
+            return `[${this.index1}][${this.index2}]`;
+        }
+        return `[${this.index1}]`;
     }
 }

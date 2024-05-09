@@ -21,6 +21,8 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
         super();
     }
 
+    is2d : boolean = false;
+
     aggregateCompileErrors(): CompileError[] {
         var cc: CompileError[] = [];
         for (const i of this.genericParameters) {
@@ -64,7 +66,7 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
             case ("List"): return new ListType(this.genericParameters[0].symbolType!);
-            case ("Array"): return new ArrayType(this.genericParameters[0].symbolType!);
+            case ("Array"): return new ArrayType(this.genericParameters[0].symbolType!, this.is2d);
             case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
             case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
             case ("Iter"): return new IterType(this.genericParameters[0].symbolType!);

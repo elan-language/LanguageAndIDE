@@ -4,8 +4,7 @@ import { ExprNode } from "./expr-node";
 import { SymbolNode } from "./symbol-node";
 import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { RangeNode } from "./range-node";
-import { CommaNode } from "./comma-node";
-import { Sequence } from "./sequence";
+import { DoubleIndexNode } from "./double-index-node";
 
 export class IndexNode extends AbstractSequence {
     contents: Alternatives | undefined;
@@ -18,14 +17,14 @@ export class IndexNode extends AbstractSequence {
     parseText(text: string): void {
         this.remainingText = text;
         var expr = () => new ExprNode();
-        var doubleIndex = () => new Sequence([() => new ExprNode(),() => new CommaNode(),()=> new ExprNode()]);
+        var doubleIndex = () => new DoubleIndexNode();
         var range = () => new RangeNode();
         this.contents = new Alternatives([expr, doubleIndex, range]);
         if (text.length > 0) {
-          this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
-          this.addElement(this.contents);
-          this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
-          super.parseText(text);
+            this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
+            this.addElement(this.contents);
+            this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
+            super.parseText(text);
         }
     }
 }

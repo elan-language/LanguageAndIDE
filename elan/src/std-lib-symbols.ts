@@ -32,7 +32,7 @@ export class StdLibSymbols implements Scope {
     private symbols = new Map<string, ISymbol>(
         [
             ["asString", this.getSymbol("asString", new FunctionType([new GenericParameterType("T")], StringType.Instance, true))],
-            ["asArray", this.getSymbol("asArray", new FunctionType([new IterType(new GenericParameterType("T"))], new ArrayType(new GenericParameterType("T")), true))],
+            ["asArray", this.getSymbol("asArray", new FunctionType([new IterType(new GenericParameterType("T"))], new ArrayType(new GenericParameterType("T"), false), true))],
             ["asList", this.getSymbol("asList", new FunctionType([new IterType(new GenericParameterType("T"))], new ListType(new GenericParameterType("T")), true))],
             ["keys", this.getSymbol("keys", new FunctionType([new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"))], new ListType(new GenericParameterType("T1")), true))],
             ["floor", this.getSymbol("floor", new FunctionType([FloatType.Instance], IntType.Instance))],

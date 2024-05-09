@@ -67,9 +67,19 @@ export function mustBeCallableSymbol(symbolType: ISymbolType, compileErrors: Com
     }
 }
 
-export function mustBeIndexableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeIndexableSymbol(symbolType: ISymbolType, isDouble : boolean, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof DictionaryType)) {
         compileErrors.push(new CompileError(`Cannot index ${symbolType.name}`, location, true));
+    }
+    if (isDouble &&
+        ((symbolType instanceof ArrayType && !symbolType.is2d) ||
+            symbolType instanceof ListType ||
+            symbolType instanceof StringType ||
+            symbolType instanceof DictionaryType)) {
+        compileErrors.push(new CompileError(`Cannot double index ${symbolType.name}`, location, true));
+    }
+    if (!isDouble && (symbolType instanceof ArrayType && symbolType.is2d)) {
+        compileErrors.push(new CompileError(`Cannot single index 2D ${symbolType.name}`, location, true));
     }
 }
 

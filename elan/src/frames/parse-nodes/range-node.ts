@@ -7,7 +7,7 @@ import { ExprNode } from "./expr-node";
 export class RangeNode extends AbstractSequence {
     fromIndex: OptionalNode | undefined;
     toIndex: OptionalNode | undefined;
-    
+
     parseText(text: string): void {
         if (text.length > 0) {
             this.fromIndex = new OptionalNode(new ExprNode());
