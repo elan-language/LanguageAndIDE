@@ -51,7 +51,7 @@ return main;}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test('Pass_ThrowExceptionUsingInterpolatedStringForMessage', async () => {
+  test('Pass_ThrowExceptionUsingInterpolatedStringForMessage', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -62,7 +62,7 @@ end main`;
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var bar = 1;
-  throw new Error("{bar}");
+  throw new Error(\`\${_stdlib.asString(bar)}\`);
 }
 return main;}`;
 
@@ -116,7 +116,7 @@ main
     print e
   end try
 end main
-  
+
 procedure foo()
   throw "Foo"
 end procedure`;
