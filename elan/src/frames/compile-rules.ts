@@ -9,6 +9,7 @@ import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
 import { FloatType } from "../symbols/number-type";
+import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import { ISymbol, SymbolScope } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
@@ -32,12 +33,24 @@ export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, com
     mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
 }
 
-export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors: CompileError[], location: string) {
+export function mustBeOneOrTwoOfTypeInt(params: AstNode[], compileErrors: CompileError[], location: string) {
+    if (params.length === 0 || params.length > 2) {
+        compileErrors.push(new CompileError(`Array requires 1 or 2 parameters`, location, false));
+    }
+    if (params.length > 0) {
+        mustBeOfSymbolType(params[0].symbolType, IntType.Instance, compileErrors, location);
+    }
+    if (params.length > 1) {
+        mustBeOfSymbolType(params[1].symbolType, IntType.Instance, compileErrors, location);
+    }
+}
+
+export function mustHaveLastSingleElse(elses: { hasIf: boolean }[], compileErrors: CompileError[], location: string) {
     if (elses.filter(s => !s.hasIf).length > 1) {
         compileErrors.push(new CompileError(`Cannot have multiple unconditional 'Else'`, location, false));
     }
 
-    if (elses[elses.length -1].hasIf){
+    if (elses[elses.length - 1].hasIf) {
         compileErrors.push(new CompileError(`Must end with unconditional 'Else'`, location, false));
     }
 }
@@ -45,6 +58,18 @@ export function mustHaveLastSingleElse(elses: {hasIf : boolean}[], compileErrors
 export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[], location: string) {
     if (symbol instanceof UnknownSymbol) {
         compileErrors.push(new CompileError(`Undeclared id`, location, true));
+    }
+}
+
+export function mustBeCallableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof FunctionType || symbolType instanceof ProcedureType)) {
+        compileErrors.push(new CompileError(`Cannot call ${symbolType.name}`, location, true));
+    }
+}
+
+export function mustBeIndexableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof DictionaryType)) {
+        compileErrors.push(new CompileError(`Cannot index ${symbolType.name}`, location, true));
     }
 }
 
@@ -129,6 +154,15 @@ export function mustBeCoercibleType(lhs: ISymbolType, rhs: ISymbolType, compileE
     mustBeCompatibleType(lhs, rhs, compileErrors, location);
 }
 
+export function mustBeNumberType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+    // for compare allow int and floats
+    if ((lhs instanceof IntType || lhs instanceof FloatType) && (rhs instanceof IntType || rhs instanceof FloatType)) {
+        return;
+    }
+
+    compileErrors.push(new CompileError(`Cannot compare ${lhs.name} and ${rhs.name}`, location, true));
+}
+
 export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
     if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
@@ -154,14 +188,31 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof DictionaryType && lhs.name !== rhs.name) {
+
+    if (lhs instanceof DictionaryType && rhs instanceof DictionaryType) {
+        mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location);
+        mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location);
+        return;
+    }
+
+    if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
-    if (lhs instanceof TupleType && lhs.name !== rhs?.name) {
+
+    if (lhs instanceof TupleType && rhs instanceof TupleType) {
+        const maxLen = lhs.ofTypes.length > rhs.ofTypes.length ? lhs.ofTypes.length : rhs.ofTypes.length;
+        for (var i = 0; i < maxLen; i++) {
+            mustBeCompatibleType(lhs.ofTypes[i], rhs.ofTypes[i], compileErrors, location);
+        }
+        return;
+    }
+
+    if (lhs instanceof TupleType && !(rhs instanceof TupleType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
     }
+
     if (lhs instanceof IterType && !(rhs instanceof ListType || rhs instanceof ArrayType || rhs instanceof StringType || rhs instanceof IterType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
@@ -214,7 +265,7 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
     if (parent.constructor.name === "FunctionMethod") {
         const s = assignable.symbolScope;
 
-        if (s !== SymbolScope.local){
+        if (s !== SymbolScope.local) {
             compileErrors.push(new CompileError(`May not mutate non local data in function`, location, false));
         }
     }
@@ -245,7 +296,7 @@ export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileErro
 }
 
 export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
-    
+
     if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {
         compileErrors.push(new CompileError(`May not reassign variable`, location, false));
     }

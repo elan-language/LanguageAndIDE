@@ -2,7 +2,7 @@ import { ISymbolType } from "./symbol-type";
 
 export class TupleType implements ISymbolType {
 
-    constructor(private ofTypes: ISymbolType[]) {
+    constructor(public readonly ofTypes: ISymbolType[]) {
 
     }
 

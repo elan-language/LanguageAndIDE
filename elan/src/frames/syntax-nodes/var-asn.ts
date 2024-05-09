@@ -6,7 +6,7 @@ import { ListType } from "../../symbols/list-type";
 import { SymbolScope } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { CompileError } from "../compile-error";
-import { mustBePublicProperty } from "../compile-rules";
+import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { propertyKeyword } from "../keywords";
@@ -78,15 +78,17 @@ export class VarAsn extends AbstractAstNode implements AstNode {
             const p = s.resolveSymbol(this.id, s);
 
             mustBePublicProperty(p, this.compileErrors, this.fieldId);
-           
         }
 
         var idx = this.index ? this.index.compile() : "";
         var code = `${q}${this.id}${idx}`;
 
-        if (this.isRange()) {
+        if (this.isRange() || this.index) {
             const rootType = this.scope.resolveSymbol(this.id, this.scope).symbolType;
-            if (rootType) {
+            if (this.index) {
+                mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
+            }
+            if (this.isRange()) {
                 code = this.wrapListOrArray(rootType, code);
             }
         }

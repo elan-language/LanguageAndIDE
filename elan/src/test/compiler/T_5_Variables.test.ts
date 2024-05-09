@@ -456,5 +456,19 @@ end main`;
 
   });
 
+  test('Fail_RecursiveDefinition', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to x + 1
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
 
 });

@@ -20,6 +20,13 @@ export function getClassScope(start: any): Scope {
     return getClassScope(start.getParent());
 }
 
+export function getParentScope(start: any): Scope {
+    if ('getParent' in start){
+         return start.getParent();
+    }
+    return start;
+}
+
 export function updateScopeAndQualifier(qualifier: QualifierAsn | undefined, currentScope: Scope): [QualifierAsn | undefined, Scope] {
 
     const qualifierScope = qualifier ? qualifier.symbolType : undefined;

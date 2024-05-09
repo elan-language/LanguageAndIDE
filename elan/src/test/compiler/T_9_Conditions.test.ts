@@ -305,10 +305,10 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Incompatible types String to Int",
       "Incompatible types String to Int",
-      "Incompatible types String to Int",
-      "Incompatible types String to Int",
-      "Incompatible types String to Int",
-      "Incompatible types String to Int"
+      "Cannot compare Int and String",
+      "Cannot compare Int and String",
+      "Cannot compare Int and String",
+      "Cannot compare Int and String"
     ]);
   });
 

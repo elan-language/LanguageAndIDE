@@ -108,7 +108,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["Cannot compare Unknown and Int", "Undeclared id"]);
   });
 
   test('Fail_testPutOnRepeat', async () => {

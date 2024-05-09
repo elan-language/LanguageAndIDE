@@ -60,7 +60,7 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  print keys(a)
+  print a.keys()
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -85,8 +85,8 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  print hasKey(a, "b")
-  print hasKey(a, "d")
+  print a.hasKey("b")
+  print a.hasKey("d")
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -112,7 +112,7 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  print values(a)
+  print a.values()
 end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -137,8 +137,8 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to setItem(a, "b", 4)
-  var c set to setItem(b, "d", 2)
+  var b set to a.setItem("b", 4)
+  var c set to b.setItem("d", 2)
   print a
   print c
 end main`;
@@ -168,7 +168,7 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to removeItem(a, "b")
+  var b set to a.removeItem("b")
   print a
   print b
 end main`;
@@ -197,7 +197,7 @@ return main;}`;
 
 constant a set to ["a":1, "b":3, "z":10]
 main
-  var b set to removeItem(a, "c")
+  var b set to a.removeItem("c")
   print b
 end main`;
 
@@ -224,9 +224,9 @@ return main;}`;
 
 main
   var a set to new Dictionary<of String, Int>()
-  var b set to setItem(a, "Foo", 1)
-  set b to setItem(b, "Bar", 3)
-  var k set to keys(b)
+  var b set to a.setItem("Foo", 1)
+  set b to b.setItem("Bar", 3)
+  var k set to b.keys()
   print k.length()
   print b["Foo"]
   print b["Bar"]
