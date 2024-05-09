@@ -46,6 +46,7 @@ import { Alternatives } from '../frames/parse-nodes/alternatives';
 import { RegExMatchNode } from '../frames/parse-nodes/regex-match-node';
 import { BinaryExpression } from '../frames/parse-nodes/binary-expression';
 import { InstanceProcRef } from '../frames/parse-nodes/instanceProcRef';
+import { IndexNode } from '../frames/parse-nodes/index-node';
 
 suite('Parsing Nodes', () => {
 
@@ -525,5 +526,18 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new FunctionCallNode(), `12.3.asString()`, ParseStatus.valid, "","");
 		testNodeParse(new FunctionCallNode(), `bar.`, ParseStatus.incomplete, "","");
 		testNodeParse(new FunctionCallNode(), `bar`, ParseStatus.incomplete, "","");
+	});
+	test('#387 Indexes', () => {
+		testNodeParse(new IndexNode(), `[3]`, ParseStatus.valid, "[3]","");
+		testNodeParse(new IndexNode(), `[3`, ParseStatus.incomplete, "[3","");
+		testNodeParse(new IndexNode(), `(3)`, ParseStatus.invalid, "","(3)");
+		testNodeParse(new IndexNode(), `[x + y]`, ParseStatus.valid, "[x + y]","");
+		testNodeParse(new IndexNode(), `[3..4]`, ParseStatus.valid, "[3..4]","");
+		testNodeParse(new IndexNode(), `[3..]`, ParseStatus.valid, "[3..]","");
+		testNodeParse(new IndexNode(), `[..4]`, ParseStatus.valid, "[..4]","");
+		testNodeParse(new IndexNode(), `[3..`, ParseStatus.incomplete, "[3..","");
+		testNodeParse(new IndexNode(), `[3,4]`, ParseStatus.valid, "[3,4]","");
+		testNodeParse(new IndexNode(), `[3,4,5]`, ParseStatus.invalid, "","[3,4,5]");
+		testNodeParse(new IndexNode(), `[3..4,5]`, ParseStatus.invalid, "","[3..4,5]");
 	});
 });
