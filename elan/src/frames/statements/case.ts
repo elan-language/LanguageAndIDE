@@ -6,6 +6,8 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
 import { caseKeyword } from "../keywords";
+import { ISymbol } from "../../symbols/symbol";
+import { mustBeCompatibleNode, mustBeCompatibleType } from "../compile-rules";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -40,6 +42,12 @@ ${this.renderChildrenAsSource()}`;
 
     compile(): string {
         this.compileErrors = [];
+
+        const switchType = (this.getParent() as unknown as ISymbol).symbolType;
+        const caseType = this.value.getOrTransformAstNode?.symbolType;
+
+        mustBeCompatibleType(switchType, caseType!, this.compileErrors, this.htmlId);
+
         return `${this.indent()}case ${this.value.compile()}:\r
 ${this.renderStatementsAsObjectCode()}\r
 ${this.indent()}${singleIndent()}break;`;

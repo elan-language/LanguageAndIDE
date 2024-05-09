@@ -1,3 +1,4 @@
+import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -6,7 +7,7 @@ import { Parent} from "../interfaces/parent";
 import { switchKeyword } from "../keywords";
 import { Default } from "./default";
 
-export class Switch extends FrameWithStatements { 
+export class Switch extends FrameWithStatements implements ISymbol { 
     isStatement = true;
     expr: ExpressionField;
     default: Default;
@@ -17,6 +18,17 @@ export class Switch extends FrameWithStatements {
         this.default = new Default(this);
         this.getChildren().push(this.default);
     }
+
+    get symbolId() {
+        return "_";
+    }
+
+    get symbolType() {
+        return this.expr.symbolType;
+    }
+
+    symbolScope = SymbolScope.local;
+
     initialKeywords(): string {
         return switchKeyword;
     }

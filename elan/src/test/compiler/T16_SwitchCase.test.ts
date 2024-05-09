@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T16_SwitchCase', () => {
@@ -181,8 +181,53 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "bcc");
   });
 
-  test('Fail_NoDefault', async () => {
+  test('Pass_CompatibleCaseType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  switch 3.1
+    case 1
+      print "a"
+    case 2
+      print "b"
+    case 3.1
+      print "c"
+    default
+  end switch
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  switch (3.1) {
+    case 1:
+      system.print(_stdlib.asString("a"));
+      break;
+    case 2:
+      system.print(_stdlib.asString("b"));
+      break;
+    case 3.1:
+      system.print(_stdlib.asString("c"));
+      break;
+    default:
+
+      break;
+  }
+}
+return main;}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "c");
+  });
+});
+
+test('Fail_NoDefault', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -198,14 +243,14 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_NoCase', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_NoCase', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -217,14 +262,14 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  ignore_test('Fail_IncompatibleCaseType', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_IncompatibleCaseType', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -234,21 +279,22 @@ main
       case 2
         print "b"
       case 3.1
-        print "c" 
+        print "c"
       default
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertParses(fileImpl);
+  assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+});
 
-  test('Fail_UseOfVariableForCase', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_UseOfVariableForCase', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to 2
@@ -259,20 +305,20 @@ main
         case a
           print "b"
         case 3
-          print "c"        
+          print "c"
       end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_UseOfExpression', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_UseOfExpression', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -282,20 +328,20 @@ main
       case 1 + 1
         print "b"
       case 3
-        print "c"        
+        print "c"
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_CaseAfterDefault', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_CaseAfterDefault', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -305,20 +351,20 @@ main
       default
         print "b"
       case 3
-        print "c"        
+        print "c"
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_WithColons', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_WithColons', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 4 step 1
@@ -328,38 +374,38 @@ main
       case 2:
         print "b"
       case 3:
-        print "c"        
+        print "c"
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_actionOnSameLineAsCase', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_actionOnSameLineAsCase', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
     switch i
       case 1 print "a"
-      case 2 print "b"       
+      case 2 print "b"
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_missingExpression', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_missingExpression', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -367,20 +413,20 @@ main
       case 1 
         print "a"
       case 2 
-        print "b"       
+        print "b"
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
+  assertDoesNotParse(fileImpl);
+});
 
-  test('Fail_caseValueMissing', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+test('Fail_caseValueMissing', async () => {
+  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   for i from 1 to 3 step 1
@@ -388,17 +434,14 @@ main
       case
           print "a"
       case 2 
-          print "b"       
+          print "b"
     end switch
   end for
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+  const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+  await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-  });
-
-
+  assertDoesNotParse(fileImpl);
 });
