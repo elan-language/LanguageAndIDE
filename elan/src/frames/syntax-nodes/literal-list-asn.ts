@@ -1,6 +1,7 @@
 import { ListType } from "../../symbols/list-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
+import { mustBeCompatibleType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
@@ -21,6 +22,12 @@ export class LiteralListAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
+        const ofType = this.items[0]?.symbolType;
+        
+        for(const i of this.items){
+            mustBeCompatibleType(ofType, i.symbolType, this.compileErrors, this.fieldId);
+        }
+
         const it = this.items.map(p => p.compile()).join(", ");
         return `system.list([${it}])`;
     }
