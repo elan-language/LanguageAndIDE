@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T17_Dictionaries', () => {
@@ -301,6 +301,67 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
+  test('Fail_AccessByInvalidKey', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
+constant a set to ["a":1, "b":3, "z":10]
+main
+  print a["c"]
+end main
+`;
 
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+  });
+
+  test('Fail_RemoveInvalidKeyType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3, "z":10]
+main
+  var b set to a.removeItem(10)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+  });
+
+  test('Fail_SetInvalidKeyType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3, "z":10]
+main
+  var b set to a.setItem(10, 4)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+  });
+
+  ignore_test('Fail_SetInvalidValueType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1, "b":3, "z":10]
+main
+  var b set to a.setItem("b", 3.1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [""]);
+  });
 });
