@@ -386,7 +386,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, 'List [4, 5, 6, 7, 8]List [1, 2, 3]List [4, 5, 6, 7, 8, 1, 2, 3]');
   });
 
-  ignore_test('Pass_constantLists', async () => {
+  test('Pass_constantLists', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to [4,5,6,7,8]
@@ -484,8 +484,19 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, 'empty List');
   });
 
-  
+  ignore_test('Fail_emptyLiteralList', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-  // Fails TODO
+main
+  var a set to []
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 
 });
