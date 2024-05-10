@@ -299,15 +299,15 @@ suite('Parsing Nodes', () => {
 	test('Lists', () => {
 		testNodeParse(new ListNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
 		testNodeParse(new ListNode(() => new LitInt()), `[1, 2, 3, 4, 5]`, ParseStatus.valid, ``, "", "[1, 2, 3, 4, 5]", "");
-		testNodeParse(new ListNode(() => new LitInt()), `[]`, ParseStatus.valid, `[]`, "", "");
+		testNodeParse(new ListNode(() => new LitInt()), `[]`, ParseStatus.invalid, ``, "[]", "");
 		testNodeParse(new ListNode(() => new LitInt()), `[`, ParseStatus.incomplete, `[`, "", "");
 		testNodeParse(new ListNode(() => new LitInt()), `[1,2,3.1]`, ParseStatus.invalid, ``, "[1,2,3.1]", "");
 		// list of list
 		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), ``, ParseStatus.empty, ``, "", "");
-		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[], [], []]`, ParseStatus.valid, `[[], [], []]`, "", "");
-		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [], [3,4]]`, ParseStatus.valid, ``, "", "[[1, 2], [], [3, 4]]", "");
-		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [], [3,4]`, ParseStatus.incomplete, ``, "", "");
-		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2, [], [3,4]]`, ParseStatus.invalid, ``, `[[1,2, [], [3,4]]`, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[], [], []]`, ParseStatus.invalid, ``, "[[], [], []]", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [3,4]]`, ParseStatus.valid, ``, "", "[[1, 2], [3, 4]]", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2], [3,4]`, ParseStatus.incomplete, `[[1,2], [3,4]`, "", "");
+		testNodeParse(new ListNode(() => new ListNode(() => new LitInt())), `[[1,2, []]`, ParseStatus.invalid, ``, `[[1,2, []]`, "", "");
 
 		testNodeParse(new ListNode(() => new LitString()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
 		testNodeParse(new ListNode(() => new LiteralNode()), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);

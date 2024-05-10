@@ -484,7 +484,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, 'empty List');
   });
 
-  ignore_test('Fail_emptyLiteralList', async () => {
+  test('Fail_emptyLiteralList', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
