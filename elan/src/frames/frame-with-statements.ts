@@ -122,10 +122,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         while (!this.parseBottom(source)) {
             if (source.isMatchRegEx(Regexes.newLine)) {
                 source.removeRegEx(Regexes.newLine, false);
-                source.removeIndent();
             } else {
                 this.getFirstSelectorAsDirectChild().parseFrom(source);
             }
+            source.removeIndent();
         } 
     }
 
