@@ -40,5 +40,5 @@ test bestFitFromPoints
     assert bestFitFromPoints(l1) is (0.76633595414913458, 1.0926439783101325)
 end test 
 
-constant empty set to new List<of (Number, Number)>()
+constant empty set to new List<of (Float, Float)>()
 constant l1 set to [(0.71, 1.12), (3.56, 5.36), (7.83, 9.04)]

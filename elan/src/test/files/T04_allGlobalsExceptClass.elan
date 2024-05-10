@@ -1,4 +1,4 @@
-# 15619a4d978be2d259d18d16a0df4b779999844825926659dcf4693e654ccd60 Elan v0.1 valid
+# dc260f1147143cf437e0471768f4a5a16d862f6e1fc6f84ff23d8fe7ee2ef8cf Elan v0.1 valid
 
 constant phi set to 1.618
 
@@ -10,7 +10,7 @@ procedure signIn()
 
 end procedure
 
-function hypotenuse(sideB as Number, sideC as Number) return Number
+function hypotenuse(sideB as Float, sideC as Float) return Float
   return sqrt(sideB ^ 2 + sideC ^ 2)
 end function
 

@@ -38,7 +38,7 @@ class GridGraph
   end function
 
   # Assumes that it will only be called if the points ARE immediate neighbours
-  function findEdge(p1 Point, p2 Point) return Number
+  function findEdge(p1 Point, p2 Point) return Float
     return p1.distanceFrom(p2)
   end function
 
@@ -80,8 +80,8 @@ class GridGraph
     return dict
   end function
 
-  function newDictionaryOfAllPointsReturningDoublesSetToInfinity() return Dictionary<of Point, Number>
-    var dict set to new Dictionary<of Point, Number>()
+  function newDictionaryOfAllPointsReturningDoublesSetToInfinity() return Dictionary<of Point, Float>
+    var dict set to new Dictionary<of Point, Float>()
     each p in nodes
       set dict to dict.setItem(p, infinity)
     end each
@@ -97,7 +97,7 @@ class GridGraph
   end function
 
   # needs converting to a function as dictionaries are immutable
-  procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource Dictionary<of Point, Number>, via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
+  procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource Dictionary<of Point, Float>, via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
     each neighbour in neighbours(currentNode)
       var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
       if newCost < costFromSource[neighbour]
@@ -107,11 +107,11 @@ class GridGraph
     end each
   end procedure
 
-  function estimatedCostToDestination(current Point, destination Point) return Number
+  function estimatedCostToDestination(current Point, destination Point) return Float
     return sqrt((current.x - destination.x) ^ 2 + (current.y - destination.y) ^ 2)
   end function
 
-  function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Number>, destination Point ,alg Algorithm) return Point
+  function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) return Point
     var lowestCostSoFar set to infinity
     var lowestCostNode set to nodes.element(0)
     var possibilities set to nodes.filter(lambda n =>  not visited[n] and costFromSource[n] < infinity)
@@ -146,7 +146,7 @@ class GridGraph
     return result
   end function
 
-  function sumOfEdges(route List<of Point>) return Number
+  function sumOfEdges(route List<of Point>) return Float
     var result set to 0.0
     var stage set to 0
     while stage < route.length() - 1
@@ -172,7 +172,7 @@ immutable class Point
 
   property y as Int
 
-  function distanceFrom(p2 Point) return Number
+  function distanceFrom(p2 Point) return Float
     return sqrt((p2.x - x)^2 + (p2.y - y)^2)
   end function
 
