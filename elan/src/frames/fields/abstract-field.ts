@@ -219,16 +219,19 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
     }
+    protected setParseStatus(newStatus: ParseStatus) {
+        this.parseStatus = newStatus;
+    }
     getParseStatus(): ParseStatus {
         if (!this.parseStatus) {
             this.parseCurrentText();
         }
         return this.parseStatus!;
     }
-    protected setParseStatus(newStatus: ParseStatus) {
-        this.parseStatus = newStatus;
+    getCompileStatus() : CompileStatus {
+        this.compileErrors = this.aggregateCompileErrors();
+        return helper_getCompileStatus(this.compileErrors);
     }
-
     select(withFocus?: boolean, multiSelect?: boolean, selection? : number): void {
         this.deselectAll();
         this.selected = true;
@@ -353,10 +356,6 @@ export abstract class AbstractField implements Selectable, Field {
     aggregateCompileErrors(): CompileError[] {
         const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
         return this.compileErrors.concat(cc);
-    }
-    getCompileStatus() : CompileStatus {
-        this.compileErrors = this.aggregateCompileErrors();
-        return helper_getCompileStatus(this.compileErrors);
     }
     get symbolType() {
         const astNode = this.getOrTransformAstNode;

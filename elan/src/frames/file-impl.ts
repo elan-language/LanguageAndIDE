@@ -242,6 +242,10 @@ export class FileImpl implements File {
     getParseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     }
+    
+    getCompileStatus(): CompileStatus {
+        return parentHelper_worstCompileStatusOfChildren(this);
+    }
 
     parseStatusAsString() : string {
         return ParseStatus[this.getParseStatus()];
@@ -379,8 +383,4 @@ export class FileImpl implements File {
     }
 
     libraryScope = this._stdLibSymbols as Scope;
-
-    getCompileStatus(): CompileStatus {
-        return parentHelper_worstCompileStatusOfChildren(this);
-    }
 }

@@ -53,12 +53,6 @@ export abstract class AbstractFrame implements Frame {
 
     abstract getFields(): Field[];
     
-    worstParseStatusOfFields(): ParseStatus {
-        return this.getFields().map(g => g.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
-    }
-    worstCompileStatusOfFields(): CompileStatus {
-        return this.getFields().map(g => g.getCompileStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CompileStatus.ok);
-    }
     getFirstPeerFrame(): Frame {
         return this.getParent().getFirstChild();
     }
@@ -442,6 +436,18 @@ export abstract class AbstractFrame implements Frame {
         return this.worstParseStatusOfFields();
     }
 
+    worstParseStatusOfFields(): ParseStatus {
+        return this.getFields().map(g => g.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
+    }
+    
+    getCompileStatus() : CompileStatus {
+        return Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
+    }
+ 
+    worstCompileStatusOfFields(): CompileStatus {
+        return this.getFields().map(g => g.getCompileStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CompileStatus.ok);
+    }
+
     abstract parseFrom(source: CodeSource): void;
 
     compileErrors: CompileError[] = [];
@@ -450,11 +456,6 @@ export abstract class AbstractFrame implements Frame {
         const cc = this.getFields().map(s => s.aggregateCompileErrors()).reduce((prev, cur) => prev.concat(cur), []);
         return this.compileErrors.concat(cc);
     }
-    
-    getCompileStatus() : CompileStatus {
-       return Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
-    }
-
     compileMsgAsHtml() {
       return helper_compileMsgAsHtml(this);
     }

@@ -77,6 +77,9 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     getParseStatus(): ParseStatus {
         return this.worstParseStatusOfFields();
     }
+    getCompileStatus() : CompileStatus {
+        return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
+    }
     getFactory(): StatementFactory {
         return this.getParent().getFactory();
     }
@@ -313,7 +316,4 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
         const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
         return cc.concat(super.aggregateCompileErrors());
     }
-    getCompileStatus() : CompileStatus {
-        return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
-     }
 }

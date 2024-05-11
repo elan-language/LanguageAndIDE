@@ -41,6 +41,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     getParseStatus(): ParseStatus {
         return this.worstParseStatusOfFields();
     }
+    
+    getCompileStatus() : CompileStatus {
+        return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
+    }
 
     getChildren(): Frame[] {
         return this._children;
@@ -174,8 +178,4 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
         return cc.concat(super.aggregateCompileErrors());
     }
-
-    getCompileStatus() : CompileStatus {
-        return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
-     }
-    }
+}
