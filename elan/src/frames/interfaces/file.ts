@@ -29,8 +29,9 @@ export interface File extends Parent {
     expandCollapseAll(): void;
 
     getParseStatus(): ParseStatus;
-    testStatus(): TestStatus;
-    runStatus(): RunStatus;
+    getCompileStatus(): CompileStatus
+    getTestStatus(): TestStatus;
+    getRunStatus(): RunStatus;
 
     //Internal use only
     createMain(): Frame;
@@ -52,7 +53,6 @@ export interface File extends Parent {
     processKey(e: editorEvent): void;
 
     compileErrors(): CompileError[];
-    getCompileStatus(): CompileStatus
 
     setRunStatus(s : RunStatus) : void;
 }

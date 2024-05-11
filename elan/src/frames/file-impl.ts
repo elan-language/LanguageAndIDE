@@ -227,11 +227,11 @@ export class FileImpl implements File {
         //does nothing
     }
 
-    testStatus(): TestStatus {
+    getTestStatus(): TestStatus {
         return TestStatus.pending;
     }
 
-    runStatus(): RunStatus {
+    getRunStatus(): RunStatus {
         return this._runStatus;
     }
 
