@@ -25,12 +25,13 @@ body {
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
     font-size: 12pt;
-    grid-row: 1;
   }
   #code-title {
+    grid-row: 1;
     grid-column: 1 / 24;
 }
 #console-title {
+  grid-row: 1;
   grid-column: 25 / 48;
   }
 
@@ -48,12 +49,12 @@ body {
   }
 
   #graphics-title {
-    grid-column: 25 / 48;
+    grid-column: 32 / 48;
     grid-row: 18;
     }
   #graphics {
     /* position pane within outer grid */
-    grid-column: 25 / 48;
+    grid-column: 32 / 48;
     grid-row: 19/35;
     /* define internal grid */
     background-color: var(--idePanelBackground);
