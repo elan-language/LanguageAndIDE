@@ -75,7 +75,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         this.pushClass(true,"multiline");
     };
     getParseStatus(): ParseStatus {
-        return this.worstParseStatusOfFields();
+        return Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
     }
     getCompileStatus() : CompileStatus {
         return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
