@@ -61,6 +61,10 @@ comment *, comment field.valid text  {
     color: var(--comment);
 }
 
+#fileStatus {
+    display: none;
+}
+
 header, header * {
     color: var(--comment);
 }
