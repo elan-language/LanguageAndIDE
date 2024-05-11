@@ -20,7 +20,7 @@ body {
     padding: 15px;
     margin: 0;
   }
-  #code-title, #console-title, #graphics-title {
+  #code-title, #console-title, #graphics-title, #status-title, #status .row {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
@@ -47,6 +47,44 @@ body {
     white-space: pre;
     padding: 5px;
   }
+  #status-title {
+    grid-column: 25 / 31;
+    grid-row: 18;
+  }
+  #status-names {
+    grid-column: 25 / 27;
+    grid-row: 19 / 35;
+    background-color: var(--ideDefaultBackground);
+    color: var(--ideDefaultText);
+  }
+  #status-values {
+    grid-column: 27 / 31;
+    grid-row: 19 / 35;
+    margin-left: 20px;
+    background-color: var(--ideDefaultBackground);
+  }
+  #status-names div {
+    background-color: var(--ideDefaultBackground);
+    color: var(--ideReverseText);
+    font-family: var(--ideTitleFont);
+  }
+  #status-names div, #status-values div{
+    margin-bottom: 20px;
+  }
+  #status-values div {
+    font-family: var(--ideTitleFont);
+    text-align: center;
+    background-color: var(--ideDefaultBackground);
+  }
+  #status-values .ok {
+    background-color: var(--ok);
+  }
+  #status-values .warning {
+    background-color: var(--warning);
+  }
+  #status-values .error {
+    background-color: var(--error);
+  }
 
   #graphics-title {
     grid-column: 32 / 48;
@@ -56,15 +94,9 @@ body {
     /* position pane within outer grid */
     grid-column: 32 / 48;
     grid-row: 19/35;
-    /* define internal grid */
     background-color: var(--idePanelBackground);
-    display: grid;
-    grid-template-columns: 10;
-    grid-template-rows: 10;
-    grid-gap: 0px;
     overflow: hidden;
     margin: 0;
-    height: 41vh;
     }
 
  #code-controls, #console-controls {
