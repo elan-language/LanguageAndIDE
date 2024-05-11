@@ -29,7 +29,9 @@ export interface File extends Parent {
     expandCollapseAll(): void;
 
     getParseStatus(): ParseStatus;
+    getParseStatusForDashboard(): string;
     getCompileStatus(): CompileStatus
+    getCompileStatusForDashboard(): string;
     getTestStatus(): TestStatus;
     getRunStatus(): RunStatus;
 

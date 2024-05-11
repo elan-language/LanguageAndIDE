@@ -93,6 +93,9 @@ function getStatus() {
 
 function updateStatus() {
 	(document.getElementById("code-title") as HTMLDivElement).innerText = `Program: ${file.fileName}`; // ${getStatus()}`;
+	// TODO  Adding the class is wrong. It must replace existing class. So make status the only class.
+	(document.getElementById("parse") as HTMLDivElement).setAttribute("class", file.getParseStatusForDashboard());
+	(document.getElementById("compile") as HTMLDivElement).setAttribute("class",file.getCompileStatusForDashboard());
 }
 
 

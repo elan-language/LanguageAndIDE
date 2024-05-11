@@ -75,6 +75,7 @@ body {
     font-family: var(--ideTitleFont);
     text-align: center;
     background-color: var(--ideDefaultBackground);
+    height:20px;
   }
   #status-values .ok {
     background-color: var(--ok);

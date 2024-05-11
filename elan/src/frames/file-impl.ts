@@ -241,6 +241,32 @@ export class FileImpl implements File {
 
     getParseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
+    };
+    getParseStatusForDashboard(): string {
+        var status = this.getParseStatus();
+        var str = "";
+        if (status === ParseStatus.valid) {
+            str = "ok";
+        } else if (status === ParseStatus.incomplete) {
+            str = "warning";
+        } else if (status === ParseStatus.invalid) {
+            str = "error";
+        }
+        return str;
+    }
+    getCompileStatusForDashboard(): string {
+        var status = this.getCompileStatus();
+        var str = "";
+        if (this.getParseStatus() !== ParseStatus.valid) {
+            str = "default";
+        } else if (status === CompileStatus.ok) {
+            str = "ok";
+        } else if (status === CompileStatus.unknownSymbol) {
+            str = "warning";
+        } else if (status === CompileStatus.error) {
+            str = "error";
+        }
+        return str;
     }
     
     getCompileStatus(): CompileStatus {
