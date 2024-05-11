@@ -60,11 +60,15 @@ export function escapeAngleBrackets(str: string) : string {
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
-    var msg = loc.compileErrors.length > 1 ?
+
+    /*  To display multiple messages use:
+            var msg = loc.compileErrors.length > 1 ?
                 loc.compileErrors.reduce((prev, cur) => prev.concat(cur.message)+ "; ", "")
                 : loc.compileErrors.length > 0 ?
                     loc.compileErrors[0].message
-                    : "";
+                    : ""; */
+    /* To display first message only use: */
+    var msg =  loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";               
     var cls = "";
     if (loc.getCompileStatus() === CompileStatus.error ) {
       cls = OverallStatus[OverallStatus.error];
