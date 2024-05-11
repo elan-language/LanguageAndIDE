@@ -88,7 +88,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function getStatus() {
-	return file.parseStatus();
+	return file.getParseStatus();
 }
 
 function updateStatus() {
@@ -209,7 +209,7 @@ function updateContent(text: string) {
 		elanCode.focus();
 	}
 
-	if (file.parseStatus() === ParseStatus.valid) {
+	if (file.getParseStatus() === ParseStatus.valid) {
 		// save to local store
 		file.renderAsSource().then(code => {
 			localStorage.setItem("elan-code", code);

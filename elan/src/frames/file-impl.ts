@@ -239,12 +239,12 @@ export class FileImpl implements File {
         this._runStatus = s;
     }
 
-    parseStatus(): ParseStatus {
+    getParseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     }
 
     parseStatusAsString() : string {
-        return ParseStatus[this.parseStatus()];
+        return ParseStatus[this.getParseStatus()];
     }
     compileErrors(): CompileError[] {
         return parentHelper_aggregateCompileErrorsOfChildren(this);

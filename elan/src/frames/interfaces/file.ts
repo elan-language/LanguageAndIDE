@@ -28,7 +28,7 @@ export interface File extends Parent {
     indent(): string;
     expandCollapseAll(): void;
 
-    parseStatus(): ParseStatus;
+    getParseStatus(): ParseStatus;
     testStatus(): TestStatus;
     runStatus(): RunStatus;
 
