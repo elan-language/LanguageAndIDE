@@ -1,9 +1,8 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
+import { assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
-suite('T30_Expressions4_SystemCalls', () => {
+suite('T30_Expressions4_ImpureFunctionCalls', () => {
 
   test('Pass_Input1', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -79,37 +78,5 @@ return main;}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Your nameFred", "Fred");
   });
-
-  // not implemented - grammar change ?
-  ignore_test('Pass_Me', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to system.me()
-  print a
-end main`;
-
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = await system.input();
-  system.print(_stdlib.asString(a));
-}
-return main;}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Your nameFred", "Fred");
-  });
-
- 
-
-
- 
-
-  // TODO fails
 
 });
