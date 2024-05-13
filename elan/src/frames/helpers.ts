@@ -69,7 +69,7 @@ export function expandCollapseAll(file: File) {
     var globals = [...map.values()].filter(s => isGlobal(s));
     var selectedGlobals = globals.filter(s => s.isSelected());
     if (selectedGlobals.length === 0) {
-        file.getFirstChild().select(true, false)
+        file.getFirstChild().select(true, false);
     }
 }
 export function escapeAngleBrackets(str: string) : string {

@@ -18,7 +18,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         this.file = parent;
         this.testName = new IdentifierField(this);
         var selector = this.getChildren().pop()!;
-        this.getChildren().push(new AssertStatement(this));
         this.getChildren().push(selector);
     }
     initialKeywords(): string {
@@ -53,5 +52,15 @@ end test\r
     }
     parseBottom(source: CodeSource): boolean {
        return this.parseStandardEnding(source, "end test");
+    }
+
+    public compile(): string {
+        this.compileErrors = [];
+      
+
+        return `function _test_${this.testName.compile()}() {\r
+${this.renderChildrenAsObjectCode()}\r
+}\r
+`;
     }
 }

@@ -105,6 +105,14 @@ export class System {
         return this.inputter!();
     }
 
+    assert(actual : any, expected : any) {
+        if (actual !== expected) {
+            this.print(`Expected: ${expected} Actual ${actual}`);
+        }
+    }
+
+
+
     pause(n: number) {
         return new Promise(r => setTimeout(r, n));
     }

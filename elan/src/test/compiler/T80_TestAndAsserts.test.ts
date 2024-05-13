@@ -4,7 +4,7 @@ import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertPar
 
 suite('Pass_PassingTest', () => {
 
-  ignore_test('Pass_PassingTest', async () => {
+  test('Pass_PassingTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -22,7 +22,22 @@ test square
 end test
 `;
 
-    const objectCode = ``;
+const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+function _test_square() {
+  system.assert(9, square(3));
+  var actual = square(4);
+  var expected = 16;
+  system.assert(expected, actual);
+}
+return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
