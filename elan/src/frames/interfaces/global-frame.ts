@@ -1,3 +1,3 @@
-export interface Global {
+export interface GlobalFrame {
     isGlobal : boolean;
 }
