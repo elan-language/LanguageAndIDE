@@ -1,4 +1,4 @@
-# 54f3690cc8bff4e29e236090e7019af5a989ab637abbdba4c466f7adef609a14 Elan v0.1 valid
+# 29b54942ea3151fa189fa6ff5477504f1915e348a6d7831eb1e61588ae67fbbf Elan v0.1 valid
 
 main
   var li2 set to ["lemon", "lime", "orange"]
@@ -24,10 +24,10 @@ function binarySearch(li as List<of String>, item as String) return Boolean
     var value set to li[mid]
     if item is value
       set result to true
-      else if item.isBefore(value)
+      else if isBefore(item, value)
         set result to binarySearch(li[..mid], item)
       else
-        set results to binarySearch(li[mid + 1..], item)
+        set result to binarySearch(li[mid + 1..], item)
     end if
   end if
   return result
