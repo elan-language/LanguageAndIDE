@@ -36,8 +36,6 @@ export abstract class ProcedureFrame extends FrameWithStatements implements ISym
         return new ProcedureType(pt);
     }
 
-    symbolScope = SymbolScope.program;
-
     getFields(): Field[] {
         return [this.name, this.params];
     }
@@ -52,22 +50,7 @@ ${this.renderChildrenAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
     }
-    indent(): string {
-        return "";
-    }
-    public renderAsSource(): string {
-        return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
-${this.renderChildrenAsSource()}\r
-end procedure\r
-`;
-    }
-    public compile(): string {
-        this.compileErrors = [];
-        return `function ${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
-}\r
-`;
-    }
+
     parseTop(source: CodeSource): void {
         source.remove("procedure ");
         this.name.parseFrom(source);
