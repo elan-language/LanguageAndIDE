@@ -170,4 +170,8 @@ export class StdLib {
         const items = Object.getOwnPropertyNames(o);
         return `${type} [${items.map(n => `"${n}":${o[n]}`).join(", ")}]`;
     }
+
+    async pause(period: number) {
+        
+    }
 }

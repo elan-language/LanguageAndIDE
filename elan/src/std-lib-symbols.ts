@@ -7,15 +7,13 @@ import { ListType } from "./symbols/list-type";
 import { StringType } from "./symbols/string-type";
 import { ISymbol, SymbolScope } from "./symbols/symbol";
 import { ISymbolType } from "./symbols/symbol-type";
-import { UnknownType } from "./symbols/unknown-type";
 import { Scope } from "./frames/interfaces/scope";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IterType } from "./symbols/iter-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
-import { ClassType } from "./symbols/class-type";
-import { GenericClassType } from "./symbols/generic-class-type";
 import { TupleType } from "./symbols/tuple-type";
+import { ProcedureType } from "./symbols/procedure-type";
 
 export class StdLibSymbols implements Scope {
 
@@ -55,6 +53,7 @@ export class StdLibSymbols implements Scope {
             ["second", this.getSymbol("second", new FunctionType([new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])], new GenericParameterType("T2"), true))],
             ["indexOf", this.getSymbol("indexOf", IntType.Instance)],
             ["typeAndProperties", this.getSymbol("typeAndProperties", new FunctionType([new GenericParameterType("")], StringType.Instance))],
+            ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance]))],
         ]
     );
 

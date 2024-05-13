@@ -39,7 +39,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  ignore_test('Pass_ExternalCall', async () => {
+  test('Pass_ExternalCall', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -49,7 +49,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.pause(1);
+  _stdlib.pause(1);
   system.print(_stdlib.asString(1));
 }
 return main;}`;
@@ -460,6 +460,7 @@ end procedure
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
+  // not really compiler
   ignore_test('Fail_UnterminatedRecursion', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
