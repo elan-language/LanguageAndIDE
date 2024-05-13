@@ -285,7 +285,7 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
 export function mustNotBeParameter(assignable: VarAsn, parent: Parent, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
-    if (parent.constructor.name === "Procedure") {
+    if (parent.constructor.name === "GlobalProcedure") {
         if (s === SymbolScope.parameter && !(assignable.rootSymbolType instanceof ArrayType)) {
             compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
         }
