@@ -63,6 +63,9 @@ export class FileImpl implements File {
         }
         this.scratchPad = new ScratchPad();
     }
+    getFile(): File {
+        return this;
+    }
 
     getScratchPad(): ScratchPad {
         return this.scratchPad;
@@ -217,7 +220,7 @@ export class FileImpl implements File {
     }
 
     expandCollapseAll() {
-        expandCollapseAll(this._map);
+        expandCollapseAll(this);
     }
 
     expand(): void {

@@ -54,6 +54,10 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
         this.getChildren().push(new Constructor(this));
         this.getChildren().push(new MemberSelector(this));
     }
+    getFile(): File {
+        return this.getParent() as File;
+    }
+
     initialKeywords(): string {
         return classKeyword;
     }

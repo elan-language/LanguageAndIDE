@@ -4,10 +4,12 @@ import { CompileStatus, ParseStatus } from "../status-enums";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { CompileError } from "../compile-error";
+import { File} from "./file";
 
 export interface Frame extends Selectable, Scope {
     isFrame: boolean;
     
+    getFile(): File;
     getParent(): Parent;
     getMap(): Map<string, Selectable>;
 

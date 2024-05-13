@@ -51,7 +51,8 @@ export function singleIndent() {
     return "  ";
 }
 
-export function expandCollapseAll(map: Map<string, Selectable>) {
+export function expandCollapseAll(file: File) {
+    var map = file.getMap();
     var collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
     var firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s) )[0]; 
     var collapse = true;
@@ -64,6 +65,11 @@ export function expandCollapseAll(map: Map<string, Selectable>) {
         } else {
             c.expand();
         }
+    }
+    var globals = [...map.values()].filter(s => isGlobal(s));
+    var selectedGlobals = globals.filter(s => s.isSelected());
+    if (selectedGlobals.length === 0) {
+        file.getFirstChild().select(true, false)
     }
 }
 export function escapeAngleBrackets(str: string) : string {

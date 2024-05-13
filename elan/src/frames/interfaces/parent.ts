@@ -6,6 +6,8 @@ import { Frame } from "./frame";
 import { Profile } from "./profile";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
+import { File} from "./file";
+
 
 export interface Parent {
     //External use
@@ -27,6 +29,7 @@ export interface Parent {
 
     indent(): string;
 
+    getFile(): File;
     getMap(): Map<string, Selectable>;
     getFactory() : StatementFactory;
     getProfile() : Profile;
