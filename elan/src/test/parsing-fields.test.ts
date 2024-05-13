@@ -27,7 +27,6 @@ suite('Field Parsing Tests', () => {
 		assert.equal(text.getParseStatus(), ParseStatus.valid);
 		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion><msg></msg><help title="Any text on a single line.">?</help></field>`);
 		}); 
-
 	test('parse varDefField', () => { 
 		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
 		var variable = new VarStatement(main);
@@ -41,7 +40,7 @@ suite('Field Parsing Tests', () => {
 		id.setText("Ab_1");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.invalid);
-		assert.equal(id.parseErrorMsg, "parse error");
+		assert.equal(id.parseErrorMsg, "");
 		id.setText("result");
 		id.parseCurrentText();
 		assert.equal(id.getParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword

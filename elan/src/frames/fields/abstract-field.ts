@@ -80,7 +80,7 @@ export abstract class AbstractField implements Selectable, Field {
             }
         }
         if (this.parseStatus === ParseStatus.invalid) {
-            this.parseErrorMsg = root.errorMessage !== "" ? root.errorMessage : "parse error";
+            this.parseErrorMsg = root.errorMessage;
         }
     }
 
