@@ -282,13 +282,21 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
     }
 }
 
-export function mustNotBeParameter(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+export function mustNotBeParameter(assignable: VarAsn, parent: Parent, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
-    if (s === SymbolScope.parameter) {
-        compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
+    if (parent.constructor.name === "ProcedureMethod") {
+        if (s === SymbolScope.parameter && !(assignable.rootSymbolType instanceof ArrayType)) {
+            compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
+        }
+    }
+    else {
+        if (s === SymbolScope.parameter) {
+            compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
+        }
     }
 }
+
 
 export function mustNotBeCounter(assignable: VarAsn, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;

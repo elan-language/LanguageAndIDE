@@ -51,7 +51,7 @@ export class SetStatement extends AbstractFrame implements Statement{
 
         mustNotBePropertyOnFunctionMethod(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
         mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
-        mustNotBeParameter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
+        mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
         mustNotBeConstant(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
         mustNotBeCounter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
 
