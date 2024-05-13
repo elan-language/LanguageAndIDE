@@ -3,8 +3,9 @@ import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { commentMarker, abstractKeyword, classKeyword, constantKeyword, enumKeyword, functionKeyword, immutableKeyword, mainKeyword, procedureKeyword, testKeyword } from "../keywords";
+import { GlobalFrame } from "../interfaces/global-frame";
 
-export class GlobalSelector extends AbstractSelector  {
+export class GlobalSelector extends AbstractSelector implements GlobalFrame  {
     isGlobal = true;
     file: File;
 

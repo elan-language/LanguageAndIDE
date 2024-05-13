@@ -1,6 +1,4 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
-import { end } from "../../test/testHelpers";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
 import { FunctionFrame } from "../globals/function-frame";
@@ -10,7 +8,6 @@ import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 
 export class FunctionMethod extends FunctionFrame implements Member {
-    isGlobal: boolean = false;
     isMember: boolean = true;
     private class: Class;
 

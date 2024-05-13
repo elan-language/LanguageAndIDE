@@ -5,11 +5,11 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
-import { ScratchPad } from "../scratch-pad";
 import { constantKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
+import { GlobalFrame } from "../interfaces/global-frame";
 
-export class Constant extends AbstractFrame implements ISymbol {
+export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
     isGlobal = true;
     name: IdentifierField;
     literal: ConstantValueField;

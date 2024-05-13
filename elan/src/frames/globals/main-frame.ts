@@ -2,9 +2,10 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
+import { GlobalFrame } from "../interfaces/global-frame";
 import { mainKeyword } from "../keywords";
 
-export class MainFrame extends FrameWithStatements {
+export class MainFrame extends FrameWithStatements implements GlobalFrame {
     isMain = true;
     isGlobal = true;
     file: File;

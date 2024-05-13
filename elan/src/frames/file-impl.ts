@@ -3,8 +3,8 @@ import { StatementFactory } from "./interfaces/statement-factory";
 import { CompileStatus, ParseStatus } from "./status-enums";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
-import { FunctionFrame } from "./globals/function-frame";
-import { Procedure } from "./globals/procedure";
+import { GlobalFunction } from "./globals/global-function";
+import { GlobalProcedure } from "./globals/global-procedure";
 import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
@@ -296,8 +296,8 @@ export class FileImpl implements File {
     }
 
     createMain(): Frame {return new MainFrame(this);}
-    createFunction(): Frame {return  new FunctionFrame(this);}
-    createProcedure(): Frame {return  new Procedure(this);}
+    createFunction(): Frame {return  new GlobalFunction(this);}
+    createProcedure(): Frame {return  new GlobalProcedure(this);}
     createEnum(): Frame {return  new Enum(this);}
     createClass(): Frame {return  new Class(this);}
     createGlobalComment(): Frame {return  new GlobalComment(this);}

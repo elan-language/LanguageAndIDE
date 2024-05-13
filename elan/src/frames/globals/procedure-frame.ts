@@ -13,8 +13,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 
-export class Procedure extends FrameWithStatements implements ISymbol, Scope {
-    isGlobal = true;
+export abstract class ProcedureFrame extends FrameWithStatements implements ISymbol, Scope {
     public name: IdentifierField;
     public params: ParamList;
     file: File;
@@ -37,8 +36,6 @@ export class Procedure extends FrameWithStatements implements ISymbol, Scope {
         return new ProcedureType(pt);
     }
 
-    symbolScope = SymbolScope.program;
-
     getFields(): Field[] {
         return [this.name, this.params];
     }
@@ -53,22 +50,7 @@ ${this.renderChildrenAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
     }
-    indent(): string {
-        return "";
-    }
-    public renderAsSource(): string {
-        return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
-${this.renderChildrenAsSource()}\r
-end procedure\r
-`;
-    }
-    public compile(): string {
-        this.compileErrors = [];
-        return `function ${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
-}\r
-`;
-    }
+
     parseTop(source: CodeSource): void {
         source.remove("procedure ");
         this.name.parseFrom(source);

@@ -1,14 +1,12 @@
 import { AbstractFrame } from "../abstract-frame";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
 import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { GlobalSelector } from "./global-selector";
 import { File } from "../interfaces/file";
 import { commentMarker } from "../keywords";
+import { GlobalFrame } from "../interfaces/global-frame";
 
-export class GlobalComment extends AbstractFrame {
+export class GlobalComment extends AbstractFrame implements GlobalFrame {
     isGlobal = true;
     public text: CommentField;
     file: File;

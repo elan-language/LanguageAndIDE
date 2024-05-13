@@ -18,8 +18,7 @@ import { mustBeCompatibleType, mustNotBeArray } from "../compile-rules";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 
-export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
-    isGlobal = true;
+export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;
@@ -72,36 +71,6 @@ ${this.renderChildrenAsHtml()}
 </function>`;
     }
 
-    indent(): string {
-        return "";
-    }
-
-    public renderAsSource(): string {
-        return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
-${this.renderChildrenAsSource()}\r
-${endKeyword} ${functionKeyword}\r
-`;
-    }
-
-    public compile(): string {
-        this.compileErrors = [];
-        const paramList = this.params.getOrTransformAstNode as CsvAsn;
-        const parameters = paramList.items.map(i => i.symbolType);
-
-        for (const p of parameters) {
-            mustNotBeArray(p, this.compileErrors, this.htmlId);
-        }
-
-        const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
-        const tt = returnStatement?.symbolType;
-        mustBeCompatibleType(this.returnType?.symbolType, tt!, this.compileErrors, returnStatement!.fieldId);
-
-        return `function ${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderChildrenAsObjectCode()}\r
-}\r
-`;
-    }
-
     parseTop(source: CodeSource): void {
         source.remove(`${functionKeyword} `);
         this.name.parseFrom(source);
@@ -122,9 +91,10 @@ ${this.renderChildrenAsObjectCode()}\r
         }
         return result;
     }
-    private getReturnStatement(): ReturnStatement {
+    protected getReturnStatement(): ReturnStatement {
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
+    
     resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;

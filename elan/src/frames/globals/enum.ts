@@ -9,8 +9,9 @@ import { enumKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { EnumValueType } from "../../symbols/enum-value-type";
+import { GlobalFrame } from "../interfaces/global-frame";
 
-export class Enum extends AbstractFrame {
+export class Enum extends AbstractFrame implements GlobalFrame {
     isGlobal = true;
     name: TypeNameField;
     values: EnumValues;
