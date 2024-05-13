@@ -336,18 +336,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitInput([NotNull] ElanParser.InputContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.external"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExternal([NotNull] ElanParser.ExternalContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.external"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExternal([NotNull] ElanParser.ExternalContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.assert"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

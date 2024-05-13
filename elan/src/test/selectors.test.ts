@@ -119,7 +119,7 @@ suite('Unit tests', () => {
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getCompletion();
-		assert.equal(help, " call each external for if input let print repeat set switch throw try var while #");
+		assert.equal(help, " call each for if input let print repeat set switch throw try var while #");
 		s.processKey(key("s"));
 		help = s.getCompletion();
 		assert.equal(help, " set switch");
@@ -176,10 +176,10 @@ suite('Unit tests', () => {
 		var ifThen = new IfStatement(m);
 		var s = new StatementSelector(ifThen);
 		var help = s.getCompletion();
-		assert.equal(help, " call each else external for if input let print repeat set switch throw try var while #");
+		assert.equal(help, " call each else for if input let print repeat set switch throw try var while #");
 		s.processKey(key("e"));
 		help = s.getCompletion();
-		assert.equal(help, " each else external");
+		assert.equal(help, " each else");
 	});	
 	test("Selection Context - selector prevents more than one main", () => {
 		const fl = new FileImpl(hash, new DefaultProfile());

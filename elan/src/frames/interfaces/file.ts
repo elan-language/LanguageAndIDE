@@ -10,7 +10,6 @@ import { RunStatus } from "../run-status";
 import { CompileError } from "../compile-error";
 
 export interface File extends Parent {
-    // external use
     isFile : boolean;
     getById(id: string) : Selectable;
     renderAsHtml(): Promise<string>;

@@ -44,7 +44,7 @@ functionSignature: IDENTIFIER OPEN_BRACKET paramList? CLOSE_BRACKET RETURN type;
 
 // STATEMENT BLOCK
 statementBlock:  ( singleLineStatement | multiLineStatement )*;
-singleLineStatement: var | let | set |  call | throw | print | input | external | assert;
+singleLineStatement: var | let | set |  call | throw | print | input | assert;
 multiLineStatement: if | for | each | while | repeat | try | switch;
 
 // SINGLE LINE STATEMENTS
@@ -54,7 +54,6 @@ call: NL CALL (methodCall | (assignableValue DOT methodCall));
 throw: NL THROW (LITERAL_STRING | IDENTIFIER ); 
 print: NL PRINT expression?;
 input: INPUT assignableValue;
-external: NL EXTERNAL (methodCall | (assignableValue DOT methodCall)) (INTO assignableValue)?;
 assert: NL ASSERT expression IS literal;
 let: NL LET IDENTIFIER BE expression;
 

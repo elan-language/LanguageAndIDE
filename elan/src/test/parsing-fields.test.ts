@@ -4,7 +4,7 @@ import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
 import { FunctionFrame } from '../frames/globals/function-frame';
 import { VarStatement } from '../frames/statements/var-statement';
-import { OverallStatus, ParseStatus } from '../frames/status-enums';
+import { ParseStatus } from '../frames/status-enums';
 import { Switch } from '../frames/statements/switch';
 import { Case } from '../frames/statements/case';
 import { CallStatement } from '../frames/statements/call-statement';
@@ -12,8 +12,6 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
 import { LetStatement } from '../frames/statements/let-statement';
-
-import { ExternalStatement } from '../frames/statements/external-statement';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');

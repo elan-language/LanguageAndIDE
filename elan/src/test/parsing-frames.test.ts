@@ -14,7 +14,6 @@ import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
 import { AssertStatement } from '../frames/statements/assert-statement';
 import { LetStatement } from '../frames/statements/let-statement';
-import { ExternalStatement } from '../frames/statements/external-statement';
 import { ignore_test } from './compiler/compiler-test-helpers';
 
 suite('File Parsing Tests', async () => {
@@ -346,36 +345,6 @@ end class
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
 
-	test('parse Frames - external with into', async () => {
-		var code = `# c6c9024aa74b80f7d1423e3d28c4318353d16034100e75d3ed1673aa76a04b2a Elan v0.1 valid
-
-main
-  external foo() into a
-end main
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
-		await await fl.parseFrom(source);
-		var elan = await fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
-	test('parse Frames - external (no into)', async () => {
-		var code = `# 8d60cbf9747bf32d051ec9b6b3625e3accb03c91f4cebf76e9b51a7028063506 Elan v0.1 valid
-
-main
-  external foo()
-end main
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
-		await await fl.parseFrom(source);
-		var elan = await fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
 	test('parse Frames - abstract immutable class', async () => {
 		var code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
 
@@ -392,15 +361,6 @@ end class
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
-
-	test('parse Frames - External frame with optional into', () => { 
-		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
-		var ext = new ExternalStatement(main);
-		ext.method.parseCurrentText();
-		ext.args.parseCurrentText();;
-		var html = ext.renderAsHtml();
-		assert.equal(html, `<statement class="incomplete" id='ext3' tabindex="0"><top><keyword>external </keyword><field id="ident4" class="empty incomplete" tabindex=0><text></text><placeholder>method</placeholder><completion><pr>method</pr></completion><msg></msg><help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</help></field>(<field id="args5" class="empty optional valid" tabindex=0><text></text><placeholder>arguments</placeholder><completion><pr></pr></completion><msg></msg><help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</help></field>) <field id="into6" class="empty optional valid" tabindex=0><text></text><placeholder>into</placeholder><completion></completion><msg></msg><help title="Type 'i' put the result of the external method call into a pre-defined variable of a Type able to accept the result.">?</help></field></top><msg></msg></statement>`);
 	});
 
 	test('parse Frames - switch 1', async () => {
@@ -441,21 +401,7 @@ end main
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
 	});
-	test('parse Frames - external with and without into clause', async () => {
-		var code = `# 0689659e2831b64100b411c9ab85c703343cf8f1df1c79074863928b350dcea6 Elan v0.1 valid
-
-main
-  external foo(4)
-  external bar(4) into x
-end main
-`
-		;
-		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
-		await await fl.parseFrom(source);
-		var elan = await fl.renderAsSource();
-		assert.equal(elan, code.replaceAll("\n", "\r\n"));
-	});
+	
 	test('parse Frames - else with and without if', async () => {
 		var code = `# 137e2149d84f86368994a74b51a04d7e84bfc144b3cc2810d511cdb7bdf97607 Elan v0.1 valid
 
