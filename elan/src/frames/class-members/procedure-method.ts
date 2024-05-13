@@ -1,15 +1,12 @@
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
-import { UnknownType } from "../../symbols/unknown-type";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
-import { Procedure } from "../globals/procedure";
+import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 
-export class ProcedureMethod extends Procedure implements Member {
-    isGlobal: boolean = false;
+export class ProcedureMethod extends ProcedureFrame implements Member {
     isMember: boolean = true;
     private class: Class;
 

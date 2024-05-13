@@ -13,8 +13,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 
-export class Procedure extends FrameWithStatements implements ISymbol, Scope {
-    isGlobal = true;
+export abstract class ProcedureFrame extends FrameWithStatements implements ISymbol, Scope {
     public name: IdentifierField;
     public params: ParamList;
     file: File;

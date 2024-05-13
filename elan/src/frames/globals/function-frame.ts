@@ -18,7 +18,7 @@ import { mustBeCompatibleType, mustNotBeArray } from "../compile-rules";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 
-export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
+export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;

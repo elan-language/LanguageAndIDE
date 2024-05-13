@@ -4,7 +4,7 @@ import { CompileStatus, ParseStatus } from "./status-enums";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
-import { Procedure } from "./globals/procedure";
+import { GlobalProcedure } from "./globals/global-procedure";
 import { Enum } from "./globals/enum";
 import { Class } from "./globals/class";
 import { GlobalComment } from "./globals/global-comment";
@@ -297,7 +297,7 @@ export class FileImpl implements File {
 
     createMain(): Frame {return new MainFrame(this);}
     createFunction(): Frame {return  new GlobalFunction(this);}
-    createProcedure(): Frame {return  new Procedure(this);}
+    createProcedure(): Frame {return  new GlobalProcedure(this);}
     createEnum(): Frame {return  new Enum(this);}
     createClass(): Frame {return  new Class(this);}
     createGlobalComment(): Frame {return  new GlobalComment(this);}

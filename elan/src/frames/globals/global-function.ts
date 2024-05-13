@@ -1,6 +1,6 @@
 
 import { Parent } from "../interfaces/parent";
-import {Global } from "../interfaces/global";
+import {Global } from "../interfaces/global-frame";
 import { FunctionFrame } from "./function-frame";
 
 export class GlobalFunction extends FunctionFrame implements Global {
@@ -8,6 +8,5 @@ export class GlobalFunction extends FunctionFrame implements Global {
 
     constructor(parent: Parent) {
         super(parent);
-    }
-    
+    } 
 }

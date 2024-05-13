@@ -2,7 +2,7 @@ import { Constant } from "../frames/globals/constant";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
 import { VarStatement } from "../frames/statements/var-statement";
-import { Procedure } from "../frames/globals/procedure";
+import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { Enum } from "../frames/globals/enum";
@@ -150,7 +150,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 	f.addChildBefore(con, gs);
 	const main = new MainFrame(f);
 	f.addChildBefore(main, gs);
-	const proc = new Procedure(f);
+	const proc = new GlobalProcedure(f);
 	proc.name.setText("signIn");
 	f.addChildBefore(proc, gs);
 	const func = new GlobalFunction(f);
