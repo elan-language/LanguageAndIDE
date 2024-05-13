@@ -301,22 +301,6 @@ end main`;
 
   });
 
-  ignore_test('Fail_noEnd', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-function f(p as Int) return Int
-  return 0
-
-main
-  var a set to f(0)
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test('Fail_noReturnType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -330,7 +314,7 @@ end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
+ 
     assertDoesNotParse(fileImpl);
   });
 
