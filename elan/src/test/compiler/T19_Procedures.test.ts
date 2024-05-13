@@ -39,7 +39,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-
   ignore_test('Pass_ExternalCall', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -100,20 +99,30 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
-  ignore_test('Pass_ReferenceTypesCanBeMutated', async () => {
+  test('Pass_ReferenceTypesCanBeMutated', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [2, 3]
+  var a set to [2, 3].asArray()
   call changeFirst(a)
   print a
 end main
 
-procedure changeFirst(a List<Int>)
+procedure changeFirst(a as Array<of Int>)
     set a[0] to 5
 end procedure`;
 
-    const objectCode = ``;
+const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = _stdlib.asArray(system.list([2, 3]));
+  changeFirst(a);
+  system.print(_stdlib.asString(a));
+}
+
+function changeFirst(a) {
+  a[0] = 5;
+}
+return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -121,10 +130,10 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List<Int> [5, 3]");
+    await assertObjectCodeExecutes(fileImpl, "Array [5, 3]");
   });
 
-  ignore_test('Fail_ReferenceTypeParamMayNotBeReassigned', async () => {
+  test('Fail_ReferenceTypeParamMayNotBeReassigned', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -133,21 +142,19 @@ main
   print a
 end main
 
-procedure changeAll(a List<Int>)
+procedure changeAll(a as List<of Int>)
     set a to [1, 2, 3]
 end procedure`;
-
-    const objectCode = ``;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
-  ignore_test('Fail_ValueTypeParamMayNotBeReassigned', async () => {
+  test('Fail_ValueTypeParamMayNotBeReassigned', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -156,7 +163,7 @@ main
   print a
 end main
 
-procedure changeValue(a Int)
+procedure changeValue(a as Int)
     set a to 3
 end procedure`;
 
@@ -167,10 +174,10 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
-  ignore_test('Pass_WithParamsPassingLiteralsOrExpressions', async () => {
+  test('Pass_WithParamsPassingLiteralsOrExpressions', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -178,7 +185,7 @@ main
   call foo(a + 1, "hello")
 end main
 
-procedure foo(a Int, b String)
+procedure foo(a as Int, b as String)
   print a
   print b
 end procedure`;
@@ -189,7 +196,7 @@ async function main() {
   foo(a + 1, "hello");
 }
 
-function foo(a: float, b: string) {
+function foo(a, b) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -201,7 +208,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
+    await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
   test('Pass_NestedCalls', async () => {
@@ -246,14 +253,14 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  ignore_test('Pass_Recursion', async () => {
+  test('Pass_Recursion', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   call foo(3)
 end main
 
-procedure foo(a Int)
+procedure foo(a as Int)
   if a > 0
     print a
     var b set to a - 1
@@ -266,7 +273,7 @@ async function main() {
   foo(3);
 }
 
-function foo(a: float) {
+function foo(a) {
   if (a > 0) {
     system.print(_stdlib.asString(a));
     var b = a - 1;
@@ -281,7 +288,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "123");
+    await assertObjectCodeExecutes(fileImpl, "321");
   });
 
   test('Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty', async () => {
@@ -384,7 +391,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
  
-  ignore_test('Fail_CallingUndeclaredProc', async () => {
+  test('Fail_CallingUndeclaredProc', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -396,7 +403,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["?"]);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
 
   test('Fail_TypeSpecifiedBeforeParamName', async () => {
@@ -415,7 +422,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_CannotCallMain', async () => {
+  test('Fail_CannotCallMain', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -435,7 +442,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_PassingUnnecessaryParameter', async () => {
+  test('Fail_PassingUnnecessaryParameter', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -452,7 +459,8 @@ end procedure
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Too many parameters 0"]);
   });
 
   test('Fail_PassingTooFewParams', async () => {
@@ -463,7 +471,7 @@ main
   call foo(a + 1)
 end main
 
-procedure foo (a Int, b String)
+procedure foo(a as Int, b as String)
   print a
   print b
 end procedure
@@ -472,17 +480,18 @@ end procedure
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Missing parameter 1"]);
   });
 
   test('Fail_PassingWrongType', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call foo(1,2)
+  call foo(1, 2)
 end main
 
-procedure foo (a Int, b String)
+procedure foo(a as Int, b as String)
   print a
   print b
 end procedure
@@ -491,7 +500,8 @@ end procedure
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
 
