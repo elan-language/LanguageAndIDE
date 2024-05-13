@@ -7,7 +7,7 @@ import { key } from './testHelpers';
 import { Constant } from '../frames/globals/constant';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
-import { FunctionFrame } from '../frames/globals/function-frame';
+import { GlobalFunction } from '../frames/globals/global-function';
 
 
 suite('Editing Fields Tests', () => {
@@ -105,7 +105,7 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 2', () => { 
-        var f = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
+        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
         var t = f.returnType;
         t.processKey(key("F"));
         assert.equal(t.text, "F");
@@ -162,7 +162,7 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 3', () => { 
-        var f = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
+        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
         var t = f.returnType;
         t.processKey(key("("));
         assert.equal(t.text, "(");

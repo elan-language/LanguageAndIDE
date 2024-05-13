@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { T03_mainWithAllStatements, T05_classes } from './model-generating-functions.';
 import {back, ctrl_d, ctrl_del, ctrl_down, ctrl_up, ctrl_v, ctrl_x, del, down, enter, key, shift_down, shift_enter, shift_ins, shift_tab, tab, up } from './testHelpers';
 import assert from 'assert';
-import { FunctionFrame } from '../frames/globals/function-frame';
+import { GlobalFunction } from '../frames/globals/global-function';
 import { Constructor } from '../frames/class-members/constructor';
 import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
@@ -163,7 +163,7 @@ suite('Editing Frames', () => {
 	});
 	test('Remove selector frame', () => {
 		var file = T05_classes();
-		var fun = file.getById("func27") as FunctionFrame;
+		var fun = file.getById("func27") as GlobalFunction;
 		var child1 = fun.getFirstChild();
 		var sel = file.getById("select28");
 		assert.equal(child1, sel);

@@ -19,7 +19,6 @@ import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CsvAsn } from "../syntax-nodes/csv-asn";
 
 export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
-    isGlobal = true;
     public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;

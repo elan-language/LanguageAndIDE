@@ -2,7 +2,7 @@ import assert from 'assert';
 import * as vscode from 'vscode';
 import { FileImpl } from '../frames/file-impl';
 import { MainFrame } from '../frames/globals/main-frame';
-import { FunctionFrame } from '../frames/globals/function-frame';
+import { GlobalFunction } from '../frames/globals/global-function';
 import { VarStatement } from '../frames/statements/var-statement';
 import { ParseStatus } from '../frames/status-enums';
 import { Switch } from '../frames/statements/switch';
@@ -117,7 +117,7 @@ suite('Field Parsing Tests', () => {
 
 			
 		test('parse TypeField invalid', () => { 
-			var func = new FunctionFrame(new FileImpl(hash, new DefaultProfile()));
+			var func = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
 			var type = func.returnType;
 			type.setText("Foo<of bar");
 			type.parseCurrentText();
