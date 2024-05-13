@@ -81,36 +81,78 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         return [p];
     }
 
+    containsGenericType(type: ISymbolType): boolean {
+        if (type instanceof GenericParameterType) {
+            return true;
+        }
+        if (type instanceof ArrayType || type instanceof ListType || type instanceof IterType) {
+            return this.containsGenericType(type.ofType);
+        }
+        if (type instanceof DictionaryType) {
+            return this.containsGenericType(type.keyType) || this.containsGenericType(type.valueType);
+        }
+
+        return false;
+    }
+
+    generateType(type: ISymbolType, matches: Map<string, ISymbolType>): ISymbolType {
+        if (type instanceof GenericParameterType) {
+            return matches.get(type.id) ?? UnknownType.Instance;
+        }
+        if (type instanceof ArrayType) {
+            return new ArrayType(this.generateType(type.ofType, matches), type.is2d);
+        }
+        if (type instanceof ListType) {
+            return new ListType(this.generateType(type.ofType, matches));
+        }
+        if (type instanceof IterType) {
+            return new IterType(this.generateType(type.ofType, matches));
+        }
+        if (type instanceof DictionaryType) {
+            return new DictionaryType(this.generateType(type.keyType, matches), this.generateType(type.valueType, matches));
+        }
+
+        return UnknownType.Instance;
+    }
+
+    matchGenericTypes(type : FunctionType, parameters : AstNode[]) {
+        const matches = new Map<string, ISymbolType>();
+
+        const flattened = type.parametersTypes.map(n => this.flatten(n));
+        var parameters = this.parameters;
+
+        if (type.isExtension && this.qualifier) {
+            parameters = [(this.qualifier as QualifierAsn).value].concat(parameters);
+        }
+
+        const pTypes = parameters.map(p => this.flatten(p.symbolType!));
+
+        for (var i = 0; i < flattened.length; i++) {
+            const pt = flattened[i];
+            const pst = pTypes[i];
+
+            for (var i = 0; i < pt.length; i++) {
+                const t = pt[i];
+                const st = pst[i];
+
+                if (t instanceof GenericParameterType) {
+                    matches.set(t.id, st);
+                }
+            }
+        }
+        return matches;
+    }
+
+
     get symbolType() {
         const type = this.scope.resolveSymbol(this.id, this.scope).symbolType;
 
         if (type instanceof FunctionType) {
             const returnType = type.returnType;
 
-            if (returnType instanceof GenericParameterType) {
-                const flattened = type.parametersTypes.map(n => this.flatten(n));
-                var parameters = this.parameters;
-
-                if (type.isExtension && this.qualifier) {
-                    parameters = [(this.qualifier as QualifierAsn).value].concat(parameters);
-                }
-
-                const pTypes = parameters.map(p => this.flatten(p.symbolType!));
-
-                for (var i = 0; i < flattened.length; i++) {
-                    const pt = flattened[i];
-                    const pst = pTypes[i];
-
-                    for (var i = 0; i < pt.length; i++) {
-                        const t = pt[i];
-                        const st = pst[i];
-
-                        if (t instanceof GenericParameterType && t.id === returnType.id) {
-                            return st;
-                        }
-                    }
-                }
-                return UnknownType.Instance;;
+            if (this.containsGenericType(returnType)) {
+                const matches = this.matchGenericTypes(type, this.parameters);
+                return this.generateType(returnType, matches);
             }
             return returnType;
         }

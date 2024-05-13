@@ -113,10 +113,14 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     }
 
 
-
-    get symbolType() {
+    get rootSymbolType() {
         const currentScope = this.updateScope(this.scope);
         const rootType = currentScope.resolveSymbol(this.id, currentScope).symbolType;
+        return rootType;
+    }
+
+    get symbolType() {
+        const rootType = this.rootSymbolType;
         if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
         }
