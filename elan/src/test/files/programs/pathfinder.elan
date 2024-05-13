@@ -15,7 +15,7 @@ class GridGraph
 
   property as List<of Point>
 
-  procedure setBlock(p1 Point, p2 Point, add as Bool)
+  procedure setBlock(p1 Point, p2 Point, add as Boolean)
     # TODO: check that p1, p2 are in right order!
     for x from p1.x to p2.x step 1
       for y from p1.y to p2.y step 1
@@ -29,11 +29,11 @@ class GridGraph
     end for
   end procedure
 
-  function nodeExists(p Point) return Bool
+  function nodeExists(p Point) return Boolean
     return nodes.contains(p)
   end function
 
-  function pointsAreAdjacentDiagonally(p1 Point,p2 Point) return Bool
+  function pointsAreAdjacentDiagonally(p1 Point,p2 Point) return Boolean
     return absolute(p1.x - p2.x) is 1 and absolute(p1.y - p2.y) is 1
   end function
 
@@ -88,8 +88,8 @@ class GridGraph
     return dict
   end function
 
-  function newDictionaryOfAllPointsReturningFalseValues() return Dictionary<of Point, Bool>
-    var dict set to new Dictionary<of Point, Bool>()
+  function newDictionaryOfAllPointsReturningFalseValues() return Dictionary<of Point, Boolean>
+    var dict set to new Dictionary<of Point, Boolean>()
     each p in nodes
       set dict to dict.setItem(p, false)
     end each
@@ -111,7 +111,7 @@ class GridGraph
     return sqrt((current.x - destination.x) ^ 2 + (current.y - destination.y) ^ 2)
   end function
 
-  function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) return Point
+  function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Boolean>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) return Point
     var lowestCostSoFar set to infinity
     var lowestCostNode set to nodes.element(0)
     var possibilities set to nodes.filter(lambda n =>  not visited[n] and costFromSource[n] < infinity)

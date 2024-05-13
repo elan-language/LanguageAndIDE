@@ -1,6 +1,6 @@
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { testAST, stubField, boolType, floatType, intType, stringType } from './testHelpers';
-import { LitBool } from '../frames/parse-nodes/lit-bool';
+import { LitBoolean } from '../frames/parse-nodes/lit-boolean';
 import { LitInt } from '../frames/parse-nodes/lit-int';
 import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { UnaryExpression } from '../frames/parse-nodes/unary-expression';
@@ -68,9 +68,9 @@ suite('ASTNodes', () => {
 		testAST(new IdentifierNode(), stubField, `a`, "a", intType);
 	});
 
-	test("Bool", () => {
-		testAST(new LitBool(), stubField, " true", "true", boolType);
-		testAST(new LitBool(), stubField, " false", "false", boolType);
+	test("Boolean", () => {
+		testAST(new LitBoolean(), stubField, " true", "true", boolType);
+		testAST(new LitBoolean(), stubField, " false", "false", boolType);
 	});
 
 	test("Int", () => {

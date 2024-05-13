@@ -3,7 +3,7 @@ import { KeywordNode } from "./keyword-node";
 
 import { falseKeyword, trueKeyword } from "../keywords";
 
-export class LitBool extends AbstractAlternatives {
+export class LitBoolean extends AbstractAlternatives {
 
     constructor() {
         super();

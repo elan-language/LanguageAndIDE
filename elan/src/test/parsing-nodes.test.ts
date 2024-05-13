@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { ExprNode } from '../frames/parse-nodes/expr-node';
 import { ParseStatus } from '../frames/status-enums';
 import { testNodeParse } from './testHelpers';
-import { LitBool } from '../frames/parse-nodes/lit-bool';
+import { LitBoolean } from '../frames/parse-nodes/lit-boolean';
 import { LitInt } from '../frames/parse-nodes/lit-int';
 import { LitFloat } from '../frames/parse-nodes/lit-float';
 import { BinaryOperation } from '../frames/parse-nodes/binary-operation';
@@ -141,14 +141,14 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new IdentifierNode(), `x as`, ParseStatus.valid, `x`, " as", "x");
 	});
 	test('LitBool', () => {
-		testNodeParse(new LitBool(), "", ParseStatus.empty, "", "", "", "");
-		testNodeParse(new LitBool(), " true", ParseStatus.valid, "true", "", "true", "<keyword>true</keyword>");
-		testNodeParse(new LitBool(), " trueX", ParseStatus.valid, "true", "X", "true", "");
-		testNodeParse(new LitBool(), " false", ParseStatus.valid, "false", "", "false", "");
-		testNodeParse(new LitBool(), " True", ParseStatus.invalid, "", "True", "", "");
-		testNodeParse(new LitBool(), "is True", ParseStatus.invalid, "", "is True", "", "");
-		testNodeParse(new LitBool(), " tr", ParseStatus.incomplete, "tr", "", "tr", "");
-		testNodeParse(new LitBool(), " tr ", ParseStatus.invalid, "", "tr ", "", "");
+		testNodeParse(new LitBoolean(), "", ParseStatus.empty, "", "", "", "");
+		testNodeParse(new LitBoolean(), " true", ParseStatus.valid, "true", "", "true", "<keyword>true</keyword>");
+		testNodeParse(new LitBoolean(), " trueX", ParseStatus.valid, "true", "X", "true", "");
+		testNodeParse(new LitBoolean(), " false", ParseStatus.valid, "false", "", "false", "");
+		testNodeParse(new LitBoolean(), " True", ParseStatus.invalid, "", "True", "", "");
+		testNodeParse(new LitBoolean(), "is True", ParseStatus.invalid, "", "is True", "", "");
+		testNodeParse(new LitBoolean(), " tr", ParseStatus.incomplete, "tr", "", "tr", "");
+		testNodeParse(new LitBoolean(), " tr ", ParseStatus.invalid, "", "tr ", "", "");
 	});
 	test('LitString - single chars', () => {
 		testNodeParse(new LitString(), "", ParseStatus.empty, "", "", "", "");

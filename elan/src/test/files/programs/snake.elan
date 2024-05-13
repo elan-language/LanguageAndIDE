@@ -1,4 +1,4 @@
-# a0b770b7d62856d88d150277e336c7859e8bcc2bcb32b8bb8a7435ac66d5a70a Elan v0.1 valid
+# 002accf710dccf269699646bc198c1b97af2f0e26768cbd7456bcde7ee461d61 Elan v0.1 valid
 
 main
   var newGame set to true
@@ -69,7 +69,7 @@ class Snake
 
   property boardWidth as Int
 
-  function bodyCovers(sq as Square) return Bool
+  function bodyCovers(sq as Square) return Boolean
     var result set to false
     each seg in body
       if (seg is sq)
@@ -89,7 +89,7 @@ class Snake
     end if
   end procedure
 
-  function hasHitEdge() return Bool
+  function hasHitEdge() return Boolean
     return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
   end function
 

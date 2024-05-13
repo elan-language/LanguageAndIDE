@@ -95,7 +95,7 @@ test liveNeighbourCount_tests
     testLiveNeighbourCount(399, 3)
 end test
 
-procedure testWillLive(alive as Bool, neighbours as Int, expected as Bool)
+procedure testWillLive(alive as Boolean, neighbours as Int, expected as Boolean)
     var actual set to willLive(alive, neighbours)
    assert actual is expected
 end procedure
@@ -121,7 +121,7 @@ test willLive_tests
     testWillLive(true, 8, false)
 end test
 
-procedure testNextCellValue(c as Int, expected as Bool)
+procedure testNextCellValue(c as Int, expected as Boolean)
     var actual set to NextCellValue(exampleCells, c)
     assert actual is expected
 end procedure

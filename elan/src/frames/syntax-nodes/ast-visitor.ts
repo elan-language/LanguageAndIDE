@@ -8,7 +8,7 @@ import { BinaryExprAsn } from "./binary-expr-asn";
 import { ExprAsn } from "./expr-asn";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { UnaryExprAsn } from "./unary-expr-asn";
-import { LitBool } from "../parse-nodes/lit-bool";
+import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LiteralBoolAsn } from "./literal-bool-asn";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IdAsn } from "./id-asn";
@@ -167,7 +167,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
         return new LiteralIntAsn(node.matchedText, fieldId);
     }
 
-    if (node instanceof LitBool) {
+    if (node instanceof LitBoolean) {
         return new LiteralBoolAsn(node.matchedText, fieldId);
     }
 

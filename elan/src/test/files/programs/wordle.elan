@@ -1,4 +1,4 @@
-# a82b149ba51c16ac00a6366902298d73611f9dd948ecb2bbad9686c915e7e63d Elan v0.1 valid
+# 76ec34dc1c57a2bb8710f63257d116242fc677e1bb951753b603b8157f41b1ba Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -12,7 +12,7 @@ main
   end while
 end main
 
-function isYellow(attempt as String, target as String, n as Int) return Bool
+function isYellow(attempt as String, target as String, n as Int) return Boolean
   return target.contains(attempt[n])
 end function
 
@@ -24,7 +24,7 @@ function setTargetIfYellow(attempt as String, target as String, n as Int) return
   return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
 end function
 
-function isGreen(attempt as String, target as String, n as Int) return Bool
+function isGreen(attempt as String, target as String, n as Int) return Boolean
   return target[n] is attempt[n]
 end function
 
@@ -40,7 +40,7 @@ function setTargetIfGreen(attempt as String, target as String, n as Int) return 
   return if attempt.isGreen(target, n) then target.setChar(n, ".") else target
 end function
 
-function isAlreadyMarkedGreen(attempt as String, n as Int) return Bool
+function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
   return attempt[n] is "*"
 end function
 
