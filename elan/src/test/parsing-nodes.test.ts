@@ -375,6 +375,10 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new ParamDefNode(), `A`, ParseStatus.invalid, "", "A", "");
 		testNodeParse(new ParamDefNode(), `v String`, ParseStatus.invalid, "", "v String", "");
 	});
+	test('ParamDefNode (by ref)', () => {
+		testNodeParse(new ParamDefNode(), `ref x as String`, ParseStatus.valid, "ref x as String", "", "ref x as String", "<keyword>ref</keyword> x <keyword>as</keyword> <type>String</type>");
+	});
+
 	test('Param List', () => {
 		testNodeParse(new CSV(() => new ParamDefNode(), 0), `A as string`, ParseStatus.valid, "", "A as string", ""); //i.e. all leftover
 		testNodeParse(new CSV(() => new ParamDefNode(), 0), ``, ParseStatus.valid, "", "", "");
