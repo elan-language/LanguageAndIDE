@@ -184,8 +184,15 @@ export class FileImpl implements File {
     }
 
     compile(): string {
+        var retVal = "return main";
+
+        if (this._children.filter(g => g instanceof TestFrame).length > 0) {
+            var getTests = `getTests() { return Object.getOwnPropertyNames(this).filter(s => s.startsWith("_test_")).map(f => this[f]);};`;
+            retVal = `${getTests} return [main, getTests]`; 
+        }
+
         const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {';
-        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}return main;}`; 
+        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}${retVal};}`; 
     }
 
     renderHashableContent(): string {

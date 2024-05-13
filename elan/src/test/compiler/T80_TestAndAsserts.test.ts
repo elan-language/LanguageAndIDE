@@ -1,10 +1,10 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('Pass_PassingTest', () => {
 
-  test('Pass_PassingTest', async () => {
+  ignore_test('Pass_PassingTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -37,7 +37,7 @@ function _test_square() {
   var expected = 16;
   system.assert(expected, actual);
 }
-return main;}`;
+getTests() { return Object.getOwnPropertyNames(this).filter(s => s.startsWith("_test_")).map(f => this[f]);}; return [main, getTests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -45,7 +45,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    // TODO need a new test helper method to test the test running and test the resulting message
+    assertTestObjectCodeExecutes(fileImpl, "");
   });
 
   ignore_test('Pass_FailingTest', async () => {

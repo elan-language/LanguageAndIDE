@@ -88,12 +88,55 @@ function executeCode(file: FileImpl, input? : string) {
     });
 }
 
+function executeTestCode(file: FileImpl, input? : string) {
+
+    const jsCode = file.compile();
+    const errors = file.compileErrors();
+    assert.strictEqual(errors.length, 0, errors.map(e => e.message).join(", "));
+
+    const system = getTestSystem();
+    const stdlib = new StdLib();
+
+    if (input) {
+        (system as any).inputed = input;
+    }
+
+    return doImport(jsCode).then(async (elan) => {
+        if (elan.program) {
+            elan._inject(system, stdlib);
+            const [main, getTests] = await elan.program();
+            const tests = getTests() as any[];
+
+            for(const t of tests) {
+                system.print("Running :" +  t.constructor.name);
+                t();
+            }
+
+            return system;
+        }
+        return undefined;
+    });
+}
+
 
 export async function assertObjectCodeExecutes(file: FileImpl, output: string, input? : string) {
     var actual;
     
     try {
         const sl = await executeCode(file, input) as any;
+        actual = sl?.printed; 
+    }
+    catch (e) {
+        assert.fail((e as any).message ?? "");
+    }
+    assert.strictEqual(actual, output);
+}
+
+export async function assertTestObjectCodeExecutes(file: FileImpl, output: string, input? : string) {
+    var actual;
+    
+    try {
+        const sl = await executeTestCode(file, input) as any;
         actual = sl?.printed; 
     }
     catch (e) {
