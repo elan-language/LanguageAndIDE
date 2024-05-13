@@ -428,8 +428,8 @@ const stubHolder = {
       case "first": return stubIntSymbol;
       case "lst": return { symbolId: "", symbolType: new ListType(intType) };
       case "lst1": return { symbolId: "", symbolType: new ListType(stringType) };
-      case "simpleGeneric": return { symbolId: "", symbolType: new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"))};
-      case "getItem": return { symbolId: "", symbolType: new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"))};
+      case "simpleGeneric": return { symbolId: "", symbolType: new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false)};
+      case "getItem": return { symbolId: "", symbolType: new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false)};
     }
 
     return UnknownSymbol.Instance;

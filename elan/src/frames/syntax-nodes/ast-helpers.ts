@@ -27,6 +27,19 @@ export function getParentScope(start: any): Scope {
     return start;
 }
 
+export function InFunctionScope(start: any): boolean {
+    if (start.constructor.name === "GlobalFunction") {
+        return true;
+    }
+    if (start.constructor.name === "FileImpl") {
+        return false;
+    }
+    if ('getParent' in start) {
+        return InFunctionScope(start.getParent());
+    }
+    return false;
+}
+
 export function updateScopeAndQualifier(qualifier: QualifierAsn | undefined, currentScope: Scope): [QualifierAsn | undefined, Scope] {
 
     const qualifierScope = qualifier ? qualifier.symbolType : undefined;

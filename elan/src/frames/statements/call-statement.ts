@@ -6,7 +6,7 @@ import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../../symbols/procedure-type";
-import { mustBeCallableSymbol, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
+import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
 import { callKeyword, globalKeyword, libraryKeyword } from "../keywords";
 import { ClassType } from "../../symbols/class-type";
 import { Scope } from "../interfaces/scope";
@@ -78,7 +78,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         const procSymbol = currentScope.resolveSymbol(id, this);
 
         mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
-        mustBeCallableSymbol(procSymbol.symbolType, this.compileErrors, this.htmlId);
+        mustBeProcedure(procSymbol.symbolType, this.compileErrors, this.htmlId);
 
         if (procSymbol.symbolType instanceof ProcedureType) {
             const argList = this.args.getOrTransformAstNode as CsvAsn;

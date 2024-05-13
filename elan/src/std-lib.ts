@@ -174,4 +174,12 @@ export class StdLib {
     async pause(period: number) {
         
     }
+
+    readKey() {
+        return 0;
+    }
+
+    random(f: number, l: number) {
+        return 0;
+    }
 }
