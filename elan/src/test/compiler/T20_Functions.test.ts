@@ -35,7 +35,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  ignore_test('Pass_ReturnSimpleDefault', async () => {
+  test('Pass_ReturnSimpleDefault', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -43,7 +43,7 @@ main
 end main
 
 function foo(a as Int, b as Int) return Int
-    return default
+    return default Int
 end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -52,7 +52,7 @@ async function main() {
 }
 
 function foo(a, b) {
-  return default;
+  return 0;
 }
 return main;}`;
 
@@ -65,7 +65,7 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  ignore_test('Pass_ReturnClassDefault', async () => {
+  test('Pass_ReturnClassDefault', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -73,7 +73,7 @@ main
 end main
 
 function foo(a as Int, b as Int) return Foo
-  return default
+  return default Foo
 end function
 
 class Foo
@@ -87,7 +87,15 @@ async function main() {
 }
 
 function foo(a, b) {
-  return a * b;
+  return Foo.defaultInstance();
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, []);};
+  constructor() {
+
+  }
+
 }
 return main;}`;
 
@@ -97,18 +105,18 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "12");
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
-  ignore_test('Pass_ReturnCollectionDefault', async () => {
+  test('Pass_ReturnCollectionDefault', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
     print foo(3,4)
 end main
 
-function foo(a Int, b Int) as Array<of Int>
-    return default
+function foo(a as Int, b as Int) return Array<of Int>
+    return default Array<of Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -117,7 +125,7 @@ async function main() {
 }
 
 function foo(a, b) {
-  return a * b;
+  return system.defaultArray();
 }
 return main;}`;
 
@@ -127,7 +135,7 @@ return main;}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "12");
+    await assertObjectCodeExecutes(fileImpl, "empty Array");
   });
 
   test('Pass_Recursive', async () => {
@@ -226,8 +234,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  // TODO fails
-
   test('Fail_ParameterCount', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -294,5 +300,76 @@ end main`;
     ]);
 
   });
+
+  ignore_test('Fail_noEnd', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p as Int) return Int
+  return 0
+
+main
+  var a set to f(0)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_noReturnType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p as Int)
+  return p
+end function
+
+main
+  var a set to f(0)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_noAs', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p Int) return Int 
+  return p
+end function
+
+main
+  var a set to f(0)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_noReturn', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function f(p Int) return Int 
+  var c set to p
+end function
+
+main
+  var a set to f(0)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+
+
+
 
 });
