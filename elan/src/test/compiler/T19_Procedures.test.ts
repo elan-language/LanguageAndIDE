@@ -133,50 +133,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "Array [5, 3]");
   });
 
-  test('Fail_ReferenceTypeParamMayNotBeReassigned', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to [2, 3]
-  call changeAll(a)
-  print a
-end main
-
-procedure changeAll(a as List<of Int>)
-    set a to [1, 2, 3]
-end procedure`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
-  });
-
-  test('Fail_ValueTypeParamMayNotBeReassigned', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to 4
-  call changeValue(a)
-  print a
-end main
-
-procedure changeValue(a as Int)
-    set a to 3
-end procedure`;
-
-    const objectCode = ``;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
-  });
-
   test('Pass_WithParamsPassingLiteralsOrExpressions', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -504,7 +460,6 @@ end procedure
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-
   ignore_test('Fail_UnterminatedRecursion', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -581,6 +536,50 @@ end main`;
       "Incompatible types Float to Int"
     ]);
 
+  });
+
+  test('Fail_ReferenceTypeParamMayNotBeReassigned', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [2, 3]
+  call changeAll(a)
+  print a
+end main
+
+procedure changeAll(a as List<of Int>)
+    set a to [1, 2, 3]
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+  });
+
+  test('Fail_ValueTypeParamMayNotBeReassigned', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 4
+  call changeValue(a)
+  print a
+end main
+
+procedure changeValue(a as Int)
+    set a to 3
+end procedure`;
+
+    const objectCode = ``;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
 });
