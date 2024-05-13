@@ -1,30 +1,47 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
 
 suite('T21_Functions_Procedures_ImpureFunctions_rules', () => {
 
-  ignore_test('Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure', async () => {
+  test('Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var k set to readKey()
-  var r set to random(1,6)
-  set r to random() * 10
+  var r set to random(1, 6)
+  set r to random(1, 6) * 10
   call bar(random(1,6))
 end main
 
 procedure foo()
   var k set to readKey()
   var r set to random(1,6)
-  set r to random() * 10
+  set r to random(1, 6) * 10
 end procedure
 
 procedure bar(x as Int)
 end procedure
 `;
 
-    const objectCode = ``;
+    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var k = _stdlib.readKey();
+  var r = _stdlib.random(1, 6);
+  r = _stdlib.random(1, 6) * 10;
+  bar(_stdlib.random(1, 6));
+}
+
+function foo() {
+  var k = _stdlib.readKey();
+  var r = _stdlib.random(1, 6);
+  r = _stdlib.random(1, 6) * 10;
+}
+
+function bar(x) {
+
+}
+return main;}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -35,7 +52,7 @@ end procedure
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test('Fail_CannotCallAProcedureWithinAnExpression', async () => {
+  test('Fail_CannotCallAProcedureWithinAnExpression', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -50,10 +67,10 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["?"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Procedure ()"]);
   });
 
-  ignore_test('Fail_CannotCallAFunctionLikeAProcedure', async () => {
+  test('Fail_CannotCallAFunctionLikeAProcedure', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -62,41 +79,39 @@ end main
 
 function square(x as Int) return Int
   return x * x
-end procedure
-`;
+end function`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["?"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Function (Int) : Int"]);
   });
 
-  ignore_test('Fail_CannotCallAProcedureWithinAFunction', async () => {
+  test('Fail_CannotCallAProcedureWithinAFunction', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var k set to foo()
 end main
 
-procedure foo()
+procedure foo(x as Int)
 end procedure
 
 function square(x as Int) return Int
-  call foo()
+  call foo(x)
   return x * x
-end procedure
+end function
 
 `;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["?"]);
+    assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_CannotUseAnImpureMethodWithinAFunction', async () => {
+  test('Fail_CannotUseAnImpureMethodWithinAFunction', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -105,14 +120,13 @@ end main
 function square(x as Int) return Int
   var x set to random(1,6)
   return x * x
-end procedure
-
+end function
 `;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["?"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call impure Function (Int, Int) : Int"]);
   });
 });

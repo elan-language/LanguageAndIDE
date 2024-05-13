@@ -18,6 +18,8 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
+import { Scope } from "./interfaces/scope";
+import { InFunctionScope } from "./syntax-nodes/ast-helpers";
 import { AstNode } from "./syntax-nodes/ast-node";
 import { KvpAsn } from "./syntax-nodes/kvp-asn";
 import { VarAsn } from "./syntax-nodes/var-asn";
@@ -62,9 +64,23 @@ export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[]
     }
 }
 
-export function mustBeCallableSymbol(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
-    if (!(symbolType instanceof FunctionType || symbolType instanceof ProcedureType)) {
+export function mustBeProcedure(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (!(symbolType instanceof ProcedureType)) {
         compileErrors.push(new CompileError(`Cannot call ${symbolType.name}`, location, true));
+    }
+}
+
+export function mustBePureFunctionSymbol(symbolType: ISymbolType, scope: Scope, compileErrors: CompileError[], location: string) {
+    if (InFunctionScope(scope)) {
+        if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
+            const imPure =  symbolType instanceof FunctionType && !symbolType.isPure ? " impure " : " ";
+            compileErrors.push(new CompileError(`Cannot call${imPure}${symbolType.name}`, location, true));
+        }
+    }
+    else {
+        if (!(symbolType instanceof FunctionType)) {
+            compileErrors.push(new CompileError(`Cannot call ${symbolType.name}`, location, true));
+        }
     }
 }
 

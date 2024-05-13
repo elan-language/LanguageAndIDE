@@ -7,7 +7,7 @@ import { ListType } from "../../symbols/list-type";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { mustBeCallableSymbol, mustBeKnownSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
+import { mustBeProcedure, mustBeKnownSymbol, mustBePureFunctionSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { scopePrefix, updateScopeAndQualifier } from "./ast-helpers";
@@ -51,7 +51,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
 
         mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
-        mustBeCallableSymbol(funcSymbol.symbolType, this.compileErrors, this.fieldId);
+        mustBePureFunctionSymbol(funcSymbol.symbolType, this.scope, this.compileErrors, this.fieldId);
 
         if (funcSymbol.symbolType instanceof FunctionType) {
             mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
