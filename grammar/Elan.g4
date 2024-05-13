@@ -39,7 +39,7 @@ test:	NL TEST IDENTIFIER
 
 procedureSignature: IDENTIFIER OPEN_BRACKET paramList? CLOSE_BRACKET;
 paramList: paramDef (COMMA paramDef)*;
-paramDef: REF? IDENTIFIER AS type;
+paramDef: IDENTIFIER AS type;
 functionSignature: IDENTIFIER OPEN_BRACKET paramList? CLOSE_BRACKET RETURN type;
 
 // STATEMENT BLOCK

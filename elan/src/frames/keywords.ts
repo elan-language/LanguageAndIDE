@@ -44,7 +44,6 @@ export const printKeyword = 'print';
 export const privateKeyword = 'private';
 export const procedureKeyword = 'procedure';
 export const propertyKeyword = 'property';
-export const refKeyword = 'ref';
 export const repeatKeyword = 'repeat';
 export const returnKeyword = 'return';
 export const setKeyword = 'set';

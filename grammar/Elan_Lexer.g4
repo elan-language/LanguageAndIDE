@@ -51,7 +51,6 @@ PRINT:		   'print';
 PRIVATE:       'private';
 PROCEDURE:	   'procedure';
 PROPERTY:      'property';
-REF:		   'ref';
 REPEAT:		   'repeat';
 RETURN:        'return';
 SET:	 	   'set';
