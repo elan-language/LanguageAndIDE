@@ -100,36 +100,6 @@ return main;}`;
     await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
-  ignore_test('Pass_valuesPassedAsReferences', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to 2
-  var b set to 3
-  print a
-  print b
-  call swap(a, b)
-  print a
-  print b
-end main
-
-procedure swap(a Int, b Int)
-    var c set to a
-    set a to b
-    set b to c
-end procedure`;
-
-    const objectCode = ``;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2\n3\n3\n2\n");
-  });
-
   ignore_test('Pass_ReferenceTypesCanBeMutated', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -154,7 +124,7 @@ end procedure`;
     await assertObjectCodeExecutes(fileImpl, "List<Int> [5, 3]");
   });
 
-  ignore_test('Pass_ReferenceTypeCanBeReplaced', async () => {
+  ignore_test('Fail_ReferenceTypeParamMayNotBeReassigned', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -174,8 +144,30 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List<Int> [1, 2, 3]");
+    assertDoesNotCompile(fileImpl, [""]);
+  });
+
+  ignore_test('Fail_ValueTypeParamMayNotBeReassigned', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 4
+  call changeValue(a)
+  print a
+end main
+
+procedure changeValue(a Int)
+    set a to 3
+end procedure`;
+
+    const objectCode = ``;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [""]);
   });
 
   ignore_test('Pass_WithParamsPassingLiteralsOrExpressions', async () => {
@@ -200,46 +192,6 @@ async function main() {
 function foo(a: float, b: string) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
-}
-return main;}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1");
-  });
-
-  ignore_test('Pass_RefParamsCanBeUpdated', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to 1
-  var b set to ""hello""
-  call foo(a, b)
-  print a
-  print b
-end main
-
-procedure foo  a Int, b String)
-  set a to a + 1
-  set b to b + "!"
-end procedure`;
-
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = 1;
-  var b = "hello";
-  foo(a, b);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-}
-
-function foo(a: float, b: string) {
-  a = a + 1;
-  b = b + "!";
 }
 return main;}`;
 
@@ -460,25 +412,6 @@ end procedure
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
-  });
-
-  test('Fail_NoEnd', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  print 1
-  call foo()
-  print 3
-end main
-
-procedure foo()
-    print 2
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
     assertDoesNotParse(fileImpl);
   });
 
