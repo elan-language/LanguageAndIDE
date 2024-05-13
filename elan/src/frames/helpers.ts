@@ -10,6 +10,7 @@ import { Selectable } from "./interfaces/selectable";
 import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
+import { GlobalFrame } from "./interfaces/global-frame";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -42,14 +43,26 @@ export function isSelector(f?: any): f is AbstractSelector {
     return !!f && 'isSelector' in f;
 } 
 
+export function isGlobal(f?: any): f is GlobalFrame {
+    return !!f && 'isGlobal' in f;
+} 
+
 export function singleIndent() {
     return "  ";
 }
 
 export function expandCollapseAll(map: Map<string, Selectable>) {
-    for (const f of map.values()) {
-        if (isCollapsible(f)) {
-           f.expandCollapse();
+    var collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
+    var firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s) )[0]; 
+    var collapse = true;
+    if (firstCollapsibleGlobal && firstCollapsibleGlobal.isCollapsed()) {
+        collapse = false;
+    }
+    for (const c of collapsible) {
+        if (collapse) {
+            c.collapse();
+        } else {
+            c.expand();
         }
     }
 }
