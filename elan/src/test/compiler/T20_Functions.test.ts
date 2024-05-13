@@ -352,8 +352,190 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
+  test('Fail_ReturnTypeIncompatible', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
+main
+  var a set to ""
+  set a to foo(3,4)
+end main
 
+function foo(a as Int, b as Int) return Int
+  var c set to a * b
+  return c
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Int to String"
+    ]);
+
+  });
+
+  test('Fail_NoReturn2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(a as Int, b as Int) return Int
+  var c set to a * b
+  return
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+
+  });
+
+  test('Fail_embeddedReturns', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(a as Int, b as Int) return Boolean
+    if 2 > 1
+        return true
+    else
+        return false
+    end if
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+
+  });
+
+  test('Fail_nonMatchingReturn2', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+    
+function foo(a as Int, b as Int) return Int
+  return a / b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
+  });
+
+  test('Fail_statementAfterReturn', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+    
+function foo(a as Int, b as Int) return Int
+  return a * b
+  var c set to a + b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_CanNotContainPrint', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(a as Int, b as Int) return Int
+  print a
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_CanNotContainInput', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(a as Int, b as Int) return Int
+  input x
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // obsolete syntax
+  ignore_test('Fail_CanNotContainSystemAccessors', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+    
+function foo(a as Int, b as Int) return Int
+  var r set to system.random()
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_CannotModifyParam', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var result set to foo(3,4)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+  set a to a + 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+  });
+
+  test('Fail_CannotPassInArray', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(a as Array<of Int>) return Int
+    return a[0]
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not pass Array into function"]);
+  });
 
 
 });

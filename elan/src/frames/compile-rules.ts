@@ -306,6 +306,12 @@ export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileErro
     }
 }
 
+export function mustNotBeArray(parameterType: ISymbolType, compileErrors: CompileError[], location: string) {
+    if (parameterType instanceof ArrayType){
+        compileErrors.push(new CompileError(`May not pass Array into function`, location, false));
+    }
+}
+
 export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
 
     if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {

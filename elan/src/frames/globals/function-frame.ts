@@ -14,8 +14,9 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../../symbols/function-type";
 import { Scope } from "../interfaces/scope";
-import { mustBeCompatibleType } from "../compile-rules";
+import { mustBeCompatibleType, mustNotBeArray } from "../compile-rules";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { CsvAsn } from "../syntax-nodes/csv-asn";
 
 export class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     isGlobal = true;
@@ -84,6 +85,13 @@ ${endKeyword} ${functionKeyword}\r
 
     public compile(): string {
         this.compileErrors = [];
+        const paramList = this.params.getOrTransformAstNode as CsvAsn;
+        const parameters = paramList.items.map(i => i.symbolType);
+
+        for (const p of parameters) {
+            mustNotBeArray(p, this.compileErrors, this.htmlId);
+        }
+
         const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
         const tt = returnStatement?.symbolType;
         mustBeCompatibleType(this.returnType?.symbolType, tt!, this.compileErrors, returnStatement!.fieldId);
