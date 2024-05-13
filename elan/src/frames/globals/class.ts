@@ -72,7 +72,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     }
     symbolScope = SymbolScope.program;
     getProfile(): Profile {
-        return this.getParent().getProfile();
+        return this.getFile().getProfile();
     }
     protected setClasses() {
         super.setClasses();

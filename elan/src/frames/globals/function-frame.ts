@@ -14,9 +14,7 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../../symbols/function-type";
 import { Scope } from "../interfaces/scope";
-import { mustBeCompatibleType, mustNotBeArray } from "../compile-rules";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     public name: IdentifierField;
@@ -49,7 +47,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     symbolScope = SymbolScope.program;
 
     getProfile(): Profile {
-        return this.getParent().getProfile();
+        return this.getFile().getProfile();
     }
 
     minimumNumberOfChildrenExceeded(): boolean {

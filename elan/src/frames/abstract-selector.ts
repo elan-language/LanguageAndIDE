@@ -15,7 +15,7 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     constructor(parent: Parent) {
         super(parent);
-        this.profile = parent.getProfile();
+        this.profile = this.getFile().getProfile();
     }
 
     initialKeywords(): string {

@@ -24,7 +24,7 @@ export abstract class AbstractFrame implements Frame {
 
     constructor(parent: Parent) {
         this._parent = parent;
-        var map = parent.getMap();
+        var map = this.getFile().getMap();
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
@@ -36,7 +36,7 @@ export abstract class AbstractFrame implements Frame {
     abstract initialKeywords(): string;  
 
     getScratchPad(): ScratchPad {
-        return this.getParent().getScratchPad();
+        return this.getFile().getScratchPad();
     }
     
     getHtmlId(): string {

@@ -8,6 +8,8 @@ import { StatementFactory } from "./statement-factory";
 import { TestStatus } from "../test-status";
 import { RunStatus } from "../run-status";
 import { CompileError } from "../compile-error";
+import { ScratchPad } from "../scratch-pad";
+import { Profile } from "./profile";
 
 export interface File extends Parent {
     isFile : boolean;
@@ -22,7 +24,9 @@ export interface File extends Parent {
     addChildAfter(g: Frame, after: Frame): void;
 
     getMap(): Map<string, Selectable>;
-    getFactory(): StatementFactory;
+    getFactory() : StatementFactory;
+    getProfile() : Profile;
+    getScratchPad(): ScratchPad;
 
     indent(): string;
     expandCollapseAll(): void;

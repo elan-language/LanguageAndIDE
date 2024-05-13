@@ -9,7 +9,6 @@ import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
-import { File} from "./interfaces/file";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { CompileStatus, ParseStatus } from "./status-enums";
@@ -27,7 +26,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
    
     getProfile(): Profile {
-        return this.getParent().getProfile();
+        return this.getFile().getProfile();
     }
 
     protected setClasses() {

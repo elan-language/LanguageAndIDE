@@ -30,10 +30,6 @@ export interface Parent {
     indent(): string;
 
     getFile(): File;
-    getMap(): Map<string, Selectable>;
-    getFactory() : StatementFactory;
-    getProfile() : Profile;
-    getScratchPad(): ScratchPad;
 
     getIdPrefix(): string;
     hasParent(): boolean;
