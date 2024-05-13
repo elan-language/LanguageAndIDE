@@ -553,5 +553,98 @@ end function`;
     assertDoesNotCompile(fileImpl, ["May not pass Array into function"]);
   });
 
+  test('Fail_CannotPassInArrayMultipleParameters', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function foo(b as Int, a as Array<of Int>) return Int
+    return a[0]
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not pass Array into function"]);
+  });
+
+  test('Fail_TooManyParams', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var result set to foo(3, 4, 5)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+    return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Too many parameters 2"]);
+  });
+
+  test('Fail_NotEnoughParams', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var result set to foo(3)
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+    return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Missing parameter 1"]);
+  });
+
+  test('Fail_WrongParamType', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var result set to foo(3, "b")
+  print result
+end main
+
+function foo(a as Int, b as Int) return Int
+    return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
+
+  test('Fail_CannotSpecifyParamByRef', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var result set to foo(3, "b")
+  print result
+end main
+
+function foo(ref a as Int, b as Int) return Int
+    return a * b
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
 
 });
