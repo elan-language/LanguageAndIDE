@@ -482,23 +482,6 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  // obsolete syntax
-  ignore_test('Fail_CanNotContainSystemAccessors', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-end main
-    
-function foo(a as Int, b as Int) return Int
-  var r set to system.random()
-  return a * b
-end function`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
 
   test('Fail_CannotModifyParam', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

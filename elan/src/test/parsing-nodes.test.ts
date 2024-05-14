@@ -426,6 +426,7 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LiteralNode(), `["a":37, 42:"b"]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(), `[(3,4), (5,6)]`, ParseStatus.valid, "", "", "");
 		testNodeParse(new LiteralNode(), `["apple", "pear"]`, ParseStatus.valid, "", "", "", `[<string>"apple"</string>, <string>"pear"</string>]`);
+		testNodeParse(new LiteralNode(), `[4, 5, 2, 3]`, ParseStatus.valid, "", "", "", `[4, 5, 2, 3]`);
 
 	});
 	test('VarRef', () => {
