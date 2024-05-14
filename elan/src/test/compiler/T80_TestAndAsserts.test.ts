@@ -131,7 +131,7 @@ return [main, _tests];}`;
 square: pass`);
   });
 
-  ignore_test('Fail_expressionForExpected', async () => {
+  test('Fail_expressionForExpected', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -146,18 +146,13 @@ test square
 end test
 `;
 
-    const objectCode = ``;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
-    
+    assertDoesNotParse(fileImpl);  
   });
 
-  ignore_test('Fail_AssertOutsideAtest', async () => {
+  test('Fail_AssertOutsideAtest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -169,19 +164,17 @@ function square(x as Float) return Float
 end function
 `;
 
-    const objectCode = ``;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);   
   });
 
-  ignore_test('Fail_callATest', async () => {
+  test('Fail_callATest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call squareTest
+  call squareTest()
 end main
 
 function square(x as Float) return Float
@@ -196,10 +189,10 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);   
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);   
   });
 
-  ignore_test('Fail_useTestAsAReference', async () => {
+  test('Fail_useTestAsAReference', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -218,7 +211,7 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);   
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);   
   });
 
   test('Pass_FailingTest', async () => {
