@@ -192,8 +192,8 @@ export class FileImpl implements File {
             tests = ` var _tests = [];`;
         }
 
-        const stdLib = `var system; var _stdlib;${tests} export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}${retVal};}`; 
+        const stdLib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
+        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}return [main, _tests];}`; 
     }
 
     renderHashableContent(): string {

@@ -332,7 +332,7 @@ runButton?.addEventListener("click", () => {
 		return doImport(jsCode).then(async (elan) => {
 			if (elan.program) {
 				elan._inject(system, stdlib);
-				const main = await elan.program();
+				const [main,] = await elan.program();
 				main().then(() => {
 					console.info("elan program completed OK");
 					file.setRunStatus(RunStatus.stopped);

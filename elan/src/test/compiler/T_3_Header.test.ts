@@ -17,7 +17,7 @@ end main`;
         const objectCode = `export async function main(system : any) {
   system.print ("Hello World!");
 }
-return main;}`;
+return [main, _tests];}`;
 
         const fileImpl = new FileImpl(hash, new DefaultProfile());
         await fileImpl.parseFrom(new CodeSourceFromString(code));

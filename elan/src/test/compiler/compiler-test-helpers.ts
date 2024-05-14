@@ -80,7 +80,7 @@ function executeCode(file: FileImpl, input? : string) {
     return doImport(jsCode).then(async (elan) => {
         if (elan.program) {
             elan._inject(system, stdlib);
-            const main = await elan.program();
+            const [main,] = await elan.program();
             await main();
             return system;
         }

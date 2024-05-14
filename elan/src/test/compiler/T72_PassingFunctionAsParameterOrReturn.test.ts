@@ -20,7 +20,7 @@ function twice(x as Float) return Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   printModified(3, twice);
 }
@@ -32,7 +32,7 @@ function printModified(i, f) {
 function twice(x) {
   return x * 2;
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -58,7 +58,7 @@ function find(x as String, y as String) return Int
   return indexOf(x, y)
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   printIt("Hello", "e", find);
 }
@@ -70,7 +70,7 @@ function printIt(s, c, f) {
 function find(x, y) {
   return _stdlib.indexOf(x, y);
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -97,7 +97,7 @@ function twice(x as Float) return Float
   return x * 2
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = getFunc();
   system.print(_stdlib.asString(f(5)));
@@ -110,7 +110,7 @@ function getFunc() {
 function twice(x) {
   return x * 2;
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
