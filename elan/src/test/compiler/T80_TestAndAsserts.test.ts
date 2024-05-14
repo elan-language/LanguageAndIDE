@@ -90,7 +90,7 @@ return [main, _tests];}`;
 square: fail- actual 9, expected 10`);
   });
 
-  ignore_test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
+  test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -106,7 +106,20 @@ test square
 end test
 `; 
 
-    const objectCode = ``;
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["square", () => {
+  system.assert(square(1.23), 1.51);
+  system.assert(square(1.89), 3.6);
+}]);
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -114,7 +127,8 @@ end test
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    // TODO need a new test helper method to test the test running and test the resulting message
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+square: pass`);
   });
 
   ignore_test('Fail_expressionForExpected', async () => {
