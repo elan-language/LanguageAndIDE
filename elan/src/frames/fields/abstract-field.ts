@@ -257,7 +257,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.selected) {
             html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else { 
-            if (this.rootNode && this.parseStatus !== ParseStatus.invalid) {
+            if (this.rootNode && this.parseStatus === ParseStatus.valid) {
                 html = this.rootNode.renderAsHtml();
             } else {
                 html = escapeAngleBrackets(this.text);
