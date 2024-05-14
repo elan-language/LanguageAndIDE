@@ -185,13 +185,14 @@ export class FileImpl implements File {
 
     compile(): string {
         var retVal = "return main";
+        var tests = "";
 
         if (this._children.filter(g => g instanceof TestFrame).length > 0) {
-            var getTests = `getTests() { return Object.getOwnPropertyNames(this).filter(s => s.startsWith("_test_")).map(f => this[f]);};`;
-            retVal = `${getTests} return [main, getTests]`; 
+            retVal = `return [main, _tests]`;
+            tests = ` var _tests = [];`;
         }
 
-        const stdLib = 'var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {';
+        const stdLib = `var system; var _stdlib;${tests} export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
         return `${stdLib}\n${this.renderGlobalsAsObjectCode()}${retVal};}`; 
     }
 

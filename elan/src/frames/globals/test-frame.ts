@@ -56,11 +56,9 @@ end test\r
 
     public compile(): string {
         this.compileErrors = [];
-      
 
-        return `function _test_${this.testName.compile()}() {\r
+        return `_tests.push(["${this.testName.compile()}", () => {\r
 ${this.renderChildrenAsObjectCode()}\r
-}\r
-`;
+}]);\r\n`;          
     }
 }

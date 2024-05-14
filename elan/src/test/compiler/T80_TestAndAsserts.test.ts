@@ -4,7 +4,7 @@ import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertPar
 
 suite('Pass_PassingTest', () => {
 
-  ignore_test('Pass_PassingTest', async () => {
+  test('Pass_PassingTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -22,7 +22,7 @@ test square
 end test
 `;
 
-const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
 
 }
@@ -31,13 +31,13 @@ function square(x) {
   return x ** 2;
 }
 
-function _test_square() {
+_tests.push(["square", () => {
   system.assert(9, square(3));
   var actual = square(4);
   var expected = 16;
   system.assert(expected, actual);
-}
-getTests() { return Object.getOwnPropertyNames(this).filter(s => s.startsWith("_test_")).map(f => this[f]);}; return [main, getTests];}`;
+}]);
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -45,7 +45,7 @@ getTests() { return Object.getOwnPropertyNames(this).filter(s => s.startsWith("_
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    assertTestObjectCodeExecutes(fileImpl, "");
+    await assertTestObjectCodeExecutes(fileImpl, "Running : square");
   });
 
   ignore_test('Pass_FailingTest', async () => {
