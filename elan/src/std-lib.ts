@@ -154,6 +154,9 @@ export class StdLib {
         var fl = this.floor(n);
         return n > fl ? fl + 1 : fl;
     }
+    toPrecision(n: number, digits: number) {
+        return n.toPrecision(digits);
+    }
    
     pi = Math.PI;
 

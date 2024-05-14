@@ -14,6 +14,7 @@ import { IterType } from "./symbols/iter-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { TupleType } from "./symbols/tuple-type";
 import { ProcedureType } from "./symbols/procedure-type";
+import { stringType } from "./test/testHelpers";
 
 export class StdLibSymbols implements Scope {
 
@@ -56,6 +57,7 @@ export class StdLibSymbols implements Scope {
             ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance]))],
             ["readKey", this.getSymbol("readKey", new FunctionType([], FloatType.Instance, false, false))],
             ["random", this.getSymbol("random", new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, false))],
+            ["toPrecision", this.getSymbol("toPrecision", new FunctionType([FloatType.Instance, IntType.Instance], StringType.Instance, true, true))]
         ]
     );
 

@@ -1,3 +1,4 @@
+import assert from "assert";
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash } from "./compiler-test-helpers";
@@ -92,48 +93,7 @@ square: fail - actual 9, expected 10
 `);
   });
 
-  test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-end main
-
-function square(x as Float) return Float
-  return x ^ 2
-end function
-
-test square
-  assert square(1.23) is 1.51
-  assert square(1.89) is 3.6
-end test
-`; 
-
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-
-}
-
-function square(x) {
-  return x ** 2;
-}
-
-_tests.push(["square", () => {
-  system.assert(square(1.23), 1.51);
-  system.assert(square(1.89), 3.6);
-}]);
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
-square: pass
-`);
-  });
-
+ 
   test('Fail_expressionForExpected', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -295,4 +255,51 @@ class2: pass
 `);
   });
 
+  test('Pass_TestUseOfToPrecisionForFloats', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+test toPrecision1
+  var a set to 1/3
+  var b set to a.toPrecision(2)
+  assert b is "0.33"
+end test
+
+test toPrecision2
+  var a set to 0.9999
+  var b set to a.toPrecision(3)
+  assert b is "1.00"
+end test
+
+test toPrecision3
+  var a set to 1.25
+  var b set to a.toPrecision(2)
+  assert b is "1.3"
+end test
+
+test toPrecision4
+  var a set to 4444
+  var b set to a.toPrecision(2)
+  assert b is "4.4e+3"
+end test
+
+`;
+
+const objectCode = ``;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    //assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
+toPrecision1: pass
+toPrecision2: pass
+toPrecision3: pass
+toPrecision4: pass
+`);
+  });
 });
