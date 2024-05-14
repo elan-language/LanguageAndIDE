@@ -334,7 +334,9 @@ runButton?.addEventListener("click", () => {
 		return doImport(jsCode).then(async (elan) => {
 			if (elan.program) {
 				elan._inject(system, stdlib);
-				const [main,] = await elan.program();
+				const [main, tests] = await elan.program();
+				// clear tests each time or the tests array in the program gets duplicates
+				(tests as any).length = 0;
 				main().then(() => {
 					console.info("elan program completed OK");
 					file.setRunStatus(RunStatus.stopped);
