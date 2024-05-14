@@ -104,12 +104,19 @@ function executeTestCode(file: FileImpl, input? : string) {
     return doImport(jsCode).then(async (elan) => {
         if (elan.program) {
             elan._inject(system, stdlib);
-            const [main, getTests] = await elan.program();
-            const tests = getTests() as any[];
-
-            for(const t of tests) {
-                system.print("Running :" +  t.constructor.name);
-                t();
+            const [main, tests] = await elan.program();
+          
+            system.print("Test Runner:");
+            for (const t of tests as [[string, () => void]]) {
+                try {
+                    system.print(`\n${t[0]}:`);
+                    t[1]();
+                    system.print(` pass`);
+                }
+                catch (e) {
+                    system.print(` fail`);
+                    system.print(`- ${(e as any).message}`);
+                }
             }
 
             return system;
@@ -132,11 +139,11 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
     assert.strictEqual(actual, output);
 }
 
-export async function assertTestObjectCodeExecutes(file: FileImpl, output: string, input? : string) {
+export async function assertTestObjectCodeExecutes(file: FileImpl, output : string) {
     var actual;
     
     try {
-        const sl = await executeTestCode(file, input) as any;
+        const sl = await executeTestCode(file, "") as any;
         actual = sl?.printed; 
     }
     catch (e) {

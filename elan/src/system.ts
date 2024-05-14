@@ -107,10 +107,14 @@ export class System {
 
     assert(actual : any, expected : any) {
         if (actual !== expected) {
-            this.print(`Expected: ${expected} Actual ${actual}`);
+            throw new Error(`actual ${actual}, expected ${expected}`);
         }
     }
 
+    getTests(program : any) {
+        
+        return Object.getOwnPropertyNames(program).filter(s => s.startsWith("_test_")).map(f => program[f]);
+    }
 
 
     pause(n: number) {
@@ -139,6 +143,8 @@ export class System {
 
         return this.objectEquals(i1, i2); // todo
     }
+
+
 
 
     objectEquals(o1: any, o2: any) {
