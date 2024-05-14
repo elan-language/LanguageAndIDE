@@ -248,10 +248,32 @@ test default_
 end test
 
 constant a set to "Hello"
+
 test constant_
   var b set to "Hello"
   assert a is b
 end test
+
+class Foo
+  constructor(b as Int)
+    set bar to b
+  end constructor
+
+  property bar as Int
+end class
+
+test class1
+  var a set to new Foo(3)
+  var b set to new Foo(3)
+  assert a is b
+end test
+
+test class2
+  var a set to default Foo
+  var b set to default Foo
+  assert a is b
+end test
+
 `;
 
 const objectCode = ``;
@@ -268,6 +290,8 @@ dictionary_: pass
 string_: pass
 default_: pass
 constant_: pass
+class1: pass
+class2: pass
 `);
   });
 
