@@ -12,6 +12,8 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { CommentStatement } from '../frames/statements/comment-statement';
 import { LetStatement } from '../frames/statements/let-statement';
+import { TestFrame } from '../frames/globals/test-frame';
+import { AssertStatement } from '../frames/statements/assert-statement';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -136,5 +138,16 @@ suite('Field Parsing Tests', () => {
 			assert.equal(expr.getParseStatus(), ParseStatus.valid);
 			assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1 * op2}"`);
 			assert.equal(expr.textAsHtml(), `<string>"</string>{op}<string> times </string>{op2}<string> equals </string>{op1 * op2}<string>"</string>`);
+		});
+
+		test('parse ValueRefField', () => { 
+			var test = new TestFrame(new FileImpl(hash, new DefaultProfile()));
+			var a = new AssertStatement(test);
+			var expected = a.expected;
+			expected.setText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
+			expected.parseCurrentText();
+			assert.equal(expected.getParseStatus(), ParseStatus.valid);
+			assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
+			assert.equal(expected.textAsHtml(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
 		});
 });

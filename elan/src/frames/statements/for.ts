@@ -22,9 +22,9 @@ export class For extends FrameWithStatements implements Statement  {
         super(parent);
         this.variable = new IdentifierField(this);
         this.variable.setPlaceholder("variableName");
-        this.from = new ValueRefField(this);
-        this.to = new ValueRefField(this);
-        this.step = new ValueRefField(this);
+        this.from = new ValueRefField(this, / to /);
+        this.to = new ValueRefField(this, / step /);
+        this.step = new ValueRefField(this, /\r|\n/);
         this.step.setText("1");
     }
 

@@ -1,20 +1,7 @@
-# 29b54942ea3151fa189fa6ff5477504f1915e348a6d7831eb1e61588ae67fbbf Elan v0.1 valid
+# 176b22af8d85fe9ffd0f8a1ab4b064ed0c4d3eb1e06cf168d62af44f6b42d6da Elan v0.1 valid
 
 main
-  var li2 set to ["lemon", "lime", "orange"]
-  print binarySearch(li2, "lemon")
-  print binarySearch(li2, "lime")
-  print binarySearch(li2, "orange")
-  print binarySearch(li2, "pear")
-  var li3 set to ["lemon", "orange"]
-  print binarySearch(li2, "lemon")
-  print binarySearch(li2, "orange")
-  print binarySearch(li2, "pear")
-  var li4 set to ["lemon"]
-  var li5 set to new List<of String>()
-  print binarySearch(li2, "pear")
-  print binarySearch(li2, "lemon")
-  print binarySearch(li2, "pear")
+
 end main
 
 function binarySearch(li as List<of String>, item as String) return Boolean
@@ -32,3 +19,20 @@ function binarySearch(li as List<of String>, item as String) return Boolean
   end if
   return result
 end function
+
+test binarySearch
+  var li1 set to ["lemon", "lime", "orange"]
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  var li2 set to ["lemon", "orange"]
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  var li3 set to ["lemon"]
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  var li4 set to new List<of String>()
+  assert binarySearch(li4, "pear") is false
+end test
