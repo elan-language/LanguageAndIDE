@@ -106,9 +106,17 @@ function executeTestCode(file: FileImpl, input? : string) {
             elan._inject(system, stdlib);
             const [main, tests] = await elan.program();
           
-            for(const t of tests as [[string, () => void]]  ) {
-                system.print("Running : " +  t[0]);
-                t[1]();
+            system.print("Test Runner:");
+            for (const t of tests as [[string, () => void]]) {
+                try {
+                    system.print(`\n${t[0]}:`);
+                    t[1]();
+                    system.print(` pass`);
+                }
+                catch (e) {
+                    system.print(` fail`);
+                    system.print(`- e.message`);
+                }
             }
 
             return system;

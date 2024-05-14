@@ -45,7 +45,8 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, "Running : square");
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+square: pass`);
   });
 
   ignore_test('Pass_FailingTest', async () => {
