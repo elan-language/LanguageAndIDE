@@ -299,8 +299,8 @@ const elanConsole = new ElanConsole();
 const system = new System();
 const stdlib = new StdLib();
 
-const runButton = document.getElementById("run");
-const clearButton = document.getElementById("clear");
+const runButton = document.getElementById("run-button");
+const clearButton = document.getElementById("clear-button");
 const newButton = document.getElementById("new");
 
 const consoleWindow = document.getElementById("console")!;
