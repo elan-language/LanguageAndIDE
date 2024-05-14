@@ -105,23 +105,6 @@ export class System {
         return this.inputter!();
     }
 
-    assert(actual : any, expected : any) {
-        if (typeof expected === "number" && typeof actual === "number") {
-            // todo cover all the edge cases and odd behaviours 
-            const es = expected.toString();
-            if (es.includes(".")) {
-                const di = expected.toString().length -1;
-                actual = actual.toPrecision(di).toString();
-                expected = es;
-            }
-        }
-
-
-        if (actual !== expected) {
-            throw new Error(`actual ${actual}, expected ${expected}`);
-        }
-    }
-
     getTests(program : any) {
         
         return Object.getOwnPropertyNames(program).filter(s => s.startsWith("_test_")).map(f => program[f]);
@@ -185,5 +168,21 @@ export class System {
         }
 
         return true;
+    }
+
+    assert(actual: any, expected: any) {
+        if (typeof expected === "number" && typeof actual === "number") {
+            // todo cover all the edge cases and odd behaviours 
+            const es = expected.toString();
+            if (es.includes(".")) {
+                const di = expected.toString().length - 1;
+                actual = actual.toPrecision(di).toString();
+                expected = es;
+            }
+        }
+
+        if (!this.equals(actual, expected)) {
+            throw new Error(`actual ${actual}, expected ${expected}`);
+        }
     }
 }
