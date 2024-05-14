@@ -46,7 +46,7 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
   system.print(_stdlib.asString(g.p2));
@@ -99,7 +99,7 @@ class Player {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -142,7 +142,7 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
   system.print(_stdlib.asString(g.i));
@@ -179,7 +179,7 @@ class Game {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -211,7 +211,7 @@ class Game
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = Game.defaultInstance();
   system.print(_stdlib.asString(g.i));
@@ -230,7 +230,7 @@ class Game {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -276,7 +276,7 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
   system.print(_stdlib.asString(g.p1));
@@ -324,7 +324,7 @@ class Player {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -382,7 +382,7 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
   system.print(_stdlib.asString(system.objectEquals(g.p1, Player.defaultInstance())));
@@ -448,7 +448,7 @@ class Player {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -507,10 +507,10 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -551,7 +551,7 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
   system.print(_stdlib.asString(f.a));
@@ -583,7 +583,7 @@ class Foo {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -621,7 +621,7 @@ abstract class Player
     abstract function ucName() return String
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
   var p = g.p1;
@@ -672,7 +672,7 @@ class Player {
     return "empty Abstract Class Player";
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -711,9 +711,9 @@ class Player
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

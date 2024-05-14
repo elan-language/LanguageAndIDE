@@ -29,7 +29,7 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
   system.print(_stdlib.asString(x.p1));
@@ -52,7 +52,7 @@ class Foo {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -86,7 +86,7 @@ class Foo
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo(7, "Apple"));
   system.print(_stdlib.asString(x.p1));
@@ -109,7 +109,7 @@ class Foo {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -162,7 +162,7 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var foo = system.initialise(new Foo());
   var bar = foo.bar;
@@ -217,7 +217,7 @@ class Bar {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

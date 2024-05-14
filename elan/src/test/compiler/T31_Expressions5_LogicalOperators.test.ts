@@ -19,7 +19,7 @@ main
   print d
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = false && false;
   var b = false && true;
@@ -30,7 +30,7 @@ async function main() {
   system.print(_stdlib.asString(c));
   system.print(_stdlib.asString(d));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -55,7 +55,7 @@ main
   print d
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = false || false;
   var b = false || true;
@@ -66,7 +66,7 @@ async function main() {
   system.print(_stdlib.asString(c));
   system.print(_stdlib.asString(d));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -91,7 +91,7 @@ main
   print d
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = false != false;
   var b = false != true;
@@ -102,7 +102,7 @@ async function main() {
   system.print(_stdlib.asString(c));
   system.print(_stdlib.asString(d));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -127,7 +127,7 @@ main
   print d
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = !false;
   var b = !true;
@@ -138,7 +138,7 @@ async function main() {
   system.print(_stdlib.asString(c));
   system.print(_stdlib.asString(d));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -159,14 +159,14 @@ main
   print b
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = !false && true;
   var b = !(false && true);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

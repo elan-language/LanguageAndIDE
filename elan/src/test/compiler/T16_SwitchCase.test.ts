@@ -22,7 +22,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
@@ -41,7 +41,7 @@ async function main() {
     }
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -69,7 +69,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
@@ -88,7 +88,7 @@ async function main() {
     }
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -113,7 +113,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
@@ -126,7 +126,7 @@ async function main() {
     }
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -154,7 +154,7 @@ main
   end for
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {
@@ -170,7 +170,7 @@ async function main() {
     }
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -197,7 +197,7 @@ main
 end main
 `;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   switch (3.1) {
     case 1:
@@ -214,7 +214,7 @@ async function main() {
       break;
   }
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

@@ -45,7 +45,7 @@ class Bar inherits Foo
     end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
   var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
@@ -106,7 +106,7 @@ class Bar {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -161,7 +161,7 @@ class Bar inherits Foo, Yon
     end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
   var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
@@ -229,7 +229,7 @@ class Bar {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -285,7 +285,7 @@ class Bar inherits Foo, Yon
     end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
   var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
@@ -359,7 +359,7 @@ class Bar {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

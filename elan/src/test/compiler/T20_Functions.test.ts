@@ -16,7 +16,7 @@ function foo(a as Float, b as Float) return Float
   return a * b
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(foo(3, 4)));
 }
@@ -24,7 +24,7 @@ async function main() {
 function foo(a, b) {
   return a * b;
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -46,7 +46,7 @@ function foo(a as Int, b as Int) return Int
     return default Int
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(foo(3, 4)));
 }
@@ -54,7 +54,7 @@ async function main() {
 function foo(a, b) {
   return 0;
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -81,7 +81,7 @@ class Foo
   end constructor
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(foo(3, 4)));
 }
@@ -97,7 +97,7 @@ class Foo {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -119,7 +119,7 @@ function foo(a as Int, b as Int) return Array<of Int>
     return default Array<of Int>
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(foo(3, 4)));
 }
@@ -127,7 +127,7 @@ async function main() {
 function foo(a, b) {
   return system.defaultArray();
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -155,7 +155,7 @@ function factorial(a as Int) return Int
     return result
 end function`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(factorial(5)));
 }
@@ -169,7 +169,7 @@ function factorial(a) {
   }
   return result;
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -202,7 +202,7 @@ class Bar
 
 end class`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var b = system.initialise(new Bar());
   system.print(_stdlib.asString(foo(b)));
@@ -223,7 +223,7 @@ class Bar {
   }
 
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

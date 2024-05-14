@@ -14,13 +14,13 @@ main
   print 3 < 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 < 4));
   system.print(_stdlib.asString(3 < 2));
   system.print(_stdlib.asString(3 < 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -40,13 +40,13 @@ main
   print 3 > 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 > 4));
   system.print(_stdlib.asString(3 > 2));
   system.print(_stdlib.asString(3 > 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -66,13 +66,13 @@ main
   print 3 <= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 <= 4));
   system.print(_stdlib.asString(3 <= 2));
   system.print(_stdlib.asString(3 <= 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -92,13 +92,13 @@ main
   print 3 >= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 >= 4));
   system.print(_stdlib.asString(3 >= 2));
   system.print(_stdlib.asString(3 >= 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -118,13 +118,13 @@ main
   print 3 is not 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 !== 4));
   system.print(_stdlib.asString(3 !== 2));
   system.print(_stdlib.asString(3 !== 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -144,13 +144,13 @@ main
   print 3 is 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 === 4));
   system.print(_stdlib.asString(3 === 2));
   system.print(_stdlib.asString(3 === 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -177,7 +177,7 @@ main
   print 3.1 >= 3
 end main`;
 
-    const objectCode = `var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(3 < 3.1));
   system.print(_stdlib.asString(3 <= 3.1));
@@ -190,7 +190,7 @@ async function main() {
   system.print(_stdlib.asString(3.1 > 3));
   system.print(_stdlib.asString(3.1 >= 3));
 }
-return main;}`;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

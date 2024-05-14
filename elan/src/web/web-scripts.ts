@@ -9,6 +9,7 @@ import { ParseStatus } from "../frames/status-enums";
 import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
+import { runTests } from "../runner";
 
 const codeContainer = document.querySelector('.elan-code');
 var file: File;
@@ -302,6 +303,7 @@ const stdlib = new StdLib();
 const runButton = document.getElementById("run-button");
 const clearButton = document.getElementById("clear-button");
 const newButton = document.getElementById("new");
+const testButton = document.getElementById("test-button");
 
 const consoleWindow = document.getElementById("console")!;
 
@@ -332,7 +334,9 @@ runButton?.addEventListener("click", () => {
 		return doImport(jsCode).then(async (elan) => {
 			if (elan.program) {
 				elan._inject(system, stdlib);
-				const main = await elan.program();
+				const [main, tests] = await elan.program();
+				// clear tests each time or the tests array in the program gets duplicates
+				(tests as any).length = 0;
 				main().then(() => {
 					console.info("elan program completed OK");
 					file.setRunStatus(RunStatus.stopped);
@@ -360,6 +364,23 @@ clearButton?.addEventListener("click", () => {
 newButton?.addEventListener("click", () => {
 	file = new FileImpl(hash, profile, true);
 	file.renderAsHtml().then(c => updateContent(c));
+});
+
+testButton?.addEventListener("click", () => {
+	const jsCode = file.compile();
+
+	system.printer = printer;
+	system.inputter = inputter;
+
+	return doImport(jsCode).then(async (elan) => {
+		if (elan.program) {
+			elan._inject(system, stdlib);
+			const [, tests] = await elan.program();
+			if (tests && tests.length > 0){
+				runTests(system, tests);
+			}
+		}
+	});
 });
 
 const upload = document.getElementById('load') as Element;

@@ -5,6 +5,7 @@ import { Done } from "mocha";
 import { getTestSystem } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { StdLib } from "../../std-lib";
+import { runTests } from "../../runner";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -80,7 +81,7 @@ function executeCode(file: FileImpl, input? : string) {
     return doImport(jsCode).then(async (elan) => {
         if (elan.program) {
             elan._inject(system, stdlib);
-            const main = await elan.program();
+            const [main,] = await elan.program();
             await main();
             return system;
         }
@@ -104,22 +105,8 @@ function executeTestCode(file: FileImpl, input? : string) {
     return doImport(jsCode).then(async (elan) => {
         if (elan.program) {
             elan._inject(system, stdlib);
-            const [main, tests] = await elan.program();
-          
-            system.print("Test Runner:");
-            for (const t of tests as [[string, () => void]]) {
-                try {
-                    system.print(`\n${t[0]}:`);
-                    t[1]();
-                    system.print(` pass`);
-                }
-                catch (e) {
-                    system.print(` fail`);
-                    system.print(`- ${(e as any).message}`);
-                }
-            }
-
-            return system;
+            const [, tests] = await elan.program();
+            return runTests(system, tests);
         }
         return undefined;
     });
