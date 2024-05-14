@@ -46,7 +46,8 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
-square: pass`);
+square: pass
+`);
   });
 
   test('Pass_FailingTest', async () => {
@@ -87,7 +88,8 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
-square: fail - actual 9, expected 10`);
+square: fail - actual 9, expected 10
+`);
   });
 
   test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
@@ -128,7 +130,8 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
-square: pass`);
+square: pass
+`);
   });
 
   test('Fail_expressionForExpected', async () => {
@@ -212,6 +215,60 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);   
+  });
+
+  test('Pass_VariousTestsOnAssert', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+test list_
+  var a set to [3, 2, 4, 0]
+  var b set to [3, 2, 4, 0]
+  assert a is b
+end test
+
+test dictionary_
+  var a set to [3:"a", 2:"b", 4:"c"]
+  var b set to [3:"a", 2:"b", 4:"c"]
+  assert a is b
+end test
+
+test string_
+  var a set to "Hello World"
+  var b set to "Hello" + " " + "World"
+  assert a is b
+end test
+
+test default_
+  var a set to 0
+  var b set to default Int
+  assert a is b
+end test
+
+constant a set to "Hello"
+test constant_
+  var b set to "Hello"
+  assert a is b
+end test
+`;
+
+const objectCode = ``;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    //assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
+list_: pass
+dictionary_: pass
+string_: pass
+default_: pass
+constant_: pass
+`);
   });
 
 });

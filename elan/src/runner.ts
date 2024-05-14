@@ -11,7 +11,7 @@ export function runTests(system : System, tests : [[string, () => void]]) {
         catch (e) {
             outcome = `fail - ${(e as any).message}`;
         }
-        system.print(`${t[0]}: ${outcome}`);
+        system.print(`${t[0]}: ${outcome}\n`);
     }
 
     // clear tests each time or the tests array in the program gets duplicates
