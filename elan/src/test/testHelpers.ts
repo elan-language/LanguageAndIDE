@@ -28,7 +28,7 @@ import { GenericParameterType } from '../symbols/generic-parameter-type';
 import { UnknownSymbol } from '../symbols/unknown-symbol';
 
 // flag to update test file 
-var updateTestFiles = true;
+var updateTestFiles = false;
 
 export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
