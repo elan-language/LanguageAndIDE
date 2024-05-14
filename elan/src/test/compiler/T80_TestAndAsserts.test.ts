@@ -45,11 +45,11 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
 square: pass`);
   });
 
-  test('Pass_FailingTest', async () => {
+  ignore_test('Pass_FailingTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -86,8 +86,8 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
-square: fail- actual 9, expected 10`);
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
+square: fail - actual 9, expected 10`);
   });
 
   test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
@@ -127,7 +127,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
 square: pass`);
   });
 
@@ -219,6 +219,47 @@ end test
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [""]);   
+  });
+
+  test('Pass_FailingTest', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function square(x as Float) return Float
+  return x ^ 2
+end function
+
+test square
+  assert square(3) is 10
+  assert square(4) is 16
+end test
+`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["square", () => {
+  system.assert(square(3), 10);
+  system.assert(square(4), 16);
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+square: fail- actual 9, expected 10`);
   });
 
 });
