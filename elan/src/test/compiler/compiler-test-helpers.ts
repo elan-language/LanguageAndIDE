@@ -115,7 +115,7 @@ function executeTestCode(file: FileImpl, input? : string) {
                 }
                 catch (e) {
                     system.print(` fail`);
-                    system.print(`- e.message`);
+                    system.print(`- ${(e as any).message}`);
                 }
             }
 

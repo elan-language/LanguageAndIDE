@@ -107,7 +107,7 @@ export class System {
 
     assert(actual : any, expected : any) {
         if (actual !== expected) {
-            this.print(`Expected: ${expected} Actual ${actual}`);
+            throw new Error(`actual ${actual}, expected ${expected}`);
         }
     }
 

@@ -32,10 +32,10 @@ function square(x) {
 }
 
 _tests.push(["square", () => {
-  system.assert(9, square(3));
+  system.assert(square(3), 9);
   var actual = square(4);
   var expected = 16;
-  system.assert(expected, actual);
+  system.assert(actual, expected);
 }]);
 return [main, _tests];}`;
 
@@ -49,7 +49,7 @@ return [main, _tests];}`;
 square: pass`);
   });
 
-  ignore_test('Pass_FailingTest', async () => {
+  test('Pass_FailingTest', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -65,7 +65,20 @@ test square
 end test
 `;
 
-    const objectCode = ``;
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+function square(x) {
+  return x ** 2;
+}
+
+_tests.push(["square", () => {
+  system.assert(square(3), 10);
+  system.assert(square(4), 16);
+}]);
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -73,7 +86,8 @@ end test
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    // The test execution should stop at the first failure
+    await assertTestObjectCodeExecutes(fileImpl, `Test Runner:
+square: fail- actual 9, expected 10`);
   });
 
   ignore_test('Pass_FloatRoundedToFloatOfDigitsGivenInExpectedLiteral', async () => {
