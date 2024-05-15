@@ -266,7 +266,7 @@ export class FileImpl implements File, Scope {
         if (this.getParseStatus() !== ParseStatus.valid) {
             str = "default";
         } else {
-            str = OverallStatus[helper_compileStatusAsOverallStatus(this.getCompileStatus())]
+            str = OverallStatus[helper_compileStatusAsOverallStatus(this.getCompileStatus())];
         }
         return str;
     }

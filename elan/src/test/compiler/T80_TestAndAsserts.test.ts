@@ -97,90 +97,6 @@ return [main, _tests];}`;
       ]]]);
   });
 
-
-  test('Fail_expressionForExpected', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-end main
-
-function square(x as Float) return Float
-  return x ^ 2
-end function
-
-test square
-  assert square(3) is 3 * 3
-end test
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  test('Fail_AssertOutsideAtest', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  assert square(3) is 3 * 3
-end main
-
-function square(x as Float) return Float
-  return x ^ 2
-end function
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  test('Fail_callATest', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  call squareTest()
-end main
-
-function square(x as Float) return Float
-  return x ^ 2
-end function
-
-test squareTest
-  assert square(3) is 93
-end test
-`;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
-  });
-
-  test('Fail_useTestAsAReference', async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to squareTest
-end main
-
-function square(x as Float) return Float
-  return x ^ 2
-end function
-
-test squareTest
-  assert square(3) is 93
-end test
-`;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
-  });
-
   test('Pass_VariousTestsOnAssert', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -238,7 +154,7 @@ test class2
   assert a is b
 end test`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
 
 }
@@ -328,7 +244,7 @@ return [main, _tests];}`;
     ]);
   });
 
-  ignore_test('Pass_TestUseOfToPrecisionForFloats', async () => {
+  test('Pass_TestUseOfToPrecisionForFloats', async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -360,19 +276,139 @@ end test
 
 `;
 
-    const objectCode = ``;
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", (_outcomes) => {
+  var a = 1 / 3;
+  var b = _stdlib.toPrecision(a, 2);
+  _outcomes.push(system.assert(b, "0.33", "assert12"));
+}]);
+
+_tests.push(["test15", (_outcomes) => {
+  var a = 0.9999;
+  var b = _stdlib.toPrecision(a, 3);
+  _outcomes.push(system.assert(b, "1.00", "assert24"));
+}]);
+
+_tests.push(["test27", (_outcomes) => {
+  var a = 1.25;
+  var b = _stdlib.toPrecision(a, 2);
+  _outcomes.push(system.assert(b, "1.3", "assert36"));
+}]);
+
+_tests.push(["test39", (_outcomes) => {
+  var a = 4444;
+  var b = _stdlib.toPrecision(a, 2);
+  _outcomes.push(system.assert(b, "4.4e+3", "assert48"));
+}]);
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    //assertObjectCodeIs(fileImpl, objectCode);
-    //await assertTestObjectCodeExecutes(fileImpl, `Test Runner...
-    // toPrecision1: pass
-    // toPrecision2: pass
-    // toPrecision3: pass
-    // toPrecision4: pass
-    // `);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [
+        new AssertOutcome("pass", "0.33", "0.33", "assert12")
+      ]],
+      ["test15", [
+        new AssertOutcome("pass", "1.00", "1.00", "assert24")
+      ]],
+      ["test27", [
+        new AssertOutcome("pass", "1.3", "1.3", "assert36")
+      ]],
+      ["test39", [
+        new AssertOutcome("pass", "4.4e+3", "4.4e+3", "assert48")
+      ]]
+    ]);
   });
+
+  test('Fail_expressionForExpected', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+function square(x as Float) return Float
+  return x ^ 2
+end function
+
+test square
+  assert square(3) is 3 * 3
+end test
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_AssertOutsideAtest', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  assert square(3) is 3 * 3
+end main
+
+function square(x as Float) return Float
+  return x ^ 2
+end function
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test('Fail_callATest', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call squareTest()
+end main
+
+function square(x as Float) return Float
+  return x ^ 2
+end function
+
+test squareTest
+  assert square(3) is 93
+end test
+`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
+  test('Fail_useTestAsAReference', async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to squareTest
+end main
+
+function square(x as Float) return Float
+  return x ^ 2
+end function
+
+test squareTest
+  assert square(3) is 93
+end test
+`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+  });
+
 });
