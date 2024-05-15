@@ -2,7 +2,7 @@ import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { helper_worstStatusOfParseCompile } from "../helpers";
+import { helper_testStatusAsOverallStatus, helper_CompileOrParseStatus } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -28,22 +28,17 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
     override getOverallStatus(): OverallStatus {
         var overall = OverallStatus.error;
-        var parseCompile = helper_worstStatusOfParseCompile(this);
+        var parseCompile = helper_CompileOrParseStatus(this);
         if (parseCompile !== OverallStatus.ok) {
             overall = parseCompile;
         } else {
-            var test = this.getTestStatus();
-            if (test === TestStatus.pass) {
-                overall = OverallStatus.ok;
-            } else if (test === TestStatus.pending) {
-                overall = OverallStatus.warning;
-            }
+            overall = helper_testStatusAsOverallStatus(this.getTestStatus());
         }
         return overall;
     }
 
     getTestStatus(): TestStatus {
-        const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        const tests =  this.getChildren().filter(c => c instanceof AssertStatement).map(c => c as AssertStatement);
         const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
         const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
         return worst;

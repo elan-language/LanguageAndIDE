@@ -225,18 +225,23 @@ field.selected.empty.optional completion, field.selected.empty.optional completi
     display: none;
 }
 
-/* field msg */
+/*  msg */
 msg {
     display: inline;
     color: var(--reverseText);
 }
 
+msg.ok {
+    background-color: var(--ok);
+}
 msg.warning {
     background-color: var(--warning);
 }
 msg.error {
     background-color: var(--error);
 }
+
+/* field msg */
 
 field msg {
     display: none;

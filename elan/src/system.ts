@@ -1,6 +1,7 @@
+import { TestStatus } from "./frames/test-status";
 
 export class AssertOutcome {
-    constructor(public readonly status : string,  public readonly actual: string, public readonly expected: string, public readonly htmlId: string) {
+    constructor(public readonly status : TestStatus,  public readonly actual: string, public readonly expected: string, public readonly htmlId: string) {
     }
 }
 
@@ -178,8 +179,8 @@ export class System {
 
     assert(actual: any, expected: any, htmlId: string, stdlib: { asString: (a: any) => string }) {
         if (!this.equals(actual, expected)) {
-            return new AssertOutcome("fail", `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
+            return new AssertOutcome(TestStatus.fail, `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
         }
-        return new AssertOutcome("pass", `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
+        return new AssertOutcome(TestStatus.pass, `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
     }
 }

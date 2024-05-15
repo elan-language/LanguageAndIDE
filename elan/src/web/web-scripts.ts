@@ -106,6 +106,7 @@ function updateStatus() {
 	// TODO  Adding the class is wrong. It must replace existing class. So make status the only class.
 	(document.getElementById("parse") as HTMLDivElement).setAttribute("class", file.getParseStatusForDashboard());
 	(document.getElementById("compile") as HTMLDivElement).setAttribute("class",file.getCompileStatusForDashboard());
+	(document.getElementById("test") as HTMLDivElement).setAttribute("class",file.getTestStatusForDashboard());
 }
 
 

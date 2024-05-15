@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_worstStatusOfParseCompile, isCollapsible } from "../helpers";
+import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_CompileOrParseStatus, isCollapsible } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../syntax-nodes/ast-node";
 import { CSV } from "../parse-nodes/csv";
@@ -319,7 +319,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     private overallStatus(): OverallStatus {
-        return helper_worstStatusOfParseCompile(this);
+        return helper_CompileOrParseStatus(this);
     }
 
     protected pushClass(flag: boolean, cls: string) {
