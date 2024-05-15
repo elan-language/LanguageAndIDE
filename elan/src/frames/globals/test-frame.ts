@@ -7,6 +7,7 @@ import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
+import { OverallStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 import { TestStatus } from "../test-status";
 
@@ -24,10 +25,9 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         this.getChildren().push(selector);
     }
 
-    override getOverallStatus(): string {
+    override getOverallStatus(): OverallStatus {
         return helper_overallStatus(this); //TODO: incorporate TestStatus into this
     }
-
 
     getTestStatus(): TestStatus {
         const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);

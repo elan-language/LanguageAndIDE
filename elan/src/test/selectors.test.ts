@@ -79,7 +79,7 @@ suite('Unit tests', () => {
 		g.processKey(key("c"));
 		help = g.getCompletion();
 		assert.equal(help, " class constant");
-        assert.equal(g.renderAsHtml(), `<global class="valid" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`);
+        assert.equal(g.renderAsHtml(), `<global class="ok" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`);
 	});	
 
 	test("Selection Filtering - members", () => {
@@ -92,7 +92,7 @@ suite('Unit tests', () => {
 		assert.equal(s.text, "pro");
 		help = s.getCompletion();
 		assert.equal(help, " procedure property");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select11' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="ok" id='select11' tabindex="0"><selector><text>pro</text><placeholder>new code</placeholder><help class="selector"> procedure property</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - abstract class", () => {
@@ -112,7 +112,7 @@ suite('Unit tests', () => {
 		s.processKey(key("p"));
 		assert.equal(s.text, "abstract pro");
 		assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
-        assert.equal(s.renderAsHtml(), `<member class="valid" id='select11' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
+        assert.equal(s.renderAsHtml(), `<member class="ok" id='select11' tabindex="0"><selector><text>abstract pro</text><placeholder>new code</placeholder><help class="selector"> abstract procedure, abstract property,</help></selector></member>`);
 	});	
 
 	test("Selection Filtering - statements", () => {
@@ -124,7 +124,7 @@ suite('Unit tests', () => {
 		s.processKey(key("s"));
 		help = s.getCompletion();
 		assert.equal(help, " set switch");
-        assert.equal(s.renderAsHtml(), `<statement class="valid" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`);
+        assert.equal(s.renderAsHtml(), `<statement class="ok" id='select3' tabindex="0"><selector><text>s</text><placeholder>new code</placeholder><help class="selector"> set switch</help></selector></statement>`);
 	});	
 
 	test("Selection Context - in a Function", () => {

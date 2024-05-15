@@ -315,10 +315,10 @@ export abstract class AbstractField implements Selectable, Field {
         this.pushClass(this.focused, "focused");
         this.pushClass(!this.text, "empty");
         this.pushClass(this.isOptional(), "optional");
-        this._classes.push(this.overallStatus());
+        this._classes.push(OverallStatus[this.overallStatus()]);
     }
 
-    private overallStatus(): string {
+    private overallStatus(): OverallStatus {
         return helper_overallStatus(this);
     }
 

@@ -17,7 +17,7 @@ suite('Navigation', () => {
 				const frame = ff.getById("const1");
 				frame.select(true, false);
 			},
-			["const1", "valid", "selected focused valid"]);
+			["const1", "ok", "selected focused ok"]);
 
 	});
 	test('Select First Child', async () => {
@@ -30,7 +30,7 @@ suite('Navigation', () => {
 					s.select(true, false);
 				}
 			},
-			["select5", "valid empty", "selected focused valid empty"]);
+			["select5", "ok empty", "selected focused ok empty"]);
 	});
 	test('Collapse Main', async () => {
 		await assertClasses(
@@ -41,7 +41,7 @@ suite('Navigation', () => {
 					mn.collapse();
 				}
 			},
-			["main4", "valid multiline", "collapsed valid multiline"]);
+			["main4", "ok multiline", "collapsed ok multiline"]);
 	});
 	test('Tabbing through fields (& back)', () => {
 

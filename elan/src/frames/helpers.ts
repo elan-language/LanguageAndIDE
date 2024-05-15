@@ -109,18 +109,16 @@ export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus
     return result;
 }
 
-export function helper_overallStatus(loc: Frame | Field): string {
-    var result = "";
+export function helper_overallStatus(loc: Frame | Field): OverallStatus {
+    var result = OverallStatus.error;
     var parse = loc.getParseStatus();
     var compile = loc.getCompileStatus();
     if (parse === ParseStatus.invalid || compile === CompileStatus.error ) {
-        result = "invalid"; //TODO: specified as literals as we might change these 
+        result = OverallStatus.error; //TODO: specified as literals as we might change these 
     } else if (parse === ParseStatus.incomplete || compile === CompileStatus.unknownSymbol ) {
-        result = "incomplete";
-    } else if (parse === ParseStatus.valid && compile === CompileStatus.ok ) {
-        result = "valid";
-    } else if (parse === ParseStatus.empty) {
-        result = "empty";
-    }
+        result = OverallStatus.warning;
+    } else if (parse === ParseStatus.valid && compile === CompileStatus.ok) {
+        result = OverallStatus.ok;
+    } 
     return result;
 }
