@@ -1,25 +1,31 @@
 export class Overtyper {
 
     preProcessor : (s : string | undefined) => boolean = (s) => true;
-    toFilter : string = "";
+    toConsume : string = "";
+    timer?: any;
+    timeOut?: number;
 
     private activePreprocessor(k: string | undefined) {
         if (k) {
-            if (this.toFilter.length > 0 && k === this.toFilter[0]) {
-                this.toFilter = this.toFilter.slice(1);
+            if (this.toConsume.length > 0 && k === this.toConsume[0]) {
+                this.toConsume = this.toConsume.slice(1);
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => this.preProcessor = (s) => true, this.timeOut);
                 return false;
             }
-            this.toFilter = "";
+            this.toConsume = "";
             this.preProcessor = (s) => true;
+            clearTimeout(this.timer);
         }
         return true;
     }
 
     public consumeChars(toConsume: string, timeOut: number) {
         if (toConsume.length > 0) {
-            this.toFilter = toConsume;
+            this.timeOut = timeOut;
+            this.toConsume = toConsume;
             this.preProcessor = this.activePreprocessor;
-            setTimeout(() => this.preProcessor = (s) => true, timeOut);
+            this.timer = setTimeout(() => this.preProcessor = (s) => true, timeOut);
         }
     }
 }
