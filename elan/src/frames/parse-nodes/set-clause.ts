@@ -32,11 +32,6 @@ export class SetClause extends AbstractSequence {
         const codeArray = this.getElements().map(e => e.compile());
         const code = codeArray.join(" ");
 
-        // kludges
-        if ((this.expr as BinaryOperation).matchedText.trim() === "div"){
-            return `Math.floor(${code})`;
-        }
-
         return code;
     }
 

@@ -39,11 +39,6 @@ export class BinaryOperation extends AbstractAlternatives {
 
     compile(): string {
         const code = super.compile();
-
-        if (this.bestMatch instanceof Sequence) {
-            // kludge
-            return code.replace("=== !", "!==");
-        }
        
         return code;
     }
