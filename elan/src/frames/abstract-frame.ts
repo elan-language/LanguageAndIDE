@@ -1,6 +1,6 @@
 import { Parent} from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
-import { expandCollapseAll, helper_compileMsgAsHtml, helper_getCompileStatus, helper_overallStatus, isCollapsible, isFile, isFrame, isGlobal, isParent, singleIndent } from "./helpers";
+import { expandCollapseAll, helper_compileMsgAsHtml, helper_getCompileStatus, helper_worstStatusOfParseCompile, isCollapsible, isFile, isFrame, isGlobal, isParent, singleIndent } from "./helpers";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
@@ -323,7 +323,7 @@ export abstract class AbstractFrame implements Frame {
     };
 
     protected getOverallStatus(): OverallStatus {
-        return helper_overallStatus(this);
+        return helper_worstStatusOfParseCompile(this);
     }
 
     protected cls(): string {

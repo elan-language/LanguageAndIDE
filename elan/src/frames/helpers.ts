@@ -9,6 +9,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
+import { TestStatus } from "./test-status";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -88,7 +89,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
     /* To display first message only use: */
     var msg =  loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";               
     var cls = "";
-    var compile = compileStatusAsOverallStatus(loc.getCompileStatus());
+    var compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
     if (compile !== OverallStatus.ok) {
         cls = OverallStatus[compile];
     }
@@ -105,9 +106,9 @@ export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus
     return result;
 }
 
-export function helper_overallStatus(loc: Frame | Field): OverallStatus {
-    var parse = parseStatusAsOverallStatus(loc.getParseStatus());
-    var compile = compileStatusAsOverallStatus(loc.getCompileStatus());
+export function helper_worstStatusOfParseCompile(loc: Frame | Field): OverallStatus {
+    var parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
+    var compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
     return worstOf(parse, compile);
 }
 
@@ -115,7 +116,17 @@ function worstOf(a: OverallStatus, b: OverallStatus): OverallStatus {
     return a < b ? a : b;
 }
 
-export function compileStatusAsOverallStatus(cs: CompileStatus) {
+export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
+    var overall = OverallStatus.error;
+    if (ps === ParseStatus.valid) {
+        overall = OverallStatus.ok;
+    } else if (ps === ParseStatus.incomplete) {
+        overall = OverallStatus.warning;
+    }
+    return overall;
+}
+
+export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
     var overall = OverallStatus.error;
     if (cs === CompileStatus.ok) {
         overall = OverallStatus.ok;
@@ -125,11 +136,11 @@ export function compileStatusAsOverallStatus(cs: CompileStatus) {
     return overall;
 }
 
-export function parseStatusAsOverallStatus(ps: ParseStatus) {
+export function helper_testStatusAsOverallStatus(ts: TestStatus) {
     var overall = OverallStatus.error;
-    if (ps === ParseStatus.valid) {
+    if (ts === TestStatus.pass) {
         overall = OverallStatus.ok;
-    } else if (ps === ParseStatus.incomplete) {
+    } else if (ts === TestStatus.pending) {
         overall = OverallStatus.warning;
     }
     return overall;
