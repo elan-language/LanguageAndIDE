@@ -33,10 +33,10 @@ function square(x) {
 }
 
 _tests.push(["test10", (_outcomes) => {
-  _outcomes.push(system.assert(square(3), 9, "assert13"));
+  _outcomes.push(system.assert(square(3), 9, "assert13", _stdlib));
   var actual = square(4);
   var expected = 16;
-  _outcomes.push(system.assert(actual, expected, "assert22"));
+  _outcomes.push(system.assert(actual, expected, "assert22", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -79,8 +79,8 @@ function square(x) {
 }
 
 _tests.push(["test10", (_outcomes) => {
-  _outcomes.push(system.assert(square(3), 10, "assert13"));
-  _outcomes.push(system.assert(square(4), 16, "assert16"));
+  _outcomes.push(system.assert(square(3), 10, "assert13", _stdlib));
+  _outcomes.push(system.assert(square(4), 16, "assert16", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -162,32 +162,32 @@ async function main() {
 _tests.push(["test3", (_outcomes) => {
   var a = system.list([3, 2, 4, 0]);
   var b = system.list([3, 2, 4, 0]);
-  _outcomes.push(system.assert(a, b, "assert12"));
+  _outcomes.push(system.assert(a, b, "assert12", _stdlib));
 }]);
 
 _tests.push(["test15", (_outcomes) => {
   var a = {3 : "a", 2 : "b", 4 : "c"};
   var b = {3 : "a", 2 : "b", 4 : "c"};
-  _outcomes.push(system.assert(a, b, "assert24"));
+  _outcomes.push(system.assert(a, b, "assert24", _stdlib));
 }]);
 
 _tests.push(["test27", (_outcomes) => {
   var a = "Hello World";
   var b = "Hello" + " " + "World";
-  _outcomes.push(system.assert(a, b, "assert36"));
+  _outcomes.push(system.assert(a, b, "assert36", _stdlib));
 }]);
 
 _tests.push(["test39", (_outcomes) => {
   var a = 0;
   var b = 0;
-  _outcomes.push(system.assert(a, b, "assert48"));
+  _outcomes.push(system.assert(a, b, "assert48", _stdlib));
 }]);
 
 const a = "Hello";
 
 _tests.push(["test54", (_outcomes) => {
   var b = "Hello";
-  _outcomes.push(system.assert(a, b, "assert60"));
+  _outcomes.push(system.assert(a, b, "assert60", _stdlib));
 }]);
 
 class Foo {
@@ -203,13 +203,13 @@ class Foo {
 _tests.push(["test79", (_outcomes) => {
   var a = system.initialise(new Foo(3));
   var b = system.initialise(new Foo(3));
-  _outcomes.push(system.assert(a, b, "assert88"));
+  _outcomes.push(system.assert(a, b, "assert88", _stdlib));
 }]);
 
 _tests.push(["test91", (_outcomes) => {
   var a = Foo.defaultInstance();
   var b = Foo.defaultInstance();
-  _outcomes.push(system.assert(a, b, "assert100"));
+  _outcomes.push(system.assert(a, b, "assert100", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -221,10 +221,10 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test3", [
-        new AssertOutcome("pass", "3,2,4,0", "3,2,4,0", "assert12")
+        new AssertOutcome("pass", "List [3, 2, 4, 0]", "List [3, 2, 4, 0]", "assert12")
       ]],
       ["test15", [
-        new AssertOutcome("pass", "[object Object]", "[object Object]", "assert24")
+        new AssertOutcome("pass", "Dictionary [2:b, 3:a, 4:c]", "Dictionary [2:b, 3:a, 4:c]", "assert24")
       ]],
       ["test27", [
         new AssertOutcome("pass", "Hello World", "Hello World", "assert36")
@@ -236,10 +236,10 @@ return [main, _tests];}`;
         new AssertOutcome("pass", "Hello", "Hello", "assert60")
       ]],
       ["test79", [
-        new AssertOutcome("pass", "[object Object]", "[object Object]", "assert88")
+        new AssertOutcome("pass", "a Foo", "a Foo", "assert88")
       ]],
       ["test91", [
-        new AssertOutcome("pass", "[object Object]", "[object Object]", "assert100")
+        new AssertOutcome("pass", "a Foo", "a Foo", "assert100")
       ]]
     ]);
   });
@@ -284,25 +284,25 @@ async function main() {
 _tests.push(["test3", (_outcomes) => {
   var a = 1 / 3;
   var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "0.33", "assert12"));
+  _outcomes.push(system.assert(b, "0.33", "assert12", _stdlib));
 }]);
 
 _tests.push(["test15", (_outcomes) => {
   var a = 0.9999;
   var b = _stdlib.toPrecision(a, 3);
-  _outcomes.push(system.assert(b, "1.00", "assert24"));
+  _outcomes.push(system.assert(b, "1.00", "assert24", _stdlib));
 }]);
 
 _tests.push(["test27", (_outcomes) => {
   var a = 1.25;
   var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "1.3", "assert36"));
+  _outcomes.push(system.assert(b, "1.3", "assert36", _stdlib));
 }]);
 
 _tests.push(["test39", (_outcomes) => {
   var a = 4444;
   var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "4.4e+3", "assert48"));
+  _outcomes.push(system.assert(b, "4.4e+3", "assert48", _stdlib));
 }]);
 return [main, _tests];}`;
 

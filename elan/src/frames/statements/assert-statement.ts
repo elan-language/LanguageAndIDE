@@ -60,7 +60,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.compileErrors = [];
         const expected = this.expected.compile(transforms);
         const actual = this.actual.compile(transforms);
-        return `${this.indent()}_outcomes.push(system.assert(${actual}, ${expected}, "${this.htmlId}"));`;
+        return `${this.indent()}_outcomes.push(system.assert(${actual}, ${expected}, "${this.htmlId}", _stdlib));`;
     }
 
     setOutcome(outcome: AssertOutcome) {

@@ -1,11 +1,5 @@
 export class StdLib {
-    private Array = "Array";
-    private List = "List";
-    private Tuple = "Tuple";
-    private Iter = "Iter";
-    private Dictionary = "Dictionary";
-
-
+   
     asString(v: any): string {
         if (typeof v === "boolean") {
             return v ? "true" : "false";
@@ -23,19 +17,19 @@ export class StdLib {
             const type = (<any>v)._type;
 
             switch (type) {
-                case this.List:
+                case 'List':
                     if (v.length === 0) {
                         return "empty List";
                     }
                     return `List [${v.map(i => this.asString(i)).join(", ")}]`;
-                case this.Tuple:
+                case 'Tuple':
                     return `Tuple (${v.map(i => this.asString(i)).join(", ")})`;
-                case this.Array:
+                case 'Array':
                     if (v.length === 0) {
                         return "empty Array";
                     }
                     return `Array [${v.map(i => this.asString(i)).join(", ")}]`;
-                case this.Iter:
+                case 'Iter':
                     if (v.length === 0) {
                         return "empty Iter";
                     }
@@ -71,25 +65,25 @@ export class StdLib {
 
     asArray(list: Array<number>): Array<number> {
         const arr = [...list] as any;
-        arr._type = this.Array;
+        arr._type = 'Array';
         return arr;
     }
 
     asList(arr: Array<number>): Array<number> {
         const list = [...arr] as any;
-        list._type = this.List;
+        list._type = 'List';
         return list;
     }
 
     keys(dict: { [key: string]: number }): Array<string> {
         const lst = Object.getOwnPropertyNames(dict) as any;
-        lst._type = this.List;
+        lst._type = 'List';
         return lst;
     }
 
     values(dict: { [key: string]: number }): Array<number> {
         const lst =  this.keys(dict).map(k => dict[k]) as any;
-        lst._type = this.List;
+        lst._type = 'List';
         return lst;
     }
 

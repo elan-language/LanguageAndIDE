@@ -176,10 +176,10 @@ export class System {
         return true;
     }
 
-    assert(actual: any, expected: any, htmlId: string) {
+    assert(actual: any, expected: any, htmlId: string, stdlib: { asString: (a: any) => string }) {
         if (!this.equals(actual, expected)) {
-            return new AssertOutcome("fail", `${actual}`, `${expected}`, htmlId);
+            return new AssertOutcome("fail", `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
         }
-        return new AssertOutcome("pass", `${actual}`, `${expected}`, htmlId); 
+        return new AssertOutcome("pass", `${stdlib.asString(actual)}`, `${stdlib.asString(expected)}`, htmlId);
     }
 }
