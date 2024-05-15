@@ -39,7 +39,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         var options = this.optionsFilteredByContext(false).filter(o => source.isMatch(o[0]));
         if (options.length === 1) {
             var typeToAdd = options[0][0];
-            var frame = this.addFrame(typeToAdd);
+            var frame = this.addFrame(typeToAdd, "");
             frame.parseFrom(source);
         } else {
             throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
@@ -62,12 +62,14 @@ export abstract class AbstractSelector extends AbstractFrame {
         return this.optionsMatchingUserInput(this.text).map(o => o[0]).reduce((soFar, kw)=> `${soFar} ${kw}${kw.includes(" ")? ",":""}`, "");
     }
 
-    addFrame(keyword: string): Frame {
+    addFrame(keyword: string, pendingChars : string): Frame {
         var func = this.defaultOptions().filter(o => o[0]===keyword)[0][1]; 
         var parent = this.getParent();
         var newFrame: Frame = func(parent);
         parent.addChildBefore(newFrame, this);
         newFrame.selectFirstField();
+        newFrame.getFields()[0]?.consumeChars(pendingChars, 500);
+
         return newFrame;
     }
 
@@ -145,7 +147,10 @@ export abstract class AbstractSelector extends AbstractFrame {
             this.text += this.commonStartText(this.text+ key).substring(this.text.length);
         } else if (options.length === 1) {
             var typeToAdd = options[0][0];
-            this.addFrame(typeToAdd);
+
+            const pendingChars = typeToAdd.slice((this.text + key).length);
+
+            this.addFrame(typeToAdd, pendingChars);
             this.text = "";
         }
     }

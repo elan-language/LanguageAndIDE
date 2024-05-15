@@ -10,4 +10,5 @@ export interface Field extends Selectable {
     compileErrors: CompileError[];
     getCompileStatus(): CompileStatus;
     aggregateCompileErrors(): CompileError[];
+    consumeChars(toConsume : string, timeOut : number) : void;
 }
