@@ -11,6 +11,7 @@ import { CSV } from "../parse-nodes/csv";
 import { CompileError } from "../compile-error";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { Overtyper } from "../overtyper";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -32,6 +33,7 @@ export abstract class AbstractField implements Selectable, Field {
     protected completion: string = "";
     parseErrorMsg: string = "";
     protected help: string = "help TBD";
+    overtyper = new Overtyper();
 
     constructor(holder: Frame) {
         this.holder = holder;
@@ -156,29 +158,8 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
 
-    preProcessor : (s : string) => boolean = (s) => true;
-    toFilter : string = "";
-
-    private activePreprocessor(k : string) {
-        if (this.toFilter.length > 0 && k === this.toFilter[0]) {
-            this.toFilter = this.toFilter.slice(1);
-            return false;
-        }
-        this.toFilter = "";
-        this.preProcessor = (s) => true;
-        return true;
-    }
-
-    public consumeChars(toConsume: string, timeOut: number) {
-        if (toConsume.length > 0) {
-            this.toFilter = toConsume;
-            this.preProcessor = this.activePreprocessor;
-            setTimeout(() => this.preProcessor = (s) => true, timeOut);
-        }
-    }
-
     private processInput(key: string) {
-        if (this.preProcessor(key)) {
+        if (this.overtyper.preProcessor(key)) {
             this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
             var preParse = this.text.length;
             this.parseCurrentText();

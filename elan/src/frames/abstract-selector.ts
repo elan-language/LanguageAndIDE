@@ -68,7 +68,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         var newFrame: Frame = func(parent);
         parent.addChildBefore(newFrame, this);
         newFrame.selectFirstField();
-        newFrame.getFields()[0]?.consumeChars(pendingChars, 500);
+        newFrame.getFields()[0]?.overtyper.consumeChars(pendingChars, 500);
 
         return newFrame;
     }

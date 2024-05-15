@@ -3,6 +3,7 @@ import { Selectable } from "./selectable";
 import {File} from "../interfaces/file";
 import { CompileError } from "../compile-error";
 import { CompileStatus } from "../status-enums";
+import { Overtyper } from "../overtyper";
 
 export interface Field extends Selectable {
     isField: boolean;
@@ -10,5 +11,5 @@ export interface Field extends Selectable {
     compileErrors: CompileError[];
     getCompileStatus(): CompileStatus;
     aggregateCompileErrors(): CompileError[];
-    consumeChars(toConsume : string, timeOut : number) : void;
+    overtyper : Overtyper;
 }
