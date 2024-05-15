@@ -36,6 +36,7 @@ export interface File extends Parent {
     getCompileStatus(): CompileStatus
     getCompileStatusForDashboard(): string;
     getTestStatus(): TestStatus;
+    getTestStatusForDashboard(): string;
     getRunStatus(): RunStatus;
 
     //Internal use only

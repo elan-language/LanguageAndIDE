@@ -16,8 +16,6 @@ export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
     actual: AssertActualField;
     expected: ValueRefField;
-    testStatus: TestStatus;
-    failMessage: string = "";
     outcome?: AssertOutcome;
 
     constructor(parent: Parent) {
@@ -25,7 +23,6 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.actual = new AssertActualField(this);
         this.expected = new ValueRefField(this, /\r|\n/);
         this.expected.setPlaceholder("expected value");
-        this.testStatus = TestStatus.pending;
     }
 
     initialKeywords(): string {
@@ -67,6 +64,10 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.outcome = outcome;
     }
 
+    getTestStatus(): TestStatus {
+        return this.outcome? this.outcome.status : TestStatus.pending;
+    }
+
     compileOrTestMsgAsHtml(): string {
         var msg = "";
         if (this.getCompileStatus() === CompileStatus.ok) {
@@ -80,15 +81,15 @@ export class AssertStatement extends AbstractFrame implements Statement{
     testMsgAsHtml(): string {
         var cls = "";
         var msg = "";
-        if (this.testStatus === TestStatus.fail) {
-            cls = OverallStatus[OverallStatus.error];
-            msg = this.failMessage;
-        } else if (this.testStatus === TestStatus.pass) {
-            cls = OverallStatus[OverallStatus.ok];
-            msg = `pass`;
-        } else {
+        if (!this.outcome) {
             cls = OverallStatus[OverallStatus.warning];
             msg = `not run`;
+        } else if (this.outcome.status === TestStatus.fail) {
+            cls = OverallStatus[OverallStatus.error];
+            msg = `actual: ${this.outcome!.actual}`;
+        } else if (this.outcome.status === TestStatus.pass) {
+            cls = OverallStatus[OverallStatus.ok];
+            msg = `pass`;
         }
         return ` <msg class="${cls}">${msg}</msg>`;
     }

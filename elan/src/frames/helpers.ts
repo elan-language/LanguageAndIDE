@@ -106,14 +106,15 @@ export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus
     return result;
 }
 
-export function helper_worstStatusOfParseCompile(loc: Frame | Field): OverallStatus {
+export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
+    var status: OverallStatus = OverallStatus.error;
     var parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
-    var compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
-    return worstOf(parse, compile);
-}
-
-function worstOf(a: OverallStatus, b: OverallStatus): OverallStatus {
-    return a < b ? a : b;
+    if (parse !== OverallStatus.ok) {
+        status = parse;
+    } else {
+        status = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
+    }
+    return status;
 }
 
 export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {

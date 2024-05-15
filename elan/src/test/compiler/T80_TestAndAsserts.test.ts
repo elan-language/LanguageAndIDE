@@ -3,6 +3,7 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash, transforms } from "./compiler-test-helpers";
 import { AssertOutcome } from "../../system";
+import { TestStatus } from "../../frames/test-status";
 
 suite('Pass_PassingTest', () => {
 
@@ -49,8 +50,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test10", [
-        new AssertOutcome("pass", "9", "9", "assert13"),
-        new AssertOutcome("pass", "16", "16", "assert22")
+        new AssertOutcome(TestStatus.pass, "9", "9", "assert13"),
+        new AssertOutcome(TestStatus.pass, "16", "16", "assert22")
       ]]]);
   });
 
