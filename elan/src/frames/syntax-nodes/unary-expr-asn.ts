@@ -31,10 +31,10 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
         return `${this.opToJs()}${this.operand.compile()}`;
     }
 
-    get symbolType() {
+    symbolType() {
         switch (this.op) {
             case OperationSymbol.Not: return BooleanType.Instance;
-            default: return this.operand.symbolType;
+            default: return this.operand.symbolType();
         }
     }
 

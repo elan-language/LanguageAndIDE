@@ -10,6 +10,7 @@ import { inputKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { StringType } from "../../symbols/string-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Input extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;  
@@ -44,26 +45,26 @@ export class Input extends AbstractFrame implements Statement, ISymbol {
         return `${this.indent()}input ${this.varName.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}var ${this.varName.compile()} = await system.input();`;
+        return `${this.indent()}var ${this.varName.compile(transforms)} = await system.input();`;
     }
 
     get symbolId() {
         return this.varName.renderAsSource();
     }
 
-    get symbolType() {
+    symbolType(transforms: Transforms) {
         return StringType.Instance;
     }
 
     symbolScope = SymbolScope.local;
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         if (id === this.symbolId) {
             return this;
         }
 
-        return super.resolveSymbol(id, initialScope);
+        return super.resolveSymbol(id, transforms, initialScope);
     }
 } 

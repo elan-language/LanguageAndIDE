@@ -1,11 +1,11 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstIdNode } from "./ast-id-node";
 import { ExprAsn } from "./expr-asn";
 
 
-export class SetAsn extends AbstractAstNode implements AstNode {
+export class SetAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, private readonly to: ExprAsn, public readonly fieldId: string, scope: Scope) {
         super();
@@ -21,8 +21,8 @@ export class SetAsn extends AbstractAstNode implements AstNode {
         return `${this.id} = ${this.to}`;
     }
 
-    get symbolType() {
-        return this.to.symbolType;
+    symbolType() {
+        return this.to.symbolType();
     }
 
     toString() {

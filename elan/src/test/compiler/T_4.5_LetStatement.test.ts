@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotCompile, assertDoesNotParse, assertIsSymbol, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
 
 suite('T_4.5_LetStatement', () => {
 
@@ -16,7 +16,7 @@ end main`;
 
     const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -37,7 +37,7 @@ end main`;
 
     const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -58,7 +58,7 @@ end main`;
 
     const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -78,7 +78,7 @@ end main`;
 
     const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     var varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];

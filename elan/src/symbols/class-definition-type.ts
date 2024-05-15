@@ -1,5 +1,6 @@
 import { Class } from "../frames/globals/class";
 import { Scope } from "../frames/interfaces/scope";
+import { Transforms } from "../frames/syntax-nodes/transforms";
 import { ISymbol } from "./symbol";
 import { ISymbolType } from "./symbol-type";
 import { isSymbol } from "./symbolHelpers";
@@ -16,7 +17,7 @@ export class ClassDefinitionType implements ISymbolType, Scope {
         return this.scope.getChildren().filter(c => isSymbol(c)) as unknown as ISymbol[];
     }
 
-    resolveSymbol(id: string, scope: Scope): ISymbol {
+    resolveSymbol(id: string, transforms : Transforms, scope: Scope): ISymbol {
         for (var f of this.scope.getChildren()) {
             if (isSymbol(f) && f.symbolId === id) {
                 return f;

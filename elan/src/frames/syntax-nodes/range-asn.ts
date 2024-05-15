@@ -32,7 +32,7 @@ export class RangeAsn extends AbstractAstNode implements AstNode {
         return `.slice(${f})`;
     }
 
-    get symbolType() {
+    symbolType() {
         return UnknownType.Instance;
     }
 

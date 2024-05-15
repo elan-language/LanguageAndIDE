@@ -14,7 +14,7 @@ import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
 import { AssertStatement } from '../frames/statements/assert-statement';
 import { LetStatement } from '../frames/statements/let-statement';
-import { ignore_test } from './compiler/compiler-test-helpers';
+import { ignore_test, transforms } from './compiler/compiler-test-helpers';
 
 suite('File Parsing Tests', async () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
@@ -22,7 +22,7 @@ suite('File Parsing Tests', async () => {
     test('parse Frames - set statement', () => {
 		var code = "  set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new SetStatement(m);
 		setTo.parseFrom(source);
@@ -33,7 +33,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - set statement 2', () => {
 		var code = "  set tot to tot";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new SetStatement(m);
 		setTo.parseFrom(source);
@@ -43,7 +43,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - set statement 3', () => {
 		var code = "  set result to 3 + 4";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new SetStatement(m);
 		setTo.parseFrom(source);
@@ -54,7 +54,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - let statement 1', () => {
 		var code = "  let result be 3 + 4";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new LetStatement(m);
 		setTo.parseFrom(source);
@@ -65,7 +65,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - let statement 2', () => {
 		var code = "  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new LetStatement(m);
 		setTo.parseFrom(source);
@@ -77,7 +77,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - assert statement 3', () => {
 		var code = "  assert foo is 7";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var t = new TestFrame(fl);	
 		var ass = new AssertStatement(t);
 		ass.parseFrom(source);
@@ -88,7 +88,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - variable', () => {
 		var code = "  var fooBar set to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var v = new VarStatement(m);
 		v.parseFrom(source);
@@ -99,7 +99,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - print', () => {
 		var code = `  print "Hello World!"`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var p = new Print(m);
 		p.parseFrom(source);
@@ -109,7 +109,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - throw', () => {
 		var code = `  throw "Failure"`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
 		setTo.parseFrom(source);
@@ -119,7 +119,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - throw with variable', () => {
 		var code = `  throw message1`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new Throw(m);
 		setTo.parseFrom(source);
@@ -129,7 +129,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - call', () => {
 		var code = `  call foo()`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new CallStatement(m);
 		setTo.parseFrom(source);
@@ -139,7 +139,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - call with args', () => {
 		var code = `  call foo(3, a, "hello")`;
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var setTo = new CallStatement(m);
 		setTo.parseFrom(source);
@@ -149,7 +149,7 @@ suite('File Parsing Tests', async () => {
 	test('parse Frames - StatementSelector', () => {
 		var code = "set fooBar to 3.141";
         var source = new CodeSourceFromString(code + "\n");
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var ss = new StatementSelector(m);
 		ss.parseFrom(source);
@@ -161,7 +161,7 @@ suite('File Parsing Tests', async () => {
 
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -173,7 +173,7 @@ suite('File Parsing Tests', async () => {
 constant pi set to 3.142
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -188,7 +188,7 @@ constant pi set to 3.142
 constant e set to 2.718
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -202,7 +202,7 @@ main
 end main
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -218,7 +218,7 @@ main
 end main
 `;
         var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
@@ -240,7 +240,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -269,7 +269,7 @@ end enum
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -297,7 +297,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -317,7 +317,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -339,7 +339,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -357,7 +357,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -377,7 +377,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -396,7 +396,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -416,7 +416,7 @@ end main
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
 		var elan = await fl.renderAsSource();
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -432,7 +432,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
 		await await fl.parseFrom(source);
 		assert.equal(fl.parseError!.includes(`0 matches found at property value as Int`), true);
 	});
@@ -449,7 +449,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
 		await await fl.parseFrom(source);
 		assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
 	});
@@ -469,7 +469,7 @@ end class
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
 		await await fl.parseFrom(source);
 		assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
 	});
@@ -486,7 +486,7 @@ abstract class Card
 `
 		;
 		var source = new CodeSourceFromString(code);
-		const fl = new FileImpl(hash, new DefaultProfile(), true);
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
 		await await fl.parseFrom(source);
 		assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
 	});

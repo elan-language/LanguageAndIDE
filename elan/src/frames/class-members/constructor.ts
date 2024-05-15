@@ -10,6 +10,7 @@ import { ISymbol } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { constructorKeyword } from "../keywords";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
@@ -51,10 +52,10 @@ ${this.indent()}end constructor\r
 `;
     }
 
-    public compile(): string {
+    public compile(transforms : Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}constructor(${this.params.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}constructor(${this.params.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}\r
 `;
     }
@@ -72,8 +73,8 @@ ${this.indent()}}\r
         return false;
     }
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
-        const s = this.params.resolveSymbol(id, this);
-        return s === UnknownSymbol.Instance ? this.getParent().resolveSymbol(id, this) : s;
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol {
+        const s = this.params.resolveSymbol(id, transforms, this);
+        return s === UnknownSymbol.Instance ? this.getParent().resolveSymbol(id, transforms, this) : s;
     }
 }

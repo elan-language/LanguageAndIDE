@@ -13,11 +13,12 @@ import { AstNode } from "./ast-node";
 import { CompileError } from "../compile-error";
 import { ArrayType } from "../../symbols/array-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { AstIdNode } from "./ast-id-node";
 
 
-export class TypeAsn extends AbstractAstNode implements AstNode {
+export class TypeAsn extends AbstractAstNode implements AstIdNode {
 
-    constructor(public readonly type: string, public readonly genericParameters: AstNode[], public readonly fieldId: string, scope: Scope) {
+    constructor(public readonly id: string, public readonly genericParameters: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
     }
 
@@ -33,19 +34,19 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
-        if (this.type === "Dictionary") {
+        if (this.id === "Dictionary") {
             return "Object";
         }
 
-        if (this.type === "List") {
+        if (this.id === "List") {
             return "Array";
         }
 
-        return this.type;
+        return this.id;
     }
 
     renderAsDefaultObjectCode(): string {
-        switch (this.type) {
+        switch (this.id) {
             case "Int":
             case "Float": return "0";
             case "String": return '""';
@@ -55,26 +56,26 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
             case "Dictionary": return "system.defaultDictionary()";
             case "Iter": return "system.defaultIter()";
         }
-        return `${this.type}.defaultInstance()`;
+        return `${this.id}.defaultInstance()`;
     }
 
 
-    get symbolType() {
-        switch (this.type) {
+    symbolType() {
+        switch (this.id) {
             case ("Int"): return IntType.Instance;
             case ("Float"): return FloatType.Instance;
             case ("Boolean"): return BooleanType.Instance;
             case ("String"): return StringType.Instance;
-            case ("List"): return new ListType(this.genericParameters[0].symbolType!);
-            case ("Array"): return new ArrayType(this.genericParameters[0].symbolType!, this.is2d);
-            case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType!, this.genericParameters[1].symbolType!);
-            case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType!));
-            case ("Iter"): return new IterType(this.genericParameters[0].symbolType!);
+            case ("List"): return new ListType(this.genericParameters[0].symbolType());
+            case ("Array"): return new ArrayType(this.genericParameters[0].symbolType(), this.is2d);
+            case ("Dictionary"): return new DictionaryType(this.genericParameters[0].symbolType(), this.genericParameters[1].symbolType());
+            case ("Tuple"): return new TupleType(this.genericParameters.map(p => p.symbolType()));
+            case ("Iter"): return new IterType(this.genericParameters[0].symbolType());
             default: {
                 if (this.genericParameters.length === 0) {
-                    return new ClassType(this.type);
+                    return new ClassType(this.id);
                 }
-                return new GenericClassType(this.type, this.genericParameters[0].symbolType!);
+                return new GenericClassType(this.id, this.genericParameters[0].symbolType());
             }
         }
     }
@@ -82,6 +83,6 @@ export class TypeAsn extends AbstractAstNode implements AstNode {
     toString() {
         const pp = this.genericParameters.map(p => p.toString()).join(", ");
         const gp = pp ? `<${pp}>` : "";
-        return `Type ${this.type}${gp}`;
+        return `Type ${this.id}${gp}`;
     }
 }

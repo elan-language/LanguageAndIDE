@@ -10,6 +10,7 @@ import { CodeSource } from "./code-source";
 import { ISymbol } from "../symbols/symbol";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
+import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {  
     isFrame = true;
@@ -42,11 +43,12 @@ export abstract class AbstractFrame implements Frame {
     getHtmlId(): string {
         return this.htmlId;
     }
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
-        return this.getParent().resolveSymbol(id, this);
+    
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol {
+        return this.getParent().resolveSymbol(id, transforms, this);
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         throw new Error("Method not implemented.");
     }
 

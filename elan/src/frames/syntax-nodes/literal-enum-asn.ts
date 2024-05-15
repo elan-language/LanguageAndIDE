@@ -19,7 +19,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
         return `${this.type.name}.${this.value}`;
     }
 
-    get symbolType() {
+    symbolType() {
         return this.type;
     }
 

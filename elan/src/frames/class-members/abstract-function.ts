@@ -12,6 +12,7 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractFunctionKeywords, abstractKeyword, functionKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
@@ -55,12 +56,12 @@ export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
 `;
     }
 
-    public override compile(): string {
+    public override compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const name = this.name.compile();
+        const name = this.name.compile(transforms);
         if (name !== "asString") {
-            return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
-${this.indent()}${this.indent()}return ${this.returnType.compile()};\r
+            return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
 ${this.indent()}}\r
 `;
         }
@@ -80,9 +81,9 @@ ${this.indent()}}\r
         return this.name.text;
     }
 
-    get symbolType() {
-        const pt = this.params.symbolTypes;
-        const rt = this.returnType.symbolType!;
+    symbolType(transforms: Transforms) {
+        const pt = this.params.symbolTypes(transforms);
+        const rt = this.returnType.symbolType(transforms);
         return new FunctionType(pt, rt, false);
     }
 

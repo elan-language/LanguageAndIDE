@@ -5,6 +5,7 @@ import { CodeSource } from "../code-source";import { FrameWithStatements } from 
 import { whileKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class While extends FrameWithStatements { 
     isStatement = true;
@@ -38,12 +39,12 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
+        mustBeOfType(this.condition.getOrTransformAstNode(transforms), BooleanType.Instance, this.compileErrors, this.htmlId);
 
-        return `${this.indent()}while (${this.condition.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}while (${this.condition.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
     }
 

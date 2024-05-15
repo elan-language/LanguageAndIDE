@@ -10,6 +10,7 @@ import { eachKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -48,19 +49,19 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
 
-        const id = this.variable.getOrTransformAstNode?.compile();
-        const symbol = this.getParent().resolveSymbol(id!, this);
+        const id = this.variable.getOrTransformAstNode(transforms)?.compile();
+        const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
         mustNotBeReassigned(symbol, this.compileErrors, this.variable.getHtmlId());
 
-        const iterType = this.iter.getOrTransformAstNode?.symbolType;
+        const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
         mustBeIterable(iterType!, this.compileErrors, this.htmlId);
 
-        return `${this.indent()}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
-${this.renderChildrenAsObjectCode()}\r
+        return `${this.indent()}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
+${this.compileChildren(transforms)}\r
 ${this.indent()}}`;
     }
 
@@ -74,14 +75,14 @@ ${this.indent()}}`;
         return this.parseStandardEnding(source, "end each");
     }
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ISymbol {
         const v = this.variable.text;
         
         if (id === v) {
-            const st = (this.iter.symbolType as any).ofType; // todo fix type
+            const st = (this.iter.symbolType(transforms) as any).ofType; // todo fix type
             return {
                 symbolId: id,
-                symbolType: st,
+                symbolType: () => st,
                 symbolScope: SymbolScope.local
             };
         }
@@ -90,16 +91,16 @@ ${this.indent()}}`;
 
         if (id === iter) {
             // intercept iter resolve in order to make counter so it's immutable
-            const symbol = super.resolveSymbol(id, this);
+            const symbol = super.resolveSymbol(id, transforms, this);
             return {
                 symbolId: id,
-                symbolType: symbol.symbolType,
+                symbolType: (t) => symbol.symbolType(t),
                 symbolScope: SymbolScope.counter
             };
         }
 
 
 
-        return super.resolveSymbol(id, this);
+        return super.resolveSymbol(id, transforms, this);
     }
 } 

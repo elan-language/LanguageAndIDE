@@ -8,6 +8,7 @@ import { singleIndent } from "../helpers";
 import { caseKeyword } from "../keywords";
 import { ISymbol } from "../../symbols/symbol";
 import { mustBeCompatibleNode, mustBeCompatibleType } from "../compile-rules";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -40,16 +41,16 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
 
-        const switchType = (this.getParent() as unknown as ISymbol).symbolType;
-        const caseType = this.value.getOrTransformAstNode?.symbolType;
+        const switchType = (this.getParent() as unknown as ISymbol).symbolType(transforms);
+        const caseType = this.value.getOrTransformAstNode(transforms)?.symbolType();
 
         mustBeCompatibleType(switchType, caseType!, this.compileErrors, this.htmlId);
 
-        return `${this.indent()}case ${this.value.compile()}:\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}case ${this.value.compile(transforms)}:\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}${singleIndent()}break;`;
     }
     

@@ -17,7 +17,7 @@ export class LiteralStringAsn extends AbstractAstNode implements AstNode {
         return `${this.value}`;
     }
 
-    get symbolType() {
+    symbolType() {
         return StringType.Instance;
     }
 

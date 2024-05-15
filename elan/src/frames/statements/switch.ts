@@ -5,6 +5,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent} from "../interfaces/parent";
 import { switchKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 import { Default } from "./default";
 
 export class Switch extends FrameWithStatements implements ISymbol { 
@@ -23,8 +24,8 @@ export class Switch extends FrameWithStatements implements ISymbol {
         return "_";
     }
 
-    get symbolType() {
-        return this.expr.symbolType;
+    symbolType(transforms : Transforms) {
+        return this.expr.symbolType(transforms);
     }
 
     symbolScope = SymbolScope.local;
@@ -56,10 +57,10 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end switch`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}switch (${this.expr.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}switch (${this.expr.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
     }
     

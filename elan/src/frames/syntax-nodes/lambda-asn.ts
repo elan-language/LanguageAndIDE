@@ -22,8 +22,8 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
         throw new Error("Method not implemented.");
     }
 
-    get symbolType() {
-        return this.body.symbolType;
+    symbolType() {
+        return this.body.symbolType();
     }
 
     toString() {

@@ -3,15 +3,14 @@ import { CompileStatus, OverallStatus, ParseStatus } from "../status-enums";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
-import {CodeSource } from "../code-source";
-import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_overallStatus, isCollapsible} from "../helpers";
+import { CodeSource } from "../code-source";
+import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_overallStatus, isCollapsible } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../syntax-nodes/ast-node";
-import { transform, transformMany } from "../syntax-nodes/ast-visitor";
 import { CSV } from "../parse-nodes/csv";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { CompileError } from "../compile-error";
 import { UnknownType } from "../../symbols/unknown-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class AbstractField implements Selectable, Field {
     public isField: boolean = true;
@@ -44,31 +43,31 @@ export abstract class AbstractField implements Selectable, Field {
     getHtmlId(): string {
         return this.htmlId;
     }
-    abstract initialiseRoot(): ParseNode ;
+    abstract initialiseRoot(): ParseNode;
     abstract readToDelimeter: (source: CodeSource) => string;
 
-    alertHolderToUpdate():void {
+    alertHolderToUpdate(): void {
         this.getHolder().fieldUpdated(this);
     }
-    
-    parseCurrentText() : void {    
+
+    parseCurrentText(): void {
         var root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(this.text, root);
     }
 
     parseFrom(source: CodeSource): void {
-        var text = this.readToDelimeter(source); 
+        var text = this.readToDelimeter(source);
         var root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(text, root);
-        if (this.parseStatus !== ParseStatus.valid) { 
+        if (this.parseStatus !== ParseStatus.valid) {
             throw new Error(`Parse error at ${source.getRemainingCode()}`);
         }
     }
 
-     parseCompleteTextUsingNode(text: string, root: ParseNode): void {
+    parseCompleteTextUsingNode(text: string, root: ParseNode): void {
         this.parseErrorMsg = "";
         if (text.length === 0) {
-            this.setParseStatus(this.isOptional()? ParseStatus.valid : ParseStatus.incomplete);
+            this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
         } else {
             root.parseText(text.trimStart());
             if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
@@ -85,20 +84,20 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     getCompletion(): string {
-        return this.rootNode? this.rootNode.getCompletionAsHtml() : "";
+        return this.rootNode ? this.rootNode.getCompletionAsHtml() : "";
     }
 
-    getPlainTextCompletion() : string {
+    getPlainTextCompletion(): string {
         var comps = this.getCompletion();
         var i = comps.indexOf("<pr>");
-        return i === -1 ? comps : comps.substring(0,i);
+        return i === -1 ? comps : comps.substring(0, i);
     }
 
-    setOptional(optional: boolean) : void {
+    setOptional(optional: boolean): void {
         this._optional = optional;
-        if (this.text ==='' && optional ) {
+        if (this.text === '' && optional) {
             this.parseStatus = ParseStatus.valid;
-        } else  if (this.text ==='' && !optional ) {
+        } else if (this.text === '' && !optional) {
             this.parseStatus === ParseStatus.incomplete;
         }
     }
@@ -114,20 +113,20 @@ export abstract class AbstractField implements Selectable, Field {
         var key = e.key;
         var textLen = this.text.length;
         switch (key) {
-            case 'Escape': {this.holder.select(true, false); break;}
-            case "Home": {this.cursorPos = 0; break; } 
-            case "End": {this.cursorPos = textLen; break;} 
-            case "Tab": {this.tab(e.modKey.shift); break; } 
-            case "Enter": {this.enter(e.modKey.shift); break;} 
-            case "ArrowLeft": {if (this.cursorPos > 0) { this.cursorPos --; } break; }  
-            case "ArrowRight": {this.cursorRight(); break; } 
-            case "ArrowUp": {this.getHolder().getPreviousFrameInTabOrder().select(true, false); break;} 
-            case "ArrowDown": {this.getHolder().getNextFrameInTabOrder().select(true, false); break; } 
+            case 'Escape': { this.holder.select(true, false); break; }
+            case "Home": { this.cursorPos = 0; break; }
+            case "End": { this.cursorPos = textLen; break; }
+            case "Tab": { this.tab(e.modKey.shift); break; }
+            case "Enter": { this.enter(e.modKey.shift); break; }
+            case "ArrowLeft": { if (this.cursorPos > 0) { this.cursorPos--; } break; }
+            case "ArrowRight": { this.cursorRight(); break; }
+            case "ArrowUp": { this.getHolder().getPreviousFrameInTabOrder().select(true, false); break; }
+            case "ArrowDown": { this.getHolder().getNextFrameInTabOrder().select(true, false); break; }
             case "Backspace": {
                 if (this.cursorPos > 0) {
-                    var reduced = this.text.slice(0,this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                    var reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
                     this.text = reduced;
-                    this.cursorPos --;
+                    this.cursorPos--;
                     var cursorBeforeParse = this.cursorPos;
                     this.parseCurrentText();
                     var afterParse = this.text.length;
@@ -137,21 +136,21 @@ export abstract class AbstractField implements Selectable, Field {
                     }
                 }
                 break;
-            } 
+            }
             case "Delete": {
                 if (this.cursorPos < textLen) {
-                    this.text = this.text.slice(0,this.cursorPos) + this.text.slice(this.cursorPos+1);
+                    this.text = this.text.slice(0, this.cursorPos) + this.text.slice(this.cursorPos + 1);
                     this.parseCurrentText();
                 }
                 break;
-            } 
+            }
             default: {
-                if(key === "o" && e.modKey.control && isCollapsible(this.holder)) {
-                    this.holder.expandCollapse(); 
-                } else if ( key === "O" && e.modKey.control) {
-                        this.holder.expandCollapseAll();
+                if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
+                    this.holder.expandCollapse();
+                } else if (key === "O" && e.modKey.control) {
+                    this.holder.expandCollapseAll();
                 } else if (key?.length === 1) {
-                    this.text = this.text.slice(0,this.cursorPos) + key + this.text.slice(this.cursorPos);
+                    this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
                     var preParse = this.text.length;
                     this.parseCurrentText();
                     var afterParse = this.text.length;
@@ -163,8 +162,8 @@ export abstract class AbstractField implements Selectable, Field {
 
     private cursorRight() {
         var textLen = this.text.length;
-        if (this.cursorPos < textLen) { 
-            this.cursorPos ++; 
+        if (this.cursorPos < textLen) {
+            this.cursorPos++;
         } else {
             var completions = this.getPlainTextCompletion();
             if (completions.length > 0) {
@@ -175,7 +174,7 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
 
-    private tab(back: boolean) {  
+    private tab(back: boolean) {
         if (back) {
             this.holder.selectFieldBefore(this);
         } else {
@@ -184,11 +183,11 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     private enter(before: boolean) {
-        var peerFields =this.holder.getFields();
+        var peerFields = this.holder.getFields();
         var last = peerFields.length - 1;
         var thisField = peerFields.indexOf(this);
         if (before && thisField === 0) {
-           this.holder.insertPeerSelector(before);
+            this.holder.insertPeerSelector(before);
         } else if (!before && thisField === last) {
             this.holder.insertSelectorAfterLastField();
         } else {
@@ -199,7 +198,7 @@ export abstract class AbstractField implements Selectable, Field {
     isFocused(): boolean {
         return this.focused;
     }
-    getHolder(): Frame  {
+    getHolder(): Frame {
         return this.holder;
     }
     getIdPrefix(): string {
@@ -228,18 +227,18 @@ export abstract class AbstractField implements Selectable, Field {
         }
         return this.parseStatus!;
     }
-    getCompileStatus() : CompileStatus {
+    getCompileStatus(): CompileStatus {
         this.compileErrors = this.aggregateCompileErrors();
         return helper_getCompileStatus(this.compileErrors);
     }
-    select(withFocus?: boolean, multiSelect?: boolean, selection? : number): void {
+    select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void {
         this.deselectAll();
         this.selected = true;
         this.focus();
         this.cursorPos = selection ?? this.text.length;
     }
 
-    isSelected() : boolean {
+    isSelected(): boolean {
         return this.selected === true;
     }
 
@@ -253,10 +252,10 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     public textAsHtml(): string {
-        var html ="";
+        var html = "";
         if (this.selected) {
             html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
-        } else { 
+        } else {
             if (this.rootNode && this.parseStatus === ParseStatus.valid) {
                 html = this.rootNode.renderAsHtml();
             } else {
@@ -267,7 +266,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     public charCount(): number {
-        return this.text ?  (this.text.length > 1 ? this.text.length-1 : 1): 1;
+        return this.text ? (this.text.length > 1 ? this.text.length - 1 : 1) : 1;
     }
 
     public fieldWidth(): string {
@@ -279,7 +278,7 @@ export abstract class AbstractField implements Selectable, Field {
             .replace(/"/g, '&quot;');
     }
 
-    public textAsSource() : string {
+    public textAsSource(): string {
         return this.text;
     }
 
@@ -308,7 +307,7 @@ export abstract class AbstractField implements Selectable, Field {
     };
 
     protected getMessage(): string {
-        return this.parseErrorMsg !== "" ? 
+        return this.parseErrorMsg !== "" ?
             `<msg class="${OverallStatus[OverallStatus.error]}"> ${this.parseErrorMsg}</msg>`
             : helper_compileMsgAsHtml(this);
     }
@@ -329,24 +328,23 @@ export abstract class AbstractField implements Selectable, Field {
         this.text = text;
     }
 
-    get getOrTransformAstNode() {
+    getOrTransformAstNode(transforms: Transforms) {
         if (!this.astNode) {
             if (this.rootNode instanceof CSV) {
                 const scope = this.getHolder();
-                const vv = transformMany(this.rootNode as CSV, this.htmlId, scope);
-                this.astNode = new CsvAsn(vv, this.htmlId, scope);
+                this.astNode = transforms.transformMany(this.rootNode as CSV, this.htmlId, scope);
             }
             else {
-                this.astNode = transform(this.rootNode, this.htmlId, this.getHolder());
+                this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
             }
         }
         return this.astNode;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
         if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-            return this.getOrTransformAstNode?.compile() ?? "";
+            return this.getOrTransformAstNode(transforms)?.compile() ?? "";
         }
 
         return "";
@@ -357,10 +355,11 @@ export abstract class AbstractField implements Selectable, Field {
         const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
         return this.compileErrors.concat(cc);
     }
-    get symbolType() {
-        const astNode = this.getOrTransformAstNode;
+
+    symbolType(transforms: Transforms) {
+        const astNode = this.getOrTransformAstNode(transforms);
         if (astNode) {
-            return astNode.symbolType;
+            return astNode.symbolType();
         }
         return UnknownType.Instance;
     }

@@ -21,8 +21,8 @@ export class WithAsn extends AbstractAstNode implements AstNode {
         throw new Error("Method not implemented.");
     }
 
-    get symbolType() {
-        return this.obj.symbolType;
+    symbolType() {
+        return this.obj.symbolType();
     }
 
     toString() {

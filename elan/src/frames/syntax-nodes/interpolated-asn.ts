@@ -20,8 +20,8 @@ export class InterpolatedAsn extends AbstractAstNode implements AstNode {
         return `\${_stdlib.asString(${this.body.compile()})}`;
     }
 
-    get symbolType() {
-        return this.body.symbolType;
+    symbolType() {
+        return this.body.symbolType();
     }
 
     toString() {

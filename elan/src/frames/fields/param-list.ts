@@ -6,8 +6,9 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
-import { ParamDefAsn } from "../syntax-nodes/param-def-asn";
+import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { AstIdNode } from "../syntax-nodes/ast-id-node";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class ParamList extends AbstractField {
@@ -38,27 +39,26 @@ export class ParamList extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) =
         (source: CodeSource) => source.readToNonMatchingCloseBracket();
 
-    get symbolTypes() : ISymbolType[] {
-        const ast = this.getOrTransformAstNode as CsvAsn;
-        return ast ? ast.items.map(i => i.symbolType!) : [];
+    symbolTypes(transforms: Transforms): ISymbolType[] {
+        const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+        return ast ? ast.items.map(i => i.symbolType()) : [];
+
     }
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
-
-        const ast = this.getOrTransformAstNode as CsvAsn;
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+        const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
         if (ast) {
-            for (const n of ast.items as ParamDefAsn[]) {
+            for (const n of ast.items as AstIdNode[]) {
                 if (n.id === id) {
                     return {
                         symbolId: id,
-                        symbolType: n.symbolType,
+                        symbolType: () => n.symbolType(),
                         symbolScope: SymbolScope.parameter
                     };
                 }
             }
         }
-
         return UnknownSymbol.Instance;
     }
 }

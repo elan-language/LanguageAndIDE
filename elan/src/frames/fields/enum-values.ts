@@ -1,10 +1,10 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-
 import { CSV } from "../parse-nodes/csv";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
+import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class EnumValues extends AbstractField {
@@ -26,9 +26,9 @@ export class EnumValues extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string)  =
         (source: CodeSource) => source.readToEndOfLine();
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const ast = this.getOrTransformAstNode as CsvAsn;
+        const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
         if (ast) {
             return ast.items.map(n =>  `${n.compile()} : "${n.compile()}"`).join(", ");

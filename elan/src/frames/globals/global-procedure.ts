@@ -2,6 +2,7 @@ import { Parent } from "../interfaces/parent";
 import { ProcedureFrame } from "./procedure-frame";
 import {GlobalFrame as GlobalFrame} from "../interfaces/global-frame";
 import { SymbolScope } from "../../symbols/symbol";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
     isGlobal = true;
@@ -21,10 +22,10 @@ end procedure\r
 `;
     }
 
-    public compile(): string {
+    public compile(transforms : Transforms): string {
         this.compileErrors = [];
-        return `function ${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 }\r
 `;
     }

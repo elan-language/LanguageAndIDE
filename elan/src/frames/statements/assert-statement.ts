@@ -6,6 +6,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { assertKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -47,10 +48,10 @@ export class AssertStatement extends AbstractFrame implements Statement{
         return `${this.indent()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const expected = this.expected.compile();
-        const actual = this.actual.compile();
+        const expected = this.expected.compile(transforms);
+        const actual = this.actual.compile(transforms);
         return `${this.indent()}system.assert(${actual}, ${expected});`;
     }
 } 

@@ -8,6 +8,7 @@ import { mustBeOfType, mustHaveLastSingleElse } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
 import { ifKeyword } from "../keywords";
 import { Else } from "./else";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class IfStatement extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -43,16 +44,16 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
+        mustBeOfType(this.condition.getOrTransformAstNode(transforms), BooleanType.Instance, this.compileErrors, this.htmlId);
         const elses = this.getChildren().filter(c => c instanceof Else) as Else[];
         if (elses.length > 0) {
             mustHaveLastSingleElse(elses, this.compileErrors, this.htmlId);
         }        
 
-        return `${this.indent()}if (${this.condition.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}if (${this.condition.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
     }
 

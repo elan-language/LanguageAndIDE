@@ -18,7 +18,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
         throw new Error("Method not implemented.");
     }
 
-    get symbolType() {
+    symbolType() {
         return { name: "" };
     }
 

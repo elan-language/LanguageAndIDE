@@ -5,6 +5,7 @@ import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { CompileError } from "../compile-error";
 import { File} from "./file";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export interface Frame extends Selectable, Scope {
     isFrame: boolean;
@@ -15,7 +16,7 @@ export interface Frame extends Selectable, Scope {
 
     renderAsHtml(): string;
     renderAsSource(): string;
-    compile(): string;
+    compile(transforms : Transforms): string;
 
     indent(): string;
 

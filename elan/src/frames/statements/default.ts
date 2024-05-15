@@ -5,6 +5,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
 import { defaultKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Default extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -34,10 +35,11 @@ ${this.renderChildrenAsHtml()}
         return `${this.indent()}default\r
 ${this.renderChildrenAsSource()}`;
     }
-    compile(): string {
+
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
         return `${this.indent()}default:\r
-${this.renderStatementsAsObjectCode()}\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}${singleIndent()}break;`;
     }
     

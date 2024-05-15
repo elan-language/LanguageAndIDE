@@ -3,7 +3,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
-import { TypeAsn } from "../syntax-nodes/type-asn";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField  {
@@ -24,19 +24,20 @@ export class TypeField extends AbstractField  {
     }
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine(); 
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const code = super.compile();
-        if (this.astNode instanceof TypeAsn) {
-            return this.astNode.renderAsDefaultObjectCode();
+        const code = super.compile(transforms);
+        // todo kludge fix
+        if ("renderAsDefaultObjectCode" in (this.astNode as any)) {
+            return (this.astNode as any).renderAsDefaultObjectCode();
         }
         return code;
     }
 
-    get symbolType() {
-        const astNode = this.getOrTransformAstNode;
+    symbolType(transforms: Transforms) {
+        const astNode = this.getOrTransformAstNode(transforms);
         if (astNode) {
-            return astNode.symbolType;
+            return astNode.symbolType();
         }
         return UnknownType.Instance;
     }

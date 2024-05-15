@@ -10,6 +10,7 @@ import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { mustBeOfSymbolType } from "../compile-rules";
 import { IntType } from "../../symbols/int-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class For extends FrameWithStatements implements Statement  {
     isStatement: boolean = true;
@@ -53,16 +54,16 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        const v = this.variable.compile();
-        const f = this.from.compile();
-        const t = this.to.compile();
-        var s = this.step.compile();
+        const v = this.variable.compile(transforms);
+        const f = this.from.compile(transforms);
+        const t = this.to.compile(transforms);
+        var s = this.step.compile(transforms);
 
-        mustBeOfSymbolType(this.from.symbolType, IntType.Instance, this.compileErrors, this.htmlId );
-        mustBeOfSymbolType(this.to.symbolType, IntType.Instance, this.compileErrors, this.htmlId );
-        mustBeOfSymbolType(this.step.symbolType, IntType.Instance, this.compileErrors, this.htmlId );
+        mustBeOfSymbolType(this.from.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
+        mustBeOfSymbolType(this.to.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
+        mustBeOfSymbolType(this.step.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
 
         var compare = "<=";
         var incDec = "+";
@@ -74,7 +75,7 @@ ${this.indent()}end for`;
         }
 
         return `${this.indent()}for (var ${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
-${this.renderStatementsAsObjectCode()}\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
     }
 
@@ -92,18 +93,18 @@ ${this.indent()}}`;
         return this.parseStandardEnding(source, "end for");
     }
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms,initialScope : Frame): ISymbol {
         const v = this.variable.text;
         
         if (id === v) {
-            const st = this.from.symbolType;
+            const st = this.from.symbolType(transforms);
             return {
                 symbolId: id,
-                symbolType: st,
+                symbolType: () => st,
                 symbolScope: SymbolScope.counter
             };
         }
 
-        return super.resolveSymbol(id, this);
+        return super.resolveSymbol(id, transforms, this);
     }
 } 

@@ -25,8 +25,8 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
         return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
     }
 
-    get symbolType() {
-        return this.expr1.symbolType;
+    symbolType() {
+        return this.expr1.symbolType();
     }
 
     toString() {

@@ -3,6 +3,7 @@ import { CompileError } from "./compile-error";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CompileStatus, ParseStatus } from "./status-enums";
+import { Transforms } from "./syntax-nodes/transforms";
 
 
 export function parentHelper_worstParseStatusOfChildren(parent: Parent): ParseStatus {
@@ -88,12 +89,12 @@ export function parentHelper_renderChildrenAsSource(parent: Parent) : string {
     return result;
 }
 
-export function parentHelper_renderChildrenAsObjectCode(parent: Parent) : string {
+export function parentHelper_compileChildren(parent: Parent, transforms : Transforms) : string {
     var result = "";
     if (parent.getChildren().length > 0 ) {
         const ss: Array<string> = [];
         for (var frame of parent.getChildren().filter(s => !('isSelector' in s))) {
-            ss.push(frame.compile());
+            ss.push(frame.compile(transforms));
         }
         result = ss.join("\r\n");
     }

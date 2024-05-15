@@ -11,6 +11,7 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractKeyword, abstractProcedureKeywords, procedureKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
@@ -51,9 +52,9 @@ export class AbstractProcedure extends AbstractFrame implements Member, ISymbol 
 `;
     }
 
-    public override compile(): string {
+    public override compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
+        return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.indent()}}\r
 `;
     }
@@ -70,8 +71,8 @@ ${this.indent()}}\r
         return this.name.text;
     }
 
-    get symbolType() {
-        const pt = this.params.symbolTypes;
+    symbolType(transforms: Transforms) {
+        const pt = this.params.symbolTypes(transforms);
         return new ProcedureType(pt);
     }
 

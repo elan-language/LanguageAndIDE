@@ -12,6 +12,7 @@ import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ISymbol, Scope {
     public name: IdentifierField;
@@ -31,8 +32,8 @@ export abstract class ProcedureFrame extends FrameWithStatements implements ISym
         return this.name.text;
     }
 
-    get symbolType() {
-        const pt = this.params.symbolTypes;
+    symbolType(transforms : Transforms) {
+        const pt = this.params.symbolTypes(transforms);
         return new ProcedureType(pt);
     }
 
@@ -62,12 +63,13 @@ ${this.renderChildrenAsHtml()}
         return this.parseStandardEnding(source, "end procedure");
     }
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms,
+         initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }
-        const s = this.params.resolveSymbol(id, initialScope);
+        const s = this.params.resolveSymbol(id, transforms, initialScope);
 
-        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, initialScope) : s;
+        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, transforms, initialScope) : s;
     }
 }

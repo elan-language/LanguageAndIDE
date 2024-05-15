@@ -19,8 +19,8 @@ export class BracketedAsn extends AbstractAstNode implements AstNode {
         return `(${this.body.compile()})`;
     }
 
-    get symbolType() {
-        return this.body.symbolType;
+    symbolType() {
+        return this.body.symbolType();
     }
 
     toString() {

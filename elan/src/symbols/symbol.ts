@@ -1,3 +1,4 @@
+import { Transforms } from "../frames/syntax-nodes/transforms";
 import { ISymbolType } from "./symbol-type";
 
 export enum SymbolScope {
@@ -14,6 +15,6 @@ export enum SymbolScope {
 
 export interface ISymbol {
     symbolId: string;
-    symbolType: ISymbolType;
+    symbolType(transforms : Transforms): ISymbolType;
     symbolScope? : SymbolScope;
 }

@@ -7,6 +7,7 @@ import { Profile } from "./profile";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 import { File} from "./file";
+import { Transforms } from "../syntax-nodes/transforms";
 
 
 export interface Parent {
@@ -45,5 +46,5 @@ export interface Parent {
 
     getFactory(): StatementFactory;
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol;
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol;
 }

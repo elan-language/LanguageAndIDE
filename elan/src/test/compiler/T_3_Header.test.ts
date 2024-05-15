@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { hash } from "../../util";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test } from "./compiler-test-helpers";
+import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, transforms } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
 suite('T_3_Header', () => {
@@ -19,7 +19,7 @@ end main`;
 }
 return [main, _tests];}`;
 
-        const fileImpl = new FileImpl(hash, new DefaultProfile());
+        const fileImpl = new FileImpl(hash, new DefaultProfile(), transforms());
         await fileImpl.parseFrom(new CodeSourceFromString(code));
 
         assertParses(fileImpl);

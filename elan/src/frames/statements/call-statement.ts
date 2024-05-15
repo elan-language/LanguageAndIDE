@@ -7,17 +7,14 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
-import { callKeyword, globalKeyword, libraryKeyword } from "../keywords";
-import { ClassType } from "../../symbols/class-type";
+import { callKeyword } from "../keywords";
 import { Scope } from "../interfaces/scope";
-import { SymbolScope } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { FileImpl } from "../file-impl";
-import { FixedIdAsn } from "../syntax-nodes/fixed-id-asn";
-import { VarAsn } from "../syntax-nodes/var-asn";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
-import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
-import { scopePrefix, updateScopeAndQualifier } from "../syntax-nodes/ast-helpers";
+import { AstIdNode } from "../syntax-nodes/ast-id-node";
+import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { Transforms } from "../syntax-nodes/transforms";
+import { scopePrefix, updateScopeAndQualifier } from "../../symbols/symbolHelpers";
 
 export class CallStatement extends AbstractFrame implements Statement {
     isStatement = true;
@@ -67,27 +64,29 @@ export class CallStatement extends AbstractFrame implements Statement {
         return this.getGlobalScope(start.getParent());
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
 
-        const varAsn = this.proc.getOrTransformAstNode as VarAsn;
-        const id = varAsn.id;
+        const astNode = this.proc.getOrTransformAstNode(transforms) as AstIdNode;
+        const id = astNode.id;
 
-        var [qualifier, currentScope] = updateScopeAndQualifier(varAsn.qualifier as QualifierAsn | undefined, this);
+        var [qualifier, currentScope] = updateScopeAndQualifier((astNode as any).qualifier, transforms, this);
 
-        const procSymbol = currentScope.resolveSymbol(id, this);
+        const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
         mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
-        mustBeProcedure(procSymbol.symbolType, this.compileErrors, this.htmlId);
+        mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
-        if (procSymbol.symbolType instanceof ProcedureType) {
-            const argList = this.args.getOrTransformAstNode as CsvAsn;
+        const ps = procSymbol.symbolType(transforms);
+
+        if (ps instanceof ProcedureType) {
+            const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
             const params = argList.items;
-            mustMatchParameters(params!, procSymbol.symbolType.parametersTypes, this.compileErrors, this.htmlId);
+            mustMatchParameters(params!, ps.parametersTypes, this.compileErrors, this.htmlId);
         }
 
         const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
 
-        return `${this.indent()}${q}${id}(${this.args.compile()});`;
+        return `${this.indent()}${q}${id}(${this.args.compile(transforms)});`;
     }
 } 

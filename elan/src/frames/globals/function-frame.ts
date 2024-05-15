@@ -15,6 +15,7 @@ import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../../symbols/function-type";
 import { Scope } from "../interfaces/scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     public name: IdentifierField;
@@ -38,9 +39,9 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
         return this.name.text;
     }
 
-    get symbolType() {
-        const pt = this.params.symbolTypes;
-        const rt = this.returnType.symbolType!;
+    symbolType(transforms : Transforms) {
+        const pt = this.params.symbolTypes(transforms);
+        const rt = this.returnType.symbolType(transforms);
         return new FunctionType(pt, rt, false);
     }
 
@@ -93,13 +94,13 @@ ${this.renderChildrenAsHtml()}
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
     
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }
         
-        const s = this.params.resolveSymbol(id, initialScope);
+        const s = this.params.resolveSymbol(id, transforms, initialScope);
 
-        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, initialScope) : s;
+        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, transforms, initialScope) : s;
     }
 }

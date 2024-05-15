@@ -14,7 +14,7 @@ import { AbstractProcedure as AbstractProcedure } from "../class-members/abstrac
 import { CommentStatement } from "../statements/comment-statement";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { AbstractSelector } from "../abstract-selector";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "../parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_compileChildren, parentHelper_renderChildrenAsSource, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
 import { StatementFactory } from "../interfaces/statement-factory";
@@ -26,12 +26,14 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
-import { TypeAsn } from "../syntax-nodes/type-asn";
 import { ClassDefinitionType } from "../../symbols/class-definition-type";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { CompileError } from "../compile-error";
+import { Transforms } from "../syntax-nodes/transforms";
+import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { AstNode } from "../syntax-nodes/ast-node";
+import { AstIdNode } from "../syntax-nodes/ast-id-node";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;
@@ -67,7 +69,7 @@ export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol
     get symbolId() { 
         return this.name.text; 
     }
-    get symbolType() {
+    symbolType(transforms : Transforms) {
         return new ClassDefinitionType(this.symbolId, this.isAbstract(), this);
     }
     symbolScope = SymbolScope.program;
@@ -212,23 +214,23 @@ end class\r\n`;
     }
 
 
-    public compile(): string {
+    public compile(transforms : Transforms): string {
         this.compileErrors = [];
 
         if (this.doesInherit()) {
-            const superClasses = this.superClasses.getOrTransformAstNode as CsvAsn;
-            const nodes = superClasses.items as TypeAsn[];
-            const superClassSymbolTypes = nodes.map(n => this.resolveSymbol(n.type, this)).map(c => c.symbolType as ClassDefinitionType);
+            const superClasses = this.superClasses.getOrTransformAstNode(transforms) as AstCollectionNode;
+            const nodes = superClasses.items as AstIdNode[];
+            const superClassSymbolTypes = nodes.map(n => this.resolveSymbol(n.id, transforms, this)).map(c => c.symbolType(transforms) as ClassDefinitionType);
 
             for (const st of superClassSymbolTypes) {
                 mustBeAbstractClass(st, this.compileErrors, this.htmlId);
             }
 
-            mustImplementSuperClasses(this.symbolType, superClassSymbolTypes, this.compileErrors, this.htmlId);
+            mustImplementSuperClasses(transforms, this.symbolType(transforms), superClassSymbolTypes, this.compileErrors, this.htmlId);
         }
 
     
-        const name = this.name.compile();
+        const name = this.name.compile(transforms);
         const asString = this.isAbstract() ? `
   asString() {
     return "empty Abstract Class ${name}";
@@ -236,7 +238,7 @@ end class\r\n`;
 
         return `class ${name}${this.inheritanceAsObjectCode()} {\r
   static defaultInstance() { return system.defaultClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
+${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
     }
 
@@ -303,7 +305,7 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
         return new MemberSelector(this);
     }
 
-    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ISymbol {
         if (id === thisKeyword){
             return this;
         }
@@ -314,7 +316,7 @@ ${parentHelper_renderChildrenAsObjectCode(this)}\r${asString}\r
             }
         }
 
-        return this.getParent().resolveSymbol(id, this);
+        return this.getParent().resolveSymbol(id, transforms, this);
     }
     aggregateCompileErrors(): CompileError[] {
         const cc = parentHelper_aggregateCompileErrorsOfChildren(this);

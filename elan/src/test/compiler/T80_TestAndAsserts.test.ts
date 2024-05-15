@@ -1,7 +1,7 @@
 import assert from "assert";
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash, transforms } from "./compiler-test-helpers";
 
 suite('Pass_PassingTest', () => {
 
@@ -40,7 +40,7 @@ _tests.push(["square", () => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -82,7 +82,7 @@ _tests.push(["square", () => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -109,7 +109,7 @@ test square
 end test
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);  
@@ -127,7 +127,7 @@ function square(x as Float) return Float
 end function
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);   
@@ -148,7 +148,7 @@ test squareTest
   assert square(3) is 93
 end test
 `;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -170,7 +170,7 @@ test squareTest
   assert square(3) is 93
 end test
 `;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -238,7 +238,7 @@ end test
 
 const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -289,7 +289,7 @@ end test
 
 const objectCode = ``;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), true);
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

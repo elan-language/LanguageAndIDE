@@ -34,7 +34,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
         return `[${this.index1.compile()}]`;
     }
 
-    get symbolType() {
+    symbolType() {
         return UnknownType.Instance;;
     }
 

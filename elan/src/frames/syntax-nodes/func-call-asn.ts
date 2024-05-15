@@ -7,14 +7,16 @@ import { ListType } from "../../symbols/list-type";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { mustBeProcedure, mustBeKnownSymbol, mustBePureFunctionSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
+import { mustBeKnownSymbol, mustBePureFunctionSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { scopePrefix, updateScopeAndQualifier } from "./ast-helpers";
 import { AstNode } from "./ast-node";
+import { AstIdNode } from "./ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
+import { transforms } from "./ast-helpers";
+import { scopePrefix, updateScopeAndQualifier } from "../../symbols/symbolHelpers";
 
-export class FuncCallAsn extends AbstractAstNode implements AstNode {
+export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, private readonly qualifier: AstNode | undefined, private readonly parameters: Array<AstNode>, public readonly fieldId: string, private readonly scope: Scope) {
         super();
@@ -46,22 +48,23 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
         this.compileErrors = [];
 
         var parameters = [...this.parameters];
-        var [qualifier, currentScope] = updateScopeAndQualifier(this.qualifier as QualifierAsn | undefined, this.scope);
+        var [qualifier, currentScope] = updateScopeAndQualifier(this.qualifier as QualifierAsn | undefined, transforms(), this.scope);
 
-        const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
+        const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
+        const fst = funcSymbol.symbolType(transforms());
 
         mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
-        mustBePureFunctionSymbol(funcSymbol.symbolType, this.scope, this.compileErrors, this.fieldId);
+        mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
 
-        if (funcSymbol.symbolType instanceof FunctionType) {
-            mustCallExtensionViaQualifier(funcSymbol.symbolType, qualifier, this.compileErrors, this.fieldId);
+        if (fst instanceof FunctionType) {
+            mustCallExtensionViaQualifier(fst, qualifier, this.compileErrors, this.fieldId);
 
-            if (funcSymbol.symbolType.isExtension && qualifier) {
-                parameters = [qualifier.value].concat(parameters);
+            if (fst.isExtension && qualifier) {
+                parameters = [(qualifier as any).value].concat(parameters);
                 qualifier = undefined;
             }
 
-            mustMatchParameters(parameters, funcSymbol.symbolType.parametersTypes, this.compileErrors, this.fieldId);
+            mustMatchParameters(parameters, fst.parametersTypes, this.compileErrors, this.fieldId);
         }
 
         const pp = parameters.map(p => p.compile()).join(", ");
@@ -125,7 +128,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
             parameters = [(this.qualifier as QualifierAsn).value].concat(parameters);
         }
 
-        const pTypes = parameters.map(p => this.flatten(p.symbolType!));
+        const pTypes = parameters.map(p => this.flatten(p.symbolType()));
 
         for (var i = 0; i < flattened.length; i++) {
             const pt = flattened[i];
@@ -144,8 +147,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstNode {
     }
 
 
-    get symbolType() {
-        const type = this.scope.resolveSymbol(this.id, this.scope).symbolType;
+    symbolType() {
+        const type = this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
 
         if (type instanceof FunctionType) {
             const returnType = type.returnType;

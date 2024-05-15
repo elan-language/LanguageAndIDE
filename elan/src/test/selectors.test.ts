@@ -18,6 +18,7 @@ import { DefaultProfile } from '../frames/default-profile';
 import { TestFrame } from '../frames/globals/test-frame';
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from '../frames/keywords';
 import { Profile } from '../frames/interfaces/profile';
+import { transforms } from './compiler/compiler-test-helpers';
 
 export class TestProfileSPJ implements Profile {
     name: string = "SPJ";
@@ -71,7 +72,7 @@ suite('Unit tests', () => {
  	});	
 
 	 test("Selection Filtering - globals", () => {
-		const f = new FileImpl(hash, new DefaultProfile());
+		const f = new FileImpl(hash, new DefaultProfile(), transforms());
 		var g = new GlobalSelector(f);
 		var help = g.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
@@ -82,7 +83,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Filtering - members", () => {
-		const f = new FileImpl(hash, new DefaultProfile());
+		const f = new FileImpl(hash, new DefaultProfile(), transforms());
 		var c = new Class(f);		
 		var s = new MemberSelector(c);
 		var help = s.getCompletion();
@@ -95,7 +96,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Filtering - abstract class", () => {
-		const f = new FileImpl(hash, new DefaultProfile());
+		const f = new FileImpl(hash, new DefaultProfile(), transforms());
 		var c = new Class(f);
 		c.makeAbstract();		
 		var s = new MemberSelector(c);
@@ -115,7 +116,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Filtering - statements", () => {
-		const f = new FileImpl(hash, new DefaultProfile());
+		const f = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(f);		
 		var s = new StatementSelector(m);
 		var help = s.getCompletion();
@@ -127,7 +128,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Context - in a Function", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var func = new GlobalFunction(fl);		
 		var s = new StatementSelector(func);
 		var help = s.getCompletion();
@@ -135,7 +136,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Context - in a Test", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var test = new TestFrame(fl);		
 		var s = new StatementSelector(test);
 		var help = s.getCompletion();
@@ -143,7 +144,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Context - deeper nesting 1", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var func = new GlobalFunction(fl);
 		var if1 = new IfStatement(func);
         var wh = new While(if1);
@@ -153,7 +154,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Context - deeper nesting 2", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var c = new Class(fl);
         var fm = new FunctionMethod(c);
 		var if1 = new IfStatement(fm);
@@ -163,7 +164,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("Selection Context - in a Switch", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var sw = new Switch(m);
 		var s = new StatementSelector(sw);
@@ -171,7 +172,7 @@ suite('Unit tests', () => {
 		assert.equal(help, " case");
 	});	
 	test("Selection Context - in an IfThen", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var m = new MainFrame(fl);	
 		var ifThen = new IfStatement(m);
 		var s = new StatementSelector(ifThen);
@@ -182,7 +183,7 @@ suite('Unit tests', () => {
 		assert.equal(help, " each else");
 	});	
 	test("Selection Context - selector prevents more than one main", () => {
-		const fl = new FileImpl(hash, new DefaultProfile());
+		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		var gs = new GlobalSelector(fl);
 		var help = gs.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
@@ -194,7 +195,7 @@ suite('Unit tests', () => {
 	});	
 
 	test("#377 - Global select filtered by profile", () => {
-		const f = new FileImpl(hash, new TestProfileSPJ());
+		const f = new FileImpl(hash, new TestProfileSPJ(), transforms());
 		var gs = f.getFirstSelectorAsDirectChild();
 		var help = gs.getCompletion();
 		assert.equal(help, " function test");

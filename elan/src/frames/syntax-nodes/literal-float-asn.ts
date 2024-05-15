@@ -21,7 +21,7 @@ export class LiteralFloatAsn extends AbstractAstNode implements AstNode {
 
     value: number;
 
-    get symbolType() {
+    symbolType() {
         return FloatType.Instance;
     }
 

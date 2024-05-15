@@ -20,12 +20,12 @@ export class KvpAsn extends AbstractAstNode implements AstNode {
         return `${this.key.compile()} : ${this.value.compile()}`;
     }
 
-    get keySymbolType() {
-        return this.key.symbolType;
+    keySymbolType() {
+        return this.key.symbolType();
     }
 
-    get symbolType() {
-        return this.value.symbolType;
+    symbolType() {
+        return this.value.symbolType();
     }
 
     toString() {

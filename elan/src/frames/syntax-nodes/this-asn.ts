@@ -2,6 +2,7 @@ import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { thisKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 import { AstNode } from "./ast-node";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
@@ -20,8 +21,8 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
         return thisKeyword;
     }
 
-    get symbolType() {
-        return this.scope.resolveSymbol(thisKeyword, this.scope)?.symbolType;
+    symbolType() {
+        return this.scope.resolveSymbol(thisKeyword, transforms(), this.scope)?.symbolType(transforms());
     }
 
     toString() {

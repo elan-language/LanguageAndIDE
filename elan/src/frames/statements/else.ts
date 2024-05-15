@@ -9,6 +9,7 @@ import { Statement } from "../interfaces/statement";
 import { elseKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Else extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
@@ -46,10 +47,10 @@ export class Else extends FrameWithStatements implements Statement {
         return this.hasIf ? ` if ${this.condition.renderAsSource()}`:``;
     }
 
-    private ifClauseAsObjectCode(): string {
+    private compileIfClause(transforms: Transforms): string {
         if (this.hasIf) {
-            mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
-            return `if (${this.condition.compile()}) {`;
+            mustBeOfType(this.condition.getOrTransformAstNode(transforms), BooleanType.Instance, this.compileErrors, this.htmlId);
+            return `if (${this.condition.compile(transforms)}) {`;
         }
         return `{`;
     }
@@ -69,10 +70,10 @@ ${this.renderChildrenAsHtml()}
 ${this.renderChildrenAsSource()}`;
     }
     
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}} else ${this.ifClauseAsObjectCode()}\r
-${this.renderStatementsAsObjectCode()}\r`;
+        return `${this.indent()}} else ${this.compileIfClause(transforms)}\r
+${this.compileStatements(transforms)}\r`;
     }
 
     parseTop(source: CodeSource): void {

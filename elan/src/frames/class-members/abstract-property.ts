@@ -8,6 +8,8 @@ import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { abstractPropertyKeywords, propertyKeyword } from "../keywords";
+import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProperty extends AbstractFrame implements Member, ISymbol {
     isAbstract = true;
@@ -41,13 +43,13 @@ export class AbstractProperty extends AbstractFrame implements Member, ISymbol {
         return `${this.indent()}abstract property ${this.name.renderAsSource()} as ${this.type.renderAsSource()}\r\n`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const pName = this.name.compile();
+        const pName = this.name.compile(transforms);
 
        
             return `${this.indent()}get ${pName}() {\r
-${this.indent()}${this.indent()}return ${this.type.compile()};\r
+${this.indent()}${this.indent()}return ${this.type.compile(transforms)};\r
 ${this.indent()}}\r
 ${this.indent()}set ${pName}(${pName}) {\r
 ${this.indent()}}\r\n`;
@@ -69,8 +71,8 @@ ${this.indent()}}\r\n`;
         return this.name.renderAsSource();
     }
 
-    get symbolType() {
-        return this.type.symbolType;
+    symbolType() {
+        return this.type.symbolType(transforms());
     }
 
     get symbolScope(): SymbolScope {

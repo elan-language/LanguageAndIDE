@@ -15,13 +15,14 @@ import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { TupleType } from "./symbols/tuple-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { stringType } from "./test/testHelpers";
+import { Transforms } from "./frames/syntax-nodes/transforms";
 
 export class StdLibSymbols implements Scope {
 
-    private getSymbol(id: string, st: ISymbolType) {
+    private getSymbol(id: string, st: ISymbolType) : ISymbol {
         return {
             symbolId: id,
-            symbolType: st,
+            symbolType: () => st,
             symbolScope: SymbolScope.stdlib
         };
     }
@@ -61,7 +62,7 @@ export class StdLibSymbols implements Scope {
         ]
     );
 
-    resolveSymbol(id: string | undefined, scope: Scope): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms, scope: Scope): ISymbol {
         return id ? this.symbols.get(id) ?? UnknownSymbol.Instance : UnknownSymbol.Instance;
     }
 }

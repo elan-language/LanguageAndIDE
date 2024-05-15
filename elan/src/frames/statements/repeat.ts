@@ -7,6 +7,7 @@ import { Statement } from "../interfaces/statement";
 import { repeatKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../../symbols/boolean-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Repeat extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
@@ -40,13 +41,13 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms : Transforms): string {
         this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode, BooleanType.Instance, this.compileErrors, this.htmlId);
+        mustBeOfType(this.condition.getOrTransformAstNode(transforms), BooleanType.Instance, this.compileErrors, this.htmlId);
         
         return `${this.indent()}do {\r
-${this.renderStatementsAsObjectCode()}\r
-${this.indent()}} while (!(${this.condition.compile()}));`;
+${this.compileStatements(transforms)}\r
+${this.indent()}} while (!(${this.condition.compile(transforms)}));`;
     }
 
     parseTop(source: CodeSource): void {

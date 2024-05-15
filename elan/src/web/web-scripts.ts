@@ -1,5 +1,4 @@
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
-import { CompileError } from "../frames/compile-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
@@ -10,6 +9,8 @@ import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
 import { runTests } from "../runner";
+import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
+import { Transforms } from "../frames/syntax-nodes/transforms";
 
 const codeContainer = document.querySelector('.elan-code');
 var file: File;
@@ -40,9 +41,16 @@ function fetchProfile() {
 	}
 }
 
+function transforms() {
+	return {
+		transform: transform,
+		transformMany: transformMany
+	} as Transforms;
+}
+
 function setup(p: Profile) {
 	profile = p;
-	file = new FileImpl(hash, profile, true);
+	file = new FileImpl(hash, profile, transforms(), true);
 	displayFile();
 }
 
@@ -362,7 +370,7 @@ clearButton?.addEventListener("click", () => {
 });
 
 newButton?.addEventListener("click", () => {
-	file = new FileImpl(hash, profile, true);
+	file = new FileImpl(hash, profile, transforms(), true);
 	file.renderAsHtml().then(c => updateContent(c));
 });
 
@@ -408,7 +416,7 @@ function handleUpload(event: Event) {
 		reader.addEventListener('load', (event: any) => {
 			const rawCode = event.target.result;
 			const code = new CodeSourceFromString(rawCode);
-			file = new FileImpl(hash, profile, true);
+			file = new FileImpl(hash, profile, transforms(), true);
 			file.fileName = fileName;
 			file.parseFrom(code).then(() => {
 				file.renderAsHtml().then(c => updateContent(c));

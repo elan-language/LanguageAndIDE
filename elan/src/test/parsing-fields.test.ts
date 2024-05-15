@@ -14,12 +14,13 @@ import { CommentStatement } from '../frames/statements/comment-statement';
 import { LetStatement } from '../frames/statements/let-statement';
 import { TestFrame } from '../frames/globals/test-frame';
 import { AssertStatement } from '../frames/statements/assert-statement';
+import { transforms } from './compiler/compiler-test-helpers';
 
 suite('Field Parsing Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('parse CommentField', () => { 
-		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 		var commentStatement = new CommentStatement(main);
         var text = commentStatement.text;
 		assert.equal(text.textAsSource(), "");
@@ -30,7 +31,7 @@ suite('Field Parsing Tests', () => {
 		assert.equal(text.renderAsHtml(), `<field id="comment4" class="optional valid" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion><msg></msg><help title="Any text on a single line.">?</help></field>`);
 		}); 
 	test('parse varDefField', () => { 
-		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 		var variable = new VarStatement(main);
         var id = variable.name;
 		assert.equal(id.textAsSource(), "");
@@ -52,7 +53,7 @@ suite('Field Parsing Tests', () => {
 	}); 
 		
 	test('parse VarDefField 2', () => { 
-		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 		var letSt = new LetStatement(main);
 		var id = letSt.name;
 		assert.equal(id.textAsSource(), "");
@@ -72,7 +73,7 @@ suite('Field Parsing Tests', () => {
 		assert.equal(id.getParseStatus(), ParseStatus.invalid);
 	}); 
 	test('parse CaseValueField', () => { 
-		var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+		var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 		var sw = new Switch(main);
 		var c = new Case(sw);
 		var f = c.value;
@@ -90,7 +91,7 @@ suite('Field Parsing Tests', () => {
 		}); 
 
 		test('parse  ArgListField', () => { 
-			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+			var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 			var call = new CallStatement(main);
 			var argList = call.args; 
 			argList.setText("3,4,5");
@@ -108,7 +109,7 @@ suite('Field Parsing Tests', () => {
 			}); 
 
 		test('parse ArgListField 2', () => { 
-			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+			var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 			var call = new CallStatement(main);
 			var argList = call.args; 
 			argList.setText("");
@@ -119,7 +120,7 @@ suite('Field Parsing Tests', () => {
 
 			
 		test('parse TypeField invalid', () => { 
-			var func = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
+			var func = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
 			var type = func.returnType;
 			type.setText("Foo<of bar");
 			type.parseCurrentText();
@@ -130,7 +131,7 @@ suite('Field Parsing Tests', () => {
 		});
 
 		test('parse ExpressionField - literal string with interpolations', () => { 
-			var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+			var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 			var v = new VarStatement(main);
 			var expr = v.expr;
 			expr.setText(`"{op} times {op2} equals {op1 * op2}"`);
@@ -141,7 +142,7 @@ suite('Field Parsing Tests', () => {
 		});
 
 		test('parse ValueRefField', () => { 
-			var test = new TestFrame(new FileImpl(hash, new DefaultProfile()));
+			var test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
 			var a = new AssertStatement(test);
 			var expected = a.expected;
 			expected.setText(`[4, 5, 6, 24, 26, 44, 45, 46]`);

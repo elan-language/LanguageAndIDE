@@ -7,7 +7,8 @@ import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { AssignableField } from "../fields/assignableField";
 import { mustBeCompatibleNode, mustNotBeConstant, mustNotBeCounter, mustNotBeParameter, mustNotBePropertyOnFunctionMethod } from "../compile-rules";
-import { VarAsn } from "../syntax-nodes/var-asn";
+import { AstNode } from "../syntax-nodes/ast-node";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -44,10 +45,10 @@ export class SetStatement extends AbstractFrame implements Statement{
     renderAsSource(): string {
         return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
     }
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const assignableAstNode = this.assignable.getOrTransformAstNode! as VarAsn;
-        const exprAstNode = this.expr.getOrTransformAstNode!;
+        const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstNode;
+        const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
         mustNotBePropertyOnFunctionMethod(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
         mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
@@ -55,6 +56,6 @@ export class SetStatement extends AbstractFrame implements Statement{
         mustNotBeConstant(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
         mustNotBeCounter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
 
-        return `${this.indent()}${this.assignable.compile()} = ${this.expr.compile()};`;
+        return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;
     }
 } 

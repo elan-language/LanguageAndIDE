@@ -22,7 +22,7 @@ export class LiteralIntAsn extends AbstractAstNode implements AstNode {
 
     value: number;
 
-    get symbolType() {
+    symbolType() {
         return IntType.Instance;
     }
 

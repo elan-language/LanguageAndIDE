@@ -74,19 +74,22 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     compile(): string {
         this.compileErrors = [];
 
+        const lst = this.lhs.symbolType();
+        const rst = this.rhs.symbolType();
+
         if (this.isCoercibleOp()) {
-            mustBeCoercibleType(this.lhs.symbolType, this.rhs.symbolType, this.compileErrors, this.fieldId);
+            mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
         }
 
         if (this.isCompareOp()) {
-            mustBeNumberType(this.lhs.symbolType, this.rhs.symbolType, this.compileErrors, this.fieldId);
+            mustBeNumberType(lst, rst, this.compileErrors, this.fieldId);
         }
 
-        if (this.op === OperationSymbol.Add && (this.lhs.symbolType instanceof ListType || this.rhs.symbolType instanceof ListType)) {
+        if (this.op === OperationSymbol.Add && (lst instanceof ListType || rst instanceof ListType)) {
             return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }
 
-        if (this.op === OperationSymbol.Equals && (this.lhs.symbolType instanceof ClassType || this.rhs.symbolType instanceof ClassType)) {
+        if (this.op === OperationSymbol.Equals && (lst instanceof ClassType || rst instanceof ClassType)) {
             return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
         }
 
@@ -99,11 +102,11 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return code;
     }
 
-    get symbolType() {
+    symbolType() {
         switch (this.op) {
-            case OperationSymbol.Add: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
-            case OperationSymbol.Minus: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
-            case OperationSymbol.Multiply: return this.MostPreciseSymbol(this.lhs.symbolType, this.rhs.symbolType);
+            case OperationSymbol.Add: return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+            case OperationSymbol.Minus: return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
+            case OperationSymbol.Multiply: return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
             case OperationSymbol.Div: return IntType.Instance;
             case OperationSymbol.Mod: return IntType.Instance;
             case OperationSymbol.Divide: return FloatType.Instance;
@@ -116,7 +119,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
             case OperationSymbol.GT: return BooleanType.Instance;
             case OperationSymbol.LTE: return BooleanType.Instance;
             case OperationSymbol.GTE: return BooleanType.Instance;
-            default: return this.lhs.symbolType;
+            default: return this.lhs.symbolType();
         }
     }
 

@@ -21,8 +21,7 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
 import { AstNode } from "./syntax-nodes/ast-node";
-import { KvpAsn } from "./syntax-nodes/kvp-asn";
-import { VarAsn } from "./syntax-nodes/var-asn";
+import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
 
@@ -33,7 +32,7 @@ export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: IS
 }
 
 export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
-    mustBeOfSymbolType(expr?.symbolType, ofType, compileErrors, location);
+    mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
 }
 
 export function mustBeOneOrTwoOfTypeInt(params: AstNode[], compileErrors: CompileError[], location: string) {
@@ -41,10 +40,10 @@ export function mustBeOneOrTwoOfTypeInt(params: AstNode[], compileErrors: Compil
         compileErrors.push(new CompileError(`Array requires 1 or 2 parameters`, location, false));
     }
     if (params.length > 0) {
-        mustBeOfSymbolType(params[0].symbolType, IntType.Instance, compileErrors, location);
+        mustBeOfSymbolType(params[0].symbolType(), IntType.Instance, compileErrors, location);
     }
     if (params.length > 1) {
-        mustBeOfSymbolType(params[1].symbolType, IntType.Instance, compileErrors, location);
+        mustBeOfSymbolType(params[1].symbolType(), IntType.Instance, compileErrors, location);
     }
 }
 
@@ -112,19 +111,19 @@ export function mustBePublicProperty(property: any, compileErrors: CompileError[
     }
 }
 
-export function mustImplementSuperClasses(classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[], compileErrors: CompileError[], location: string) {
+export function mustImplementSuperClasses(transforms : Transforms,  classType: ClassDefinitionType, superClassTypes: ClassDefinitionType[], compileErrors: CompileError[], location: string) {
 
     for (const superClassType of superClassTypes) {
         const superSymbols = superClassType.childSymbols();
 
         for (const superSymbol of superSymbols) {
-            const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
+            const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
 
             if (subSymbol === UnknownSymbol.Instance) {
                 compileErrors.push(new CompileError(`${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`, location, false));
             }
             else {
-                mustBeOfSymbolType(subSymbol.symbolType, superSymbol.symbolType!, compileErrors, location);
+                mustBeOfSymbolType(subSymbol.symbolType(transforms), superSymbol.symbolType(transforms), compileErrors, location);
             }
         }
     }
@@ -157,7 +156,7 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
             compileErrors.push(new CompileError(`Too many parameters ${i}`, location, false));
         }
         else {
-            mustBeCompatibleType(t, p.symbolType!, compileErrors, location);
+            mustBeCompatibleType(t, p.symbolType(), compileErrors, location);
         }
     }
 }
@@ -275,20 +274,24 @@ export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compile
 }
 
 export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: CompileError[], location: string) {
-    if (lhs.symbolType instanceof UnknownType || lhs.symbolType === undefined) {
+    const lst = lhs.symbolType();
+    const rst = rhs.symbolType();
+    
+    
+    if (lst instanceof UnknownType || rst === undefined) {
         FailUnknown(lhs, compileErrors, location);
         return;
     }
 
-    if (rhs.symbolType instanceof UnknownType || rhs.symbolType === undefined) {
+    if (rst instanceof UnknownType || rst === undefined) {
         FailUnknown(rhs, compileErrors, location);
         return;
     }
 
-    mustBeCompatibleType(lhs.symbolType, rhs.symbolType, compileErrors, location);
+    mustBeCompatibleType(lst, rst, compileErrors, location);
 }
 
-export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Parent, compileErrors: CompileError[], location: string) {
+export function mustNotBePropertyOnFunctionMethod(assignable: any, parent: Parent, compileErrors: CompileError[], location: string) {
     if (parent.constructor.name === "FunctionMethod") {
         const s = assignable.symbolScope;
 
@@ -298,7 +301,7 @@ export function mustNotBePropertyOnFunctionMethod(assignable: VarAsn, parent: Pa
     }
 }
 
-export function mustNotBeParameter(assignable: VarAsn, parent: Parent, compileErrors: CompileError[], location: string) {
+export function mustNotBeParameter(assignable: any, parent: Parent, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
     if (parent.constructor.name === "GlobalProcedure") {
@@ -314,7 +317,7 @@ export function mustNotBeParameter(assignable: VarAsn, parent: Parent, compileEr
 }
 
 
-export function mustNotBeCounter(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+export function mustNotBeCounter(assignable: any, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.counter) {
@@ -322,7 +325,7 @@ export function mustNotBeCounter(assignable: VarAsn, compileErrors: CompileError
     }
 }
 
-export function mustNotBeConstant(assignable: VarAsn, compileErrors: CompileError[], location: string) {
+export function mustNotBeConstant(assignable: any, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.program) {

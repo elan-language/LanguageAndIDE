@@ -9,6 +9,7 @@ import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;
@@ -20,7 +21,7 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
         this.name = new VarDefField(this);
         this.expr = new ExpressionField(this);
     }
-    get symbolType() {
+    symbolType(transforms: Transforms) {
         return UnknownType.Instance;
     }
     symbolScope?: SymbolScope | undefined;
@@ -50,9 +51,9 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
         return `${this.indent()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}var ${this.name.compile()} = ${this.expr.compile()};`;
+        return `${this.indent()}var ${this.name.compile(transforms)} = ${this.expr.compile(transforms)};`;
     }
 
     get symbolId() {

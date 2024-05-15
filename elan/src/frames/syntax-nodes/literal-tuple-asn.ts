@@ -24,8 +24,8 @@ export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
         return `system.tuple([${it}])`;
     }
 
-    get symbolType() {
-        return new TupleType(this.items.map(i => i.symbolType!));
+    symbolType() {
+        return new TupleType(this.items.map(i => i.symbolType()));
     }
 
     toString() {

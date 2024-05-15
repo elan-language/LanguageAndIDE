@@ -4,7 +4,7 @@ import { UnknownType } from "./unknown-type";
 export class UnknownSymbol implements ISymbol {
     private constructor() { }
     symbolId = "";
-    symbolType = UnknownType.Instance;;
+    symbolType = () => UnknownType.Instance;;
     symbolScope = undefined;
 
     static Instance: ISymbol = new UnknownSymbol();

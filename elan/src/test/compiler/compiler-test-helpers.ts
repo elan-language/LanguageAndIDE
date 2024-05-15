@@ -6,6 +6,8 @@ import { getTestSystem } from "./test-system";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
+import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
+import { Transforms } from "../../frames/syntax-nodes/transforms";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -46,19 +48,6 @@ export function assertDoesNotCompile(file: FileImpl, msgs : string[]) {
         assert.strictEqual(e.message, m);
     }
 }
-
-export function assertIsSymbol(toTest: any, id: string, name: string) {
-    if (isSymbol(toTest)) {
-        var sid = toTest.symbolId;
-        var st = toTest.symbolType;
-
-        assert.strictEqual(sid, id);
-        assert.strictEqual(st?.name, name);
-    }
-    else {
-        assert.fail("expected symbol");
-    }
-} 
 
 function doImport(str: string) {
     const url = "data:text/javascript;base64," + btoa(str);
@@ -163,4 +152,11 @@ export function ignore_test(name: string, test: (done: Done) => void) {
 
 export function testHash(s : string) {
     return Promise.resolve("");
+}
+
+export function transforms() {
+    return {
+        transform: transform,
+        transformMany: transformMany
+    } as Transforms;
 }

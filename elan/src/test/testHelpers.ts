@@ -26,6 +26,7 @@ import { ListType } from '../symbols/list-type';
 import { FunctionType } from '../symbols/function-type';
 import { GenericParameterType } from '../symbols/generic-parameter-type';
 import { UnknownSymbol } from '../symbols/unknown-symbol';
+import { transforms } from './compiler/compiler-test-helpers';
 
 // flag to update test file 
 var updateTestFiles = false;
@@ -39,7 +40,7 @@ export async function assertEffectOfAction(sourceFile: string, action: (f: FileI
 
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
 
-  var fl = new FileImpl(hash, new DefaultProfile());
+  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -69,7 +70,7 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
 
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
 
-  var fl = new FileImpl(hash, new DefaultProfile());
+  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -174,7 +175,7 @@ export async function assertFileParses(sourceFile: string) {
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
-  var fl = new FileImpl(hash, new DefaultProfile());
+  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -191,7 +192,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
   var codeSource = new CodeSourceFromString(sourceDoc.getText());
-  var fl = new FileImpl(hash, new DefaultProfile());
+  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -386,31 +387,31 @@ export const unknownType = UnknownType.Instance;
 
 const stubIntSymbol = {
   symbolId: "a",
-  symbolType: intType,
+  symbolType: () => intType,
 } as ISymbol;
 
 const stubFloatSymbol = {
   symbolId: "b",
-  symbolType: floatType,
+  symbolType: () => floatType,
 } as ISymbol;
 
 const stubStringSymbol = {
   symbolId: "bar",
-  symbolType: stringType,
+  symbolType: () => stringType,
 } as ISymbol;
 
 const stubBoolSymbol = {
   symbolId: "bar",
-  symbolType: boolType,
+  symbolType: () => boolType,
 } as ISymbol;
 
 const stubClassSymbol = {
   symbolId: "p",
-  symbolType: new ClassType("p"),
+  symbolType: () => new ClassType("p"),
 } as ISymbol;
 
 const stubHolder = {
-  resolveSymbol(id, initialScope): ISymbol {
+  resolveSymbol(id, transforms, initialScope): ISymbol {
     switch (id) {
       case "a": return stubIntSymbol;
       case "b": return stubFloatSymbol;
@@ -426,10 +427,10 @@ const stubHolder = {
       case "attempt": return stubBoolSymbol;
       case "target": return stubStringSymbol;
       case "first": return stubIntSymbol;
-      case "lst": return { symbolId: "", symbolType: new ListType(intType) };
-      case "lst1": return { symbolId: "", symbolType: new ListType(stringType) };
-      case "simpleGeneric": return { symbolId: "", symbolType: new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false)};
-      case "getItem": return { symbolId: "", symbolType: new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false)};
+      case "lst": return { symbolId: "", symbolType: () => new ListType(intType) };
+      case "lst1": return { symbolId: "", symbolType: () => new ListType(stringType) };
+      case "simpleGeneric": return { symbolId: "", symbolType: () => new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false)};
+      case "getItem": return { symbolId: "", symbolType: () => new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false)};
     }
 
     return UnknownSymbol.Instance;
@@ -448,6 +449,6 @@ export function testAST(node: ParseNode, field: Field, text: string, astAsString
     const ast = transform(node, "", field.getHolder() as Scope);
 
     assert.strictEqual(ast?.toString(), astAsString);
-    assert.strictEqual(ast.symbolType?.name, st.name, text);
+    assert.strictEqual(ast.symbolType()?.name, st.name, text);
   }
 }

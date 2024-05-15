@@ -23,7 +23,7 @@ export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
         return `\`${this.segments.map(s => s.compile()).join("")}\``;
     }
 
-    get symbolType() {
+    symbolType() {
         return StringType.Instance;
     }
 

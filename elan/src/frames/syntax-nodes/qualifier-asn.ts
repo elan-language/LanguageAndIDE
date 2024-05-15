@@ -3,7 +3,9 @@ import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 import { AstNode } from "./ast-node";
+import { Transforms } from "./transforms";
 
 export class QualifierAsn extends AbstractAstNode implements AstNode {
 
@@ -34,9 +36,9 @@ export class QualifierAsn extends AbstractAstNode implements AstNode {
         return `${s}`;
     }
 
-    get symbolType() {
+    symbolType() {
         const id = (this.value as any).id;
-        return id ? this.scope.resolveSymbol(id, this.scope).symbolType : UnknownType.Instance;;
+        return id ? this.scope.resolveSymbol(id, transforms(), this.scope).symbolType(transforms()) : UnknownType.Instance;;
     }
 
     toString() {

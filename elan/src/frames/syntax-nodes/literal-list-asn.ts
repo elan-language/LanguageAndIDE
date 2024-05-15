@@ -4,9 +4,10 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { AstCollectionNode } from "./ast-collection-node";
 import { AstNode } from "./ast-node";
 
-export class LiteralListAsn extends AbstractAstNode implements AstNode {
+export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
 
     constructor(public readonly items: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
@@ -22,18 +23,18 @@ export class LiteralListAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
-        const ofType = this.items[0]?.symbolType;
+        const ofType = this.items[0]?.symbolType();
         
         for(const i of this.items){
-            mustBeCompatibleType(ofType, i.symbolType, this.compileErrors, this.fieldId);
+            mustBeCompatibleType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
         }
 
         const it = this.items.map(p => p.compile()).join(", ");
         return `system.list([${it}])`;
     }
 
-    get symbolType() {
-        const ofType = this.items[0]?.symbolType;
+    symbolType() {
+        const ofType = this.items[0]?.symbolType();
         if (ofType) {
             return new ListType(ofType);
         }

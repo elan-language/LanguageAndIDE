@@ -6,6 +6,7 @@ import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class FunctionMethod extends FunctionFrame implements Member {
     isMember: boolean = true;
@@ -24,10 +25,10 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
     }
-    public override compile(): string {
+    public override compile(transforms : Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderStatementsAsObjectCode()}\r
+        return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r
 ${this.indent()}}\r
 `;
     }
@@ -39,12 +40,12 @@ ${this.indent()}}\r
         return super.parseBottom(source);
     }
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         if (this.name.text === id) {
             return this as ISymbol;
         }
 
-        return super.resolveSymbol(id, initialScope);
+        return super.resolveSymbol(id, transforms, initialScope);
     }
 
     symbolScope = SymbolScope.property;

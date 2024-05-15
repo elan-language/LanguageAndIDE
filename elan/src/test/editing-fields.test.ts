@@ -8,13 +8,14 @@ import { Constant } from '../frames/globals/constant';
 import { MainFrame } from '../frames/globals/main-frame';
 import { SetStatement } from '../frames/statements/set-statement';
 import { GlobalFunction } from '../frames/globals/global-function';
+import { transforms } from './compiler/compiler-test-helpers';
 
 
 suite('Editing Fields Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 test('Simple entry & editing of text in a name', () => { 
-    var con = new Constant(new FileImpl(hash, new DefaultProfile()));
+    var con = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
     var name = con.name;
     assert.equal(name.text, "");
     assert.equal(name.cursorPos, 0);
@@ -62,7 +63,7 @@ test('Simple entry & editing of text in a name', () => {
 
 
     test('Entry of text with formatting', () => { 
-        var main = new MainFrame(new FileImpl(hash, new DefaultProfile()));
+        var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
         var set = new SetStatement(main);
         var expr = set.expr;
         expr.processKey(key("3"));
@@ -105,7 +106,7 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 2', () => { 
-        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
+        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
         var t = f.returnType;
         t.processKey(key("F"));
         assert.equal(t.text, "F");
@@ -162,7 +163,7 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 3', () => { 
-        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile()));
+        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
         var t = f.returnType;
         t.processKey(key("("));
         assert.equal(t.text, "(");

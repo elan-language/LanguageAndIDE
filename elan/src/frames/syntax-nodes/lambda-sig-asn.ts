@@ -6,6 +6,7 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "./ast-node";
 import { ParamDefAsn } from "./param-def-asn";
+import { Transforms } from "./transforms";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
@@ -21,7 +22,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         return this.compileErrors.concat(cc);
     }
 
-    get symbolType() {
+    symbolType() {
         return UnknownType.Instance;
     }
 
@@ -29,13 +30,16 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         throw new Error("Method not implemented.");
     }
 
-    resolveSymbol(id: string | undefined, scope: Scope): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ISymbol {
         for (const p of this.parameters) {
             if (p.id.trim() === id) {
-                return { symbolId: id, symbolType: p.symbolType };
+                return {
+                    symbolId: id,
+                    symbolType: () => p.symbolType()
+                };
             }
         }
-        return this.scope.resolveSymbol(id, this);
+        return this.scope.resolveSymbol(id, transforms, this);
     }
 
     toString() {

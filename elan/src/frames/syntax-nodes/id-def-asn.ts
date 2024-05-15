@@ -1,12 +1,10 @@
-import { SymbolScope } from "../../symbols/symbol";
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol } from "../compile-rules";
-import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { transforms } from "./ast-helpers";
+import { AstIdNode } from "./ast-id-node";
 
-export class IdDefAsn extends AbstractAstNode implements AstNode {
+export class IdDefAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, public readonly fieldId: string, private readonly scope: Scope) {
         super();
@@ -37,8 +35,8 @@ export class IdDefAsn extends AbstractAstNode implements AstNode {
         return this.id;
     }
 
-    get symbolType() {
-        return this.scope.resolveSymbol(this.id, this.scope).symbolType;
+    symbolType() {
+        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
     }
 
     toString() {

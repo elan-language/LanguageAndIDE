@@ -8,6 +8,7 @@ import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Property extends AbstractFrame implements Member, ISymbol {
     isMember = true;
@@ -51,21 +52,21 @@ export class Property extends AbstractFrame implements Member, ISymbol {
         return `${this.indent()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const pName = this.name.compile();
+        const pName = this.name.compile(transforms);
         const mod = this.modifierAsObjectCode();
-        if (this.type.symbolType instanceof ClassType) {
+        if (this.type.symbolType(transforms) instanceof ClassType) {
             return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
-${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile()};\r
+${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
 ${this.indent()}}\r
 ${this.indent()}${mod}set ${pName}(${pName}) {\r
 ${this.indent()}${this.indent()}this._${pName} = ${pName};\r
 ${this.indent()}}\r\n`;
         }
 
-        return `${this.indent()}${mod}${pName} = ${this.type.compile()};\r\n`;
+        return `${this.indent()}${mod}${pName} = ${this.type.compile(transforms)};\r\n`;
     }
 
     parseFrom(source: CodeSource): void {
@@ -84,8 +85,8 @@ ${this.indent()}}\r\n`;
         return this.name.renderAsSource();
     }
 
-    get symbolType() {
-        return this.type.symbolType;
+    symbolType(transforms : Transforms) {
+        return this.type.symbolType(transforms);
     }
 
     get symbolScope(): SymbolScope {

@@ -1,13 +1,10 @@
-
 import { Parent } from "../interfaces/parent";
 import {GlobalFrame } from "../interfaces/global-frame";
 import { FunctionFrame } from "./function-frame";
 import { functionKeyword, returnKeyword, endKeyword } from "../keywords";
 import { mustNotBeArray, mustBeCompatibleType } from "../compile-rules";
-import { CsvAsn } from "../syntax-nodes/csv-asn";
-import { ISymbol } from "../../symbols/symbol";
-import { UnknownSymbol } from "../../symbols/unknown-symbol";
-import { Frame } from "../interfaces/frame";
+import { Transforms } from "../syntax-nodes/transforms";
+import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
     isGlobal = true;
@@ -27,21 +24,21 @@ ${endKeyword} ${functionKeyword}\r
 `;
     }
 
-    public compile(): string {
+    public compile(transforms : Transforms): string {
         this.compileErrors = [];
-        const paramList = this.params.getOrTransformAstNode as CsvAsn;
-        const parameters = paramList.items.map(i => i.symbolType);
+        const paramList = this.params.getOrTransformAstNode(transforms) as AstCollectionNode;
+        const parameters = paramList.items.map(i => i.symbolType());
 
         for (const p of parameters) {
             mustNotBeArray(p, this.compileErrors, this.htmlId);
         }
 
-        const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode;
-        const tt = returnStatement?.symbolType;
-        mustBeCompatibleType(this.returnType?.symbolType, tt!, this.compileErrors, returnStatement!.fieldId);
+        const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+        const tt = returnStatement?.symbolType();
+        mustBeCompatibleType(this.returnType?.symbolType(transforms), tt!, this.compileErrors, returnStatement!.fieldId);
 
-        return `function ${this.name.compile()}(${this.params.compile()}) {\r
-${this.renderChildrenAsObjectCode()}\r
+        return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.compileChildren(transforms)}\r
 }\r
 `;
     }

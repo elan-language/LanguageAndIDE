@@ -89,6 +89,7 @@ import { ThisAsn } from "./this-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { DoubleIndexNode } from "../parse-nodes/double-index-node";
+import { AstCollectionNode } from "./ast-collection-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -117,28 +118,28 @@ export function asCsv(nodes : AstNode[], id : string, scope : Scope){
     return new CsvAsn(nodes, id, scope);
 }
 
-export function transformMany(node: CSV | Multiple | Sequence, fieldId: string, scope: Scope): Array<AstNode> {
-    const ast = new Array<AstNode>();
+export function transformMany(node: CSV | Multiple | Sequence, fieldId: string, scope: Scope): AstCollectionNode {
+    const asts = new Array<AstNode>();
 
     for (const elem of node.getElements()) {
         if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
-            const asns = transformMany(elem, fieldId, scope);
+            const asns = transformMany(elem, fieldId, scope).items;
 
             for (const asn of asns) {
                 if (asn) {
-                    ast.push(asn);
+                    asts.push(asn);
                 }
             }
         }
         else {
             const asn = transform(elem, fieldId, scope);
             if (asn) {
-                ast.push(asn);
+                asts.push(asn);
             }
         }
     }
 
-    return ast;
+    return new CsvAsn(asts, fieldId, scope);
 }
 
 
@@ -180,7 +181,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof LitStringNonEmpty) {
-        const ss = node.segments ? transformMany(node.segments, fieldId, scope) : [];
+        const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
 
         if (ss.map(i => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
             return new SegmentedStringAsn(ss, fieldId, scope);
@@ -201,13 +202,13 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     if (node instanceof FunctionCallNode) {
         const qualifier = transform(node.qualifier, fieldId, scope);
         const id = node.name!.matchedText;
-        const parameters = transformMany(node.args as CSV, fieldId, scope) as Array<ExprAsn>;
+        const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
         return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
     }
 
     if (node instanceof Lambda) {
-        const parameters = transformMany(node.params as CSV, fieldId, scope) as Array<ParamDefAsn>;
+        const parameters = transformMany(node.params as CSV, fieldId, scope).items as Array<ParamDefAsn>;
         const sig = new LambdaSigAsn(parameters, fieldId, scope);
         const body = transform(node.expr, fieldId, sig) as ExprAsn;
 
@@ -227,7 +228,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
         var gp = new Array<AstNode>();
 
         if (opt) {
-            gp = transformMany(opt as Sequence, fieldId, scope)!;
+            gp = transformMany(opt as Sequence, fieldId, scope).items;
         }
 
         return new TypeAsn(type, gp, fieldId, scope);
@@ -235,7 +236,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
 
     if (node instanceof FuncTypeNode) {
         const type = "Func";
-        var inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope) : [];
+        var inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
         var oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
         return new TypeAsn(type, inp.concat(oup), fieldId, scope);
@@ -307,7 +308,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof ListNode) {
-        const items = transformMany(node.csv as CSV, fieldId, scope);
+        const items = transformMany(node.csv as CSV, fieldId, scope).items;
         return new LiteralListAsn(items, fieldId, scope);
     }
 
@@ -317,17 +318,17 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof TupleNode) {
-        const items = transformMany(node.csv as CSV, fieldId, scope);
+        const items = transformMany(node.csv as CSV, fieldId, scope).items;
         return new LiteralTupleAsn(items, fieldId, scope);
     }
 
     if (node instanceof LitTuple) {
-        const items = transformMany(node.csv as CSV, fieldId, scope);
+        const items = transformMany(node.csv as CSV, fieldId, scope).items;
         return new LiteralTupleAsn(items, fieldId, scope);
     }
 
     if (node instanceof DeconstructedTuple) {
-        const items = transformMany(node.csv as CSV, fieldId, scope);
+        const items = transformMany(node.csv as CSV, fieldId, scope).items;
         return new LiteralTupleAsn(items, fieldId, scope);
     }
 
@@ -343,7 +344,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
 
     if (node instanceof NewInstance) {
         const type = transform(node.type, fieldId, scope) as TypeAsn;
-        const pp = transformMany(node.args as CSV, fieldId, scope);
+        const pp = transformMany(node.args as CSV, fieldId, scope).items;
         return new NewAsn(type, pp, fieldId, scope);
     }
 
@@ -361,7 +362,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof TypeTuple) {
-        const gp = transformMany(node.types as CSV, fieldId, scope);
+        const gp = transformMany(node.types as CSV, fieldId, scope).items;
         return new TypeAsn("Tuple", gp, fieldId, scope);
     }
 

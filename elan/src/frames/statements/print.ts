@@ -6,6 +6,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { printKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Print extends AbstractFrame implements Statement {
     isStatement = true;  
@@ -41,11 +42,11 @@ export class Print extends AbstractFrame implements Statement {
         return `${this.indent()}print ${this.expr.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const toPrint = this.expr.compile();
+        const toPrint = this.expr.compile(transforms);
         if (toPrint){
-            return `${this.indent()}system.print(_stdlib.asString(${this.expr.compile()}));`;
+            return `${this.indent()}system.print(_stdlib.asString(${this.expr.compile(transforms)}));`;
         }
         return `${this.indent()}system.print("");`;
     }

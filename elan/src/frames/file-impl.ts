@@ -30,13 +30,14 @@ import { TestStatus } from "./test-status";
 import { RunStatus } from "./run-status";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
+import { Transforms } from "./syntax-nodes/transforms";
 
 // for web editor bundle
 export { CodeSourceFromString };
 
 //var system; var _stdlib; export function _inject(l,s) { system = l; _stdlib = s; };
 
-export class FileImpl implements File {
+export class FileImpl implements File, Scope {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
@@ -52,7 +53,7 @@ export class FileImpl implements File {
     private ignoreHashOnParsing: boolean = false;
     private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts 
 
-    constructor(private hash: (toHash: string) => Promise<string>, private profile : Profile,  ignoreHashOnParsing?: boolean) {
+    constructor(private hash: (toHash: string) => Promise<string>, private profile: Profile, private transform: Transforms, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
         var selector = new GlobalSelector(this);
@@ -161,16 +162,16 @@ export class FileImpl implements File {
         return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
     }
 
-    renderGlobalsAsObjectCode() : string{
+    compileGlobals() : string{
         var result = "";
         if (this._children.length > 0) {
             const ss: Array<string> = [];
             for (var frame of this._children.filter(g => g instanceof Enum)) {
-                ss.push(frame.compile());
+                ss.push(frame.compile(this.transform));
             }
 
             for (var frame of this._children.filter(g => !('isSelector' in g || g instanceof Enum))) {
-                ss.push(frame.compile());
+                ss.push(frame.compile(this.transform));
             }
             result = ss.join("\r\n");
         }
@@ -184,16 +185,8 @@ export class FileImpl implements File {
     }
 
     compile(): string {
-        var retVal = "return main";
-        var tests = "";
-
-        if (this._children.filter(g => g instanceof TestFrame).length > 0) {
-            retVal = `return [main, _tests]`;
-            tests = ` var _tests = [];`;
-        }
-
         const stdLib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-        return `${stdLib}\n${this.renderGlobalsAsObjectCode()}return [main, _tests];}`; 
+        return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`; 
     }
 
     renderHashableContent(): string {
@@ -406,7 +399,7 @@ export class FileImpl implements File {
         }
     }
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol {
 
         const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as Array<ISymbol>;
 
@@ -416,7 +409,7 @@ export class FileImpl implements File {
             }
         }
 
-        return this.libraryScope.resolveSymbol(id, this as unknown as Scope)!;
+        return this.libraryScope.resolveSymbol(id, transforms, this as unknown as Scope)!;
     }
 
     libraryScope = this._stdLibSymbols as Scope;

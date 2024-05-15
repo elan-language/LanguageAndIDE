@@ -1,9 +1,9 @@
 import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstIdNode } from "./ast-id-node";
 
-export class FixedIdAsn extends AbstractAstNode implements AstNode {
+export class FixedIdAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, public readonly fieldId: string) {
         super();
@@ -19,7 +19,7 @@ export class FixedIdAsn extends AbstractAstNode implements AstNode {
         return this.id;
     }
 
-    get symbolType() {
+    symbolType() {
         return UnknownType.Instance;
     }
 

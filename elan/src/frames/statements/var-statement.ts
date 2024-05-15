@@ -9,6 +9,7 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
     isStatement = true;
@@ -46,31 +47,31 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
         return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const id = this.name.getOrTransformAstNode?.compile();
-        const symbol = this.getParent().resolveSymbol(id!, this);
+        const id = this.name.getOrTransformAstNode(transforms)?.compile();
+        const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
         mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
         
-        return `${this.indent()}var ${id} = ${this.expr.compile()};`;
+        return `${this.indent()}var ${id} = ${this.expr.compile(transforms)};`;
     }
 
     get symbolId() {
         return this.name.renderAsSource();
     }
 
-    get symbolType() {
-        return this.expr.symbolType;
+    symbolType(transforms : Transforms) {
+        return this.expr.symbolType(transforms);
     }
 
     symbolScope = SymbolScope.local;
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         if (id === this.symbolId) {
             return this;
         }
 
-        return super.resolveSymbol(id, initialScope);
+        return super.resolveSymbol(id, transforms, initialScope);
     }
 } 

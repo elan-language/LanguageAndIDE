@@ -6,6 +6,7 @@ import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
     isTest = true;
@@ -54,11 +55,11 @@ end test\r
        return this.parseStandardEnding(source, "end test");
     }
 
-    public compile(): string {
+    public compile(transforms : Transforms): string {
         this.compileErrors = [];
 
-        return `_tests.push(["${this.testName.compile()}", () => {\r
-${this.renderChildrenAsObjectCode()}\r
+        return `_tests.push(["${this.testName.compile(transforms)}", () => {\r
+${this.compileChildren(transforms)}\r
 }]);\r\n`;          
     }
 }

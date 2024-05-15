@@ -21,7 +21,7 @@ export class LiteralBoolAsn extends AbstractAstNode implements AstNode {
 
     value: boolean;
 
-    get symbolType() {
+    symbolType() {
         return BooleanType.Instance;
     }
 

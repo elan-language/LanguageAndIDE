@@ -2,9 +2,10 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { AstCollectionNode } from "./ast-collection-node";
 import { AstNode } from "./ast-node";
 
-export class CsvAsn extends AbstractAstNode implements AstNode {
+export class CsvAsn extends AbstractAstNode implements AstCollectionNode {
 
     constructor(public readonly items: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();
@@ -24,7 +25,7 @@ export class CsvAsn extends AbstractAstNode implements AstNode {
         return `${it}`;
     }
 
-    get symbolType() {
+    symbolType() {
         return UnknownType.Instance;
     }
 

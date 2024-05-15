@@ -10,10 +10,11 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsObjectCode, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_compileChildren, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { CompileStatus, ParseStatus } from "./status-enums";
 import { StatementSelector } from "./statements/statement-selector";
 import { CompileError } from "./compile-error";
+import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
@@ -91,7 +92,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
     protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
-    protected renderChildrenAsObjectCode() : string {return parentHelper_renderChildrenAsObjectCode(this);}
+    protected compileChildren(transforms : Transforms) : string {return parentHelper_compileChildren(this, transforms);}
     
     selectFirstField(): boolean {
         var result = super.selectFirstField();
@@ -146,19 +147,19 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return result;
     }
 
-    protected renderStatementsAsObjectCode() : string {
+    protected compileStatements(transforms : Transforms) : string {
         var result = "";
         if (this._children.length > 0 ) {
             const ss: Array<string> = [];
             for (var frame of this._children.filter(s => !('isSelector' in s))) {
-                ss.push(frame.compile());
+                ss.push(frame.compile(transforms));
             }
             result = ss.join("\r\n");
         }
         return result;
     }
 
-    resolveSymbol(id: string | undefined, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ISymbol {
         var fst = this.getFirstChild();
         var range = this.getChildRange(fst, initialScope);
         if (range.length > 1) {
@@ -171,7 +172,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
             }
         }
 
-        return this.getParent().resolveSymbol(id, this);
+        return this.getParent().resolveSymbol(id, transforms, this);
     }
 
     aggregateCompileErrors(): CompileError[] {

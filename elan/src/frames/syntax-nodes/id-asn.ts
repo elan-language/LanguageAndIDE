@@ -1,13 +1,14 @@
 import { SymbolScope } from "../../symbols/symbol";
+import { getParentScope } from "../../symbols/symbolHelpers";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { getParentScope } from "./ast-helpers";
-import { AstNode } from "./ast-node";
+import { transforms } from "./ast-helpers";
+import { AstIdNode } from "./ast-id-node";
 
-export class IdAsn extends AbstractAstNode implements AstNode {
+export class IdAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, public readonly fieldId: string, private readonly scope: Scope) {
         super();
@@ -25,7 +26,7 @@ export class IdAsn extends AbstractAstNode implements AstNode {
             // don't prefix properties with this
             return this.id;
         }
-        const symbol = getParentScope(this.scope).resolveSymbol(this.id, this.scope);
+        const symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
         if (symbol?.symbolScope === SymbolScope.stdlib) {
             return `_stdlib.${this.id}`;
         }
@@ -38,8 +39,8 @@ export class IdAsn extends AbstractAstNode implements AstNode {
         return this.id;
     }
 
-    get symbolType() {
-        return getParentScope(this.scope).resolveSymbol(this.id, this.scope).symbolType;
+    symbolType() {
+        return getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
     }
 
     toString() {

@@ -5,6 +5,7 @@ import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { AbstractFrame } from "../abstract-frame";
 import { returnKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class ReturnStatement extends AbstractFrame implements Statement{
     isStatement = true; 
@@ -37,9 +38,9 @@ export class ReturnStatement extends AbstractFrame implements Statement{
         return `${this.indent()}return ${this.expr.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}return ${this.expr.compile()};`;
+        return `${this.indent()}return ${this.expr.compile(transforms)};`;
     }
 
     parseFrom(source: CodeSource): void {

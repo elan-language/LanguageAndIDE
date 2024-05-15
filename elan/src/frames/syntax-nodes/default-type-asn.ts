@@ -19,8 +19,8 @@ export class DefaultTypeAsn extends AbstractAstNode implements AstNode {
         return this.type.renderAsDefaultObjectCode();
     }
 
-    get symbolType() {
-        return this.type.symbolType;
+    symbolType() {
+        return this.type.symbolType();
     }
 
     toString() {

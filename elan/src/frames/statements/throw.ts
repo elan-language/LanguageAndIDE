@@ -5,6 +5,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { throwKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Throw extends AbstractFrame implements Statement{
     isStatement = true;
@@ -37,8 +38,8 @@ export class Throw extends AbstractFrame implements Statement{
         return `${this.indent()}throw ${this.text.renderAsSource()}`;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `${this.indent()}throw new Error(${this.text.compile()});`;
+        return `${this.indent()}throw new Error(${this.text.compile(transforms)});`;
     }
 } 

@@ -10,6 +10,7 @@ import { Frame } from "../interfaces/frame";
 import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { EnumValueType } from "../../symbols/enum-value-type";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Enum extends AbstractFrame implements GlobalFrame {
     isGlobal = true;
@@ -50,10 +51,10 @@ end enum\r
 `;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
         return `var ${this.name.renderAsSource()} = {\r
-${singleIndent()}${this.values.compile()}\r
+${singleIndent()}${this.values.compile(transforms)}\r
 };\r
 `;
     }
@@ -68,19 +69,19 @@ ${singleIndent()}${this.values.compile()}\r
         source.remove("end enum");
     }
 
-    resolveSymbol(id: string, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ISymbol {
         const names = this.values.renderAsSource().split(",").map(s => s.trim());
 
         for (var n of names) {
             if (n === id) {
                 return {
                     symbolId : id,
-                    symbolType: new EnumValueType(this.name.renderAsSource(), id),
+                    symbolType: () => new EnumValueType(this.name.renderAsSource(), id),
                     symbolScope: SymbolScope.program
                 };
             }
         }
 
-        return this.getParent().resolveSymbol(id, this);
+        return this.getParent().resolveSymbol(id, transforms, this);
     }
 } 

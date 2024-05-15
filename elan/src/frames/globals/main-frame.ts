@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { mainKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
     isMain = true;
@@ -44,10 +45,10 @@ end main\r
 `;
     }
 
-    public compile() : string {
+    public compile(transforms : Transforms) : string {
         this.compileErrors = [];
         return `async function main() {\r
-${this.renderStatementsAsObjectCode()}\r
+${this.compileStatements(transforms)}\r
 }\r
 `;
     }

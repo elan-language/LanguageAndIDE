@@ -8,6 +8,7 @@ import { ISymbol, SymbolScope } from "../../symbols/symbol";
 import { constantKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
     isGlobal = true;
@@ -51,9 +52,9 @@ export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
 `;
     }
 
-    compile(): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
-        return `const ${this.name.compile()} = ${this.literal.compile()};\r
+        return `const ${this.name.compile(transforms)} = ${this.literal.compile(transforms)};\r
 `;
     }
 
@@ -61,17 +62,17 @@ export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
         return this.name.renderAsSource();
     }
 
-    get symbolType() {
-        return this.literal.symbolType;
+    symbolType(transforms : Transforms) {
+        return this.literal.symbolType(transforms);
     }
 
     symbolScope = SymbolScope.program;
 
-    resolveSymbol(id: string | undefined, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         if (id === this.symbolId) {
             return this;
         }
 
-        return super.resolveSymbol(id, initialScope);
+        return super.resolveSymbol(id, transforms, initialScope);
     }
 } 

@@ -10,14 +10,16 @@ import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { getClassScope } from "./ast-helpers";
+import { transforms } from "./ast-helpers";
 import { AstNode } from "./ast-node";
+import { AstIdNode } from "./ast-id-node";
 import { IndexAsn } from "./index-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
+import { getClassScope } from "../../symbols/symbolHelpers";
 
-export class VarAsn extends AbstractAstNode implements AstNode {
+export class VarAsn extends AbstractAstNode implements AstIdNode {
 
     constructor(public readonly id: string, public readonly qualifier: AstNode | undefined, private readonly index: AstNode | undefined, public readonly fieldId: string, private scope: Scope) {
         super();
@@ -44,7 +46,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         if (this.qualifier) {
             return `${this.qualifier.compile()}`;
         }
-        const s = this.scope.resolveSymbol(this.id, this.scope);
+        const s = this.scope.resolveSymbol(this.id, transforms(), this.scope);
 
         if (s && s.symbolScope === SymbolScope.property) {
             return "this.";
@@ -70,10 +72,10 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         this.compileErrors = [];
         var q = this.getQualifier();
 
-        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
+        const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
         if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, this.scope) as unknown as Scope;
-            const p = s.resolveSymbol(this.id, s);
+            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope) as unknown as Scope;
+            const p = s.resolveSymbol(this.id, transforms(), s);
 
             mustBePublicProperty(p, this.compileErrors, this.fieldId);
         }
@@ -82,7 +84,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
         var code = `${q}${this.id}${idx}`;
 
         if (this.isRange() || this.index) {
-            const rootType = this.scope.resolveSymbol(this.id, this.scope).symbolType;
+            const rootType = this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
             if (this.index) {
                 mustBeIndexableSymbol(rootType, (this.index as IndexAsn).isDoubleIndex(), this.compileErrors, this.fieldId);
             }
@@ -95,9 +97,9 @@ export class VarAsn extends AbstractAstNode implements AstNode {
     }
 
     updateScope(currentScope: Scope) {
-        const classScope = this.qualifier ? this.qualifier.symbolType : undefined;
+        const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
         if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, this.scope);
+            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
             // replace scope with class scope
             currentScope = s as unknown as Scope;
         }
@@ -115,11 +117,11 @@ export class VarAsn extends AbstractAstNode implements AstNode {
 
     get rootSymbolType() {
         const currentScope = this.updateScope(this.scope);
-        const rootType = currentScope.resolveSymbol(this.id, currentScope).symbolType;
+        const rootType = currentScope.resolveSymbol(this.id, transforms(), currentScope).symbolType(transforms());
         return rootType;
     }
 
-    get symbolType() {
+    symbolType() {
         const rootType = this.rootSymbolType;
         if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
@@ -129,7 +131,7 @@ export class VarAsn extends AbstractAstNode implements AstNode {
 
     get symbolScope() {
         const currentScope = this.updateScope(this.scope);
-        const symbol = currentScope.resolveSymbol(this.id, currentScope);
+        const symbol = currentScope.resolveSymbol(this.id, transforms(), currentScope);
         return symbol.symbolScope;
     }
 
