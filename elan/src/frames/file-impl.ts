@@ -1,6 +1,6 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { CompileStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { expandCollapseAll, isSelector } from "./helpers";
+import { compileStatusAsOverallStatus, expandCollapseAll, isSelector, parseStatusAsOverallStatus } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -250,28 +250,14 @@ export class FileImpl implements File, Scope {
         return parentHelper_worstParseStatusOfChildren(this);
     };
     getParseStatusForDashboard(): string {
-        var status = this.getParseStatus();
-        var str = "";
-        if (status === ParseStatus.valid) {
-            str = "ok";
-        } else if (status === ParseStatus.incomplete) {
-            str = "warning";
-        } else if (status === ParseStatus.invalid) {
-            str = "error";
-        }
-        return str;
+        return OverallStatus[parseStatusAsOverallStatus(this.getParseStatus())];
     }
     getCompileStatusForDashboard(): string {
-        var status = this.getCompileStatus();
         var str = "";
         if (this.getParseStatus() !== ParseStatus.valid) {
             str = "default";
-        } else if (status === CompileStatus.ok) {
-            str = "ok";
-        } else if (status === CompileStatus.unknownSymbol) {
-            str = "warning";
-        } else if (status === CompileStatus.error) {
-            str = "error";
+        } else {
+            str = OverallStatus[compileStatusAsOverallStatus(this.getCompileStatus())]
         }
         return str;
     }

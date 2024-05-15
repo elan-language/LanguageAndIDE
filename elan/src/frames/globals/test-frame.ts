@@ -26,7 +26,19 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     }
 
     override getOverallStatus(): OverallStatus {
-        return helper_overallStatus(this); //TODO: incorporate TestStatus into this
+        var overall = OverallStatus.error;
+        var parseCompile = helper_overallStatus(this);
+        if (parseCompile !== OverallStatus.ok) {
+            overall = parseCompile;
+        } else {
+            var test = this.getTestStatus();
+            if (test === TestStatus.pass) {
+                overall = OverallStatus.ok;
+            } else if (test === TestStatus.pending) {
+                overall = OverallStatus.warning;
+            }
+        }
+        return overall;
     }
 
     getTestStatus(): TestStatus {
