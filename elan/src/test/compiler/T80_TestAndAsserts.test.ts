@@ -93,8 +93,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test10", [
-        new AssertOutcome("fail", "9", "10", "assert13"),
-        new AssertOutcome("pass", "16", "16", "assert16")
+        new AssertOutcome(TestStatus.fail, "9", "10", "assert13"),
+        new AssertOutcome(TestStatus.pass, "16", "16", "assert16")
       ]]]);
   });
 
@@ -222,25 +222,25 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test3", [
-        new AssertOutcome("pass", "List [3, 2, 4, 0]", "List [3, 2, 4, 0]", "assert12")
+        new AssertOutcome(TestStatus.pass, "List [3, 2, 4, 0]", "List [3, 2, 4, 0]", "assert12")
       ]],
       ["test15", [
-        new AssertOutcome("pass", "Dictionary [2:b, 3:a, 4:c]", "Dictionary [2:b, 3:a, 4:c]", "assert24")
+        new AssertOutcome(TestStatus.pass, "Dictionary [2:b, 3:a, 4:c]", "Dictionary [2:b, 3:a, 4:c]", "assert24")
       ]],
       ["test27", [
-        new AssertOutcome("pass", "Hello World", "Hello World", "assert36")
+        new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")
       ]],
       ["test39", [
-        new AssertOutcome("pass", "0", "0", "assert48")
+        new AssertOutcome(TestStatus.pass, "0", "0", "assert48")
       ]],
       ["test54", [
-        new AssertOutcome("pass", "Hello", "Hello", "assert60")
+        new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")
       ]],
       ["test79", [
-        new AssertOutcome("pass", "a Foo", "a Foo", "assert88")
+        new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert88")
       ]],
       ["test91", [
-        new AssertOutcome("pass", "a Foo", "a Foo", "assert100")
+        new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert100")
       ]]
     ]);
   });
@@ -315,16 +315,16 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test3", [
-        new AssertOutcome("pass", "0.33", "0.33", "assert12")
+        new AssertOutcome(TestStatus.pass, "0.33", "0.33", "assert12")
       ]],
       ["test15", [
-        new AssertOutcome("pass", "1.00", "1.00", "assert24")
+        new AssertOutcome(TestStatus.pass, "1.00", "1.00", "assert24")
       ]],
       ["test27", [
-        new AssertOutcome("pass", "1.3", "1.3", "assert36")
+        new AssertOutcome(TestStatus.pass, "1.3", "1.3", "assert36")
       ]],
       ["test39", [
-        new AssertOutcome("pass", "4.4e+3", "4.4e+3", "assert48")
+        new AssertOutcome(TestStatus.pass, "4.4e+3", "4.4e+3", "assert48")
       ]]
     ]);
   });
