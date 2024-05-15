@@ -1,5 +1,5 @@
 export enum TestStatus {
-    pending,
     pass,
+    pending,
     fail
 }
