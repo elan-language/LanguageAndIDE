@@ -8,6 +8,7 @@ import { AssertActualField } from "../fields/assert-actual-field";
 import { assertKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { TestStatus } from "../test-status";
+import { AssertOutcome } from "../../system";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -15,6 +16,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
     expected: ValueRefField;
     testStatus: TestStatus;
     failMessage: string = "";
+    outcome?: AssertOutcome;
 
     constructor(parent: Parent) {
         super(parent);
@@ -56,6 +58,10 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.compileErrors = [];
         const expected = this.expected.compile(transforms);
         const actual = this.actual.compile(transforms);
-        return `${this.indent()}system.assert(${actual}, ${expected});`;
+        return `${this.indent()}_outcomes.push(system.assert(${actual}, ${expected}, "${this.htmlId}"));`;
+    }
+
+    setOutcome(outcome: AssertOutcome) {
+        this.outcome = outcome;
     }
 } 

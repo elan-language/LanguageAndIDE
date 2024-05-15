@@ -7,10 +7,11 @@ import { Profile } from "../frames/interfaces/profile";
 import { ParseStatus } from "../frames/status-enums";
 import { RunStatus } from "../frames/run-status";
 import { StdLib } from "../std-lib";
-import { System } from "../system";
+import { AssertOutcome, System } from "../system";
 import { runTests } from "../runner";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../frames/syntax-nodes/transforms";
+import { TestFrame } from "../frames/globals/test-frame";
 
 const codeContainer = document.querySelector('.elan-code');
 var file: File;
@@ -228,8 +229,8 @@ function updateContent(text: string) {
 			localStorage.setItem("elan-file", file.fileName);
 			(document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
 		});
-		// compile before updating status
-		file.compile();
+		// compile and run tests before updating status
+		runAllTests();
 	}
 
 	updateStatus();
@@ -311,7 +312,6 @@ const stdlib = new StdLib();
 const runButton = document.getElementById("run-button");
 const clearButton = document.getElementById("clear-button");
 const newButton = document.getElementById("new");
-const testButton = document.getElementById("test-button");
 
 const consoleWindow = document.getElementById("console")!;
 
@@ -374,22 +374,31 @@ newButton?.addEventListener("click", () => {
 	file.renderAsHtml().then(c => updateContent(c));
 });
 
-testButton?.addEventListener("click", () => {
+function updateTestResults(outcomes : [string, AssertOutcome[]][]) {
+	for(const outcome of outcomes) {
+		const [tid, asserts] = outcome;
+		const test = file.getById(tid) as TestFrame;
+		test.setAssertOutcomes(asserts);
+	}
+}
+
+function runAllTests() {
 	const jsCode = file.compile();
 
 	system.printer = printer;
 	system.inputter = inputter;
 
-	return doImport(jsCode).then(async (elan) => {
+	doImport(jsCode).then(async (elan) => {
 		if (elan.program) {
 			elan._inject(system, stdlib);
 			const [, tests] = await elan.program();
-			if (tests && tests.length > 0){
-				runTests(system, tests);
+			if (tests && tests.length > 0) {
+				const outcomes = runTests(tests);
+				updateTestResults(outcomes);
 			}
 		}
 	});
-});
+}
 
 const upload = document.getElementById('load') as Element;
 upload.addEventListener('click', chooser);

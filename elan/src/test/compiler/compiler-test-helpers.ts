@@ -8,6 +8,7 @@ import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
 import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../../frames/syntax-nodes/transforms";
+import { AssertOutcome } from "../../system";
 
 export function assertParses(file: FileImpl) {
     assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -37,9 +38,9 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
     assert.strictEqual(actual, expected);
 }
 
-export function assertDoesNotCompile(file: FileImpl, msgs : string[]) {
+export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
     file.compile();
-    
+
     const errors = file.compileErrors();
 
     for (var i = 0; i < msgs.length; i++) {
@@ -54,7 +55,7 @@ function doImport(str: string) {
     return import(url);
 }
 
-function executeCode(file: FileImpl, input? : string) {
+function executeCode(file: FileImpl, input?: string) {
 
     const jsCode = file.compile();
     const errors = file.compileErrors();
@@ -78,7 +79,7 @@ function executeCode(file: FileImpl, input? : string) {
     });
 }
 
-function executeTestCode(file: FileImpl, input? : string) {
+function executeTestCode(file: FileImpl, input?: string) {
 
     const jsCode = file.compile();
     const errors = file.compileErrors();
@@ -95,19 +96,19 @@ function executeTestCode(file: FileImpl, input? : string) {
         if (elan.program) {
             elan._inject(system, stdlib);
             const [, tests] = await elan.program();
-            return runTests(system, tests);
+            return runTests(tests);
         }
         return undefined;
     });
 }
 
 
-export async function assertObjectCodeExecutes(file: FileImpl, output: string, input? : string) {
+export async function assertObjectCodeExecutes(file: FileImpl, output: string, input?: string) {
     var actual;
-    
+
     try {
         const sl = await executeCode(file, input) as any;
-        actual = sl?.printed; 
+        actual = sl?.printed;
     }
     catch (e) {
         assert.fail((e as any).message ?? "");
@@ -115,20 +116,41 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
     assert.strictEqual(actual, output);
 }
 
-export async function assertTestObjectCodeExecutes(file: FileImpl, output : string) {
-    var actual;
-    
+export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutcomes: [string, AssertOutcome[]][]) {
+    var actualOutcomes: [string, AssertOutcome[]][];
+
     try {
-        const sl = await executeTestCode(file, "") as any;
-        actual = sl?.printed; 
+        actualOutcomes = await executeTestCode(file, "") as any;
     }
     catch (e) {
         assert.fail((e as any).message ?? "");
     }
-    assert.strictEqual(actual, output);
+
+    assert.strictEqual(actualOutcomes.length, expectedOutcomes.length, "mismatched all outcomes");
+
+
+    for (var i = 0; i < expectedOutcomes.length; i++) {
+
+        const ao = actualOutcomes[i];
+        const eo = expectedOutcomes[i];
+
+        assert.strictEqual(ao[0], eo[0], "mismatched test names");
+        assert.strictEqual(ao[1].length, eo[1].length, "mismatched outcomes");
+
+        for (var i = 0; i < ao[1].length; i++) {
+
+            const a = ao[1][i];
+            const e = eo[1][i];
+
+            assert.strictEqual(a.status, e.status);
+            assert.strictEqual(a.actual, e.actual);
+            assert.strictEqual(a.expected, e.expected);
+            assert.strictEqual(a.htmlId, e.htmlId);
+        }
+    }
 }
 
-export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg? : string) {
+export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg?: string) {
 
     try {
         await executeCode(file);
@@ -150,7 +172,7 @@ export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg? : stri
 export function ignore_test(name: string, test: (done: Done) => void) {
 }
 
-export function testHash(s : string) {
+export function testHash(s: string) {
     return Promise.resolve("");
 }
 
