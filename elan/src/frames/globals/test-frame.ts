@@ -1,3 +1,4 @@
+import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -85,8 +86,17 @@ end test\r
     public compile(transforms : Transforms): string {
         this.compileErrors = [];
 
-        return `_tests.push(["${this.testName.compile(transforms)}", () => {\r
+        return `_tests.push(["${this.htmlId}", (_outcomes) => {\r
 ${this.compileChildren(transforms)}\r
 }]);\r\n`;          
+    }
+
+    setAssertOutcomes(outcomes: AssertOutcome[]) {
+        for (const assert of this.getChildren().filter(c => c instanceof AssertStatement) as AssertStatement[]) {
+            const match = outcomes.filter(o => o.htmlId === assert.getHtmlId());
+            if (match.length === 1) {
+                assert.setOutcome(match[0]);
+            }
+        }
     }
 }

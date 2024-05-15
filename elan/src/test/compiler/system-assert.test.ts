@@ -5,14 +5,14 @@ suite('assert-tests', () => {
     test('Passes', async () => {
         const system = new System();
 
-        system.assert(1, 1);
-        system.assert(1.0, 1.0);
-        system.assert("str", "str"); 
+        system.assert(1, 1, "");
+        system.assert(1.0, 1.0, "");
+        system.assert("str", "str", ""); 
     });
 
     function assertFailHelper(system: System, actual : any, expected : any, message : string) {
         try {
-            system.assert(actual, expected);
+            system.assert(actual, expected, "");
             assert.fail("expect exception");
         }
         catch (e) {

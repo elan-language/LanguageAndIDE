@@ -1,3 +1,9 @@
+
+export class AssertOutcome {
+    constructor(public readonly status : string,  public readonly actual: string, public readonly expected: string, public readonly htmlId: string) {
+    }
+}
+
 export class System {
 
     private default(type : string) {
@@ -170,9 +176,10 @@ export class System {
         return true;
     }
 
-    assert(actual: any, expected: any) {
+    assert(actual: any, expected: any, htmlId: string) {
         if (!this.equals(actual, expected)) {
-            throw new Error(`actual ${actual}, expected ${expected}`);
+            return new AssertOutcome("fail", `${actual}`, `${expected}`, htmlId);
         }
+        return new AssertOutcome("pass", `${actual}`, `${expected}`, htmlId); 
     }
 }
