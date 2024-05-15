@@ -11,6 +11,7 @@ import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
+import { TestFrame } from "./globals/test-frame";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -46,6 +47,7 @@ export function isSelector(f?: any): f is AbstractSelector {
 export function isGlobal(f?: any): f is GlobalFrame {
     return !!f && 'isGlobal' in f;
 } 
+
 
 export function singleIndent() {
     return "  ";

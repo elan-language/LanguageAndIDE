@@ -7,6 +7,7 @@ import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
 import { Transforms } from "../syntax-nodes/transforms";
+import { TestStatus } from "../test-status";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
     isTest = true;
@@ -21,6 +22,17 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         var selector = this.getChildren().pop()!;
         this.getChildren().push(selector);
     }
+
+    getTestStatus(): TestStatus {
+        var tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        var worst = tests.reduce((prev,t) => this.worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        return worst;
+    }
+    
+    private worstOf(a: TestStatus, b: TestStatus) {
+        return a < b ? a : b;
+    }
+
     initialKeywords(): string {
         return testKeyword;
     }

@@ -232,7 +232,13 @@ export class FileImpl implements File, Scope {
     }
 
     getTestStatus(): TestStatus {
-        return TestStatus.pending;
+        var tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        var worst = tests.reduce((prev,t) => this.worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        return worst;
+    }
+
+    private worstOf(a: TestStatus, b: TestStatus) {
+        return a < b ? a : b;
     }
 
     getRunStatus(): RunStatus {
