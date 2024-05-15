@@ -2,11 +2,13 @@ import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { helper_overallStatus } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
+import { OverallStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 import { TestStatus } from "../test-status";
 
@@ -24,14 +26,27 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         this.getChildren().push(selector);
     }
 
-    getTestStatus(): TestStatus {
-        var tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
-        var worst = tests.reduce((prev,t) => this.worstOf(t.getTestStatus(), prev), TestStatus.pending);
-        return worst;
+    override getOverallStatus(): OverallStatus {
+        var overall = OverallStatus.error;
+        var parseCompile = helper_overallStatus(this);
+        if (parseCompile !== OverallStatus.ok) {
+            overall = parseCompile;
+        } else {
+            var test = this.getTestStatus();
+            if (test === TestStatus.pass) {
+                overall = OverallStatus.ok;
+            } else if (test === TestStatus.pending) {
+                overall = OverallStatus.warning;
+            }
+        }
+        return overall;
     }
-    
-    private worstOf(a: TestStatus, b: TestStatus) {
-        return a < b ? a : b;
+
+    getTestStatus(): TestStatus {
+        const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
+        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        return worst;
     }
 
     initialKeywords(): string {

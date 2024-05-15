@@ -9,6 +9,8 @@ import { assertKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { TestStatus } from "../test-status";
 import { AssertOutcome } from "../../system";
+import { CompileStatus, OverallStatus } from "../status-enums";
+import { helper_compileMsgAsHtml } from "../helpers";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -47,7 +49,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
     }
 
     renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>assert </keyword>${this.actual.renderAsHtml()}<keyword> is </keyword>${this.expected.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
+        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>assert </keyword>${this.actual.renderAsHtml()}<keyword> is </keyword>${this.expected.renderAsHtml()}${this.compileOrTestMsgAsHtml()}</statement>`;
     }
    
     renderAsSource(): string {
@@ -63,5 +65,31 @@ export class AssertStatement extends AbstractFrame implements Statement{
 
     setOutcome(outcome: AssertOutcome) {
         this.outcome = outcome;
+    }
+
+    compileOrTestMsgAsHtml(): string {
+        var msg = "";
+        if (this.getCompileStatus() === CompileStatus.ok) {
+            msg = this.testMsgAsHtml();
+        } else {
+            msg = helper_compileMsgAsHtml(this);
+        }
+        return msg;
+    }
+
+    testMsgAsHtml(): string {
+        var cls = "";
+        var msg = "";
+        if (this.testStatus === TestStatus.fail) {
+            cls = OverallStatus[OverallStatus.error];
+            msg = this.failMessage;
+        } else if (this.testStatus === TestStatus.pass) {
+            cls = OverallStatus[OverallStatus.ok];
+            msg = `pass`;
+        } else {
+            cls = OverallStatus[OverallStatus.warning];
+            msg = `not run`;
+        }
+        return ` <msg class="${cls}">${msg}</msg>`;
     }
 } 

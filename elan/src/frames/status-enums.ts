@@ -13,8 +13,8 @@ export enum CompileStatus {
 }
 
 export enum OverallStatus {
-    ok, 
+    error,
     warning, 
-    error
+    ok
 }
 

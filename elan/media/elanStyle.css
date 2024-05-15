@@ -40,7 +40,7 @@ span {
 keyword {
     color: var(--keyword);
 } 
-method, method field.valid text {
+method, method field.ok text {
     color: var(--method);
 }
 type {
@@ -50,14 +50,14 @@ string {
     color: var(--string);
     white-space: pre;
 }
-field.incomplete, field.incomplete  keyword, field.incomplete  type, field.incomplete  string, field.incomplete method {
+field.warning, field.warning  keyword, field.warning  type, field.warning  string, field.warning method {
     color: var(--warning);
 }
-.invalid field, field.invalid  keyword, field.invalid  type, field.invalid  string, field.invalid method {
+.error field, field.error  keyword, field.error  type, field.error  string, field.error method {
     color: var(--error);
 }
 /* Header & comments */
-comment *, comment field.valid text  {
+comment *, comment field.ok text  {
     color: var(--comment);
 }
 
@@ -68,13 +68,13 @@ comment *, comment field.valid text  {
 header, header * {
     color: var(--comment);
 }
-header .invalid {
+header .error {
     color: var(--error)
 }
-header .incomplete {
+header .warning {
     color: var(--warning)
 }
-header .valid {
+header .ok {
     color: var(--ok)
 }
 
@@ -116,41 +116,41 @@ expand {
     margin-right: 1ch;
     /* cursor: pointer; why only this? */
 }
-/* colour corresponds to worst of parseStatus and compileStatus*/
+/* colour corresponds to worst of parseStatus and compileStatus (and testStatus - for tests only)*/
 .multiline.collapsed expand {
     background-color: var(--ok);
 }
-.multiline.collapsed.incomplete expand, .multiline.collapsed.unknownSymbol expand {
+.multiline.collapsed.warning expand {
     background-color: var(--warning);
 }
-.multiline.collapsed.invalid expand, .multiline.collapsed.error expand {
+.multiline.collapsed.error expand {
     background-color: var(--error);
 }
 
 /* Fields */
 /* field-text*/
-field.invalid text {
+field.error text {
     color: var(--error);
 }
-field.incomplete text {
+field.warning text {
     color: var(--warning);
 }
-field.valid text {
+field.ok text {
     color: var(--defaultText);
 }
-field.selected.invalid text, field.selected.invalid input  {
+field.selected.error text, field.selected.error input  {
     background-color: var(--error);
     color: var(--defaultText);
 }
-field.selected.incomplete text, field.selected.incomplete input {
+field.selected.warning text, field.selected.warning input {
     background-color: var(--warning);
     color: var(--defaultText);
 }
-field.selected.valid text, field.selected.valid input {
+field.selected.ok text, field.selected.ok input {
     background-color: var(--ok);
     color: var(--defaultText);
 }
-field.selected.valid.optional.empty text, field.selected.valid.optional.empty input {
+field.selected.ok.optional.empty text, field.selected.ok.optional.empty input {
     background-color: var(--optional);
     color: var(--reverseText);
 }

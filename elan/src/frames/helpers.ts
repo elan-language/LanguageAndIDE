@@ -6,12 +6,9 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { Selectable } from "./interfaces/selectable";
-import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
-import { TestFrame } from "./globals/test-frame";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -91,10 +88,9 @@ export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
     /* To display first message only use: */
     var msg =  loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";               
     var cls = "";
-    if (loc.getCompileStatus() === CompileStatus.error ) {
-      cls = OverallStatus[OverallStatus.error];
-    } else if (loc.getCompileStatus() === CompileStatus.unknownSymbol ){
-      cls = OverallStatus[OverallStatus.warning];
+    var compile = compileStatusAsOverallStatus(loc.getCompileStatus());
+    if (compile !== OverallStatus.ok) {
+        cls = OverallStatus[compile];
     }
     return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
@@ -109,18 +105,32 @@ export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus
     return result;
 }
 
-export function helper_overallStatus(loc: Frame | Field): string {
-    var result = "";
-    var parse = loc.getParseStatus();
-    var compile = loc.getCompileStatus();
-    if (parse === ParseStatus.invalid || compile === CompileStatus.error ) {
-        result = "invalid"; //TODO: specified as literals as we might change these 
-    } else if (parse === ParseStatus.incomplete || compile === CompileStatus.unknownSymbol ) {
-        result = "incomplete";
-    } else if (parse === ParseStatus.valid && compile === CompileStatus.ok ) {
-        result = "valid";
-    } else if (parse === ParseStatus.empty) {
-        result = "empty";
+export function helper_overallStatus(loc: Frame | Field): OverallStatus {
+    var parse = parseStatusAsOverallStatus(loc.getParseStatus());
+    var compile = compileStatusAsOverallStatus(loc.getCompileStatus());
+    return worstOf(parse, compile);
+}
+
+function worstOf(a: OverallStatus, b: OverallStatus): OverallStatus {
+    return a < b ? a : b;
+}
+
+export function compileStatusAsOverallStatus(cs: CompileStatus) {
+    var overall = OverallStatus.error;
+    if (cs === CompileStatus.ok) {
+        overall = OverallStatus.ok;
+    } else if (cs === CompileStatus.unknownSymbol) {
+        overall = OverallStatus.warning;
     }
-    return result;
+    return overall;
+}
+
+export function parseStatusAsOverallStatus(ps: ParseStatus) {
+    var overall = OverallStatus.error;
+    if (ps === ParseStatus.valid) {
+        overall = OverallStatus.ok;
+    } else if (ps === ParseStatus.incomplete) {
+        overall = OverallStatus.warning;
+    }
+    return overall;
 }

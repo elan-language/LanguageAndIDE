@@ -29,7 +29,7 @@ import { UnknownSymbol } from '../symbols/unknown-symbol';
 import { transforms } from './compiler/compiler-test-helpers';
 
 // flag to update test file 
-var updateTestFiles = false;
+var updateTestFiles = true;
 
 export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
