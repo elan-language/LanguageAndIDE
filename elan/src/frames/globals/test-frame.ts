@@ -24,13 +24,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     }
 
     getTestStatus(): TestStatus {
-        var tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
-        var worst = tests.reduce((prev,t) => this.worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
+        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
         return worst;
-    }
-    
-    private worstOf(a: TestStatus, b: TestStatus) {
-        return a < b ? a : b;
     }
 
     initialKeywords(): string {
