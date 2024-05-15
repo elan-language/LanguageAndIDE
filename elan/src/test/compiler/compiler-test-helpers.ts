@@ -137,10 +137,10 @@ export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutco
         assert.strictEqual(ao[0], eo[0], "mismatched test names");
         assert.strictEqual(ao[1].length, eo[1].length, "mismatched outcomes");
 
-        for (var i = 0; i < ao[1].length; i++) {
+        for (var j = 0; j < ao[1].length; j++) {
 
-            const a = ao[1][i];
-            const e = eo[1][i];
+            const a = ao[1][j];
+            const e = eo[1][j];
 
             assert.strictEqual(a.status, e.status);
             assert.strictEqual(a.actual, e.actual);
