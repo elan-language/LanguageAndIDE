@@ -5,14 +5,15 @@ import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
-import { AssertStatement } from "../statements/assert-statement";
 import { Transforms } from "../syntax-nodes/transforms";
+import { TestStatus } from "../test-status";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
     isTest = true;
     isGlobal = true;
     public testName : IdentifierField;
     file: File;
+    status: TestStatus;
 
     constructor(parent: File) {
         super(parent);
@@ -20,6 +21,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         this.testName = new IdentifierField(this);
         var selector = this.getChildren().pop()!;
         this.getChildren().push(selector);
+        this.status = TestStatus.pending;
     }
     initialKeywords(): string {
         return testKeyword;

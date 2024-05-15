@@ -7,17 +7,21 @@ import { Statement } from "../interfaces/statement";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { assertKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { TestStatus } from "../test-status";
 
 export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
     actual: AssertActualField;
     expected: ValueRefField;
+    status: TestStatus;
+    failMessage: string = "";
 
     constructor(parent: Parent) {
         super(parent);
         this.actual = new AssertActualField(this);
         this.expected = new ValueRefField(this, /\r|\n/);
         this.expected.setPlaceholder("expected value");
+        this.status = TestStatus.pending;
     }
 
     initialKeywords(): string {
