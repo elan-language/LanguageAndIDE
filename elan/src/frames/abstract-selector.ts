@@ -5,6 +5,9 @@ import { Parent } from "./interfaces/parent";
 import {CodeSource } from "./code-source";
 import { AbstractFrame } from "./abstract-frame";
 import { Profile } from "./interfaces/profile";
+import { MainFrame } from "./globals/main-frame";
+import { Overtyper } from "./overtyper";
+import { FrameWithStatements } from "./frame-with-statements";
 
 export abstract class AbstractSelector extends AbstractFrame {
     isSelector = true;
@@ -12,6 +15,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     text: string = "";
     label: string = "new code";
     protected profile: Profile;
+    overtyper  = new Overtyper();
 
     constructor(parent: Parent) {
         super(parent);
@@ -68,7 +72,16 @@ export abstract class AbstractSelector extends AbstractFrame {
         var newFrame: Frame = func(parent);
         parent.addChildBefore(newFrame, this);
         newFrame.selectFirstField();
-        newFrame.getFields()[0]?.overtyper.consumeChars(pendingChars, 500);
+        const fields = newFrame.getFields();
+        if (fields.length > 0) {
+            fields[0].overtyper.consumeChars(pendingChars, 500);
+        }
+        else if (newFrame instanceof FrameWithStatements) {
+            const ss = newFrame.getFirstChild();
+            if (ss instanceof AbstractSelector) {
+                ss.overtyper.consumeChars(pendingChars, 500);
+            }
+        }
 
         return newFrame;
     }
@@ -142,16 +155,18 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     processOptions(key: string | undefined) {
-        var options = this.optionsMatchingUserInput(this.text + key);
-        if (options.length > 1 ) {
-            this.text += this.commonStartText(this.text+ key).substring(this.text.length);
-        } else if (options.length === 1) {
-            var typeToAdd = options[0][0];
+        if (this.overtyper.preProcessor(key)) {
+            var options = this.optionsMatchingUserInput(this.text + key);
+            if (options.length > 1) {
+                this.text += this.commonStartText(this.text + key).substring(this.text.length);
+            } else if (options.length === 1) {
+                var typeToAdd = options[0][0];
 
-            const pendingChars = typeToAdd.slice((this.text + key).length);
+                const pendingChars = typeToAdd.slice((this.text + key).length);
 
-            this.addFrame(typeToAdd, pendingChars);
-            this.text = "";
+                this.addFrame(typeToAdd, pendingChars);
+                this.text = "";
+            }
         }
     }
 

@@ -1,15 +1,17 @@
 export class Overtyper {
 
-    preProcessor : (s : string) => boolean = (s) => true;
+    preProcessor : (s : string | undefined) => boolean = (s) => true;
     toFilter : string = "";
 
-    private activePreprocessor(k : string) {
-        if (this.toFilter.length > 0 && k === this.toFilter[0]) {
-            this.toFilter = this.toFilter.slice(1);
-            return false;
+    private activePreprocessor(k: string | undefined) {
+        if (k) {
+            if (this.toFilter.length > 0 && k === this.toFilter[0]) {
+                this.toFilter = this.toFilter.slice(1);
+                return false;
+            }
+            this.toFilter = "";
+            this.preProcessor = (s) => true;
         }
-        this.toFilter = "";
-        this.preProcessor = (s) => true;
         return true;
     }
 
