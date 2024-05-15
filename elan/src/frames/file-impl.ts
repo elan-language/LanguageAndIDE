@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { compileStatusAsOverallStatus, expandCollapseAll, isSelector, parseStatusAsOverallStatus } from "./helpers";
+import { helper_compileStatusAsOverallStatus, expandCollapseAll, isSelector, helper_parseStatusAsOverallStatus, helper_testStatusAsOverallStatus } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -237,6 +237,15 @@ export class FileImpl implements File, Scope {
         const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
         return worst;
     }
+    getTestStatusForDashboard(): string {
+        var str = "";
+        if (this.getParseStatus() !== ParseStatus.valid || this.getCompileStatus() !== CompileStatus.ok) {
+            str = "default";
+        } else {
+            str = OverallStatus[helper_testStatusAsOverallStatus(this.getTestStatus())];
+        }
+        return str;
+    }
 
     getRunStatus(): RunStatus {
         return this._runStatus;
@@ -250,14 +259,14 @@ export class FileImpl implements File, Scope {
         return parentHelper_worstParseStatusOfChildren(this);
     };
     getParseStatusForDashboard(): string {
-        return OverallStatus[parseStatusAsOverallStatus(this.getParseStatus())];
+        return OverallStatus[helper_parseStatusAsOverallStatus(this.getParseStatus())];
     }
     getCompileStatusForDashboard(): string {
         var str = "";
         if (this.getParseStatus() !== ParseStatus.valid) {
             str = "default";
         } else {
-            str = OverallStatus[compileStatusAsOverallStatus(this.getCompileStatus())]
+            str = OverallStatus[helper_compileStatusAsOverallStatus(this.getCompileStatus())]
         }
         return str;
     }

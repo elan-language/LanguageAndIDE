@@ -1,7 +1,7 @@
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { helper_overallStatus } from "../helpers";
+import { helper_worstStatusOfParseCompile } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -27,7 +27,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
     override getOverallStatus(): OverallStatus {
         var overall = OverallStatus.error;
-        var parseCompile = helper_overallStatus(this);
+        var parseCompile = helper_worstStatusOfParseCompile(this);
         if (parseCompile !== OverallStatus.ok) {
             overall = parseCompile;
         } else {
