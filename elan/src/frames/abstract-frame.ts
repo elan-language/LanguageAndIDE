@@ -319,11 +319,11 @@ export abstract class AbstractFrame implements Frame {
         this.pushClass(this.collapsed, "collapsed");
         this.pushClass(this.selected, "selected");
         this.pushClass(this.focused, "focused");
-        this._classes.push(this.overallStatus());
+        this._classes.push(this.getOverallStatus());
     };
 
-    private overallStatus(): string {
-        return helper_overallStatus(this);
+    protected getOverallStatus(): string {
+        return helper_overallStatus(this); //TODO
     }
 
     protected cls(): string {

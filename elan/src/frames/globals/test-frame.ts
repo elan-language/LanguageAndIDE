@@ -1,6 +1,7 @@
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { helper_overallStatus } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -22,6 +23,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         var selector = this.getChildren().pop()!;
         this.getChildren().push(selector);
     }
+
+    override getOverallStatus(): string {
+        return helper_overallStatus(this); //TODO: incorporate TestStatus into this
+    }
+
 
     getTestStatus(): TestStatus {
         const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
