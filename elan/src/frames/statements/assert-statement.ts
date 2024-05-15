@@ -13,7 +13,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
     isStatement = true;
     actual: AssertActualField;
     expected: ValueRefField;
-    status: TestStatus;
+    testStatus: TestStatus;
     failMessage: string = "";
 
     constructor(parent: Parent) {
@@ -21,7 +21,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
         this.actual = new AssertActualField(this);
         this.expected = new ValueRefField(this, /\r|\n/);
         this.expected.setPlaceholder("expected value");
-        this.status = TestStatus.pending;
+        this.testStatus = TestStatus.pending;
     }
 
     initialKeywords(): string {

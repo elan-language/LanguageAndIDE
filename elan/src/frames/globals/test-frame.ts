@@ -13,7 +13,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     isGlobal = true;
     public testName : IdentifierField;
     file: File;
-    status: TestStatus;
+    testStatus: TestStatus;
 
     constructor(parent: File) {
         super(parent);
@@ -21,7 +21,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         this.testName = new IdentifierField(this);
         var selector = this.getChildren().pop()!;
         this.getChildren().push(selector);
-        this.status = TestStatus.pending;
+        this.testStatus = TestStatus.pending;
     }
     initialKeywords(): string {
         return testKeyword;
