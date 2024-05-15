@@ -6,14 +6,9 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { Selectable } from "./interfaces/selectable";
-import { AbstractParseNode } from "./parse-nodes/abstract-parse-node";
 import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
-import { TestFrame } from "./globals/test-frame";
-import { mustBeCompatibleType } from "./compile-rules";
-import { TestStatus } from "./test-status";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
