@@ -5,9 +5,10 @@ import { Frame } from "./frame";
 import { StatementFactory } from "./statement-factory";
 import { File} from "./file";
 import { Transforms } from "../syntax-nodes/transforms";
+import { Scope } from "./scope";
 
 
-export interface Parent {
+export interface Parent extends Scope{
     //External use
     isParent: boolean;
 
