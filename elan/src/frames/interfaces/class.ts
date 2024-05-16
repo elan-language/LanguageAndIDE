@@ -1,5 +1,5 @@
-import { Scope } from "./scope";
+import { Frame } from "./frame";
 
-export interface Class extends Scope {
+export interface Class extends Frame {
 
 }

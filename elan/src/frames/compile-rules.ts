@@ -25,7 +25,6 @@ import { Transforms } from "./syntax-nodes/transforms";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { Property } from "./class-members/property";
 import { FunctionMethod } from "./class-members/function-method";
-import { GlobalProcedure } from "./globals/global-procedure";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 
@@ -323,7 +322,7 @@ export function mustNotBeParameter(assignable: AstQualifiedNode, parent: Parent,
 }
 
 
-export function mustNotBeCounter(assignable: any, compileErrors: CompileError[], location: string) {
+export function mustNotBeCounter(assignable: AstNode, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.counter) {
@@ -331,7 +330,7 @@ export function mustNotBeCounter(assignable: any, compileErrors: CompileError[],
     }
 }
 
-export function mustNotBeConstant(assignable: any, compileErrors: CompileError[], location: string) {
+export function mustNotBeConstant(assignable: AstNode, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.program) {

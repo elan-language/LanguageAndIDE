@@ -13,16 +13,17 @@ import { Class } from "./interfaces/class";
 import { Scope } from "./interfaces/scope";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { AstNode } from "./interfaces/ast-node";
+import { Selectable } from "./interfaces/selectable";
 
-export function isCollapsible(f?: any): f is Collapsible {
+export function isCollapsible(f?: Selectable): f is Collapsible {
     return !!f && 'isCollapsible' in f;
 }
 
-export function isFile(f?: any): f is File {
+export function isFile(f?: Scope): f is File {
     return !!f && 'isFile' in f;
 }
 
-export function isClass(f?: any): f is Class {
+export function isClass(f?: Scope): f is Class {
     return !!f && 'isClass' in f;
 }
 
