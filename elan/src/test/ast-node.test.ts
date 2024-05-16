@@ -1,5 +1,5 @@
 import { ExprNode } from '../frames/parse-nodes/expr-node';
-import { testAST, stubField, boolType, floatType, intType, stringType } from './testHelpers';
+import { testAST, stubField, boolType, floatType, intType, stringType, unknownType } from './testHelpers';
 import { LitBoolean } from '../frames/parse-nodes/lit-boolean';
 import { LitInt } from '../frames/parse-nodes/lit-int';
 import { LitFloat } from '../frames/parse-nodes/lit-float';
@@ -31,26 +31,27 @@ import { Dictionary } from '../frames/parse-nodes/dictionary';
 import { LitValueNode } from '../frames/parse-nodes/lit-value';
 import { ignore_test } from './compiler/compiler-test-helpers';
 import { DictionaryType } from '../symbols/dictionary-type';
+import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 
 suite('ASTNodes', () => {
 
 	test("ExprNode", () => {
-		// testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", floatType);
-		// testAST(new ExprNode(), stubField, "a", "a", intType);
-		// testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", floatType); 
-		// testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", floatType);
-		// testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType); 
+		testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
+		testAST(new ExprNode(), stubField, "a", "a", intType);
+		testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", floatType); 
+		testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", floatType);
+		testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType); 
 
-		// testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", floatType);
-		// testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", floatType);
+		testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
+		testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", intType);
 		testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
-		// const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
-		// testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
-		// testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
-		// testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
+		const ast = "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
+		testAST(new ExprNode(), stubField, "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())", ast, intType);
+		testAST(new ExprNode(), stubField, "default String", "Default (Type String)", stringType);
+		testAST(new ExprNode(), stubField, "default List<of Int>", "Default (Type List<Type Int>)", new ListType(intType));
 
-		// const ast1 = "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
-		// testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
+		const ast1 = "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
+		testAST(new ExprNode(), stubField, "p with [x set to p.x + 3, y set to p.y - 1]", ast1, new ClassType("p"));
 	});
 
 	test("Unary", () => {
@@ -96,14 +97,14 @@ suite('ASTNodes', () => {
 	});
 
 	test("Function", () => {
-		// testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
-		// testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
-		// testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `bar(x, 1, "hello")`, 'Func Call bar (x, 1, "hello")', stringType);
+		testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
 		testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call foo ()", intType);
-		// testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call _stdlib.foo ()", intType);
-		// testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
-		// testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
-		// testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
+		testAST(new FunctionCallNode(), stubField, `library.foo()`, "Func Call library.foo ()", intType);
+		testAST(new FunctionCallNode(), stubField, `isBefore(b[0])`, "Func Call isBefore (b[0])", boolType);
+		testAST(new FunctionCallNode(), stubField, `a.isBefore(b[0])`, "Func Call a.isBefore (b[0])", boolType);
+		testAST(new FunctionCallNode(), stubField, `a[0].isBefore(b[0])`, "Func Call a[0].isBefore (b[0])", boolType);
 	});
 
 	test("List", () => {
@@ -111,7 +112,6 @@ suite('ASTNodes', () => {
 		testAST(new ListNode(() => new ListNode(() => new LitInt())), stubField, `[[1,2], [3], [4,5,6]]`, "[[1, 2], [3], [4, 5, 6]]", new ListType(new ListType(intType)));
 		testAST(new ListNode(() => new LitString()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
 		testAST(new ListNode(() => new LiteralNode()), stubField, `["apple", "pear"]`, '["apple", "pear"]', new ListType(stringType));
-
 		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , func(a, 3) -1, new Foo()]`, "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]", new ListType(intType));
 		testAST(new ListNode(() => new ExprNode()), stubField, `[a, 3+ 4 , foo(a, 3) -1]`, "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]", new ListType(intType));
 	});
@@ -152,7 +152,6 @@ suite('ASTNodes', () => {
 	});
 
 	test("Dictionary", () => {
-
 		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37]`, `[("a":37)]`, new DictionaryType(stringType, intType));
 		testAST(new Dictionary(() => new LitString(), () => new LitInt()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
 		testAST(new Dictionary(() => new LitValueNode(), () => new LitValueNode()), stubField, `["a":37, "b":42]`, `[("a":37), ("b":42)]`, new DictionaryType(stringType, intType));
@@ -160,7 +159,6 @@ suite('ASTNodes', () => {
 	});
 
 	test("LitTuple", () => {
-
 		testAST(new LitTuple(), stubField, `(3,4)`, "(3, 4)", new TupleType([intType, intType]));
 		testAST(new LitTuple(), stubField, `(3,"a", "hello", 4.1, true)`, `(3, "a", "hello", 4.1, true)`, new TupleType([intType, stringType, stringType, floatType, boolType]));
 		testAST(new LitTuple(), stubField, `((3,4), ("a", true))`, `((3, 4), ("a", true))`,
@@ -175,25 +173,23 @@ suite('ASTNodes', () => {
 	test("LitNode", () => {
 		testAST(new LiteralNode(), stubField, `"hello"`, `"hello"`, stringType);
 		testAST(new LiteralNode(), stubField, `123`, "123", intType);
-		//testAST(new LiteralNode(), stubField, `["a":37, 42:"b"]`, "", intType);
+		testAST(new LiteralNode(), stubField, `["a":37, 42:"b"]`, `[("a":37), (42:"b")]`, new DictionaryType(stringType, intType));
 		testAST(new LiteralNode(), stubField, `[(3,4), (5,6)]`, "[(3, 4), (5, 6)]", new ListType(new TupleType([intType, intType])));
 		testAST(new LiteralNode(), stubField, `["apple", "pear"]`, `["apple", "pear"]`, new ListType(stringType));
 	});
 
 	test("Var", () => {
 		testAST(new VarRefNode(), stubField, `a`, "a", intType);
-		//testAST(new VarRefNode(), stubField, `result`, "", intType);
+		testAST(new VarRefNode(), stubField, `result`, "result", unknownType);
 		testAST(new VarRefNode(), stubField, `lst`, "lst", new ListType(intType));
 		testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
 		testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
 		testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
-		//testAST(new VarRefNode(), stubField, `property.lst[3..4]`, "property.lst[Range 3..4]", new ListType(intType));
 		testAST(new VarRefNode(), stubField, `bar.lst[..4]`, "bar.lst[Range ..4]", new ListType(intType));
-		//testAST(new VarRefNode(), stubField, `property.bar.foo`, "property.bar.foo", intType);
 	});
 
 	ignore_test("DeconList", () => {
-		//testAST(new DeconstructedList(), stubField, `[a:b]`, "[a:b]");
+		testAST(new DeconstructedList(), stubField, `[a:b]`, "[a:b]", unknownType);
 	});
 
 	test("New", () => {

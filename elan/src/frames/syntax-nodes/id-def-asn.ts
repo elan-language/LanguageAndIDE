@@ -18,20 +18,6 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
 
     compile(): string {
         this.compileErrors = [];
-        // if (isMember(this.scope)) {
-        //     // don't prefix properties with this
-        //     return this.id;
-        // }
-        // const symbol = this.scope.resolveSymbol(this.id, this.scope);
-        // if (symbol?.symbolScope === SymbolScope.stdlib) {
-        //     return `_stdlib.${this.id}`;
-        // }
-        // if (symbol?.symbolScope === SymbolScope.property) {
-        //     return `this.${this.id}`;
-        // }
-
-        // mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
-
         return this.id;
     }
 
