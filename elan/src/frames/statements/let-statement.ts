@@ -24,7 +24,11 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     symbolType(transforms: Transforms) {
         return UnknownType.Instance;
     }
-    symbolScope?: SymbolScope | undefined;
+    
+    get symbolScope() : SymbolScope {
+        return SymbolScope.local;
+    }
+    
     initialKeywords(): string {
         return letKeyword;
     }

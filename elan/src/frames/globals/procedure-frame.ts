@@ -12,6 +12,7 @@ import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ISymbol, Scope {
     public name: IdentifierField;
@@ -30,6 +31,8 @@ export abstract class ProcedureFrame extends FrameWithStatements implements ISym
     get symbolId() {
         return this.name.text;
     }
+
+    abstract get symbolScope() : SymbolScope;
 
     symbolType(transforms : Transforms) {
         const pt = this.params.symbolTypes(transforms);

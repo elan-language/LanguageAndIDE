@@ -5,5 +5,5 @@ import { ISymbolType } from "./symbol-type";
 export interface ISymbol {
     symbolId: string;
     symbolType(transforms : Transforms): ISymbolType;
-    symbolScope? : SymbolScope;
+    symbolScope : SymbolScope;
 }

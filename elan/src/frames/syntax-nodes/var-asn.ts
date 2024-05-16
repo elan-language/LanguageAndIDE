@@ -118,14 +118,14 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     }
 
 
-    get rootSymbolType() {
+    rootSymbolType() {
         const currentScope = this.updateScope(this.scope);
         const rootType = currentScope.resolveSymbol(this.id, transforms(), currentScope).symbolType(transforms());
         return rootType;
     }
 
     symbolType() {
-        const rootType = this.rootSymbolType;
+        const rootType = this.rootSymbolType();
         if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
             return rootType.ofType;
         }

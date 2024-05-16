@@ -23,6 +23,11 @@ import { InFunctionScope } from "./syntax-nodes/ast-helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { Transforms } from "./syntax-nodes/transforms";
 import { SymbolScope } from "./symbols/symbol-scope";
+import { Property } from "./class-members/property";
+import { FunctionMethod } from "./class-members/function-method";
+import { GlobalProcedure } from "./globals/global-procedure";
+import { ProcedureFrame } from "./globals/procedure-frame";
+import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
 
@@ -106,8 +111,8 @@ export function mustBeAbstractClass(classType: ClassDefinitionType, compileError
     }
 }
 
-export function mustBePublicProperty(property: any, compileErrors: CompileError[], location: string) {
-    if (property.constructor.name === "Property" && property.private === true) {
+export function mustBePublicProperty(property: ISymbol, compileErrors: CompileError[], location: string) {
+    if (property instanceof Property && property.private === true) {
         compileErrors.push(new CompileError(`Cannot reference private property`, location, false));
     }
 }
@@ -292,8 +297,8 @@ export function mustBeCompatibleNode(lhs: AstNode, rhs: AstNode, compileErrors: 
     mustBeCompatibleType(lst, rst, compileErrors, location);
 }
 
-export function mustNotBePropertyOnFunctionMethod(assignable: any, parent: Parent, compileErrors: CompileError[], location: string) {
-    if (parent.constructor.name === "FunctionMethod") {
+export function mustNotBePropertyOnFunctionMethod(assignable: AstNode, parent: Parent, compileErrors: CompileError[], location: string) {
+    if (parent instanceof FunctionMethod) {
         const s = assignable.symbolScope;
 
         if (s !== SymbolScope.local) {
@@ -302,11 +307,11 @@ export function mustNotBePropertyOnFunctionMethod(assignable: any, parent: Paren
     }
 }
 
-export function mustNotBeParameter(assignable: any, parent: Parent, compileErrors: CompileError[], location: string) {
+export function mustNotBeParameter(assignable: AstQualifiedNode, parent: Parent, compileErrors: CompileError[], location: string) {
     const s = assignable.symbolScope;
 
-    if (parent.constructor.name === "GlobalProcedure") {
-        if (s === SymbolScope.parameter && !(assignable.rootSymbolType instanceof ArrayType)) {
+    if (parent instanceof ProcedureFrame) {
+        if (s === SymbolScope.parameter && !(assignable.rootSymbolType() instanceof ArrayType)) {
             compileErrors.push(new CompileError(`May not mutate parameter`, location, false));
         }
     }

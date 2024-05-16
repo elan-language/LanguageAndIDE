@@ -7,6 +7,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 import { Transforms } from "./transforms";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
@@ -35,7 +36,8 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
             if (p.id.trim() === id) {
                 return {
                     symbolId: id,
-                    symbolType: () => p.symbolType()
+                    symbolType: () => p.symbolType(),
+                    symbolScope: SymbolScope.local
                 };
             }
         }

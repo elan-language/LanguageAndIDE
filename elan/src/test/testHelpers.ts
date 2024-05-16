@@ -27,6 +27,7 @@ import { FunctionType } from '../frames/symbols/function-type';
 import { GenericParameterType } from '../frames/symbols/generic-parameter-type';
 import { UnknownSymbol } from '../frames/symbols/unknown-symbol';
 import { transforms } from './compiler/compiler-test-helpers';
+import { SymbolScope } from '../frames/symbols/symbol-scope';
 
 // flag to update test file 
 var updateTestFiles = true;
@@ -388,26 +389,31 @@ export const unknownType = UnknownType.Instance;
 const stubIntSymbol = {
   symbolId: "a",
   symbolType: () => intType,
+  symbolScope : SymbolScope.unknown
 } as ISymbol;
 
 const stubFloatSymbol = {
   symbolId: "b",
   symbolType: () => floatType,
+  symbolScope : SymbolScope.unknown
 } as ISymbol;
 
 const stubStringSymbol = {
   symbolId: "bar",
   symbolType: () => stringType,
+  symbolScope : SymbolScope.unknown
 } as ISymbol;
 
 const stubBoolSymbol = {
   symbolId: "bar",
   symbolType: () => boolType,
+  symbolScope : SymbolScope.unknown
 } as ISymbol;
 
 const stubClassSymbol = {
   symbolId: "p",
   symbolType: () => new ClassType("p"),
+  symbolScope : SymbolScope.unknown
 } as ISymbol;
 
 const stubHolder = {
@@ -427,10 +433,10 @@ const stubHolder = {
       case "attempt": return stubBoolSymbol;
       case "target": return stubStringSymbol;
       case "first": return stubIntSymbol;
-      case "lst": return { symbolId: "", symbolType: () => new ListType(intType) };
-      case "lst1": return { symbolId: "", symbolType: () => new ListType(stringType) };
-      case "simpleGeneric": return { symbolId: "", symbolType: () => new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false)};
-      case "getItem": return { symbolId: "", symbolType: () => new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false)};
+      case "lst": return { symbolId: "", symbolType: () => new ListType(intType), symbolScope : SymbolScope.unknown };
+      case "lst1": return { symbolId: "", symbolType: () => new ListType(stringType), symbolScope : SymbolScope.unknown };
+      case "simpleGeneric": return { symbolId: "", symbolType: () => new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false), symbolScope : SymbolScope.unknown};
+      case "getItem": return { symbolId: "", symbolType: () => new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false), symbolScope : SymbolScope.unknown};
     }
 
     return UnknownSymbol.Instance;

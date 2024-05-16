@@ -2,10 +2,11 @@ export enum SymbolScope {
     external, 
     system, 
     stdlib,
-    program, // also undefined 
+    program, 
     parameter,
     property,
     member,
     local,
-    counter
+    counter,
+    unknown
 }

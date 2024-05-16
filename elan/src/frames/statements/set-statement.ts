@@ -9,6 +9,7 @@ import { AssignableField } from "../fields/assignableField";
 import { mustBeCompatibleNode, mustNotBeConstant, mustNotBeCounter, mustNotBeParameter, mustNotBePropertyOnFunctionMethod } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 
 export class SetStatement extends AbstractFrame implements Statement{
     isStatement = true;
@@ -47,7 +48,7 @@ export class SetStatement extends AbstractFrame implements Statement{
     }
     compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstNode;
+        const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstQualifiedNode;
         const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
         mustNotBePropertyOnFunctionMethod(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
