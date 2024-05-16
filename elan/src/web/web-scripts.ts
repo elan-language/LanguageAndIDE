@@ -138,8 +138,8 @@ function updateContent(text: string) {
 		});
 
 		frame.addEventListener('click', event => {
-			const ke = event as KeyboardEvent;
-			const selection = (event.target as any)["selectionStart"] as number | undefined;
+			const ke = event as PointerEvent;
+			const selection = (event.target as HTMLInputElement).selectionStart as number | undefined;
 			const msg: editorEvent = {
 				type: 'click',
 				target: "frame",
@@ -344,7 +344,7 @@ runButton?.addEventListener("click", () => {
 				elan._inject(system, stdlib);
 				const [main, tests] = await elan.program();
 				// clear tests each time or the tests array in the program gets duplicates
-				(tests as any).length = 0;
+				tests.length = 0;
 				main().then(() => {
 					console.info("elan program completed OK");
 					file.setRunStatus(RunStatus.default);
@@ -409,7 +409,7 @@ function chooser(event: Event) {
 	f.type = 'file';
 	f.name = 'file';
 	f.accept = ".elan";
-	(document.getElementById("code-controls") as any).appendChild(f);
+	document.getElementById("code-controls")?.appendChild(f);
 	f.addEventListener('change', handleUpload);
 	f.click();
 }
