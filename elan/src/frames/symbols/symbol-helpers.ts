@@ -10,6 +10,8 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { AstNode } from "../interfaces/ast-node";
 import { ClassType } from "./class-type";
 import { SymbolScope } from "./symbol-scope";
+import { FileImpl } from "../file-impl";
+import { isClass, isFile } from "../helpers";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
@@ -77,14 +79,14 @@ export function updateScopeAndQualifier(qualifier: any | undefined, transforms: 
 }
 
 function getGlobalScope(start: any): Scope {
-    if (start.constructor.name === "FileImpl") {
+    if (isFile(start)) {
         return start;
     }
     return getGlobalScope(start.getParent());
 }
 
 export function getClassScope(start: any): Scope {
-    if (start.constructor.name === "Class") {
+    if (isClass(start)) {
         return start;
     }
     return getClassScope(start.getParent());

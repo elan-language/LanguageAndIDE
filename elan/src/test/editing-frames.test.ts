@@ -7,7 +7,7 @@ import { Constructor } from '../frames/class-members/constructor';
 import { IdentifierField } from '../frames/fields/identifier-field';
 import { ExpressionField } from '../frames/fields/expression-field';
 import { Property } from '../frames/class-members/property';
-import { Class } from '../frames/globals/class';
+import { ClassFrame } from '../frames/globals/class-frame';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { StatementSelector } from '../frames/statements/statement-selector';
 import { MainFrame } from '../frames/globals/main-frame';
@@ -191,7 +191,7 @@ suite('Editing Frames', () => {
 	});
 	test('Delete frame - Ctrl-Delete', () => {
 		var file = T05_classes();
-		var cls = file.getById("class1") as Class;
+		var cls = file.getById("class1") as ClassFrame;
 		var last = cls.getChildren()[1];
 		assert.equal(last instanceof Property, true);
 		last.processKey(ctrl_del());
@@ -200,7 +200,7 @@ suite('Editing Frames', () => {
 	});
 	test('Delete frame  - Ctrl-d', () => {
 		var file = T05_classes();
-		var cls = file.getById("class1") as Class;
+		var cls = file.getById("class1") as ClassFrame;
 		var last = cls.getChildren()[1];
 		assert.equal(last instanceof Property, true);
 		last.processKey(ctrl_d());

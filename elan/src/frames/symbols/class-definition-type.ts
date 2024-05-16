@@ -1,4 +1,4 @@
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ISymbol } from "../interfaces/symbol";
@@ -9,7 +9,7 @@ import { UnknownType } from "./unknown-type";
 
 export class ClassDefinitionType implements ISymbolType, Scope {
 
-    constructor(public className: string, public isAbstract: boolean, private readonly scope: Class) {
+    constructor(public className: string, public isAbstract: boolean, private readonly scope: ClassFrame) {
 
     }
 

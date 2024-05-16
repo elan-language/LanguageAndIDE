@@ -3,7 +3,7 @@ import { T09_emptyMainAndClassWithGlobalSelector } from './model-generating-func
 import { key } from './testHelpers';
 import assert from 'assert';
 import { FileImpl } from '../frames/file-impl';
-import { Class } from '../frames/globals/class';
+import { ClassFrame } from '../frames/globals/class-frame';
 import { MemberSelector } from '../frames/class-members/member-selector';
 import { MainFrame } from '../frames/globals/main-frame';
 import { GlobalFunction } from '../frames/globals/global-function';
@@ -84,7 +84,7 @@ suite('Unit tests', () => {
 
 	test("Selection Filtering - members", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new Class(f);		
+		var c = new ClassFrame(f);		
 		var s = new MemberSelector(c);
 		var help = s.getCompletion();
 		assert.equal(help, " function procedure property #");
@@ -97,7 +97,7 @@ suite('Unit tests', () => {
 
 	test("Selection Filtering - abstract class", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new Class(f);
+		var c = new ClassFrame(f);
 		c.makeAbstract();		
 		var s = new MemberSelector(c);
 		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
@@ -155,7 +155,7 @@ suite('Unit tests', () => {
 
 	test("Selection Context - deeper nesting 2", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new Class(fl);
+		var c = new ClassFrame(fl);
         var fm = new FunctionMethod(c);
 		var if1 = new IfStatement(fm);
 		var s = new StatementSelector(if1);

@@ -1,10 +1,7 @@
 import { ISymbol } from "./symbol";
 import { AbstractSelector } from "../abstract-selector";
-import { ScratchPad } from "../scratch-pad";
 import { Field } from "./field";
 import { Frame } from "./frame";
-import { Profile } from "./profile";
-import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 import { File} from "./file";
 import { Transforms } from "../syntax-nodes/transforms";

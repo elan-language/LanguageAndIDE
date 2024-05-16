@@ -2,7 +2,7 @@ import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import { mustBeConcreteClass, mustBeOneOrTwoOfTypeInt, mustMatchParameters } from "../compile-rules";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -48,7 +48,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
             if (cdt.isAbstract === false) {
                 // todo is this right - or should we resolve constructor on class scope and get constructor symbol ? 
-                const parameterTypes = (cls as Class).getConstructor().params.symbolTypes(transforms());
+                const parameterTypes = (cls as ClassFrame).getConstructor().params.symbolTypes(transforms());
                 mustMatchParameters(this.parameters, parameterTypes, this.compileErrors, this.fieldId);
             }
         }

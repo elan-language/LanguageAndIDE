@@ -6,7 +6,7 @@ import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { Enum } from "./globals/enum";
-import { Class } from "./globals/class";
+import { ClassFrame } from "./globals/class-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
@@ -301,7 +301,7 @@ export class FileImpl implements File, Scope {
     createFunction(): Frame {return  new GlobalFunction(this);}
     createProcedure(): Frame {return  new GlobalProcedure(this);}
     createEnum(): Frame {return  new Enum(this);}
-    createClass(): Frame {return  new Class(this);}
+    createClass(): Frame {return  new ClassFrame(this);}
     createGlobalComment(): Frame {return  new GlobalComment(this);}
     createConstant(): Frame {return  new Constant(this);}
     createTest(): Frame {return  new TestFrame(this);}

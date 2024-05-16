@@ -7,7 +7,7 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { Enum } from "../frames/globals/enum";
 import { TestFrame } from "../frames/globals/test-frame";
-import { Class } from "../frames/globals/class";
+import { ClassFrame } from "../frames/globals/class-frame";
 import { Property } from "../frames/class-members/property";
 import { Throw } from "../frames/statements/throw";
 import { CallStatement } from "../frames/statements/call-statement";
@@ -172,7 +172,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 export function T05_classes() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
 	var gs = f.getFirstSelectorAsDirectChild();
-	const cl1 = new Class(f);
+	const cl1 = new ClassFrame(f);
 	var ms = cl1.getFirstSelectorAsDirectChild();
 	f.addChildBefore(cl1, gs);
 	cl1.name.setText("Player");
@@ -181,7 +181,7 @@ export function T05_classes() {
 	p1.name.setText("score");
 	p1.type.setText("Int");
 
-	const cl2 = new Class(f);
+	const cl2 = new ClassFrame(f);
 	var ms2 = cl2.getFirstSelectorAsDirectChild();
 	cl2.makeInherits();
 	cl2.superClasses.setText("Foo, Bar");
@@ -205,7 +205,7 @@ export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
 	var gs = f.getFirstSelectorAsDirectChild();
 	f.addChildBefore(new MainFrame(f), gs);
-	f.addChildBefore(new Class(f), gs);
+	f.addChildBefore(new ClassFrame(f), gs);
 	return f;
 }
 

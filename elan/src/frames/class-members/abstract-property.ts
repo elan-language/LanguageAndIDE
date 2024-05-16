@@ -4,7 +4,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { abstractPropertyKeywords } from "../keywords";
@@ -17,11 +17,11 @@ export class AbstractProperty extends AbstractFrame implements Member, ISymbol {
     name: IdentifierField;
     type: TypeField;
     public private: boolean = false;
-    private class: Class;
+    private class: ClassFrame;
 
-    constructor(parent: Class) {
+    constructor(parent: ClassFrame) {
         super(parent);
-        this.class = parent as Class;
+        this.class = parent as ClassFrame;
         this.name = new IdentifierField(this);
         this.type = new TypeField(this);
     }

@@ -6,7 +6,7 @@ import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
@@ -20,11 +20,11 @@ export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
     public name : IdentifierField;
     public params: ParamList;
     public returnType: TypeField;
-    private class: Class;
+    private class: ClassFrame;
    
     constructor(parent: Parent) {
         super(parent);
-        this.class = parent as Class;
+        this.class = parent as ClassFrame;
         this.name = new IdentifierField(this);
         this.params = new ParamList(this);
         this.returnType = new TypeField(this);

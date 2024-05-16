@@ -1,6 +1,6 @@
 import { Member } from "../interfaces/member";
 import { singleIndent } from "../helpers";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Parent } from "../interfaces/parent";
 import { Frame } from "../interfaces/frame";
@@ -8,11 +8,11 @@ import { functionKeyword, procedureKeyword, propertyKeyword, privateKeyword, abs
 
 export class MemberSelector extends AbstractSelector implements Member  {
     isMember: boolean = true;
-    private class: Class;
+    private class: ClassFrame;
 
     constructor(parent: Parent) {
         super(parent);
-        this.class = parent as Class;
+        this.class = parent as ClassFrame;
     }
  
     defaultOptions(): [string, (parent: Parent) => Frame][] {

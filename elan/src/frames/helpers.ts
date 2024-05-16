@@ -10,6 +10,7 @@ import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { TestStatus } from "./test-status";
+import { Class } from "./interfaces/class";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -18,6 +19,11 @@ export function isCollapsible(f?: any): f is Collapsible {
 export function isFile(f?: any): f is File {
     return !!f && 'isFile' in f;
 }
+
+export function isClass(f?: any): f is Class {
+    return !!f && 'isClass' in f;
+}
+
 export function isMain(f?: any): f is MainFrame {
     return !!f && 'isMain' in f;
 }

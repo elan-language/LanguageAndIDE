@@ -1,7 +1,7 @@
 import { FrameWithStatements } from "../frame-with-statements";
 import { ParamList } from "../fields/param-list";
 import { Member } from "../interfaces/member";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractSelector } from "../abstract-selector";
@@ -16,11 +16,11 @@ export class Constructor extends FrameWithStatements implements Member {
     isConstructor = true;
     isMember = true;
     public params: ParamList ;
-    private class: Class;
+    private class: ClassFrame;
 
-    constructor(parent: Class) {
+    constructor(parent: ClassFrame) {
         super(parent);
-        this.class = parent as Class;
+        this.class = parent as ClassFrame;
         this.movable = false;
         this.params = new ParamList(this);
     }

@@ -1,7 +1,7 @@
 import { ISymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
-import { Class } from "../globals/class";
+import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
@@ -10,11 +10,11 @@ import { Transforms } from "../syntax-nodes/transforms";
 
 export class ProcedureMethod extends ProcedureFrame implements Member {
     isMember: boolean = true;
-    private class: Class;
+    private class: ClassFrame;
 
-    constructor(parent: Class) {
+    constructor(parent: ClassFrame) {
         super(parent);
-        this.class = parent as Class;
+        this.class = parent as ClassFrame;
     }
 
     public override indent(): string {

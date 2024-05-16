@@ -34,10 +34,12 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { Class } from "../interfaces/class";
 
-export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
+export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ISymbol {
     isCollapsible: boolean = true;
     isParent: boolean = true; 
+    isClass: boolean = true; 
     public name: TypeNameField;
     public abstract: OptionalKeyword;
     public immutable: OptionalKeyword;
