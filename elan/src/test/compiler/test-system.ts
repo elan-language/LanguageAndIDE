@@ -1,18 +1,21 @@
 import { System } from "../../system";
 
+class TestSystem extends System {
+    printed: string = "";
+    inputed: string = "";
+}
+
 export function getTestSystem() {
 
-    var system = new System();
+    var system = new TestSystem();
 
-    (system as any)['printed'] = "";
-    (system as any)['inputed'] = "";
-    system.print = (s : string) => {
-        (system as any).printed = (system as any).printed + s;
+    system.print = (s: string) => {
+        system.printed = system.printed + s;
     };
-    
+
     system.input = () => {
-        return Promise.resolve((system as any).inputed);
+        return Promise.resolve(system.inputed);
     };
 
-    return system;
+    return system as System;
 }
