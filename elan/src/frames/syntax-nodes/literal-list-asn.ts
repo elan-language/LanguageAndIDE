@@ -1,5 +1,5 @@
-import { ListType } from "../../symbols/list-type";
-import { UnknownType } from "../../symbols/unknown-type";
+import { ListType } from "../symbols/list-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { mustBeCompatibleType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";

@@ -1,5 +1,5 @@
-import { ISymbol } from "../../symbols/symbol";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { ISymbol } from "../symbols/symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
 import { FunctionFrame } from "../globals/function-frame";

@@ -1,4 +1,4 @@
-import { ParseStatus } from "../frames/status-enums";
+import { ParseStatus } from "../status-enums";
 import { ISymbol } from "./symbol";
 import { ISymbolType } from "./symbol-type";
 

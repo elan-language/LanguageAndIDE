@@ -5,7 +5,7 @@ import { CodeSource } from "../code-source";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ProcedureType } from "../../symbols/procedure-type";
+import { ProcedureType } from "../symbols/procedure-type";
 import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
 import { callKeyword } from "../keywords";
 import { Scope } from "../interfaces/scope";
@@ -14,7 +14,7 @@ import { FileImpl } from "../file-impl";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
-import { scopePrefix, updateScopeAndQualifier } from "../../symbols/symbolHelpers";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbolHelpers";
 
 export class CallStatement extends AbstractFrame implements Statement {
     isStatement = true;

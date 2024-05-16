@@ -56,7 +56,7 @@ import { IfExpr } from "../parse-nodes/if-expr";
 import { IfExprAsn } from "./if-expr-asn";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { LiteralEnumAsn } from "./literal-enum-asn";
-import { EnumType } from "../../symbols/enum-type";
+import { EnumType } from "../symbols/enum-type";
 import { Dictionary } from "../parse-nodes/dictionary";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";

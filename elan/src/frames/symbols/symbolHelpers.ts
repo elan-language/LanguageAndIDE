@@ -3,11 +3,11 @@ import { FloatType } from "./number-type";
 import { ISymbol } from "./symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
-import { Transforms } from "../frames/syntax-nodes/transforms";
-import { Frame } from "../frames/interfaces/frame";
-import { Scope } from "../frames/interfaces/scope";
-import { globalKeyword, libraryKeyword } from "../frames/keywords";
-import { AstNode } from "../frames/interfaces/ast-node";
+import { Transforms } from "../syntax-nodes/transforms";
+import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
+import { globalKeyword, libraryKeyword } from "../keywords";
+import { AstNode } from "../interfaces/ast-node";
 import { ClassType } from "./class-type";
 import { SymbolScope } from "./symbol-scope";
 

@@ -1,4 +1,4 @@
-import { Transforms } from "../frames/syntax-nodes/transforms";
+import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "./symbol-scope";
 import { ISymbolType } from "./symbol-type";
 

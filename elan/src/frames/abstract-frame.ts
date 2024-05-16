@@ -7,7 +7,7 @@ import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
 import { CodeSource } from "./code-source";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "./symbols/symbol";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
 import { Transforms } from "./syntax-nodes/transforms";

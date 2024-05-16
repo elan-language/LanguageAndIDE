@@ -1,9 +1,9 @@
-import { BooleanType } from "../../symbols/boolean-type";
-import { ClassType } from "../../symbols/class-type";
-import { IntType } from "../../symbols/int-type";
-import { ListType } from "../../symbols/list-type";
-import { FloatType } from "../../symbols/number-type";
-import { ISymbolType } from "../../symbols/symbol-type";
+import { BooleanType } from "../symbols/boolean-type";
+import { ClassType } from "../symbols/class-type";
+import { IntType } from "../symbols/int-type";
+import { ListType } from "../symbols/list-type";
+import { FloatType } from "../symbols/number-type";
+import { ISymbolType } from "../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeCoercibleType, mustBeCompatibleType, mustBeNumberType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";

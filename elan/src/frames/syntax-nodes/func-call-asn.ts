@@ -1,11 +1,11 @@
-import { ArrayType } from "../../symbols/array-type";
-import { DictionaryType } from "../../symbols/dictionary-type";
-import { FunctionType } from "../../symbols/function-type";
-import { GenericParameterType } from "../../symbols/generic-parameter-type";
-import { IterType } from "../../symbols/iter-type";
-import { ListType } from "../../symbols/list-type";
-import { ISymbolType } from "../../symbols/symbol-type";
-import { UnknownType } from "../../symbols/unknown-type";
+import { ArrayType } from "../symbols/array-type";
+import { DictionaryType } from "../symbols/dictionary-type";
+import { FunctionType } from "../symbols/function-type";
+import { GenericParameterType } from "../symbols/generic-parameter-type";
+import { IterType } from "../symbols/iter-type";
+import { ListType } from "../symbols/list-type";
+import { ISymbolType } from "../symbols/symbol-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustBePureFunctionSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
@@ -14,7 +14,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { transforms } from "./ast-helpers";
-import { scopePrefix, updateScopeAndQualifier } from "../../symbols/symbolHelpers";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbolHelpers";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 

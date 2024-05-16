@@ -9,7 +9,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../interfaces/ast-node";
 import { CSV } from "../parse-nodes/csv";
 import { CompileError } from "../compile-error";
-import { UnknownType } from "../../symbols/unknown-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Overtyper } from "../overtyper";
 

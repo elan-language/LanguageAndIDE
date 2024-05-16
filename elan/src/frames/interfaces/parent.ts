@@ -1,4 +1,4 @@
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { AbstractSelector } from "../abstract-selector";
 import { ScratchPad } from "../scratch-pad";
 import { Field } from "./field";

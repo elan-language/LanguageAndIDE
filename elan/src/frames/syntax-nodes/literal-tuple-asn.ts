@@ -1,4 +1,4 @@
-import { TupleType } from "../../symbols/tuple-type";
+import { TupleType } from "../symbols/tuple-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";

@@ -5,7 +5,7 @@ import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { mustBeOfType, mustHaveLastSingleElse } from "../compile-rules";
-import { BooleanType } from "../../symbols/boolean-type";
+import { BooleanType } from "../symbols/boolean-type";
 import { ifKeyword } from "../keywords";
 import { Else } from "./else";
 import { Transforms } from "../syntax-nodes/transforms";

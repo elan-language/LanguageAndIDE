@@ -8,10 +8,10 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;

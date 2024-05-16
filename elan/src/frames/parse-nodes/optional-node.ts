@@ -1,5 +1,5 @@
 
-import { UnknownType } from "../../symbols/unknown-type";
+import { UnknownType } from "../symbols/unknown-type";
 
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";

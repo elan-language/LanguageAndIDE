@@ -1,5 +1,5 @@
-import { ISymbol } from "../symbols/symbol";
-import { isSymbol } from "../symbols/symbolHelpers";
+import { ISymbol } from "./symbols/symbol";
+import { isSymbol } from "./symbols/symbolHelpers";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";

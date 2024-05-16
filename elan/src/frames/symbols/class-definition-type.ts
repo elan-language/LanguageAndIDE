@@ -1,6 +1,6 @@
-import { Class } from "../frames/globals/class";
-import { Scope } from "../frames/interfaces/scope";
-import { Transforms } from "../frames/syntax-nodes/transforms";
+import { Class } from "../globals/class";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../syntax-nodes/transforms";
 import { ISymbol } from "./symbol";
 import { ISymbolType } from "./symbol-type";
 import { isSymbol } from "./symbolHelpers";

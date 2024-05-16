@@ -17,20 +17,20 @@ import { Lambda } from '../frames/parse-nodes/lambda';
 import { IfExpr } from '../frames/parse-nodes/if-expr';
 import { ParamDefNode } from '../frames/parse-nodes/param-def-node';
 import { Term } from '../frames/parse-nodes/term';
-import { ListType } from '../symbols/list-type';
+import { ListType } from '../frames/symbols/list-type';
 import { LiteralNode } from '../frames/parse-nodes/literal-node';
 import { LitTuple } from '../frames/parse-nodes/lit-tuple';
 import { VarRefNode } from '../frames/parse-nodes/var-ref-node';
 import { DeconstructedTuple } from '../frames/parse-nodes/deconstructed-tuple';
-import { ClassType } from '../symbols/class-type';
-import { GenericClassType } from '../symbols/generic-class-type';
-import { TupleType } from '../symbols/tuple-type';
+import { ClassType } from '../frames/symbols/class-type';
+import { GenericClassType } from '../frames/symbols/generic-class-type';
+import { TupleType } from '../frames/symbols/tuple-type';
 import { NewInstance } from '../frames/parse-nodes/new-instance';
-import { EnumType } from '../symbols/enum-type';
+import { EnumType } from '../frames/symbols/enum-type';
 import { Dictionary } from '../frames/parse-nodes/dictionary';
 import { LitValueNode } from '../frames/parse-nodes/lit-value';
 import { ignore_test } from './compiler/compiler-test-helpers';
-import { DictionaryType } from '../symbols/dictionary-type';
+import { DictionaryType } from '../frames/symbols/dictionary-type';
 import { DeconstructedList } from '../frames/parse-nodes/deconstructed-list';
 
 suite('ASTNodes', () => {

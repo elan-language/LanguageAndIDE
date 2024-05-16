@@ -1,4 +1,4 @@
-import { StringType } from "../../symbols/string-type";
+import { StringType } from "../symbols/string-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";

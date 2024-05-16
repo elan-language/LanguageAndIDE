@@ -1,4 +1,4 @@
-import { BooleanType } from "../../symbols/boolean-type";
+import { BooleanType } from "../symbols/boolean-type";
 import { CompileError } from "../compile-error";
 import { mustBeOfType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";

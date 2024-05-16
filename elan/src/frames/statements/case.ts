@@ -6,7 +6,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
 import { caseKeyword } from "../keywords";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { mustBeCompatibleNode, mustBeCompatibleType } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
 

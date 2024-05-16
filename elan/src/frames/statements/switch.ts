@@ -1,5 +1,5 @@
-import { ISymbol } from "../../symbols/symbol";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { ISymbol } from "../symbols/symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";

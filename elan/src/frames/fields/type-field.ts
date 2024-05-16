@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/unknown-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../parse-nodes/parse-node";

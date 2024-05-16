@@ -7,11 +7,11 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { mustBeOfSymbolType } from "../compile-rules";
-import { IntType } from "../../symbols/int-type";
+import { IntType } from "../symbols/int-type";
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class For extends FrameWithStatements implements Statement {
     isStatement: boolean = true;

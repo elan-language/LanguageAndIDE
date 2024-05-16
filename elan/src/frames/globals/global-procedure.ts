@@ -2,7 +2,7 @@ import { Parent } from "../interfaces/parent";
 import { ProcedureFrame } from "./procedure-frame";
 import { GlobalFrame as GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
     isGlobal = true;

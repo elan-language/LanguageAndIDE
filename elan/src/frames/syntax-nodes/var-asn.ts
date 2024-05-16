@@ -1,9 +1,9 @@
-import { ArrayType } from "../../symbols/array-type";
-import { ClassDefinitionType } from "../../symbols/class-definition-type";
-import { ClassType } from "../../symbols/class-type";
-import { FunctionType } from "../../symbols/function-type";
-import { ListType } from "../../symbols/list-type";
-import { ISymbolType } from "../../symbols/symbol-type";
+import { ArrayType } from "../symbols/array-type";
+import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
+import { FunctionType } from "../symbols/function-type";
+import { ListType } from "../symbols/list-type";
+import { ISymbolType } from "../symbols/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
@@ -16,8 +16,8 @@ import { IndexAsn } from "./index-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
-import { getClassScope } from "../../symbols/symbolHelpers";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { getClassScope } from "../symbols/symbolHelpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode {
 

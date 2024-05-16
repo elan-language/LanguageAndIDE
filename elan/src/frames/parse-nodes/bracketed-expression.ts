@@ -1,7 +1,7 @@
 import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
-import { UnknownType } from "../../symbols/unknown-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { Field } from "../interfaces/field";
 
 

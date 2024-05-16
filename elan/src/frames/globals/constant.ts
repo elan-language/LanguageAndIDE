@@ -4,12 +4,12 @@ import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ConstantValueField } from "../fields/constant-value-field";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { constantKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
     isGlobal = true;

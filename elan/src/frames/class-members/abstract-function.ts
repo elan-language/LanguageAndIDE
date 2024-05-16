@@ -1,6 +1,6 @@
-import { FunctionType } from "../../symbols/function-type";
-import { ISymbol } from "../../symbols/symbol";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { FunctionType } from "../symbols/function-type";
+import { ISymbol } from "../symbols/symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";

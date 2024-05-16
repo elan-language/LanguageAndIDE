@@ -8,7 +8,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { elseKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
-import { BooleanType } from "../../symbols/boolean-type";
+import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Else extends FrameWithStatements implements Statement {

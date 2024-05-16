@@ -6,7 +6,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { repeatKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
-import { BooleanType } from "../../symbols/boolean-type";
+import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Repeat extends FrameWithStatements implements Statement {

@@ -1,6 +1,6 @@
-import { ProcedureType } from "../../symbols/procedure-type";
-import { ISymbol } from "../../symbols/symbol";
-import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { ProcedureType } from "../symbols/procedure-type";
+import { ISymbol } from "../symbols/symbol";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";

@@ -22,18 +22,18 @@ import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
-import { ISymbol } from "../../symbols/symbol";
-import { isSymbol } from "../../symbols/symbolHelpers";
+import { ISymbol } from "../symbols/symbol";
+import { isSymbol } from "../symbols/symbolHelpers";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
-import { ClassDefinitionType } from "../../symbols/class-definition-type";
+import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { SymbolScope } from "../../symbols/symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;

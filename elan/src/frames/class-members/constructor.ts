@@ -6,10 +6,10 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractSelector } from "../abstract-selector";
 import { Collapsible } from "../interfaces/collapsible";
-import { ISymbol } from "../../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { constructorKeyword } from "../keywords";
-import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constructor extends FrameWithStatements implements Member {

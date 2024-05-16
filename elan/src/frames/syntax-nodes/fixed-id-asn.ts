@@ -1,4 +1,4 @@
-import { UnknownType } from "../../symbols/unknown-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";

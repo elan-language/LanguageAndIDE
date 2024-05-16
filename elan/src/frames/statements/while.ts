@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";import { FrameWithStatements } from "../frame-with-statements";
 import { whileKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
-import { BooleanType } from "../../symbols/boolean-type";
+import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class While extends FrameWithStatements { 

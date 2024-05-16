@@ -1,5 +1,5 @@
-import { ClassDefinitionType } from "../../symbols/class-definition-type";
-import { ClassType } from "../../symbols/class-type";
+import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import { mustBeConcreteClass, mustBeOneOrTwoOfTypeInt, mustMatchParameters } from "../compile-rules";
 import { Class } from "../globals/class";
