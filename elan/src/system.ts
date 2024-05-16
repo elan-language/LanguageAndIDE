@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestStatus } from "./frames/status-enums";
 
 export class AssertOutcome {

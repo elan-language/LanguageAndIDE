@@ -2,7 +2,7 @@ export class Overtyper {
 
     preProcessor : (s : string | undefined) => boolean = (s) => true;
     toConsume : string = "";
-    timer?: any;
+    timer?: number;
     timeOut?: number;
 
     private activePreprocessor(k: string | undefined) {
@@ -10,7 +10,7 @@ export class Overtyper {
             if (this.toConsume.length > 0 && k === this.toConsume[0]) {
                 this.toConsume = this.toConsume.slice(1);
                 clearTimeout(this.timer);
-                this.timer = setTimeout(() => this.preProcessor = (s) => true, this.timeOut);
+                this.timer = setTimeout(() => this.preProcessor = (s) => true, this.timeOut) as unknown as number;
                 return false;
             }
             this.toConsume = "";
@@ -25,7 +25,7 @@ export class Overtyper {
             this.timeOut = timeOut;
             this.toConsume = toConsume;
             this.preProcessor = this.activePreprocessor;
-            this.timer = setTimeout(() => this.preProcessor = (s) => true, timeOut);
+            this.timer = setTimeout(() => this.preProcessor = (s) => true, timeOut) as unknown as number;
         }
     }
 }
