@@ -52,8 +52,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         if (fst instanceof FunctionType) {
             mustCallExtensionViaQualifier(fst, qualifier, this.compileErrors, this.fieldId);
 
-            if (fst.isExtension && qualifier) {
-                parameters = [(qualifier as any).value].concat(parameters);
+            if (fst.isExtension && qualifier instanceof QualifierAsn) {
+                parameters = [qualifier.value as AstNode].concat(parameters);
                 qualifier = undefined;
             }
 
