@@ -7,9 +7,8 @@ import { Statement } from "../interfaces/statement";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { assertKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { TestStatus } from "../test-status";
 import { AssertOutcome } from "../../system";
-import { CompileStatus, OverallStatus } from "../status-enums";
+import { CompileStatus, OverallStatus, TestStatus } from "../status-enums";
 import { helper_compileMsgAsHtml } from "../helpers";
 
 export class AssertStatement extends AbstractFrame implements Statement{

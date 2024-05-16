@@ -3,18 +3,33 @@ export enum ParseStatus {
     empty,
     incomplete, 
     valid,    
-    notParsed
+    default
 }
 
 export enum CompileStatus {
     error, 
     unknownSymbol, 
-    ok
+    ok,
+    default
+}
+
+export enum TestStatus {
+    fail,
+    pending,
+    pass,
+    default
+}
+
+export enum RunStatus {
+    error,
+    paused,
+    running,
+    default
 }
 
 export enum OverallStatus {
     error,
     warning, 
-    ok
+    ok,
+    default
 }
-

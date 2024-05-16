@@ -47,6 +47,7 @@ export class StdLibSymbols implements Scope {
             ["sin", this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false))],
             ["cos", this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false))],
             ["min", this.getSymbol("min", new FunctionType([FloatType.Instance, FloatType.Instance], FloatType.Instance, false))],
+            ["sqrt", this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false))],
             ["isBefore", this.getSymbol("isBefore", new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false))],
             ["isAfter", this.getSymbol("isAfter", new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false))],
             ["isBeforeOrSameAs", this.getSymbol("isBeforeOrSameAs", new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false))],

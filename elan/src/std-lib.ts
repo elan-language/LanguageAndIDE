@@ -160,6 +160,8 @@ export class StdLib {
 
     min = Math.min;
 
+    sqrt = Math.sqrt;
+
     newline = "\n";
 
     typeAndProperties(o: any) {

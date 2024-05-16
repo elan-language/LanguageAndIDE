@@ -1,12 +1,10 @@
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import { CompileStatus, ParseStatus } from "../status-enums";
+import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
-import { TestStatus } from "../test-status";
-import { RunStatus } from "../run-status";
 import { CompileError } from "../compile-error";
 import { ScratchPad } from "../scratch-pad";
 import { Profile } from "./profile";

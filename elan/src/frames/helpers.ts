@@ -6,10 +6,9 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, OverallStatus, ParseStatus, TestStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
-import { TestStatus } from "./test-status";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -118,31 +117,37 @@ export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
 }
 
 export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
-    var overall = OverallStatus.error;
+    var overall = OverallStatus.default;
     if (ps === ParseStatus.valid) {
         overall = OverallStatus.ok;
     } else if (ps === ParseStatus.incomplete) {
         overall = OverallStatus.warning;
+    }else if (ps === ParseStatus.invalid) {
+        overall = OverallStatus.error;
     }
     return overall;
 }
 
 export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
-    var overall = OverallStatus.error;
+    var overall = OverallStatus.default;
     if (cs === CompileStatus.ok) {
         overall = OverallStatus.ok;
     } else if (cs === CompileStatus.unknownSymbol) {
         overall = OverallStatus.warning;
+    } else if (cs === CompileStatus.error) {
+        overall = OverallStatus.error;
     }
     return overall;
 }
 
 export function helper_testStatusAsOverallStatus(ts: TestStatus) {
-    var overall = OverallStatus.error;
+    var overall = OverallStatus.default;
     if (ts === TestStatus.pass) {
         overall = OverallStatus.ok;
     } else if (ts === TestStatus.pending) {
         overall = OverallStatus.warning;
+    } else if (ts === TestStatus.fail) {
+        overall = OverallStatus.error;
     }
     return overall;
 }

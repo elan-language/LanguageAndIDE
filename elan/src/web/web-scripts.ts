@@ -4,8 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { ParseStatus } from "../frames/status-enums";
-import { RunStatus } from "../frames/run-status";
+import { ParseStatus, RunStatus } from "../frames/status-enums";
 import { StdLib } from "../std-lib";
 import { AssertOutcome, System } from "../system";
 import { runTests } from "../runner";
@@ -114,7 +113,7 @@ function updateStatus() {
  * Render the document
  */
 function updateContent(text: string) {
-	file.setRunStatus(RunStatus.stopped);
+	file.setRunStatus(RunStatus.default);
 	doOnce = doOnce === undefined || doOnce ? true : false;
 
 	codeContainer!.innerHTML = text;
@@ -348,7 +347,7 @@ runButton?.addEventListener("click", () => {
 				(tests as any).length = 0;
 				main().then(() => {
 					console.info("elan program completed OK");
-					file.setRunStatus(RunStatus.stopped);
+					file.setRunStatus(RunStatus.default);
 					updateStatus();
 				})
 					.catch((e: any) => {
