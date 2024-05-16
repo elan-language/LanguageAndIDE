@@ -22,6 +22,8 @@ export abstract class AbstractFrame implements Frame {
     private _classes = new Array<string>;
     protected htmlId: string = "";
     protected movable: boolean = true;
+    private _parseStatus: ParseStatus = ParseStatus.default;
+    private _compileStatus: CompileStatus = CompileStatus.default;
 
     constructor(parent: Parent) {
         this._parent = parent;
@@ -437,20 +439,45 @@ export abstract class AbstractFrame implements Frame {
         return true;
     }
 
-    getParseStatus(): ParseStatus {
-        return this.worstParseStatusOfFields();
+    aggregateParseStatus(): void {
+        this._parseStatus = this.worstParseStatusOfFields();
     }
-
     worstParseStatusOfFields(): ParseStatus {
         return this.getFields().map(g => g.getParseStatus()).reduce((prev, cur) => cur < prev ? cur : prev, ParseStatus.valid);
     }
-    
-    getCompileStatus() : CompileStatus {
-        return Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
+    readParseStatus(): ParseStatus {
+        return this._parseStatus;
     }
- 
-    worstCompileStatusOfFields(): CompileStatus {
+    protected setParseStatus(newStatus: ParseStatus): void {
+        this._parseStatus = newStatus;
+    }
+
+    getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of methods above
+        return this.worstParseStatusOfFields();
+    }
+
+
+    aggregateCompileStatus(): void {
+        this._compileStatus = Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
+    }
+    protected worstCompileStatusOfFields(): CompileStatus {
         return this.getFields().map(g => g.getCompileStatus()).reduce((prev, cur) => cur < prev ? cur : prev, CompileStatus.ok);
+    }
+    readCompileStatus() : CompileStatus {
+        return this._compileStatus;
+    }
+    setCompileStatus(newStatus: CompileStatus) {
+        this._compileStatus = newStatus;
+    }
+    resetCompileStatus(): void {
+       if (this._compileStatus !== CompileStatus.default) {
+        this.getFields().forEach(f => f.resetCompileStatus())
+        this._compileStatus = CompileStatus.default;
+       }
+    }
+    
+    getCompileStatus() : CompileStatus { //TODO: to be eliminated in favour of methods above
+        return Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors));
     }
 
     abstract parseFrom(source: CodeSource): void;

@@ -10,6 +10,7 @@ export interface Field extends Selectable {
     getHolder(): Frame | File; //File because of GlobalSelector
     compileErrors: CompileError[];
     getCompileStatus(): CompileStatus;
+    resetCompileStatus(): void;
     aggregateCompileErrors(): CompileError[];
     overtyper : Overtyper;
 }

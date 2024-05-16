@@ -26,7 +26,8 @@ export abstract class AbstractField implements Selectable, Field {
     private holder: Frame;
     private _optional: boolean = false;
     protected map: Map<string, Selectable>;
-    private parseStatus: ParseStatus | undefined;
+    private _parseStatus: ParseStatus | undefined; //TODO lose 'undefined' and set to ParseStatus.default 
+    private _compileStatus: CompileStatus = CompileStatus.default;
     cursorPos: number = 0; //Relative to LH end of text
     protected rootNode?: ParseNode;
     protected astNode?: AstNode;
@@ -61,7 +62,7 @@ export abstract class AbstractField implements Selectable, Field {
         var text = this.readToDelimeter(source);
         var root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(text, root);
-        if (this.parseStatus !== ParseStatus.valid) {
+        if (this._parseStatus !== ParseStatus.valid) {
             throw new Error(`Parse error at ${source.getRemainingCode()}`);
         }
     }
@@ -80,7 +81,7 @@ export abstract class AbstractField implements Selectable, Field {
                 this.text = root.renderAsSource();
             }
         }
-        if (this.parseStatus === ParseStatus.invalid) {
+        if (this._parseStatus === ParseStatus.invalid) {
             this.parseErrorMsg = root.errorMessage;
         }
     }
@@ -98,9 +99,9 @@ export abstract class AbstractField implements Selectable, Field {
     setOptional(optional: boolean): void {
         this._optional = optional;
         if (this.text === '' && optional) {
-            this.parseStatus = ParseStatus.valid;
+            this._parseStatus = ParseStatus.valid;
         } else if (this.text === '' && !optional) {
-            this.parseStatus === ParseStatus.incomplete;
+            this._parseStatus === ParseStatus.incomplete;
         }
     }
 
@@ -227,13 +228,16 @@ export abstract class AbstractField implements Selectable, Field {
         }
     }
     protected setParseStatus(newStatus: ParseStatus) {
-        this.parseStatus = newStatus;
+        this._parseStatus = newStatus;
     }
     getParseStatus(): ParseStatus {
-        if (!this.parseStatus) {
+        if (!this._parseStatus) {
             this.parseCurrentText();
         }
-        return this.parseStatus!;
+        return this._parseStatus!;
+    }
+    resetCompileStatus(): void {
+        this._compileStatus = CompileStatus.default;
     }
     getCompileStatus(): CompileStatus {
         this.compileErrors = this.aggregateCompileErrors();
@@ -264,7 +268,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.selected) {
             html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else {
-            if (this.rootNode && this.parseStatus === ParseStatus.valid) {
+            if (this.rootNode && this._parseStatus === ParseStatus.valid) {
                 html = this.rootNode.renderAsHtml();
             } else {
                 html = escapeAngleBrackets(this.text);
