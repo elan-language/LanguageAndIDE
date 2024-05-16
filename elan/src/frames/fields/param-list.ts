@@ -1,5 +1,5 @@
-import { ISymbol } from "../symbols/symbol";
-import { ISymbolType } from "../symbols/symbol-type";
+import { ISymbol } from "../interfaces/symbol";
+import { ISymbolType } from "../interfaces/symbol-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";

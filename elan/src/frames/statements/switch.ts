@@ -1,4 +1,4 @@
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";

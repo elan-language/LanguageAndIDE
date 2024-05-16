@@ -1,4 +1,4 @@
-import { ISymbolType } from "./symbol-type";
+import { ISymbolType } from "../interfaces/symbol-type";
 
 export class IntType implements ISymbolType {
     private constructor() { }

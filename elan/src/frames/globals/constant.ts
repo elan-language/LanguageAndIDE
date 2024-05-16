@@ -4,7 +4,7 @@ import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ConstantValueField } from "../fields/constant-value-field";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { constantKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";

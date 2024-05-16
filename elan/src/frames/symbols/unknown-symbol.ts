@@ -1,4 +1,4 @@
-import { ISymbol } from "./symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { UnknownType } from "./unknown-type";
 
 export class UnknownSymbol implements ISymbol {

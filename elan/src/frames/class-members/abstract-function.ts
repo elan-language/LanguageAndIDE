@@ -1,5 +1,5 @@
 import { FunctionType } from "../symbols/function-type";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";

@@ -1,9 +1,9 @@
 import { Class } from "../globals/class";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../syntax-nodes/transforms";
-import { ISymbol } from "./symbol";
-import { ISymbolType } from "./symbol-type";
-import { isSymbol } from "./symbolHelpers";
+import { ISymbol } from "../interfaces/symbol";
+import { ISymbolType } from "../interfaces/symbol-type";
+import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 

@@ -1,4 +1,4 @@
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { Class } from "../globals/class";
