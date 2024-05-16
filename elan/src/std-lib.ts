@@ -1,6 +1,15 @@
+
+interface hasHiddenType {
+    _type : "List" | "Array" | "Tuple" | "Iter";
+}
+
 export class StdLib {
    
-    asString(v: any): string {
+    asString<T>(v: T | T[] | undefined): string {
+        if (v === undefined || v === null) {
+            throw new Error(`Out of range error`);
+        }
+
         if (typeof v === "boolean") {
             return v ? "true" : "false";
         }
@@ -14,7 +23,7 @@ export class StdLib {
         }
 
         if (Array.isArray(v)) {
-            const type = (<any>v)._type;
+            const type = (v as unknown as hasHiddenType)._type;
 
             switch (type) {
                 case 'List':
@@ -40,7 +49,7 @@ export class StdLib {
         }
 
         if (typeof v === "object" && "asString" in v) {
-            return v.asString();
+            return (v.asString as () => string)();
         }
 
         if (typeof v === "object" && v.constructor.name === "Object") {
@@ -49,61 +58,59 @@ export class StdLib {
                 return "empty Dictionary";
             }
 
-            return `Dictionary [${items.map(n => `${n}:${v[n]}`).join(", ")}]`;
+            const o = v as { [key: string]: object };
+
+            return `Dictionary [${items.map(n => `${n}:${o[n]}`).join(", ")}]`;
         }
 
         if (typeof v === "object") {
             return `a ${v.constructor.name}`;
         }
 
-        if (v === undefined) {
-            throw new Error(`Out of range error`);
-        }
-
         throw new Error("Not implemented: " + typeof v);
     }
 
-    asArray(list: Array<number>): Array<number> {
-        const arr = [...list] as any;
-        arr._type = 'Array';
+    asArray<T>(list: T[]): T[] {
+        const arr = [...list];
+        (arr as unknown as hasHiddenType)._type = 'Array';
         return arr;
     }
 
-    asList(arr: Array<number>): Array<number> {
-        const list = [...arr] as any;
-        list._type = 'List';
+    asList<T>(arr: T[]): T[] {
+        const list = [...arr];
+        (list as unknown as hasHiddenType)._type = 'List';
         return list;
     }
 
-    keys(dict: { [key: string]: number }): Array<string> {
-        const lst = Object.getOwnPropertyNames(dict) as any;
-        lst._type = 'List';
+    keys<T>(dict: { [key: string]: T }): string[] {
+        const lst = Object.getOwnPropertyNames(dict);
+        (lst as unknown as hasHiddenType)._type = 'List';
         return lst;
     }
 
-    values(dict: { [key: string]: number }): Array<number> {
-        const lst =  this.keys(dict).map(k => dict[k]) as any;
-        lst._type = 'List';
+    values<T>(dict: { [key: string]: T }): T[] {
+        const lst =  this.keys(dict).map(k => dict[k]);
+        (lst as unknown as hasHiddenType)._type = 'List';
         return lst;
     }
 
-    hasKey(dict: { [key: string]: number }, key: string): boolean {
+    hasKey<T>(dict: { [key: string]: T }, key: string): boolean {
         return this.keys(dict).includes(key);
     }
 
-    setItem(dict: { [key: string]: number }, key: string, value : number){
+    setItem<T>(dict: { [key: string]: T }, key: string, value : T){
         var newDict = {...dict};
         newDict[key] = value;
         return newDict;
     }
 
-    removeItem(dict: { [key: string]: number }, key: string){
+    removeItem<T>(dict: { [key: string]: T }, key: string){
         var newDict = {...dict};
         delete newDict[key];
         return newDict;
     }
 
-    length(coll : any){
+    length<T>(coll : string | T[] | { [key: string]: T }){
         if (typeof coll === "string") {
             return coll.length;
         }
@@ -164,7 +171,7 @@ export class StdLib {
 
     newline = "\n";
 
-    typeAndProperties(o: any) {
+    typeAndProperties(o: { [key: string]: object }) {
         const type = o.constructor.name;
         const items = Object.getOwnPropertyNames(o);
         return `${type} [${items.map(n => `"${n}":${o[n]}`).join(", ")}]`;
