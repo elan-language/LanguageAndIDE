@@ -65,7 +65,7 @@ function executeCode(file: FileImpl, input?: string) {
     const stdlib = new StdLib();
 
     if (input) {
-        (system as any).inputed = input;
+        system.inputed = input;
     }
 
     return doImport(jsCode).then(async (elan) => {
@@ -89,7 +89,7 @@ function executeTestCode(file: FileImpl, input?: string) {
     const stdlib = new StdLib();
 
     if (input) {
-        (system as any).inputed = input;
+        system.inputed = input;
     }
 
     return doImport(jsCode).then(async (elan) => {
@@ -98,7 +98,7 @@ function executeTestCode(file: FileImpl, input?: string) {
             const [, tests] = await elan.program();
             return runTests(tests);
         }
-        return undefined;
+        return [];
     });
 }
 
@@ -107,7 +107,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
     var actual;
 
     try {
-        const sl = await executeCode(file, input) as any;
+        const sl = await executeCode(file, input);
         actual = sl?.printed;
     }
     catch (e) {
@@ -120,7 +120,7 @@ export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutco
     var actualOutcomes: [string, AssertOutcome[]][];
 
     try {
-        actualOutcomes = await executeTestCode(file, "") as any;
+        actualOutcomes = await executeTestCode(file, "");
     }
     catch (e) {
         assert.fail((e as any).message ?? "");

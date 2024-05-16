@@ -17,5 +17,5 @@ export function getTestSystem() {
         return Promise.resolve(system.inputed);
     };
 
-    return system as System;
+    return system;
 }
