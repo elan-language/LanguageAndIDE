@@ -11,6 +11,8 @@ import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
 import { Scope } from "./interfaces/scope";
+import { AstTypeNode } from "./interfaces/ast-type-node";
+import { AstNode } from "./interfaces/ast-node";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -56,6 +58,9 @@ export function isScope(f?: any): f is Scope {
     return !!f && 'resolveSymbol' in f;
 } 
 
+export function isAstType(f?: AstNode): f is AstTypeNode {
+    return !!f && 'renderAsDefaultObjectCode' in f;
+} 
 
 export function singleIndent() {
     return "  ";

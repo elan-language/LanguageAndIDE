@@ -13,10 +13,10 @@ import { AstNode } from "../interfaces/ast-node";
 import { CompileError } from "../compile-error";
 import { ArrayType } from "../symbols/array-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstTypeNode } from "../interfaces/ast-type-node";
 
 
-export class TypeAsn extends AbstractAstNode implements AstIdNode {
+export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     constructor(public readonly id: string, public readonly genericParameters: AstNode[], public readonly fieldId: string, scope: Scope) {
         super();

@@ -5,6 +5,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
+import { isAstType } from "../helpers";
 
 export class TypeField extends AbstractField  {
     isParseByNodes = true;
@@ -26,19 +27,14 @@ export class TypeField extends AbstractField  {
 
     compile(transforms: Transforms): string {
         this.compileErrors = [];
-        const code = super.compile(transforms);
-        // todo kludge fix
-        if ("renderAsDefaultObjectCode" in (this.astNode as any)) {
-            return (this.astNode as any).renderAsDefaultObjectCode();
+        const astNode = this.getOrTransformAstNode(transforms);
+        if (isAstType(astNode)) {
+            return astNode.renderAsDefaultObjectCode();
         }
-        return code;
+        return super.compile(transforms);
     }
 
     symbolType(transforms: Transforms) {
-        const astNode = this.getOrTransformAstNode(transforms);
-        if (astNode) {
-            return astNode.symbolType();
-        }
-        return UnknownType.Instance;
+        return this.getOrTransformAstNode(transforms)?.symbolType() ?? UnknownType.Instance;
     }
 }
