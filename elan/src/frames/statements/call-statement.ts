@@ -14,7 +14,7 @@ import { FileImpl } from "../file-impl";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
-import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbolHelpers";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 
 export class CallStatement extends AbstractFrame implements Statement {
     isStatement = true;

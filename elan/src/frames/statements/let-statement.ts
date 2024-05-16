@@ -4,7 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
 import { UnknownType } from "../symbols/unknown-type";

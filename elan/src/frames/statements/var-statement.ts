@@ -5,7 +5,7 @@ import { CodeSource } from "../code-source";
 import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";

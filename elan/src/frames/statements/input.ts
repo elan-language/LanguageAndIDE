@@ -6,7 +6,7 @@ import { Statement } from "../interfaces/statement";
 import { IdentifierField } from "../fields/identifier-field";
 import { inputKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { StringType } from "../symbols/string-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";

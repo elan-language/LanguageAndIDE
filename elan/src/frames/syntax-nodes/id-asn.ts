@@ -1,4 +1,4 @@
-import { getParentScope } from "../symbols/symbolHelpers";
+import { getParentScope } from "../symbols/symbol-helpers";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
 import { isMember } from "../helpers";

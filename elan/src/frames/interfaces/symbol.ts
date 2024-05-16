@@ -1,5 +1,5 @@
 import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "./symbol-scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { ISymbolType } from "./symbol-type";
 
 export interface ISymbol {

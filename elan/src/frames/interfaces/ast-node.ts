@@ -1,4 +1,4 @@
-import { ISymbolType } from "../symbols/symbol-type";
+import { ISymbolType } from "./symbol-type";
 import { CompileError } from "../compile-error";
 
 export interface AstNode {

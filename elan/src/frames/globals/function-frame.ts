@@ -10,7 +10,7 @@ import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../symbols/function-type";
 import { Scope } from "../interfaces/scope";

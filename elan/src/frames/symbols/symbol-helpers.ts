@@ -1,6 +1,6 @@
 import { BooleanType } from "./boolean-type";
 import { FloatType } from "./number-type";
-import { ISymbol } from "./symbol";
+import { ISymbol } from "../interfaces/symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";

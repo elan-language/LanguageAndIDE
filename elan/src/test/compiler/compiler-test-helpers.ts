@@ -3,7 +3,7 @@ import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/status-enums";
 import { Done } from "mocha";
 import { getTestSystem } from "./test-system";
-import { isSymbol } from "../../frames/symbols/symbolHelpers";
+import { isSymbol } from "../../frames/symbols/symbol-helpers";
 import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
 import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";

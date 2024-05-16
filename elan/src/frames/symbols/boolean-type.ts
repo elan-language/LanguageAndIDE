@@ -1,4 +1,4 @@
-import { ISymbolType } from "./symbol-type";
+import { ISymbolType } from "../interfaces/symbol-type";
 
 export class BooleanType implements ISymbolType {
     private constructor() { }

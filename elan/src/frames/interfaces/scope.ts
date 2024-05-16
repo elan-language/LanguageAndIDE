@@ -1,4 +1,4 @@
-import { ISymbol } from "../symbols/symbol";
+import { ISymbol } from "./symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export interface Scope {
