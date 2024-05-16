@@ -21,13 +21,13 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
         super(parent);
         this.file = parent;
         this.testName = new IdentifierField(this);
-        var selector = this.getChildren().pop()!;
+        const selector = this.getChildren().pop()!;
         this.getChildren().push(selector);
     }
 
     override getOverallStatus(): OverallStatus {
-        var overall = OverallStatus.error;
-        var parseCompile = helper_CompileOrParseStatus(this);
+        let overall = OverallStatus.error;
+        const parseCompile = helper_CompileOrParseStatus(this);
         if (parseCompile !== OverallStatus.ok) {
             overall = parseCompile;
         } else {

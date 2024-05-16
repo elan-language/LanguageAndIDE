@@ -16,7 +16,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
     }
  
     defaultOptions(): [string, (parent: Parent) => Frame][] {
-        var options:  [string, (parent: Parent) => Frame][] = [
+        const options:  [string, (parent: Parent) => Frame][] = [
         [functionKeyword, (parent: Parent) => this.class.createFunction()],
         [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
         [propertyKeyword, (parent: Parent) => this.class.createProperty()],
@@ -34,7 +34,7 @@ export class MemberSelector extends AbstractSelector implements Member  {
     }
 
     validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
-        var result = false;
+        let result = false;
         if (this.class.isAbstract()) {
             if (this.class.isImmutable()) {
                 result = keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords  || keyword === commentMarker;

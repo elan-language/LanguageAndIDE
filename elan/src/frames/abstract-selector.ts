@@ -40,10 +40,10 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     parseFrom(source: CodeSource): void {
         source.removeIndent();
-        var options = this.optionsFilteredByContext(false).filter(o => source.isMatch(o[0]));
+        const options = this.optionsFilteredByContext(false).filter(o => source.isMatch(o[0]));
         if (options.length === 1) {
-            var typeToAdd = options[0][0];
-            var frame = this.addFrame(typeToAdd, "");
+            const typeToAdd = options[0][0];
+            const frame = this.addFrame(typeToAdd, "");
             frame.parseFrom(source);
         } else {
             throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
@@ -67,9 +67,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     addFrame(keyword: string, pendingChars : string): Frame {
-        var func = this.defaultOptions().filter(o => o[0]===keyword)[0][1]; 
-        var parent = this.getParent();
-        var newFrame: Frame = func(parent);
+        const func = this.defaultOptions().filter(o => o[0]===keyword)[0][1]; 
+        const parent = this.getParent();
+        const newFrame: Frame = func(parent);
         parent.addChildBefore(newFrame, this);
         newFrame.selectFirstField();
         const fields = newFrame.getFields();
@@ -112,7 +112,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         return `${this.indent()}`;
     }
     processKey(e: editorEvent): void {
-        var key = e.key;
+        let key = e.key;
         switch (key) {
             case "Tab" : {this.tab(e.modKey.shift); break;}
             case "Enter" : {this.tab(e.modKey.shift); break;}
@@ -138,9 +138,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
 
     paste(): void {
-        var parent = this.getParent();
-        var sp = this.getScratchPad();
-        var frame = sp.readSnippet();
+        const parent = this.getParent();
+        const sp = this.getScratchPad();
+        const frame = sp.readSnippet();
         if (frame && this.canBePastedIn(frame)) {
             sp.remove(frame);
             parent.addChildBefore(frame, this);
@@ -156,11 +156,11 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     processOptions(key: string | undefined) {
         if (this.overtyper.preProcessor(key)) {
-            var options = this.optionsMatchingUserInput(this.text + key);
+            const options = this.optionsMatchingUserInput(this.text + key);
             if (options.length > 1) {
                 this.text += this.commonStartText(this.text + key).substring(this.text.length);
             } else if (options.length === 1) {
-                var typeToAdd = options[0][0];
+                const typeToAdd = options[0][0];
 
                 const pendingChars = typeToAdd.slice((this.text + key).length);
 
@@ -174,7 +174,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         if (shift) {
             this.   selectLastFieldAboveThisFrame();
         } else {
-            var next = this.getNextFrameInTabOrder();
+            const next = this.getNextFrameInTabOrder();
             if (next !== this) {
                 next.selectFirstField();
             }

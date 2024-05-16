@@ -60,14 +60,14 @@ ${this.indent()}end for`;
         const v = this.variable.compile(transforms);
         const f = this.from.compile(transforms);
         const t = this.to.compile(transforms);
-        var s = this.step.compile(transforms);
+        let s = this.step.compile(transforms);
 
         mustBeOfSymbolType(this.from.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
         mustBeOfSymbolType(this.to.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
         mustBeOfSymbolType(this.step.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
 
-        var compare = "<=";
-        var incDec = "+";
+        let compare = "<=";
+        let incDec = "+";
 
         if (s.startsWith("-")) {
             compare = ">=";

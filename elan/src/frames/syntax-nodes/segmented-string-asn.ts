@@ -11,7 +11,7 @@ export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
     }
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
         for (const i of this.segments) {
             cc = cc.concat(i.aggregateCompileErrors());
         }

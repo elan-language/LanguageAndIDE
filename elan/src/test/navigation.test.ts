@@ -45,21 +45,21 @@ suite('Navigation', () => {
 	});
 	test('Tabbing through fields (& back)', () => {
 
-		var file = T03_mainWithAllStatements();
-		var var4 = file.getById("var4") as IdentifierField;
+		const file = T03_mainWithAllStatements();
+		const var4 = file.getById("var4") as IdentifierField;
 		assert.equal(var4.isSelected(), false);
 		file.processKey(tab());
 		assert.equal(var4.isSelected(), true);
-		var expr5 = file.getById("expr5") as ExpressionField;
+		const expr5 = file.getById("expr5") as ExpressionField;
 		assert.equal(expr5.isSelected(), false);
 		var4.processKey(tab());
 		assert.equal(var4.isSelected(), false);
 		assert.equal(expr5.isSelected(), true);
 		expr5.processKey(tab());
-		var ident7 = file.getById("ident7") as ExpressionField;
+		const ident7 = file.getById("ident7") as ExpressionField;
 		assert.equal(ident7.isSelected(), true);
 		ident7.processKey(tab());
-		var expr8 = file.getById("expr8") as ExpressionField;
+		const expr8 = file.getById("expr8") as ExpressionField;
 		assert.equal(expr8.isSelected(), true);
 		expr8.processKey(shift_tab());
 		assert.equal(expr8.isSelected(), false);
@@ -72,12 +72,12 @@ suite('Navigation', () => {
 		assert.equal(var4.isSelected(), true);
 	});
 	test('Tabbing through ALL fields (& back)', () => {
-		var file = T05_classes();
-		var fields: string[] = ['type2','text5','args6','params9','select8','ident12','type13','select10','type15','text18','args19','params22','select21','ident25','type26','ident29','params30','type31','select28','expr33','select23','select0'];
+		const file = T05_classes();
+		const fields: string[] = ['type2','text5','args6','params9','select8','ident12','type13','select10','type15','text18','args19','params22','select21','ident25','type26','ident29','params30','type31','select28','expr33','select23','select0'];
 		file.processKey(tab());
-		var selected: Selectable = file.getAllSelected()[0];
+		let selected: Selectable = file.getAllSelected()[0];
 		for (let i = 0; i <= 21; i++) {
-			var id = selected.getHtmlId();
+			const id = selected.getHtmlId();
 			assert.equal(id, fields[i]);
 			selected.processKey(tab());
 			selected = file.getAllSelected()[0];
@@ -86,9 +86,9 @@ suite('Navigation', () => {
 		assert.equal(selected!.isSelected(), true);
 		file.processKey(esc());
 		file.processKey(shift_tab());
-		var selected: Selectable = file.getAllSelected()[0];
+		selected = file.getAllSelected()[0];
 		for (let i = 21; i >=0; i--) {
-			var id = selected.getHtmlId();
+			const id = selected.getHtmlId();
 			assert.equal(id, fields[i]);
 			selected.processKey(shift_tab());
 			selected = file.getAllSelected()[0];
@@ -99,16 +99,16 @@ suite('Navigation', () => {
 		assert.equal(selected.isSelected(), false);
 	});
 	test('Selecting frames', () => {
-		var file = T03_mainWithAllStatements();
-		var main = file.getById("main1");
-		var global_select = file.getById("select0");
-		var main_st_1 = file.getById("var3");
+		const file = T03_mainWithAllStatements();
+		const main = file.getById("main1");
+		const global_select = file.getById("select0");
+		const main_st_1 = file.getById("var3");
 		assert.equal(main_st_1.isSelected(), false);
-		var main_st_2 = file.getById("set6");
+		const main_st_2 = file.getById("set6");
 		assert.equal(main_st_2.isSelected(), false);
-		var main_st_penult = file.getById("switch59");
+		const main_st_penult = file.getById("switch59");
 		assert.equal(main_st_penult.isSelected(), false);
-		var main_st_last = file.getById("select2");
+		const main_st_last = file.getById("select2");
 		assert.equal(main_st_last.isSelected(), false);
 		assert.equal(main.isSelected(), false);
 		assert.equal(global_select.isSelected(), true);
@@ -131,10 +131,10 @@ suite('Navigation', () => {
 		assert.equal(main_st_penult.isSelected(), true);
 		main_st_penult.processKey(right());
 		assert.equal(main_st_penult.isSelected(), false);
-		var select = file.getById("select60");
+		const select = file.getById("select60");
 		assert.equal(select.isSelected(), true);
 		select.processKey(down());
-		var def = file.getById("default62");
+		const def = file.getById("default62");
 		assert.equal(def.isSelected(), true);
 	});
 

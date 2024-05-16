@@ -227,7 +227,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     if (node instanceof TypeWithOptGenerics) {
         const type = node.simpleType!.matchedText;
         const opt = (node.generic as OptionalNode).matchedNode;
-        var gp = new Array<AstNode>();
+        let gp = new Array<AstNode>();
 
         if (opt) {
             gp = transformMany(opt as Sequence, fieldId, scope).items;
@@ -238,8 +238,8 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
 
     if (node instanceof FuncTypeNode) {
         const type = "Func";
-        var inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
-        var oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
+        const inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
+        const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
         return new TypeAsn(type, inp.concat(oup), fieldId, scope);
     }
@@ -369,16 +369,16 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof RangeNode) {
-        var fromNode = node.fromIndex?.matchedNode;
+        const fromNode = node.fromIndex?.matchedNode;
         const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
-        var toNode = node.toIndex?.matchedNode;
+        const toNode = node.toIndex?.matchedNode;
         const to = toNode ? transform(toNode, fieldId, scope) : undefined;
         return new RangeAsn(from, to, fieldId, scope);
     }
 
     if (node instanceof DoubleIndexNode) {
-        var indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
-        var indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
+        const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
+        const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
 
         return new IndexAsn(indexOne, indexTwo, fieldId, scope);
     }
@@ -389,8 +389,8 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof InstanceNode) {
-        var id = node.variable!.matchedText;
-        var index = transform(node.index, fieldId, scope);
+        const id = node.variable!.matchedText;
+        const index = transform(node.index, fieldId, scope);
         return new VarAsn(id, undefined, index, fieldId, scope);
     }
 
@@ -402,21 +402,21 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof EnumVal) {
-        var id = node.val!.matchedText;
-        var type = new EnumType(node.type!.matchedText);
+        const id = node.val!.matchedText;
+        const type = new EnumType(node.type!.matchedText);
 
         return new LiteralEnumAsn(id, type, fieldId, scope);
     }
 
     if (node instanceof KVPnode) {
-        var key = transform(node.key, fieldId, scope)!;
-        var value = transform(node.value, fieldId, scope)!;
+        const key = transform(node.key, fieldId, scope)!;
+        const value = transform(node.value, fieldId, scope)!;
 
         return new KvpAsn(key, value, fieldId, scope);
     }
 
     if (node instanceof StringInterpolation) {
-        var value = transform(node.expr, fieldId, scope)!;
+        const value = transform(node.expr, fieldId, scope)!;
 
         return new InterpolatedAsn(value, fieldId, scope);
     }

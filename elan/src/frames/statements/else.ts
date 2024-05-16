@@ -85,7 +85,7 @@ ${this.compileStatements(transforms)}\r`;
         }
     }
     parseBottom(source: CodeSource): boolean {
-        var result = false;
+        let result = false;
         source.removeIndent();
         if (source.isMatch("else")) {
             result = true;

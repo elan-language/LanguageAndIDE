@@ -14,10 +14,10 @@ import { Transforms } from "../frames/syntax-nodes/transforms";
 import { TestFrame } from "../frames/globals/test-frame";
 
 const codeContainer = document.querySelector('.elan-code');
-var file: File;
+let file: File;
 const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
-var doOnce = true;
-var profile: Profile;
+let doOnce = true;
+let profile: Profile;
 
 async function hash(toHash: string) {
 	const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
@@ -35,9 +35,9 @@ function fetchProfile() {
 		return localProfile ? Promise.resolve(localProfile) : Promise.reject();
 	}
 	else {
-		var scriptUrl = document.getElementsByTagName('script')[0].src;
-		var scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
-		var jsonProfile = `${scriptName}.json`;
+		const scriptUrl = document.getElementsByTagName('script')[0].src;
+		const scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
+		const jsonProfile = `${scriptName}.json`;
 		return fetch(jsonProfile, { mode: "same-origin" }).then(f => f.json()).then(j => j as Profile);
 	}
 }
@@ -121,7 +121,7 @@ function updateContent(text: string) {
 
 	const frames = document.querySelectorAll('.elan-code [id]');
 
-	for (var frame of frames) {
+	for (const frame of frames) {
 		const id = frame.id;
 
 		frame.addEventListener('keydown', (event: Event) => {
@@ -281,7 +281,7 @@ class ElanConsole {
 		inp.focus();
 
 		return new Promise<string>((rs, rj) => {
-			var entered = false;
+			let entered = false;
 			inp.addEventListener("keydown", (k: KeyboardEvent) => {
 				entered = k.key === "Enter";
 			});
@@ -405,7 +405,7 @@ const upload = document.getElementById('load') as Element;
 upload.addEventListener('click', chooser);
 
 function chooser(event: Event) {
-	var f = document.createElement('input');
+	const f = document.createElement('input');
 	f.style.display = 'none';
 	f.type = 'file';
 	f.name = 'file';
@@ -442,7 +442,7 @@ const download = document.getElementById('save') as Element;
 download.addEventListener('click', handleDownload);
 
 function handleDownload(event: Event) {
-	var fileName = prompt("Please enter your file name", file.fileName);
+	let fileName = prompt("Please enter your file name", file.fileName);
 
 	if (fileName === null) {
 		// cancelled

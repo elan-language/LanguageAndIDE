@@ -38,7 +38,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     constructor(holder: Frame) {
         this.holder = holder;
-        var map = holder.getMap();
+        const map = holder.getMap();
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.map = map;
@@ -54,13 +54,13 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     parseCurrentText(): void {
-        var root = this.initialiseRoot();
+        const root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(this.text, root);
     }
 
     parseFrom(source: CodeSource): void {
-        var text = this.readToDelimeter(source);
-        var root = this.initialiseRoot();
+        const text = this.readToDelimeter(source);
+        const root = this.initialiseRoot();
         this.parseCompleteTextUsingNode(text, root);
         if (this._parseStatus !== ParseStatus.valid) {
             throw new Error(`Parse error at ${source.getRemainingCode()}`);
@@ -91,8 +91,8 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     getPlainTextCompletion(): string {
-        var comps = this.getCompletion();
-        var i = comps.indexOf("<pr>");
+        const comps = this.getCompletion();
+        const i = comps.indexOf("<pr>");
         return i === -1 ? comps : comps.substring(0, i);
     }
 
@@ -113,8 +113,8 @@ export abstract class AbstractField implements Selectable, Field {
         return this._optional;
     }
     processKey(e: editorEvent): void {
-        var key = e.key;
-        var textLen = this.text.length;
+        const key = e.key;
+        const textLen = this.text.length;
         switch (key) {
             case 'Escape': { this.holder.select(true, false); break; }
             case "Home": { this.cursorPos = 0; break; }
@@ -127,12 +127,12 @@ export abstract class AbstractField implements Selectable, Field {
             case "ArrowDown": { this.getHolder().getNextFrameInTabOrder().select(true, false); break; }
             case "Backspace": {
                 if (this.cursorPos > 0) {
-                    var reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
+                    const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
                     this.text = reduced;
                     this.cursorPos--;
-                    var cursorBeforeParse = this.cursorPos;
+                    const cursorBeforeParse = this.cursorPos;
                     this.parseCurrentText();
-                    var afterParse = this.text.length;
+                    const afterParse = this.text.length;
                     if (this.text.length > reduced.length) {
                         this.text = reduced;
                         this.cursorPos = cursorBeforeParse;
@@ -162,19 +162,19 @@ export abstract class AbstractField implements Selectable, Field {
     private processInput(key: string) {
         if (this.overtyper.preProcessor(key)) {
             this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
-            var preParse = this.text.length;
+            const preParse = this.text.length;
             this.parseCurrentText();
-            var afterParse = this.text.length;
+            const afterParse = this.text.length;
             this.cursorPos = this.cursorPos + 1 + afterParse - preParse;
         }
     }
 
     private cursorRight() {
-        var textLen = this.text.length;
+        const textLen = this.text.length;
         if (this.cursorPos < textLen) {
             this.cursorPos++;
         } else {
-            var completions = this.getPlainTextCompletion();
+            const completions = this.getPlainTextCompletion();
             if (completions.length > 0) {
                 this.text = this.text + completions;
                 this.parseCurrentText();
@@ -192,9 +192,9 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     private enter(before: boolean) {
-        var peerFields = this.holder.getFields();
-        var last = peerFields.length - 1;
-        var thisField = peerFields.indexOf(this);
+        const peerFields = this.holder.getFields();
+        const last = peerFields.length - 1;
+        const thisField = peerFields.indexOf(this);
         if (before && thisField === 0) {
             this.holder.insertPeerSelector(before);
         } else if (!before && thisField === last) {
@@ -264,7 +264,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     public textAsHtml(): string {
-        var html = "";
+        let html = "";
         if (this.selected) {
             html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
         } else {

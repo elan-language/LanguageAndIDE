@@ -24,7 +24,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     }
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
 
         for (const i of this.parameters) {
             cc = cc.concat(i.aggregateCompileErrors());
@@ -40,11 +40,12 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     compile(): string {
         this.compileErrors = [];
 
-        var parameters = [...this.parameters];
-        var [qualifier, currentScope] = updateScopeAndQualifier(this.qualifier as QualifierAsn | undefined, transforms(), this.scope);
+        let parameters = [...this.parameters];
+        const [updatedQualifier, currentScope] = updateScopeAndQualifier(this.qualifier as QualifierAsn | undefined, transforms(), this.scope);
 
         const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
         const fst = funcSymbol.symbolType(transforms());
+        let qualifier = updatedQualifier;
 
         mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
         mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
@@ -115,7 +116,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         const matches = new Map<string, SymbolType>();
 
         const flattened = type.parametersTypes.map(n => this.flatten(n));
-        var parameters = this.parameters;
 
         if (type.isExtension && this.qualifier) {
             parameters = [(this.qualifier as QualifierAsn).value as AstNode].concat(parameters);
@@ -123,11 +123,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
         const pTypes = parameters.map(p => this.flatten(p.symbolType()));
 
-        for (var i = 0; i < flattened.length; i++) {
+        for (let i = 0; i < flattened.length; i++) {
             const pt = flattened[i];
             const pst = pTypes[i];
 
-            for (var i = 0; i < pt.length; i++) {
+            for (let i = 0; i < pt.length; i++) {
                 const t = pt[i];
                 const st = pst[i];
 

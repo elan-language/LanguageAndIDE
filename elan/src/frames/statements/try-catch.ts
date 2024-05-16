@@ -44,7 +44,7 @@ ${this.indent()}end try`;
         source.remove("try");
     }
     parseBottom(source: CodeSource): boolean {
-        var result = false;
+        let result = false;
         if (source.isMatch("catch ")) {
             result = true;
             this.catch.parseFrom(source);

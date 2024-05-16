@@ -70,7 +70,7 @@ ${this.indent()}}`;
         this.expr.parseFrom(source);
     }
     parseBottom(source: CodeSource): boolean {
-        var result = false;
+        let result = false;
         if (source.isMatch("default")) {
             result = true;
             this.default.parseFrom(source);

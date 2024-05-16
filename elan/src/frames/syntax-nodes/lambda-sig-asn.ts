@@ -16,7 +16,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     }
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
         for (const i of this.parameters) {
             cc = cc.concat(i.aggregateCompileErrors());
         }

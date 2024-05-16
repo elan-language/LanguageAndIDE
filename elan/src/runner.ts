@@ -4,7 +4,7 @@ export function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]
     const allOutcomes: [string, AssertOutcome[]][] = [];
 
     for (const t of tests) {
-        var outcomes: AssertOutcome[] = [];
+        const outcomes: AssertOutcome[] = [];
         t[1](outcomes);
         allOutcomes.push([t[0], outcomes]);
     }

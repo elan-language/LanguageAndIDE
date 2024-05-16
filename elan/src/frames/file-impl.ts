@@ -58,7 +58,7 @@ export class FileImpl implements File, Scope {
     constructor(private hash: (toHash: string) => Promise<string>, private profile: Profile, private transform: Transforms, ignoreHashOnParsing?: boolean) {
         this._map = new Map<string, Selectable>();
         this._factory = new StatementFactoryImpl();
-        var selector = new GlobalSelector(this);
+        const selector = new GlobalSelector(this);
         this.getChildren().push(selector);
         selector.select(true, false);
         if (ignoreHashOnParsing) {
@@ -83,8 +83,8 @@ export class FileImpl implements File, Scope {
     }
 
     private moveDownOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
+        let result = false;
+        const i = this.getChildren().indexOf(child);
         if (i < this.getChildren().length - 1) {
             this.getChildren().splice(i, 1);
             this.getChildren().splice(i + 1, 0, child);
@@ -93,8 +93,8 @@ export class FileImpl implements File, Scope {
         return result;
     }
     private moveUpOne(child: Frame): boolean {
-        var result = false;
-        var i = this.getChildren().indexOf(child);
+        let result = false;
+        const i = this.getChildren().indexOf(child);
         if (i > 0) {
             this.getChildren().splice(i, 1);
             this.getChildren().splice(i - 1, 0, child);
@@ -103,18 +103,18 @@ export class FileImpl implements File, Scope {
         return result;
     }
     moveSelectedChildrenUpOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected());
-        var cont = true;
-        var i = 0;
+        const toMove = this.getChildren().filter(g => g.isSelected());
+        let cont = true;
+        let i = 0;
         while (cont && i < toMove.length) {
             cont = this.moveUpOne(toMove[i]);
             i++;
         }
     }
     moveSelectedChildrenDownOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected());
-        var cont = true;
-        var i = toMove.length - 1;
+        const toMove = this.getChildren().filter(g => g.isSelected());
+        let cont = true;
+        let i = toMove.length - 1;
         while (cont && i >= 0) {
             cont = this.moveDownOne(toMove[i]);
             i--;
@@ -141,7 +141,7 @@ export class FileImpl implements File, Scope {
     }
 
     public async renderAsHtml(): Promise<string> {
-        var globals = parentHelper_renderChildrenAsHtml(this);
+        const globals = parentHelper_renderChildrenAsHtml(this);
         const hash = await this.getHash();
         return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
     }
@@ -160,19 +160,19 @@ export class FileImpl implements File, Scope {
     }
 
     private getProfileName() {
-        var profile = this.getProfile();
+        const profile = this.getProfile();
         return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
     }
 
     compileGlobals(): string {
-        var result = "";
+        let result = "";
         if (this._children.length > 0) {
             const ss: Array<string> = [];
-            for (var frame of this._children.filter(g => g instanceof Enum)) {
+            for (const frame of this._children.filter(g => g instanceof Enum)) {
                 ss.push(frame.compile(this.transform));
             }
 
-            for (var frame of this._children.filter(g => !('isSelector' in g || g instanceof Enum))) {
+            for (const frame of this._children.filter(g => !('isSelector' in g || g instanceof Enum))) {
                 ss.push(frame.compile(this.transform));
             }
             result = ss.join("\r\n");
@@ -252,7 +252,7 @@ export class FileImpl implements File, Scope {
         return worst;
     }
     getTestStatusForDashboard(): string {
-        var status: OverallStatus;
+        let status: OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid || this.getCompileStatus() !== CompileStatus.ok) {
             status = OverallStatus.default;
         } else {
@@ -287,7 +287,7 @@ export class FileImpl implements File, Scope {
 
     
     getCompileStatusForDashboard(): string {
-        var status: OverallStatus;
+        let status: OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid) {
             status = OverallStatus.default;
         } else {
@@ -356,7 +356,7 @@ export class FileImpl implements File, Scope {
     }
 
     containsMain(): boolean {
-        var mains = this.getChildren().filter(g => 'isMain' in g);
+        const mains = this.getChildren().filter(g => 'isMain' in g);
         return mains.length > 0;
     }
 
@@ -379,7 +379,7 @@ export class FileImpl implements File, Scope {
     }
 
     private isEmpty(code: string): boolean {
-        var matches = code.match(/^[\s\r\n]*$/);
+        const matches = code.match(/^[\s\r\n]*$/);
         return matches !== null && matches.length > 0;
     }
 

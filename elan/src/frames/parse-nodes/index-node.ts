@@ -16,9 +16,9 @@ export class IndexNode extends AbstractSequence {
 
     parseText(text: string): void {
         this.remainingText = text;
-        var expr = () => new ExprNode();
-        var doubleIndex = () => new DoubleIndexNode();
-        var range = () => new RangeNode();
+        const expr = () => new ExprNode();
+        const doubleIndex = () => new DoubleIndexNode();
+        const range = () => new RangeNode();
         this.contents = new Alternatives([expr, doubleIndex, range]);
         if (text.length > 0) {
             this.addElement(new SymbolNode(OPEN_SQ_BRACKET));

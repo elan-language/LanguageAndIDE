@@ -17,7 +17,7 @@ export class OptionalNode extends AbstractParseNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            var option = this.option;
+            const option = this.option;
             option.parseText(text);
             if (option.status === ParseStatus.valid || (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")) {
                 this.updateFrom(option);

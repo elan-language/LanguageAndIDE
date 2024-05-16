@@ -73,7 +73,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ElanSymbol {
         const names = this.values.renderAsSource().split(",").map(s => s.trim());
 
-        for (var n of names) {
+        for (const n of names) {
             if (n === id) {
                 return {
                     symbolId : id,

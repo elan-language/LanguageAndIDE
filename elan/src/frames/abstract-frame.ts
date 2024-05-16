@@ -27,7 +27,7 @@ export abstract class AbstractFrame implements Frame {
 
     constructor(parent: Parent) {
         this._parent = parent;
-        var map = this.getFile().getMap();
+        const map = this.getFile().getMap();
         this.htmlId = `${this.getIdPrefix()}${map.size}`;
         map.set(this.htmlId, this);
         this.setMap(map);
@@ -74,8 +74,8 @@ export abstract class AbstractFrame implements Frame {
     }
 
     selectFieldBefore(current: Field) {
-        var fields = this.getFields();
-        var i = fields.indexOf(current);
+        const fields = this.getFields();
+        const i = fields.indexOf(current);
         if (i > 0) {
             fields[i-1].select(true, false);
         } else {
@@ -84,15 +84,15 @@ export abstract class AbstractFrame implements Frame {
     }
 
     selectFieldAfter(current: Field) {
-        var fields = this.getFields();
-        var i = fields.indexOf(current);
+        const fields = this.getFields();
+        const i = fields.indexOf(current);
         if (i < fields.length - 1) {
             fields[i+1].select(true, false);
         } else {
             if (isParent(this)){
                 this.getFirstChild().selectFirstField();
             } else {
-                var next = this.getNextFrameInTabOrder();
+                const next = this.getNextFrameInTabOrder();
                 if (next !== this) {
                     next.selectFirstField();
                 }
@@ -101,13 +101,13 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getNextFrameInTabOrder(): Frame {
-        var result: Frame = this;
+        let result: Frame = this;
         if (this.getNextPeerFrame() !== this) {
             result = this.getNextPeerFrame();
         } else {
-            var parent = this.getParent();
+            const parent = this.getParent();
             if (isFrame(parent)) {
-                var parentNextPeer = parent.getNextFrameInTabOrder();
+                const parentNextPeer = parent.getNextFrameInTabOrder();
                 if (parentNextPeer !== parent) {
                     result = parentNextPeer;
                 }
@@ -117,11 +117,11 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getPreviousFrameInTabOrder(): Frame {
-        var result: Frame = this;
+        let result: Frame = this;
         if (this.getPreviousPeerFrame() !== this) {
             result = this.getPreviousPeerFrame();
         } else {
-            var parent = this.getParent();
+            const parent = this.getParent();
             if (isFrame(parent)) {
                 result = parent.getPreviousFrameInTabOrder();
             }
@@ -131,7 +131,7 @@ export abstract class AbstractFrame implements Frame {
 
     //Overridden by any frames that have children
     selectFirstField(): boolean {
-        var result = false;
+        let result = false;
         if (this.getFields().length > 0) {
           this.getFields()[0].select(true, false);
           result = true;
@@ -140,8 +140,8 @@ export abstract class AbstractFrame implements Frame {
     } 
 
     selectLastField(): boolean {
-        var result = false;
-        var n = this.getFields().length;
+        let result = false;
+        const n = this.getFields().length;
         if (n > 0) {
           this.getFields()[n -1].select(true, false);
           result = true;
@@ -150,7 +150,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     processKey(e: editorEvent): void {
-        var key = e.key;
+        const key = e.key;
         switch (key) {
           case "Home": {this.getFirstPeerFrame().select(true, false); break;}
           case "End": {this.getLastPeerFrame().select(true, false); break;}
@@ -175,7 +175,7 @@ export abstract class AbstractFrame implements Frame {
             break;
           }
           case "ArrowLeft": {
-            var pt = this.getParent();
+            const pt = this.getParent();
             if (isFrame(pt)) {
                 pt.select(true, false);
             }
@@ -190,9 +190,9 @@ export abstract class AbstractFrame implements Frame {
     cut(): void {
         if (this.movable) {
             this.insertNewSelectorIfNecessary();
-            var newFocus = this.getAdjacentPeer();
+            const newFocus = this.getAdjacentPeer();
             this.deselect();
-            var sp = this.getScratchPad();
+            const sp = this.getScratchPad();
             this.getParent().removeChild(this);
             sp.addSnippet(this);
             newFocus.select(true, false);
@@ -207,8 +207,8 @@ export abstract class AbstractFrame implements Frame {
     }
 
     delete(): void {
-            var parent = this.getParent();
-            var newFocus = this.getAdjacentPeer();
+            const parent = this.getParent();
+            const newFocus = this.getAdjacentPeer();
             parent.removeChild(this);
             this.getMap().delete(this.htmlId);
             newFocus.select(true, false);
@@ -222,8 +222,8 @@ export abstract class AbstractFrame implements Frame {
 
     protected getAdjacentPeer(): Frame
     {
-        var parent =this.getParent();
-        var adjacent = parent.getChildBefore(this);
+        const parent =this.getParent();
+        let adjacent = parent.getChildBefore(this);
         if (adjacent === this) {
             adjacent = parent.getChildAfter(this);
         }
@@ -234,7 +234,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     insertPeerSelector(before: boolean): void {
-        var parent =this.getParent();
+        const parent =this.getParent();
         if (before && this.canInsertBefore()) {
             parent.insertOrGotoChildSelector(false, this);
         } else if (!before && this.canInsertAfter()) {
@@ -255,14 +255,14 @@ export abstract class AbstractFrame implements Frame {
     }
 
     selectLastFieldAboveThisFrame(): boolean {
-        var result = false;
-        var peer = this.getPreviousPeerFrame();
+        let result = false;
+        const peer = this.getPreviousPeerFrame();
         if (peer !== this) {
             result = peer.selectLastField();
         } else {
-            var parent = this.getParent();
-            var fields = parent.getFields();
-            var n = fields.length;
+            const parent = this.getParent();
+            const fields = parent.getFields();
+            const n = fields.length;
             if (n > 0) {
                 fields[n -1].select(true, false);
                 result = true;
@@ -278,8 +278,8 @@ export abstract class AbstractFrame implements Frame {
     }
 
     private selectLastFieldInPreviousGlobal(file: File, frame: Frame) : boolean {
-        var result = false;
-        var prior = file.getChildBefore(frame);
+        let result = false;
+        const prior = file.getChildBefore(frame);
         if (prior !== frame ) {
             prior.selectLastField();  
             result = true;
@@ -371,7 +371,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getAllSelected(): Selectable[] {
-        var selected = [];
+        const selected = [];
         for (const f of this.getMap().values()) {
             if (f.isSelected()) {
                 selected.push(f);

@@ -11,10 +11,10 @@ export class WithClause extends AbstractSequence {
     changes: ListNode | undefined;
 
     parseText(text: string): void {
-        var sp0 = new SpaceNode(Space.added);
-        var withKw = new KeywordNode(withKeyword);
-        var sp1 = new SpaceNode(Space.required);
-        var setClause = () => new SetClause();
+        const sp0 = new SpaceNode(Space.added);
+        const withKw = new KeywordNode(withKeyword);
+        const sp1 = new SpaceNode(Space.required);
+        const setClause = () => new SetClause();
         this.changes = new ListNode(setClause);
         this.addElement(sp0);
         this.addElement(withKw);

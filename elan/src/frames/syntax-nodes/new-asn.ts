@@ -17,7 +17,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     }
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
         for (const i of this.parameters) {
             cc = cc.concat(i.aggregateCompileErrors());
         }
@@ -26,7 +26,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     compile(): string {
         this.compileErrors = [];
-        var gt = this.typeNode.genericParameters.map(p => `"${p.compile()}"`).join(", ");
+        let gt = this.typeNode.genericParameters.map(p => `"${p.compile()}"`).join(", ");
         gt = gt ? `, [${gt}]` : "";
         const pp = this.parameters.map(p => p.compile()).join(", ");
         const t = this.typeNode.compile();

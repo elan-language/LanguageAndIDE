@@ -15,8 +15,8 @@ suite('Editing Fields Tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 test('Simple entry & editing of text in a name', () => { 
-    var con = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
-    var name = con.name;
+    const con = new Constant(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const name = con.name;
     assert.equal(name.text, "");
     assert.equal(name.cursorPos, 0);
     name.processKey(key("a"));
@@ -63,9 +63,9 @@ test('Simple entry & editing of text in a name', () => {
 
 
     test('Entry of text with formatting', () => { 
-        var main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
-        var set = new SetStatement(main);
-        var expr = set.expr;
+        const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+        const set = new SetStatement(main);
+        const expr = set.expr;
         expr.processKey(key("3"));
         assert.equal(expr.text, "3");
         assert.equal(expr.cursorPos, 1); 
@@ -106,8 +106,8 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 2', () => { 
-        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
-        var t = f.returnType;
+        const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
+        const t = f.returnType;
         t.processKey(key("F"));
         assert.equal(t.text, "F");
         assert.equal(t.cursorPos, 1); 
@@ -163,8 +163,8 @@ test('Simple entry & editing of text in a name', () => {
     });
 
     test('Entry of text with formatting 3', () => { 
-        var f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
-        var t = f.returnType;
+        const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
+        const t = f.returnType;
         t.processKey(key("("));
         assert.equal(t.text, "(");
         assert.equal(t.cursorPos, 1);

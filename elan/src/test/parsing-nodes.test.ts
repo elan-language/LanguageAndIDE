@@ -487,9 +487,9 @@ suite('Parsing Nodes', () => {
 		testNodeParse(new LitString(), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
 	});
 	test('Interpolated strings', () => {
-        var field = () => new StringInterpolation();
-        var plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
-        var segment = () => new Alternatives([field, plainText]);
+        const field = () => new StringInterpolation();
+        const plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
+        const segment = () => new Alternatives([field, plainText]);
         testNodeParse(segment(), `abc`, ParseStatus.valid, "abc","");
 		testNodeParse(segment(), `{x}`, ParseStatus.valid, "{x}","");
 		testNodeParse(segment(), `"`, ParseStatus.invalid, "",`"`);

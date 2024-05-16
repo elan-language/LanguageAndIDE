@@ -13,10 +13,10 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (this.remainingText.length > 0) {
-            var cont = true;
-            var i = 0;
+            let cont = true;
+            let i = 0;
             while (i < this.alternatives.length && cont) {
-                var alt = this.alternatives[i];
+                const alt = this.alternatives[i];
                 alt.parseText(text);
                 if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
                     this.bestMatch = alt;

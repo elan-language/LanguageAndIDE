@@ -25,7 +25,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     is2d : boolean = false;
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
         for (const i of this.genericParameters) {
             cc = cc.concat(i.aggregateCompileErrors());
         }

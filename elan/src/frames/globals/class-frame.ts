@@ -83,7 +83,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     };
 
     aggregateParseStatus(): void {
-        var worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
+        const worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
         this.setParseStatus(worstOfFieldsOrChildren);
     }
     getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of readParseStatus()
@@ -91,7 +91,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
     }
 
     aggregateCompileStatus(): void {
-        var worst = Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
+        const worst = Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
         this.setCompileStatus(worst);
     }
     getCompileStatus() : CompileStatus { //TODO: to be eliminated in favour of readCompileStatus()
@@ -170,7 +170,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
         return 'class';
     }
     private modifiersAsHtml(): string {
-        var result = "";
+        let result = "";
         if (this.hasAddedMembers()) {
             result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
             result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
@@ -180,7 +180,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
         return result;
     }
     private modifiersAsSource(): string {
-        var result = "";
+        let result = "";
         if (this.isAbstract()) {
             result += `abstract `;
         }
@@ -277,19 +277,19 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
         } 
     }
     parseTop(source: CodeSource): boolean {
-        var abs = "abstract ";
+        const abs = "abstract ";
         if (source.isMatch(abs)) {
             source.remove(abs);
             this.makeAbstract();
         }
-        var imm = "immutable ";
+        const imm = "immutable ";
         if (source.isMatch(imm)) {
             source.remove(imm);
             this.makeImmutable();
         }
         source.remove("class ");
         this.name.parseFrom(source);
-        var inh = " inherits "; //Note leading & trailing space
+        const inh = " inherits "; //Note leading & trailing space
         if (source.isMatch(inh)) {
             source.remove(inh);
             this.makeInherits();
@@ -303,9 +303,9 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
 
     parseBottom(source: CodeSource): boolean {
-        var result = false;
+        let result = false;
         source.removeIndent();
-        var keyword = "end class";
+        const keyword = "end class";
         if (source.isMatch(keyword)) {
             source.remove(keyword);
             result = true;
@@ -321,7 +321,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
             return this;
         }
 
-        for (var f of this.getChildren()) {
+        for (const f of this.getChildren()) {
             if (isSymbol(f) && f.symbolId === id) {
                 return f;
             }

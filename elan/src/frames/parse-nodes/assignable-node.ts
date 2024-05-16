@@ -14,7 +14,7 @@ export class AssignableNode extends AbstractSequence {
 
     constructor() {
         super();
-        var qualDot =  new Qualifier(new KeywordNode(propertyKeyword));
+        const qualDot =  new Qualifier(new KeywordNode(propertyKeyword));
         this.qualifier = new OptionalNode(qualDot);
         this.simple =  new IdentifierNode();
         this.index =  new OptionalNode(new IndexNode());

@@ -25,9 +25,9 @@ export class BinaryOperation extends AbstractAlternatives {
         this.alternatives.push(new OperatorNode(LE));
         this.alternatives.push(new OperatorNode(POWER));
         this.alternatives.push(new KeywordNode(isKeyword));
-        var is = () => new KeywordNode(isKeyword);
-        var sp = () => new SpaceNode(Space.required);
-        var not = () => new KeywordNode(notKeyword);
+        const is = () => new KeywordNode(isKeyword);
+        const sp = () => new SpaceNode(Space.required);
+        const not = () => new KeywordNode(notKeyword);
         this.alternatives.push(new Sequence([is,sp, not]));
         this.alternatives.push(new KeywordNode(andKeyword));
         this.alternatives.push(new KeywordNode(orKeyword));

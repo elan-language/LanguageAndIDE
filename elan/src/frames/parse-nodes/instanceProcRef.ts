@@ -19,10 +19,10 @@ export class InstanceProcRef extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            var global = () => new Qualifier(new KeywordNode(globalKeyword));
-            var lib = () => new Qualifier(new KeywordNode(libraryKeyword));
-            var instance = () => new Qualifier(new InstanceNode());
-            var qualifier = new Alternatives([global, lib, instance]);
+            const global = () => new Qualifier(new KeywordNode(globalKeyword));
+            const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
+            const instance = () => new Qualifier(new InstanceNode());
+            const qualifier = new Alternatives([global, lib, instance]);
             this.qualifier =  new OptionalNode(qualifier);
             this.simple = new IdentifierNode();
             this.addElement(this.qualifier!);

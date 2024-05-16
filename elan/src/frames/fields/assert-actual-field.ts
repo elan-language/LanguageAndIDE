@@ -16,8 +16,8 @@ export class AssertActualField extends AbstractField {
     
     initialiseRoot(): ParseNode {
         this.astNode = undefined; 
-        var variableRef = () => new VarRefNode();
-        var functionCall = () => new FunctionCallNode();
+        const variableRef = () => new VarRefNode();
+        const functionCall = () => new FunctionCallNode();
         this.rootNode = new Alternatives([variableRef, functionCall]);
         return this.rootNode; 
     }

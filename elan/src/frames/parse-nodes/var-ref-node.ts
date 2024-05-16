@@ -11,7 +11,7 @@ export class VarRefNode extends AbstractAlternatives {
     }
 
     parseText(text: string): void {
-        var simple = () => new IdentifierNode();
+        const simple = () => new IdentifierNode();
         this.alternatives.push(simple());
         this.alternatives.push(new VarRefCompound());
         super.parseText(text);

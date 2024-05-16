@@ -17,9 +17,9 @@ export class LitStringNonEmpty extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            var field = () => new StringInterpolation();
-            var plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
-            var segment = () => new Alternatives([field, plainText]);
+            const field = () => new StringInterpolation();
+            const plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
+            const segment = () => new Alternatives([field, plainText]);
             this.segments = new Multiple(segment, 1);
             this.addElement(new SymbolNode(DOUBLE_QUOTES));
             this.addElement(this.segments);

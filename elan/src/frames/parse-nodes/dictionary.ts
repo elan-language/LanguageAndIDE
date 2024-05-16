@@ -17,7 +17,7 @@ export class Dictionary extends AbstractParseNode  {
 
     parseText(text: string): void {
         if (text.length > 0) {
-             var kvpConstructor = () => new KVPnode(this.keyConstructor, this.valueConstructor);
+             const kvpConstructor = () => new KVPnode(this.keyConstructor, this.valueConstructor);
             this.kvps = new ListNode(kvpConstructor);
             this.kvps.parseText(text);
             this.updateFrom(this.kvps);

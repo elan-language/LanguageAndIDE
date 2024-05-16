@@ -14,7 +14,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     }
 
     aggregateCompileErrors(): CompileError[] {
-        var cc: CompileError[] = [];
+        let cc: CompileError[] = [];
         for (const i of this.items) {
             cc = cc.concat(i.aggregateCompileErrors());
         }

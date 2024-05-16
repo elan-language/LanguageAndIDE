@@ -22,10 +22,10 @@ export class Multiple extends AbstractParseNode {
         if (text.length === 0) {
             this.status = this.minimum === 0 ? ParseStatus.valid : ParseStatus.empty;
         } else {
-            var toParse = text;
-            var cont = true;
+            let toParse = text;
+            let cont = true;
             while (cont && toParse.length > 0) {
-                var node = this.elementConstructor();
+                const node = this.elementConstructor();
                 node.parseText(toParse);
                 if (node.status === ParseStatus.valid) {
                     this.elements.push(node);
@@ -41,9 +41,9 @@ export class Multiple extends AbstractParseNode {
                 this.status = ParseStatus.valid;
                 this.remainingText = toParse;
             } else if (this.elements.length >= this.minimum) {
-                var last = this.elements[this.elements.length - 1];
+                const last = this.elements[this.elements.length - 1];
                 this.status = last.status;
-                var matchedLength = text.length - toParse.length;
+                const matchedLength = text.length - toParse.length;
                 this.matchedText = text.substring(0, matchedLength);
                 this.remainingText = toParse;
             } else {

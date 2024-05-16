@@ -30,7 +30,7 @@ import { transforms } from './compiler/compiler-test-helpers';
 import { SymbolScope } from '../frames/symbols/symbol-scope';
 
 // flag to update test file 
-var updateTestFiles = true;
+const updateTestFiles = true;
 
 export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
@@ -39,9 +39,9 @@ export async function assertEffectOfAction(sourceFile: string, action: (f: FileI
   const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
   const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
 
-  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+  const codeSource = new CodeSourceFromString(sourceDoc.getText());
 
-  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -69,9 +69,9 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
   const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
 
-  var codeSource = new CodeSourceFromString(sourceDoc.getText());
+  const codeSource = new CodeSourceFromString(sourceDoc.getText());
 
-  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -175,8 +175,8 @@ export async function assertFileParses(sourceFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  var codeSource = new CodeSourceFromString(sourceDoc.getText());
-  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const codeSource = new CodeSourceFromString(sourceDoc.getText());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -192,8 +192,8 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  var codeSource = new CodeSourceFromString(sourceDoc.getText());
-  var fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  const codeSource = new CodeSourceFromString(sourceDoc.getText());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);

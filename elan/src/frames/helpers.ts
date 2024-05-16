@@ -60,10 +60,10 @@ export function singleIndent() {
 }
 
 export function expandCollapseAll(file: File) {
-    var map = file.getMap();
-    var collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
-    var firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s))[0];
-    var collapse = true;
+    const map = file.getMap();
+    const collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
+    const firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s))[0];
+    let collapse = true;
     if (firstCollapsibleGlobal && firstCollapsibleGlobal.isCollapsed()) {
         collapse = false;
     }
@@ -74,8 +74,8 @@ export function expandCollapseAll(file: File) {
             c.expand();
         }
     }
-    var globals = [...map.values()].filter(s => isGlobal(s));
-    var selectedGlobals = globals.filter(s => s.isSelected());
+    const globals = [...map.values()].filter(s => isGlobal(s));
+    const selectedGlobals = globals.filter(s => s.isSelected());
     if (selectedGlobals.length === 0) {
         file.getFirstChild().select(true, false);
     }
@@ -95,9 +95,9 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
                     loc.compileErrors[0].message
                     : ""; */
     /* To display first message only use: */
-    var msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
-    var cls = "";
-    var compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
+    const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
+    let cls = "";
+    const compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
     if (compile !== OverallStatus.ok) {
         cls = OverallStatus[compile];
     }
@@ -105,7 +105,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
 }
 
 export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
-    var result = CompileStatus.error;
+    let result = CompileStatus.error;
     if (errors.length === 0) {
         result = CompileStatus.ok;
     } else {
@@ -115,8 +115,8 @@ export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
 }
 
 export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
-    var status: OverallStatus = OverallStatus.error;
-    var parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
+    let status: OverallStatus = OverallStatus.error;
+    const parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
     if (parse !== OverallStatus.ok) {
         status = parse;
     } else {
@@ -126,7 +126,7 @@ export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
 }
 
 export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
-    var overall = OverallStatus.default;
+    let overall = OverallStatus.default;
     if (ps === ParseStatus.valid) {
         overall = OverallStatus.ok;
     } else if (ps === ParseStatus.incomplete) {
@@ -138,7 +138,7 @@ export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
 }
 
 export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
-    var overall = OverallStatus.default;
+    let overall = OverallStatus.default;
     if (cs === CompileStatus.ok) {
         overall = OverallStatus.ok;
     } else if (cs === CompileStatus.unknownSymbol) {
@@ -150,7 +150,7 @@ export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
 }
 
 export function helper_testStatusAsOverallStatus(ts: TestStatus) {
-    var overall = OverallStatus.default;
+    let overall = OverallStatus.default;
     if (ts === TestStatus.pass) {
         overall = OverallStatus.ok;
     } else if (ts === TestStatus.pending) {
@@ -162,7 +162,7 @@ export function helper_testStatusAsOverallStatus(ts: TestStatus) {
 }
 
 export function helper_runStatusAsOverallStatus(rs: RunStatus) {
-    var overall = OverallStatus.default;
+    let overall = OverallStatus.default;
     if (rs === RunStatus.running) {
         overall = OverallStatus.ok;
     } else if (rs === RunStatus.paused) {

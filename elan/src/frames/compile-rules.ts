@@ -150,7 +150,7 @@ export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNo
 export function mustMatchParameters(parms: AstNode[], ofType: SymbolType[], compileErrors: CompileError[], location: string) {
     const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
 
-    for (var i = 0; i < maxLen; i++) {
+    for (let i = 0; i < maxLen; i++) {
         const p = parms[i];
         const t = ofType[i];
 
@@ -233,7 +233,7 @@ export function mustBeCompatibleType(lhs: SymbolType, rhs: SymbolType, compileEr
 
     if (lhs instanceof TupleType && rhs instanceof TupleType) {
         const maxLen = lhs.ofTypes.length > rhs.ofTypes.length ? lhs.ofTypes.length : rhs.ofTypes.length;
-        for (var i = 0; i < maxLen; i++) {
+        for (let i = 0; i < maxLen; i++) {
             mustBeCompatibleType(lhs.ofTypes[i], rhs.ofTypes[i], compileErrors, location);
         }
         return;

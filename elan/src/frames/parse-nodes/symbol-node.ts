@@ -10,9 +10,9 @@ export class SymbolNode extends FixedTextNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            var target = this.fixedText;
+            const target = this.fixedText;
             if (text.startsWith(target)) {
-                var n = this.numLeadingSpaces(text) + this.fixedText.length;
+                const n = this.numLeadingSpaces(text) + this.fixedText.length;
                 this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
             } else if (target.startsWith(text)) {
                 this.set(ParseStatus.incomplete, text, "");

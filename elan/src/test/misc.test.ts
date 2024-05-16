@@ -14,7 +14,7 @@ suite('Misc Tests', () => {
 
 	
 	ignore_test('Invalid identifier', async () => {
-		var file = T03_mainWithAllStatements();
+		const file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("X"));
@@ -23,7 +23,7 @@ suite('Misc Tests', () => {
 	});
 
 	ignore_test('Valid identifier', async () => {
-		var file = T03_mainWithAllStatements();
+		const file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("q"));
@@ -32,7 +32,7 @@ suite('Misc Tests', () => {
 	});
 
 	ignore_test('Valid variable statement', async () => {
-		var file = T03_mainWithAllStatements();
+		const file = T03_mainWithAllStatements();
 		await assertElementHasClasses(file, "fileStatus", "incomplete");
 		await assertElementHasClasses(file, "var3", "incomplete"); 
 		file.getById("var4").processKey(key("q"));
@@ -50,31 +50,31 @@ suite('Misc Tests', () => {
 	//Code source
 	
 	test('code source - readToNonMatchingCloseBracket1', () => {
-		var source = new CodeSourceFromString("foo, bar, yon) ");
-		var read = source.readToNonMatchingCloseBracket();
+		const source = new CodeSourceFromString("foo, bar, yon) ");
+		const read = source.readToNonMatchingCloseBracket();
 		assert.equal(read, "foo, bar, yon");
 		assert.equal(source.getRemainingCode(), ") ");
 	});
 	test('code source - readToNonMatchingCloseBracket2', () => {
-		var source = new CodeSourceFromString(`"x)y" ) `);
-		var read = source.readToNonMatchingCloseBracket();
+		const source = new CodeSourceFromString(`"x)y" ) `);
+		const read = source.readToNonMatchingCloseBracket();
 		assert.equal(read, `"x)y" `);
 		assert.equal(source.getRemainingCode(), ") ");
 	});
 	test('code source - readToNonMatchingCloseBracket3', () => {
-		var source = new CodeSourceFromString(`x() ) `);
-		var read = source.readToNonMatchingCloseBracket();
+		const source = new CodeSourceFromString(`x() ) `);
+		const read = source.readToNonMatchingCloseBracket();
 		assert.equal(read, `x() `);
 		assert.equal(source.getRemainingCode(), ") ");
 	});
 
 	
 	test('parse Frames - empty file', async () => {
-        var source = new CodeSourceFromString("");
+        const source = new CodeSourceFromString("");
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
 		await await fl.parseFrom(source);
-		var elan = await fl.renderAsSource();
-		var code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
+		const elan = await fl.renderAsSource();
+		const code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
 
 `;
 		assert.equal(elan, code.replaceAll("\n", "\r\n"));

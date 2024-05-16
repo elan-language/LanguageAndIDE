@@ -68,7 +68,7 @@ export class AssertStatement extends AbstractFrame implements Statement{
     }
 
     compileOrTestMsgAsHtml(): string {
-        var msg = "";
+        let msg = "";
         if (this.getCompileStatus() === CompileStatus.ok) {
             msg = this.testMsgAsHtml();
         } else {
@@ -78,8 +78,8 @@ export class AssertStatement extends AbstractFrame implements Statement{
     }
 
     testMsgAsHtml(): string {
-        var cls = "";
-        var msg = "";
+        let cls = "";
+        let msg = "";
         if (!this.outcome) {
             cls = OverallStatus[OverallStatus.warning];
             msg = `not run`;

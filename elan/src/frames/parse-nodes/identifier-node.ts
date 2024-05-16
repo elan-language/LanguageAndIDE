@@ -16,7 +16,7 @@ export class IdentifierNode extends AbstractParseNode {
         this.remainingText = text;
         if (text.length > 0) {
             [this.status, this.matchedText, this.remainingText] = matchRegEx(text.trimStart(), Regexes.identifier);
-            var match = this.matchedText;
+            const match = this.matchedText;
             //Check that it is not a keyword (except result)
             if (this.status === ParseStatus.valid && allKeywords.indexOf(match) > -1) {
                 this.status = ParseStatus.invalid;

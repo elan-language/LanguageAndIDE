@@ -62,7 +62,7 @@ export class System {
     array(size1: number, size2?: number) {
         const arr = new Array(size1);
         if (size2) {
-            for (var i = 0; i <= size1; i++) {
+            for (let i = 0; i <= size1; i++) {
                 const a2 = new Array(size2);
                 (<any>a2)._type = "Array";
                 arr[i] = a2;
@@ -79,7 +79,7 @@ export class System {
 
     initialise(toInit: any, toType? : string[]) {
         if (toType && Array.isArray(toInit) && toInit.length > 0) {
-            for (var i = 0; i < toInit.length; i++) {
+            for (let i = 0; i < toInit.length; i++) {
                 if (Array.isArray(toInit[i])){
                     this.initialise(toInit[i], toType);
                 }

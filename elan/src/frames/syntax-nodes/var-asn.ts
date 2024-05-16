@@ -73,7 +73,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
 
     compile(): string {
         this.compileErrors = [];
-        var q = this.getQualifier();
+        const q = this.getQualifier();
 
         const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
         if (classScope instanceof ClassType) {
@@ -84,8 +84,8 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
             }
         }
 
-        var idx = this.index ? this.index.compile() : "";
-        var code = `${q}${this.id}${idx}`;
+        const idx = this.index ? this.index.compile() : "";
+        let code = `${q}${this.id}${idx}`;
 
         if (this.isRange() || this.index) {
             const rootType = this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());

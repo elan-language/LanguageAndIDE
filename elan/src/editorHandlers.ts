@@ -22,9 +22,9 @@ export function handleClick(e: editorEvent, file: File) {
                 if (curSel.length > 0) {
                     const toSelect = new Set<Selectable>();
 
-                    for (var cs of curSel) {
+                    for (const cs of curSel) {
                         const range = parent.getChildRange(cs as Frame, s);
-                        for (var r of range) {
+                        for (const r of range) {
                             toSelect.add(r);
                         }
                     }
@@ -32,7 +32,7 @@ export function handleClick(e: editorEvent, file: File) {
                     // this should clear all other selections
                     s?.select(true, false);
                     // select all in range
-                    for (var ts of toSelect) {
+                    for (const ts of toSelect) {
                         ts.select(false, true);
                     }
                     // select with focus clicked on frame

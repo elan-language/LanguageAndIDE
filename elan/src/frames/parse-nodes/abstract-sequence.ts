@@ -15,11 +15,11 @@ export abstract class AbstractSequence extends AbstractParseNode {
     }
 
     parseText(text: string): void {
-        var i = 0; //Index
-        var remaining = text;
-        var worstStatus: ParseStatus = ParseStatus.default;
+        let i = 0; //Index
+        let remaining = text;
+        let worstStatus: ParseStatus = ParseStatus.default;
         while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
-            var node = this.elements[i];
+            const node = this.elements[i];
             node.parseText(remaining);
             remaining = node.remainingText;
             if (node.status === ParseStatus.empty) {

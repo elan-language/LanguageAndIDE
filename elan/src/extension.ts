@@ -11,7 +11,7 @@ import * as fs from 'fs';
 import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
 
 
-var client : LanguageClient | undefined;
+let client : LanguageClient | undefined;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -55,9 +55,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(ElanEditorProvider.register(context));
 
-	var buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g4j3ur8v23tmnmkk/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
+	const buff1 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g4j3ur8v23tmnmkk/artifacts/Compiler%2Fbin%2FDebug%2Fbc.zip");
 	await InstallZip(buff1, "elan compiler", compilerPath, []);
-	var buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g4j3ur8v23tmnmkk/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
+	const buff2 = await downloadServer("https://ci.appveyor.com/api/buildjobs/g4j3ur8v23tmnmkk/artifacts/LanguageServer%2Fbin%2FDebug%2FLanguageServer.zip");
 	await InstallZip(buff2, "elan language server", languageServerPath, []);
 
 	startLanguageServer(context, languageServerPath);

@@ -13,11 +13,11 @@ export class SetClause extends AbstractSequence {
 
     parseText(text: string): void {
         this.property = new IdentifierNode();
-        var sp0 =new SpaceNode(Space.required);
-        var set = new KeywordNode(setKeyword);
-        var sp1 =new SpaceNode(Space.required);
-        var to = new KeywordNode(toKeyword);
-        var sp2 =new SpaceNode(Space.required);
+        const sp0 =new SpaceNode(Space.required);
+        const set = new KeywordNode(setKeyword);
+        const sp1 =new SpaceNode(Space.required);
+        const to = new KeywordNode(toKeyword);
+        const sp2 =new SpaceNode(Space.required);
         this.expr = new ExprNode();
         this.addElement(this.property);
         this.addElement(sp0);

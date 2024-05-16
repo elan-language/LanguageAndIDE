@@ -20,7 +20,7 @@ export class SpaceNode extends AbstractParseNode {
             }
         } else {
             this.remainingText = text;
-            var matches = text.match(Regexes.leadingSpaceNotNL);
+            const matches = text.match(Regexes.leadingSpaceNotNL);
             if (matches !== null && matches.length > 0) {
                 this.remainingText = text.replace(matches[0], "");
                     this.status = ParseStatus.valid ;

@@ -30,15 +30,15 @@ export class IfExpr extends AbstractSequence {
         }
     }
     renderAsHtml(): string {
-        var condition = this.condition!.renderAsHtml();
-        var ifTrue = this.whenTrue!.renderAsHtml();
-        var ifFalse = this.whenFalse!.renderAsHtml();
+        const condition = this.condition!.renderAsHtml();
+        const ifTrue = this.whenTrue!.renderAsHtml();
+        const ifFalse = this.whenFalse!.renderAsHtml();
         return `<keyword>if </keyword>${condition}<keyword> then </keyword>${ifTrue}<keyword> else </keyword>${ifFalse}`;
     }
     renderAsSource(): string {
-        var condition = this.condition!.renderAsSource();
-        var ifTrue = this.whenTrue!.renderAsSource();
-        var ifFalse = this.whenFalse!.renderAsSource();
+        const condition = this.condition!.renderAsSource();
+        const ifTrue = this.whenTrue!.renderAsSource();
+        const ifFalse = this.whenFalse!.renderAsSource();
         return `if ${condition} then ${ifTrue} else ${ifFalse}`;    
     }
 }

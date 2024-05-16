@@ -60,7 +60,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         const astNode = this.proc.getOrTransformAstNode(transforms) as AstQualifiedNode;
         const id = astNode.id;
 
-        var [qualifier, currentScope] = updateScopeAndQualifier(astNode.qualifier, transforms, this);
+        const [qualifier, currentScope] = updateScopeAndQualifier(astNode.qualifier, transforms, this);
 
         const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 

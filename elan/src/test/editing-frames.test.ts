@@ -18,16 +18,16 @@ suite('Editing Frames', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test('Tab from file to first field in first global', () => {
-			var file = T05_classes();
+			const file = T05_classes();
 			file.processKey(tab());
-			var field = file.getById("type2");
+			const field = file.getById("type2");
 			assert.equal(field.isSelected(), true);
 			field.processKey(shift_tab());
 			assert.equal(field.isSelected(), true);
 	});
 	test('Shift-tab from file to first field in a main (that is also first in file', () => {
-		var file = T03_mainWithAllStatements();
-		var var4 = file.getById("var4");
+		const file = T03_mainWithAllStatements();
+		const var4 = file.getById("var4");
 		assert.equal(var4.isSelected(), false);
 		file.processKey(tab());
 		assert.equal(var4.isSelected(), true);
@@ -36,26 +36,26 @@ suite('Editing Frames', () => {
 	});
 
 	test('Enter on a frame to Insert new code - creating a selector', () => {
-		var file = T03_mainWithAllStatements();
-		var if_st = file.getById("if43");
+		const file = T03_mainWithAllStatements();
+		const if_st = file.getById("if43");
 		if_st.processKey(shift_enter()); //Insert above
-		var newSel = file.getById("select64");
+		const newSel = file.getById("select64");
 		assert.equal(if_st.isSelected(), false);
 		assert.equal(newSel.isSelected(), true);
 		newSel.processKey(down());
 		assert.equal(if_st.isSelected(), true);
 		assert.equal(newSel.isSelected(), false);
 		if_st.processKey(enter()); //Insert below
-		var newSel2 = file.getById("select65");
+		const newSel2 = file.getById("select65");
 		assert.equal(if_st.isSelected(), false);
 		newSel2.processKey(up());
 		assert.equal(if_st.isSelected(), true);
 	});
 	test('Enter on a frame does not create a selector if there is already one there', () => {
-		var file = T03_mainWithAllStatements();
-		var if_st = file.getById("if43");
+		const file = T03_mainWithAllStatements();
+		const if_st = file.getById("if43");
 		if_st.processKey(enter()); //Should insert selector below
-		var newSel = file.getById("select64"); //New a selector
+		const newSel = file.getById("select64"); //New a selector
 		assert.equal(newSel.isSelected(), true);
 		newSel.processKey(up()); //Go back up to 'if'
 		assert.equal(newSel.isSelected(), false);
@@ -67,13 +67,13 @@ suite('Editing Frames', () => {
 		assert.equal(if_st.isSelected(), true);
 	});
 	test('Enter/shift-enter on a field goes to next/previous field owned by same frame (except the last/field field).', () => {
-		var file = T03_mainWithAllStatements();
-		var varStatement = file.getById("var3");
+		const file = T03_mainWithAllStatements();
+		const varStatement = file.getById("var3");
 		varStatement.select(true, false);
-		var var4 = file.getById("var4") as IdentifierField;
+		const var4 = file.getById("var4") as IdentifierField;
 		var4.select();
 		assert.equal(var4.isSelected(), true);
-		var expr5 = file.getById("expr5") as ExpressionField;
+		const expr5 = file.getById("expr5") as ExpressionField;
 		assert.equal(expr5.isSelected(), false);
 		var4.processKey(enter());
 		assert.equal(var4.isSelected(), false);
@@ -84,21 +84,21 @@ suite('Editing Frames', () => {
 	});
 
 	test('Enter on last field in a frame (or shift-enter on first field) - is same effect as that key on the Frame itself', () => {
-		var file = T03_mainWithAllStatements();
-		var varStatement = file.getById("var3");
-		var expr5 = file.getById("expr5") as ExpressionField;
+		const file = T03_mainWithAllStatements();
+		const varStatement = file.getById("var3");
+		const expr5 = file.getById("expr5") as ExpressionField;
 		expr5.select();
 		expr5.processKey(enter());
-		var newSel = file.getById("select64"); //New selector
+		const newSel = file.getById("select64"); //New selector
 		assert.equal(newSel.isSelected(), true);
 		newSel.processKey(up());
 		assert.equal(newSel.isSelected(), false);
 		assert.equal(varStatement.isSelected(), true);
 
-		var var4 = file.getById("var4") as IdentifierField;
+		const var4 = file.getById("var4") as IdentifierField;
 		var4.select();
 		var4.processKey(shift_enter());
-		var newSel2 = file.getById("select65"); //New selector
+		const newSel2 = file.getById("select65"); //New selector
 		assert.equal(newSel2.isSelected(), true);
 		newSel2.processKey(down());
 		assert.equal(newSel2.isSelected(), false);
@@ -106,20 +106,20 @@ suite('Editing Frames', () => {
 	});
 
 	test('Enter on last field in a frame with statements', () => {
-		var file = T03_mainWithAllStatements();
-		var globSel = file.getById("select0");
+		const file = T03_mainWithAllStatements();
+		const globSel = file.getById("select0");
 		globSel.processKey(key("p"));
-		var params = file.getById("params67");
-		var stateSel = file.getById("select65");
+		const params = file.getById("params67");
+		const stateSel = file.getById("select65");
 		assert.equal(stateSel.isSelected(), false);
 		params.processKey(enter());
 		assert.equal(stateSel.isSelected(), true);
 	});
 
 	test('Move', () => {
-		var file = T03_mainWithAllStatements();
-		var if_st = file.getById("if43");
-		var try_st = file.getById("try54");
+		const file = T03_mainWithAllStatements();
+		const if_st = file.getById("if43");
+		const try_st = file.getById("try54");
 		assert.equal(try_st.isSelected(), false);
 		if_st.processKey(down());
 		assert.equal(try_st.isSelected(), true);
@@ -133,16 +133,16 @@ suite('Editing Frames', () => {
 		if_st.select(true,false);
 		if_st.processKey(ctrl_up());
 		if_st.processKey(ctrl_up());
-		var each = file.getById("if35");
+		const each = file.getById("if35");
 		assert.equal(each.isSelected(), false);
 		if_st.processKey(down());
 		assert.equal(each.isSelected(), true);
 	});
 	test('Move multi-selection', () => {
-		var file = T03_mainWithAllStatements();
-		var whil = file.getById("while16");
-		var rep = file.getById("repeat19");
-		var fr = file.getById("for22");
+		const file = T03_mainWithAllStatements();
+		const whil = file.getById("while16");
+		const rep = file.getById("repeat19");
+		const fr = file.getById("for22");
 		whil.select(true,false);
 		whil.processKey(shift_down());
 		rep.processKey(shift_down());
@@ -158,16 +158,16 @@ suite('Editing Frames', () => {
 		assert.equal(rep.isSelected(), false);
 		assert.equal(fr.isSelected(), false);
 		whil.processKey(up());
-		var each = file.getById("each28");
+		const each = file.getById("each28");
 		assert.equal(each.isSelected(), true);
 	});
 	test('Remove selector frame', () => {
-		var file = T05_classes();
-		var fun = file.getById("func27") as GlobalFunction;
-		var child1 = fun.getFirstChild();
-		var sel = file.getById("select28");
+		const file = T05_classes();
+		const fun = file.getById("func27") as GlobalFunction;
+		let child1 = fun.getFirstChild();
+		const sel = file.getById("select28");
 		assert.equal(child1, sel);
-		var ret = file.getById("return32");
+		const ret = file.getById("return32");
 		ret.select(true, false);
 		ret.processKey(up());
 		assert.equal(ret.isSelected(), false);
@@ -180,73 +180,73 @@ suite('Editing Frames', () => {
 		assert.equal(child1, ret);
 	});
 	test('Cannot remove selector that is only statement', () => {
-		var file = T05_classes();
-		var cons = file.getById("constructor7") as Constructor;
-		var child1 = cons.getFirstChild();
-		var sel = file.getById("select8");
+		const file = T05_classes();
+		const cons = file.getById("constructor7") as Constructor;
+		let child1 = cons.getFirstChild();
+		const sel = file.getById("select8");
 		assert.equal(child1, sel);
 		sel.processKey(del());
 		child1 = cons.getFirstChild();
 		assert.equal(child1, sel);
 	});
 	test('Delete frame - Ctrl-Delete', () => {
-		var file = T05_classes();
-		var cls = file.getById("class1") as ClassFrame;
-		var last = cls.getChildren()[1];
+		const file = T05_classes();
+		const cls = file.getById("class1") as ClassFrame;
+		let last = cls.getChildren()[1];
 		assert.equal(last instanceof Property, true);
 		last.processKey(ctrl_del());
 		last = cls.getChildren()[1];
 		assert.equal(last instanceof MemberSelector, true);
 	});
 	test('Delete frame  - Ctrl-d', () => {
-		var file = T05_classes();
-		var cls = file.getById("class1") as ClassFrame;
-		var last = cls.getChildren()[1];
+		const file = T05_classes();
+		const cls = file.getById("class1") as ClassFrame;
+		let last = cls.getChildren()[1];
 		assert.equal(last instanceof Property, true);
 		last.processKey(ctrl_d());
 		last = cls.getChildren()[1];
 		assert.equal(last instanceof MemberSelector, true);
 	});
 	test('Cut', () => {
-		var file = T03_mainWithAllStatements();
-		var main = file.getById("main1") as MainFrame;
-		var var3 = file.getById("var3");
+		const file = T03_mainWithAllStatements();
+		const main = file.getById("main1") as MainFrame;
+		const var3 = file.getById("var3");
 		var3.processKey(ctrl_x());
-		var firstStatement = main.getChildren()[0];
+		const firstStatement = main.getChildren()[0];
 		assert.equal(firstStatement.getHtmlId(), "set6");
 	});
 	test('Paste', () => {
-		var file = T03_mainWithAllStatements();
-		var main = file.getById("main1") as MainFrame;
-		var var3 = file.getById("var3");
+		const file = T03_mainWithAllStatements();
+		const main = file.getById("main1") as MainFrame;
+		const var3 = file.getById("var3");
 		var3.processKey(ctrl_x());
-		var set6 = file.getById("set6");
+		const set6 = file.getById("set6");
 		set6.processKey(enter());
-		var selector = main.getChildren()[1];
+		const selector = main.getChildren()[1];
 		assert.equal(selector.getHtmlId(), "select64");
 		selector.processKey(ctrl_v());
-		var pasted = main.getChildren()[1];
+		const pasted = main.getChildren()[1];
 		assert.equal(pasted.getHtmlId(), "var3");
-		var third = main.getChildren()[2];
+		const third = main.getChildren()[2];
 		assert.equal(third.getHtmlId(), "throw9");
 	});
 	test('Paste at wrong level has no effect', () => {
-		var file = T03_mainWithAllStatements();
-		var main = file.getById("main1") as MainFrame;
-		var var3 = file.getById("var3");
+		const file = T03_mainWithAllStatements();
+		const main = file.getById("main1") as MainFrame;
+		const var3 = file.getById("var3");
 		var3.processKey(ctrl_x());
 		main.processKey(shift_enter());
-		var globalSelect = file.getChildren()[0];
+		const globalSelect = file.getChildren()[0];
 		assert.equal(globalSelect.getHtmlId(), "select64");
 		globalSelect.processKey(ctrl_v());
-		var newFirst = file.getChildren()[0];
+		const newFirst = file.getChildren()[0];
 		assert.equal(newFirst, globalSelect);
 	});
 	ignore_test('#364 ParseError within in class member not showing up at class level', () => {
-		var file = T05_classes();
-		var player = file.getById("class1");
+		const file = T05_classes();
+		const player = file.getById("class1");
 		assert.equal(player.getParseStatus(), ParseStatus.valid);
-		var field = file.getById("ident12");
+		const field = file.getById("ident12");
 		assert.equal(field.getParseStatus(), ParseStatus.valid);
 		field.processKey(key("%"));
 		assert.equal(field.getParseStatus(), ParseStatus.invalid);
@@ -254,10 +254,10 @@ suite('Editing Frames', () => {
 		field.processKey(back());
 		assert.equal(field.getParseStatus(), ParseStatus.valid);
 		assert.equal(player.getParseStatus(), ParseStatus.valid);
-		var card = file.getById("class14");
-		var reset = file.getById("func27");
-		var ret = file.getById("return32");
-		var expr = file.getById("expr33");
+		const card = file.getById("class14");
+		const reset = file.getById("func27");
+		const ret = file.getById("return32");
+		const expr = file.getById("expr33");
 		expr.processKey(key("£"));
 		assert.equal(expr.getParseStatus(), ParseStatus.invalid);
 		assert.equal(ret.getParseStatus(), ParseStatus.invalid);

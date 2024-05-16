@@ -7,7 +7,7 @@ class TestSystem extends System {
 
 export function getTestSystem() {
 
-    var system = new TestSystem();
+    const system = new TestSystem();
 
     system.print = (s: string) => {
         system.printed = system.printed + s;

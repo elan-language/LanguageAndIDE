@@ -43,7 +43,7 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
 
     const errors = file.compileErrors();
 
-    for (var i = 0; i < msgs.length; i++) {
+    for (let i = 0; i < msgs.length; i++) {
         const m = msgs[i];
         const e = errors[i];
         assert.strictEqual(e.message, m);
@@ -104,7 +104,7 @@ function executeTestCode(file: FileImpl, input?: string) {
 
 
 export async function assertObjectCodeExecutes(file: FileImpl, output: string, input?: string) {
-    var actual;
+    let actual;
 
     try {
         const sl = await executeCode(file, input);
@@ -117,7 +117,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
 }
 
 export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutcomes: [string, AssertOutcome[]][]) {
-    var actualOutcomes: [string, AssertOutcome[]][];
+    let actualOutcomes: [string, AssertOutcome[]][];
 
     try {
         actualOutcomes = await executeTestCode(file, "");
@@ -129,7 +129,7 @@ export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutco
     assert.strictEqual(actualOutcomes.length, expectedOutcomes.length, "mismatched all outcomes");
 
 
-    for (var i = 0; i < expectedOutcomes.length; i++) {
+    for (let i = 0; i < expectedOutcomes.length; i++) {
 
         const ao = actualOutcomes[i];
         const eo = expectedOutcomes[i];
@@ -137,7 +137,7 @@ export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutco
         assert.strictEqual(ao[0], eo[0], "mismatched test names");
         assert.strictEqual(ao[1].length, eo[1].length, "mismatched outcomes");
 
-        for (var j = 0; j < ao[1].length; j++) {
+        for (let j = 0; j < ao[1].length; j++) {
 
             const a = ao[1][j];
             const e = eo[1][j];

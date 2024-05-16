@@ -8,7 +8,7 @@ export class ScratchPad {
         this.frame = frame;
     }
     readSnippet(): Frame | undefined {
-        var toPaste = this.frame;
+        const toPaste = this.frame;
         this.frame = undefined;
         return toPaste;
     }

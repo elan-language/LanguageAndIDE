@@ -35,10 +35,10 @@ export function T00_emptyFile() {
 
 export function T01_helloWorld() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
-	var ss = m.getFirstSelectorAsDirectChild();
+	const ss = m.getFirstSelectorAsDirectChild();
 	const comment = new CommentStatement(m);
 	comment.text.setText(`My first program`);
 	m.addChildBefore(comment, ss);
@@ -50,13 +50,13 @@ export function T01_helloWorld() {
 
 export function T02_comments() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	const gc = new GlobalComment(f);
 	gc.text.setText("Comment 1");
 	f.addChildBefore(gc,gs);
 	const m = new MainFrame(f);
 	f.addChildBefore(m, gs);
-	var ss = m.getFirstSelectorAsDirectChild();
+	const ss = m.getFirstSelectorAsDirectChild();
 	const sc2 = new CommentStatement(m);
 	sc2.text.setText("Comment 2");
 	m.addChildBefore(sc2, ss);
@@ -65,10 +65,10 @@ export function T02_comments() {
 
 export function T03_mainWithAllStatements(): FileImpl {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	const m = new MainFrame(f);
 	f.addChildBefore(m,gs);
-	var ssm = m.getFirstSelectorAsDirectChild();
+	const ssm = m.getFirstSelectorAsDirectChild();
 	const v = new VarStatement(m);
 	m.addChildBefore(v,ssm);
 	const s = new SetStatement(m);
@@ -106,13 +106,13 @@ export function T03_mainWithAllStatements(): FileImpl {
 	const if2 = new IfStatement(m);
 	m.addChildBefore(if2,ssm);
     if2.condition.setText("y > 4");
-	var ss2 = if2.getFirstSelectorAsDirectChild();
-	var el1 = new Else(if2);
+	const ss2 = if2.getFirstSelectorAsDirectChild();
+	const el1 = new Else(if2);
 	if2.addChildBefore(el1,ss2);
 	if2.addChildBefore(new StatementSelector(if2), el1);
 	const if3 = new IfStatement(m);
 	m.addChildBefore(if3, ssm);
-	var ss_if3 = if3.getFirstSelectorAsDirectChild();
+	const ss_if3 = if3.getFirstSelectorAsDirectChild();
     if3.condition.setText("y > 4");
 	const el2 = new Else(if3);
 	el2.hasIf = true;
@@ -144,7 +144,7 @@ export function CollapseAll(f : FileImpl) {
 
 export function T04_allGlobalsExceptClass(): FileImpl {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	const con = new Constant(f);
 	con.name.setText("phi");
 	con.literal.setText("1.618");
@@ -171,9 +171,9 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 
 export function T05_classes() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	const cl1 = new ClassFrame(f);
-	var ms = cl1.getFirstSelectorAsDirectChild();
+	const ms = cl1.getFirstSelectorAsDirectChild();
 	f.addChildBefore(cl1, gs);
 	cl1.name.setText("Player");
 	const p1 = new Property(cl1);
@@ -182,7 +182,7 @@ export function T05_classes() {
 	p1.type.setText("Int");
 
 	const cl2 = new ClassFrame(f);
-	var ms2 = cl2.getFirstSelectorAsDirectChild();
+	const ms2 = cl2.getFirstSelectorAsDirectChild();
 	cl2.makeInherits();
 	cl2.superClasses.setText("Foo, Bar");
 	f.addChildBefore(cl2, gs);
@@ -203,7 +203,7 @@ export function T05_classes() {
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
 	const f = new FileImpl(hash, new DefaultProfile(), transforms());
-	var gs = f.getFirstSelectorAsDirectChild();
+	const gs = f.getFirstSelectorAsDirectChild();
 	f.addChildBefore(new MainFrame(f), gs);
 	f.addChildBefore(new ClassFrame(f), gs);
 	return f;

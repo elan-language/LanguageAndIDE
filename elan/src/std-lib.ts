@@ -99,13 +99,13 @@ export class StdLib {
     }
 
     setItem<T>(dict: { [key: string]: T }, key: string, value : T){
-        var newDict = {...dict};
+        const newDict = {...dict};
         newDict[key] = value;
         return newDict;
     }
 
     removeItem<T>(dict: { [key: string]: T }, key: string){
-        var newDict = {...dict};
+        const newDict = {...dict};
         delete newDict[key];
         return newDict;
     }
@@ -152,7 +152,7 @@ export class StdLib {
         return Math.floor(n);
     }
     ceiling(n: number) {
-        var fl = this.floor(n);
+        const fl = this.floor(n);
         return n > fl ? fl + 1 : fl;
     }
     toPrecision(n: number, digits: number) {

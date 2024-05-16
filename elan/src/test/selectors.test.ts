@@ -33,48 +33,48 @@ suite('Unit tests', () => {
 	vscode.window.showInformationMessage('Start all unit tests.');
 
 	test("Statement Select - variable", () => {
-		var file = T09_emptyMainAndClassWithGlobalSelector();
+		const file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("v"));
-		var v = file.getById("var13").renderAsSource();
+		const v = file.getById("var13").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
 
 	test("Statement Select - case insensitive", () => {
-		var file = T09_emptyMainAndClassWithGlobalSelector();
+		const file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select2").processKey(key("V"));
-		var v = file.getById("var13").renderAsSource();
+		const v = file.getById("var13").renderAsSource();
 		assert.equal(v, '  var  set to ');
 	});	
 	
 	test("Member Select - function", () => {
-		var file = T09_emptyMainAndClassWithGlobalSelector();
+		const file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select12").processKey(key("f"));
-		var v = file.getById("func13").renderAsSource();
+		const v = file.getById("func13").renderAsSource();
 		assert.equal(v, '  function () return \r\n' +
 		'    return \r\n' +
 		'  end function\r\n');
  	});	
 
 	 test("Member Select - procedure", () => {
-		var file = T09_emptyMainAndClassWithGlobalSelector();
+		const file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select12").processKey(key("p"));
 		file.getById("select12").processKey(key("c"));
-		var v = file.getById("proc13").renderAsSource();
+		const v = file.getById("proc13").renderAsSource();
 		assert.equal(v, '  procedure ()\r\n\r\n  end procedure\r\n');
  	});	
 
 	 test("Global Select - Constant", () => {
-		var file = T09_emptyMainAndClassWithGlobalSelector();
+		const file = T09_emptyMainAndClassWithGlobalSelector();
 		file.getById("select0").processKey(key("c"));
 		file.getById("select0").processKey(key("o"));
-		var v = file.getById("const13").renderAsSource();
+		const v = file.getById("const13").renderAsSource();
 		assert.equal(v, 'constant  set to \r\n');
  	});	
 
 	 test("Selection Filtering - globals", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var g = new GlobalSelector(f);
-		var help = g.getCompletion();
+		const g = new GlobalSelector(f);
+		let help = g.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
 		g.processKey(key("c"));
 		help = g.getCompletion();
@@ -84,9 +84,9 @@ suite('Unit tests', () => {
 
 	test("Selection Filtering - members", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new ClassFrame(f);		
-		var s = new MemberSelector(c);
-		var help = s.getCompletion();
+		const c = new ClassFrame(f);		
+		const s = new MemberSelector(c);
+		let help = s.getCompletion();
 		assert.equal(help, " function procedure property #");
 		s.processKey(key("p"));
 		assert.equal(s.text, "pro");
@@ -97,9 +97,9 @@ suite('Unit tests', () => {
 
 	test("Selection Filtering - abstract class", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new ClassFrame(f);
+		const c = new ClassFrame(f);
 		c.makeAbstract();		
-		var s = new MemberSelector(c);
+		const s = new MemberSelector(c);
 		assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
 		s.processKey(key("a"));
 		assert.equal(s.text, "abstract ");
@@ -117,9 +117,9 @@ suite('Unit tests', () => {
 
 	test("Selection Filtering - statements", () => {
 		const f = new FileImpl(hash, new DefaultProfile(), transforms());
-		var m = new MainFrame(f);		
-		var s = new StatementSelector(m);
-		var help = s.getCompletion();
+		const m = new MainFrame(f);		
+		const s = new StatementSelector(m);
+		let help = s.getCompletion();
 		assert.equal(help, " call each for if input let print repeat set switch throw try var while #");
 		s.processKey(key("s"));
 		help = s.getCompletion();
@@ -129,54 +129,54 @@ suite('Unit tests', () => {
 
 	test("Selection Context - in a Function", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var func = new GlobalFunction(fl);		
-		var s = new StatementSelector(func);
-		var help = s.getCompletion();
+		const func = new GlobalFunction(fl);		
+		const s = new StatementSelector(func);
+		const help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");
 	});	
 
 	test("Selection Context - in a Test", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var test = new TestFrame(fl);		
-		var s = new StatementSelector(test);
-		var help = s.getCompletion();
+		const test = new TestFrame(fl);		
+		const s = new StatementSelector(test);
+		const help = s.getCompletion();
 		assert.equal(help, " assert let var #");
 	});	
 
 	test("Selection Context - deeper nesting 1", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var func = new GlobalFunction(fl);
-		var if1 = new IfStatement(func);
-        var wh = new While(if1);
-		var s = new StatementSelector(wh);
-		var help = s.getCompletion();
+		const func = new GlobalFunction(fl);
+		const if1 = new IfStatement(func);
+        const wh = new While(if1);
+		const s = new StatementSelector(wh);
+		const help = s.getCompletion();
 		assert.equal(help, " each for if let repeat set switch throw try var while #");//no else, print, call
 	});	
 
 	test("Selection Context - deeper nesting 2", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var c = new ClassFrame(fl);
-        var fm = new FunctionMethod(c);
-		var if1 = new IfStatement(fm);
-		var s = new StatementSelector(if1);
-		var help = s.getCompletion();
+		const c = new ClassFrame(fl);
+        const fm = new FunctionMethod(c);
+		const if1 = new IfStatement(fm);
+		const s = new StatementSelector(if1);
+		const help = s.getCompletion();
 		assert.equal(help, " each else for if let repeat set switch throw try var while #");//else, but no print, call
 	});	
 
 	test("Selection Context - in a Switch", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var m = new MainFrame(fl);	
-		var sw = new Switch(m);
-		var s = new StatementSelector(sw);
-		var help = s.getCompletion();
+		const m = new MainFrame(fl);	
+		const sw = new Switch(m);
+		const s = new StatementSelector(sw);
+		const help = s.getCompletion();
 		assert.equal(help, " case");
 	});	
 	test("Selection Context - in an IfThen", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var m = new MainFrame(fl);	
-		var ifThen = new IfStatement(m);
-		var s = new StatementSelector(ifThen);
-		var help = s.getCompletion();
+		const m = new MainFrame(fl);	
+		const ifThen = new IfStatement(m);
+		const s = new StatementSelector(ifThen);
+		let help = s.getCompletion();
 		assert.equal(help, " call each else for if input let print repeat set switch throw try var while #");
 		s.processKey(key("e"));
 		help = s.getCompletion();
@@ -184,10 +184,10 @@ suite('Unit tests', () => {
 	});	
 	test("Selection Context - selector prevents more than one main", () => {
 		const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-		var gs = new GlobalSelector(fl);
-		var help = gs.getCompletion();
+		let gs = new GlobalSelector(fl);
+		let help = gs.getCompletion();
 		assert.equal(help, " main procedure function class constant enum test #");
-		var m = new MainFrame(fl);	
+		const m = new MainFrame(fl);	
 		fl.getChildren().push(m);
 		gs = new GlobalSelector(fl);
 		help = gs.getCompletion();
@@ -196,10 +196,10 @@ suite('Unit tests', () => {
 
 	test("#377 - Global select filtered by profile", () => {
 		const f = new FileImpl(hash, new TestProfileSPJ(), transforms());
-		var gs = f.getFirstSelectorAsDirectChild();
-		var help = gs.getCompletion();
+		const gs = f.getFirstSelectorAsDirectChild();
+		const help = gs.getCompletion();
 		assert.equal(help, " function test");
-		var filtered = gs.optionsMatchingUserInput(`f`);
+		const filtered = gs.optionsMatchingUserInput(`f`);
 		assert.equal(filtered.length, 1);
  	});	
 

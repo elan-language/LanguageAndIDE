@@ -17,7 +17,7 @@ export class TypeNode extends AbstractAlternatives {
             if (text.trimStart().startsWith("Func")) {
                 this.alternatives.push(new FuncTypeNode());
             } else if (text.trimStart().startsWith("(")) {
-                var tuple = new TypeTuple();
+                const tuple = new TypeTuple();
                 this.alternatives.push(tuple);
             } 
             this.alternatives.push(new TypeWithOptGenerics());

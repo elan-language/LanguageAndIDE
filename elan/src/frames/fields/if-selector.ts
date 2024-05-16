@@ -45,8 +45,8 @@ export class IfSelector extends AbstractField {
     } 
 
     processKey(keyEvent: editorEvent): void {
-        var char = keyEvent.key;
-        var empty = this.text ==="";
+        const char = keyEvent.key;
+        const empty = this.text ==="";
         if (empty && (char ==="i")) {
             this.else.setIfExtension(true);
             this.else.condition.select();

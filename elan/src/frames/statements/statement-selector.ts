@@ -45,7 +45,7 @@ export class StatementSelector extends AbstractSelector  {
     }
 
     validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
-        var result = false;
+        let result = false;
         if (this.getParent().getIdPrefix() === testKeyword ) {
             result = keyword === assertKeyword || keyword === letKeyword ||  keyword === varKeyword || keyword === commentMarker;
         } else if (this.getParent().getIdPrefix() === switchKeyword) {

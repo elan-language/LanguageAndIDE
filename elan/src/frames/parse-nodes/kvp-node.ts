@@ -30,8 +30,8 @@ export class KVPnode extends AbstractSequence  {
     }
 
     getCompletionAsHtml(): string {
-        var k =(!this.key || this.key.status === ParseStatus.empty) ? "<pr>key</pr>": "";
-        var v = (!this.value || this.value.status === ParseStatus.empty) ? " <pr>value</pr>": "";
+        const k =(!this.key || this.key.status === ParseStatus.empty) ? "<pr>key</pr>": "";
+        const v = (!this.value || this.value.status === ParseStatus.empty) ? " <pr>value</pr>": "";
         return `${k}:${v}`;
     }
 }

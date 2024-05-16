@@ -25,14 +25,14 @@ export class TypeWithOptGenerics extends AbstractSequence {
         this.remainingText = text;
         if (text.length > 0) {
            this.simpleType = new TypeSimpleNode();
-            var lt = () => new SymbolNode(LT);
-            var of = () => new KeywordNode(ofKeyword);
-            var sp = () => new SpaceNode(Space.required);
-            var type = () => new TypeNode();
-            var commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
-            var commaTypes = () => new Multiple(commaType, 0);
-            var gt =() => new SymbolNode(GT);
-            var genericNode = new Sequence([lt,of,sp,type,commaTypes,gt]);
+            const lt = () => new SymbolNode(LT);
+            const of = () => new KeywordNode(ofKeyword);
+            const sp = () => new SpaceNode(Space.required);
+            const type = () => new TypeNode();
+            const commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
+            const commaTypes = () => new Multiple(commaType, 0);
+            const gt =() => new SymbolNode(GT);
+            const genericNode = new Sequence([lt,of,sp,type,commaTypes,gt]);
             this.generic = new OptionalNode(genericNode);
             this.addElement(this.simpleType);
             this.addElement(this.generic);

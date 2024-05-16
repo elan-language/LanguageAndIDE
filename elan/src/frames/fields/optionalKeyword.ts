@@ -37,7 +37,7 @@ export class OptionalKeyword extends AbstractField {
     }
 
     processKey(e: editorEvent): void {
-        var key = e.key;
+        const key = e.key;
         if (key && key.length ===1 && this.keyword.startsWith(key.toLowerCase())) {
             this.text = this.keyword;
             this.alertHolderToUpdate();
@@ -56,7 +56,7 @@ export class OptionalKeyword extends AbstractField {
             return super.textAsHtml();
         }
         else{ 
-            var c = this.keywordExists() ? `<keyword> ${this.text}</keyword>` : ``;
+            const c = this.keywordExists() ? `<keyword> ${this.text}</keyword>` : ``;
             return c;
         } 
     }

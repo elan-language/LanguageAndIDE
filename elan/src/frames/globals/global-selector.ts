@@ -34,7 +34,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame  {
     }
 
     validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
-        var result = false;
+        let result = false;
         if (keyword === mainKeyword) {
             result = !this.file.containsMain();
         } else if ( keyword === abstractKeyword || keyword === immutableKeyword) { //Those options available for parsing code from file only

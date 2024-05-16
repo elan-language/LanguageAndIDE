@@ -28,12 +28,12 @@ export class ProcRefField extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readUntil(/\(/);
 
     public textAsHtml(): string {
-        var text: string;
+        let text: string;
         if (this.selected) {
             text = super.textAsHtml();
         } else { 
             if (this.getParseStatus() === ParseStatus.valid || this.getParseStatus() === ParseStatus.valid) {
-                var bestMatch = (this.rootNode! as Alternatives).bestMatch;
+                const bestMatch = (this.rootNode! as Alternatives).bestMatch;
                 if (bestMatch instanceof IdentifierNode) {
                     text =  `<method>${this.text}</method>`;
                 } else {                    

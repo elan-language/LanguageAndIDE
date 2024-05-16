@@ -51,7 +51,7 @@ export class CodeSourceFromString implements CodeSource {
                 throw new Error(`${this.readToEndOfLine()} does not match ${regx}`);
             }
         } else {
-            var match = this.remainingCode.match(regx)![0];
+            const match = this.remainingCode.match(regx)![0];
             this.remainingCode = this.remainingCode.replace(regx,"");
             return match;
         }
@@ -60,7 +60,7 @@ export class CodeSourceFromString implements CodeSource {
         return this.remainingCode.startsWith(code);
     }
     isMatchRegEx(regEx: RegExp): boolean {
-        var matches = this.remainingCode.match(regEx);
+        const matches = this.remainingCode.match(regEx);
         return matches !== null && matches.length > 0;
     }
     hasMoreCode(): boolean {
@@ -76,8 +76,8 @@ export class CodeSourceFromString implements CodeSource {
         return this.removeRegEx(new RegExp(`^[^\r\n]*`),false);
     }
     readUntil(regx: RegExp): string {
-        var matchIndex = regx.exec(this.remainingCode)?.index;
-        var uptoMatch =  this.remainingCode.substring(0, matchIndex);
+        const matchIndex = regx.exec(this.remainingCode)?.index;
+        const uptoMatch =  this.remainingCode.substring(0, matchIndex);
         this.remainingCode = this.remainingCode.slice(matchIndex);
         return uptoMatch;
     }
@@ -85,13 +85,13 @@ export class CodeSourceFromString implements CodeSource {
         return this.removeRegEx(regx, true);
     }
     readToNonMatchingCloseBracket(): string {
-        var insideDoubleQuotes = false;
-        var insideSingleQuotes = false;
-        var openBracketCount = 0;
-        var cont = true;
-        var result = "";
+        let insideDoubleQuotes = false;
+        let insideSingleQuotes = false;
+        let openBracketCount = 0;
+        let cont = true;
+        let result = "";
         while (cont) {
-            var c = this.peekNextChar();
+            const c = this.peekNextChar();
             if (insideDoubleQuotes) {   
                 if (c === `"`) {
                     insideDoubleQuotes = false;

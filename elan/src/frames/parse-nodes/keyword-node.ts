@@ -11,12 +11,12 @@ export class KeywordNode extends FixedTextNode {
     parseText(text: string): void {
         this.remainingText = text;
         if (text.length > 0) {
-            var target = this.fixedText;
-            var trimmed = text.trimStart();
-            var lcLetters = trimmed.match(/^[a-z]*/);
+            const target = this.fixedText;
+            const trimmed = text.trimStart();
+            const lcLetters = trimmed.match(/^[a-z]*/);
             if (lcLetters && lcLetters.length === 1) {
                 if (lcLetters[0] === target) {
-                    var n = this.numLeadingSpaces(text) + this.fixedText.length;
+                    const n = this.numLeadingSpaces(text) + this.fixedText.length;
                     this.set(ParseStatus.valid, text.substring(0, n), text.substring(n));
                 } else if (target.startsWith(trimmed)) {
                     this.set(ParseStatus.incomplete, text, "");
@@ -28,9 +28,9 @@ export class KeywordNode extends FixedTextNode {
     }
 
     getCompletionAsHtml(): string {
-        var comp = ``;
-        var matched = this.matchedText.length;
-        var kw = this.fixedText.length;
+        let comp = ``;
+        const matched = this.matchedText.length;
+        const kw = this.fixedText.length;
         if (this.status === ParseStatus.empty) {
             comp = `${this.fixedText}`;
         } else if (matched === kw && this.remainingText === "") {

@@ -21,10 +21,10 @@ export class UnaryExpression extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            var minus = () => new SymbolNode(MINUS);
-            var not = () => new KeywordNode(notKeyword);
-            var sp = () => new SpaceNode(Space.required);
-            var notSp = () => new Sequence([not, sp]);
+            const minus = () => new SymbolNode(MINUS);
+            const not = () => new KeywordNode(notKeyword);
+            const sp = () => new SpaceNode(Space.required);
+            const notSp = () => new Sequence([not, sp]);
             this.unaryOp = new Alternatives([minus,notSp]);
             this.addElement(this.unaryOp);
             this.term = new Term();

@@ -41,7 +41,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     aggregateParseStatus(): void {
-        var worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
+        const worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
         this.setParseStatus(worstOfFieldsOrChildren);
     }
     getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of readParseStatus on superclass
@@ -83,11 +83,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after, child);}
 
     insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 
-        var firstChild = this._children[0];
+        const firstChild = this._children[0];
         if ("isSelector" in firstChild) {
             firstChild.select(true, false);
         } else {
-            var selector = this.newChildSelector();
+            const selector = this.newChildSelector();
             this.addChildBefore(selector, firstChild);
             selector.select(true, false);
         }
@@ -109,7 +109,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     protected compileChildren(transforms : Transforms) : string {return parentHelper_compileChildren(this, transforms);}
     
     selectFirstField(): boolean {
-        var result = super.selectFirstField();
+        let result = super.selectFirstField();
         if (!result) {
             result = this.getChildren()[0].selectFirstField();
         }
@@ -125,7 +125,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     selectFirstChildIfAny(): boolean {
-        var result = false;
+        let result = false;
         if (this.getChildren().length > 0) {
             this.getChildren()[0].select(true, false);
             result = true;
@@ -153,7 +153,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
     protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
         source.removeIndent();
-        var result = false;
+        let result = false;
         if (source.isMatch(keywords)) {
             source.remove(keywords);
             result = true;
@@ -162,10 +162,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     protected compileStatements(transforms : Transforms) : string {
-        var result = "";
+        let result = "";
         if (this._children.length > 0 ) {
             const ss: Array<string> = [];
-            for (var frame of this._children.filter(s => !('isSelector' in s))) {
+            for (const frame of this._children.filter(s => !('isSelector' in s))) {
                 ss.push(frame.compile(transforms));
             }
             result = ss.join("\r\n");
@@ -174,12 +174,12 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ElanSymbol {
-        var fst = this.getFirstChild();
-        var range = this.getChildRange(fst, initialScope);
+        const fst = this.getFirstChild();
+        let range = this.getChildRange(fst, initialScope);
         if (range.length > 1) {
             range = range.slice(0, range.length - 1);
 
-            for (var f of range) {
+            for (const f of range) {
                 if (isSymbol(f) && f.symbolId === id) {
                     return f;
                 }

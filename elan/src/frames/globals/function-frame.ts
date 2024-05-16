@@ -79,8 +79,8 @@ ${this.renderChildrenAsHtml()}
         this.returnType.parseFrom(source);
     }
     parseBottom(source: CodeSource): boolean {
-        var result = false;
-        var keyword = `${returnKeyword} `;
+        let result = false;
+        const keyword = `${returnKeyword} `;
         source.removeIndent();
         if (source.isMatch(keyword)) {
             this.getReturnStatement().parseFrom(source);

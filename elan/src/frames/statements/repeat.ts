@@ -54,7 +54,7 @@ ${this.indent()}} while (!(${this.condition.compile(transforms)}));`;
         source.remove("repeat");
     }
     parseBottom(source: CodeSource): boolean {
-        var result = false;
+        let result = false;
         if (this.parseStandardEnding(source, "end repeat when ")) {
             this.condition.parseFrom(source);
             result = true;

@@ -20,9 +20,9 @@ export class VarDefField extends AbstractField {
     }
     initialiseRoot(): ParseNode {
         this.astNode = undefined; 
-        var varRef = () => new IdentifierNode();
-        var deconTup = () => new DeconstructedTuple();
-        var deconList = () => new DeconstructedList();
+        const varRef = () => new IdentifierNode();
+        const deconTup = () => new DeconstructedTuple();
+        const deconList = () => new DeconstructedList();
         this.rootNode = new Alternatives([varRef, deconTup, deconList]);
         return this.rootNode; 
     }

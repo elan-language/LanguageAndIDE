@@ -7,9 +7,9 @@ import { SymbolNode } from "./symbol-node";
 export class CommaNode extends AbstractSequence {
 
     parseText(text: string): void {
-        var ignoreSpace =  new SpaceNode(Space.ignored);
-        var comma =  new SymbolNode(COMMA);
-        var addSpace = new SpaceNode(Space.added);
+        const ignoreSpace =  new SpaceNode(Space.ignored);
+        const comma =  new SymbolNode(COMMA);
+        const addSpace = new SpaceNode(Space.added);
         this.addElement(ignoreSpace);
         this.addElement(comma);
         this.addElement(addSpace);

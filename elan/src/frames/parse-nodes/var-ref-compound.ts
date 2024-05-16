@@ -20,11 +20,11 @@ export class VarRefCompound extends AbstractSequence {
 
     parseText(text: string): void {
         if (text.length > 0) {
-            var instance = () => new Qualifier(new IdentifierNode());
-            var global = () => new Qualifier(new KeywordNode(globalKeyword));
-            var lib = () => new Qualifier(new KeywordNode(libraryKeyword));
-            var prop = () => new Qualifier(new KeywordNode(propertyKeyword));
-            var qualifier = new Alternatives([global, lib, prop, instance]);
+            const instance = () => new Qualifier(new IdentifierNode());
+            const global = () => new Qualifier(new KeywordNode(globalKeyword));
+            const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
+            const prop = () => new Qualifier(new KeywordNode(propertyKeyword));
+            const qualifier = new Alternatives([global, lib, prop, instance]);
             this.optQualifier =  new OptionalNode(qualifier);
             this.simple = new IdentifierNode();
             this.index = new OptionalNode(new IndexNode());
