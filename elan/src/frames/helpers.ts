@@ -13,6 +13,7 @@ import { Scope } from "./interfaces/scope";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { AstNode } from "./interfaces/ast-node";
 import { Selectable } from "./interfaces/selectable";
+import { ISymbol } from "./interfaces/symbol";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -26,33 +27,33 @@ export function isClass(f?: Scope): f is Class {
     return !!f && 'isClass' in f;
 }
 
-export function isFrame(f?: any): f is Frame {
+export function isFrame(f?: Selectable | Scope): f is Frame {
     return !!f && 'isFrame' in f;
 }
 
-export function isParent(f?: any): f is Parent {
+export function isParent(f?: Selectable | Parent): f is Parent {
     return !!f && 'isParent' in f;
 }
 
-export function isMember(f?: any): f is Member {
+export function isMember(f?: Scope | Member): f is Member {
     return !!f && 'isMember' in f;
-} 
+}
 
 export function isSelector(f?: Selectable): f is AbstractSelector {
     return !!f && 'isSelector' in f;
-} 
+}
 
-export function isGlobal(f?: any): f is GlobalFrame {
+export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
     return !!f && 'isGlobal' in f;
-} 
+}
 
-export function isScope(f?: any): f is Scope {
+export function isScope(f?: ISymbol | Scope): f is Scope {
     return !!f && 'resolveSymbol' in f;
-} 
+}
 
 export function isAstType(f?: AstNode): f is AstTypeNode {
     return !!f && 'renderAsDefaultObjectCode' in f;
-} 
+}
 
 export function singleIndent() {
     return "  ";
@@ -61,7 +62,7 @@ export function singleIndent() {
 export function expandCollapseAll(file: File) {
     var map = file.getMap();
     var collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
-    var firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s) )[0]; 
+    var firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s))[0];
     var collapse = true;
     if (firstCollapsibleGlobal && firstCollapsibleGlobal.isCollapsed()) {
         collapse = false;
@@ -79,13 +80,13 @@ export function expandCollapseAll(file: File) {
         file.getFirstChild().select(true, false);
     }
 }
-export function escapeAngleBrackets(str: string) : string {
+export function escapeAngleBrackets(str: string): string {
     return str
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 }
 
-export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
+export function helper_compileMsgAsHtml(loc: Frame | Field): string {
 
     /*  To display multiple messages use:
             var msg = loc.compileErrors.length > 1 ?
@@ -94,7 +95,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
                     loc.compileErrors[0].message
                     : ""; */
     /* To display first message only use: */
-    var msg =  loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";               
+    var msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
     var cls = "";
     var compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
     if (compile !== OverallStatus.ok) {
@@ -103,7 +104,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field ): string {
     return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
 
-export function helper_getCompileStatus(errors: CompileError[] ) : CompileStatus {
+export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
     var result = CompileStatus.error;
     if (errors.length === 0) {
         result = CompileStatus.ok;
@@ -130,7 +131,7 @@ export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
         overall = OverallStatus.ok;
     } else if (ps === ParseStatus.incomplete) {
         overall = OverallStatus.warning;
-    }else if (ps === ParseStatus.invalid) {
+    } else if (ps === ParseStatus.invalid) {
         overall = OverallStatus.error;
     }
     return overall;

@@ -95,8 +95,7 @@ export function getClassScope(start: Scope): Scope {
     }
 
     if (isFrame(start)) {
-        // todo fix any
-        return getClassScope((start as any).getParent());
+        return getClassScope(start.getParent());
     }
 
     return start;
