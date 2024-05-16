@@ -13,12 +13,11 @@ import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { ISymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../symbols/function-type";
-import { Scope } from "../interfaces/scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
+export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol {
     public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;

@@ -5,7 +5,6 @@ import { ISymbol } from "../interfaces/symbol";
 import { ISymbolType } from "../interfaces/symbol-type";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
-import { UnknownType } from "./unknown-type";
 
 export class ClassDefinitionType implements ISymbolType, Scope {
 
@@ -14,10 +13,11 @@ export class ClassDefinitionType implements ISymbolType, Scope {
     }
 
     childSymbols() {
+        // unknown because of typescript quirk 
         return this.scope.getChildren().filter(c => isSymbol(c)) as unknown as ISymbol[];
     }
 
-    resolveSymbol(id: string, transforms : Transforms, scope: Scope): ISymbol {
+    resolveSymbol(id: string, transforms: Transforms, scope: Scope): ISymbol {
         for (var f of this.scope.getChildren()) {
             if (isSymbol(f) && f.symbolId === id) {
                 return f;

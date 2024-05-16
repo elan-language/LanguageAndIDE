@@ -1,7 +1,7 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { CompileStatus, OverallStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { File} from "./interfaces/file";
+import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -39,12 +39,12 @@ export class FileImpl implements File, Scope {
     isParent: boolean = true;
     hasFields: boolean = true;
     isFile: boolean = true;
-    parseError? : string;
+    parseError?: string;
     readonly defaultFileName = "code.elan";
-    fileName : string = this.defaultFileName;
-    private _runStatus : RunStatus = RunStatus.default;
+    fileName: string = this.defaultFileName;
+    private _runStatus: RunStatus = RunStatus.default;
     private scratchPad: ScratchPad;
- 
+
     private _children: Array<Frame> = new Array<Frame>();
     private _map: Map<string, Selectable>;
     private _factory: StatementFactory;
@@ -70,7 +70,7 @@ export class FileImpl implements File, Scope {
         return this.scratchPad;
     }
 
-    getProfile() : Profile {
+    getProfile(): Profile {
         return this.profile;
     }
 
@@ -82,24 +82,24 @@ export class FileImpl implements File, Scope {
         var result = false;
         var i = this.getChildren().indexOf(child);
         if (i < this.getChildren().length - 1) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i+1,0,child);
+            this.getChildren().splice(i, 1);
+            this.getChildren().splice(i + 1, 0, child);
             result = true;
-        }  
+        }
         return result;
     }
     private moveUpOne(child: Frame): boolean {
         var result = false;
         var i = this.getChildren().indexOf(child);
         if (i > 0) {
-            this.getChildren().splice(i,1);
-            this.getChildren().splice(i-1,0,child); 
-            return result = true;  
-        }  
+            this.getChildren().splice(i, 1);
+            this.getChildren().splice(i - 1, 0, child);
+            return result = true;
+        }
         return result;
     }
     moveSelectedChildrenUpOne(): void {
-        var toMove = this.getChildren().filter(g => g.isSelected()); 
+        var toMove = this.getChildren().filter(g => g.isSelected());
         var cont = true;
         var i = 0;
         while (cont && i < toMove.length) {
@@ -127,7 +127,7 @@ export class FileImpl implements File, Scope {
     getParent(): Parent {
         throw new Error("getParent Should not have been called on a file; test for 'hasParent()' before calling.");
     }
-    
+
     getById(id: string): Selectable {
         return this._map.get(id) as Selectable;
     }
@@ -146,7 +146,7 @@ export class FileImpl implements File, Scope {
         return "";
     }
 
-    private getHash(body? : string): Promise<string> {
+    private getHash(body?: string): Promise<string> {
         body = (body || this.renderHashableContent()).trim().replaceAll("\r", "");
         return this.hash(body);
     }
@@ -160,7 +160,7 @@ export class FileImpl implements File, Scope {
         return profile.include_profile_name_in_header ? ` ${profile.name}` : "";
     }
 
-    compileGlobals() : string{
+    compileGlobals(): string {
         var result = "";
         if (this._children.length > 0) {
             const ss: Array<string> = [];
@@ -179,36 +179,36 @@ export class FileImpl implements File, Scope {
     async renderAsSource(): Promise<string> {
         const content = this.renderHashableContent();
         const hash = await this.getHash(content);
-        return `# ${hash} ${content}`; 
+        return `# ${hash} ${content}`;
     }
 
     compile(): string {
         const stdLib = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-        return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`; 
+        return `${stdLib}\n${this.compileGlobals()}return [main, _tests];}`;
     }
 
     renderHashableContent(): string {
         const globals = parentHelper_renderChildrenAsSource(this);
-        return `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`; 
+        return `${this.getVersion()}${this.getProfileName()} ${this.parseStatusAsString()}\r\n\r\n${globals}`;
     }
 
-    public getFirstSelectorAsDirectChild() : AbstractSelector {
+    public getFirstSelectorAsDirectChild(): AbstractSelector {
         return this.getChildren().filter(g => ('isSelector' in g))[0] as GlobalSelector;
     }
 
     getChildNumber(n: number): Frame {
         return this.getChildren()[n];
     }
-    
-    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
-    getLastChild(): Frame {return parentHelper_getLastChild(this); }
-    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
-    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
-    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
-    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
-    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
-    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
-        insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after,child);}
+
+    getFirstChild(): Frame { return parentHelper_getFirstChild(this); }
+    getLastChild(): Frame { return parentHelper_getLastChild(this); }
+    getChildAfter(child: Frame): Frame { return parentHelper_getChildAfter(this, child); }
+    getChildBefore(child: Frame): Frame { return parentHelper_getChildBefore(this, child); }
+    getChildRange(first: Frame, last: Frame): Frame[] { return parentHelper_getChildRange(this, first, last); }
+    addChildBefore(child: Frame, before: Frame): void { parentHelper_addChildBefore(this, child, before); }
+    addChildAfter(child: Frame, before: Frame): void { parentHelper_addChildAfter(this, child, before); }
+    removeChild(child: Frame): void { parentHelper_removeChild(this, child); };
+    insertOrGotoChildSelector(after: boolean, child: Frame) { parentHelper_insertOrGotoChildSelector(this, after, child); }
 
     defocusAll() {
         for (const f of this._map.values()) {
@@ -230,9 +230,9 @@ export class FileImpl implements File, Scope {
     }
 
     getTestStatus(): TestStatus {
-        const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        const tests = this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
         const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
-        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
+        const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
         return worst;
     }
     getTestStatusForDashboard(): string {
@@ -249,7 +249,7 @@ export class FileImpl implements File, Scope {
         return this._runStatus;
     }
 
-    setRunStatus(s : RunStatus){
+    setRunStatus(s: RunStatus) {
         this._runStatus = s;
     }
 
@@ -260,7 +260,7 @@ export class FileImpl implements File, Scope {
         return OverallStatus[helper_parseStatusAsOverallStatus(this.getParseStatus())];
     }
     getCompileStatusForDashboard(): string {
-        var status:OverallStatus;
+        var status: OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid) {
             status = OverallStatus.default;
         } else {
@@ -268,12 +268,12 @@ export class FileImpl implements File, Scope {
         }
         return OverallStatus[status];
     }
-    
+
     getCompileStatus(): CompileStatus {
         return parentHelper_worstCompileStatusOfChildren(this);
     }
 
-    parseStatusAsString() : string {
+    parseStatusAsString(): string {
         return ParseStatus[this.getParseStatus()];
     }
     compileErrors(): CompileError[] {
@@ -281,7 +281,7 @@ export class FileImpl implements File, Scope {
     }
     getAllSelected(): Selectable[] {
         const v = this.getMap().values()!;
-        return  [...v].filter(s => s.isSelected());
+        return [...v].filter(s => s.isSelected());
     }
 
     deselectAll(): void {
@@ -295,14 +295,14 @@ export class FileImpl implements File, Scope {
         return this._factory;
     }
 
-    createMain(): Frame {return new MainFrame(this);}
-    createFunction(): Frame {return  new GlobalFunction(this);}
-    createProcedure(): Frame {return  new GlobalProcedure(this);}
-    createEnum(): Frame {return  new Enum(this);}
-    createClass(): Frame {return  new ClassFrame(this);}
-    createGlobalComment(): Frame {return  new GlobalComment(this);}
-    createConstant(): Frame {return  new Constant(this);}
-    createTest(): Frame {return  new TestFrame(this);}
+    createMain(): Frame { return new MainFrame(this); }
+    createFunction(): Frame { return new GlobalFunction(this); }
+    createProcedure(): Frame { return new GlobalProcedure(this); }
+    createEnum(): Frame { return new Enum(this); }
+    createClass(): Frame { return new ClassFrame(this); }
+    createGlobalComment(): Frame { return new GlobalComment(this); }
+    createConstant(): Frame { return new Constant(this); }
+    createTest(): Frame { return new TestFrame(this); }
 
     async parseFrom(source: CodeSource): Promise<void> {
         try {
@@ -362,14 +362,14 @@ export class FileImpl implements File, Scope {
 
     processKey(e: editorEvent): void {
         switch (e.key) {
-            case 'Home': {this.selectFirstGlobal(); break;}
-            case 'End': {this.getLastChild().select(true, false); break;}
-            case 'Tab': {this.tab(e.modKey.shift); break;}
-            case 'ArrowDown':  {this.selectFirstGlobal(); break;}
-            case 'ArrowRight':  {this.selectFirstGlobal(); break;}
-            case "O": {if (e.modKey.control) {this.expandCollapseAll();} break;}
+            case 'Home': { this.selectFirstGlobal(); break; }
+            case 'End': { this.getLastChild().select(true, false); break; }
+            case 'Tab': { this.tab(e.modKey.shift); break; }
+            case 'ArrowDown': { this.selectFirstGlobal(); break; }
+            case 'ArrowRight': { this.selectFirstGlobal(); break; }
+            case "O": { if (e.modKey.control) { this.expandCollapseAll(); } break; }
         }
-    } 
+    }
 
     private selectFirstGlobal(): void {
         this.getFirstChild().select(true, false);
@@ -395,17 +395,18 @@ export class FileImpl implements File, Scope {
         }
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
 
-        const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as Array<ISymbol>;
+        // unknown because of typescript quirk 
+        const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as ISymbol[];
 
-        for (const s of globalSymbols){
-            if (s.symbolId === id){
+        for (const s of globalSymbols) {
+            if (s.symbolId === id) {
                 return s;
             }
         }
 
-        return this.libraryScope.resolveSymbol(id, transforms, this as unknown as Scope)!;
+        return this.libraryScope.resolveSymbol(id, transforms, this);
     }
 
     libraryScope = this._stdLibSymbols as Scope;

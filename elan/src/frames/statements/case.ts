@@ -9,6 +9,8 @@ import { caseKeyword } from "../keywords";
 import { ISymbol } from "../interfaces/symbol";
 import { mustBeCompatibleNode, mustBeCompatibleType } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
+import { isSymbol } from "../symbols/symbol-helpers";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class Case extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -44,10 +46,13 @@ ${this.renderChildrenAsSource()}`;
     compile(transforms : Transforms): string {
         this.compileErrors = [];
 
-        const switchType = (this.getParent() as unknown as ISymbol).symbolType(transforms);
-        const caseType = this.value.getOrTransformAstNode(transforms)?.symbolType();
+        const parent = this.getParent();
 
-        mustBeCompatibleType(switchType, caseType!, this.compileErrors, this.htmlId);
+        if (isSymbol(parent)) {
+            const switchType = parent.symbolType(transforms);
+            const caseType = this.value.getOrTransformAstNode(transforms)?.symbolType() ?? UnknownType.Instance;
+            mustBeCompatibleType(switchType, caseType, this.compileErrors, this.htmlId);
+        } 
 
         return `${this.indent()}case ${this.value.compile(transforms)}:\r
 ${this.compileStatements(transforms)}\r

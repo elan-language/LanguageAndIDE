@@ -4,8 +4,6 @@ import { Member } from "../interfaces/member";
 import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { AbstractSelector } from "../abstract-selector";
-import { Collapsible } from "../interfaces/collapsible";
 import { ISymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
 import { constructorKeyword } from "../keywords";
