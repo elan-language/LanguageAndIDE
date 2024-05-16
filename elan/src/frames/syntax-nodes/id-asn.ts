@@ -1,4 +1,3 @@
-import { SymbolScope } from "../../symbols/symbol";
 import { getParentScope } from "../../symbols/symbolHelpers";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
@@ -7,6 +6,7 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
 

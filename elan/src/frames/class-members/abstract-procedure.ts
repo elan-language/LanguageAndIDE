@@ -1,7 +1,7 @@
 import { ProcedureType } from "../../symbols/procedure-type";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
@@ -10,7 +10,7 @@ import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { abstractKeyword, abstractProcedureKeywords, procedureKeyword } from "../keywords";
+import { abstractProcedureKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ISymbol {

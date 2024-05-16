@@ -22,7 +22,7 @@ import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { isSymbol } from "../../symbols/symbolHelpers";
 import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
@@ -33,6 +33,7 @@ import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {
     isCollapsible: boolean = true;

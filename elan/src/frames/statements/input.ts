@@ -1,16 +1,15 @@
-import { ExpressionField } from "../fields/expression-field";
 import { Parent} from "../interfaces/parent";
 import { AbstractFrame} from "../abstract-frame";
-
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { Statement } from "../interfaces/statement";
 import { IdentifierField } from "../fields/identifier-field";
 import { inputKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { StringType } from "../../symbols/string-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class Input extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;  

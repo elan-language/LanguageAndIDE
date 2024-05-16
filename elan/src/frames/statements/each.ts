@@ -1,16 +1,17 @@
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { Parent} from "../interfaces/parent";
-import { File} from "../interfaces/file";
+import { Parent } from "../interfaces/parent";
+import { File } from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -49,7 +50,7 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
     }
 
-    compile(transforms : Transforms): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
 
         const id = this.variable.getOrTransformAstNode(transforms)?.compile();
@@ -75,9 +76,9 @@ ${this.indent()}}`;
         return this.parseStandardEnding(source, "end each");
     }
 
-    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         const v = this.variable.text;
-        
+
         if (id === v) {
             const st = (this.iter.symbolType(transforms) as any).ofType; // todo fix type
             return {

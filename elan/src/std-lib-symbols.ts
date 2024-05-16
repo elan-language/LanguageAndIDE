@@ -5,7 +5,7 @@ import { FloatType } from "./symbols/number-type";
 import { IntType } from "./symbols/int-type";
 import { ListType } from "./symbols/list-type";
 import { StringType } from "./symbols/string-type";
-import { ISymbol, SymbolScope } from "./symbols/symbol";
+import { ISymbol } from "./symbols/symbol";
 import { ISymbolType } from "./symbols/symbol-type";
 import { Scope } from "./frames/interfaces/scope";
 import { FunctionType } from "./symbols/function-type";
@@ -16,6 +16,7 @@ import { TupleType } from "./symbols/tuple-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { stringType } from "./test/testHelpers";
 import { Transforms } from "./frames/syntax-nodes/transforms";
+import { SymbolScope } from "./symbols/symbol-scope";
 
 export class StdLibSymbols implements Scope {
 

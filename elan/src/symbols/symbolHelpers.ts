@@ -1,6 +1,6 @@
 import { BooleanType } from "./boolean-type";
 import { FloatType } from "./number-type";
-import { ISymbol, SymbolScope } from "./symbol";
+import { ISymbol } from "./symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
 import { Transforms } from "../frames/syntax-nodes/transforms";
@@ -9,6 +9,7 @@ import { Scope } from "../frames/interfaces/scope";
 import { globalKeyword, libraryKeyword } from "../frames/keywords";
 import { AstNode } from "../frames/interfaces/ast-node";
 import { ClassType } from "./class-type";
+import { SymbolScope } from "./symbol-scope";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
@@ -47,7 +48,7 @@ export function scopePrefix(symbolScope: SymbolScope | undefined) {
     return "";
 }
 
-export function updateScopeAndQualifier(qualifier: any | undefined, transforms : Transforms, currentScope: Scope): [AstNode | undefined, Scope] {
+export function updateScopeAndQualifier(qualifier: any | undefined, transforms: Transforms, currentScope: Scope): [AstNode | undefined, Scope] {
 
 
     const qualifierScope = qualifier ? qualifier.symbolType() : undefined;
@@ -90,8 +91,8 @@ export function getClassScope(start: any): Scope {
 }
 
 export function getParentScope(start: any): Scope {
-    if ('getParent' in start){
-         return start.getParent();
+    if ('getParent' in start) {
+        return start.getParent();
     }
     return start;
 }

@@ -11,7 +11,7 @@ import { ListType } from "../symbols/list-type";
 import { FloatType } from "../symbols/number-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
-import { ISymbol, SymbolScope } from "../symbols/symbol";
+import { ISymbol } from "../symbols/symbol";
 import { ISymbolType } from "../symbols/symbol-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -22,6 +22,7 @@ import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { Transforms } from "./syntax-nodes/transforms";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
 

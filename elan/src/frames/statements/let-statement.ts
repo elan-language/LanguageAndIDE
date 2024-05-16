@@ -1,15 +1,15 @@
 import { ExpressionField } from "../fields/expression-field";
-import { Parent} from "../interfaces/parent";
+import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
-import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     isStatement = true;
@@ -38,7 +38,7 @@ export class LetStatement extends AbstractFrame implements Statement, ISymbol {
     }
     getFields(): Field[] {
         return [this.name, this.expr];
-    } 
+    }
     getIdPrefix(): string {
         return 'let';
     }

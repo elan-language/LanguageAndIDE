@@ -1,4 +1,4 @@
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { ISymbolType } from "../../symbols/symbol-type";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
@@ -10,6 +10,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class ParamList extends AbstractField {
     isParseByNodes = true;

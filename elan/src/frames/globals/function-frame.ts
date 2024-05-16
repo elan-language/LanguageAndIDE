@@ -10,12 +10,13 @@ import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../../symbols/function-type";
 import { Scope } from "../interfaces/scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol, Scope {
     public name: IdentifierField;

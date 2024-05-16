@@ -1,13 +1,13 @@
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
-import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { Class } from "../globals/class";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
-import { abstractPropertyKeywords, propertyKeyword } from "../keywords";
+import { abstractPropertyKeywords } from "../keywords";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 

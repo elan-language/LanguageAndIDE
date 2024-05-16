@@ -1,5 +1,5 @@
 import { IdentifierField } from "../fields/identifier-field";
-import { Parent} from "../interfaces/parent";
+import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ValueRefField } from "../fields/value-ref-field";
@@ -7,12 +7,13 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol, SymbolScope } from "../../symbols/symbol";
+import { ISymbol } from "../../symbols/symbol";
 import { mustBeOfSymbolType } from "../compile-rules";
 import { IntType } from "../../symbols/int-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { SymbolScope } from "../../symbols/symbol-scope";
 
-export class For extends FrameWithStatements implements Statement  {
+export class For extends FrameWithStatements implements Statement {
     isStatement: boolean = true;
     variable: IdentifierField;
     from: ValueRefField;
@@ -39,7 +40,7 @@ export class For extends FrameWithStatements implements Statement  {
 
     getIdPrefix(): string {
         return 'for';
-     }
+    }
     renderAsHtml(): string {
         return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>for </keyword>${this.variable.renderAsHtml()}<keyword> from </keyword>${this.from.renderAsHtml()}<keyword> to </keyword>${this.to.renderAsHtml()}<keyword> step </keyword>${this.step.renderAsHtml()}</top>${this.compileMsgAsHtml()}
@@ -54,21 +55,21 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
     }
 
-    compile(transforms : Transforms): string {
+    compile(transforms: Transforms): string {
         this.compileErrors = [];
         const v = this.variable.compile(transforms);
         const f = this.from.compile(transforms);
         const t = this.to.compile(transforms);
         var s = this.step.compile(transforms);
 
-        mustBeOfSymbolType(this.from.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
-        mustBeOfSymbolType(this.to.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
-        mustBeOfSymbolType(this.step.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId );
+        mustBeOfSymbolType(this.from.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
+        mustBeOfSymbolType(this.to.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
+        mustBeOfSymbolType(this.step.symbolType(transforms), IntType.Instance, this.compileErrors, this.htmlId);
 
         var compare = "<=";
         var incDec = "+";
 
-        if (s.startsWith("-")){
+        if (s.startsWith("-")) {
             compare = ">=";
             incDec = "-";
             s = s.slice(1);
@@ -93,9 +94,9 @@ ${this.indent()}}`;
         return this.parseStandardEnding(source, "end for");
     }
 
-    resolveSymbol(id: string | undefined, transforms : Transforms,initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
         const v = this.variable.text;
-        
+
         if (id === v) {
             const st = this.from.symbolType(transforms);
             return {
