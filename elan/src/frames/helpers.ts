@@ -6,7 +6,7 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { CompileStatus, OverallStatus, ParseStatus, TestStatus } from "./status-enums";
+import { CompileStatus, OverallStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
@@ -163,6 +163,18 @@ export function helper_testStatusAsOverallStatus(ts: TestStatus) {
     } else if (ts === TestStatus.pending) {
         overall = OverallStatus.warning;
     } else if (ts === TestStatus.fail) {
+        overall = OverallStatus.error;
+    }
+    return overall;
+}
+
+export function helper_runStatusAsOverallStatus(rs: RunStatus) {
+    var overall = OverallStatus.default;
+    if (rs === RunStatus.running) {
+        overall = OverallStatus.ok;
+    } else if (rs === RunStatus.paused) {
+        overall = OverallStatus.warning;
+    } else if (rs === RunStatus.error) {
         overall = OverallStatus.error;
     }
     return overall;

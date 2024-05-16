@@ -15,6 +15,7 @@ import { CompileStatus, ParseStatus } from "./status-enums";
 import { StatementSelector } from "./statements/statement-selector";
 import { CompileError } from "./compile-error";
 import { Transforms } from "./syntax-nodes/transforms";
+import { helper_getCompileStatus } from "./helpers";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
     isCollapsible: boolean = true;
@@ -39,11 +40,24 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return this.getParent().getFactory();
     }
 
-    getParseStatus(): ParseStatus {
+    aggregateParseStatus(): void {
+        var worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
+        this.setParseStatus(worstOfFieldsOrChildren);
+    }
+    getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of readParseStatus on superclass
         return Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
     }
 
-    getCompileStatus() : CompileStatus {
+    aggregateCompileStatus(): void {
+        this.setCompileStatus(Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors)));
+    }
+    resetCompileStatus(): void {
+       if (this.readCompileStatus() !== CompileStatus.default) {
+        this.getChildren().forEach(f => f.resetCompileStatus())
+        super.resetCompileStatus();
+       }
+    }
+    getCompileStatus() : CompileStatus { //TODO: to be eliminated in favour of methods above
         return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
     }
 

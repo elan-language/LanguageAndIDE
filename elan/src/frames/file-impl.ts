@@ -11,7 +11,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import { helper_compileStatusAsOverallStatus, expandCollapseAll, isSelector, helper_parseStatusAsOverallStatus, helper_testStatusAsOverallStatus } from "./helpers";
+import { helper_compileStatusAsOverallStatus, expandCollapseAll, isSelector, helper_parseStatusAsOverallStatus, helper_testStatusAsOverallStatus, helper_runStatusAsOverallStatus } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { CodeSource, CodeSourceFromString } from "./code-source";
@@ -42,7 +42,11 @@ export class FileImpl implements File, Scope {
     parseError?: string;
     readonly defaultFileName = "code.elan";
     fileName: string = this.defaultFileName;
+    private _parseStatus: ParseStatus = ParseStatus.default;
+    private _compileStatus: CompileStatus = CompileStatus.default;
+    private _testStatus: TestStatus = TestStatus.default;
     private _runStatus: RunStatus = RunStatus.default;
+
     private scratchPad: ScratchPad;
 
     private _children: Array<Frame> = new Array<Frame>();
@@ -229,6 +233,18 @@ export class FileImpl implements File, Scope {
         //does nothing
     }
 
+    readTestStatus(): TestStatus {
+        return this._testStatus;
+    }
+    readTestStatusForDashboard(): string {
+        return OverallStatus[helper_testStatusAsOverallStatus(this._testStatus)];
+    }
+    calculateTestStatus() {
+        const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
+        const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
+        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
+        this._testStatus = worst;
+    }
     getTestStatus(): TestStatus {
         const tests = this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
         const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
@@ -245,20 +261,31 @@ export class FileImpl implements File, Scope {
         return OverallStatus[status];
     }
 
-    getRunStatus(): RunStatus {
+    readRunStatus(): RunStatus {
         return this._runStatus;
     }
 
-    setRunStatus(s: RunStatus) {
+    setRunStatus(s : RunStatus){
         this._runStatus = s;
     }
 
+    recalculateParseStatus(): void {
+        this._parseStatus = parentHelper_worstParseStatusOfChildren(this);
+    }
+    readParseStatus(): ParseStatus {
+        return this._parseStatus;
+    }
+    readParseStatusForDashboard(): string {
+        return OverallStatus[helper_parseStatusAsOverallStatus(this._parseStatus)];
+    }
     getParseStatus(): ParseStatus {
         return parentHelper_worstParseStatusOfChildren(this);
     };
     getParseStatusForDashboard(): string {
         return OverallStatus[helper_parseStatusAsOverallStatus(this.getParseStatus())];
     }
+
+    
     getCompileStatusForDashboard(): string {
         var status: OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid) {

@@ -36,7 +36,7 @@ export interface File extends Parent {
     getCompileStatusForDashboard(): string;
     getTestStatus(): TestStatus;
     getTestStatusForDashboard(): string;
-    getRunStatus(): RunStatus;
+    readRunStatus(): RunStatus;
 
     //Internal use only
     createMain(): Frame;

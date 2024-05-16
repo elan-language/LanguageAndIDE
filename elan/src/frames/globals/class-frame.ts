@@ -24,7 +24,6 @@ import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
 import { ISymbol } from "../interfaces/symbol";
 import { isSymbol } from "../symbols/symbol-helpers";
-import { Scope } from "../interfaces/scope";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { ClassDefinitionType } from "../symbols/class-definition-type";
@@ -82,10 +81,20 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
         super.setClasses();
         this.pushClass(true,"multiline");
     };
-    getParseStatus(): ParseStatus {
+
+    aggregateParseStatus(): void {
+        var worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
+        this.setParseStatus(worstOfFieldsOrChildren);
+    }
+    getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of readParseStatus()
         return Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
     }
-    getCompileStatus() : CompileStatus {
+
+    aggregateCompileStatus(): void {
+        var worst = Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
+        this.setCompileStatus(worst);
+    }
+    getCompileStatus() : CompileStatus { //TODO: to be eliminated in favour of readCompileStatus()
         return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
     }
     getFactory(): StatementFactory {
