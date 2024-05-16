@@ -4,7 +4,7 @@ import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "./transforms";
 
 export class QualifierAsn extends AbstractAstNode implements AstNode {

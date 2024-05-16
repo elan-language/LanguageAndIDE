@@ -3,7 +3,7 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 

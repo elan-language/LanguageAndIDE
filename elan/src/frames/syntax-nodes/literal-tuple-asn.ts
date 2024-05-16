@@ -2,7 +2,7 @@ import { TupleType } from "../../symbols/tuple-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 
 export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
 

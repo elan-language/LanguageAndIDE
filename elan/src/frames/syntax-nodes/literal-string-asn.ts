@@ -1,7 +1,7 @@
 import { StringType } from "../../symbols/string-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 
 export class LiteralStringAsn extends AbstractAstNode implements AstNode {
 

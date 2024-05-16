@@ -1,8 +1,8 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
-import { AstIdNode } from "./ast-id-node";
+import { AstNode } from "../interfaces/ast-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 

@@ -3,7 +3,7 @@ import { Scope } from "../interfaces/scope";
 import { thisKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
 

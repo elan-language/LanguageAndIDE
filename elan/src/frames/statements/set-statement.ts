@@ -7,7 +7,7 @@ import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { AssignableField } from "../fields/assignableField";
 import { mustBeCompatibleNode, mustNotBeConstant, mustNotBeCounter, mustNotBeParameter, mustNotBePropertyOnFunctionMethod } from "../compile-rules";
-import { AstNode } from "../syntax-nodes/ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class SetStatement extends AbstractFrame implements Statement{

@@ -6,7 +6,7 @@ import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstIdNode } from "./ast-id-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
 

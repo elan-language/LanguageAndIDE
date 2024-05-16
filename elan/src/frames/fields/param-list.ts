@@ -6,8 +6,8 @@ import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
-import { AstIdNode } from "../syntax-nodes/ast-id-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 

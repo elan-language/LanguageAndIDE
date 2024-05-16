@@ -6,7 +6,7 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { KvpAsn } from "./kvp-asn";
 import { LiteralListAsn } from "./literal-list-asn";
 

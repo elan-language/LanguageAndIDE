@@ -2,7 +2,7 @@ import { BooleanType } from "../../symbols/boolean-type";
 import { CompileError } from "../compile-error";
 import { trueKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 
 export class LiteralBoolAsn extends AbstractAstNode implements AstNode {
     constructor(rawValue: string, public readonly fieldId: string) {

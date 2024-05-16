@@ -11,8 +11,8 @@ import { callKeyword } from "../keywords";
 import { Scope } from "../interfaces/scope";
 import { Frame } from "../interfaces/frame";
 import { FileImpl } from "../file-impl";
-import { AstIdNode } from "../syntax-nodes/ast-id-node";
-import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { scopePrefix, updateScopeAndQualifier } from "../../symbols/symbolHelpers";
 

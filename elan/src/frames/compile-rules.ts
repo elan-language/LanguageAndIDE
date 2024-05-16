@@ -20,7 +20,7 @@ import { CompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
-import { AstNode } from "./syntax-nodes/ast-node";
+import { AstNode } from "./interfaces/ast-node";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {

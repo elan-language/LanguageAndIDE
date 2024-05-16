@@ -4,8 +4,8 @@ import { CompileError } from "../compile-error";
 import { mustBeCompatibleType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstCollectionNode } from "./ast-collection-node";
-import { AstNode } from "./ast-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstNode } from "../interfaces/ast-node";
 
 export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
 

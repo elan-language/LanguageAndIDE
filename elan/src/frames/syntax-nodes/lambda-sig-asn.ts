@@ -4,7 +4,7 @@ import { UnknownType } from "../../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 import { Transforms } from "./transforms";
 

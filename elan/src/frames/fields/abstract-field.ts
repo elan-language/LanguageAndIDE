@@ -6,7 +6,7 @@ import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
 import { escapeAngleBrackets, helper_compileMsgAsHtml, helper_getCompileStatus, helper_CompileOrParseStatus, isCollapsible } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { AstNode } from "../syntax-nodes/ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { CSV } from "../parse-nodes/csv";
 import { CompileError } from "../compile-error";
 import { UnknownType } from "../../symbols/unknown-type";

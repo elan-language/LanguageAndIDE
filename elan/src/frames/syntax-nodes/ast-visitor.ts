@@ -3,9 +3,8 @@ import { BinaryExpression } from "../parse-nodes/binary-expression";
 import { LitInt } from "../parse-nodes/lit-int";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { OperationSymbol } from "./operation-symbol";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { BinaryExprAsn } from "./binary-expr-asn";
-import { ExprAsn } from "./expr-asn";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { LitBoolean } from "../parse-nodes/lit-boolean";
@@ -89,7 +88,8 @@ import { ThisAsn } from "./this-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { DoubleIndexNode } from "../parse-nodes/double-index-node";
-import { AstCollectionNode } from "./ast-collection-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { ExprAsn } from "./expr-asn";
 
 function mapOperation(op: string) {
     switch (op.trim()) {

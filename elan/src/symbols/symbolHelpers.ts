@@ -7,7 +7,7 @@ import { Transforms } from "../frames/syntax-nodes/transforms";
 import { Frame } from "../frames/interfaces/frame";
 import { Scope } from "../frames/interfaces/scope";
 import { globalKeyword, libraryKeyword } from "../frames/keywords";
-import { AstNode } from "../frames/syntax-nodes/ast-node";
+import { AstNode } from "../frames/interfaces/ast-node";
 import { ClassType } from "./class-type";
 
 export function isSymbol(s?: any): s is ISymbol {

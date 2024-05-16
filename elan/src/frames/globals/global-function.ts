@@ -4,7 +4,7 @@ import { FunctionFrame } from "./function-frame";
 import { functionKeyword, returnKeyword, endKeyword } from "../keywords";
 import { mustNotBeArray, mustBeCompatibleType } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
-import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
     isGlobal = true;

@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { TypeAsn } from "./type-asn";
 
 export class DefaultTypeAsn extends AbstractAstNode implements AstNode {

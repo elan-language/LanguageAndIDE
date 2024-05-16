@@ -6,7 +6,7 @@ import { Class } from "../globals/class";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "./transforms";
 import { TypeAsn } from "./type-asn";
 

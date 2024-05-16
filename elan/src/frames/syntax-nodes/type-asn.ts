@@ -9,11 +9,11 @@ import { ListType } from "../../symbols/list-type";
 import { StringType } from "../../symbols/string-type";
 import { TupleType } from "../../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
-import { AstNode } from "./ast-node";
+import { AstNode } from "../interfaces/ast-node";
 import { CompileError } from "../compile-error";
 import { ArrayType } from "../../symbols/array-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstIdNode } from "./ast-id-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 
 export class TypeAsn extends AbstractAstNode implements AstIdNode {
