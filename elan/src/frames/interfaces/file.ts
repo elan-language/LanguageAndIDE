@@ -8,6 +8,7 @@ import { StatementFactory } from "./statement-factory";
 import { CompileError } from "../compile-error";
 import { ScratchPad } from "../scratch-pad";
 import { Profile } from "./profile";
+import { Scope } from "./scope";
 
 export interface File extends Parent {
     isFile : boolean;
@@ -59,4 +60,6 @@ export interface File extends Parent {
     compileErrors(): CompileError[];
 
     setRunStatus(s : RunStatus) : void;
+
+    libraryScope : Scope;
 }

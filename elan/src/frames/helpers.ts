@@ -10,6 +10,7 @@ import { CompileStatus, OverallStatus, ParseStatus, TestStatus } from "./status-
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
+import { Scope } from "./interfaces/scope";
 
 export function isCollapsible(f?: any): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -49,6 +50,10 @@ export function isSelector(f?: any): f is AbstractSelector {
 
 export function isGlobal(f?: any): f is GlobalFrame {
     return !!f && 'isGlobal' in f;
+} 
+
+export function isScope(f?: any): f is Scope {
+    return !!f && 'resolveSymbol' in f;
 } 
 
 

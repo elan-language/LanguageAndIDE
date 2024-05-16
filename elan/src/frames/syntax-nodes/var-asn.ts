@@ -18,6 +18,7 @@ import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { isScope } from "../helpers";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode {
 
@@ -74,10 +75,11 @@ export class VarAsn extends AbstractAstNode implements AstIdNode {
 
         const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
         if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope) as unknown as Scope;
-            const p = s.resolveSymbol(this.id, transforms(), s);
-
-            mustBePublicProperty(p, this.compileErrors, this.fieldId);
+            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
+            if (isScope(s)) {
+                const p = s.resolveSymbol(this.id, transforms(), s);
+                mustBePublicProperty(p, this.compileErrors, this.fieldId);
+            }
         }
 
         var idx = this.index ? this.index.compile() : "";
@@ -101,13 +103,12 @@ export class VarAsn extends AbstractAstNode implements AstIdNode {
         if (classScope instanceof ClassType) {
             const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
             // replace scope with class scope
-            currentScope = s as unknown as Scope;
+            currentScope = isScope(s) ? s : currentScope;
         }
         else if (classScope instanceof ClassDefinitionType) {
-            currentScope = classScope as unknown as Scope;
+            currentScope = classScope as Scope;
         }
         else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
-            // todo kludge
             currentScope = getClassScope(currentScope as Frame);
         }
 

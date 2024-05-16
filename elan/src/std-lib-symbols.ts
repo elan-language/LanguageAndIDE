@@ -14,7 +14,6 @@ import { IterType } from "./frames/symbols/iter-type";
 import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
 import { TupleType } from "./frames/symbols/tuple-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
-import { stringType } from "./test/testHelpers";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 

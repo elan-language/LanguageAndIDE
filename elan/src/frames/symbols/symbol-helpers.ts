@@ -4,13 +4,13 @@ import { ISymbol } from "../interfaces/symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
-import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { AstNode } from "../interfaces/ast-node";
 import { ClassType } from "./class-type";
 import { SymbolScope } from "./symbol-scope";
-import { isClass, isFile, isFrame } from "../helpers";
+import { isClass, isFile, isFrame, isScope } from "../helpers";
+import { File} from "../interfaces/file";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
@@ -58,26 +58,25 @@ export function updateScopeAndQualifier(qualifier: any | undefined, transforms: 
     if (qualifierScope instanceof ClassType) {
         const s = currentScope.resolveSymbol(qualifierScope.className, transforms, currentScope);
         // replace scope with class scope
-        currentScope = s as unknown as Scope;
+        currentScope = isScope(s) ? s : currentScope;
     }
     else if (value?.id === globalKeyword) {
         // todo kludge
-        currentScope = getGlobalScope(currentScope as Frame);
+        currentScope = getGlobalScope(currentScope);
         qualifier = undefined;
     }
     else if (value?.id === libraryKeyword) {
-        // todo kludge
-        currentScope = (getGlobalScope(currentScope as Frame) as any).libraryScope;
+        currentScope = getGlobalScope(currentScope).libraryScope;
         qualifier = undefined;
     }
     else if (qualifier) {
-        currentScope = (getGlobalScope(currentScope as Frame) as any).libraryScope;
+        currentScope = getGlobalScope(currentScope).libraryScope;
     }
 
     return [qualifier, currentScope];
 }
 
-function getGlobalScope(start: Scope): Scope {
+function getGlobalScope(start: Scope): File {
     if (isFile(start)) {
         return start;
     }
@@ -86,7 +85,7 @@ function getGlobalScope(start: Scope): Scope {
         return getGlobalScope(start.getParent());
     }
 
-    return start;
+    throw new Error("Global scope not found");
 }
 
 export function getClassScope(start: Scope): Scope {
