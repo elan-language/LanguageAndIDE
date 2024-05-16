@@ -53,7 +53,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
     resetCompileStatus(): void {
        if (this.readCompileStatus() !== CompileStatus.default) {
-        this.getChildren().forEach(f => f.resetCompileStatus())
+        this.getChildren().forEach(f => f.resetCompileStatus());
         super.resetCompileStatus();
        }
     }

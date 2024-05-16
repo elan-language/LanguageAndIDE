@@ -1,6 +1,6 @@
 import { AssertOutcome } from "./system";
 
-export function runTests(tests: [[string, (_outcomes: AssertOutcome[]) => void]]) {
+export function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]) {
     const allOutcomes: [string, AssertOutcome[]][] = [];
 
     for (const t of tests) {
@@ -10,7 +10,7 @@ export function runTests(tests: [[string, (_outcomes: AssertOutcome[]) => void]]
     }
 
     // clear tests each time or the tests array in the program gets duplicates
-    (tests as any).length = 0;
+    tests.length = 0;
 
     return allOutcomes;
 }
