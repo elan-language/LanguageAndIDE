@@ -118,7 +118,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         var parameters = this.parameters;
 
         if (type.isExtension && this.qualifier) {
-            parameters = [(this.qualifier as QualifierAsn).value].concat(parameters);
+            parameters = [(this.qualifier as QualifierAsn).value as AstNode].concat(parameters);
         }
 
         const pTypes = parameters.map(p => this.flatten(p.symbolType()));

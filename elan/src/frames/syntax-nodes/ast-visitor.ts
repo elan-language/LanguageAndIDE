@@ -90,6 +90,7 @@ import { IdDefAsn } from "./id-def-asn";
 import { DoubleIndexNode } from "../parse-nodes/double-index-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { ExprAsn } from "./expr-asn";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -382,8 +383,8 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof Qualifier) {
-        const q = transform(node.qualifier, fieldId, scope);
-        return new QualifierAsn(q!, fieldId, scope);
+        const q = transform(node.qualifier, fieldId, scope) as AstIdNode;
+        return new QualifierAsn(q, fieldId, scope);
     }
 
     if (node instanceof InstanceNode) {

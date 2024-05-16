@@ -12,6 +12,7 @@ import { ISymbol } from "../interfaces/symbol";
 import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 
 export class Each extends FrameWithStatements implements Statement {
     isStatement = true;
@@ -80,7 +81,7 @@ ${this.indent()}}`;
         const v = this.variable.text;
 
         if (id === v) {
-            const st = (this.iter.symbolType(transforms) as any).ofType; // todo fix type
+            const st = (this.iter.symbolType(transforms) as GenericSymbolType).ofType;
             return {
                 symbolId: id,
                 symbolType: () => st,

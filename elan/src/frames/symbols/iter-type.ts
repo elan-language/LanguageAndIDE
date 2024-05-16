@@ -1,6 +1,7 @@
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { ISymbolType } from "../interfaces/symbol-type";
 
-export class IterType implements ISymbolType {
+export class IterType implements GenericSymbolType {
 
     constructor(public readonly ofType: ISymbolType) {
 

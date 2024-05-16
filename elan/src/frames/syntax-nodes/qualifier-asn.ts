@@ -6,10 +6,11 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "./transforms";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class QualifierAsn extends AbstractAstNode implements AstNode {
 
-    constructor(public readonly value: AstNode, public readonly fieldId: string, private readonly scope: Scope) {
+    constructor(public readonly value: AstIdNode, public readonly fieldId: string, private readonly scope: Scope) {
         super();
     }
 
@@ -37,7 +38,7 @@ export class QualifierAsn extends AbstractAstNode implements AstNode {
     }
 
     symbolType() {
-        const id = (this.value as any).id;
+        const id = this.value.id;
         return id ? this.scope.resolveSymbol(id, transforms(), this.scope).symbolType(transforms()) : UnknownType.Instance;;
     }
 
