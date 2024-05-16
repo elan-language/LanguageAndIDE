@@ -8,7 +8,7 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { mustBeIterable, mustNotBeReassigned } from "../compile-rules";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -77,7 +77,7 @@ ${this.indent()}}`;
         return this.parseStandardEnding(source, "end each");
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         const v = this.variable.text;
 
         if (id === v) {

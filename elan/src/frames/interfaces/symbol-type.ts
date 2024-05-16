@@ -1,3 +1,3 @@
-export interface ISymbolType {
+export interface SymbolType {
     name: string;
 }

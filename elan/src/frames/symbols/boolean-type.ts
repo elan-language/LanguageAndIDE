@@ -1,9 +1,9 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class BooleanType implements ISymbolType {
+export class BooleanType implements SymbolType {
     private constructor() { }
 
-    static Instance: ISymbolType = new BooleanType();
+    static Instance: SymbolType = new BooleanType();
 
     name = "Boolean";
 }

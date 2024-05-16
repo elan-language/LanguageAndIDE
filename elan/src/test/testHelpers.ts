@@ -10,7 +10,7 @@ import { hash } from '../util';
 import { DefaultProfile } from '../frames/default-profile';
 import { ParseStatus } from '../frames/status-enums';
 import { ParseNode } from '../frames/parse-nodes/parse-node';
-import { ISymbolType } from '../frames/interfaces/symbol-type';
+import { SymbolType } from '../frames/interfaces/symbol-type';
 import { transform } from '../frames/syntax-nodes/ast-visitor';
 import { Field } from '../frames/interfaces/field';
 import { FloatType } from '../frames/symbols/number-type';
@@ -18,7 +18,7 @@ import { Parent } from '../frames/interfaces/parent';
 import { BooleanType } from '../frames/symbols/boolean-type';
 import { IntType } from '../frames/symbols/int-type';
 import { StringType } from '../frames/symbols/string-type';
-import { ISymbol } from '../frames/interfaces/symbol';
+import { ElanSymbol } from '../frames/interfaces/symbol';
 import { UnknownType } from '../frames/symbols/unknown-type';
 import { ClassType } from '../frames/symbols/class-type';
 import { Scope } from '../frames/interfaces/scope';
@@ -390,34 +390,34 @@ const stubIntSymbol = {
   symbolId: "a",
   symbolType: () => intType,
   symbolScope : SymbolScope.unknown
-} as ISymbol;
+} as ElanSymbol;
 
 const stubFloatSymbol = {
   symbolId: "b",
   symbolType: () => floatType,
   symbolScope : SymbolScope.unknown
-} as ISymbol;
+} as ElanSymbol;
 
 const stubStringSymbol = {
   symbolId: "bar",
   symbolType: () => stringType,
   symbolScope : SymbolScope.unknown
-} as ISymbol;
+} as ElanSymbol;
 
 const stubBoolSymbol = {
   symbolId: "bar",
   symbolType: () => boolType,
   symbolScope : SymbolScope.unknown
-} as ISymbol;
+} as ElanSymbol;
 
 const stubClassSymbol = {
   symbolId: "p",
   symbolType: () => new ClassType("p"),
   symbolScope : SymbolScope.unknown
-} as ISymbol;
+} as ElanSymbol;
 
 const stubHolder = {
-  resolveSymbol(id, transforms, initialScope): ISymbol {
+  resolveSymbol(id, transforms, initialScope): ElanSymbol {
     switch (id) {
       case "a": return stubIntSymbol;
       case "b": return stubFloatSymbol;
@@ -449,7 +449,7 @@ export const stubField = {
   }
 } as Field;
 
-export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: ISymbolType) {
+export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: SymbolType) {
   node.parseText(text);
   if (node.status === ParseStatus.valid) {
     const ast = transform(node, "", field.getHolder() as Scope);

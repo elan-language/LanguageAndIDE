@@ -1,5 +1,5 @@
 import { ClassType } from "../symbols/class-type";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
@@ -11,7 +11,7 @@ import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Property extends AbstractFrame implements Member, ISymbol {
+export class Property extends AbstractFrame implements Member, ElanSymbol {
     isMember = true;
     name: IdentifierField;
     type: TypeField;

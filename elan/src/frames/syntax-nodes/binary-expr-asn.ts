@@ -3,7 +3,7 @@ import { ClassType } from "../symbols/class-type";
 import { IntType } from "../symbols/int-type";
 import { ListType } from "../symbols/list-type";
 import { FloatType } from "../symbols/number-type";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeCoercibleType, mustBeCompatibleType, mustBeNumberType } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
@@ -22,7 +22,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return this.compileErrors.concat(this.lhs.aggregateCompileErrors()).concat(this.rhs.aggregateCompileErrors());
     }
 
-    private MostPreciseSymbol(lhs: ISymbolType, rhs: ISymbolType): ISymbolType {
+    private MostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType {
         if (lhs instanceof FloatType || rhs instanceof FloatType) {
             return FloatType.Instance;
         }

@@ -22,7 +22,7 @@ import { Regexes } from "../fields/regexes";
 import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { isSymbol } from "../symbols/symbol-helpers";
 import { abstractKeyword, classKeyword, immutableKeyword, inheritsKeyword, thisKeyword } from "../keywords";
 import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
@@ -35,7 +35,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Class } from "../interfaces/class";
 
-export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ISymbol {
+export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
     isCollapsible: boolean = true;
     isParent: boolean = true; 
     isClass: boolean = true; 
@@ -316,7 +316,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
         return new MemberSelector(this);
     }
 
-    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ElanSymbol {
         if (id === thisKeyword){
             return this;
         }

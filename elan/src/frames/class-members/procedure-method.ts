@@ -1,4 +1,4 @@
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { ClassFrame } from "../globals/class-frame";
@@ -41,9 +41,9 @@ ${this.indent()}}\r
         return super.parseBottom(source);
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         if (this.name.text === id) {
-            return this as ISymbol;
+            return this as ElanSymbol;
         }
 
         return super.resolveSymbol(id, transforms, initialScope);

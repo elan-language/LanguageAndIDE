@@ -1,4 +1,4 @@
-import { ISymbol } from "./symbol";
+import { ElanSymbol } from "./symbol";
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
@@ -44,5 +44,5 @@ export interface Parent extends Scope {
 
     getFactory(): StatementFactory;
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol;
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ElanSymbol;
 }

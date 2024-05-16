@@ -1,5 +1,5 @@
-import { ISymbol } from "../interfaces/symbol";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
@@ -31,7 +31,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         throw new Error("Method not implemented.");
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
         for (const p of this.parameters) {
             if (p.id.trim() === id) {
                 return {

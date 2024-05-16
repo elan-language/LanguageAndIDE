@@ -1,5 +1,5 @@
 import { ProcedureType } from "../symbols/procedure-type";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
@@ -14,7 +14,7 @@ import { procedureKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export abstract class ProcedureFrame extends FrameWithStatements implements ISymbol, Scope {
+export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
     public name: IdentifierField;
     public params: ParamList;
     file: File;
@@ -66,9 +66,9 @@ ${this.renderChildrenAsHtml()}
     }
 
     resolveSymbol(id: string | undefined, transforms: Transforms,
-         initialScope: Frame): ISymbol {
+         initialScope: Frame): ElanSymbol {
         if (this.name.text === id) {
-            return this as ISymbol;
+            return this as ElanSymbol;
         }
         const s = this.params.resolveSymbol(id, transforms, initialScope);
 

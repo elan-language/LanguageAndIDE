@@ -1,9 +1,9 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class FunctionType implements ISymbolType {
+export class FunctionType implements SymbolType {
 
-    constructor(public readonly parametersTypes: ISymbolType[],
-        public readonly returnType: ISymbolType,
+    constructor(public readonly parametersTypes: SymbolType[],
+        public readonly returnType: SymbolType,
         public readonly isExtension: boolean,
         public readonly isPure: boolean = true) {
     }

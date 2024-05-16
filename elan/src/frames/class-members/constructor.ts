@@ -4,7 +4,7 @@ import { Member } from "../interfaces/member";
 import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
 import { constructorKeyword } from "../keywords";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -71,7 +71,7 @@ ${this.indent()}}\r
         return false;
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ElanSymbol {
         const s = this.params.resolveSymbol(id, transforms, this);
         return s === UnknownSymbol.Instance ? this.getParent().resolveSymbol(id, transforms, this) : s;
     }

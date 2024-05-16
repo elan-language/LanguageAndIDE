@@ -1,4 +1,4 @@
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
@@ -9,7 +9,7 @@ import { switchKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Default } from "./default";
 
-export class Switch extends FrameWithStatements implements ISymbol { 
+export class Switch extends FrameWithStatements implements ElanSymbol { 
     isStatement = true;
     expr: ExpressionField;
     default: Default;

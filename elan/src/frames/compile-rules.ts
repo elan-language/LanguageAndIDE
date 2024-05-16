@@ -11,8 +11,8 @@ import { ListType } from "./symbols/list-type";
 import { FloatType } from "./symbols/number-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
-import { ISymbol } from "./interfaces/symbol";
-import { ISymbolType } from "./interfaces/symbol-type";
+import { ElanSymbol } from "./interfaces/symbol";
+import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
@@ -28,7 +28,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 
-export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeOfSymbolType(exprType: SymbolType | undefined, ofType: SymbolType, compileErrors: CompileError[], location: string) {
 
     const unknown = exprType?.name === undefined || ofType.name === undefined;
     if (exprType?.name !== ofType.name) {
@@ -36,7 +36,7 @@ export function mustBeOfSymbolType(exprType: ISymbolType | undefined, ofType: IS
     }
 }
 
-export function mustBeOfType(expr: AstNode | undefined, ofType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeOfType(expr: AstNode | undefined, ofType: SymbolType, compileErrors: CompileError[], location: string) {
     mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
 }
 
@@ -62,19 +62,19 @@ export function mustHaveLastSingleElse(elses: { hasIf: boolean }[], compileError
     }
 }
 
-export function mustBeKnownSymbol(symbol: ISymbol, compileErrors: CompileError[], location: string) {
+export function mustBeKnownSymbol(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
     if (symbol instanceof UnknownSymbol) {
         compileErrors.push(new CompileError(`Undeclared id`, location, true));
     }
 }
 
-export function mustBeProcedure(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeProcedure(symbolType: SymbolType, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof ProcedureType)) {
         compileErrors.push(new CompileError(`Cannot call ${symbolType.name}`, location, true));
     }
 }
 
-export function mustBePureFunctionSymbol(symbolType: ISymbolType, scope: Scope, compileErrors: CompileError[], location: string) {
+export function mustBePureFunctionSymbol(symbolType: SymbolType, scope: Scope, compileErrors: CompileError[], location: string) {
     if (InFunctionScope(scope)) {
         if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
             const imPure =  symbolType instanceof FunctionType && !symbolType.isPure ? " impure " : " ";
@@ -88,7 +88,7 @@ export function mustBePureFunctionSymbol(symbolType: ISymbolType, scope: Scope, 
     }
 }
 
-export function mustBeIndexableSymbol(symbolType: ISymbolType, isDouble : boolean, compileErrors: CompileError[], location: string) {
+export function mustBeIndexableSymbol(symbolType: SymbolType, isDouble : boolean, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof DictionaryType)) {
         compileErrors.push(new CompileError(`Cannot index ${symbolType.name}`, location, true));
     }
@@ -110,7 +110,7 @@ export function mustBeAbstractClass(classType: ClassDefinitionType, compileError
     }
 }
 
-export function mustBePublicProperty(property: ISymbol, compileErrors: CompileError[], location: string) {
+export function mustBePublicProperty(property: ElanSymbol, compileErrors: CompileError[], location: string) {
     if (property instanceof Property && property.private === true) {
         compileErrors.push(new CompileError(`Cannot reference private property`, location, false));
     }
@@ -147,7 +147,7 @@ export function mustCallExtensionViaQualifier(ft: FunctionType, qualifier: AstNo
     }
 }
 
-export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], compileErrors: CompileError[], location: string) {
+export function mustMatchParameters(parms: AstNode[], ofType: SymbolType[], compileErrors: CompileError[], location: string) {
     const maxLen = parms.length > ofType.length ? parms.length : ofType.length;
 
     for (var i = 0; i < maxLen; i++) {
@@ -167,7 +167,7 @@ export function mustMatchParameters(parms: AstNode[], ofType: ISymbolType[], com
 }
 
 
-function FailIncompatible(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+function FailIncompatible(lhs: SymbolType, rhs: SymbolType, compileErrors: CompileError[], location: string) {
     const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
     compileErrors.push(new CompileError(`Incompatible types ${rhs.name} to ${lhs.name}`, location, unknown));
 }
@@ -176,7 +176,7 @@ function FailUnknown(lhs: AstNode, compileErrors: CompileError[], location: stri
     compileErrors.push(new CompileError(`Undeclared variable ${lhs}`, location, true));
 }
 
-export function mustBeCoercibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeCoercibleType(lhs: SymbolType, rhs: SymbolType, compileErrors: CompileError[], location: string) {
     // for compare allow int and floats
     if ((lhs instanceof IntType || lhs instanceof FloatType) && (rhs instanceof IntType || rhs instanceof FloatType)) {
         return;
@@ -185,7 +185,7 @@ export function mustBeCoercibleType(lhs: ISymbolType, rhs: ISymbolType, compileE
     mustBeCompatibleType(lhs, rhs, compileErrors, location);
 }
 
-export function mustBeNumberType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeNumberType(lhs: SymbolType, rhs: SymbolType, compileErrors: CompileError[], location: string) {
     // for compare allow int and floats
     if ((lhs instanceof IntType || lhs instanceof FloatType) && (rhs instanceof IntType || rhs instanceof FloatType)) {
         return;
@@ -194,7 +194,7 @@ export function mustBeNumberType(lhs: ISymbolType, rhs: ISymbolType, compileErro
     compileErrors.push(new CompileError(`Cannot compare ${lhs.name} and ${rhs.name}`, location, true));
 }
 
-export function mustBeCompatibleType(lhs: ISymbolType, rhs: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeCompatibleType(lhs: SymbolType, rhs: SymbolType, compileErrors: CompileError[], location: string) {
     if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
         FailIncompatible(lhs, rhs, compileErrors, location);
         return;
@@ -338,20 +338,20 @@ export function mustNotBeConstant(assignable: AstNode, compileErrors: CompileErr
     }
 }
 
-export function mustNotBeArray(parameterType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustNotBeArray(parameterType: SymbolType, compileErrors: CompileError[], location: string) {
     if (parameterType instanceof ArrayType){
         compileErrors.push(new CompileError(`May not pass Array into function`, location, false));
     }
 }
 
-export function mustNotBeReassigned(variable: ISymbol, compileErrors: CompileError[], location: string) {
+export function mustNotBeReassigned(variable: ElanSymbol, compileErrors: CompileError[], location: string) {
 
     if (variable !== UnknownSymbol.Instance && variable.symbolScope === SymbolScope.local) {
         compileErrors.push(new CompileError(`May not reassign variable`, location, false));
     }
 }
 
-export function mustBeIterable(symbolType: ISymbolType, compileErrors: CompileError[], location: string) {
+export function mustBeIterable(symbolType: SymbolType, compileErrors: CompileError[], location: string) {
     if (!(symbolType instanceof ListType || symbolType instanceof ArrayType || symbolType instanceof StringType || symbolType instanceof IterType)) {
         compileErrors.push(new CompileError(`Cannot iterate ${symbolType.name}`, location, true));
     }

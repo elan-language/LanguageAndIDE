@@ -13,7 +13,7 @@ import { Scope } from "./interfaces/scope";
 import { AstTypeNode } from "./interfaces/ast-type-node";
 import { AstNode } from "./interfaces/ast-node";
 import { Selectable } from "./interfaces/selectable";
-import { ISymbol } from "./interfaces/symbol";
+import { ElanSymbol } from "./interfaces/symbol";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
     return !!f && 'isCollapsible' in f;
@@ -47,7 +47,7 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
     return !!f && 'isGlobal' in f;
 }
 
-export function isScope(f?: ISymbol | Scope): f is Scope {
+export function isScope(f?: ElanSymbol | Scope): f is Scope {
     return !!f && 'resolveSymbol' in f;
 }
 

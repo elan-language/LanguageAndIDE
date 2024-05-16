@@ -22,7 +22,7 @@ import { editorEvent } from "./interfaces/editor-event";
 import { AbstractSelector } from "./abstract-selector";
 import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_renderChildrenAsSource, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
-import { ISymbol } from "./interfaces/symbol";
+import { ElanSymbol } from "./interfaces/symbol";
 import { StdLibSymbols } from "../std-lib-symbols";
 import { isSymbol } from "./symbols/symbol-helpers";
 import { Scope } from "./interfaces/scope";
@@ -422,10 +422,10 @@ export class FileImpl implements File, Scope {
         }
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
 
         // unknown because of typescript quirk 
-        const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as ISymbol[];
+        const globalSymbols = this.getChildren().filter(c => isSymbol(c)) as unknown as ElanSymbol[];
 
         for (const s of globalSymbols) {
             if (s.symbolId === id) {

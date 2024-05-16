@@ -1,5 +1,5 @@
-import { ISymbol } from "../interfaces/symbol";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
@@ -40,13 +40,13 @@ export class ParamList extends AbstractField {
     readToDelimeter: ((source: CodeSource) => string) =
         (source: CodeSource) => source.readToNonMatchingCloseBracket();
 
-    symbolTypes(transforms: Transforms): ISymbolType[] {
+    symbolTypes(transforms: Transforms): SymbolType[] {
         const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
         return ast ? ast.items.map(i => i.symbolType()) : [];
 
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
         if (ast) {

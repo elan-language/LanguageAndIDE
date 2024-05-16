@@ -1,8 +1,8 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class FloatType implements ISymbolType {
+export class FloatType implements SymbolType {
     private constructor() { }
 
-    static Instance: ISymbolType = new FloatType();
+    static Instance: SymbolType = new FloatType();
     name = "Float";
 }

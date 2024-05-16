@@ -1,8 +1,8 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class DictionaryType implements ISymbolType {
+export class DictionaryType implements SymbolType {
 
-    constructor(public readonly keyType: ISymbolType, public readonly valueType: ISymbolType) {
+    constructor(public readonly keyType: SymbolType, public readonly valueType: SymbolType) {
 
     }
 

@@ -1,8 +1,8 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class ProcedureType implements ISymbolType {
+export class ProcedureType implements SymbolType {
 
-    constructor(public readonly parametersTypes: ISymbolType[]) {
+    constructor(public readonly parametersTypes: SymbolType[]) {
 
     }
 

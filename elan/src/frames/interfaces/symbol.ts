@@ -1,9 +1,9 @@
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { ISymbolType } from "./symbol-type";
+import { SymbolType } from "./symbol-type";
 
-export interface ISymbol {
+export interface ElanSymbol {
     symbolId: string;
-    symbolType(transforms : Transforms): ISymbolType;
+    symbolType(transforms : Transforms): SymbolType;
     symbolScope : SymbolScope;
 }

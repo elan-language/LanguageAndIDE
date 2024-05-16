@@ -1,9 +1,9 @@
-import { ISymbolType } from "./symbol-type";
+import { SymbolType } from "./symbol-type";
 import { CompileError } from "../compile-error";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export interface AstNode {
-    symbolType():  ISymbolType;
+    symbolType():  SymbolType;
 
     symbolScope: SymbolScope;
 

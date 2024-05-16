@@ -1,6 +1,6 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class ClassType implements ISymbolType {
+export class ClassType implements SymbolType {
 
     constructor(public className: string) {
 

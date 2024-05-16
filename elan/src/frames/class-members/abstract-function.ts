@@ -1,5 +1,5 @@
 import { FunctionType } from "../symbols/function-type";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
@@ -14,7 +14,7 @@ import { Parent } from "../interfaces/parent";
 import { abstractFunctionKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractFunction extends AbstractFrame implements Member, ISymbol {
+export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
     isAbstract = true;
     isMember: boolean = true;
     public name : IdentifierField;

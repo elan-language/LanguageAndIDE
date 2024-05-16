@@ -7,7 +7,7 @@ import { CodeSource } from "../code-source";
 import { TypeNameField } from "../fields/type-name-field";
 import { enumKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { EnumValueType } from "../symbols/enum-value-type";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -70,7 +70,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
         source.remove("end enum");
     }
 
-    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string, transforms : Transforms, initialScope: Frame): ElanSymbol {
         const names = this.values.renderAsSource().split(",").map(s => s.trim());
 
         for (var n of names) {

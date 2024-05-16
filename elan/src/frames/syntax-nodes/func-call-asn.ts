@@ -4,7 +4,7 @@ import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IterType } from "../symbols/iter-type";
 import { ListType } from "../symbols/list-type";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustBePureFunctionSymbol, mustCallExtensionViaQualifier, mustMatchParameters } from "../compile-rules";
@@ -65,7 +65,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         return `${q}${this.id}(${pp})`;
     }
 
-    flatten(p: ISymbolType): ISymbolType[] {
+    flatten(p: SymbolType): SymbolType[] {
         if (p instanceof ArrayType || p instanceof ListType || p instanceof IterType) {
             return this.flatten(p.ofType);
         }
@@ -77,7 +77,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         return [p];
     }
 
-    containsGenericType(type: ISymbolType): boolean {
+    containsGenericType(type: SymbolType): boolean {
         if (type instanceof GenericParameterType) {
             return true;
         }
@@ -91,7 +91,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         return false;
     }
 
-    generateType(type: ISymbolType, matches: Map<string, ISymbolType>): ISymbolType {
+    generateType(type: SymbolType, matches: Map<string, SymbolType>): SymbolType {
         if (type instanceof GenericParameterType) {
             return matches.get(type.id) ?? UnknownType.Instance;
         }
@@ -112,7 +112,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     }
 
     matchGenericTypes(type : FunctionType, parameters : AstNode[]) {
-        const matches = new Map<string, ISymbolType>();
+        const matches = new Map<string, SymbolType>();
 
         const flattened = type.parametersTypes.map(n => this.flatten(n));
         var parameters = this.parameters;

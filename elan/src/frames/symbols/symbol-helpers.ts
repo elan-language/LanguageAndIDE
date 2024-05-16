@@ -1,6 +1,6 @@
 import { BooleanType } from "./boolean-type";
 import { FloatType } from "./number-type";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -15,7 +15,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 
-export function isSymbol(s?: Parent | Frame | ISymbol): s is ISymbol {
+export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
 }
 export function rawSymbolToType(s: string) {

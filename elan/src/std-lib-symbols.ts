@@ -5,8 +5,8 @@ import { FloatType } from "./frames/symbols/number-type";
 import { IntType } from "./frames/symbols/int-type";
 import { ListType } from "./frames/symbols/list-type";
 import { StringType } from "./frames/symbols/string-type";
-import { ISymbol } from "./frames/interfaces/symbol";
-import { ISymbolType } from "./frames/interfaces/symbol-type";
+import { ElanSymbol } from "./frames/interfaces/symbol";
+import { SymbolType } from "./frames/interfaces/symbol-type";
 import { Scope } from "./frames/interfaces/scope";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
@@ -19,7 +19,7 @@ import { SymbolScope } from "./frames/symbols/symbol-scope";
 
 export class StdLibSymbols implements Scope {
 
-    private getSymbol(id: string, st: ISymbolType) : ISymbol {
+    private getSymbol(id: string, st: SymbolType) : ElanSymbol {
         return {
             symbolId: id,
             symbolType: () => st,
@@ -29,7 +29,7 @@ export class StdLibSymbols implements Scope {
 
 
     // todo - we need to load this from a .d.ts file also work out how to do generics
-    private symbols = new Map<string, ISymbol>(
+    private symbols = new Map<string, ElanSymbol>(
         [
             ["asString", this.getSymbol("asString", new FunctionType([new GenericParameterType("T")], StringType.Instance, true))],
             ["asArray", this.getSymbol("asArray", new FunctionType([new IterType(new GenericParameterType("T"))], new ArrayType(new GenericParameterType("T"), false), true))],
@@ -63,7 +63,7 @@ export class StdLibSymbols implements Scope {
         ]
     );
 
-    resolveSymbol(id: string | undefined, transforms : Transforms, scope: Scope): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms, scope: Scope): ElanSymbol {
         return id ? this.symbols.get(id) ?? UnknownSymbol.Instance : UnknownSymbol.Instance;
     }
 }

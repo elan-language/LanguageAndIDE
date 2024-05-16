@@ -1,5 +1,5 @@
-import { ISymbolType } from "./symbol-type";
+import { SymbolType } from "./symbol-type";
 
-export interface GenericSymbolType extends ISymbolType {
-    ofType : ISymbolType; 
+export interface GenericSymbolType extends SymbolType {
+    ofType : SymbolType; 
 }

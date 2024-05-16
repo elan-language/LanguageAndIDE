@@ -5,14 +5,14 @@ import { CodeSource } from "../code-source";
 import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
 import { mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
+export class VarStatement extends AbstractFrame implements Statement, ElanSymbol  {
     isStatement = true;
     name: VarDefField;
     expr: ExpressionField;
@@ -68,7 +68,7 @@ export class VarStatement extends AbstractFrame implements Statement, ISymbol  {
 
     symbolScope = SymbolScope.local;
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         if (id === this.symbolId) {
             return this;
         }

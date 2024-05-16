@@ -4,14 +4,14 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
 import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export class LetStatement extends AbstractFrame implements Statement, ISymbol {
+export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
     isStatement = true;
     name: VarDefField;
     expr: ExpressionField;

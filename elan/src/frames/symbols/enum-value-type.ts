@@ -1,6 +1,6 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class EnumValueType implements ISymbolType {
+export class EnumValueType implements SymbolType {
 
     constructor(public readonly owner: string, public readonly name: string) {
 

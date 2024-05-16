@@ -1,9 +1,9 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
 export class GenericClassType implements GenericSymbolType {
 
-    constructor(private className: string, public ofType: ISymbolType) {
+    constructor(private className: string, public ofType: SymbolType) {
 
     }
 

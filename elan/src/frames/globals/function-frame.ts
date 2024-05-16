@@ -10,14 +10,14 @@ import { CodeSource } from "../code-source";
 import { File } from "../interfaces/file";
 import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
 import { FunctionType } from "../symbols/function-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export abstract class FunctionFrame extends FrameWithStatements implements Parent, ISymbol {
+export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
     public name: IdentifierField;
     public params: ParamList;
     public returnType: TypeField;
@@ -94,9 +94,9 @@ ${this.renderChildrenAsHtml()}
         return this.getChildren().filter(s => ('isReturnStatement' in s))[0] as ReturnStatement;
     }
     
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         if (this.name.text === id) {
-            return this as ISymbol;
+            return this as ElanSymbol;
         }
         
         const s = this.params.resolveSymbol(id, transforms, initialScope);

@@ -3,7 +3,7 @@ import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { ListType } from "../symbols/list-type";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
@@ -58,7 +58,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         return "";
     }
 
-    wrapListOrArray(rootType: ISymbolType, code: string): string {
+    wrapListOrArray(rootType: SymbolType, code: string): string {
         if (rootType instanceof ListType) {
             return `system.list(${code})`;
         }

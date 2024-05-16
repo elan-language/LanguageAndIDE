@@ -1,9 +1,9 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
 export class ArrayType implements GenericSymbolType {
 
-    constructor(public readonly ofType: ISymbolType, public readonly is2d : boolean) {
+    constructor(public readonly ofType: SymbolType, public readonly is2d : boolean) {
 
     }
 

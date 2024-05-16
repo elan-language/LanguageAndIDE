@@ -1,9 +1,9 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class IntType implements ISymbolType {
+export class IntType implements SymbolType {
     private constructor() { }
 
-    static Instance: ISymbolType = new IntType();
+    static Instance: SymbolType = new IntType();
 
     name = "Int";
 }

@@ -1,4 +1,4 @@
-import { ISymbol } from "./interfaces/symbol";
+import { ElanSymbol } from "./interfaces/symbol";
 import { isSymbol } from "./symbols/symbol-helpers";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
@@ -173,7 +173,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         return result;
     }
 
-    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ElanSymbol {
         var fst = this.getFirstChild();
         var range = this.getChildRange(fst, initialScope);
         if (range.length > 1) {

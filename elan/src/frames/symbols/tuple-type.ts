@@ -1,8 +1,8 @@
-import { ISymbolType } from "../interfaces/symbol-type";
+import { SymbolType } from "../interfaces/symbol-type";
 
-export class TupleType implements ISymbolType {
+export class TupleType implements SymbolType {
 
-    constructor(public readonly ofTypes: ISymbolType[]) {
+    constructor(public readonly ofTypes: SymbolType[]) {
 
     }
 

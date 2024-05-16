@@ -4,14 +4,14 @@ import { File} from "../interfaces/file";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { ConstantValueField } from "../fields/constant-value-field";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { constantKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
+export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame {
     isGlobal = true;
     name: IdentifierField;
     literal: ConstantValueField;
@@ -69,7 +69,7 @@ export class Constant extends AbstractFrame implements ISymbol, GlobalFrame {
 
     symbolScope = SymbolScope.program;
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         if (id === this.symbolId) {
             return this;
         }

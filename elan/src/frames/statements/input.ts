@@ -6,12 +6,12 @@ import { Statement } from "../interfaces/statement";
 import { IdentifierField } from "../fields/identifier-field";
 import { inputKeyword } from "../keywords";
 import { Frame } from "../interfaces/frame";
-import { ISymbol } from "../interfaces/symbol";
+import { ElanSymbol } from "../interfaces/symbol";
 import { StringType } from "../symbols/string-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export class Input extends AbstractFrame implements Statement, ISymbol {
+export class Input extends AbstractFrame implements Statement, ElanSymbol {
     isStatement = true;  
     varName: IdentifierField;
 
@@ -59,7 +59,7 @@ export class Input extends AbstractFrame implements Statement, ISymbol {
 
     symbolScope = SymbolScope.local;
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ISymbol {
+    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
         if (id === this.symbolId) {
             return this;
         }
