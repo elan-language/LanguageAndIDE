@@ -1,10 +1,12 @@
 import { FileImpl } from "../file-impl";
-import { GlobalFunction } from "../globals/global-function";
+import { FunctionFrame } from "../globals/function-frame";
+import { isFrame } from "../helpers";
+import { Scope } from "../interfaces/scope";
 import { transform, transformMany } from "./ast-visitor";
 import { Transforms } from "./transforms";
 
-export function InFunctionScope(start: any): boolean {
-    if (start instanceof  GlobalFunction) {
+export function InFunctionScope(start: Scope): boolean {
+    if (start instanceof FunctionFrame) {
         return true;
     }
 
@@ -12,15 +14,16 @@ export function InFunctionScope(start: any): boolean {
         return false;
     }
 
-    if ('getParent' in start) {
+    if (isFrame(start)) {
         return InFunctionScope(start.getParent());
     }
+
     return false;
 }
 
-export function transforms() : Transforms {
+export function transforms(): Transforms {
     return {
-        transform : transform,
-        transformMany : transformMany
+        transform: transform,
+        transformMany: transformMany
     };
 }
