@@ -32,7 +32,6 @@ import { CompileStatus, ParseStatus } from "../status-enums";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstCollectionNode } from "../syntax-nodes/ast-collection-node";
-import { AstNode } from "../syntax-nodes/ast-node";
 import { AstIdNode } from "../syntax-nodes/ast-id-node";
 
 export class Class extends AbstractFrame implements Parent, Collapsible, ISymbol, Scope {

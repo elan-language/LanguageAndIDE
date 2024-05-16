@@ -57,13 +57,6 @@ export class CallStatement extends AbstractFrame implements Statement {
         return `${this.indent()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
     }
 
-    getGlobalScope(start: Frame | Parent): Scope {
-        if (start instanceof FileImpl) {
-            return start;
-        }
-        return this.getGlobalScope(start.getParent());
-    }
-
     compile(transforms: Transforms): string {
         this.compileErrors = [];
 

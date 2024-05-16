@@ -37,13 +37,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         return this.compileErrors.concat(cc);
     }
 
-    getGlobalScope(start: any): Scope {
-        if (start.constructor.name === "FileImpl") {
-            return start;
-        }
-        return this.getGlobalScope(start.getParent());
-    }
-
     compile(): string {
         this.compileErrors = [];
 
