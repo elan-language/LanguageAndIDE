@@ -101,6 +101,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getNextFrameInTabOrder(): Frame {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         let result: Frame = this;
         if (this.getNextPeerFrame() !== this) {
             result = this.getNextPeerFrame();
@@ -117,6 +118,7 @@ export abstract class AbstractFrame implements Frame {
     }
 
     getPreviousFrameInTabOrder(): Frame {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         let result: Frame = this;
         if (this.getPreviousPeerFrame() !== this) {
             result = this.getPreviousPeerFrame();
