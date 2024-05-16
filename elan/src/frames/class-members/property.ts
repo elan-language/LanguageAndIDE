@@ -12,89 +12,89 @@ import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
-    isMember = true;
-    name: IdentifierField;
-    type: TypeField;
-    public private: boolean = false;
-    private class: ClassFrame;
+  isMember = true;
+  name: IdentifierField;
+  type: TypeField;
+  public private: boolean = false;
+  private class: ClassFrame;
 
-    constructor(parent: ClassFrame) {
-        super(parent);
-        this.class = parent as ClassFrame;
-        this.name = new IdentifierField(this);
-        this.type = new TypeField(this);
-    }
-    initialKeywords(): string {
-        return propertyKeyword;
-    }
-    getFields(): Field[] {
-        return [this.name, this.type];
-    }
+  constructor(parent: ClassFrame) {
+    super(parent);
+    this.class = parent as ClassFrame;
+    this.name = new IdentifierField(this);
+    this.type = new TypeField(this);
+  }
+  initialKeywords(): string {
+    return propertyKeyword;
+  }
+  getFields(): Field[] {
+    return [this.name, this.type];
+  }
 
-    getIdPrefix(): string {
-        return 'prop';
-    }
-    private modifierAsHtml(): string {
-        return this.private ? `<keyword>private </keyword>` : "";
-    }
-    private modifierAsSource(): string {
-        return this.private ? `private ` : "";
-    }
+  getIdPrefix(): string {
+    return "prop";
+  }
+  private modifierAsHtml(): string {
+    return this.private ? `<keyword>private </keyword>` : "";
+  }
+  private modifierAsSource(): string {
+    return this.private ? `private ` : "";
+  }
 
-    private modifierAsObjectCode(): string {
-        return this.private ? `#` : "";
-    }
+  private modifierAsObjectCode(): string {
+    return this.private ? `#` : "";
+  }
 
-    renderAsHtml(): string {
-        return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}</property>`;
-    }
+  renderAsHtml(): string {
+    return `<property class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.modifierAsHtml()}<keyword>${propertyKeyword} </keyword>${this.name.renderAsHtml()}<keyword> ${asKeyword} </keyword>${this.type.renderAsHtml()}${this.compileMsgAsHtml()}</property>`;
+  }
 
-    renderAsSource(): string {
-        return `${this.indent()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
-    }
+  renderAsSource(): string {
+    return `${this.indent()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+  }
 
-    compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        const pName = this.name.compile(transforms);
-        const mod = this.modifierAsObjectCode();
-        if (this.type.symbolType(transforms) instanceof ClassType) {
-            return `${this.indent()}_${pName};\r
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const pName = this.name.compile(transforms);
+    const mod = this.modifierAsObjectCode();
+    if (this.type.symbolType(transforms) instanceof ClassType) {
+      return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
 ${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
 ${this.indent()}}\r
 ${this.indent()}${mod}set ${pName}(${pName}) {\r
 ${this.indent()}${this.indent()}this._${pName} = ${pName};\r
 ${this.indent()}}\r\n`;
-        }
-
-        return `${this.indent()}${mod}${pName} = ${this.type.compile(transforms)};\r\n`;
     }
 
-    parseFrom(source: CodeSource): void {
-        const priv = `${privateKeyword} `;
-        if (source.isMatch(priv)) {
-            source.remove(priv);
-            this.private = true;
-        }
-        source.remove(`${propertyKeyword} `);
-        this.name.parseFrom(source);
-        source.remove(` ${asKeyword} `);
-        this.type.parseFrom(source);
-    }
+    return `${this.indent()}${mod}${pName} = ${this.type.compile(transforms)};\r\n`;
+  }
 
-    get symbolId() {
-        return this.name.renderAsSource();
+  parseFrom(source: CodeSource): void {
+    const priv = `${privateKeyword} `;
+    if (source.isMatch(priv)) {
+      source.remove(priv);
+      this.private = true;
     }
+    source.remove(`${propertyKeyword} `);
+    this.name.parseFrom(source);
+    source.remove(` ${asKeyword} `);
+    this.type.parseFrom(source);
+  }
 
-    symbolType(transforms : Transforms) {
-        return this.type.symbolType(transforms);
-    }
+  get symbolId() {
+    return this.name.renderAsSource();
+  }
 
-    get symbolScope(): SymbolScope {
-        return SymbolScope.property;
-    }
+  symbolType(transforms: Transforms) {
+    return this.type.symbolType(transforms);
+  }
 
-    public initCode() {
-        return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
-    }
-} 
+  get symbolScope(): SymbolScope {
+    return SymbolScope.property;
+  }
+
+  public initCode() {
+    return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
+  }
+}

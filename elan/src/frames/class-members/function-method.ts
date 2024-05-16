@@ -10,44 +10,48 @@ import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class FunctionMethod extends FunctionFrame implements Member {
-    isMember: boolean = true;
-    private class: ClassFrame;
+  isMember: boolean = true;
+  private class: ClassFrame;
 
-    constructor(parent: ClassFrame) {
-        super(parent);
-        this.class = parent as ClassFrame;
-    }
-    public override indent(): string {
-        return singleIndent();
-    }
-    public override renderAsSource(): string {
-        return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
+  constructor(parent: ClassFrame) {
+    super(parent);
+    this.class = parent as ClassFrame;
+  }
+  public override indent(): string {
+    return singleIndent();
+  }
+  public override renderAsSource(): string {
+    return `${this.indent()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
-    }
-    public override compile(transforms : Transforms): string {
-        this.compileErrors = [];
-        return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+  }
+  public override compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}\r
 `;
-    }
-    parseTop(source: CodeSource): void {
-        source.removeIndent();
-        super.parseTop(source);
-    }
-    parseBottom(source: CodeSource): boolean {
-        return super.parseBottom(source);
+  }
+  parseTop(source: CodeSource): void {
+    source.removeIndent();
+    super.parseTop(source);
+  }
+  parseBottom(source: CodeSource): boolean {
+    return super.parseBottom(source);
+  }
+
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    initialScope: Frame,
+  ): ElanSymbol {
+    if (this.name.text === id) {
+      return this as ElanSymbol;
     }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
-        if (this.name.text === id) {
-            return this as ElanSymbol;
-        }
+    return super.resolveSymbol(id, transforms, initialScope);
+  }
 
-        return super.resolveSymbol(id, transforms, initialScope);
-    }
-
-    symbolScope = SymbolScope.property;
+  symbolScope = SymbolScope.property;
 }

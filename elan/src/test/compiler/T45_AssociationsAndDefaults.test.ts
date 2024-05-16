@@ -1,11 +1,20 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T45_AssociationsAndDefaults', () => {
-
-  test('Pass_CanHavePropertiesThatAreDataStructuresOrObjects', async () => {
+suite("T45_AssociationsAndDefaults", () => {
+  test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -101,7 +110,12 @@ class Player {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -110,7 +124,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ChloeJoeList [5, 2, 4]");
   });
 
-  test('Pass_PropertiesOfAllStandardTypesHaveDefaultValues', async () => {
+  test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -181,16 +195,24 @@ class Game {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00falseempty Listempty Dictionaryempty Array");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "00falseempty Listempty Dictionaryempty Array",
+    );
   });
 
-  test('Pass_DefaultValuesNotPickedUpFromDefaultConstructor', async () => {
+  test("Pass_DefaultValuesNotPickedUpFromDefaultConstructor", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -232,7 +254,12 @@ class Game {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -241,7 +268,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test('Pass_PropertiesOfClassTypesHaveDefaultValues', async () => {
+  test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -326,7 +353,12 @@ class Player {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -335,7 +367,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A game");
   });
 
-  test('Pass_defaultKeywordToTestValue', async () => {
+  test("Pass_defaultKeywordToTestValue", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -450,7 +482,12 @@ class Player {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -459,7 +496,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
   });
 
-  ignore_test('Pass_defaultValueCanBeAssigned', async () => {
+  ignore_test("Pass_defaultValueCanBeAssigned", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -512,7 +549,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -521,7 +563,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
   });
 
-  test('Pass_defaultForStandardDataStructures', async () => {
+  test("Pass_defaultForStandardDataStructures", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -585,16 +627,24 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "empty Listempty Dictionaryempty Arraytruetruetruetrue",
+    );
   });
 
-  test('Pass_PropertyOfAbstractType', async () => {
+  test("Pass_PropertyOfAbstractType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -674,7 +724,12 @@ class Player {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -683,7 +738,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test('Pass_defaultCannotBeReplacedUsingWith', async () => {
+  ignore_test("Pass_defaultCannotBeReplacedUsingWith", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -715,15 +770,20 @@ end class`;
 
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty Listempty Dictionaryempty Arraytruetruetruetrue");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "empty Listempty Dictionaryempty Arraytruetruetruetrue",
+    );
   });
-
-  
-
 });

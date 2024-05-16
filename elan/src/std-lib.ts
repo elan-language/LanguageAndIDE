@@ -1,191 +1,187 @@
-
 interface hasHiddenType {
-    _type : "List" | "Array" | "Tuple" | "Iter";
+  _type: "List" | "Array" | "Tuple" | "Iter";
 }
 
 export class StdLib {
-   
-    asString<T>(v: T | T[] | undefined): string {
-        if (v === undefined || v === null) {
-            throw new Error(`Out of range error`);
-        }
-
-        if (typeof v === "boolean") {
-            return v ? "true" : "false";
-        }
-
-        if (typeof v === "string") {
-            return v.toString();
-        }
-
-        if (typeof v === "number") {
-            return v.toString();
-        }
-
-        if (Array.isArray(v)) {
-            const type = (v as unknown as hasHiddenType)._type;
-
-            switch (type) {
-                case 'List':
-                    if (v.length === 0) {
-                        return "empty List";
-                    }
-                    return `List [${v.map(i => this.asString(i)).join(", ")}]`;
-                case 'Tuple':
-                    return `Tuple (${v.map(i => this.asString(i)).join(", ")})`;
-                case 'Array':
-                    if (v.length === 0) {
-                        return "empty Array";
-                    }
-                    return `Array [${v.map(i => this.asString(i)).join(", ")}]`;
-                case 'Iter':
-                    if (v.length === 0) {
-                        return "empty Iter";
-                    }
-                    return `Iter [${v.map(i => this.asString(i)).join(", ")}]`;
-                default:
-                    throw new Error("_type not set"); 
-            }
-        }
-
-        if (typeof v === "object" && "asString" in v) {
-            return (v.asString as () => string)();
-        }
-
-        if (typeof v === "object" && v.constructor.name === "Object") {
-            const items = Object.getOwnPropertyNames(v);
-            if (items.length === 0) {
-                return "empty Dictionary";
-            }
-
-            const o = v as { [key: string]: object };
-
-            return `Dictionary [${items.map(n => `${n}:${o[n]}`).join(", ")}]`;
-        }
-
-        if (typeof v === "object") {
-            return `a ${v.constructor.name}`;
-        }
-
-        throw new Error("Not implemented: " + typeof v);
+  asString<T>(v: T | T[] | undefined): string {
+    if (v === undefined || v === null) {
+      throw new Error(`Out of range error`);
     }
 
-    asArray<T>(list: T[]): T[] {
-        const arr = [...list];
-        (arr as unknown as hasHiddenType)._type = 'Array';
-        return arr;
+    if (typeof v === "boolean") {
+      return v ? "true" : "false";
     }
 
-    asList<T>(arr: T[]): T[] {
-        const list = [...arr];
-        (list as unknown as hasHiddenType)._type = 'List';
-        return list;
+    if (typeof v === "string") {
+      return v.toString();
     }
 
-    keys<T>(dict: { [key: string]: T }): string[] {
-        const lst = Object.getOwnPropertyNames(dict);
-        (lst as unknown as hasHiddenType)._type = 'List';
-        return lst;
+    if (typeof v === "number") {
+      return v.toString();
     }
 
-    values<T>(dict: { [key: string]: T }): T[] {
-        const lst =  this.keys(dict).map(k => dict[k]);
-        (lst as unknown as hasHiddenType)._type = 'List';
-        return lst;
+    if (Array.isArray(v)) {
+      const type = (v as unknown as hasHiddenType)._type;
+
+      switch (type) {
+        case "List":
+          if (v.length === 0) {
+            return "empty List";
+          }
+          return `List [${v.map((i) => this.asString(i)).join(", ")}]`;
+        case "Tuple":
+          return `Tuple (${v.map((i) => this.asString(i)).join(", ")})`;
+        case "Array":
+          if (v.length === 0) {
+            return "empty Array";
+          }
+          return `Array [${v.map((i) => this.asString(i)).join(", ")}]`;
+        case "Iter":
+          if (v.length === 0) {
+            return "empty Iter";
+          }
+          return `Iter [${v.map((i) => this.asString(i)).join(", ")}]`;
+        default:
+          throw new Error("_type not set");
+      }
     }
 
-    hasKey<T>(dict: { [key: string]: T }, key: string): boolean {
-        return this.keys(dict).includes(key);
+    if (typeof v === "object" && "asString" in v) {
+      return (v.asString as () => string)();
     }
 
-    setItem<T>(dict: { [key: string]: T }, key: string, value : T){
-        const newDict = {...dict};
-        newDict[key] = value;
-        return newDict;
+    if (typeof v === "object" && v.constructor.name === "Object") {
+      const items = Object.getOwnPropertyNames(v);
+      if (items.length === 0) {
+        return "empty Dictionary";
+      }
+
+      const o = v as { [key: string]: object };
+
+      return `Dictionary [${items.map((n) => `${n}:${o[n]}`).join(", ")}]`;
     }
 
-    removeItem<T>(dict: { [key: string]: T }, key: string){
-        const newDict = {...dict};
-        delete newDict[key];
-        return newDict;
+    if (typeof v === "object") {
+      return `a ${v.constructor.name}`;
     }
 
-    length<T>(coll : string | T[] | { [key: string]: T }){
-        if (typeof coll === "string") {
-            return coll.length;
-        }
-        if (Array.isArray(coll)) {
-            return coll.length;
-        }
-        return this.keys(coll).length;
+    throw new Error("Not implemented: " + typeof v);
+  }
+
+  asArray<T>(list: T[]): T[] {
+    const arr = [...list];
+    (arr as unknown as hasHiddenType)._type = "Array";
+    return arr;
+  }
+
+  asList<T>(arr: T[]): T[] {
+    const list = [...arr];
+    (list as unknown as hasHiddenType)._type = "List";
+    return list;
+  }
+
+  keys<T>(dict: { [key: string]: T }): string[] {
+    const lst = Object.getOwnPropertyNames(dict);
+    (lst as unknown as hasHiddenType)._type = "List";
+    return lst;
+  }
+
+  values<T>(dict: { [key: string]: T }): T[] {
+    const lst = this.keys(dict).map((k) => dict[k]);
+    (lst as unknown as hasHiddenType)._type = "List";
+    return lst;
+  }
+
+  hasKey<T>(dict: { [key: string]: T }, key: string): boolean {
+    return this.keys(dict).includes(key);
+  }
+
+  setItem<T>(dict: { [key: string]: T }, key: string, value: T) {
+    const newDict = { ...dict };
+    newDict[key] = value;
+    return newDict;
+  }
+
+  removeItem<T>(dict: { [key: string]: T }, key: string) {
+    const newDict = { ...dict };
+    delete newDict[key];
+    return newDict;
+  }
+
+  length<T>(coll: string | T[] | { [key: string]: T }) {
+    if (typeof coll === "string") {
+      return coll.length;
     }
-
-    isBefore(s1 : string, s2 : string){
-        return s1 < s2;
+    if (Array.isArray(coll)) {
+      return coll.length;
     }
+    return this.keys(coll).length;
+  }
 
-    isAfter(s1 : string, s2 : string){
-        return s1 > s2;
-    }
+  isBefore(s1: string, s2: string) {
+    return s1 < s2;
+  }
 
-    isAfterOrSameAs(s1 : string, s2 : string){
-        return s1 > s2 || s1 === s2;
-    }
+  isAfter(s1: string, s2: string) {
+    return s1 > s2;
+  }
 
-    isBeforeOrSameAs(s1 : string, s2 : string){
-        return s1 < s2 || s1 === s2;
-    }
+  isAfterOrSameAs(s1: string, s2: string) {
+    return s1 > s2 || s1 === s2;
+  }
 
-    first<T>(st : Array<T>){
-        return st[0];
-    }
+  isBeforeOrSameAs(s1: string, s2: string) {
+    return s1 < s2 || s1 === s2;
+  }
 
-    second<T>(st : Array<T>){
-        return st[1];
-    }
+  first<T>(st: Array<T>) {
+    return st[0];
+  }
 
-    indexOf(s1 : string, s2 : string){
-        return s1.indexOf(s2);
-    }
+  second<T>(st: Array<T>) {
+    return st[1];
+  }
 
-    floor(n: number) {
-        return Math.floor(n);
-    }
-    ceiling(n: number) {
-        const fl = this.floor(n);
-        return n > fl ? fl + 1 : fl;
-    }
-    toPrecision(n: number, digits: number) {
-        return n.toPrecision(digits);
-    }
-   
-    pi = Math.PI;
+  indexOf(s1: string, s2: string) {
+    return s1.indexOf(s2);
+  }
 
-    sin = Math.sin;
+  floor(n: number) {
+    return Math.floor(n);
+  }
+  ceiling(n: number) {
+    const fl = this.floor(n);
+    return n > fl ? fl + 1 : fl;
+  }
+  toPrecision(n: number, digits: number) {
+    return n.toPrecision(digits);
+  }
 
-    cos = Math.cos;
+  pi = Math.PI;
 
-    min = Math.min;
+  sin = Math.sin;
 
-    sqrt = Math.sqrt;
+  cos = Math.cos;
 
-    newline = "\n";
+  min = Math.min;
 
-    typeAndProperties(o: { [key: string]: object }) {
-        const type = o.constructor.name;
-        const items = Object.getOwnPropertyNames(o);
-        return `${type} [${items.map(n => `"${n}":${o[n]}`).join(", ")}]`;
-    }
+  sqrt = Math.sqrt;
 
-    async pause(period: number) {
-        
-    }
+  newline = "\n";
 
-    readKey() {
-        return 0;
-    }
+  typeAndProperties(o: { [key: string]: object }) {
+    const type = o.constructor.name;
+    const items = Object.getOwnPropertyNames(o);
+    return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
+  }
 
-    random(f: number, l: number) {
-        return 0;
-    }
+  async pause(period: number) {}
+
+  readKey() {
+    return 0;
+  }
+
+  random(f: number, l: number) {
+    return 0;
+  }
 }

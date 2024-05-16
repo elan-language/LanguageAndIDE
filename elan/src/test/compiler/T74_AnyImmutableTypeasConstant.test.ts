@@ -1,11 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T74_AnyImmutableTypeAsConstant', () => {
-
-  test('Pass_String', async () => {
+suite("T74_AnyImmutableTypeAsConstant", () => {
+  test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant k set to "Apple"
@@ -22,7 +30,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -31,7 +44,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test('Pass_Tuple', async () => {
+  test("Pass_Tuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant k set to (3, "Apple")
@@ -48,7 +61,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -57,7 +75,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (3, Apple)");
   });
 
-  test('Pass_List', async () => {
+  test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant k set to [1, 2, 3]
@@ -74,7 +92,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -83,7 +106,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
   });
 
-  test('Pass_Dictionary', async () => {
+  test("Pass_Dictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant k set to ["a":1, "b":3, "c":3]
@@ -100,7 +123,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -109,8 +137,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, c:3]");
   });
 
-  // no longer supported ? 
-  ignore_test('Pass_ImmutableClass', async () => {
+  // no longer supported ?
+  ignore_test("Pass_ImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant k set to 0
@@ -152,7 +180,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -161,9 +194,5 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, c:3]");
   });
 
- 
-  
-
   // Fails TODO
-
 });

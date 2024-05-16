@@ -1,11 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('Pass_CanUseVariables', () => {
-
-  test('Pass_String', async () => {
+suite("Pass_CanUseVariables", () => {
+  test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -24,7 +32,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -33,9 +46,5 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1 Apple List [1, 2, 3]");
   });
 
- 
-  
-
   // Fails TODO
-
 });

@@ -1,3 +1,3 @@
 export interface Statement {
-    isStatement : boolean;
+  isStatement: boolean;
 }

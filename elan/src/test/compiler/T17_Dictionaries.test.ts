@@ -1,11 +1,21 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T17_Dictionaries', () => {
-
-  test('Pass_LiteralConstantAndPrinting', async () => {
+suite("T17_Dictionaries", () => {
+  test("Pass_LiteralConstantAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -21,7 +31,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -30,7 +45,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
-  test('Pass_AccessByKey', async () => {
+  test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -46,7 +61,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -55,7 +75,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test('Pass_keys', async () => {
+  test("Pass_keys", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -71,7 +91,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -80,7 +105,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "List [a, b, z]");
   });
 
-  test('Pass_hasKey', async () => {
+  test("Pass_hasKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -98,7 +123,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -107,7 +137,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  test('Pass_values', async () => {
+  test("Pass_values", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -123,7 +153,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -132,7 +167,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "List [1, 3, 10]");
   });
 
-  test('Pass_set', async () => {
+  test("Pass_set", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -154,16 +189,24 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]Dictionary [a:1, b:4, z:10, d:2]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:1, b:3, z:10]Dictionary [a:1, b:4, z:10, d:2]",
+    );
   });
 
-  test('Pass_removeEntry', async () => {
+  test("Pass_removeEntry", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -183,16 +226,24 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]Dictionary [a:1, z:10]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:1, b:3, z:10]Dictionary [a:1, z:10]",
+    );
   });
 
-  test('Pass_removeInvalidKey', async () => {
+  test("Pass_removeInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -210,7 +261,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -219,7 +275,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
-  test('Pass_CreateEmptyDictionary', async () => {
+  test("Pass_CreateEmptyDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -244,7 +300,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -253,7 +314,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test('Fail_RepeatedKey', async () => {
+  test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "a":10]
@@ -262,14 +323,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s)"]);
   });
 
-  test('Fail_InconsistentTypes1', async () => {
+  test("Fail_InconsistentTypes1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3.1, "c":10]
@@ -278,14 +344,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  test('Fail_InconsistentTypes2', async () => {
+  test("Fail_InconsistentTypes2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, 10:10]
@@ -294,14 +365,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test('Fail_AccessByInvalidKey', async () => {
+  test("Fail_AccessByInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -310,14 +386,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test('Fail_RemoveInvalidKeyType', async () => {
+  test("Fail_RemoveInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -326,14 +407,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
   });
 
-  test('Fail_SetInvalidKeyType', async () => {
+  test("Fail_SetInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -342,14 +428,19 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
   });
 
-  ignore_test('Fail_SetInvalidValueType', async () => {
+  ignore_test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -358,7 +449,12 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

@@ -7,38 +7,45 @@ import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly op: OperationSymbol,
+    private readonly operand: ExprAsn,
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly op: OperationSymbol, private readonly operand: ExprAsn, public readonly fieldId: string, scope: Scope) {
-        super();
+  compileErrors: CompileError[] = [];
+
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors.concat(this.operand.aggregateCompileErrors());
+  }
+
+  private opToJs() {
+    switch (this.op) {
+      case OperationSymbol.Not:
+        return "!";
+      case OperationSymbol.Minus:
+        return "-";
     }
+  }
 
-    compileErrors: CompileError[] = [];
+  compile(): string {
+    this.compileErrors = [];
+    return `${this.opToJs()}${this.operand.compile()}`;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors
-            .concat(this.operand.aggregateCompileErrors());
+  symbolType() {
+    switch (this.op) {
+      case OperationSymbol.Not:
+        return BooleanType.Instance;
+      default:
+        return this.operand.symbolType();
     }
+  }
 
-    private opToJs() {
-        switch (this.op) {
-            case OperationSymbol.Not: return "!";
-            case OperationSymbol.Minus: return "-";
-        }
-    }
-
-    compile(): string {
-        this.compileErrors = [];
-        return `${this.opToJs()}${this.operand.compile()}`;
-    }
-
-    symbolType() {
-        switch (this.op) {
-            case OperationSymbol.Not: return BooleanType.Instance;
-            default: return this.operand.symbolType();
-        }
-    }
-
-    toString() {
-        return `${OperationSymbol[this.op]} (${this.operand})`;
-    }
+  toString() {
+    return `${OperationSymbol[this.op]} (${this.operand})`;
+  }
 }

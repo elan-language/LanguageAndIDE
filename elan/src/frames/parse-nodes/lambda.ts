@@ -10,32 +10,32 @@ import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
 export class Lambda extends AbstractSequence {
-    params: CSV | undefined;
-    expr: ExprNode | undefined;
+  params: CSV | undefined;
+  expr: ExprNode | undefined;
 
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    parseText(text: string): void {
-        if (text.length > 0) {
-            this.addElement(new KeywordNode(lambdaKeyword));
-            this.params = new CSV(() => new ParamDefNode(), 1);
-            this.addElement(this.params);
-            this.addElement(new SpaceNode(Space.required));
-            this.addElement(new SymbolNode(ARROW));
-            this.addElement(new SpaceNode(Space.required));
-            this.expr = new ExprNode();
-            this.addElement(this.expr);
-            super.parseText(text);
-        }
+  parseText(text: string): void {
+    if (text.length > 0) {
+      this.addElement(new KeywordNode(lambdaKeyword));
+      this.params = new CSV(() => new ParamDefNode(), 1);
+      this.addElement(this.params);
+      this.addElement(new SpaceNode(Space.required));
+      this.addElement(new SymbolNode(ARROW));
+      this.addElement(new SpaceNode(Space.required));
+      this.expr = new ExprNode();
+      this.addElement(this.expr);
+      super.parseText(text);
     }
+  }
 
-    renderAsHtml(): string {
-        return `<keyword>${lambdaKeyword} </keyword>${this.params!.renderAsHtml()}<keyword> ${ARROW} </keyword>${this.expr!.renderAsHtml()}`;
-    }
+  renderAsHtml(): string {
+    return `<keyword>${lambdaKeyword} </keyword>${this.params!.renderAsHtml()}<keyword> ${ARROW} </keyword>${this.expr!.renderAsHtml()}`;
+  }
 
-    renderAsSource(): string {
-        return `${lambdaKeyword} ${this.params!.renderAsSource()} ${ARROW} ${this.expr!.renderAsSource()}`;
-    }
+  renderAsSource(): string {
+    return `${lambdaKeyword} ${this.params!.renderAsSource()} ${ARROW} ${this.expr!.renderAsSource()}`;
+  }
 }

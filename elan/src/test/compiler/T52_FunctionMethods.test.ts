@@ -1,11 +1,21 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T52_FunctionMethods', () => {
-
-  test('Pass_HappyCase', async () => {
+suite("T52_FunctionMethods", () => {
+  test("Pass_HappyCase", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -55,7 +65,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -64,7 +79,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test('Pass_FunctionMethodMayCallOtherClassFunctionViaProperty', async () => {
+  test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -155,7 +170,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -164,7 +184,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test('Pass_FunctionMethodMayCallOtherClassFunctionMethod', async () => {
+  test("Pass_FunctionMethodMayCallOtherClassFunctionMethod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -259,7 +279,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -268,7 +293,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test('Pass_FunctionMethodNameHidesGlobalFunction', async () => {
+  test("Pass_FunctionMethodNameHidesGlobalFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -318,7 +343,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -327,7 +357,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  test('Fail_FunctionCannotBeCalledDirectly', async () => {
+  test("Fail_FunctionCannotBeCalledDirectly", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -352,16 +382,19 @@ class Foo
 
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
 
-  test('Fail_FunctionMethodCannotMutateProperty', async () => {
+  test("Fail_FunctionMethodCannotMutateProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -382,16 +415,21 @@ class Foo
 
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate non local data in function"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate non local data in function",
+    ]);
   });
 
-  test('Fail_FunctionMethodCannotCallProcedureMethod', async () => {
+  test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -416,13 +454,14 @@ class Foo
 
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
-
-
 });

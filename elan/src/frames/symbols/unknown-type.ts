@@ -1,9 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class UnknownType implements SymbolType {
-    private constructor() { }
+  private constructor() {}
 
-    static Instance: SymbolType = new UnknownType();
+  static Instance: SymbolType = new UnknownType();
 
-    name = "Unknown";
+  name = "Unknown";
 }

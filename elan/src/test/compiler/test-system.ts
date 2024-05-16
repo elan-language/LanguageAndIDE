@@ -1,21 +1,20 @@
 import { System } from "../../system";
 
 class TestSystem extends System {
-    printed: string = "";
-    inputed: string = "";
+  printed: string = "";
+  inputed: string = "";
 }
 
 export function getTestSystem() {
+  const system = new TestSystem();
 
-    const system = new TestSystem();
+  system.print = (s: string) => {
+    system.printed = system.printed + s;
+  };
 
-    system.print = (s: string) => {
-        system.printed = system.printed + s;
-    };
+  system.input = () => {
+    return Promise.resolve(system.inputed);
+  };
 
-    system.input = () => {
-        return Promise.resolve(system.inputed);
-    };
-
-    return system;
+  return system;
 }

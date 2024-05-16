@@ -1,4 +1,3 @@
-
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
@@ -14,29 +13,30 @@ import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 
 export class TypeWithOptGenerics extends AbstractSequence {
-    simpleType: TypeSimpleNode | undefined;
-    generic: OptionalNode | undefined;
+  simpleType: TypeSimpleNode | undefined;
+  generic: OptionalNode | undefined;
 
-    constructor() {
-        super();
-        this.completionWhenEmpty = "Type";
+  constructor() {
+    super();
+    this.completionWhenEmpty = "Type";
+  }
+  parseText(text: string): void {
+    this.remainingText = text;
+    if (text.length > 0) {
+      this.simpleType = new TypeSimpleNode();
+      const lt = () => new SymbolNode(LT);
+      const of = () => new KeywordNode(ofKeyword);
+      const sp = () => new SpaceNode(Space.required);
+      const type = () => new TypeNode();
+      const commaType = () =>
+        new Sequence([() => new CommaNode(), () => new TypeNode()]);
+      const commaTypes = () => new Multiple(commaType, 0);
+      const gt = () => new SymbolNode(GT);
+      const genericNode = new Sequence([lt, of, sp, type, commaTypes, gt]);
+      this.generic = new OptionalNode(genericNode);
+      this.addElement(this.simpleType);
+      this.addElement(this.generic);
+      super.parseText(text);
     }
-    parseText(text: string): void {
-        this.remainingText = text;
-        if (text.length > 0) {
-           this.simpleType = new TypeSimpleNode();
-            const lt = () => new SymbolNode(LT);
-            const of = () => new KeywordNode(ofKeyword);
-            const sp = () => new SpaceNode(Space.required);
-            const type = () => new TypeNode();
-            const commaType = () => new Sequence([() => new CommaNode() ,() => new TypeNode()]);
-            const commaTypes = () => new Multiple(commaType, 0);
-            const gt =() => new SymbolNode(GT);
-            const genericNode = new Sequence([lt,of,sp,type,commaTypes,gt]);
-            this.generic = new OptionalNode(genericNode);
-            this.addElement(this.simpleType);
-            this.addElement(this.generic);
-            super.parseText(text);
-        }
-    }
+  }
 }

@@ -1,62 +1,93 @@
 import { ExpressionField } from "../fields/expression-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
-import {CodeSource } from "../code-source";
+import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { AssignableField } from "../fields/assignableField";
-import { mustBeCompatibleNode, mustNotBeConstant, mustNotBeCounter, mustNotBeParameter, mustNotBePropertyOnFunctionMethod } from "../compile-rules";
+import {
+  mustBeCompatibleNode,
+  mustNotBeConstant,
+  mustNotBeCounter,
+  mustNotBeParameter,
+  mustNotBePropertyOnFunctionMethod,
+} from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 
-export class SetStatement extends AbstractFrame implements Statement{
-    isStatement = true;
-    assignable: AssignableField;
-    expr: ExpressionField;
+export class SetStatement extends AbstractFrame implements Statement {
+  isStatement = true;
+  assignable: AssignableField;
+  expr: ExpressionField;
 
-    constructor(parent: Parent) {
-        super(parent);
-        this.assignable = new AssignableField(this);
-        this.assignable.setPlaceholder("variableName");
-        this.expr = new ExpressionField(this);
-    }
-    initialKeywords(): string {
-        return setKeyword;
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.assignable = new AssignableField(this);
+    this.assignable.setPlaceholder("variableName");
+    this.expr = new ExpressionField(this);
+  }
+  initialKeywords(): string {
+    return setKeyword;
+  }
 
-    parseFrom(source: CodeSource): void {
-        source.removeIndent();
-        source.remove("set ");
-        this.assignable.parseFrom(source);
-        source.remove(" to ");
-        this.expr.parseFrom(source);
-        source.removeNewLine();
-    }
-    getFields(): Field[] {
-        return [this.assignable, this.expr];
-    }  
-    getIdPrefix(): string {
-        return 'set';
-    }
-    renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${this.assignable.renderAsHtml()}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
-    }
-    renderAsSource(): string {
-        return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
-    }
-    compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstQualifiedNode;
-        const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
+  parseFrom(source: CodeSource): void {
+    source.removeIndent();
+    source.remove("set ");
+    this.assignable.parseFrom(source);
+    source.remove(" to ");
+    this.expr.parseFrom(source);
+    source.removeNewLine();
+  }
+  getFields(): Field[] {
+    return [this.assignable, this.expr];
+  }
+  getIdPrefix(): string {
+    return "set";
+  }
+  renderAsHtml(): string {
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${this.assignable.renderAsHtml()}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
+  }
+  renderAsSource(): string {
+    return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
+  }
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const assignableAstNode = this.assignable.getOrTransformAstNode(
+      transforms,
+    )! as AstQualifiedNode;
+    const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
-        mustNotBePropertyOnFunctionMethod(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
-        mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
-        mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.assignable.getHtmlId());
-        mustNotBeConstant(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
-        mustNotBeCounter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
+    mustNotBePropertyOnFunctionMethod(
+      assignableAstNode,
+      this.getParent(),
+      this.compileErrors,
+      this.assignable.getHtmlId(),
+    );
+    mustBeCompatibleNode(
+      assignableAstNode,
+      exprAstNode,
+      this.compileErrors,
+      this.expr.getHtmlId(),
+    );
+    mustNotBeParameter(
+      assignableAstNode,
+      this.getParent(),
+      this.compileErrors,
+      this.assignable.getHtmlId(),
+    );
+    mustNotBeConstant(
+      assignableAstNode,
+      this.compileErrors,
+      this.assignable.getHtmlId(),
+    );
+    mustNotBeCounter(
+      assignableAstNode,
+      this.compileErrors,
+      this.assignable.getHtmlId(),
+    );
 
-        return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;
-    }
-} 
+    return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;
+  }
+}

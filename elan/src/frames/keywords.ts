@@ -1,72 +1,136 @@
-export const abstractKeyword = 'abstract';
-export const andKeyword = 'and';
-export const asKeyword = 'as';
-export const assertKeyword = 'assert';
-export const beKeyword = 'be';
-export const callKeyword = 'call';
-export const caseKeyword = 'case';
-export const catchKeyword = 'catch';
-export const classKeyword = 'class';
-export const constantKeyword = 'constant';
-export const constructorKeyword = 'constructor';
-export const curryKeyword = 'curry'; //for future use
-export const defaultKeyword = 'default'; 
-export const divKeyword = 'div';
-export const eachKeyword = 'each';
-export const elseKeyword = 'else';
-export const endKeyword = 'end'; 
-export const enumKeyword = 'enum';
-export const falseKeyword = 'false';
-export const forKeyword = 'for';
-export const fromKeyword = 'from';
-export const functionKeyword = 'function';
-export const globalKeyword = 'global';
-export const ifKeyword = 'if'; 
-export const immutableKeyword = 'immutable';
-export const importKeyword = 'import';
-export const inKeyword = 'in';
-export const intoKeyword = 'into';
-export const inheritsKeyword = 'inherits';
-export const inputKeyword = 'input';
-export const lambdaKeyword = 'lambda';
-export const letKeyword = 'let'; 
-export const libraryKeyword = 'library';
-export const mainKeyword = 'main';
-export const modKeyword = 'mod';
-export const newKeyword = 'new';
-export const notKeyword = 'not';
-export const ofKeyword = 'of';
-export const isKeyword = 'is';
-export const orKeyword = 'or';
-export const packageKeyword = 'package';
-export const partialKeyword = 'partial'; //for future use
-export const printKeyword = 'print';
-export const privateKeyword = 'private';
-export const procedureKeyword = 'procedure';
-export const propertyKeyword = 'property';
-export const repeatKeyword = 'repeat';
-export const returnKeyword = 'return';
-export const setKeyword = 'set';
-export const stepKeyword = 'step';
-export const switchKeyword = 'switch';
-export const testKeyword = 'test';
-export const thenKeyword = 'then';
-export const thisKeyword = 'this';
-export const throwKeyword = 'throw';
-export const toKeyword = 'to';
-export const trueKeyword = 'true';
-export const tryKeyword = 'try';
-export const varKeyword = 'var';
-export const whenKeyword = 'when';
-export const whileKeyword = 'while';
-export const withKeyword = 'with';
-export const xorKeyword = 'xor';
+export const abstractKeyword = "abstract";
+export const andKeyword = "and";
+export const asKeyword = "as";
+export const assertKeyword = "assert";
+export const beKeyword = "be";
+export const callKeyword = "call";
+export const caseKeyword = "case";
+export const catchKeyword = "catch";
+export const classKeyword = "class";
+export const constantKeyword = "constant";
+export const constructorKeyword = "constructor";
+export const curryKeyword = "curry"; //for future use
+export const defaultKeyword = "default";
+export const divKeyword = "div";
+export const eachKeyword = "each";
+export const elseKeyword = "else";
+export const endKeyword = "end";
+export const enumKeyword = "enum";
+export const falseKeyword = "false";
+export const forKeyword = "for";
+export const fromKeyword = "from";
+export const functionKeyword = "function";
+export const globalKeyword = "global";
+export const ifKeyword = "if";
+export const immutableKeyword = "immutable";
+export const importKeyword = "import";
+export const inKeyword = "in";
+export const intoKeyword = "into";
+export const inheritsKeyword = "inherits";
+export const inputKeyword = "input";
+export const lambdaKeyword = "lambda";
+export const letKeyword = "let";
+export const libraryKeyword = "library";
+export const mainKeyword = "main";
+export const modKeyword = "mod";
+export const newKeyword = "new";
+export const notKeyword = "not";
+export const ofKeyword = "of";
+export const isKeyword = "is";
+export const orKeyword = "or";
+export const packageKeyword = "package";
+export const partialKeyword = "partial"; //for future use
+export const printKeyword = "print";
+export const privateKeyword = "private";
+export const procedureKeyword = "procedure";
+export const propertyKeyword = "property";
+export const repeatKeyword = "repeat";
+export const returnKeyword = "return";
+export const setKeyword = "set";
+export const stepKeyword = "step";
+export const switchKeyword = "switch";
+export const testKeyword = "test";
+export const thenKeyword = "then";
+export const thisKeyword = "this";
+export const throwKeyword = "throw";
+export const toKeyword = "to";
+export const trueKeyword = "true";
+export const tryKeyword = "try";
+export const varKeyword = "var";
+export const whenKeyword = "when";
+export const whileKeyword = "while";
+export const withKeyword = "with";
+export const xorKeyword = "xor";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
-export const abstractProcedureKeywords = abstractKeyword + " " + procedureKeyword;
+export const abstractProcedureKeywords =
+  abstractKeyword + " " + procedureKeyword;
 export const abstractFunctionKeywords = abstractKeyword + " " + functionKeyword;
 
 export const commentMarker = "#";
 
-export const allKeywords = [abstractKeyword, andKeyword, asKeyword, assertKeyword, beKeyword, callKeyword, caseKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, curryKeyword, defaultKeyword, divKeyword, eachKeyword, elseKeyword, endKeyword, enumKeyword,  falseKeyword, forKeyword, fromKeyword, functionKeyword, globalKeyword, ifKeyword, immutableKeyword, importKeyword, inKeyword, intoKeyword, inheritsKeyword, inputKeyword, lambdaKeyword, letKeyword, libraryKeyword, mainKeyword, modKeyword, newKeyword, notKeyword, ofKeyword, isKeyword, orKeyword, packageKeyword, partialKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, repeatKeyword, returnKeyword, setKeyword, stepKeyword, switchKeyword, testKeyword, thisKeyword, throwKeyword, toKeyword, trueKeyword, tryKeyword, varKeyword, whenKeyword, whileKeyword, withKeyword, xorKeyword];
+export const allKeywords = [
+  abstractKeyword,
+  andKeyword,
+  asKeyword,
+  assertKeyword,
+  beKeyword,
+  callKeyword,
+  caseKeyword,
+  catchKeyword,
+  classKeyword,
+  constantKeyword,
+  constructorKeyword,
+  curryKeyword,
+  defaultKeyword,
+  divKeyword,
+  eachKeyword,
+  elseKeyword,
+  endKeyword,
+  enumKeyword,
+  falseKeyword,
+  forKeyword,
+  fromKeyword,
+  functionKeyword,
+  globalKeyword,
+  ifKeyword,
+  immutableKeyword,
+  importKeyword,
+  inKeyword,
+  intoKeyword,
+  inheritsKeyword,
+  inputKeyword,
+  lambdaKeyword,
+  letKeyword,
+  libraryKeyword,
+  mainKeyword,
+  modKeyword,
+  newKeyword,
+  notKeyword,
+  ofKeyword,
+  isKeyword,
+  orKeyword,
+  packageKeyword,
+  partialKeyword,
+  printKeyword,
+  privateKeyword,
+  procedureKeyword,
+  propertyKeyword,
+  repeatKeyword,
+  returnKeyword,
+  setKeyword,
+  stepKeyword,
+  switchKeyword,
+  testKeyword,
+  thisKeyword,
+  throwKeyword,
+  toKeyword,
+  trueKeyword,
+  tryKeyword,
+  varKeyword,
+  whenKeyword,
+  whileKeyword,
+  withKeyword,
+  xorKeyword,
+];

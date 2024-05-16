@@ -39,7 +39,12 @@ import { SetClause } from "../parse-nodes/set-clause";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
-import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
+import {
+  globalKeyword,
+  libraryKeyword,
+  propertyKeyword,
+  thisKeyword,
+} from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralListAsn } from "./literal-list-asn";
@@ -94,349 +99,400 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
 function mapOperation(op: string) {
-    switch (op.trim()) {
-        case "+": return OperationSymbol.Add;
-        case "-": return OperationSymbol.Minus;
-        case "*": return OperationSymbol.Multiply;
-        case "<": return OperationSymbol.LT;
-        case ">": return OperationSymbol.GT;
-        case ">=": return OperationSymbol.GTE;
-        case "<=": return OperationSymbol.LTE;
-        case "and": return OperationSymbol.And;
-        case "or": return OperationSymbol.Or;
-        case "xor": return OperationSymbol.Xor;
-        case "not": return OperationSymbol.Not;
-        case "is": return OperationSymbol.Equals;
-        case "is not": return OperationSymbol.NotEquals;
-        case "div": return OperationSymbol.Div;
-        case "mod": return OperationSymbol.Mod;
-        case "/": return OperationSymbol.Divide;
-        case "^": return OperationSymbol.Pow;
-        default: throw new Error("Not implemented");
-    }
+  switch (op.trim()) {
+    case "+":
+      return OperationSymbol.Add;
+    case "-":
+      return OperationSymbol.Minus;
+    case "*":
+      return OperationSymbol.Multiply;
+    case "<":
+      return OperationSymbol.LT;
+    case ">":
+      return OperationSymbol.GT;
+    case ">=":
+      return OperationSymbol.GTE;
+    case "<=":
+      return OperationSymbol.LTE;
+    case "and":
+      return OperationSymbol.And;
+    case "or":
+      return OperationSymbol.Or;
+    case "xor":
+      return OperationSymbol.Xor;
+    case "not":
+      return OperationSymbol.Not;
+    case "is":
+      return OperationSymbol.Equals;
+    case "is not":
+      return OperationSymbol.NotEquals;
+    case "div":
+      return OperationSymbol.Div;
+    case "mod":
+      return OperationSymbol.Mod;
+    case "/":
+      return OperationSymbol.Divide;
+    case "^":
+      return OperationSymbol.Pow;
+    default:
+      throw new Error("Not implemented");
+  }
 }
 
-export function asCsv(nodes : AstNode[], id : string, scope : Scope){
-    return new CsvAsn(nodes, id, scope);
+export function asCsv(nodes: AstNode[], id: string, scope: Scope) {
+  return new CsvAsn(nodes, id, scope);
 }
 
-export function transformMany(node: CSV | Multiple | Sequence, fieldId: string, scope: Scope): AstCollectionNode {
-    const asts = new Array<AstNode>();
+export function transformMany(
+  node: CSV | Multiple | Sequence,
+  fieldId: string,
+  scope: Scope,
+): AstCollectionNode {
+  const asts = new Array<AstNode>();
 
-    for (const elem of node.getElements()) {
-        if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
-            const asns = transformMany(elem, fieldId, scope).items;
+  for (const elem of node.getElements()) {
+    if (
+      elem instanceof Multiple ||
+      elem instanceof CSV ||
+      elem instanceof Sequence
+    ) {
+      const asns = transformMany(elem, fieldId, scope).items;
 
-            for (const asn of asns) {
-                if (asn) {
-                    asts.push(asn);
-                }
-            }
+      for (const asn of asns) {
+        if (asn) {
+          asts.push(asn);
         }
-        else {
-            const asn = transform(elem, fieldId, scope);
-            if (asn) {
-                asts.push(asn);
-            }
-        }
+      }
+    } else {
+      const asn = transform(elem, fieldId, scope);
+      if (asn) {
+        asts.push(asn);
+      }
     }
+  }
 
-    return new CsvAsn(asts, fieldId, scope);
+  return new CsvAsn(asts, fieldId, scope);
 }
 
+export function transform(
+  node: ParseNode | undefined,
+  fieldId: string,
+  scope: Scope,
+): AstNode | undefined {
+  if (node instanceof BracketedExpression) {
+    return new BracketedAsn(
+      transform(node.expr, fieldId, scope)!,
+      fieldId,
+      scope,
+    );
+  }
 
-export function transform(node: ParseNode | undefined, fieldId: string, scope: Scope): AstNode | undefined {
+  if (node instanceof UnaryExpression) {
+    const op = mapOperation(node.unaryOp!.matchedText);
+    const operand = transform(node.term, fieldId, scope) as ExprAsn;
 
-    if (node instanceof BracketedExpression) {
-        return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId, scope);
+    return new UnaryExprAsn(op, operand, fieldId, scope);
+  }
+
+  if (node instanceof BinaryExpression) {
+    const lhs = transform(node.lhs, fieldId, scope) as ExprAsn;
+    const rhs = transform(node.rhs, fieldId, scope) as ExprAsn;
+    const op = mapOperation(node.op!.matchedText);
+
+    return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
+  }
+
+  if (node instanceof LitInt) {
+    return new LiteralIntAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitBoolean) {
+    return new LiteralBoolAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitFloat) {
+    return new LiteralFloatAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitStringEmpty) {
+    return new LiteralStringAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitStringNonEmpty) {
+    const ss = node.segments
+      ? transformMany(node.segments, fieldId, scope).items
+      : [];
+
+    if (ss.map((i) => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
+      return new SegmentedStringAsn(ss, fieldId, scope);
     }
 
-    if (node instanceof UnaryExpression) {
-        const op = mapOperation(node.unaryOp!.matchedText);
-        const operand = transform(node.term, fieldId, scope) as ExprAsn;
+    return new LiteralStringAsn(node.matchedText, fieldId);
+  }
 
-        return new UnaryExprAsn(op, operand, fieldId, scope);
+  if (node instanceof IdentifierNode) {
+    // kludge - fix
+    if (
+      fieldId.startsWith("var") ||
+      fieldId.startsWith("ident") ||
+      fieldId.startsWith("enumVals")
+    ) {
+      return new IdDefAsn(node.matchedText, fieldId, scope);
     }
 
-    if (node instanceof BinaryExpression) {
-        const lhs = transform(node.lhs, fieldId, scope) as ExprAsn;
-        const rhs = transform(node.rhs, fieldId, scope) as ExprAsn;
-        const op = mapOperation(node.op!.matchedText);
+    return new IdAsn(node.matchedText, fieldId, scope);
+  }
 
-        return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
+  if (node instanceof FunctionCallNode) {
+    const qualifier = transform(node.qualifier, fieldId, scope);
+    const id = node.name!.matchedText;
+    const parameters = transformMany(node.args as CSV, fieldId, scope)
+      .items as Array<ExprAsn>;
+
+    return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
+  }
+
+  if (node instanceof Lambda) {
+    const parameters = transformMany(node.params as CSV, fieldId, scope)
+      .items as Array<ParamDefAsn>;
+    const sig = new LambdaSigAsn(parameters, fieldId, scope);
+    const body = transform(node.expr, fieldId, sig) as ExprAsn;
+
+    return new LambdaAsn(sig, body, fieldId, scope);
+  }
+
+  if (node instanceof ParamDefNode) {
+    const id = node.name!.matchedText;
+    const type = transform(node.type, fieldId, scope)!;
+
+    return new ParamDefAsn(id, type, fieldId, scope);
+  }
+
+  if (node instanceof TypeWithOptGenerics) {
+    const type = node.simpleType!.matchedText;
+    const opt = (node.generic as OptionalNode).matchedNode;
+    let gp = new Array<AstNode>();
+
+    if (opt) {
+      gp = transformMany(opt as Sequence, fieldId, scope).items;
     }
 
-    if (node instanceof LitInt) {
-        return new LiteralIntAsn(node.matchedText, fieldId);
+    return new TypeAsn(type, gp, fieldId, scope);
+  }
+
+  if (node instanceof FuncTypeNode) {
+    const type = "Func";
+    const inp = node.inputTypes
+      ? transformMany(node.inputTypes, fieldId, scope).items
+      : [];
+    const oup = node.returnType
+      ? [transform(node.returnType, fieldId, scope)!]
+      : [];
+
+    return new TypeAsn(type, inp.concat(oup), fieldId, scope);
+  }
+
+  if (node instanceof TypeSimpleNode) {
+    const type = node.matchedText;
+
+    return new TypeAsn(type, [], fieldId, scope);
+  }
+
+  if (node instanceof DefaultOfTypeNode) {
+    const type = transform(node.type, fieldId, scope) as TypeAsn;
+    return new DefaultTypeAsn(type, fieldId, scope);
+  }
+
+  if (node instanceof OptionalNode) {
+    if (node.matchedNode) {
+      return transform(node.matchedNode, fieldId, scope);
+    }
+    return undefined;
+  }
+
+  if (node instanceof VarRefNode) {
+    return transform(node.bestMatch, fieldId, scope);
+  }
+
+  if (node instanceof SetClause) {
+    const id = node.property!.matchedText;
+    const to = transform(node.expr, fieldId, scope) as ExprAsn;
+
+    return new SetAsn(id, to, fieldId, scope);
+  }
+
+  if (node instanceof SymbolNode) {
+    return undefined;
+  }
+
+  if (node instanceof CommaNode) {
+    return undefined;
+  }
+
+  if (node instanceof SpaceNode) {
+    return undefined;
+  }
+
+  if (node instanceof KeywordNode) {
+    // todo decouple this from js
+    if (node.fixedText === globalKeyword) {
+      return new FixedIdAsn(globalKeyword, fieldId);
+    }
+    if (node.fixedText === libraryKeyword) {
+      return new FixedIdAsn(libraryKeyword, fieldId);
+    }
+    if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
+      return new ThisAsn(node.fixedText, fieldId, scope);
     }
 
-    if (node instanceof LitBoolean) {
-        return new LiteralBoolAsn(node.matchedText, fieldId);
-    }
+    return undefined;
+  }
 
-    if (node instanceof LitFloat) {
-        return new LiteralFloatAsn(node.matchedText, fieldId);
-    }
+  if (node instanceof IndexNode) {
+    const index = transform(node.contents, fieldId, scope) as ExprAsn;
+    return new IndexAsn(index, undefined, fieldId, scope);
+  }
 
-    if (node instanceof LitStringEmpty) {
-        return new LiteralStringAsn(node.matchedText, fieldId);
-    }
+  if (node instanceof AbstractAlternatives) {
+    return transform(node.bestMatch, fieldId, scope);
+  }
 
-    if (node instanceof LitStringNonEmpty) {
-        const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
+  if (node instanceof ListNode) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralListAsn(items, fieldId, scope);
+  }
 
-        if (ss.map(i => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
-            return new SegmentedStringAsn(ss, fieldId, scope);
-        }
+  if (node instanceof Dictionary) {
+    const items = transform(node.kvps, fieldId, scope) as LiteralListAsn;
+    return new LiteralDictionaryAsn(items, fieldId, scope);
+  }
 
-        return new LiteralStringAsn(node.matchedText, fieldId);
-    }
+  if (node instanceof TupleNode) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralTupleAsn(items, fieldId, scope);
+  }
 
-    if (node instanceof IdentifierNode) {
-        // kludge - fix
-        if (fieldId.startsWith("var") || fieldId.startsWith("ident") || fieldId.startsWith("enumVals")) {
-            return new IdDefAsn(node.matchedText, fieldId, scope);
-        }
+  if (node instanceof LitTuple) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralTupleAsn(items, fieldId, scope);
+  }
 
-        return new IdAsn(node.matchedText, fieldId, scope);
-    }
+  if (node instanceof DeconstructedTuple) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralTupleAsn(items, fieldId, scope);
+  }
 
-    if (node instanceof FunctionCallNode) {
-        const qualifier = transform(node.qualifier, fieldId, scope);
-        const id = node.name!.matchedText;
-        const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
+  if (node instanceof DeconstructedList) {
+    const hd = node.head!.matchedText;
+    const tl = node.tail!.matchedText;
+    return new DeconstructedListAsn(hd, tl, fieldId, scope);
+  }
 
-        return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
-    }
+  if (node instanceof WithClause) {
+    return transform(node.changes, fieldId, scope);
+  }
 
-    if (node instanceof Lambda) {
-        const parameters = transformMany(node.params as CSV, fieldId, scope).items as Array<ParamDefAsn>;
-        const sig = new LambdaSigAsn(parameters, fieldId, scope);
-        const body = transform(node.expr, fieldId, sig) as ExprAsn;
+  if (node instanceof NewInstance) {
+    const type = transform(node.type, fieldId, scope) as TypeAsn;
+    const pp = transformMany(node.args as CSV, fieldId, scope).items;
+    return new NewAsn(type, pp, fieldId, scope);
+  }
 
-        return new LambdaAsn(sig, body, fieldId, scope);
-    }
+  if (node instanceof VarRefCompound) {
+    const q = transform(node.optQualifier, fieldId, scope) as
+      | AstQualifierNode
+      | undefined;
+    const id = node.simple!.matchedText;
+    const index = transform(node.index, fieldId, scope);
+    return new VarAsn(id, q, index, fieldId, scope);
+  }
 
-    if (node instanceof ParamDefNode) {
-        const id = node.name!.matchedText;
-        const type = transform(node.type, fieldId, scope)!;
+  if (node instanceof TermWith) {
+    const obj = transform(node.term, fieldId, scope) as ExprAsn;
+    const changes = transform(node.with, fieldId, scope) as LiteralListAsn;
+    return new WithAsn(obj, changes, fieldId, scope);
+  }
 
-        return new ParamDefAsn(id, type, fieldId, scope);
-    }
+  if (node instanceof TypeTuple) {
+    const gp = transformMany(node.types as CSV, fieldId, scope).items;
+    return new TypeAsn("Tuple", gp, fieldId, scope);
+  }
 
-    if (node instanceof TypeWithOptGenerics) {
-        const type = node.simpleType!.matchedText;
-        const opt = (node.generic as OptionalNode).matchedNode;
-        let gp = new Array<AstNode>();
+  if (node instanceof RangeNode) {
+    const fromNode = node.fromIndex?.matchedNode;
+    const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
+    const toNode = node.toIndex?.matchedNode;
+    const to = toNode ? transform(toNode, fieldId, scope) : undefined;
+    return new RangeAsn(from, to, fieldId, scope);
+  }
 
-        if (opt) {
-            gp = transformMany(opt as Sequence, fieldId, scope).items;
-        }
+  if (node instanceof DoubleIndexNode) {
+    const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
+    const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
 
-        return new TypeAsn(type, gp, fieldId, scope);
-    }
+    return new IndexAsn(indexOne, indexTwo, fieldId, scope);
+  }
 
-    if (node instanceof FuncTypeNode) {
-        const type = "Func";
-        const inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
-        const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
+  if (node instanceof Qualifier) {
+    const q = transform(node.qualifier, fieldId, scope) as AstIdNode;
+    return new QualifierAsn(q, fieldId, scope);
+  }
 
-        return new TypeAsn(type, inp.concat(oup), fieldId, scope);
-    }
+  if (node instanceof InstanceNode) {
+    const id = node.variable!.matchedText;
+    const index = transform(node.index, fieldId, scope);
+    return new VarAsn(id, undefined, index, fieldId, scope);
+  }
 
-    if (node instanceof TypeSimpleNode) {
-        const type = node.matchedText;
+  if (node instanceof IfExpr) {
+    const condition = transform(node.condition, fieldId, scope) as ExprAsn;
+    const tr = transform(node.whenTrue, fieldId, scope) as ExprAsn;
+    const fl = transform(node.whenFalse, fieldId, scope) as ExprAsn;
+    return new IfExprAsn(condition, tr, fl, fieldId, scope);
+  }
 
-        return new TypeAsn(type, [], fieldId, scope);
-    }
+  if (node instanceof EnumVal) {
+    const id = node.val!.matchedText;
+    const type = new EnumType(node.type!.matchedText);
 
-    if (node instanceof DefaultOfTypeNode) {
-        const type = transform(node.type, fieldId, scope) as TypeAsn;
-        return new DefaultTypeAsn(type, fieldId, scope);
-    }
+    return new LiteralEnumAsn(id, type, fieldId, scope);
+  }
 
-    if (node instanceof OptionalNode) {
-        if (node.matchedNode) {
-            return transform(node.matchedNode, fieldId, scope);
-        }
-        return undefined;
-    }
+  if (node instanceof KVPnode) {
+    const key = transform(node.key, fieldId, scope)!;
+    const value = transform(node.value, fieldId, scope)!;
 
-    if (node instanceof VarRefNode) {
-        return transform(node.bestMatch, fieldId, scope);
-    }
+    return new KvpAsn(key, value, fieldId, scope);
+  }
 
-    if (node instanceof SetClause) {
-        const id = node.property!.matchedText;
-        const to = transform(node.expr, fieldId, scope) as ExprAsn;
+  if (node instanceof StringInterpolation) {
+    const value = transform(node.expr, fieldId, scope)!;
 
-        return new SetAsn(id, to, fieldId, scope);
-    }
+    return new InterpolatedAsn(value, fieldId, scope);
+  }
 
-    if (node instanceof SymbolNode) {
-        return undefined;
-    }
+  if (node instanceof RegExMatchNode) {
+    return new LiteralStringAsn(node.matchedText, fieldId);
+  }
 
-    if (node instanceof CommaNode) {
-        return undefined;
-    }
+  if (node instanceof AssignableNode) {
+    const q = transform(node.qualifier, fieldId, scope) as
+      | AstQualifierNode
+      | undefined;
+    const id = node.simple.matchedText;
+    const index = transform(node.index, fieldId, scope);
+    return new VarAsn(id, q, index, fieldId, scope);
+  }
 
-    if (node instanceof SpaceNode) {
-        return undefined;
-    }
+  if (node instanceof InstanceProcRef) {
+    const q = transform(node.qualifier, fieldId, scope) as
+      | AstQualifierNode
+      | undefined;
+    const id = node.simple!.matchedText;
+    return new VarAsn(id, q, undefined, fieldId, scope);
+  }
 
-    if (node instanceof KeywordNode) {
-        // todo decouple this from js
-        if (node.fixedText === globalKeyword) {
-            return new FixedIdAsn(globalKeyword, fieldId);
-        }
-        if (node.fixedText === libraryKeyword) {
-            return new FixedIdAsn(libraryKeyword, fieldId);
-        }
-        if (node.fixedText === propertyKeyword || node.fixedText === thisKeyword) {
-            return new ThisAsn(node.fixedText, fieldId, scope);
-        }
-
-        return undefined;
-    }
-
-    if (node instanceof IndexNode) {
-        const index = transform(node.contents, fieldId, scope) as ExprAsn;
-        return new IndexAsn(index, undefined, fieldId, scope);
-    }
-
-    if (node instanceof AbstractAlternatives) {
-        return transform(node.bestMatch, fieldId, scope);
-    }
-
-    if (node instanceof ListNode) {
-        const items = transformMany(node.csv as CSV, fieldId, scope).items;
-        return new LiteralListAsn(items, fieldId, scope);
-    }
-
-    if (node instanceof Dictionary) {
-        const items = transform(node.kvps, fieldId, scope) as LiteralListAsn;
-        return new LiteralDictionaryAsn(items, fieldId, scope);
-    }
-
-    if (node instanceof TupleNode) {
-        const items = transformMany(node.csv as CSV, fieldId, scope).items;
-        return new LiteralTupleAsn(items, fieldId, scope);
-    }
-
-    if (node instanceof LitTuple) {
-        const items = transformMany(node.csv as CSV, fieldId, scope).items;
-        return new LiteralTupleAsn(items, fieldId, scope);
-    }
-
-    if (node instanceof DeconstructedTuple) {
-        const items = transformMany(node.csv as CSV, fieldId, scope).items;
-        return new LiteralTupleAsn(items, fieldId, scope);
-    }
-
-    if (node instanceof DeconstructedList) {
-        const hd = node.head!.matchedText;
-        const tl = node.tail!.matchedText;
-        return new DeconstructedListAsn(hd, tl, fieldId, scope);
-    }
-
-    if (node instanceof WithClause) {
-        return transform(node.changes, fieldId, scope);
-    }
-
-    if (node instanceof NewInstance) {
-        const type = transform(node.type, fieldId, scope) as TypeAsn;
-        const pp = transformMany(node.args as CSV, fieldId, scope).items;
-        return new NewAsn(type, pp, fieldId, scope);
-    }
-
-    if (node instanceof VarRefCompound) {
-        const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
-        const id = node.simple!.matchedText;
-        const index = transform(node.index, fieldId, scope);
-        return new VarAsn(id, q, index, fieldId, scope);
-    }
-
-    if (node instanceof TermWith) {
-        const obj = transform(node.term, fieldId, scope) as ExprAsn;
-        const changes = transform(node.with, fieldId, scope) as LiteralListAsn;
-        return new WithAsn(obj, changes, fieldId, scope);
-    }
-
-    if (node instanceof TypeTuple) {
-        const gp = transformMany(node.types as CSV, fieldId, scope).items;
-        return new TypeAsn("Tuple", gp, fieldId, scope);
-    }
-
-    if (node instanceof RangeNode) {
-        const fromNode = node.fromIndex?.matchedNode;
-        const from = fromNode ? transform(fromNode, fieldId, scope) : undefined;
-        const toNode = node.toIndex?.matchedNode;
-        const to = toNode ? transform(toNode, fieldId, scope) : undefined;
-        return new RangeAsn(from, to, fieldId, scope);
-    }
-
-    if (node instanceof DoubleIndexNode) {
-        const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
-        const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
-
-        return new IndexAsn(indexOne, indexTwo, fieldId, scope);
-    }
-
-    if (node instanceof Qualifier) {
-        const q = transform(node.qualifier, fieldId, scope) as AstIdNode;
-        return new QualifierAsn(q, fieldId, scope);
-    }
-
-    if (node instanceof InstanceNode) {
-        const id = node.variable!.matchedText;
-        const index = transform(node.index, fieldId, scope);
-        return new VarAsn(id, undefined, index, fieldId, scope);
-    }
-
-    if (node instanceof IfExpr) {
-        const condition = transform(node.condition, fieldId, scope) as ExprAsn;
-        const tr = transform(node.whenTrue, fieldId, scope) as ExprAsn;
-        const fl = transform(node.whenFalse, fieldId, scope) as ExprAsn;
-        return new IfExprAsn(condition, tr, fl, fieldId, scope);
-    }
-
-    if (node instanceof EnumVal) {
-        const id = node.val!.matchedText;
-        const type = new EnumType(node.type!.matchedText);
-
-        return new LiteralEnumAsn(id, type, fieldId, scope);
-    }
-
-    if (node instanceof KVPnode) {
-        const key = transform(node.key, fieldId, scope)!;
-        const value = transform(node.value, fieldId, scope)!;
-
-        return new KvpAsn(key, value, fieldId, scope);
-    }
-
-    if (node instanceof StringInterpolation) {
-        const value = transform(node.expr, fieldId, scope)!;
-
-        return new InterpolatedAsn(value, fieldId, scope);
-    }
-
-    if (node instanceof RegExMatchNode) {
-        return new LiteralStringAsn(node.matchedText, fieldId);
-    }
-
-    if (node instanceof AssignableNode) {
-        const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
-        const id = node.simple.matchedText;
-        const index = transform(node.index, fieldId, scope);
-        return new VarAsn(id, q, index, fieldId, scope);
-    }
-
-    if (node instanceof InstanceProcRef) {
-        const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
-        const id = node.simple!.matchedText;
-        return new VarAsn(id, q, undefined, fieldId, scope);
-    }
-
-    throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
+  throw new Error(
+    "Not implemented " + (node ? node.constructor.name : "undefined"),
+  );
 }

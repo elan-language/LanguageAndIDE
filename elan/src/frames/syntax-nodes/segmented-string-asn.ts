@@ -5,29 +5,32 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 
 export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly segments: AstNode[],
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly segments: AstNode[], public readonly fieldId: string, scope: Scope) {
-        super();
+  aggregateCompileErrors(): CompileError[] {
+    let cc: CompileError[] = [];
+    for (const i of this.segments) {
+      cc = cc.concat(i.aggregateCompileErrors());
     }
+    return this.compileErrors.concat(cc);
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        let cc: CompileError[] = [];
-        for (const i of this.segments) {
-            cc = cc.concat(i.aggregateCompileErrors());
-        }
-        return this.compileErrors.concat(cc);
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return `\`${this.segments.map((s) => s.compile()).join("")}\``;
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return `\`${this.segments.map(s => s.compile()).join("")}\``;
-    }
+  symbolType() {
+    return StringType.Instance;
+  }
 
-    symbolType() {
-        return StringType.Instance;
-    }
-
-    toString() {
-        return this.segments.map(s => `${s}`).join("");
-    }
+  toString() {
+    return this.segments.map((s) => `${s}`).join("");
+  }
 }

@@ -1,9 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class StringType implements SymbolType {
-    private constructor() { }
+  private constructor() {}
 
-    static Instance: SymbolType = new StringType();
+  static Instance: SymbolType = new StringType();
 
-    name = "String";
+  name = "String";
 }

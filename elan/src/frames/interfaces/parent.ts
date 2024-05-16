@@ -3,46 +3,49 @@ import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { StatementFactory } from "./statement-factory";
-import { File} from "./file";
+import { File } from "./file";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Scope } from "./scope";
 
-
 export interface Parent extends Scope {
-    //External use
-    isParent: boolean;
+  //External use
+  isParent: boolean;
 
-    minimumNumberOfChildrenExceeded(): boolean;
-    getFirstChild(): Frame; 
-    getLastChild(): Frame;
-    expand(): void;
-    collapse(): void;
-    
-    getChildren(): Frame[];
-    getChildAfter(child: Frame): Frame;
-    getChildBefore(child: Frame): Frame;
-    getChildRange(first: Frame, last: Frame): Frame[];
-    removeChild(child: Frame): void;
-    addChildBefore(newFrame: Frame, existingChild: Frame): void;
-    addChildAfter(newFrame: Frame, existingChild: Frame): void;
+  minimumNumberOfChildrenExceeded(): boolean;
+  getFirstChild(): Frame;
+  getLastChild(): Frame;
+  expand(): void;
+  collapse(): void;
 
-    indent(): string;
+  getChildren(): Frame[];
+  getChildAfter(child: Frame): Frame;
+  getChildBefore(child: Frame): Frame;
+  getChildRange(first: Frame, last: Frame): Frame[];
+  removeChild(child: Frame): void;
+  addChildBefore(newFrame: Frame, existingChild: Frame): void;
+  addChildAfter(newFrame: Frame, existingChild: Frame): void;
 
-    getFile(): File;
+  indent(): string;
 
-    getIdPrefix(): string;
-    hasParent(): boolean;
-    getParent(): Parent;
+  getFile(): File;
 
-    getFields(): Field[];
+  getIdPrefix(): string;
+  hasParent(): boolean;
+  getParent(): Parent;
 
-    moveSelectedChildrenDownOne(): void;
-    moveSelectedChildrenUpOne(): void;
+  getFields(): Field[];
 
-    insertOrGotoChildSelector(after: boolean, child: Frame): void;
-    newChildSelector(): AbstractSelector;
+  moveSelectedChildrenDownOne(): void;
+  moveSelectedChildrenUpOne(): void;
 
-    getFactory(): StatementFactory;
+  insertOrGotoChildSelector(after: boolean, child: Frame): void;
+  newChildSelector(): AbstractSelector;
 
-    resolveSymbol(id: string | undefined, transforms: Transforms, initialScope : Frame): ElanSymbol;
+  getFactory(): StatementFactory;
+
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    initialScope: Frame,
+  ): ElanSymbol;
 }

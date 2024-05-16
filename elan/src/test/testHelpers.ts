@@ -1,38 +1,42 @@
-import * as vscode from 'vscode';
-import { Selectable } from '../frames/interfaces/selectable';
-import assert from 'assert';
-import { File } from '../frames/interfaces/file';
-import * as jsdom from 'jsdom';
-import { editorEvent } from '../frames/interfaces/editor-event';
-import { FileImpl } from '../frames/file-impl';
-import { CodeSourceFromString } from '../frames/code-source';
-import { hash } from '../util';
-import { DefaultProfile } from '../frames/default-profile';
-import { ParseStatus } from '../frames/status-enums';
-import { ParseNode } from '../frames/parse-nodes/parse-node';
-import { SymbolType } from '../frames/interfaces/symbol-type';
-import { transform } from '../frames/syntax-nodes/ast-visitor';
-import { Field } from '../frames/interfaces/field';
-import { FloatType } from '../frames/symbols/number-type';
-import { Parent } from '../frames/interfaces/parent';
-import { BooleanType } from '../frames/symbols/boolean-type';
-import { IntType } from '../frames/symbols/int-type';
-import { StringType } from '../frames/symbols/string-type';
-import { ElanSymbol } from '../frames/interfaces/symbol';
-import { UnknownType } from '../frames/symbols/unknown-type';
-import { ClassType } from '../frames/symbols/class-type';
-import { Scope } from '../frames/interfaces/scope';
-import { ListType } from '../frames/symbols/list-type';
-import { FunctionType } from '../frames/symbols/function-type';
-import { GenericParameterType } from '../frames/symbols/generic-parameter-type';
-import { UnknownSymbol } from '../frames/symbols/unknown-symbol';
-import { transforms } from './compiler/compiler-test-helpers';
-import { SymbolScope } from '../frames/symbols/symbol-scope';
+import * as vscode from "vscode";
+import { Selectable } from "../frames/interfaces/selectable";
+import assert from "assert";
+import { File } from "../frames/interfaces/file";
+import * as jsdom from "jsdom";
+import { editorEvent } from "../frames/interfaces/editor-event";
+import { FileImpl } from "../frames/file-impl";
+import { CodeSourceFromString } from "../frames/code-source";
+import { hash } from "../util";
+import { DefaultProfile } from "../frames/default-profile";
+import { ParseStatus } from "../frames/status-enums";
+import { ParseNode } from "../frames/parse-nodes/parse-node";
+import { SymbolType } from "../frames/interfaces/symbol-type";
+import { transform } from "../frames/syntax-nodes/ast-visitor";
+import { Field } from "../frames/interfaces/field";
+import { FloatType } from "../frames/symbols/number-type";
+import { Parent } from "../frames/interfaces/parent";
+import { BooleanType } from "../frames/symbols/boolean-type";
+import { IntType } from "../frames/symbols/int-type";
+import { StringType } from "../frames/symbols/string-type";
+import { ElanSymbol } from "../frames/interfaces/symbol";
+import { UnknownType } from "../frames/symbols/unknown-type";
+import { ClassType } from "../frames/symbols/class-type";
+import { Scope } from "../frames/interfaces/scope";
+import { ListType } from "../frames/symbols/list-type";
+import { FunctionType } from "../frames/symbols/function-type";
+import { GenericParameterType } from "../frames/symbols/generic-parameter-type";
+import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
+import { transforms } from "./compiler/compiler-test-helpers";
+import { SymbolScope } from "../frames/symbols/symbol-scope";
 
-// flag to update test file 
+// flag to update test file
 const updateTestFiles = true;
 
-export async function assertEffectOfAction(sourceFile: string, action: (f: FileImpl) => void, htmlFile: string) {
+export async function assertEffectOfAction(
+  sourceFile: string,
+  action: (f: FileImpl) => void,
+  htmlFile: string,
+) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
@@ -53,8 +57,7 @@ export async function assertEffectOfAction(sourceFile: string, action: (f: FileI
   const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
   try {
     assert.strictEqual(actualHtml, expectedHtml);
-  }
-  catch (e) {
+  } catch (e) {
     if (updateTestFiles) {
       updateTestFile(htmlDoc, actualHtml);
     }
@@ -62,7 +65,10 @@ export async function assertEffectOfAction(sourceFile: string, action: (f: FileI
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
+export async function assertGeneratesHtmlandSameSource(
+  sourceFile: string,
+  htmlFile: string,
+) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
@@ -85,9 +91,7 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   try {
     assert.strictEqual(actualSource, expectedSource);
     assert.strictEqual(actualHtml, expectedHtml);
-
-  }
-  catch (e) {
+  } catch (e) {
     if (updateTestFiles) {
       updateTestFile(sourceDoc, actualSource);
       updateTestFile(htmlDoc, actualHtml);
@@ -102,17 +106,17 @@ function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
   edit.replace(
     testDoc.uri,
     new vscode.Range(0, 0, testDoc.lineCount, 0),
-    newContent);
+    newContent,
+  );
 
-  vscode.workspace.applyEdit(edit).then(ok => {
+  vscode.workspace.applyEdit(edit).then((ok) => {
     if (ok) {
-      testDoc.save().then(b => {
+      testDoc.save().then((b) => {
         if (!b) {
           console.warn("Save failed: " + testDoc.fileName);
         }
       });
-    }
-    else {
+    } else {
       console.warn("Edit failed: " + testDoc.fileName);
     }
   });
@@ -135,7 +139,10 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) {
+export async function assertAreEqualByHtml(
+  htmlFile: string,
+  frame: () => File,
+) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
 
   const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -148,8 +155,7 @@ export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) 
 
   try {
     assert.strictEqual(actualHtml, expectedHtml);
-  }
-  catch (e) {
+  } catch (e) {
     if (updateTestFiles) {
       updateTestFile(htmlDoc, actualHtml);
     }
@@ -157,7 +163,10 @@ export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) 
   }
 }
 
-export async function assertAreEqualBySource(sourceFile: string, frame: () => File) {
+export async function assertAreEqualBySource(
+  sourceFile: string,
+  frame: () => File,
+) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
 
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -201,7 +210,11 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   return fl;
 }
 
-export async function assertAreEqualByFile<T extends Selectable>(htmlFile: string, elanFile: string, frame: (s: string) => T) {
+export async function assertAreEqualByFile<T extends Selectable>(
+  htmlFile: string,
+  elanFile: string,
+  frame: (s: string) => T,
+) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
 
   const elanUri = vscode.Uri.joinPath(ws, elanFile);
@@ -215,24 +228,40 @@ export async function assertAreEqualByFile<T extends Selectable>(htmlFile: strin
   assert.strictEqual(actualHtml, expectedHtml);
 }
 
-export function assertElementsById(dom: jsdom.JSDOM, id: string, expected: string) {
+export function assertElementsById(
+  dom: jsdom.JSDOM,
+  id: string,
+  expected: string,
+) {
   const e = dom.window.document.getElementById(id);
   const c = e?.className;
   assert.strictEqual(c, expected);
 }
 
-export async function assertElementHasClasses(f: File, elementId: string, classes: string) {
+export async function assertElementHasClasses(
+  f: File,
+  elementId: string,
+  classes: string,
+) {
   const dom = await readAsDOM(f);
   assertElementsById(dom, elementId, classes);
 }
 
-export function assertElementHtmlById(dom: jsdom.JSDOM, id: string, expected: string) {
+export function assertElementHtmlById(
+  dom: jsdom.JSDOM,
+  id: string,
+  expected: string,
+) {
   const e = dom.window.document.getElementById(id);
   const c = e?.innerHTML;
   assert.strictEqual(c, expected);
 }
 
-export async function assertElementContainsHtml(f: File, id: string, expectedHtml: string) {
+export async function assertElementContainsHtml(
+  f: File,
+  id: string,
+  expectedHtml: string,
+) {
   const dom = await readAsDOM(f);
   const e = dom.window.document.getElementById(id);
   const c = e?.innerHTML;
@@ -244,7 +273,11 @@ export async function readAsDOM(f: File) {
   return new jsdom.JSDOM(renderedHtml);
 }
 
-export async function assertClasses(setupFn: () => File, testFn: (f: File) => void, assertClasses: [string, string, string]) {
+export async function assertClasses(
+  setupFn: () => File,
+  testFn: (f: File) => void,
+  assertClasses: [string, string, string],
+) {
   const ff = setupFn();
   const preDom = await readAsDOM(ff);
   testFn(ff);
@@ -254,7 +287,11 @@ export async function assertClasses(setupFn: () => File, testFn: (f: File) => vo
   assertElementsById(postDom, assertClasses[0], assertClasses[2]);
 }
 
-export async function assertHtml(setupFn: () => File, testFn: (f: File) => void, assertClasses: [string, string]) {
+export async function assertHtml(
+  setupFn: () => File,
+  testFn: (f: File) => void,
+  assertClasses: [string, string],
+) {
   const ff = setupFn();
   testFn(ff);
   const postDom = await readAsDOM(ff);
@@ -262,13 +299,23 @@ export async function assertHtml(setupFn: () => File, testFn: (f: File) => void,
   assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
-export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): editorEvent {
-  return { key: k, modKey: { shift: !!shift, control: !!control, alt: !!alt }, type: "key", target: "frame" };
+export function key(
+  k: string,
+  shift?: boolean,
+  control?: boolean,
+  alt?: boolean,
+): editorEvent {
+  return {
+    key: k,
+    modKey: { shift: !!shift, control: !!control, alt: !!alt },
+    type: "key",
+    target: "frame",
+  };
 }
 
 export async function activate(docUri: vscode.Uri) {
   // The extensionId is `publisher.name` from package.json
-  const ext = vscode.extensions.getExtension('undefined_publisher.elan')!;
+  const ext = vscode.extensions.getExtension("undefined_publisher.elan")!;
 
   if (!ext) {
     const all = vscode.extensions.all;
@@ -286,7 +333,7 @@ export async function activate(docUri: vscode.Uri) {
 }
 
 async function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 //Keys
@@ -342,23 +389,30 @@ export function del() {
   return key("Delete");
 }
 export function ctrl_del() {
-  return key("Delete",false,true);
+  return key("Delete", false, true);
 }
 export function ctrl_d() {
-  return key("d",false,true);
+  return key("d", false, true);
 }
 export function shift_ins() {
   return key("Insert", true);
 }
 export function ctrl_x() {
-  return key("x",false,true);
+  return key("x", false, true);
 }
 export function ctrl_v() {
-  return key("v",false,true);
+  return key("v", false, true);
 }
 
-export function testNodeParse(node: ParseNode, text: string, status: ParseStatus,
-  matchedText: string, remainingText: string, source = "", html = "") {
+export function testNodeParse(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  source = "",
+  html = "",
+) {
   node.parseText(text);
   assert.equal(node.status, status);
   if (matchedText !== "") {
@@ -373,12 +427,16 @@ export function testNodeParse(node: ParseNode, text: string, status: ParseStatus
   }
 }
 
-export function testCompletion(node: ParseNode, text: string, status: ParseStatus, completion: string) {
+export function testCompletion(
+  node: ParseNode,
+  text: string,
+  status: ParseStatus,
+  completion: string,
+) {
   node.parseText(text);
   assert.equal(node.status, status);
   assert.equal(node.getCompletionAsHtml(), completion);
 }
-
 
 export const intType = IntType.Instance;
 export const floatType = FloatType.Instance;
@@ -389,54 +447,98 @@ export const unknownType = UnknownType.Instance;
 const stubIntSymbol = {
   symbolId: "a",
   symbolType: () => intType,
-  symbolScope : SymbolScope.unknown
+  symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubFloatSymbol = {
   symbolId: "b",
   symbolType: () => floatType,
-  symbolScope : SymbolScope.unknown
+  symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubStringSymbol = {
   symbolId: "bar",
   symbolType: () => stringType,
-  symbolScope : SymbolScope.unknown
+  symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubBoolSymbol = {
   symbolId: "bar",
   symbolType: () => boolType,
-  symbolScope : SymbolScope.unknown
+  symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubClassSymbol = {
   symbolId: "p",
   symbolType: () => new ClassType("p"),
-  symbolScope : SymbolScope.unknown
+  symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubHolder = {
   resolveSymbol(id, transforms, initialScope): ElanSymbol {
     switch (id) {
-      case "a": return stubIntSymbol;
-      case "b": return stubFloatSymbol;
-      case "c": return stubFloatSymbol;
-      case "x": return stubIntSymbol;
-      case 'foo': return stubIntSymbol;
-      case 'bar': return stubStringSymbol;
-      case 'boo': return stubBoolSymbol;
-      case 'reduce': return stubIntSymbol;
-      case "p": return stubClassSymbol;
-      case 'isBefore': return stubBoolSymbol;
-      case 'betterOf': return stubStringSymbol;
-      case "attempt": return stubBoolSymbol;
-      case "target": return stubStringSymbol;
-      case "first": return stubIntSymbol;
-      case "lst": return { symbolId: "", symbolType: () => new ListType(intType), symbolScope : SymbolScope.unknown };
-      case "lst1": return { symbolId: "", symbolType: () => new ListType(stringType), symbolScope : SymbolScope.unknown };
-      case "simpleGeneric": return { symbolId: "", symbolType: () => new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false), symbolScope : SymbolScope.unknown};
-      case "getItem": return { symbolId: "", symbolType: () => new FunctionType([new ListType(new GenericParameterType("T"))], new GenericParameterType("T"), false), symbolScope : SymbolScope.unknown};
+      case "a":
+        return stubIntSymbol;
+      case "b":
+        return stubFloatSymbol;
+      case "c":
+        return stubFloatSymbol;
+      case "x":
+        return stubIntSymbol;
+      case "foo":
+        return stubIntSymbol;
+      case "bar":
+        return stubStringSymbol;
+      case "boo":
+        return stubBoolSymbol;
+      case "reduce":
+        return stubIntSymbol;
+      case "p":
+        return stubClassSymbol;
+      case "isBefore":
+        return stubBoolSymbol;
+      case "betterOf":
+        return stubStringSymbol;
+      case "attempt":
+        return stubBoolSymbol;
+      case "target":
+        return stubStringSymbol;
+      case "first":
+        return stubIntSymbol;
+      case "lst":
+        return {
+          symbolId: "",
+          symbolType: () => new ListType(intType),
+          symbolScope: SymbolScope.unknown,
+        };
+      case "lst1":
+        return {
+          symbolId: "",
+          symbolType: () => new ListType(stringType),
+          symbolScope: SymbolScope.unknown,
+        };
+      case "simpleGeneric":
+        return {
+          symbolId: "",
+          symbolType: () =>
+            new FunctionType(
+              [new GenericParameterType("T")],
+              new GenericParameterType("T"),
+              false,
+            ),
+          symbolScope: SymbolScope.unknown,
+        };
+      case "getItem":
+        return {
+          symbolId: "",
+          symbolType: () =>
+            new FunctionType(
+              [new ListType(new GenericParameterType("T"))],
+              new GenericParameterType("T"),
+              false,
+            ),
+          symbolScope: SymbolScope.unknown,
+        };
     }
 
     return UnknownSymbol.Instance;
@@ -446,10 +548,16 @@ const stubHolder = {
 export const stubField = {
   getHolder() {
     return stubHolder;
-  }
+  },
 } as Field;
 
-export function testAST(node: ParseNode, field: Field, text: string, astAsString: string, st: SymbolType) {
+export function testAST(
+  node: ParseNode,
+  field: Field,
+  text: string,
+  astAsString: string,
+  st: SymbolType,
+) {
   node.parseText(text);
   if (node.status === ParseStatus.valid) {
     const ast = transform(node, "", field.getHolder() as Scope);

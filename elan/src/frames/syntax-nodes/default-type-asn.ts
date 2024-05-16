@@ -5,25 +5,28 @@ import { AstNode } from "../interfaces/ast-node";
 import { TypeAsn } from "./type-asn";
 
 export class DefaultTypeAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly type: TypeAsn,
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly type: TypeAsn, public readonly fieldId: string, scope: Scope) {
-        super();
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors.concat(this.type.aggregateCompileErrors());
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors.concat(this.type.aggregateCompileErrors());
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return this.type.renderAsDefaultObjectCode();
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return this.type.renderAsDefaultObjectCode();
-    }
+  symbolType() {
+    return this.type.symbolType();
+  }
 
-    symbolType() {
-        return this.type.symbolType();
-    }
-
-    toString() {
-        return `Default (${this.type})`;
-    }
+  toString() {
+    return `Default (${this.type})`;
+  }
 }

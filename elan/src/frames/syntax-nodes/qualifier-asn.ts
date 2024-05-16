@@ -9,46 +9,53 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
 export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
+  constructor(
+    public readonly value: AstIdNode,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(public readonly value: AstIdNode, public readonly fieldId: string, private readonly scope: Scope) {
-        super();
+  compileErrors: CompileError[] = [];
+
+  aggregateCompileErrors(): CompileError[] {
+    const q = this.value.aggregateCompileErrors();
+    return this.compileErrors.concat(q);
+  }
+
+  compile(): string {
+    const s = this.compileAsParameter();
+    return s === "" ? "" : `${s}.`;
+  }
+
+  compileAsParameter(): string {
+    this.compileErrors = [];
+    const s = this.value.compile();
+
+    if (s === globalKeyword) {
+      return "";
     }
 
-    compileErrors: CompileError[] = [];
+    return `${s}`;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        const q = this.value.aggregateCompileErrors();
-        return this.compileErrors.concat(q);
+  symbolType() {
+    const id = this.value.id;
+    return id
+      ? this.scope
+          .resolveSymbol(id, transforms(), this.scope)
+          .symbolType(transforms())
+      : UnknownType.Instance;
+  }
+
+  toString() {
+    const s = this.value.toString();
+
+    if (s === globalKeyword) {
+      return "";
     }
 
-    compile(): string {
-        const s = this.compileAsParameter();
-        return s === "" ? "" : `${s}.`;
-    }
-
-    compileAsParameter(): string {
-        this.compileErrors = [];
-        const s = this.value.compile();
-
-        if (s === globalKeyword) {
-            return "";
-        }
-
-        return `${s}`;
-    }
-
-    symbolType() {
-        const id = this.value.id;
-        return id ? this.scope.resolveSymbol(id, transforms(), this.scope).symbolType(transforms()) : UnknownType.Instance;;
-    }
-
-    toString() {
-        const s = this.value.toString();
-
-        if (s === globalKeyword) {
-            return "";
-        }
-
-        return `${s}.`;
-    }
+    return `${s}.`;
+  }
 }

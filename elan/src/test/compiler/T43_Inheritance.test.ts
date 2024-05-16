@@ -1,10 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
-suite('T43_Inheritance', () => {
-
-  test('Pass_DefineAbstractClassAndInheritFromIt', async () => {
+suite("T43_Inheritance", () => {
+  test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -108,7 +117,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -117,7 +131,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test('Pass_InheritFromMoreThanOneAbstractClass', async () => {
+  test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -231,7 +245,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -240,7 +259,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test('Pass_SuperclassesCanDefineSameMember', async () => {
+  test("Pass_SuperclassesCanDefineSameMember", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -361,7 +380,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -370,7 +394,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test('Fail_CannotInheritFromConcreteClass', async () => {
+  test("Fail_CannotInheritFromConcreteClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -397,16 +421,19 @@ class Bar inherits Foo
 
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
   });
 
-  test('Fail_AbstractClassCannotInheritFromConcreteClass', async () => {
+  test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -430,16 +457,19 @@ abstract class Bar inherits Foo
     abstract property p2 as Int
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
   });
 
-  test('Fail_MustImplementAllInheritedMethods', async () => {
+  test("Fail_MustImplementAllInheritedMethods", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -467,19 +497,23 @@ class Bar inherits Foo
     end function
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Class Bar must implement Class Foo.p2",
       "Class Bar must implement Class Foo.setP1",
-      "Class Bar must implement Class Foo.product"]);
+      "Class Bar must implement Class Foo.product",
+    ]);
   });
 
-  test('Fail_MustCorrectlyImplementAllInheritedMethods', async () => {
+  test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -515,19 +549,23 @@ class Bar inherits Foo
     end function
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Expression must be Int",
       "Expression must be Procedure (Int)",
-      "Expression must be Function () : Int"]);
+      "Expression must be Function () : Int",
+    ]);
   });
 
-  test('Fail_ImplementedMethodMustHaveSameSignature', async () => {
+  test("Fail_ImplementedMethodMustHaveSameSignature", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -564,17 +602,19 @@ class Bar inherits Foo
     end function
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Function () : Int"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Function () : Int"]);
   });
 
-  test('Fail_AbstractClassDefinesMethodBody', async () => {
+  test("Fail_AbstractClassDefinesMethodBody", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -592,13 +632,18 @@ abstract class Foo
     abstract function product() return Int
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test('Fail_MissingAbstractProperty', async () => {
+  ignore_test("Fail_MissingAbstractProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -609,13 +654,18 @@ abstract class Foo
   property p1 as Int
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_MissingAbstractFunction', async () => {
+  test("Fail_MissingAbstractFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -626,13 +676,18 @@ abstract class Foo
     function product() return Int
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_MissingAbstractProcedure', async () => {
+  test("Fail_MissingAbstractProcedure", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -643,13 +698,18 @@ abstract class Foo
   procedure setP1(v as Int)
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_CannotInstantiateAbstractClass', async () => {
+  test("Fail_CannotInstantiateAbstractClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -661,9 +721,12 @@ abstract class Bar
     abstract property p2 as Int
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

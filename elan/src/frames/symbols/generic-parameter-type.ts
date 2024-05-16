@@ -1,12 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class GenericParameterType implements SymbolType {
+  constructor(public id: string) {}
 
-    constructor(public id: string) {
-
-    }
-
-    get name() {
-        return `Generic Parameter ${this.id}`;
-    }
+  get name() {
+    return `Generic Parameter ${this.id}`;
+  }
 }

@@ -1,12 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class ClassType implements SymbolType {
+  constructor(public className: string) {}
 
-    constructor(public className: string) {
-
-    }
-
-    get name() {
-        return `Class ${this.className.trim()}`;
-    }
+  get name() {
+    return `Class ${this.className.trim()}`;
+  }
 }

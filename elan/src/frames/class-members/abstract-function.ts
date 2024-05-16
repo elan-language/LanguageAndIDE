@@ -14,78 +14,81 @@ import { Parent } from "../interfaces/parent";
 import { abstractFunctionKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
-    isAbstract = true;
-    isMember: boolean = true;
-    public name : IdentifierField;
-    public params: ParamList;
-    public returnType: TypeField;
-    private class: ClassFrame;
-   
-    constructor(parent: Parent) {
-        super(parent);
-        this.class = parent as ClassFrame;
-        this.name = new IdentifierField(this);
-        this.params = new ParamList(this);
-        this.returnType = new TypeField(this);
-        this.returnType.setPlaceholder("return type");
-    }
-    initialKeywords(): string {
-        return abstractFunctionKeywords;
-    }
-    getFields(): Field[] {
-        return [this.name, this.params, this.returnType];
-    }
+export class AbstractFunction
+  extends AbstractFrame
+  implements Member, ElanSymbol
+{
+  isAbstract = true;
+  isMember: boolean = true;
+  public name: IdentifierField;
+  public params: ParamList;
+  public returnType: TypeField;
+  private class: ClassFrame;
 
-    getIdPrefix(): string {
-        return 'func';
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.class = parent as ClassFrame;
+    this.name = new IdentifierField(this);
+    this.params = new ParamList(this);
+    this.returnType = new TypeField(this);
+    this.returnType.setPlaceholder("return type");
+  }
+  initialKeywords(): string {
+    return abstractFunctionKeywords;
+  }
+  getFields(): Field[] {
+    return [this.name, this.params, this.returnType];
+  }
 
-    public override indent(): string {
-        return singleIndent();
-    }
+  getIdPrefix(): string {
+    return "func";
+  }
 
-    renderAsHtml(): string {
-        return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+  public override indent(): string {
+    return singleIndent();
+  }
+
+  renderAsHtml(): string {
+    return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) return ${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}</function>
 `;
-    }
+  }
 
-    public override renderAsSource() : string {
-        return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) return ${this.returnType.renderAsSource()}\r
+  public override renderAsSource(): string {
+    return `${this.indent()}abstract function ${this.name.renderAsSource()}(${this.params.renderAsSource()}) return ${this.returnType.renderAsSource()}\r
 `;
-    }
+  }
 
-    public override compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        const name = this.name.compile(transforms);
-        if (name !== "asString") {
-            return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+  public override compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const name = this.name.compile(transforms);
+    if (name !== "asString") {
+      return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
 ${this.indent()}}\r
 `;
-        }
-        return "";
     }
+    return "";
+  }
 
-    parseFrom(source: CodeSource): void {
-        source.remove("abstract function ");
-        this.name.parseFrom(source);
-        source.remove("(");
-        this.params.parseFrom(source);
-        source.remove(") return ");
-        this.returnType.parseFrom(source);
-    }
+  parseFrom(source: CodeSource): void {
+    source.remove("abstract function ");
+    this.name.parseFrom(source);
+    source.remove("(");
+    this.params.parseFrom(source);
+    source.remove(") return ");
+    this.returnType.parseFrom(source);
+  }
 
-    get symbolId() {
-        return this.name.text;
-    }
+  get symbolId() {
+    return this.name.text;
+  }
 
-    symbolType(transforms: Transforms) {
-        const pt = this.params.symbolTypes(transforms);
-        const rt = this.returnType.symbolType(transforms);
-        return new FunctionType(pt, rt, false);
-    }
+  symbolType(transforms: Transforms) {
+    const pt = this.params.symbolTypes(transforms);
+    const rt = this.returnType.symbolType(transforms);
+    return new FunctionType(pt, rt, false);
+  }
 
-    symbolScope = SymbolScope.property;
+  symbolScope = SymbolScope.property;
 }

@@ -1,11 +1,21 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T13_StringManipulation', () => {
-
-  test('Pass_AppendStrings', async () => {
+suite("T13_StringManipulation", () => {
+  test("Pass_AppendStrings", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -22,7 +32,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -31,7 +46,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello World!");
   });
 
-  test('Pass_AppendOrPrependChar', async () => {
+  test("Pass_AppendOrPrependChar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -44,7 +59,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -53,7 +73,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "_Hello!");
   });
 
-  test('Pass_AppendFloat', async () => {
+  test("Pass_AppendFloat", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -66,7 +86,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -75,7 +100,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello3.1");
   });
 
-  test('Pass_Indexing', async () => {
+  test("Pass_Indexing", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -90,7 +115,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -99,7 +129,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "c");
   });
 
-  test('Pass_Ranges', async () => {
+  test("Pass_Ranges", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -118,7 +148,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -127,7 +162,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bccdeab");
   });
 
-  test('Pass_EqualityTesting', async () => {
+  test("Pass_EqualityTesting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -152,7 +187,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -161,7 +201,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsefalsetruetruetruetrue");
   });
 
-  test('Pass_ComparisonMethods', async () => {
+  test("Pass_ComparisonMethods", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -184,7 +224,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -193,7 +238,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "falsetruetruetruetruefalse");
   });
 
-  test('Pass_UseAsStringExplicitly', async () => {
+  test("Pass_UseAsStringExplicitly", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -212,7 +257,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -221,7 +271,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5.5");
   });
 
-  test('Pass_Interpolation', async () => {
+  test("Pass_Interpolation", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -240,7 +290,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -250,7 +305,7 @@ return [main, _tests];}`;
   });
 
   // not supported also Pass_literalNewline
-  ignore_test('Pass_UseBracesInString', async () => {
+  ignore_test("Pass_UseBracesInString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -269,7 +324,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -278,7 +338,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
 
-  test('Pass_newLineConstant', async () => {
+  test("Pass_newLineConstant", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -293,7 +353,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -302,7 +367,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello \nWorld!");
   });
 
-  test('Pass_AppendStringToFloat', async () => {
+  test("Pass_AppendStringToFloat", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -317,7 +382,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -326,7 +396,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3.1Hello");
   });
 
-  test('Fail_IndexOutOfRange', async () => {
+  test("Fail_IndexOutOfRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -335,7 +405,12 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -343,7 +418,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test('Fail_ComparisonOperators', async () => {
+  test("Fail_ComparisonOperators", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -356,7 +431,12 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -366,11 +446,11 @@ end main
       "Cannot compare String and String",
       "Cannot compare String and String",
       "Cannot compare String and String",
-      "Cannot compare String and String"
+      "Cannot compare String and String",
     ]);
   });
 
-  test('Fail_CoerceNumberToString', async () => {
+  test("Fail_CoerceNumberToString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -380,13 +460,15 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Float to String"
-    ]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to String"]);
   });
-
 });

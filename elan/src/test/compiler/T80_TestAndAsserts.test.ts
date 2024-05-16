@@ -1,12 +1,21 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeIs, assertParses, assertStatusIsValid, assertTestObjectCodeExecutes, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { AssertOutcome } from "../../system";
 import { TestStatus } from "../../frames/status-enums";
 
-suite('Pass_PassingTest', () => {
-
-  test('Pass_PassingTest', async () => {
+suite("Pass_PassingTest", () => {
+  test("Pass_PassingTest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -41,20 +50,29 @@ _tests.push(["test10", (_outcomes) => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test10", [
-        new AssertOutcome(TestStatus.pass, "9", "9", "assert13"),
-        new AssertOutcome(TestStatus.pass, "16", "16", "assert22")
-      ]]]);
+      [
+        "test10",
+        [
+          new AssertOutcome(TestStatus.pass, "9", "9", "assert13"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "assert22"),
+        ],
+      ],
+    ]);
   });
 
-  test('Pass_FailingTest', async () => {
+  test("Pass_FailingTest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -85,20 +103,29 @@ _tests.push(["test10", (_outcomes) => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test10", [
-        new AssertOutcome(TestStatus.fail, "9", "10", "assert13"),
-        new AssertOutcome(TestStatus.pass, "16", "16", "assert16")
-      ]]]);
+      [
+        "test10",
+        [
+          new AssertOutcome(TestStatus.fail, "9", "10", "assert13"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "assert16"),
+        ],
+      ],
+    ]);
   });
 
-  test('Pass_VariousTestsOnAssert', async () => {
+  test("Pass_VariousTestsOnAssert", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -214,38 +241,68 @@ _tests.push(["test91", (_outcomes) => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [
-        new AssertOutcome(TestStatus.pass, "List [3, 2, 4, 0]", "List [3, 2, 4, 0]", "assert12")
-      ]],
-      ["test15", [
-        new AssertOutcome(TestStatus.pass, "Dictionary [2:b, 3:a, 4:c]", "Dictionary [2:b, 3:a, 4:c]", "assert24")
-      ]],
-      ["test27", [
-        new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "assert36")
-      ]],
-      ["test39", [
-        new AssertOutcome(TestStatus.pass, "0", "0", "assert48")
-      ]],
-      ["test54", [
-        new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")
-      ]],
-      ["test79", [
-        new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert88")
-      ]],
-      ["test91", [
-        new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert100")
-      ]]
+      [
+        "test3",
+        [
+          new AssertOutcome(
+            TestStatus.pass,
+            "List [3, 2, 4, 0]",
+            "List [3, 2, 4, 0]",
+            "assert12",
+          ),
+        ],
+      ],
+      [
+        "test15",
+        [
+          new AssertOutcome(
+            TestStatus.pass,
+            "Dictionary [2:b, 3:a, 4:c]",
+            "Dictionary [2:b, 3:a, 4:c]",
+            "assert24",
+          ),
+        ],
+      ],
+      [
+        "test27",
+        [
+          new AssertOutcome(
+            TestStatus.pass,
+            "Hello World",
+            "Hello World",
+            "assert36",
+          ),
+        ],
+      ],
+      ["test39", [new AssertOutcome(TestStatus.pass, "0", "0", "assert48")]],
+      [
+        "test54",
+        [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "assert60")],
+      ],
+      [
+        "test79",
+        [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert88")],
+      ],
+      [
+        "test91",
+        [new AssertOutcome(TestStatus.pass, "a Foo", "a Foo", "assert100")],
+      ],
     ]);
   });
 
-  test('Pass_TestUseOfToPrecisionForFloats', async () => {
+  test("Pass_TestUseOfToPrecisionForFloats", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -307,29 +364,38 @@ _tests.push(["test39", (_outcomes) => {
 }]);
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [
-        new AssertOutcome(TestStatus.pass, "0.33", "0.33", "assert12")
-      ]],
-      ["test15", [
-        new AssertOutcome(TestStatus.pass, "1.00", "1.00", "assert24")
-      ]],
-      ["test27", [
-        new AssertOutcome(TestStatus.pass, "1.3", "1.3", "assert36")
-      ]],
-      ["test39", [
-        new AssertOutcome(TestStatus.pass, "4.4e+3", "4.4e+3", "assert48")
-      ]]
+      [
+        "test3",
+        [new AssertOutcome(TestStatus.pass, "0.33", "0.33", "assert12")],
+      ],
+      [
+        "test15",
+        [new AssertOutcome(TestStatus.pass, "1.00", "1.00", "assert24")],
+      ],
+      [
+        "test27",
+        [new AssertOutcome(TestStatus.pass, "1.3", "1.3", "assert36")],
+      ],
+      [
+        "test39",
+        [new AssertOutcome(TestStatus.pass, "4.4e+3", "4.4e+3", "assert48")],
+      ],
     ]);
   });
 
-  test('Fail_expressionForExpected', async () => {
+  test("Fail_expressionForExpected", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -344,13 +410,18 @@ test square
 end test
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_AssertOutsideAtest', async () => {
+  test("Fail_AssertOutsideAtest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -362,13 +433,18 @@ function square(x as Float) return Float
 end function
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_callATest', async () => {
+  test("Fail_callATest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -383,14 +459,19 @@ test squareTest
   assert square(3) is 93
 end test
 `;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
 
-  test('Fail_useTestAsAReference', async () => {
+  test("Fail_useTestAsAReference", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -405,11 +486,15 @@ test squareTest
   assert square(3) is 93
 end test
 `;
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
-
 });

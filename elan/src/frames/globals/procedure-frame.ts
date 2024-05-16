@@ -14,64 +14,72 @@ import { procedureKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
-    public name: IdentifierField;
-    public params: ParamList;
-    file: File;
+export abstract class ProcedureFrame
+  extends FrameWithStatements
+  implements ElanSymbol, Scope
+{
+  public name: IdentifierField;
+  public params: ParamList;
+  file: File;
 
-    constructor(parent: Parent) {
-        super(parent);
-        this.file = parent as File;
-        this.name = new IdentifierField(this);
-        this.params = new ParamList(this);
-    }
-    initialKeywords(): string {
-        return procedureKeyword;
-    }
-    get symbolId() {
-        return this.name.text;
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.file = parent as File;
+    this.name = new IdentifierField(this);
+    this.params = new ParamList(this);
+  }
+  initialKeywords(): string {
+    return procedureKeyword;
+  }
+  get symbolId() {
+    return this.name.text;
+  }
 
-    abstract get symbolScope() : SymbolScope;
+  abstract get symbolScope(): SymbolScope;
 
-    symbolType(transforms : Transforms) {
-        const pt = this.params.symbolTypes(transforms);
-        return new ProcedureType(pt);
-    }
+  symbolType(transforms: Transforms) {
+    const pt = this.params.symbolTypes(transforms);
+    return new ProcedureType(pt);
+  }
 
-    getFields(): Field[] {
-        return [this.name, this.params];
-    }
+  getFields(): Field[] {
+    return [this.name, this.params];
+  }
 
-    getIdPrefix(): string {
-        return 'proc';
-    }
-    public renderAsHtml(): string {
-        return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+  getIdPrefix(): string {
+    return "proc";
+  }
+  public renderAsHtml(): string {
+    return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end procedure</keyword>
 </procedure>`;
-    }
+  }
 
-    parseTop(source: CodeSource): void {
-        source.remove("procedure ");
-        this.name.parseFrom(source);
-        source.remove("(");
-        this.params.parseFrom(source);
-        source.remove(")");
-    }
-    parseBottom(source: CodeSource): boolean {
-        return this.parseStandardEnding(source, "end procedure");
-    }
+  parseTop(source: CodeSource): void {
+    source.remove("procedure ");
+    this.name.parseFrom(source);
+    source.remove("(");
+    this.params.parseFrom(source);
+    source.remove(")");
+  }
+  parseBottom(source: CodeSource): boolean {
+    return this.parseStandardEnding(source, "end procedure");
+  }
 
-    resolveSymbol(id: string | undefined, transforms: Transforms,
-         initialScope: Frame): ElanSymbol {
-        if (this.name.text === id) {
-            return this as ElanSymbol;
-        }
-        const s = this.params.resolveSymbol(id, transforms, initialScope);
-
-        return s === UnknownSymbol.Instance ? super.resolveSymbol(id, transforms, initialScope) : s;
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    initialScope: Frame,
+  ): ElanSymbol {
+    if (this.name.text === id) {
+      return this as ElanSymbol;
     }
+    const s = this.params.resolveSymbol(id, transforms, initialScope);
+
+    return s === UnknownSymbol.Instance
+      ? super.resolveSymbol(id, transforms, initialScope)
+      : s;
+  }
 }

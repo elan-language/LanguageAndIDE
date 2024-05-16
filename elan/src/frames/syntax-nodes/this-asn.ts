@@ -6,26 +6,30 @@ import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private originalKeyword: string,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private originalKeyword : string,  public readonly fieldId: string, private readonly scope : Scope) {
-        super();
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors;
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return thisKeyword;
+  }
 
+  symbolType() {
+    return this.scope
+      .resolveSymbol(thisKeyword, transforms(), this.scope)
+      ?.symbolType(transforms());
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return thisKeyword;
-    }
-
-    symbolType() {
-        return this.scope.resolveSymbol(thisKeyword, transforms(), this.scope)?.symbolType(transforms());
-    }
-
-    toString() {
-        return this.originalKeyword;
-    }
+  toString() {
+    return this.originalKeyword;
+  }
 }

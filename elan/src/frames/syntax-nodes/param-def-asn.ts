@@ -5,26 +5,29 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
+  constructor(
+    public readonly id: string,
+    private readonly type: AstNode,
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(public readonly id: string, private readonly type: AstNode, public readonly fieldId: string, scope: Scope) {
-        super();
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors.concat(this.type.aggregateCompileErrors());
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors
-            .concat(this.type.aggregateCompileErrors());
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return `${this.id}`;
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return `${this.id}`;
-    }
+  symbolType() {
+    return this.type.symbolType();
+  }
 
-    symbolType() {
-        return this.type.symbolType();
-    }
-
-    toString() {
-        return `Param ${this.id} : ${this.type}`;
-    }
+  toString() {
+    return `Param ${this.id} : ${this.type}`;
+  }
 }

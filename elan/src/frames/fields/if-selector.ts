@@ -7,51 +7,50 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { Regexes } from "./regexes";
 
 export class IfSelector extends AbstractField {
+  protected placeholderIsCode: boolean = true;
+  private else: Else;
 
-    protected placeholderIsCode: boolean = true;
-    private else: Else;
+  constructor(holder: Else) {
+    super(holder);
+    this.else = holder;
+    this.setPlaceholder("if");
+    this.setOptional(true);
+    this.setParseStatus(ParseStatus.valid);
+    this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
+  }
 
-    constructor(holder: Else) {
-        super(holder);
-        this.else = holder;
-        this.setPlaceholder("if");
-        this.setOptional(true);
-        this.setParseStatus(ParseStatus.valid);
-        this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
+  initialiseRoot(): ParseNode {
+    throw new Error("Method not implemented.");
+  }
+  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => "";
+
+  parseFrom(source: CodeSource): void {
+    if (source.isMatchRegEx(Regexes.ifClause)) {
+      source.remove("if ");
+      this.else.setIfExtension(true);
     }
+  }
 
-    initialiseRoot(): ParseNode {
-        throw new Error("Method not implemented.");
+  getIdPrefix(): string {
+    return "elif";
+  }
+
+  indent(): string {
+    return "";
+  }
+
+  renderAsSource(): string {
+    return ``;
+  }
+
+  processKey(keyEvent: editorEvent): void {
+    const char = keyEvent.key;
+    const empty = this.text === "";
+    if (empty && char === "i") {
+      this.else.setIfExtension(true);
+      this.else.condition.select();
+      return;
     }
-    readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => "";
-
-    parseFrom(source: CodeSource): void {
-        if (source.isMatchRegEx(Regexes.ifClause)) {
-            source.remove("if ");
-            this.else.setIfExtension(true);
-        }
-    }
-
-    getIdPrefix(): string {
-        return 'elif';
-    }
-
-    indent(): string {
-        return "";
-    }
-
-    renderAsSource(): string {
-        return ``;
-    } 
-
-    processKey(keyEvent: editorEvent): void {
-        const char = keyEvent.key;
-        const empty = this.text ==="";
-        if (empty && (char ==="i")) {
-            this.else.setIfExtension(true);
-            this.else.condition.select();
-            return;
-        }
-        super.processKey(keyEvent);
-    }  
+    super.processKey(keyEvent);
+  }
 }

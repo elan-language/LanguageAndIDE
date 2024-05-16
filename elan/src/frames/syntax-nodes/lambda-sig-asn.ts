@@ -10,43 +10,50 @@ import { Transforms } from "./transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
+  constructor(
+    private readonly parameters: ParamDefAsn[],
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly parameters: ParamDefAsn[], public readonly fieldId: string, private readonly scope: Scope) {
-        super();
+  aggregateCompileErrors(): CompileError[] {
+    let cc: CompileError[] = [];
+    for (const i of this.parameters) {
+      cc = cc.concat(i.aggregateCompileErrors());
     }
+    return this.compileErrors.concat(cc);
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        let cc: CompileError[] = [];
-        for (const i of this.parameters) {
-            cc = cc.concat(i.aggregateCompileErrors());
-        }
-        return this.compileErrors.concat(cc);
+  symbolType() {
+    return UnknownType.Instance;
+  }
+
+  compile(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    scope: Scope,
+  ): ElanSymbol {
+    for (const p of this.parameters) {
+      if (p.id.trim() === id) {
+        return {
+          symbolId: id,
+          symbolType: () => p.symbolType(),
+          symbolScope: SymbolScope.local,
+        };
+      }
     }
+    return this.scope.resolveSymbol(id, transforms, this);
+  }
 
-    symbolType() {
-        return UnknownType.Instance;
-    }
+  toString() {
+    const pp = this.parameters.map((p) => p.toString()).join(", ");
 
-    compile(): string {
-        throw new Error("Method not implemented.");
-    }
-
-    resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
-        for (const p of this.parameters) {
-            if (p.id.trim() === id) {
-                return {
-                    symbolId: id,
-                    symbolType: () => p.symbolType(),
-                    symbolScope: SymbolScope.local
-                };
-            }
-        }
-        return this.scope.resolveSymbol(id, transforms, this);
-    }
-
-    toString() {
-        const pp = this.parameters.map(p => p.toString()).join(", ");
-
-        return `${pp}`;
-    }
+    return `${pp}`;
+  }
 }

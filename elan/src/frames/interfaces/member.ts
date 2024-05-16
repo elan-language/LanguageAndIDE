@@ -1,3 +1,3 @@
 export interface Member {
-    isMember : boolean;
+  isMember: boolean;
 }

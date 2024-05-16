@@ -1,4 +1,3 @@
-
 import { DictionaryType } from "../symbols/dictionary-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { unknownType } from "../../test/testHelpers";
@@ -11,46 +10,58 @@ import { KvpAsn } from "./kvp-asn";
 import { LiteralListAsn } from "./literal-list-asn";
 
 export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly list: LiteralListAsn,
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly list: LiteralListAsn, public readonly fieldId: string, scope: Scope) {
-        super();
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors.concat(this.list.aggregateCompileErrors());
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    const items = this.list.items as KvpAsn[];
+
+    const keys = items.map((kvp) => kvp.key.compile());
+    mustHaveUniqueKeys(keys, this.compileErrors, this.fieldId);
+
+    const first = items[0];
+
+    const ofKeyType = first.keySymbolType();
+    const ofValueType = first.symbolType();
+
+    for (const i of items) {
+      mustBeCompatibleType(
+        ofKeyType,
+        i.keySymbolType(),
+        this.compileErrors,
+        this.fieldId,
+      );
+      mustBeCompatibleType(
+        ofValueType,
+        i.symbolType(),
+        this.compileErrors,
+        this.fieldId,
+      );
     }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors
-            .concat(this.list.aggregateCompileErrors());
+    const itemList = this.list.items.map((p) => p.compile()).join(", ");
+    return `{${itemList}}`;
+  }
+
+  symbolType() {
+    const first = this.list.items[0] as KvpAsn | undefined;
+    if (first) {
+      return new DictionaryType(first.keySymbolType(), first.symbolType());
     }
+    return new DictionaryType(UnknownType.Instance, UnknownType.Instance);
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        const items = this.list.items as KvpAsn[];
-
-        const keys = items.map(kvp => kvp.key.compile());
-        mustHaveUniqueKeys(keys, this.compileErrors, this.fieldId);
-
-        const first = items[0];
-
-        const ofKeyType = first.keySymbolType();
-        const ofValueType = first.symbolType();
-
-        for (const i of items) {
-            mustBeCompatibleType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
-            mustBeCompatibleType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
-        }
-
-        const itemList = this.list.items.map(p => p.compile()).join(", ");
-        return `{${itemList}}`;
-    }
-
-    symbolType() {
-        const first = this.list.items[0] as KvpAsn | undefined;
-        if (first) {
-            return new DictionaryType(first.keySymbolType(), first.symbolType());
-        }
-        return new DictionaryType(UnknownType.Instance, UnknownType.Instance);
-    }
-
-    toString() {
-        return `${this.list}`;
-    }
+  toString() {
+    return `${this.list}`;
+  }
 }

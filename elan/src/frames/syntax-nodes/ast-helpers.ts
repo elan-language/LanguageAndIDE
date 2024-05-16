@@ -6,24 +6,24 @@ import { transform, transformMany } from "./ast-visitor";
 import { Transforms } from "./transforms";
 
 export function InFunctionScope(start: Scope): boolean {
-    if (start instanceof FunctionFrame) {
-        return true;
-    }
+  if (start instanceof FunctionFrame) {
+    return true;
+  }
 
-    if (start instanceof FileImpl) {
-        return false;
-    }
-
-    if (isFrame(start)) {
-        return InFunctionScope(start.getParent());
-    }
-
+  if (start instanceof FileImpl) {
     return false;
+  }
+
+  if (isFrame(start)) {
+    return InFunctionScope(start.getParent());
+  }
+
+  return false;
 }
 
 export function transforms(): Transforms {
-    return {
-        transform: transform,
-        transformMany: transformMany
-    };
+  return {
+    transform: transform,
+    transformMany: transformMany,
+  };
 }

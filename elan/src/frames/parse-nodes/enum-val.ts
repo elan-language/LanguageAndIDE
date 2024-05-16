@@ -5,15 +5,15 @@ import { TypeSimpleNode } from "./type-simple-node";
 import { DOT } from "../symbols";
 
 export class EnumVal extends AbstractSequence {
-    type: TypeSimpleNode | undefined;
-    val: IdentifierNode | undefined;
+  type: TypeSimpleNode | undefined;
+  val: IdentifierNode | undefined;
 
-    parseText(text: string): void {
-        this.type = new TypeSimpleNode();
-        this.addElement(this.type);
-        this.addElement(new SymbolNode(DOT));
-        this.val = new IdentifierNode();
-        this.addElement(this.val);
-        super.parseText(text.trimStart());
-    }
+  parseText(text: string): void {
+    this.type = new TypeSimpleNode();
+    this.addElement(this.type);
+    this.addElement(new SymbolNode(DOT));
+    this.val = new IdentifierNode();
+    this.addElement(this.val);
+    super.parseText(text.trimStart());
+  }
 }

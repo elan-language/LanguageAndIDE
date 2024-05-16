@@ -1,3 +1,3 @@
 export interface SymbolType {
-    name: string;
+  name: string;
 }

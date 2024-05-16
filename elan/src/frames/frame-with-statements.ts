@@ -10,187 +10,266 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { parentHelper_addChildAfter, parentHelper_addChildBefore, parentHelper_aggregateCompileErrorsOfChildren, parentHelper_getChildAfter, parentHelper_getChildBefore, parentHelper_getChildRange, parentHelper_getFirstChild, parentHelper_getFirstSelectorAsDirectChild, parentHelper_getLastChild, parentHelper_insertOrGotoChildSelector, parentHelper_moveSelectedChildrenDownOne, parentHelper_moveSelectedChildrenUpOne, parentHelper_removeChild, parentHelper_renderChildrenAsHtml, parentHelper_compileChildren, parentHelper_renderChildrenAsSource, parentHelper_selectFirstChild, parentHelper_selectLastField, parentHelper_worstCompileStatusOfChildren, parentHelper_worstParseStatusOfChildren } from "./parent-helpers";
+import {
+  parentHelper_addChildAfter,
+  parentHelper_addChildBefore,
+  parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_getChildAfter,
+  parentHelper_getChildBefore,
+  parentHelper_getChildRange,
+  parentHelper_getFirstChild,
+  parentHelper_getFirstSelectorAsDirectChild,
+  parentHelper_getLastChild,
+  parentHelper_insertOrGotoChildSelector,
+  parentHelper_moveSelectedChildrenDownOne,
+  parentHelper_moveSelectedChildrenUpOne,
+  parentHelper_removeChild,
+  parentHelper_renderChildrenAsHtml,
+  parentHelper_compileChildren,
+  parentHelper_renderChildrenAsSource,
+  parentHelper_selectFirstChild,
+  parentHelper_selectLastField,
+  parentHelper_worstCompileStatusOfChildren,
+  parentHelper_worstParseStatusOfChildren,
+} from "./parent-helpers";
 import { CompileStatus, ParseStatus } from "./status-enums";
 import { StatementSelector } from "./statements/statement-selector";
 import { CompileError } from "./compile-error";
 import { Transforms } from "./syntax-nodes/transforms";
 import { helper_getCompileStatus } from "./helpers";
 
-export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible{
-    isCollapsible: boolean = true;
-    isParent: boolean = true;
-    private _children: Array<Frame> = new Array<Frame>();
+export abstract class FrameWithStatements
+  extends AbstractFrame
+  implements Parent, Collapsible
+{
+  isCollapsible: boolean = true;
+  isParent: boolean = true;
+  private _children: Array<Frame> = new Array<Frame>();
 
-    constructor(parent: Parent) {
-        super(parent);   
-        this.getChildren().push(new StatementSelector(this));
-    }
-   
-    getProfile(): Profile {
-        return this.getFile().getProfile();
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.getChildren().push(new StatementSelector(this));
+  }
 
-    protected setClasses() {
-        super.setClasses();
-        this.pushClass(true,"multiline");
-    };
+  getProfile(): Profile {
+    return this.getFile().getProfile();
+  }
 
-    getFactory(): StatementFactory {
-        return this.getParent().getFactory();
-    }
+  protected setClasses() {
+    super.setClasses();
+    this.pushClass(true, "multiline");
+  }
 
-    aggregateParseStatus(): void {
-        const worstOfFieldsOrChildren = Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
-        this.setParseStatus(worstOfFieldsOrChildren);
-    }
-    getParseStatus(): ParseStatus { //TODO: to be eliminated in favour of readParseStatus on superclass
-        return Math.min(this.worstParseStatusOfFields(), parentHelper_worstParseStatusOfChildren(this));
-    }
+  getFactory(): StatementFactory {
+    return this.getParent().getFactory();
+  }
 
-    aggregateCompileStatus(): void {
-        this.setCompileStatus(Math.min(this.worstCompileStatusOfFields(), helper_getCompileStatus(this.compileErrors)));
-    }
-    resetCompileStatus(): void {
-       if (this.readCompileStatus() !== CompileStatus.default) {
-        this.getChildren().forEach(f => f.resetCompileStatus());
-        super.resetCompileStatus();
-       }
-    }
-    getCompileStatus() : CompileStatus { //TODO: to be eliminated in favour of methods above
-        return Math.min(super.getCompileStatus(), parentHelper_worstCompileStatusOfChildren(this));
-    }
+  aggregateParseStatus(): void {
+    const worstOfFieldsOrChildren = Math.min(
+      this.worstParseStatusOfFields(),
+      parentHelper_worstParseStatusOfChildren(this),
+    );
+    this.setParseStatus(worstOfFieldsOrChildren);
+  }
+  getParseStatus(): ParseStatus {
+    //TODO: to be eliminated in favour of readParseStatus on superclass
+    return Math.min(
+      this.worstParseStatusOfFields(),
+      parentHelper_worstParseStatusOfChildren(this),
+    );
+  }
 
-    getChildren(): Frame[] {
-        return this._children;
+  aggregateCompileStatus(): void {
+    this.setCompileStatus(
+      Math.min(
+        this.worstCompileStatusOfFields(),
+        helper_getCompileStatus(this.compileErrors),
+      ),
+    );
+  }
+  resetCompileStatus(): void {
+    if (this.readCompileStatus() !== CompileStatus.default) {
+      this.getChildren().forEach((f) => f.resetCompileStatus());
+      super.resetCompileStatus();
     }
+  }
+  getCompileStatus(): CompileStatus {
+    //TODO: to be eliminated in favour of methods above
+    return Math.min(
+      super.getCompileStatus(),
+      parentHelper_worstCompileStatusOfChildren(this),
+    );
+  }
 
-    minimumNumberOfChildrenExceeded(): boolean {
-        return this.getChildren().length > 1;
+  getChildren(): Frame[] {
+    return this._children;
+  }
+
+  minimumNumberOfChildrenExceeded(): boolean {
+    return this.getChildren().length > 1;
+  }
+
+  expandCollapse(): void {
+    if (this.isCollapsed()) {
+      this.expand();
+    } else {
+      this.collapse();
     }
+  }
 
-    expandCollapse(): void {
-        if (this.isCollapsed()) {
-            this.expand();
-        } else {
-            this.collapse();
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
+  }
+  insertOrGotoChildSelector(after: boolean, child: Frame) {
+    parentHelper_insertOrGotoChildSelector(this, after, child);
+  }
+
+  insertSelectorAfterLastField(): void {
+    //intende to overridden byFrameWithStatements
+    const firstChild = this._children[0];
+    if ("isSelector" in firstChild) {
+      firstChild.select(true, false);
+    } else {
+      const selector = this.newChildSelector();
+      this.addChildBefore(selector, firstChild);
+      selector.select(true, false);
+    }
+  }
+  removeChild(child: Frame): void {
+    parentHelper_removeChild(this, child);
+  }
+  getFirstChild(): Frame {
+    return parentHelper_getFirstChild(this);
+  }
+  getLastChild(): Frame {
+    return parentHelper_getLastChild(this);
+  }
+  getChildAfter(child: Frame): Frame {
+    return parentHelper_getChildAfter(this, child);
+  }
+  getChildBefore(child: Frame): Frame {
+    return parentHelper_getChildBefore(this, child);
+  }
+  getChildRange(first: Frame, last: Frame): Frame[] {
+    return parentHelper_getChildRange(this, first, last);
+  }
+  getFirstSelectorAsDirectChild(): AbstractSelector {
+    return parentHelper_getFirstSelectorAsDirectChild(this);
+  }
+  selectFirstChild(multiSelect: boolean): boolean {
+    return parentHelper_selectFirstChild(this, multiSelect);
+  }
+  addChildBefore(child: Frame, before: Frame): void {
+    parentHelper_addChildBefore(this, child, before);
+  }
+  addChildAfter(child: Frame, before: Frame): void {
+    parentHelper_addChildAfter(this, child, before);
+  }
+  selectLastField(): boolean {
+    return parentHelper_selectLastField(this);
+  }
+
+  protected renderChildrenAsHtml(): string {
+    return parentHelper_renderChildrenAsHtml(this);
+  }
+  protected renderChildrenAsSource(): string {
+    return parentHelper_renderChildrenAsSource(this);
+  }
+  protected compileChildren(transforms: Transforms): string {
+    return parentHelper_compileChildren(this, transforms);
+  }
+
+  selectFirstField(): boolean {
+    let result = super.selectFirstField();
+    if (!result) {
+      result = this.getChildren()[0].selectFirstField();
+    }
+    return result;
+  }
+
+  selectFieldBefore(current: Field): void {
+    if (this.getFields().includes(current)) {
+      super.selectFieldBefore(current);
+    } else {
+      this.getLastChild().selectLastField();
+    }
+  }
+
+  selectFirstChildIfAny(): boolean {
+    let result = false;
+    if (this.getChildren().length > 0) {
+      this.getChildren()[0].select(true, false);
+      result = true;
+    }
+    return result;
+  }
+
+  moveSelectedChildrenUpOne(): void {
+    parentHelper_moveSelectedChildrenUpOne(this);
+  }
+  moveSelectedChildrenDownOne(): void {
+    parentHelper_moveSelectedChildrenDownOne(this);
+  }
+
+  parseFrom(source: CodeSource): void {
+    this.parseTop(source);
+    while (!this.parseBottom(source)) {
+      if (source.isMatchRegEx(Regexes.newLine)) {
+        source.removeRegEx(Regexes.newLine, false);
+      } else {
+        this.getFirstSelectorAsDirectChild().parseFrom(source);
+      }
+      source.removeIndent();
+    }
+  }
+
+  abstract parseTop(source: CodeSource): void;
+  abstract parseBottom(source: CodeSource): boolean;
+
+  protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
+    source.removeIndent();
+    let result = false;
+    if (source.isMatch(keywords)) {
+      source.remove(keywords);
+      result = true;
+    }
+    return result;
+  }
+
+  protected compileStatements(transforms: Transforms): string {
+    let result = "";
+    if (this._children.length > 0) {
+      const ss: Array<string> = [];
+      for (const frame of this._children.filter((s) => !("isSelector" in s))) {
+        ss.push(frame.compile(transforms));
+      }
+      result = ss.join("\r\n");
+    }
+    return result;
+  }
+
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    initialScope: Frame,
+  ): ElanSymbol {
+    const fst = this.getFirstChild();
+    let range = this.getChildRange(fst, initialScope);
+    if (range.length > 1) {
+      range = range.slice(0, range.length - 1);
+
+      for (const f of range) {
+        if (isSymbol(f) && f.symbolId === id) {
+          return f;
         }
+      }
     }
 
-    newChildSelector(): AbstractSelector {
-        return new StatementSelector(this);
-    }
-    insertOrGotoChildSelector(after: boolean, child: Frame) {parentHelper_insertOrGotoChildSelector(this, after, child);}
+    return this.getParent().resolveSymbol(id, transforms, this);
+  }
 
-    insertSelectorAfterLastField(): void { //intende to overridden byFrameWithStatements 
-        const firstChild = this._children[0];
-        if ("isSelector" in firstChild) {
-            firstChild.select(true, false);
-        } else {
-            const selector = this.newChildSelector();
-            this.addChildBefore(selector, firstChild);
-            selector.select(true, false);
-        }
-    }
-    removeChild(child: Frame): void { parentHelper_removeChild(this, child);};
-    getFirstChild(): Frame {return parentHelper_getFirstChild(this); }
-    getLastChild(): Frame {return parentHelper_getLastChild(this); }
-    getChildAfter(child: Frame): Frame {return parentHelper_getChildAfter(this, child);}
-    getChildBefore(child: Frame): Frame {return parentHelper_getChildBefore(this, child);}
-    getChildRange(first: Frame, last: Frame): Frame[] {return parentHelper_getChildRange(this, first, last); }
-    getFirstSelectorAsDirectChild() : AbstractSelector {return parentHelper_getFirstSelectorAsDirectChild(this);}
-    selectFirstChild(multiSelect: boolean): boolean {return parentHelper_selectFirstChild(this, multiSelect);}
-    addChildBefore(child: Frame, before: Frame): void {parentHelper_addChildBefore(this, child, before);}
-    addChildAfter(child: Frame, before: Frame): void {parentHelper_addChildAfter(this, child, before);}
-    selectLastField(): boolean {return parentHelper_selectLastField(this);}
-
-    protected renderChildrenAsHtml(): string {return parentHelper_renderChildrenAsHtml(this);}
-    protected renderChildrenAsSource() : string {return parentHelper_renderChildrenAsSource(this);}
-    protected compileChildren(transforms : Transforms) : string {return parentHelper_compileChildren(this, transforms);}
-    
-    selectFirstField(): boolean {
-        let result = super.selectFirstField();
-        if (!result) {
-            result = this.getChildren()[0].selectFirstField();
-        }
-        return result;
-    } 
-
-    selectFieldBefore(current: Field): void {
-        if (this.getFields().includes(current)) {
-            super.selectFieldBefore(current);
-        } else{
-         this.getLastChild().selectLastField();
-        }
-    }
-
-    selectFirstChildIfAny(): boolean {
-        let result = false;
-        if (this.getChildren().length > 0) {
-            this.getChildren()[0].select(true, false);
-            result = true;
-        }
-        return result;
-    }
-
-    moveSelectedChildrenUpOne(): void {parentHelper_moveSelectedChildrenUpOne(this);}
-    moveSelectedChildrenDownOne(): void {parentHelper_moveSelectedChildrenDownOne(this);}
-
-    parseFrom(source: CodeSource): void {
-        this.parseTop(source);
-        while (!this.parseBottom(source)) {
-            if (source.isMatchRegEx(Regexes.newLine)) {
-                source.removeRegEx(Regexes.newLine, false);
-            } else {
-                this.getFirstSelectorAsDirectChild().parseFrom(source);
-            }
-            source.removeIndent();
-        } 
-    }
-
-    abstract parseTop(source: CodeSource): void;
-    abstract parseBottom(source: CodeSource): boolean;
-
-    protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
-        source.removeIndent();
-        let result = false;
-        if (source.isMatch(keywords)) {
-            source.remove(keywords);
-            result = true;
-        }
-        return result;
-    }
-
-    protected compileStatements(transforms : Transforms) : string {
-        let result = "";
-        if (this._children.length > 0 ) {
-            const ss: Array<string> = [];
-            for (const frame of this._children.filter(s => !('isSelector' in s))) {
-                ss.push(frame.compile(transforms));
-            }
-            result = ss.join("\r\n");
-        }
-        return result;
-    }
-
-    resolveSymbol(id: string | undefined, transforms : Transforms, initialScope : Frame): ElanSymbol {
-        const fst = this.getFirstChild();
-        let range = this.getChildRange(fst, initialScope);
-        if (range.length > 1) {
-            range = range.slice(0, range.length - 1);
-
-            for (const f of range) {
-                if (isSymbol(f) && f.symbolId === id) {
-                    return f;
-                }
-            }
-        }
-
-        return this.getParent().resolveSymbol(id, transforms, this);
-    }
-
-    aggregateCompileErrors(): CompileError[] {
-        const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
-        return cc.concat(super.aggregateCompileErrors());
-    }
+  aggregateCompileErrors(): CompileError[] {
+    const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
+    return cc.concat(super.aggregateCompileErrors());
+  }
 }

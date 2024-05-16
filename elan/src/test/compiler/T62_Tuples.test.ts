@@ -1,11 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T62_Tuples', () => {
-
-  test('Pass_CreatingTuplesAndReadingContents', async () => {
+suite("T62_Tuples", () => {
+  test("Pass_CreatingTuplesAndReadingContents", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -24,7 +32,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -33,7 +46,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (3, Apple)3Apple");
   });
 
-  test('Pass_FunctionReturnsTuple', async () => {
+  test("Pass_FunctionReturnsTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -60,7 +73,12 @@ function f() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -69,7 +87,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (1, 2)12");
   });
 
-  test('Pass_IndexFunctionReturnsTuple', async () => {
+  test("Pass_IndexFunctionReturnsTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -92,7 +110,12 @@ function f() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -102,7 +125,7 @@ return [main, _tests];}`;
   });
 
   // pending lambda
-  ignore_test('Pass_IndexGenericFunctionReturnsTuple', async () => {
+  ignore_test("Pass_IndexGenericFunctionReturnsTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -120,7 +143,12 @@ function f() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -129,7 +157,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test('Pass_FunctionTupleParameter', async () => {
+  ignore_test("Pass_FunctionTupleParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -154,7 +182,12 @@ function f(t) {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -164,7 +197,7 @@ return [main, _tests];}`;
   });
 
   // pending settarget changes
-  ignore_test('Pass_DeconstructIntoExistingVariables', async () => {
+  ignore_test("Pass_DeconstructIntoExistingVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -188,7 +221,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -197,7 +235,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
-  ignore_test('Pass_DeconstructIntoNewVariables', async () => {
+  ignore_test("Pass_DeconstructIntoNewVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -217,7 +255,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -226,7 +269,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
-  test('Pass_AssignANewTupleOfSameType', async () => {
+  test("Pass_AssignANewTupleOfSameType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -244,7 +287,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -253,8 +301,5 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (4, Pear)");
   });
 
-  
-
   // Fails TODO
-
 });

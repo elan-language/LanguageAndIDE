@@ -8,25 +8,28 @@ import { DOT } from "../symbols";
 import { Regexes } from "../fields/regexes";
 
 export class LitFloat extends AbstractSequence {
+  constructor() {
+    super();
+    this.completionWhenEmpty = "numeric value";
+  }
 
-    constructor() {
-        super();
-        this.completionWhenEmpty = "numeric value";
+  parseText(text: string): void {
+    this.remainingText = text;
+    if (text.length > 0) {
+      this.addElement(new LitInt());
+      this.addElement(new SymbolNode(DOT));
+      this.addElement(new RegExMatchNode(Regexes.literalInt));
+      const exponent = new OptionalNode(
+        new Sequence([
+          () => new RegExMatchNode(/e/),
+          () => new RegExMatchNode(Regexes.negatableLitInt),
+        ]),
+      );
+      this.addElement(exponent);
+      super.parseText(text);
     }
-
-    parseText(text: string): void {
-        this.remainingText = text;
-        if (text.length > 0) {
-            this.addElement(new LitInt());
-            this.addElement(new SymbolNode(DOT));
-            this.addElement(new RegExMatchNode(Regexes.literalInt));
-            const exponent = new OptionalNode(new Sequence([
-                () => new RegExMatchNode(/e/),
-                () => new RegExMatchNode(Regexes.negatableLitInt)
-                ]));
-            this.addElement(exponent);
-            super.parseText(text);
-        }
-    }
-    compile(): string { return this.matchedText.toUpperCase(); } //For the exponent e -> E
+  }
+  compile(): string {
+    return this.matchedText.toUpperCase();
+  } //For the exponent e -> E
 }

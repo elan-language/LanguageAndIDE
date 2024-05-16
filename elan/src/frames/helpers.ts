@@ -5,7 +5,13 @@ import { Parent } from "./interfaces/parent";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { AbstractSelector } from "./abstract-selector";
-import { CompileStatus, OverallStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import {
+  CompileStatus,
+  OverallStatus,
+  ParseStatus,
+  RunStatus,
+  TestStatus,
+} from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
@@ -16,159 +22,160 @@ import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
-    return !!f && 'isCollapsible' in f;
+  return !!f && "isCollapsible" in f;
 }
 
 export function isFile(f?: Scope): f is File {
-    return !!f && 'isFile' in f;
+  return !!f && "isFile" in f;
 }
 
 export function isClass(f?: Scope): f is Class {
-    return !!f && 'isClass' in f;
+  return !!f && "isClass" in f;
 }
 
 export function isFrame(f?: Selectable | Scope): f is Frame {
-    return !!f && 'isFrame' in f;
+  return !!f && "isFrame" in f;
 }
 
 export function isParent(f?: Selectable | Parent): f is Parent {
-    return !!f && 'isParent' in f;
+  return !!f && "isParent" in f;
 }
 
 export function isMember(f?: Scope | Member): f is Member {
-    return !!f && 'isMember' in f;
+  return !!f && "isMember" in f;
 }
 
 export function isSelector(f?: Selectable): f is AbstractSelector {
-    return !!f && 'isSelector' in f;
+  return !!f && "isSelector" in f;
 }
 
 export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
-    return !!f && 'isGlobal' in f;
+  return !!f && "isGlobal" in f;
 }
 
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
-    return !!f && 'resolveSymbol' in f;
+  return !!f && "resolveSymbol" in f;
 }
 
 export function isAstType(f?: AstNode): f is AstTypeNode {
-    return !!f && 'renderAsDefaultObjectCode' in f;
+  return !!f && "renderAsDefaultObjectCode" in f;
 }
 
 export function singleIndent() {
-    return "  ";
+  return "  ";
 }
 
 export function expandCollapseAll(file: File) {
-    const map = file.getMap();
-    const collapsible = [...map.values()].filter(s => isCollapsible(s)).map(s => s as Collapsible);
-    const firstCollapsibleGlobal = collapsible.filter(s => isGlobal(s))[0];
-    let collapse = true;
-    if (firstCollapsibleGlobal && firstCollapsibleGlobal.isCollapsed()) {
-        collapse = false;
+  const map = file.getMap();
+  const collapsible = [...map.values()]
+    .filter((s) => isCollapsible(s))
+    .map((s) => s as Collapsible);
+  const firstCollapsibleGlobal = collapsible.filter((s) => isGlobal(s))[0];
+  let collapse = true;
+  if (firstCollapsibleGlobal && firstCollapsibleGlobal.isCollapsed()) {
+    collapse = false;
+  }
+  for (const c of collapsible) {
+    if (collapse) {
+      c.collapse();
+    } else {
+      c.expand();
     }
-    for (const c of collapsible) {
-        if (collapse) {
-            c.collapse();
-        } else {
-            c.expand();
-        }
-    }
-    const globals = [...map.values()].filter(s => isGlobal(s));
-    const selectedGlobals = globals.filter(s => s.isSelected());
-    if (selectedGlobals.length === 0) {
-        file.getFirstChild().select(true, false);
-    }
+  }
+  const globals = [...map.values()].filter((s) => isGlobal(s));
+  const selectedGlobals = globals.filter((s) => s.isSelected());
+  if (selectedGlobals.length === 0) {
+    file.getFirstChild().select(true, false);
+  }
 }
 export function escapeAngleBrackets(str: string): string {
-    return str
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+  return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
-
-    /*  To display multiple messages use:
+  /*  To display multiple messages use:
             var msg = loc.compileErrors.length > 1 ?
                 loc.compileErrors.reduce((prev, cur) => prev.concat(cur.message)+ "; ", "")
                 : loc.compileErrors.length > 0 ?
                     loc.compileErrors[0].message
                     : ""; */
-    /* To display first message only use: */
-    const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
-    let cls = "";
-    const compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
-    if (compile !== OverallStatus.ok) {
-        cls = OverallStatus[compile];
-    }
-    return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
+  /* To display first message only use: */
+  const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
+  let cls = "";
+  const compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
+  if (compile !== OverallStatus.ok) {
+    cls = OverallStatus[compile];
+  }
+  return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
 
 export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
-    let result = CompileStatus.error;
-    if (errors.length === 0) {
-        result = CompileStatus.ok;
-    } else {
-        result = errors.some(e => !e.unknownType) ? CompileStatus.error : CompileStatus.unknownSymbol;
-    }
-    return result;
+  let result = CompileStatus.error;
+  if (errors.length === 0) {
+    result = CompileStatus.ok;
+  } else {
+    result = errors.some((e) => !e.unknownType)
+      ? CompileStatus.error
+      : CompileStatus.unknownSymbol;
+  }
+  return result;
 }
 
 export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
-    let status: OverallStatus = OverallStatus.error;
-    const parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
-    if (parse !== OverallStatus.ok) {
-        status = parse;
-    } else {
-        status = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
-    }
-    return status;
+  let status: OverallStatus = OverallStatus.error;
+  const parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
+  if (parse !== OverallStatus.ok) {
+    status = parse;
+  } else {
+    status = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
+  }
+  return status;
 }
 
 export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
-    let overall = OverallStatus.default;
-    if (ps === ParseStatus.valid) {
-        overall = OverallStatus.ok;
-    } else if (ps === ParseStatus.incomplete) {
-        overall = OverallStatus.warning;
-    } else if (ps === ParseStatus.invalid) {
-        overall = OverallStatus.error;
-    }
-    return overall;
+  let overall = OverallStatus.default;
+  if (ps === ParseStatus.valid) {
+    overall = OverallStatus.ok;
+  } else if (ps === ParseStatus.incomplete) {
+    overall = OverallStatus.warning;
+  } else if (ps === ParseStatus.invalid) {
+    overall = OverallStatus.error;
+  }
+  return overall;
 }
 
 export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
-    let overall = OverallStatus.default;
-    if (cs === CompileStatus.ok) {
-        overall = OverallStatus.ok;
-    } else if (cs === CompileStatus.unknownSymbol) {
-        overall = OverallStatus.warning;
-    } else if (cs === CompileStatus.error) {
-        overall = OverallStatus.error;
-    }
-    return overall;
+  let overall = OverallStatus.default;
+  if (cs === CompileStatus.ok) {
+    overall = OverallStatus.ok;
+  } else if (cs === CompileStatus.unknownSymbol) {
+    overall = OverallStatus.warning;
+  } else if (cs === CompileStatus.error) {
+    overall = OverallStatus.error;
+  }
+  return overall;
 }
 
 export function helper_testStatusAsOverallStatus(ts: TestStatus) {
-    let overall = OverallStatus.default;
-    if (ts === TestStatus.pass) {
-        overall = OverallStatus.ok;
-    } else if (ts === TestStatus.pending) {
-        overall = OverallStatus.warning;
-    } else if (ts === TestStatus.fail) {
-        overall = OverallStatus.error;
-    }
-    return overall;
+  let overall = OverallStatus.default;
+  if (ts === TestStatus.pass) {
+    overall = OverallStatus.ok;
+  } else if (ts === TestStatus.pending) {
+    overall = OverallStatus.warning;
+  } else if (ts === TestStatus.fail) {
+    overall = OverallStatus.error;
+  }
+  return overall;
 }
 
 export function helper_runStatusAsOverallStatus(rs: RunStatus) {
-    let overall = OverallStatus.default;
-    if (rs === RunStatus.running) {
-        overall = OverallStatus.ok;
-    } else if (rs === RunStatus.paused) {
-        overall = OverallStatus.warning;
-    } else if (rs === RunStatus.error) {
-        overall = OverallStatus.error;
-    }
-    return overall;
+  let overall = OverallStatus.default;
+  if (rs === RunStatus.running) {
+    overall = OverallStatus.ok;
+  } else if (rs === RunStatus.paused) {
+    overall = OverallStatus.warning;
+  } else if (rs === RunStatus.error) {
+    overall = OverallStatus.error;
+  }
+  return overall;
 }

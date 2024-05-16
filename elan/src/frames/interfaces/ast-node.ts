@@ -3,15 +3,15 @@ import { CompileError } from "../compile-error";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export interface AstNode {
-    symbolType():  SymbolType;
+  symbolType(): SymbolType;
 
-    symbolScope: SymbolScope;
+  symbolScope: SymbolScope;
 
-    compile(): string;
+  compile(): string;
 
-    compileErrors: CompileError[];
+  compileErrors: CompileError[];
 
-    aggregateCompileErrors(): CompileError[];
+  aggregateCompileErrors(): CompileError[];
 
-    fieldId: string;
+  fieldId: string;
 }

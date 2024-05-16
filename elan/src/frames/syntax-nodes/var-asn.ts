@@ -22,125 +22,159 @@ import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
-export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
+export class VarAsn
+  extends AbstractAstNode
+  implements AstIdNode, AstQualifiedNode
+{
+  constructor(
+    public readonly id: string,
+    public readonly qualifier: AstQualifierNode | undefined,
+    private readonly index: AstNode | undefined,
+    public readonly fieldId: string,
+    private scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(public readonly id: string, public readonly qualifier: AstQualifierNode | undefined, private readonly index: AstNode | undefined, public readonly fieldId: string, private scope: Scope) {
-        super();
+  aggregateCompileErrors(): CompileError[] {
+    const q = this.qualifier ? this.qualifier.aggregateCompileErrors() : [];
+    const i = this.index ? this.index.aggregateCompileErrors() : [];
+
+    return this.compileErrors.concat(q).concat(i);
+  }
+
+  private isRange() {
+    return (
+      this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn
+    );
+  }
+
+  private isIndex() {
+    return (
+      this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn)
+    );
+  }
+
+  private getQualifier() {
+    if (this.qualifier) {
+      return `${this.qualifier.compile()}`;
+    }
+    const s = this.scope.resolveSymbol(this.id, transforms(), this.scope);
+
+    if (s && s.symbolScope === SymbolScope.property) {
+      return "this.";
     }
 
-    aggregateCompileErrors(): CompileError[] {
-        const q = this.qualifier ? this.qualifier.aggregateCompileErrors() : [];
-        const i = this.index ? this.index.aggregateCompileErrors() : [];
+    return "";
+  }
 
-        return this.compileErrors
-            .concat(q)
-            .concat(i);
+  wrapListOrArray(rootType: SymbolType, code: string): string {
+    if (rootType instanceof ListType) {
+      return `system.list(${code})`;
+    }
+    if (rootType instanceof ArrayType) {
+      return `system.wrapArray(${code})`;
+    }
+    if (rootType instanceof FunctionType) {
+      return this.wrapListOrArray(rootType.returnType, code);
+    }
+    return code;
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    const q = this.getQualifier();
+
+    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
+    if (classScope instanceof ClassType) {
+      const s = this.scope.resolveSymbol(
+        classScope.className,
+        transforms(),
+        this.scope,
+      );
+      if (isScope(s)) {
+        const p = s.resolveSymbol(this.id, transforms(), s);
+        mustBePublicProperty(p, this.compileErrors, this.fieldId);
+      }
     }
 
-    private isRange() {
-        return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
+    const idx = this.index ? this.index.compile() : "";
+    let code = `${q}${this.id}${idx}`;
+
+    if (this.isRange() || this.index) {
+      const rootType = this.scope
+        .resolveSymbol(this.id, transforms(), this.scope)
+        .symbolType(transforms());
+      if (this.index) {
+        mustBeIndexableSymbol(
+          rootType,
+          (this.index as IndexAsn).isDoubleIndex(),
+          this.compileErrors,
+          this.fieldId,
+        );
+      }
+      if (this.isRange()) {
+        code = this.wrapListOrArray(rootType, code);
+      }
     }
 
-    private isIndex() {
-        return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
+    return code;
+  }
+
+  updateScope(currentScope: Scope) {
+    const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
+    if (classScope instanceof ClassType) {
+      const s = this.scope.resolveSymbol(
+        classScope.className,
+        transforms(),
+        this.scope,
+      );
+      // replace scope with class scope
+      currentScope = isScope(s) ? s : currentScope;
+    } else if (classScope instanceof ClassDefinitionType) {
+      currentScope = classScope as Scope;
+    } else if (
+      this.qualifier instanceof QualifierAsn &&
+      this.qualifier?.value instanceof ThisAsn
+    ) {
+      currentScope = getClassScope(currentScope as Frame);
     }
 
-    private getQualifier() {
-        if (this.qualifier) {
-            return `${this.qualifier.compile()}`;
-        }
-        const s = this.scope.resolveSymbol(this.id, transforms(), this.scope);
+    return currentScope;
+  }
 
-        if (s && s.symbolScope === SymbolScope.property) {
-            return "this.";
-        }
+  rootSymbolType() {
+    const currentScope = this.updateScope(this.scope);
+    const rootType = currentScope
+      .resolveSymbol(this.id, transforms(), currentScope)
+      .symbolType(transforms());
+    return rootType;
+  }
 
-        return "";
+  symbolType() {
+    const rootType = this.rootSymbolType();
+    if (
+      this.isIndex() &&
+      (rootType instanceof ListType || rootType instanceof ArrayType)
+    ) {
+      return rootType.ofType;
     }
+    return rootType;
+  }
 
-    wrapListOrArray(rootType: SymbolType, code: string): string {
-        if (rootType instanceof ListType) {
-            return `system.list(${code})`;
-        }
-        if (rootType instanceof ArrayType) {
-            return `system.wrapArray(${code})`;
-        }
-        if (rootType instanceof FunctionType) {
-            return this.wrapListOrArray(rootType.returnType, code);
-        }
-        return code;
-    }
+  get symbolScope() {
+    const currentScope = this.updateScope(this.scope);
+    const symbol = currentScope.resolveSymbol(
+      this.id,
+      transforms(),
+      currentScope,
+    );
+    return symbol.symbolScope;
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        const q = this.getQualifier();
-
-        const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-        if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
-            if (isScope(s)) {
-                const p = s.resolveSymbol(this.id, transforms(), s);
-                mustBePublicProperty(p, this.compileErrors, this.fieldId);
-            }
-        }
-
-        const idx = this.index ? this.index.compile() : "";
-        let code = `${q}${this.id}${idx}`;
-
-        if (this.isRange() || this.index) {
-            const rootType = this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
-            if (this.index) {
-                mustBeIndexableSymbol(rootType, (this.index as IndexAsn).isDoubleIndex(), this.compileErrors, this.fieldId);
-            }
-            if (this.isRange()) {
-                code = this.wrapListOrArray(rootType, code);
-            }
-        }
-
-        return code;
-    }
-
-    updateScope(currentScope: Scope) {
-        const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-        if (classScope instanceof ClassType) {
-            const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
-            // replace scope with class scope
-            currentScope = isScope(s) ? s : currentScope;
-        }
-        else if (classScope instanceof ClassDefinitionType) {
-            currentScope = classScope as Scope;
-        }
-        else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
-            currentScope = getClassScope(currentScope as Frame);
-        }
-
-        return currentScope;
-    }
-
-
-    rootSymbolType() {
-        const currentScope = this.updateScope(this.scope);
-        const rootType = currentScope.resolveSymbol(this.id, transforms(), currentScope).symbolType(transforms());
-        return rootType;
-    }
-
-    symbolType() {
-        const rootType = this.rootSymbolType();
-        if (this.isIndex() && (rootType instanceof ListType || rootType instanceof ArrayType)) {
-            return rootType.ofType;
-        }
-        return rootType;
-    }
-
-    get symbolScope() {
-        const currentScope = this.updateScope(this.scope);
-        const symbol = currentScope.resolveSymbol(this.id, transforms(), currentScope);
-        return symbol.symbolScope;
-    }
-
-    toString() {
-        const q = this.qualifier ? `${this.qualifier}` : "";
-        const idx = this.index ? `${this.index}` : "";
-        return `${q}${this.id}${idx}`;
-    }
+  toString() {
+    const q = this.qualifier ? `${this.qualifier}` : "";
+    const idx = this.index ? `${this.index}` : "";
+    return `${q}${this.id}${idx}`;
+  }
 }

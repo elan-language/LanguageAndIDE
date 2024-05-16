@@ -1,10 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
-suite('T_7_IfStatement', () => {
-  test('Pass_1', async () => {
+suite("T_7_IfStatement", () => {
+  test("Pass_1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -27,7 +36,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -37,7 +51,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "yes");
   });
 
-  test('Pass_2', async () => {
+  test("Pass_2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -60,7 +74,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -69,7 +88,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "no");
   });
 
-  test('Pass_3', async () => {
+  test("Pass_3", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -96,7 +115,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -105,7 +129,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "two");
   });
 
-  test('Pass_4', async () => {
+  test("Pass_4", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -132,7 +156,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -141,7 +170,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "neither");
   });
 
-  test('Pass_5', async () => {
+  test("Pass_5", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -160,7 +189,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -169,7 +203,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "yes");
   });
 
-  test('Pass_6', async () => {
+  test("Pass_6", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -200,7 +234,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -209,7 +248,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "three");
   });
 
-  test('Fail_noEndIf', async () => {
+  test("Fail_noEndIf", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -218,14 +257,19 @@ main
     print "yes"
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-});
+  });
 
-test('Fail_TwoElses', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test("Fail_TwoElses", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to 3
@@ -238,15 +282,22 @@ main
   end if
 end main`;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, ["Cannot have multiple unconditional 'Else'"]);
-});
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot have multiple unconditional 'Else'",
+    ]);
+  });
 
-test('Fail_ElseIfAfterElse', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test("Fail_ElseIfAfterElse", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to 3
@@ -259,15 +310,20 @@ main
   end if
 end main`;
 
-  const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-  await fileImpl.parseFrom(new CodeSourceFromString(code));
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-  assertParses(fileImpl);
-  assertDoesNotCompile(fileImpl, ["Must end with unconditional 'Else'"]);
-});
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Must end with unconditional 'Else'"]);
+  });
 
-test('Fail_ConditionNotBool', async () => {
-  const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  test("Fail_ConditionNotBool", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to 3
@@ -278,15 +334,19 @@ main
   end if
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
-
   });
 
-  test('Fail_ElseConditionNotBool', async () => {
+  test("Fail_ElseConditionNotBool", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
   main
@@ -299,14 +359,16 @@ end main`;
       print "neither"
     end if
   end main`;
-  
-      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
-  
-    });
 
-
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean"]);
+  });
 });

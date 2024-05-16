@@ -1,11 +1,20 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T55_asString', () => {
-
-  test('Pass_SimpleExtension', async () => {
+suite("T55_asString", () => {
+  test("Pass_SimpleExtension", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -20,7 +29,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -29,7 +43,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test('Pass_ClassHasNoAsString', async () => {
+  test("Pass_ClassHasNoAsString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -65,7 +79,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -74,7 +93,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
-  test('Pass_DefaultClassAsString', async () => {
+  test("Pass_DefaultClassAsString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -116,7 +135,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -125,8 +149,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
-  // this behaviour has changed from c# compiler 
-  test('Pass_DefaultClassReplacesAsString', async () => {
+  // this behaviour has changed from c# compiler
+  test("Pass_DefaultClassReplacesAsString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -180,7 +204,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -189,7 +218,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Custom asStringCustom asString");
   });
 
-  test('Pass_AsStringMayBeCalled', async () => {
+  test("Pass_AsStringMayBeCalled", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -239,7 +268,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -248,7 +282,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test('Pass_AsStringCalledWhenObjectPrinted', async () => {
+  test("Pass_AsStringCalledWhenObjectPrinted", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -296,7 +330,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -305,7 +344,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test('Pass_AsStringUsingDefaultHelper', async () => {
+  test("Pass_AsStringUsingDefaultHelper", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -353,7 +392,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -362,7 +406,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, 'Foo ["p1":5, "p2":Apple]');
   });
 
-  test('Pass_AsStringOnVariousDataTypes', async () => {
+  test("Pass_AsStringOnVariousDataTypes", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -391,14 +435,20 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]Array [1, 2, 3]Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "List [1, 2, 3]Array [1, 2, 3]Dictionary [a:1, b:3, z:10]",
+    );
   });
-
-
 });

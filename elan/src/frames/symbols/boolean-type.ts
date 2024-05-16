@@ -1,9 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class BooleanType implements SymbolType {
-    private constructor() { }
+  private constructor() {}
 
-    static Instance: SymbolType = new BooleanType();
+  static Instance: SymbolType = new BooleanType();
 
-    name = "Boolean";
+  name = "Boolean";
 }

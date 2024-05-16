@@ -6,13 +6,13 @@ import { SpaceNode } from "./space-node";
 import { TypeWithOptGenerics } from "./type-with-opt-generics";
 
 export class DefaultOfTypeNode extends AbstractSequence {
-    type: TypeWithOptGenerics |undefined;
+  type: TypeWithOptGenerics | undefined;
 
-    parseText(text: string): void {
-        this.addElement(new KeywordNode(defaultKeyword));
-        this.addElement(new SpaceNode(Space.required));
-        this.type =new TypeWithOptGenerics();
-        this.addElement(this.type); 
-        super.parseText(text);
-    }
+  parseText(text: string): void {
+    this.addElement(new KeywordNode(defaultKeyword));
+    this.addElement(new SpaceNode(Space.required));
+    this.type = new TypeWithOptGenerics();
+    this.addElement(this.type);
+    super.parseText(text);
+  }
 }

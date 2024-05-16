@@ -9,41 +9,49 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
+  constructor(
+    public readonly id: string,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+    this.id = id.trim();
+  }
 
-    constructor(public readonly id: string, public readonly fieldId: string, private readonly scope: Scope) {
-        super();
-        this.id = id.trim();
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    if (isMember(this.scope)) {
+      // don't prefix properties with this
+      return this.id;
+    }
+    const symbol = getParentScope(this.scope).resolveSymbol(
+      this.id,
+      transforms(),
+      this.scope,
+    );
+    if (symbol?.symbolScope === SymbolScope.stdlib) {
+      return `_stdlib.${this.id}`;
+    }
+    if (symbol?.symbolScope === SymbolScope.property) {
+      return `this.${this.id}`;
     }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors;
-    }
+    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
+    return this.id;
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        if (isMember(this.scope)) {
-            // don't prefix properties with this
-            return this.id;
-        }
-        const symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
-        if (symbol?.symbolScope === SymbolScope.stdlib) {
-            return `_stdlib.${this.id}`;
-        }
-        if (symbol?.symbolScope === SymbolScope.property) {
-            return `this.${this.id}`;
-        }
+  symbolType() {
+    return getParentScope(this.scope)
+      .resolveSymbol(this.id, transforms(), this.scope)
+      .symbolType(transforms());
+  }
 
-        mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
-
-        return this.id;
-    }
-
-    symbolType() {
-        return getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
-    }
-
-    toString() {
-        return this.id;
-    }
+  toString() {
+    return this.id;
+  }
 }

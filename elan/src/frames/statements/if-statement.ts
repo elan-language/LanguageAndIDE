@@ -11,59 +11,63 @@ import { Else } from "./else";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class IfStatement extends FrameWithStatements implements Statement {
-    isStatement = true;
-    condition: ExpressionField;
+  isStatement = true;
+  condition: ExpressionField;
 
-    constructor(parent: Parent) {
-        super(parent);
-        this.condition = new ExpressionField(this);
-        this.condition.setPlaceholder("condition");
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.condition = new ExpressionField(this);
+    this.condition.setPlaceholder("condition");
+  }
 
-    initialKeywords(): string {
-        return ifKeyword;
-    }
+  initialKeywords(): string {
+    return ifKeyword;
+  }
 
-    getFields(): Field[] {
-        return [this.condition];
-    }
-    getIdPrefix(): string {
-        return 'if';
-    }
+  getFields(): Field[] {
+    return [this.condition];
+  }
+  getIdPrefix(): string {
+    return "if";
+  }
 
-    renderAsHtml(): string {
-        return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+  renderAsHtml(): string {
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <top><expand>+</expand><keyword>if </keyword>${this.condition.renderAsHtml()}</top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end if</keyword>
 </statement>`;
-    }
-    renderAsSource(): string {
+  }
+  renderAsSource(): string {
     return `${this.indent()}if ${this.condition.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end if`;
+  }
+
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    mustBeOfType(
+      this.condition.getOrTransformAstNode(transforms),
+      BooleanType.Instance,
+      this.compileErrors,
+      this.htmlId,
+    );
+    const elses = this.getChildren().filter((c) => c instanceof Else) as Else[];
+    if (elses.length > 0) {
+      mustHaveLastSingleElse(elses, this.compileErrors, this.htmlId);
     }
 
-    compile(transforms : Transforms): string {
-        this.compileErrors = [];
-        mustBeOfType(this.condition.getOrTransformAstNode(transforms), BooleanType.Instance, this.compileErrors, this.htmlId);
-        const elses = this.getChildren().filter(c => c instanceof Else) as Else[];
-        if (elses.length > 0) {
-            mustHaveLastSingleElse(elses, this.compileErrors, this.htmlId);
-        }        
-
-        return `${this.indent()}if (${this.condition.compile(transforms)}) {\r
+    return `${this.indent()}if (${this.condition.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
-    }
+  }
 
-    
-    parseTop(source: CodeSource): void {
-        source.remove("if ");
-        this.condition.parseFrom(source);
-    }
-    parseBottom(source: CodeSource): boolean {
-        source.removeIndent();
-        return this.parseStandardEnding(source, "end if");
-    }
-} 
+  parseTop(source: CodeSource): void {
+    source.remove("if ");
+    this.condition.parseFrom(source);
+  }
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return this.parseStandardEnding(source, "end if");
+  }
+}

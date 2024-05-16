@@ -9,19 +9,19 @@ import { LitStringNonEmpty } from "./lit-string-non-empty";
 import { LitTuple } from "./lit-tuple";
 
 export class LitValueNode extends AbstractAlternatives {
-    constructor() {
-        super();
-        this.completionWhenEmpty = "";
-    }
+  constructor() {
+    super();
+    this.completionWhenEmpty = "";
+  }
 
-    parseText(text: string): void {
-        this.alternatives.push(new LitInt());
-        this.alternatives.push(new LitFloat());
-        this.alternatives.push(new LitBoolean());
-        this.alternatives.push(new LitStringEmpty());
-        this.alternatives.push(new LitStringNonEmpty());
-        this.alternatives.push(new EnumVal());
-        this.alternatives.push(new LitTuple());
-        super.parseText(text);
-    }
+  parseText(text: string): void {
+    this.alternatives.push(new LitInt());
+    this.alternatives.push(new LitFloat());
+    this.alternatives.push(new LitBoolean());
+    this.alternatives.push(new LitStringEmpty());
+    this.alternatives.push(new LitStringNonEmpty());
+    this.alternatives.push(new EnumVal());
+    this.alternatives.push(new LitTuple());
+    super.parseText(text);
+  }
 }

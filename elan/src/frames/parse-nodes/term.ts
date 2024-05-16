@@ -17,25 +17,25 @@ import { thisKeyword } from "../keywords";
 import { DefaultOfTypeNode } from "./default-of-type-node";
 
 export class Term extends AbstractAlternatives {
-    constructor() {
-        super();
-        this.completionWhenEmpty = "expression";
-    }
+  constructor() {
+    super();
+    this.completionWhenEmpty = "expression";
+  }
 
-    parseText(text: string): void {
-        //Sub nodes added only when asked to parse
-        this.alternatives.push(new BracketedExpression());
-        this.alternatives.push(new Lambda());
-        this.alternatives.push(new IfExpr());
-        this.alternatives.push(new NewInstance());
-        this.alternatives.push(new UnaryExpression());
-        this.alternatives.push(new LiteralNode());
-        this.alternatives.push(new VarRefNode());
-        this.alternatives.push(new FunctionCallNode());
-        this.alternatives.push(new KeywordNode(thisKeyword));
-        this.alternatives.push(new DefaultOfTypeNode());
-        this.alternatives.push(new ListNode(() => new ExprNode()));
-        this.alternatives.push(new TupleNode());
-        super.parseText(text);
-    }
+  parseText(text: string): void {
+    //Sub nodes added only when asked to parse
+    this.alternatives.push(new BracketedExpression());
+    this.alternatives.push(new Lambda());
+    this.alternatives.push(new IfExpr());
+    this.alternatives.push(new NewInstance());
+    this.alternatives.push(new UnaryExpression());
+    this.alternatives.push(new LiteralNode());
+    this.alternatives.push(new VarRefNode());
+    this.alternatives.push(new FunctionCallNode());
+    this.alternatives.push(new KeywordNode(thisKeyword));
+    this.alternatives.push(new DefaultOfTypeNode());
+    this.alternatives.push(new ListNode(() => new ExprNode()));
+    this.alternatives.push(new TupleNode());
+    super.parseText(text);
+  }
 }

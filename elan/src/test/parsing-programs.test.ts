@@ -1,28 +1,28 @@
-import * as vscode from 'vscode';
-import { assertFileParses } from './testHelpers';
+import * as vscode from "vscode";
+import { assertFileParses } from "./testHelpers";
 
-suite('File Parsing Tests', () => {
-  vscode.window.showInformationMessage('Start all unit tests.');
+suite("File Parsing Tests", () => {
+  vscode.window.showInformationMessage("Start all unit tests.");
 
-  test('parse Frames - merge-sort', async () => {
+  test("parse Frames - merge-sort", async () => {
     await assertFileParses("programs/merge-sort.elan");
   });
-  test('parse Frames - snake', async () => {
+  test("parse Frames - snake", async () => {
     await assertFileParses("programs/snake.elan");
   });
-  test('parse Frames - wordle', async () => {
+  test("parse Frames - wordle", async () => {
     await assertFileParses("programs/wordle.elan");
   });
-  test('parse Frames - life', async () => {
+  test("parse Frames - life", async () => {
     await assertFileParses("programs/life.elan");
   });
-  test('parse Frames - life-tests', async () => {
+  test("parse Frames - life-tests", async () => {
     await assertFileParses("programs/life-tests.elan");
   });
-  test('parse Frames - best-fit', async () => {
+  test("parse Frames - best-fit", async () => {
     await assertFileParses("programs/best-fit.elan");
   });
-  test('parse Frames - binary-search', async () => {
+  test("parse Frames - binary-search", async () => {
     await assertFileParses("programs/binary-search.elan");
   });
 });

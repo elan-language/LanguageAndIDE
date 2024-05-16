@@ -1,11 +1,20 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T18_ThrowAndCatchException', () => {
-
-  test('Pass_ThrowExceptionInMain', async () => {
+suite("T18_ThrowAndCatchException", () => {
+  test("Pass_ThrowExceptionInMain", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -18,7 +27,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -27,7 +41,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test('Pass_ThrowExceptionInMainUsingVariableForMessage', async () => {
+  test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -42,7 +56,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -51,7 +70,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  test('Pass_ThrowExceptionUsingInterpolatedStringForMessage', async () => {
+  test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -66,7 +85,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -75,7 +99,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "1");
   });
 
-  test('Pass_ThrowExceptionInProcedure', async () => {
+  test("Pass_ThrowExceptionInProcedure", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -96,7 +120,12 @@ function foo() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -105,7 +134,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test('Pass_CatchException', async () => {
+  ignore_test("Pass_CatchException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -137,7 +166,12 @@ function foo() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -146,7 +180,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test('Pass_CatchSystemGeneratedException', async () => {
+  ignore_test("Pass_CatchSystemGeneratedException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -175,7 +209,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -184,7 +223,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test('Pass_UseException', async () => {
+  ignore_test("Pass_UseException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -216,7 +255,12 @@ function foo() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -225,7 +269,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test('Fail_ThrowExceptionInFunction', async () => {
+  ignore_test("Fail_ThrowExceptionInFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -238,13 +282,18 @@ function foo(x String) as String
 end function
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_catchMissingVariable', async () => {
+  test("Fail_catchMissingVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -261,13 +310,18 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_UseExpressionForMessage', async () => {
+  test("Fail_UseExpressionForMessage", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -276,7 +330,12 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

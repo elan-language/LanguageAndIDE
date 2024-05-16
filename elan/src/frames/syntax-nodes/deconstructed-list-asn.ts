@@ -4,25 +4,29 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 
 export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly head: string,
+    private readonly tail: string,
+    public readonly fieldId: string,
+    scope: Scope,
+  ) {
+    super();
+  }
 
-    constructor(private readonly head: string, private readonly tail: string, public readonly fieldId: string, scope: Scope) {
-        super();
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors;
-    }
+  compile(): string {
+    this.compileErrors = [];
+    throw new Error("Method not implemented.");
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        throw new Error("Method not implemented.");
-    }
+  symbolType() {
+    return { name: "" };
+  }
 
-    symbolType() {
-        return { name: "" };
-    }
-
-    toString() {
-        return `[${this.head}:${this.tail}]`;
-    }
+  toString() {
+    return `[${this.head}:${this.tail}]`;
+  }
 }

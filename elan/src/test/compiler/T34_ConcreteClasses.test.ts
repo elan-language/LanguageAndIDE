@@ -1,10 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
-suite('T34_ConcreteClasses', () => {
-
-  test('Pass_Class_SimpleInstantiation_PropertyAccess_Methods', async () => {
+suite("T34_ConcreteClasses", () => {
+  test("Pass_Class_SimpleInstantiation_PropertyAccess_Methods", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -54,7 +63,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -63,7 +77,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  test('Pass_ConstructorWithParm', async () => {
+  test("Pass_ConstructorWithParm", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -111,7 +125,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -120,7 +139,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7Apple");
   });
 
-  test('Pass_ReferenceProperty', async () => {
+  test("Pass_ReferenceProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -219,7 +238,12 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -228,7 +252,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00");
   });
 
-  test('Fail_NoConstructor', async () => {
+  test("Fail_NoConstructor", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -242,13 +266,18 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_InitialisePropertyInLine', async () => {
+  test("Fail_InitialisePropertyInLine", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -262,13 +291,18 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_AttemptToModifyAPropertyDirectly', async () => {
+  test("Fail_AttemptToModifyAPropertyDirectly", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -287,13 +321,18 @@ class Foo
   end function
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_OverloadedConstructor', async () => {
+  test("Fail_OverloadedConstructor", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
@@ -312,13 +351,18 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_InstantiateWithoutRequiredArgs', async () => {
+  test("Fail_InstantiateWithoutRequiredArgs", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -338,14 +382,19 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Missing parameter 0"]);
   });
 
-  test('Fail_InstantiateWithWrongArgType', async () => {
+  test("Fail_InstantiateWithWrongArgType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -365,14 +414,19 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  test('Fail_SupplyingArgumentNotSpecified', async () => {
+  test("Fail_SupplyingArgumentNotSpecified", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -391,14 +445,19 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Too many parameters 0"]);
   });
 
-  test('Fail_MissingNewOnInstantiation', async () => {
+  test("Fail_MissingNewOnInstantiation", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -423,10 +482,14 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
-
 });

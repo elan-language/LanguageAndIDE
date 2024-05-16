@@ -5,27 +5,31 @@ import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class IdDefAsn extends AbstractAstNode implements AstIdNode {
+  constructor(
+    public readonly id: string,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+    this.id = id.trim();
+  }
 
-    constructor(public readonly id: string, public readonly fieldId: string, private readonly scope: Scope) {
-        super();
-        this.id = id.trim();
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors;
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return this.id;
+  }
 
+  symbolType() {
+    return this.scope
+      .resolveSymbol(this.id, transforms(), this.scope)
+      .symbolType(transforms());
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return this.id;
-    }
-
-    symbolType() {
-        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
-    }
-
-    toString() {
-        return this.id;
-    }
+  toString() {
+    return this.id;
+  }
 }

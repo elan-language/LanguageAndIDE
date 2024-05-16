@@ -7,6 +7,14 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 
 export interface Transforms {
-    transform(node: ParseNode | undefined, fieldId: string, scope: Scope): AstNode | undefined;
-    transformMany(node: CSV | Multiple | Sequence, fieldId: string, scope: Scope): AstCollectionNode;
+  transform(
+    node: ParseNode | undefined,
+    fieldId: string,
+    scope: Scope,
+  ): AstNode | undefined;
+  transformMany(
+    node: CSV | Multiple | Sequence,
+    fieldId: string,
+    scope: Scope,
+  ): AstCollectionNode;
 }

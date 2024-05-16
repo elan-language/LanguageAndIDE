@@ -1,143 +1,144 @@
-import * as vscode from 'vscode';
-import { getNonce, hash } from './util';
-import { File } from './frames/interfaces/file';
-import { editorEvent } from './frames/interfaces/editor-event';
-import { ParseStatus } from './frames/status-enums';
-import { Uri } from 'vscode';
-import { FileImpl } from './frames/file-impl';
-import { CodeSourceFromString } from './frames/code-source';
-import { handleClick, handleDblClick, handleKey } from './editorHandlers';
-import { DefaultProfile } from './frames/default-profile';
-import { Transforms } from './frames/syntax-nodes/transforms';
-import { transform, transformMany } from './frames/syntax-nodes/ast-visitor';
+import * as vscode from "vscode";
+import { getNonce, hash } from "./util";
+import { File } from "./frames/interfaces/file";
+import { editorEvent } from "./frames/interfaces/editor-event";
+import { ParseStatus } from "./frames/status-enums";
+import { Uri } from "vscode";
+import { FileImpl } from "./frames/file-impl";
+import { CodeSourceFromString } from "./frames/code-source";
+import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
+import { DefaultProfile } from "./frames/default-profile";
+import { Transforms } from "./frames/syntax-nodes/transforms";
+import { transform, transformMany } from "./frames/syntax-nodes/ast-visitor";
 
 export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
+  public static register(context: vscode.ExtensionContext): vscode.Disposable {
+    const provider = new ElanEditorProvider(context);
+    const providerRegistration = vscode.window.registerCustomEditorProvider(
+      ElanEditorProvider.viewType,
+      provider,
+    );
+    return providerRegistration;
+  }
 
-	public static register(context: vscode.ExtensionContext): vscode.Disposable {
-		const provider = new ElanEditorProvider(context);
-		const providerRegistration = vscode.window.registerCustomEditorProvider(ElanEditorProvider.viewType, provider);
-		return providerRegistration;
-	}
+  private static readonly viewType = "elan.elanEditor";
 
-	private static readonly viewType = 'elan.elanEditor';
+  private file?: File;
+  private currentFileUri?: Uri;
 
-	private file?: File;
-	private currentFileUri?: Uri;
+  constructor(private readonly context: vscode.ExtensionContext) {}
 
-	constructor(
-		private readonly context: vscode.ExtensionContext
-	) { }
+  transforms = {
+    transform: transform,
+    transformMany: transformMany,
+  } as Transforms;
 
-	transforms = {
-		transform: transform,
-		transformMany: transformMany
-	} as Transforms;
+  /**
+   * Called when our custom editor is opened.
+   */
+  public async resolveCustomTextEditor(
+    document: vscode.TextDocument,
+    webviewPanel: vscode.WebviewPanel,
+    _token: vscode.CancellationToken,
+  ): Promise<void> {
+    // Setup initial content for the webview
+    webviewPanel.webview.options = {
+      enableScripts: true,
+    };
+    webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-	/**
-	 * Called when our custom editor is opened.
-	 */
-	public async resolveCustomTextEditor(
-		document: vscode.TextDocument,
-		webviewPanel: vscode.WebviewPanel,
-		_token: vscode.CancellationToken
-	): Promise<void> {
+    if (this.currentFileUri !== document.uri || !this.file) {
+      this.file = new FileImpl(hash, new DefaultProfile(), this.transforms);
+      await this.file.parseFrom(new CodeSourceFromString(document.getText()));
+      this.file.deselectAll();
+      this.currentFileUri = document.uri;
+    }
 
-		// Setup initial content for the webview
-		webviewPanel.webview.options = {
-			enableScripts: true,
-		};
-		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
+    function updateWebview(fm: File) {
+      webviewPanel.webview.postMessage({
+        type: "update",
+        text: fm.renderAsHtml(),
+      });
+    }
 
-		if (this.currentFileUri !== document.uri || !this.file) {
-			this.file = new FileImpl(hash, new DefaultProfile(), this.transforms);
-			await this.file.parseFrom(new CodeSourceFromString(document.getText()));   
-			this.file.deselectAll();
-			this.currentFileUri = document.uri;
-		}
+    function updateSource(fm: File) {
+      if (fm.getParseStatus() === ParseStatus.valid) {
+        fm.renderAsSource().then((source) => {
+          const edit = new vscode.WorkspaceEdit();
 
-		function updateWebview(fm: File) {
-			webviewPanel.webview.postMessage({
-				type: 'update',
-				text: fm.renderAsHtml(),
-			});
-		}
+          // Just replace the entire document every time for this example extension.
+          // A more complete extension should compute minimal edits instead.
+          edit.replace(
+            document.uri,
+            new vscode.Range(0, 0, document.lineCount, 0),
+            source,
+          );
 
-		function updateSource(fm: File) {
+          vscode.workspace.applyEdit(edit);
+        });
+      }
+    }
 
-			if (fm.getParseStatus() === ParseStatus.valid) {
-				fm.renderAsSource().then(source => {
+    // Hook up event handlers so that we can synchronize the webview with the text document.
+    //
+    // The text document acts as our model, so we have to sync change in the document to our
+    // editor and sync changes in the editor back to the document.
+    //
+    // Remember that a single text document can also be shared between multiple custom
+    // editors (this happens for example when you split a custom editor)
 
-					const edit = new vscode.WorkspaceEdit();
+    const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
+      (e) => {
+        if (e.document.uri.toString() === document.uri.toString()) {
+          updateWebview(this.file!);
+        }
+      },
+    );
 
-					// Just replace the entire document every time for this example extension.
-					// A more complete extension should compute minimal edits instead.
-					edit.replace(
-						document.uri,
-						new vscode.Range(0, 0, document.lineCount, 0),
-						source);
+    // Make sure we get rid of the listener when our editor is closed.
+    webviewPanel.onDidDispose(() => {
+      changeDocumentSubscription.dispose();
+      this.file = undefined;
+    });
 
-					vscode.workspace.applyEdit(edit);
-				});
-			}
-		}
+    // Receive message from the webview.
+    webviewPanel.webview.onDidReceiveMessage((e: editorEvent) => {
+      switch (e.type) {
+        case "click":
+          handleClick(e, this.file!);
+          updateWebview(this.file!);
+          return;
+        case "dblclick":
+          handleDblClick(e, this.file!);
+          updateWebview(this.file!);
+          return;
+        case "key":
+          handleKey(e, this.file!);
+          updateWebview(this.file!);
+          updateSource(this.file!);
+          return;
+      }
+    });
+    updateWebview(this.file!);
+  }
 
-		// Hook up event handlers so that we can synchronize the webview with the text document.
-		//
-		// The text document acts as our model, so we have to sync change in the document to our
-		// editor and sync changes in the editor back to the document.
-		// 
-		// Remember that a single text document can also be shared between multiple custom
-		// editors (this happens for example when you split a custom editor)
+  /**
+   * Get the static html used for the editor webviews.
+   */
+  private getHtmlForWebview(webview: vscode.Webview): string {
+    // Local path to script and css for the webview
+    const scriptUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(this.context.extensionUri, "media", "elanScripts.js"),
+    );
 
-		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
-			if (e.document.uri.toString() === document.uri.toString()) {
-				updateWebview(this.file!);
-			}
-		});
+    const styleMainUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(this.context.extensionUri, "media", "elanStyle.css"),
+    );
 
-		// Make sure we get rid of the listener when our editor is closed.
-		webviewPanel.onDidDispose(() => {
-			changeDocumentSubscription.dispose();
-			this.file = undefined;
-		});
+    // Use a nonce to whitelist which scripts can be run
+    const nonce = getNonce();
 
-		// Receive message from the webview.
-		webviewPanel.webview.onDidReceiveMessage((e: editorEvent) => {
-			switch (e.type) {
-				case 'click':
-					handleClick(e, this.file!);
-					updateWebview(this.file!);
-					return;
-				case 'dblclick':
-					handleDblClick(e, this.file!);
-					updateWebview(this.file!);
-					return;
-				case 'key':
-					handleKey(e, this.file!);
-					updateWebview(this.file!);
-					updateSource(this.file!);
-					return;
-			}
-		});
-		updateWebview(this.file!);
-	}
-
-
-	/**
-	 * Get the static html used for the editor webviews.
-	 */
-	private getHtmlForWebview(webview: vscode.Webview): string {
-		// Local path to script and css for the webview
-		const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(
-			this.context.extensionUri, 'media', 'elanScripts.js'));
-
-		const styleMainUri = webview.asWebviewUri(vscode.Uri.joinPath(
-			this.context.extensionUri, 'media', 'elanStyle.css'));
-
-		// Use a nonce to whitelist which scripts can be run
-		const nonce = getNonce();
-
-		return /* html */`
+    return /* html */ `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
@@ -160,5 +161,5 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;
-	}
+  }
 }

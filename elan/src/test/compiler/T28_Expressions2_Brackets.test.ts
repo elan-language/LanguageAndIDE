@@ -1,11 +1,20 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T28_Expressions2_Brackets', () => {
-
-  test('Pass_BracketsChangeOperatorEvaluation', async () => {
+suite("T28_Expressions2_Brackets", () => {
+  test("Pass_BracketsChangeOperatorEvaluation", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -28,7 +37,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -37,7 +51,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
-  test('Pass_RedundantBracketsIgnored', async () => {
+  test("Pass_RedundantBracketsIgnored", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
     main
@@ -60,7 +74,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -69,7 +88,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
-  test('Pass_PowerHasHigherPrecedenceThatMultiply', async () => {
+  test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -88,7 +107,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -97,7 +121,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
 
-  test('Pass_PowerHasHigherPrecedenceThanFloatDivision', async () => {
+  test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -116,7 +140,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -125,7 +154,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  test('Pass_PowerHasHigherPrecedenceThanIntDivision', async () => {
+  test("Pass_PowerHasHigherPrecedenceThanIntDivision", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -144,7 +173,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -153,7 +187,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  test('Pass_MinusAsAUnaryOperator', async () => {
+  test("Pass_MinusAsAUnaryOperator", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -172,7 +206,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -181,7 +220,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "-4.7-15");
   });
 
-  test('Pass_OperatorPrecedenceForMod', async () => {
+  test("Pass_OperatorPrecedenceForMod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -200,7 +239,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -209,7 +253,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  test('Pass_OperatorPrecedenceForDiv', async () => {
+  test("Pass_OperatorPrecedenceForDiv", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -228,7 +272,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -237,8 +286,5 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "37");
   });
 
- 
-
   // TODO fails
-
 });

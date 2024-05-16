@@ -7,20 +7,19 @@ import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
+  name: IdentifierNode | undefined;
+  type: TypeNode | undefined;
 
-    name: IdentifierNode | undefined;
-    type: TypeNode | undefined;
-
-    parseText(text: string): void {
-        if (text.trim().length > 0) {
-            this.name = new IdentifierNode();
-            this.addElement(this.name);
-            this.addElement(new SpaceNode(Space.required));
-            this.addElement(new KeywordNode(asKeyword));
-            this.addElement(new SpaceNode(Space.required));
-            this.type = new TypeNode();
-            this.addElement(this.type);
-            super.parseText(text);
-        }
+  parseText(text: string): void {
+    if (text.trim().length > 0) {
+      this.name = new IdentifierNode();
+      this.addElement(this.name);
+      this.addElement(new SpaceNode(Space.required));
+      this.addElement(new KeywordNode(asKeyword));
+      this.addElement(new SpaceNode(Space.required));
+      this.type = new TypeNode();
+      this.addElement(this.type);
+      super.parseText(text);
     }
+  }
 }

@@ -4,49 +4,49 @@ import { CompileStatus, ParseStatus } from "../status-enums";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { CompileError } from "../compile-error";
-import { File} from "./file";
+import { File } from "./file";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export interface Frame extends Selectable, Scope {
-    isFrame: boolean;
-    
-    getFile(): File;
-    getParent(): Parent;
-    getMap(): Map<string, Selectable>;
+  isFrame: boolean;
 
-    renderAsHtml(): string;
-    renderAsSource(): string;
-    compile(transforms : Transforms): string;
+  getFile(): File;
+  getParent(): Parent;
+  getMap(): Map<string, Selectable>;
 
-    indent(): string;
+  renderAsHtml(): string;
+  renderAsSource(): string;
+  compile(transforms: Transforms): string;
 
-    getFields(): Field[];
-    worstParseStatusOfFields(): ParseStatus;
+  indent(): string;
 
-    selectFirstField() : boolean;
-    selectLastField() : boolean;
-    selectFieldBefore(current: Field): void;
-    selectFieldAfter(current: Field): void;
+  getFields(): Field[];
+  worstParseStatusOfFields(): ParseStatus;
 
-    //If none, return this
-    getNextFrameInTabOrder(): Frame;
-    getPreviousFrameInTabOrder(): Frame;
+  selectFirstField(): boolean;
+  selectLastField(): boolean;
+  selectFieldBefore(current: Field): void;
+  selectFieldAfter(current: Field): void;
 
-    canInsertBefore(): boolean;
-    canInsertAfter(): boolean;
+  //If none, return this
+  getNextFrameInTabOrder(): Frame;
+  getPreviousFrameInTabOrder(): Frame;
 
-    fieldUpdated(field: Field): void;
+  canInsertBefore(): boolean;
+  canInsertAfter(): boolean;
 
-    expandCollapseAll(): void;
+  fieldUpdated(field: Field): void;
 
-    compileErrors: CompileError[];
-    aggregateCompileErrors(): CompileError[];
-    getCompileStatus(): CompileStatus; //To be obsoleted in favour of ...
-    readCompileStatus(): CompileStatus;
-    resetCompileStatus(): void;
-    insertSelectorAfterLastField(): void;
-    insertPeerSelector(before: boolean): void;
+  expandCollapseAll(): void;
 
-    initialKeywords(): string;
-    setParent(parent: Parent): void;
+  compileErrors: CompileError[];
+  aggregateCompileErrors(): CompileError[];
+  getCompileStatus(): CompileStatus; //To be obsoleted in favour of ...
+  readCompileStatus(): CompileStatus;
+  resetCompileStatus(): void;
+  insertSelectorAfterLastField(): void;
+  insertPeerSelector(before: boolean): void;
+
+  initialKeywords(): string;
+  setParent(parent: Parent): void;
 }

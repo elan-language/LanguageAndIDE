@@ -1,11 +1,19 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { MainFrame } from "../../frames/globals/main-frame";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 
-suite('T_5_Variables', () => {
-
-  test('Pass_Int', async () => {
+suite("T_5_Variables", () => {
+  test("Pass_Int", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -20,7 +28,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -30,7 +43,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test('Pass_IntVariable', async () => {
+  test("Pass_IntVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -47,7 +60,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[1];
@@ -57,7 +75,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test('Pass_Int_Expression', async () => {
+  test("Pass_Int_Expression", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -72,7 +90,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -82,7 +105,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test('Pass_Reassign', async () => {
+  test("Pass_Reassign", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -99,7 +122,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -108,7 +136,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test('Pass_CoerceFloatToIntVar', async () => {
+  test("Pass_CoerceFloatToIntVar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -125,7 +153,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -135,7 +168,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test('Pass_LocalVarHidesGlobalConstant', async () => {
+  test("Pass_LocalVarHidesGlobalConstant", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
@@ -153,7 +186,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -162,7 +200,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test('Pass_OperatorCoverage', async () => {
+  test("Pass_OperatorCoverage", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -217,15 +255,23 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "-1truetruefalsefalsefalsetruetrue111.3333333333333333");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "-1truetruefalsefalsefalsetruetrue111.3333333333333333",
+    );
   });
 
-  test('Pass_Enum', async () => {
+  test("Pass_Enum", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -247,7 +293,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -256,7 +307,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
-  test('Pass_Iter', async () => {
+  test("Pass_Iter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f() return Iter<of Int>
@@ -281,7 +332,12 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
@@ -291,21 +347,25 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "List [1, 2]");
   });
 
-
-  test('Fail_WrongKeyword', async () => {
+  test("Fail_WrongKeyword", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   variable a set to 3
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_DuplicateVar', async () => {
+  test("Fail_DuplicateVar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -313,14 +373,19 @@ main
   var a set to 4
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
   });
 
-  test('Fail_GlobalVariable', async () => {
+  test("Fail_GlobalVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 var a set to 4
@@ -328,13 +393,18 @@ main
  
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_AssignIncompatibleType', async () => {
+  test("Fail_AssignIncompatibleType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -342,14 +412,19 @@ main
   set a to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to String"]);
   });
 
-  test('Fail_NotInitialized', async () => {
+  test("Fail_NotInitialized", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -357,53 +432,72 @@ main
   set a to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_InvalidVariableName1', async () => {
+  test("Fail_InvalidVariableName1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var A = 4.1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_InvalidVariableName2', async () => {
+  test("Fail_InvalidVariableName2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a@b set to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test('Fail_UseOfKeywordAsName', async () => {
+  test("Fail_UseOfKeywordAsName", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var if set to 4.1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-
   });
 
-  test('Fail_TypeCheck1', async () => {
+  test("Fail_TypeCheck1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f() return Int
@@ -420,7 +514,12 @@ main
   set d to 1.0
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -428,11 +527,11 @@ end main`;
       "Incompatible types Float to Boolean",
       "Incompatible types Boolean to Int",
       "Incompatible types List <Float> to String",
-      "Incompatible types Float to Int"]);
-
+      "Incompatible types Float to Int",
+    ]);
   });
 
-  test('Fail_TypeCheck2', async () => {
+  test("Fail_TypeCheck2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -444,31 +543,38 @@ main
   set c to b
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types List <Float> to Array <String>",
       "Incompatible types Array <String> to List <Float>",
-      "Incompatible types List <Float> to Dictionary <String,Float>"
+      "Incompatible types List <Float> to Dictionary <String,Float>",
     ]);
-
   });
 
-  test('Fail_RecursiveDefinition', async () => {
+  test("Fail_RecursiveDefinition", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to x + 1
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Undeclared id"]);
   });
-
-
 });

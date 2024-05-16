@@ -5,27 +5,30 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 
 export class LiteralBoolAsn extends AbstractAstNode implements AstNode {
-    constructor(rawValue: string, public readonly fieldId: string) {
-        super();
-        this.value = rawValue.trim() === trueKeyword;
-    }
+  constructor(
+    rawValue: string,
+    public readonly fieldId: string,
+  ) {
+    super();
+    this.value = rawValue.trim() === trueKeyword;
+  }
 
-    aggregateCompileErrors(): CompileError[] {
-        return this.compileErrors;
-    }
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
 
-    compile(): string {
-        this.compileErrors = [];
-        return this.value ? "true" : "false";
-    }
+  compile(): string {
+    this.compileErrors = [];
+    return this.value ? "true" : "false";
+  }
 
-    value: boolean;
+  value: boolean;
 
-    symbolType() {
-        return BooleanType.Instance;
-    }
+  symbolType() {
+    return BooleanType.Instance;
+  }
 
-    toString() {
-        return this.value.toString();
-    }
+  toString() {
+    return this.value.toString();
+  }
 }

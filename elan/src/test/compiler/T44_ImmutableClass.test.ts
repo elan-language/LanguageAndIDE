@@ -1,11 +1,21 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeDoesNotExecute, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
+} from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite('T44_ImmutableClass', () => {
-
-  test('Pass_BasicImmutableClass', async () => {
+suite("T44_ImmutableClass", () => {
+  test("Pass_BasicImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -53,7 +63,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -62,7 +77,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
-  test('Pass_AbstractImmutableClass', async () => {
+  test("Pass_AbstractImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -132,7 +147,12 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -141,7 +161,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
-  ignore_test('Fail_ProcedureMethod', async () => {
+  ignore_test("Fail_ProcedureMethod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 immutable class Foo
@@ -160,9 +180,12 @@ immutable class Foo
   end function
 end class`;
 
-
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -171,5 +194,4 @@ end class`;
   // remaining tests not relevant
   // Fail_ProcedureMethodOnAbstractImmutableClass
   // Fail_AbstractAndImmutableReversed
-
 });

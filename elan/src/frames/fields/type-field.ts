@@ -7,34 +7,38 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 import { isAstType } from "../helpers";
 
-export class TypeField extends AbstractField  {
-    isParseByNodes = true;
-    constructor(holder: Frame) {
-        super(holder);
-        this.useHtmlTags = true;
-        this.placeholder = "Type";
-        this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
-    }
-    getIdPrefix(): string {
-        return 'type';
-    }
-    initialiseRoot(): ParseNode {
-        this.astNode = undefined; 
-        this.rootNode = new TypeNode();
-        return this.rootNode; 
-    }
-    readToDelimeter: ((source: CodeSource) => string) = (source: CodeSource) => source.readToEndOfLine(); 
+export class TypeField extends AbstractField {
+  isParseByNodes = true;
+  constructor(holder: Frame) {
+    super(holder);
+    this.useHtmlTags = true;
+    this.placeholder = "Type";
+    this.help = `A simple Type name must begin with an upper-case letter. More complex types are: 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
+  }
+  getIdPrefix(): string {
+    return "type";
+  }
+  initialiseRoot(): ParseNode {
+    this.astNode = undefined;
+    this.rootNode = new TypeNode();
+    return this.rootNode;
+  }
+  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+    source.readToEndOfLine();
 
-    compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        const astNode = this.getOrTransformAstNode(transforms);
-        if (isAstType(astNode)) {
-            return astNode.renderAsDefaultObjectCode();
-        }
-        return super.compile(transforms);
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const astNode = this.getOrTransformAstNode(transforms);
+    if (isAstType(astNode)) {
+      return astNode.renderAsDefaultObjectCode();
     }
+    return super.compile(transforms);
+  }
 
-    symbolType(transforms: Transforms) {
-        return this.getOrTransformAstNode(transforms)?.symbolType() ?? UnknownType.Instance;
-    }
+  symbolType(transforms: Transforms) {
+    return (
+      this.getOrTransformAstNode(transforms)?.symbolType() ??
+      UnknownType.Instance
+    );
+  }
 }

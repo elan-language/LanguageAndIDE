@@ -7,20 +7,20 @@ import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { AbstractField } from "./abstract-field";
 
 export class AssertActualField extends AbstractField {
+  constructor(holder: Frame) {
+    super(holder);
+    this.placeholder = "result";
+    this.help = `May be a function call, or a variable defined in a prior statement.`;
+  }
 
-    constructor(holder: Frame) {
-        super(holder);
-        this.placeholder = "result";
-        this.help = `May be a function call, or a variable defined in a prior statement.`;
-    }
-    
-    initialiseRoot(): ParseNode {
-        this.astNode = undefined; 
-        const variableRef = () => new VarRefNode();
-        const functionCall = () => new FunctionCallNode();
-        this.rootNode = new Alternatives([variableRef, functionCall]);
-        return this.rootNode; 
-    }
+  initialiseRoot(): ParseNode {
+    this.astNode = undefined;
+    const variableRef = () => new VarRefNode();
+    const functionCall = () => new FunctionCallNode();
+    this.rootNode = new Alternatives([variableRef, functionCall]);
+    return this.rootNode;
+  }
 
-    readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\sis\s/);
+  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+    source.readUntil(/\sis\s/);
 }

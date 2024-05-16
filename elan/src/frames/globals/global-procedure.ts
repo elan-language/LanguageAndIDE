@@ -5,30 +5,30 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
-    isGlobal = true;
+  isGlobal = true;
 
-    constructor(parent: Parent) {
-        super(parent);
-    }
+  constructor(parent: Parent) {
+    super(parent);
+  }
 
-    indent(): string {
-        return "";
-    }
+  indent(): string {
+    return "";
+  }
 
-    public renderAsSource(): string {
-        return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+  public renderAsSource(): string {
+    return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
-    }
+  }
 
-    public compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+  public compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 }\r
 `;
-    }
+  }
 
-    symbolScope = SymbolScope.program;
+  symbolScope = SymbolScope.program;
 }

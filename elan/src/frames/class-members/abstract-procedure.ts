@@ -13,68 +13,71 @@ import { Parent } from "../interfaces/parent";
 import { abstractProcedureKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
-    isAbstract = true;
-    isMember: boolean = true;
-    public name : IdentifierField;
-    public params: ParamList;
-    private class: ClassFrame;
+export class AbstractProcedure
+  extends AbstractFrame
+  implements Member, ElanSymbol
+{
+  isAbstract = true;
+  isMember: boolean = true;
+  public name: IdentifierField;
+  public params: ParamList;
+  private class: ClassFrame;
 
-    constructor(parent: Parent) {
-        super(parent);
-        this.class = parent as ClassFrame;
-        this.name = new IdentifierField(this);
-        this.params = new ParamList(this);
-    }
-    initialKeywords(): string {
-        return abstractProcedureKeywords;
-    }
-    getFields(): Field[] {
-        return [this.name, this.params];
-    }
+  constructor(parent: Parent) {
+    super(parent);
+    this.class = parent as ClassFrame;
+    this.name = new IdentifierField(this);
+    this.params = new ParamList(this);
+  }
+  initialKeywords(): string {
+    return abstractProcedureKeywords;
+  }
+  getFields(): Field[] {
+    return [this.name, this.params];
+  }
 
-    getIdPrefix(): string {
-        return 'proc';
-    }
+  getIdPrefix(): string {
+    return "proc";
+  }
 
-    public override indent(): string {
-        return singleIndent();
-    }
+  public override indent(): string {
+    return singleIndent();
+  }
 
-    renderAsHtml(): string {
-        return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
+  renderAsHtml(): string {
+    return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
 <keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}</procedure>
 `;
-    }
+  }
 
-    public override renderAsSource() : string {
-        return `${this.indent()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+  public override renderAsSource(): string {
+    return `${this.indent()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 `;
-    }
+  }
 
-    public override compile(transforms: Transforms): string {
-        this.compileErrors = [];
-        return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+  public override compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.indent()}}\r
 `;
-    }
+  }
 
-    parseFrom(source: CodeSource): void {
-        source.remove("abstract procedure ");
-        this.name.parseFrom(source);
-        source.remove("(");
-        this.params.parseFrom(source);
-        source.remove(")");
-    }
+  parseFrom(source: CodeSource): void {
+    source.remove("abstract procedure ");
+    this.name.parseFrom(source);
+    source.remove("(");
+    this.params.parseFrom(source);
+    source.remove(")");
+  }
 
-    get symbolId() {
-        return this.name.text;
-    }
+  get symbolId() {
+    return this.name.text;
+  }
 
-    symbolType(transforms: Transforms) {
-        const pt = this.params.symbolTypes(transforms);
-        return new ProcedureType(pt);
-    }
+  symbolType(transforms: Transforms) {
+    const pt = this.params.symbolTypes(transforms);
+    return new ProcedureType(pt);
+  }
 
-    symbolScope = SymbolScope.property;
+  symbolScope = SymbolScope.property;
 }
