@@ -4,7 +4,6 @@ import { Collapsible } from "./interfaces/collapsible";
 import { Parent } from "./interfaces/parent";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
-import { MainFrame } from "./globals/main-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CompileStatus, OverallStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
@@ -27,10 +26,6 @@ export function isClass(f?: Scope): f is Class {
     return !!f && 'isClass' in f;
 }
 
-export function isMain(f?: any): f is MainFrame {
-    return !!f && 'isMain' in f;
-}
-
 export function isFrame(f?: any): f is Frame {
     return !!f && 'isFrame' in f;
 }
@@ -43,11 +38,7 @@ export function isMember(f?: any): f is Member {
     return !!f && 'isMember' in f;
 } 
 
-export function isField(f?: any): f is Field {
-    return !!f && 'isField' in f;
-} 
-
-export function isSelector(f?: any): f is AbstractSelector {
+export function isSelector(f?: Selectable): f is AbstractSelector {
     return !!f && 'isSelector' in f;
 } 
 

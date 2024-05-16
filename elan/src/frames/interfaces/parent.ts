@@ -8,7 +8,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { Scope } from "./scope";
 
 
-export interface Parent extends Scope{
+export interface Parent extends Scope {
     //External use
     isParent: boolean;
 
