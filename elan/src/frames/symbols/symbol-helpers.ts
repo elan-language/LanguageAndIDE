@@ -12,8 +12,10 @@ import { SymbolScope } from "./symbol-scope";
 import { isClass as isClass, isFile, isFrame, isScope } from "../helpers";
 import { File} from "../interfaces/file";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
 
-export function isSymbol(s?: any): s is ISymbol {
+export function isSymbol(s?: Parent | Frame | ISymbol): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
 }
 export function rawSymbolToType(s: string) {
