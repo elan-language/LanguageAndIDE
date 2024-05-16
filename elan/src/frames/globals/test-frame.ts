@@ -8,9 +8,8 @@ import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
-import { OverallStatus } from "../status-enums";
+import { OverallStatus, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
-import { TestStatus } from "../test-status";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
     isTest = true;
@@ -40,7 +39,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     getTestStatus(): TestStatus {
         const tests =  this.getChildren().filter(c => c instanceof AssertStatement).map(c => c as AssertStatement);
         const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
-        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
         return worst;
     }
 

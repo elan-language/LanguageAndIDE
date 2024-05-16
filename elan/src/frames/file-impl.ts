@@ -1,6 +1,6 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, OverallStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { File} from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
@@ -26,8 +26,6 @@ import { ISymbol } from "./interfaces/symbol";
 import { StdLibSymbols } from "../std-lib-symbols";
 import { isSymbol } from "./symbols/symbol-helpers";
 import { Scope } from "./interfaces/scope";
-import { TestStatus } from "./test-status";
-import { RunStatus } from "./run-status";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
 import { Transforms } from "./syntax-nodes/transforms";
@@ -44,7 +42,7 @@ export class FileImpl implements File, Scope {
     parseError? : string;
     readonly defaultFileName = "code.elan";
     fileName : string = this.defaultFileName;
-    private _runStatus : RunStatus = RunStatus.stopped;
+    private _runStatus : RunStatus = RunStatus.default;
     private scratchPad: ScratchPad;
  
     private _children: Array<Frame> = new Array<Frame>();
@@ -234,17 +232,17 @@ export class FileImpl implements File, Scope {
     getTestStatus(): TestStatus {
         const tests =  this.getChildren().filter(c => c instanceof TestFrame).map(c => c as TestFrame);
         const worstOf = (a: TestStatus, b: TestStatus) => a < b ? a : b;
-        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.pending);
+        const worst = tests.reduce((prev,t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
         return worst;
     }
     getTestStatusForDashboard(): string {
-        var str = "";
+        var status: OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid || this.getCompileStatus() !== CompileStatus.ok) {
-            str = "default";
+            status = OverallStatus.default;
         } else {
-            str = OverallStatus[helper_testStatusAsOverallStatus(this.getTestStatus())];
+            status = helper_testStatusAsOverallStatus(this.getTestStatus());
         }
-        return str;
+        return OverallStatus[status];
     }
 
     getRunStatus(): RunStatus {
@@ -262,13 +260,13 @@ export class FileImpl implements File, Scope {
         return OverallStatus[helper_parseStatusAsOverallStatus(this.getParseStatus())];
     }
     getCompileStatusForDashboard(): string {
-        var str = "";
+        var status:OverallStatus;
         if (this.getParseStatus() !== ParseStatus.valid) {
-            str = "default";
+            status = OverallStatus.default;
         } else {
-            str = OverallStatus[helper_compileStatusAsOverallStatus(this.getCompileStatus())];
+            status = helper_compileStatusAsOverallStatus(this.getCompileStatus());
         }
-        return str;
+        return OverallStatus[status];
     }
     
     getCompileStatus(): CompileStatus {

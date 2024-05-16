@@ -17,13 +17,13 @@ export abstract class AbstractSequence extends AbstractParseNode {
     parseText(text: string): void {
         var i = 0; //Index
         var remaining = text;
-        var worstStatus: ParseStatus = ParseStatus.notParsed;
+        var worstStatus: ParseStatus = ParseStatus.default;
         while (i < this.elements.length && worstStatus >= ParseStatus.valid) {
             var node = this.elements[i];
             node.parseText(remaining);
             remaining = node.remainingText;
             if (node.status === ParseStatus.empty) {
-                worstStatus = worstStatus === ParseStatus.notParsed ? ParseStatus.empty : ParseStatus.incomplete;
+                worstStatus = worstStatus === ParseStatus.default ? ParseStatus.empty : ParseStatus.incomplete;
             } else {
                 worstStatus = node.status < worstStatus ? node.status : worstStatus;
             }
