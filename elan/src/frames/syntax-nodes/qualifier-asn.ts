@@ -5,10 +5,10 @@ import { globalKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
-import { Transforms } from "./transforms";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
-export class QualifierAsn extends AbstractAstNode implements AstNode {
+export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
 
     constructor(public readonly value: AstIdNode, public readonly fieldId: string, private readonly scope: Scope) {
         super();

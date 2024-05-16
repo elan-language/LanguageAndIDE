@@ -8,13 +8,10 @@ import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../symbols/procedure-type";
 import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
 import { callKeyword } from "../keywords";
-import { Scope } from "../interfaces/scope";
-import { Frame } from "../interfaces/frame";
-import { FileImpl } from "../file-impl";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 
 export class CallStatement extends AbstractFrame implements Statement {
     isStatement = true;
@@ -60,10 +57,10 @@ export class CallStatement extends AbstractFrame implements Statement {
     compile(transforms: Transforms): string {
         this.compileErrors = [];
 
-        const astNode = this.proc.getOrTransformAstNode(transforms) as AstIdNode;
+        const astNode = this.proc.getOrTransformAstNode(transforms) as AstQualifiedNode;
         const id = astNode.id;
 
-        var [qualifier, currentScope] = updateScopeAndQualifier((astNode as any).qualifier, transforms, this);
+        var [qualifier, currentScope] = updateScopeAndQualifier(astNode.qualifier, transforms, this);
 
         const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 

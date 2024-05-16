@@ -111,7 +111,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
         actual = sl?.printed;
     }
     catch (e) {
-        assert.fail((e as any).message ?? "");
+        assert.fail((e as { message: string }).message ?? "");
     }
     assert.strictEqual(actual, output);
 }
@@ -123,7 +123,7 @@ export async function assertTestObjectCodeExecutes(file: FileImpl, expectedOutco
         actualOutcomes = await executeTestCode(file, "");
     }
     catch (e) {
-        assert.fail((e as any).message ?? "");
+        assert.fail((e as { message: string }).message ?? "");
     }
 
     assert.strictEqual(actualOutcomes.length, expectedOutcomes.length, "mismatched all outcomes");

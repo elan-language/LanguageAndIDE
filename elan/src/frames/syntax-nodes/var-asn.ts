@@ -19,10 +19,12 @@ import { ThisAsn } from "./this-asn";
 import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isScope } from "../helpers";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
-export class VarAsn extends AbstractAstNode implements AstIdNode {
+export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
 
-    constructor(public readonly id: string, public readonly qualifier: AstNode | undefined, private readonly index: AstNode | undefined, public readonly fieldId: string, private scope: Scope) {
+    constructor(public readonly id: string, public readonly qualifier: AstQualifierNode | undefined, private readonly index: AstNode | undefined, public readonly fieldId: string, private scope: Scope) {
         super();
     }
 

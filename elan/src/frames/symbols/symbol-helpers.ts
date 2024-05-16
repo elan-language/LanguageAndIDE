@@ -9,8 +9,9 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { AstNode } from "../interfaces/ast-node";
 import { ClassType } from "./class-type";
 import { SymbolScope } from "./symbol-scope";
-import { isClass, isFile, isFrame, isScope } from "../helpers";
+import { isClass as isClass, isFile, isFrame, isScope } from "../helpers";
 import { File} from "../interfaces/file";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
 export function isSymbol(s?: any): s is ISymbol {
     return !!s && 'symbolId' in s && 'symbolType' in s;
@@ -49,7 +50,7 @@ export function scopePrefix(symbolScope: SymbolScope | undefined) {
     return "";
 }
 
-export function updateScopeAndQualifier(qualifier: any | undefined, transforms: Transforms, currentScope: Scope): [AstNode | undefined, Scope] {
+export function updateScopeAndQualifier(qualifier: AstQualifierNode | undefined, transforms: Transforms, currentScope: Scope): [AstNode | undefined, Scope] {
 
 
     const qualifierScope = qualifier ? qualifier.symbolType() : undefined;

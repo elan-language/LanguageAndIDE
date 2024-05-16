@@ -91,6 +91,7 @@ import { DoubleIndexNode } from "../parse-nodes/double-index-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { ExprAsn } from "./expr-asn";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 
 function mapOperation(op: string) {
     switch (op.trim()) {
@@ -350,7 +351,7 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof VarRefCompound) {
-        const q = transform(node.optQualifier, fieldId, scope);
+        const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
         const id = node.simple!.matchedText;
         const index = transform(node.index, fieldId, scope);
         return new VarAsn(id, q, index, fieldId, scope);
@@ -425,14 +426,14 @@ export function transform(node: ParseNode | undefined, fieldId: string, scope: S
     }
 
     if (node instanceof AssignableNode) {
-        const q = transform(node.qualifier, fieldId, scope);
+        const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
         const id = node.simple.matchedText;
         const index = transform(node.index, fieldId, scope);
         return new VarAsn(id, q, index, fieldId, scope);
     }
 
     if (node instanceof InstanceProcRef) {
-        const q = transform(node.qualifier, fieldId, scope);
+        const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
         const id = node.simple!.matchedText;
         return new VarAsn(id, q, undefined, fieldId, scope);
     }
