@@ -166,6 +166,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   const test = new TestFrame(f);
   test.testName.setFieldToKnownValidText("test1");
   f.addChildBefore(test, gs);
+  f.updateParseStatus();
   return f;
 }
 

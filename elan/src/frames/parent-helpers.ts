@@ -5,14 +5,15 @@ import { Parent } from "./interfaces/parent";
 import { CompileStatus, ParseStatus } from "./status-enums";
 import { Transforms } from "./syntax-nodes/transforms";
 
-export function parentHelper_worstParseStatusOfChildren(
+export function parentHelper_readWorstParseStatusOfChildren(
   parent: Parent,
 ): ParseStatus {
   return parent
     .getChildren()
-    .map((s) => s.getParseStatus())
+    .map((s) => s.readParseStatus())
     .reduce((prev, cur) => (cur < prev ? cur : prev), ParseStatus.valid);
 }
+
 export function parentHelper_aggregateCompileErrorsOfChildren(
   parent: Parent,
 ): CompileError[] {

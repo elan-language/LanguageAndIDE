@@ -30,7 +30,7 @@ import {
   parentHelper_selectFirstChild,
   parentHelper_selectLastField,
   parentHelper_worstCompileStatusOfChildren,
-  parentHelper_worstParseStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
 } from "./parent-helpers";
 import { CompileStatus, ParseStatus } from "./status-enums";
 import { StatementSelector } from "./statements/statement-selector";
@@ -64,22 +64,16 @@ export abstract class FrameWithStatements
     return this.getParent().getFactory();
   }
 
-  aggregateParseStatus(): void {
+  updateParseStatus(): void {
+    this.getChildren().forEach(c => c.updateParseStatus());
     const worstOfFieldsOrChildren = Math.min(
       this.worstParseStatusOfFields(),
-      parentHelper_worstParseStatusOfChildren(this),
+      parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldsOrChildren);
   }
-  getParseStatus(): ParseStatus {
-    //TODO: to be eliminated in favour of readParseStatus on superclass
-    return Math.min(
-      this.worstParseStatusOfFields(),
-      parentHelper_worstParseStatusOfChildren(this),
-    );
-  }
-
-  aggregateCompileStatus(): void {
+ 
+  updateCompileStatus(): void {
     this.setCompileStatus(
       Math.min(
         this.worstCompileStatusOfFields(),

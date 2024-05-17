@@ -7,7 +7,7 @@ import { File } from "./interfaces/file";
 import { AbstractSelector } from "./abstract-selector";
 import {
   CompileStatus,
-  OverallStatus,
+  DisplayStatus,
   ParseStatus,
   RunStatus,
   TestStatus,
@@ -102,9 +102,9 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   /* To display first message only use: */
   const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
   let cls = "";
-  const compile = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
-  if (compile !== OverallStatus.ok) {
-    cls = OverallStatus[compile];
+  const compile = helper_compileStatusAsDisplayStatus(loc.getCompileStatus());
+  if (compile !== DisplayStatus.ok) {
+    cls = DisplayStatus[compile];
   }
   return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
@@ -121,61 +121,61 @@ export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
   return result;
 }
 
-export function helper_CompileOrParseStatus(loc: Frame | Field): OverallStatus {
-  let status: OverallStatus = OverallStatus.error;
-  const parse = helper_parseStatusAsOverallStatus(loc.getParseStatus());
-  if (parse !== OverallStatus.ok) {
-    status = parse;
-  } else {
-    status = helper_compileStatusAsOverallStatus(loc.getCompileStatus());
+export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
+  let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
+  if (status === DisplayStatus.ok) {
+    const compile = helper_compileStatusAsDisplayStatus(loc.getCompileStatus());
+    if (compile !== DisplayStatus.default) { // Implies that the compiler has not been run
+      status = compile;
+    }
   }
   return status;
 }
 
-export function helper_parseStatusAsOverallStatus(ps: ParseStatus) {
-  let overall = OverallStatus.default;
+export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatus {
+  let overall = DisplayStatus.default;
   if (ps === ParseStatus.valid) {
-    overall = OverallStatus.ok;
+    overall = DisplayStatus.ok;
   } else if (ps === ParseStatus.incomplete) {
-    overall = OverallStatus.warning;
+    overall = DisplayStatus.warning;
   } else if (ps === ParseStatus.invalid) {
-    overall = OverallStatus.error;
+    overall = DisplayStatus.error;
   }
   return overall;
 }
 
-export function helper_compileStatusAsOverallStatus(cs: CompileStatus) {
-  let overall = OverallStatus.default;
+export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayStatus {
+  let overall = DisplayStatus.default;
   if (cs === CompileStatus.ok) {
-    overall = OverallStatus.ok;
+    overall = DisplayStatus.ok;
   } else if (cs === CompileStatus.unknownSymbol) {
-    overall = OverallStatus.warning;
+    overall = DisplayStatus.warning;
   } else if (cs === CompileStatus.error) {
-    overall = OverallStatus.error;
+    overall = DisplayStatus.error;
   }
   return overall;
 }
 
-export function helper_testStatusAsOverallStatus(ts: TestStatus) {
-  let overall = OverallStatus.default;
+export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus {
+  let overall = DisplayStatus.default;
   if (ts === TestStatus.pass) {
-    overall = OverallStatus.ok;
+    overall = DisplayStatus.ok;
   } else if (ts === TestStatus.pending) {
-    overall = OverallStatus.warning;
+    overall = DisplayStatus.warning;
   } else if (ts === TestStatus.fail) {
-    overall = OverallStatus.error;
+    overall = DisplayStatus.error;
   }
   return overall;
 }
 
-export function helper_runStatusAsOverallStatus(rs: RunStatus) {
-  let overall = OverallStatus.default;
+export function helper_runStatusDisplayStatus(rs: RunStatus): DisplayStatus {
+  let overall = DisplayStatus.default;
   if (rs === RunStatus.running) {
-    overall = OverallStatus.ok;
+    overall = DisplayStatus.ok;
   } else if (rs === RunStatus.paused) {
-    overall = OverallStatus.warning;
+    overall = DisplayStatus.warning;
   } else if (rs === RunStatus.error) {
-    overall = OverallStatus.error;
+    overall = DisplayStatus.error;
   }
   return overall;
 }

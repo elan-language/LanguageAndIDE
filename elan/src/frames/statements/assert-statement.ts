@@ -8,7 +8,7 @@ import { AssertActualField } from "../fields/assert-actual-field";
 import { assertKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AssertOutcome } from "../../system";
-import { CompileStatus, OverallStatus, TestStatus } from "../status-enums";
+import { CompileStatus, DisplayStatus, TestStatus } from "../status-enums";
 import { helper_compileMsgAsHtml } from "../helpers";
 
 export class AssertStatement extends AbstractFrame implements Statement {
@@ -81,13 +81,13 @@ export class AssertStatement extends AbstractFrame implements Statement {
     let cls = "";
     let msg = "";
     if (!this.outcome) {
-      cls = OverallStatus[OverallStatus.warning];
+      cls = DisplayStatus[DisplayStatus.warning];
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {
-      cls = OverallStatus[OverallStatus.error];
+      cls = DisplayStatus[DisplayStatus.error];
       msg = `actual: ${this.outcome!.actual}`;
     } else if (this.outcome.status === TestStatus.pass) {
-      cls = OverallStatus[OverallStatus.ok];
+      cls = DisplayStatus[DisplayStatus.ok];
       msg = `pass`;
     }
     return ` <msg class="${cls}">${msg}</msg>`;

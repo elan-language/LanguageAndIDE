@@ -20,6 +20,7 @@ import { IdentifierField } from "../frames/fields/identifier-field";
 import { ExpressionField } from "../frames/fields/expression-field";
 import { isParent } from "../frames/helpers";
 import { Selectable } from "../frames/interfaces/selectable";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("Navigation", () => {
   vscode.window.showInformationMessage("Start all unit tests.");

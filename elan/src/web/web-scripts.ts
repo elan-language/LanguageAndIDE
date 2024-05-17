@@ -97,10 +97,6 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function getStatus() {
-  return file.getParseStatus();
-}
-
 function updateStatus() {
   (document.getElementById("code-title") as HTMLDivElement).innerText =
     `Program: ${file.fileName}`; // ${getStatus()}`;
@@ -233,7 +229,7 @@ function updateContent(text: string) {
     elanCode.focus();
   }
 
-  if (file.getParseStatus() === ParseStatus.valid) {
+  if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
     file.renderAsSource().then((code) => {
       localStorage.setItem("elan-code", code);

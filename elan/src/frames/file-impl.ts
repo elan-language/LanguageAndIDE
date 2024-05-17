@@ -2,7 +2,7 @@ import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
 import {
   CompileStatus,
-  OverallStatus,
+  DisplayStatus,
   ParseStatus,
   RunStatus,
   TestStatus,
@@ -18,12 +18,12 @@ import { Constant } from "./globals/constant";
 import { TestFrame } from "./globals/test-frame";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import {
-  helper_compileStatusAsOverallStatus,
+  helper_compileStatusAsDisplayStatus,
   expandCollapseAll,
   isSelector,
-  helper_parseStatusAsOverallStatus,
-  helper_testStatusAsOverallStatus,
-  helper_runStatusAsOverallStatus,
+  helper_parseStatusAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+  helper_runStatusDisplayStatus,
 } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
@@ -47,7 +47,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_worstCompileStatusOfChildren,
-  parentHelper_worstParseStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
 } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ElanSymbol } from "./interfaces/symbol";
@@ -294,7 +294,7 @@ export class FileImpl implements File, Scope {
     return this._testStatus;
   }
   readTestStatusForDashboard(): string {
-    return OverallStatus[helper_testStatusAsOverallStatus(this._testStatus)];
+    return DisplayStatus[helper_testStatusAsDisplayStatus(this._testStatus)];
   }
   calculateTestStatus() {
     const tests = this.getChildren()
@@ -319,16 +319,16 @@ export class FileImpl implements File, Scope {
     return worst;
   }
   getTestStatusForDashboard(): string {
-    let status: OverallStatus;
+    let status: DisplayStatus;
     if (
-      this.getParseStatus() !== ParseStatus.valid ||
+      this.readParseStatus() !== ParseStatus.valid ||
       this.getCompileStatus() !== CompileStatus.ok
     ) {
-      status = OverallStatus.default;
+      status = DisplayStatus.default;
     } else {
-      status = helper_testStatusAsOverallStatus(this.getTestStatus());
+      status = helper_testStatusAsDisplayStatus(this.getTestStatus());
     }
-    return OverallStatus[status];
+    return DisplayStatus[status];
   }
 
   readRunStatus(): RunStatus {
@@ -339,32 +339,30 @@ export class FileImpl implements File, Scope {
     this._runStatus = s;
   }
 
-  recalculateParseStatus(): void {
-    this._parseStatus = parentHelper_worstParseStatusOfChildren(this);
+  updateParseStatus(): void {
+    this.getChildren().forEach(c => c.updateParseStatus());
+    this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
   readParseStatus(): ParseStatus {
     return this._parseStatus;
   }
   readParseStatusForDashboard(): string {
-    return OverallStatus[helper_parseStatusAsOverallStatus(this._parseStatus)];
-  }
-  getParseStatus(): ParseStatus {
-    return parentHelper_worstParseStatusOfChildren(this);
+    return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
   getParseStatusForDashboard(): string {
-    return OverallStatus[
-      helper_parseStatusAsOverallStatus(this.getParseStatus())
+    return DisplayStatus[
+      helper_parseStatusAsDisplayStatus(this.readParseStatus())
     ];
   }
 
   getCompileStatusForDashboard(): string {
-    let status: OverallStatus;
-    if (this.getParseStatus() !== ParseStatus.valid) {
-      status = OverallStatus.default;
+    let status: DisplayStatus;
+    if (this.readParseStatus() !== ParseStatus.valid) {
+      status = DisplayStatus.default;
     } else {
-      status = helper_compileStatusAsOverallStatus(this.getCompileStatus());
+      status = helper_compileStatusAsDisplayStatus(this.getCompileStatus());
     }
-    return OverallStatus[status];
+    return DisplayStatus[status];
   }
 
   getCompileStatus(): CompileStatus {
@@ -372,7 +370,7 @@ export class FileImpl implements File, Scope {
   }
 
   parseStatusAsString(): string {
-    return ParseStatus[this.getParseStatus()];
+    return ParseStatus[this.readParseStatus()];
   }
   compileErrors(): CompileError[] {
     return parentHelper_aggregateCompileErrorsOfChildren(this);
@@ -440,6 +438,7 @@ export class FileImpl implements File, Scope {
       this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
     }
     this.getFirstChild().select(true, false);
+    this.updateParseStatus();
   }
 
   containsMain(): boolean {

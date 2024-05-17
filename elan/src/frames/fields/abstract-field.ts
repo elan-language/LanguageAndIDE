@@ -1,5 +1,5 @@
 import { Selectable } from "../interfaces/selectable";
-import { CompileStatus, OverallStatus, ParseStatus } from "../status-enums";
+import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { editorEvent } from "../interfaces/editor-event";
@@ -8,7 +8,7 @@ import {
   escapeAngleBrackets,
   helper_compileMsgAsHtml,
   helper_getCompileStatus,
-  helper_CompileOrParseStatus,
+  helper_CompileOrParseAsDisplayStatus,
   isCollapsible,
 } from "../helpers";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -282,7 +282,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected setParseStatus(newStatus: ParseStatus) {
     this._parseStatus = newStatus;
   }
-  getParseStatus(): ParseStatus {
+  readParseStatus(): ParseStatus {
     return this._parseStatus!;
   }
   resetCompileStatus(): void {
@@ -348,11 +348,11 @@ export abstract class AbstractField implements Selectable, Field {
     this.pushClass(this.focused, "focused");
     this.pushClass(!this.text, "empty");
     this.pushClass(this.isOptional(), "optional");
-    this._classes.push(OverallStatus[this.overallStatus()]);
+    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
   }
 
-  private overallStatus(): OverallStatus {
-    return helper_CompileOrParseStatus(this);
+  private readDisplayStatus(): DisplayStatus {
+    return helper_CompileOrParseAsDisplayStatus(this);
   }
 
   protected pushClass(flag: boolean, cls: string) {
@@ -368,7 +368,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   protected getMessage(): string {
     return this.parseErrorMsg !== ""
-      ? `<msg class="${OverallStatus[OverallStatus.error]}"> ${this.parseErrorMsg}</msg>`
+      ? `<msg class="${DisplayStatus[DisplayStatus.error]}"> ${this.parseErrorMsg}</msg>`
       : helper_compileMsgAsHtml(this);
   }
 

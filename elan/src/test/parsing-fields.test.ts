@@ -26,10 +26,10 @@ suite("Field Parsing Tests", () => {
     const commentStatement = new CommentStatement(main);
     const text = commentStatement.text;
     assert.equal(text.textAsSource(), "");
-    assert.equal(text.getParseStatus(), ParseStatus.valid);
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("Hello");
     text.parseCurrentText();
-    assert.equal(text.getParseStatus(), ParseStatus.valid);
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
       `<field id="comment4" class="optional ok" tabindex=0><text>Hello</text><placeholder>comment</placeholder><completion></completion><msg></msg><help title="Any text on a single line.">?</help></field>`,
@@ -42,24 +42,24 @@ suite("Field Parsing Tests", () => {
     const variable = new VarStatement(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
-    assert.equal(id.getParseStatus(), ParseStatus.incomplete);
+    assert.equal(id.readParseStatus(), ParseStatus.incomplete);
     id.setFieldToKnownValidText("ab_1");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.valid);
+    assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
       `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
     assert.equal(id.parseErrorMsg, "");
     id.setFieldToKnownValidText("result");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword
+    assert.equal(id.readParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
   });
 
   test("parse VarDefField 2", () => {
@@ -69,23 +69,23 @@ suite("Field Parsing Tests", () => {
     const letSt = new LetStatement(main);
     const id = letSt.name;
     assert.equal(id.textAsSource(), "");
-    assert.equal(id.getParseStatus(), ParseStatus.incomplete);
+    assert.equal(id.readParseStatus(), ParseStatus.incomplete);
     id.setFieldToKnownValidText("ab_1");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.valid);
+    assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
       `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
     id.setFieldToKnownValidText("result");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.valid);
+    assert.equal(id.readParseStatus(), ParseStatus.valid);
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
-    assert.equal(id.getParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
   });
   test("parse CaseValueField", () => {
     const main = new MainFrame(
@@ -95,16 +95,16 @@ suite("Field Parsing Tests", () => {
     const c = new Case(sw);
     const f = c.value;
     assert.equal(f.textAsSource(), "");
-    assert.equal(f.getParseStatus(), ParseStatus.incomplete);
+    assert.equal(f.readParseStatus(), ParseStatus.incomplete);
     f.setFieldToKnownValidText("3");
     f.parseCurrentText();
-    assert.equal(f.getParseStatus(), ParseStatus.valid);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
     f.setFieldToKnownValidText(`"hello"`);
     f.parseCurrentText();
-    assert.equal(f.getParseStatus(), ParseStatus.valid);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
     f.setFieldToKnownValidText(`ab`);
     f.parseCurrentText();
-    assert.equal(f.getParseStatus(), ParseStatus.invalid);
+    assert.equal(f.readParseStatus(), ParseStatus.invalid);
   });
 
   test("parse  ArgListField", () => {
@@ -115,16 +115,16 @@ suite("Field Parsing Tests", () => {
     const argList = call.args;
     argList.setFieldToKnownValidText("3,4,5");
     argList.parseCurrentText();
-    assert.equal(argList.getParseStatus(), ParseStatus.valid);
+    assert.equal(argList.readParseStatus(), ParseStatus.valid);
     argList.setFieldToKnownValidText(`s, a, "hello", b[5]`);
     argList.parseCurrentText();
-    assert.equal(argList.getParseStatus(), ParseStatus.valid);
+    assert.equal(argList.readParseStatus(), ParseStatus.valid);
     argList.setFieldToKnownValidText(`5, 3 + 4`);
     argList.parseCurrentText();
-    assert.equal(argList.getParseStatus(), ParseStatus.valid);
+    assert.equal(argList.readParseStatus(), ParseStatus.valid);
     argList.setFieldToKnownValidText(`5, (3 + 4)`);
     argList.parseCurrentText();
-    assert.equal(argList.getParseStatus(), ParseStatus.valid);
+    assert.equal(argList.readParseStatus(), ParseStatus.valid);
   });
 
   test("parse ArgListField 2", () => {
@@ -135,7 +135,7 @@ suite("Field Parsing Tests", () => {
     const argList = call.args;
     argList.setFieldToKnownValidText("");
     argList.parseCurrentText();
-    assert.equal(argList.getParseStatus(), ParseStatus.valid);
+    assert.equal(argList.readParseStatus(), ParseStatus.valid);
   });
 
   test("parse TypeField invalid", () => {
@@ -145,7 +145,7 @@ suite("Field Parsing Tests", () => {
     const type = func.returnType;
     type.setFieldToKnownValidText("Foo<of bar");
     type.parseCurrentText();
-    assert.equal(type.getParseStatus(), ParseStatus.invalid);
+    assert.equal(type.readParseStatus(), ParseStatus.invalid);
     assert.equal(type.textAsSource(), "Foo<of bar");
     assert.equal(type.textAsHtml(), "Foo&lt;of bar");
   });
@@ -158,7 +158,7 @@ suite("Field Parsing Tests", () => {
     const expr = v.expr;
     expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1 * op2}"`);
     expr.parseCurrentText();
-    assert.equal(expr.getParseStatus(), ParseStatus.valid);
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1 * op2}"`);
     assert.equal(
       expr.textAsHtml(),
@@ -174,7 +174,7 @@ suite("Field Parsing Tests", () => {
     const expected = a.expected;
     expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
     expected.parseCurrentText();
-    assert.equal(expected.getParseStatus(), ParseStatus.valid);
+    assert.equal(expected.readParseStatus(), ParseStatus.valid);
     assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
     assert.equal(expected.textAsHtml(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
   });

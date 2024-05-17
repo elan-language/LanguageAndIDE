@@ -3,15 +3,15 @@ import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import {
-  helper_testStatusAsOverallStatus,
-  helper_CompileOrParseStatus,
+  helper_testStatusAsDisplayStatus,
+  helper_CompileOrParseAsDisplayStatus,
 } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
-import { OverallStatus, TestStatus } from "../status-enums";
+import { DisplayStatus, TestStatus } from "../status-enums";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
@@ -28,13 +28,13 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this.getChildren().push(selector);
   }
 
-  override getOverallStatus(): OverallStatus {
-    let overall = OverallStatus.error;
-    const parseCompile = helper_CompileOrParseStatus(this);
-    if (parseCompile !== OverallStatus.ok) {
+  override readDisplayStatus(): DisplayStatus {
+    let overall = DisplayStatus.error;
+    const parseCompile = helper_CompileOrParseAsDisplayStatus(this);
+    if (parseCompile !== DisplayStatus.ok) {
       overall = parseCompile;
     } else {
-      overall = helper_testStatusAsOverallStatus(this.getTestStatus());
+      overall = helper_testStatusAsDisplayStatus(this.getTestStatus());
     }
     return overall;
   }

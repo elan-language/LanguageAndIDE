@@ -268,24 +268,24 @@ suite("Editing Frames", () => {
     () => {
       const file = T05_classes();
       const player = file.getById("class1");
-      assert.equal(player.getParseStatus(), ParseStatus.valid);
+      assert.equal(player.readParseStatus(), ParseStatus.valid);
       const field = file.getById("ident12");
-      assert.equal(field.getParseStatus(), ParseStatus.valid);
+      assert.equal(field.readParseStatus(), ParseStatus.valid);
       field.processKey(key("%"));
-      assert.equal(field.getParseStatus(), ParseStatus.invalid);
-      assert.equal(player.getParseStatus(), ParseStatus.invalid);
+      assert.equal(field.readParseStatus(), ParseStatus.invalid);
+      assert.equal(player.readParseStatus(), ParseStatus.invalid);
       field.processKey(back());
-      assert.equal(field.getParseStatus(), ParseStatus.valid);
-      assert.equal(player.getParseStatus(), ParseStatus.valid);
+      assert.equal(field.readParseStatus(), ParseStatus.valid);
+      assert.equal(player.readParseStatus(), ParseStatus.valid);
       const card = file.getById("class14");
       const reset = file.getById("func27");
       const ret = file.getById("return32");
       const expr = file.getById("expr33");
       expr.processKey(key("£"));
-      assert.equal(expr.getParseStatus(), ParseStatus.invalid);
-      assert.equal(ret.getParseStatus(), ParseStatus.invalid);
-      assert.equal(reset.getParseStatus(), ParseStatus.invalid);
-      assert.equal(card.getParseStatus(), ParseStatus.invalid);
+      assert.equal(expr.readParseStatus(), ParseStatus.invalid);
+      assert.equal(ret.readParseStatus(), ParseStatus.invalid);
+      assert.equal(reset.readParseStatus(), ParseStatus.invalid);
+      assert.equal(card.readParseStatus(), ParseStatus.invalid);
     },
   );
 });

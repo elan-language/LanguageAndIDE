@@ -22,6 +22,7 @@ export interface Frame extends Selectable, Scope {
 
   getFields(): Field[];
   worstParseStatusOfFields(): ParseStatus;
+  updateParseStatus(): void;
 
   selectFirstField(): boolean;
   selectLastField(): boolean;

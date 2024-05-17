@@ -30,7 +30,7 @@ import { transforms } from "./compiler/compiler-test-helpers";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfAction(
   sourceFile: string,

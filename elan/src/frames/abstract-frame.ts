@@ -4,7 +4,7 @@ import {
   expandCollapseAll,
   helper_compileMsgAsHtml,
   helper_getCompileStatus,
-  helper_CompileOrParseStatus,
+  helper_CompileOrParseAsDisplayStatus,
   isCollapsible,
   isFile,
   isFrame,
@@ -12,7 +12,7 @@ import {
   isParent,
   singleIndent,
 } from "./helpers";
-import { CompileStatus, OverallStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { Field } from "./interfaces/field";
@@ -392,11 +392,11 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.collapsed, "collapsed");
     this.pushClass(this.selected, "selected");
     this.pushClass(this.focused, "focused");
-    this._classes.push(OverallStatus[this.getOverallStatus()]);
+    this._classes.push(DisplayStatus[this.readDisplayStatus()]);
   }
 
-  protected getOverallStatus(): OverallStatus {
-    return helper_CompileOrParseStatus(this);
+  protected readDisplayStatus(): DisplayStatus {
+    return helper_CompileOrParseAsDisplayStatus(this);
   }
 
   protected cls(): string {
@@ -510,12 +510,12 @@ export abstract class AbstractFrame implements Frame {
     return true;
   }
 
-  aggregateParseStatus(): void {
+  updateParseStatus(): void {
     this._parseStatus = this.worstParseStatusOfFields();
   }
   worstParseStatusOfFields(): ParseStatus {
     return this.getFields()
-      .map((g) => g.getParseStatus())
+      .map((g) => g.readParseStatus())
       .reduce((prev, cur) => (cur < prev ? cur : prev), ParseStatus.valid);
   }
   readParseStatus(): ParseStatus {
@@ -524,17 +524,8 @@ export abstract class AbstractFrame implements Frame {
   protected setParseStatus(newStatus: ParseStatus): void {
     this._parseStatus = newStatus;
   }
-
-  getParseStatus(): ParseStatus {
-    //TODO: to be eliminated in favour of methods above
-    return this.worstParseStatusOfFields();
-  }
-
-  aggregateCompileStatus(): void {
-    this._compileStatus = Math.min(
-      this.worstCompileStatusOfFields(),
-      helper_getCompileStatus(this.compileErrors),
-    );
+  updateCompileStatus(): void {
+    this._compileStatus = this.worstCompileStatusOfFields();
   }
   protected worstCompileStatusOfFields(): CompileStatus {
     return this.getFields()

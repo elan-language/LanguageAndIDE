@@ -35,7 +35,8 @@ export interface File extends Parent {
   indent(): string;
   expandCollapseAll(): void;
 
-  getParseStatus(): ParseStatus;
+  updateParseStatus(): void;
+  readParseStatus(): ParseStatus;
   getParseStatusForDashboard(): string;
   getCompileStatus(): CompileStatus;
   getCompileStatusForDashboard(): string;
@@ -60,7 +61,7 @@ export interface File extends Parent {
   parseError?: string;
 
   deselectAll(): void;
-  processKey(e: editorEvent): void;
+  processKey(e: editorEvent): boolean;
 
   compileErrors(): CompileError[];
 

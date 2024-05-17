@@ -27,7 +27,8 @@ export enum RunStatus {
   default,
 }
 
-export enum OverallStatus {
+//Set of generic status values that drive the 'traffic light' rendering in code and status panel
+export enum DisplayStatus {
   error,
   warning,
   ok,

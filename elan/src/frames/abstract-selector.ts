@@ -8,6 +8,7 @@ import { Profile } from "./interfaces/profile";
 import { MainFrame } from "./globals/main-frame";
 import { Overtyper } from "./overtyper";
 import { FrameWithStatements } from "./frame-with-statements";
+import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {
   isSelector = true;
@@ -20,6 +21,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   constructor(parent: Parent) {
     super(parent);
     this.profile = this.getFile().getProfile();
+    this.setParseStatus(ParseStatus.valid); //Can never be invalid.
   }
 
   initialKeywords(): string {

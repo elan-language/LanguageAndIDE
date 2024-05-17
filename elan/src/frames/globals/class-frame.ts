@@ -33,7 +33,7 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_selectLastField,
   parentHelper_worstCompileStatusOfChildren,
-  parentHelper_worstParseStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
 } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
@@ -118,22 +118,16 @@ export class ClassFrame
     this.pushClass(true, "multiline");
   }
 
-  aggregateParseStatus(): void {
-    const worstOfFieldsOrChildren = Math.min(
+  updateParseStatus(): void {
+    this.getChildren().forEach(c => c.updateParseStatus());
+    const worstOfFieldOrChildParseStatus = Math.min(
       this.worstParseStatusOfFields(),
-      parentHelper_worstParseStatusOfChildren(this),
+      parentHelper_readWorstParseStatusOfChildren(this),
     );
-    this.setParseStatus(worstOfFieldsOrChildren);
-  }
-  getParseStatus(): ParseStatus {
-    //TODO: to be eliminated in favour of readParseStatus()
-    return Math.min(
-      this.worstParseStatusOfFields(),
-      parentHelper_worstParseStatusOfChildren(this),
-    );
+    this.setParseStatus(worstOfFieldOrChildParseStatus);
   }
 
-  aggregateCompileStatus(): void {
+  updateCompileStatus(): void {
     const worst = Math.min(
       super.getCompileStatus(),
       parentHelper_worstCompileStatusOfChildren(this),
