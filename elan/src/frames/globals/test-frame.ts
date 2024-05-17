@@ -1,3 +1,4 @@
+import { Test } from "mocha";
 import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
@@ -19,6 +20,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isGlobal = true;
   public testName: IdentifierField;
   file: File;
+  private _testStatus: TestStatus;
 
   constructor(parent: File) {
     super(parent);
@@ -26,6 +28,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this.testName = new IdentifierField(this);
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
+    this._testStatus = TestStatus.default;
   }
 
   override readDisplayStatus(): DisplayStatus {
@@ -34,12 +37,16 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     if (parseCompile !== DisplayStatus.ok) {
       overall = parseCompile;
     } else {
-      overall = helper_testStatusAsDisplayStatus(this.getTestStatus());
+      overall = helper_testStatusAsDisplayStatus(this._testStatus);
     }
     return overall;
   }
 
-  getTestStatus(): TestStatus {
+  readTestStatus(): TestStatus {
+    return this._testStatus;
+  }
+
+  updateTestStatus(): void {
     const tests = this.getChildren()
       .filter((c) => c instanceof AssertStatement)
       .map((c) => c as AssertStatement);
@@ -48,9 +55,12 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
       (prev, t) => worstOf(t.getTestStatus(), prev),
       TestStatus.default,
     );
-    return worst;
+    this._testStatus = worst;
   }
 
+  resetTestStatus(): void { 
+    this._testStatus = TestStatus.default;
+  }
   initialKeywords(): string {
     return testKeyword;
   }

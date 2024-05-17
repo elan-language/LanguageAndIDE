@@ -80,10 +80,10 @@ export abstract class FrameWithStatements
     );
     this.setCompileStatus(worstOfFieldsOrChildren);
   }
-  resetCompileStatus(): void {
+  resetCompileStatusAndErrors(): void {
     if (this.readCompileStatus() !== CompileStatus.default) {
-      this.getChildren().forEach((f) => f.resetCompileStatus());
-      super.resetCompileStatus();
+      this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
+      super.resetCompileStatusAndErrors();
     }
   }
 

@@ -111,7 +111,7 @@ function updateStatus() {
   );
   (document.getElementById("test") as HTMLDivElement).setAttribute(
     "class",
-    file.getTestStatusForDashboard(),
+    file.readTestStatusForDashboard(),
   );
 }
 

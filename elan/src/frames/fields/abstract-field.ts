@@ -285,8 +285,9 @@ export abstract class AbstractField implements Selectable, Field {
   readParseStatus(): ParseStatus {
     return this._parseStatus!;
   }
-  resetCompileStatus(): void {
+  resetCompileStatusAndErrors(): void {
     this._compileStatus = CompileStatus.default;
+    this.compileErrors = [];
   }
   readCompileStatus(): CompileStatus {
     return this._compileStatus;

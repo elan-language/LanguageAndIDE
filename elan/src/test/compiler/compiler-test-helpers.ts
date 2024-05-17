@@ -36,7 +36,7 @@ export function assertStatusIsInvalid(file: FileImpl) {
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   const actual = file.compile().replaceAll("\r", "");
   const expected = objectCode.replaceAll("\r", "");
-  const errors = file.compileErrors();
+  const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
   assert.strictEqual(actual, expected);
 }
@@ -44,7 +44,7 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
 export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   file.compile();
 
-  const errors = file.compileErrors();
+  const errors = file.aggregateCompileErrors();
 
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
@@ -60,7 +60,7 @@ function doImport(str: string) {
 
 function executeCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.compileErrors();
+  const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem();
@@ -83,7 +83,7 @@ function executeCode(file: FileImpl, input?: string) {
 
 function executeTestCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.compileErrors();
+  const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem();

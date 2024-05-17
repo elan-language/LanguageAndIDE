@@ -44,7 +44,7 @@ export interface Frame extends Selectable, Scope {
   aggregateCompileErrors(): CompileError[];
   readCompileStatus(): CompileStatus;
   updateCompileStatus(): void;
-  resetCompileStatus(): void;
+  resetCompileStatusAndErrors(): void;
   insertSelectorAfterLastField(): void;
   insertPeerSelector(before: boolean): void;
 

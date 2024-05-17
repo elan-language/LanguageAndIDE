@@ -23,7 +23,6 @@ import {
   isSelector,
   helper_parseStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
-  helper_runStatusDisplayStatus,
 } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
@@ -99,6 +98,7 @@ export class FileImpl implements File, Scope {
     }
     this.scratchPad = new ScratchPad();
   }
+
   getFile(): File {
     return this;
   }
@@ -290,66 +290,30 @@ export class FileImpl implements File, Scope {
     //does nothing
   }
 
-  readTestStatus(): TestStatus {
-    return this._testStatus;
-  }
-  readTestStatusForDashboard(): string {
-    return DisplayStatus[helper_testStatusAsDisplayStatus(this._testStatus)];
-  }
-  calculateTestStatus() {
-    const tests = this.getChildren()
-      .filter((c) => c instanceof TestFrame)
-      .map((c) => c as TestFrame);
-    const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
-    const worst = tests.reduce(
-      (prev, t) => worstOf(t.getTestStatus(), prev),
-      TestStatus.default,
-    );
-    this._testStatus = worst;
-  }
-  getTestStatus(): TestStatus {
-    const tests = this.getChildren()
-      .filter((c) => c instanceof TestFrame)
-      .map((c) => c as TestFrame);
-    const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
-    const worst = tests.reduce(
-      (prev, t) => worstOf(t.getTestStatus(), prev),
-      TestStatus.default,
-    );
-    return worst;
-  }
-  getTestStatusForDashboard(): string {
-    let status: DisplayStatus;
-    if (
-      this.readParseStatus() !== ParseStatus.valid ||
-      this.readCompileStatus() !== CompileStatus.ok
-    ) {
-      status = DisplayStatus.default;
-    } else {
-      status = helper_testStatusAsDisplayStatus(this.getTestStatus());
-    }
-    return DisplayStatus[status];
-  }
-
   readRunStatus(): RunStatus {
     return this._runStatus;
   }
-
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
-  }
-
-  updateParseStatus(): void {
-    this.getChildren().forEach(c => c.updateParseStatus());
-    this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
   readParseStatus(): ParseStatus {
     return this._parseStatus;
   }
+  parseStatusAsString(): string {
+    return ParseStatus[this.readParseStatus()];
+  }
   readParseStatusForDashboard(): string {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
+  updateParseStatus(): void {
+    this.getChildren().forEach(c => c.updateParseStatus());
+    this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
+  }
 
+  //Compile status
+  readCompileStatus() : CompileStatus {
+    return this._compileStatus;
+  }
   readCompileStatusForDashboard(): string {
     let status = helper_parseStatusAsDisplayStatus(this.readParseStatus());
     if (status === DisplayStatus.ok) {
@@ -360,20 +324,52 @@ export class FileImpl implements File, Scope {
     }
     return DisplayStatus[status];
   }
-
-  readCompileStatus() : CompileStatus {
-    return this._compileStatus;
-  }
-
   updateCompileStatus(): void {
     this.getChildren().forEach(c => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
-
-  parseStatusAsString(): string {
-    return ParseStatus[this.readParseStatus()];
+  resetCompileStatusAndErrors(): void {
+    this.getChildren().forEach(c => c.resetCompileStatusAndErrors());
   }
-  compileErrors(): CompileError[] {
+  
+
+  readTestStatus(): TestStatus {
+    return this._testStatus;
+  }
+  readTestStatusForDashboard(): string {
+    let status: DisplayStatus;
+    if (
+      this.readParseStatus() !== ParseStatus.valid ||
+      this.readCompileStatus() !== CompileStatus.ok
+    ) {
+      status = DisplayStatus.default;
+    } else {
+      status = helper_testStatusAsDisplayStatus(this.readTestStatus());
+    }
+    return DisplayStatus[status];
+  }
+  updateTestStatus(): void {
+    const tests = this.getTestFrames();
+    tests.forEach(t => t.updateTestStatus());
+    const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
+    const worst = tests.reduce(
+      (prev, t) => worstOf(t.readTestStatus(), prev),
+      TestStatus.default,
+    );
+    this._testStatus = worst;
+  }
+  resetTestStatus(): void {
+    const tests = this.getTestFrames();
+    tests.forEach(t => t.resetTestStatus())
+  }
+
+  private getTestFrames(): TestFrame[] {
+    return  this.getChildren()
+    .filter((c) => c instanceof TestFrame)
+    .map((c) => c as TestFrame);
+  }
+
+  aggregateCompileErrors(): CompileError[] {
     return parentHelper_aggregateCompileErrorsOfChildren(this);
   }
   getAllSelected(): Selectable[] {

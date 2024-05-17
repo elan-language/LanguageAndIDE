@@ -35,14 +35,20 @@ export interface File extends Parent {
   indent(): string;
   expandCollapseAll(): void;
 
-  updateParseStatus(): void;
   readParseStatus(): ParseStatus;
   readParseStatusForDashboard(): string;
+  updateParseStatus(): void;
+
   readCompileStatus(): CompileStatus;
+  readCompileStatusForDashboard(): string
   updateCompileStatus(): void;
-  readCompileStatusForDashboard(): string;
-  getTestStatus(): TestStatus;
-  getTestStatusForDashboard(): string;
+  resetCompileStatusAndErrors(): void;
+
+  readTestStatus(): TestStatus;
+  readTestStatusForDashboard(): string;
+  updateTestStatus(): void;
+  resetTestStatus(): void;
+
   readRunStatus(): RunStatus;
 
   //Internal use only
@@ -64,7 +70,7 @@ export interface File extends Parent {
   deselectAll(): void;
   processKey(e: editorEvent): boolean;
 
-  compileErrors(): CompileError[];
+  aggregateCompileErrors(): CompileError[];
 
   setRunStatus(s: RunStatus): void;
 
