@@ -69,7 +69,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
 
   compileOrTestMsgAsHtml(): string {
     let msg = "";
-    if (this.getCompileStatus() === CompileStatus.ok) {
+    if (this.readCompileStatus() === CompileStatus.ok) {
       msg = this.testMsgAsHtml();
     } else {
       msg = helper_compileMsgAsHtml(this);

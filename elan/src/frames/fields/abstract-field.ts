@@ -7,7 +7,7 @@ import { CodeSource } from "../code-source";
 import {
   escapeAngleBrackets,
   helper_compileMsgAsHtml,
-  helper_getCompileStatus,
+  helper_deriveCompileStatusFromErrors,
   helper_CompileOrParseAsDisplayStatus,
   isCollapsible,
 } from "../helpers";
@@ -288,9 +288,12 @@ export abstract class AbstractField implements Selectable, Field {
   resetCompileStatus(): void {
     this._compileStatus = CompileStatus.default;
   }
-  getCompileStatus(): CompileStatus {
+  readCompileStatus(): CompileStatus {
+    return this._compileStatus;
+  }
+  updateCompileStatus(): void {
     this.compileErrors = this.aggregateCompileErrors();
-    return helper_getCompileStatus(this.compileErrors);
+    this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
   select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void {
     this.deselectAll();

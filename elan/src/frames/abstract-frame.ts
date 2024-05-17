@@ -3,12 +3,10 @@ import { Selectable } from "./interfaces/selectable";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtml,
-  helper_getCompileStatus,
   helper_CompileOrParseAsDisplayStatus,
   isCollapsible,
   isFile,
   isFrame,
-  isGlobal,
   isParent,
   singleIndent,
 } from "./helpers";
@@ -524,18 +522,19 @@ export abstract class AbstractFrame implements Frame {
   protected setParseStatus(newStatus: ParseStatus): void {
     this._parseStatus = newStatus;
   }
-  updateCompileStatus(): void {
-    this._compileStatus = this.worstCompileStatusOfFields();
-  }
+
   protected worstCompileStatusOfFields(): CompileStatus {
     return this.getFields()
-      .map((g) => g.getCompileStatus())
-      .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.ok);
+      .map((g) => g.readCompileStatus())
+      .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.default);
   }
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
-  setCompileStatus(newStatus: CompileStatus) {
+  updateCompileStatus(): void {
+    this._compileStatus = this.worstCompileStatusOfFields();
+  }
+  protected setCompileStatus(newStatus: CompileStatus) {
     this._compileStatus = newStatus;
   }
   resetCompileStatus(): void {
@@ -543,14 +542,6 @@ export abstract class AbstractFrame implements Frame {
       this.getFields().forEach((f) => f.resetCompileStatus());
       this._compileStatus = CompileStatus.default;
     }
-  }
-
-  getCompileStatus(): CompileStatus {
-    //TODO: to be eliminated in favour of methods above
-    return Math.min(
-      this.worstCompileStatusOfFields(),
-      helper_getCompileStatus(this.compileErrors),
-    );
   }
 
   abstract parseFrom(source: CodeSource): void;

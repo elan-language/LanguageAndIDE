@@ -11,7 +11,15 @@ export function parentHelper_readWorstParseStatusOfChildren(
   return parent
     .getChildren()
     .map((s) => s.readParseStatus())
-    .reduce((prev, cur) => (cur < prev ? cur : prev), ParseStatus.valid);
+    .reduce((prev, cur) => (cur < prev ? cur : prev), ParseStatus.default);
+}
+export function parentHelper_readWorstCompileStatusOfChildren(
+  parent: Parent,
+): CompileStatus {
+  return parent
+    .getChildren()
+    .map((s) => s.readCompileStatus())
+    .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.default);
 }
 
 export function parentHelper_aggregateCompileErrorsOfChildren(
@@ -23,14 +31,6 @@ export function parentHelper_aggregateCompileErrorsOfChildren(
     .reduce((prev, cur) => prev.concat(cur), []);
 }
 
-export function parentHelper_worstCompileStatusOfChildren(
-  parent: Parent,
-): CompileStatus {
-  return parent
-    .getChildren()
-    .map((s) => s.getCompileStatus())
-    .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.ok);
-}
 
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {
   const i = parent.getChildren().indexOf(child);

@@ -29,14 +29,13 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
   parentHelper_selectLastField,
-  parentHelper_worstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
+  parentHelper_readWorstCompileStatusOfChildren,
 } from "./parent-helpers";
-import { CompileStatus, ParseStatus } from "./status-enums";
+import { CompileStatus } from "./status-enums";
 import { StatementSelector } from "./statements/statement-selector";
 import { CompileError } from "./compile-error";
 import { Transforms } from "./syntax-nodes/transforms";
-import { helper_getCompileStatus } from "./helpers";
 
 export abstract class FrameWithStatements
   extends AbstractFrame
@@ -74,25 +73,18 @@ export abstract class FrameWithStatements
   }
  
   updateCompileStatus(): void {
-    this.setCompileStatus(
-      Math.min(
-        this.worstCompileStatusOfFields(),
-        helper_getCompileStatus(this.compileErrors),
-      ),
+    this.getChildren().forEach(c => c.updateCompileStatus());
+    const worstOfFieldsOrChildren = Math.min(
+      this.worstCompileStatusOfFields(),
+      parentHelper_readWorstCompileStatusOfChildren(this),
     );
+    this.setCompileStatus(worstOfFieldsOrChildren);
   }
   resetCompileStatus(): void {
     if (this.readCompileStatus() !== CompileStatus.default) {
       this.getChildren().forEach((f) => f.resetCompileStatus());
       super.resetCompileStatus();
     }
-  }
-  getCompileStatus(): CompileStatus {
-    //TODO: to be eliminated in favour of methods above
-    return Math.min(
-      super.getCompileStatus(),
-      parentHelper_worstCompileStatusOfChildren(this),
-    );
   }
 
   getChildren(): Frame[] {

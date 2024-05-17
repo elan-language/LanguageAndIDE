@@ -37,9 +37,10 @@ export interface File extends Parent {
 
   updateParseStatus(): void;
   readParseStatus(): ParseStatus;
-  getParseStatusForDashboard(): string;
-  getCompileStatus(): CompileStatus;
-  getCompileStatusForDashboard(): string;
+  readParseStatusForDashboard(): string;
+  readCompileStatus(): CompileStatus;
+  updateCompileStatus(): void;
+  readCompileStatusForDashboard(): string;
   getTestStatus(): TestStatus;
   getTestStatusForDashboard(): string;
   readRunStatus(): RunStatus;

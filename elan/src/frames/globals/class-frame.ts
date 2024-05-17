@@ -32,8 +32,8 @@ import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsSource,
   parentHelper_selectLastField,
-  parentHelper_worstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
+  parentHelper_readWorstCompileStatusOfChildren,
 } from "../parent-helpers";
 import { AbstractFrame } from "../abstract-frame";
 import { Parent } from "../interfaces/parent";
@@ -128,19 +128,14 @@ export class ClassFrame
   }
 
   updateCompileStatus(): void {
-    const worst = Math.min(
-      super.getCompileStatus(),
-      parentHelper_worstCompileStatusOfChildren(this),
+    this.getChildren().forEach(c => c.updateCompileStatus());
+    const worstOfFieldsOrChildren = Math.min(
+      this.worstCompileStatusOfFields(),
+      parentHelper_readWorstCompileStatusOfChildren(this),
     );
-    this.setCompileStatus(worst);
+    this.setCompileStatus(worstOfFieldsOrChildren);
   }
-  getCompileStatus(): CompileStatus {
-    //TODO: to be eliminated in favour of readCompileStatus()
-    return Math.min(
-      super.getCompileStatus(),
-      parentHelper_worstCompileStatusOfChildren(this),
-    );
-  }
+  
   getFactory(): StatementFactory {
     return this.getParent().getFactory();
   }

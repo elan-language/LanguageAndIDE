@@ -102,14 +102,14 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   /* To display first message only use: */
   const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
   let cls = "";
-  const compile = helper_compileStatusAsDisplayStatus(loc.getCompileStatus());
-  if (compile !== DisplayStatus.ok) {
+  const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
+  if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
     cls = DisplayStatus[compile];
   }
   return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
 
-export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
+export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {
   let result = CompileStatus.error;
   if (errors.length === 0) {
     result = CompileStatus.ok;
@@ -124,7 +124,7 @@ export function helper_getCompileStatus(errors: CompileError[]): CompileStatus {
 export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
   let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
   if (status === DisplayStatus.ok) {
-    const compile = helper_compileStatusAsDisplayStatus(loc.getCompileStatus());
+    const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
     if (compile !== DisplayStatus.default) { // Implies that the compiler has not been run
       status = compile;
     }

@@ -46,7 +46,7 @@ import {
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
-  parentHelper_worstCompileStatusOfChildren,
+  parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
 } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
@@ -322,7 +322,7 @@ export class FileImpl implements File, Scope {
     let status: DisplayStatus;
     if (
       this.readParseStatus() !== ParseStatus.valid ||
-      this.getCompileStatus() !== CompileStatus.ok
+      this.readCompileStatus() !== CompileStatus.ok
     ) {
       status = DisplayStatus.default;
     } else {
@@ -349,24 +349,25 @@ export class FileImpl implements File, Scope {
   readParseStatusForDashboard(): string {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
-  getParseStatusForDashboard(): string {
-    return DisplayStatus[
-      helper_parseStatusAsDisplayStatus(this.readParseStatus())
-    ];
-  }
 
-  getCompileStatusForDashboard(): string {
-    let status: DisplayStatus;
-    if (this.readParseStatus() !== ParseStatus.valid) {
-      status = DisplayStatus.default;
-    } else {
-      status = helper_compileStatusAsDisplayStatus(this.getCompileStatus());
+  readCompileStatusForDashboard(): string {
+    let status = helper_parseStatusAsDisplayStatus(this.readParseStatus());
+    if (status === DisplayStatus.ok) {
+      const compile = helper_compileStatusAsDisplayStatus(this._compileStatus);
+      if (compile !== DisplayStatus.default) {
+        status = compile;
+      }
     }
     return DisplayStatus[status];
   }
 
-  getCompileStatus(): CompileStatus {
-    return parentHelper_worstCompileStatusOfChildren(this);
+  readCompileStatus() : CompileStatus {
+    return this._compileStatus;
+  }
+
+  updateCompileStatus(): void {
+    this.getChildren().forEach(c => c.updateCompileStatus());
+    this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
 
   parseStatusAsString(): string {
