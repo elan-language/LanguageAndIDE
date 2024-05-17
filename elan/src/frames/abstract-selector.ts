@@ -138,7 +138,8 @@ export abstract class AbstractSelector extends AbstractFrame {
   renderAsSource(): string {
     return `${this.indent()}`;
   }
-  processKey(e: editorEvent): void {
+  processKey(e: editorEvent): boolean {
+    let codeHasChanged = true;
     let key = e.key;
     switch (key) {
       case "Tab": {
@@ -154,30 +155,33 @@ export abstract class AbstractSelector extends AbstractFrame {
         break;
       }
       case "Delete": {
-        this.deleteIfPermissible();
+        this.deleteIfPermissible();  // Deleting selector is not a code change
         break;
       }
       case "d": {
         if (e.modKey.control) {
-          this.deleteIfPermissible();
-          break;
+          this.deleteIfPermissible();  // Deleting selector is not a code change
         }
+        break;
       }
       case "v": {
         if (e.modKey.control) {
           this.paste();
-          break;
+          codeHasChanged = true;
+          break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
         }
       }
       default: {
         if (!key || key.length === 1) {
           key = key?.toLowerCase();
           this.processOptions(key);
+          codeHasChanged = true;
         } else {
-          super.processKey(e);
+          codeHasChanged = super.processKey(e);
         }
       }
     }
+    return codeHasChanged;
   }
 
   override deleteIfPermissible(): void {

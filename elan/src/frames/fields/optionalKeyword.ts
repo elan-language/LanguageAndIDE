@@ -37,19 +37,23 @@ export class OptionalKeyword extends AbstractField {
     this.alertHolderToUpdate();
   }
 
-  processKey(e: editorEvent): void {
+  processKey(e: editorEvent): boolean {
+    let codeHasChanged = true;
     const key = e.key;
     if (key && key.length === 1 && this.keyword.startsWith(key.toLowerCase())) {
       this.text = this.keyword;
       this.alertHolderToUpdate();
       this.getHolder().selectFieldAfter(this);
+      codeHasChanged = true;
     } else if (key === "Delete" || key === "Backspace") {
       this.text = "";
       this.alertHolderToUpdate();
       this.getHolder().selectFieldAfter(this);
+      codeHasChanged = true;
     } else {
-      super.processKey(e);
+      codeHasChanged = super.processKey(e);
     }
+    return codeHasChanged;
   }
 
   public textAsHtml(): string {

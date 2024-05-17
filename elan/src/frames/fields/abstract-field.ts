@@ -123,7 +123,8 @@ export abstract class AbstractField implements Selectable, Field {
   isOptional(): boolean {
     return this._optional;
   }
-  processKey(e: editorEvent): void {
+  processKey(e: editorEvent): boolean {
+    let codeHasChanged = false;
     const key = e.key;
     const textLen = this.text.length;
     switch (key) {
@@ -180,6 +181,7 @@ export abstract class AbstractField implements Selectable, Field {
             this.cursorPos = cursorBeforeParse;
           }
         }
+        codeHasChanged = true;
         break;
       }
       case "Delete": {
@@ -189,6 +191,7 @@ export abstract class AbstractField implements Selectable, Field {
             this.text.slice(this.cursorPos + 1);
           this.parseCurrentText();
         }
+        codeHasChanged = true;
         break;
       }
       default: {
@@ -197,10 +200,11 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (key === "O" && e.modKey.control) {
           this.holder.expandCollapseAll();
         } else if (key?.length === 1) {
-          this.processInput(key);
+          this.processInput(key);codeHasChanged = true;
         }
       }
     }
+    return codeHasChanged;
   }
 
   private processInput(key: string) {

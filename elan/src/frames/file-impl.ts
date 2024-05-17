@@ -474,8 +474,9 @@ export class FileImpl implements File, Scope {
     return [];
   }
 
-  processKey(e: editorEvent): void {
-    switch (e.key) {
+  processKey(e: editorEvent): boolean {
+    const codeHasChanged = false; // Can change to let if future expansion provides code-changing ops at file level
+    switch (e.key) { 
       case "Home": {
         this.selectFirstGlobal();
         break;
@@ -503,6 +504,7 @@ export class FileImpl implements File, Scope {
         break;
       }
     }
+    return codeHasChanged;
   }
 
   private selectFirstGlobal(): void {

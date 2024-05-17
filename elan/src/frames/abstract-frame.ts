@@ -166,7 +166,8 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
-  processKey(e: editorEvent): void {
+  processKey(e: editorEvent): boolean {
+    let codeHasChanged = true;
     const key = e.key;
     switch (key) {
       case "Home": {
@@ -229,22 +230,26 @@ export abstract class AbstractFrame implements Frame {
       case "Delete": {
         if (e.modKey.control) {
           this.deleteIfPermissible();
+          codeHasChanged = true;
         }
         break;
       }
       case "d": {
         if (e.modKey.control) {
           this.deleteIfPermissible();
+          codeHasChanged = true;
         }
         break;
       }
       case "x": {
         if (e.modKey.control) {
           this.cut();
+          codeHasChanged = true;
         }
         break;
       }
     }
+    return codeHasChanged;
   }
   cut(): void {
     if (this.movable) {
