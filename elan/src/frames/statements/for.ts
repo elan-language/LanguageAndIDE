@@ -27,7 +27,7 @@ export class For extends FrameWithStatements implements Statement {
     this.from = new ValueRefField(this, / to /);
     this.to = new ValueRefField(this, / step /);
     this.step = new ValueRefField(this, /\r|\n/);
-    this.step.setText("1");
+    this.step.setFieldToKnownValidText("1");
   }
 
   initialKeywords(): string {

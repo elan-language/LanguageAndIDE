@@ -207,7 +207,7 @@ export class ClassFrame
       if (this.inherits.keywordExists()) {
         this.superClasses.setOptional(false);
       } else {
-        this.superClasses.setText("");
+        this.superClasses.setFieldToKnownValidText("");
         this.superClasses.setOptional(true);
       }
     }

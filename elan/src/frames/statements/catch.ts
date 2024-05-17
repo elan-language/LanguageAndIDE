@@ -15,7 +15,7 @@ export class Catch extends FrameWithStatements implements Statement {
     super(parent);
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("variableName");
-    this.variable.setText("e");
+    this.variable.setFieldToKnownValidText("e");
   }
 
   initialKeywords(): string {

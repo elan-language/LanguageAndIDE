@@ -27,7 +27,7 @@ suite("Field Parsing Tests", () => {
     const text = commentStatement.text;
     assert.equal(text.textAsSource(), "");
     assert.equal(text.getParseStatus(), ParseStatus.valid);
-    text.setText("Hello");
+    text.setFieldToKnownValidText("Hello");
     text.parseCurrentText();
     assert.equal(text.getParseStatus(), ParseStatus.valid);
     assert.equal(
@@ -43,21 +43,21 @@ suite("Field Parsing Tests", () => {
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.getParseStatus(), ParseStatus.incomplete);
-    id.setText("ab_1");
+    id.setFieldToKnownValidText("ab_1");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
       `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
-    id.setText("Ab_1");
+    id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.invalid);
     assert.equal(id.parseErrorMsg, "");
-    id.setText("result");
+    id.setFieldToKnownValidText("result");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword
-    id.setText("default");
+    id.setFieldToKnownValidText("default");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.invalid);
   });
@@ -70,20 +70,20 @@ suite("Field Parsing Tests", () => {
     const id = letSt.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.getParseStatus(), ParseStatus.incomplete);
-    id.setText("ab_1");
+    id.setFieldToKnownValidText("ab_1");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
       `<field id="var4" class="ok" tabindex=0><text>ab_1</text><placeholder>name</placeholder><completion></completion><msg></msg><help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</help></field>`,
     );
-    id.setText("Ab_1");
+    id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.invalid);
-    id.setText("result");
+    id.setFieldToKnownValidText("result");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.valid);
-    id.setText("default");
+    id.setFieldToKnownValidText("default");
     id.parseCurrentText();
     assert.equal(id.getParseStatus(), ParseStatus.invalid);
   });
@@ -96,13 +96,13 @@ suite("Field Parsing Tests", () => {
     const f = c.value;
     assert.equal(f.textAsSource(), "");
     assert.equal(f.getParseStatus(), ParseStatus.incomplete);
-    f.setText("3");
+    f.setFieldToKnownValidText("3");
     f.parseCurrentText();
     assert.equal(f.getParseStatus(), ParseStatus.valid);
-    f.setText(`"hello"`);
+    f.setFieldToKnownValidText(`"hello"`);
     f.parseCurrentText();
     assert.equal(f.getParseStatus(), ParseStatus.valid);
-    f.setText(`ab`);
+    f.setFieldToKnownValidText(`ab`);
     f.parseCurrentText();
     assert.equal(f.getParseStatus(), ParseStatus.invalid);
   });
@@ -113,16 +113,16 @@ suite("Field Parsing Tests", () => {
     );
     const call = new CallStatement(main);
     const argList = call.args;
-    argList.setText("3,4,5");
+    argList.setFieldToKnownValidText("3,4,5");
     argList.parseCurrentText();
     assert.equal(argList.getParseStatus(), ParseStatus.valid);
-    argList.setText(`s, a, "hello", b[5]`);
+    argList.setFieldToKnownValidText(`s, a, "hello", b[5]`);
     argList.parseCurrentText();
     assert.equal(argList.getParseStatus(), ParseStatus.valid);
-    argList.setText(`5, 3 + 4`);
+    argList.setFieldToKnownValidText(`5, 3 + 4`);
     argList.parseCurrentText();
     assert.equal(argList.getParseStatus(), ParseStatus.valid);
-    argList.setText(`5, (3 + 4)`);
+    argList.setFieldToKnownValidText(`5, (3 + 4)`);
     argList.parseCurrentText();
     assert.equal(argList.getParseStatus(), ParseStatus.valid);
   });
@@ -133,7 +133,7 @@ suite("Field Parsing Tests", () => {
     );
     const call = new CallStatement(main);
     const argList = call.args;
-    argList.setText("");
+    argList.setFieldToKnownValidText("");
     argList.parseCurrentText();
     assert.equal(argList.getParseStatus(), ParseStatus.valid);
   });
@@ -143,7 +143,7 @@ suite("Field Parsing Tests", () => {
       new FileImpl(hash, new DefaultProfile(), transforms()),
     );
     const type = func.returnType;
-    type.setText("Foo<of bar");
+    type.setFieldToKnownValidText("Foo<of bar");
     type.parseCurrentText();
     assert.equal(type.getParseStatus(), ParseStatus.invalid);
     assert.equal(type.textAsSource(), "Foo<of bar");
@@ -156,7 +156,7 @@ suite("Field Parsing Tests", () => {
     );
     const v = new VarStatement(main);
     const expr = v.expr;
-    expr.setText(`"{op} times {op2} equals {op1 * op2}"`);
+    expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1 * op2}"`);
     expr.parseCurrentText();
     assert.equal(expr.getParseStatus(), ParseStatus.valid);
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1 * op2}"`);
@@ -172,7 +172,7 @@ suite("Field Parsing Tests", () => {
     );
     const a = new AssertStatement(test);
     const expected = a.expected;
-    expected.setText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
+    expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
     expected.parseCurrentText();
     assert.equal(expected.getParseStatus(), ParseStatus.valid);
     assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);

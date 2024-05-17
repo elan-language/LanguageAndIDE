@@ -32,7 +32,7 @@ export abstract class AbstractField implements Selectable, Field {
   private holder: Frame;
   private _optional: boolean = false;
   protected map: Map<string, Selectable>;
-  private _parseStatus: ParseStatus | undefined; //TODO lose 'undefined' and set to ParseStatus.default
+  private _parseStatus: ParseStatus; 
   private _compileStatus: CompileStatus = CompileStatus.default;
   cursorPos: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
@@ -48,6 +48,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.htmlId = `${this.getIdPrefix()}${map.size}`;
     map.set(this.htmlId, this);
     this.map = map;
+    this._parseStatus = ParseStatus.incomplete; // (see setOptional)
   }
   getHtmlId(): string {
     return this.htmlId;
@@ -282,9 +283,6 @@ export abstract class AbstractField implements Selectable, Field {
     this._parseStatus = newStatus;
   }
   getParseStatus(): ParseStatus {
-    if (!this._parseStatus) {
-      this.parseCurrentText();
-    }
     return this._parseStatus!;
   }
   resetCompileStatus(): void {
@@ -386,8 +384,9 @@ export abstract class AbstractField implements Selectable, Field {
     return this.textAsSource();
   }
 
-  setText(text: string) {
+  setFieldToKnownValidText(text: string) {
     this.text = text;
+    this._parseStatus = ParseStatus.valid;
   }
 
   getOrTransformAstNode(transforms: Transforms) {
