@@ -45,7 +45,7 @@ export function T01_helloWorld() {
   const pr = new Print(m);
   pr.expr.setFieldToKnownValidText(`"Hello World!"`);
   m.addChildBefore(pr, ss);
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 
@@ -61,7 +61,7 @@ export function T02_comments() {
   const sc2 = new CommentStatement(m);
   sc2.text.setFieldToKnownValidText("Comment 2");
   m.addChildBefore(sc2, ss);
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 
@@ -125,7 +125,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(tr, ssm);
   const sw = new Switch(m);
   m.addChildBefore(sw, ssm);
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 
@@ -169,7 +169,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   const test = new TestFrame(f);
   test.testName.setFieldToKnownValidText("test1");
   f.addChildBefore(test, gs);
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 
@@ -202,7 +202,7 @@ export function T05_classes() {
   m1.name.setFieldToKnownValidText("reset");
   m1.params.setFieldToKnownValidText("");
   m1.returnType.setFieldToKnownValidText("Player");
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 
@@ -211,7 +211,7 @@ export function T09_emptyMainAndClassWithGlobalSelector() {
   const gs = f.getFirstSelectorAsDirectChild();
   f.addChildBefore(new MainFrame(f), gs);
   f.addChildBefore(new ClassFrame(f), gs);
-  f.updateParseStatus();
+  f.updateAllParseStatus();
   return f;
 }
 

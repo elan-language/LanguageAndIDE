@@ -305,7 +305,7 @@ export class FileImpl implements File, Scope {
   readParseStatusForDashboard(): string {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
-  updateParseStatus(): void {
+  updateAllParseStatus(): void {
     this.getChildren().forEach(c => c.updateParseStatus());
     this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
@@ -324,11 +324,11 @@ export class FileImpl implements File, Scope {
     }
     return DisplayStatus[status];
   }
-  updateCompileStatus(): void {
+  updateAllCompileStatus(): void {
     this.getChildren().forEach(c => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
-  resetCompileStatusAndErrors(): void {
+  resetAllCompileStatusAndErrors(): void {
     this.getChildren().forEach(c => c.resetCompileStatusAndErrors());
   }
   
@@ -348,7 +348,7 @@ export class FileImpl implements File, Scope {
     }
     return DisplayStatus[status];
   }
-  updateTestStatus(): void {
+  updateAllTestStatus(): void {
     const tests = this.getTestFrames();
     tests.forEach(t => t.updateTestStatus());
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
@@ -358,7 +358,7 @@ export class FileImpl implements File, Scope {
     );
     this._testStatus = worst;
   }
-  resetTestStatus(): void {
+  resetAllTestStatus(): void {
     const tests = this.getTestFrames();
     tests.forEach(t => t.resetTestStatus())
   }
@@ -435,7 +435,7 @@ export class FileImpl implements File, Scope {
       this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
     }
     this.getFirstChild().select(true, false);
-    this.updateParseStatus();
+    this.updateAllParseStatus();
   }
 
   containsMain(): boolean {

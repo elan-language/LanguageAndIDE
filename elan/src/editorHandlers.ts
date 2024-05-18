@@ -75,7 +75,7 @@ export function handleKey(e: editorEvent, file: File) {
         codeHasChanged = file.processKey(e);
       }
       if (codeHasChanged) {
-        file.updateParseStatus();
+        file.updateAllParseStatus();
       }
     }
   }

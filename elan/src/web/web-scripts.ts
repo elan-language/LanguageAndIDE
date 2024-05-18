@@ -97,10 +97,9 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function updateStatus() {
+function updateDisplayValues() {
   (document.getElementById("code-title") as HTMLDivElement).innerText =
     `Program: ${file.fileName}`; // ${getStatus()}`;
-  // TODO  Adding the class is wrong. It must replace existing class. So make status the only class.
   (document.getElementById("parse") as HTMLDivElement).setAttribute(
     "class",
     file.readParseStatusForDashboard(),
@@ -242,7 +241,7 @@ function updateContent(text: string) {
     runAllTests();
   }
 
-  updateStatus();
+  updateDisplayValues();
 
   // debug check
   if (document.querySelectorAll(".focused").length > 1) {
@@ -341,7 +340,7 @@ function inputter() {
 runButton?.addEventListener("click", () => {
   try {
     file.setRunStatus(RunStatus.running);
-    updateStatus();
+    updateDisplayValues();
     const jsCode = file.compile();
 
     system.printer = printer;
@@ -357,19 +356,19 @@ runButton?.addEventListener("click", () => {
           .then(() => {
             console.info("elan program completed OK");
             file.setRunStatus(RunStatus.default);
-            updateStatus();
+            updateDisplayValues();
           })
           .catch((e: any) => {
             console.warn(e);
             file.setRunStatus(RunStatus.error);
-            updateStatus();
+            updateDisplayValues();
           });
       }
     });
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
-    updateStatus();
+    updateDisplayValues();
   }
 });
 
