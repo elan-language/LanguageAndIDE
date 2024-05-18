@@ -3,7 +3,6 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
@@ -11,7 +10,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T18_ThrowAndCatchException", () => {
   test("Pass_ThrowExceptionInMain", async () => {
