@@ -29,6 +29,7 @@ body {
   #code-title {
     grid-row: 1;
     grid-column: 1 / 24;
+    margin-left: 10px;
 }
 #console-title {
   grid-row: 1;
@@ -37,8 +38,9 @@ body {
 
 .elan-code{
   grid-column: 1 / 24;
-  grid-row: 2/34;
+  grid-row: 2/36; 
   padding: 5px;
+  margin-left: 10px;
 }
 
   #console {
@@ -94,22 +96,23 @@ body {
   #graphics {
     /* position pane within outer grid */
     grid-column: 32 / 48;
-    grid-row: 19/35;
+    grid-row: 19/36;
     background-color: var(--idePanelBackground);
     overflow: hidden;
     margin: 0;
     }
 
- #code-controls, #console-controls {
-    grid-row: 34;
+ #code-controls, #run-controls {
+    grid-column: 25/31;
     background-color: var(--ideDefaultBackground);
   }
+  #run-controls {
+    grid-row: 30;;
+  }
   #code-controls {
-    grid-column: 1/24;
+    grid-row: 35;
   }
-  #console-controls {
-    grid-column: 25/48;
-  }
+
 
 button, button:hover, button:active, button:focus  {
     background-color: var(--idePanelBackground);
