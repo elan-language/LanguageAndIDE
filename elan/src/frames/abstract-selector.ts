@@ -141,7 +141,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
   processKey(e: editorEvent): boolean {
-    let codeHasChanged = true;
+    let codeHasChanged = false;
     let key = e.key;
     switch (key) {
       case "Tab": {
@@ -158,11 +158,13 @@ export abstract class AbstractSelector extends AbstractFrame {
       }
       case "Delete": {
         this.deleteIfPermissible();  // Deleting selector is not a code change
+        codeHasChanged = true;
         break;
       }
       case "d": {
         if (e.modKey.control) {
           this.deleteIfPermissible();  // Deleting selector is not a code change
+          codeHasChanged = true;
         }
         break;
       }

@@ -165,7 +165,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   processKey(e: editorEvent): boolean {
-    let codeHasChanged = true;
+    let codeHasChanged = false;
     const key = e.key;
     switch (key) {
       case "Home": {
@@ -199,6 +199,7 @@ export abstract class AbstractFrame implements Frame {
       case "ArrowUp": {
         if (e.modKey.control && this.movable) {
           this.getParent().moveSelectedChildrenUpOne();
+          codeHasChanged = true;
         } else {
           this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
         }
@@ -207,6 +208,7 @@ export abstract class AbstractFrame implements Frame {
       case "ArrowDown": {
         if (e.modKey.control && this.movable) {
           this.getParent().moveSelectedChildrenDownOne();
+          codeHasChanged = true;
         } else {
           this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
         }

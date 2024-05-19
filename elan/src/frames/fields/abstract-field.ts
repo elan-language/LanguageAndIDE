@@ -181,8 +181,8 @@ export abstract class AbstractField implements Selectable, Field {
             this.text = reduced;
             this.cursorPos = cursorBeforeParse;
           }
+          codeHasChanged = true;
         }
-        codeHasChanged = true;
         break;
       }
       case "Delete": {
@@ -191,8 +191,8 @@ export abstract class AbstractField implements Selectable, Field {
             this.text.slice(0, this.cursorPos) +
             this.text.slice(this.cursorPos + 1);
           this.parseCurrentText();
+          codeHasChanged = true;
         }
-        codeHasChanged = true;
         break;
       }
       default: {
@@ -201,7 +201,8 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (key === "O" && e.modKey.control) {
           this.holder.expandCollapseAll();
         } else if (key?.length === 1) {
-          this.processInput(key);codeHasChanged = true;
+          this.processInput(key);
+          codeHasChanged = true;
         }
       }
     }
