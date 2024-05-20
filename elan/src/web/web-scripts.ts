@@ -72,7 +72,6 @@ function refreshAndDisplay() {
   });
 }
 
-
 function displayFile() {
   if (codeFile) {
     fetch(codeFile, { mode: "same-origin" })
@@ -256,7 +255,7 @@ function updateContent(text: string) {
   }
 }
 
-function testRunner(jsCode : string) {
+function testRunner(jsCode: string) {
   system.printer = printer;
   system.inputter = inputter;
 
@@ -286,8 +285,7 @@ function postMessage(e: editorEvent) {
       const codeChanged = handleKey(e, file);
       if (codeChanged === true) {
         refreshAndDisplay();
-      }
-      else if (codeChanged === false) {
+      } else if (codeChanged === false) {
         file.renderAsHtml().then((c) => updateContent(c));
       }
       // undefined just return

@@ -58,7 +58,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this._testStatus = worst;
   }
 
-  resetTestStatus(): void { 
+  resetTestStatus(): void {
     this._testStatus = TestStatus.default;
   }
   initialKeywords(): string {

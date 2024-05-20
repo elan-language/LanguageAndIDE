@@ -41,7 +41,7 @@ export interface File extends Parent {
   updateAllParseStatus(): void;
 
   readCompileStatus(): CompileStatus;
-  readCompileStatusForDashboard(): string
+  readCompileStatusForDashboard(): string;
   updateAllCompileStatus(): void;
   resetAllCompileStatusAndErrors(): void;
 
@@ -77,5 +77,7 @@ export interface File extends Parent {
 
   libraryScope: Scope;
 
-  refreshAllStatuses(testRunner: (jsCode : string) => Promise<[string, AssertOutcome[]][]>) : Promise<void>;
+  refreshAllStatuses(
+    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
+  ): Promise<void>;
 }

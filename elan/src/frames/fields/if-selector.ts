@@ -54,6 +54,6 @@ export class IfSelector extends AbstractField {
     } else {
       codeHasChanged = super.processKey(keyEvent);
     }
-    return codeHasChanged; 
+    return codeHasChanged;
   }
 }

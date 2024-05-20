@@ -119,7 +119,7 @@ export class ClassFrame
   }
 
   updateParseStatus(): void {
-    this.getChildren().forEach(c => c.updateParseStatus());
+    this.getChildren().forEach((c) => c.updateParseStatus());
     const worstOfFieldOrChildParseStatus = Math.min(
       this.worstParseStatusOfFields(),
       parentHelper_readWorstParseStatusOfChildren(this),
@@ -128,14 +128,14 @@ export class ClassFrame
   }
 
   updateCompileStatus(): void {
-    this.getChildren().forEach(c => c.updateCompileStatus());
+    this.getChildren().forEach((c) => c.updateCompileStatus());
     const worstOfFieldsOrChildren = Math.min(
       this.worstCompileStatusOfFields(),
       parentHelper_readWorstCompileStatusOfChildren(this),
     );
     this.setCompileStatus(worstOfFieldsOrChildren);
   }
-  
+
   getFactory(): StatementFactory {
     return this.getParent().getFactory();
   }

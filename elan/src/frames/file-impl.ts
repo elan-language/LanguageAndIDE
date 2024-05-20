@@ -308,11 +308,13 @@ export class FileImpl implements File, Scope {
   }
 
   updateAllParseStatus(): void {
-    this.getChildren().forEach(c => c.updateParseStatus());
+    this.getChildren().forEach((c) => c.updateParseStatus());
     this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
 
-  async refreshAllStatuses(testRunner: (jsCode : string) => Promise<[string, AssertOutcome[]][]>) {
+  async refreshAllStatuses(
+    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
+  ) {
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
 
@@ -328,15 +330,14 @@ export class FileImpl implements File, Scope {
           test.setAssertOutcomes(asserts);
         }
         this.updateAllTestStatus();
-      }
-      else {
+      } else {
         this.resetAllTestStatus();
       }
     }
-  } 
+  }
 
   //Compile status
-  readCompileStatus() : CompileStatus {
+  readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
   readCompileStatusForDashboard(): string {
@@ -350,13 +351,12 @@ export class FileImpl implements File, Scope {
     return DisplayStatus[status];
   }
   updateAllCompileStatus(): void {
-    this.getChildren().forEach(c => c.updateCompileStatus());
+    this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
   resetAllCompileStatusAndErrors(): void {
-    this.getChildren().forEach(c => c.resetCompileStatusAndErrors());
+    this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
   }
-  
 
   readTestStatus(): TestStatus {
     return this._testStatus;
@@ -375,7 +375,7 @@ export class FileImpl implements File, Scope {
   }
   updateAllTestStatus(): void {
     const tests = this.getTestFrames();
-    tests.forEach(t => t.updateTestStatus());
+    tests.forEach((t) => t.updateTestStatus());
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce(
       (prev, t) => worstOf(t.readTestStatus(), prev),
@@ -385,13 +385,13 @@ export class FileImpl implements File, Scope {
   }
   resetAllTestStatus(): void {
     const tests = this.getTestFrames();
-    tests.forEach(t => t.resetTestStatus());
+    tests.forEach((t) => t.resetTestStatus());
   }
 
   private getTestFrames(): TestFrame[] {
-    return  this.getChildren()
-    .filter((c) => c instanceof TestFrame)
-    .map((c) => c as TestFrame);
+    return this.getChildren()
+      .filter((c) => c instanceof TestFrame)
+      .map((c) => c as TestFrame);
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -497,7 +497,7 @@ export class FileImpl implements File, Scope {
 
   processKey(e: editorEvent): boolean {
     const codeHasChanged = false; // Can change to let if future expansion provides code-changing ops at file level
-    switch (e.key) { 
+    switch (e.key) {
       case "Home": {
         this.selectFirstGlobal();
         break;

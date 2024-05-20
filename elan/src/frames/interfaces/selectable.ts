@@ -12,7 +12,7 @@ export interface Selectable {
   defocus(): void;
 
   //returning true indicates that code has changed, and so status should be aggregated from the file down
-  processKey(keyEvent: editorEvent): boolean; 
+  processKey(keyEvent: editorEvent): boolean;
   renderAsHtml(): string;
   renderAsSource(): string;
 

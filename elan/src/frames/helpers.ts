@@ -109,7 +109,9 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
 }
 
-export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {
+export function helper_deriveCompileStatusFromErrors(
+  errors: CompileError[],
+): CompileStatus {
   let result = CompileStatus.error;
   if (errors.length === 0) {
     result = CompileStatus.ok;
@@ -121,18 +123,25 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   return result;
 }
 
-export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
+export function helper_CompileOrParseAsDisplayStatus(
+  loc: Frame | Field,
+): DisplayStatus {
   let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
   if (status === DisplayStatus.ok) {
-    const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-    if (compile !== DisplayStatus.default) { // Implies that the compiler has not been run
+    const compile = helper_compileStatusAsDisplayStatus(
+      loc.readCompileStatus(),
+    );
+    if (compile !== DisplayStatus.default) {
+      // Implies that the compiler has not been run
       status = compile;
     }
   }
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatus {
+export function helper_parseStatusAsDisplayStatus(
+  ps: ParseStatus,
+): DisplayStatus {
   let overall = DisplayStatus.default;
   if (ps === ParseStatus.valid) {
     overall = DisplayStatus.ok;
@@ -144,7 +153,9 @@ export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatu
   return overall;
 }
 
-export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayStatus {
+export function helper_compileStatusAsDisplayStatus(
+  cs: CompileStatus,
+): DisplayStatus {
   let overall = DisplayStatus.default;
   if (cs === CompileStatus.ok) {
     overall = DisplayStatus.ok;
@@ -156,7 +167,9 @@ export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayS
   return overall;
 }
 
-export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus {
+export function helper_testStatusAsDisplayStatus(
+  ts: TestStatus,
+): DisplayStatus {
   let overall = DisplayStatus.default;
   if (ts === TestStatus.pass) {
     overall = DisplayStatus.ok;
