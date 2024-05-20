@@ -109,7 +109,7 @@ ${this.renderChildrenAsHtml()}
 
     const s = this.params.resolveSymbol(id, transforms, initialScope);
 
-    return s === UnknownSymbol.Instance
+    return s instanceof UnknownSymbol
       ? super.resolveSymbol(id, transforms, initialScope)
       : s;
   }

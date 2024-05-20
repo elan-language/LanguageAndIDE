@@ -3,12 +3,12 @@ import { SymbolScope } from "./symbol-scope";
 import { UnknownType } from "./unknown-type";
 
 export class UnknownSymbol implements ElanSymbol {
-  private constructor() {}
+  constructor(id?: string) {
+    this.symbolId = id??"";
+  }
   symbolId = "";
   symbolType = () => UnknownType.Instance;
   symbolScope = SymbolScope.unknown;
-
-  static Instance: ElanSymbol = new UnknownSymbol();
 
   name = "Unknown Symbol";
 }

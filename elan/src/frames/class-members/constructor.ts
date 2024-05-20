@@ -77,7 +77,7 @@ ${this.indent()}}\r
     initialScope: Frame,
   ): ElanSymbol {
     const s = this.params.resolveSymbol(id, transforms, this);
-    return s === UnknownSymbol.Instance
+    return (s instanceof UnknownSymbol)
       ? this.getParent().resolveSymbol(id, transforms, this)
       : s;
   }

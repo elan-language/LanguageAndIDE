@@ -108,7 +108,7 @@ export function mustBeKnownSymbol(
   location: string,
 ) {
   if (symbol instanceof UnknownSymbol) {
-    compileErrors.push(new CompileError(`Undeclared id`, location, true));
+    compileErrors.push(new CompileError(`${symbol.symbolId} is not defined`, location, true));
   }
 }
 
@@ -242,7 +242,7 @@ export function mustImplementSuperClasses(
         classType,
       );
 
-      if (subSymbol === UnknownSymbol.Instance) {
+      if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
           new CompileError(
             `${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`,
@@ -652,7 +652,7 @@ export function mustNotBeReassigned(
   location: string,
 ) {
   if (
-    variable !== UnknownSymbol.Instance &&
+   !(variable instanceof UnknownSymbol) &&
     variable.symbolScope === SymbolScope.local
   ) {
     compileErrors.push(
