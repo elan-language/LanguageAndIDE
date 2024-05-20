@@ -23,7 +23,7 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    
+
     return `(${this.signature.compile()}) => ${this.body.compile()}`;
   }
 
