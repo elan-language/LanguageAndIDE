@@ -1,10 +1,8 @@
-import { ElanSymbol } from "./symbol";
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { StatementFactory } from "./statement-factory";
 import { File } from "./file";
-import { Transforms } from "../syntax-nodes/transforms";
 import { Scope } from "./scope";
 
 export interface Parent extends Scope {
@@ -42,10 +40,4 @@ export interface Parent extends Scope {
   newChildSelector(): AbstractSelector;
 
   getFactory(): StatementFactory;
-
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol;
 }

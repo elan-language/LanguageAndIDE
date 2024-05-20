@@ -8,6 +8,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 import { Transforms } from "./transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { Parent } from "../interfaces/parent";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(
@@ -16,6 +17,10 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     private readonly scope: Scope,
   ) {
     super();
+  }
+
+  getParent(): Parent {
+    return this.scope as Parent;
   }
 
   aggregateCompileErrors(): CompileError[] {

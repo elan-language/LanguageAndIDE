@@ -16,8 +16,14 @@ import { TupleType } from "./frames/symbols/tuple-type";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
+import { Parent } from "./frames/interfaces/parent";
 
 export class StdLibSymbols implements Scope {
+  
+  getParent(): Parent {
+    throw new Error("Method not implemented.");
+  }
+
   private getSymbol(id: string, st: SymbolType): ElanSymbol {
     return {
       symbolId: id,

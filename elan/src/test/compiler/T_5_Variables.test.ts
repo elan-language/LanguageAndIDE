@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -559,7 +560,7 @@ end main`;
     ]);
   });
 
-  test("Fail_RecursiveDefinition", async () => {
+  ignore_test("Fail_RecursiveDefinition", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

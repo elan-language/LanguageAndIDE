@@ -29,7 +29,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
       // don't prefix properties with this
       return this.id;
     }
-    const symbol = getParentScope(this.scope).resolveSymbol(
+    const symbol = this.scope.resolveSymbol(
       this.id,
       transforms(),
       this.scope,

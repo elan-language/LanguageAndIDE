@@ -54,7 +54,7 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
 }
 
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
-  return !!f && "resolveSymbol" in f;
+  return !!f && "resolveSymbol" in f && "getParent" in f;
 }
 
 export function isAstType(f?: AstNode): f is AstTypeNode {

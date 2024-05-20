@@ -48,5 +48,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
+  test("Pass_TupleArg", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call printModified((4, 5), lambda t as (Int, Int) => t.first())
+end main
+  
+procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
+  print f(i)
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  printModified(system.tuple([4, 5]), (t) => _stdlib.first(t));
+}
+
+function printModified(i, f) {
+  system.print(_stdlib.asString(f(i)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   // Fails TODO
 });

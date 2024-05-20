@@ -87,7 +87,7 @@ function getGlobalScope(start: Scope): File {
     return start;
   }
 
-  if (isFrame(start)) {
+  if (isScope(start)) {
     return getGlobalScope(start.getParent());
   }
 
@@ -99,7 +99,7 @@ export function getClassScope(start: Scope): Scope {
     return start;
   }
 
-  if (isFrame(start)) {
+  if (isScope(start)) {
     return getClassScope(start.getParent());
   }
 
@@ -107,7 +107,7 @@ export function getClassScope(start: Scope): Scope {
 }
 
 export function getParentScope(start: Scope): Scope {
-  if (isFrame(start)) {
+  if (isScope(start)) {
     return start.getParent();
   }
   return start;

@@ -5,6 +5,7 @@ import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
+import { Parent } from "../interfaces/parent";
 
 export class ClassDefinitionType implements SymbolType, Scope {
   constructor(
@@ -12,6 +13,10 @@ export class ClassDefinitionType implements SymbolType, Scope {
     public isAbstract: boolean,
     private readonly scope: ClassFrame,
   ) {}
+  
+  getParent(): Parent {
+    return this.scope as Parent;
+  }
 
   childSymbols() {
     // unknown because of typescript quirk
