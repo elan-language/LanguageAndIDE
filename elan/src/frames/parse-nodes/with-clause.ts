@@ -1,4 +1,3 @@
-import { BinaryOperation } from "./binary-operation";
 import { AbstractSequence } from "./abstract-sequence";
 import { withKeyword } from "../keywords";
 import { KeywordNode } from "./keyword-node";
