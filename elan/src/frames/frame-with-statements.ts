@@ -73,6 +73,7 @@ export abstract class FrameWithStatements
   }
 
   updateCompileStatus(): void {
+    this.getFields().forEach((f) => f.updateCompileStatus());
     this.getChildren().forEach((c) => c.updateCompileStatus());
     const worstOfFieldsOrChildren = Math.min(
       this.worstCompileStatusOfFields(),
