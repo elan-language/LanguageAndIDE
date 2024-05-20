@@ -7,6 +7,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { LetStatement } from "../statements/let-statement";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -33,10 +34,14 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
       transforms(),
       this.scope,
     );
-    if (symbol?.symbolScope === SymbolScope.stdlib) {
+
+    if (symbol instanceof LetStatement) {
+      return `${this.id}()`;
+    }
+    if (symbol.symbolScope === SymbolScope.stdlib) {
       return `_stdlib.${this.id}`;
     }
-    if (symbol?.symbolScope === SymbolScope.property) {
+    if (symbol.symbolScope === SymbolScope.property) {
       return `this.${this.id}`;
     }
 

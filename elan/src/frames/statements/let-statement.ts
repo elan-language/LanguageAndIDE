@@ -10,6 +10,7 @@ import { VarDefField } from "../fields/var-def-field";
 import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { LetType } from "../symbols/let-type";
 
 export class LetStatement
   extends AbstractFrame
@@ -24,8 +25,9 @@ export class LetStatement
     this.name = new VarDefField(this);
     this.expr = new ExpressionField(this);
   }
+
   symbolType(transforms: Transforms) {
-    return UnknownType.Instance;
+    return this.expr.getOrTransformAstNode(transforms)!.symbolType();
   }
 
   get symbolScope(): SymbolScope {
@@ -60,7 +62,7 @@ export class LetStatement
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}var ${this.name.compile(transforms)} = ${this.expr.compile(transforms)};`;
+    return `${this.indent()}var ${this.name.compile(transforms)} = () => ${this.expr.compile(transforms)};`;
   }
 
   get symbolId() {

@@ -13,7 +13,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T_4.5_LetStatement", () => {
-  ignore_test("Pass_normal", async () => {
+  test("Pass_normal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -22,7 +22,13 @@ main
   print x + y
 end main`;
 
-    const objectCode = ``;
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = () => 3;
+  var y = () => x() + 3;
+  system.print(_stdlib.asString(x() + y()));
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -32,7 +38,6 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
