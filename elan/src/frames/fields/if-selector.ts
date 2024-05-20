@@ -22,7 +22,7 @@ export class IfSelector extends AbstractField {
   initialiseRoot(): ParseNode {
     throw new Error("Method not implemented.");
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) => "";
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => "";
 
   parseFrom(source: CodeSource): void {
     if (source.isMatchRegEx(Regexes.ifClause)) {

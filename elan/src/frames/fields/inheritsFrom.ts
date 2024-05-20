@@ -20,6 +20,6 @@ export class InheritsFrom extends AbstractField {
     this.rootNode = new CSV(() => new TypeNode(), 1);
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 }

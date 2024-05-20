@@ -164,7 +164,7 @@ main
   var lower set to 1
   var upper set to 10
   var tot set to 0
-  for i from lower to upper step 2 
+  for i from lower to upper step 2
       set tot to tot + i
   end for
   print tot

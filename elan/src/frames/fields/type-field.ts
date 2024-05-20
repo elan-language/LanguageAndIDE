@@ -23,7 +23,7 @@ export class TypeField extends AbstractField {
     this.rootNode = new TypeNode();
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 
   compile(transforms: Transforms): string {

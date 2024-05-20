@@ -54,7 +54,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this.htmlId;
   }
   abstract initialiseRoot(): ParseNode;
-  abstract readToDelimeter: (source: CodeSource) => string;
+  abstract readToDelimiter: (source: CodeSource) => string;
 
   alertHolderToUpdate(): void {
     this.getHolder().fieldUpdated(this);
@@ -66,7 +66,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   parseFrom(source: CodeSource): void {
-    const text = this.readToDelimeter(source);
+    const text = this.readToDelimiter(source);
     const root = this.initialiseRoot();
     this.parseCompleteTextUsingNode(text, root);
     if (this._parseStatus !== ParseStatus.valid) {

@@ -1,7 +1,5 @@
-import { read } from "fs";
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-
 import { Alternatives } from "../parse-nodes/alternatives";
 import { LiteralNode } from "../parse-nodes/literal-node";
 import { ParseNode } from "../parse-nodes/parse-node";
@@ -10,11 +8,11 @@ import { AbstractField } from "./abstract-field";
 
 export class ValueRefField extends AbstractField {
   isParseByNodes = true;
-  delimeter: RegExp;
+  readUntil: RegExp;
 
   constructor(holder: Frame, readUntil: RegExp) {
     super(holder);
-    this.delimeter = readUntil;
+    this.readUntil = readUntil;
     this.setPlaceholder("value");
     this.help = `Enter either a literal value or the name of a variable (followed, optionally for some data structure types, by an index in square brackets).'
 `;
@@ -30,6 +28,6 @@ export class ValueRefField extends AbstractField {
     return this.rootNode;
   }
 
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
-    source.readUntil(this.delimeter);
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
+    source.readUntil(this.readUntil);
 }

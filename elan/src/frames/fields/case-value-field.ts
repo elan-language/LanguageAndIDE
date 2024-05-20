@@ -17,6 +17,6 @@ export class CaseValueField extends AbstractField {
     this.rootNode = new LitValueNode();
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 }
