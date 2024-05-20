@@ -13,4 +13,5 @@ export interface Field extends Selectable {
   resetCompileStatusAndErrors(): void;
   aggregateCompileErrors(): CompileError[];
   overtyper: Overtyper;
+  updateCompileStatus() : void;
 }

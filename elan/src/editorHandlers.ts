@@ -68,16 +68,12 @@ export function handleKey(e: editorEvent, file: File) {
     case "Alt":
       break;
     default: {
-      let codeHasChanged = false;
       if (e.target === "frame") {
-        codeHasChanged =file.getById(e.id!).processKey(e);
+        return file.getById(e.id!).processKey(e);
       } else {
-        codeHasChanged = file.processKey(e);
-      }
-      if (codeHasChanged) {
-        file.updateAllParseStatus();
+        return file.processKey(e);
       }
     }
   }
-
+  return undefined;
 }
