@@ -27,6 +27,7 @@ import { Property } from "./class-members/property";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
+import { LetStatement } from "./statements/let-statement";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -620,6 +621,16 @@ export function mustNotBeConstant(
     compileErrors.push(
       new CompileError(`May not mutate constant`, location, false),
     );
+  }
+}
+
+export function mustNotBeLet(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbol instanceof LetStatement) {
+    compileErrors.push(new CompileError(`May not set let`, location, false));
   }
 }
 

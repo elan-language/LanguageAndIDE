@@ -53,7 +53,7 @@ export class VarStatement
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const id = this.name.getOrTransformAstNode(transforms)?.compile();
+    const id = this.name.compile(transforms);
     const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
     mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());

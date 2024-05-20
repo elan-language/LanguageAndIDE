@@ -11,6 +11,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { LetType } from "../symbols/let-type";
+import { mustNotBeReassigned } from "../compile-rules";
 
 export class LetStatement
   extends AbstractFrame
@@ -62,7 +63,12 @@ export class LetStatement
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}var ${this.name.compile(transforms)} = () => ${this.expr.compile(transforms)};`;
+    const id = this.name.compile(transforms);
+    const symbol = this.getParent().resolveSymbol(id!, transforms, this);
+
+    mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+
+    return `${this.indent()}var ${id} = () => ${this.expr.compile(transforms)};`;
   }
 
   get symbolId() {

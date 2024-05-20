@@ -44,7 +44,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
-  ignore_test("Pass_proveLazilyEvaluated", async () => {
+  test("Pass_proveLazilyEvaluated", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -53,7 +53,13 @@ main
   print y
 end main`;
 
-    const objectCode = ``;
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = () => 1 / 0;
+  var y = () => 4;
+  system.print(_stdlib.asString(y()));
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -63,14 +69,13 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "4"); //i.e. does not generate a division by zero error from the first let (are we testing that it DOES for a var/set!)
   });
 
-  ignore_test("Fail_cannotRedefine ", async () => {
+  test("Fail_cannotRedefine ", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -79,8 +84,6 @@ main
   print x + y
 end main`;
 
-    const objectCode = ``;
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -89,13 +92,12 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
   });
 
-  ignore_test("Fail_cannotAssign", async () => {
+  test("Fail_cannotAssign", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -104,8 +106,6 @@ main
   print x + y
 end main`;
 
-    const objectCode = ``;
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -114,10 +114,8 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "7");
+    assertDoesNotCompile(fileImpl, ["May not set let"]);
   });
 });

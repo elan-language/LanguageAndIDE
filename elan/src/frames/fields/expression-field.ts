@@ -10,11 +10,12 @@ export class ExpressionField extends AbstractField {
   isParseByNodes = true;
   readUntil: RegExp;
 
-  constructor(holder: Frame, readUntil =  /\r?\n/) {
+  constructor(holder: Frame, readUntil = /\r?\n/) {
     super(holder);
     this.readUntil = readUntil;
     this.setPlaceholder("expression");
-    this.help = "Field may contain a literal value, a reference to a variable, or an expression";
+    this.help =
+      "Field may contain a literal value, a reference to a variable, or an expression";
   }
   getIdPrefix(): string {
     return "expr";

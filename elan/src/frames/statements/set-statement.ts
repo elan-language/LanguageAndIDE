@@ -10,6 +10,7 @@ import {
   mustBeCompatibleNode,
   mustNotBeConstant,
   mustNotBeCounter,
+  mustNotBeLet,
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
 } from "../compile-rules";
@@ -87,6 +88,13 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.compileErrors,
       this.assignable.getHtmlId(),
     );
+
+    const symbol = this.getParent().resolveSymbol(
+      assignableAstNode.id,
+      transforms,
+      this,
+    );
+    mustNotBeLet(symbol, this.compileErrors, this.assignable.getHtmlId());
 
     return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;
   }
