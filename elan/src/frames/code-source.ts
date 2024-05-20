@@ -73,7 +73,7 @@ export class CodeSourceFromString implements CodeSource {
     return this.remainingCode[0];
   }
   readToEndOfLine(): string {
-    return this.removeRegEx(new RegExp(`^[^\r\n]*`), false);
+    return this.removeRegEx(Regexes.anythingToNewLineAsRegExp, false);
   }
   readUntil(regx: RegExp): string {
     const matchIndex = regx.exec(this.remainingCode)?.index;

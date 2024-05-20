@@ -20,7 +20,7 @@ export class TypeNameField extends AbstractField {
     return this.rootNode;
   }
 
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/[^a-zA-Z0-9_]/);
 
   getIdPrefix(): string {

@@ -12,21 +12,22 @@ import { mustBeOfSymbolType } from "../compile-rules";
 import { IntType } from "../symbols/int-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { ExpressionField } from "../fields/expression-field";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
   variable: IdentifierField;
-  from: ValueRefField;
-  to: ValueRefField;
-  step: ValueRefField;
+  from: ExpressionField;
+  to: ExpressionField;
+  step: ExpressionField;
 
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("variableName");
-    this.from = new ValueRefField(this, / to /);
-    this.to = new ValueRefField(this, / step /);
-    this.step = new ValueRefField(this, /\r|\n/);
+    this.from = new ExpressionField(this, / to /);
+    this.to = new ExpressionField(this, / step /);
+    this.step = new ExpressionField(this);
     this.step.setFieldToKnownValidText("1");
   }
 

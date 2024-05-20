@@ -24,6 +24,6 @@ export class ExceptionMessage extends AbstractField {
     ]);
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 }

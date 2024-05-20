@@ -18,6 +18,6 @@ export class ConstantValueField extends AbstractField {
     this.rootNode = new LiteralNode();
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 }

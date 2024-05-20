@@ -25,7 +25,7 @@ export class OptionalKeyword extends AbstractField {
     this.rootNode = new OptionalNode(new KeywordNode(this.keyword));
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readMatching(/[^\S\r\n]*[a-z]*/);
 
   keywordExists(): boolean {

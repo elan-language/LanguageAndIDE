@@ -29,6 +29,6 @@ export class ArgListField extends AbstractField {
     this.rootNode = new CSV(() => new ExprNode(), 0);
     return this.rootNode;
   }
-  readToDelimeter: (source: CodeSource) => string = (source: CodeSource) =>
+  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToNonMatchingCloseBracket();
 }
