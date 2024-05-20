@@ -64,6 +64,14 @@ fetchProfile()
     setup(new DefaultProfile());
   });
 
+function refreshAndDisplay() {
+  file.refreshAllStatuses(testRunner).then(() => {
+    file.renderAsHtml().then((c) => {
+      updateContent(c);
+    });
+  });
+}
+
 function displayFile() {
   if (codeFile) {
     fetch(codeFile, { mode: "same-origin" })
@@ -71,12 +79,12 @@ function displayFile() {
       .then((text) => {
         const code = new CodeSourceFromString(text);
         file.parseFrom(code).then(() => {
-          file.renderAsHtml().then((c) => updateContent(c));
+          refreshAndDisplay();
         });
       })
       .catch((e) => {
         console.error(e);
-        file.renderAsHtml().then((c) => updateContent(c));
+        refreshAndDisplay();
       });
   } else {
     const previousCode = localStorage.getItem("elan-code");
@@ -85,10 +93,10 @@ function displayFile() {
       const code = new CodeSourceFromString(previousCode);
       file.parseFrom(code).then(() => {
         file.fileName = previousFileName || file.defaultFileName;
-        file.renderAsHtml().then((c) => updateContent(c));
+        refreshAndDisplay();
       });
     } else {
-      file.renderAsHtml().then((c) => updateContent(c));
+      refreshAndDisplay();
     }
   }
 }
@@ -237,8 +245,6 @@ function updateContent(text: string) {
         "unsaved",
       );
     });
-    // compile and run tests before updating status
-    runAllTests();
   }
 
   updateDisplayValues();
@@ -247,6 +253,22 @@ function updateContent(text: string) {
   if (document.querySelectorAll(".focused").length > 1) {
     console.warn("multiple focused");
   }
+}
+
+function testRunner(jsCode: string) {
+  system.printer = printer;
+  system.inputter = inputter;
+
+  return doImport(jsCode).then(async (elan) => {
+    if (elan.program) {
+      elan._inject(system, stdlib);
+      const [, tests] = await elan.program();
+      if (tests && tests.length > 0) {
+        return runTests(tests);
+      }
+    }
+    return [];
+  });
 }
 
 function postMessage(e: editorEvent) {
@@ -260,8 +282,13 @@ function postMessage(e: editorEvent) {
       file.renderAsHtml().then((c) => updateContent(c));
       return;
     case "key":
-      handleKey(e, file);
-      file.renderAsHtml().then((c) => updateContent(c));
+      const codeChanged = handleKey(e, file);
+      if (codeChanged === true) {
+        refreshAndDisplay();
+      } else if (codeChanged === false) {
+        file.renderAsHtml().then((c) => updateContent(c));
+      }
+      // undefined just return
       return;
   }
 }
@@ -387,24 +414,6 @@ function updateTestResults(outcomes: [string, AssertOutcome[]][]) {
     const test = file.getById(tid) as TestFrame;
     test.setAssertOutcomes(asserts);
   }
-}
-
-function runAllTests() {
-  const jsCode = file.compile();
-
-  system.printer = printer;
-  system.inputter = inputter;
-
-  doImport(jsCode).then(async (elan) => {
-    if (elan.program) {
-      elan._inject(system, stdlib);
-      const [, tests] = await elan.program();
-      if (tests && tests.length > 0) {
-        const outcomes = runTests(tests);
-        updateTestResults(outcomes);
-      }
-    }
-  });
 }
 
 const upload = document.getElementById("load") as Element;

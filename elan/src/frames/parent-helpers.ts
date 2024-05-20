@@ -31,7 +31,6 @@ export function parentHelper_aggregateCompileErrorsOfChildren(
     .reduce((prev, cur) => prev.concat(cur), []);
 }
 
-
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {
   const i = parent.getChildren().indexOf(child);
   parent.getChildren().splice(i, 1);

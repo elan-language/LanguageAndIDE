@@ -14,6 +14,7 @@ import { CompileError } from "../compile-error";
 import { ScratchPad } from "../scratch-pad";
 import { Profile } from "./profile";
 import { Scope } from "./scope";
+import { AssertOutcome } from "../../system";
 
 export interface File extends Parent {
   isFile: boolean;
@@ -40,7 +41,7 @@ export interface File extends Parent {
   updateAllParseStatus(): void;
 
   readCompileStatus(): CompileStatus;
-  readCompileStatusForDashboard(): string
+  readCompileStatusForDashboard(): string;
   updateAllCompileStatus(): void;
   resetAllCompileStatusAndErrors(): void;
 
@@ -75,4 +76,8 @@ export interface File extends Parent {
   setRunStatus(s: RunStatus): void;
 
   libraryScope: Scope;
+
+  refreshAllStatuses(
+    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
+  ): Promise<void>;
 }

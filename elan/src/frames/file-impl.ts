@@ -56,6 +56,7 @@ import { Scope } from "./interfaces/scope";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
 import { Transforms } from "./syntax-nodes/transforms";
+import { AssertOutcome } from "../system";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -305,13 +306,38 @@ export class FileImpl implements File, Scope {
   readParseStatusForDashboard(): string {
     return DisplayStatus[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }
+
   updateAllParseStatus(): void {
-    this.getChildren().forEach(c => c.updateParseStatus());
+    this.getChildren().forEach((c) => c.updateParseStatus());
     this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
 
+  async refreshAllStatuses(
+    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
+  ) {
+    this.updateAllParseStatus();
+    this.resetAllCompileStatusAndErrors();
+
+    if (this._parseStatus === ParseStatus.valid) {
+      const code = this.compile();
+      this.updateAllCompileStatus();
+
+      if (this._compileStatus === CompileStatus.ok) {
+        const outcomes = await testRunner(code);
+        for (const outcome of outcomes) {
+          const [tid, asserts] = outcome;
+          const test = this.getById(tid) as TestFrame;
+          test.setAssertOutcomes(asserts);
+        }
+        this.updateAllTestStatus();
+      } else {
+        this.resetAllTestStatus();
+      }
+    }
+  }
+
   //Compile status
-  readCompileStatus() : CompileStatus {
+  readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
   readCompileStatusForDashboard(): string {
@@ -325,13 +351,12 @@ export class FileImpl implements File, Scope {
     return DisplayStatus[status];
   }
   updateAllCompileStatus(): void {
-    this.getChildren().forEach(c => c.updateCompileStatus());
+    this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
   resetAllCompileStatusAndErrors(): void {
-    this.getChildren().forEach(c => c.resetCompileStatusAndErrors());
+    this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
   }
-  
 
   readTestStatus(): TestStatus {
     return this._testStatus;
@@ -350,7 +375,7 @@ export class FileImpl implements File, Scope {
   }
   updateAllTestStatus(): void {
     const tests = this.getTestFrames();
-    tests.forEach(t => t.updateTestStatus());
+    tests.forEach((t) => t.updateTestStatus());
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce(
       (prev, t) => worstOf(t.readTestStatus(), prev),
@@ -360,13 +385,13 @@ export class FileImpl implements File, Scope {
   }
   resetAllTestStatus(): void {
     const tests = this.getTestFrames();
-    tests.forEach(t => t.resetTestStatus())
+    tests.forEach((t) => t.resetTestStatus());
   }
 
   private getTestFrames(): TestFrame[] {
-    return  this.getChildren()
-    .filter((c) => c instanceof TestFrame)
-    .map((c) => c as TestFrame);
+    return this.getChildren()
+      .filter((c) => c instanceof TestFrame)
+      .map((c) => c as TestFrame);
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -472,7 +497,7 @@ export class FileImpl implements File, Scope {
 
   processKey(e: editorEvent): boolean {
     const codeHasChanged = false; // Can change to let if future expansion provides code-changing ops at file level
-    switch (e.key) { 
+    switch (e.key) {
       case "Home": {
         this.selectFirstGlobal();
         break;

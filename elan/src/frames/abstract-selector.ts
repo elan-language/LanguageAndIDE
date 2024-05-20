@@ -157,13 +157,13 @@ export abstract class AbstractSelector extends AbstractFrame {
         break;
       }
       case "Delete": {
-        this.deleteIfPermissible();  // Deleting selector is not a code change
+        this.deleteIfPermissible(); // Deleting selector is not a code change
         codeHasChanged = true;
         break;
       }
       case "d": {
         if (e.modKey.control) {
-          this.deleteIfPermissible();  // Deleting selector is not a code change
+          this.deleteIfPermissible(); // Deleting selector is not a code change
           codeHasChanged = true;
         }
         break;

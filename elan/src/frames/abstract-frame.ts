@@ -533,9 +533,12 @@ export abstract class AbstractFrame implements Frame {
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
+
   updateCompileStatus(): void {
+    this.getFields().forEach((f) => f.updateCompileStatus());
     this._compileStatus = this.worstCompileStatusOfFields();
   }
+
   protected setCompileStatus(newStatus: CompileStatus) {
     this._compileStatus = newStatus;
   }

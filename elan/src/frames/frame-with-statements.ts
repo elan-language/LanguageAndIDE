@@ -64,16 +64,16 @@ export abstract class FrameWithStatements
   }
 
   updateParseStatus(): void {
-    this.getChildren().forEach(c => c.updateParseStatus());
+    this.getChildren().forEach((c) => c.updateParseStatus());
     const worstOfFieldsOrChildren = Math.min(
       this.worstParseStatusOfFields(),
       parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldsOrChildren);
   }
- 
+
   updateCompileStatus(): void {
-    this.getChildren().forEach(c => c.updateCompileStatus());
+    this.getChildren().forEach((c) => c.updateCompileStatus());
     const worstOfFieldsOrChildren = Math.min(
       this.worstCompileStatusOfFields(),
       parentHelper_readWorstCompileStatusOfChildren(this),
