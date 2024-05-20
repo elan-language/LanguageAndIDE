@@ -286,9 +286,9 @@ export abstract class AbstractFrame implements Frame {
 
   protected getAdjacentPeer(): Frame {
     const parent = this.getParent();
-    let adjacent = parent.getChildBefore(this);
+    let adjacent = parent.getChildAfter(this);
     if (adjacent === this) {
-      adjacent = parent.getChildAfter(this);
+      adjacent = parent.getChildBefore(this);
     }
     return adjacent;
   }
