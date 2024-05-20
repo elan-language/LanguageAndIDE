@@ -139,7 +139,7 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot compare Unknown and Int",
-      "Undeclared id",
+      "x is not defined",
     ]);
   });
 

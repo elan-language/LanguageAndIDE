@@ -338,7 +338,7 @@ export class StdLibSymbols implements Scope {
     scope: Scope,
   ): ElanSymbol {
     return id
-      ? this.symbols.get(id) ?? UnknownSymbol.Instance
-      : UnknownSymbol.Instance;
+      ? this.symbols.get(id) ?? new UnknownSymbol(id)
+      : new UnknownSymbol();
   }
 }

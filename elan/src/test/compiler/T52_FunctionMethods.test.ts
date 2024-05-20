@@ -391,7 +391,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["times is not defined"]);
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {

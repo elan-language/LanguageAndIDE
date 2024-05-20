@@ -362,7 +362,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["display is not defined"]);
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
@@ -396,6 +396,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["calculate is not defined"]);
   });
 });

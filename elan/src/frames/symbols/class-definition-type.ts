@@ -26,7 +26,7 @@ export class ClassDefinitionType implements SymbolType, Scope {
         return f;
       }
     }
-    return UnknownSymbol.Instance;
+    return new UnknownSymbol(id);
   }
 
   get name() {

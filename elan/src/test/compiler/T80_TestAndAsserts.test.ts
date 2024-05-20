@@ -468,7 +468,7 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["squareTest is not defined"]);
   });
 
   test("Fail_useTestAsAReference", async () => {
@@ -495,6 +495,6 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["squareTest is not defined"]);
   });
 });

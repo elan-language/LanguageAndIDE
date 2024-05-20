@@ -63,6 +63,6 @@ export class ParamList extends AbstractField {
         }
       }
     }
-    return UnknownSymbol.Instance;
+    return new UnknownSymbol(id);
   }
 }

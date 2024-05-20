@@ -541,7 +541,7 @@ const stubHolder = {
         };
     }
 
-    return UnknownSymbol.Instance;
+    return new UnknownSymbol(id);
   },
 } as Parent;
 

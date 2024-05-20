@@ -575,6 +575,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared id"]);
+    assertDoesNotCompile(fileImpl, ["x is not defined"]);
   });
 });
