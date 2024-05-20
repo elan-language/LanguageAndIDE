@@ -316,18 +316,6 @@ public class ElanBaseListener implements ElanListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExternal(ElanParser.ExternalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExternal(ElanParser.ExternalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAssert(ElanParser.AssertContext ctx) { }
 	/**
 	 * {@inheritDoc}
