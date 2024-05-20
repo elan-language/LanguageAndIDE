@@ -14,6 +14,7 @@ import { CompileError } from "../compile-error";
 import { ArrayType } from "../symbols/array-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
+import { FunctionType } from "../symbols/function-type";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -92,6 +93,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
       case "Iter":
         return new IterType(this.genericParameters[0].symbolType());
+      case "Func":
+        const types = this.genericParameters.map((p) => p.symbolType());
+        const pTypes = types.slice(0, -1);
+        const rType = types[types.length - 1];
+        return new FunctionType(pTypes, rType, false);
       default: {
         if (this.genericParameters.length === 0) {
           return new ClassType(this.id);

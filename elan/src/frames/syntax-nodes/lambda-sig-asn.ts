@@ -31,7 +31,8 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   }
 
   compile(): string {
-    throw new Error("Method not implemented.");
+    this.compileErrors = [];
+    return this.parameters.map((p) => p.compile()).join(", ");
   }
 
   resolveSymbol(
