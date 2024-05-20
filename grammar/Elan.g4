@@ -159,7 +159,7 @@ varRef: ((PROPERTY|GLOBAL|LIBRARY|IDENTIFIER) DOT)? IDENTIFIER index?;
 defaultType: DEFAULT type;
 index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_SQ_BRACKET;
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
-withClause: WITH OPEN_SQ_BRACKET inlineAsignment (COMMA inlineAsignment)* CLOSE_BRACE;
+withClause: WITH OPEN_BRACE inlineAsignment (COMMA inlineAsignment)* CLOSE_BRACE;
 inlineAsignment: assignableValue SET TO expression;
 
 // LITERALS

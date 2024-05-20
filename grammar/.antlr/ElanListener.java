@@ -257,16 +257,6 @@ public interface ElanListener extends ParseTreeListener {
 	 */
 	void exitInput(ElanParser.InputContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElanParser#external}.
-	 * @param ctx the parse tree
-	 */
-	void enterExternal(ElanParser.ExternalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElanParser#external}.
-	 * @param ctx the parse tree
-	 */
-	void exitExternal(ElanParser.ExternalContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ElanParser#assert}.
 	 * @param ctx the parse tree
 	 */

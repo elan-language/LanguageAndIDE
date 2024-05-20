@@ -4594,7 +4594,7 @@ public partial class ElanParser : Parser {
 
 	public partial class WithClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode WITH() { return GetToken(ElanParser.WITH, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPEN_SQ_BRACKET() { return GetToken(ElanParser.OPEN_SQ_BRACKET, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPEN_BRACE() { return GetToken(ElanParser.OPEN_BRACE, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public InlineAsignmentContext[] inlineAsignment() {
 			return GetRuleContexts<InlineAsignmentContext>();
 		}
@@ -4634,7 +4634,7 @@ public partial class ElanParser : Parser {
 			State = 702;
 			Match(WITH);
 			State = 703;
-			Match(OPEN_SQ_BRACKET);
+			Match(OPEN_BRACE);
 			State = 704;
 			inlineAsignment();
 			State = 709;
@@ -6661,7 +6661,7 @@ public partial class ElanParser : Parser {
 		693,5,81,0,0,693,694,3,94,47,0,694,701,1,0,0,0,695,696,3,94,47,0,696,697,
 		5,81,0,0,697,701,1,0,0,0,698,699,5,81,0,0,699,701,3,94,47,0,700,691,1,
 		0,0,0,700,695,1,0,0,0,700,698,1,0,0,0,701,115,1,0,0,0,702,703,5,65,0,0,
-		703,704,5,77,0,0,704,709,3,118,59,0,705,706,5,83,0,0,706,708,3,118,59,
+		703,704,5,75,0,0,704,709,3,118,59,0,705,706,5,83,0,0,706,708,3,118,59,
 		0,707,705,1,0,0,0,708,711,1,0,0,0,709,707,1,0,0,0,709,710,1,0,0,0,710,
 		712,1,0,0,0,711,709,1,0,0,0,712,713,5,76,0,0,713,117,1,0,0,0,714,715,3,
 		54,27,0,715,716,5,52,0,0,716,717,5,60,0,0,717,718,3,94,47,0,718,119,1,
