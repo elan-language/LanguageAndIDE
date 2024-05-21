@@ -111,5 +111,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
   });
 
+  test("Pass_max", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+main
+  print source.max()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+async function main() {
+  system.print(_stdlib.asString(_stdlib.max(source)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "37");
+  });
+
   // Fails TODO
 });
