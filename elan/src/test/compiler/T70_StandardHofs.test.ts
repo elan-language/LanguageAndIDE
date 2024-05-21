@@ -77,5 +77,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]Iter [2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*]");
   });
 
+  test("Pass_reduce", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+main
+  print source.reduce(0, lambda s as Int, x as Int => s + x)
+  print source.reduce(100, lambda s as Int, x as Int => s + x)
+  print source.reduce("Concat:", lambda s as String, x as Int => s + x.asString())
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+async function main() {
+  system.print(_stdlib.asString(_stdlib.reduce(source, 0, (s, x) => s + x)));
+  system.print(_stdlib.asString(_stdlib.reduce(source, 100, (s, x) => s + x)));
+  system.print(_stdlib.asString(_stdlib.reduce(source, "Concat:", (s, x) => s + _stdlib.asString(x))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
+  });
+
   // Fails TODO
 });

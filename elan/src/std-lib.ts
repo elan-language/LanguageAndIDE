@@ -198,4 +198,8 @@ export class StdLib {
   map<T, U>(source : T[], predicate: (value : T) => U ){
     return this.asIter(source.map(predicate));
   }
+
+  reduce<T, U>(source: T[], initValue: U, predicate: (s: U, value: T) => U): U {
+    return source.reduce(predicate, initValue);
+  }
 }
