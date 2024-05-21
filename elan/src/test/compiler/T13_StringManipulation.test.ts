@@ -441,12 +441,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot compare String and String",
-      "Cannot compare String and String",
-      "Cannot compare String and String",
-      "Cannot compare String and String",
-      "Cannot compare String and String",
-      "Cannot compare String and String",
+      "String and String must both be numeric types",
+      "String and String must both be numeric types",
+      "String and String must both be numeric types",
+      "String and String must both be numeric types",
+      "String and String must both be numeric types",
+      "String and String must both be numeric types",
     ]);
   });
 

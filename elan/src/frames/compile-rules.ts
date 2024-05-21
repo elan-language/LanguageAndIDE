@@ -382,7 +382,7 @@ export function mustBeNumberType(
 
   compileErrors.push(
     new CompileError(
-      `Cannot compare ${lhs.name} and ${rhs.name}`,
+      `${lhs.name} and ${rhs.name} must both be numeric types`,
       location,
       true,
     ),

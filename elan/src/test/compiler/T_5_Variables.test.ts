@@ -578,7 +578,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot compare Unknown and Int",
+      "Unknown and Int must both be numeric types",
       "x is not defined",
     ]);
   });

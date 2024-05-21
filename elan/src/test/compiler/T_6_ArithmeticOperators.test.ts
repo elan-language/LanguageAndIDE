@@ -373,9 +373,9 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot compare Int and Boolean",
-      "Cannot compare Boolean and Int",
-      "Cannot compare Int and Class Foo",
+      "Int and Boolean must both be numeric types",
+      "Boolean and Int must both be numeric types",
+      "Int and Class Foo must both be numeric types",
     ]);
   });
 });
