@@ -391,6 +391,20 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    [
+      "maxBy",
+      this.getSymbol(
+        "maxBy",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], FloatType.Instance, false)
+          ],
+          new GenericParameterType("T"),
+          true,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(
