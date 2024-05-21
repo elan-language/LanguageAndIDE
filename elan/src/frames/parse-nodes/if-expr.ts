@@ -29,16 +29,4 @@ export class IfExpr extends AbstractSequence {
       super.parseText(text);
     }
   }
-  renderAsHtml(): string {
-    const condition = this.condition!.renderAsHtml();
-    const ifTrue = this.whenTrue!.renderAsHtml();
-    const ifFalse = this.whenFalse!.renderAsHtml();
-    return `<keyword>if </keyword>${condition}<keyword> then </keyword>${ifTrue}<keyword> else </keyword>${ifFalse}`;
-  }
-  renderAsSource(): string {
-    const condition = this.condition!.renderAsSource();
-    const ifTrue = this.whenTrue!.renderAsSource();
-    const ifFalse = this.whenFalse!.renderAsSource();
-    return `if ${condition} then ${ifTrue} else ${ifFalse}`;
-  }
 }
