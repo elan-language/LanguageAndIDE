@@ -304,7 +304,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
   });
 
-  ignore_test("Pass_ListofList", async () => {
+  test("Pass_ListofList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to [[4, 5], [6, 7, 8]]
@@ -332,7 +332,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [List [4, 5], List [6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "List [List [4, 5], List [6, 7, 8]]");
   });
 
   test("Fail_useInsideMain", async () => {
