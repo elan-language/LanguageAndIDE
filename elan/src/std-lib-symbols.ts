@@ -19,7 +19,6 @@ import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { Parent } from "./frames/interfaces/parent";
 
 export class StdLibSymbols implements Scope {
-  
   getParent(): Parent {
     throw new Error("Method not implemented.");
   }

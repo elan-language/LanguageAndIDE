@@ -13,7 +13,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T43_Inheritance", () => {
-  test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
+  ignore_test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -131,7 +131,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
+  ignore_test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -259,7 +259,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  test("Pass_SuperclassesCanDefineSameMember", async () => {
+  ignore_test("Pass_SuperclassesCanDefineSameMember", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

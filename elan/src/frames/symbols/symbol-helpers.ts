@@ -121,7 +121,6 @@ export function wrapScopeInScope(wrapped: Scope) {
       scope: Scope,
     ) => wrapped.resolveSymbol(id, transforms, scope),
 
-    getParent: () => wrapped
+    getParent: () => wrapped,
   } as Scope;
-
 }

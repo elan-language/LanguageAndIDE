@@ -257,8 +257,12 @@ export function transform(
     const parameters = transformMany(node.params as CSV, fieldId, scope)
       .items as Array<ParamDefAsn>;
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
-    // wrap sig scope in another scope to prevent looking up a symbol in current scope. 
-    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;
+    // wrap sig scope in another scope to prevent looking up a symbol in current scope.
+    const body = transform(
+      node.expr,
+      fieldId,
+      wrapScopeInScope(sig),
+    ) as ExprAsn;
 
     return new LambdaAsn(sig, body, fieldId, scope);
   }

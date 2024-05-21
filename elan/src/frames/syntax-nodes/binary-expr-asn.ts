@@ -6,6 +6,7 @@ import { FloatType } from "../symbols/number-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import {
+  mustBeBooleanType,
   mustBeCoercibleType,
   mustBeCompatibleType,
   mustBeNumberType,
@@ -15,6 +16,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
+import { StringType } from "../symbols/string-type";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -50,12 +52,36 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
+  private isArithmeticOp() {
+    switch (this.op) {
+      case OperationSymbol.Add:
+      case OperationSymbol.Minus:
+      case OperationSymbol.Multiply:
+      case OperationSymbol.Div:
+      case OperationSymbol.Divide:
+      case OperationSymbol.Mod:
+      case OperationSymbol.Pow:
+        return true;
+    }
+    return false;
+  }
+
   private isCompareOp() {
     switch (this.op) {
       case OperationSymbol.LT:
       case OperationSymbol.GT:
       case OperationSymbol.GTE:
       case OperationSymbol.LTE:
+        return true;
+    }
+    return false;
+  }
+
+  private isLogicalOp() {
+    switch (this.op) {
+      case OperationSymbol.And:
+      case OperationSymbol.Or:
+      case OperationSymbol.Xor:
         return true;
     }
     return false;
@@ -106,12 +132,37 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
+    if (
+      this.op === OperationSymbol.Add &&
+      (lst instanceof ListType || rst instanceof ListType)
+    ) {
+      if (lst instanceof ListType && rst instanceof ListType) {
+        mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
+      } else if (lst instanceof ListType) {
+        mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
+      } else if (rst instanceof ListType) {
+        mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
+      }
+      return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
+    }
+
+    if (
+      this.op === OperationSymbol.Add &&
+      (lst instanceof StringType || rst instanceof StringType)
+    ) {
+      return `${this.lhs.compile()} + ${this.rhs.compile()}`;
+    }
+
     if (this.isCoercibleOp()) {
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 
-    if (this.isCompareOp()) {
+    if (this.isCompareOp() || this.isArithmeticOp()) {
       mustBeNumberType(lst, rst, this.compileErrors, this.fieldId);
+    }
+
+    if (this.isLogicalOp()) {
+      mustBeBooleanType(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (
