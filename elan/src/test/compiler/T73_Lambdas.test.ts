@@ -114,6 +114,35 @@ return [main, _tests];}`;
       await assertObjectCodeExecutes(fileImpl, "25");
   });
 
+  test("Pass_lambdaInExpression", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var l set to lambda x as Int => x * 5
+  print l(5) + 5
+end main`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var l = (x) => x * 5;
+  system.print(_stdlib.asString(l(5) + 5));
+}
+return [main, _tests];}`;
+  
+      const fileImpl = new FileImpl(
+        testHash,
+        new DefaultProfile(),
+        transforms(),
+        true,
+      );
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+  
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+      await assertObjectCodeExecutes(fileImpl, "30");
+  });
+
   test("Pass_ReturnALambda", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -150,6 +179,31 @@ return [main, _tests];}`;
         assertStatusIsValid(fileImpl);
         assertObjectCodeIs(fileImpl, objectCode);
         await assertObjectCodeExecutes(fileImpl, "25");
+  });
+
+  test("Fail_ImmediateInvoke", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var l set to getFunc()(5)
+  print l
+end main
+    
+function getFunc() return Func<of Int => Int>
+  return lambda x as Int => x * 5
+end function`;
+
+    
+    
+        const fileImpl = new FileImpl(
+          testHash,
+          new DefaultProfile(),
+          transforms(),
+          true,
+        );
+        await fileImpl.parseFrom(new CodeSourceFromString(code));
+    
+        assertDoesNotParse(fileImpl);
   });
 
 
