@@ -335,6 +335,34 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    [
+      "filter",
+      this.getSymbol(
+        "filter",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false)
+          ],
+          new IterType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "map",
+      this.getSymbol(
+        "map",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], new GenericParameterType("U"), false)
+          ],
+          new IterType(new GenericParameterType("U")),
+          true,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(

@@ -80,6 +80,12 @@ export class StdLib {
     return list;
   }
 
+  asIter<T>(arr: T[]): T[] {
+    const list = [...arr];
+    (list as unknown as hasHiddenType)._type = "Iter";
+    return list;
+  }
+
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict);
     (lst as unknown as hasHiddenType)._type = "List";
@@ -183,5 +189,13 @@ export class StdLib {
 
   random(f: number, l: number) {
     return 0;
+  }
+
+  filter<T>(source : T[], predicate: (value : T) => boolean ){
+    return this.asIter(source.filter(predicate));
+  }
+
+  map<T, U>(source : T[], predicate: (value : T) => U ){
+    return this.asIter(source.map(predicate));
   }
 }
