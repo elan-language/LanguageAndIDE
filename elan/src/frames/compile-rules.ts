@@ -508,15 +508,7 @@ export function mustBeCompatibleType(
       rhs instanceof ArrayType ||
       rhs instanceof IterType)
   ) {
-    if (
-      !(
-        lhs.ofType instanceof GenericParameterType ||
-        lhs.ofType.name === rhs.ofType.name
-      )
-    ) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
-      return;
-    }
+    mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
   if (lhs instanceof IterType && rhs instanceof StringType) {

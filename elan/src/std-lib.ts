@@ -202,4 +202,15 @@ export class StdLib {
   reduce<T, U>(source: T[], initValue: U, predicate: (s: U, value: T) => U): U {
     return source.reduce(predicate, initValue);
   }
+
+  max(source: number[]): number {
+    return Math.max(...source);
+  }
+
+  maxBy<T>(source: T[], predicate: (value : T) => number): T {
+    const mm = source.map(predicate);
+    const max = Math.max(...mm);
+    const i = mm.indexOf(max); 
+    return source[i];
+  }
 }
