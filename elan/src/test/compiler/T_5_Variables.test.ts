@@ -576,6 +576,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["x is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot compare Unknown and Int",
+      "x is not defined"]);
   });
 });

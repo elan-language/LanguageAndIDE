@@ -387,6 +387,28 @@ export function mustBeNumberType(
   );
 }
 
+export function mustBeBooleanType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  // for compare allow int and floats
+  if (
+    lhs instanceof BooleanType && rhs instanceof BooleanType
+  ) {
+    return;
+  }
+
+  compileErrors.push(
+    new CompileError(
+      `Cannot logically compare ${lhs.name} and ${rhs.name}`,
+      location,
+      true,
+    ),
+  );
+}
+
 function mustBeCompatibleTypes(lhss: SymbolType[], rhss: SymbolType[], compileErrors: CompileError[], location: string) {
   const maxLen =
     lhss.length > rhss.length
