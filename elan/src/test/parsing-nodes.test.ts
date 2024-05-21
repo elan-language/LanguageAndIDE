@@ -345,7 +345,7 @@ suite("Parsing Nodes", () => {
       "this",
       "",
       "this",
-      "<keyword>this</keyword>",
+      "this",  // Not now detected or rejected as a keyword by the parse node - that is down to compilation
     );
     testNodeParse(
       new ExprNode(),
@@ -517,21 +517,21 @@ suite("Parsing Nodes", () => {
       "-de",
       "abc",
     );
-    // Cannot be a keyword
+    // Can be a keyword - because that will be rejected at compile stage, not parse stage
     testNodeParse(
       new IdentifierNode(),
       `new`,
-      ParseStatus.invalid,
-      ``,
-      "new",
+      ParseStatus.valid,
+      `new`,
+      "",
       "",
     );
     testNodeParse(
       new IdentifierNode(),
       `global`,
-      ParseStatus.invalid,
-      ``,
-      "global",
+      ParseStatus.valid,
+      `global`,
+      "",
       "",
     );
     testNodeParse(
@@ -1360,17 +1360,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new FunctionCallNode(),
       `property.foo()`,
-      ParseStatus.invalid,
-      ``,
-      "property.foo()",
-      "",
-    );
-    testNodeParse(
-      new FunctionCallNode(),
+      ParseStatus.valid, //Because 'property' is parsed as an instance name. This should be picked up as a compile error though.
       `property.foo()`,
-      ParseStatus.invalid,
-      ``,
-      "property.foo()",
+      "",
       "",
     );
     testNodeParse(
@@ -2193,8 +2185,7 @@ suite("Parsing Nodes", () => {
   });
   test("VarRef", () => {
     testNodeParse(new VarRefNode(), `g`, ParseStatus.valid, "", "", "");
-    testNodeParse(new VarRefNode(), `result`, ParseStatus.valid, "", "", ""); //only keyword that is OK
-    testNodeParse(new VarRefNode(), `new`, ParseStatus.invalid, "", "new", "");
+    testNodeParse(new VarRefNode(), `new`, ParseStatus.valid, "new", "", ""); // because keyword as var is now a compile error not parse error
     testNodeParse(
       new VarRefNode(),
       `global.`,
@@ -2206,8 +2197,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new VarRefNode(),
       `global`,
-      ParseStatus.incomplete,
-      "",
+      ParseStatus.valid, //because use of a keyword alone is now to be picked up as a compile error, not a parse error
+      "global",
       "",
       "",
     );

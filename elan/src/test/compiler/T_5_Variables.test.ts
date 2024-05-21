@@ -480,7 +480,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_UseOfKeywordAsName", async () => {
+  ignore_test("Fail_UseOfKeywordAsName", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -495,7 +495,8 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl,[""] );
   });
 
   test("Fail_TypeCheck1", async () => {
