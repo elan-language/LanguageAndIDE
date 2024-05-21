@@ -112,3 +112,16 @@ export function getParentScope(start: Scope): Scope {
   }
   return start;
 }
+
+export function wrapScopeInScope(wrapped: Scope) {
+  return {
+    resolveSymbol: (
+      id: string | undefined,
+      transforms: Transforms,
+      scope: Scope,
+    ) => wrapped.resolveSymbol(id, transforms, scope),
+
+    getParent: () => wrapped
+  } as Scope;
+
+}

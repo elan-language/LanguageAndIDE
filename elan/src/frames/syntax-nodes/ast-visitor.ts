@@ -97,6 +97,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { ExprAsn } from "./expr-asn";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { wrapScopeInScope } from "../symbols/symbol-helpers";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -256,7 +257,8 @@ export function transform(
     const parameters = transformMany(node.params as CSV, fieldId, scope)
       .items as Array<ParamDefAsn>;
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
-    const body = transform(node.expr, fieldId, sig) as ExprAsn;
+    // wrap sig scope in another scope to prevent looking up a symbol in current scope. 
+    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;
 
     return new LambdaAsn(sig, body, fieldId, scope);
   }
