@@ -29,7 +29,11 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return new FunctionType(this.signature.parameterTypes(), this.body.symbolType(), false);
+    return new FunctionType(
+      this.signature.parameterTypes(),
+      this.body.symbolType(),
+      false,
+    );
   }
 
   toString() {

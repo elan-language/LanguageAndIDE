@@ -4,7 +4,7 @@ import { UnknownType } from "./unknown-type";
 
 export class UnknownSymbol implements ElanSymbol {
   constructor(id?: string) {
-    this.symbolId = id??"";
+    this.symbolId = id ?? "";
   }
   symbolId = "";
   symbolType = () => UnknownType.Instance;

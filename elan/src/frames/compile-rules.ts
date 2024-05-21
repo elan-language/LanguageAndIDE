@@ -108,7 +108,9 @@ export function mustBeKnownSymbol(
   location: string,
 ) {
   if (symbol instanceof UnknownSymbol) {
-    compileErrors.push(new CompileError(`${symbol.symbolId} is not defined`, location, true));
+    compileErrors.push(
+      new CompileError(`${symbol.symbolId} is not defined`, location, true),
+    );
   }
 }
 
@@ -394,9 +396,7 @@ export function mustBeBooleanType(
   location: string,
 ) {
   // for compare allow int and floats
-  if (
-    lhs instanceof BooleanType && rhs instanceof BooleanType
-  ) {
+  if (lhs instanceof BooleanType && rhs instanceof BooleanType) {
     return;
   }
 
@@ -409,22 +409,18 @@ export function mustBeBooleanType(
   );
 }
 
-function mustBeCompatibleTypes(lhss: SymbolType[], rhss: SymbolType[], compileErrors: CompileError[], location: string) {
-  const maxLen =
-    lhss.length > rhss.length
-      ? lhss.length
-      : rhss.length;
+function mustBeCompatibleTypes(
+  lhss: SymbolType[],
+  rhss: SymbolType[],
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
   for (let i = 0; i < maxLen; i++) {
-    mustBeCompatibleType(
-      lhss[i],
-      rhss[i],
-      compileErrors,
-      location,
-    );
+    mustBeCompatibleType(lhss[i], rhss[i], compileErrors, location);
   }
   return;
 }
-
 
 export function mustBeCompatibleType(
   lhs: SymbolType,
@@ -558,16 +554,23 @@ export function mustBeCompatibleType(
     (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
     (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
   ) {
-    
-      FailIncompatible(lhs, rhs, compileErrors, location);
-      return;
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
   }
 
-  if (
-    lhs instanceof FunctionType && rhs instanceof FunctionType
-  ) {
-    mustBeCompatibleTypes(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
-    mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
+  if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
+    mustBeCompatibleTypes(
+      lhs.parametersTypes,
+      rhs.parametersTypes,
+      compileErrors,
+      location,
+    );
+    mustBeCompatibleType(
+      lhs.returnType,
+      rhs.returnType,
+      compileErrors,
+      location,
+    );
     return;
   }
 }
@@ -697,7 +700,7 @@ export function mustNotBeReassigned(
   location: string,
 ) {
   if (
-   !(variable instanceof UnknownSymbol) &&
+    !(variable instanceof UnknownSymbol) &&
     variable.symbolScope === SymbolScope.local
   ) {
     compileErrors.push(

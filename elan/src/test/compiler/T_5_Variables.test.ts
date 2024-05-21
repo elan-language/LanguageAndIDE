@@ -578,6 +578,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot compare Unknown and Int",
-      "x is not defined"]);
+      "x is not defined",
+    ]);
   });
 });

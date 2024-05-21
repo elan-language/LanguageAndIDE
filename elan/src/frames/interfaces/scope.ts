@@ -9,5 +9,5 @@ export interface Scope {
     scope: Scope,
   ): ElanSymbol;
 
-  getParent() : Parent;
+  getParent(): Parent;
 }

@@ -138,17 +138,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     ) {
       if (lst instanceof ListType && rst instanceof ListType) {
         mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
-      }
-      else if (lst instanceof ListType) {
+      } else if (lst instanceof ListType) {
         mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
-      }
-      else if (rst instanceof ListType) {
+      } else if (rst instanceof ListType) {
         mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
       }
       return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }
-
-
 
     if (
       this.op === OperationSymbol.Add &&

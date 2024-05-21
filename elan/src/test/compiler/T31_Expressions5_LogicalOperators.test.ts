@@ -224,8 +224,6 @@ main
   var i set to "fred" xor "fred"
 end main`;
 
-   
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -245,6 +243,7 @@ end main`;
       "Cannot logically compare Int and Int",
       "Cannot logically compare Boolean and String",
       "Cannot logically compare String and Boolean",
-      "Cannot logically compare String and String"]);
+      "Cannot logically compare String and String",
+    ]);
   });
 });

@@ -346,7 +346,6 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-
   test("Fail_AddWrongTypes", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -373,8 +372,10 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot compare Int and Boolean",
+    assertDoesNotCompile(fileImpl, [
+      "Cannot compare Int and Boolean",
       "Cannot compare Boolean and Int",
-      "Cannot compare Int and Class Foo"]);
+      "Cannot compare Int and Class Foo",
+    ]);
   });
 });
