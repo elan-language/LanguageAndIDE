@@ -438,7 +438,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotCallMain", async () => {
+  ignore_test("Fail_CannotCallMain", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -460,7 +460,8 @@ end procedure
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["keyword 'main' cannot be used as an identifer"]); //Or some broadly similar message
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {

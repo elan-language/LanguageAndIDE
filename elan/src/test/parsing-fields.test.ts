@@ -54,12 +54,9 @@ suite("Field Parsing Tests", () => {
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
     assert.equal(id.parseErrorMsg, "");
-    id.setFieldToKnownValidText("result");
-    id.parseCurrentText();
-    assert.equal(id.readParseStatus(), ParseStatus.valid); //Because 'result' is no longer a keyword
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
-    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
   });
 
   test("parse VarDefField 2", () => {
@@ -80,12 +77,9 @@ suite("Field Parsing Tests", () => {
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    id.setFieldToKnownValidText("result");
-    id.parseCurrentText();
-    assert.equal(id.readParseStatus(), ParseStatus.valid);
     id.setFieldToKnownValidText("default");
     id.parseCurrentText();
-    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+    assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
   });
   test("parse CaseValueField", () => {
     const main = new MainFrame(
