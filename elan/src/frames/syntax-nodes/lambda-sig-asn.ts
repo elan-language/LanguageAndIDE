@@ -35,6 +35,10 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return UnknownType.Instance;
   }
 
+  parameterTypes() {
+    return this.parameters.map(p => p.symbolType());
+  }
+
   compile(): string {
     this.compileErrors = [];
     return this.parameters.map((p) => p.compile()).join(", ");

@@ -40,6 +40,7 @@ import { LitValueNode } from "../frames/parse-nodes/lit-value";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { DictionaryType } from "../frames/symbols/dictionary-type";
 import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
+import { FunctionType } from "../frames/symbols/function-type";
 
 suite("ASTNodes", () => {
   test("ExprNode", () => {
@@ -396,21 +397,21 @@ suite("ASTNodes", () => {
       stubField,
       `lambda x as Int => x * x`,
       "Lambda (Param x : Type Int) => (Multiply (x) (x))",
-      intType,
+      new FunctionType([intType], intType, false),
     );
     testAST(
       new Lambda(),
       stubField,
       `lambda s as Int, p as List<of Int> => s + p.first()`,
       "Lambda (Param s : Type Int, Param p : Type List<Type Int>) => (Add (s) (Func Call p.first ()))",
-      intType,
+      new FunctionType([intType, new ListType(intType)], intType, false),
     );
     testAST(
       new Lambda(),
       stubField,
       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
       "Lambda (Param bestSoFar : Type String, Param newWord : Type String) => (Func Call betterOf (bestSoFar, newWord, possAnswers))",
-      stringType,
+      new FunctionType([stringType, stringType], stringType, false),
     );
   });
 

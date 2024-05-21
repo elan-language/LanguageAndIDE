@@ -4,6 +4,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ExprAsn } from "./expr-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
+import { FunctionType } from "../symbols/function-type";
 
 export class LambdaAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -28,7 +29,7 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return this.body.symbolType();
+    return new FunctionType(this.signature.parameterTypes(), this.body.symbolType(), false);
   }
 
   toString() {

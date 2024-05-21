@@ -387,6 +387,23 @@ export function mustBeNumberType(
   );
 }
 
+function mustBeCompatibleTypes(lhss: SymbolType[], rhss: SymbolType[], compileErrors: CompileError[], location: string) {
+  const maxLen =
+    lhss.length > rhss.length
+      ? lhss.length
+      : rhss.length;
+  for (let i = 0; i < maxLen; i++) {
+    mustBeCompatibleType(
+      lhss[i],
+      rhss[i],
+      compileErrors,
+      location,
+    );
+  }
+  return;
+}
+
+
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -445,18 +462,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof TupleType && rhs instanceof TupleType) {
-    const maxLen =
-      lhs.ofTypes.length > rhs.ofTypes.length
-        ? lhs.ofTypes.length
-        : rhs.ofTypes.length;
-    for (let i = 0; i < maxLen; i++) {
-      mustBeCompatibleType(
-        lhs.ofTypes[i],
-        rhs.ofTypes[i],
-        compileErrors,
-        location,
-      );
-    }
+    mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
     return;
   }
 
@@ -524,6 +530,23 @@ export function mustBeCompatibleType(
       FailIncompatible(lhs, rhs, compileErrors, location);
       return;
     }
+  }
+
+  if (
+    (lhs instanceof FunctionType && !(rhs instanceof FunctionType)) ||
+    (rhs instanceof FunctionType && !(lhs instanceof FunctionType))
+  ) {
+    
+      FailIncompatible(lhs, rhs, compileErrors, location);
+      return;
+  }
+
+  if (
+    lhs instanceof FunctionType && rhs instanceof FunctionType
+  ) {
+    mustBeCompatibleTypes(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
+    mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
+    return;
   }
 }
 
