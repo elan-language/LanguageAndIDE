@@ -4,6 +4,7 @@ import {
   expandCollapseAll,
   helper_compileMsgAsHtml,
   helper_CompileOrParseAsDisplayStatus,
+  helper_deriveCompileStatusFromErrors,
   isCollapsible,
   isFile,
   isFrame,
@@ -535,8 +536,12 @@ export abstract class AbstractFrame implements Frame {
   }
 
   updateCompileStatus(): void {
+    const own = helper_deriveCompileStatusFromErrors(
+      this.compileErrors,
+    );
     this.getFields().forEach((f) => f.updateCompileStatus());
-    this._compileStatus = this.worstCompileStatusOfFields();
+    const worstField = this.worstCompileStatusOfFields();
+    this._compileStatus = Math.min(own, worstField);
   }
 
   protected setCompileStatus(newStatus: CompileStatus) {
