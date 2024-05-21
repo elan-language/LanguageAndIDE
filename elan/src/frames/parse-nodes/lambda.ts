@@ -13,13 +13,10 @@ export class Lambda extends AbstractSequence {
   params: CSV | undefined;
   expr: ExprNode | undefined;
 
-  constructor() {
-    super();
-  }
-
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(new KeywordNode(lambdaKeyword));
+      this.addElement(new SpaceNode(Space.required));
       this.params = new CSV(() => new ParamDefNode(), 1);
       this.addElement(this.params);
       this.addElement(new SpaceNode(Space.required));
@@ -29,13 +26,5 @@ export class Lambda extends AbstractSequence {
       this.addElement(this.expr);
       super.parseText(text);
     }
-  }
-
-  renderAsHtml(): string {
-    return `<keyword>${lambdaKeyword} </keyword>${this.params!.renderAsHtml()}<keyword> ${ARROW} </keyword>${this.expr!.renderAsHtml()}`;
-  }
-
-  renderAsSource(): string {
-    return `${lambdaKeyword} ${this.params!.renderAsSource()} ${ARROW} ${this.expr!.renderAsSource()}`;
   }
 }
