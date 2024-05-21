@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -208,4 +209,42 @@ return [main, _tests];}`;
   });
 
   // TODO fails
+  test("Fail_TypeCheck", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to false and 1
+  var b set to 1 and true
+  var c set to 1 and 1
+  var d set to true or 0
+  var e set to 0 or true
+  var f set to 0 or 0
+  var g set to true xor "fred"
+  var h set to "fred" xor true
+  var i set to "fred" xor "fred"
+end main`;
+
+   
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot logically compare Boolean and Int",
+      "Cannot logically compare Int and Boolean",
+      "Cannot logically compare Int and Int",
+      "Cannot logically compare Boolean and Int",
+      "Cannot logically compare Int and Boolean",
+      "Cannot logically compare Int and Int",
+      "Cannot logically compare Boolean and String",
+      "Cannot logically compare String and Boolean",
+      "Cannot logically compare String and String"]);
+  });
 });
