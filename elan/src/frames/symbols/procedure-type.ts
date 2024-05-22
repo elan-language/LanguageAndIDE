@@ -6,4 +6,8 @@ export class ProcedureType implements SymbolType {
   get name() {
     return `Procedure (${this.parametersTypes.map((p) => p.name).join(", ")})`;
   }
+
+  toString(): string {
+    return `Procedure`;
+  }
 }

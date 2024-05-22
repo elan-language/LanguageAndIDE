@@ -10,4 +10,8 @@ export class ArrayType implements GenericSymbolType {
   get name() {
     return `Array <${this.ofType.name}>`;
   }
+
+  toString(): string {
+    return `Array<of ${this.ofType.name}>`;
+  }
 }

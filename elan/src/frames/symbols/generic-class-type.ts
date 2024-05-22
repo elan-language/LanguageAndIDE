@@ -10,4 +10,8 @@ export class GenericClassType implements GenericSymbolType {
   get name() {
     return `Class ${this.className}<${this.ofType.name}>`;
   }
+
+  toString(): string {
+    return `${this.className}<of ${this.ofType.name}>`;
+  }
 }

@@ -9,4 +9,8 @@ export class DictionaryType implements SymbolType {
   get name() {
     return `Dictionary <${this.keyType.name},${this.valueType.name}>`;
   }
+
+  toString(): string {
+    return `Dictionary`;
+  }
 }

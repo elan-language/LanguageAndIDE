@@ -6,4 +6,8 @@ export class IntType implements SymbolType {
   static Instance: SymbolType = new IntType();
 
   name = "Int";
+
+  toString(): string {
+    return "Int";
+  }
 }

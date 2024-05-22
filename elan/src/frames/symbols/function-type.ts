@@ -11,4 +11,8 @@ export class FunctionType implements SymbolType {
   get name() {
     return `Function (${this.parametersTypes.map((p) => p.name).join(", ")}) : ${this.returnType.name}`;
   }
+
+  toString(): string {
+    return "Function";
+  }
 }

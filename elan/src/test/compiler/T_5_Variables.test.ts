@@ -528,7 +528,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Float to Boolean",
       "Incompatible types Boolean to Int",
-      "Incompatible types List <Float> to String",
+      "Incompatible types List<of Float> to String",
       "Incompatible types Float to Int",
     ]);
   });
@@ -555,9 +555,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types List <Float> to Array <String>",
-      "Incompatible types Array <String> to List <Float>",
-      "Incompatible types List <Float> to Dictionary <String,Float>",
+      "Incompatible types List<of Float> to Array<of String>",
+      "Incompatible types Array<of String> to List<of Float>",
+      "Incompatible types List<of Float> to Dictionary",
     ]);
   });
 

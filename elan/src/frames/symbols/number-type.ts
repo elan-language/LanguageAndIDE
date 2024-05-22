@@ -5,4 +5,8 @@ export class FloatType implements SymbolType {
 
   static Instance: SymbolType = new FloatType();
   name = "Float";
+
+  toString(): string {
+    return `Float`;
+  }
 }

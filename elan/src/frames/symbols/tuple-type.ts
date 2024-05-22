@@ -6,4 +6,8 @@ export class TupleType implements SymbolType {
   get name() {
     return `Tuple <${this.ofTypes.map((t) => t.name).join(", ")}>`;
   }
+
+  toString(): string {
+    return `(${this.ofTypes.map((t) => t.name).join(", ")})`;
+  }
 }
