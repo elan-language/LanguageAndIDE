@@ -1,7 +1,7 @@
 export enum Priority {
-  illegal, 
+  illegal,
   unknown,
-  type
+  type,
 }
 
 export abstract class CompileError {
@@ -44,13 +44,23 @@ export class TypesCompileError extends CompileError {
     location: string,
     unknown: boolean,
   ) {
-    super(Priority.type, `Incompatible types ${type1} to ${type2}`, location, unknown);
+    super(
+      Priority.type,
+      `Incompatible types ${type1} to ${type2}`,
+      location,
+      unknown,
+    );
   }
 }
 
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegal, `Array requires 1 or 2 parameters`, location, false);
+    super(
+      Priority.illegal,
+      `Array requires 1 or 2 parameters`,
+      location,
+      false,
+    );
   }
 }
 
@@ -87,13 +97,23 @@ export class NotIterableCompileError extends CompileError {
 
 export class MustBeAbstractCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(Priority.illegal, `Superclass ${type} must be abstract`, location, false);
+    super(
+      Priority.illegal,
+      `Superclass ${type} must be abstract`,
+      location,
+      false,
+    );
   }
 }
 
 export class PrivatePropertyCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(Priority.illegal, `Cannot reference private property ${id}`, location, false);
+    super(
+      Priority.illegal,
+      `Cannot reference private property ${id}`,
+      location,
+      false,
+    );
   }
 }
 
@@ -121,7 +141,12 @@ export class MustBeConcreteCompileError extends CompileError {
 
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegal, `Cannot call extension method directly`, location, false);
+    super(
+      Priority.illegal,
+      `Cannot call extension method directly`,
+      location,
+      false,
+    );
   }
 }
 
@@ -156,6 +181,11 @@ export class DuplicateKeyCompileError extends CompileError {
 
 export class ArrayCompileError extends CompileError {
   constructor(location: string) {
-    super(Priority.illegal, `May not pass Array into function`, location, false);
+    super(
+      Priority.illegal,
+      `May not pass Array into function`,
+      location,
+      false,
+    );
   }
 }
