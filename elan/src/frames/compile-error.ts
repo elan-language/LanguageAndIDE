@@ -16,10 +16,10 @@ export abstract class CompileError {
 
   public get priority() {
     return this.basePriority === Priority.illegal
-      ? this.basePriority
-      : this.unknownType
-        ? Priority.unknown
-        : Priority.type;
+      ? this.unknownType
+        ? Priority.type
+        : Priority.illegal
+      : this.basePriority;
   }
 
   public toString() {
@@ -72,7 +72,7 @@ export class SyntaxCompileError extends CompileError {
 
 export class UndefinedSymbolCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(Priority.type, `${id} is not defined`, location, true);
+    super(Priority.unknown, `${id} is not defined`, location, true);
   }
 }
 
