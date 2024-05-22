@@ -345,7 +345,7 @@ suite("Parsing Nodes", () => {
       "this",
       "",
       "this",
-      "this",  // Not now detected or rejected as a keyword by the parse node - that is down to compilation
+      "this", // Not now detected or rejected as a keyword by the parse node - that is down to compilation
     );
     testNodeParse(
       new ExprNode(),

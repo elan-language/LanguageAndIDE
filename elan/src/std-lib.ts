@@ -189,11 +189,11 @@ export class StdLib {
     return 0;
   }
 
-  filter<T>(source : T[], predicate: (value : T) => boolean ){
+  filter<T>(source: T[], predicate: (value: T) => boolean) {
     return this.asIter(source.filter(predicate));
   }
 
-  map<T, U>(source : T[], predicate: (value : T) => U ){
+  map<T, U>(source: T[], predicate: (value: T) => U) {
     return this.asIter(source.map(predicate));
   }
 
@@ -205,10 +205,10 @@ export class StdLib {
     return Math.max(...source);
   }
 
-  maxBy<T>(source: T[], predicate: (value : T) => number): T {
+  maxBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
     const max = Math.max(...mm);
-    const i = mm.indexOf(max); 
+    const i = mm.indexOf(max);
     return source[i];
   }
 
@@ -216,10 +216,10 @@ export class StdLib {
     return Math.min(...source);
   }
 
-  minBy<T>(source: T[], predicate: (value : T) => number): T {
+  minBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
     const max = Math.min(...mm);
-    const i = mm.indexOf(max); 
+    const i = mm.indexOf(max);
     return source[i];
   }
 
@@ -233,7 +233,7 @@ export class StdLib {
     return this.keys(coll).length;
   }
 
-  any<T>(source : T[], predicate: (value : T) => boolean ){
+  any<T>(source: T[], predicate: (value: T) => boolean) {
     return source.some(predicate);
   }
 
@@ -244,8 +244,7 @@ export class StdLib {
     for (const i of source) {
       if (result[i]) {
         result[i].push(i);
-      }
-      else {
+      } else {
         result[i] = this.asList([i]);
       }
     }

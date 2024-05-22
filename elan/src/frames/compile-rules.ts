@@ -16,7 +16,28 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { ArrayCompileError, ArraySizeCompileError, CompileError, DuplicateKeyCompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, MutateCompileError, NotCallableCompileError, NotIndexableCompileError, NotIterableCompileError, ParametersCompileError, PrivatePropertyCompileError, ReassignCompileError, TypeCompileError, TypesCompileError, UndefinedSymbolCompileError } from "./compile-error";
+import {
+  ArrayCompileError,
+  ArraySizeCompileError,
+  CompileError,
+  DuplicateKeyCompileError,
+  ExtensionCompileError,
+  MissingElseCompileError,
+  MultipleElseCompileError,
+  MustBeAbstractCompileError,
+  MustBeConcreteCompileError,
+  MustImplementCompileError,
+  MutateCompileError,
+  NotCallableCompileError,
+  NotIndexableCompileError,
+  NotIterableCompileError,
+  ParametersCompileError,
+  PrivatePropertyCompileError,
+  ReassignCompileError,
+  TypeCompileError,
+  TypesCompileError,
+  UndefinedSymbolCompileError,
+} from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -58,9 +79,7 @@ export function mustBeOneOrTwoOfTypeInt(
   location: string,
 ) {
   if (params.length === 0 || params.length > 2) {
-    compileErrors.push(
-      new ArraySizeCompileError(location),
-    );
+    compileErrors.push(new ArraySizeCompileError(location));
   }
   if (params.length > 0) {
     mustBeOfSymbolType(
@@ -86,15 +105,11 @@ export function mustHaveLastSingleElse(
   location: string,
 ) {
   if (elses.filter((s) => !s.hasIf).length > 1) {
-    compileErrors.push(
-      new MultipleElseCompileError(location),
-    );
+    compileErrors.push(new MultipleElseCompileError(location));
   }
 
   if (elses[elses.length - 1].hasIf) {
-    compileErrors.push(
-      new MissingElseCompileError(location),
-    );
+    compileErrors.push(new MissingElseCompileError(location));
   }
 }
 
@@ -117,7 +132,12 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new NotCallableCompileError(symbolType.toString(), location, false, symbolType instanceof UnknownType),
+      new NotCallableCompileError(
+        symbolType.toString(),
+        location,
+        false,
+        symbolType instanceof UnknownType,
+      ),
     );
   }
 }
@@ -132,13 +152,23 @@ export function mustBePureFunctionSymbol(
     if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
       const imPure = symbolType instanceof FunctionType && !symbolType.isPure;
       compileErrors.push(
-        new NotCallableCompileError(symbolType.toString(), location, imPure, symbolType instanceof UnknownType),
+        new NotCallableCompileError(
+          symbolType.toString(),
+          location,
+          imPure,
+          symbolType instanceof UnknownType,
+        ),
       );
     }
   } else {
     if (!(symbolType instanceof FunctionType)) {
       compileErrors.push(
-        new NotCallableCompileError(symbolType.toString(), location, false, symbolType instanceof UnknownType),
+        new NotCallableCompileError(
+          symbolType.toString(),
+          location,
+          false,
+          symbolType instanceof UnknownType,
+        ),
       );
     }
   }
@@ -159,7 +189,11 @@ export function mustBeIndexableSymbol(
     )
   ) {
     compileErrors.push(
-      new NotIndexableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
+      new NotIndexableCompileError(
+        symbolType.toString(),
+        location,
+        symbolType instanceof UnknownType,
+      ),
     );
   }
   if (
@@ -224,8 +258,10 @@ export function mustImplementSuperClasses(
       if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
           new MustImplementCompileError(
-            classType.toString(), superClassType.toString(), superSymbol.symbolId,
-            location
+            classType.toString(),
+            superClassType.toString(),
+            superSymbol.symbolId,
+            location,
           ),
         );
       } else {
@@ -247,10 +283,7 @@ export function mustBeConcreteClass(
 ) {
   if (classType.isAbstract) {
     compileErrors.push(
-      new MustBeConcreteCompileError(
-        classType.toString(),
-        location
-      ),
+      new MustBeConcreteCompileError(classType.toString(), location),
     );
   }
 }
@@ -262,9 +295,7 @@ export function mustCallExtensionViaQualifier(
   location: string,
 ) {
   if (ft.isExtension && qualifier === undefined) {
-    compileErrors.push(
-      new ExtensionCompileError(location),
-    );
+    compileErrors.push(new ExtensionCompileError(location));
   }
 }
 
@@ -298,10 +329,7 @@ function FailIncompatible(
 ) {
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
   compileErrors.push(
-    new TypesCompileError(rhs.toString(), lhs.toString(),
-      location,
-      unknown,
-    ),
+    new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown),
   );
 }
 
@@ -509,7 +537,12 @@ export function mustBeCompatibleNode(
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof UnknownType || lst === undefined || rst instanceof UnknownType || rst === undefined) {
+  if (
+    lst instanceof UnknownType ||
+    lst === undefined ||
+    rst instanceof UnknownType ||
+    rst === undefined
+  ) {
     return; //Because there will be a higher priority compile error
   }
 
@@ -527,10 +560,7 @@ export function mustNotBePropertyOnFunctionMethod(
 
     if (s !== SymbolScope.local) {
       compileErrors.push(
-        new MutateCompileError(
-          `non local data in function`,
-          location
-        ),
+        new MutateCompileError(`non local data in function`, location),
       );
     }
   }
@@ -549,15 +579,11 @@ export function mustNotBeParameter(
       s === SymbolScope.parameter &&
       !(assignable.rootSymbolType() instanceof ArrayType)
     ) {
-      compileErrors.push(
-        new MutateCompileError(`parameter`, location),
-      );
+      compileErrors.push(new MutateCompileError(`parameter`, location));
     }
   } else {
     if (s === SymbolScope.parameter) {
-      compileErrors.push(
-        new MutateCompileError(`parameter`, location),
-      );
+      compileErrors.push(new MutateCompileError(`parameter`, location));
     }
   }
 }
@@ -570,9 +596,7 @@ export function mustNotBeCounter(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.counter) {
-    compileErrors.push(
-      new MutateCompileError(`counter`, location),
-    );
+    compileErrors.push(new MutateCompileError(`counter`, location));
   }
 }
 
@@ -584,9 +608,7 @@ export function mustNotBeConstant(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.program) {
-    compileErrors.push(
-      new MutateCompileError(`constant`, location),
-    );
+    compileErrors.push(new MutateCompileError(`constant`, location));
   }
 }
 
@@ -606,9 +628,7 @@ export function mustNotBeArray(
   location: string,
 ) {
   if (parameterType instanceof ArrayType) {
-    compileErrors.push(
-      new ArrayCompileError(location),
-    );
+    compileErrors.push(new ArrayCompileError(location));
   }
 }
 
@@ -621,9 +641,7 @@ export function mustNotBeReassigned(
     !(variable instanceof UnknownSymbol) &&
     variable.symbolScope === SymbolScope.local
   ) {
-    compileErrors.push(
-      new ReassignCompileError(variable.symbolId, location),
-    );
+    compileErrors.push(new ReassignCompileError(variable.symbolId, location));
   }
 }
 
@@ -641,7 +659,11 @@ export function mustBeIterable(
     )
   ) {
     compileErrors.push(
-      new NotIterableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
+      new NotIterableCompileError(
+        symbolType.toString(),
+        location,
+        symbolType instanceof UnknownType,
+      ),
     );
   }
 }
@@ -653,8 +675,6 @@ export function mustHaveUniqueKeys(
 ) {
   const set = new Set(keys);
   if (set.size !== keys.length) {
-    compileErrors.push(
-      new DuplicateKeyCompileError(location),
-    );
+    compileErrors.push(new DuplicateKeyCompileError(location));
   }
 }

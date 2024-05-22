@@ -12,7 +12,7 @@ export abstract class CompileError {
     return `Compile Error: ${this.constructor.name} ${this.message} Priority: ${this.priority}/${this.unknownType ? "un" : ""}known  at: ${this.locationId}`;
   }
 
-  public sameError(other : CompileError){
+  public sameError(other: CompileError) {
     return this.toString() === other.toString();
   }
 }
@@ -24,7 +24,12 @@ export class TypeCompileError extends CompileError {
 }
 
 export class TypesCompileError extends CompileError {
-  constructor(type1: string, type2: string, location: string, unknown: boolean) {
+  constructor(
+    type1: string,
+    type2: string,
+    location: string,
+    unknown: boolean,
+  ) {
     super(1, `Incompatible types ${type1} to ${type2}`, location, unknown);
   }
 }
@@ -48,50 +53,60 @@ export class MissingElseCompileError extends CompileError {
 }
 
 export class UndefinedSymbolCompileError extends CompileError {
-  constructor(id : string, location: string) {
+  constructor(id: string, location: string) {
     super(5, `${id} is not defined`, location, true);
   }
 }
 
 export class NotCallableCompileError extends CompileError {
-  constructor(id : string, location: string, imPure : boolean, unknown : boolean) {
+  constructor(id: string, location: string, imPure: boolean, unknown: boolean) {
     const impStr = imPure ? " impure" : "";
     super(6, `Cannot call${impStr} ${id}`, location, unknown);
   }
 }
 
 export class NotIndexableCompileError extends CompileError {
-  constructor(type : string, location : string, unknown : boolean) {
+  constructor(type: string, location: string, unknown: boolean) {
     super(7, `Cannot index ${type}`, location, unknown);
   }
 }
 
 export class NotIterableCompileError extends CompileError {
-  constructor(type : string, location : string, unknown : boolean) {
+  constructor(type: string, location: string, unknown: boolean) {
     super(8, `Cannot iterate ${type}`, location, unknown);
   }
 }
 
 export class MustBeAbstractCompileError extends CompileError {
-  constructor(type : string, location : string) {
+  constructor(type: string, location: string) {
     super(9, `Superclass ${type} must be abstract`, location, false);
   }
 }
 
 export class PrivatePropertyCompileError extends CompileError {
-  constructor(id : string, location : string) {
+  constructor(id: string, location: string) {
     super(10, `Cannot reference private property ${id}`, location, false);
   }
 }
 
 export class MustImplementCompileError extends CompileError {
-  constructor(classType: string, superClassType: string, id: string, location: string) {
-    super(11, `${classType} must implement ${superClassType}.${id}`, location, false);
+  constructor(
+    classType: string,
+    superClassType: string,
+    id: string,
+    location: string,
+  ) {
+    super(
+      11,
+      `${classType} must implement ${superClassType}.${id}`,
+      location,
+      false,
+    );
   }
 }
 
 export class MustBeConcreteCompileError extends CompileError {
-  constructor(type : string, location: string) {
+  constructor(type: string, location: string) {
     super(12, `${type} must be concrete to new`, location, false);
   }
 }
@@ -103,8 +118,13 @@ export class ExtensionCompileError extends CompileError {
 }
 
 export class ParametersCompileError extends CompileError {
-  constructor(expected: number, actual : number, location: string) {
-    super(14, `Parameters expected: ${expected} got: ${actual}`, location, false);
+  constructor(expected: number, actual: number, location: string) {
+    super(
+      14,
+      `Parameters expected: ${expected} got: ${actual}`,
+      location,
+      false,
+    );
   }
 }
 
@@ -131,4 +151,3 @@ export class ArrayCompileError extends CompileError {
     super(18, `May not pass Array into function`, location, false);
   }
 }
-

@@ -68,7 +68,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [List [4, 5], List [6, 7, 8]]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "List [List [4, 5], List [6, 7, 8]]",
+    );
   });
 
   test("Pass_literalListOfClass", async () => {

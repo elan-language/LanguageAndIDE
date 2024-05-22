@@ -461,7 +461,9 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["keyword 'main' cannot be used as an identifer"]); //Or some broadly similar message
+    assertDoesNotCompile(fileImpl, [
+      "keyword 'main' cannot be used as an identifer",
+    ]); //Or some broadly similar message
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {

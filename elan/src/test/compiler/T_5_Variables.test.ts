@@ -496,7 +496,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl,[""] );
+    assertDoesNotCompile(fileImpl, [""]);
   });
 
   test("Fail_TypeCheck1", async () => {
