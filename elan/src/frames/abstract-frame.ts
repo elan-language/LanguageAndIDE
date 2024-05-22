@@ -536,9 +536,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   updateCompileStatus(): void {
-    const own = helper_deriveCompileStatusFromErrors(
-      this.compileErrors,
-    );
+    const own = helper_deriveCompileStatusFromErrors(this.compileErrors);
     this.getFields().forEach((f) => f.updateCompileStatus());
     const worstField = this.worstCompileStatusOfFields();
     this._compileStatus = Math.min(own, worstField);
