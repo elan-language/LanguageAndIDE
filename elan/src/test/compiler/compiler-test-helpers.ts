@@ -81,7 +81,7 @@ function executeCode(file: FileImpl, input?: string) {
   });
 }
 
-function executeTestCode(file: FileImpl, input?: string) {
+export function executeTestCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
   const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));

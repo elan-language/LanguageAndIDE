@@ -28,6 +28,9 @@ import { GenericParameterType } from "../frames/symbols/generic-parameter-type";
 import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
+import { StdLib } from "../std-lib";
+import { getTestSystem } from "./compiler/test-system";
+import { getTestRunner } from "../runner";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -567,3 +570,11 @@ export function testAST(
     assert.strictEqual(ast.symbolType()?.name, st.name, text);
   }
 }
+
+export function createTestRunner() {
+  const system = getTestSystem();
+  const stdlib = new StdLib();
+  return getTestRunner(system, stdlib);
+}
+
+
