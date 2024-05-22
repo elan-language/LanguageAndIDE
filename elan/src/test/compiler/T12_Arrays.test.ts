@@ -255,7 +255,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot double index Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index Array<of String>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -276,7 +276,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot single index 2D Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index 2D Array<of String>"]);
   });
 
   ignore_test("Fail_OutOfRange", async () => {

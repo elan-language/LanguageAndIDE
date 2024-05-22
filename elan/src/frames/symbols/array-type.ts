@@ -12,6 +12,7 @@ export class ArrayType implements GenericSymbolType {
   }
 
   toString(): string {
-    return `Array<of ${this.ofType.name}>`;
+    const twod = this.is2d ? "2D " : "";
+    return `${twod}Array<of ${this.ofType.name}>`;
   }
 }

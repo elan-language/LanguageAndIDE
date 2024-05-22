@@ -16,7 +16,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { ArraySizeCompileError, CompileError, MissingElseCompileError, MultipleElseCompileError, NotCallableCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
+import { ArraySizeCompileError, CompileError, MissingElseCompileError, MultipleElseCompileError, NotCallableCompileError, NotIndexableCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -166,7 +166,7 @@ export function mustBeIndexableSymbol(
     )
   ) {
     compileErrors.push(
-      new CompileError(`Cannot index ${symbolType}`, location, true),
+      new NotIndexableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
     );
   }
   if (
@@ -177,20 +177,12 @@ export function mustBeIndexableSymbol(
       symbolType instanceof DictionaryType)
   ) {
     compileErrors.push(
-      new CompileError(
-        `Cannot double index ${symbolType}`,
-        location,
-        true,
-      ),
+      new NotIndexableCompileError(symbolType.toString(), location, false),
     );
   }
   if (!isDouble && symbolType instanceof ArrayType && symbolType.is2d) {
     compileErrors.push(
-      new CompileError(
-        `Cannot single index 2D ${symbolType}`,
-        location,
-        true,
-      ),
+      new NotIndexableCompileError(symbolType.toString(), location, false),
     );
   }
 }
