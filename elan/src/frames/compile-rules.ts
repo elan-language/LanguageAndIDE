@@ -543,14 +543,8 @@ export function mustBeCompatibleNode(
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof UnknownType || rst === undefined) {
-    FailUnknown(lhs, compileErrors, location);
-    return;
-  }
-
-  if (rst instanceof UnknownType || rst === undefined) {
-    FailUnknown(rhs, compileErrors, location);
-    return;
+  if (lst instanceof UnknownType || lst === undefined || rst instanceof UnknownType || rst === undefined) {
+    return; //Because there will be a higher priority compile error
   }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);

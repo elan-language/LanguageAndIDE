@@ -1,4 +1,4 @@
-# 87674e593e61fc1a9556a6fea7d43080ff8a017d769e3c48ce11e2c4fa20ee85 Elan v0.1 valid
+# fda15d540467471a9aa356f4a813eddd8b4aeaa88c77a106c8c4594a88f7ec42 Elan v0.1 valid
 
 main
   var li set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
@@ -6,7 +6,7 @@ main
 end main
 
 function mergeSort(list as List<of String>) return List<of String>
-  var result set to new List<of String>()
+  var result set to list
   if list.length() > 1
     var mid set to list.length() div 2
     set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
@@ -37,7 +37,7 @@ test mergeSort
   var expected3 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
   assert mergeSort(li3) is expected3
   var li4 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  var expected4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+  var expected4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
   assert mergeSort(li4) is expected4
   var li5 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
   assert mergeSort(li5) is li5

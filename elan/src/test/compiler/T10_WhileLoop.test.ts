@@ -136,7 +136,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared variable x"]);
+    assertDoesNotCompile(fileImpl, ["Unknown and Int must both be numeric types"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {
