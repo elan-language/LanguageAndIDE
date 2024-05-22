@@ -1,26 +1,41 @@
 import assert from "assert";
 import * as vscode from "vscode";
 import { DefaultProfile } from "../frames/default-profile";
-import { FileImpl } from "../frames/file-impl";
+import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { hash } from "../util";
 import { key } from "./testHelpers";
 import { Constant } from "../frames/globals/constant";
 import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
 import { GlobalFunction } from "../frames/globals/global-function";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { testHash, transforms } from "./compiler/compiler-test-helpers";
 
 suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
 
-  test("Simple entry & editing of text in a name", () => {
-    const con = new Constant(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
+  test("Simple entry & editing of text in a name", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+    constant a set to 3
+    main
+      print a
+    end main
+    `;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
     );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const con = fileImpl.getFirstChild() as Constant;
+
     const name = con.name;
-    assert.equal(name.text, "");
+    assert.equal(name.text, "a");
     assert.equal(name.cursorPos, 0);
-    name.processKey(key("a"));
+    name.processKey(key("ArrowRight"));
     assert.equal(name.text, "a");
     assert.equal(name.cursorPos, 1);
     name.processKey(key("b"));
