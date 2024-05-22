@@ -54,5 +54,13 @@ export class NotCallableCompileError extends CompileError {
     super(`Cannot call${impStr} ${id}`, location, unknown);
   }
 
-  priority = 4;
+  priority = 5;
+}
+
+export class NotIndexableCompileError extends CompileError {
+  constructor(type : string, location : string, unknown : boolean) {
+    super(`Cannot index ${type}`, location, unknown);
+  }
+
+  priority = 6;
 }
