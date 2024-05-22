@@ -315,12 +315,7 @@ export class FileImpl implements File, Scope {
   async refreshAllStatuses(
     testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
   ) {
-    this.updateAllParseStatus();
-    this.resetAllCompileStatusAndErrors();
-
-    if (this._parseStatus === ParseStatus.valid) {
-      const code = this.compile();
-      this.updateAllCompileStatus();
+      const code = this.refreshParseAndCompileStatus();
 
       if (this._compileStatus === CompileStatus.ok) {
         const outcomes = await testRunner(code);
@@ -333,7 +328,18 @@ export class FileImpl implements File, Scope {
       } else {
         this.resetAllTestStatus();
       }
+  }
+
+  refreshParseAndCompileStatus(): string {
+    let code = "";
+    this.updateAllParseStatus();
+    this.resetAllCompileStatusAndErrors();
+
+   if (this._parseStatus === ParseStatus.valid) {
+     code = this.compile();
+     this.updateAllCompileStatus();
     }
+    return code;
   }
 
   //Compile status
@@ -356,6 +362,7 @@ export class FileImpl implements File, Scope {
   }
   resetAllCompileStatusAndErrors(): void {
     this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
+    this._compileStatus = CompileStatus.default;
   }
 
   readTestStatus(): TestStatus {
