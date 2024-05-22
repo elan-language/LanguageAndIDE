@@ -430,7 +430,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
+    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
@@ -466,7 +466,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Superclass Class Foo must be abstract"]);
+    assertDoesNotCompile(fileImpl, ["Superclass Foo must be abstract"]);
   });
 
   test("Fail_MustImplementAllInheritedMethods", async () => {
@@ -507,9 +507,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class Bar must implement Class Foo.p2",
-      "Class Bar must implement Class Foo.setP1",
-      "Class Bar must implement Class Foo.product",
+      "Bar must implement Foo.p2",
+      "Bar must implement Foo.setP1",
+      "Bar must implement Foo.product",
     ]);
   });
 
@@ -560,8 +560,8 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Expression must be Int",
-      "Expression must be Procedure (Int)",
-      "Expression must be Function () : Int",
+      "Expression must be Procedure",
+      "Expression must be Function",
     ]);
   });
 
@@ -611,7 +611,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Function () : Int"]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Function"]);
   });
 
   test("Fail_AbstractClassDefinesMethodBody", async () => {
@@ -730,6 +730,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Class Bar must be concrete to new"]);
+    assertDoesNotCompile(fileImpl, ["Bar must be concrete to new"]);
   });
 });

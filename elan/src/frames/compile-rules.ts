@@ -38,7 +38,7 @@ export function mustBeOfSymbolType(
   const unknown = exprType?.name === undefined || ofType.name === undefined;
   if (exprType?.name !== ofType.name) {
     compileErrors.push(
-      new CompileError(`Expression must be ${ofType.name}`, location, unknown),
+      new CompileError(`Expression must be ${ofType}`, location, unknown),
     );
   }
 }
@@ -121,7 +121,7 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new CompileError(`Cannot call ${symbolType.name}`, location, true),
+      new CompileError(`Cannot call ${symbolType}`, location, true),
     );
   }
 }
@@ -140,7 +140,7 @@ export function mustBePureFunctionSymbol(
           : " ";
       compileErrors.push(
         new CompileError(
-          `Cannot call${imPure}${symbolType.name}`,
+          `Cannot call${imPure}${symbolType}`,
           location,
           true,
         ),
@@ -149,7 +149,7 @@ export function mustBePureFunctionSymbol(
   } else {
     if (!(symbolType instanceof FunctionType)) {
       compileErrors.push(
-        new CompileError(`Cannot call ${symbolType.name}`, location, true),
+        new CompileError(`Cannot call ${symbolType}`, location, true),
       );
     }
   }
@@ -170,7 +170,7 @@ export function mustBeIndexableSymbol(
     )
   ) {
     compileErrors.push(
-      new CompileError(`Cannot index ${symbolType.name}`, location, true),
+      new CompileError(`Cannot index ${symbolType}`, location, true),
     );
   }
   if (
@@ -182,7 +182,7 @@ export function mustBeIndexableSymbol(
   ) {
     compileErrors.push(
       new CompileError(
-        `Cannot double index ${symbolType.name}`,
+        `Cannot double index ${symbolType}`,
         location,
         true,
       ),
@@ -191,7 +191,7 @@ export function mustBeIndexableSymbol(
   if (!isDouble && symbolType instanceof ArrayType && symbolType.is2d) {
     compileErrors.push(
       new CompileError(
-        `Cannot single index 2D ${symbolType.name}`,
+        `Cannot single index 2D ${symbolType}`,
         location,
         true,
       ),
@@ -207,7 +207,7 @@ export function mustBeAbstractClass(
   if (!classType.isAbstract) {
     compileErrors.push(
       new CompileError(
-        `Superclass ${classType.name} must be abstract`,
+        `Superclass ${classType} must be abstract`,
         location,
         false,
       ),
@@ -247,7 +247,7 @@ export function mustImplementSuperClasses(
       if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
           new CompileError(
-            `${classType.name} must implement ${superClassType.name}.${superSymbol.symbolId}`,
+            `${classType} must implement ${superClassType}.${superSymbol.symbolId}`,
             location,
             false,
           ),
@@ -272,7 +272,7 @@ export function mustBeConcreteClass(
   if (classType.isAbstract) {
     compileErrors.push(
       new CompileError(
-        `${classType.name} must be concrete to new`,
+        `${classType} must be concrete to new`,
         location,
         false,
       ),
@@ -332,7 +332,7 @@ function FailIncompatible(
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
   compileErrors.push(
     new CompileError(
-      `Incompatible types ${rhs.name} to ${lhs.name}`,
+      `Incompatible types ${rhs} to ${lhs}`,
       location,
       unknown,
     ),
@@ -382,7 +382,7 @@ export function mustBeNumberType(
 
   compileErrors.push(
     new CompileError(
-      `${lhs.name} and ${rhs.name} must both be numeric types`,
+      `${lhs} and ${rhs} must both be numeric types`,
       location,
       true,
     ),
@@ -402,7 +402,7 @@ export function mustBeBooleanType(
 
   compileErrors.push(
     new CompileError(
-      `Cannot logically compare ${lhs.name} and ${rhs.name}`,
+      `Cannot logically compare ${lhs} and ${rhs}`,
       location,
       true,
     ),
@@ -715,7 +715,7 @@ export function mustBeIterable(
     )
   ) {
     compileErrors.push(
-      new CompileError(`Cannot iterate ${symbolType.name}`, location, true),
+      new CompileError(`Cannot iterate ${symbolType}`, location, true),
     );
   }
 }

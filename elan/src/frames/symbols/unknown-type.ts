@@ -6,4 +6,8 @@ export class UnknownType implements SymbolType {
   static Instance: SymbolType = new UnknownType();
 
   name = "Unknown";
+
+  toString(): string {
+    return `Unknown`;
+  }
 }

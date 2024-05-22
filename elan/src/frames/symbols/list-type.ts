@@ -7,4 +7,7 @@ export class ListType implements GenericSymbolType {
   get name() {
     return `List <${this.ofType.name}>`;
   }
+  toString(): string {
+    return `List<of ${this.ofType.name}>`;
+  }
 }

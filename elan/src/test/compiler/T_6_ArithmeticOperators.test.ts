@@ -375,7 +375,7 @@ end class
     assertDoesNotCompile(fileImpl, [
       "Int and Boolean must both be numeric types",
       "Boolean and Int must both be numeric types",
-      "Int and Class Foo must both be numeric types",
+      "Int and Foo must both be numeric types",
     ]);
   });
 });

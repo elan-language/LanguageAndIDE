@@ -6,4 +6,8 @@ export class StringType implements SymbolType {
   static Instance: SymbolType = new StringType();
 
   name = "String";
+
+  toString(): string {
+    return `String`;
+  }
 }

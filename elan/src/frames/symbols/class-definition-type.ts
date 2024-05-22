@@ -37,4 +37,8 @@ export class ClassDefinitionType implements SymbolType, Scope {
   get name() {
     return `Class ${this.className.trim()}`;
   }
+
+  toString(): string {
+    return `${this.className.trim()}`;
+  }
 }

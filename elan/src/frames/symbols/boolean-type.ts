@@ -6,4 +6,8 @@ export class BooleanType implements SymbolType {
   static Instance: SymbolType = new BooleanType();
 
   name = "Boolean";
+
+  toString(): string {
+    return "Boolean";
+  }
 }

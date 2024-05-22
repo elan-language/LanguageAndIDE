@@ -7,4 +7,8 @@ export class IterType implements GenericSymbolType {
   get name() {
     return `Iter <${this.ofType.name}>`;
   }
+
+  toString(): string {
+    return `Iter<of ${this.ofType.name}>`;
+  }
 }

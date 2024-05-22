@@ -86,7 +86,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Procedure ()"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Procedure"]);
   });
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {
@@ -110,7 +110,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Function (Int) : Int"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call Function"]);
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
@@ -162,7 +162,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call impure Function (Int, Int) : Int",
+      "Cannot call impure Function",
     ]);
   });
 });
