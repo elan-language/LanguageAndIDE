@@ -1,4 +1,4 @@
-# 7c8171cb1b3b77fbc3d50ec32eee4ea7ac0e0e5fcb4ca4854b3860b9b376d177 Elan v0.1 valid
+# 87674e593e61fc1a9556a6fea7d43080ff8a017d769e3c48ce11e2c4fa20ee85 Elan v0.1 valid
 
 main
   var li set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
@@ -16,9 +16,9 @@ end function
 
 function merge(a as List<of String>, b as List<of String>) return List<of String>
   var result set to new List<of String>()
-  if a.length is 0
+  if a.length() is 0
     set result to b
-    else if b.length is 0
+    else if b.length() is 0
       set result to a
     else if isBefore(a[0], b[0])
       set result to [a[0]] + merge(a[1..], b)
