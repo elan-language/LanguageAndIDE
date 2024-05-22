@@ -50,7 +50,7 @@ export class UndefinedSymbolCompileError extends CompileError {
 
 export class NotCallableCompileError extends CompileError {
   constructor(id : string, location: string, imPure : boolean, unknown : boolean) {
-    const impStr = imPure ? " imPure" : "";
+    const impStr = imPure ? " impure" : "";
     super(`Cannot call${impStr} ${id}`, location, unknown);
   }
 
@@ -63,4 +63,52 @@ export class NotIndexableCompileError extends CompileError {
   }
 
   priority = 6;
+}
+
+export class MustBeAbstractCompileError extends CompileError {
+  constructor(type : string, location : string) {
+    super(`Superclass ${type} must be abstract`, location, false);
+  }
+
+  priority = 6;
+}
+
+export class PrivatePropertyCompileError extends CompileError {
+  constructor(id : string, location : string) {
+    super(`Cannot reference private property ${id}`, location, false);
+  }
+
+  priority = 7;
+}
+
+export class MustImplementCompileError extends CompileError {
+  constructor(classType: string, superClassType: string, id: string, location: string) {
+    super(`${classType} must implement ${superClassType}.${id}`, location, false);
+  }
+
+  priority = 8;
+}
+
+export class MustBeConcreteCompileError extends CompileError {
+  constructor(type : string, location: string) {
+    super(`${type} must be concrete to new`, location, false);
+  }
+
+  priority = 8;
+}
+
+export class ExtensionCompileError extends CompileError {
+  constructor(location: string) {
+    super(`Cannot call extension method directly`, location, false);
+  }
+
+  priority = 8;
+}
+
+export class ParametersCompileError extends CompileError {
+  constructor(expected: number, actual : number, location: string) {
+    super(`Parameters expected: ${expected} got: ${actual}`, location, false);
+  }
+
+  priority = 8;
 }

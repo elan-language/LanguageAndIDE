@@ -16,7 +16,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { ArraySizeCompileError, CompileError, MissingElseCompileError, MultipleElseCompileError, NotCallableCompileError, NotIndexableCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
+import { ArraySizeCompileError, CompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, NotCallableCompileError, NotIndexableCompileError, ParametersCompileError, PrivatePropertyCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -117,7 +117,7 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new NotCallableCompileError(symbolType.toString(), location, false, true),
+      new NotCallableCompileError(symbolType.toString(), location, false, symbolType instanceof UnknownType),
     );
   }
 }
@@ -130,22 +130,15 @@ export function mustBePureFunctionSymbol(
 ) {
   if (InFunctionScope(scope)) {
     if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
-      const imPure =
-        symbolType instanceof FunctionType && !symbolType.isPure
-          ? " impure "
-          : " ";
+      const imPure = symbolType instanceof FunctionType && !symbolType.isPure;
       compileErrors.push(
-        new CompileError(
-          `Cannot call${imPure}${symbolType}`,
-          location,
-          true,
-        ),
+        new NotCallableCompileError(symbolType.toString(), location, imPure, symbolType instanceof UnknownType),
       );
     }
   } else {
     if (!(symbolType instanceof FunctionType)) {
       compileErrors.push(
-        new CompileError(`Cannot call ${symbolType}`, location, true),
+        new NotCallableCompileError(symbolType.toString(), location, false, symbolType instanceof UnknownType),
       );
     }
   }
@@ -194,11 +187,7 @@ export function mustBeAbstractClass(
 ) {
   if (!classType.isAbstract) {
     compileErrors.push(
-      new CompileError(
-        `Superclass ${classType} must be abstract`,
-        location,
-        false,
-      ),
+      new MustBeAbstractCompileError(classType.toString(), location),
     );
   }
 }
@@ -210,7 +199,7 @@ export function mustBePublicProperty(
 ) {
   if (property instanceof Property && property.private === true) {
     compileErrors.push(
-      new CompileError(`Cannot reference private property`, location, false),
+      new PrivatePropertyCompileError(property.name.text, location),
     );
   }
 }
@@ -234,10 +223,9 @@ export function mustImplementSuperClasses(
 
       if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
-          new CompileError(
-            `${classType} must implement ${superClassType}.${superSymbol.symbolId}`,
-            location,
-            false,
+          new MustImplementCompileError(
+            classType.toString(), superClassType.toString(), superSymbol.symbolId,
+            location
           ),
         );
       } else {
@@ -259,10 +247,9 @@ export function mustBeConcreteClass(
 ) {
   if (classType.isAbstract) {
     compileErrors.push(
-      new CompileError(
-        `${classType} must be concrete to new`,
-        location,
-        false,
+      new MustBeConcreteCompileError(
+        classType.toString(),
+        location
       ),
     );
   }
@@ -276,11 +263,7 @@ export function mustCallExtensionViaQualifier(
 ) {
   if (ft.isExtension && qualifier === undefined) {
     compileErrors.push(
-      new CompileError(
-        `Cannot call extension method directly`,
-        location,
-        false,
-      ),
+      new ExtensionCompileError(location),
     );
   }
 }
@@ -297,13 +280,9 @@ export function mustMatchParameters(
     const p = parms[i];
     const t = ofType[i];
 
-    if (p === undefined) {
+    if (p === undefined || t === undefined) {
       compileErrors.push(
-        new CompileError(`Missing parameter ${i}`, location, false),
-      );
-    } else if (t === undefined) {
-      compileErrors.push(
-        new CompileError(`Too many parameters ${i}`, location, false),
+        new ParametersCompileError(ofType.length, parms.length, location),
       );
     } else {
       mustBeCompatibleType(t, p.symbolType(), compileErrors, location);

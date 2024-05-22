@@ -106,7 +106,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private property"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private property p2"]);
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
@@ -142,6 +142,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot reference private property"]);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private property p2"]);
   });
 });
