@@ -432,6 +432,20 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    [
+      "any",
+      this.getSymbol(
+        "any",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false)
+          ],
+          BooleanType.Instance,
+          true,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(

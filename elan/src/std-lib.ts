@@ -232,4 +232,22 @@ export class StdLib {
     }
     return this.keys(coll).length;
   }
+
+  any<T>(source : T[], predicate: (value : T) => boolean ){
+    return source.some(predicate);
+  }
+
+  groupBy<T>(source: T[], predicate: (value: T) => T) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = {} as any;
+
+    for (const i of source) {
+      if (result[i]) {
+        result[i].push(i);
+      }
+      else {
+        result[i] = this.asList([i]);
+      }
+    }
+  }
 }
