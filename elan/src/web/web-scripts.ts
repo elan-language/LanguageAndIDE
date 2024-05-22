@@ -442,7 +442,7 @@ function handleUpload(event: Event) {
       file = new FileImpl(hash, profile, transforms(), true);
       file.fileName = fileName;
       file.parseFrom(code).then(() => {
-        file.renderAsHtml().then((c) => updateContent(c));
+        refreshAndDisplay();
       });
     });
     reader.readAsText(elanFile);
