@@ -7,7 +7,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
-import { mustNotBeReassigned } from "../compile-rules";
+import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -54,6 +54,8 @@ export class VarStatement
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const id = this.name.compile(transforms);
+    mustNotBeKeyword(id, this.compileErrors, this.name.getHtmlId());
+
     const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
     mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());

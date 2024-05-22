@@ -1,6 +1,6 @@
 import { getParentScope } from "../symbols/symbol-helpers";
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol } from "../compile-rules";
+import { mustBeKnownSymbol, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -25,6 +25,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
+
+    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
+
     if (isMember(this.scope)) {
       // don't prefix properties with this
       return this.id;
