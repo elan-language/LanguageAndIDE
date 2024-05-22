@@ -93,12 +93,6 @@ export function escapeAngleBrackets(str: string): string {
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
-  /*  To display multiple messages use:
-            var msg = loc.compileErrors.length > 1 ?
-                loc.compileErrors.reduce((prev, cur) => prev.concat(cur.message)+ "; ", "")
-                : loc.compileErrors.length > 0 ?
-                    loc.compileErrors[0].message
-                    : ""; */
   /* To display first message only use: */
   const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
   let cls = "";
@@ -106,7 +100,8 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
     cls = DisplayStatus[compile];
   }
-  return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${msg}</msg>`;
+  const toDisplay = escapeAngleBrackets(msg);
+  return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${toDisplay}</msg>`;
 }
 
 export function helper_deriveCompileStatusFromErrors(
