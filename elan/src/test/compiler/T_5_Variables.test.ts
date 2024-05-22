@@ -383,7 +383,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign a"]);
   });
 
   test("Fail_GlobalVariable", async () => {

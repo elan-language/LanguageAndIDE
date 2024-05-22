@@ -235,15 +235,17 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot logically compare Boolean and Int",
-      "Cannot logically compare Int and Boolean",
-      "Cannot logically compare Int and Int",
-      "Cannot logically compare Boolean and Int",
-      "Cannot logically compare Int and Boolean",
-      "Cannot logically compare Int and Int",
-      "Cannot logically compare Boolean and String",
-      "Cannot logically compare String and Boolean",
-      "Cannot logically compare String and String",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types Int to Boolean",
+      "Incompatible types String to Boolean",
+      "Incompatible types String to Boolean",
+      "Incompatible types String to Boolean",
     ]);
   });
 });

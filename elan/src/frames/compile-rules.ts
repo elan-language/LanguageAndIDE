@@ -16,7 +16,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { ArraySizeCompileError, CompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, MutateCompileError, NotCallableCompileError, NotIndexableCompileError, ParametersCompileError, PrivatePropertyCompileError, TypeCompileError, TypesCompileError, UndefinedSymbolCompileError } from "./compile-error";
+import { ArrayCompileError, ArraySizeCompileError, CompileError, DuplicateKeyCompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, MutateCompileError, NotCallableCompileError, NotIndexableCompileError, NotIterableCompileError, ParametersCompileError, PrivatePropertyCompileError, ReassignCompileError, TypeCompileError, TypesCompileError, UndefinedSymbolCompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -338,18 +338,8 @@ export function mustBeBooleanType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  // for compare allow int and floats
-  if (lhs instanceof BooleanType && rhs instanceof BooleanType) {
-    return;
-  }
-
-  compileErrors.push(
-    new CompileError(
-      `Cannot logically compare ${lhs} and ${rhs}`,
-      location,
-      true,
-    ),
-  );
+  mustBeCompatibleType(BooleanType.Instance, lhs, compileErrors, location);
+  mustBeCompatibleType(BooleanType.Instance, rhs, compileErrors, location);
 }
 
 function mustBeCompatibleTypes(
@@ -606,7 +596,7 @@ export function mustNotBeLet(
   location: string,
 ) {
   if (symbol instanceof LetStatement) {
-    compileErrors.push(new CompileError(`May not set let`, location, false));
+    compileErrors.push(new MutateCompileError(symbol.symbolId, location));
   }
 }
 
@@ -617,7 +607,7 @@ export function mustNotBeArray(
 ) {
   if (parameterType instanceof ArrayType) {
     compileErrors.push(
-      new CompileError(`May not pass Array into function`, location, false),
+      new ArrayCompileError(location),
     );
   }
 }
@@ -632,7 +622,7 @@ export function mustNotBeReassigned(
     variable.symbolScope === SymbolScope.local
   ) {
     compileErrors.push(
-      new CompileError(`May not reassign variable`, location, false),
+      new ReassignCompileError(variable.symbolId, location),
     );
   }
 }
@@ -651,7 +641,7 @@ export function mustBeIterable(
     )
   ) {
     compileErrors.push(
-      new CompileError(`Cannot iterate ${symbolType}`, location, true),
+      new NotIterableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -664,7 +654,7 @@ export function mustHaveUniqueKeys(
   const set = new Set(keys);
   if (set.size !== keys.length) {
     compileErrors.push(
-      new CompileError(`Duplicate Dictionary key(s)`, location, true),
+      new DuplicateKeyCompileError(location),
     );
   }
 }

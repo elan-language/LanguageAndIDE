@@ -217,7 +217,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign x"]);
   });
 
   test("Fail_variableIsScoped2", async () => {
