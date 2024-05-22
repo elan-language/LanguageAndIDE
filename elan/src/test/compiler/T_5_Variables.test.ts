@@ -383,7 +383,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign a"]);
   });
 
   test("Fail_GlobalVariable", async () => {
@@ -496,7 +496,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl,[""] );
+    assertDoesNotCompile(fileImpl, [""]);
   });
 
   test("Fail_TypeCheck1", async () => {
@@ -578,7 +578,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Unknown and Int must both be numeric types",
+      "Incompatible types Unknown to Float",
       "x is not defined",
     ]);
   });

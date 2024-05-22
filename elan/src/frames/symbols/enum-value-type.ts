@@ -9,6 +9,4 @@ export class EnumValueType implements SymbolType {
   toString() {
     return `${this.owner}.${this.name}`;
   }
-
-  
 }

@@ -84,7 +84,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-
   test("Pass_AssignALambdaToAVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -93,25 +92,25 @@ main
   print l(5)
 end main`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = (x) => x * 5;
   system.print(_stdlib.asString(l(5)));
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(
-        testHash,
-        new DefaultProfile(),
-        transforms(),
-        true,
-      );
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, "25");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
   });
 
   test("Pass_lambdaInExpression", async () => {
@@ -122,25 +121,25 @@ main
   print l(5) + 5
 end main`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = (x) => x * 5;
   system.print(_stdlib.asString(l(5) + 5));
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(
-        testHash,
-        new DefaultProfile(),
-        transforms(),
-        true,
-      );
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, "30");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "30");
   });
 
   test("Pass_ReturnALambda", async () => {
@@ -155,8 +154,7 @@ function getFunc() return Func<of Int => Int>
   return lambda x as Int => x * 5
 end function`;
 
-    
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = getFunc();
   system.print(_stdlib.asString(l(5)));
@@ -166,19 +164,19 @@ function getFunc() {
   return (x) => x * 5;
 }
 return [main, _tests];}`;
-    
-        const fileImpl = new FileImpl(
-          testHash,
-          new DefaultProfile(),
-          transforms(),
-          true,
-        );
-        await fileImpl.parseFrom(new CodeSourceFromString(code));
-    
-        assertParses(fileImpl);
-        assertStatusIsValid(fileImpl);
-        assertObjectCodeIs(fileImpl, objectCode);
-        await assertObjectCodeExecutes(fileImpl, "25");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "25");
   });
 
   test("Fail_ImmediateInvoke", async () => {
@@ -193,19 +191,16 @@ function getFunc() return Func<of Int => Int>
   return lambda x as Int => x * 5
 end function`;
 
-    
-    
-        const fileImpl = new FileImpl(
-          testHash,
-          new DefaultProfile(),
-          transforms(),
-          true,
-        );
-        await fileImpl.parseFrom(new CodeSourceFromString(code));
-    
-        assertDoesNotParse(fileImpl);
-  });
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
+    assertDoesNotParse(fileImpl);
+  });
 
   test("Fail_PassLambdaWithWrongTypes", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

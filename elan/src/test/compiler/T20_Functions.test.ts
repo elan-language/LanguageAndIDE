@@ -296,8 +296,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many parameters 1",
-      "Missing parameter 0",
+      "Parameters expected: 1 got: 2",
+      "Parameters expected: 1 got: 0",
     ]);
   });
 
@@ -667,7 +667,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Too many parameters 2"]);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 3"]);
   });
 
   test("Fail_NotEnoughParams", async () => {
@@ -691,7 +691,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Missing parameter 1"]);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 1"]);
   });
 
   test("Fail_WrongParamType", async () => {

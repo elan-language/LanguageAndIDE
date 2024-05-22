@@ -161,8 +161,6 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot call impure Function",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot call impure Function"]);
   });
 });

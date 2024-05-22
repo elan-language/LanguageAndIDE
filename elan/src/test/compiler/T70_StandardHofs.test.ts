@@ -43,7 +43,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Iter [23, 27, 31, 37]Iter [23, 27, 31, 37]Iter [2, 37]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Iter [23, 27, 31, 37]Iter [23, 27, 31, 37]Iter [2, 37]",
+    );
   });
 
   test("Pass_map", async () => {
@@ -75,7 +78,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]Iter [2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]Iter [2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*]",
+    );
   });
 
   test("Pass_reduce", async () => {
@@ -109,7 +115,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "195295Concat:23571113171923273137",
+    );
   });
 
   test("Pass_max", async () => {
@@ -425,5 +434,4 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Float"]);
   });
-
 });

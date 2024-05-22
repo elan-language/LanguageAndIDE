@@ -94,7 +94,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign variable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign x"]);
   });
 
   test("Fail_cannotAssign", async () => {
@@ -116,6 +116,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set let"]);
+    assertDoesNotCompile(fileImpl, ["May not mutate x"]);
   });
 });

@@ -136,7 +136,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unknown and Int must both be numeric types"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Float"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {
