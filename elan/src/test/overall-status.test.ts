@@ -6,6 +6,9 @@ import { key, loadFileAsModel } from "./testHelpers";
 import { Constant } from "../frames/globals/constant";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { CompileStatus, ParseStatus, TestStatus } from "../frames/status-enums";
+import { getTestRunner } from "../runner";
+import { getTestSystem } from "./compiler/test-system";
+import { StdLib } from "../std-lib";
 
 suite("Editing Fields Tests", () => {
     vscode.window.showInformationMessage("Start all unit tests.");
@@ -31,7 +34,11 @@ suite("Editing Fields Tests", () => {
 
     test("test top-level Parse and Compile Status changes", async () => {
         const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
-        f.refreshParseAndCompileStatus();
+        const system = getTestSystem();
+        const stdlib = new StdLib();
+
+        f.refreshAllStatuses(getTestRunner(system, stdlib));
+        //f.refreshParseAndCompileStatus();
         assert.equal(f.readParseStatus(), ParseStatus.valid);
         assert.equal(f.readCompileStatus(), CompileStatus.ok);
         let v4 = f.getById("var4");

@@ -8,7 +8,7 @@ import { Profile } from "../frames/interfaces/profile";
 import { ParseStatus, RunStatus } from "../frames/status-enums";
 import { StdLib } from "../std-lib";
 import { AssertOutcome, System } from "../system";
-import { runTests } from "../runner";
+import { doImport, getTestRunner, runTests } from "../runner";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../frames/syntax-nodes/transforms";
 import { TestFrame } from "../frames/globals/test-frame";
@@ -65,7 +65,7 @@ fetchProfile()
   });
 
 function refreshAndDisplay() {
-  file.refreshAllStatuses(testRunner).then(() => {
+  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
     file.renderAsHtml().then((c) => {
       updateContent(c);
     });
@@ -255,22 +255,6 @@ function updateContent(text: string) {
   }
 }
 
-function testRunner(jsCode: string) {
-  system.printer = printer;
-  system.inputter = inputter;
-
-  return doImport(jsCode).then(async (elan) => {
-    if (elan.program) {
-      elan._inject(system, stdlib);
-      const [, tests] = await elan.program();
-      if (tests && tests.length > 0) {
-        return runTests(tests);
-      }
-    }
-    return [];
-  });
-}
-
 function postMessage(e: editorEvent) {
   switch (e.type) {
     case "click":
@@ -343,6 +327,9 @@ const elanConsole = new ElanConsole();
 const system = new System();
 const stdlib = new StdLib();
 
+system.printer = printer;
+system.inputter = inputter;
+
 const runButton = document.getElementById("run-button");
 const clearButton = document.getElementById("clear-button");
 const newButton = document.getElementById("new");
@@ -350,11 +337,6 @@ const newButton = document.getElementById("new");
 const consoleWindow = document.getElementById("console")!;
 
 consoleWindow.innerHTML = elanConsole.render();
-
-function doImport(str: string) {
-  const url = "data:text/javascript;base64," + btoa(str);
-  return import(url);
-}
 
 function printer(s: string) {
   elanConsole.printLine(s);
@@ -369,9 +351,6 @@ runButton?.addEventListener("click", () => {
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
     const jsCode = file.compile();
-
-    system.printer = printer;
-    system.inputter = inputter;
 
     return doImport(jsCode).then(async (elan) => {
       if (elan.program) {
