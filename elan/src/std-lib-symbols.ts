@@ -135,7 +135,7 @@ export class StdLibSymbols implements Scope {
         "length",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          FloatType.Instance,
+          IntType.Instance,
           true,
         ),
       ),
@@ -146,7 +146,7 @@ export class StdLibSymbols implements Scope {
         "count",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          FloatType.Instance,
+          IntType.Instance,
           true,
         ),
       ),
