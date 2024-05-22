@@ -16,7 +16,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { CompileError } from "./compile-error";
+import { ArraySizeCompileError, CompileError, MissingElseCompileError, MultipleElseCompileError, NotCallableCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -38,7 +38,7 @@ export function mustBeOfSymbolType(
   const unknown = exprType?.name === undefined || ofType.name === undefined;
   if (exprType?.name !== ofType.name) {
     compileErrors.push(
-      new CompileError(`Expression must be ${ofType.name}`, location, unknown),
+      new TypeCompileError(ofType.name, location, unknown),
     );
   }
 }
@@ -59,7 +59,7 @@ export function mustBeOneOrTwoOfTypeInt(
 ) {
   if (params.length === 0 || params.length > 2) {
     compileErrors.push(
-      new CompileError(`Array requires 1 or 2 parameters`, location, false),
+      new ArraySizeCompileError(location),
     );
   }
   if (params.length > 0) {
@@ -87,17 +87,13 @@ export function mustHaveLastSingleElse(
 ) {
   if (elses.filter((s) => !s.hasIf).length > 1) {
     compileErrors.push(
-      new CompileError(
-        `Cannot have multiple unconditional 'Else'`,
-        location,
-        false,
-      ),
+      new MultipleElseCompileError(location),
     );
   }
 
   if (elses[elses.length - 1].hasIf) {
     compileErrors.push(
-      new CompileError(`Must end with unconditional 'Else'`, location, false),
+      new MissingElseCompileError(location),
     );
   }
 }
@@ -109,7 +105,7 @@ export function mustBeKnownSymbol(
 ) {
   if (symbol instanceof UnknownSymbol) {
     compileErrors.push(
-      new CompileError(`${symbol.symbolId} is not defined`, location, true),
+      new UndefinedSymbolCompileError(symbol.symbolId, location),
     );
   }
 }
@@ -121,7 +117,7 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new CompileError(`Cannot call ${symbolType.name}`, location, true),
+      new NotCallableCompileError(symbolType.name, location, false, true),
     );
   }
 }
