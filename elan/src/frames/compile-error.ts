@@ -16,6 +16,14 @@ export class TypeCompileError extends CompileError {
   priority = 0;
 }
 
+export class TypesCompileError extends CompileError {
+  constructor(type1: string, type2: string, location: string, unknown: boolean) {
+    super(`Incompatible types ${type1} to ${type2}`, location, unknown);
+  }
+
+  priority = 0;
+}
+
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
     super(`Array requires 1 or 2 parameters`, location, false);
@@ -108,6 +116,14 @@ export class ExtensionCompileError extends CompileError {
 export class ParametersCompileError extends CompileError {
   constructor(expected: number, actual : number, location: string) {
     super(`Parameters expected: ${expected} got: ${actual}`, location, false);
+  }
+
+  priority = 8;
+}
+
+export class MutateCompileError extends CompileError {
+  constructor(thing: string, location: string) {
+    super(`May not mutate ${thing}`, location, false);
   }
 
   priority = 8;

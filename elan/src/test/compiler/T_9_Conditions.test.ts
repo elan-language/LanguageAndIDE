@@ -387,10 +387,10 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Incompatible types String to Int",
       "Incompatible types String to Int",
-      "Int and String must both be numeric types",
-      "Int and String must both be numeric types",
-      "Int and String must both be numeric types",
-      "Int and String must both be numeric types",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
     ]);
   });
 

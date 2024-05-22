@@ -441,12 +441,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "String and String must both be numeric types",
-      "String and String must both be numeric types",
-      "String and String must both be numeric types",
-      "String and String must both be numeric types",
-      "String and String must both be numeric types",
-      "String and String must both be numeric types",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
+      "Incompatible types String to Float",
     ]);
   });
 

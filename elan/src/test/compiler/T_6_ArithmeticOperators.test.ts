@@ -373,9 +373,9 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Int and Boolean must both be numeric types",
-      "Boolean and Int must both be numeric types",
-      "Int and Foo must both be numeric types",
+      "Incompatible types Boolean to Float",
+      "Incompatible types Boolean to Float",
+      "Incompatible types Foo to Float",
     ]);
   });
 });

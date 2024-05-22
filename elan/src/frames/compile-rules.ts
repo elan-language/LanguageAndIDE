@@ -16,7 +16,7 @@ import { SymbolType } from "./interfaces/symbol-type";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { ArraySizeCompileError, CompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, NotCallableCompileError, NotIndexableCompileError, ParametersCompileError, PrivatePropertyCompileError, TypeCompileError, UndefinedSymbolCompileError } from "./compile-error";
+import { ArraySizeCompileError, CompileError, ExtensionCompileError, MissingElseCompileError, MultipleElseCompileError, MustBeAbstractCompileError, MustBeConcreteCompileError, MustImplementCompileError, MutateCompileError, NotCallableCompileError, NotIndexableCompileError, ParametersCompileError, PrivatePropertyCompileError, TypeCompileError, TypesCompileError, UndefinedSymbolCompileError } from "./compile-error";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { InFunctionScope } from "./syntax-nodes/ast-helpers";
@@ -298,21 +298,10 @@ function FailIncompatible(
 ) {
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
   compileErrors.push(
-    new CompileError(
-      `Incompatible types ${rhs} to ${lhs}`,
+    new TypesCompileError(rhs.toString(), lhs.toString(),
       location,
       unknown,
     ),
-  );
-}
-
-function FailUnknown(
-  lhs: AstNode,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  compileErrors.push(
-    new CompileError(`Undeclared variable ${lhs}`, location, true),
   );
 }
 
@@ -339,21 +328,8 @@ export function mustBeNumberType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  // for compare allow int and floats
-  if (
-    (lhs instanceof IntType || lhs instanceof FloatType) &&
-    (rhs instanceof IntType || rhs instanceof FloatType)
-  ) {
-    return;
-  }
-
-  compileErrors.push(
-    new CompileError(
-      `${lhs} and ${rhs} must both be numeric types`,
-      location,
-      true,
-    ),
-  );
+  mustBeCompatibleType(FloatType.Instance, lhs, compileErrors, location);
+  mustBeCompatibleType(FloatType.Instance, rhs, compileErrors, location);
 }
 
 export function mustBeBooleanType(
@@ -561,10 +537,9 @@ export function mustNotBePropertyOnFunctionMethod(
 
     if (s !== SymbolScope.local) {
       compileErrors.push(
-        new CompileError(
-          `May not mutate non local data in function`,
-          location,
-          false,
+        new MutateCompileError(
+          `non local data in function`,
+          location
         ),
       );
     }
@@ -585,13 +560,13 @@ export function mustNotBeParameter(
       !(assignable.rootSymbolType() instanceof ArrayType)
     ) {
       compileErrors.push(
-        new CompileError(`May not mutate parameter`, location, false),
+        new MutateCompileError(`parameter`, location),
       );
     }
   } else {
     if (s === SymbolScope.parameter) {
       compileErrors.push(
-        new CompileError(`May not mutate parameter`, location, false),
+        new MutateCompileError(`parameter`, location),
       );
     }
   }
@@ -606,7 +581,7 @@ export function mustNotBeCounter(
 
   if (s === SymbolScope.counter) {
     compileErrors.push(
-      new CompileError(`May not mutate counter`, location, false),
+      new MutateCompileError(`counter`, location),
     );
   }
 }
@@ -620,7 +595,7 @@ export function mustNotBeConstant(
 
   if (s === SymbolScope.program) {
     compileErrors.push(
-      new CompileError(`May not mutate constant`, location, false),
+      new MutateCompileError(`constant`, location),
     );
   }
 }
