@@ -143,6 +143,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
+  //Ignored pending further work on compile error prioritisation. Currently this test
+  //is throwing error because the error shown is not the most important
   ignore_test("Fail_NoSuchProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -173,7 +175,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Undeclared variable property.p"]);
+    assertDoesNotCompile(fileImpl, ["Undeclared property.p"]);
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
