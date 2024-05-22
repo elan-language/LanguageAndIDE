@@ -48,6 +48,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { LetStatement } from "./statements/let-statement";
+import { allKeywords, thisKeyword } from "./keywords";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -127,6 +128,25 @@ export function mustBeKnownSymbol(
   if (symbol instanceof UnknownSymbol) {
     compileErrors.push(
       new UndefinedSymbolCompileError(symbol.symbolId, location),
+    );
+  }
+}
+
+export function mustNotBeKeyword(
+  id : string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (id === thisKeyword) {
+    return; 
+  }
+
+  if (allKeywords.includes(id)){
+    compileErrors.push(
+      new SyntaxCompileError(
+        'identifier may not be a reserved keyword',
+        location,
+      ),
     );
   }
 }
