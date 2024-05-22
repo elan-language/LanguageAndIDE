@@ -40,15 +40,9 @@ export class ArraySizeCompileError extends CompileError {
   }
 }
 
-export class MultipleElseCompileError extends CompileError {
-  constructor(location: string) {
-    super(3, `Cannot have multiple unconditional 'Else'`, location, false);
-  }
-}
-
-export class MissingElseCompileError extends CompileError {
-  constructor(location: string) {
-    super(4, `Must end with unconditional 'Else'`, location, false);
+export class SyntaxCompileError extends CompileError {
+  constructor(message: string, location: string) {
+    super(3, message, location, false);
   }
 }
 

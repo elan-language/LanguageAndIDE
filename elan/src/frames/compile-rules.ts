@@ -22,8 +22,6 @@ import {
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
-  MissingElseCompileError,
-  MultipleElseCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustImplementCompileError,
@@ -34,6 +32,7 @@ import {
   ParametersCompileError,
   PrivatePropertyCompileError,
   ReassignCompileError,
+  SyntaxCompileError,
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
@@ -105,11 +104,18 @@ export function mustHaveLastSingleElse(
   location: string,
 ) {
   if (elses.filter((s) => !s.hasIf).length > 1) {
-    compileErrors.push(new MultipleElseCompileError(location));
+    compileErrors.push(
+      new SyntaxCompileError(
+        `Cannot have multiple unconditional 'Else'`,
+        location,
+      ),
+    );
   }
 
   if (elses[elses.length - 1].hasIf) {
-    compileErrors.push(new MissingElseCompileError(location));
+    compileErrors.push(
+      new SyntaxCompileError(`Must end with unconditional 'Else'`, location),
+    );
   }
 }
 
