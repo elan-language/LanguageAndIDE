@@ -171,7 +171,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "19");
   });
 
-  ignore_test("Pass_maxBy1", async () => {
+  test("Pass_maxBy1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant source set to [[1], [2, 2]]
@@ -180,6 +180,11 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list([system.list([1]), system.list([2, 2])]);
+
+async function main() {
+  system.print(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.length(x))));
+}
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -194,6 +199,66 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "List [2, 2]");
+  });
+
+  test("Pass_maxBy2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to ["apple", "orange", "pear"]
+main
+  print source.maxBy(lambda t as String => t.length())
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list(["apple", "orange", "pear"]);
+
+async function main() {
+  system.print(_stdlib.asString(_stdlib.maxBy(source, (t) => _stdlib.length(t))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "orange");
+  });
+
+  test("Pass_count", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+main
+  print source.count()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+async function main() {
+  system.print(_stdlib.asString(_stdlib.count(source)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
   });
 
   // Fails TODO

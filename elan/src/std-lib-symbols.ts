@@ -141,6 +141,17 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "count",
+      this.getSymbol(
+        "count",
+        new FunctionType(
+          [new IterType(new GenericParameterType("T"))],
+          FloatType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
       "setItem",
       this.getSymbol(
         "setItem",
@@ -194,17 +205,6 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "cos",
         new FunctionType([FloatType.Instance], FloatType.Instance, false),
-      ),
-    ],
-    [
-      "min",
-      this.getSymbol(
-        "min",
-        new FunctionType(
-          [FloatType.Instance, FloatType.Instance],
-          FloatType.Instance,
-          false,
-        ),
       ),
     ],
     [
@@ -395,6 +395,33 @@ export class StdLibSymbols implements Scope {
       "maxBy",
       this.getSymbol(
         "maxBy",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], FloatType.Instance, false)
+          ],
+          new GenericParameterType("T"),
+          true,
+        ),
+      ),
+    ],
+    [
+      "min",
+      this.getSymbol(
+        "min",
+        new FunctionType(
+          [
+            new IterType(FloatType.Instance),
+          ],
+          FloatType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
+      "minBy",
+      this.getSymbol(
+        "minBy",
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),

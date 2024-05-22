@@ -169,8 +169,6 @@ export class StdLib {
 
   cos = Math.cos;
 
-  min = Math.min;
-
   sqrt = Math.sqrt;
 
   newline = "\n";
@@ -212,5 +210,26 @@ export class StdLib {
     const max = Math.max(...mm);
     const i = mm.indexOf(max); 
     return source[i];
+  }
+
+  min(source: number[]): number {
+    return Math.min(...source);
+  }
+
+  minBy<T>(source: T[], predicate: (value : T) => number): T {
+    const mm = source.map(predicate);
+    const max = Math.min(...mm);
+    const i = mm.indexOf(max); 
+    return source[i];
+  }
+
+  count<T>(coll: string | T[] | { [key: string]: T }) {
+    if (typeof coll === "string") {
+      return coll.length;
+    }
+    if (Array.isArray(coll)) {
+      return coll.length;
+    }
+    return this.keys(coll).length;
   }
 }
