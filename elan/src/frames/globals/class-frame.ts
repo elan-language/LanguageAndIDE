@@ -129,11 +129,10 @@ export class ClassFrame
 
   updateCompileStatus(): void {
     this.getChildren().forEach((c) => c.updateCompileStatus());
-    const worstOfFieldsOrChildren = Math.min(
-      this.worstCompileStatusOfFields(),
-      parentHelper_readWorstCompileStatusOfChildren(this),
-    );
-    this.setCompileStatus(worstOfFieldsOrChildren);
+    const worstOfChildren = parentHelper_readWorstCompileStatusOfChildren(this);
+    super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
+    const newStatus = Math.min(this.readCompileStatus(), worstOfChildren);
+    this.setCompileStatus(newStatus);
   }
 
   getFactory(): StatementFactory {

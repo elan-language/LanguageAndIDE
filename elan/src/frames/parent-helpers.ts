@@ -13,6 +13,7 @@ export function parentHelper_readWorstParseStatusOfChildren(
     .map((s) => s.readParseStatus())
     .reduce((prev, cur) => (cur < prev ? cur : prev), ParseStatus.default);
 }
+
 export function parentHelper_readWorstCompileStatusOfChildren(
   parent: Parent,
 ): CompileStatus {

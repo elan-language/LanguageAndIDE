@@ -294,10 +294,8 @@ export abstract class AbstractField implements Selectable, Field {
     return this._compileStatus;
   }
   updateCompileStatus(): void {
-    this.compileErrors = this.aggregateCompileErrors();
-    this._compileStatus = helper_deriveCompileStatusFromErrors(
-      this.compileErrors,
-    );
+    this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
+    this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
   select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void {
     this.deselectAll();
