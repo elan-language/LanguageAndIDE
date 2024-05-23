@@ -23,6 +23,7 @@ import {
   isSelector,
   helper_parseStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
+  helper_runStatusAsDisplayStatus,
 } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
@@ -293,6 +294,9 @@ export class FileImpl implements File, Scope {
 
   readRunStatus(): RunStatus {
     return this._runStatus;
+  }
+  readRunStatusForDashboard(): string {
+    return DisplayStatus[helper_runStatusAsDisplayStatus(this._runStatus)];
   }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
