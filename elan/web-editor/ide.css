@@ -115,13 +115,7 @@ body {
   }
 
 /* Buttons */
-button {
-  font-family: var(--ideTitleFont);
-  font-size: var(--ideTitleSize);
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-top: 0px;
-}
+
 button#run-button, button#pause, button#stop  {
   height: 40px;
   padding: 0px;
@@ -140,7 +134,11 @@ button, button:hover, button:active, button:focus  {
     border: none;
     outline:none;
     height: 20px;
-    margin-top: 5px;
+    font-family: var(--ideTitleFont);
+    font-size: var(--ideTitleSize);
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
 }
 
 button:hover, button:active {
