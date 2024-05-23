@@ -49,7 +49,7 @@ suite("Editing Fields Tests", () => {
         assert.equal(f.readTestStatus(), TestStatus.pass);
         //1. Make a test fail
         const test64 = f.getById("test64");
-        assert.equal(test64.renderAsHtml().startsWith(`<test class="OK`),true);
+        assert.equal(test64.renderAsHtml().startsWith(`<test class="ok`),true);
         const exp20 = f.getById("expr20");
         exp20.select();
         exp20.processKey(key("Backspace"));

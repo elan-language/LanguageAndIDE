@@ -84,10 +84,8 @@ export abstract class FrameWithStatements
   }
 
   resetCompileStatusAndErrors(): void {
-    if (this.readCompileStatus() !== CompileStatus.default) {
       this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
       super.resetCompileStatusAndErrors();
-    }
   }
 
   getChildren(): Frame[] {

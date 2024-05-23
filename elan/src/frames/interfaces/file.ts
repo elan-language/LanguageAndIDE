@@ -51,6 +51,7 @@ export interface File extends Parent {
   resetAllTestStatus(): void;
 
   readRunStatus(): RunStatus;
+  readRunStatusForDashboard(): string;
 
   //Internal use only
   createMain(): Frame;

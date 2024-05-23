@@ -176,7 +176,7 @@ export function helper_testStatusAsDisplayStatus(
   return overall;
 }
 
-export function helper_runStatusDisplayStatus(rs: RunStatus): DisplayStatus {
+export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayStatus {
   let overall = DisplayStatus.default;
   if (rs === RunStatus.running) {
     overall = DisplayStatus.ok;

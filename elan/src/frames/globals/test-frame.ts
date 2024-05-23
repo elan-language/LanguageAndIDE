@@ -26,6 +26,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     super(parent);
     this.file = parent;
     this.testName = new IdentifierField(this);
+    this.testName.setOptional(true);
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
     this._testStatus = TestStatus.default;

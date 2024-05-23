@@ -23,6 +23,7 @@ import {
   isSelector,
   helper_parseStatusAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
+  helper_runStatusAsDisplayStatus,
 } from "./helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
@@ -294,6 +295,9 @@ export class FileImpl implements File, Scope {
   readRunStatus(): RunStatus {
     return this._runStatus;
   }
+  readRunStatusForDashboard(): string {
+    return DisplayStatus[helper_runStatusAsDisplayStatus(this._runStatus)];
+  }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
   }
@@ -341,12 +345,10 @@ export class FileImpl implements File, Scope {
     return this._compileStatus;
   }
   readCompileStatusForDashboard(): string {
-    let status = helper_parseStatusAsDisplayStatus(this.readParseStatus());
-    if (status === DisplayStatus.ok) {
-      const compile = helper_compileStatusAsDisplayStatus(this._compileStatus);
-      if (compile !== DisplayStatus.default) {
-        status = compile;
-      }
+    let status = DisplayStatus.default;
+    const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
+    if (parseStatus === DisplayStatus.ok) {
+      status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }
     return DisplayStatus[status];
   }

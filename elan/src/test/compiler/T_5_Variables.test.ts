@@ -496,7 +496,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["identifier may not be a reserved keyword"]);
+    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
   });
 
   test("Fail_TypeCheck1", async () => {

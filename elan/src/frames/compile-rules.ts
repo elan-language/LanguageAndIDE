@@ -144,7 +144,7 @@ export function mustNotBeKeyword(
   if (allKeywords.includes(id)){
     compileErrors.push(
       new SyntaxCompileError(
-        'identifier may not be a reserved keyword',
+        `'${id}' keyword may not be used as identifier`,
         location,
       ),
     );
