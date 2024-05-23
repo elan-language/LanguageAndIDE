@@ -13,7 +13,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T17.5_ImmutableDictionaries", () => {
-  ignore_test("Pass_LiteralConstantAndPrinting", async () => {
+  test("Pass_LiteralConstantAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
@@ -22,7 +22,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -40,7 +40,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
   ignore_test("Pass_AccessByKey", async () => {

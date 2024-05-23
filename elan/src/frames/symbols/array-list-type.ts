@@ -6,6 +6,7 @@ export class ArrayListType implements GenericSymbolType {
     public readonly ofType: SymbolType,
     public readonly is2d: boolean,
   ) {}
+  isImmutable = false;
 
   get name() {
     return `ArrayList <${this.ofType.name}>`;

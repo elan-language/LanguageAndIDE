@@ -4,6 +4,8 @@ import { SymbolType } from "../interfaces/symbol-type";
 export class LetType implements GenericSymbolType {
   constructor(public readonly ofType: SymbolType) {}
 
+  isImmutable = true;
+
   get name() {
     return `Let <${this.ofType.name}>`;
   }

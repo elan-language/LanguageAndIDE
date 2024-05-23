@@ -1,17 +1,18 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class DictionaryType implements SymbolType {
+export class ImmutableDictionaryType implements SymbolType {
   constructor(
     public readonly keyType: SymbolType,
     public readonly valueType: SymbolType,
   ) {}
-  isImmutable = false;
+
+  isImmutable = true;
 
   get name() {
-    return `Dictionary <${this.keyType.name},${this.valueType.name}>`;
+    return `ImmutableDictionary <${this.keyType.name},${this.valueType.name}>`;
   }
 
   toString(): string {
-    return `Dictionary`;
+    return `ImmutableDictionary`;
   }
 }

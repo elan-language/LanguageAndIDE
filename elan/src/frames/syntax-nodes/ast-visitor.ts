@@ -100,6 +100,8 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { ArrayListNode } from "../parse-nodes/array-list-node";
 import { LiteralArrayListAsn } from "./literal-array-list-asn";
+import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
+import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -376,8 +378,13 @@ export function transform(
   }
 
   if (node instanceof DictionaryNode) {
-    const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
+    const items = transform(node.kvps, fieldId, scope) as LiteralArrayListAsn;
     return new LiteralDictionaryAsn(items, fieldId, scope);
+  }
+
+  if (node instanceof ImmutableDictionaryNode) {
+    const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
+    return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof TupleNode) {
