@@ -15,6 +15,8 @@ import { FunctionType } from "../symbols/function-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { mustBeCompatibleType } from "../compile-rules";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 
 export abstract class FunctionFrame
   extends FrameWithStatements
@@ -112,5 +114,32 @@ ${this.renderChildrenAsHtml()}
     return s instanceof UnknownSymbol
       ? super.resolveSymbol(id, transforms, initialScope)
       : s;
+  }
+
+  public compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const paramList = this.params.getOrTransformAstNode(
+      transforms,
+    ) as AstCollectionNode;
+    const parameterTypes = paramList.items.map((i) => i.symbolType());
+
+    // for (let st of parameterTypes) {
+    //   if (st instanceof ClassType) {
+    //     st = this.resolveSymbol(st.className, transforms, this).symbolType(transforms);
+    //   }
+    //   mustBeImmutableType(st, this.compileErrors, this.htmlId);
+    // }
+
+    const returnStatement =
+      this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+    const tt = returnStatement?.symbolType();
+    mustBeCompatibleType(
+      this.returnType?.symbolType(transforms),
+      tt!,
+      this.compileErrors,
+      returnStatement!.fieldId,
+    );
+
+    return "";
   }
 }

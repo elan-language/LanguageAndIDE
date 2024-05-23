@@ -30,7 +30,7 @@ class Foo
 
     property p1 as Float
 
-    function times(value as Float) return Int
+    function times(value as Float) return Float
         return p1 * value
     end function
 
@@ -214,7 +214,7 @@ class Foo
 
 end class
 
-class Bar
+immutable class Bar
     constructor()
         set p1 to 1
     end constructor

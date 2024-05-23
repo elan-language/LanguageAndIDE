@@ -9,11 +9,11 @@ import { Parent } from "../interfaces/parent";
 
 export class ClassDefinitionType implements SymbolType, Scope {
   constructor(
-    public className: string,
-    public isAbstract: boolean,
+    public readonly className: string,
+    public readonly isAbstract: boolean,
+    public readonly isImmutable: boolean,
     private readonly scope: ClassFrame,
   ) {}
-  isImmutable = false;
 
   getParent(): Parent {
     return this.scope as Parent;

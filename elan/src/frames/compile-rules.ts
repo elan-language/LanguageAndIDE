@@ -17,13 +17,13 @@ import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
-  ArrayCompileError,
   ArraySizeCompileError,
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
+  MustBeImmutableCompileError,
   MustImplementCompileError,
   MutateCompileError,
   NotCallableCompileError,
@@ -128,6 +128,18 @@ export function mustBeKnownSymbol(
   if (symbol instanceof UnknownSymbol) {
     compileErrors.push(
       new UndefinedSymbolCompileError(symbol.symbolId, location),
+    );
+  }
+}
+
+export function mustBeImmutableType(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!symbolType.isImmutable) {
+    compileErrors.push(
+      new MustBeImmutableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -656,16 +668,6 @@ export function mustNotBeLet(
 ) {
   if (symbol instanceof LetStatement) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, location));
-  }
-}
-
-export function mustNotBeArray(
-  parameterType: SymbolType,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (parameterType instanceof ArrayListType) {
-    compileErrors.push(new ArrayCompileError(location));
   }
 }
 

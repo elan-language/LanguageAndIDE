@@ -27,7 +27,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
+    super.compile(transforms);
     return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}\r

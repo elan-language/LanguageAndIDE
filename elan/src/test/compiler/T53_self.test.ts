@@ -83,7 +83,7 @@ function doubled(f as Foo) return Float
     return 2 * f.p1
 end function
 
-class Foo
+immutable class Foo
     constructor()
         set p1 to 3
     end constructor

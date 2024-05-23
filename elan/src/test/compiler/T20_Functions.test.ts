@@ -227,7 +227,7 @@ function foo(bar as Bar) return String
     return bar.asString()
 end function
 
-class Bar
+immutable class Bar
     constructor()
     end constructor
 
@@ -621,7 +621,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not pass ArrayList into function"]);
+    assertDoesNotCompile(fileImpl, ["ArrayList<of Int> must be immutable"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -643,7 +643,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not pass ArrayList into function"]);
+    assertDoesNotCompile(fileImpl, ["ArrayList<of Int> must be immutable"]);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -739,5 +739,38 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_PassMutableTypes", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+function foo(a as ArrayList<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
+    return 1
+end function
+
+class Foo
+  constructor()
+
+  end constructor
+end class
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "ArrayList<of Int> must be immutable",
+      "Dictionary must be immutable",
+      "Foo must be immutable"]);
   });
 });

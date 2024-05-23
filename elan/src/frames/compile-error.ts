@@ -141,6 +141,12 @@ export class MustBeConcreteCompileError extends CompileError {
   }
 }
 
+export class MustBeImmutableCompileError extends CompileError {
+  constructor(type: string, location: string, unknown : boolean) {
+    super(Priority.typeError, `${type} must be immutable`, location, unknown);
+  }
+}
+
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
     super(
@@ -179,19 +185,4 @@ export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location, false);
   }
-}
-
-export class ArrayCompileError extends CompileError {
-  constructor(location: string) {
-    super(
-      Priority.illegalOperation,
-      `May not pass ArrayList into function`,
-      location,
-      false,
-    );
-  }
-}
-
-function mutability(b : boolean){
-  return b ? "Immutable" : "Mutable";
 }

@@ -15,13 +15,14 @@ import { ArrayListType } from "../symbols/array-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
+import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
     public readonly id: string,
     public readonly genericParameters: AstNode[],
     public readonly fieldId: string,
-    scope: Scope,
+    private readonly scope: Scope,
   ) {
     super();
   }
