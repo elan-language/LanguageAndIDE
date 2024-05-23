@@ -1,6 +1,6 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { LiteralNode } from "../parse-nodes/literal-node";
+import { ConstantLiteralNode } from "../parse-nodes/constant-literal-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 
@@ -15,7 +15,7 @@ export class ConstantValueField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new LiteralNode();
+    this.rootNode = new ConstantLiteralNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

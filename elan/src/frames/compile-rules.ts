@@ -409,6 +409,17 @@ function mustBeCompatibleTypes(
   return;
 }
 
+export function mustBeCompatibleMutableType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lhs.isImmutable !== rhs.isImmutable){
+    FailIncompatible(lhs, rhs, compileErrors, location);
+  }
+}
+
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,

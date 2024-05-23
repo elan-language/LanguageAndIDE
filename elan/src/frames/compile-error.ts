@@ -1,3 +1,5 @@
+import { SymbolType } from "./interfaces/symbol-type";
+
 export enum Priority {
   illegalOperation,
   unknownIdentifier,
@@ -188,4 +190,8 @@ export class ArrayCompileError extends CompileError {
       false,
     );
   }
+}
+
+function mutability(b : boolean){
+  return b ? "Immutable" : "Mutable";
 }

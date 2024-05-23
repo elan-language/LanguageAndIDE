@@ -38,7 +38,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.compileErrors = [];
-    if (this.id === "Dictionary") {
+    if (this.id === "Dictionary" || this.id === "ImmutableDictionary") {
       return "Object";
     }
 

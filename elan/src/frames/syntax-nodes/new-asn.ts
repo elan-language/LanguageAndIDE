@@ -56,6 +56,14 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.list(new ${t}(${pp}))${gt})`;
     }
 
+    if (this.typeNode.id === "ImmutableDictionary") {
+      return `system.initialise(system.immutableDictionary(new ${t}(${pp}))${gt})`;
+    }
+
+    if (this.typeNode.id === "Dictionary") {
+      return `system.initialise(system.dictionary(new ${t}(${pp}))${gt})`;
+    }
+
     const cls = this.scope.resolveSymbol(
       this.typeNode.id,
       transforms(),

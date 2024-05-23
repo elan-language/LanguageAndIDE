@@ -43,7 +43,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
-  ignore_test("Pass_AccessByKey", async () => {
+  test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
@@ -165,10 +165,10 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 3, 10}");
   });
 
-  ignore_test("Pass_set", async () => {
+  test("Pass_set", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.setItem("b", 4)
   var c set to b.setItem("d", 2)
@@ -177,7 +177,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   var b = _stdlib.setItem(a, "b", 4);
@@ -200,14 +200,14 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:1, b:3, z:10]Dictionary [a:1, b:4, z:10, d:2]",
+      "ImmutableDictionary {a:1, b:3, z:10}ImmutableDictionary {a:1, b:4, z:10, d:2}",
     );
   });
 
-  ignore_test("Pass_removeEntry", async () => {
+  test("Pass_removeEntry", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.removeItem("b")
   print a
@@ -215,7 +215,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   var b = _stdlib.removeItem(a, "b");
@@ -237,21 +237,21 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:1, b:3, z:10]Dictionary [a:1, z:10]",
+      "ImmutableDictionary {a:1, b:3, z:10}ImmutableDictionary {a:1, z:10}",
     );
   });
 
-  ignore_test("Pass_removeInvalidKey", async () => {
+  test("Pass_removeInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.removeItem("c")
   print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   var b = _stdlib.removeItem(a, "c");
@@ -270,14 +270,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
-  ignore_test("Pass_CreateEmptyDictionary", async () => {
+  test("Pass_CreateEmptyDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Dictionary<of String, Int>()
+  var a set to new ImmutableDictionary<of String, Int>()
   var b set to a.setItem("Foo", 1)
   set b to b.setItem("Bar", 3)
   var k set to b.keys()
@@ -288,7 +288,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(new Object(), ["String", "Int"]);
+  var a = system.initialise(system.immutableDictionary(new Object()), ["String", "Int"]);
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
   var k = _stdlib.keys(b);
@@ -312,10 +312,10 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  ignore_test("Fail_RepeatedKey", async () => {
+  test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "a":10]
+constant a set to {"a":1, "b":3, "a":10}
 main
   print a
 end main
@@ -333,10 +333,10 @@ end main
     assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s)"]);
   });
 
-  ignore_test("Fail_InconsistentTypes1", async () => {
+  test("Fail_InconsistentTypes1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3.1, "c":10]
+constant a set to {"a":1, "b":3.1, "c":10}
 main
   print a
 end main
@@ -354,10 +354,10 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  ignore_test("Fail_InconsistentTypes2", async () => {
+  test("Fail_InconsistentTypes2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, 10:10]
+constant a set to {"a":1, "b":3, 10:10}
 main
   print a
 end main
@@ -375,10 +375,10 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  ignore_test("Fail_AccessByInvalidKey", async () => {
+  test("Fail_AccessByInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a["c"]
 end main
@@ -399,7 +399,7 @@ end main
   ignore_test("Fail_RemoveInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.removeItem(10)
 end main
@@ -417,10 +417,10 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
   });
 
-  ignore_test("Fail_SetInvalidKeyType", async () => {
+  test("Fail_SetInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.setItem(10, 4)
 end main
@@ -441,7 +441,7 @@ end main
   ignore_test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   var b set to a.setItem("b", 3.1)
 end main
