@@ -341,12 +341,10 @@ export class FileImpl implements File, Scope {
     return this._compileStatus;
   }
   readCompileStatusForDashboard(): string {
-    let status = helper_parseStatusAsDisplayStatus(this.readParseStatus());
-    if (status === DisplayStatus.ok) {
-      const compile = helper_compileStatusAsDisplayStatus(this._compileStatus);
-      if (compile !== DisplayStatus.default) {
-        status = compile;
-      }
+    let status = DisplayStatus.default;
+    const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
+    if (parseStatus === DisplayStatus.ok) {
+      status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }
     return DisplayStatus[status];
   }
