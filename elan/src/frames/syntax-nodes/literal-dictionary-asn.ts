@@ -50,7 +50,7 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     }
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
-    return `{${itemList}}`;
+    return `system.dictionary({${itemList}})`;
   }
 
   symbolType() {

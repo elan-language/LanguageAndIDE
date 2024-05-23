@@ -1,5 +1,5 @@
-interface hasHiddenType {
-  _type: "ImmutableList" | "ArrayList" | "Tuple" | "Iter";
+export interface hasHiddenType {
+  _type: "ImmutableList" | "ArrayList" | "Tuple" | "Iter" | "Dictionary" | "ImmutableDictionary";
 }
 
 export class StdLib {
@@ -51,14 +51,18 @@ export class StdLib {
     }
 
     if (typeof v === "object" && v.constructor.name === "Object") {
-      const items = Object.getOwnPropertyNames(v);
+      const type = (v as unknown as hasHiddenType)._type;
+      const [tn, pf, sf] = type === "Dictionary" ? ["Dictionary", "[", "]"] : ["ImmutableDictionary", "{", "}"];
+    
+
+      const items = Object.getOwnPropertyNames(v).filter(s => s !== "_type");
       if (items.length === 0) {
-        return "empty Dictionary";
+        return `empty ${tn}`;
       }
 
       const o = v as { [key: string]: object };
 
-      return `Dictionary [${items.map((n) => `${n}:${o[n]}`).join(", ")}]`;
+      return `${tn} ${pf}${items.map((n) => `${n}:${o[n]}`).join(", ")}${sf}`;
     }
 
     if (typeof v === "object") {
@@ -87,7 +91,7 @@ export class StdLib {
   }
 
   keys<T>(dict: { [key: string]: T }): string[] {
-    const lst = Object.getOwnPropertyNames(dict);
+    const lst = Object.getOwnPropertyNames(dict).filter(s => s !== "_type");
     (lst as unknown as hasHiddenType)._type = "ImmutableList";
     return lst;
   }

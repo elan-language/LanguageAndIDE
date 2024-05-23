@@ -425,7 +425,7 @@ async function main() {
   var a = _stdlib.asArray(system.list([1, 2, 3]));
   var sa = _stdlib.asString(a);
   system.print(_stdlib.asString(sa));
-  var d = {"a" : 1, "b" : 3, "z" : 10};
+  var d = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
   var sd = _stdlib.asString(d);
   system.print(_stdlib.asString(sd));
 }

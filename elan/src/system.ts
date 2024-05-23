@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestStatus } from "./frames/status-enums";
+import { hasHiddenType } from "./std-lib";
 
 export class AssertOutcome {
   constructor(
@@ -25,9 +26,10 @@ export class System {
     return undefined;
   }
 
-  private default_array = this.array(0);
+  private default_array = this.literalArray([]);
   private default_list = this.list([]);
-  private default_dictionary = {};
+  private default_dictionary = this.dictionary({});
+  private default_immutableDictionary = this.immutableDictionary({});
   private default_iter = this.iter([]);
 
   defaultList() {
@@ -47,27 +49,38 @@ export class System {
   }
 
   tuple(t: Array<any>) {
-    (<any>t)._type = "Tuple";
+    (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
   }
 
   list(t: Array<any>) {
-    (<any>t)._type = "ImmutableList";
+    (t as unknown as hasHiddenType)._type = "ImmutableList";
     return t;
   }
 
+  dictionary(t: object) {
+    (t as unknown as hasHiddenType)._type = "Dictionary";
+    return t;
+  }
+
+  immutableDictionary(t: object) {
+    (t as unknown as hasHiddenType)._type = "ImmutableDictionary";
+    return t;
+  }
+
+
   literalArray(t: Array<any>) {
-    (<any>t)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "ArrayList";
     return t;
   }
 
   iter(t: Array<any>) {
-    (<any>t)._type = "Iter";
+    (t as unknown as hasHiddenType)._type = "Iter";
     return t;
   }
 
   wrapArray(t: Array<any>) {
-    (<any>t)._type = "ArrayList";
+    (t as unknown as hasHiddenType)._type = "ArrayList";
     return t;
   }
 
@@ -80,13 +93,8 @@ export class System {
         arr[i] = a2;
       }
     }
-    (<any>arr)._type = "ArrayList";
+    (arr as unknown as hasHiddenType)._type = "ArrayList";
     return arr;
-  }
-
-  dictionary(t: Array<any>) {
-    (<any>t)._type = "Dictionary";
-    return t;
   }
 
   initialise(toInit: any, toType?: string[]) {

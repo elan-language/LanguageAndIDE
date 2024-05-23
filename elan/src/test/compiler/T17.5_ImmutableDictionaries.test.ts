@@ -12,17 +12,17 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("T17_Dictionaries", () => {
-  test("Pass_LiteralConstantAndPrinting", async () => {
+suite("T17.5_ImmutableDictionaries", () => {
+  ignore_test("Pass_LiteralConstantAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -43,7 +43,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
-  test("Pass_AccessByKey", async () => {
+  ignore_test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -52,7 +52,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(a["z"]));
@@ -73,7 +73,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test("Pass_keys", async () => {
+  ignore_test("Pass_keys", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -82,7 +82,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.keys(a)));
@@ -103,7 +103,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableList {a, b, z}");
   });
 
-  test("Pass_hasKey", async () => {
+  ignore_test("Pass_hasKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -113,7 +113,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
@@ -135,7 +135,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  test("Pass_values", async () => {
+  ignore_test("Pass_values", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -144,7 +144,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.values(a)));
@@ -165,7 +165,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 3, 10}");
   });
 
-  test("Pass_set", async () => {
+  ignore_test("Pass_set", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -177,7 +177,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   var b = _stdlib.setItem(a, "b", 4);
@@ -204,7 +204,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_removeEntry", async () => {
+  ignore_test("Pass_removeEntry", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -215,7 +215,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   var b = _stdlib.removeItem(a, "b");
@@ -241,7 +241,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_removeInvalidKey", async () => {
+  ignore_test("Pass_removeInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -251,7 +251,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = {"a" : 1, "b" : 3, "z" : 10};
 
 async function main() {
   var b = _stdlib.removeItem(a, "c");
@@ -273,7 +273,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
-  test("Pass_CreateEmptyDictionary", async () => {
+  ignore_test("Pass_CreateEmptyDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -312,7 +312,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Fail_RepeatedKey", async () => {
+  ignore_test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "a":10]
@@ -333,7 +333,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Duplicate Dictionary key(s)"]);
   });
 
-  test("Fail_InconsistentTypes1", async () => {
+  ignore_test("Fail_InconsistentTypes1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3.1, "c":10]
@@ -354,7 +354,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  test("Fail_InconsistentTypes2", async () => {
+  ignore_test("Fail_InconsistentTypes2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, 10:10]
@@ -375,7 +375,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test("Fail_AccessByInvalidKey", async () => {
+  ignore_test("Fail_AccessByInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -396,7 +396,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test("Fail_RemoveInvalidKeyType", async () => {
+  ignore_test("Fail_RemoveInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
@@ -417,7 +417,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
   });
 
-  test("Fail_SetInvalidKeyType", async () => {
+  ignore_test("Fail_SetInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to ["a":1, "b":3, "z":10]
