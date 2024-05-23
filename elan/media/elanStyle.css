@@ -279,10 +279,3 @@ selector placeholder  {
 .selected > selector placeholder {
     display: none;
 }
-
-/* Buttons */
-button, button img {
-    height: 40px;
-    padding:0px;
-}
-

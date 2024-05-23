@@ -113,6 +113,19 @@ body {
     grid-row: 35;
   }
 
+/* Buttons */
+button#run-button, button#pause, button#stop  {
+  height: 40px;
+  padding: 0px;
+  opacity: 0.5;
+}
+button#run-button.enabled, button#pause.enabled, button#stop.enabled{
+  opacity: 1;
+}
+button img {
+  height: 40px;
+  padding:0px;
+}
 
 button, button:hover, button:active, button:focus  {
     background-color: var(--idePanelBackground);

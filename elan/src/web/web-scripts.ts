@@ -112,14 +112,19 @@ function updateDisplayValues() {
     "class",
     file.readParseStatusForDashboard(),
   );
+  const compile = file.readCompileStatusForDashboard();
   (document.getElementById("compile") as HTMLDivElement).setAttribute(
-    "class",
-    file.readCompileStatusForDashboard(),
+    "class", compile
   );
   (document.getElementById("test") as HTMLDivElement).setAttribute(
     "class",
     file.readTestStatusForDashboard(),
   );
+  if (compile === "ok") {
+    (document.getElementById("run-button") as HTMLButtonElement).setAttribute(
+      "class", "enabled"
+    );
+  }
 }
 
 /**
