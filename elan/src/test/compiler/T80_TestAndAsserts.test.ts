@@ -138,8 +138,8 @@ test list_
 end test
 
 test dictionary_
-  var a set to {3:"a", 2:"b", 4:"c"}
-  var b set to {3:"a", 2:"b", 4:"c"}
+  var a set to [3:"a", 2:"b", 4:"c"]
+  var b set to [3:"a", 2:"b", 4:"c"]
   assert a is b
 end test
 

@@ -25,7 +25,7 @@ import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { Term } from "../frames/parse-nodes/term";
 import { KVPnode } from "../frames/parse-nodes/kvp-node";
-import { Dictionary } from "../frames/parse-nodes/dictionary";
+import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { LitValueNode } from "../frames/parse-nodes/lit-value";
 import { LiteralNode } from "../frames/parse-nodes/literal-node";
 import { LitTuple } from "../frames/parse-nodes/lit-tuple";
@@ -1967,89 +1967,89 @@ suite("Parsing Nodes", () => {
   });
   test("Dictionary", () => {
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37}`,
+      `["a":37]`,
       ParseStatus.valid,
-      `{"a":37}`,
+      `["a":37]`,
       "",
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37, "b":42}`,
+      `["a":37, "b":42]`,
       ParseStatus.valid,
       "",
       "",
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37, "b":42`,
+      `["a":37, "b":42`,
       ParseStatus.incomplete,
       "",
       "",
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37,`,
+      `["a":37,`,
       ParseStatus.incomplete,
       "",
       "",
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37, 42:"b"}`,
+      `["a":37, 42:"b"]`,
       ParseStatus.invalid,
       "",
-      `{"a":37, 42:"b"}`,
+      `["a":37, 42:"b"]`,
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
-      `{"a":37, "b":42)`,
+      `["a":37, "b":42)`,
       ParseStatus.invalid,
       "",
-      `{"a":37, "b":42)`,
+      `["a":37, "b":42)`,
       "",
     );
 
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
-      `{"a":37, "b":42}`,
+      `["a":37, "b":42]`,
       ParseStatus.valid,
       "",
       "",
       "",
     );
     testNodeParse(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
-      `{"a":1.0, 5:"abc"}`,
+      `["a":1.0, 5:"abc"]`,
       ParseStatus.valid,
       "",
       "",

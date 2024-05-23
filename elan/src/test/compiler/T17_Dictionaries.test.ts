@@ -16,7 +16,7 @@ suite("T17_Dictionaries", () => {
   test("Pass_LiteralConstantAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a
 end main`;
@@ -46,7 +46,7 @@ return [main, _tests];}`;
   test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a["z"]
 end main`;
@@ -76,7 +76,7 @@ return [main, _tests];}`;
   test("Pass_keys", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a.keys()
 end main`;
@@ -106,7 +106,7 @@ return [main, _tests];}`;
   test("Pass_hasKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a.hasKey("b")
   print a.hasKey("d")
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   test("Pass_values", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a.values()
 end main`;
@@ -168,7 +168,7 @@ return [main, _tests];}`;
   test("Pass_set", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   var b set to a.setItem("b", 4)
   var c set to b.setItem("d", 2)
@@ -207,7 +207,7 @@ return [main, _tests];}`;
   test("Pass_removeEntry", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   var b set to a.removeItem("b")
   print a
@@ -244,7 +244,7 @@ return [main, _tests];}`;
   test("Pass_removeInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   var b set to a.removeItem("c")
   print b
@@ -315,7 +315,7 @@ return [main, _tests];}`;
   test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "a":10}
+constant a set to ["a":1, "b":3, "a":10]
 main
   print a
 end main
@@ -336,7 +336,7 @@ end main
   test("Fail_InconsistentTypes1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3.1, "c":10}
+constant a set to ["a":1, "b":3.1, "c":10]
 main
   print a
 end main
@@ -357,7 +357,7 @@ end main
   test("Fail_InconsistentTypes2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, 10:10}
+constant a set to ["a":1, "b":3, 10:10]
 main
   print a
 end main
@@ -378,7 +378,7 @@ end main
   test("Fail_AccessByInvalidKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   print a["c"]
 end main
@@ -399,7 +399,7 @@ end main
   test("Fail_RemoveInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   var b set to a.removeItem(10)
 end main
@@ -420,7 +420,7 @@ end main
   test("Fail_SetInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to {"a":1, "b":3, "z":10}
+constant a set to ["a":1, "b":3, "z":10]
 main
   var b set to a.setItem(10, 4)
 end main

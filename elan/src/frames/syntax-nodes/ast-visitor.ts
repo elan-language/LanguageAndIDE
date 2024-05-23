@@ -62,7 +62,7 @@ import { IfExprAsn } from "./if-expr-asn";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { EnumType } from "../symbols/enum-type";
-import { Dictionary } from "../parse-nodes/dictionary";
+import { DictionaryNode } from "../parse-nodes/dictionary-node";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { RangeAsn } from "./range-asn";
@@ -375,7 +375,7 @@ export function transform(
     return new LiteralArrayListAsn(items, fieldId, scope);
   }
 
-  if (node instanceof Dictionary) {
+  if (node instanceof DictionaryNode) {
     const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
     return new LiteralDictionaryAsn(items, fieldId, scope);
   }

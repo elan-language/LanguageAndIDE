@@ -539,7 +539,7 @@ end main`;
 main
   var a set to new ArrayList<of String>(3)
   var b set to {1.0, 2}
-  var c set to {"a":1.0, "b":3, "z":10}
+  var c set to ["a":1.0, "b":3, "z":10]
   set a to {1.0, 2}
   set b to a
   set c to b

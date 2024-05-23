@@ -3,7 +3,7 @@ import { KVPnode } from "./kvp-node";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { ImmutableListNode } from "./immutable-list-node";
 
-export class Dictionary extends AbstractParseNode {
+export class ImmutableDictionaryNode extends AbstractParseNode {
   kvps: ImmutableListNode | undefined;
   private keyConstructor: () => ParseNode;
   private valueConstructor: () => ParseNode;

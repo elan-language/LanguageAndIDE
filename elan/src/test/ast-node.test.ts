@@ -35,12 +35,13 @@ import { GenericClassType } from "../frames/symbols/generic-class-type";
 import { TupleType } from "../frames/symbols/tuple-type";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { EnumType } from "../frames/symbols/enum-type";
-import { Dictionary } from "../frames/parse-nodes/dictionary";
+import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { LitValueNode } from "../frames/parse-nodes/lit-value";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { DictionaryType } from "../frames/symbols/dictionary-type";
 import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
 import { FunctionType } from "../frames/symbols/function-type";
+import { ArrayListType } from "../frames/symbols/array-list-type";
 
 suite("ASTNodes", () => {
   test("ExprNode", () => {
@@ -453,7 +454,7 @@ suite("ASTNodes", () => {
 
   test("Dictionary", () => {
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
@@ -463,7 +464,7 @@ suite("ASTNodes", () => {
       new DictionaryType(stringType, intType),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
@@ -473,7 +474,7 @@ suite("ASTNodes", () => {
       new DictionaryType(stringType, intType),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
@@ -483,7 +484,7 @@ suite("ASTNodes", () => {
       new DictionaryType(stringType, intType),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
@@ -535,8 +536,8 @@ suite("ASTNodes", () => {
     testAST(
       new LiteralNode(),
       stubField,
-      `{"a":37, 42:"b"}`,
-      `{("a":37), (42:"b")}`,
+      `["a":37, 42:"b"]`,
+      `[("a":37), (42:"b")]`,
       new DictionaryType(stringType, intType),
     );
     testAST(
@@ -549,9 +550,23 @@ suite("ASTNodes", () => {
     testAST(
       new LiteralNode(),
       stubField,
+      `[(3,4), (5,6)]`,
+      "[(3, 4), (5, 6)]",
+      new ArrayListType(new TupleType([intType, intType]), false),
+    );
+    testAST(
+      new LiteralNode(),
+      stubField,
       `{"apple", "pear"}`,
       `{"apple", "pear"}`,
       new ImmutableListType(stringType),
+    );
+    testAST(
+      new LiteralNode(),
+      stubField,
+      `["apple", "pear"]`,
+      `["apple", "pear"]`,
+      new ArrayListType(stringType, false),
     );
   });
 
