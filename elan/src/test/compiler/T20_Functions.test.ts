@@ -140,8 +140,8 @@ main
     print foo(3,4)
 end main
 
-function foo(a as Int, b as Int) return Array<of Int>
-    return default Array<of Int>
+function foo(a as Int, b as Int) return ArrayList<of Int>
+    return default ArrayList<of Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -165,7 +165,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty Array");
+    await assertObjectCodeExecutes(fileImpl, "empty ArrayList");
   });
 
   test("Pass_Recursive", async () => {
@@ -608,7 +608,7 @@ end function`;
 main
 end main
 
-function foo(a as Array<of Int>) return Int
+function foo(a as ArrayList<of Int>) return Int
     return a[0]
 end function`;
 
@@ -621,7 +621,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not pass Array into function"]);
+    assertDoesNotCompile(fileImpl, ["May not pass ArrayList into function"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -630,7 +630,7 @@ end function`;
 main
 end main
 
-function foo(b as Int, a as Array<of Int>) return Int
+function foo(b as Int, a as ArrayList<of Int>) return Int
     return a[0]
 end function`;
 
@@ -643,7 +643,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not pass Array into function"]);
+    assertDoesNotCompile(fileImpl, ["May not pass ArrayList into function"]);
   });
 
   test("Fail_TooManyParams", async () => {

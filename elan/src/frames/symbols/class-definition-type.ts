@@ -13,6 +13,7 @@ export class ClassDefinitionType implements SymbolType, Scope {
     public isAbstract: boolean,
     private readonly scope: ClassFrame,
   ) {}
+  isImmutable = false;
 
   getParent(): Parent {
     return this.scope as Parent;

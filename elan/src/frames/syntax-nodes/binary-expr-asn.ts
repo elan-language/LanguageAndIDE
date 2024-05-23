@@ -1,7 +1,7 @@
 import { BooleanType } from "../symbols/boolean-type";
 import { ClassType } from "../symbols/class-type";
 import { IntType } from "../symbols/int-type";
-import { ListType } from "../symbols/list-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { FloatType } from "../symbols/number-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
@@ -134,13 +134,13 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (
       this.op === OperationSymbol.Add &&
-      (lst instanceof ListType || rst instanceof ListType)
+      (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
     ) {
-      if (lst instanceof ListType && rst instanceof ListType) {
+      if (lst instanceof ImmutableListType && rst instanceof ImmutableListType) {
         mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
-      } else if (lst instanceof ListType) {
+      } else if (lst instanceof ImmutableListType) {
         mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
-      } else if (rst instanceof ListType) {
+      } else if (rst instanceof ImmutableListType) {
         mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
       }
       return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
@@ -167,7 +167,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (
       this.op === OperationSymbol.Add &&
-      (lst instanceof ListType || rst instanceof ListType)
+      (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
     ) {
       return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }

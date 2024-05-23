@@ -18,7 +18,7 @@ suite("T43_Inheritance", () => {
 
 main
   var x set to new Bar()
-  var l set to new List<of Foo>() + x
+  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()
@@ -136,7 +136,7 @@ return [main, _tests];}`;
 
 main
   var x set to new Bar()
-  var l set to new List<of Foo>() + x
+  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()
@@ -264,7 +264,7 @@ return [main, _tests];}`;
 
 main
   var x set to new Bar()
-  var l set to new List<of Foo>() + x
+  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()

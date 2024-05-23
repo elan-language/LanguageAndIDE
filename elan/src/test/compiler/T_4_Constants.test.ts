@@ -276,7 +276,7 @@ return [main, _tests];}`;
   test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [1,2,3]
+constant a set to {1,2,3}
 main
   print a
 end main
@@ -301,13 +301,53 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2, 3}");
+  });
+
+  test("Fail_ArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to [1,2,3]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_Dictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to ["a":1]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 
   test("Pass_ListofList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [[4, 5], [6, 7, 8]]
+constant a set to {{4, 5}, {6, 7, 8}}
 main
   print a
 end main
@@ -334,7 +374,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [List [4, 5], List [6, 7, 8]]",
+      "ImmutableList {ImmutableList {4, 5}, ImmutableList {6, 7, 8}}",
     );
   });
 

@@ -5,6 +5,7 @@ export class EnumValueType implements SymbolType {
     public readonly owner: string,
     public readonly name: string,
   ) {}
+  isImmutable = true;
 
   toString() {
     return `${this.owner}.${this.name}`;

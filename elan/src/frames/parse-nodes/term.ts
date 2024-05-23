@@ -7,7 +7,7 @@ import { TupleNode as TupleNode } from "./tuple-node";
 import { Lambda } from "./lambda";
 import { IfExpr } from "./if-expr";
 import { Field } from "../interfaces/field";
-import { ListNode } from "./list-node";
+import { ImmutableListNode } from "./immutable-list-node";
 import { ExprNode } from "./expr-node";
 import { VarRefNode } from "./var-ref-node";
 import { FunctionCallNode } from "./function-call-node";
@@ -15,6 +15,7 @@ import { LiteralNode } from "./literal-node";
 import { KeywordNode } from "./keyword-node";
 import { thisKeyword } from "../keywords";
 import { DefaultOfTypeNode } from "./default-of-type-node";
+import { ArrayListNode } from "./array-list-node";
 
 export class Term extends AbstractAlternatives {
   constructor() {
@@ -34,7 +35,8 @@ export class Term extends AbstractAlternatives {
     this.alternatives.push(new FunctionCallNode());
     this.alternatives.push(new KeywordNode(thisKeyword));
     this.alternatives.push(new DefaultOfTypeNode());
-    this.alternatives.push(new ListNode(() => new ExprNode()));
+    this.alternatives.push(new ImmutableListNode(() => new ExprNode()));
+    this.alternatives.push(new ArrayListNode(() => new ExprNode()));
     this.alternatives.push(new TupleNode());
     super.parseText(text);
   }

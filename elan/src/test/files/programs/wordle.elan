@@ -1,4 +1,4 @@
-# 76ec34dc1c57a2bb8710f63257d116242fc677e1bb951753b603b8157f41b1ba Elan v0.1 valid
+# 49aa3f9e73643e48efd167eec649984ca5a10b9ae8efe234986442c8efbb57f4 Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -75,7 +75,7 @@ function size(g as Group<of String>) return Int
   return members.count
 end function
 
-function allRemainingWordCounts(possAnswers as List<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
+function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
   let parallel be possAttempts.asParallel()
   return parallel.map(lambda w as String => wordCountRemainingAfterAttempt(possAnswers, w))
 end function
@@ -86,7 +86,7 @@ function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of Str
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
-function bestAttempt(possAnswers as List<of String>, possAttempts as List<of String>) return String
+function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
   let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
   let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
@@ -104,9 +104,9 @@ immutable class WordCount
 
 end class
 
-constant letterPositions set to [0, 1, 2, 3, 4]
+constant letterPositions set to {0, 1, 2, 3, 4}
 
 # Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
-constant allPossibleAnswers set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
+constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
 
-constant validWords set to ["ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"]
+constant validWords set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}

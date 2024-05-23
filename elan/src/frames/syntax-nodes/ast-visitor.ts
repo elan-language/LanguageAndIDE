@@ -31,7 +31,7 @@ import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
 import { DefaultTypeAsn } from "./default-type-asn";
 import { WithClause } from "../parse-nodes/with-clause";
 import { WithAsn } from "./with-asn";
-import { ListNode } from "../parse-nodes/list-node";
+import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
 import { SetAsn } from "./set-asn";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { VarAsn } from "./var-asn";
@@ -47,7 +47,7 @@ import {
 } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
-import { LiteralListAsn } from "./literal-list-asn";
+import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
@@ -62,7 +62,7 @@ import { IfExprAsn } from "./if-expr-asn";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { EnumType } from "../symbols/enum-type";
-import { Dictionary } from "../parse-nodes/dictionary";
+import { DictionaryNode } from "../parse-nodes/dictionary-node";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { RangeAsn } from "./range-asn";
@@ -98,6 +98,10 @@ import { ExprAsn } from "./expr-asn";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
+import { ArrayListNode } from "../parse-nodes/array-list-node";
+import { LiteralArrayListAsn } from "./literal-array-list-asn";
+import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
+import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -363,14 +367,24 @@ export function transform(
     return transform(node.bestMatch, fieldId, scope);
   }
 
-  if (node instanceof ListNode) {
+  if (node instanceof ImmutableListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId, scope);
+    return new LiteralImmutableListAsn(items, fieldId, scope);
   }
 
-  if (node instanceof Dictionary) {
-    const items = transform(node.kvps, fieldId, scope) as LiteralListAsn;
+  if (node instanceof ArrayListNode) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralArrayListAsn(items, fieldId, scope);
+  }
+
+  if (node instanceof DictionaryNode) {
+    const items = transform(node.kvps, fieldId, scope) as LiteralArrayListAsn;
     return new LiteralDictionaryAsn(items, fieldId, scope);
+  }
+
+  if (node instanceof ImmutableDictionaryNode) {
+    const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
+    return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof TupleNode) {
@@ -415,7 +429,7 @@ export function transform(
 
   if (node instanceof TermWith) {
     const obj = transform(node.term, fieldId, scope) as ExprAsn;
-    const changes = transform(node.with, fieldId, scope) as LiteralListAsn;
+    const changes = transform(node.with, fieldId, scope) as LiteralImmutableListAsn;
     return new WithAsn(obj, changes, fieldId, scope);
   }
 

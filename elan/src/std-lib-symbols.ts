@@ -1,9 +1,9 @@
-import { ArrayType } from "./frames/symbols/array-type";
+import { ArrayListType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/number-type";
 import { IntType } from "./frames/symbols/int-type";
-import { ListType } from "./frames/symbols/list-type";
+import { ImmutableListType } from "./frames/symbols/immutable-list-type";
 import { StringType } from "./frames/symbols/string-type";
 import { ElanSymbol } from "./frames/interfaces/symbol";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -50,7 +50,7 @@ export class StdLibSymbols implements Scope {
         "asArray",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          new ArrayType(new GenericParameterType("T"), false),
+          new ArrayListType(new GenericParameterType("T"), false),
           true,
         ),
       ),
@@ -61,7 +61,7 @@ export class StdLibSymbols implements Scope {
         "asList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          new ListType(new GenericParameterType("T")),
+          new ImmutableListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -75,9 +75,10 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
           ],
-          new ListType(new GenericParameterType("T1")),
+          new ImmutableListType(new GenericParameterType("T1")),
           true,
         ),
       ),
@@ -105,9 +106,10 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
           ],
-          new ListType(new GenericParameterType("T1")),
+          new ImmutableListType(new GenericParameterType("T1")),
           true,
         ),
       ),
@@ -121,6 +123,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
             new GenericParameterType("T1"),
           ],
@@ -160,6 +163,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
@@ -167,6 +171,7 @@ export class StdLibSymbols implements Scope {
           new DictionaryType(
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
+            true
           ),
           true,
         ),
@@ -181,12 +186,14 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true,
             ),
             new GenericParameterType("T1"),
           ],
           new DictionaryType(
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
+            true,
           ),
           true,
         ),

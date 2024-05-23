@@ -16,7 +16,7 @@ suite("Pass_CanUseVariables", () => {
 main
   var a set to 1
   var b set to "Apple"
-  var c set to [1,2,3]
+  var c set to {1,2,3}
   print "{a} {b} {c}"
 end main`;
 
@@ -40,7 +40,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple List [1, 2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "1 Apple ImmutableList {1, 2, 3}");
   });
 
   // Fails TODO

@@ -7,6 +7,8 @@ export class GenericClassType implements GenericSymbolType {
     public ofType: SymbolType,
   ) {}
 
+  isImmutable = false;
+
   get name() {
     return `Class ${this.className}<${this.ofType.name}>`;
   }

@@ -406,10 +406,10 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var l set to [1,2,3]
+    var l set to {1,2,3}
     var sl set to l.asString()
     print sl
-    var a set to [1,2,3].asArray()
+    var a set to {1,2,3}.asArray()
     var sa set to a.asString()
     print sa
     var d set to ["a":1, "b":3, "z":10]
@@ -425,7 +425,7 @@ async function main() {
   var a = _stdlib.asArray(system.list([1, 2, 3]));
   var sa = _stdlib.asString(a);
   system.print(_stdlib.asString(sa));
-  var d = {"a" : 1, "b" : 3, "z" : 10};
+  var d = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
   var sd = _stdlib.asString(d);
   system.print(_stdlib.asString(sd));
 }
@@ -444,7 +444,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [1, 2, 3]Array [1, 2, 3]Dictionary [a:1, b:3, z:10]",
+      "ImmutableList {1, 2, 3}ArrayList [1, 2, 3]Dictionary [a:1, b:3, z:10]",
     );
   });
 });

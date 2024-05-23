@@ -9,7 +9,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { KvpAsn } from "./kvp-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 
-export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
+export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly list: LiteralImmutableListAsn,
     public readonly fieldId: string,
@@ -50,15 +50,15 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     }
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
-    return `system.dictionary({${itemList}})`;
+    return `system.immutableDictionary({${itemList}})`;
   }
 
   symbolType() {
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new DictionaryType(first.keySymbolType(), first.symbolType(), false);
+      return new DictionaryType(first.keySymbolType(), first.symbolType(), true);
     }
-    return new DictionaryType(UnknownType.Instance, UnknownType.Instance, false);
+    return new DictionaryType(UnknownType.Instance, UnknownType.Instance, true);
   }
 
   toString() {

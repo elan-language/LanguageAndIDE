@@ -132,8 +132,8 @@ main
 end main
 
 test list_
-  var a set to [3, 2, 4, 0]
-  var b set to [3, 2, 4, 0]
+  var a set to {3, 2, 4, 0}
+  var b set to {3, 2, 4, 0}
   assert a is b
 end test
 
@@ -194,8 +194,8 @@ _tests.push(["test3", (_outcomes) => {
 }]);
 
 _tests.push(["test15", (_outcomes) => {
-  var a = {3 : "a", 2 : "b", 4 : "c"};
-  var b = {3 : "a", 2 : "b", 4 : "c"};
+  var a = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
+  var b = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
   _outcomes.push(system.assert(a, b, "assert24", _stdlib));
 }]);
 
@@ -258,8 +258,8 @@ return [main, _tests];}`;
         [
           new AssertOutcome(
             TestStatus.pass,
-            "List [3, 2, 4, 0]",
-            "List [3, 2, 4, 0]",
+            "ImmutableList {3, 2, 4, 0}",
+            "ImmutableList {3, 2, 4, 0}",
             "assert12",
           ),
         ],

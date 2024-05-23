@@ -312,12 +312,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f() return Iter<of Int>
-  return [1, 2]
+  return {1, 2}
 end function
 
 main
   var a set to f()
-  set a to [1, 2]
+  set a to {1, 2}
   print a
 end main`;
 
@@ -345,7 +345,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [1, 2]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2}");
   });
 
   test("Fail_WrongKeyword", async () => {
@@ -512,7 +512,7 @@ main
   var d set to f()
   set a to 1.0
   set b to false
-  set c to [1.0, 2]
+  set c to {1.0, 2}
   set d to 1.0
 end main`;
 
@@ -528,7 +528,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Float to Boolean",
       "Incompatible types Boolean to Int",
-      "Incompatible types List<of Float> to String",
+      "Incompatible types ImmutableList<of Float> to String",
       "Incompatible types Float to Int",
     ]);
   });
@@ -537,10 +537,10 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
-  var b set to [1.0, 2]
+  var a set to new ArrayList<of String>(3)
+  var b set to {1.0, 2}
   var c set to ["a":1.0, "b":3, "z":10]
-  set a to [1.0, 2]
+  set a to {1.0, 2}
   set b to a
   set c to b
 end main`;
@@ -555,9 +555,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types List<of Float> to Array<of String>",
-      "Incompatible types Array<of String> to List<of Float>",
-      "Incompatible types List<of Float> to Dictionary",
+      "Incompatible types ImmutableList<of Float> to ArrayList<of String>",
+      "Incompatible types ArrayList<of String> to ImmutableList<of Float>",
+      "Incompatible types ImmutableList<of Float> to Dictionary",
     ]);
   });
 

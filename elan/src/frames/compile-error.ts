@@ -1,3 +1,5 @@
+import { SymbolType } from "./interfaces/symbol-type";
+
 export enum Priority {
   illegalOperation,
   unknownIdentifier,
@@ -57,7 +59,7 @@ export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
     super(
       Priority.illegalOperation,
-      `Array requires 1 or 2 parameters`,
+      `ArrayList requires 1 or 2 parameters`,
       location,
       false,
     );
@@ -183,9 +185,13 @@ export class ArrayCompileError extends CompileError {
   constructor(location: string) {
     super(
       Priority.illegalOperation,
-      `May not pass Array into function`,
+      `May not pass ArrayList into function`,
       location,
       false,
     );
   }
+}
+
+function mutability(b : boolean){
+  return b ? "Immutable" : "Mutable";
 }

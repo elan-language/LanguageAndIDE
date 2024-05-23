@@ -22,7 +22,7 @@ import { ElanSymbol } from "../frames/interfaces/symbol";
 import { UnknownType } from "../frames/symbols/unknown-type";
 import { ClassType } from "../frames/symbols/class-type";
 import { Scope } from "../frames/interfaces/scope";
-import { ListType } from "../frames/symbols/list-type";
+import { ImmutableListType } from "../frames/symbols/immutable-list-type";
 import { FunctionType } from "../frames/symbols/function-type";
 import { GenericParameterType } from "../frames/symbols/generic-parameter-type";
 import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
@@ -512,13 +512,13 @@ const stubHolder = {
       case "lst":
         return {
           symbolId: "",
-          symbolType: () => new ListType(intType),
+          symbolType: () => new ImmutableListType(intType),
           symbolScope: SymbolScope.unknown,
         };
       case "lst1":
         return {
           symbolId: "",
-          symbolType: () => new ListType(stringType),
+          symbolType: () => new ImmutableListType(stringType),
           symbolScope: SymbolScope.unknown,
         };
       case "simpleGeneric":
@@ -537,7 +537,7 @@ const stubHolder = {
           symbolId: "",
           symbolType: () =>
             new FunctionType(
-              [new ListType(new GenericParameterType("T"))],
+              [new ImmutableListType(new GenericParameterType("T"))],
               new GenericParameterType("T"),
               false,
             ),

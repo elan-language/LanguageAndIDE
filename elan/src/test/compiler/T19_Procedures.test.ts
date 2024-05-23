@@ -128,12 +128,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [2, 3].asArray()
+  var a set to {2, 3}.asArray()
   call changeFirst(a)
   print a
 end main
 
-procedure changeFirst(a as Array<of Int>)
+procedure changeFirst(a as ArrayList<of Int>)
     set a[0] to 5
 end procedure`;
 
@@ -160,7 +160,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Array [5, 3]");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [5, 3]");
   });
 
   test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
@@ -644,13 +644,13 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [2, 3]
+  var a set to {2, 3}
   call changeAll(a)
   print a
 end main
 
-procedure changeAll(a as List<of Int>)
-    set a to [1, 2, 3]
+procedure changeAll(a as ImmutableList<of Int>)
+    set a to {1, 2, 3}
 end procedure`;
 
     const fileImpl = new FileImpl(

@@ -42,7 +42,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     gt = gt ? `, [${gt}]` : "";
     const pp = this.parameters.map((p) => p.compile()).join(", ");
     const t = this.typeNode.compile();
-    if (this.typeNode.id === "Array") {
+    if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(
         this.parameters,
@@ -52,8 +52,16 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.array(${pp})${gt})`;
     }
 
-    if (this.typeNode.id === "List") {
+    if (this.typeNode.id === "ImmutableList") {
       return `system.initialise(system.list(new ${t}(${pp}))${gt})`;
+    }
+
+    if (this.typeNode.id === "ImmutableDictionary") {
+      return `system.initialise(system.immutableDictionary(new ${t}(${pp}))${gt})`;
+    }
+
+    if (this.typeNode.id === "Dictionary") {
+      return `system.initialise(system.dictionary(new ${t}(${pp}))${gt})`;
     }
 
     const cls = this.scope.resolveSymbol(

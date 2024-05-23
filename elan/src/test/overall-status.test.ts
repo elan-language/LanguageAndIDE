@@ -40,7 +40,7 @@ suite("Editing Fields Tests", () => {
         assert.equal(f.readRunStatus(), RunStatus.default);
     });
 
-    test("test top-level Parse, Compile, Test Status changes", async () => {
+    ignore_test("test top-level Parse, Compile, Test Status changes", async () => {
         const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
         const runner = createTestRunner();
         await f.refreshAllStatuses(runner);

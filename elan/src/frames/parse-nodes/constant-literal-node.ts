@@ -1,11 +1,10 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ArrayListNode } from "./array-list-node";
 import { DictionaryNode } from "./dictionary-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ImmutableListNode } from "./immutable-list-node";
 import { LitValueNode } from "./lit-value";
 
-export class LiteralNode extends AbstractAlternatives {
+export class ConstantLiteralNode extends AbstractAlternatives {
   constructor() {
     super();
     this.completionWhenEmpty = "";
@@ -13,18 +12,11 @@ export class LiteralNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     this.alternatives.push(new LitValueNode());
-    this.alternatives.push(new ImmutableListNode(() => new LiteralNode()));
-    this.alternatives.push(new ArrayListNode(() => new LiteralNode()));
-    this.alternatives.push(
-      new DictionaryNode(
-        () => new LitValueNode(),
-        () => new LiteralNode(),
-      ),
-    );
+    this.alternatives.push(new ImmutableListNode(() => new ConstantLiteralNode()));
     this.alternatives.push(
       new ImmutableDictionaryNode(
         () => new LitValueNode(),
-        () => new LiteralNode(),
+        () => new ConstantLiteralNode(),
       ),
     );
     super.parseText(text);

@@ -14,7 +14,7 @@ import { LitFloat } from "../frames/parse-nodes/lit-float";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression";
 import { LitString } from "../frames/parse-nodes/lit-string";
-import { ListNode } from "../frames/parse-nodes/list-node";
+import { ImmutableListNode } from "../frames/parse-nodes/immutable-list-node";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
@@ -25,7 +25,7 @@ import { Lambda } from "../frames/parse-nodes/lambda";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { Term } from "../frames/parse-nodes/term";
-import { ListType } from "../frames/symbols/list-type";
+import { ImmutableListType } from "../frames/symbols/immutable-list-type";
 import { LiteralNode } from "../frames/parse-nodes/literal-node";
 import { LitTuple } from "../frames/parse-nodes/lit-tuple";
 import { VarRefNode } from "../frames/parse-nodes/var-ref-node";
@@ -35,12 +35,13 @@ import { GenericClassType } from "../frames/symbols/generic-class-type";
 import { TupleType } from "../frames/symbols/tuple-type";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { EnumType } from "../frames/symbols/enum-type";
-import { Dictionary } from "../frames/parse-nodes/dictionary";
+import { DictionaryNode } from "../frames/parse-nodes/dictionary-node";
 import { LitValueNode } from "../frames/parse-nodes/lit-value";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { DictionaryType } from "../frames/symbols/dictionary-type";
 import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
 import { FunctionType } from "../frames/symbols/function-type";
+import { ArrayListType } from "../frames/symbols/array-list-type";
 
 suite("ASTNodes", () => {
   test("ExprNode", () => {
@@ -78,11 +79,11 @@ suite("ASTNodes", () => {
       intType,
     );
     const ast =
-      "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type List<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
+      "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type ImmutableList<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
     testAST(
       new ExprNode(),
       stubField,
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())",
+      "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
       ast,
       intType,
     );
@@ -96,17 +97,17 @@ suite("ASTNodes", () => {
     testAST(
       new ExprNode(),
       stubField,
-      "default List<of Int>",
-      "Default (Type List<Type Int>)",
-      new ListType(intType),
+      "default ImmutableList<of Int>",
+      "Default (Type ImmutableList<Type Int>)",
+      new ImmutableListType(intType),
     );
 
     const ast1 =
-      "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
+      "With (p) ({Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))})";
     testAST(
       new ExprNode(),
       stubField,
-      "p with [x set to p.x + 3, y set to p.y - 1]",
+      "p with {x set to p.x + 3, y set to p.y - 1}",
       ast1,
       new ClassType("p"),
     );
@@ -248,48 +249,48 @@ suite("ASTNodes", () => {
     );
   });
 
-  test("List", () => {
+  test("ImmutableList", () => {
     testAST(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       stubField,
-      `[1,2,3 ,4 , 5]`,
-      "[1, 2, 3, 4, 5]",
-      new ListType(intType),
+      `{1,2,3 ,4 , 5}`,
+      "{1, 2, 3, 4, 5}",
+      new ImmutableListType(intType),
     );
     testAST(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       stubField,
-      `[[1,2], [3], [4,5,6]]`,
-      "[[1, 2], [3], [4, 5, 6]]",
-      new ListType(new ListType(intType)),
+      `{{1,2}, {3}, {4,5,6}}`,
+      "{{1, 2}, {3}, {4, 5, 6}}",
+      new ImmutableListType(new ImmutableListType(intType)),
     );
     testAST(
-      new ListNode(() => new LitString()),
+      new ImmutableListNode(() => new LitString()),
       stubField,
-      `["apple", "pear"]`,
-      '["apple", "pear"]',
-      new ListType(stringType),
+      `{"apple", "pear"}`,
+      '{"apple", "pear"}',
+      new ImmutableListType(stringType),
     );
     testAST(
-      new ListNode(() => new LiteralNode()),
+      new ImmutableListNode(() => new LiteralNode()),
       stubField,
-      `["apple", "pear"]`,
-      '["apple", "pear"]',
-      new ListType(stringType),
+      `{"apple", "pear"}`,
+      '{"apple", "pear"}',
+      new ImmutableListType(stringType),
     );
     testAST(
-      new ListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode()),
       stubField,
-      `[a, 3+ 4 , func(a, 3) -1, new Foo()]`,
-      "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]",
-      new ListType(intType),
+      `{a, 3+ 4 , func(a, 3) -1, new Foo()}`,
+      "{a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()}",
+      new ImmutableListType(intType),
     );
     testAST(
-      new ListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode()),
       stubField,
-      `[a, 3+ 4 , foo(a, 3) -1]`,
-      "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]",
-      new ListType(intType),
+      `{a, 3+ 4 , foo(a, 3) -1}`,
+      "{a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)}",
+      new ImmutableListType(intType),
     );
   });
 
@@ -318,16 +319,16 @@ suite("ASTNodes", () => {
     testAST(
       new TypeWithOptGenerics(),
       stubField,
-      `Foo<of List<of Bar>>`,
-      "Type Foo<Type List<Type Bar>>",
-      new GenericClassType("Foo", new ListType(new ClassType("Bar"))),
+      `Foo<of ImmutableList<of Bar>>`,
+      "Type Foo<Type ImmutableList<Type Bar>>",
+      new GenericClassType("Foo", new ImmutableListType(new ClassType("Bar"))),
     );
     testAST(
       new TypeNode(),
       stubField,
-      `Foo<of List<of Bar>>`,
-      "Type Foo<Type List<Type Bar>>",
-      new GenericClassType("Foo", new ListType(new ClassType("Bar"))),
+      `Foo<of ImmutableList<of Bar>>`,
+      "Type Foo<Type ImmutableList<Type Bar>>",
+      new GenericClassType("Foo", new ImmutableListType(new ClassType("Bar"))),
     );
     testAST(
       new TypeNode(),
@@ -363,11 +364,11 @@ suite("ASTNodes", () => {
     testAST(
       new TypeNode(),
       stubField,
-      `Foo<of List<of (Bar, Qux)>>`,
-      "Type Foo<Type List<Type Tuple<Type Bar, Type Qux>>>",
+      `Foo<of ImmutableList<of (Bar, Qux)>>`,
+      "Type Foo<Type ImmutableList<Type Tuple<Type Bar, Type Qux>>>",
       new GenericClassType(
         "Foo",
-        new ListType(
+        new ImmutableListType(
           new TupleType([new ClassType("Bar"), new ClassType("Qux")]),
         ),
       ),
@@ -402,9 +403,9 @@ suite("ASTNodes", () => {
     testAST(
       new Lambda(),
       stubField,
-      `lambda s as Int, p as List<of Int> => s + p.first()`,
-      "Lambda (Param s : Type Int, Param p : Type List<Type Int>) => (Add (s) (Func Call p.first ()))",
-      new FunctionType([intType, new ListType(intType)], intType, false),
+      `lambda s as Int, p as ImmutableList<of Int> => s + p.first()`,
+      "Lambda (Param s : Type Int, Param p : Type ImmutableList<Type Int>) => (Add (s) (Func Call p.first ()))",
+      new FunctionType([intType, new ImmutableListType(intType)], intType, false),
     );
     testAST(
       new Lambda(),
@@ -453,44 +454,44 @@ suite("ASTNodes", () => {
 
   test("Dictionary", () => {
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
       stubField,
       `["a":37]`,
       `[("a":37)]`,
-      new DictionaryType(stringType, intType),
+      new DictionaryType(stringType, intType, false),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitString(),
         () => new LitInt(),
       ),
       stubField,
       `["a":37, "b":42]`,
       `[("a":37), ("b":42)]`,
-      new DictionaryType(stringType, intType),
+      new DictionaryType(stringType, intType, false),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
       stubField,
       `["a":37, "b":42]`,
       `[("a":37), ("b":42)]`,
-      new DictionaryType(stringType, intType),
+      new DictionaryType(stringType, intType, false),
     );
     testAST(
-      new Dictionary(
+      new DictionaryNode(
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
       stubField,
       `["a":1.1, 5:"abc"]`,
       `[("a":1.1), (5:"abc")]`,
-      new DictionaryType(stringType, floatType),
+      new DictionaryType(stringType, floatType, false),
     );
   });
 
@@ -537,28 +538,42 @@ suite("ASTNodes", () => {
       stubField,
       `["a":37, 42:"b"]`,
       `[("a":37), (42:"b")]`,
-      new DictionaryType(stringType, intType),
+      new DictionaryType(stringType, intType, false),
+    );
+    testAST(
+      new LiteralNode(),
+      stubField,
+      `{(3,4), (5,6)}`,
+      "{(3, 4), (5, 6)}",
+      new ImmutableListType(new TupleType([intType, intType])),
     );
     testAST(
       new LiteralNode(),
       stubField,
       `[(3,4), (5,6)]`,
       "[(3, 4), (5, 6)]",
-      new ListType(new TupleType([intType, intType])),
+      new ArrayListType(new TupleType([intType, intType]), false),
+    );
+    testAST(
+      new LiteralNode(),
+      stubField,
+      `{"apple", "pear"}`,
+      `{"apple", "pear"}`,
+      new ImmutableListType(stringType),
     );
     testAST(
       new LiteralNode(),
       stubField,
       `["apple", "pear"]`,
       `["apple", "pear"]`,
-      new ListType(stringType),
+      new ArrayListType(stringType, false),
     );
   });
 
   test("Var", () => {
     testAST(new VarRefNode(), stubField, `a`, "a", intType);
     testAST(new VarRefNode(), stubField, `result`, "result", unknownType);
-    testAST(new VarRefNode(), stubField, `lst`, "lst", new ListType(intType));
+    testAST(new VarRefNode(), stubField, `lst`, "lst", new ImmutableListType(intType));
     testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
     testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
     testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
@@ -567,7 +582,7 @@ suite("ASTNodes", () => {
       stubField,
       `bar.lst[..4]`,
       "bar.lst[Range ..4]",
-      new ListType(intType),
+      new ImmutableListType(intType),
     );
   });
 

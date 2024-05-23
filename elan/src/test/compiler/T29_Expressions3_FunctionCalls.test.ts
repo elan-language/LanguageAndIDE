@@ -168,7 +168,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to [3.1, 3].min()
+  var x set to {3.1, 3}.min()
   print x
 end main`;
 

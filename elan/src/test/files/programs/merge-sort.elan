@@ -1,11 +1,11 @@
-# fda15d540467471a9aa356f4a813eddd8b4aeaa88c77a106c8c4594a88f7ec42 Elan v0.1 valid
+# 8345c69338f229369c751ee6ac3a0fd325e6c8631882790b996d51f7e5c0f4b5 Elan v0.1 valid
 
 main
-  var li set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  var li set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
   print mergeSort(li)
 end main
 
-function mergeSort(list as List<of String>) return List<of String>
+function mergeSort(list as ImmutableList<of String>) return ImmutableList<of String>
   var result set to list
   if list.length() > 1
     var mid set to list.length() div 2
@@ -14,31 +14,31 @@ function mergeSort(list as List<of String>) return List<of String>
   return result
 end function
 
-function merge(a as List<of String>, b as List<of String>) return List<of String>
-  var result set to new List<of String>()
+function merge(a as ImmutableList<of String>, b as ImmutableList<of String>) return ImmutableList<of String>
+  var result set to new ImmutableList<of String>()
   if a.length() is 0
     set result to b
     else if b.length() is 0
       set result to a
     else if isBefore(a[0], b[0])
-      set result to [a[0]] + merge(a[1..], b)
+      set result to {a[0]} + merge(a[1..], b)
     else
-      set result to [b[0]] + merge(a, b[1..])
+      set result to {b[0]} + merge(a, b[1..])
   end if
   return result
 end function
 
 test mergeSort
-  var li1 set to new List<of String>()
+  var li1 set to new ImmutableList<of String>()
   assert mergeSort(li1) is li1
-  var li2 set to ["plum"]
+  var li2 set to {"plum"}
   assert mergeSort(li2) is li2
-  var li3 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  var expected3 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
+  var li3 set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
+  var expected3 set to {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"}
   assert mergeSort(li3) is expected3
-  var li4 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  var expected4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
+  var li4 set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"}
+  var expected4 set to {"apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"}
   assert mergeSort(li4) is expected4
-  var li5 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+  var li5 set to {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"}
   assert mergeSort(li5) is li5
 end test

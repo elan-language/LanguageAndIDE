@@ -8,6 +8,8 @@ export class FunctionType implements SymbolType {
     public readonly isPure: boolean = true,
   ) {}
 
+  isImmutable = true;
+
   get name() {
     return `Function (${this.parametersTypes.map((p) => p.name).join(", ")}) : ${this.returnType.name}`;
   }

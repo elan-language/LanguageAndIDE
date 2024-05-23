@@ -5,13 +5,13 @@ import { FloatType } from "../symbols/number-type";
 import { GenericClassType } from "../symbols/generic-class-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
-import { ListType } from "../symbols/list-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "../interfaces/ast-node";
 import { CompileError } from "../compile-error";
-import { ArrayType } from "../symbols/array-type";
+import { ArrayListType } from "../symbols/array-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
@@ -38,11 +38,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.compileErrors = [];
-    if (this.id === "Dictionary") {
+    if (this.id === "Dictionary" || this.id === "ImmutableDictionary") {
       return "Object";
     }
 
-    if (this.id === "List") {
+    if (this.id === "ImmutableList") {
       return "Array";
     }
 
@@ -58,12 +58,14 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return '""';
       case "Boolean":
         return "false";
-      case "List":
+      case "ImmutableList":
         return "system.defaultList()";
-      case "Array":
+      case "ArrayList":
         return "system.defaultArray()";
       case "Dictionary":
         return "system.defaultDictionary()";
+      case "ImmutableDictionary":
+          return "system.defaultImmutableDictionary()";
       case "Iter":
         return "system.defaultIter()";
     }
@@ -80,15 +82,22 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return BooleanType.Instance;
       case "String":
         return StringType.Instance;
-      case "List":
-        return new ListType(this.genericParameters[0].symbolType());
-      case "Array":
-        return new ArrayType(this.genericParameters[0].symbolType(), this.is2d);
+      case "ImmutableList":
+        return new ImmutableListType(this.genericParameters[0].symbolType());
+      case "ArrayList":
+        return new ArrayListType(this.genericParameters[0].symbolType(), this.is2d);
       case "Dictionary":
         return new DictionaryType(
           this.genericParameters[0].symbolType(),
           this.genericParameters[1].symbolType(),
+          false
         );
+      case "ImmutableDictionary":
+          return new DictionaryType(
+            this.genericParameters[0].symbolType(),
+            this.genericParameters[1].symbolType(),
+            true
+          );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
       case "Iter":

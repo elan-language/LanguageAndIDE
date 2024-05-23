@@ -3,6 +3,8 @@ import { SymbolType } from "../interfaces/symbol-type";
 export class StringType implements SymbolType {
   private constructor() {}
 
+  isImmutable = true;
+
   static Instance: SymbolType = new StringType();
 
   name = "String";

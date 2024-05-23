@@ -11,7 +11,8 @@ import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { Qualifier } from "./qualifier";
 import { InstanceNode } from "./instanceNode";
 import { LitValueNode } from "./lit-value";
-import { ListNode } from "./list-node";
+import { ImmutableListNode } from "./immutable-list-node";
+import { ArrayListNode } from "./array-list-node";
 
 export class FunctionCallNode extends AbstractSequence {
   qualifier: OptionalNode | undefined;
@@ -20,7 +21,8 @@ export class FunctionCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const list = () => new Qualifier(new ListNode(() => new ExprNode()));
+      const array = () => new Qualifier(new ArrayListNode(() => new ExprNode()));
+      const list = () => new Qualifier(new ImmutableListNode(() => new ExprNode()));
       const literal = () => new Qualifier(new LitValueNode());
       const global = () => new Qualifier(new KeywordNode(globalKeyword));
       const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
@@ -31,6 +33,7 @@ export class FunctionCallNode extends AbstractSequence {
         instance,
         literal,
         list,
+        array,
       ]);
       this.qualifier = new OptionalNode(qualifier);
       this.name = new IdentifierNode();

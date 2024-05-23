@@ -1,26 +1,26 @@
-﻿# 266d81a657d21cb14240d7dab25b5201a91b31f639ffb4ab8e83df663d9022ad Elan v0.1 valid
+﻿# 087793fd2f969fc91993bbd499ffdcf532603e0a70dddfa63b23c287f60eb00c Elan v0.1 valid
 
 function calcA(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
   return (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)
 end function
 
-function calcSumX(points as List<of (Float, Float)>) return Float
+function calcSumX(points as ImmutableList<of (Float, Float)>) return Float
   return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first())
 end function
 
-function calcSumXY(points as List<of (Float, Float)>) return Float
+function calcSumXY(points as ImmutableList<of (Float, Float)>) return Float
   return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first() * p.second())
 end function
 
-function calcSumY(points as List<of (Float, Float)>) return Float
+function calcSumY(points as ImmutableList<of (Float, Float)>) return Float
   return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.second())
 end function
 
-function calcSumXsq(points as List<of (Float, Float)>) return Float
+function calcSumXsq(points as ImmutableList<of (Float, Float)>) return Float
   return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first() * p.first())
 end function
 
-function bestFitFromPoints(points as List<of (Float, Float)>) return (Float, Float)
+function bestFitFromPoints(points as ImmutableList<of (Float, Float)>) return (Float, Float)
   return bestFitFromSummaryTerms(calcSumX(points), calcSumXsq(points), calcSumY(points), calcSumXY(points), points.length())
 end function
 
@@ -32,4 +32,4 @@ function bestFitFromSummaryTerms(sumX as Float, sumX2 as Float, sumY as Float, s
   return (calcA(sumX, sumX2, sumY, sumXY, n), calcB(sumX, sumX2, sumY, sumXY, n))
 end function
 
-constant example set to [(0, 2.673040396), (1, 3.550437254), (2, 5.063963424), (3, 6.445493589), (4, 5.959864362), (5, 7.826499306), (6, 5.628729698), (7, 10.65942485), (8, 8.010532477), (9, 10.67121885), (10, 9.000669447), (11, 13.50830072), (12, 11.43464406), (13, 13.58275437), (14, 13.10821319), (15, 10.28617997), (16, 17.86384888), (17, 15.20409345), (18, 17.00764549), (19, 12.11596949)]
+constant example set to {(0, 2.673040396), (1, 3.550437254), (2, 5.063963424), (3, 6.445493589), (4, 5.959864362), (5, 7.826499306), (6, 5.628729698), (7, 10.65942485), (8, 8.010532477), (9, 10.67121885), (10, 9.000669447), (11, 13.50830072), (12, 11.43464406), (13, 13.58275437), (14, 13.10821319), (15, 10.28617997), (16, 17.86384888), (17, 15.20409345), (18, 17.00764549), (19, 12.11596949)}

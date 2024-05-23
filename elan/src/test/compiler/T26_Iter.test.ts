@@ -15,7 +15,7 @@ suite("T26_Iter", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var it set to [1.0, 5, 6]
+  var it set to {1.0, 5, 6}
   call printEach(it)
 end main
   
@@ -140,7 +140,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var it set to [1.0, 2, 3, 4, 5, 6, 7]
+  var it set to {1.0, 2, 3, 4, 5, 6, 7}
   call printAsIter(it)
   call printAsList(it)
 end main
@@ -184,7 +184,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [1, 2, 3, 4, 5, 6, 7]List [4, 5, 6, 7]",
+      "ImmutableList {1, 2, 3, 4, 5, 6, 7}ImmutableList {4, 5, 6, 7}",
     );
   });
 

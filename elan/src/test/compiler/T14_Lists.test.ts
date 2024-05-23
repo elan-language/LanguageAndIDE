@@ -17,7 +17,7 @@ suite("T14_Lists", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   print a
 end main`;
 
@@ -39,14 +39,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [4, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4, 5, 6, 7, 8}");
   });
 
   test("Pass_literalListofList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [[4, 5], [6, 7, 8]]
+  var a set to {{4, 5}, {6, 7, 8}}
   print a
 end main`;
 
@@ -70,7 +70,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [List [4, 5], List [6, 7, 8]]",
+      "ImmutableList {ImmutableList {4, 5}, ImmutableList {6, 7, 8}}",
     );
   });
 
@@ -79,7 +79,7 @@ return [main, _tests];}`;
 
 main
   var a set to new Foo()
-  var b set to [a]
+  var b set to {a}
   print b
 end main
 
@@ -124,7 +124,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [foo]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {foo}");
   });
 
   test("Pass_literalListOfValueId", async () => {
@@ -136,11 +136,11 @@ main
   var c set to "c"
   var d set to "d"
   var e set to true
-  var v set to [a]
-  var w set to [b]
-  var x set to [c]
-  var y set to [d]
-  var z set to [e]
+  var v set to {a}
+  var w set to {b}
+  var x set to {c}
+  var y set to {d}
+  var z set to {e}
   print v
   print w
   print x
@@ -203,7 +203,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [1]List [1.1]List [c]List [d]List [true]",
+      "ImmutableList {1}ImmutableList {1.1}ImmutableList {c}ImmutableList {d}ImmutableList {true}",
     );
   });
 
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["Foo", "Bar"]
+  var a set to {"Foo", "Bar"}
   print a
 end main`;
 
@@ -233,14 +233,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [Foo, Bar]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {Foo, Bar}");
   });
 
   test("Pass_literalListWithCoercion", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4.1,5,6,7,8]
+  var a set to {4.1,5,6,7,8}
   print a
 end main`;
 
@@ -262,14 +262,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [4.1, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4.1, 5, 6, 7, 8}");
   });
 
   test("Pass_length", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
+    var a set to {4,5,6,7,8}
     print a.length()
 end main`;
 
@@ -298,7 +298,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to new List<of Int>()
+    var a set to new ImmutableList<of Int>()
     print a.length()
 end main`;
 
@@ -327,7 +327,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
+    var a set to {4,5,6,7,8}
     print a[2]
 end main`;
 
@@ -356,7 +356,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   print a[2..]
   print a[1..3]
   print a[..2]
@@ -384,7 +384,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [6, 7, 8]List [5, 6]List [4, 5]",
+      "ImmutableList {6, 7, 8}ImmutableList {5, 6}ImmutableList {4, 5}",
     );
   });
 
@@ -392,7 +392,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   var b set to a + 9
   print a
   print b
@@ -420,7 +420,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [4, 5, 6, 7, 8]List [4, 5, 6, 7, 8, 9]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {4, 5, 6, 7, 8, 9}",
     );
   });
 
@@ -428,7 +428,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   var b set to 9 + a
   print a
   print b
@@ -456,7 +456,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [4, 5, 6, 7, 8]List [9, 4, 5, 6, 7, 8]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {9, 4, 5, 6, 7, 8}",
     );
   });
 
@@ -464,8 +464,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
-    var b set to [1,2,3]
+    var a set to {4,5,6,7,8}
+    var b set to {1,2,3}
     var c set to a + b
     print a
     print b
@@ -496,14 +496,14 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [4, 5, 6, 7, 8]List [1, 2, 3]List [4, 5, 6, 7, 8, 1, 2, 3]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {1, 2, 3}ImmutableList {4, 5, 6, 7, 8, 1, 2, 3}",
     );
   });
 
   test("Pass_constantLists", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [4,5,6,7,8]
+constant a set to {4,5,6,7,8}
 main
   print a
 end main`;
@@ -527,14 +527,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [4, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4, 5, 6, 7, 8}");
   });
 
   test("Pass_createEmptyListUsingConstructor", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new List<of Int>()
+  var a set to new ImmutableList<of Int>()
   print a
 end main`;
 
@@ -556,7 +556,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty List");
+    await assertObjectCodeExecutes(fileImpl, "empty ImmutableList");
   });
 
   test("Pass_Default", async () => {
@@ -571,7 +571,7 @@ class Foo
   constructor()
   end constructor
   
-  property it as List<of Int>
+  property it as ImmutableList<of Int>
   
   function asString() return String
     return "A Foo"
@@ -585,7 +585,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["it", "List<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["it", "ImmutableList<of Int>"]]);};
   constructor() {
 
   }
@@ -610,7 +610,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty List");
+    await assertObjectCodeExecutes(fileImpl, "empty ImmutableList");
   });
 
   test("Fail_emptyLiteralList", async () => {
@@ -636,7 +636,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [3, "apples"]
+  var a set to {3, "apples"}
 end main
 `;
 
@@ -656,7 +656,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [3, 3.1]
+  var a set to {3, 3.1}
 end main
 `;
 
@@ -676,7 +676,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4, 5, 6, 7, 8]
+  var a set to {4, 5, 6, 7, 8}
   var b set to a[5]
 end main
 `;
