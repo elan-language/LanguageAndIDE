@@ -3,12 +3,12 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ExprAsn } from "./expr-asn";
-import { LiteralListAsn } from "./literal-list-asn";
+import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 
 export class WithAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly obj: ExprAsn,
-    private readonly withClause: LiteralListAsn,
+    private readonly withClause: LiteralImmutableListAsn,
     public readonly fieldId: string,
     scope: Scope,
   ) {

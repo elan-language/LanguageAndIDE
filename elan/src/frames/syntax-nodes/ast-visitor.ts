@@ -47,7 +47,7 @@ import {
 } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
-import { LiteralListAsn } from "./literal-list-asn";
+import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
@@ -98,6 +98,8 @@ import { ExprAsn } from "./expr-asn";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
+import { ArrayListNode } from "../parse-nodes/array-list-node";
+import { LiteralArrayListAsn } from "./literal-array-list-asn";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -365,11 +367,16 @@ export function transform(
 
   if (node instanceof ImmutableListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralListAsn(items, fieldId, scope);
+    return new LiteralImmutableListAsn(items, fieldId, scope);
+  }
+
+  if (node instanceof ArrayListNode) {
+    const items = transformMany(node.csv as CSV, fieldId, scope).items;
+    return new LiteralArrayListAsn(items, fieldId, scope);
   }
 
   if (node instanceof Dictionary) {
-    const items = transform(node.kvps, fieldId, scope) as LiteralListAsn;
+    const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
     return new LiteralDictionaryAsn(items, fieldId, scope);
   }
 
@@ -415,7 +422,7 @@ export function transform(
 
   if (node instanceof TermWith) {
     const obj = transform(node.term, fieldId, scope) as ExprAsn;
-    const changes = transform(node.with, fieldId, scope) as LiteralListAsn;
+    const changes = transform(node.with, fieldId, scope) as LiteralImmutableListAsn;
     return new WithAsn(obj, changes, fieldId, scope);
   }
 

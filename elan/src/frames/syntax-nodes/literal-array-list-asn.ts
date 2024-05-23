@@ -1,4 +1,3 @@
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { mustBeCompatibleType } from "../compile-rules";
@@ -6,8 +5,9 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
+import { ArrayListType } from "../symbols/array-list-type";
 
-export class LiteralListAsn
+export class LiteralArrayListAsn
   extends AbstractAstNode
   implements AstCollectionNode
 {
@@ -41,19 +41,19 @@ export class LiteralListAsn
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");
-    return `system.list([${it}])`;
+    return `system.literalArray([${it}])`;
   }
 
   symbolType() {
     const ofType = this.items[0]?.symbolType();
     if (ofType) {
-      return new ImmutableListType(ofType);
+      return new ArrayListType(ofType, false);
     }
-    return new ImmutableListType(UnknownType.Instance);
+    return new ArrayListType(UnknownType.Instance, false);
   }
 
   toString() {
     const it = this.items.map((p) => p.toString()).join(", ");
-    return `{${it}}`;
+    return `[${it}]`;
   }
 }

@@ -56,6 +56,11 @@ export class System {
     return t;
   }
 
+  literalArray(t: Array<any>) {
+    (<any>t)._type = "ArrayList";
+    return t;
+  }
+
   iter(t: Array<any>) {
     (<any>t)._type = "Iter";
     return t;
