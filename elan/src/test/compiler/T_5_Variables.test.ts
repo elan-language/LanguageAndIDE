@@ -480,7 +480,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_UseOfKeywordAsName", async () => {
+  test("Fail_UseOfKeywordAsName", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -496,7 +496,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["identifier may not be a reserved keyword"]);
   });
 
   test("Fail_TypeCheck1", async () => {
