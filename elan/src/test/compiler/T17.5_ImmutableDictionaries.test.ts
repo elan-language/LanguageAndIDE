@@ -46,13 +46,13 @@ return [main, _tests];}`;
   ignore_test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a["z"]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   system.print(_stdlib.asString(a["z"]));
@@ -73,16 +73,16 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  ignore_test("Pass_keys", async () => {
+  test("Pass_keys", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a.keys()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.keys(a)));
@@ -103,17 +103,17 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableList {a, b, z}");
   });
 
-  ignore_test("Pass_hasKey", async () => {
+  test("Pass_hasKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a.hasKey("b")
   print a.hasKey("d")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
@@ -135,16 +135,16 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  ignore_test("Pass_values", async () => {
+  test("Pass_values", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to ["a":1, "b":3, "z":10]
+constant a set to {"a":1, "b":3, "z":10}
 main
   print a.values()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = {"a" : 1, "b" : 3, "z" : 10};
+const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.values(a)));

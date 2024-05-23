@@ -56,9 +56,9 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
   symbolType() {
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new DictionaryType(first.keySymbolType(), first.symbolType());
+      return new DictionaryType(first.keySymbolType(), first.symbolType(), false);
     }
-    return new DictionaryType(UnknownType.Instance, UnknownType.Instance);
+    return new DictionaryType(UnknownType.Instance, UnknownType.Instance, false);
   }
 
   toString() {

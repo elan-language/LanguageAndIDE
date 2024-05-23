@@ -153,6 +153,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return new DictionaryType(
         this.generateType(type.keyType, matches),
         this.generateType(type.valueType, matches),
+        type.isImmutable
       );
     }
 

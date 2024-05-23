@@ -8,7 +8,6 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { KvpAsn } from "./kvp-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 
 export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -57,9 +56,9 @@ export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements As
   symbolType() {
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new ImmutableDictionaryType(first.keySymbolType(), first.symbolType());
+      return new DictionaryType(first.keySymbolType(), first.symbolType(), true);
     }
-    return new ImmutableDictionaryType(UnknownType.Instance, UnknownType.Instance);
+    return new DictionaryType(UnknownType.Instance, UnknownType.Instance, true);
   }
 
   toString() {

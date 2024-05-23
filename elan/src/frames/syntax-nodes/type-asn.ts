@@ -64,6 +64,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return "system.defaultArray()";
       case "Dictionary":
         return "system.defaultDictionary()";
+      case "ImmutableDictionary":
+          return "system.defaultImmutableDictionary()";
       case "Iter":
         return "system.defaultIter()";
     }
@@ -88,7 +90,14 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return new DictionaryType(
           this.genericParameters[0].symbolType(),
           this.genericParameters[1].symbolType(),
+          false
         );
+      case "ImmutableDictionary":
+          return new DictionaryType(
+            this.genericParameters[0].symbolType(),
+            this.genericParameters[1].symbolType(),
+            true
+          );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
       case "Iter":

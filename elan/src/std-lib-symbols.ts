@@ -75,6 +75,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
           ],
           new ImmutableListType(new GenericParameterType("T1")),
@@ -105,6 +106,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
           ],
           new ImmutableListType(new GenericParameterType("T1")),
@@ -121,6 +123,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
             new GenericParameterType("T1"),
           ],
@@ -160,6 +163,7 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true
             ),
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
@@ -167,6 +171,7 @@ export class StdLibSymbols implements Scope {
           new DictionaryType(
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
+            true
           ),
           true,
         ),
@@ -181,12 +186,14 @@ export class StdLibSymbols implements Scope {
             new DictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
+              true,
             ),
             new GenericParameterType("T1"),
           ],
           new DictionaryType(
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
+            true,
           ),
           true,
         ),
