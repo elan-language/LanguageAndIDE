@@ -208,7 +208,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [2, 2]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {2, 2}");
   });
 
   test("Pass_maxBy2", async () => {

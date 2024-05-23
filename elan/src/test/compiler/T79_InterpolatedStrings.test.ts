@@ -40,7 +40,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple ImmutableList [1, 2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "1 Apple ImmutableList {1, 2, 3}");
   });
 
   // Fails TODO

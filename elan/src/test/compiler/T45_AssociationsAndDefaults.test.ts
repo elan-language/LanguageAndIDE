@@ -121,7 +121,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ChloeJoeImmutableList [5, 2, 4]");
+    await assertObjectCodeExecutes(fileImpl, "ChloeJoeImmutableList {5, 2, 4}");
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {

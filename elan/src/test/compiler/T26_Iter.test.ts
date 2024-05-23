@@ -184,7 +184,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [1, 2, 3, 4, 5, 6, 7]ImmutableList [4, 5, 6, 7]",
+      "ImmutableList {1, 2, 3, 4, 5, 6, 7}ImmutableList {4, 5, 6, 7}",
     );
   });
 

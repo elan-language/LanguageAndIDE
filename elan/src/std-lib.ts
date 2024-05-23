@@ -28,7 +28,7 @@ export class StdLib {
           if (v.length === 0) {
             return "empty ImmutableList";
           }
-          return `ImmutableList [${v.map((i) => this.asString(i)).join(", ")}]`;
+          return `ImmutableList {${v.map((i) => this.asString(i)).join(", ")}}`;
         case "Tuple":
           return `Tuple (${v.map((i) => this.asString(i)).join(", ")})`;
         case "ArrayList":

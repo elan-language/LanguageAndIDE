@@ -39,7 +39,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [4, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4, 5, 6, 7, 8}");
   });
 
   test("Pass_literalListofList", async () => {
@@ -70,7 +70,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [ImmutableList [4, 5], ImmutableList [6, 7, 8]]",
+      "ImmutableList {ImmutableList {4, 5}, ImmutableList {6, 7, 8}}",
     );
   });
 
@@ -124,7 +124,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [foo]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {foo}");
   });
 
   test("Pass_literalListOfValueId", async () => {
@@ -203,7 +203,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [1]ImmutableList [1.1]ImmutableList [c]ImmutableList [d]ImmutableList [true]",
+      "ImmutableList {1}ImmutableList {1.1}ImmutableList {c}ImmutableList {d}ImmutableList {true}",
     );
   });
 
@@ -233,7 +233,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [Foo, Bar]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {Foo, Bar}");
   });
 
   test("Pass_literalListWithCoercion", async () => {
@@ -262,7 +262,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [4.1, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4.1, 5, 6, 7, 8}");
   });
 
   test("Pass_length", async () => {
@@ -384,7 +384,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [6, 7, 8]ImmutableList [5, 6]ImmutableList [4, 5]",
+      "ImmutableList {6, 7, 8}ImmutableList {5, 6}ImmutableList {4, 5}",
     );
   });
 
@@ -420,7 +420,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [4, 5, 6, 7, 8]ImmutableList [4, 5, 6, 7, 8, 9]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {4, 5, 6, 7, 8, 9}",
     );
   });
 
@@ -456,7 +456,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [4, 5, 6, 7, 8]ImmutableList [9, 4, 5, 6, 7, 8]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {9, 4, 5, 6, 7, 8}",
     );
   });
 
@@ -496,7 +496,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList [4, 5, 6, 7, 8]ImmutableList [1, 2, 3]ImmutableList [4, 5, 6, 7, 8, 1, 2, 3]",
+      "ImmutableList {4, 5, 6, 7, 8}ImmutableList {1, 2, 3}ImmutableList {4, 5, 6, 7, 8, 1, 2, 3}",
     );
   });
 
@@ -527,7 +527,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [4, 5, 6, 7, 8]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {4, 5, 6, 7, 8}");
   });
 
   test("Pass_createEmptyListUsingConstructor", async () => {

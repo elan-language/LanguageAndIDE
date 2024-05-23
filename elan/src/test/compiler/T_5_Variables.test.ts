@@ -345,7 +345,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList [1, 2]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2}");
   });
 
   test("Fail_WrongKeyword", async () => {
