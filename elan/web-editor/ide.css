@@ -2,8 +2,9 @@
     --ideDefaultBackground: rgb(68, 114, 196);
     --idePanelBackground: white;
     --ideDefaultText: black;
-    --ideReverseText: white;;
-    --ideTitleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif
+    --ideReverseText: white;
+    --ideTitleFont: Segoe UI, Open Sans, Verdana, Arial, Helvetica, sans-serif;
+    --ideTitleSize: 12pt;
 }
 
 body {
@@ -24,7 +25,7 @@ body {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
-    font-size: 12pt;
+    font-size: var(--ideTitleSize);
   }
   #code-title {
     grid-row: 1;
@@ -114,6 +115,13 @@ body {
   }
 
 /* Buttons */
+button {
+  font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+}
 button#run-button, button#pause, button#stop  {
   height: 40px;
   padding: 0px;
@@ -141,4 +149,9 @@ button:hover, button:active {
 
 #console, .elan-code {
   overflow-y: auto;
+}
+
+button#clear-console {
+  grid-row: 1;
+  grid-column: 47;
 }

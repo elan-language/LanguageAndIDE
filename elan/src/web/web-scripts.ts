@@ -349,7 +349,7 @@ system.printer = printer;
 system.inputter = inputter;
 
 const runButton = document.getElementById("run-button");
-const clearButton = document.getElementById("clear-button");
+const clearConsoleButton = document.getElementById("clear-console");
 const newButton = document.getElementById("new");
 
 const consoleWindow = document.getElementById("console")!;
@@ -396,7 +396,7 @@ runButton?.addEventListener("click", () => {
   }
 });
 
-clearButton?.addEventListener("click", () => {
+clearConsoleButton?.addEventListener("click", () => {
   elanConsole.clear();
 });
 
