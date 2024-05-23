@@ -166,10 +166,10 @@ suite("Field Parsing Tests", () => {
     );
     const a = new AssertStatement(test);
     const expected = a.expected;
-    expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
+    expected.setFieldToKnownValidText(`{4, 5, 6, 24, 26, 44, 45, 46}`);
     expected.parseCurrentText();
     assert.equal(expected.readParseStatus(), ParseStatus.valid);
-    assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
-    assert.equal(expected.textAsHtml(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
+    assert.equal(expected.textAsSource(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
+    assert.equal(expected.textAsHtml(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
   });
 });

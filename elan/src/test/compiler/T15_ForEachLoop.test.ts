@@ -18,7 +18,7 @@ suite("T15_eachLoop", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [7,8,9]
+  var a set to {7,8,9}
   var n set to 0
   each x in a
       set n to n + x
@@ -55,7 +55,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [7,8,9].asArray()
+  var a set to {7,8,9}.asArray()
   var n set to 0
   each x in a
       set n to n + x
@@ -166,7 +166,7 @@ main
 end main
 
 function fruit() return ImmutableList<of String>
-  return ["apple","orange", "pear"]
+  return {"apple","orange", "pear"}
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -199,7 +199,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [7, 8, 9]
+  var a set to {7, 8, 9}
   var x set to "hello"
   each x in a
     print x
@@ -224,7 +224,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [7, 8, 9]
+  var a set to {7, 8, 9}
   each x in a
     print x
   end each
@@ -294,7 +294,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [1, 2, 3, 4, 5]
+  var a set to {1, 2, 3, 4, 5}
   each x in a
     set a to a + x
   end each

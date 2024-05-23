@@ -425,7 +425,7 @@ suite("Parsing Nodes", () => {
   test("ImmutableList of set clauses", () => {
     testNodeParse(
       new ImmutableListNode(() => new SetClause()),
-      "[x set to p.x + 3, y set to p.y - 1]",
+      "{x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
@@ -436,7 +436,7 @@ suite("Parsing Nodes", () => {
   test("with clause", () => {
     testNodeParse(
       new WithClause(),
-      " with [x set to p.x + 3, y set to p.y - 1]",
+      " with {x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
@@ -445,7 +445,7 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new WithClause(),
-      "with [x set to p.x + 3, y set to p.y - 1]",
+      "with {x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
@@ -456,7 +456,7 @@ suite("Parsing Nodes", () => {
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
-      "p with [x set to p.x + 3, y set to p.y - 1]",
+      "p with {x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
@@ -465,10 +465,10 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "pwith [x set to p.x + 3, y set to p.y - 1]",
+      "pwith {x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "pwith",
-      " [x set to p.x + 3, y set to p.y - 1]",
+      " {x set to p.x + 3, y set to p.y - 1}",
       "",
       "",
     );
@@ -1402,35 +1402,35 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ImmutableListNode(() => new LitInt()),
-      `[1, 2, 3, 4, 5]`,
+      `{1, 2, 3, 4, 5}`,
       ParseStatus.valid,
       ``,
       "",
-      "[1, 2, 3, 4, 5]",
+      "{1, 2, 3, 4, 5}",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new LitInt()),
-      `[]`,
+      `{}`,
       ParseStatus.invalid,
       ``,
-      "[]",
+      "{}",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new LitInt()),
-      `[`,
+      `{`,
       ParseStatus.incomplete,
-      `[`,
+      `{`,
       "",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new LitInt()),
-      `[1,2,3.1]`,
+      `{1,2,3.1}`,
       ParseStatus.invalid,
       ``,
-      "[1,2,3.1]",
+      "{1,2,3.1}",
       "",
     );
     // list of list
@@ -1444,74 +1444,74 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
-      `[[], [], []]`,
+      `{{}, {}, {}}`,
       ParseStatus.invalid,
       ``,
-      "[[], [], []]",
+      "{{}, {}, {}}",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
-      `[[1,2], [3,4]]`,
+      `{{1,2}, {3,4}}`,
       ParseStatus.valid,
       ``,
       "",
-      "[[1, 2], [3, 4]]",
+      "{{1, 2}, {3, 4}}",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
-      `[[1,2], [3,4]`,
+      `{{1,2}, {3,4}`,
       ParseStatus.incomplete,
-      `[[1,2], [3,4]`,
+      `{{1,2}, {3,4}`,
       "",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
-      `[[1,2, []]`,
+      `{{1,2, {}}`,
       ParseStatus.invalid,
       ``,
-      `[[1,2, []]`,
+      `{{1,2, {}}`,
       "",
       "",
     );
 
     testNodeParse(
       new ImmutableListNode(() => new LitString()),
-      `["apple", "pear"]`,
+      `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
       "",
       "",
-      `[<string>"apple"</string>, <string>"pear"</string>]`,
+      `{<string>"apple"</string>, <string>"pear"</string>}`,
     );
     testNodeParse(
       new ImmutableListNode(() => new LiteralNode()),
-      `["apple", "pear"]`,
+      `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
       "",
       "",
-      `[<string>"apple"</string>, <string>"pear"</string>]`,
+      `{<string>"apple"</string>, <string>"pear"</string>}`,
     );
   });
   test("ImmutableList of expressions", () => {
     testNodeParse(
       new ImmutableListNode(() => new ExprNode()),
-      `[a, 3 + 4, func(a, 3)- 1, new Foo()]`,
+      `{a, 3 + 4, func(a, 3)- 1, new Foo()}`,
       ParseStatus.valid,
-      "[a, 3 + 4, func(a, 3)- 1, new Foo()]",
+      "{a, 3 + 4, func(a, 3)- 1, new Foo()}",
       "",
       "",
     );
     testNodeParse(
       new ImmutableListNode(() => new ExprNode()),
-      `[a, 3+ 4, foo(a, 3) - 1]`,
+      `{a, 3+ 4, foo(a, 3) - 1}`,
       ParseStatus.valid,
       "",
       "",
-      "[a, 3 + 4, foo(a, 3) - 1]",
+      "{a, 3 + 4, foo(a, 3) - 1}",
       "",
     );
   });
@@ -1971,9 +1971,9 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37]`,
+      `{"a":37}`,
       ParseStatus.valid,
-      `["a":37]`,
+      `{"a":37}`,
       "",
       "",
     );
@@ -1982,7 +1982,7 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37, "b":42]`,
+      `{"a":37, "b":42}`,
       ParseStatus.valid,
       "",
       "",
@@ -1993,7 +1993,7 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37, "b":42`,
+      `{"a":37, "b":42`,
       ParseStatus.incomplete,
       "",
       "",
@@ -2004,7 +2004,7 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37,`,
+      `{"a":37,`,
       ParseStatus.incomplete,
       "",
       "",
@@ -2015,10 +2015,10 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37, 42:"b"]`,
+      `{"a":37, 42:"b"}`,
       ParseStatus.invalid,
       "",
-      `["a":37, 42:"b"]`,
+      `{"a":37, 42:"b"}`,
       "",
     );
     testNodeParse(
@@ -2026,10 +2026,10 @@ suite("Parsing Nodes", () => {
         () => new LitString(),
         () => new LitInt(),
       ),
-      `["a":37, "b":42)`,
+      `{"a":37, "b":42)`,
       ParseStatus.invalid,
       "",
-      `["a":37, "b":42)`,
+      `{"a":37, "b":42)`,
       "",
     );
 
@@ -2038,7 +2038,7 @@ suite("Parsing Nodes", () => {
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
-      `["a":37, "b":42]`,
+      `{"a":37, "b":42}`,
       ParseStatus.valid,
       "",
       "",
@@ -2049,7 +2049,7 @@ suite("Parsing Nodes", () => {
         () => new LitValueNode(),
         () => new LitValueNode(),
       ),
-      `["a":1.0, 5:"abc"]`,
+      `{"a":1.0, 5:"abc"}`,
       ParseStatus.valid,
       "",
       "",
@@ -2150,7 +2150,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LiteralNode(), `123`, ParseStatus.valid, "", "", "");
     testNodeParse(
       new LiteralNode(),
-      `["a":37, 42:"b"]`,
+      `{"a":37, 42:"b"}`,
       ParseStatus.valid,
       "",
       "",
@@ -2158,7 +2158,7 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new LiteralNode(),
-      `[(3,4), (5,6)]`,
+      `{(3,4), (5,6)}`,
       ParseStatus.valid,
       "",
       "",
@@ -2166,21 +2166,21 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new LiteralNode(),
-      `["apple", "pear"]`,
+      `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
       "",
       "",
-      `[<string>"apple"</string>, <string>"pear"</string>]`,
+      `{<string>"apple"</string>, <string>"pear"</string>}`,
     );
     testNodeParse(
       new LiteralNode(),
-      `[4, 5, 2, 3]`,
+      `{4, 5, 2, 3}`,
       ParseStatus.valid,
       "",
       "",
       "",
-      `[4, 5, 2, 3]`,
+      `{4, 5, 2, 3}`,
     );
   });
   test("VarRef", () => {
@@ -2623,10 +2623,10 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParse(new LiteralNode(), `[1,2,3,4,5]`, ParseStatus.valid, "", "");
+    testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
     testNodeParse(
       new FunctionCallNode(),
-      `[1,2,3,4,5].asArray()`,
+      `{1,2,3,4,5}.asArray()`,
       ParseStatus.valid,
       "",
       "",

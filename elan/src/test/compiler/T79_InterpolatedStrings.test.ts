@@ -16,7 +16,7 @@ suite("Pass_CanUseVariables", () => {
 main
   var a set to 1
   var b set to "Apple"
-  var c set to [1,2,3]
+  var c set to {1,2,3}
   print "{a} {b} {c}"
 end main`;
 

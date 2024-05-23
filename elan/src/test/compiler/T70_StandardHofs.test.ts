@@ -15,7 +15,7 @@ suite("T70_StandardHofs", () => {
   test("Pass_filter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.filter(lambda x as Int => x > 20)
   print source.filter(lambda x as Int => x > 20)
@@ -52,7 +52,7 @@ return [main, _tests];}`;
   test("Pass_map", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.map(lambda x as Int => x + 1)
   print source.map(lambda x as Int => x.asString() + "*")
@@ -87,7 +87,7 @@ return [main, _tests];}`;
   test("Pass_reduce", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.reduce(0, lambda s as Int, x as Int => s + x)
   print source.reduce(100, lambda s as Int, x as Int => s + x)
@@ -124,7 +124,7 @@ return [main, _tests];}`;
   test("Pass_max", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.max()
 end main`;
@@ -154,7 +154,7 @@ return [main, _tests];}`;
   test("Pass_maxBy", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.maxBy(lambda x as Int => x mod 5)
 end main`;
@@ -184,7 +184,7 @@ return [main, _tests];}`;
   test("Pass_maxBy1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [[1], [2, 2]]
+constant source set to {{1}, {2, 2}}
 main
   print source.maxBy(lambda x as ImmutableList<of Int> => x.length())
 end main`;
@@ -214,7 +214,7 @@ return [main, _tests];}`;
   test("Pass_maxBy2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to ["apple", "orange", "pear"]
+constant source set to {"apple", "orange", "pear"}
 main
   print source.maxBy(lambda t as String => t.length())
 end main`;
@@ -244,7 +244,7 @@ return [main, _tests];}`;
   test("Pass_count", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.count()
 end main`;
@@ -274,7 +274,7 @@ return [main, _tests];}`;
   test("Pass_min", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.min()
 end main`;
@@ -304,7 +304,7 @@ return [main, _tests];}`;
   test("Pass_minBy", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.minBy(lambda x as Int => x mod 5)
 end main`;
@@ -334,7 +334,7 @@ return [main, _tests];}`;
   test("Pass_any", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.any(lambda x as Int => x > 20)
   print source.any(lambda x as Int => (x mod 2) is 0)
@@ -368,13 +368,13 @@ return [main, _tests];}`;
   ignore_test("Pass_groupBy", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
   print source.groupBy(lambda x as Int => x mod 5)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+const source = system.list({2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.groupBy(source, (x) => x % 5)));
@@ -398,7 +398,7 @@ return [main, _tests];}`;
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to ["apple", "orange", "pair"]
+constant source set to {"apple", "orange", "pair"}
 main
   print source.max()
 end main`;
@@ -418,7 +418,7 @@ end main`;
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant source set to ["apple", "orange", "pair"]
+constant source set to {"apple", "orange", "pair"}
 main
   print source.maxBy(lambda t as String => t)
 end main`;

@@ -1,10 +1,10 @@
-# 176b22af8d85fe9ffd0f8a1ab4b064ed0c4d3eb1e06cf168d62af44f6b42d6da Elan v0.1 valid
+# 22a4db7c957af462d6a73fd70f7ca184c16f28f9c1a0d79cfbf6ef5198c5f89d Elan v0.1 valid
 
 main
 
 end main
 
-function binarySearch(li as List<of String>, item as String) return Boolean
+function binarySearch(li as ImmutableList<of String>, item as String) return Boolean
   var result set to false
   if li.length() > 0
     var mid set to li.length() div 2
@@ -21,18 +21,18 @@ function binarySearch(li as List<of String>, item as String) return Boolean
 end function
 
 test binarySearch
-  var li1 set to ["lemon", "lime", "orange"]
+  var li1 set to {"lemon", "lime", "orange"}
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
   assert binarySearch(li1, "orange") is true
   assert binarySearch(li1, "pear") is false
-  var li2 set to ["lemon", "orange"]
+  var li2 set to {"lemon", "orange"}
   assert binarySearch(li2, "lemon") is true
   assert binarySearch(li2, "orange") is true
   assert binarySearch(li2, "pear") is false
-  var li3 set to ["lemon"]
+  var li3 set to {"lemon"}
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  var li4 set to new List<of String>()
+  var li4 set to new ImmutableList<of String>()
   assert binarySearch(li4, "pear") is false
 end test

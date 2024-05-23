@@ -17,7 +17,7 @@ suite("T14_Lists", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   print a
 end main`;
 
@@ -46,7 +46,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [[4, 5], [6, 7, 8]]
+  var a set to {{4, 5}, {6, 7, 8}}
   print a
 end main`;
 
@@ -79,7 +79,7 @@ return [main, _tests];}`;
 
 main
   var a set to new Foo()
-  var b set to [a]
+  var b set to {a}
   print b
 end main
 
@@ -136,11 +136,11 @@ main
   var c set to "c"
   var d set to "d"
   var e set to true
-  var v set to [a]
-  var w set to [b]
-  var x set to [c]
-  var y set to [d]
-  var z set to [e]
+  var v set to {a}
+  var w set to {b}
+  var x set to {c}
+  var y set to {d}
+  var z set to {e}
   print v
   print w
   print x
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["Foo", "Bar"]
+  var a set to {"Foo", "Bar"}
   print a
 end main`;
 
@@ -240,7 +240,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4.1,5,6,7,8]
+  var a set to {4.1,5,6,7,8}
   print a
 end main`;
 
@@ -269,7 +269,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
+    var a set to {4,5,6,7,8}
     print a.length()
 end main`;
 
@@ -327,7 +327,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
+    var a set to {4,5,6,7,8}
     print a[2]
 end main`;
 
@@ -356,7 +356,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   print a[2..]
   print a[1..3]
   print a[..2]
@@ -392,7 +392,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   var b set to a + 9
   print a
   print b
@@ -428,7 +428,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4,5,6,7,8]
+  var a set to {4,5,6,7,8}
   var b set to 9 + a
   print a
   print b
@@ -464,8 +464,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to [4,5,6,7,8]
-    var b set to [1,2,3]
+    var a set to {4,5,6,7,8}
+    var b set to {1,2,3}
     var c set to a + b
     print a
     print b
@@ -503,7 +503,7 @@ return [main, _tests];}`;
   test("Pass_constantLists", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [4,5,6,7,8]
+constant a set to {4,5,6,7,8}
 main
   print a
 end main`;
@@ -636,7 +636,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [3, "apples"]
+  var a set to {3, "apples"}
 end main
 `;
 
@@ -656,7 +656,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [3, 3.1]
+  var a set to {3, 3.1}
 end main
 `;
 
@@ -676,7 +676,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [4, 5, 6, 7, 8]
+  var a set to {4, 5, 6, 7, 8}
   var b set to a[5]
 end main
 `;

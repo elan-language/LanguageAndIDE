@@ -128,7 +128,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [2, 3].asArray()
+  var a set to {2, 3}.asArray()
   call changeFirst(a)
   print a
 end main
@@ -644,13 +644,13 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [2, 3]
+  var a set to {2, 3}
   call changeAll(a)
   print a
 end main
 
 procedure changeAll(a as ImmutableList<of Int>)
-    set a to [1, 2, 3]
+    set a to {1, 2, 3}
 end procedure`;
 
     const fileImpl = new FileImpl(

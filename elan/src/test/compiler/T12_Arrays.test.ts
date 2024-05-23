@@ -114,7 +114,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["foo","bar","yon"].asArray()
+  var a set to {"foo","bar","yon"}.asArray()
   print a.length()
 end main`;
 

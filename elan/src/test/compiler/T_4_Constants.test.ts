@@ -276,7 +276,7 @@ return [main, _tests];}`;
   test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [1,2,3]
+constant a set to {1,2,3}
 main
   print a
 end main
@@ -307,7 +307,7 @@ return [main, _tests];}`;
   test("Pass_ListofList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to [[4, 5], [6, 7, 8]]
+constant a set to {{4, 5}, {6, 7, 8}}
 main
   print a
 end main

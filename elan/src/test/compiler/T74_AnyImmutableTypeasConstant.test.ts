@@ -78,7 +78,7 @@ return [main, _tests];}`;
   test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant k set to [1, 2, 3]
+constant k set to {1, 2, 3}
 
 main 
   print k
@@ -109,7 +109,7 @@ return [main, _tests];}`;
   test("Pass_Dictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant k set to ["a":1, "b":3, "c":3]
+constant k set to {"a":1, "b":3, "c":3}
 
 main 
   print k

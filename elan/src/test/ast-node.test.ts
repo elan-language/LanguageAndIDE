@@ -106,7 +106,7 @@ suite("ASTNodes", () => {
     testAST(
       new ExprNode(),
       stubField,
-      "p with [x set to p.x + 3, y set to p.y - 1]",
+      "p with {x set to p.x + 3, y set to p.y - 1}",
       ast1,
       new ClassType("p"),
     );
@@ -252,42 +252,42 @@ suite("ASTNodes", () => {
     testAST(
       new ImmutableListNode(() => new LitInt()),
       stubField,
-      `[1,2,3 ,4 , 5]`,
+      `{1,2,3 ,4 , 5}`,
       "[1, 2, 3, 4, 5]",
       new ImmutableListType(intType),
     );
     testAST(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       stubField,
-      `[[1,2], [3], [4,5,6]]`,
+      `{{1,2}, {3}, {4,5,6}}`,
       "[[1, 2], [3], [4, 5, 6]]",
       new ImmutableListType(new ImmutableListType(intType)),
     );
     testAST(
       new ImmutableListNode(() => new LitString()),
       stubField,
-      `["apple", "pear"]`,
+      `{"apple", "pear"]`,
       '["apple", "pear"]',
       new ImmutableListType(stringType),
     );
     testAST(
       new ImmutableListNode(() => new LiteralNode()),
       stubField,
-      `["apple", "pear"]`,
+      `{"apple", "pear"}`,
       '["apple", "pear"]',
       new ImmutableListType(stringType),
     );
     testAST(
       new ImmutableListNode(() => new ExprNode()),
       stubField,
-      `[a, 3+ 4 , func(a, 3) -1, new Foo()]`,
+      `{a, 3+ 4 , func(a, 3) -1, new Foo()}`,
       "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]",
       new ImmutableListType(intType),
     );
     testAST(
       new ImmutableListNode(() => new ExprNode()),
       stubField,
-      `[a, 3+ 4 , foo(a, 3) -1]`,
+      `{a, 3+ 4 , foo(a, 3) -1}`,
       "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]",
       new ImmutableListType(intType),
     );

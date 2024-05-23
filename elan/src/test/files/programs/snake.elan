@@ -1,4 +1,4 @@
-# 0ffb2c09b09fc7ca3039b0da019b68f0e4370053e9a961c07115774b2e5c2ecc Elan v0.1 valid
+# 8a1dd984ac8175bc5b51bc3e9eaaee6d78de1be37df7d1f189b8480d008bc69c Elan v0.1 valid
 
 main
   var newGame set to true
@@ -49,7 +49,7 @@ class Snake
     set property.boardWidth to boardWidth
     set property.boardHeight to boardHeight
     var tail set to new Square(boardWidth div 2, boardHeight div 2)
-    set body to [tail]
+    set body to {tail}
     set head to tail.getAdjacentSquare(startingDirection)
     call setNewApplePosition()
   end constructor
@@ -108,4 +108,4 @@ class Snake
 
 end class
 
-constant directionByKey set to ["w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right]
+constant directionByKey set to {"w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right}

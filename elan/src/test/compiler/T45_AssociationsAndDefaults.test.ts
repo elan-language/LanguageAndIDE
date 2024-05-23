@@ -28,7 +28,7 @@ class Game
     constructor()
       set p2 to new Player("Chloe")
       set p1 to new Player("Joe")
-      set previousScores to [5, 2, 4]
+      set previousScores to {5, 2, 4}
     end constructor
 
     property p1 as Player

@@ -132,14 +132,14 @@ main
 end main
 
 test list_
-  var a set to [3, 2, 4, 0]
-  var b set to [3, 2, 4, 0]
+  var a set to {3, 2, 4, 0}
+  var b set to {3, 2, 4, 0}
   assert a is b
 end test
 
 test dictionary_
-  var a set to [3:"a", 2:"b", 4:"c"]
-  var b set to [3:"a", 2:"b", 4:"c"]
+  var a set to {3:"a", 2:"b", 4:"c"}
+  var b set to {3:"a", 2:"b", 4:"c"}
   assert a is b
 end test
 

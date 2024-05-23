@@ -312,12 +312,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 function f() return Iter<of Int>
-  return [1, 2]
+  return {1, 2}
 end function
 
 main
   var a set to f()
-  set a to [1, 2]
+  set a to {1, 2}
   print a
 end main`;
 
@@ -512,7 +512,7 @@ main
   var d set to f()
   set a to 1.0
   set b to false
-  set c to [1.0, 2]
+  set c to {1.0, 2}
   set d to 1.0
 end main`;
 
@@ -538,9 +538,9 @@ end main`;
 
 main
   var a set to new ArrayList<of String>(3)
-  var b set to [1.0, 2]
-  var c set to ["a":1.0, "b":3, "z":10]
-  set a to [1.0, 2]
+  var b set to {1.0, 2}
+  var c set to {"a":1.0, "b":3, "z":10}
+  set a to {1.0, 2}
   set b to a
   set c to b
 end main`;
