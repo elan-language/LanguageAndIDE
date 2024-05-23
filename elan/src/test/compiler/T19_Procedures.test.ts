@@ -133,7 +133,7 @@ main
   print a
 end main
 
-procedure changeFirst(a as Array<of Int>)
+procedure changeFirst(a as ArrayList<of Int>)
     set a[0] to 5
 end procedure`;
 
@@ -160,7 +160,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Array [5, 3]");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [5, 3]");
   });
 
   test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {

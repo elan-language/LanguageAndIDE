@@ -42,7 +42,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     gt = gt ? `, [${gt}]` : "";
     const pp = this.parameters.map((p) => p.compile()).join(", ");
     const t = this.typeNode.compile();
-    if (this.typeNode.id === "Array") {
+    if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(
         this.parameters,

@@ -1,4 +1,4 @@
-import { ArrayType } from "./symbols/array-type";
+import { ArrayListType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassDefinitionType } from "./symbols/class-definition-type";
 import { ClassType } from "./symbols/class-type";
@@ -209,7 +209,7 @@ export function mustBeIndexableSymbol(
   if (
     !(
       symbolType instanceof ListType ||
-      symbolType instanceof ArrayType ||
+      symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
       symbolType instanceof DictionaryType
     )
@@ -224,7 +224,7 @@ export function mustBeIndexableSymbol(
   }
   if (
     isDouble &&
-    ((symbolType instanceof ArrayType && !symbolType.is2d) ||
+    ((symbolType instanceof ArrayListType && !symbolType.is2d) ||
       symbolType instanceof ListType ||
       symbolType instanceof StringType ||
       symbolType instanceof DictionaryType)
@@ -233,7 +233,7 @@ export function mustBeIndexableSymbol(
       new NotIndexableCompileError(symbolType.toString(), location, false),
     );
   }
-  if (!isDouble && symbolType instanceof ArrayType && symbolType.is2d) {
+  if (!isDouble && symbolType instanceof ArrayListType && symbolType.is2d) {
     compileErrors.push(
       new NotIndexableCompileError(symbolType.toString(), location, false),
     );
@@ -445,10 +445,10 @@ export function mustBeCompatibleType(
     return;
   }
   if (
-    lhs instanceof ArrayType &&
+    lhs instanceof ArrayListType &&
     !(
       lhs.name === rhs.name ||
-      lhs.name === new IterType((lhs as ArrayType).ofType).name
+      lhs.name === new IterType((lhs as ArrayListType).ofType).name
     )
   ) {
     FailIncompatible(lhs, rhs, compileErrors, location);
@@ -480,7 +480,7 @@ export function mustBeCompatibleType(
     lhs instanceof IterType &&
     !(
       rhs instanceof ListType ||
-      rhs instanceof ArrayType ||
+      rhs instanceof ArrayListType ||
       rhs instanceof StringType ||
       rhs instanceof IterType
     )
@@ -492,7 +492,7 @@ export function mustBeCompatibleType(
   if (
     lhs instanceof IterType &&
     (rhs instanceof ListType ||
-      rhs instanceof ArrayType ||
+      rhs instanceof ArrayListType ||
       rhs instanceof IterType)
   ) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
@@ -603,7 +603,7 @@ export function mustNotBeParameter(
   if (parent instanceof ProcedureFrame) {
     if (
       s === SymbolScope.parameter &&
-      !(assignable.rootSymbolType() instanceof ArrayType)
+      !(assignable.rootSymbolType() instanceof ArrayListType)
     ) {
       compileErrors.push(new MutateCompileError(`parameter`, location));
     }
@@ -653,7 +653,7 @@ export function mustNotBeArray(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (parameterType instanceof ArrayType) {
+  if (parameterType instanceof ArrayListType) {
     compileErrors.push(new ArrayCompileError(location));
   }
 }
@@ -679,7 +679,7 @@ export function mustBeIterable(
   if (
     !(
       symbolType instanceof ListType ||
-      symbolType instanceof ArrayType ||
+      symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
       symbolType instanceof IterType
     )

@@ -444,7 +444,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [1, 2, 3]Array [1, 2, 3]Dictionary [a:1, b:3, z:10]",
+      "List [1, 2, 3]ArrayList [1, 2, 3]Dictionary [a:1, b:3, z:10]",
     );
   });
 });

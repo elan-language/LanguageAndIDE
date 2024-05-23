@@ -1,4 +1,4 @@
-import { ArrayType } from "./frames/symbols/array-type";
+import { ArrayListType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/number-type";
@@ -50,7 +50,7 @@ export class StdLibSymbols implements Scope {
         "asArray",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          new ArrayType(new GenericParameterType("T"), false),
+          new ArrayListType(new GenericParameterType("T"), false),
           true,
         ),
       ),

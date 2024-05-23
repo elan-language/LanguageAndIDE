@@ -19,7 +19,7 @@ suite("T12_Arrays", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   print a.length()
 end main`;
 
@@ -48,7 +48,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   print a[0].length()
   print a
 end main`;
@@ -72,14 +72,14 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0Array [, , ]");
+    await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
   });
 
   test("Pass_SetAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   set a[0] to "foo"
   set a[2] to "yon"
   print a[0]
@@ -143,7 +143,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3,4)
+  var a set to new ArrayList<of String>(3,4)
   set a[0, 0] to "foo"
   set a[2, 3] to "yon"
   print a[0, 0]
@@ -178,7 +178,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   var b set to a(0)
 end main
 `;
@@ -192,7 +192,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call ArrayList<of String>"]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
@@ -220,7 +220,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>[3][4]
+  var a set to new ArrayList<of String>[3][4]
   print a[0, 0]
   print a[2, 3]
 end main
@@ -241,7 +241,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   set a[0, 0] to "foo"
 end main
 `;
@@ -255,14 +255,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index ArrayList<of String>"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3, 3)
+  var a set to new ArrayList<of String>(3, 3)
   set a[0] to "foo"
 end main
 `;
@@ -276,14 +276,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index 2D Array<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList<of String>"]);
   });
 
   ignore_test("Fail_OutOfRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   var b set to a[3]
 end main
 `;
@@ -305,7 +305,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   set a[0] to true
 end main
 `;
@@ -326,7 +326,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>()
+  var a set to new ArrayList<of String>()
 end main
 `;
 
@@ -339,14 +339,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Array requires 1 or 2 parameters"]);
+    assertDoesNotCompile(fileImpl, ["ArrayList requires 1 or 2 parameters"]);
   });
 
   test("Fail_SizeWrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(1.1)
+  var a set to new ArrayList<of String>(1.1)
 end main
 `;
 
@@ -366,7 +366,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>[3]
+  var a set to new ArrayList<of String>[3]
 end main
 `;
 
@@ -386,7 +386,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3) {"foo","bar","yon"}
+  var a set to new ArrayList<of String>(3) {"foo","bar","yon"}
 end main
 `;
 
@@ -406,7 +406,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to Array<of String>()
+  var a set to ArrayList<of String>()
 end main
 `;
 

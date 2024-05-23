@@ -1,4 +1,4 @@
-import { ArrayType } from "../symbols/array-type";
+import { ArrayListType } from "../symbols/array-list-type";
 import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
@@ -72,7 +72,7 @@ export class VarAsn
     if (rootType instanceof ListType) {
       return `system.list(${code})`;
     }
-    if (rootType instanceof ArrayType) {
+    if (rootType instanceof ArrayListType) {
       return `system.wrapArray(${code})`;
     }
     if (rootType instanceof FunctionType) {
@@ -155,7 +155,7 @@ export class VarAsn
     const rootType = this.rootSymbolType();
     if (
       this.isIndex() &&
-      (rootType instanceof ListType || rootType instanceof ArrayType)
+      (rootType instanceof ListType || rootType instanceof ArrayListType)
     ) {
       return rootType.ofType;
     }

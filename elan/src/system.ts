@@ -62,7 +62,7 @@ export class System {
   }
 
   wrapArray(t: Array<any>) {
-    (<any>t)._type = "Array";
+    (<any>t)._type = "ArrayList";
     return t;
   }
 
@@ -71,11 +71,11 @@ export class System {
     if (size2) {
       for (let i = 0; i <= size1; i++) {
         const a2 = new Array(size2);
-        (<any>a2)._type = "Array";
+        (<any>a2)._type = "ArrayList";
         arr[i] = a2;
       }
     }
-    (<any>arr)._type = "Array";
+    (<any>arr)._type = "ArrayList";
     return arr;
   }
 

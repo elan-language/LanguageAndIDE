@@ -11,7 +11,7 @@ import { TupleType } from "../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
 import { AstNode } from "../interfaces/ast-node";
 import { CompileError } from "../compile-error";
-import { ArrayType } from "../symbols/array-type";
+import { ArrayListType } from "../symbols/array-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
@@ -60,7 +60,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return "false";
       case "List":
         return "system.defaultList()";
-      case "Array":
+      case "ArrayList":
         return "system.defaultArray()";
       case "Dictionary":
         return "system.defaultDictionary()";
@@ -82,8 +82,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return StringType.Instance;
       case "List":
         return new ListType(this.genericParameters[0].symbolType());
-      case "Array":
-        return new ArrayType(this.genericParameters[0].symbolType(), this.is2d);
+      case "ArrayList":
+        return new ArrayListType(this.genericParameters[0].symbolType(), this.is2d);
       case "Dictionary":
         return new DictionaryType(
           this.genericParameters[0].symbolType(),

@@ -1,4 +1,4 @@
-import { ArrayType } from "../symbols/array-type";
+import { ArrayListType } from "../symbols/array-list-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -101,7 +101,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
   flatten(p: SymbolType): SymbolType[] {
     if (
-      p instanceof ArrayType ||
+      p instanceof ArrayListType ||
       p instanceof ListType ||
       p instanceof IterType
     ) {
@@ -120,7 +120,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return true;
     }
     if (
-      type instanceof ArrayType ||
+      type instanceof ArrayListType ||
       type instanceof ListType ||
       type instanceof IterType
     ) {
@@ -140,8 +140,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     if (type instanceof GenericParameterType) {
       return matches.get(type.id) ?? UnknownType.Instance;
     }
-    if (type instanceof ArrayType) {
-      return new ArrayType(this.generateType(type.ofType, matches), type.is2d);
+    if (type instanceof ArrayListType) {
+      return new ArrayListType(this.generateType(type.ofType, matches), type.is2d);
     }
     if (type instanceof ListType) {
       return new ListType(this.generateType(type.ofType, matches));

@@ -148,7 +148,7 @@ class Game
     property s as String
     property li as List<of Int>
     property dsi as Dictionary<of String, Int>
-    property ai as Array<of Int>
+    property ai as ArrayList<of Int>
 
     function asString() return String
         return "A game"
@@ -169,7 +169,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "Array<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -208,7 +208,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty Listempty Dictionaryempty Array",
+      "00falseempty Listempty Dictionaryempty ArrayList",
     );
   });
 
@@ -575,7 +575,7 @@ main
   print f.a is default List<of Int>
   print f.b is default String
   print f.c is default Dictionary<of String,Int>
-  print f.d is default Array<of Int>
+  print f.d is default ArrayList<of Int>
 end main
 
 class Foo
@@ -585,7 +585,7 @@ class Foo
   property a as List<of Int>
   property b as String
   property c as Dictionary<of String, Int>
-  property d as Array<of Int>
+  property d as ArrayList<of Int>
 
   function asString() return String
     return "A Foo"
@@ -607,7 +607,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["a", "List<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "Array<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["a", "List<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -640,7 +640,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "empty Listempty Dictionaryempty Arraytruetruetruetrue",
+      "empty Listempty Dictionaryempty ArrayListtruetruetruetrue",
     );
   });
 

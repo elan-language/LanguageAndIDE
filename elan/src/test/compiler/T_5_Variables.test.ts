@@ -537,7 +537,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new Array<of String>(3)
+  var a set to new ArrayList<of String>(3)
   var b set to [1.0, 2]
   var c set to ["a":1.0, "b":3, "z":10]
   set a to [1.0, 2]
@@ -555,8 +555,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types List<of Float> to Array<of String>",
-      "Incompatible types Array<of String> to List<of Float>",
+      "Incompatible types List<of Float> to ArrayList<of String>",
+      "Incompatible types ArrayList<of String> to List<of Float>",
       "Incompatible types List<of Float> to Dictionary",
     ]);
   });

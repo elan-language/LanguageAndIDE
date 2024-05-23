@@ -1,5 +1,5 @@
 interface hasHiddenType {
-  _type: "List" | "Array" | "Tuple" | "Iter";
+  _type: "List" | "ArrayList" | "Tuple" | "Iter";
 }
 
 export class StdLib {
@@ -31,11 +31,11 @@ export class StdLib {
           return `List [${v.map((i) => this.asString(i)).join(", ")}]`;
         case "Tuple":
           return `Tuple (${v.map((i) => this.asString(i)).join(", ")})`;
-        case "Array":
+        case "ArrayList":
           if (v.length === 0) {
-            return "empty Array";
+            return "empty ArrayList";
           }
-          return `Array [${v.map((i) => this.asString(i)).join(", ")}]`;
+          return `ArrayList [${v.map((i) => this.asString(i)).join(", ")}]`;
         case "Iter":
           if (v.length === 0) {
             return "empty Iter";
@@ -70,7 +70,7 @@ export class StdLib {
 
   asArray<T>(list: T[]): T[] {
     const arr = [...list];
-    (arr as unknown as hasHiddenType)._type = "Array";
+    (arr as unknown as hasHiddenType)._type = "ArrayList";
     return arr;
   }
 
