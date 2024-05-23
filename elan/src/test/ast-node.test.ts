@@ -102,7 +102,7 @@ suite("ASTNodes", () => {
     );
 
     const ast1 =
-      "With (p) ([Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))])";
+      "With (p) ({Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))})";
     testAST(
       new ExprNode(),
       stubField,
@@ -253,42 +253,42 @@ suite("ASTNodes", () => {
       new ImmutableListNode(() => new LitInt()),
       stubField,
       `{1,2,3 ,4 , 5}`,
-      "[1, 2, 3, 4, 5]",
+      "{1, 2, 3, 4, 5}",
       new ImmutableListType(intType),
     );
     testAST(
       new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       stubField,
       `{{1,2}, {3}, {4,5,6}}`,
-      "[[1, 2], [3], [4, 5, 6]]",
+      "{{1, 2}, {3}, {4, 5, 6}}",
       new ImmutableListType(new ImmutableListType(intType)),
     );
     testAST(
       new ImmutableListNode(() => new LitString()),
       stubField,
-      `{"apple", "pear"]`,
-      '["apple", "pear"]',
+      `{"apple", "pear"}`,
+      '{"apple", "pear"}',
       new ImmutableListType(stringType),
     );
     testAST(
       new ImmutableListNode(() => new LiteralNode()),
       stubField,
       `{"apple", "pear"}`,
-      '["apple", "pear"]',
+      '{"apple", "pear"}',
       new ImmutableListType(stringType),
     );
     testAST(
       new ImmutableListNode(() => new ExprNode()),
       stubField,
       `{a, 3+ 4 , func(a, 3) -1, new Foo()}`,
-      "[a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()]",
+      "{a, Add (3) (4), Minus (Func Call func (a, 3)) (1), new Type Foo()}",
       new ImmutableListType(intType),
     );
     testAST(
       new ImmutableListNode(() => new ExprNode()),
       stubField,
       `{a, 3+ 4 , foo(a, 3) -1}`,
-      "[a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)]",
+      "{a, Add (3) (4), Minus (Func Call foo (a, 3)) (1)}",
       new ImmutableListType(intType),
     );
   });
@@ -535,22 +535,22 @@ suite("ASTNodes", () => {
     testAST(
       new LiteralNode(),
       stubField,
-      `["a":37, 42:"b"]`,
-      `[("a":37), (42:"b")]`,
+      `{"a":37, 42:"b"}`,
+      `{("a":37), (42:"b")}`,
       new DictionaryType(stringType, intType),
     );
     testAST(
       new LiteralNode(),
       stubField,
-      `[(3,4), (5,6)]`,
-      "[(3, 4), (5, 6)]",
+      `{(3,4), (5,6)}`,
+      "{(3, 4), (5, 6)}",
       new ImmutableListType(new TupleType([intType, intType])),
     );
     testAST(
       new LiteralNode(),
       stubField,
-      `["apple", "pear"]`,
-      `["apple", "pear"]`,
+      `{"apple", "pear"}`,
+      `{"apple", "pear"}`,
       new ImmutableListType(stringType),
     );
   });

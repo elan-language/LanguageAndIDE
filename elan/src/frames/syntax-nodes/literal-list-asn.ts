@@ -54,6 +54,6 @@ export class LiteralListAsn
 
   toString() {
     const it = this.items.map((p) => p.toString()).join(", ");
-    return `[${it}]`;
+    return `{${it}}`;
   }
 }

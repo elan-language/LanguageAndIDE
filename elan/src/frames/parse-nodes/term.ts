@@ -15,6 +15,7 @@ import { LiteralNode } from "./literal-node";
 import { KeywordNode } from "./keyword-node";
 import { thisKeyword } from "../keywords";
 import { DefaultOfTypeNode } from "./default-of-type-node";
+import { ArrayListNode } from "./array-list-node";
 
 export class Term extends AbstractAlternatives {
   constructor() {
@@ -35,6 +36,7 @@ export class Term extends AbstractAlternatives {
     this.alternatives.push(new KeywordNode(thisKeyword));
     this.alternatives.push(new DefaultOfTypeNode());
     this.alternatives.push(new ImmutableListNode(() => new ExprNode()));
+    this.alternatives.push(new ArrayListNode(() => new ExprNode()));
     this.alternatives.push(new TupleNode());
     super.parseText(text);
   }
