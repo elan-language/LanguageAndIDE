@@ -301,7 +301,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [1, 2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList [1, 2, 3]");
   });
 
   test("Pass_ListofList", async () => {
@@ -334,7 +334,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "List [List [4, 5], List [6, 7, 8]]",
+      "ImmutableList [ImmutableList [4, 5], ImmutableList [6, 7, 8]]",
     );
   });
 

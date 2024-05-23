@@ -3,7 +3,7 @@ import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IterType } from "../symbols/iter-type";
-import { ListType } from "../symbols/list-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
@@ -102,7 +102,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   flatten(p: SymbolType): SymbolType[] {
     if (
       p instanceof ArrayListType ||
-      p instanceof ListType ||
+      p instanceof ImmutableListType ||
       p instanceof IterType
     ) {
       return this.flatten(p.ofType);
@@ -121,7 +121,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     }
     if (
       type instanceof ArrayListType ||
-      type instanceof ListType ||
+      type instanceof ImmutableListType ||
       type instanceof IterType
     ) {
       return this.containsGenericType(type.ofType);
@@ -143,8 +143,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     if (type instanceof ArrayListType) {
       return new ArrayListType(this.generateType(type.ofType, matches), type.is2d);
     }
-    if (type instanceof ListType) {
-      return new ListType(this.generateType(type.ofType, matches));
+    if (type instanceof ImmutableListType) {
+      return new ImmutableListType(this.generateType(type.ofType, matches));
     }
     if (type instanceof IterType) {
       return new IterType(this.generateType(type.ofType, matches));

@@ -31,7 +31,7 @@ import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
 import { DefaultTypeAsn } from "./default-type-asn";
 import { WithClause } from "../parse-nodes/with-clause";
 import { WithAsn } from "./with-asn";
-import { ListNode } from "../parse-nodes/list-node";
+import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
 import { SetAsn } from "./set-asn";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { VarAsn } from "./var-asn";
@@ -363,7 +363,7 @@ export function transform(
     return transform(node.bestMatch, fieldId, scope);
   }
 
-  if (node instanceof ListNode) {
+  if (node instanceof ImmutableListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
     return new LiteralListAsn(items, fieldId, scope);
   }

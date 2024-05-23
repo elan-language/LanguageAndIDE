@@ -52,7 +52,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.array(${pp})${gt})`;
     }
 
-    if (this.typeNode.id === "List") {
+    if (this.typeNode.id === "ImmutableList") {
       return `system.initialise(system.list(new ${t}(${pp}))${gt})`;
     }
 

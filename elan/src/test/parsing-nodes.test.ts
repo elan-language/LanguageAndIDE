@@ -10,7 +10,7 @@ import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { BracketedExpression } from "../frames/parse-nodes/bracketed-expression";
 import { OptionalNode } from "../frames/parse-nodes/optional-node";
 import { LitString } from "../frames/parse-nodes/lit-string";
-import { ListNode } from "../frames/parse-nodes/list-node";
+import { ImmutableListNode } from "../frames/parse-nodes/immutable-list-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { CSV } from "../frames/parse-nodes/csv";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
@@ -332,9 +332,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())",
+      "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
       ParseStatus.valid,
-      "reduce(0.0, lambda s as String, p as List<of String> => s + p.first() * p.first())",
+      "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
       "",
       "",
     );
@@ -422,9 +422,9 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("List of set clauses", () => {
+  test("ImmutableList of set clauses", () => {
     testNodeParse(
-      new ListNode(() => new SetClause()),
+      new ImmutableListNode(() => new SetClause()),
       "[x set to p.x + 3, y set to p.y - 1]",
       ParseStatus.valid,
       "",
@@ -1393,7 +1393,7 @@ suite("Parsing Nodes", () => {
   });
   test("Lists", () => {
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       ``,
       ParseStatus.empty,
       ``,
@@ -1401,7 +1401,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       `[1, 2, 3, 4, 5]`,
       ParseStatus.valid,
       ``,
@@ -1410,7 +1410,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       `[]`,
       ParseStatus.invalid,
       ``,
@@ -1418,7 +1418,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       `[`,
       ParseStatus.incomplete,
       `[`,
@@ -1426,7 +1426,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new LitInt()),
+      new ImmutableListNode(() => new LitInt()),
       `[1,2,3.1]`,
       ParseStatus.invalid,
       ``,
@@ -1435,7 +1435,7 @@ suite("Parsing Nodes", () => {
     );
     // list of list
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       ``,
       ParseStatus.empty,
       ``,
@@ -1443,7 +1443,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       `[[], [], []]`,
       ParseStatus.invalid,
       ``,
@@ -1451,7 +1451,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       `[[1,2], [3,4]]`,
       ParseStatus.valid,
       ``,
@@ -1460,7 +1460,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       `[[1,2], [3,4]`,
       ParseStatus.incomplete,
       `[[1,2], [3,4]`,
@@ -1468,7 +1468,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ListNode(() => new LitInt())),
+      new ImmutableListNode(() => new ImmutableListNode(() => new LitInt())),
       `[[1,2, []]`,
       ParseStatus.invalid,
       ``,
@@ -1478,7 +1478,7 @@ suite("Parsing Nodes", () => {
     );
 
     testNodeParse(
-      new ListNode(() => new LitString()),
+      new ImmutableListNode(() => new LitString()),
       `["apple", "pear"]`,
       ParseStatus.valid,
       "",
@@ -1487,7 +1487,7 @@ suite("Parsing Nodes", () => {
       `[<string>"apple"</string>, <string>"pear"</string>]`,
     );
     testNodeParse(
-      new ListNode(() => new LiteralNode()),
+      new ImmutableListNode(() => new LiteralNode()),
       `["apple", "pear"]`,
       ParseStatus.valid,
       "",
@@ -1496,9 +1496,9 @@ suite("Parsing Nodes", () => {
       `[<string>"apple"</string>, <string>"pear"</string>]`,
     );
   });
-  test("List of expressions", () => {
+  test("ImmutableList of expressions", () => {
     testNodeParse(
-      new ListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode()),
       `[a, 3 + 4, func(a, 3)- 1, new Foo()]`,
       ParseStatus.valid,
       "[a, 3 + 4, func(a, 3)- 1, new Foo()]",
@@ -1506,7 +1506,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode()),
       `[a, 3+ 4, foo(a, 3) - 1]`,
       ParseStatus.valid,
       "",
@@ -1595,12 +1595,12 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeWithOptGenerics(),
-      `Foo<of List<of Bar>>`,
+      `Foo<of ImmutableList<of Bar>>`,
       ParseStatus.valid,
-      "Foo<of List<of Bar>>",
+      "Foo<of ImmutableList<of Bar>>",
       "",
       "",
-      "<type>Foo</type>&lt;<keyword>of</keyword> <type>List</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;&gt;",
+      "<type>Foo</type>&lt;<keyword>of</keyword> <type>ImmutableList</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;&gt;",
     );
     testNodeParse(
       new TypeWithOptGenerics(),
@@ -1613,20 +1613,20 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeWithOptGenerics(),
-      `List<of (Bar, Yon)>`,
+      `ImmutableList<of (Bar, Yon)>`,
       ParseStatus.valid,
-      "List<of (Bar, Yon)>",
+      "ImmutableList<of (Bar, Yon)>",
       "",
       "",
-      "<type>List</type>&lt;<keyword>of</keyword> (<type>Bar</type>, <type>Yon</type>)&gt;",
+      "<type>ImmutableList</type>&lt;<keyword>of</keyword> (<type>Bar</type>, <type>Yon</type>)&gt;",
     );
   });
   test("TypeNode", () => {
     testNodeParse(
       new TypeNode(),
-      `Foo<of List<of Bar>>`,
+      `Foo<of ImmutableList<of Bar>>`,
       ParseStatus.valid,
-      "Foo<of List<of Bar>>",
+      "Foo<of ImmutableList<of Bar>>",
       "",
       "",
     ); //Single
@@ -1672,9 +1672,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new TypeNode(),
-      `Foo<of List<of (Bar, Qux)>>`,
+      `Foo<of ImmutableList<of (Bar, Qux)>>`,
       ParseStatus.valid,
-      "Foo<of List<of (Bar, Qux)>>",
+      "Foo<of ImmutableList<of (Bar, Qux)>>",
       "",
       "",
     );
@@ -1759,7 +1759,7 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new Lambda(),
-      `lambda s as Int, p as List<of Int> => s + p.first()`,
+      `lambda s as Int, p as ImmutableList<of Int> => s + p.first()`,
       ParseStatus.valid,
       "",
       "",
@@ -1861,7 +1861,7 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("Param List", () => {
+  test("Param ImmutableList", () => {
     testNodeParse(
       new CSV(() => new ParamDefNode(), 0),
       `A as string`,

@@ -649,7 +649,7 @@ main
   print a
 end main
 
-procedure changeAll(a as List<of Int>)
+procedure changeAll(a as ImmutableList<of Int>)
     set a to [1, 2, 3]
 end procedure`;
 

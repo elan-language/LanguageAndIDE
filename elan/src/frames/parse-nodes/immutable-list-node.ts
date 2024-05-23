@@ -4,7 +4,7 @@ import { CSV } from "./csv";
 import { ParseNode } from "./parse-node";
 import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 
-export class ListNode extends AbstractSequence {
+export class ImmutableListNode extends AbstractSequence {
   csv: CSV | undefined;
   elementConstructor: () => ParseNode;
 

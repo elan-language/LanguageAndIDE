@@ -258,8 +258,8 @@ return [main, _tests];}`;
         [
           new AssertOutcome(
             TestStatus.pass,
-            "List [3, 2, 4, 0]",
-            "List [3, 2, 4, 0]",
+            "ImmutableList [3, 2, 4, 0]",
+            "ImmutableList [3, 2, 4, 0]",
             "assert12",
           ),
         ],

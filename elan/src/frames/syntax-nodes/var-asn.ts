@@ -2,7 +2,7 @@ import { ArrayListType } from "../symbols/array-list-type";
 import { ClassDefinitionType } from "../symbols/class-definition-type";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
-import { ListType } from "../symbols/list-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
@@ -69,7 +69,7 @@ export class VarAsn
   }
 
   wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ListType) {
+    if (rootType instanceof ImmutableListType) {
       return `system.list(${code})`;
     }
     if (rootType instanceof ArrayListType) {
@@ -155,7 +155,7 @@ export class VarAsn
     const rootType = this.rootSymbolType();
     if (
       this.isIndex() &&
-      (rootType instanceof ListType || rootType instanceof ArrayListType)
+      (rootType instanceof ImmutableListType || rootType instanceof ArrayListType)
     ) {
       return rootType.ofType;
     }

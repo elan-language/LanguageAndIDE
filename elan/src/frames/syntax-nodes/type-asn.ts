@@ -5,7 +5,7 @@ import { FloatType } from "../symbols/number-type";
 import { GenericClassType } from "../symbols/generic-class-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
-import { ListType } from "../symbols/list-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { Scope } from "../interfaces/scope";
@@ -42,7 +42,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return "Object";
     }
 
-    if (this.id === "List") {
+    if (this.id === "ImmutableList") {
       return "Array";
     }
 
@@ -58,7 +58,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return '""';
       case "Boolean":
         return "false";
-      case "List":
+      case "ImmutableList":
         return "system.defaultList()";
       case "ArrayList":
         return "system.defaultArray()";
@@ -80,8 +80,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return BooleanType.Instance;
       case "String":
         return StringType.Instance;
-      case "List":
-        return new ListType(this.genericParameters[0].symbolType());
+      case "ImmutableList":
+        return new ImmutableListType(this.genericParameters[0].symbolType());
       case "ArrayList":
         return new ArrayListType(this.genericParameters[0].symbolType(), this.is2d);
       case "Dictionary":

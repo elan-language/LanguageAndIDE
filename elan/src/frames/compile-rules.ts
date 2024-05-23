@@ -7,7 +7,7 @@ import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
-import { ListType } from "./symbols/list-type";
+import { ImmutableListType } from "./symbols/immutable-list-type";
 import { FloatType } from "./symbols/number-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
@@ -208,7 +208,7 @@ export function mustBeIndexableSymbol(
 ) {
   if (
     !(
-      symbolType instanceof ListType ||
+      symbolType instanceof ImmutableListType ||
       symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
       symbolType instanceof DictionaryType
@@ -225,7 +225,7 @@ export function mustBeIndexableSymbol(
   if (
     isDouble &&
     ((symbolType instanceof ArrayListType && !symbolType.is2d) ||
-      symbolType instanceof ListType ||
+      symbolType instanceof ImmutableListType ||
       symbolType instanceof StringType ||
       symbolType instanceof DictionaryType)
   ) {
@@ -435,10 +435,10 @@ export function mustBeCompatibleType(
     return;
   }
   if (
-    lhs instanceof ListType &&
+    lhs instanceof ImmutableListType &&
     !(
       lhs.name === rhs.name ||
-      lhs.name === new IterType((lhs as ListType).ofType).name
+      lhs.name === new IterType((lhs as ImmutableListType).ofType).name
     )
   ) {
     FailIncompatible(lhs, rhs, compileErrors, location);
@@ -479,7 +479,7 @@ export function mustBeCompatibleType(
   if (
     lhs instanceof IterType &&
     !(
-      rhs instanceof ListType ||
+      rhs instanceof ImmutableListType ||
       rhs instanceof ArrayListType ||
       rhs instanceof StringType ||
       rhs instanceof IterType
@@ -491,7 +491,7 @@ export function mustBeCompatibleType(
 
   if (
     lhs instanceof IterType &&
-    (rhs instanceof ListType ||
+    (rhs instanceof ImmutableListType ||
       rhs instanceof ArrayListType ||
       rhs instanceof IterType)
   ) {
@@ -678,7 +678,7 @@ export function mustBeIterable(
 ) {
   if (
     !(
-      symbolType instanceof ListType ||
+      symbolType instanceof ImmutableListType ||
       symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
       symbolType instanceof IterType

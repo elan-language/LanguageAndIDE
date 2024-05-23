@@ -52,7 +52,7 @@ export class System {
   }
 
   list(t: Array<any>) {
-    (<any>t)._type = "List";
+    (<any>t)._type = "ImmutableList";
     return t;
   }
 

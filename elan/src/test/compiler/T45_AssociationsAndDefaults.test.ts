@@ -34,7 +34,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as List<of Int>
+    property previousScores as ImmutableList<of Int>
 
     function asString() return String
         return "A game"
@@ -64,7 +64,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "List<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -121,7 +121,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ChloeJoeList [5, 2, 4]");
+    await assertObjectCodeExecutes(fileImpl, "ChloeJoeImmutableList [5, 2, 4]");
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
@@ -146,7 +146,7 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as List<of Int>
+    property li as ImmutableList<of Int>
     property dsi as Dictionary<of String, Int>
     property ai as ArrayList<of Int>
 
@@ -169,7 +169,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "List<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -208,7 +208,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty Listempty Dictionaryempty ArrayList",
+      "00falseempty ImmutableListempty Dictionaryempty ArrayList",
     );
   });
 
@@ -375,7 +375,7 @@ main
   print g.p1 is default Player
   print g.p2 is default Player
   print g.previousGame is default Game
-  print g.previousScores is default List<of Int>
+  print g.previousScores is default ImmutableList<of Int>
   print g.score is default Int
   print g.best is default Int
 end main
@@ -393,7 +393,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ImmutableList<of Int>
 
   function asString() return String
     return "A game"
@@ -426,7 +426,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "List<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.score = 1;
   }
@@ -523,7 +523,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as List<of Int>
+  property previousScores as ImmutableList<of Int>
 
   function asString() return String
     return "A game"
@@ -572,7 +572,7 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is default List<of Int>
+  print f.a is default ImmutableList<of Int>
   print f.b is default String
   print f.c is default Dictionary<of String,Int>
   print f.d is default ArrayList<of Int>
@@ -582,7 +582,7 @@ class Foo
   constructor()
   end constructor
 
-  property a as List<of Int>
+  property a as ImmutableList<of Int>
   property b as String
   property c as Dictionary<of String, Int>
   property d as ArrayList<of Int>
@@ -607,7 +607,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["a", "List<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
+  static defaultInstance() { return system.defaultClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -640,7 +640,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "empty Listempty Dictionaryempty ArrayListtruetruetruetrue",
+      "empty ImmutableListempty Dictionaryempty ArrayListtruetruetruetrue",
     );
   });
 

@@ -1,10 +1,10 @@
 import { ParseNode } from "./parse-node";
 import { KVPnode } from "./kvp-node";
 import { AbstractParseNode } from "./abstract-parse-node";
-import { ListNode } from "./list-node";
+import { ImmutableListNode } from "./immutable-list-node";
 
 export class Dictionary extends AbstractParseNode {
-  kvps: ListNode | undefined;
+  kvps: ImmutableListNode | undefined;
   private keyConstructor: () => ParseNode;
   private valueConstructor: () => ParseNode;
 
@@ -21,7 +21,7 @@ export class Dictionary extends AbstractParseNode {
     if (text.length > 0) {
       const kvpConstructor = () =>
         new KVPnode(this.keyConstructor, this.valueConstructor);
-      this.kvps = new ListNode(kvpConstructor);
+      this.kvps = new ImmutableListNode(kvpConstructor);
       this.kvps.parseText(text);
       this.updateFrom(this.kvps);
     }

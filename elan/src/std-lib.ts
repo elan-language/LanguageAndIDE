@@ -1,5 +1,5 @@
 interface hasHiddenType {
-  _type: "List" | "ArrayList" | "Tuple" | "Iter";
+  _type: "ImmutableList" | "ArrayList" | "Tuple" | "Iter";
 }
 
 export class StdLib {
@@ -24,11 +24,11 @@ export class StdLib {
       const type = (v as unknown as hasHiddenType)._type;
 
       switch (type) {
-        case "List":
+        case "ImmutableList":
           if (v.length === 0) {
-            return "empty List";
+            return "empty ImmutableList";
           }
-          return `List [${v.map((i) => this.asString(i)).join(", ")}]`;
+          return `ImmutableList [${v.map((i) => this.asString(i)).join(", ")}]`;
         case "Tuple":
           return `Tuple (${v.map((i) => this.asString(i)).join(", ")})`;
         case "ArrayList":
@@ -76,7 +76,7 @@ export class StdLib {
 
   asList<T>(arr: T[]): T[] {
     const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "List";
+    (list as unknown as hasHiddenType)._type = "ImmutableList";
     return list;
   }
 
@@ -88,13 +88,13 @@ export class StdLib {
 
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict);
-    (lst as unknown as hasHiddenType)._type = "List";
+    (lst as unknown as hasHiddenType)._type = "ImmutableList";
     return lst;
   }
 
   values<T>(dict: { [key: string]: T }): T[] {
     const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = "List";
+    (lst as unknown as hasHiddenType)._type = "ImmutableList";
     return lst;
   }
 

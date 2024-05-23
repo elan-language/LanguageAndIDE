@@ -186,7 +186,7 @@ return [main, _tests];}`;
 
 constant source set to [[1], [2, 2]]
 main
-  print source.maxBy(lambda x as List<of Int> => x.length())
+  print source.maxBy(lambda x as ImmutableList<of Int> => x.length())
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -208,7 +208,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [2, 2]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList [2, 2]");
   });
 
   test("Pass_maxBy2", async () => {

@@ -345,7 +345,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "List [1, 2]");
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList [1, 2]");
   });
 
   test("Fail_WrongKeyword", async () => {
@@ -528,7 +528,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Float to Boolean",
       "Incompatible types Boolean to Int",
-      "Incompatible types List<of Float> to String",
+      "Incompatible types ImmutableList<of Float> to String",
       "Incompatible types Float to Int",
     ]);
   });
@@ -555,9 +555,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types List<of Float> to ArrayList<of String>",
-      "Incompatible types ArrayList<of String> to List<of Float>",
-      "Incompatible types List<of Float> to Dictionary",
+      "Incompatible types ImmutableList<of Float> to ArrayList<of String>",
+      "Incompatible types ArrayList<of String> to ImmutableList<of Float>",
+      "Incompatible types ImmutableList<of Float> to Dictionary",
     ]);
   });
 
