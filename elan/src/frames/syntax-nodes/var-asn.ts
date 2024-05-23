@@ -155,7 +155,8 @@ export class VarAsn
     const rootType = this.rootSymbolType();
     if (
       this.isIndex() &&
-      (rootType instanceof ImmutableListType || rootType instanceof ArrayListType)
+      (rootType instanceof ImmutableListType ||
+        rootType instanceof ArrayListType)
     ) {
       return rootType.ofType;
     }

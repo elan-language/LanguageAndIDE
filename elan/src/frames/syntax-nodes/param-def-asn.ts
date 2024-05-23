@@ -28,7 +28,9 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
       let st = this.symbolType();
       if (st instanceof ClassType) {
         const tt = transforms();
-        st = this.scope.resolveSymbol(st.className, tt, this.scope).symbolType(tt);
+        st = this.scope
+          .resolveSymbol(st.className, tt, this.scope)
+          .symbolType(tt);
       }
       mustBeImmutableType(st, this.compileErrors, this.fieldId);
     }

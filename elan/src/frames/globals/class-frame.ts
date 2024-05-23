@@ -107,7 +107,12 @@ export class ClassFrame
     return this.name.text;
   }
   symbolType(transforms: Transforms) {
-    return new ClassDefinitionType(this.symbolId, this.isAbstract(), this.isImmutable(), this);
+    return new ClassDefinitionType(
+      this.symbolId,
+      this.isAbstract(),
+      this.isImmutable(),
+      this,
+    );
   }
   symbolScope = SymbolScope.program;
   getProfile(): Profile {

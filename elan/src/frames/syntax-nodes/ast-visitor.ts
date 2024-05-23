@@ -383,7 +383,11 @@ export function transform(
   }
 
   if (node instanceof ImmutableDictionaryNode) {
-    const items = transform(node.kvps, fieldId, scope) as LiteralImmutableListAsn;
+    const items = transform(
+      node.kvps,
+      fieldId,
+      scope,
+    ) as LiteralImmutableListAsn;
     return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
   }
 
@@ -429,7 +433,11 @@ export function transform(
 
   if (node instanceof TermWith) {
     const obj = transform(node.term, fieldId, scope) as ExprAsn;
-    const changes = transform(node.with, fieldId, scope) as LiteralImmutableListAsn;
+    const changes = transform(
+      node.with,
+      fieldId,
+      scope,
+    ) as LiteralImmutableListAsn;
     return new WithAsn(obj, changes, fieldId, scope);
   }
 

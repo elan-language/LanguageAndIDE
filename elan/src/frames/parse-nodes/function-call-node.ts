@@ -21,8 +21,10 @@ export class FunctionCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const array = () => new Qualifier(new ArrayListNode(() => new ExprNode()));
-      const list = () => new Qualifier(new ImmutableListNode(() => new ExprNode()));
+      const array = () =>
+        new Qualifier(new ArrayListNode(() => new ExprNode()));
+      const list = () =>
+        new Qualifier(new ImmutableListNode(() => new ExprNode()));
       const literal = () => new Qualifier(new LitValueNode());
       const global = () => new Qualifier(new KeywordNode(globalKeyword));
       const lib = () => new Qualifier(new KeywordNode(libraryKeyword));

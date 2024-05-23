@@ -40,7 +40,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableDictionary {a:1, b:3, z:10}",
+    );
   });
 
   test("Pass_AccessByKey", async () => {
@@ -270,7 +273,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableDictionary {a:1, b:3, z:10}",
+    );
   });
 
   test("Pass_CreateEmptyDictionary", async () => {

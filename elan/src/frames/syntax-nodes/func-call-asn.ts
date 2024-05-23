@@ -141,7 +141,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return matches.get(type.id) ?? UnknownType.Instance;
     }
     if (type instanceof ArrayListType) {
-      return new ArrayListType(this.generateType(type.ofType, matches), type.is2d);
+      return new ArrayListType(
+        this.generateType(type.ofType, matches),
+        type.is2d,
+      );
     }
     if (type instanceof ImmutableListType) {
       return new ImmutableListType(this.generateType(type.ofType, matches));
@@ -153,7 +156,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return new DictionaryType(
         this.generateType(type.keyType, matches),
         this.generateType(type.valueType, matches),
-        type.isImmutable
+        type.isImmutable,
       );
     }
 

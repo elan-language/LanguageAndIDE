@@ -114,7 +114,8 @@ function updateDisplayValues() {
   );
   const compileStatus = file.readCompileStatusForDashboard();
   (document.getElementById("compile") as HTMLDivElement).setAttribute(
-    "class", compileStatus
+    "class",
+    compileStatus,
   );
   (document.getElementById("test") as HTMLDivElement).setAttribute(
     "class",
@@ -133,10 +134,12 @@ function updateDisplayValues() {
     runButton = "enabled";
   }
   (document.getElementById("run-button") as HTMLButtonElement).setAttribute(
-    "class", runButton
+    "class",
+    runButton,
   );
   (document.getElementById("stop") as HTMLButtonElement).setAttribute(
-    "class", stopButton
+    "class",
+    stopButton,
   );
 }
 

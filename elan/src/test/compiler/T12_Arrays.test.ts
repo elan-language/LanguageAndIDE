@@ -44,8 +44,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [4, 5, 6, 7, 8]");
   });
 
-
-
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

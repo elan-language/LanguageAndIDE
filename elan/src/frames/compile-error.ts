@@ -81,7 +81,12 @@ export class UndefinedSymbolCompileError extends CompileError {
 export class NotCallableCompileError extends CompileError {
   constructor(id: string, location: string, imPure: boolean, unknown: boolean) {
     const impStr = imPure ? " impure" : "";
-    super(Priority.illegalOperation, `Cannot call${impStr} ${id}`, location, unknown);
+    super(
+      Priority.illegalOperation,
+      `Cannot call${impStr} ${id}`,
+      location,
+      unknown,
+    );
   }
 }
 
@@ -93,7 +98,12 @@ export class NotIndexableCompileError extends CompileError {
 
 export class NotIterableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
-    super(Priority.illegalOperation, `Cannot iterate ${type}`, location, unknown);
+    super(
+      Priority.illegalOperation,
+      `Cannot iterate ${type}`,
+      location,
+      unknown,
+    );
   }
 }
 
@@ -137,12 +147,17 @@ export class MustImplementCompileError extends CompileError {
 
 export class MustBeConcreteCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(Priority.illegalOperation, `${type} must be concrete to new`, location, false);
+    super(
+      Priority.illegalOperation,
+      `${type} must be concrete to new`,
+      location,
+      false,
+    );
   }
 }
 
 export class MustBeImmutableCompileError extends CompileError {
-  constructor(type: string, location: string, unknown : boolean) {
+  constructor(type: string, location: string, unknown: boolean) {
     super(Priority.typeError, `${type} must be immutable`, location, unknown);
   }
 }
@@ -171,13 +186,23 @@ export class ParametersCompileError extends CompileError {
 
 export class MutateCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not mutate ${thing}`, location, false);
+    super(
+      Priority.illegalOperation,
+      `May not mutate ${thing}`,
+      location,
+      false,
+    );
   }
 }
 
 export class ReassignCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not reassign ${thing}`, location, false);
+    super(
+      Priority.illegalOperation,
+      `May not reassign ${thing}`,
+      location,
+      false,
+    );
   }
 }
 

@@ -405,7 +405,11 @@ suite("ASTNodes", () => {
       stubField,
       `lambda s as Int, p as ImmutableList<of Int> => s + p.first()`,
       "Lambda (Param s : Type Int, Param p : Type ImmutableList<Type Int>) => (Add (s) (Func Call p.first ()))",
-      new FunctionType([intType, new ImmutableListType(intType)], intType, false),
+      new FunctionType(
+        [intType, new ImmutableListType(intType)],
+        intType,
+        false,
+      ),
     );
     testAST(
       new Lambda(),
@@ -573,7 +577,13 @@ suite("ASTNodes", () => {
   test("Var", () => {
     testAST(new VarRefNode(), stubField, `a`, "a", intType);
     testAST(new VarRefNode(), stubField, `result`, "result", unknownType);
-    testAST(new VarRefNode(), stubField, `lst`, "lst", new ImmutableListType(intType));
+    testAST(
+      new VarRefNode(),
+      stubField,
+      `lst`,
+      "lst",
+      new ImmutableListType(intType),
+    );
     testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
     testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
     testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);

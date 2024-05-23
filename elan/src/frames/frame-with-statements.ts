@@ -75,17 +75,20 @@ export abstract class FrameWithStatements
   updateCompileStatus(): void {
     this.getChildren().forEach((c) => c.updateCompileStatus());
     const worstOfFieldsOrChildren = Math.min(
-      this.worstCompileStatusOfFields(), 
-      parentHelper_readWorstCompileStatusOfChildren(this)
+      this.worstCompileStatusOfFields(),
+      parentHelper_readWorstCompileStatusOfChildren(this),
     );
     super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(this.readCompileStatus(), worstOfFieldsOrChildren);
+    const newStatus = Math.min(
+      this.readCompileStatus(),
+      worstOfFieldsOrChildren,
+    );
     this.setCompileStatus(newStatus);
   }
 
   resetCompileStatusAndErrors(): void {
-      this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
-      super.resetCompileStatusAndErrors();
+    this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
+    super.resetCompileStatusAndErrors();
   }
 
   getChildren(): Frame[] {

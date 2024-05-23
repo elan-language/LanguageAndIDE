@@ -323,9 +323,9 @@ export class FileImpl implements File, Scope {
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
 
-   if (this._parseStatus === ParseStatus.valid) {
-     code = this.compile();
-     this.updateAllCompileStatus();
+    if (this._parseStatus === ParseStatus.valid) {
+      code = this.compile();
+      this.updateAllCompileStatus();
     }
     if (this._compileStatus === CompileStatus.ok) {
       const outcomes = await testRunner(code);
@@ -339,14 +339,16 @@ export class FileImpl implements File, Scope {
       this.resetAllTestStatus();
     }
   }
-  
+
   //Compile status
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
   readCompileStatusForDashboard(): string {
     let status = DisplayStatus.default;
-    const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
+    const parseStatus = helper_parseStatusAsDisplayStatus(
+      this.readParseStatus(),
+    );
     if (parseStatus === DisplayStatus.ok) {
       status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }

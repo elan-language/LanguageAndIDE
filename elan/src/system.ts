@@ -68,7 +68,6 @@ export class System {
     return t;
   }
 
-
   literalArray(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "ArrayList";
     return t;

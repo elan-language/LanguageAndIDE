@@ -136,7 +136,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       this.op === OperationSymbol.Add &&
       (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
     ) {
-      if (lst instanceof ImmutableListType && rst instanceof ImmutableListType) {
+      if (
+        lst instanceof ImmutableListType &&
+        rst instanceof ImmutableListType
+      ) {
         mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
       } else if (lst instanceof ImmutableListType) {
         mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);

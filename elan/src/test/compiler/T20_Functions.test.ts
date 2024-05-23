@@ -771,6 +771,7 @@ end class
     assertDoesNotCompile(fileImpl, [
       "ArrayList<of Int> must be immutable",
       "Dictionary must be immutable",
-      "Foo must be immutable"]);
+      "Foo must be immutable",
+    ]);
   });
 });

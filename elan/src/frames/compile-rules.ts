@@ -139,21 +139,25 @@ export function mustBeImmutableType(
 ) {
   if (!symbolType.isImmutable) {
     compileErrors.push(
-      new MustBeImmutableCompileError(symbolType.toString(), location, symbolType instanceof UnknownType),
+      new MustBeImmutableCompileError(
+        symbolType.toString(),
+        location,
+        symbolType instanceof UnknownType,
+      ),
     );
   }
 }
 
 export function mustNotBeKeyword(
-  id : string,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (id === thisKeyword) {
-    return; 
+    return;
   }
 
-  if (allKeywords.includes(id)){
+  if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
         `'${id}' keyword may not be used as identifier`,
@@ -427,7 +431,7 @@ export function mustBeCompatibleMutableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (lhs.isImmutable !== rhs.isImmutable){
+  if (lhs.isImmutable !== rhs.isImmutable) {
     FailIncompatible(lhs, rhs, compileErrors, location);
   }
 }

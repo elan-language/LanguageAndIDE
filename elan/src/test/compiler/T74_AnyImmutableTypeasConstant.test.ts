@@ -134,7 +134,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, c:3}");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableDictionary {a:1, b:3, c:3}",
+    );
   });
 
   // no longer supported ?

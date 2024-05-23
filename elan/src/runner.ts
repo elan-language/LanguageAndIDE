@@ -23,8 +23,7 @@ export function doImport(str: string) {
   return import(url);
 }
 
-function testRunner(jsCode: string, system : System, stdlib : StdLib) {
- 
+function testRunner(jsCode: string, system: System, stdlib: StdLib) {
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
       elan._inject(system, stdlib);
@@ -37,6 +36,6 @@ function testRunner(jsCode: string, system : System, stdlib : StdLib) {
   });
 }
 
-export function getTestRunner(system : System, stdlib : StdLib) {
+export function getTestRunner(system: System, stdlib: StdLib) {
   return (jsCode: string) => testRunner(jsCode, system, stdlib);
 }

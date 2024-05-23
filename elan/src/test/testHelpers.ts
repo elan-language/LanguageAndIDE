@@ -183,7 +183,6 @@ export async function assertAreEqualBySource(
   assert.strictEqual(actualSource, expectedSource);
 }
 
-
 export async function assertFileParses(sourceFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -576,5 +575,3 @@ export function createTestRunner() {
   const stdlib = new StdLib();
   return getTestRunner(system, stdlib);
 }
-
-
