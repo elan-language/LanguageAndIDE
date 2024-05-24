@@ -692,7 +692,6 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
 
-
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

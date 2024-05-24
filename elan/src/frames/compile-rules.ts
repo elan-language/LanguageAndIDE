@@ -632,8 +632,8 @@ export function mustNotBeParameter(
       // only mutate indexed arraylist
       const rst = assignable.rootSymbolType();
       const st = assignable.symbolType();
-      if (rst.name === st.name) // ie not indexed
-      {
+      if (rst.name === st.name) {
+        // ie not indexed
         compileErrors.push(new MutateCompileError(`parameter`, location));
       }
     } else {

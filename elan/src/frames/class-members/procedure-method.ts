@@ -26,7 +26,7 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
   }
-  
+
   public override compile(transforms: Transforms): string {
     super.compile(transforms);
     return `${this.indent()}${super.compile(transforms)}\r
