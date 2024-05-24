@@ -28,8 +28,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
   }
   public override compile(transforms: Transforms): string {
     super.compile(transforms);
-    return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+    return `${this.indent()}${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;
   }

@@ -24,11 +24,8 @@ ${endKeyword} ${functionKeyword}\r
   }
 
   public compile(transforms: Transforms): string {
-    super.compile(transforms);
-
-    return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileChildren(transforms)}\r
-}\r
+    return `function ${super.compile(transforms)}\r
+}
 `;
   }
 }

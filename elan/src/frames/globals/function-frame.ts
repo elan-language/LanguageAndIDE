@@ -129,6 +129,7 @@ ${this.renderChildrenAsHtml()}
       returnStatement!.fieldId,
     );
 
-    return "";
+    return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r`;
   }
 }
