@@ -1,21 +1,20 @@
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
-import { ClassFrame } from "../globals/class-frame";
 import { FunctionFrame } from "../globals/function-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { Parent } from "../interfaces/parent";
+import { mustBeCompatibleType } from "../compile-rules";
 
 export class FunctionMethod extends FunctionFrame implements Member {
   isMember: boolean = true;
-  private class: ClassFrame;
 
-  constructor(parent: ClassFrame) {
+  constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
   }
   public override indent(): string {
     return singleIndent();
@@ -27,7 +26,15 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public override compile(transforms: Transforms): string {
-    super.compile(transforms);
+    const returnStatement =
+      this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+    const tt = returnStatement?.symbolType();
+    mustBeCompatibleType(
+      this.returnType?.symbolType(transforms),
+      tt!,
+      this.compileErrors,
+      returnStatement!.fieldId,
+    );
     return `${this.indent()}${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;

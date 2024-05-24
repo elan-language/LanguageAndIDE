@@ -117,17 +117,17 @@ ${this.renderChildrenAsHtml()}
   }
 
   public compile(transforms: Transforms): string {
-    this.compileErrors = [];
+    //this.compileErrors = [];
 
-    const returnStatement =
-      this.getReturnStatement().expr.getOrTransformAstNode(transforms);
-    const tt = returnStatement?.symbolType();
-    mustBeCompatibleType(
-      this.returnType?.symbolType(transforms),
-      tt!,
-      this.compileErrors,
-      returnStatement!.fieldId,
-    );
+    // const returnStatement =
+    //   this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+    // const tt = returnStatement?.symbolType();
+    // mustBeCompatibleType(
+    //   this.returnType?.symbolType(transforms),
+    //   tt!,
+    //   this.compileErrors,
+    //   returnStatement!.fieldId,
+    // );
 
     return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r`;

@@ -1,20 +1,19 @@
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
-import { ClassFrame } from "../globals/class-frame";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
 import { Transforms } from "../syntax-nodes/transforms";
+import { Parent } from "../interfaces/parent";
 
 export class ProcedureMethod extends ProcedureFrame implements Member {
   isMember: boolean = true;
-  private class: ClassFrame;
+  
 
-  constructor(parent: ClassFrame) {
+  constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
   }
 
   public override indent(): string {

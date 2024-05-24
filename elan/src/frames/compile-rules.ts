@@ -44,11 +44,11 @@ import { AstNode } from "./interfaces/ast-node";
 import { Transforms } from "./syntax-nodes/transforms";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { Property } from "./class-members/property";
-import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { LetStatement } from "./statements/let-statement";
 import { allKeywords, thisKeyword } from "./keywords";
+import { FunctionMethod } from "./class-members/function-method";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
