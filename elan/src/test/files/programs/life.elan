@@ -1,4 +1,4 @@
-# 627593aab70ecbe090115a27bdb751f8f39cb768e1316b6aacd52bfa8ff04eaa Elan v0.1 valid
+# 4717b1237eccf38e40e436275e5cc472d5f1fc60514354e309937369109c4718 Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -12,10 +12,10 @@ end main
 procedure drawGrid(cm as CharMap, grid as ImmutableList<of Boolean>)
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
-      var cell set to grid[col * 20 + row]
+      var cell set to grid[col*20 + row]
       var colour set to if cell then Colour.white else Colour.black
-      call cm.putBlockWithColour((col * 2), row, colour)
-      call cm.putBlockWithColour((col * 2 + 1), row, colour)
+      call cm.putBlockWithColour((col*2), row, colour)
+      call cm.putBlockWithColour((col*2 + 1), row, colour)
     end for
   end for
 end procedure

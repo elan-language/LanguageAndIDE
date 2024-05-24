@@ -280,7 +280,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       "a * -b",
       "",
-      "a * -b",
+      "a*-b",
       "",
     );
     testNodeParse(
@@ -309,7 +309,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       "3 * 4 + x",
       "",
-      "3 * 4 + x",
+      "3*4 + x",
       "",
     );
     testNodeParse(
@@ -318,7 +318,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       "",
       "",
-      "3 * foo(5)",
+      "3*foo(5)",
       "",
     );
     testNodeParse(
@@ -855,7 +855,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       "(3 * 4 + x)",
       "",
-      "(3 * 4 + x)",
+      "(3*4 + x)",
       "",
     );
     testNodeParse(
@@ -864,7 +864,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       "(3 * (4 + x))",
       "",
-      "(3 * (4 + x))",
+      "(3*(4 + x))",
       "",
     );
     testNodeParse(
@@ -2555,10 +2555,10 @@ suite("Parsing Nodes", () => {
       ParseStatus.incomplete,
       "3 ",
       "",
-      "3 ",
+      "3",
     );
 
-    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3");
   });
 
   test("ProcRefCompound", () => {

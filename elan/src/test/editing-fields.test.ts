@@ -23,8 +23,8 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "3");
     assert.equal(expr.cursorPos, 1);
     expr.processKey(key(" "));
-    assert.equal(expr.text, "3 ");
-    assert.equal(expr.cursorPos, 2);
+    assert.equal(expr.text, "3");
+    assert.equal(expr.cursorPos, 1);
     assert.equal(expr.getCompletion(), "<pr>operator </pr><pr>expression</pr>");
     expr.processKey(key("+"));
     assert.equal(expr.text, "3 + ");
@@ -45,7 +45,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "3 +");
     assert.equal(expr.cursorPos, 3);
     expr.processKey(key("Backspace"));
-    assert.equal(expr.text, "3 ");
+    assert.equal(expr.text, "3");
     assert.equal(expr.cursorPos, 2);
     expr.processKey(key("Backspace"));
     assert.equal(expr.text, "3");
