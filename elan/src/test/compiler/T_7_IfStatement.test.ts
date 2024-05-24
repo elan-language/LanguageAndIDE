@@ -322,7 +322,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Must end with unconditional 'Else'"]);
   });
 
-  test("Fail_ConditionNotBool", async () => {
+  test("Fail_IfConditionNotBool", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

@@ -209,7 +209,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_ConditionNotBool", async () => {
+  test("Fail_RepeatConditionNotBool", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

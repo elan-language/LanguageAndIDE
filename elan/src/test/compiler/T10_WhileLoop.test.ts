@@ -204,7 +204,7 @@ main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_ConditionNotBool", async () => {
+  test("Fail_WhileConditionNotBool", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

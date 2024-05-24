@@ -627,15 +627,16 @@ export function mustNotBeParameter(
 ) {
   const s = assignable.symbolScope;
 
-  if (parent instanceof ProcedureFrame) {
-    if (
-      s === SymbolScope.parameter &&
-      !(assignable.rootSymbolType() instanceof ArrayListType)
-    ) {
-      compileErrors.push(new MutateCompileError(`parameter`, location));
-    }
-  } else {
-    if (s === SymbolScope.parameter) {
+  if (s === SymbolScope.parameter) {
+    if (parent instanceof ProcedureFrame) {
+      // only mutate indexed arraylist
+      const rst = assignable.rootSymbolType();
+      const st = assignable.symbolType();
+      if (rst.name === st.name) // ie not indexed
+      {
+        compileErrors.push(new MutateCompileError(`parameter`, location));
+      }
+    } else {
       compileErrors.push(new MutateCompileError(`parameter`, location));
     }
   }

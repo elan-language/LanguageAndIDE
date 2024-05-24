@@ -128,7 +128,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to {2, 3}.asArray()
+  var a set to [2, 3]
   call changeFirst(a)
   print a
 end main
@@ -139,7 +139,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArray(system.list([2, 3]));
+  var a = system.literalArray([2, 3]);
   changeFirst(a);
   system.print(_stdlib.asString(a));
 }
@@ -665,6 +665,33 @@ end procedure`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
   });
+
+  test("Fail_ArrayListParamMayNotBeReassigned", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [2, 3]
+  call changeAll(a)
+  print a
+end main
+
+procedure changeAll(a as ArrayList<of Int>)
+    set a to [1, 2, 3]
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+  });
+
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
