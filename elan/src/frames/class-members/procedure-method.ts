@@ -26,13 +26,14 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
   }
+  
   public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
+    super.compile(transforms);
+    return `${this.indent()}${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;
   }
+
   parseTop(source: CodeSource): void {
     source.removeIndent();
     return super.parseTop(source);

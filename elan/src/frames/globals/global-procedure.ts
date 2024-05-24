@@ -23,10 +23,8 @@ end procedure\r
   }
 
   public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `function ${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.compileStatements(transforms)}\r
-}\r
+    return `function ${super.compile(transforms)}\r
+}
 `;
   }
 

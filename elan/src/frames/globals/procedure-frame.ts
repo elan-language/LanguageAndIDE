@@ -82,4 +82,11 @@ ${this.renderChildrenAsHtml()}
       ? super.resolveSymbol(id, transforms, initialScope)
       : s;
   }
+
+  public compile(transforms: Transforms): string {
+    this.compileErrors = [];
+
+    return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+${this.compileStatements(transforms)}\r`;
+  }
 }
