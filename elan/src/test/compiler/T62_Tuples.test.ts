@@ -194,11 +194,11 @@ return [main, _tests];}`;
   });
 
   // pending settarget changes
-  ignore_test("Pass_DeconstructIntoExistingVariables", async () => {
+  test("Pass_DeconstructIntoExistingVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to (3,"Apple")
+  var x set to (3, "Apple")
   var y set to 0
   var z set to ""
   set (y, z) to x
