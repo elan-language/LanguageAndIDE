@@ -1,0 +1,117 @@
+# 31e0f0ddde8de0845eb8faeedb23c9763b28176189ea3c9dd956a8c13d464693 Elan v0.1 valid
+
+main
+  var possible set to validWords
+  var marking set to ""
+  var attempt set to "RAISE"
+  while marking is not "*****"
+    print attempt
+    input marking
+    var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
+    set attempt to bestAttempt(possAnswers.asList(), validWords)
+  end while
+end main
+
+function isYellow(attempt as String, target as String, n as Int) return Boolean
+  return target.contains(attempt[n])
+end function
+
+function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")
+end function
+
+function setTargetIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
+end function
+
+function isGreen(attempt as String, target as String, n as Int) return Boolean
+  return target[n] is attempt[n]
+end function
+
+function setChar(word as String, n as Int, newChar as Char) return String
+  return word[..n] + newChar + word[n + 1..]
+end function
+
+function setAttemptIfGreen(attempt as String, target as String, n as Int) return String
+  return if attempt.isGreen(target, n) then attempt.setChar(n, "*") else attempt
+end function
+
+function setTargetIfGreen(attempt as String, target as String, n as Int) return String
+  return if attempt.isGreen(target, n) then target.setChar(n, ".") else target
+end function
+
+function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
+  return attempt[n] is "*"
+end function
+
+function evaluateGreens(attempt as String, target as String) return (String, String)
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
+end function
+
+function evaluateYellows(attempt as String, target as String) return (String, String)
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
+end function
+
+function markAttempt(attempt as String, target as String) return String
+  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)
+  let markedAttempt be attemptAfterGreens.evaluateYellows(targetAfterGreens)
+  return markedAttempt.first()
+end function
+
+function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String, mark as String) return Iter<of String>
+  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
+end function
+
+function wordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
+  let d = dictionaryOfAllOutcomes 
+  let d2 = possibleAnswers.reduce(lambda (d, pa) => incrementByOne, d);
+  return d2.keys().reduce(lambda (m, k) => max(m, d2[k]))
+end function
+
+function increment(d as {string: Int}, k as String)  : {string: int} 
+  let count = d[k]
+  return d.put(k, count + 1);
+end function
+
+function size(g as Group<of String>) return Int
+  let members be g.members
+  return members.count
+end function
+
+function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
+  let parallel be possAttempts.asParallel()
+  return parallel.map(lambda w as String => new WordCount(w, wordCountRemainingAfterAttempt(possAnswers, w))
+end function
+
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
+  let isBetter be wc2.count < wc1.count
+  let isEqualAndPossAnswer be wc2.count is wc1.count and possAnswers.contains(wc2.word)
+  return if isBetter or isEqualAndPossAnswer then wc2 else wc1
+end function
+
+function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
+  let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
+  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
+  return best.word
+end function
+
+immutable class WordCount
+  constructor(word as String, count as Int)
+    set property.word to word
+    set property.count to count
+  end constructor
+
+  property word as String
+
+  property count as Int
+
+end class
+
+constant letterPositions set to {0, 1, 2, 3, 4}
+
+constant dictionaryOfallOutcomes set to {"_____": 0, "____+": 0, ...  "****_":0}
+
+# Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
+constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
+
+constant validWords set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
