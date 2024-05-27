@@ -118,4 +118,51 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not mutate x"]);
   });
+
+  test("Fail_RecursiveDefinition", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  let x be x + 1
+  print x
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to Float",
+      "x is not defined",
+    ]);
+  });
+
+  ignore_test("Fail_RecursiveDefinition1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to 1
+  let y be x.y
+  print y
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to Float",
+      "x is not defined",
+    ]);
+  });
 });

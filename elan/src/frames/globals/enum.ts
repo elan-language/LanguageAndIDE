@@ -12,8 +12,10 @@ import { EnumValueType } from "../symbols/enum-value-type";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { SymbolType } from "../interfaces/symbol-type";
+import { EnumType } from "../symbols/enum-type";
 
-export class Enum extends AbstractFrame implements GlobalFrame {
+export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame {
   isGlobal = true;
   name: TypeNameField;
   values: EnumValues;
@@ -26,6 +28,16 @@ export class Enum extends AbstractFrame implements GlobalFrame {
     this.name.setPlaceholder("Name");
     this.values = new EnumValues(this);
   }
+  
+  get symbolId() {
+    return this.name.text;
+  }
+
+  symbolType(transforms: Transforms): SymbolType {
+    return new EnumType(this.symbolId);
+  }
+  symbolScope = SymbolScope.program;
+
   initialKeywords(): string {
     return enumKeyword;
   }
