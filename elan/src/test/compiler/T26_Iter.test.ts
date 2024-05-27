@@ -52,12 +52,89 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "156");
   });
 
-  ignore_test("Pass_Array", async () => {
+  test("Pass_ListToFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var it set to [1, 3, 6]
-  var arr set to it.asArray()
+  var it set to {"one", "two"}
+  print printEach(it)
+end main
+  
+function printEach(target as Iter<of String>) return Iter<of String>
+  return target
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var it = system.list(["one", "two"]);
+  system.print(_stdlib.asString(printEach(it)));
+}
+
+function printEach(target) {
+  return target;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {one, two}");
+  });
+
+  test("Pass_IterAssignToList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var lst set to {"one", "two"}
+  var it set to printEach(lst)
+  set lst to it.asList()
+  print lst
+end main
+
+function printEach(target as Iter<of String>) return Iter<of String>
+  return target
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var lst = system.list(["one", "two"]);
+  var it = printEach(lst);
+  lst = _stdlib.asList(it);
+  system.print(_stdlib.asString(lst));
+}
+
+function printEach(target) {
+  return target;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {one, two}");
+  });
+
+  test("Pass_Array", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var arr set to [1, 3, 6]
   call printEach(arr)
 end main
   
@@ -69,8 +146,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.list([1, 3, 6]);
-  var arr = _stdlib.asArray(it);
+  var arr = system.literalArray([1, 3, 6]);
   printEach(arr);
 }
 
