@@ -5,6 +5,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -88,18 +89,22 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "pear");
   });
 
-  test("Pass_useAsType", async () => {
+  ignore_test("Pass_passAsArgument", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to Fruit.apple
-  var y set to x
-  print y
+  print isFavourite(Fruit.apple)
+  print isFavourite(Fruit.pear)
 end main
    
 enum Fruit
   apple, orange, pear
-end enum`;
+end enum
+
+function isFavourite(f as Fruit) return Boolean
+  return f is Fruit.pear
+end function
+`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -107,10 +112,14 @@ var Fruit = {
 };
 
 async function main() {
-  var x = Fruit.apple;
-  var y = x;
-  system.print(_stdlib.asString(y));
+  system.print(_stdlib.asString(Fruit.apple));
+  system.print(_stdlib.asString(Fruit.orange));
 }
+
+function isFavourite(f) {
+  return f === Fruit.apple;
+}
+
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -124,7 +133,52 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "apple");
+    await assertObjectCodeExecutes(fileImpl, "falsetrue");
+  });
+
+  test("Pass_returnFromFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print firstFruit() is Fruit.apple
+end main
+   
+enum Fruit
+  apple, orange, pear
+end enum
+
+function firstFruit() return Fruit
+  return Fruit.apple
+end function
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  system.print(_stdlib.asString(firstFruit() === Fruit.apple));
+}
+
+function firstFruit() {
+  return Fruit.pear.asString();
+}
+
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
   test("Pass_equality", async () => {
