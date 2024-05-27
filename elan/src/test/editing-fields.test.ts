@@ -9,6 +9,7 @@ import { MainFrame } from "../frames/globals/main-frame";
 import { SetStatement } from "../frames/statements/set-statement";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { testHash, transforms } from "./compiler/compiler-test-helpers";
+import { IfStatement } from "../frames/statements/if-statement";
 
 suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -23,8 +24,8 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "3");
     assert.equal(expr.cursorPos, 1);
     expr.processKey(key(" "));
-    assert.equal(expr.text, "3");
-    assert.equal(expr.cursorPos, 1);
+    assert.equal(expr.text, "3 ");
+    assert.equal(expr.cursorPos, 2);
     assert.equal(expr.getCompletion(), "<pr>operator </pr><pr>expression</pr>");
     expr.processKey(key("+"));
     assert.equal(expr.text, "3 + ");
@@ -45,7 +46,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "3 +");
     assert.equal(expr.cursorPos, 3);
     expr.processKey(key("Backspace"));
-    assert.equal(expr.text, "3");
+    assert.equal(expr.text, "3 ");
     assert.equal(expr.cursorPos, 2);
     expr.processKey(key("Backspace"));
     assert.equal(expr.text, "3");
@@ -161,5 +162,28 @@ suite("Editing Fields Tests", () => {
     t.processKey(key("Backspace"));
     assert.equal(t.text, ""); //i.e. does not accept a prompt as text
     assert.equal(t.cursorPos, 0);
+  });
+
+  test("Entry of expression using 'is' - #464", () => {
+    const main = new MainFrame(
+      new FileImpl(hash, new DefaultProfile(), transforms()),
+    );
+    const if1 = new IfStatement(main);
+    const expr = if1.condition;
+    expr.processKey(key("a"));
+    assert.equal(expr.text, "a");
+    assert.equal(expr.cursorPos, 1);
+    expr.processKey(key(" "));
+    assert.equal(expr.text, "a ");
+    assert.equal(expr.cursorPos, 2);
+    assert.equal(expr.getCompletion(), "<pr>operator </pr><pr>expression</pr>");
+    expr.processKey(key("i"));
+    assert.equal(expr.text, "a i");
+    assert.equal(expr.cursorPos, 3);
+    assert.equal(expr.getCompletion(), "s<pr>expression</pr>");
+    expr.processKey(key("s"));
+    assert.equal(expr.text, "a is ");
+    assert.equal(expr.cursorPos, 5);
+    assert.equal(expr.getCompletion(), "<pr>expression</pr>");
   });
 });

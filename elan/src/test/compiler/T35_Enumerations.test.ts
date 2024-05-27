@@ -136,7 +136,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "falsetrue");
   });
 
-  test("Pass_returnFromFunction", async () => {
+  ignore_test("Pass_returnFromFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

@@ -18,15 +18,15 @@ suite("T21_Functions_Procedures_ImpureFunctions_rules", () => {
 
 main
   var k set to readKey()
-  var r set to random(1, 6)
-  set r to random(1, 6) * 10
-  call bar(random(1,6))
+  var r set to randomInt(1, 6)
+  set r to randomInt(1, 6) * 10
+  call bar(randomInt(1,6))
 end main
 
 procedure foo()
   var k set to readKey()
-  var r set to random(1,6)
-  set r to random(1, 6) * 10
+  var r set to randomInt(1, 6)
+  set r to randomInt(1, 6) * 10
 end procedure
 
 procedure bar(x as Int)
@@ -36,15 +36,15 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var k = _stdlib.readKey();
-  var r = _stdlib.random(1, 6);
-  r = _stdlib.random(1, 6) * 10;
-  bar(_stdlib.random(1, 6));
+  var r = _stdlib.randomInt(1, 6);
+  r = _stdlib.randomInt(1, 6) * 10;
+  bar(_stdlib.randomInt(1, 6));
 }
 
 function foo() {
   var k = _stdlib.readKey();
-  var r = _stdlib.random(1, 6);
-  r = _stdlib.random(1, 6) * 10;
+  var r = _stdlib.randomInt(1, 6);
+  r = _stdlib.randomInt(1, 6) * 10;
 }
 
 function bar(x) {

@@ -2520,10 +2520,10 @@ suite("Parsing Nodes", () => {
       ParseStatus.incomplete,
       "3 ",
       "",
-      "3",
+      "3 ",
     );
 
-    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3");
+    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
   test("ProcRefCompound", () => {
