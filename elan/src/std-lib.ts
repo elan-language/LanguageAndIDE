@@ -190,8 +190,6 @@ export class StdLib {
 
   sqrt = Math.sqrt;
 
-  newline = "\n";
-
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);

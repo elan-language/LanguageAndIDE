@@ -94,7 +94,7 @@ return [main, _tests];}`;
 main
   var a set to "hello"
   each x in a
-    print x + newline
+    print x
   end each
 end main`;
 
@@ -102,7 +102,7 @@ end main`;
 async function main() {
   var a = "hello";
   for (const x of a) {
-    system.print(_stdlib.asString(x + _stdlib.newline));
+    system.print(_stdlib.asString(x));
   }
 }
 return [main, _tests];}`;
@@ -118,7 +118,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "h\ne\nl\nl\no\n");
+    await assertObjectCodeExecutes(fileImpl, "hello");
   });
 
   test("Pass_DoubleLoop", async () => {
