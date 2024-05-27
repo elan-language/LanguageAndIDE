@@ -202,9 +202,17 @@ export class StdLib {
     return 0;
   }
 
-  random(f: number, l: number) {
+  // Returns an Int between the two inclusive boundaries. 
+  randomInt(f: number, l: number) {
     return 0;
   }
+
+  // returns a Float in range 0 <= n < 1
+  random() {
+    return 0;
+  }
+
+
 
   filter<T>(source: T[], predicate: (value: T) => boolean) {
     return this.asIter(source.filter(predicate));

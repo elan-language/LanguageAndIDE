@@ -1,4 +1,4 @@
-# 7504d8fb26cae6973387d0878c9c52e917251cc55e57b9c0b246c03ec5244153 Elan v0.1 valid
+# 229a91a138e4f2b580682556311ddc11b92ba9502f532bc0180b77f8035ef032 Elan v0.1 valid
 
 main
   var newGame set to true
@@ -59,7 +59,8 @@ class Snake
   private property body as List<of Square>
 
   function tail() return Square
-    return body[0]
+    # return body[0]
+    return new Square(0, 0)
   end function
 
   function length() return Int
@@ -91,15 +92,15 @@ class Snake
   end procedure
 
   function hasHitEdge() return Boolean
-    return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
+    return (head.x < 0) or (head.y < 0) or (head.x is boardWidth) or (head.y is boardHeight)
   end function
 
   procedure setNewApplePosition()
     repeat
       var w set to boardWidth - 1
       var h set to boardHeight - 1
-      var ranW set to random(w)
-      var ranH set to random(h)
+      var ranW set to randomInt(0, w)
+      var ranH set to randomInt(0, h)
       set apple to new Square(ranW, ranH)
     end repeat when not bodyCovers(apple)
   end procedure
@@ -109,3 +110,45 @@ class Snake
 end class
 
 constant directionByKey set to {"w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right}
+
+# Standard library types and functions
+enum Direction
+  up, down, left, right
+end enum
+
+immutable class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  function getAdjacentSquare(d as Direction) return Square
+    var newX set to 0
+    var newY set to 0
+    switch d
+      case Direction.left
+        set newX to x - 1
+      case Direction.right
+        set newX to x + 1
+      case Direction.up
+        set newY to y - 1
+      case Direction.down
+        set newY to y + 1
+      default
+
+    end switch
+    return new Square(newX, newY)
+  end function
+
+end class
+
+immutable class CharMapDisplay
+  constructor()
+
+  end constructor
+
+end class
