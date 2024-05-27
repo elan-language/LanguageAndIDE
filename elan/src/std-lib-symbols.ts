@@ -84,17 +84,31 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "mod",
+      this.getSymbol(
+        "mod",
+        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
+      ),
+    ],
+    [
+      "div",
+      this.getSymbol(
+        "div",
+        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
+      ),
+    ],
+    [
       "floor",
       this.getSymbol(
         "floor",
-        new FunctionType([FloatType.Instance], IntType.Instance, false),
+        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
       ),
     ],
     [
       "ceiling",
       this.getSymbol(
         "ceiling",
-        new FunctionType([FloatType.Instance], IntType.Instance, false),
+        new FunctionType([FloatType.Instance], IntType.Instance, false, true),
       ),
     ],
     [

@@ -1,4 +1,4 @@
-# 22a4db7c957af462d6a73fd70f7ca184c16f28f9c1a0d79cfbf6ef5198c5f89d Elan v0.1 valid
+# 05e65e1fd129a5802ffad1f5aae9d05a20c469d61f21734dfde59533ee880b9b Elan v0.1 valid
 
 main
 
@@ -7,7 +7,7 @@ end main
 function binarySearch(li as ImmutableList<of String>, item as String) return Boolean
   var result set to false
   if li.length() > 0
-    var mid set to li.length() div 2
+    var mid set to div(li.length(), 2)
     var value set to li[mid]
     if item is value
       set result to true

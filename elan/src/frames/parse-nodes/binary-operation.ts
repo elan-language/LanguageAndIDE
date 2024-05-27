@@ -1,15 +1,11 @@
 import {
   andKeyword,
-  divKeyword,
   isKeyword,
-  modKeyword,
   notKeyword,
   orKeyword,
-  xorKeyword,
 } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
-import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
 import { OperatorNode } from "./operator-node";
@@ -38,9 +34,6 @@ export class BinaryOperation extends AbstractAlternatives {
     this.alternatives.push(new Sequence([is, sp, not]));
     this.alternatives.push(new KeywordNode(andKeyword));
     this.alternatives.push(new KeywordNode(orKeyword));
-    this.alternatives.push(new KeywordNode(xorKeyword));
-    this.alternatives.push(new KeywordNode(modKeyword));
-    this.alternatives.push(new KeywordNode(divKeyword));
     super.parseText(text.trimStart());
   }
 

@@ -154,12 +154,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print 7 div 2
+  print div(7, 2)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(Math.floor(7 / 2)));
+  system.print(_stdlib.asString(_stdlib.div(7, 2)));
 }
 return [main, _tests];}`;
 
@@ -181,12 +181,12 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print 11 mod 3
+  print mod(11, 3)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(11 % 3));
+  system.print(_stdlib.asString(_stdlib.mod(11, 3)));
 }
 return [main, _tests];}`;
 
@@ -208,7 +208,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print if 25 mod 20 < 19 then 1 else 2
+  print if 25.mod(20) < 19 then 1 else 2
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

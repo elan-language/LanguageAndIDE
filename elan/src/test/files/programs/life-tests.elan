@@ -1,4 +1,4 @@
-﻿# 95aea650c762b61d2e51568e214c7b2e3e619923118c1f20b1793c828942f623 Elan v0.1 valid
+﻿# 86721064e625d7866b9c26e14316a335ba59d58e5542cc497bd6fa5563e43a64 Elan v0.1 valid
 
 constant exampleCells set to {false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false}
 
@@ -26,7 +26,7 @@ test south
 end test
 
 function east(c as Int) return Int
-  return if c mod 20 < 19 then c + 1 else c - 19
+  return if c.mod(20) < 19 then c + 1 else c - 19
 end function
 
 test east
@@ -37,7 +37,7 @@ test east
 end test
 
 function west(c as Int) return Int
-  return if c mod 20 > 0 then c - 1 else c + 1
+  return if c.mod(20) > 0 then c - 1 else c + 1
 end function
 
 test west
