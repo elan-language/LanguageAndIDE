@@ -166,6 +166,71 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truetrue");
   });
+  test("Pass_CombineLogicalOpsWithComparison1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to (4 > 3) and (6 > 5)
+  var b set to (3 > 4) or (6 is 6)
+  var c set to not (4 > 3)
+  print a
+  print b
+  print c
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = (4 > 3) && (6 > 5);
+  var b = (3 > 4) || (6 === 6);
+  var c = !(4 > 3);
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(c));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+  });
+  test("Pass_CombineLogicalOpsWithComparison2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to (true and false) is (true or false)
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = (true && false) === (true || false);
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
+  });
+
 
   // TODO fails
   test("Fail_TypeCheck", async () => {
@@ -200,5 +265,75 @@ end main`;
       "Incompatible types Int to Boolean",
       "Incompatible types Int to Boolean",
     ]);
+  });
+  test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to 4 > 3 and 6 > 5
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
+  });
+
+  test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to not 4 > 3
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
+  });
+
+  test("fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to true and false is true or false
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = true && false === true || false;
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "false");
   });
 });
