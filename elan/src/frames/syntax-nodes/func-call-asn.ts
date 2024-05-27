@@ -23,6 +23,7 @@ import {
   scopePrefix,
   updateScopeAndQualifier,
 } from "../symbols/symbol-helpers";
+import { TupleType } from "../symbols/tuple-type";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -112,6 +113,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return this.flatten(p.keyType).concat(this.flatten(p.valueType));
     }
 
+    if (p instanceof TupleType) {
+      let flattened = [] as SymbolType[];
+      for (const t of p.ofTypes) {
+        flattened = flattened.concat(this.flatten(t));
+      }
+      return [new TupleType(flattened)];
+    }
+
     return [p];
   }
 
@@ -131,6 +140,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         this.containsGenericType(type.keyType) ||
         this.containsGenericType(type.valueType)
       );
+    }
+
+    if (type instanceof TupleType) {
+      return type.ofTypes.some(t => this.containsGenericType(t));
     }
 
     return false;
@@ -163,6 +176,28 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     return UnknownType.Instance;
   }
 
+  match(flattened : SymbolType[][], pTypes : SymbolType[][], matches : Map<string, SymbolType>) {
+    for (let i = 0; i < flattened.length; i++) {
+      const pt = flattened[i];
+      const pst = pTypes[i];
+
+      for (let i = 0; i < pt.length; i++) {
+        const t = pt[i];
+        const st = pst[i];
+
+        if (t instanceof GenericParameterType) {
+          matches.set(t.id, st);
+        }
+
+        if (t instanceof TupleType && st instanceof TupleType) {
+          this.match([t.ofTypes], [st.ofTypes], matches);
+        }
+
+      }
+    }
+  }
+
+
   matchGenericTypes(type: FunctionType, parameters: AstNode[]) {
     const matches = new Map<string, SymbolType>();
 
@@ -176,19 +211,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
     const pTypes = parameters.map((p) => this.flatten(p.symbolType()));
 
-    for (let i = 0; i < flattened.length; i++) {
-      const pt = flattened[i];
-      const pst = pTypes[i];
+    this.match(flattened, pTypes, matches);
 
-      for (let i = 0; i < pt.length; i++) {
-        const t = pt[i];
-        const st = pst[i];
-
-        if (t instanceof GenericParameterType) {
-          matches.set(t.id, st);
-        }
-      }
-    }
     return matches;
   }
 

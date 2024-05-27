@@ -122,7 +122,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  // pending lambda
   test("Pass_IndexGenericFunctionReturnsTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -155,7 +154,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Pass_FunctionTupleParameter", async () => {
+  test("Pass_FunctionTupleParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
