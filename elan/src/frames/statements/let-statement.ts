@@ -7,11 +7,10 @@ import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
-import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { LetType } from "../symbols/let-type";
 import { mustNotBeReassigned } from "../compile-rules";
+import { Frame } from "../interfaces/frame";
 
 export class LetStatement
   extends AbstractFrame
@@ -73,5 +72,17 @@ export class LetStatement
 
   get symbolId() {
     return this.name.renderAsSource();
+  }
+
+  resolveSymbol(
+    id: string | undefined,
+    transforms: Transforms,
+    initialScope: Frame,
+  ): ElanSymbol {
+    if (id === this.symbolId) {
+      return this;
+    }
+
+    return super.resolveSymbol(id, transforms, initialScope);
   }
 }
