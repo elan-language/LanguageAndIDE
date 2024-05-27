@@ -248,6 +248,37 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_combineComparisonWithArithmetic", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print (5 + 3) > (4 + 2)
+  print (5 + 3) is (4 + 4)
+  print (5 + 3) > (4 + 6)
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  system.print(_stdlib.asString((5 + 3) > (4 + 2)));
+  system.print(_stdlib.asString((5 + 3) === (4 + 4)));
+  system.print(_stdlib.asString((5 + 3) > (4 + 6)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+  });
+
   test("Fail_not_is", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -431,4 +462,23 @@ end main
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_combineComparisonWithArithmeticWithoutBrackets", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print 5 + 3 > 4 + 2
+end main`;
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
+  });
+
 });

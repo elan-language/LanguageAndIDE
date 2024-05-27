@@ -1,4 +1,4 @@
-# 4717b1237eccf38e40e436275e5cc472d5f1fc60514354e309937369109c4718 Elan v0.1 valid
+# 9fdde6518c4868893c80b7864a5deca032d5a54e434f26643031c8615d6b2ccb Elan v0.1 valid
 
 main
   var cm set to new CharMap()
@@ -29,11 +29,11 @@ function south(c as Int) return Int
 end function
 
 function east(c as Int) return Int
-  return if c mod 20 < 19 then c + 1 else c - 19
+  return if c.mod(20) < 19 then c + 1 else c - 19
 end function
 
 function west(c as Int) return Int
-  return if c mod 20 > 0 then c - 1 else c + 1
+  return if c.mod(20) > 0 then c - 1 else c + 1
 end function
 
 function northEast(c as Int) return Int

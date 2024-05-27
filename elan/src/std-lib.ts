@@ -163,6 +163,13 @@ export class StdLib {
   indexOf(s1: string, s2: string) {
     return s1.indexOf(s2);
   }
+  mod(n: number, d: number) {
+    return n % d;
+  }
+
+  div(n: number, d: number) {
+    return this.floor(n/d);
+  }
 
   floor(n: number) {
     return Math.floor(n);

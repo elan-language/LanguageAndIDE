@@ -2,12 +2,9 @@ import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 import {
   andKeyword,
-  divKeyword,
   isKeyword,
-  modKeyword,
   notKeyword,
   orKeyword,
-  xorKeyword,
 } from "../keywords";
 
 export class KeywordNode extends FixedTextNode {
@@ -67,12 +64,6 @@ export class KeywordNode extends FixedTextNode {
         return "&&";
       case orKeyword:
         return "||";
-      case xorKeyword:
-        return "^";
-      case divKeyword:
-        return "/";
-      case modKeyword:
-        return "%";
       default:
         return this.matchedText;
     }

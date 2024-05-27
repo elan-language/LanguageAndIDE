@@ -213,8 +213,6 @@ main
   var f set to 3 is 4
   var g set to 3 is not 4
   var h set to not false
-  var i set to 4 div 3
-  var j set to 4 mod 3
   var k set to 4 / 3
   print a
   print b
@@ -224,8 +222,6 @@ main
   print f
   print g
   print h
-  print i
-  print j
   print k
 end main`;
 
@@ -239,8 +235,6 @@ async function main() {
   var f = 3 === 4;
   var g = 3 !== 4;
   var h = !false;
-  var i = Math.floor(4 / 3);
-  var j = 4 % 3;
   var k = 4 / 3;
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
@@ -250,8 +244,6 @@ async function main() {
   system.print(_stdlib.asString(f));
   system.print(_stdlib.asString(g));
   system.print(_stdlib.asString(h));
-  system.print(_stdlib.asString(i));
-  system.print(_stdlib.asString(j));
   system.print(_stdlib.asString(k));
 }
 return [main, _tests];}`;
@@ -268,7 +260,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "-1truetruefalsefalsefalsetruetrue111.3333333333333333",
+      "-1truetruefalsefalsefalsetruetrue1.3333333333333333",
     );
   });
 

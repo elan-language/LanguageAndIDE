@@ -11,7 +11,6 @@ export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const curryKeyword = "curry"; //for future use
 export const defaultKeyword = "default";
-export const divKeyword = "div";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
 export const endKeyword = "end";
@@ -28,15 +27,14 @@ export const inKeyword = "in";
 export const intoKeyword = "into";
 export const inheritsKeyword = "inherits";
 export const inputKeyword = "input";
+export const isKeyword = "is";
 export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
 export const libraryKeyword = "library";
 export const mainKeyword = "main";
-export const modKeyword = "mod";
 export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
-export const isKeyword = "is";
 export const orKeyword = "or";
 export const packageKeyword = "package";
 export const partialKeyword = "partial"; //for future use
@@ -60,7 +58,6 @@ export const varKeyword = "var";
 export const whenKeyword = "when";
 export const whileKeyword = "while";
 export const withKeyword = "with";
-export const xorKeyword = "xor";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
@@ -84,7 +81,6 @@ export const allKeywords = [
   constructorKeyword,
   curryKeyword,
   defaultKeyword,
-  divKeyword,
   eachKeyword,
   elseKeyword,
   endKeyword,
@@ -105,7 +101,6 @@ export const allKeywords = [
   letKeyword,
   libraryKeyword,
   mainKeyword,
-  modKeyword,
   newKeyword,
   notKeyword,
   ofKeyword,
@@ -132,5 +127,4 @@ export const allKeywords = [
   whenKeyword,
   whileKeyword,
   withKeyword,
-  xorKeyword,
 ];

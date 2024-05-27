@@ -210,41 +210,6 @@ suite("Parsing Nodes", () => {
       "or",
       "",
     );
-    testNodeParse(
-      new BinaryOperation(),
-      "xor",
-      ParseStatus.valid,
-      "xor",
-      "",
-      "xor",
-      "",
-    );
-    testNodeParse(
-      new BinaryOperation(),
-      "mod",
-      ParseStatus.valid,
-      "mod",
-      "",
-      "mod",
-      "",
-    );
-    testNodeParse(
-      new BinaryOperation(),
-      "div",
-      ParseStatus.valid,
-      "div",
-      "",
-      "div",
-      "",
-    );
-    testNodeParse(
-      new BinaryOperation(),
-      "d",
-      ParseStatus.incomplete,
-      "d",
-      "",
-      "",
-    );
     testNodeParse(new BinaryOperation(), "%", ParseStatus.invalid, "", "%", "");
   });
   test("IndexableTerm", () => {
