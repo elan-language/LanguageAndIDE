@@ -232,11 +232,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
-  ignore_test("Pass_DeconstructIntoNewVariables", async () => {
+  test("Pass_DeconstructIntoNewVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to (3,""Apple"")
+  var x set to (3, "Apple")
   var (y, z) set to x
   print y
   print z

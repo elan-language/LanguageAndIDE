@@ -249,8 +249,20 @@ export abstract class FrameWithStatements
       range = range.slice(0, range.length - 1);
 
       for (const f of range) {
-        if (isSymbol(f) && f.symbolId === id) {
-          return f;
+        if (isSymbol(f) && id) {
+          // todo kludge
+          const sid = f.symbolId;
+
+          if (sid.startsWith("(")) {
+            const sids = sid.slice(1, -1).split(",").map(s => s.trim());
+
+            if (sids.includes(id)) {
+              return f;
+            }
+          }
+          else if (sid === id) {
+            return f;
+          }
         }
       }
     }
