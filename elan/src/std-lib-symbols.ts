@@ -401,8 +401,8 @@ export class StdLibSymbols implements Scope {
             new IterType(new GenericParameterType("T")),
             new GenericParameterType("U"),
             new FunctionType(
-              [new GenericParameterType("U")],
-              new GenericParameterType("T"),
+              [new GenericParameterType("U"), new GenericParameterType("T")],
+              new GenericParameterType("U"),
               false,
             ),
           ],

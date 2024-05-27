@@ -102,6 +102,7 @@ import { ArrayListNode } from "../parse-nodes/array-list-node";
 import { LiteralArrayListAsn } from "./literal-array-list-asn";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
+import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -403,7 +404,7 @@ export function transform(
 
   if (node instanceof DeconstructedTuple) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralTupleAsn(items, fieldId, scope);
+    return new DeconstructedTupleAsn(items, fieldId, scope);
   }
 
   if (node instanceof DeconstructedList) {
