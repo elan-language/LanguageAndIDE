@@ -204,7 +204,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  ignore_test("Pass_ModHasPrecedenceOverComparison", async () => {
+  ignore_test("Pass_ModWithComparison", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
