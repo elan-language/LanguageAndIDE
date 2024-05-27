@@ -1,6 +1,8 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -298,5 +300,168 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (4, Pear)");
   });
 
-  // Fails TODO
+  ignore_test("Fail_OutOfRangeError", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3,"Apple")
+  print x.third()
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeExecutes(fileImpl, "Tuple (4, Pear)");
+  });
+
+  test("Fail_AssignItemToWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3,"Apple")
+  var y set to 4
+  set y to x.second()
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
+  test("Fail_ImmutableSoCannotAssignAnItem", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3, "Apple")
+  set x.first() to 4
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_DeconstructIntoWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3,"Apple")
+  var y set to 0
+  var z set to ""
+  set (z, y) to x
+  print y
+  print z
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String",
+      "Incompatible types String to Int"]);
+  });
+
+  test("Fail_DeconstructIntoMixed1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3,"Apple")
+  var z set to ""
+  set (z, y) to x
+  print y
+  print z
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "y is not defined"]);
+  });
+
+  test("Fail_DeconstructIntoMixed2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3,"Apple")
+  var z set to ""
+  var (z, y) set to x
+  print y
+  print z
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["May not reassign z"]);
+  });
+
+  test("Fail_AssignANewTupleOfWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3, "Apple")
+  set x to ("4", "Pear")
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
 });

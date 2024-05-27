@@ -1,16 +1,21 @@
 import { CompileError } from "../compile-error";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "../interfaces/ast-node";
 import { TupleType } from "../symbols/tuple-type";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
-export class DeconstructedTupleAsn extends AbstractAstNode implements AstNode {
+export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode {
   constructor(
-    public readonly items: AstNode[],
+    public readonly items: AstIdNode[],
     public readonly fieldId: string,
     scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    const ids = this.items.map(i => i.id).join(",");
+    return `${ids}`;
   }
 
   aggregateCompileErrors(): CompileError[] {

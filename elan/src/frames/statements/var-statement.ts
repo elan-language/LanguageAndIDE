@@ -11,6 +11,7 @@ import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class VarStatement
   extends AbstractFrame
@@ -53,14 +54,18 @@ export class VarStatement
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const id = this.name.compile(transforms);
-    mustNotBeKeyword(id, this.compileErrors, this.name.getHtmlId());
+    const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
+    const ids = (id.includes(",")) ? id.split(",") : [id];
 
-    const symbol = this.getParent().resolveSymbol(id!, transforms, this);
+    for (const i of ids) {
+      mustNotBeKeyword(i, this.compileErrors, this.name.getHtmlId());
+      const symbol = this.getParent().resolveSymbol(i!, transforms, this);
+      mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+    }
 
-    mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
 
-    return `${this.indent()}var ${id} = ${this.expr.compile(transforms)};`;
+    return `${this.indent()}var ${vid} = ${this.expr.compile(transforms)};`;
   }
 
   get symbolId() {
