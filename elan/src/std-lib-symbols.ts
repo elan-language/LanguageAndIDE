@@ -337,6 +337,18 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "random",
         new FunctionType(
+          [],
+          FloatType.Instance,
+          false,
+          false,
+        ),
+      ),
+    ],
+    [
+      "randomInt",
+      this.getSymbol(
+        "randomInt",
+        new FunctionType(
           [IntType.Instance, IntType.Instance],
           IntType.Instance,
           false,
