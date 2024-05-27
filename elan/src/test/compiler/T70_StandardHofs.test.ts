@@ -49,6 +49,48 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_filterInFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+main
+  print filterIt(source)
+end main
+
+function filterIt(tofilter as Iter<of Int>) return Iter<of Int>
+    return tofilter.filter(lambda x as Int => x > 20)
+end function
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+async function main() {
+  system.print(_stdlib.asString(filterIt(source)));
+}
+
+function filterIt(tofilter) {
+  return _stdlib.filter(tofilter, (x) => x > 20);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Iter [23, 27, 31, 37]",
+    );
+  });
+
   test("Pass_map", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

@@ -1,4 +1,4 @@
-# 49aa3f9e73643e48efd167eec649984ca5a10b9ae8efe234986442c8efbb57f4 Elan v0.1 valid
+# 31e0f0ddde8de0845eb8faeedb23c9763b28176189ea3c9dd956a8c13d464693 Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -7,8 +7,8 @@ main
   while marking is not "*****"
     print attempt
     input marking
-    set possible to possibleAnswersAfterAttempt(possible, attempt, marking)
-    set attempt to bestAttempt(possible.asList(), validWords)
+    var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
+    set attempt to bestAttempt(possAnswers.asList(), validWords)
   end while
 end main
 
