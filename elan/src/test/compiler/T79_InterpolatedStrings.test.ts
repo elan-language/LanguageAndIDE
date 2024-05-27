@@ -9,7 +9,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Pass_CanUseVariables", () => {
+suite("Interpolated strings", () => {
   test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

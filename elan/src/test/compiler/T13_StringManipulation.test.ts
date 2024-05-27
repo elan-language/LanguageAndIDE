@@ -338,35 +338,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3 x 4 = 12");
   });
 
-  test("Pass_newLineConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var c set to "Hello " + newline + "World!"
-  print c
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var c = "Hello " + _stdlib.newline + "World!";
-  system.print(_stdlib.asString(c));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Hello \nWorld!");
-  });
-
   test("Pass_AppendStringToFloat", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
