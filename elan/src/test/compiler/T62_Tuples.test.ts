@@ -123,22 +123,22 @@ return [main, _tests];}`;
   });
 
   // pending lambda
-  ignore_test("Pass_IndexGenericFunctionReturnsTuple", async () => {
+  test("Pass_IndexGenericFunctionReturnsTuple", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print reduce(a, (1,1), lambda i, j -> j).first()
+  var t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  print t.first()
 end main
-constant a set to [(1,2)]`;
+constant a set to {(1,2)}`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.first(f())));
+  var t = _stdlib.reduce(a, system.tuple([1, 1]), (i, j) => j);
+  system.print(_stdlib.asString(_stdlib.first(t)));
 }
 
-function f() {
-  return system.tuple(["1", "2"]);
-}
+const a = system.list([system.tuple([1, 2])]);
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
