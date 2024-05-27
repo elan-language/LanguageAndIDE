@@ -89,7 +89,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "pear");
   });
 
-  ignore_test("Pass_passAsArgument", async () => {
+  test("Pass_passAsArgument", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -112,14 +112,13 @@ var Fruit = {
 };
 
 async function main() {
-  system.print(_stdlib.asString(Fruit.apple));
-  system.print(_stdlib.asString(Fruit.orange));
+  system.print(_stdlib.asString(isFavourite(Fruit.apple)));
+  system.print(_stdlib.asString(isFavourite(Fruit.pear)));
 }
 
 function isFavourite(f) {
-  return f === Fruit.apple;
+  return f === Fruit.pear;
 }
-
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(

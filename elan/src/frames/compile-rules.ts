@@ -49,6 +49,7 @@ import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { LetStatement } from "./statements/let-statement";
 import { allKeywords, thisKeyword } from "./keywords";
 import { FunctionMethod } from "./class-members/function-method";
+import { EnumType } from "./symbols/enum-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -535,6 +536,23 @@ export function mustBeCompatibleType(
       FailIncompatible(lhs, rhs, compileErrors, location);
       return;
     }
+  }
+
+  if (lhs instanceof EnumType && rhs instanceof EnumType) {
+    if (lhs.name !== rhs.name) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+      return;
+    }
+  }
+
+  if (lhs instanceof EnumType && !(rhs instanceof EnumType)) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
+  }
+
+  if (rhs instanceof EnumType && !(lhs instanceof EnumType)) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
   }
 
   if (
