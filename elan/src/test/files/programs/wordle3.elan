@@ -21,7 +21,7 @@ function setAttemptIfYellow(attempt as String, target as String, n as Int) retur
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, 3, ".") else target
 end function
 
 function isGreen(attempt as String, target as String, n as Int) return Boolean
@@ -53,8 +53,10 @@ function evaluateYellows(attempt as String, target as String) return (String, St
 end function
 
 function markAttempt(attempt as String, target as String) return String
-  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)
-  let markedAttempt be attemptAfterGreens.evaluateYellows(targetAfterGreens)
+  let greens be evaluateGreens(attempt, target)
+  let attemptAfterGreens be greens.first()
+  let targetAfterGreens be greens.second()
+  let markedAttempt be evaluateYellows(attemptAfterGreens, targetAfterGreens)
   return markedAttempt.first()
 end function
 
