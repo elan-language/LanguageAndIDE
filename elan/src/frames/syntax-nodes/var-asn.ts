@@ -21,6 +21,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { DictionaryType } from "../symbols/dictionary-type";
 
 export class VarAsn
   extends AbstractAstNode
@@ -156,12 +157,15 @@ export class VarAsn
 
   symbolType() {
     const rootType = this.rootSymbolType();
-    if (
-      this.isIndex() &&
-      (rootType instanceof ImmutableListType ||
-        rootType instanceof ArrayListType)
-    ) {
-      return rootType.ofType;
+    if (this.isIndex()) {
+      if (rootType instanceof ImmutableListType ||
+        rootType instanceof ArrayListType) {
+        return rootType.ofType;
+      }
+
+      if (rootType instanceof DictionaryType) {
+        return rootType.valueType;
+      }
     }
     return rootType;
   }

@@ -163,6 +163,43 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_reduceToDictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to {"three", "four"}
+main
+  var ed set to {"one":1, "two":2}
+  set ed to source.reduce(ed, lambda d as ImmutableDictionary<of String, Int>, x as String => d.setItem(x, 1))
+  print ed
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.list(["three", "four"]);
+
+async function main() {
+  var ed = system.immutableDictionary({"one" : 1, "two" : 2});
+  ed = _stdlib.reduce(source, ed, (d, x) => _stdlib.setItem(d, x, 1));
+  system.print(_stdlib.asString(ed));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableDictionary {one:1, two:2, three:1, four:1}",
+    );
+  });
+
   test("Pass_max", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

@@ -26,6 +26,15 @@ import {
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 
+class TypeHolder implements SymbolType {
+  constructor(public readonly symbolType: SymbolType, public readonly ofTypes: SymbolType[]) { }
+  isImmutable = false;
+  name = "TypeHolder";
+  toString() {
+    return this.name;
+  }
+}
+
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
@@ -111,7 +120,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     }
 
     if (p instanceof DictionaryType) {
-      return this.flatten(p.keyType).concat(this.flatten(p.valueType));
+      const tt = this.flatten(p.keyType).concat(p.valueType);
+      return [new TypeHolder(p, tt)];
     }
 
     if (p instanceof TupleType) {
@@ -152,7 +162,12 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
   generateType(type: SymbolType, matches: Map<string, SymbolType>): SymbolType {
     if (type instanceof GenericParameterType) {
-      return matches.get(type.id) ?? UnknownType.Instance;
+      const match = matches.get(type.id);
+      if (match instanceof TypeHolder) {
+        return this.generateType(match.symbolType, matches);
+      }
+
+      return match ?? UnknownType.Instance;
     }
     if (type instanceof ArrayListType) {
       return new ArrayListType(
@@ -174,7 +189,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       );
     }
 
-    return UnknownType.Instance;
+    return type;
   }
 
   minOf(a1 : object[], a2 : object[]) {
@@ -198,6 +213,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         }
 
         if (t instanceof TupleType && st instanceof TupleType) {
+          this.match([t.ofTypes], [st.ofTypes], matches);
+        }
+
+        if (t instanceof TypeHolder && st instanceof TypeHolder) {
           this.match([t.ofTypes], [st.ofTypes], matches);
         }
 
