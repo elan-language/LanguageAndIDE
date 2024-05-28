@@ -169,7 +169,7 @@ export class System {
       return true;
     }
 
-    if (o1.constructor.name !== o2.constructor.name) {
+    if (o1?.constructor?.name !== o2?.constructor?.name) {
       return false;
     }
 

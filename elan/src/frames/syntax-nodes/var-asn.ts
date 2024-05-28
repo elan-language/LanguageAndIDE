@@ -22,6 +22,7 @@ import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { DictionaryType } from "../symbols/dictionary-type";
+import { LetStatement } from "../statements/let-statement";
 
 export class VarAsn
   extends AbstractAstNode
@@ -99,8 +100,15 @@ export class VarAsn
       }
     }
 
+    const symbol = getParentScope(this.scope).resolveSymbol(
+      this.id,
+      transforms(),
+      this.scope,
+    );
+
+    const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index ? this.index.compile() : "";
-    let code = `${q}${this.id}${idx}`;
+    let code = `${q}${this.id}${call}${idx}`;
 
     if (this.isRange() || this.index) {
       const rootType = this.scope

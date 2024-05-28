@@ -1,4 +1,4 @@
-# 02be65952a1864e36c33482111afa0fe56ee56fc693af7073731c5896713676b Elan v0.1 valid
+# a1b81b6c0e551427bdce646435a3033f21ee39ee4e691e6a258f751dc7262241 Elan v0.1 valid
 
 main
 
@@ -129,21 +129,21 @@ function markAttempt(attempt as String, target as String) return String
 end function
 
 test markAttempt
-  #Breaking down the first real test to find the issue
+  # Breaking down the first real test to find the issue
   let greens be evaluateGreens("ABCDE", "XXXXX")
   assert greens is ("ABCDE", "XXXXX")
   # next one throws error
-  # assert greens.first() is "ABCDE"
+  assert greens.first() is "ABCDE"
 
   # real tests - first one is throws exception
-  # assert markAttempt("ABCDE", "XXXXX") is "_____"
-  # assert markAttempt("ABCDE", "BCDEA") is "+++++"
-  # assert markAttempt("ABCDE", "ABCDE") is "*****"
-  # assert markAttempt("SAINT", "LADLE") is "_*___"
-  # assert markAttempt("IDEAL", "LADLE") is "_++++"
-  # assert markAttempt("CABAL", "RECAP") is "+__*_"
-  # assert markAttempt("CABAL", "RECAP") is "+__*_"
-  # assert markAttempt("COLON", "GLORY") is "_++__"
+  assert markAttempt("ABCDE", "XXXXX") is "_____"
+  assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  assert markAttempt("ABCDE", "ABCDE") is "*****"
+  assert markAttempt("SAINT", "LADLE") is "_*___"
+  assert markAttempt("IDEAL", "LADLE") is "_++++"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("COLON", "GLORY") is "_++__"
 end test
 
 constant letterPositions set to {0, 1, 2, 3, 4}

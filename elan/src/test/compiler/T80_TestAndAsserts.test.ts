@@ -72,6 +72,100 @@ return [main, _tests];}`;
     ]);
   });
 
+  test("Pass_AssertTuple", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+test square
+  var t set to ("one", "two")
+  assert t is ("one", "two")
+  assert t.first() is "one"
+end test
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", (_outcomes) => {
+  var t = system.tuple(["one", "two"]);
+  _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
+  _outcomes.push(system.assert(_stdlib.first(t), "one", "assert12", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test3",
+        [
+          new AssertOutcome(TestStatus.pass, 'Tuple (one, two)', 'Tuple (one, two)', "assert9"),
+          new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
+        ],
+      ],
+    ]);
+  });
+
+  test("Pass_AssertLetTuple", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+test square
+  let t be ("one", "two")
+  assert t is ("one", "two")
+  assert t.first() is "one"
+end test
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", (_outcomes) => {
+  var t = () => system.tuple(["one", "two"]);
+  _outcomes.push(system.assert(t(), system.tuple(["one", "two"]), "assert9", _stdlib));
+  _outcomes.push(system.assert(_stdlib.first(t()), "one", "assert12", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test3",
+        [
+          new AssertOutcome(TestStatus.pass, 'Tuple (one, two)', 'Tuple (one, two)', "assert9"),
+          new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
+        ],
+      ],
+    ]);
+  });
+
   test("Pass_FailingTest", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
