@@ -1,15 +1,7 @@
 # 31e0f0ddde8de0845eb8faeedb23c9763b28176189ea3c9dd956a8c13d464693 Elan v0.1 valid
 
 main
-  var possible set to validWords
-  var marking set to ""
-  var attempt set to "RAISE"
-  while marking is not "*****"
-    print attempt
-    input marking
-    var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
-    set attempt to bestAttempt(possAnswers.asList(), validWords)
-  end while
+  # TODO
 end main
 
 function isYellow(attempt as String, target as String, n as Int) return Boolean
@@ -58,60 +50,8 @@ function markAttempt(attempt as String, target as String) return String
   return markedAttempt.first()
 end function
 
-function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String, mark as String) return Iter<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
-end function
-
-function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
-  let d = emptyDictionaryOfAllOutcomes 
-  let d2 = possibleAnswers.reduce(countMarks, d);
-  return d2.keys().reduce(maxCount)
-end function
-
-function countMarks(d as ImmutableDictionary<of String, Int>, possAnswer as String, attempt as String) return ImmutableDictionary<of String, Int>
-  let mark be markAttempt(attempt, possAnswer)
-  let count = d[mark]
-  return d.put(mark, count + 1)
-end function
-
-function maxCount(d as ImmutableDictionary<of String, Int>, mark as String, maxSoFar as Int,) return Int
-    let countForMark be d[mark]
-    return if countForMark > maxSoFar then countForMark else maxSoFar
-end function
-
-function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
-  let parallel be possAttempts.asParallel()
-  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
-end function
-
-function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
-  let isBetter be wc2.count < wc1.count
-  let isEqualAndPossAnswer be wc2.count is wc1.count and possAnswers.contains(wc2.word)
-  return if isBetter or isEqualAndPossAnswer then wc2 else wc1
-end function
-
-function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
-  let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
-  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
-  return best.word
-end function
-
-immutable class WordCount
-  constructor(word as String, count as Int)
-    set property.word to word
-    set property.count to count
-  end constructor
-
-  property word as String
-
-  property count as Int
-
-end class
 
 constant letterPositions set to {0, 1, 2, 3, 4}
-
-# Truncated. Full is is all 238 valid five-char outcomes (marks), each with value set to 0
-constant emptyDictionaryOfallOutcomes set to {"_____": 0, "____+": 0,  "****_":0} 
 
 # Both lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
 constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
