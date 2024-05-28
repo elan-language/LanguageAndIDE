@@ -135,7 +135,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "falsetrue");
   });
 
-  ignore_test("Pass_returnFromFunction", async () => {
+  test("Pass_returnFromFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -161,9 +161,8 @@ async function main() {
 }
 
 function firstFruit() {
-  return Fruit.pear.asString();
+  return Fruit.apple;
 }
-
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
