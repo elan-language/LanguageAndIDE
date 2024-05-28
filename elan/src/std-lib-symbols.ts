@@ -17,6 +17,7 @@ import { ProcedureType } from "./frames/symbols/procedure-type";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { Parent } from "./frames/interfaces/parent";
+import { stringType } from "./test/testHelpers";
 
 export class StdLibSymbols implements Scope {
   getParent(): Parent {
@@ -312,7 +313,16 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["indexOf", this.getSymbol("indexOf", IntType.Instance)],
+    ["indexOf",
+      this.getSymbol(
+        "indexOf",
+        new FunctionType(
+          [StringType.Instance, StringType.Instance],
+          IntType.Instance,
+          true,
+        ),
+      ),
+    ],
     [
       "typeAndProperties",
       this.getSymbol(
