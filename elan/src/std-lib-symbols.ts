@@ -499,6 +499,20 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    [
+      "contains",
+      this.getSymbol(
+        "contains",
+        new FunctionType(
+          [
+            new IterType(StringType.Instance),
+            StringType.Instance
+          ],
+          BooleanType.Instance,
+          true,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(

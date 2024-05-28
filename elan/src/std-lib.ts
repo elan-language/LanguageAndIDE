@@ -274,4 +274,8 @@ export class StdLib {
       }
     }
   }
+
+  contains(source: string[], substr: string) {
+    return source.includes(substr);
+  }
 }
