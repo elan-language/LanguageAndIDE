@@ -132,6 +132,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return [new TupleType(flattened)];
     }
 
+    if (p instanceof FunctionType) {
+      let flattened = [] as SymbolType[];
+      for (const t of p.parametersTypes) {
+        flattened = flattened.concat(this.flatten(t));
+      }
+      return flattened.concat(this.flatten(p.returnType));
+    }
+
     return [p];
   }
 

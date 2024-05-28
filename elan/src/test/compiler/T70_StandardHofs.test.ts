@@ -126,6 +126,40 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_mapTestType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
+  set source to source.map(lambda x as Int => x + 1)
+  print source
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var source = _stdlib.asIter(system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
+  source = _stdlib.map(source, (x) => x + 1);
+  system.print(_stdlib.asString(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]",
+    );
+  });
+
   test("Pass_reduce", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

@@ -68,6 +68,17 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "asIter",
+      this.getSymbol(
+        "asIter",
+        new FunctionType(
+          [new IterType(new GenericParameterType("T"))],
+          new IterType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
       "keys",
       this.getSymbol(
         "keys",
