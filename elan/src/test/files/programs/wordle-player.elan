@@ -1,7 +1,7 @@
-# 31e0f0ddde8de0845eb8faeedb23c9763b28176189ea3c9dd956a8c13d464693 Elan v0.1 valid
+# 5858c7f86a5fa179c3bf4a75272caf6a8dfc53bcba8ef5e22ab47e8eff3d5255 Elan v0.1 valid
 
 main
-  # TODO
+
 end main
 
 function isYellow(attempt as String, target as String, n as Int) return Boolean
@@ -9,27 +9,27 @@ function isYellow(attempt as String, target as String, n as Int) return Boolean
 end function
 
 function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt[n] is "*" then attempt else if attempt.isYellow(target, n) then attempt.setChar(n, "+") else attempt.setChar(n, "_")
+  return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt.isAlreadyMarkedGreen(n) then target else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), ".") else target
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
 end function
 
 function isGreen(attempt as String, target as String, n as Int) return Boolean
   return target[n] is attempt[n]
 end function
 
-function setChar(word as String, n as Int, newChar as Char) return String
+function setChar(word as String, n as Int, newChar as String) return String
   return word[..n] + newChar + word[n + 1..]
 end function
 
 function setAttemptIfGreen(attempt as String, target as String, n as Int) return String
-  return if attempt.isGreen(target, n) then attempt.setChar(n, "*") else attempt
+  return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
 end function
 
 function setTargetIfGreen(attempt as String, target as String, n as Int) return String
-  return if attempt.isGreen(target, n) then target.setChar(n, ".") else target
+  return if isGreen(attempt, target, n) then setChar(target, n, ".") else target
 end function
 
 function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
@@ -37,11 +37,11 @@ function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
 end function
 
 function evaluateGreens(attempt as String, target as String) return (String, String)
-  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.first(), a.second(), x), setTargetIfGreen(a.first(), a.second(), x)))
 end function
 
 function evaluateYellows(attempt as String, target as String) return (String, String)
-  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
+  return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfYellow(a.first(), a.second(), x), setTargetIfYellow(a.first(), a.second(), x)))
 end function
 
 function markAttempt(attempt as String, target as String) return String
@@ -50,10 +50,9 @@ function markAttempt(attempt as String, target as String) return String
   return markedAttempt.first()
 end function
 
-
 constant letterPositions set to {0, 1, 2, 3, 4}
 
-# Both lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
+# Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
 constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
 
 constant validWords set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
