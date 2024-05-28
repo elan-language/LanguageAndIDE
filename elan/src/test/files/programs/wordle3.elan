@@ -1,4 +1,4 @@
-# f69ef5057d40150888723979afdcdd1977e4ea07b9f08d4e99149c371a37ffea Elan v0.1 valid
+# a0887696fd27ce9a8ea96df79c27738fd40cafbda97dfc071ef4c6d13a906e5c Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -64,22 +64,16 @@ function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String
   return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
-function wordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return WordCount
-  let groups be possibleAnswers.groupBy(lambda w as String => markAttempt(attempt, w))
-  let largest be groups.maxBy(size)
-  let members be largest.members
-  let count be members.count()
-  return new WordCount(attempt, count)
-end function
-
-function size(g as Group<of String>) return Int
-  let members be g.members
-  return members.count
+function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
+  let d be emptyDictionaryOfAllOutcomes
+  let d2 be possibleAnswers.reduce(d, lambda possAnswer as String, attempt as String => d.put(markAttempt(attempt, possAnswer), d[mark] + 1))
+  let keys be d2.keys()
+  return keys.reduce(0, lambda mark as String, maxSoFar as Int => if d[mark] > maxSoFar then countForMark else maxSoFar)
 end function
 
 function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
   let parallel be possAttempts
-  return parallel.map(lambda w as String => wordCountRemainingAfterAttempt(possAnswers, w))
+  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
@@ -107,6 +101,8 @@ immutable class WordCount
 end class
 
 constant letterPositions set to {0, 1, 2, 3, 4}
+
+constant emptyDictionaryOfAllOutcomes set to {"_____": 0, "____+": 0,  "****_":0}
 
 # Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
 constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}

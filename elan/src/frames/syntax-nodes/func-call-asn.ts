@@ -177,12 +177,19 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     return UnknownType.Instance;
   }
 
-  match(flattened : SymbolType[][], pTypes : SymbolType[][], matches : Map<string, SymbolType>) {
-    for (let i = 0; i < flattened.length; i++) {
+  minOf(a1 : object[], a2 : object[]) {
+    return a1.length < a2.length ? a1.length : a2.length;
+  }
+
+  match(flattened: SymbolType[][], pTypes: SymbolType[][], matches: Map<string, SymbolType>) {
+    const minLength = this.minOf(flattened, pTypes);
+    for (let i = 0; i < minLength; i++) {
       const pt = flattened[i];
       const pst = pTypes[i];
 
-      for (let i = 0; i < pt.length; i++) {
+      const minLength1 = this.minOf(pt, pst);
+      for (let i = 0; i < minLength1; i++) {
+
         const t = pt[i];
         const st = pst[i];
 
