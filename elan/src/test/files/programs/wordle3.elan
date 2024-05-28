@@ -1,4 +1,4 @@
-# a0887696fd27ce9a8ea96df79c27738fd40cafbda97dfc071ef4c6d13a906e5c Elan v0.1 valid
+# f01e66d776a891292d434e914c5dc7f81d027c4e1260fb367c7b9352d30497e3 Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -66,9 +66,9 @@ end function
 
 function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
   let d be emptyDictionaryOfAllOutcomes
-  let d2 be possibleAnswers.reduce(d, lambda possAnswer as String, attempt as String => d.put(markAttempt(attempt, possAnswer), d[mark] + 1))
+  let d2 be possibleAnswers.reduce(d, lambda dd as ImmutableDictionary<of String, Int>, possAnswer as String => dd.setItem(markAttempt(attempt, possAnswer), dd[possAnswer] + 1))
   let keys be d2.keys()
-  return keys.reduce(0, lambda mark as String, maxSoFar as Int => if d[mark] > maxSoFar then countForMark else maxSoFar)
+  return keys.reduce(0, lambda mark as String, maxSoFar as Int => if d[mark] > maxSoFar then d[mark] else maxSoFar)
 end function
 
 function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
@@ -78,13 +78,13 @@ end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
   let isBetter be wc2.count < wc1.count
-  let isEqualAndPossAnswer be wc2.count is wc1.count and possAnswers.contains(wc2.word)
+  let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
 function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
   let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
-  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))
+  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 

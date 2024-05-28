@@ -98,6 +98,10 @@ export class StdLib {
     return list;
   }
 
+  head<T>(arr: T[]): T {
+    return arr[0];
+  }
+
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
     (lst as unknown as hasHiddenType)._type = "ImmutableList";
