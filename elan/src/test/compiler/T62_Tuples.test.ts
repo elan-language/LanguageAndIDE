@@ -195,7 +195,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "one");
   });
 
-  // pending settarget changes
   test("Pass_DeconstructIntoExistingVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -217,6 +216,40 @@ async function main() {
   [y, z] = x;
   system.print(_stdlib.asString(y));
   system.print(_stdlib.asString(z));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3Apple");
+  });
+
+  ignore_test("Pass_DeconstructIntoLetVariables", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3, "Apple")
+  let (y, z) be x
+  print y
+  print z
+end main
+`;
+    
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  var [_y, _z] = x; var y = () => _y; var z = () => _z;
+  system.print(_stdlib.asString(y()));
+  system.print(_stdlib.asString(z()));
 }
 return [main, _tests];}`;
 
