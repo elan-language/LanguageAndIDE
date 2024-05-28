@@ -1,3 +1,14 @@
+# Removed from wordle-player as markAttempt giving undefined, which was causing error on loading (when tests were run)
+test markAttempt
+  assert markAttempt("ABCDE", "XXXXX") is "_____"
+  assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  assert markAttempt("ABCDE", "ABCDE") is "*****"
+  assert markAttempt("SAINT", "LADLE") is "_*___"
+  assert markAttempt("IDEAL", "LADLE") is "_++++"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("COLON", "GLORY") is "_++__"
+end test
 
 test possibleAnswersAfterAttempt
 

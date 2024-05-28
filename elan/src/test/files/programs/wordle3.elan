@@ -21,7 +21,7 @@ function setAttemptIfYellow(attempt as String, target as String, n as Int) retur
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, 3, ".") else target
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
 end function
 
 function isGreen(attempt as String, target as String, n as Int) return Boolean
