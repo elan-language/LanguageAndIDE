@@ -4,45 +4,121 @@ main
 
 end main
 
-function isYellow(attempt as String, target as String, n as Int) return Boolean
-  return target.contains(attempt[n])
-end function
-
-function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
-  return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
-end function
-
-function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, 3, ".") else target
-end function
-
 function isGreen(attempt as String, target as String, n as Int) return Boolean
   return target[n] is attempt[n]
 end function
+
+test isGreen
+  assert isGreen("ABCDE", "A____", 0) is true
+  assert isGreen("ABCDE", "____E", 4) is true
+  assert isGreen("ABCDE", "_A___", 1) is false
+  assert isGreen("BABBB", "B____", 1) is false
+end test
 
 function setChar(word as String, n as Int, newChar as String) return String
   return word[..n] + newChar + word[n + 1..]
 end function
 
+test setChar
+  assert setChar("ABCDE", 0, "_") is "_BCDE"
+  assert setChar("ABCDE", 4, "_") is "ABCD_"
+end test
+
 function setAttemptIfGreen(attempt as String, target as String, n as Int) return String
   return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
 end function
+
+test setAttemptIfGreen
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 0) is "*BCDE"
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 4) is "ABCD*"
+  assert setAttemptIfGreen("BBCDE", "ABCDE", 0) is "BBCDE"
+  assert setAttemptIfGreen("ABCDE", "AACDE", 0) is "*BCDE"
+end test
 
 function setTargetIfGreen(attempt as String, target as String, n as Int) return String
   return if isGreen(attempt, target, n) then setChar(target, n, ".") else target
 end function
 
-function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
-  return attempt[n] is "*"
-end function
+test setTargetIfGreen
+  assert setTargetIfGreen("ABCDE", "ABCDE", 0) is ".BCDE"
+  assert setTargetIfGreen("ABCDE", "ABCDE", 4) is "ABCD."
+  assert setTargetIfGreen("BBCDE", "ABCDE", 0) is "ABCDE"
+  assert setTargetIfGreen("ABCDE", "AACDE", 0) is ".ACDE"
+end test
 
 function evaluateGreens(attempt as String, target as String) return (String, String)
   return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfGreen(a.first(), a.second(), x), setTargetIfGreen(a.first(), a.second(), x)))
 end function
 
+test evaluateGreens
+  assert evaluateGreens("ABCDE", "AXXXX") is ("*BCDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "XXXXE") is ("ABCD*", "XXXX.")
+  assert evaluateGreens("ABCDE", "ABCDE") is ("*****", ".....")
+  assert evaluateGreens("AACDE", "AXXXX") is ("*ACDE", ".XXXX")
+  assert evaluateGreens("ABCDE", "AAXXX") is ("*BCDE", ".AXXX")
+end test
+
+function isYellow(attempt as String, target as String, n as Int) return Boolean
+  return target.contains(attempt[n])
+end function
+
+test isYellow
+  assert isYellow("ABCDE", "____A", 0) is true
+  assert isYellow("ABCDE", "____A", 4) is false
+  assert isYellow("ABCDE", "___AA", 0) is true
+  assert isYellow("AACDE", "_A___", 1) is true
+  assert isYellow("AACDE", "__A__", 1) is true
+end test
+
+function setAttemptIfYellow(attempt as String, target as String, n as Int) return String
+  return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
+end function
+
+test setAttemptIfYellow
+  assert setAttemptIfYellow("ABCDE", "EABCD", 0) is "+BCDE"
+  assert setAttemptIfYellow("ABCDE", "EABCD", 4) is "ABCD+"
+  assert setAttemptIfYellow("ABCDE", "BAAAA", 0) is "+BCDE"
+  assert setAttemptIfYellow("AAAAB", "EABBB", 4) is "AAAA+"
+end test
+
+function isAlreadyMarkedGreen(attempt as String, n as Int) return Boolean
+  return attempt[n] is "*"
+end function
+
+test isAlreadyMarkedGreen
+  assert isAlreadyMarkedGreen("AB*DE", 2) is true
+  assert isAlreadyMarkedGreen("AB*DE", 0) is false
+  assert isAlreadyMarkedGreen("AB*DE", 4) is false
+  assert isAlreadyMarkedGreen("*BCD*", 2) is false
+  assert isAlreadyMarkedGreen("*BCD*", 0) is true
+  assert isAlreadyMarkedGreen("*BCD*", 4) is true
+end test
+
+function setTargetIfYellow(attempt as String, target as String, n as Int) return String
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, 3, ".") else target
+end function
+
+test setTargetIfYellow
+  assert setTargetIfYellow("ABCDE", "EABCD", 0) is "E.BCD"
+  assert setTargetIfYellow("ABCDE", "EABCD", 4) is ".ABCD"
+  assert setTargetIfYellow("ABCDE", "BAAAA", 0) is "B.AAA"
+  assert setTargetIfYellow("AAAAB", "EABEA", 4) is "EA.EA"
+  assert setTargetIfYellow("AAAAB", "EABBB", 4) is "EA.BB"
+  assert setTargetIfYellow("*BCDE", "*BCDA", 4) is "*BCDA"
+end test
+
 function evaluateYellows(attempt as String, target as String) return (String, String)
   return letterPositions.reduce((attempt, target), lambda a as (String, String), x as Int => (setAttemptIfYellow(a.first(), a.second(), x), setTargetIfYellow(a.first(), a.second(), x)))
 end function
+
+test evaluateYellows
+  assert evaluateYellows("ABCDE", "XAXXX") is ("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "XXXXA") is ("+____", "XXXX.")
+  assert evaluateYellows("ABCDE", "XXXXE") is ("____+", "XXXX.")
+  assert evaluateYellows("ABCDE", "XAAXX") is ("+____", "X.AXX")
+  assert evaluateYellows("AACDE", "XAXXX") is ("+____", "X.XXX")
+  assert evaluateYellows("ABCDE", "BCDEA") is ("+++++", ".....")
+end test
 
 function markAttempt(attempt as String, target as String) return String
   let greens be evaluateGreens(attempt, target)
@@ -51,6 +127,28 @@ function markAttempt(attempt as String, target as String) return String
   let markedAttempt be evaluateYellows(attemptAfterGreens, targetAfterGreens)
   return markedAttempt.first()
 end function
+
+test markAttempt
+  assert markAttempt("ABCDE", "XXXXX") is "_____"
+  assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  assert markAttempt("ABCDE", "ABCDE") is "*****"
+  assert markAttempt("SAINT", "LADLE") is "_*___"
+  assert markAttempt("IDEAL", "LADLE") is "_++++"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("COLON", "GLORY") is "_++__"
+end test
+
+test markAttempt
+  assert markAttempt("ABCDE", "XXXXX") is "_____"
+  assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  assert markAttempt("ABCDE", "ABCDE") is "*****"
+  assert markAttempt("SAINT", "LADLE") is "_*___"
+  assert markAttempt("IDEAL", "LADLE") is "_++++"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("CABAL", "RECAP") is "+__*_"
+  assert markAttempt("COLON", "GLORY") is "_++__"
+end test
 
 constant letterPositions set to {0, 1, 2, 3, 4}
 

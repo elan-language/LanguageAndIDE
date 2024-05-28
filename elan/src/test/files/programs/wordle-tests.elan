@@ -1,0 +1,74 @@
+
+test possibleAnswersAfterAttempt
+
+  var prior = new List<string> { "ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD" };
+  assert prior, "AAAAA", "*____", "ABCDE"
+  assert prior, "AXXXX", "+____", "BCDEA", "CDEAB", "DEABC", "EABCD"
+  assert prior, "AXXBX", "+__+_", "BCDEA", "CDEAB", "EABCD"
+  void assert List<string> prior, string attempt, string mark, params string[] expected)
+
+  CollectionAssert.AreEqual(expected, PossibleAnswersAfterAttempt(prior, attempt, 
+mark).ToList
+
+end test
+
+test wordCountRemainingAfterAttempt
+
+  var prior = new List<string> { "ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD" };
+  assert prior, "AAAAA", 1
+  assert prior, "AXXXX", 4
+  assert prior, "XXXXX", 5
+  void assert List<string> prior, string attempt, int expected)
+
+  Assert.AreEqual(expected, WordCountRemainingAfterAttempt(prior, attempt)
+
+end test
+Wordle Solver – A-level NEA Project by Richard Pawson
+35
+
+test allRemainingWordCounts
+
+  var possAnswers = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD" };
+  var possAttempts = new List<string> { "ABABA", "BCBCB", "ABCBC" };
+  var expected = new List<(string word, int count)> { ("ABABA", 2), ("BCBCB", 2), ("ABCBC", 1) };
+  assert possAnswers, possAttempts, expected
+  void assert List<string> possAnswers, List<string> possAttempts, List<(string word, int count)> 
+expected)
+
+  CollectionAssert.AreEqual(expected, AllRemainingWordCounts(possAnswers, 
+possAttempts).ToList
+
+end test
+
+test betterOf
+
+  var possAnswers = new List<string> { };
+  assert ("A", 3), ("B", 2), possAnswers, "B"
+  assert ("B", 2), ("A", 3), possAnswers, "B"
+  assert ("B", 2), ("A", 2), possAnswers, "B"
+  assert ("A", 2), ("B", 2), possAnswers, "A"
+  possAnswers = new List<string> { "B" };
+  assert ("A", 2), ("B", 2), possAnswers, "B"
+  possAnswers = new List<string> { "B", "A" };
+  assert ("A", 2), ("B", 2), possAnswers, "B"
+  assert ("B", 2), ("A", 2), possAnswers, "A"
+  void assert (string word, int count) word1, (string word, int count) word2, List<string> 
+possAnswers, string expected)
+
+  Assert.AreEqual(expected, BetterOf(word1, word2, possAnswers).word
+
+end test
+
+test bestAttempt
+
+  var possAnswers = new List<string> { "ABCDE", "ABBBB", "EDCBA" };
+  var possAttempts = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", 
+"DEABC" };
+  assert possAnswers, possAttempts, "EDCBA"
+  possAnswers = new List<string> { "ABCDE", "ABBBB", "BCDEA" };
+  possAttempts = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC" };
+  assert possAnswers, possAttempts, "BBBBB"
+  void assert List<string> possAnswers, List<string> possAttempts, string expected)
+
+  Assert.AreEqual(expected, BestAttempt(possAnswers, possAttempts)
+
