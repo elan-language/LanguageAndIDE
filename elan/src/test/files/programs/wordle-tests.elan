@@ -1,4 +1,23 @@
-# Removed from wordle-player as markAttempt giving undefined, which was causing error on loading (when tests were run)
+main
+  var wc set to new WordCount("FOOBA", 0)
+end main
+
+immutable class WordCount
+  constructor(word as String, count as Int)
+    set property.word to word
+    set property.count to count
+  end constructor
+
+  property word as String
+
+  property count as Int
+
+end class
+
+function markAttempt(attempt as String, target as String) return String
+  return ""
+end function
+
 test markAttempt
   assert markAttempt("ABCDE", "XXXXX") is "_____"
   assert markAttempt("ABCDE", "BCDEA") is "+++++"
@@ -10,76 +29,66 @@ test markAttempt
   assert markAttempt("COLON", "GLORY") is "_++__"
 end test
 
+function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String, mark as String) return Iter<of String>
+  return prior
+end function
+
 test possibleAnswersAfterAttempt
-
-  var prior = new List<string> { "ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD" };
-  assert prior, "AAAAA", "*____", "ABCDE"
-  assert prior, "AXXXX", "+____", "BCDEA", "CDEAB", "DEABC", "EABCD"
-  assert prior, "AXXBX", "+__+_", "BCDEA", "CDEAB", "EABCD"
-  void assert List<string> prior, string attempt, string mark, params string[] expected)
-
-  CollectionAssert.AreEqual(expected, PossibleAnswersAfterAttempt(prior, attempt, 
-mark).ToList
-
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is "ABCDE"
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is {"BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
 end test
 
-test wordCountRemainingAfterAttempt
+function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
+  return 0
+end function
 
-  var prior = new List<string> { "ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD" };
-  assert prior, "AAAAA", 1
-  assert prior, "AXXXX", 4
-  assert prior, "XXXXX", 5
-  void assert List<string> prior, string attempt, int expected)
-
-  Assert.AreEqual(expected, WordCountRemainingAfterAttempt(prior, attempt)
-
+test maxWordCountRemainingAfterAttempt
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
+  assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
+  assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
-Wordle Solver – A-level NEA Project by Richard Pawson
-35
+
+function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
+  return {new WordCount("FOOBA", 0)}
+end function
 
 test allRemainingWordCounts
-
-  var possAnswers = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD" };
-  var possAttempts = new List<string> { "ABABA", "BCBCB", "ABCBC" };
-  var expected = new List<(string word, int count)> { ("ABABA", 2), ("BCBCB", 2), ("ABCBC", 1) };
-  assert possAnswers, possAttempts, expected
-  void assert List<string> possAnswers, List<string> possAttempts, List<(string word, int count)> 
-expected)
-
-  CollectionAssert.AreEqual(expected, AllRemainingWordCounts(possAnswers, 
-possAttempts).ToList
-
+  let possAnswers be {"AAAAA", "BBBBB", "CCCCC", "DDDDD"}
+  let possAttempts be {"ABABA", "BCBCB", "ABCBC"}
+  let expected be {("ABABA", 2), ("BCBCB", 2), ("ABCBC", 1)}
+  assert allRemainingWordCounts(possAnswers, possAttempts) is expected
 end test
+
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
+   return new WordCount("FOOBA", 0)
+end function
 
 test betterOf
-
-  var possAnswers = new List<string> { };
-  assert ("A", 3), ("B", 2), possAnswers, "B"
-  assert ("B", 2), ("A", 3), possAnswers, "B"
-  assert ("B", 2), ("A", 2), possAnswers, "B"
-  assert ("A", 2), ("B", 2), possAnswers, "A"
-  possAnswers = new List<string> { "B" };
-  assert ("A", 2), ("B", 2), possAnswers, "B"
-  possAnswers = new List<string> { "B", "A" };
-  assert ("A", 2), ("B", 2), possAnswers, "B"
-  assert ("B", 2), ("A", 2), possAnswers, "A"
-  void assert (string word, int count) word1, (string word, int count) word2, List<string> 
-possAnswers, string expected)
-
-  Assert.AreEqual(expected, BetterOf(word1, word2, possAnswers).word
-
+  let possAnswers be new ImmutableList<of String>()
+  assert betterOf(new WordCount("A", 3), new WordCount("B", 2), possAnswers) is "B"
+  assert betterOf(new WordCount("B", 2), new WordCount("A", 3), possAnswers) is "B"
+  assert betterOf(new WordCount("B", 2), new WordCount("A", 2), possAnswers) is "B"
+  assert betterOf(new WordCount("A", 2), new WordCount("B", 2), possAnswers) is "A"
+  possAnswers = new List<string> {"B"}
+  assert betterOf(new WordCount("A", 2), new WordCount("B", 2), possAnswers) is "B"
+  possAnswers = new List<string> {"B", "A"}
+  assert betterOf(new WordCount("A", 2), new WordCount("B", 2), possAnswers) is "B"
+  assert betterOf(new WordCount("B", 2), new WordCount("A", 2), possAnswers) is "A"
 end test
 
+function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
+  return ""
+end function
+
 test bestAttempt
-
-  var possAnswers = new List<string> { "ABCDE", "ABBBB", "EDCBA" };
-  var possAttempts = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", 
-"DEABC" };
-  assert possAnswers, possAttempts, "EDCBA"
-  possAnswers = new List<string> { "ABCDE", "ABBBB", "BCDEA" };
-  possAttempts = new List<string> { "AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC" };
-  assert possAnswers, possAttempts, "BBBBB"
-  void assert List<string> possAnswers, List<string> possAttempts, string expected)
-
-  Assert.AreEqual(expected, BestAttempt(possAnswers, possAttempts)
+  let possAnswers be {"ABCDE", "ABBBB", "EDCBA"}
+  let possAttempts be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
+  assert bestAttempt(possAnswers, possAttempts) is "EDCBA"
+  let possAnswers2 be {"ABCDE", "ABBBB", "BCDEA"}
+  let possAttempts2 be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
+  assert bestAttempt(possAnswers, possAttempts) is "BBBBB"
+end test
 
