@@ -1,4 +1,4 @@
-# a1b81b6c0e551427bdce646435a3033f21ee39ee4e691e6a258f751dc7262241 Elan v0.1 valid
+# d12417558faf93a0eb3408eda270794ed1b85b1c637285042d558559effc7dca Elan v0.1 valid
 
 main
 
@@ -129,13 +129,6 @@ function markAttempt(attempt as String, target as String) return String
 end function
 
 test markAttempt
-  # Breaking down the first real test to find the issue
-  let greens be evaluateGreens("ABCDE", "XXXXX")
-  assert greens is ("ABCDE", "XXXXX")
-  # next one throws error
-  assert greens.first() is "ABCDE"
-
-  # real tests - first one is throws exception
   assert markAttempt("ABCDE", "XXXXX") is "_____"
   assert markAttempt("ABCDE", "BCDEA") is "+++++"
   assert markAttempt("ABCDE", "ABCDE") is "*****"
