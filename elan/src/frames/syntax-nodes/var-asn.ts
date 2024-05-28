@@ -16,7 +16,7 @@ import { IndexAsn } from "./index-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
-import { getClassScope } from "../symbols/symbol-helpers";
+import { getClassScope, getParentScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
@@ -139,6 +139,9 @@ export class VarAsn
     ) {
       currentScope = getClassScope(currentScope as Frame);
     }
+    else {
+      currentScope = getParentScope(currentScope);
+    }
 
     return currentScope;
   }
@@ -146,7 +149,7 @@ export class VarAsn
   rootSymbolType() {
     const currentScope = this.updateScope(this.scope);
     const rootType = currentScope
-      .resolveSymbol(this.id, transforms(), currentScope)
+      .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
     return rootType;
   }
@@ -168,7 +171,7 @@ export class VarAsn
     const symbol = currentScope.resolveSymbol(
       this.id,
       transforms(),
-      currentScope,
+      this.scope,
     );
     return symbol.symbolScope;
   }

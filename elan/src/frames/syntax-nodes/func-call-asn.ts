@@ -20,6 +20,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { transforms } from "./ast-helpers";
 import {
+  getParentScope,
   scopePrefix,
   updateScopeAndQualifier,
 } from "../symbols/symbol-helpers";
@@ -217,7 +218,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    const type = this.scope
+    const type = getParentScope(this.scope)
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
 

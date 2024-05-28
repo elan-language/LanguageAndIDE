@@ -9,8 +9,9 @@ import { beKeyword, letKeyword } from "../keywords";
 import { VarDefField } from "../fields/var-def-field";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { mustNotBeReassigned } from "../compile-rules";
+import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class LetStatement
   extends AbstractFrame
@@ -27,7 +28,7 @@ export class LetStatement
   }
 
   symbolType(transforms: Transforms) {
-    return this.expr.getOrTransformAstNode(transforms)!.symbolType();
+    return this.expr.symbolType(transforms);
   }
 
   get symbolScope(): SymbolScope {
@@ -62,12 +63,19 @@ export class LetStatement
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const id = this.name.compile(transforms);
-    const symbol = this.getParent().resolveSymbol(id!, transforms, this);
+    // todo common code with var statement
+    const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
+    const ids = (id.includes(",")) ? id.split(",") : [id];
 
-    mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+    for (const i of ids) {
+      mustNotBeKeyword(i, this.compileErrors, this.name.getHtmlId());
+      const symbol = this.getParent().resolveSymbol(i!, transforms, this);
+      mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+    }
 
-    return `${this.indent()}var ${id} = () => ${this.expr.compile(transforms)};`;
+    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
+
+    return `${this.indent()}var ${vid} = () => ${this.expr.compile(transforms)};`;
   }
 
   get symbolId() {
