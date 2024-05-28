@@ -1,4 +1,4 @@
-import { isFrame } from "./frames/helpers";
+import { isCollapsible, isFrame } from "./frames/helpers";
 import { Collapsible } from "./frames/interfaces/collapsible";
 import { editorEvent } from "./frames/interfaces/editor-event";
 import { File } from "./frames/interfaces/file";
@@ -53,7 +53,9 @@ export function handleDblClick(e: editorEvent, file: File) {
   switch (e.target) {
     case "frame": {
       const s = file.getById(e.id!) as Collapsible;
-      s.expandCollapse();
+      if (isCollapsible(s)) {
+        s.expandCollapse();
+      }
       break;
     }
   }
