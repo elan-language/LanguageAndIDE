@@ -1,4 +1,4 @@
-# 5858c7f86a5fa179c3bf4a75272caf6a8dfc53bcba8ef5e22ab47e8eff3d5255 Elan v0.1 valid
+# 02be65952a1864e36c33482111afa0fe56ee56fc693af7073731c5896713676b Elan v0.1 valid
 
 main
 
@@ -13,7 +13,7 @@ function setAttemptIfYellow(attempt as String, target as String, n as Int) retur
 end function
 
 function setTargetIfYellow(attempt as String, target as String, n as Int) return String
-  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
+  return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, 3, ".") else target
 end function
 
 function isGreen(attempt as String, target as String, n as Int) return Boolean
@@ -45,8 +45,10 @@ function evaluateYellows(attempt as String, target as String) return (String, St
 end function
 
 function markAttempt(attempt as String, target as String) return String
-  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)
-  let markedAttempt be attemptAfterGreens.evaluateYellows(targetAfterGreens)
+  let greens be evaluateGreens(attempt, target)
+  let attemptAfterGreens be greens.first()
+  let targetAfterGreens be greens.second()
+  let markedAttempt be evaluateYellows(attemptAfterGreens, targetAfterGreens)
   return markedAttempt.first()
 end function
 
