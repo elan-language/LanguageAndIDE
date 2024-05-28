@@ -128,6 +128,24 @@ function markAttempt(attempt as String, target as String) return String
   return markedAttempt.first()
 end function
 
+test markAttempt
+  #Breaking down the first real test to find the issue
+  let greens be evaluateGreens("ABCDE", "XXXXX")
+  assert greens is ("ABCDE", "XXXXX")
+  # next one throws error
+  # assert greens.first() is "ABCDE"
+
+  # real tests - first one is throws exception
+  # assert markAttempt("ABCDE", "XXXXX") is "_____"
+  # assert markAttempt("ABCDE", "BCDEA") is "+++++"
+  # assert markAttempt("ABCDE", "ABCDE") is "*****"
+  # assert markAttempt("SAINT", "LADLE") is "_*___"
+  # assert markAttempt("IDEAL", "LADLE") is "_++++"
+  # assert markAttempt("CABAL", "RECAP") is "+__*_"
+  # assert markAttempt("CABAL", "RECAP") is "+__*_"
+  # assert markAttempt("COLON", "GLORY") is "_++__"
+end test
+
 constant letterPositions set to {0, 1, 2, 3, 4}
 
 # Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
