@@ -1,15 +1,15 @@
-# 0cc6c55e910dc36bc54fbc739a411bbba9b40bcb5007dac9a9a46ec2837347d6 Elan v0.1 valid
+# ce8f05c7726e4d2485ab883ddd9e506543b73446c188d49272390dd4f077d5f7 Elan v0.1 valid
 
 main
     var d set to 1999
     print roman(d, valueSymbols)
 end main
 
-function roman(d as Int, as List<of(Int, String)>) return String
+function roman(d as Int, valueSymbols as ImmutableList<of (Int, String)>) return String
     var result set to ""
     var (value, symbol) set to valueSymbols[0]
     if d > 0
-        if (d >= value)
+        if d >= value
            set result to result + symbol + roman(d - value, valueSymbols)
         else
            set result to roman(d, valueSymbols[1..])
@@ -18,4 +18,4 @@ function roman(d as Int, as List<of(Int, String)>) return String
     return result
 end function
 
-constant valueSymbols set to [ (1000,"M"), (900,"CM"), (500,"D"), (400,"CD"), (100,"C"), (90,"XC"), (50,"L"), (40,"XL"), (10,"X"), (9,"IX"), (5,"V"), (4,"IV"), (1,"I") ]
+constant valueSymbols set to {(1000,"M"), (900,"CM"), (500,"D"), (400,"CD"), (100,"C"), (90,"XC"), (50,"L"), (40,"XL"), (10,"X"), (9,"IX"), (5,"V"), (4,"IV"), (1,"I")}
