@@ -8,6 +8,7 @@ import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { LetStatement } from "../statements/let-statement";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -54,9 +55,14 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    return getParentScope(this.scope)
+    const st = getParentScope(this.scope)
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
+
+    if (st instanceof DeconstructedTupleType) {
+      return st.symbolTypeFor(this.id);
+    }
+    return st;
   }
 
   toString() {
