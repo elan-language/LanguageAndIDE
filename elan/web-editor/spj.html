@@ -13,21 +13,36 @@
         <div id="code-title">Code</div>
         <div class="elan-code" data-code="" tabindex="0"></div>
         <div id="console-title">Console</div>
+        <button id="clear-console">Clear</button>
         <div id="console" tabindex="0"></div>
-        <div id="graphics-title" tabindex="0">Graphics</div>
-        <div id="graphics" tabindex="0">
+        <div id="status-title" tabindex="0">Status</div>
+        <div id="status-names" tabindex="0">
+            <div>Parse</div>
+            <div>Compile</div>
+            <div>Test</div>
+            <div>Run</div>
+        </div>
+        <div id="status-values">
+            <div id="parse" class=""></div>
+            <div id="compile" class=""></div>
+            <div id="test" class=""></div>
+            <div id="run-status" class=""></div>
+        </div>
+        <div id="run-controls">
+            <button id="run-button"><img src="./images/Run.png"></button>
+            <button id="pause"><img src="./images/Pause.png"></button>
+            <button id="stop"><img src="./images/Stop.png"></button>
         </div>
         <div id="code-controls">
             <button id="load">Load</button>
             <button id="save">Save</button>
             <button id="new">New</button>
         </div>
-        <div id="console-controls">
-            <button id="run">Run</button>
-            <button id="pause">Pause</button>
-            <button id="stop">Stop</button>
-            <button id="clear">Clear</button>
+        <div id="graphics-title" tabindex="0">Graphics</div>
+        <div id="graphics" tabindex="0">
         </div>
+
+
         <script src="spj-profile.js"></script>
         <script src="web-scripts.js"></script>
     </body>
