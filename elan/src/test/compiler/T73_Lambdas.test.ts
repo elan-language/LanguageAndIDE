@@ -113,6 +113,64 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
+  ignore_test("Pass_AssignALambdaToAProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to new Foo()
+  call foo.set(lambda x as Int => x)
+  var v set to foo.p1(5)
+  print v
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure set(p as Func<of Int => Int>)
+    set p1 to p
+  end procedure
+
+  property p1 as Func<of Int => Int>
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo = system.initialise(new Foo());
+  foo.set((x) => x);
+  var v = foo.p1(5);
+  system.print(_stdlib.asString(v));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Func<of Int => Int>"]]);};
+  constructor() {
+
+  }
+
+  set(p) {
+    this.p1 = p;
+  }
+
+  p1 = Func.defaultInstance();
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
   test("Pass_lambdaInExpression", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
