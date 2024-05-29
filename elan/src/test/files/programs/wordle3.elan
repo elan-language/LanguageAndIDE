@@ -1,4 +1,4 @@
-# bbc218bfb2167deddd9958c0720927c6be2dcd3dc2a6d12390a3b9978027a0a1 Elan v0.1 valid
+# 254218acbed8d3e23d4417fc81bb15df4278b7578483b31ac7b62696ee2c2173 Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -198,6 +198,22 @@ function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of Str
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
+
+test betterOf
+  let possAnswers be new ImmutableList<of String>()
+  let b2 be new WordCount("B", 2)
+  let a3 be new WordCount("A", 3)
+  let a2 be new WordCount("A", 2)
+  assert betterOf(a3, b2, possAnswers) is b2
+  assert betterOf(b2, a3, possAnswers) is b2
+  assert betterOf(b2, a2, possAnswers) is b2
+  assert betterOf(a2, b2, possAnswers) is a2
+  let possAnswers2 be {"B"}
+  assert betterOf(a2, b2, possAnswers2) is b2
+  let possAnswers3 be {"B", "A"}
+  assert betterOf(a2, b2, possAnswers3) is b2
+  assert betterOf(b2, a2, possAnswers3) is a2
+end test
 
 function bestAttempt(possAnswers as ImmutableList<of String>, possAttempts as ImmutableList<of String>) return String
   let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
