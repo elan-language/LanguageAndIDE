@@ -1,4 +1,4 @@
-# 59b16e76621427f12ee800bd22242b0951937cb66b076e71e7c7c3865daed6ae Elan v0.1 valid
+# bbc218bfb2167deddd9958c0720927c6be2dcd3dc2a6d12390a3b9978027a0a1 Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -151,17 +151,47 @@ function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String
   return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
+test possibleAnswersAfterAttempt
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is {"ABCDE"}
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is {"BCDEA", "CDEAB", "DEABC", "EABCD"}
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
+end test
+
 function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
   let d be emptyDictionaryOfAllOutcomes
-  let d2 be possibleAnswers.reduce(d, lambda dd as ImmutableDictionary<of String, Int>, possAnswer as String => dd.setItem(markAttempt(attempt, possAnswer), dd[possAnswer] + 1))
+  let d2 be possibleAnswers.reduce(d, lambda dd as ImmutableDictionary<of String, Int>, possAnswer as String => incrementCount(dd, possAnswer, attempt))
   let keys be d2.keys()
-  return keys.reduce(0, lambda mark as String, maxSoFar as Int => if d[mark] > maxSoFar then d[mark] else maxSoFar)
+  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2[mark] > maxSoFar then d2[mark] else maxSoFar)
 end function
+
+function incrementCount(dd as ImmutableDictionary<of String, Int>, possAnswer as String, attempt as String) return ImmutableDictionary<of String, Int>
+  let mark be markAttempt(attempt, possAnswer)
+  let keys be dd.keys()
+  let count be if keys.contains(mark) then dd[mark] else 0
+  let dd2 be dd.setItem(mark, count + 1)
+  return dd2
+end function
+
+test maxWordCountRemainingAfterAttempt
+  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  let d be emptyDictionaryOfAllOutcomes
+  assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
+  assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
+  assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
+end test
 
 function allRemainingWordCounts(possAnswers as ImmutableList<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
   let parallel be possAttempts
   return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
+
+test allRemainingWordCounts
+  let possAnswers be {"AAAAA", "BBBBB", "CCCCC", "DDDDD"}
+  let possAttempts be {"ABABA", "BCBCB", "ABCBC"}
+  let expected be {new WordCount("ABABA", 2), new WordCount("BCBCB", 2), new WordCount("ABCBC", 1)}
+  assert allRemainingWordCounts(possAnswers, possAttempts) is expected
+end test
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
   let isBetter be wc2.count < wc1.count
