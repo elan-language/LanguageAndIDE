@@ -10,8 +10,10 @@ import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { Collapsible } from "../interfaces/collapsible";
 
-export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame {
+export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
+  isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;
   literal: ConstantValueField;
@@ -34,6 +36,11 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame {
     this.literal.parseFrom(source);
   }
 
+  protected setClasses() {
+    super.setClasses();
+    this.pushClass(true, "multiline");
+  }
+
   getFields(): Field[] {
     return [this.name, this.literal];
   }
@@ -42,7 +49,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame {
     return "const";
   }
   renderAsHtml(): string {
-    return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>constant </keyword>${this.name.renderAsHtml()}<keyword> set to </keyword>${this.literal.renderAsHtml()}${this.compileMsgAsHtml()}</constant>`;
+    return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>constant </keyword>${this.name.renderAsHtml()}</top><keyword> set to </keyword>${this.literal.renderAsHtml()}${this.compileMsgAsHtml()}</constant>`;
   }
 
   indent(): string {

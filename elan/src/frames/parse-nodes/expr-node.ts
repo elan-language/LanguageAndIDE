@@ -1,7 +1,7 @@
+import { TermWith } from "./term-with";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { Term } from "./term";
-import { TermWith } from "./term-with";
 
 export class ExprNode extends AbstractAlternatives {
   constructor() {

@@ -32,7 +32,7 @@ suite("Navigation", () => {
         const frame = ff.getById("const1");
         frame.select(true, false);
       },
-      ["const1", "ok", "selected focused ok"],
+      ["const1", "ok multiline", "selected focused ok multiline"],
     );
   });
   test("Select First Child", async () => {
