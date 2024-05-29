@@ -491,4 +491,23 @@ end class`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_MissingClassOnInstantiation", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Foo()
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
+  });
 });

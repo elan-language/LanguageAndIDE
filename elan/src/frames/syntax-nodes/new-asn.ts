@@ -1,8 +1,8 @@
 import { ClassDefinitionType } from "../symbols/class-definition-type";
-import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
+  mustBeKnownSymbol,
   mustBeOneOrTwoOfTypeInt,
   mustMatchParameters,
 } from "../compile-rules";
@@ -11,7 +11,6 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
-import { Transforms } from "./transforms";
 import { TypeAsn } from "./type-asn";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
@@ -69,6 +68,9 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       transforms(),
       this.scope,
     );
+    
+    mustBeKnownSymbol(cls, this.compileErrors, this.fieldId);
+
     const cdt = cls.symbolType(transforms());
 
     if (cdt instanceof ClassDefinitionType) {
