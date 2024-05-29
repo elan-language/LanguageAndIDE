@@ -10,8 +10,8 @@ suite("File Parsing Tests", () => {
   test("parse Frames - snake", async () => {
     await assertFileParses("programs/snake.elan");
   });
-  test("parse Frames - wordle", async () => {
-    await assertFileParses("programs/wordle.elan");
+  test("parse Frames - wordle-solver", async () => {
+    await assertFileParses("programs/wordle-solver.elan");
   });
   test("parse Frames - life", async () => {
     await assertFileParses("programs/life.elan");

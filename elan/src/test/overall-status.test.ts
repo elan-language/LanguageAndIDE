@@ -126,14 +126,14 @@ suite("Editing Fields Tests", () => {
   );
 
   test(
-    "test wordle3",
+    "test wordle-solver",
     async () => {
-      const f = (await loadFileAsModel("programs/wordle3.elan")) as FileImpl;
+      const f = (await loadFileAsModel("programs/wordle-solver.elan")) as FileImpl;
       const runner = createTestRunner();
       await f.refreshAllStatuses(runner);
       assert.equal(f.readParseStatus(), ParseStatus.valid);
       assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      // assert.equal(f.readTestStatus(), TestStatus.pass);
+      assert.equal(f.readTestStatus(), TestStatus.pass);
     },
   );
 
