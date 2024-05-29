@@ -129,6 +129,57 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
+  ignore_test("Pass_PassAsAbstractClassIntoFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Yon()
+  print f(x)
+  print b(x)
+end main
+
+abstract class Foo
+  abstract property p1 as Float
+end class
+
+abstract class Bar
+  abstract property p2 as String
+end class
+
+class Yon inherits Foo, Bar
+    constructor()
+        set p1 to 3
+        set p2 to "apple"
+    end constructor
+    property p1 as Float
+    property p2 as String
+end class
+
+function b(bar as Bar) return String
+    return bar.p2
+end function
+
+function f(foo as Foo) return Float
+    return foo.p1
+end function`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "341216");
+  });
+
   test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
