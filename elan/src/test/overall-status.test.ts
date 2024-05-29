@@ -219,7 +219,7 @@ suite("Editing Fields Tests", () => {
       //assert.equal(f.readTestStatus(), TestStatus.pass);
     },
   );
-  ignore_test(
+  test(
     "test roman-numerals-6",
     async () => {
       const f = (await loadFileAsModel("programs/roman-numerals-6.elan")) as FileImpl;

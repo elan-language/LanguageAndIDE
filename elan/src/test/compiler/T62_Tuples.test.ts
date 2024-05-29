@@ -301,6 +301,48 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
+  test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to (3, "Apple")
+  var (y, z) set to x
+  var a set to 0
+  var b set to ""
+  set a to y
+  set b to z
+  print a
+  print b
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.tuple([3, "Apple"]);
+  var [y, z] = x;
+  var a = 0;
+  var b = "";
+  a = y;
+  b = z;
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3Apple");
+  });
+
   test("Pass_AssignANewTupleOfSameType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

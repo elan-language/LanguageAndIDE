@@ -1,4 +1,4 @@
-# 0754018db50c99bce2ca5a99ad2ed196c30fbcf13f3a69873cab97c687721beb Elan v0.1 valid
+# 95cc572cd138def55528fcdfa57aa96d807ee008d9e13f186fe622463d1971b4 Elan v0.1 valid
 
 main
     var d set to 1999
@@ -18,4 +18,4 @@ function roman(d as Int) return String
     return result
 end function
 
-constant valueSymbols set to [ (1000,"M"), (900,"CM"), (500,"D"), (400,"CD"), (100,"C"), (90,"XC"), (50,"L"), (40,"XL"), (10,"X"), (9,"IX"), (5,"V"), (4,"IV"), (1,"I") ]
+constant valueSymbols set to {(1000,"M"), (900,"CM"), (500,"D"), (400,"CD"), (100,"C"), (90,"XC"), (50,"L"), (40,"XL"), (10,"X"), (9,"IX"), (5,"V"), (4,"IV"), (1,"I")}

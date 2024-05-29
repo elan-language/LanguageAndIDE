@@ -12,6 +12,8 @@ import { Frame } from "../interfaces/frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { TupleType } from "../symbols/tuple-type";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 
 export class VarStatement
   extends AbstractFrame
@@ -52,10 +54,19 @@ export class VarStatement
     return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
+  _ids? : string[];
+
+  ids(transforms: Transforms) {
+    if (!this._ids){
+      const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
+      this._ids = (id.includes(",")) ? id.split(",") : [id];
+    }
+    return this._ids;
+  } 
+
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
-    const ids = (id.includes(",")) ? id.split(",") : [id];
+    const ids = this.ids(transforms);
 
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.name.getHtmlId());
@@ -63,7 +74,7 @@ export class VarStatement
       mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
     }
 
-    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
+    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 
     return `${this.indent()}var ${vid} = ${this.expr.compile(transforms)};`;
   }
@@ -73,7 +84,13 @@ export class VarStatement
   }
 
   symbolType(transforms: Transforms) {
-    return this.expr.symbolType(transforms);
+    const ids = this.ids(transforms);
+    const st = this.expr.symbolType(transforms);
+    if (ids.length > 1 && st instanceof TupleType) {
+      return new DeconstructedTupleType(ids, st.ofTypes);
+    }
+
+    return st;
   }
 
   symbolScope = SymbolScope.local;
