@@ -1,4 +1,5 @@
-# Elan v0.1 valid FFFFFFFFFFFFFFFF
+# 94c5c8f0c909e7ab50691b22ea96e66c62e177f80ba42fbd320795f4caf61b3f Elan v0.1 valid
+
 main
     var d set to 1999
     print roman(d)
@@ -7,7 +8,7 @@ end main
 function roman(d as Int) return String
     var result set to ""
     var d2 set to d
-    for i from 0 to decValues.length() - 1
+    for i from 0 to decValues.length() - 1 step 1
         var decValue set to decValues[i]
         while d2 >= decValue
             set result to result + romSymbols[i]
@@ -17,5 +18,5 @@ function roman(d as Int) return String
     return result
 end function
 
-constant decValues set to [ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ]
-constant romSymbols set to [ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+constant decValues set to {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}
+constant romSymbols set to {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}

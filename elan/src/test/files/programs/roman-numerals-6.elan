@@ -1,4 +1,5 @@
-# Elan v0.1 valid FFFFFFFFFFFFFFFF
+# 0754018db50c99bce2ca5a99ad2ed196c30fbcf13f3a69873cab97c687721beb Elan v0.1 valid
+
 main
     var d set to 1999
     print roman(d)
