@@ -1,4 +1,4 @@
-# a29f1637e392f4d8032c1f2c4fe09662b8ec07a3618e918051fc41bc4746cdc4 Elan v0.1 valid
+# 277ba1cecf7aafb387cadafe28f0b8cdccdddeaaef0082d2fff5d88881e922c6 Elan v0.1 valid
 
 main
   var possible set to allPossibleAnswers.asIter()
@@ -182,8 +182,7 @@ test maxWordCountRemainingAfterAttempt
 end test
 
 function allRemainingWordCounts(possAnswers as Iter<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
-  let parallel be possAttempts
-  return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
+  return possAttempts.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
 
 test allRemainingWordCounts
