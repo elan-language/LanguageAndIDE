@@ -5,7 +5,7 @@ import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
-import { mustBeIndexableSymbol, mustBePublicProperty } from "../compile-rules";
+import { mustBeIndexableSymbol, mustBeKnownSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -23,6 +23,8 @@ import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { LetStatement } from "../statements/let-statement";
+import { ElanSymbol } from "../interfaces/symbol";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class VarAsn
   extends AbstractAstNode
@@ -86,26 +88,30 @@ export class VarAsn
   compile(): string {
     this.compileErrors = [];
     const q = this.getQualifier();
+    let symbol : ElanSymbol = new UnknownSymbol(this.id);
 
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
     if (classScope instanceof ClassType) {
-      const s = this.scope.resolveSymbol(
+      const classSymbol = this.scope.resolveSymbol(
         classScope.className,
         transforms(),
         this.scope,
       );
-      if (isScope(s)) {
-        const p = s.resolveSymbol(this.id, transforms(), s);
-        mustBePublicProperty(p, this.compileErrors, this.fieldId);
+      if (isScope(classSymbol)) {
+        symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
+        mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
       }
     }
+    else {
+      symbol = getParentScope(this.scope).resolveSymbol(
+        this.id,
+        transforms(),
+        this.scope,
+      );
+    }
 
-    const symbol = getParentScope(this.scope).resolveSymbol(
-      this.id,
-      transforms(),
-      this.scope,
-    );
-
+    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
+    
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index ? this.index.compile() : "";
     let code = `${q}${this.id}${call}${idx}`;
