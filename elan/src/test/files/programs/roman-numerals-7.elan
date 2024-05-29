@@ -1,21 +1,53 @@
-# ce8f05c7726e4d2485ab883ddd9e506543b73446c188d49272390dd4f077d5f7 Elan v0.1 valid
+# 1aa07c334a90575c103d2a0b3d07be5048846778423454a3bf62a1ad1e869418 Elan v0.1 valid
 
 main
-    var d set to 1999
-    print roman(d, valueSymbols)
+  var d set to 1999
+  print asRoman(d)
 end main
 
-function roman(d as Int, valueSymbols as ImmutableList<of (Int, String)>) return String
-    var result set to ""
-    var (value, symbol) set to valueSymbols[0]
-    if d > 0
-        if d >= value
-           set result to result + symbol + roman(d - value, valueSymbols)
-        else
-           set result to roman(d, valueSymbols[1..])
-        end if
-    end if
-    return result
+function asRoman(d as Int) return String
+  let allSymbols be {(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")}
+  let symbols be allSymbols.filter(lambda s as (Int, String) => s.first() <= d)
+  let largest be symbols.head()
+  return if d is 0 then "" else largest.second() + asRoman(d - largest.first())
 end function
 
-constant valueSymbols set to {(1000,"M"), (900,"CM"), (500,"D"), (400,"CD"), (100,"C"), (90,"XC"), (50,"L"), (40,"XL"), (10,"X"), (9,"IX"), (5,"V"), (4,"IV"), (1,"I")}
+test 
+  assert asRoman(0) is ""
+  assert asRoman(1) is "I"
+  assert asRoman(2) is "II"
+  assert asRoman(3) is "III"
+  assert asRoman(4) is "IV"
+  assert asRoman(5) is "V"
+  assert asRoman(6) is "VI"
+  assert asRoman(7) is "VII"
+  assert asRoman(8) is "VIII"
+  assert asRoman(9) is "IX"
+  assert asRoman(10) is "X"
+  assert asRoman(11) is "XI"
+  assert asRoman(14) is "XIV"
+  assert asRoman(15) is "XV"
+  assert asRoman(17) is "XVII"
+  assert asRoman(19) is "XIX"
+  assert asRoman(20) is "XX"
+  assert asRoman(21) is "XXI"
+  assert asRoman(25) is "XXV"
+  assert asRoman(28) is "XXVIII"
+  assert asRoman(29) is "XXIX"
+  assert asRoman(30) is "XXX"
+  assert asRoman(37) is "XXXVII"
+  assert asRoman(41) is "XLI"
+  assert asRoman(50) is "L"
+  assert asRoman(54) is "LIV"
+  assert asRoman(79) is "LXXIX"
+  assert asRoman(95) is "XCV"
+  assert asRoman(333) is "CCCXXXIII"
+  assert asRoman(444) is "CDXLIV"
+  assert asRoman(555) is "DLV"
+  assert asRoman(666) is "DCLXVI"
+  assert asRoman(999) is "CMXCIX"
+  assert asRoman(1066) is "MLXVI"
+  assert asRoman(1789) is "MDCCLXXXIX"
+  assert asRoman(1999) is "MCMXCIX"
+  assert asRoman(2017) is "MMXVII"
+end test

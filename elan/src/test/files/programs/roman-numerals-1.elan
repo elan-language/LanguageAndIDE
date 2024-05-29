@@ -1,59 +1,103 @@
-# 1651f6b5cbbd16da720b17dcea8503dbbed2505ec1876b8f646f30b7e9f49746 Elan v0.1 valid
+# c10b69689362d1ad1034ddf8bef6c32137aa8f3040e24b60c296d059828d297d Elan v0.1 valid
 
 main
-    var d set to 1789
-    var result set to ""
-    while d >= 1000
-        set d to d - 1000
-        set result to result + "M"
-    end while
-    while d >= 900
-        set d to d - 900
-        set result to result + "CM"
-    end while
-    while d >= 500
-        set d to d - 500
-        set result to result + "D"
-    end while
-    while d >= 400
-        set d to d - 400
-        set result to result + "CD"
-    end while
-    while d >= 100
-        set d to d - 100
-        set result to result + "C"
-    end while
-    while d >= 90
-        set d to d - 90
-        set result to result + "XC"
-    end while
-    while d >= 50
-        set d to d - 50
-        set result to result + "L"
-    end while
-    while d >= 40
-        set d to d - 40
-        set result to result + "XL"
-    end while
-    while d >= 10
-        set d to d - 10
-        set result to result + "X"
-    end while
-    while d >= 9
-        set d to d - 9
-        set result to result + "IX"
-    end while
-    while d >= 5
-        set d to d - 5
-        set result to result + "V"
-    end while
-    while d >= 4
-        set d to d - 4
-        set result to result + "IV"
-    end while
-    while d >= 1
-        set d to d - 1
-        set result to result + "I"
-    end while
-    print result
+
 end main
+
+function asRoman(decimal as Int) return String
+  var result set to ""
+  var d set to decimal
+  while d >= 1000
+    set d to d - 1000
+    set result to result + "M"
+  end while
+  while d >= 900
+    set d to d - 900
+    set result to result + "CM"
+  end while
+  while d >= 500
+    set d to d - 500
+    set result to result + "D"
+  end while
+  while d >= 400
+    set d to d - 400
+    set result to result + "CD"
+  end while
+  while d >= 100
+    set d to d - 100
+    set result to result + "C"
+  end while
+  while d >= 90
+    set d to d - 90
+    set result to result + "XC"
+  end while
+  while d >= 50
+    set d to d - 50
+    set result to result + "L"
+  end while
+  while d >= 40
+    set d to d - 40
+    set result to result + "XL"
+  end while
+  while d >= 10
+    set d to d - 10
+    set result to result + "X"
+  end while
+  while d >= 9
+    set d to d - 9
+    set result to result + "IX"
+  end while
+  while d >= 5
+    set d to d - 5
+    set result to result + "V"
+  end while
+  while d >= 4
+    set d to d - 4
+    set result to result + "IV"
+  end while
+  while d >= 1
+    set d to d - 1
+    set result to result + "I"
+  end while
+  return result
+end function
+
+test 
+  assert asRoman(0) is ""
+  assert asRoman(1) is "I"
+  assert asRoman(2) is "II"
+  assert asRoman(3) is "III"
+  assert asRoman(4) is "IV"
+  assert asRoman(5) is "V"
+  assert asRoman(6) is "VI"
+  assert asRoman(7) is "VII"
+  assert asRoman(8) is "VIII"
+  assert asRoman(9) is "IX"
+  assert asRoman(10) is "X"
+  assert asRoman(11) is "XI"
+  assert asRoman(14) is "XIV"
+  assert asRoman(15) is "XV"
+  assert asRoman(17) is "XVII"
+  assert asRoman(19) is "XIX"
+  assert asRoman(20) is "XX"
+  assert asRoman(21) is "XXI"
+  assert asRoman(25) is "XXV"
+  assert asRoman(28) is "XXVIII"
+  assert asRoman(29) is "XXIX"
+  assert asRoman(30) is "XXX"
+  assert asRoman(37) is "XXXVII"
+  assert asRoman(41) is "XLI"
+  assert asRoman(50) is "L"
+  assert asRoman(54) is "LIV"
+  assert asRoman(79) is "LXXIX"
+  assert asRoman(95) is "XCV"
+  assert asRoman(333) is "CCCXXXIII"
+  assert asRoman(444) is "CDXLIV"
+  assert asRoman(555) is "DLV"
+  assert asRoman(666) is "DCLXVI"
+  assert asRoman(999) is "CMXCIX"
+  assert asRoman(1066) is "MLXVI"
+  assert asRoman(1789) is "MDCCLXXXIX"
+  assert asRoman(1999) is "MCMXCIX"
+  assert asRoman(2017) is "MMXVII"
+end test
