@@ -1,8 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -11,7 +9,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T45_AssociationsAndDefaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
@@ -496,7 +493,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
   });
 
-  ignore_test("Pass_defaultValueCanBeAssigned", async () => {
+  test("Pass_defaultValueCanBeAssigned", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -546,6 +543,70 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
+  var g = system.initialise(new Game());
+  system.print(_stdlib.asString(g.score));
+  g.setScore(0);
+  system.print(_stdlib.asString(g.score));
+}
+
+class Game {
+  static defaultInstance() { return system.defaultClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  constructor() {
+    this.score = 10;
+  }
+
+  score = 0;
+
+  best = 0;
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Player.defaultInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  _p2;
+  get p2() {
+    return this._p2 ??= Player.defaultInstance();
+  }
+  set p2(p2) {
+    this._p2 = p2;
+  }
+
+  setScore(newScore) {
+    this.score = newScore;
+  }
+
+  _previousGame;
+  get previousGame() {
+    return this._previousGame ??= Game.defaultInstance();
+  }
+  set previousGame(previousGame) {
+    this._previousGame = previousGame;
+  }
+
+  previousScores = system.defaultList();
+
+  asString() {
+    return "A game";
+  }
+
+}
+
+class Player {
+  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  constructor(name) {
+    this.name = name;
+  }
+
+  name = "";
+
+  asString() {
+    return this.name;
+  }
+
 }
 return [main, _tests];}`;
 
@@ -560,7 +621,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "100");
   });
 
   test("Pass_defaultForStandardDataStructures", async () => {
@@ -738,6 +799,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  // pending with implementation
   ignore_test("Pass_defaultCannotBeReplacedUsingWith", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

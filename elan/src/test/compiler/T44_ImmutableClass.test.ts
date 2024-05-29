@@ -1,18 +1,14 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T44_ImmutableClass", () => {
   test("Pass_BasicImmutableClass", async () => {
@@ -161,7 +157,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "39");
   });
 
-  ignore_test("Fail_ProcedureMethod", async () => {
+  test("Fail_ProcedureMethod", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 immutable class Foo
