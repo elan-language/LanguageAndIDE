@@ -439,7 +439,7 @@ function handleUpload(event: Event) {
     reader.addEventListener("load", (event: any) => {
       const rawCode = event.target.result;
       const code = new CodeSourceFromString(rawCode);
-      file = new FileImpl(hash, profile, transforms(), true);
+      file = new FileImpl(hash, profile, transforms(), false);
       file.fileName = fileName;
       file.parseFrom(code).then(() => {
         refreshAndDisplay();
