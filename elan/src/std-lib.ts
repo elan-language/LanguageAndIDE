@@ -92,6 +92,14 @@ export class StdLib {
     return list;
   }
 
+  range(start: number, end: number): number[] {
+    const seq = [];
+    for (let i = start; i <= end; i++) {
+      seq.push(i);
+    }
+    return seq;
+  }
+
   asIter<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iter";
