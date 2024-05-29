@@ -1,4 +1,5 @@
-# Elan v0.1 valid FFFFFFFFFFFFFFFF
+# 0cc6c55e910dc36bc54fbc739a411bbba9b40bcb5007dac9a9a46ec2837347d6 Elan v0.1 valid
+
 main
     var d set to 1999
     print roman(d, valueSymbols)

@@ -105,6 +105,6 @@ ${this.indent()}}`;
       };
     }
 
-    return super.resolveSymbol(id, transforms, this);
+    return super.resolveSymbol(id, transforms, initialScope);
   }
 }
