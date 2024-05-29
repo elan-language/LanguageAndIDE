@@ -126,13 +126,14 @@ suite("Editing Fields Tests", () => {
   );
 
   test(
-    "test wordle",
+    "test wordle3",
     async () => {
       const f = (await loadFileAsModel("programs/wordle3.elan")) as FileImpl;
       const runner = createTestRunner();
       await f.refreshAllStatuses(runner);
       assert.equal(f.readParseStatus(), ParseStatus.valid);
       assert.equal(f.readCompileStatus(), CompileStatus.ok);
+      // assert.equal(f.readTestStatus(), TestStatus.pass);
     },
   );
 
@@ -145,6 +146,18 @@ suite("Editing Fields Tests", () => {
       assert.equal(f.readParseStatus(), ParseStatus.valid);
       assert.equal(f.readCompileStatus(), CompileStatus.ok);
       assert.equal(f.readTestStatus(), TestStatus.pass);
+    },
+  );
+
+  test(
+    "test best-fit",
+    async () => {
+      const f = (await loadFileAsModel("programs/best-fit.elan")) as FileImpl;
+      const runner = createTestRunner();
+      await f.refreshAllStatuses(runner);
+      assert.equal(f.readParseStatus(), ParseStatus.valid);
+      assert.equal(f.readCompileStatus(), CompileStatus.ok);
+      //assert.equal(f.readTestStatus(), TestStatus.pass);
     },
   );
 });
