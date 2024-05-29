@@ -393,6 +393,8 @@ export abstract class AbstractField implements Selectable, Field {
 
   setFieldToKnownValidText(text: string) {
     this.text = text;
+    const root = this.initialiseRoot();
+    this.parseCompleteTextUsingNode(this.text, root);
     this._parseStatus = ParseStatus.valid;
   }
 
