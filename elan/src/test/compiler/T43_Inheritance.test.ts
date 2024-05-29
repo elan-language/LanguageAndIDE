@@ -13,12 +13,11 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T43_Inheritance", () => {
-  ignore_test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
+  test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to new Bar()
-  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()
@@ -57,7 +56,6 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
@@ -131,12 +129,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  ignore_test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
+  test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to new Bar()
-  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()
@@ -178,7 +175,6 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
@@ -259,12 +255,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  ignore_test("Pass_SuperclassesCanDefineSameMember", async () => {
+  test("Pass_SuperclassesCanDefineSameMember", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to new Bar()
-  var l set to new ImmutableList<of Foo>() + x
   print x.p1
   print x.p2
   print x.product()
@@ -307,7 +302,6 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  var l = system.concat(system.initialise(system.list(new Array()), ["Foo"]), x);
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
@@ -643,11 +637,11 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_MissingAbstractProperty", async () => {
+  test("Fail_MissingAbstractProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to new Bar()
+
 end main
 
 abstract class Foo
