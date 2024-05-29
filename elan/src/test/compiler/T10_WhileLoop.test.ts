@@ -136,7 +136,7 @@ main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Float"]);
+    assertDoesNotCompile(fileImpl, ["x is not defined"]);
   });
 
   test("Fail_variableDefinedInWhile", async () => {
