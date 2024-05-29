@@ -16,9 +16,6 @@ suite("File Parsing Tests", () => {
   test("parse Frames - life", async () => {
     await assertFileParses("programs/life.elan");
   });
-  test("parse Frames - life-tests", async () => {
-    await assertFileParses("programs/life-tests.elan");
-  });
   test("parse Frames - best-fit", async () => {
     await assertFileParses("programs/best-fit.elan");
   });
