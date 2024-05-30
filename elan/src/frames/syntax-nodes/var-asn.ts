@@ -4,7 +4,11 @@ import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
-import { mustBeIndexableSymbol, mustBeKnownSymbol, mustBePublicProperty } from "../compile-rules";
+import {
+  mustBeIndexableSymbol,
+  mustBeKnownSymbol,
+  mustBePublicProperty,
+} from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -87,7 +91,7 @@ export class VarAsn
   compile(): string {
     this.compileErrors = [];
     const q = this.getQualifier();
-    let symbol : ElanSymbol = new UnknownSymbol(this.id);
+    let symbol: ElanSymbol = new UnknownSymbol(this.id);
 
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
     if (classScope instanceof ClassType) {
@@ -100,8 +104,7 @@ export class VarAsn
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
         mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
       }
-    }
-    else {
+    } else {
       symbol = getParentScope(this.scope).resolveSymbol(
         this.id,
         transforms(),
@@ -110,7 +113,7 @@ export class VarAsn
     }
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
-    
+
     const call = symbol instanceof LetStatement ? "()" : "";
     const idx = this.index ? this.index.compile() : "";
     let code = `${q}${this.id}${call}${idx}`;
@@ -152,8 +155,7 @@ export class VarAsn
       this.qualifier?.value instanceof ThisAsn
     ) {
       currentScope = getClassScope(currentScope as Frame);
-    }
-    else {
+    } else {
       currentScope = getParentScope(currentScope);
     }
 
@@ -171,8 +173,10 @@ export class VarAsn
   symbolType() {
     const rootType = this.rootSymbolType();
     if (this.isIndex()) {
-      if (rootType instanceof ImmutableListType ||
-        rootType instanceof ArrayListType) {
+      if (
+        rootType instanceof ImmutableListType ||
+        rootType instanceof ArrayListType
+      ) {
         return rootType.ofType;
       }
 

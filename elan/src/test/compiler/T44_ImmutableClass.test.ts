@@ -295,7 +295,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0");
   });
-  
+
   test("Pass_UpcastImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -393,8 +393,6 @@ function fun(bar as Bar) return Foo
 end function
 `;
 
-   
-
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -407,11 +405,6 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Bar to Foo"]);
   });
-  
-
-
-
-
 
   // remaining tests not relevant
   // Fail_ProcedureMethodOnAbstractImmutableClass

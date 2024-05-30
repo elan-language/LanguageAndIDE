@@ -10,7 +10,6 @@ import { Parent } from "../interfaces/parent";
 
 export class ProcedureMethod extends ProcedureFrame implements Member {
   isMember: boolean = true;
-  
 
   constructor(parent: Parent) {
     super(parent);

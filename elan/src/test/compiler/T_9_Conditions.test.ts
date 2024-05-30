@@ -480,5 +480,4 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
   });
-
 });

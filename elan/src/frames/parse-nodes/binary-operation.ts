@@ -1,9 +1,4 @@
-import {
-  andKeyword,
-  isKeyword,
-  notKeyword,
-  orKeyword,
-} from "../keywords";
+import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
 import { Sequence } from "./sequence";

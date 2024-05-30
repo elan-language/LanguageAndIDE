@@ -12,7 +12,10 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Collapsible } from "../interfaces/collapsible";
 
-export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
+export class Constant
+  extends AbstractFrame
+  implements ElanSymbol, GlobalFrame, Collapsible
+{
   isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;

@@ -125,132 +125,115 @@ suite("Editing Fields Tests", () => {
     },
   );
 
-  test(
-    "test wordle-solver",
-    async () => {
-      const f = (await loadFileAsModel("programs/wordle-solver.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test wordle-solver", async () => {
+    const f = (await loadFileAsModel(
+      "programs/wordle-solver.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test wordle-player",
-    async () => {
-      const f = (await loadFileAsModel("programs/wordle-player.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test wordle-player", async () => {
+    const f = (await loadFileAsModel(
+      "programs/wordle-player.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test best-fit",
-    async () => {
-      const f = (await loadFileAsModel("programs/best-fit.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test best-fit", async () => {
+    const f = (await loadFileAsModel("programs/best-fit.elan")) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test binary-search",
-    async () => {
-      const f = (await loadFileAsModel("programs/binary-search.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test binary-search", async () => {
+    const f = (await loadFileAsModel(
+      "programs/binary-search.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test merge-sort",
-    async () => {
-      const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test merge-sort", async () => {
+    const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test life",
-    async () => {
-      const f = (await loadFileAsModel("programs/life.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test life", async () => {
+    const f = (await loadFileAsModel("programs/life.elan")) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test roman-numerals-1",
-    async () => {
-      const f = (await loadFileAsModel("programs/roman-numerals-1.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      //assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test roman-numerals-1", async () => {
+    const f = (await loadFileAsModel(
+      "programs/roman-numerals-1.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    //assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
-  test(
-    "test roman-numerals-4",
-    async () => {
-      const f = (await loadFileAsModel("programs/roman-numerals-4.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      //assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
-  test(
-    "test roman-numerals-5",
-    async () => {
-      const f = (await loadFileAsModel("programs/roman-numerals-5.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      //assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
-  test(
-    "test roman-numerals-6",
-    async () => {
-      const f = (await loadFileAsModel("programs/roman-numerals-6.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      //assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
-  test(
-    "test roman-numerals-7",
-    async () => {
-      const f = (await loadFileAsModel("programs/roman-numerals-7.elan")) as FileImpl;
-      const runner = createTestRunner();
-      await f.refreshAllStatuses(runner);
-      assert.equal(f.readParseStatus(), ParseStatus.valid);
-      assert.equal(f.readCompileStatus(), CompileStatus.ok);
-      //assert.equal(f.readTestStatus(), TestStatus.pass);
-    },
-  );
+  test("test roman-numerals-4", async () => {
+    const f = (await loadFileAsModel(
+      "programs/roman-numerals-4.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    //assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
+  test("test roman-numerals-5", async () => {
+    const f = (await loadFileAsModel(
+      "programs/roman-numerals-5.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    //assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
+  test("test roman-numerals-6", async () => {
+    const f = (await loadFileAsModel(
+      "programs/roman-numerals-6.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    //assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
+  test("test roman-numerals-7", async () => {
+    const f = (await loadFileAsModel(
+      "programs/roman-numerals-7.elan",
+    )) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    //assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 });

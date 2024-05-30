@@ -65,7 +65,7 @@ export class LetStatement
     this.compileErrors = [];
     // todo common code with var statement
     const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
-    const ids = (id.includes(",")) ? id.split(",") : [id];
+    const ids = id.includes(",") ? id.split(",") : [id];
 
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.name.getHtmlId());

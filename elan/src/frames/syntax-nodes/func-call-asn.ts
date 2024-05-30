@@ -27,7 +27,10 @@ import {
 import { TupleType } from "../symbols/tuple-type";
 
 class TypeHolder implements SymbolType {
-  constructor(public readonly symbolType: SymbolType, public readonly ofTypes: SymbolType[]) { }
+  constructor(
+    public readonly symbolType: SymbolType,
+    public readonly ofTypes: SymbolType[],
+  ) {}
   isImmutable = false;
   name = "TypeHolder";
   toString() {
@@ -162,7 +165,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     }
 
     if (type instanceof TupleType) {
-      return type.ofTypes.some(t => this.containsGenericType(t));
+      return type.ofTypes.some((t) => this.containsGenericType(t));
     }
 
     return false;
@@ -200,11 +203,15 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     return type;
   }
 
-  minOf(a1 : object[], a2 : object[]) {
+  minOf(a1: object[], a2: object[]) {
     return a1.length < a2.length ? a1.length : a2.length;
   }
 
-  match(flattened: SymbolType[][], pTypes: SymbolType[][], matches: Map<string, SymbolType>) {
+  match(
+    flattened: SymbolType[][],
+    pTypes: SymbolType[][],
+    matches: Map<string, SymbolType>,
+  ) {
     const minLength = this.minOf(flattened, pTypes);
     for (let i = 0; i < minLength; i++) {
       const pt = flattened[i];
@@ -212,7 +219,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
       const minLength1 = this.minOf(pt, pst);
       for (let i = 0; i < minLength1; i++) {
-
         const t = pt[i];
         const st = pst[i];
 
@@ -227,11 +233,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         if (t instanceof TypeHolder && st instanceof TypeHolder) {
           this.match([t.ofTypes], [st.ofTypes], matches);
         }
-
       }
     }
   }
-
 
   matchGenericTypes(type: FunctionType, parameters: AstNode[]) {
     const matches = new Map<string, SymbolType>();

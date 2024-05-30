@@ -450,7 +450,7 @@ export function mustBeInvariantType(
     return;
   }
 
-  if (lhs.name !== rhs.name){
+  if (lhs.name !== rhs.name) {
     FailIncompatible(lhs, rhs, compileErrors, location);
   }
 }
@@ -573,9 +573,7 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (
-    lhs instanceof ClassType
-  ) {
+  if (lhs instanceof ClassType) {
     if (lhs.isAssignableFrom(rhs)) {
       return;
     }

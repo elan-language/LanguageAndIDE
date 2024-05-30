@@ -54,15 +54,15 @@ export class VarStatement
     return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
-  _ids? : string[];
+  _ids?: string[];
 
   ids(transforms: Transforms) {
-    if (!this._ids){
+    if (!this._ids) {
       const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
-      this._ids = (id.includes(",")) ? id.split(",") : [id];
+      this._ids = id.includes(",") ? id.split(",") : [id];
     }
     return this._ids;
-  } 
+  }
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];

@@ -254,13 +254,15 @@ export abstract class FrameWithStatements
           const sid = f.symbolId;
 
           if (sid.startsWith("(")) {
-            const sids = sid.slice(1, -1).split(",").map(s => s.trim());
+            const sids = sid
+              .slice(1, -1)
+              .split(",")
+              .map((s) => s.trim());
 
             if (sids.includes(id)) {
               return f;
             }
-          }
-          else if (sid === id) {
+          } else if (sid === id) {
             return f;
           }
         }

@@ -28,7 +28,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame {
     this.name.setPlaceholder("Name");
     this.values = new EnumValues(this);
   }
-  
+
   get symbolId() {
     return this.name.text;
   }

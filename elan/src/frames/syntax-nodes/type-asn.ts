@@ -110,7 +110,9 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         const rType = types[types.length - 1];
         return new FunctionType(pTypes, rType, false);
       default: {
-        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
+        return this.scope
+          .resolveSymbol(this.id, transforms(), this.scope)
+          .symbolType(transforms());
       }
     }
   }

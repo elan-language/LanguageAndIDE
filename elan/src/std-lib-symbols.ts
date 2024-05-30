@@ -72,7 +72,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "range",
         new FunctionType(
-          [IntType.Instance,IntType.Instance],
+          [IntType.Instance, IntType.Instance],
           new IterType(IntType.Instance),
           false,
         ),
@@ -121,14 +121,24 @@ export class StdLibSymbols implements Scope {
       "mod",
       this.getSymbol(
         "mod",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
+        new FunctionType(
+          [IntType.Instance, IntType.Instance],
+          IntType.Instance,
+          false,
+          true,
+        ),
       ),
     ],
     [
       "div",
       this.getSymbol(
         "div",
-        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
+        new FunctionType(
+          [IntType.Instance, IntType.Instance],
+          IntType.Instance,
+          false,
+          true,
+        ),
       ),
     ],
     [
@@ -346,7 +356,8 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["indexOf",
+    [
+      "indexOf",
       this.getSymbol(
         "indexOf",
         new FunctionType(
@@ -379,12 +390,7 @@ export class StdLibSymbols implements Scope {
       "random",
       this.getSymbol(
         "random",
-        new FunctionType(
-          [],
-          FloatType.Instance,
-          false,
-          false,
-        ),
+        new FunctionType([], FloatType.Instance, false, false),
       ),
     ],
     [
@@ -547,10 +553,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "contains",
         new FunctionType(
-          [
-            new IterType(StringType.Instance),
-            StringType.Instance
-          ],
+          [new IterType(StringType.Instance), StringType.Instance],
           BooleanType.Instance,
           true,
         ),

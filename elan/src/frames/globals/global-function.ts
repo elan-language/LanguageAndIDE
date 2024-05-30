@@ -35,7 +35,6 @@ ${endKeyword} ${functionKeyword}\r
       returnStatement!.fieldId,
     );
 
-
     return `function ${super.compile(transforms)}\r
 }
 `;

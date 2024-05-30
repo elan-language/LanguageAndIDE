@@ -85,10 +85,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "Iter [23, 27, 31, 37]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "Iter [23, 27, 31, 37]");
   });
 
   test("Pass_map", async () => {

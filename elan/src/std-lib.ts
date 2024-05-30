@@ -180,7 +180,7 @@ export class StdLib {
   }
 
   div(n: number, d: number) {
-    return this.floor(n/d);
+    return this.floor(n / d);
   }
 
   floor(n: number) {
@@ -214,7 +214,7 @@ export class StdLib {
     return 0;
   }
 
-  // Returns an Int between the two inclusive boundaries. 
+  // Returns an Int between the two inclusive boundaries.
   randomInt(f: number, l: number) {
     return 0;
   }
@@ -223,8 +223,6 @@ export class StdLib {
   random() {
     return 0;
   }
-
-
 
   filter<T>(source: T[], predicate: (value: T) => boolean) {
     return this.asIter(source.filter(predicate));

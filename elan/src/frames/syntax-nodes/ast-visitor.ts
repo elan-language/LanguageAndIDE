@@ -403,7 +403,8 @@ export function transform(
   }
 
   if (node instanceof DeconstructedTuple) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items as AstIdNode[];
+    const items = transformMany(node.csv as CSV, fieldId, scope)
+      .items as AstIdNode[];
     return new DeconstructedTupleAsn(items, fieldId, scope);
   }
 

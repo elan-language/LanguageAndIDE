@@ -695,7 +695,7 @@ function fun(foo as Foo) return Int
 end function
 `;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
   system.print(_stdlib.asString(fun(f)));
@@ -728,19 +728,19 @@ function fun(foo) {
   return foo.p1;
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(
-        testHash,
-        new DefaultProfile(),
-        transforms(),
-        true,
-      );
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, "0");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Pass_AbstractImmutableClassAsProcedureParameter1", async () => {
@@ -870,7 +870,7 @@ function fun(foo as Foo) return Int
 end function
 `;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
   system.print(_stdlib.asString(fun(f)));
@@ -924,19 +924,19 @@ function fun(foo) {
   return foo.p1;
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(
-        testHash,
-        new DefaultProfile(),
-        transforms(),
-        true,
-      );
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, "0");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_AbstractMutableClassAsFunctionParameter", async () => {
@@ -1340,7 +1340,7 @@ function fun(l as ImmutableList<of Bar>) return Bar
 end function
 `;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var b = system.initialise(new Bar());
   var lst = system.list([b]);
@@ -1374,19 +1374,19 @@ function fun(l) {
   return l[0];
 }
 return [main, _tests];}`;
-    
-        const fileImpl = new FileImpl(
-          testHash,
-          new DefaultProfile(),
-          transforms(),
-          true,
-        );
-        await fileImpl.parseFrom(new CodeSourceFromString(code));
-    
-        assertParses(fileImpl);
-        assertStatusIsValid(fileImpl);
-        assertObjectCodeIs(fileImpl, objectCode);
-        await assertObjectCodeExecutes(fileImpl, "a Bar");
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Bar");
   });
 
   test("Fail_Invariance1", async () => {
@@ -1423,7 +1423,9 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList<of Class Bar> to ImmutableList<of Class Foo>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types ImmutableList<of Class Bar> to ImmutableList<of Class Foo>",
+    ]);
   });
 
   test("Fail_Invariance2", async () => {
@@ -1460,7 +1462,9 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>",
+    ]);
   });
 
   ignore_test("Fail_Invariance3", async () => {
@@ -1496,6 +1500,8 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>",
+    ]);
   });
 });

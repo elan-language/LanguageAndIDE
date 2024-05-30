@@ -51,10 +51,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "truefalsetruefalsetruefalse",
-    );
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruefalse");
   });
-
 });

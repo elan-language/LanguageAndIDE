@@ -354,7 +354,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Eat more apples!");
   });
 
-
   test("Fail_InvalidTypeName", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

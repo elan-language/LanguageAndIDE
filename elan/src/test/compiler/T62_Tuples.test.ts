@@ -243,7 +243,7 @@ main
   print z
 end main
 `;
-    
+
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.tuple([3, "Apple"]);
@@ -464,8 +464,10 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String",
-      "Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Int to String",
+      "Incompatible types String to Int",
+    ]);
   });
 
   test("Fail_DeconstructIntoMixed1", async () => {
@@ -490,7 +492,10 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String", "y is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Int to String",
+      "y is not defined",
+    ]);
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {

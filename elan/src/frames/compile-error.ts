@@ -1,4 +1,3 @@
-
 export enum Priority {
   illegalOperation,
   unknownIdentifier,

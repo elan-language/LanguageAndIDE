@@ -14,14 +14,14 @@ export class ClassType implements SymbolType, Scope {
     public readonly isImmutable: boolean,
     public readonly inheritsFrom: SymbolType[],
     private readonly scope: ClassFrame,
-  ) { }
+  ) {}
 
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {
         return true;
       }
-      return otherType.inheritsFrom.some(c => this.isAssignableFrom(c));
+      return otherType.inheritsFrom.some((c) => this.isAssignableFrom(c));
     }
     return false;
   }

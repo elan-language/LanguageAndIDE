@@ -68,7 +68,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       transforms(),
       this.scope,
     );
-    
+
     mustBeKnownSymbol(cls, this.compileErrors, this.fieldId);
 
     const cdt = cls.symbolType(transforms());

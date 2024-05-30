@@ -38,17 +38,17 @@ export class BinaryExpression extends AbstractSequence {
   renderAsHtml(): string {
     const op = this.op?.bestMatch?.matchedText;
     let sp = op ? " " : "";
-    if (op && [MULT,DIVIDE,POWER].includes(op)) {
+    if (op && [MULT, DIVIDE, POWER].includes(op)) {
       sp = "";
     }
     return `${this.lhs?.renderAsHtml()}${sp}${this.op!.renderAsHtml()}${sp}${this.rhs?.renderAsHtml()}`;
   }
-  renderAsSource(): string { 
+  renderAsSource(): string {
     let sp1 = "";
     let sp2 = "";
     const op = this.op!.bestMatch;
     if (op) {
-      if (![MULT,DIVIDE,POWER].includes(op.matchedText)) {
+      if (![MULT, DIVIDE, POWER].includes(op.matchedText)) {
         sp1 = " ";
         if (this.op!.status === ParseStatus.valid) {
           sp2 = " ";
@@ -57,7 +57,7 @@ export class BinaryExpression extends AbstractSequence {
     } else if (this.matchedText.endsWith(" ")) {
       this.remainingText = "";
       sp1 = " ";
-    };
+    }
     return `${this.lhs?.renderAsSource()}${sp1}${this.op!.renderAsSource()}${sp2}${this.rhs?.renderAsSource()}`;
   }
 }

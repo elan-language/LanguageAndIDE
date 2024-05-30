@@ -215,7 +215,7 @@ export class FileImpl implements File, Scope {
         ss.push(frame.compile(this.transform));
       }
 
-      if (!this._children.some(g => g instanceof MainFrame)) {
+      if (!this._children.some((g) => g instanceof MainFrame)) {
         const emptyMain = new MainFrame(this);
         ss.push(emptyMain.compile(this.transform));
       }

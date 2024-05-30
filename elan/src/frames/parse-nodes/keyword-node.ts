@@ -1,11 +1,6 @@
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
-import {
-  andKeyword,
-  isKeyword,
-  notKeyword,
-  orKeyword,
-} from "../keywords";
+import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
 
 export class KeywordNode extends FixedTextNode {
   constructor(keyword: string) {

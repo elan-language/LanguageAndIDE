@@ -300,21 +300,24 @@ suite("ASTNodes", () => {
       stubField,
       `Foo`,
       "Type Foo",
-      new  ClassType("Foo", false, false, [], undefined as any),
+      new ClassType("Foo", false, false, [], undefined as any),
     );
     testAST(
       new TypeWithOptGenerics(),
       stubField,
       `Foo`,
       "Type Foo",
-      new  ClassType("Foo", false, false, [], undefined as any),
+      new ClassType("Foo", false, false, [], undefined as any),
     );
     testAST(
       new TypeNode(),
       stubField,
       `(Foo, Bar)`,
       "Type Tuple<Type Foo, Type Bar>",
-      new TupleType([new  ClassType("Foo", false, false, [], undefined as any), new  ClassType("Bar", false, false, [], undefined as any)]),
+      new TupleType([
+        new ClassType("Foo", false, false, [], undefined as any),
+        new ClassType("Bar", false, false, [], undefined as any),
+      ]),
     );
     testAST(
       new TypeNode(),
@@ -322,15 +325,14 @@ suite("ASTNodes", () => {
       `(Foo, (Bar, Yon, Qux))`,
       "Type Tuple<Type Foo, Type Tuple<Type Bar, Type Yon, Type Qux>>",
       new TupleType([
-        new  ClassType("Foo", false, false, [], undefined as any),
+        new ClassType("Foo", false, false, [], undefined as any),
         new TupleType([
-          new  ClassType("Bar", false, false, [], undefined as any),
+          new ClassType("Bar", false, false, [], undefined as any),
           new ClassType("Yon", false, false, [], undefined as any),
           new ClassType("Qux", false, false, [], undefined as any),
         ]),
       ]),
     );
-   
   });
 
   test("Tuple", () => {

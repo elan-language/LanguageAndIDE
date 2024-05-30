@@ -112,7 +112,12 @@ return [main, _tests];}`;
       [
         "test3",
         [
-          new AssertOutcome(TestStatus.pass, 'Tuple (one, two)', 'Tuple (one, two)', "assert9"),
+          new AssertOutcome(
+            TestStatus.pass,
+            "Tuple (one, two)",
+            "Tuple (one, two)",
+            "assert9",
+          ),
           new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
         ],
       ],
@@ -159,7 +164,12 @@ return [main, _tests];}`;
       [
         "test3",
         [
-          new AssertOutcome(TestStatus.pass, 'Tuple (one, two)', 'Tuple (one, two)', "assert9"),
+          new AssertOutcome(
+            TestStatus.pass,
+            "Tuple (one, two)",
+            "Tuple (one, two)",
+            "assert9",
+          ),
           new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
         ],
       ],
