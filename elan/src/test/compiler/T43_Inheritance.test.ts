@@ -1315,4 +1315,114 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
   });
+
+  test("Pass_Invariance", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  var lst set to {b}
+  print fun(lst)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(l as ImmutableList<of Bar>) return Bar
+    return l[0]
+end function
+`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var b = system.initialise(new Bar());
+  var lst = system.list([b]);
+  system.print(_stdlib.asString(fun(lst)));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+
+function fun(l) {
+  return l[0];
+}
+return [main, _tests];}`;
+    
+        const fileImpl = new FileImpl(
+          testHash,
+          new DefaultProfile(),
+          transforms(),
+          true,
+        );
+        await fileImpl.parseFrom(new CodeSourceFromString(code));
+    
+        assertParses(fileImpl);
+        assertStatusIsValid(fileImpl);
+        assertObjectCodeIs(fileImpl, objectCode);
+        await assertObjectCodeExecutes(fileImpl, "a Bar");
+  });
+
+  test("Fail_Invariance1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  var lst set to {b}
+  print fun(lst)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(l as ImmutableList<of Foo>) return Foo
+    return l[0]
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList<of Class Bar> to ImmutableList<of Class Foo>"]);
+  });
 });
