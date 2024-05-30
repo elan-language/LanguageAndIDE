@@ -53,7 +53,7 @@ function transforms() {
 
 function setup(p: Profile) {
   profile = p;
-  file = new FileImpl(hash, profile, transforms(), true);
+  file = new FileImpl(hash, profile, transforms(), false);
   displayFile();
 }
 
