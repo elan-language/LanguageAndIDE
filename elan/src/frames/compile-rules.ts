@@ -436,6 +436,25 @@ export function mustBeCompatibleMutableType(
   }
 }
 
+export function mustBeInvariantType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    lhs instanceof FloatType &&
+    !(rhs instanceof IntType || rhs instanceof FloatType)
+  ) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
+  }
+
+  if (lhs.name !== rhs.name){
+    FailIncompatible(lhs, rhs, compileErrors, location);
+  }
+}
+
 export function mustBeCompatibleType(
   lhs: SymbolType,
   rhs: SymbolType,

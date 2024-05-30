@@ -46,6 +46,38 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_LiteralVarAndPrinting", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"a":1, "b":3, "z":10}
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableDictionary {a:1, b:3, z:10}",
+    );
+  });
+
   test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

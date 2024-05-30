@@ -1425,4 +1425,77 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList<of Class Bar> to ImmutableList<of Class Foo>"]);
   });
+
+  test("Fail_Invariance2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  var lst set to [b]
+  call fun(lst)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+procedure fun(l as ArrayList<of Foo>)
+  print l[0]
+end procedure
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>"]);
+  });
+
+  ignore_test("Fail_Invariance3", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var lst set to new ImmutableDictionary<of String, Bar>()
+  print fun(lst)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(l as ImmutableDictionary<of String, Foo>) return Foo
+    return l["id"]
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>"]);
+  });
 });
