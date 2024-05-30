@@ -1,7 +1,21 @@
-# 05e65e1fd129a5802ffad1f5aae9d05a20c469d61f21734dfde59533ee880b9b Elan v0.1 valid
+# c1738db5a87121c47ae6646d4c6a250b3f011aedfd1eaa379dadd7e638c0784a Elan v0.1 valid
 
 main
-
+  var exit set to false
+  while not exit
+    print "What type of fruit do you want ('x' to exit)?"
+    input wanted
+    if wanted is not "x"
+      var result set to binarySearch(fruit, wanted)
+      if result
+        print "We can supply a {wanted}"
+        else
+          print "Sorry, we cannot supply a {wanted}"
+      end if
+      else
+        set exit to true
+    end if
+  end while
 end main
 
 function binarySearch(li as ImmutableList<of String>, item as String) return Boolean
@@ -36,3 +50,5 @@ test binarySearch
   var li4 set to new ImmutableList<of String>()
   assert binarySearch(li4, "pear") is false
 end test
+
+constant fruit set to {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pinapple", "plumb", "raspberry", "strawberry", "watermelon"}
