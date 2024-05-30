@@ -1,5 +1,5 @@
 import { ArrayListType } from "../symbols/array-list-type";
-import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -90,7 +90,7 @@ export class VarAsn
     let symbol : ElanSymbol = new UnknownSymbol(this.id);
 
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-    if (classScope instanceof ClassDefinitionType) {
+    if (classScope instanceof ClassType) {
       const classSymbol = this.scope.resolveSymbol(
         classScope.className,
         transforms(),
@@ -137,7 +137,7 @@ export class VarAsn
 
   updateScope(currentScope: Scope) {
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
-    if (classScope instanceof ClassDefinitionType) {
+    if (classScope instanceof ClassType) {
       const s = this.scope.resolveSymbol(
         classScope.className,
         transforms(),
@@ -145,7 +145,7 @@ export class VarAsn
       );
       // replace scope with class scope
       currentScope = isScope(s) ? s : currentScope;
-    } else if (classScope instanceof ClassDefinitionType) {
+    } else if (classScope instanceof ClassType) {
       currentScope = classScope as Scope;
     } else if (
       this.qualifier instanceof QualifierAsn &&

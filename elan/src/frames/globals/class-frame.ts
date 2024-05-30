@@ -55,7 +55,7 @@ import {
   mustBeAbstractClass,
   mustImplementSuperClasses,
 } from "../compile-rules";
-import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -107,7 +107,7 @@ export class ClassFrame
     return this.name.text;
   }
   symbolType(transforms: Transforms) {
-    return new ClassDefinitionType(
+    return new ClassType(
       this.symbolId,
       this.isAbstract(),
       this.isImmutable(),
@@ -313,7 +313,7 @@ end class\r\n`;
       const nodes = superClasses.items as AstIdNode[];
       const superClassSymbolTypes = nodes
         .map((n) => this.resolveSymbol(n.id, transforms, this))
-        .map((c) => c.symbolType(transforms) as ClassDefinitionType);
+        .map((c) => c.symbolType(transforms) as ClassType);
 
       for (const st of superClassSymbolTypes) {
         mustBeAbstractClass(st, this.compileErrors, this.htmlId);

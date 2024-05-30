@@ -13,7 +13,7 @@ import { File } from "../interfaces/file";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
-import { ClassDefinitionType } from "./class-definition-type";
+import { ClassType } from "./class-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -60,7 +60,7 @@ export function updateScopeAndQualifier(
   const qualifierScope = qualifier ? qualifier.symbolType() : undefined;
   const value = qualifier?.value;
 
-  if (qualifierScope instanceof ClassDefinitionType) {
+  if (qualifierScope instanceof ClassType) {
     const classSymbol = currentScope.resolveSymbol(
       qualifierScope.className,
       transforms,

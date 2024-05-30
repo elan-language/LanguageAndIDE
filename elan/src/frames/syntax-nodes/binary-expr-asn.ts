@@ -16,7 +16,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { StringType } from "../symbols/string-type";
-import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -177,7 +177,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (
       this.op === OperationSymbol.Equals &&
-      (lst instanceof ClassDefinitionType || rst instanceof ClassDefinitionType)
+      (lst instanceof ClassType || rst instanceof ClassType)
     ) {
       return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }

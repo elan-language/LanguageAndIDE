@@ -1,6 +1,6 @@
 import { ArrayListType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
-import { ClassDefinitionType } from "./symbols/class-definition-type";
+import { ClassType } from "./symbols/class-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
@@ -257,7 +257,7 @@ export function mustBeIndexableSymbol(
 }
 
 export function mustBeAbstractClass(
-  classType: ClassDefinitionType,
+  classType: ClassType,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -282,8 +282,8 @@ export function mustBePublicProperty(
 
 export function mustImplementSuperClasses(
   transforms: Transforms,
-  classType: ClassDefinitionType,
-  superClassTypes: ClassDefinitionType[],
+  classType: ClassType,
+  superClassTypes: ClassType[],
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -319,7 +319,7 @@ export function mustImplementSuperClasses(
 }
 
 export function mustBeConcreteClass(
-  classType: ClassDefinitionType,
+  classType: ClassType,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -555,7 +555,7 @@ export function mustBeCompatibleType(
   }
 
   if (
-    lhs instanceof ClassDefinitionType
+    lhs instanceof ClassType
   ) {
     if (lhs.isAssignableFrom(rhs)) {
       return;

@@ -1,4 +1,4 @@
-import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
@@ -73,7 +73,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     const cdt = cls.symbolType(transforms());
 
-    if (cdt instanceof ClassDefinitionType) {
+    if (cdt instanceof ClassType) {
       mustBeConcreteClass(cdt, this.compileErrors, this.fieldId);
 
       if (cdt.isAbstract === false) {

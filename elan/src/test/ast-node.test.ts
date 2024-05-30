@@ -41,7 +41,7 @@ import { DictionaryType } from "../frames/symbols/dictionary-type";
 import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
 import { FunctionType } from "../frames/symbols/function-type";
 import { ArrayListType } from "../frames/symbols/array-list-type";
-import { ClassDefinitionType } from "../frames/symbols/class-definition-type";
+import { ClassType } from "../frames/symbols/class-type";
 
 suite("ASTNodes", () => {
   test("ExprNode", () => {
@@ -109,7 +109,7 @@ suite("ASTNodes", () => {
       stubField,
       "p with {x set to p.x + 3, y set to p.y - 1}",
       ast1,
-      new ClassDefinitionType("p", false, false, undefined as any),
+      new ClassType("p", false, false, undefined as any),
     );
   });
 
@@ -300,21 +300,21 @@ suite("ASTNodes", () => {
       stubField,
       `Foo`,
       "Type Foo",
-      new  ClassDefinitionType("Foo", false, false, undefined as any),
+      new  ClassType("Foo", false, false, undefined as any),
     );
     testAST(
       new TypeWithOptGenerics(),
       stubField,
       `Foo`,
       "Type Foo",
-      new  ClassDefinitionType("Foo", false, false, undefined as any),
+      new  ClassType("Foo", false, false, undefined as any),
     );
     testAST(
       new TypeNode(),
       stubField,
       `(Foo, Bar)`,
       "Type Tuple<Type Foo, Type Bar>",
-      new TupleType([new  ClassDefinitionType("Foo", false, false, undefined as any), new  ClassDefinitionType("Bar", false, false, undefined as any)]),
+      new TupleType([new  ClassType("Foo", false, false, undefined as any), new  ClassType("Bar", false, false, undefined as any)]),
     );
     testAST(
       new TypeNode(),
@@ -322,11 +322,11 @@ suite("ASTNodes", () => {
       `(Foo, (Bar, Yon, Qux))`,
       "Type Tuple<Type Foo, Type Tuple<Type Bar, Type Yon, Type Qux>>",
       new TupleType([
-        new  ClassDefinitionType("Foo", false, false, undefined as any),
+        new  ClassType("Foo", false, false, undefined as any),
         new TupleType([
-          new  ClassDefinitionType("Bar", false, false, undefined as any),
-          new ClassDefinitionType("Yon", false, false, undefined as any),
-          new ClassDefinitionType("Qux", false, false, undefined as any),
+          new  ClassType("Bar", false, false, undefined as any),
+          new ClassType("Yon", false, false, undefined as any),
+          new ClassType("Qux", false, false, undefined as any),
         ]),
       ]),
     );
@@ -564,7 +564,7 @@ suite("ASTNodes", () => {
       stubField,
       `new Foo()`,
       "new Type Foo()",
-      new ClassDefinitionType("Foo", false, false, undefined as any),
+      new ClassType("Foo", false, false, undefined as any),
     );
   });
 

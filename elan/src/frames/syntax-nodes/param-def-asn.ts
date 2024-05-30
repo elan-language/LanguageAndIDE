@@ -6,7 +6,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { FunctionFrame } from "../globals/function-frame";
 import { mustBeImmutableType } from "../compile-rules";
 import { transforms } from "./ast-helpers";
-import { ClassDefinitionType } from "../symbols/class-definition-type";
+import { ClassType } from "../symbols/class-type";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -26,7 +26,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     this.compileErrors = [];
     if (this.scope instanceof FunctionFrame) {
       let st = this.symbolType();
-      if (st instanceof ClassDefinitionType) {
+      if (st instanceof ClassType) {
         const tt = transforms();
         st = this.scope
           .resolveSymbol(st.className, tt, this.scope)

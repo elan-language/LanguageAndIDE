@@ -1,14 +1,53 @@
+import { ClassFrame } from "../globals/class-frame";
+import { Scope } from "../interfaces/scope";
+import { Transforms } from "../syntax-nodes/transforms";
+import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
+import { isSymbol } from "./symbol-helpers";
+import { UnknownSymbol } from "./unknown-symbol";
+import { Parent } from "../interfaces/parent";
 
-// export class ClassType implements SymbolType {
-//   constructor(public className: string) {}
-//   isImmutable = false;
+export class ClassType implements SymbolType, Scope {
+  constructor(
+    public readonly className: string,
+    public readonly isAbstract: boolean,
+    public readonly isImmutable: boolean,
+    private readonly scope: ClassFrame,
+  ) { }
 
-//   get name() {
-//     return `Class ${this.className.trim()}`;
-//   }
+  isAssignableFrom(otherType: SymbolType) {
+    if (otherType instanceof ClassType) {
+      return true;
+    }
+    return false;
+  }
 
-//   toString(): string {
-//     return `${this.className.trim()}`;
-//   }
-// }
+
+  getParent(): Parent {
+    return this.scope as Parent;
+  }
+
+  childSymbols() {
+    // unknown because of typescript quirk
+    return this.scope
+      .getChildren()
+      .filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
+    for (const f of this.scope.getChildren()) {
+      if (isSymbol(f) && f.symbolId === id) {
+        return f;
+      }
+    }
+    return new UnknownSymbol(id);
+  }
+
+  get name() {
+    return `Class ${this.className.trim()}`;
+  }
+
+  toString(): string {
+    return `${this.className.trim()}`;
+  }
+}

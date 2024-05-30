@@ -31,7 +31,7 @@ import { SymbolScope } from "../frames/symbols/symbol-scope";
 import { StdLib } from "../std-lib";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "../runner";
-import { ClassDefinitionType } from "../frames/symbols/class-definition-type";
+import { ClassType } from "../frames/symbols/class-type";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -474,31 +474,31 @@ const stubBoolSymbol = {
 
 const stubClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassDefinitionType("p", false, false, undefined as any),
+  symbolType: () => new ClassType("p", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubFooClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassDefinitionType("Foo", false, false, undefined as any),
+  symbolType: () => new ClassType("Foo", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubBarClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassDefinitionType("Bar", false, false, undefined as any),
+  symbolType: () => new ClassType("Bar", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubYonClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassDefinitionType("Yon", false, false, undefined as any),
+  symbolType: () => new ClassType("Yon", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubQuxClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassDefinitionType("Qux", false, false, undefined as any),
+  symbolType: () => new ClassType("Qux", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
