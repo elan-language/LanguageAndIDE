@@ -1,8 +1,12 @@
 import { CodeSource } from "../code-source";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Frame } from "../interfaces/frame";
+import { SymbolType } from "../interfaces/symbol-type";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
+import { ClassType } from "../symbols/class-type";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
 export class InheritsFrom extends AbstractField {
@@ -22,4 +26,12 @@ export class InheritsFrom extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
+
+  symbolTypes(transforms: Transforms): SymbolType[] {
+    if (this.rootNode) {
+      const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+      return ast ? ast.items.map((i) => i.symbolType()) : [];
+    }
+    return [];
+  }
 }

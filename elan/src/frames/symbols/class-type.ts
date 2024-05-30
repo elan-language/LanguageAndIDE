@@ -12,16 +12,19 @@ export class ClassType implements SymbolType, Scope {
     public readonly className: string,
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
+    public readonly inheritsFrom: SymbolType[],
     private readonly scope: ClassFrame,
   ) { }
 
-  isAssignableFrom(otherType: SymbolType) {
+  isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
-      return true;
+      if (otherType.className === this.className) {
+        return true;
+      }
+      return otherType.inheritsFrom.some(c => this.isAssignableFrom(c));
     }
     return false;
   }
-
 
   getParent(): Parent {
     return this.scope as Parent;

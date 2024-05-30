@@ -474,31 +474,31 @@ const stubBoolSymbol = {
 
 const stubClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("p", false, false, undefined as any),
+  symbolType: () => new ClassType("p", false, false, [], undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubFooClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("Foo", false, false, undefined as any),
+  symbolType: () => new ClassType("Foo", false, false, [], undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubBarClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("Bar", false, false, undefined as any),
+  symbolType: () => new ClassType("Bar", false, false, [], undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubYonClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("Yon", false, false, undefined as any),
+  symbolType: () => new ClassType("Yon", false, false, [], undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
 const stubQuxClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("Qux", false, false, undefined as any),
+  symbolType: () => new ClassType("Qux", false, false, [], undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 

@@ -596,4 +596,80 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
   });
+
+  test("Fail_IncompatibleClassAsProcedureParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  call proc(f)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+class Bar
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+procedure proc(bar as Bar)
+    print bar.p1
+end procedure
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+  });
+
+  test("Fail_IncompatibleClassAsFunctionParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print fun(f)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+class Bar
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(bar as Bar) return Int
+    return bar.p1
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
+  });
 });

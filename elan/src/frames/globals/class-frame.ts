@@ -56,7 +56,6 @@ import {
   mustImplementSuperClasses,
 } from "../compile-rules";
 import { ClassType } from "../symbols/class-type";
-import { CompileStatus, ParseStatus } from "../status-enums";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -111,6 +110,7 @@ export class ClassFrame
       this.symbolId,
       this.isAbstract(),
       this.isImmutable(),
+      this.superClasses.symbolTypes(transforms),
       this,
     );
   }
@@ -264,10 +264,10 @@ export class ClassFrame
     }
     return result;
   }
-  private inhertanceAsHtml(): string {
+  private inheritanceAsHtml(): string {
     return ` ${this.inherits.renderAsHtml()} ${this.superClasses.renderAsHtml()}`;
   }
-  private inhertanceAsSource(): string {
+  private inheritanceAsSource(): string {
     return this.doesInherit()
       ? ` ${this.inherits.renderAsSource()} ${this.superClasses.renderAsSource()}`
       : ``;
@@ -279,7 +279,7 @@ export class ClassFrame
 
   public renderAsHtml(): string {
     return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inhertanceAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}</top>${this.compileMsgAsHtml()}
 ${parentHelper_renderChildrenAsHtml(this)}
 <keyword>end class</keyword>
 </classDef>`;
@@ -290,7 +290,7 @@ ${parentHelper_renderChildrenAsHtml(this)}
   }
 
   public renderAsSource(): string {
-    return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inhertanceAsSource()}\r
+    return `${this.modifiersAsSource()}class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
   }
