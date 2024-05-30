@@ -129,7 +129,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "341216");
   });
 
-  ignore_test("Pass_PassAsAbstractClassIntoFunction", async () => {
+  test("Pass_PassAsAbstractClassIntoFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -138,15 +138,15 @@ main
   print b(x)
 end main
 
-abstract class Foo
+abstract immutable class Foo
   abstract property p1 as Float
 end class
 
-abstract class Bar
+abstract immutable class Bar
   abstract property p2 as String
 end class
 
-class Yon inherits Foo, Bar
+immutable class Yon inherits Foo, Bar
     constructor()
         set p1 to 3
         set p2 to "apple"
@@ -164,6 +164,58 @@ function f(foo as Foo) return Float
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Yon());
+  system.print(_stdlib.asString(f(x)));
+  system.print(_stdlib.asString(b(x)));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p2", "String"]]);};
+  get p2() {
+    return "";
+  }
+  set p2(p2) {
+  }
+
+  asString() {
+    return "empty Abstract Class Bar";
+  }
+}
+
+class Yon {
+  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Float"], ["p2", "String"]]);};
+  constructor() {
+    this.p1 = 3;
+    this.p2 = "apple";
+  }
+
+  p1 = 0;
+
+  p2 = "";
+
+}
+
+function b(bar) {
+  return bar.p2;
+}
+
+function f(foo) {
+  return foo.p1;
+}
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
@@ -177,7 +229,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "341216");
+    await assertObjectCodeExecutes(fileImpl, "3apple");
   });
 
   test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
