@@ -7,13 +7,13 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { AstNode } from "../interfaces/ast-node";
-import { ClassType } from "./class-type";
 import { SymbolScope } from "./symbol-scope";
 import { isClass as isClass, isFile, isFrame, isScope } from "../helpers";
 import { File } from "../interfaces/file";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
+import { ClassDefinitionType } from "./class-definition-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -60,14 +60,14 @@ export function updateScopeAndQualifier(
   const qualifierScope = qualifier ? qualifier.symbolType() : undefined;
   const value = qualifier?.value;
 
-  if (qualifierScope instanceof ClassType) {
-    const s = currentScope.resolveSymbol(
+  if (qualifierScope instanceof ClassDefinitionType) {
+    const classSymbol = currentScope.resolveSymbol(
       qualifierScope.className,
       transforms,
       currentScope,
     );
     // replace scope with class scope
-    currentScope = isScope(s) ? s : currentScope;
+    currentScope = isScope(classSymbol) ? classSymbol : currentScope;
   } else if (value?.id === globalKeyword) {
     // todo kludge
     currentScope = getGlobalScope(currentScope);

@@ -1,8 +1,6 @@
 import { BooleanType } from "../symbols/boolean-type";
-import { ClassType } from "../symbols/class-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/number-type";
-import { GenericClassType } from "../symbols/generic-class-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
@@ -16,9 +14,6 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
 import { transforms } from "./ast-helpers";
-import { UnknownType } from "../symbols/unknown-type";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { EnumType } from "../symbols/enum-type";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -115,18 +110,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         const rType = types[types.length - 1];
         return new FunctionType(pTypes, rType, false);
       default: {
-        if (this.genericParameters.length === 0) {
-          const st = this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
-          if (st instanceof EnumType) {
-            // todo make this work the same for enums and classes
-            return st;
-          }
-          return new ClassType(this.id);
-        }
-        return new GenericClassType(
-          this.id,
-          this.genericParameters[0].symbolType(),
-        );
+        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
       }
     }
   }

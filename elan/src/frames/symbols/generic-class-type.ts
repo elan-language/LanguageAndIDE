@@ -1,19 +1,19 @@
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class GenericClassType implements GenericSymbolType {
-  constructor(
-    private className: string,
-    public ofType: SymbolType,
-  ) {}
+// export class GenericClassType implements GenericSymbolType {
+//   constructor(
+//     private className: string,
+//     public ofType: SymbolType,
+//   ) {}
 
-  isImmutable = false;
+//   isImmutable = false;
 
-  get name() {
-    return `Class ${this.className}<${this.ofType.name}>`;
-  }
+//   get name() {
+//     return `Class ${this.className}<${this.ofType.name}>`;
+//   }
 
-  toString(): string {
-    return `${this.className}<of ${this.ofType.name}>`;
-  }
-}
+//   toString(): string {
+//     return `${this.className}<of ${this.ofType.name}>`;
+//   }
+// }

@@ -1,4 +1,3 @@
-import { ClassType } from "../symbols/class-type";
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
@@ -10,6 +9,7 @@ import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ClassDefinitionType } from "../symbols/class-definition-type";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
@@ -57,7 +57,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     this.compileErrors = [];
     const pName = this.name.compile(transforms);
     const mod = this.modifierAsObjectCode();
-    if (this.type.symbolType(transforms) instanceof ClassType) {
+    if (this.type.symbolType(transforms) instanceof ClassDefinitionType) {
       return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
 ${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r

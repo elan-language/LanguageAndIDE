@@ -13,7 +13,15 @@ export class ClassDefinitionType implements SymbolType, Scope {
     public readonly isAbstract: boolean,
     public readonly isImmutable: boolean,
     private readonly scope: ClassFrame,
-  ) {}
+  ) { }
+
+  isAssignableFrom(otherType: SymbolType) {
+    if (otherType instanceof ClassDefinitionType) {
+      return true;
+    }
+    return false;
+  }
+
 
   getParent(): Parent {
     return this.scope as Parent;

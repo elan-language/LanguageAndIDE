@@ -1,7 +1,6 @@
 import { ArrayListType } from "./symbols/array-list-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassDefinitionType } from "./symbols/class-definition-type";
-import { ClassType } from "./symbols/class-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
@@ -556,22 +555,13 @@ export function mustBeCompatibleType(
   }
 
   if (
-    lhs instanceof ClassType &&
-    !(rhs instanceof ClassType || rhs instanceof ClassDefinitionType)
+    lhs instanceof ClassDefinitionType
   ) {
-    FailIncompatible(lhs, rhs, compileErrors, location);
-    return;
-  }
-
-  if (
-    lhs instanceof ClassType &&
-    (rhs instanceof ClassType || rhs instanceof ClassDefinitionType)
-  ) {
-    if (lhs.className !== rhs.className) {
-      // TODO inheritance
-      FailIncompatible(lhs, rhs, compileErrors, location);
+    if (lhs.isAssignableFrom(rhs)) {
       return;
     }
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
   }
 
   if (

@@ -1,4 +1,3 @@
-import { SymbolType } from "./interfaces/symbol-type";
 
 export enum Priority {
   illegalOperation,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExprNode } from "../frames/parse-nodes/expr-node";
 import {
   testAST,
@@ -30,8 +31,6 @@ import { LiteralNode } from "../frames/parse-nodes/literal-node";
 import { LitTuple } from "../frames/parse-nodes/lit-tuple";
 import { VarRefNode } from "../frames/parse-nodes/var-ref-node";
 import { DeconstructedTuple } from "../frames/parse-nodes/deconstructed-tuple";
-import { ClassType } from "../frames/symbols/class-type";
-import { GenericClassType } from "../frames/symbols/generic-class-type";
 import { TupleType } from "../frames/symbols/tuple-type";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { EnumType } from "../frames/symbols/enum-type";
@@ -42,6 +41,7 @@ import { DictionaryType } from "../frames/symbols/dictionary-type";
 import { DeconstructedList } from "../frames/parse-nodes/deconstructed-list";
 import { FunctionType } from "../frames/symbols/function-type";
 import { ArrayListType } from "../frames/symbols/array-list-type";
+import { ClassDefinitionType } from "../frames/symbols/class-definition-type";
 
 suite("ASTNodes", () => {
   test("ExprNode", () => {
@@ -109,7 +109,7 @@ suite("ASTNodes", () => {
       stubField,
       "p with {x set to p.x + 3, y set to p.y - 1}",
       ast1,
-      new ClassType("p"),
+      new ClassDefinitionType("p", false, false, undefined as any),
     );
   });
 
@@ -300,42 +300,21 @@ suite("ASTNodes", () => {
       stubField,
       `Foo`,
       "Type Foo",
-      new ClassType("Foo"),
+      new  ClassDefinitionType("Foo", false, false, undefined as any),
     );
     testAST(
       new TypeWithOptGenerics(),
       stubField,
       `Foo`,
       "Type Foo",
-      new ClassType("Foo"),
-    );
-    testAST(
-      new TypeWithOptGenerics(),
-      stubField,
-      `Foo<of Bar>`,
-      "Type Foo<Type Bar>",
-      new GenericClassType("Foo", new ClassType("Bar")),
-    );
-    testAST(
-      new TypeWithOptGenerics(),
-      stubField,
-      `Foo<of ImmutableList<of Bar>>`,
-      "Type Foo<Type ImmutableList<Type Bar>>",
-      new GenericClassType("Foo", new ImmutableListType(new ClassType("Bar"))),
-    );
-    testAST(
-      new TypeNode(),
-      stubField,
-      `Foo<of ImmutableList<of Bar>>`,
-      "Type Foo<Type ImmutableList<Type Bar>>",
-      new GenericClassType("Foo", new ImmutableListType(new ClassType("Bar"))),
+      new  ClassDefinitionType("Foo", false, false, undefined as any),
     );
     testAST(
       new TypeNode(),
       stubField,
       `(Foo, Bar)`,
       "Type Tuple<Type Foo, Type Bar>",
-      new TupleType([new ClassType("Foo"), new ClassType("Bar")]),
+      new TupleType([new  ClassDefinitionType("Foo", false, false, undefined as any), new  ClassDefinitionType("Bar", false, false, undefined as any)]),
     );
     testAST(
       new TypeNode(),
@@ -343,36 +322,15 @@ suite("ASTNodes", () => {
       `(Foo, (Bar, Yon, Qux))`,
       "Type Tuple<Type Foo, Type Tuple<Type Bar, Type Yon, Type Qux>>",
       new TupleType([
-        new ClassType("Foo"),
+        new  ClassDefinitionType("Foo", false, false, undefined as any),
         new TupleType([
-          new ClassType("Bar"),
-          new ClassType("Yon"),
-          new ClassType("Qux"),
+          new  ClassDefinitionType("Bar", false, false, undefined as any),
+          new ClassDefinitionType("Yon", false, false, undefined as any),
+          new ClassDefinitionType("Qux", false, false, undefined as any),
         ]),
       ]),
     );
-    testAST(
-      new TypeNode(),
-      stubField,
-      `(Foo, Bar< of Yon>)`,
-      "Type Tuple<Type Foo, Type Bar<Type Yon>>",
-      new TupleType([
-        new ClassType("Foo"),
-        new GenericClassType("Bar", new ClassType("Yon")),
-      ]),
-    );
-    testAST(
-      new TypeNode(),
-      stubField,
-      `Foo<of ImmutableList<of (Bar, Qux)>>`,
-      "Type Foo<Type ImmutableList<Type Tuple<Type Bar, Type Qux>>>",
-      new GenericClassType(
-        "Foo",
-        new ImmutableListType(
-          new TupleType([new ClassType("Bar"), new ClassType("Qux")]),
-        ),
-      ),
-    );
+   
   });
 
   test("Tuple", () => {
@@ -606,7 +564,7 @@ suite("ASTNodes", () => {
       stubField,
       `new Foo()`,
       "new Type Foo()",
-      new ClassType("Foo"),
+      new ClassDefinitionType("Foo", false, false, undefined as any),
     );
   });
 

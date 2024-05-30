@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as vscode from "vscode";
 import { Selectable } from "../frames/interfaces/selectable";
 import assert from "assert";
@@ -20,7 +21,6 @@ import { IntType } from "../frames/symbols/int-type";
 import { StringType } from "../frames/symbols/string-type";
 import { ElanSymbol } from "../frames/interfaces/symbol";
 import { UnknownType } from "../frames/symbols/unknown-type";
-import { ClassType } from "../frames/symbols/class-type";
 import { Scope } from "../frames/interfaces/scope";
 import { ImmutableListType } from "../frames/symbols/immutable-list-type";
 import { FunctionType } from "../frames/symbols/function-type";
@@ -31,6 +31,7 @@ import { SymbolScope } from "../frames/symbols/symbol-scope";
 import { StdLib } from "../std-lib";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "../runner";
+import { ClassDefinitionType } from "../frames/symbols/class-definition-type";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -473,7 +474,31 @@ const stubBoolSymbol = {
 
 const stubClassSymbol = {
   symbolId: "p",
-  symbolType: () => new ClassType("p"),
+  symbolType: () => new ClassDefinitionType("p", false, false, undefined as any),
+  symbolScope: SymbolScope.unknown,
+} as ElanSymbol;
+
+const stubFooClassSymbol = {
+  symbolId: "p",
+  symbolType: () => new ClassDefinitionType("Foo", false, false, undefined as any),
+  symbolScope: SymbolScope.unknown,
+} as ElanSymbol;
+
+const stubBarClassSymbol = {
+  symbolId: "p",
+  symbolType: () => new ClassDefinitionType("Bar", false, false, undefined as any),
+  symbolScope: SymbolScope.unknown,
+} as ElanSymbol;
+
+const stubYonClassSymbol = {
+  symbolId: "p",
+  symbolType: () => new ClassDefinitionType("Yon", false, false, undefined as any),
+  symbolScope: SymbolScope.unknown,
+} as ElanSymbol;
+
+const stubQuxClassSymbol = {
+  symbolId: "p",
+  symbolType: () => new ClassDefinitionType("Qux", false, false, undefined as any),
   symbolScope: SymbolScope.unknown,
 } as ElanSymbol;
 
@@ -508,6 +533,14 @@ const stubHolder = {
         return stubStringSymbol;
       case "first":
         return stubIntSymbol;
+      case "Foo":
+        return stubFooClassSymbol;
+      case "Bar":
+        return stubBarClassSymbol;
+      case "Yon":
+        return stubYonClassSymbol;
+      case "Qux":
+        return stubQuxClassSymbol;
       case "lst":
         return {
           symbolId: "",
