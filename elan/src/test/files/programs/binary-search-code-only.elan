@@ -1,4 +1,4 @@
-# e43fee08f69f5b39538c66f58a2ad782119519b0e8f9fd1d3d6f0fcc87abe7cf Elan v0.1 valid
+# 8bbf1211457cf6adae7c2daff417f535f44234b0c136934e1327c7478d6ca020 Elan v0.1 valid
 
 main
   var exit set to false
@@ -33,22 +33,5 @@ function binarySearch(list as ImmutableList<of String>, item as String) return B
   end if
   return result
 end function
-
-test binarySearch
-  var li1 set to {"lemon", "lime", "orange"}
-  assert binarySearch(li1, "lemon") is true
-  assert binarySearch(li1, "lime") is true
-  assert binarySearch(li1, "orange") is true
-  assert binarySearch(li1, "pear") is false
-  var li2 set to {"lemon", "orange"}
-  assert binarySearch(li2, "lemon") is true
-  assert binarySearch(li2, "orange") is true
-  assert binarySearch(li2, "pear") is false
-  var li3 set to {"lemon"}
-  assert binarySearch(li3, "lemon") is true
-  assert binarySearch(li3, "lime") is false
-  var li4 set to new ImmutableList<of String>()
-  assert binarySearch(li4, "pear") is false
-end test
 
 constant fruit set to {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pinapple", "plumb", "raspberry", "strawberry", "watermelon"}
