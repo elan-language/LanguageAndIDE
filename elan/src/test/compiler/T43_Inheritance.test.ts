@@ -743,6 +743,202 @@ return [main, _tests];}`;
       await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_AbstractImmutableClassAsProcedureParameter1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Bar()
+  call proc(f)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+abstract immutable class Yon inherits Foo
+  abstract property p1 as Int
+  abstract property p2 as Int
+end class
+
+immutable class Bar inherits Yon
+  constructor()
+  end constructor
+  property p1 as Int
+  property p2 as Int
+end class
+
+procedure proc(foo as Foo)
+    print foo.p1
+end procedure
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Bar());
+  proc(f);
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Yon {
+  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Int"], ["p2", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  get p2() {
+    return 0;
+  }
+  set p2(p2) {
+  }
+
+  asString() {
+    return "empty Abstract Class Yon";
+  }
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  p2 = 0;
+
+}
+
+function proc(foo) {
+  system.print(_stdlib.asString(foo.p1));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
+  test("Pass_AbstractImmutableClassAsFunctionParameter1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Bar()
+  print fun(f)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+abstract immutable class Yon inherits Foo
+  abstract property p1 as Int
+  abstract property p2 as Int
+end class
+
+immutable class Bar inherits Yon
+  constructor()
+  end constructor
+  property p1 as Int
+  property p2 as Int
+end class
+
+function fun(foo as Foo) return Int
+    return foo.p1
+end function
+`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Bar());
+  system.print(_stdlib.asString(fun(f)));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Yon {
+  static defaultInstance() { return system.defaultClass(Yon, [["p1", "Int"], ["p2", "Int"]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  get p2() {
+    return 0;
+  }
+  set p2(p2) {
+  }
+
+  asString() {
+    return "empty Abstract Class Yon";
+  }
+}
+
+class Bar {
+  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  p2 = 0;
+
+}
+
+function fun(foo) {
+  return foo.p1;
+}
+return [main, _tests];}`;
+  
+      const fileImpl = new FileImpl(
+        testHash,
+        new DefaultProfile(),
+        transforms(),
+        true,
+      );
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+  
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+      await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
   test("Fail_AbstractMutableClassAsFunctionParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -1077,5 +1273,46 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Bar must be concrete to new"]);
+  });
+
+  test("Fail_SuperClassAsFunctionParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  var f set to upcast(b)
+  print fun(f)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function upcast(bar as Bar) return Foo
+    return foo
+end function
+
+function fun(bar as Bar) return Int
+    return foo.p1
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
   });
 });
