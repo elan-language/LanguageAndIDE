@@ -251,6 +251,92 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00");
   });
 
+  test("Pass_MutableClassAsProcedureParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  call proc(f)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+procedure proc(foo as Foo)
+    print foo.p1
+end procedure
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  proc(f);
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+
+function proc(foo) {
+  system.print(_stdlib.asString(foo.p1));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
+  test("Fail_MutableClassAsFunctionParameter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print fun(f)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(foo as Foo) return Int
+    return foo.p1
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
+  });
+
   test("Fail_NoConstructor", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
