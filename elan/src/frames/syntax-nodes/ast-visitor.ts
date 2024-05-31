@@ -103,6 +103,7 @@ import { LiteralArrayListAsn } from "./literal-array-list-asn";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
+import { TypeGeneric } from "../parse-nodes/type-generic";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -277,6 +278,14 @@ export function transform(
     const type = transform(node.type, fieldId, scope)!;
 
     return new ParamDefAsn(id, type, fieldId, scope);
+  }
+
+  if (node instanceof TypeGeneric) {
+    const type = node.simpleType!.matchedText;
+    const generic = node.generic;
+    let gp = new Array<AstNode>();
+    gp = transformMany(generic as Sequence, fieldId, scope).items;
+    return new TypeAsn(type, gp, fieldId, scope);
   }
 
   if (node instanceof TypeWithOptGenerics) {

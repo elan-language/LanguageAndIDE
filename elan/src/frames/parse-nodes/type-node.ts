@@ -3,6 +3,8 @@ import { TypeWithOptGenerics } from "./type-with-opt-generics";
 import { TypeTuple } from "./type-tuple";
 import { FuncTypeNode } from "./func-type-node";
 import { OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
+import { TypeGeneric } from "./type-generic";
+import { TypeSimpleNode } from "./type-simple-node";
 
 export class TypeNode extends AbstractAlternatives {
   constructor() {
@@ -19,10 +21,9 @@ export class TypeNode extends AbstractAlternatives {
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         const tuple = new TypeTuple();
         this.alternatives.push(tuple);
-      } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-        this.alternatives.push(new TypeWithOptGenerics());
       } else {
-        this.alternatives.push(new TypeWithOptGenerics());
+        this.alternatives.push(new TypeSimpleNode());
+        this.alternatives.push(new TypeGeneric());
       }
       super.parseText(text.trimStart());
     }
