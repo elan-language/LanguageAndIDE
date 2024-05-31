@@ -16,7 +16,7 @@ import { Parent } from "./interfaces/parent";
 import { CommentStatement } from "./statements/comment-statement";
 import { ReturnStatement } from "./statements/return-statement";
 import { Else } from "./statements/else";
-import { Default } from "./statements/default";
+import { DefaultStatement } from "./statements/default-statement";
 import { Catch } from "./statements/catch";
 import { Case } from "./statements/case";
 import { AssertStatement } from "./statements/assert-statement";
@@ -37,7 +37,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new Catch(parent);
   }
   public newDefault(parent: Parent): Frame {
-    return new Default(parent);
+    return new DefaultStatement(parent);
   }
   public newEach(parent: Parent): Frame {
     return new Each(parent);

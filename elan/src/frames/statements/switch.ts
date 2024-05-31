@@ -7,17 +7,17 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { switchKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { Default } from "./default";
+import { DefaultStatement } from "./default-statement";
 
 export class Switch extends FrameWithStatements implements ElanSymbol {
   isStatement = true;
   expr: ExpressionField;
-  default: Default;
+  default: DefaultStatement;
 
   constructor(parent: Parent) {
     super(parent);
     this.expr = new ExpressionField(this);
-    this.default = new Default(this);
+    this.default = new DefaultStatement(this);
     this.getChildren().push(this.default);
   }
 

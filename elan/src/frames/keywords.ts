@@ -13,6 +13,7 @@ export const curryKeyword = "curry"; //for future use
 export const defaultKeyword = "default";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
+export const emptyKeyword = "empty";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
 export const falseKeyword = "false";
@@ -83,6 +84,7 @@ export const allKeywords = [
   defaultKeyword,
   eachKeyword,
   elseKeyword,
+  emptyKeyword,
   endKeyword,
   enumKeyword,
   falseKeyword,

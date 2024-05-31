@@ -7,7 +7,7 @@ import { singleIndent } from "../helpers";
 import { defaultKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class Default extends FrameWithStatements implements Statement {
+export class DefaultStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
