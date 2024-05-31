@@ -17,7 +17,7 @@ import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
-import { TypeWithOptGenerics } from "../frames/parse-nodes/type-with-opt-generics";
+import { TypeSimpleOrGeneric } from "../frames/parse-nodes/type-simple-or-generic";
 import { TypeSimpleNode } from "../frames/parse-nodes/type-simple-node";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
@@ -1501,7 +1501,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeWithOptGenerics", () => {
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -1510,7 +1510,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `foo`,
       ParseStatus.invalid,
       "",
@@ -1518,7 +1518,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<`,
       ParseStatus.incomplete,
       "Foo<",
@@ -1526,7 +1526,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<of`,
       ParseStatus.incomplete,
       "Foo<of",
@@ -1534,7 +1534,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<of Bar`,
       ParseStatus.incomplete,
       "Foo<of Bar",
@@ -1542,7 +1542,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<ofBar`,
       ParseStatus.valid,
       "",
@@ -1550,7 +1550,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<of Bar>`,
       ParseStatus.valid,
       "Foo<of Bar>",
@@ -1559,7 +1559,7 @@ suite("Parsing Nodes", () => {
       "<type>Foo</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Foo<of ImmutableList<of Bar>>`,
       ParseStatus.valid,
       "Foo<of ImmutableList<of Bar>>",
@@ -1568,7 +1568,7 @@ suite("Parsing Nodes", () => {
       "<type>Foo</type>&lt;<keyword>of</keyword> <type>ImmutableList</type>&lt;<keyword>of</keyword> <type>Bar</type>&gt;&gt;",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `Dictionary<of Bar, Yon>`,
       ParseStatus.valid,
       "Dictionary<of Bar, Yon>",
@@ -1577,7 +1577,7 @@ suite("Parsing Nodes", () => {
       "<type>Dictionary</type>&lt;<keyword>of</keyword> <type>Bar</type>, <type>Yon</type>&gt;",
     );
     testNodeParse(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       `ImmutableList<of (Bar, Yon)>`,
       ParseStatus.valid,
       "ImmutableList<of (Bar, Yon)>",

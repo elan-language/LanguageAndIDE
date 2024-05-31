@@ -19,7 +19,7 @@ import { ImmutableListNode } from "../frames/parse-nodes/immutable-list-node";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
-import { TypeWithOptGenerics } from "../frames/parse-nodes/type-with-opt-generics";
+import { TypeSimpleOrGeneric } from "../frames/parse-nodes/type-simple-or-generic";
 import { TypeSimpleNode } from "../frames/parse-nodes/type-simple-node";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
@@ -303,7 +303,7 @@ suite("ASTNodes", () => {
       new ClassType("Foo", false, false, [], undefined as any),
     );
     testAST(
-      new TypeWithOptGenerics(),
+      new TypeSimpleOrGeneric(),
       stubField,
       `Foo`,
       "Type Foo",

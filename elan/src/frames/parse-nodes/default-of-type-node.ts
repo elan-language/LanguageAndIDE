@@ -3,15 +3,15 @@ import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
-import { TypeWithOptGenerics } from "./type-with-opt-generics";
+import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
 
 export class DefaultOfTypeNode extends AbstractSequence {
-  type: TypeWithOptGenerics | undefined;
+  type: TypeSimpleOrGeneric | undefined;
 
   parseText(text: string): void {
     this.addElement(new KeywordNode(defaultKeyword));
     this.addElement(new SpaceNode(Space.required));
-    this.type = new TypeWithOptGenerics();
+    this.type = new TypeSimpleOrGeneric();
     this.addElement(this.type);
     super.parseText(text);
   }

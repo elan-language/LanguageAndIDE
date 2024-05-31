@@ -23,7 +23,6 @@ import { Lambda } from "../parse-nodes/lambda";
 import { LambdaAsn } from "./lambda-asn";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParamDefAsn } from "./param-def-asn";
-import { TypeWithOptGenerics } from "../parse-nodes/type-with-opt-generics";
 import { TypeAsn } from "./type-asn";
 import { SymbolNode } from "../parse-nodes/symbol-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
@@ -285,18 +284,6 @@ export function transform(
     const generic = node.generic;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as Sequence, fieldId, scope).items;
-    return new TypeAsn(type, gp, fieldId, scope);
-  }
-
-  if (node instanceof TypeWithOptGenerics) {
-    const type = node.simpleType!.matchedText;
-    const opt = (node.generic as OptionalNode).matchedNode;
-    let gp = new Array<AstNode>();
-
-    if (opt) {
-      gp = transformMany(opt as Sequence, fieldId, scope).items;
-    }
-
     return new TypeAsn(type, gp, fieldId, scope);
   }
 

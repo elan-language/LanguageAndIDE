@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { TypeWithOptGenerics } from "./type-with-opt-generics";
+import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
 import { TypeTuple } from "./type-tuple";
 import { FuncTypeNode } from "./func-type-node";
 import { OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
