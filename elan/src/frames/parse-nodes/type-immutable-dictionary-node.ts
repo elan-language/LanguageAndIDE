@@ -2,11 +2,12 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import { CLOSE_BRACE, OPEN_BRACE } from "../symbols";
+import { CLOSE_BRACE, CLOSE_SQ_BRACKET, COLON, OPEN_BRACE, OPEN_SQ_BRACKET } from "../symbols";
 
-export class TypeImmutableListNode extends AbstractSequence {
+export class TypeImmutableDictionaryNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
-  generic: TypeNode | undefined;
+  keyType: TypeNode | undefined;
+  valueType: TypeNode | undefined;
 
   constructor() {
     super();
@@ -16,10 +17,13 @@ export class TypeImmutableListNode extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(); //Not added to elements, as not present in the text
-      this.simpleType.parseText("ImmutableList");
+      this.simpleType.parseText("ImmmutableDictionary");
       this.addElement(new SymbolNode(OPEN_BRACE));
-      this.generic = new TypeNode();
-      this.addElement(this.generic);
+      this.keyType = new TypeNode();
+      this.addElement(this.keyType);
+      this.addElement(new SymbolNode(COLON));
+      this.valueType = new TypeNode();
+      this.addElement(this.valueType);
       this.addElement(new SymbolNode(CLOSE_BRACE));
       super.parseText(text);
     }

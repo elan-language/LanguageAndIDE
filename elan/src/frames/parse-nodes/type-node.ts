@@ -1,12 +1,14 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
-import { TypeTuple } from "./type-tuple";
+import { TypeTupleNode } from "./type-tuple-node";
 import { FuncTypeNode } from "./func-type-node";
 import { OPEN_BRACE, OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeSimple } from "./type-simple";
+import { TypeSimpleNode } from "./type-simple-node";
 import { TypeListNode } from "./type-list-node";
 import { TypeImmutableListNode } from "./type-immutable-list-node";
+import { TypeDictionaryNode } from "./type-dictionary-node";
+import { TypeImmutableDictionaryNode } from "./type-immutable-dictionary-node";
 
 export class TypeNode extends AbstractAlternatives {
   constructor() {
@@ -20,16 +22,15 @@ export class TypeNode extends AbstractAlternatives {
       if (text.trimStart().startsWith("Func")) { // tested first because 'Func' is *syntactically* valid simple type
         this.alternatives.push(new FuncTypeNode());
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
-        const tuple = new TypeTuple();
-        this.alternatives.push(tuple);
+        this.alternatives.push(new TypeTupleNode());
       } else if (text.trimStart().startsWith(OPEN_SQ_BRACKET)) {
-         const list = new TypeListNode();
-        this.alternatives.push(list);
+        this.alternatives.push(new TypeListNode());
+        this.alternatives.push(new TypeDictionaryNode());
       } else if (text.trimStart().startsWith(OPEN_BRACE)) {
-        const list = new TypeImmutableListNode();
-       this.alternatives.push(list);
-     }  else {
-        this.alternatives.push(new TypeSimple());
+        this.alternatives.push(new TypeImmutableListNode());
+        this.alternatives.push(new TypeImmutableDictionaryNode());
+      } else {
+        this.alternatives.push(new TypeSimpleNode());
         this.alternatives.push(new TypeGenericNode());
       }
       super.parseText(text.trimStart());

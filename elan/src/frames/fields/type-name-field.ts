@@ -2,7 +2,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 
 import { ParseNode } from "../parse-nodes/parse-node";
-import { TypeSimple } from "../parse-nodes/type-simple";
+import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { AbstractField } from "./abstract-field";
 
 export class TypeNameField extends AbstractField {
@@ -16,7 +16,7 @@ export class TypeNameField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new TypeSimple();
+    this.rootNode = new TypeSimpleNode();
     return this.rootNode;
   }
 

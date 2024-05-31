@@ -4,7 +4,7 @@ import { OptionalNode } from "./optional-node";
 import { SymbolNode } from "./symbol-node";
 import { Sequence } from "./sequence";
 import { TypeNode } from "./type-node";
-import { TypeSimple } from "./type-simple";
+import { TypeSimpleNode } from "./type-simple-node";
 import { GT, LT } from "../symbols";
 import { ofKeyword } from "../keywords";
 import { SpaceNode } from "./space-node";
@@ -13,7 +13,7 @@ import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 
 export class TypeGenericNode extends AbstractSequence {
-  simpleType: TypeSimple | undefined;
+  simpleType: TypeSimpleNode | undefined;
   generic: Sequence | undefined;
 
   constructor() {
@@ -23,7 +23,7 @@ export class TypeGenericNode extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.simpleType = new TypeSimple();
+      this.simpleType = new TypeSimpleNode();
       const lt = () => new SymbolNode(LT);
       const of = () => new KeywordNode(ofKeyword);
       const sp = () => new SpaceNode(Space.required);

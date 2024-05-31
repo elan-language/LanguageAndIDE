@@ -49,7 +49,7 @@ import { IndexAsn } from "./index-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
-import { TypeSimple } from "../parse-nodes/type-simple";
+import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -72,7 +72,7 @@ import { KVPnode } from "../parse-nodes/kvp-node";
 import { KvpAsn } from "./kvp-asn";
 import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { TermWith } from "../parse-nodes/term-with";
-import { TypeTuple } from "../parse-nodes/type-tuple";
+import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { Qualifier } from "../parse-nodes/qualifier";
 import { InstanceNode } from "../parse-nodes/instanceNode";
@@ -105,6 +105,8 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeListNode } from "../parse-nodes/type-list-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
+import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
+import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -295,6 +297,13 @@ export function transform(
     return new TypeAsn(type, [gp], fieldId, scope);
   }
 
+  if (node instanceof TypeDictionaryNode || node instanceof TypeImmutableDictionaryNode) {
+    const type = node.simpleType!.matchedText;
+    const key = transform(node.keyType, fieldId, scope)!;
+    const value = transform(node.valueType, fieldId, scope)!;
+    return new TypeAsn(type, [key, value], fieldId, scope);
+  }
+
   if (node instanceof FuncTypeNode) {
     const type = "Func";
     const inp = node.inputTypes
@@ -307,7 +316,7 @@ export function transform(
     return new TypeAsn(type, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeSimple) {
+  if (node instanceof TypeSimpleNode) {
     const type = node.matchedText;
 
     return new TypeAsn(type, [], fieldId, scope);
@@ -447,7 +456,7 @@ export function transform(
     return new WithAsn(obj, changes, fieldId, scope);
   }
 
-  if (node instanceof TypeTuple) {
+  if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
     return new TypeAsn("Tuple", gp, fieldId, scope);
   }

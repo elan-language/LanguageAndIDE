@@ -4,7 +4,7 @@ import { CSV } from "./csv";
 import { SymbolNode } from "./symbol-node";
 import { TypeNode } from "./type-node";
 
-export class TypeTuple extends AbstractSequence {
+export class TypeTupleNode extends AbstractSequence {
   types: CSV | undefined;
 
   parseText(text: string): void {

@@ -18,7 +18,7 @@ import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../frames/parse-nodes/type-simple-or-generic";
-import { TypeSimple } from "../frames/parse-nodes/type-simple";
+import { TypeSimpleNode } from "../frames/parse-nodes/type-simple-node";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
@@ -311,6 +311,43 @@ suite("Parsing Nodes", () => {
       "",
       "this",
       "this", // Not now detected or rejected as a keyword by the parse node - that is down to compilation
+    );
+    // empty data structures
+    testNodeParse(
+      new ExprNode(),
+      "empty [Int]",
+      ParseStatus.valid,
+      "empty [Int]",
+      "",
+      "",
+      "<keyword>empty</keyword> [<type>Int</type>]",
+    );
+    testNodeParse(
+      new ExprNode(),
+      "empty {Int}",
+      ParseStatus.valid,
+      "empty {Int}",
+      "",
+      "",
+      "<keyword>empty</keyword> {<type>Int</type>}",
+    );
+    testNodeParse(
+      new ExprNode(),
+      "empty [Int:String]",
+      ParseStatus.valid,
+      "empty [Int:String]",
+      "",
+      "",
+      "<keyword>empty</keyword> [<type>Int</type>:<type>String</type>]",
+    );
+    testNodeParse(
+      new ExprNode(),
+      "empty {Int:Boolean}",
+      ParseStatus.valid,
+      "empty {Int:Boolean}",
+      "",
+      "",
+      "<keyword>empty</keyword> {<type>Int</type>:<type>Boolean</type>}",
     );
     testNodeParse(
       new ExprNode(),
@@ -1482,7 +1519,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeSimpleNode", () => {
     testNodeParse(
-      new TypeSimple(),
+      new TypeSimpleNode(),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -1491,7 +1528,7 @@ suite("Parsing Nodes", () => {
       "<type>Foo</type>",
     );
     testNodeParse(
-      new TypeSimple(),
+      new TypeSimpleNode(),
       `foo`,
       ParseStatus.invalid,
       "",
@@ -1653,6 +1690,80 @@ suite("Parsing Nodes", () => {
       "{Foo, Bar}",
       "",
     );
+    //Dictionary
+    testNodeParse(
+      new TypeNode(),
+      `[Foo:Bar]`,
+      ParseStatus.valid,
+      "[Foo:Bar]",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo: Bar]`,
+      ParseStatus.valid,
+      "[Foo: Bar]",
+      "",
+      "[Foo:Bar]",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo:Bar`,
+      ParseStatus.incomplete,
+      "[Foo:Bar",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo`,
+      ParseStatus.incomplete,
+      "[Foo",
+      "",
+      "",
+    );
+      //ImmtableDictionary
+      testNodeParse(
+        new TypeNode(),
+        `{Foo:Bar}`,
+        ParseStatus.valid,
+        "{Foo:Bar}",
+        "",
+        "",
+      );
+      testNodeParse(
+        new TypeNode(),
+        `{Foo: Bar}`,
+        ParseStatus.valid,
+        "{Foo: Bar}",
+        "",
+        "{Foo:Bar}",
+      );
+      testNodeParse(
+        new TypeNode(),
+        `{Foo:Bar`,
+        ParseStatus.incomplete,
+        "{Foo:Bar",
+        "",
+        "",
+      );
+      testNodeParse(
+        new TypeNode(),
+        `[Foo`,
+        ParseStatus.incomplete,
+        "[Foo",
+        "",
+        "",
+      );
+      testNodeParse(
+        new TypeNode(),
+        `[Foo, Bar}`,
+        ParseStatus.invalid,
+        "",
+        "[Foo, Bar}",
+        "",
+      );
     testNodeParse(
       new TypeNode(),
       `Foo<of ImmutableList<of Bar>>`,

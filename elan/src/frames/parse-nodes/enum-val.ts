@@ -1,15 +1,15 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { SymbolNode } from "./symbol-node";
-import { TypeSimple } from "./type-simple";
+import { TypeSimpleNode } from "./type-simple-node";
 import { DOT } from "../symbols";
 
 export class EnumVal extends AbstractSequence {
-  type: TypeSimple | undefined;
+  type: TypeSimpleNode | undefined;
   val: IdentifierNode | undefined;
 
   parseText(text: string): void {
-    this.type = new TypeSimple();
+    this.type = new TypeSimpleNode();
     this.addElement(this.type);
     this.addElement(new SymbolNode(DOT));
     this.val = new IdentifierNode();

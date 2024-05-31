@@ -59,24 +59,32 @@ return [main, _tests];}`;
 main
   var a set to [1, 2]
   var b set to {3, 4}
-  call foo(a, b)
+  var c set to ["a":true, "b":false]
+  var d set to {"a":true, "b":false}
+  call foo(a, b, c, d)
 end main
 
-procedure foo(x as [Int], y as {Int})
+procedure foo(x as [Int], y as {Int}, z as [String:Boolean], t as {String:Boolean})
   print x
   print y
+  print z
+  print t
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.list([3, 4]);
-  foo(a, b);
+  var c = system.dictionary({"a" : true, "b" : false});
+  var d = system.immutableDictionary({"a" : true, "b" : false});
+  foo(a, b, c, d);
 }
 
-function foo(x, y) {
+function foo(x, y, z, t) {
   system.print(_stdlib.asString(x));
   system.print(_stdlib.asString(y));
+  system.print(_stdlib.asString(z));
+  system.print(_stdlib.asString(t));
 }
 return [main, _tests];}`;
 
@@ -91,8 +99,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [1, 2]ImmutableList {3, 4}");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [1, 2]ImmutableList {3, 4}Dictionary [a:true, b:false]ImmutableDictionary {a:true, b:false}");
   });
+  
+  //TODO Fail for passing incompatible types
 
   test("Pass_ExternalCall", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

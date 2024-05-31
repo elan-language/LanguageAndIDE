@@ -20,7 +20,7 @@ import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../frames/parse-nodes/type-simple-or-generic";
-import { TypeSimple } from "../frames/parse-nodes/type-simple";
+import { TypeSimpleNode } from "../frames/parse-nodes/type-simple-node";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
@@ -296,7 +296,7 @@ suite("ASTNodes", () => {
 
   test("Types", () => {
     testAST(
-      new TypeSimple(),
+      new TypeSimpleNode(),
       stubField,
       `Foo`,
       "Type Foo",
