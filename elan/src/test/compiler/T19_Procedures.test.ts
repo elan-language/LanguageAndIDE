@@ -53,6 +53,46 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "123");
   });
+  test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1, 2]
+  var b set to {3, 4}
+  call foo(a, b)
+end main
+
+procedure foo(x as [Int], y as {Int})
+  print x
+  print y
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2]);
+  var b = system.list([3, 4]);
+  foo(a, b);
+}
+
+function foo(x, y) {
+  system.print(_stdlib.asString(x));
+  system.print(_stdlib.asString(y));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [1, 2]ImmutableList {3, 4}");
+  });
 
   test("Pass_ExternalCall", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

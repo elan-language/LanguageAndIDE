@@ -1499,7 +1499,7 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("TypeWithOptGenerics", () => {
+  test("TypeSimpleOrGeneric", () => {
     testNodeParse(
       new TypeSimpleOrGeneric(),
       `Foo`,
@@ -1587,6 +1587,72 @@ suite("Parsing Nodes", () => {
     );
   });
   test("TypeNode", () => {
+    //List (mutable) type shortform
+    testNodeParse(
+      new TypeNode(),
+      `[Foo]`,
+      ParseStatus.valid,
+      "[Foo]",
+      "",
+      "",
+    ); 
+    testNodeParse(
+      new TypeNode(),
+      `[Foo`,
+      ParseStatus.incomplete,
+      "[Foo",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[foo`,
+      ParseStatus.invalid,
+      "",
+      "[foo",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo, Bar]`,
+      ParseStatus.invalid,
+      "",
+      "[Foo, Bar]",
+      "",
+    );
+    //Immutable list type short form
+    testNodeParse(
+      new TypeNode(),
+      `{Foo}`,
+      ParseStatus.valid,
+      "{Foo}",
+      "",
+      "",
+    ); 
+    testNodeParse(
+      new TypeNode(),
+      `{Foo`,
+      ParseStatus.incomplete,
+      "{Foo",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `{foo`,
+      ParseStatus.invalid,
+      "",
+      "{foo",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `{Foo, Bar}`,
+      ParseStatus.invalid,
+      "",
+      "{Foo, Bar}",
+      "",
+    );
     testNodeParse(
       new TypeNode(),
       `Foo<of ImmutableList<of Bar>>`,

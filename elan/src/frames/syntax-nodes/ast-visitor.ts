@@ -104,6 +104,7 @@ import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-as
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 import { TypeListNode } from "../parse-nodes/type-list-node";
+import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -288,7 +289,7 @@ export function transform(
     return new TypeAsn(type, gp, fieldId, scope);
   }
 
-  if (node instanceof TypeListNode) {
+  if (node instanceof TypeListNode || node instanceof TypeImmutableListNode) {
     const type = node.simpleType!.matchedText;
     const gp = transform(node.generic, fieldId, scope)!;
     return new TypeAsn(type, [gp], fieldId, scope);
