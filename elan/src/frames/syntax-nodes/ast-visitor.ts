@@ -49,7 +49,7 @@ import { IndexAsn } from "./index-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { NewAsn } from "./new-asn";
-import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { TypeSimple } from "../parse-nodes/type-simple";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { CommaNode } from "../parse-nodes/comma-node";
@@ -299,7 +299,7 @@ export function transform(
     return new TypeAsn(type, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeSimpleNode) {
+  if (node instanceof TypeSimple) {
     const type = node.matchedText;
 
     return new TypeAsn(type, [], fieldId, scope);

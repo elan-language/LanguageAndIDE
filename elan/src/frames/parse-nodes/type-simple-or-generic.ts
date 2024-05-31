@@ -1,7 +1,7 @@
 
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeGeneric } from "./type-generic";
-import { TypeSimpleNode } from "./type-simple-node";
+import { TypeSimple } from "./type-simple";
 
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
   constructor() {
@@ -11,7 +11,7 @@ export class TypeSimpleOrGeneric extends AbstractAlternatives {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.alternatives.push(new TypeSimpleNode());
+      this.alternatives.push(new TypeSimple());
       this.alternatives.push(new TypeGeneric());
       super.parseText(text);
     }

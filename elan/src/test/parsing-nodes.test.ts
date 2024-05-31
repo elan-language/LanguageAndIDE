@@ -18,7 +18,7 @@ import { FunctionCallNode } from "../frames/parse-nodes/function-call-node";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { TypeNode } from "../frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../frames/parse-nodes/type-simple-or-generic";
-import { TypeSimpleNode } from "../frames/parse-nodes/type-simple-node";
+import { TypeSimple } from "../frames/parse-nodes/type-simple";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
@@ -1482,7 +1482,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeSimpleNode", () => {
     testNodeParse(
-      new TypeSimpleNode(),
+      new TypeSimple(),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -1491,7 +1491,7 @@ suite("Parsing Nodes", () => {
       "<type>Foo</type>",
     );
     testNodeParse(
-      new TypeSimpleNode(),
+      new TypeSimple(),
       `foo`,
       ParseStatus.invalid,
       "",

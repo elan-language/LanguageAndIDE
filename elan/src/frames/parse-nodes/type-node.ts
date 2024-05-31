@@ -4,7 +4,7 @@ import { TypeTuple } from "./type-tuple";
 import { FuncTypeNode } from "./func-type-node";
 import { OPEN_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { TypeGeneric } from "./type-generic";
-import { TypeSimpleNode } from "./type-simple-node";
+import { TypeSimple } from "./type-simple";
 
 export class TypeNode extends AbstractAlternatives {
   constructor() {
@@ -22,7 +22,7 @@ export class TypeNode extends AbstractAlternatives {
         const tuple = new TypeTuple();
         this.alternatives.push(tuple);
       } else {
-        this.alternatives.push(new TypeSimpleNode());
+        this.alternatives.push(new TypeSimple());
         this.alternatives.push(new TypeGeneric());
       }
       super.parseText(text.trimStart());
