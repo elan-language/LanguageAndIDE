@@ -12,7 +12,7 @@ import { Space } from "./parse-node-helpers";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 
-export class TypeGeneric extends AbstractSequence {
+export class TypeGenericNode extends AbstractSequence {
   simpleType: TypeSimple | undefined;
   generic: Sequence | undefined;
 

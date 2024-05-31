@@ -1,6 +1,6 @@
 
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { TypeGeneric } from "./type-generic";
+import { TypeGenericNode } from "./type-generic-node";
 import { TypeSimple } from "./type-simple";
 
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
@@ -12,7 +12,7 @@ export class TypeSimpleOrGeneric extends AbstractAlternatives {
     this.remainingText = text;
     if (text.length > 0) {
       this.alternatives.push(new TypeSimple());
-      this.alternatives.push(new TypeGeneric());
+      this.alternatives.push(new TypeGenericNode());
       super.parseText(text);
     }
   }

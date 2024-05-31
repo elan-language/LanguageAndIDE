@@ -102,7 +102,7 @@ import { LiteralArrayListAsn } from "./literal-array-list-asn";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
-import { TypeGeneric } from "../parse-nodes/type-generic";
+import { TypeGenericNode } from "../parse-nodes/type-generic-node";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -279,7 +279,7 @@ export function transform(
     return new ParamDefAsn(id, type, fieldId, scope);
   }
 
-  if (node instanceof TypeGeneric) {
+  if (node instanceof TypeGenericNode) {
     const type = node.simpleType!.matchedText;
     const generic = node.generic;
     let gp = new Array<AstNode>();
