@@ -15,6 +15,7 @@ import {
   testKeyword,
 } from "../keywords";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { ParseStatus } from "../status-enums";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   isGlobal = true;
@@ -23,6 +24,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   constructor(parent: File) {
     super(parent);
     this.file = parent;
+    this.setParseStatus(ParseStatus.default);
   }
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {

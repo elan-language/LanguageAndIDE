@@ -5,7 +5,7 @@ import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
-import { ParseStatus, RunStatus } from "../frames/status-enums";
+import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StdLib } from "../std-lib";
 import { AssertOutcome, System } from "../system";
 import { doImport, getTestRunner, runTests } from "../runner";
@@ -112,35 +112,65 @@ function updateDisplayValues() {
     "class",
     file.readParseStatusForDashboard(),
   );
-  const compileStatus = file.readCompileStatusForDashboard();
   (document.getElementById("compile") as HTMLDivElement).setAttribute(
     "class",
-    compileStatus,
+    file.readCompileStatusForDashboard(),
   );
   (document.getElementById("test") as HTMLDivElement).setAttribute(
     "class",
     file.readTestStatusForDashboard(),
   );
-  const runStatus = file.readRunStatusForDashboard();
+  //Display run status
   (document.getElementById("run-status") as HTMLDivElement).setAttribute(
     "class",
-    runStatus,
+    file.readRunStatusForDashboard(),
   );
-  let runButton = "";
-  let stopButton = "";
-  if (runStatus === "ok") {
-    stopButton = "enabled";
-  } else if (compileStatus === "ok") {
-    runButton = "enabled";
+  // Button control
+  const isParsing = file.readParseStatus() == ParseStatus.valid;
+  const isCompiling = file.readCompileStatus() == CompileStatus.ok;
+  const isRunning = file.readRunStatus() === RunStatus.running;
+  const run = document.getElementById("run-button") as HTMLButtonElement;
+  if (isRunning) {
+    disable(run, "Program is already running")
+  } else if (!file.containsMain()) {
+    disable(run, "Code must have a 'main' routine to be run");
+  } else if (!isCompiling) {
+    disable(run, "Program is not compiling")
+  } else {
+    enable(run);
   }
-  (document.getElementById("run-button") as HTMLButtonElement).setAttribute(
-    "class",
-    runButton,
-  );
-  (document.getElementById("stop") as HTMLButtonElement).setAttribute(
-    "class",
-    stopButton,
-  );
+  const stop = document.getElementById("stop") as HTMLButtonElement;
+  const pause = document.getElementById("pause") as HTMLButtonElement;
+  if (isRunning) {
+    enable(stop);
+    enable(pause);
+  } else {
+    const msg = "Program is not running"
+    disable(stop, msg);
+    disable(pause, msg);
+  }  
+  const load = document.getElementById("load") as HTMLButtonElement;
+  const save = document.getElementById("save") as HTMLButtonElement;
+  const newButton = document.getElementById("new") as HTMLButtonElement;
+  enable(load);
+  enable(save);
+  enable(newButton);
+  if (isRunning) {
+    const msg = "Program is running";
+    disable(load, msg);
+    disable(save, msg );
+    disable(newButton, msg);
+  } else if (!isParsing) {
+    disable(save, "Code must be parsing to be saved");
+  } 
+}
+
+function disable(button:HTMLButtonElement, msg = "") {
+  button.setAttribute("disabled", "");
+  button.setAttribute("title", msg)
+}
+function enable(button:HTMLButtonElement) {
+  button.removeAttribute("disabled");
 }
 
 /**
