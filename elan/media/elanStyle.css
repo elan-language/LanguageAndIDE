@@ -200,10 +200,10 @@ field.selected ~ field.empty placeholder, field.selected ~ field.empty.optional 
 }
 
 /* field help */
-field help {
+field help, field.selected.ok help {
     display: none;
 }
-field.selected help, field.selected help * {
+field.selected help, field.selected.ok.optional help  {
     display: inline;
     color: var(--reverseText);
     background-color: var(--help);
