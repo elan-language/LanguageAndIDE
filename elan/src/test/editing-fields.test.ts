@@ -10,6 +10,7 @@ import { SetStatement } from "../frames/statements/set-statement";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { testHash, transforms } from "./compiler/compiler-test-helpers";
 import { IfStatement } from "../frames/statements/if-statement";
+import { VarStatement } from "../frames/statements/var-statement";
 
 suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -185,5 +186,34 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.text, "a is ");
     assert.equal(expr.cursorPos, 5);
     assert.equal(expr.getCompletion(), "<pr>expression</pr>");
+  });
+
+  test("Tabbing to use plain text completions #485", () => {
+    const main = new MainFrame(
+      new FileImpl(hash, new DefaultProfile(), transforms()),
+    );
+    const v = new VarStatement(main);
+    const expr = v.expr;
+    expr.processKey(key("l"));
+    expr.processKey(key("a"));
+    expr.processKey(key("m"));
+    expr.processKey(key("b"));
+    expr.processKey(key("d"));
+    expr.processKey(key("a"));
+    expr.processKey(key(" "));
+    expr.processKey(key("a"));
+    expr.processKey(key(" "));
+    assert.equal(expr.text, "lambda a ");
+    assert.equal(expr.getCompletion(), "as <pr>Type</pr> => <pr>expression</pr>");
+    expr.processKey(key("Tab"));
+    assert.equal(expr.text, "lambda a as ");
+    assert.equal(expr.getCompletion(), "<pr>Type</pr> => <pr>expression</pr>");
+    expr.processKey(key("I"));
+    expr.processKey(key("n"));
+    expr.processKey(key("t"));
+    assert.equal(expr.text,  "lambda a as Int");
+    assert.equal(expr.getCompletion(), " => <pr>expression</pr>");
+    expr.processKey(key("Enter"));
+    assert.equal(expr.text,  "lambda a as Int => ");
   });
 });

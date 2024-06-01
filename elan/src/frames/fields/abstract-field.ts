@@ -240,20 +240,30 @@ export abstract class AbstractField implements Selectable, Field {
     if (back) {
       this.holder.selectFieldBefore(this);
     } else {
-      this.holder.selectFieldAfter(this);
+      const completions = this.getPlainTextCompletion();
+      if (completions.length > 0) {
+        this.cursorRight();
+      } else {
+        this.holder.selectFieldAfter(this);
+      }
     }
   }
 
   private enter(before: boolean) {
-    const peerFields = this.holder.getFields();
-    const last = peerFields.length - 1;
-    const thisField = peerFields.indexOf(this);
-    if (before && thisField === 0) {
-      this.holder.insertPeerSelector(before);
-    } else if (!before && thisField === last) {
-      this.holder.insertSelectorAfterLastField();
+    const completions = this.getPlainTextCompletion();
+    if (completions.length > 0) {
+      this.cursorRight();
     } else {
-      this.tab(before);
+      const peerFields = this.holder.getFields();
+      const last = peerFields.length - 1;
+      const thisField = peerFields.indexOf(this);
+      if (before && thisField === 0) {
+        this.holder.insertPeerSelector(before);
+      } else if (!before && thisField === last) {
+        this.holder.insertSelectorAfterLastField();
+      } else {
+        this.tab(before);
+      }
     }
   }
 
