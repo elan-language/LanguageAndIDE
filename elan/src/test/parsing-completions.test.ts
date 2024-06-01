@@ -138,7 +138,7 @@ suite("Parsing - Completions", () => {
   });
 
   test("ParamDef", () => {
-    testCompletion(new ParamDefNode(), "", ParseStatus.empty, "<pr></pr>");
+    testCompletion(new ParamDefNode(), "", ParseStatus.empty, "<pr>parameter definition</pr>");
     testCompletion(
       new ParamDefNode(),
       "a",
@@ -231,8 +231,9 @@ suite("Parsing - Completions", () => {
   });
   test("Lambda", () => {
     testCompletion(new Lambda(), "lambda x as Int => x*x", ParseStatus.valid, "");
-    testCompletion(new Lambda(), "lambda x as Int", ParseStatus.incomplete, " => <pr>expression</pr>");
+    testCompletion(new Lambda(), "lambda ", ParseStatus.incomplete, "<pr>parameter definition</pr> => <pr>expression</pr>");
     testCompletion(new Lambda(), "lambda x as Int ", ParseStatus.incomplete, "=> <pr>expression</pr>");
+    testCompletion(new Lambda(), "lambda x as Int,", ParseStatus.incomplete, "<pr>parameter definition</pr> => <pr>expression</pr>");
     testCompletion(new Lambda(), "lambda x as Int =", ParseStatus.incomplete, "> <pr>expression</pr>");
   });
 
