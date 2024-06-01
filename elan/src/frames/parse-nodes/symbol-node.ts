@@ -25,4 +25,18 @@ export class SymbolNode extends FixedTextNode {
   renderAsHtml(): string {
     return escapeAngleBrackets(this.renderAsSource());
   }
+
+  getCompletionAsHtml(): string {
+    let comp = ``;
+    const matched = this.matchedText.length;
+    const kw = this.fixedText.length;
+    if (this.status === ParseStatus.empty) {
+      comp = `${this.fixedText}`;
+    } else if (matched === kw && this.remainingText === "") {
+      comp = ``;
+    } else if (matched < kw) {
+      comp = `${this.fixedText.substring(this.matchedText.length)}`;
+    }
+    return comp;
+  }
 }

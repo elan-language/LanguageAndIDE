@@ -2,6 +2,7 @@ import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
 import { CSV } from "../frames/parse-nodes/csv";
 import { ExprNode } from "../frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
+import { Lambda } from "../frames/parse-nodes/lambda";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { Space } from "../frames/parse-nodes/parse-node-helpers";
@@ -228,4 +229,11 @@ suite("Parsing - Completions", () => {
       "<pr>Type</pr> => <pr>Type</pr>>",
     );
   });
+  test("Lambda", () => {
+    testCompletion(new Lambda(), "lambda x as Int => x*x", ParseStatus.valid, "");
+    testCompletion(new Lambda(), "lambda x as Int", ParseStatus.incomplete, " => <pr>expression</pr>");
+    testCompletion(new Lambda(), "lambda x as Int ", ParseStatus.incomplete, "=> <pr>expression</pr>");
+    testCompletion(new Lambda(), "lambda x as Int =", ParseStatus.incomplete, "> <pr>expression</pr>");
+  });
+
 });
