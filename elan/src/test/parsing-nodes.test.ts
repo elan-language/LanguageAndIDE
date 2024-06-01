@@ -1079,10 +1079,10 @@ suite("Parsing Nodes", () => {
     );
   });
   test("CommaNode", () => {
-    testNodeParse(new CommaNode(), ``, ParseStatus.incomplete, ``, "", "");
+    testNodeParse(new CommaNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new CommaNode(), `,`, ParseStatus.valid, ``, "", ", ");
-    testNodeParse(new CommaNode(), ` ,`, ParseStatus.valid, ``, "", ", ");
-    testNodeParse(new CommaNode(), `  ,    `, ParseStatus.valid, ``, "", ", ");
+    testNodeParse(new CommaNode(), ` ,`, ParseStatus.invalid, ``, " ,", "");
+    testNodeParse(new CommaNode(), `,    `, ParseStatus.valid, ``, "", ", ");
     testNodeParse(new CommaNode(), `.`, ParseStatus.invalid, ``, ".", "");
     testNodeParse(new CommaNode(), `,,`, ParseStatus.valid, `,`, ",", "");
   });
@@ -1105,9 +1105,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new CSV(() => new LitInt(), 0),
-      `2, 4,3 , 1`,
+      `2, 4,3, 1`,
       ParseStatus.valid,
-      `2, 4,3 , 1`,
+      `2, 4,3, 1`,
       "",
       "2, 4, 3, 1",
     );
@@ -1129,9 +1129,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new CSV(() => new LitString(), 0),
-      `"apple","orange" , "pear"`,
+      `"apple","orange", "pear"`,
       ParseStatus.valid,
-      `"apple","orange" , "pear"`,
+      `"apple","orange", "pear"`,
       "",
       `"apple", "orange", "pear"`,
     );
@@ -1141,7 +1141,7 @@ suite("Parsing Nodes", () => {
       ParseStatus.valid,
       `a,b,c`,
       "",
-      "",
+      "a, b, c",
     );
     testNodeParse(
       new CSV(() => new IdentifierNode(), 0),
@@ -1153,9 +1153,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new CSV(() => new ExprNode(), 0),
-      `a + b,c, 1`,
+      `a + b, c, 1`,
       ParseStatus.valid,
-      `a + b,c, 1`,
+      `a + b, c, 1`,
       "",
       "",
     );
