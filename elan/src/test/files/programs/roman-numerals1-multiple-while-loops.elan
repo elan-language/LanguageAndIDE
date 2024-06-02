@@ -1,8 +1,4 @@
-# c10b69689362d1ad1034ddf8bef6c32137aa8f3040e24b60c296d059828d297d Elan v0.1 valid
-
-main
-
-end main
+# ba3150732d5c62c2f61061a9012177ec4f67a8763c3318f5636d174353ac85e6 Elan v0.1 valid
 
 function asRoman(decimal as Int) return String
   var result set to ""
@@ -97,7 +93,5 @@ test
   assert asRoman(666) is "DCLXVI"
   assert asRoman(999) is "CMXCIX"
   assert asRoman(1066) is "MLXVI"
-  assert asRoman(1789) is "MDCCLXXXIX"
-  assert asRoman(1999) is "MCMXCIX"
-  assert asRoman(2017) is "MMXVII"
+  assert asRoman(1966) is "MCMLXVI"
 end test

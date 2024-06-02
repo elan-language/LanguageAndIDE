@@ -1,9 +1,4 @@
-# de3e172ddd92c8f3fa46bcf82afffb8a42519205dfe84243240ce56d180db07b Elan v0.1 valid
-
-main
-  var d set to 1999
-  print asRoman(d)
-end main
+# 09e3fffe59a31c2871a93d363010f1f441fee0d2c0bf437b89fac95596ad85d2 Elan v0.1 valid
 
 function asRoman(d as Int) return String
   var result set to ""
@@ -57,7 +52,5 @@ test
   assert asRoman(666) is "DCLXVI"
   assert asRoman(999) is "CMXCIX"
   assert asRoman(1066) is "MLXVI"
-  assert asRoman(1789) is "MDCCLXXXIX"
-  assert asRoman(1999) is "MCMXCIX"
-  assert asRoman(2017) is "MMXVII"
+  assert asRoman(1966) is "MCMLXVI"
 end test

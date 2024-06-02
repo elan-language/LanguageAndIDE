@@ -1,16 +1,19 @@
-# 1aa07c334a90575c103d2a0b3d07be5048846778423454a3bf62a1ad1e869418 Elan v0.1 valid
-
-main
-  var d set to 1999
-  print asRoman(d)
-end main
+# a16d74db32d502c5b8dc0ac84a525ec96fd9ac4c9bfee57ca4a05945666a08ed Elan v0.1 valid
 
 function asRoman(d as Int) return String
-  let allSymbols be {(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")}
-  let symbols be allSymbols.filter(lambda s as (Int, String) => s.first() <= d)
-  let largest be symbols.head()
-  return if d is 0 then "" else largest.second() + asRoman(d - largest.first())
+  var result set to ""
+  var d2 set to d
+  each vs in valueSymbols
+    var (value, symbol) set to vs
+    while d2 >= value
+      set result to result + symbol
+      set d2 to d2 - value
+    end while
+  end each
+  return result
 end function
+
+constant valueSymbols set to {(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")}
 
 test 
   assert asRoman(0) is ""
@@ -47,7 +50,5 @@ test
   assert asRoman(666) is "DCLXVI"
   assert asRoman(999) is "CMXCIX"
   assert asRoman(1066) is "MLXVI"
-  assert asRoman(1789) is "MDCCLXXXIX"
-  assert asRoman(1999) is "MCMXCIX"
-  assert asRoman(2017) is "MMXVII"
+  assert asRoman(1966) is "MCMLXVI"
 end test

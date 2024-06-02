@@ -185,55 +185,55 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 
-  test("test roman-numerals-1", async () => {
+  test("test roman-numerals1-multiple-while-loops", async () => {
     const f = (await loadFileAsModel(
-      "programs/roman-numerals-1.elan",
+      "programs/roman-numerals1-multiple-while-loops.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    //assert.equal(f.readTestStatus(), TestStatus.pass);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 
-  test("test roman-numerals-4", async () => {
+  test("test roman-numerals2-processSymbol", async () => {
     const f = (await loadFileAsModel(
-      "programs/roman-numerals-4.elan",
+      "programs/roman-numerals2-processSymbol.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    //assert.equal(f.readTestStatus(), TestStatus.pass);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
   });
-  test("test roman-numerals-5", async () => {
+  test("test roman-numerals3-two-lists", async () => {
     const f = (await loadFileAsModel(
-      "programs/roman-numerals-5.elan",
+      "programs/roman-numerals3-two-lists.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    //assert.equal(f.readTestStatus(), TestStatus.pass);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
   });
-  test("test roman-numerals-6", async () => {
+  test("test roman-numerals4-list-of-tuples", async () => {
     const f = (await loadFileAsModel(
-      "programs/roman-numerals-6.elan",
+      "programs/roman-numerals4-list-of-tuples.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    //assert.equal(f.readTestStatus(), TestStatus.pass);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
   });
-  test("test roman-numerals-7", async () => {
+  test("test roman-numerals5-recursive", async () => {
     const f = (await loadFileAsModel(
-      "programs/roman-numerals-7.elan",
+      "programs/roman-numerals5-recursive.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    //assert.equal(f.readTestStatus(), TestStatus.pass);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 });

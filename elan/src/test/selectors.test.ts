@@ -87,7 +87,7 @@ suite("Unit tests", () => {
     assert.equal(help, " class constant");
     assert.equal(
       g.renderAsHtml(),
-      `<global class="ok" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`,
+      `<global class="default" id='select1' tabindex="0"><selector><text>c</text><placeholder>new code</placeholder><help class="selector"> class constant</help></selector></global>`,
     );
   });
 
