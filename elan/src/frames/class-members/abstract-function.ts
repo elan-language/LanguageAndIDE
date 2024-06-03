@@ -50,7 +50,7 @@ export class AbstractFunction
 
   renderAsHtml(): string {
     return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()}) return ${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}</function>
+<top><keyword>abstract function </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> return </keyword>${this.returnType.renderAsHtml()}</top>${this.compileMsgAsHtml()}</function>
 `;
   }
 
