@@ -58,7 +58,7 @@ export function isScope(f?: ElanSymbol | Scope): f is Scope {
 }
 
 export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "renderAsDefaultObjectCode" in f;
+  return !!f && "compileToEmptyObjectCode" in f;
 }
 
 export function singleIndent() {

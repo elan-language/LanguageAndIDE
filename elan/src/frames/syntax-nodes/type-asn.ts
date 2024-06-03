@@ -48,7 +48,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return this.id;
   }
 
-  renderAsDefaultObjectCode(): string {
+  compileToEmptyObjectCode(): string {
     switch (this.id) {
       case "Int":
       case "Float":

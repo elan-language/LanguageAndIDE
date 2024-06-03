@@ -19,7 +19,7 @@ export class EmptyTypeAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    return this.type.renderAsDefaultObjectCode();
+    return this.type.compileToEmptyObjectCode();
   }
 
   symbolType() {

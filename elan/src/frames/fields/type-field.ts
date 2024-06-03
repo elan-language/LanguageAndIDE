@@ -30,7 +30,7 @@ export class TypeField extends AbstractField {
     this.compileErrors = [];
     const astNode = this.getOrTransformAstNode(transforms);
     if (isAstType(astNode)) {
-      return astNode.renderAsDefaultObjectCode();
+      return astNode.compileToEmptyObjectCode();
     }
     return super.compile(transforms);
   }
