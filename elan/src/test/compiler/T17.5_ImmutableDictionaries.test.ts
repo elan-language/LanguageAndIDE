@@ -350,6 +350,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
+  test("Pass_EmptyImmutableDictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty {String:Int}
+  var b set to empty {String:Int}
+  set b to a.setItem("a", 1)
+  print a
+  print b
+  print a is b
+  print a is empty {String:Int}
+  print b is empty {String:Int}
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.emptyImmutableDictionary();
+  var b = system.emptyImmutableDictionary();
+  b = _stdlib.setItem(a, "a", 1);
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(system.objectEquals(a, b)));
+  system.print(_stdlib.asString(system.objectEquals(a, system.emptyImmutableDictionary())));
+  system.print(_stdlib.asString(system.objectEquals(b, system.emptyImmutableDictionary())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "empty ImmutableDictionaryImmutableDictionary {a:1}falsetruefalse");
+  });
+
   test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

@@ -14,7 +14,7 @@ import {
 } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite("T12_Arrays", () => {
+suite("T12_ArrayList", () => {
   test("Pass_literalArrayList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -177,6 +177,9 @@ main
   set a[0] to 3
   print a
   print b
+  print a is b
+  print a is empty [Int]
+  print b is empty [Int]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -186,6 +189,9 @@ async function main() {
   a[0] = 3;
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(system.objectEquals(a, b)));
+  system.print(_stdlib.asString(system.objectEquals(a, system.emptyArrayList())));
+  system.print(_stdlib.asString(system.objectEquals(b, system.emptyArrayList())));
 }
 return [main, _tests];}`;
 
@@ -200,7 +206,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayList");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayListfalsefalsetrue");
   });
 
   test("Pass_2DArray", async () => {

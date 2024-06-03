@@ -129,11 +129,13 @@ export class StdLib {
   setItem<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
+    (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
     return newDict;
   }
 
   removeItem<T>(dict: { [key: string]: T }, key: string) {
     const newDict = { ...dict };
+    (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
     delete newDict[key];
     return newDict;
   }
