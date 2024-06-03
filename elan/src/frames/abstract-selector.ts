@@ -175,6 +175,12 @@ export abstract class AbstractSelector extends AbstractFrame {
           break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
         }
       }
+      case "O": {
+        if (e.modKey.control) {
+          this.expandCollapseAll();
+        }
+        break;
+      }
       default: {
         if (!key || key.length === 1) {
           key = key?.toLowerCase();
