@@ -18,6 +18,7 @@ import { CompileError } from "../compile-error";
 import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Overtyper } from "../overtyper";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -417,7 +418,7 @@ export abstract class AbstractField implements Selectable, Field {
           this.htmlId,
           scope,
         );
-      } else {
+      } else if (this.rootNode) {
         this.astNode = transforms.transform(
           this.rootNode,
           this.htmlId,
@@ -425,7 +426,7 @@ export abstract class AbstractField implements Selectable, Field {
         );
       }
     }
-    return this.astNode;
+    return this.astNode ?? new EmptyAsn(this.htmlId);
   }
 
   compile(transforms: Transforms): string {
