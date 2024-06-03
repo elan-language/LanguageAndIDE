@@ -1,30 +1,29 @@
 import { ParseNode } from "./parse-node";
 import { KVPnode } from "./kvp-node";
-import { AbstractParseNode } from "./abstract-parse-node";
-import { ImmutableListNode } from "./immutable-list-node";
-import { ArrayListNode } from "./array-list-node";
+import { AbstractSequence } from "./abstract-sequence";
+import { CSV } from "./csv";
+import { OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET } from "../symbols";
+import { SymbolNode } from "./symbol-node";
 
-export class DictionaryNode extends AbstractParseNode {
-  kvps: ImmutableListNode | undefined;
-  private keyConstructor: () => ParseNode;
-  private valueConstructor: () => ParseNode;
+export class DictionaryNode extends AbstractSequence {
+  csv: CSV | undefined;
+  elementConstructor: () => ParseNode;
 
   constructor(
     keyConstructor: () => ParseNode,
     valueConstructor: () => ParseNode,
   ) {
     super();
-    this.keyConstructor = keyConstructor;
-    this.valueConstructor = valueConstructor;
+    this.elementConstructor = () => new KVPnode(keyConstructor, valueConstructor);
   }
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const kvpConstructor = () =>
-        new KVPnode(this.keyConstructor, this.valueConstructor);
-      this.kvps = new ArrayListNode(kvpConstructor);
-      this.kvps.parseText(text);
-      this.updateFrom(this.kvps);
+      this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
+      this.csv = new CSV(this.elementConstructor, 1);
+      this.addElement(this.csv);
+      this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
+      super.parseText(text);
     }
   }
 }
