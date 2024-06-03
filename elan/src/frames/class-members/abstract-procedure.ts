@@ -46,7 +46,7 @@ export class AbstractProcedure
 
   renderAsHtml(): string {
     return `<procedure class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}</procedure>
+<top><keyword>abstract procedure </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})</top>${this.compileMsgAsHtml()}</procedure>
 `;
   }
 
