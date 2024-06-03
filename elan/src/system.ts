@@ -29,7 +29,7 @@ export class System {
   // constant immutables
   emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
-  emptyImmutableDictionarySingleton = this.immutableDictionary([]);
+  emptyImmutableDictionarySingleton = this.immutableDictionary({});
 
 
   emptyIter() {
