@@ -126,6 +126,7 @@ function updateDisplayValues() {
     file.readRunStatusForDashboard(),
   );
   // Button control
+  const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
@@ -137,31 +138,33 @@ function updateDisplayValues() {
   } else if (!isCompiling) {
     disable(run, "Program is not compiling");
   } else {
-    enable(run);
+    enable(run, "Run the program");
   }
   const stop = document.getElementById("stop") as HTMLButtonElement;
   const pause = document.getElementById("pause") as HTMLButtonElement;
-  if (isRunning) {
+/*   if (isRunning) {
     enable(stop);
     enable(pause);
   } else {
     const msg = "Program is not running";
     disable(stop, msg);
     disable(pause, msg);
-  }  
+  }   */
   const load = document.getElementById("load") as HTMLButtonElement;
   const save = document.getElementById("save") as HTMLButtonElement;
   const newButton = document.getElementById("new") as HTMLButtonElement;
-  enable(load);
-  enable(save);
-  enable(newButton);
+  enable(load, "Load code from a file");
+  enable(save, "Save code as file to the Download directory");
+  enable(newButton, "Clear the current code and start anew");
   if (isRunning) {
     const msg = "Program is running";
     disable(load, msg);
     disable(save, msg );
     disable(newButton, msg);
+  } else if (isEmpty) {
+    disable(save, "Some code must be added in order to save");
   } else if (!isParsing) {
-    disable(save, "Code must be parsing to be saved");
+    disable(save, "Code must be parsing in order to save");
   } 
 }
 
@@ -169,8 +172,9 @@ function disable(button:HTMLButtonElement, msg = "") {
   button.setAttribute("disabled", "");
   button.setAttribute("title", msg);
 }
-function enable(button:HTMLButtonElement) {
+function enable(button:HTMLButtonElement, msg = "") {
   button.removeAttribute("disabled");
+  button.setAttribute("title", msg);
 }
 
 /**
