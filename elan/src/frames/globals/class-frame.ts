@@ -207,7 +207,8 @@ export class ClassFrame
   }
 
   minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 2; //Constructor +
+    const children = this.getChildren().length;
+    return this.isAbstract()? children > 1 : children > 2;  // Concrete class must include constructor
   }
 
   isAbstract(): boolean {
