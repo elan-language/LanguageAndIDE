@@ -279,7 +279,7 @@ export function transform(
 
   if (node instanceof ParamDefNode) {
     const id = node.name!.matchedText;
-    const type = transform(node.type, fieldId, scope)!;
+    const type = transform(node.type, fieldId, scope) as AstIdNode;
 
     return new ParamDefAsn(id, type, fieldId, scope);
   }

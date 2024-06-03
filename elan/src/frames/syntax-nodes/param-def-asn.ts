@@ -4,14 +4,14 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { FunctionFrame } from "../globals/function-frame";
-import { mustBeImmutableType } from "../compile-rules";
+import { mustBeImmutableType, mustBeKnownSymbolType } from "../compile-rules";
 import { transforms } from "./ast-helpers";
 import { ClassType } from "../symbols/class-type";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
-    private readonly type: AstNode,
+    private readonly type: AstIdNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -24,8 +24,8 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
+    let st = this.symbolType();
     if (this.scope instanceof FunctionFrame) {
-      let st = this.symbolType();
       if (st instanceof ClassType) {
         const tt = transforms();
         st = this.scope
@@ -34,6 +34,9 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
       }
       mustBeImmutableType(st, this.compileErrors, this.fieldId);
     }
+
+    mustBeKnownSymbolType(st, this.type.id, this.compileErrors, this.fieldId);
+
     return `${this.id}`;
   }
 
