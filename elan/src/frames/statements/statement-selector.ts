@@ -8,7 +8,6 @@ import {
   callKeyword,
   caseKeyword,
   catchKeyword,
-  defaultKeyword,
   eachKeyword,
   elseKeyword,
   forKeyword,
@@ -26,6 +25,7 @@ import {
   commentMarker,
   inputKeyword,
   letKeyword,
+  emptyKeyword,
 } from "../keywords";
 
 export class StatementSelector extends AbstractSelector {
@@ -43,7 +43,7 @@ export class StatementSelector extends AbstractSelector {
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
       [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
       [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
-      [defaultKeyword, (parent: Parent) => this.factory.newDefault(parent)],
+      [emptyKeyword, (parent: Parent) => this.factory.newEmpty(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
@@ -83,7 +83,7 @@ export class StatementSelector extends AbstractSelector {
     } else if (
       keyword === returnKeyword ||
       keyword === catchKeyword ||
-      keyword === defaultKeyword
+      keyword === emptyKeyword
     ) {
       result = !userEntry;
     } else if (keyword === elseKeyword) {

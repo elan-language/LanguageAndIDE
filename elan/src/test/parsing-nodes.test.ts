@@ -351,16 +351,16 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(
       new ExprNode(),
-      "default String",
+      "empty String",
       ParseStatus.valid,
-      "default String",
+      "empty String",
       "",
       "",
-      "<keyword>default</keyword> <type>String</type>",
+      "<keyword>empty</keyword> <type>String</type>",
     );
     testNodeParse(
       new ExprNode(),
-      "default Lit<of Int>",
+      "empty Lit<of Int>",
       ParseStatus.valid,
       "",
       "",

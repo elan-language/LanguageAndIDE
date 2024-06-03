@@ -4,17 +4,17 @@ import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
-import { defaultKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { emptyKeyword } from "../keywords";
 
-export class DefaultStatement extends FrameWithStatements implements Statement {
+export class EmptyStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
     this.movable = false;
   }
   initialKeywords(): string {
-    return defaultKeyword;
+    return emptyKeyword;
   }
   delete(): void {} //Does nothing as default cannot be deleted
 

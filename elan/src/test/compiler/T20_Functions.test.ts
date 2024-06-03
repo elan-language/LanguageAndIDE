@@ -58,7 +58,7 @@ main
 end main
 
 function foo(a as Int, b as Int) return Int
-    return default Int
+    return empty Int
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -93,7 +93,7 @@ main
 end main
 
 function foo(a as Int, b as Int) return Foo
-  return default Foo
+  return empty Foo
 end function
 
 class Foo
@@ -141,7 +141,7 @@ main
 end main
 
 function foo(a as Int, b as Int) return ArrayList<of Int>
-    return default ArrayList<of Int>
+    return empty ArrayList<of Int>
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

@@ -26,7 +26,6 @@ import { ParamDefAsn } from "./param-def-asn";
 import { TypeAsn } from "./type-asn";
 import { SymbolNode } from "../parse-nodes/symbol-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
-import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
 import { EmptyTypeAsn } from "./empty-type-asn";
 import { WithClause } from "../parse-nodes/with-clause";
 import { WithAsn } from "./with-asn";
@@ -322,11 +321,6 @@ export function transform(
     const type = node.matchedText;
 
     return new TypeAsn(type, [], fieldId, scope);
-  }
-
-  if (node instanceof DefaultOfTypeNode) {
-    const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new EmptyTypeAsn(type, fieldId, scope);
   }
 
   if (node instanceof EmptyOfTypeNode) {

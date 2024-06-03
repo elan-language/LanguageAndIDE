@@ -328,8 +328,8 @@ main
   print foo.i
   print foo1.i
   print foo.i is foo1.i
-  print foo.i is default Iter<of Int>
-  print foo1.i is default Iter<of Int>
+  print foo.i is empty Iter<of Int>
+  print foo1.i is empty Iter<of Int>
 end main
 
 class Foo

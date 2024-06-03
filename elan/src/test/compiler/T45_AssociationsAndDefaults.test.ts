@@ -213,7 +213,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to default Game
+  var g set to empty Game
   print g.i
 end main
 
@@ -369,12 +369,12 @@ return [main, _tests];}`;
 
 main
   var g set to new Game()
-  print g.p1 is default Player
-  print g.p2 is default Player
-  print g.previousGame is default Game
-  print g.previousScores is default ImmutableList<of Int>
-  print g.score is default Int
-  print g.best is default Int
+  print g.p1 is empty Player
+  print g.p2 is empty Player
+  print g.previousGame is empty Game
+  print g.previousScores is empty ImmutableList<of Int>
+  print g.score is empty Int
+  print g.best is empty Int
 end main
 
 class Game
@@ -499,7 +499,7 @@ return [main, _tests];}`;
 main
   var g set to new Game()
   print g.score
-  call g.setScore(default Int)
+  call g.setScore(empty Int)
   print g.score
 end main
 
@@ -633,10 +633,10 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is default ImmutableList<of Int>
-  print f.b is default String
-  print f.c is default Dictionary<of String,Int>
-  print f.d is default ArrayList<of Int>
+  print f.a is empty ImmutableList<of Int>
+  print f.b is empty String
+  print f.c is empty Dictionary<of String,Int>
+  print f.d is empty ArrayList<of Int>
 end main
 
 class Foo
@@ -804,7 +804,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var p set to default Player
+  var p set to empty Player
   var p1 set to new Player("other player")
   var p2 set to p with {name set to "foo", otherPlayer set to p1}
   print type(p2)

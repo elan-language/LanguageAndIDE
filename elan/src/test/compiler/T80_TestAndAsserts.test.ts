@@ -255,7 +255,7 @@ end test
 
 test default_
   var a set to 0
-  var b set to default Int
+  var b set to empty Int
   assert a is b
 end test
 
@@ -281,8 +281,8 @@ test class1
 end test
 
 test class2
-  var a set to default Foo
-  var b set to default Foo
+  var a set to empty Foo
+  var b set to empty Foo
   assert a is b
 end test`;
 

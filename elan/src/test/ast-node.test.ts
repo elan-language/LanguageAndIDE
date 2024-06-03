@@ -90,14 +90,14 @@ suite("ASTNodes", () => {
     testAST(
       new ExprNode(),
       stubField,
-      "default String",
+      "empty String",
       "Default (Type String)",
       stringType,
     );
     testAST(
       new ExprNode(),
       stubField,
-      "default ImmutableList<of Int>",
+      "empty ImmutableList<of Int>",
       "Default (Type ImmutableList<Type Int>)",
       new ImmutableListType(intType),
     );

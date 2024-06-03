@@ -88,12 +88,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
   });
 
-  test("Pass_EmptyDoesNotEqualDefault", async () => {
+  test("Pass_EmptyDoesEqualDefault", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to new Foo()
-  print x is default Foo
+  print x is empty Foo
 end main
 
 class Foo

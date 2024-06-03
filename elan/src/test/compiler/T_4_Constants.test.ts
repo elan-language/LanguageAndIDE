@@ -146,7 +146,7 @@ return [main, _tests];}`;
 constant a set to ""
 main
   print a
-  print a is default String
+  print a is empty String
 end main
 `;
 
