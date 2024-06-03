@@ -8,13 +8,14 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { KvpAsn } from "./kvp-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 
 export class LiteralImmutableDictionaryAsn
   extends AbstractAstNode
   implements AstNode
 {
   constructor(
-    private readonly list: LiteralImmutableListAsn,
+    private readonly list: AstCollectionNode,
     public readonly fieldId: string,
     scope: Scope,
   ) {
@@ -69,6 +70,6 @@ export class LiteralImmutableDictionaryAsn
   }
 
   toString() {
-    return `${this.list}`;
+    return `{${this.list}}`;
   }
 }

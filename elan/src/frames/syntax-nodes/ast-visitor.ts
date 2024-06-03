@@ -393,16 +393,16 @@ export function transform(
   }
 
   if (node instanceof DictionaryNode) {
-    const items = transform(node.kvps, fieldId, scope) as LiteralArrayListAsn;
+    const items = transformMany(node.csv!, fieldId, scope);
     return new LiteralDictionaryAsn(items, fieldId, scope);
   }
 
   if (node instanceof ImmutableDictionaryNode) {
-    const items = transform(
-      node.kvps,
+    const items = transformMany(
+      node.csv!,
       fieldId,
       scope,
-    ) as LiteralImmutableListAsn;
+    );
     return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
   }
 
