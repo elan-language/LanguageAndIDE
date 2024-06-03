@@ -65,7 +65,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -89,7 +89,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
-  test("Pass_DefaultClassAsString", async () => {
+  test("Pass_emptyClassAsString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -115,7 +115,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Foo"]]);};
   constructor() {
 
   }
@@ -146,7 +146,7 @@ return [main, _tests];}`;
   });
 
   // this behaviour has changed from c# compiler
-  test("Pass_DefaultClassReplacesAsString", async () => {
+  test("Pass_emptyClassReplacesAsString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -180,7 +180,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Foo"]]);};
   constructor() {
 
   }
@@ -247,7 +247,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -309,7 +309,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -371,7 +371,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";

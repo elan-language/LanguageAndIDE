@@ -111,7 +111,7 @@ function foo(a, b) {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, []);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   constructor() {
 
   }
@@ -248,7 +248,7 @@ function foo(bar) {
 }
 
 class Bar {
-  static emptyInstance() { return system.defaultClass(Bar, []);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
   constructor() {
 
   }

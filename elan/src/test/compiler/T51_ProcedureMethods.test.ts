@@ -47,7 +47,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -111,7 +111,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -176,7 +176,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -271,7 +271,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -296,7 +296,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 1;
   }

@@ -143,7 +143,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Func<of Int => Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Func<of Int => Int>"]]);};
   constructor() {
 
   }

@@ -61,7 +61,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -93,7 +93,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -166,7 +166,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -237,7 +237,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["i", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", "Float"]]);};
   constructor() {
     this.i = 100;
   }
@@ -308,7 +308,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
   constructor() {
 
   }
@@ -336,7 +336,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -423,7 +423,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.score = 1;
   }
@@ -465,7 +465,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -550,7 +550,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.score = 10;
   }
@@ -596,7 +596,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -668,7 +668,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -740,7 +740,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
   constructor() {
 
   }
@@ -768,7 +768,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
   get name() {
     return "";
   }

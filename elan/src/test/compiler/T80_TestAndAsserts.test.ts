@@ -323,7 +323,7 @@ _tests.push(["test54", (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.defaultClass(Foo, [["bar", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["bar", "Int"]]);};
   constructor(b) {
     this.bar = b;
   }

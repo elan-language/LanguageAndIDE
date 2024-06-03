@@ -1,5 +1,5 @@
 // class Foo {
-//     static emptyInstance() : any { return system.defaultClass(Foo, [["bar", Bar.emptyInstance()]]);};
+//     static emptyInstance() : any { return system.emptyClass(Foo, [["bar", Bar.emptyInstance()]]);};
 //     constructor() {
 
 //     }
@@ -13,7 +13,7 @@
 //   }
 
 //   class Bar {
-//     static emptyInstance() : any { return system.defaultClass(Bar, [["p1", 0], ["p2", ""], ["foo", Foo.emptyInstance()]]);};
+//     static emptyInstance() : any { return system.emptyClass(Bar, [["p1", 0], ["p2", ""], ["foo", Foo.emptyInstance()]]);};
 //     constructor() {
 
 //     }

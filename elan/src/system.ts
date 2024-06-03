@@ -113,7 +113,7 @@ export class System {
     return toInit;
   }
 
-  defaultClass(type: any, properties: [string, any][]) {
+  emptyClass(type: any, properties: [string, any][]) {
     const t = Object.create(type.prototype);
 
     for (const p of properties) {
