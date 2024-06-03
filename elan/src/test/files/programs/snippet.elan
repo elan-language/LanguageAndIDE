@@ -1,4 +1,4 @@
-# 99ab36a6a221ee940f80d1d74aa2a9c176ec3da6d0d15127821f7e39b45ce848 Elan v0.1 valid
+# e0a9d4238513f97782ca96e40ae04bb68f41d7c47b18424714538474bb0b91c5 Elan v0.1 valid
 
 main
   let r be new Rule("a", "b", "c", "d", Dir.left)
