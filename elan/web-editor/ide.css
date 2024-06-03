@@ -119,16 +119,27 @@ button:disabled {
   opacity: 0.5;
 } 
 
-button#run-button, button#pause, button#stop  {
-  height: 40px;
+button.icon, button.icon img {
   padding: 0px;
-}
-button img {
-  height: 40px;
-  padding:0px;
+  border: 2px;
+  border-style: solid;
+  border-color: var(--ideDefaultBackground);
 }
 
-button, button:hover, button:active, button:focus  {
+button.icon img {
+  height: 40px;
+}
+
+button.icon {
+  height: 47px;
+}
+
+button.icon:hover, button.icon:active, button.icon:focus {
+  border-color: white;
+}
+
+
+button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     background-color: var(--idePanelBackground);
     border: none;
     outline:none;
@@ -140,7 +151,7 @@ button, button:hover, button:active, button:focus  {
     margin-top: 0px;
 }
 
-button:hover, button:active {
+button.plain:hover, button.plain:active {
     background-color: lightblue;
 }
 
