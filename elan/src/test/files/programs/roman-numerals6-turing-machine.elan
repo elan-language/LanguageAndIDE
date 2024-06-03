@@ -1,8 +1,7 @@
-# 8f68290426033f7726c9649710c75cf9e0e5f8984ca2cd1f57394e86584b14f2 Elan v0.1 valid
+# 420df89d1b1e552662d2ba40e0f439b59c0f783d8ace47315519d725f1859fef Elan v0.1 valid
 
 main
-  # Temp cause compile error to allow load pending #494 fix 
-  set a to 3
+  set a to 0
 end main
 
 class TuringMachine
@@ -34,7 +33,7 @@ class TuringMachine
   end procedure
 
   procedure add(rule as Rule)
-    # set rules to rules.add(rule)
+    set rules to rules + rule
   end procedure
 
   procedure reset()
