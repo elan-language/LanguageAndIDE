@@ -318,5 +318,72 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "empty Iter");
   });
 
+  test("Pass_EmptyIter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to new Foo()
+  var foo1 set to new Foo()
+  call foo.update()
+  print foo.i
+  print foo1.i
+  print foo.i is foo1.i
+  print foo.i is default Iter<of Int>
+  print foo1.i is default Iter<of Int>
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  property i as Iter<of Int>
+
+  procedure update()
+    set i to {1}
+  end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo = system.initialise(new Foo());
+  var foo1 = system.initialise(new Foo());
+  foo.update();
+  system.print(_stdlib.asString(foo.i));
+  system.print(_stdlib.asString(foo1.i));
+  system.print(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
+  system.print(_stdlib.asString(system.objectEquals(foo.i, system.emptyIter())));
+  system.print(_stdlib.asString(system.objectEquals(foo1.i, system.emptyIter())));
+}
+
+class Foo {
+  static defaultInstance() { return system.defaultClass(Foo, [["i", "Iter<of Int>"]]);};
+  constructor() {
+
+  }
+
+  i = system.emptyIter();
+
+  update() {
+    this.i = system.list([1]);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1}empty Iterfalsefalsetrue");
+  });
+
   // TODO fails
 });
