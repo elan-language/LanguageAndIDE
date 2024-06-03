@@ -61,7 +61,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -70,7 +70,7 @@ class Game {
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.defaultInstance();
+    return this._p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -78,7 +78,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.defaultInstance();
+    return this._p2 ??= Player.emptyInstance();
   }
   set p2(p2) {
     this._p2 = p2;
@@ -93,7 +93,7 @@ class Game {
 }
 
 class Player {
-  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -166,7 +166,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -232,12 +232,12 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = Game.defaultInstance();
+  var g = Game.emptyInstance();
   system.print(_stdlib.asString(g.i));
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["i", "Float"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["i", "Float"]]);};
   constructor() {
     this.i = 100;
   }
@@ -308,14 +308,14 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
   constructor() {
 
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.defaultInstance();
+    return this._p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -323,7 +323,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.defaultInstance();
+    return this._previousGame ??= Game.emptyInstance();
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -336,7 +336,7 @@ class Game {
 }
 
 class Player {
-  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -414,16 +414,16 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(system.objectEquals(g.p1, Player.defaultInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.p2, Player.defaultInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.previousGame, Game.defaultInstance())));
+  system.print(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
+  system.print(_stdlib.asString(system.objectEquals(g.p2, Player.emptyInstance())));
+  system.print(_stdlib.asString(system.objectEquals(g.previousGame, Game.emptyInstance())));
   system.print(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
   system.print(_stdlib.asString(g.score === 0));
   system.print(_stdlib.asString(g.best === 0));
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.score = 1;
   }
@@ -434,7 +434,7 @@ class Game {
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.defaultInstance();
+    return this._p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -442,7 +442,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.defaultInstance();
+    return this._p2 ??= Player.emptyInstance();
   }
   set p2(p2) {
     this._p2 = p2;
@@ -450,7 +450,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.defaultInstance();
+    return this._previousGame ??= Game.emptyInstance();
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -465,7 +465,7 @@ class Game {
 }
 
 class Player {
-  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -550,7 +550,7 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
   constructor() {
     this.score = 10;
   }
@@ -561,7 +561,7 @@ class Game {
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.defaultInstance();
+    return this._p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -569,7 +569,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.defaultInstance();
+    return this._p2 ??= Player.emptyInstance();
   }
   set p2(p2) {
     this._p2 = p2;
@@ -581,7 +581,7 @@ class Game {
 
   _previousGame;
   get previousGame() {
-    return this._previousGame ??= Game.defaultInstance();
+    return this._previousGame ??= Game.emptyInstance();
   }
   set previousGame(previousGame) {
     this._previousGame = previousGame;
@@ -596,7 +596,7 @@ class Game {
 }
 
 class Player {
-  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
   constructor(name) {
     this.name = name;
   }
@@ -668,7 +668,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
   constructor() {
 
   }
@@ -740,14 +740,14 @@ async function main() {
 }
 
 class Game {
-  static defaultInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
+  static emptyInstance() { return system.defaultClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
   constructor() {
 
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Player.defaultInstance();
+    return this._p1 ??= Player.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -755,7 +755,7 @@ class Game {
 
   _p2;
   get p2() {
-    return this._p2 ??= Player.defaultInstance();
+    return this._p2 ??= Player.emptyInstance();
   }
   set p2(p2) {
     this._p2 = p2;
@@ -768,7 +768,7 @@ class Game {
 }
 
 class Player {
-  static defaultInstance() { return system.defaultClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Player, [["name", "String"]]);};
   get name() {
     return "";
   }

@@ -101,7 +101,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, []);};
+  static emptyInstance() { return system.defaultClass(Foo, []);};
   constructor() {
 
   }
@@ -178,7 +178,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, []);};
+  static emptyInstance() { return system.defaultClass(Foo, []);};
   constructor() {
 
   }
@@ -585,7 +585,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["it", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["it", "ImmutableList<of Int>"]]);};
   constructor() {
 
   }

@@ -338,7 +338,7 @@ end class\r\n`;
       : "";
 
     return `class ${name}${this.inheritanceAsObjectCode()} {\r
-  static defaultInstance() { return system.defaultClass(${name}, ${this.propertiesToInit()});};\r
+  static emptyInstance() { return system.defaultClass(${name}, ${this.propertiesToInit()});};\r
 ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
   }

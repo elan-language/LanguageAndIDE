@@ -391,14 +391,14 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Bar"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Bar"]]);};
   constructor() {
     this.p1 = system.initialise(new Bar());
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Bar.defaultInstance();
+    return this._p1 ??= Bar.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -415,7 +415,7 @@ class Foo {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
+  static emptyInstance() { return system.defaultClass(Bar, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }

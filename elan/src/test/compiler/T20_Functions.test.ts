@@ -107,11 +107,11 @@ async function main() {
 }
 
 function foo(a, b) {
-  return Foo.defaultInstance();
+  return Foo.emptyInstance();
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, []);};
+  static emptyInstance() { return system.defaultClass(Foo, []);};
   constructor() {
 
   }
@@ -248,7 +248,7 @@ function foo(bar) {
 }
 
 class Bar {
-  static defaultInstance() { return system.defaultClass(Bar, []);};
+  static emptyInstance() { return system.defaultClass(Bar, []);};
   constructor() {
 
   }

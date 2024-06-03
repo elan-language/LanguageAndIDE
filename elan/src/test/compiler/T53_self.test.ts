@@ -43,7 +43,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor(p1) {
     this.p1 = p1;
   }
@@ -111,7 +111,7 @@ function doubled(f) {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 3;
   }

@@ -290,7 +290,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["it", "Iter<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["it", "Iter<of Int>"]]);};
   constructor() {
 
   }
@@ -357,7 +357,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["i", "Iter<of Int>"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["i", "Iter<of Int>"]]);};
   constructor() {
 
   }

@@ -323,7 +323,7 @@ _tests.push(["test54", (_outcomes) => {
 }]);
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["bar", "Int"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["bar", "Int"]]);};
   constructor(b) {
     this.bar = b;
   }
@@ -339,8 +339,8 @@ _tests.push(["test79", (_outcomes) => {
 }]);
 
 _tests.push(["test91", (_outcomes) => {
-  var a = Foo.defaultInstance();
-  var b = Foo.defaultInstance();
+  var a = Foo.emptyInstance();
+  var b = Foo.emptyInstance();
   _outcomes.push(system.assert(a, b, "assert100", _stdlib));
 }]);
 return [main, _tests];}`;

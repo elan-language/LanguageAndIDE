@@ -68,7 +68,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iter":
         return "system.emptyIter()";
     }
-    return `${this.id}.defaultInstance()`;
+    return `${this.id}.emptyInstance()`;
   }
 
   symbolType() {

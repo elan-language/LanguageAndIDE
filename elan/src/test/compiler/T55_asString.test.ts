@@ -65,7 +65,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -115,14 +115,14 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
   constructor() {
 
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Foo.defaultInstance();
+    return this._p1 ??= Foo.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -180,14 +180,14 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Foo"]]);};
   constructor() {
 
   }
 
   _p1;
   get p1() {
-    return this._p1 ??= Foo.defaultInstance();
+    return this._p1 ??= Foo.emptyInstance();
   }
   set p1(p1) {
     this._p1 = p1;
@@ -247,7 +247,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -309,7 +309,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -371,7 +371,7 @@ async function main() {
 }
 
 class Foo {
-  static defaultInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.defaultClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";

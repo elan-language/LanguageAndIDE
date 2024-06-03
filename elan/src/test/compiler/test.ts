@@ -1,10 +1,10 @@
 // class Foo {
-//     static defaultInstance() : any { return system.defaultClass(Foo, [["bar", Bar.defaultInstance()]]);};
+//     static emptyInstance() : any { return system.defaultClass(Foo, [["bar", Bar.emptyInstance()]]);};
 //     constructor() {
 
 //     }
 
-//     bar = Bar.defaultInstance();
+//     bar = Bar.emptyInstance();
 
 //     asString() {
 //       return "";
@@ -13,7 +13,7 @@
 //   }
 
 //   class Bar {
-//     static defaultInstance() : any { return system.defaultClass(Bar, [["p1", 0], ["p2", ""], ["foo", Foo.defaultInstance()]]);};
+//     static emptyInstance() : any { return system.defaultClass(Bar, [["p1", 0], ["p2", ""], ["foo", Foo.emptyInstance()]]);};
 //     constructor() {
 
 //     }
@@ -22,7 +22,7 @@
 
 //     p2 = "";
 
-//     foo = Foo.defaultInstance();
+//     foo = Foo.emptyInstance();
 
 //     asString() {
 //       return "";
