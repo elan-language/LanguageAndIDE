@@ -58,15 +58,15 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Boolean":
         return "false";
       case "ImmutableList":
-        return "system.defaultList()";
+        return "system.emptyImmutableList()";
       case "ArrayList":
         return "system.emptyArrayList()";
       case "Dictionary":
-        return "system.defaultDictionary()";
+        return "system.emptyDictionary()";
       case "ImmutableDictionary":
-        return "system.defaultImmutableDictionary()";
+        return "system.emptyImmutableDictionary()";
       case "Iter":
-        return "system.defaultIter()";
+        return "system.emptyIter()";
     }
     return `${this.id}.defaultInstance()`;
   }

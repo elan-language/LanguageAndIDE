@@ -27,7 +27,7 @@ import { TypeAsn } from "./type-asn";
 import { SymbolNode } from "../parse-nodes/symbol-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { DefaultOfTypeNode } from "../parse-nodes/default-of-type-node";
-import { DefaultTypeAsn } from "./default-type-asn";
+import { EmptyTypeAsn } from "./empty-type-asn";
 import { WithClause } from "../parse-nodes/with-clause";
 import { WithAsn } from "./with-asn";
 import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
@@ -108,6 +108,7 @@ import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { EmptyAsn } from "./empty-asn";
+import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -325,7 +326,12 @@ export function transform(
 
   if (node instanceof DefaultOfTypeNode) {
     const type = transform(node.type, fieldId, scope) as TypeAsn;
-    return new DefaultTypeAsn(type, fieldId, scope);
+    return new EmptyTypeAsn(type, fieldId, scope);
+  }
+
+  if (node instanceof EmptyOfTypeNode) {
+    const type = transform(node.type, fieldId, scope) as TypeAsn;
+    return new EmptyTypeAsn(type, fieldId, scope);
   }
 
   if (node instanceof OptionalNode) {

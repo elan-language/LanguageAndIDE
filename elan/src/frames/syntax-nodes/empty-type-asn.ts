@@ -4,7 +4,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { TypeAsn } from "./type-asn";
 
-export class DefaultTypeAsn extends AbstractAstNode implements AstNode {
+export class EmptyTypeAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly type: TypeAsn,
     public readonly fieldId: string,

@@ -84,7 +84,7 @@ class Game {
     this._p2 = p2;
   }
 
-  previousScores = system.defaultList();
+  previousScores = system.emptyImmutableList();
 
   asString() {
     return "A game";
@@ -179,9 +179,9 @@ class Game {
 
   s = "";
 
-  li = system.defaultList();
+  li = system.emptyImmutableList();
 
-  dsi = system.defaultDictionary();
+  dsi = system.emptyDictionary();
 
   ai = system.emptyArrayList();
 
@@ -417,7 +417,7 @@ async function main() {
   system.print(_stdlib.asString(system.objectEquals(g.p1, Player.defaultInstance())));
   system.print(_stdlib.asString(system.objectEquals(g.p2, Player.defaultInstance())));
   system.print(_stdlib.asString(system.objectEquals(g.previousGame, Game.defaultInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.previousScores, system.defaultList())));
+  system.print(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
   system.print(_stdlib.asString(g.score === 0));
   system.print(_stdlib.asString(g.best === 0));
 }
@@ -456,7 +456,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.defaultList();
+  previousScores = system.emptyImmutableList();
 
   asString() {
     return "A game";
@@ -587,7 +587,7 @@ class Game {
     this._previousGame = previousGame;
   }
 
-  previousScores = system.defaultList();
+  previousScores = system.emptyImmutableList();
 
   asString() {
     return "A game";
@@ -661,9 +661,9 @@ async function main() {
   system.print(_stdlib.asString(f.b));
   system.print(_stdlib.asString(f.c));
   system.print(_stdlib.asString(f.d));
-  system.print(_stdlib.asString(system.objectEquals(f.a, system.defaultList())));
+  system.print(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
   system.print(_stdlib.asString(f.b === ""));
-  system.print(_stdlib.asString(system.objectEquals(f.c, system.defaultDictionary())));
+  system.print(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
   system.print(_stdlib.asString(system.objectEquals(f.d, system.emptyArrayList())));
 }
 
@@ -673,11 +673,11 @@ class Foo {
 
   }
 
-  a = system.defaultList();
+  a = system.emptyImmutableList();
 
   b = "";
 
-  c = system.defaultDictionary();
+  c = system.emptyDictionary();
 
   d = system.emptyArrayList();
 

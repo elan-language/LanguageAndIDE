@@ -295,7 +295,7 @@ class Foo {
 
   }
 
-  it = system.defaultIter();
+  it = system.emptyIter();
 
   asString() {
     return "A Foo";

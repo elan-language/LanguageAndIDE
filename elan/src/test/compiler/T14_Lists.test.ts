@@ -590,7 +590,7 @@ class Foo {
 
   }
 
-  it = system.defaultList();
+  it = system.emptyImmutableList();
 
   asString() {
     return "A Foo";

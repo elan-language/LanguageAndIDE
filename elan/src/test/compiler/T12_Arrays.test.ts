@@ -172,8 +172,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to default [Int]
-  var b set to default [Int]
+  var a set to empty [Int]
+  var b set to empty [Int]
   set a[0] to 3
   print a
   print b

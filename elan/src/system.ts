@@ -32,7 +32,7 @@ export class System {
   emptyImmutableDictionarySingleton = this.immutableDictionary([]);
 
 
-  defaultIter() {
+  emptyIter() {
     return this.emptyIterableSingleton;
   }
 
@@ -40,16 +40,15 @@ export class System {
     return this.literalArray([]);
   }
 
-  defaultDictionary() {
+  emptyDictionary() {
     return this.dictionary({});
   }
 
-  defaultImmutableDictionary() {
+  emptyImmutableDictionary() {
     return this.emptyImmutableDictionarySingleton;
   }
 
-  
-  defaultList() {
+  emptyImmutableList() {
     return this.emptyImmutableListSingleton;
   }
 
