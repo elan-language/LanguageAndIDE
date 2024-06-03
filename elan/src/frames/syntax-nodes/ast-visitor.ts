@@ -107,6 +107,7 @@ import { TypeListNode } from "../parse-nodes/type-list-node";
 import { TypeImmutableListNode } from "../parse-nodes/type-immutable-list-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
+import { EmptyAsn } from "./empty-asn";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
