@@ -1,4 +1,4 @@
-# d6ed76ff0cd04f758f32bd47a53ba85a4a44036886ac82cb824a77c591ad8ae3 Elan v0.1 valid
+# 6d775b5cb0fdaace4415e8ee1d96fcd5490c37fffcc08992f2b94f7de63a14e8 Elan v0.1 valid
 
 main
   var newGame set to true
@@ -109,7 +109,7 @@ class Snake
 
 end class
 
-constant directionByKey set to {"w": Direction.up, "s": Direction.down, "a": Direction.left, "d": Direction.right}
+constant directionByKey set to {"w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right}
 
 # Standard library types and functions
 enum Direction

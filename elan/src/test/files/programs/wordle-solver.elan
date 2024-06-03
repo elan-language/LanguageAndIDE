@@ -1,4 +1,4 @@
-# c7e4ee9129e2c33dcdbefd8fd6e3754dd6caffb4ced229ceac9d2c26a2df4378 Elan v0.1 valid
+# 43c35c657ba4d5ad04a66c673260e5dd820a977b85d512151c00d8ed226487ed Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -244,7 +244,7 @@ end class
 
 constant letterPositions set to {0, 1, 2, 3, 4}
 
-constant emptyDictionaryOfAllOutcomes set to {"_____": 0, "____+": 0,  "****_":0}
+constant emptyDictionaryOfAllOutcomes set to {"_____":0, "____+":0, "****_":0}
 
 # Lists of words below are truncated. Full lists are 2309 words & 15,000+ words respectively
 constant allPossibleAnswers set to {"ABACK", "ABASE", "ABATE", "ABBEY", "ABBOT", "ABHOR", "ABIDE", "ABLED", "ABODE", "ABORT", "ABOUT", "ABOVE"}
