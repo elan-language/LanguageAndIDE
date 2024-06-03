@@ -178,8 +178,8 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "O": {
         if (e.modKey.control) {
           this.expandCollapseAll();
+          break;
         }
-        break;
       }
       default: {
         if (!key || key.length === 1) {
