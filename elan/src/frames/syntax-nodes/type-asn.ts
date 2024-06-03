@@ -1,6 +1,6 @@
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
-import { FloatType } from "../symbols/number-type";
+import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
@@ -60,7 +60,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "ImmutableList":
         return "system.defaultList()";
       case "ArrayList":
-        return "system.defaultArray()";
+        return "system.emptyArrayList()";
       case "Dictionary":
         return "system.defaultDictionary()";
       case "ImmutableDictionary":

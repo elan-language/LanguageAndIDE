@@ -1,7 +1,7 @@
 import { BooleanType } from "../symbols/boolean-type";
 import { IntType } from "../symbols/int-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
-import { FloatType } from "../symbols/number-type";
+import { FloatType } from "../symbols/float-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import {
@@ -17,6 +17,7 @@ import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { StringType } from "../symbols/string-type";
 import { ClassType } from "../symbols/class-type";
+import { isValueType } from "../symbols/symbol-helpers";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -177,8 +178,12 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (
       this.op === OperationSymbol.Equals &&
-      (lst instanceof ClassType || rst instanceof ClassType)
+      (isValueType(lst) || isValueType(rst))
     ) {
+      return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
+    }
+
+    if (this.op === OperationSymbol.Equals) {
       return `system.objectEquals(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }
 

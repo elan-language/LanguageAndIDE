@@ -26,26 +26,31 @@ export class System {
     return undefined;
   }
 
-  private default_array = this.literalArray([]);
-  private default_list = this.list([]);
-  private default_dictionary = this.dictionary({});
-  private default_immutableDictionary = this.immutableDictionary({});
-  private default_iter = this.iter([]);
+  // constant immutables
+  emptyImmutableListSingleton = this.list([]);
+  emptyIterableSingleton = this.iter([]);
+  emptyImmutableDictionarySingleton = this.immutableDictionary([]);
 
-  defaultList() {
-    return this.default_list;
-  }
 
   defaultIter() {
-    return this.default_iter;
+    return this.emptyIterableSingleton;
   }
 
-  defaultArray() {
-    return this.default_array;
+  emptyArrayList() {
+    return this.literalArray([]);
   }
 
   defaultDictionary() {
-    return this.default_dictionary;
+    return this.dictionary({});
+  }
+
+  defaultImmutableDictionary() {
+    return this.emptyImmutableDictionarySingleton;
+  }
+
+  
+  defaultList() {
+    return this.emptyImmutableListSingleton;
   }
 
   tuple(t: Array<any>) {

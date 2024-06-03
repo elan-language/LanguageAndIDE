@@ -14,7 +14,7 @@ import { ParseNode } from "../frames/parse-nodes/parse-node";
 import { SymbolType } from "../frames/interfaces/symbol-type";
 import { transform } from "../frames/syntax-nodes/ast-visitor";
 import { Field } from "../frames/interfaces/field";
-import { FloatType } from "../frames/symbols/number-type";
+import { FloatType } from "../frames/symbols/float-type";
 import { Parent } from "../frames/interfaces/parent";
 import { BooleanType } from "../frames/symbols/boolean-type";
 import { IntType } from "../frames/symbols/int-type";

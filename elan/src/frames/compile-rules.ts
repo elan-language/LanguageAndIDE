@@ -7,7 +7,7 @@ import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
 import { ImmutableListType } from "./symbols/immutable-list-type";
-import { FloatType } from "./symbols/number-type";
+import { FloatType } from "./symbols/float-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
 import { ElanSymbol } from "./interfaces/symbol";

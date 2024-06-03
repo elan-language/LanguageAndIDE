@@ -1,7 +1,7 @@
 import { ArrayListType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
-import { FloatType } from "./frames/symbols/number-type";
+import { FloatType } from "./frames/symbols/float-type";
 import { IntType } from "./frames/symbols/int-type";
 import { ImmutableListType } from "./frames/symbols/immutable-list-type";
 import { StringType } from "./frames/symbols/string-type";

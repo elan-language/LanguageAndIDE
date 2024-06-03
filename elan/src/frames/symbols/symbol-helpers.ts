@@ -1,5 +1,5 @@
 import { BooleanType } from "./boolean-type";
-import { FloatType } from "./number-type";
+import { FloatType } from "./float-type";
 import { ElanSymbol } from "../interfaces/symbol";
 import { IntType } from "./int-type";
 import { UnknownType } from "./unknown-type";
@@ -14,6 +14,8 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
 import { ClassType } from "./class-type";
+import { SymbolType } from "../interfaces/symbol-type";
+import { StringType } from "./string-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -123,4 +125,12 @@ export function wrapScopeInScope(wrapped: Scope) {
 
     getParent: () => wrapped,
   } as Scope;
+}
+
+export function isValueType(type : SymbolType){
+  return type instanceof IntType ||
+         type instanceof FloatType || 
+         type instanceof BooleanType || 
+         type instanceof StringType;
+  
 }

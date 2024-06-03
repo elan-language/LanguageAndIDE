@@ -168,6 +168,41 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
+  test("Pass_EmptyArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to default [Int]
+  var b set to default [Int]
+  set a[0] to 3
+  print a
+  print b
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.emptyArrayList();
+  var b = system.emptyArrayList();
+  a[0] = 3;
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayList");
+  });
+
   test("Pass_2DArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
