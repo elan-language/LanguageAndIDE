@@ -672,4 +672,30 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
   });
+
+  test("Fail_UnknownPropertyType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Bar
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+  });
 });

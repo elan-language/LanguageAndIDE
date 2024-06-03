@@ -132,6 +132,19 @@ export function mustBeKnownSymbol(
   }
 }
 
+export function mustBeKnownSymbolType(
+  symbolType: SymbolType,
+  originalName : string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof UnknownType) {
+    compileErrors.push(
+      new UndefinedSymbolCompileError(originalName, location),
+    );
+  }
+}
+
 export function mustBeImmutableType(
   symbolType: SymbolType,
   compileErrors: CompileError[],

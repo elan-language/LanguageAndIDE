@@ -36,9 +36,6 @@ export class TypeField extends AbstractField {
   }
 
   symbolType(transforms: Transforms) {
-    return (
-      this.getOrTransformAstNode(transforms)?.symbolType() ??
-      UnknownType.Instance
-    );
+    return  this.getOrTransformAstNode(transforms).symbolType();
   }
 }

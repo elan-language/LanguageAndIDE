@@ -11,6 +11,7 @@ import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "../symbols/class-type";
 import { EnumType } from "../symbols/enum-type";
+import { mustBeKnownSymbolType } from "../compile-rules";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
@@ -59,6 +60,9 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     const pName = this.name.compile(transforms);
     const mod = this.modifierAsObjectCode();
     const st = this.type.symbolType(transforms);
+
+    mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
+
     if (st instanceof ClassType || st instanceof EnumType) {
       return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
