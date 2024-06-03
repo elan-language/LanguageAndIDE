@@ -237,9 +237,9 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 
-  test("test snippet", async () => {
+  test("test for enum default value", async () => {
     const f = (await loadFileAsModel(
-      "programs/snippet.elan",
+      "test-for-enum-default.elan",
     )) as FileImpl;
     const runner = createTestRunner();
     await f.refreshAllStatuses(runner);
