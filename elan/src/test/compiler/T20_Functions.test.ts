@@ -774,4 +774,28 @@ end class
       "Foo must be immutable",
     ]);
   });
+
+  test("Fail_ParameterUnknownType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+function changeValue(a as Bar) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+  });
 });
