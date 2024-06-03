@@ -126,16 +126,16 @@ function updateDisplayValues() {
     file.readRunStatusForDashboard(),
   );
   // Button control
-  const isParsing = file.readParseStatus() == ParseStatus.valid;
-  const isCompiling = file.readCompileStatus() == CompileStatus.ok;
+  const isParsing = file.readParseStatus() === ParseStatus.valid;
+  const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = file.readRunStatus() === RunStatus.running;
   const run = document.getElementById("run-button") as HTMLButtonElement;
   if (isRunning) {
-    disable(run, "Program is already running")
+    disable(run, "Program is already running");
   } else if (!file.containsMain()) {
     disable(run, "Code must have a 'main' routine to be run");
   } else if (!isCompiling) {
-    disable(run, "Program is not compiling")
+    disable(run, "Program is not compiling");
   } else {
     enable(run);
   }
@@ -145,7 +145,7 @@ function updateDisplayValues() {
     enable(stop);
     enable(pause);
   } else {
-    const msg = "Program is not running"
+    const msg = "Program is not running";
     disable(stop, msg);
     disable(pause, msg);
   }  
@@ -167,7 +167,7 @@ function updateDisplayValues() {
 
 function disable(button:HTMLButtonElement, msg = "") {
   button.setAttribute("disabled", "");
-  button.setAttribute("title", msg)
+  button.setAttribute("title", msg);
 }
 function enable(button:HTMLButtonElement) {
   button.removeAttribute("disabled");

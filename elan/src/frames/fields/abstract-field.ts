@@ -42,6 +42,7 @@ export abstract class AbstractField implements Selectable, Field {
   parseErrorMsg: string = "";
   protected help: string = "help TBD";
   overtyper = new Overtyper();
+  protected codeHasChanged : boolean = false;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -126,7 +127,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this._optional;
   }
   processKey(e: editorEvent): boolean {
-    let codeHasChanged = false;
+    this.codeHasChanged = false;
     const key = e.key;
     const textLen = this.text.length;
     switch (key) {
@@ -182,7 +183,7 @@ export abstract class AbstractField implements Selectable, Field {
             this.text = reduced;
             this.cursorPos = cursorBeforeParse;
           }
-          codeHasChanged = true;
+          this.codeHasChanged = true;
         }
         break;
       }
@@ -192,7 +193,7 @@ export abstract class AbstractField implements Selectable, Field {
             this.text.slice(0, this.cursorPos) +
             this.text.slice(this.cursorPos + 1);
           this.parseCurrentText();
-          codeHasChanged = true;
+          this.codeHasChanged = true;
         }
         break;
       }
@@ -203,11 +204,11 @@ export abstract class AbstractField implements Selectable, Field {
           this.holder.expandCollapseAll();
         } else if (key?.length === 1) {
           this.processInput(key);
-          codeHasChanged = true;
+          this.codeHasChanged = true;
         }
       }
     }
-    return codeHasChanged;
+    return this.codeHasChanged;
   }
 
   private processInput(key: string) {
@@ -410,7 +411,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   getOrTransformAstNode(transforms: Transforms) {
-    if (!this.astNode) {
+    if (!this.astNode || this.codeHasChanged) {
       if (this.rootNode instanceof CSV) {
         const scope = this.getHolder();
         this.astNode = transforms.transformMany(
@@ -425,6 +426,7 @@ export abstract class AbstractField implements Selectable, Field {
           this.getHolder(),
         );
       }
+      this.codeHasChanged = false;
     }
     return this.astNode ?? new EmptyAsn(this.htmlId);
   }

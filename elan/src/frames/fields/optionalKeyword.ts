@@ -38,22 +38,22 @@ export class OptionalKeyword extends AbstractField {
   }
 
   processKey(e: editorEvent): boolean {
-    let codeHasChanged = true;
+    this.codeHasChanged = true;
     const key = e.key;
     if (key && key.length === 1 && this.keyword.startsWith(key.toLowerCase())) {
       this.text = this.keyword;
       this.alertHolderToUpdate();
       this.getHolder().selectFieldAfter(this);
-      codeHasChanged = true;
+      this.codeHasChanged = true;
     } else if (key === "Delete" || key === "Backspace") {
       this.text = "";
       this.alertHolderToUpdate();
       this.getHolder().selectFieldAfter(this);
-      codeHasChanged = true;
+      this.codeHasChanged = true;
     } else {
-      codeHasChanged = super.processKey(e);
+      this.codeHasChanged = super.processKey(e);
     }
-    return codeHasChanged;
+    return this.codeHasChanged;
   }
 
   public textAsHtml(): string {
