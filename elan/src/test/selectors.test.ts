@@ -173,7 +173,7 @@ suite("Unit tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert let var #");
+    assert.equal(help, " assert call let var #");
   });
 
   test("Selection Context - deeper nesting 1", () => {

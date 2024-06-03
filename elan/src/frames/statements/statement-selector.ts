@@ -72,6 +72,7 @@ export class StatementSelector extends AbstractSelector {
     if (this.getParent().getIdPrefix() === testKeyword) {
       result =
         keyword === assertKeyword ||
+        keyword === callKeyword ||
         keyword === letKeyword ||
         keyword === varKeyword ||
         keyword === commentMarker;
