@@ -158,7 +158,7 @@ async function main() {
 }
 
 function isFavourite(f) {
-  return f === Fruit.pear;
+  return system.objectEquals(f, Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -198,7 +198,7 @@ var Fruit = {
 };
 
 async function main() {
-  system.print(_stdlib.asString(firstFruit() === Fruit.apple));
+  system.print(_stdlib.asString(system.objectEquals(firstFruit(), Fruit.apple)));
 }
 
 function firstFruit() {
@@ -240,8 +240,8 @@ var Fruit = {
 
 async function main() {
   var x = Fruit.apple;
-  system.print(_stdlib.asString(x === Fruit.apple));
-  system.print(_stdlib.asString(x === Fruit.pear));
+  system.print(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
+  system.print(_stdlib.asString(system.objectEquals(x, Fruit.pear)));
 }
 return [main, _tests];}`;
 

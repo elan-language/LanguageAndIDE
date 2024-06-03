@@ -150,7 +150,7 @@ async function main() {
 }
 
 function foo(a, b) {
-  return system.defaultArray();
+  return system.emptyArrayList();
 }
 return [main, _tests];}`;
 

@@ -1,5 +1,5 @@
 import { IntType } from "../symbols/int-type";
-import { FloatType } from "../symbols/number-type";
+import { FloatType } from "../symbols/float-type";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";

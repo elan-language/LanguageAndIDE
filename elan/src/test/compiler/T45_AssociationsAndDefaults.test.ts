@@ -183,7 +183,7 @@ class Game {
 
   dsi = system.defaultDictionary();
 
-  ai = system.defaultArray();
+  ai = system.emptyArrayList();
 
   asString() {
     return "A game";
@@ -417,7 +417,7 @@ async function main() {
   system.print(_stdlib.asString(system.objectEquals(g.p1, Player.defaultInstance())));
   system.print(_stdlib.asString(system.objectEquals(g.p2, Player.defaultInstance())));
   system.print(_stdlib.asString(system.objectEquals(g.previousGame, Game.defaultInstance())));
-  system.print(_stdlib.asString(g.previousScores === system.defaultList()));
+  system.print(_stdlib.asString(system.objectEquals(g.previousScores, system.defaultList())));
   system.print(_stdlib.asString(g.score === 0));
   system.print(_stdlib.asString(g.best === 0));
 }
@@ -661,10 +661,10 @@ async function main() {
   system.print(_stdlib.asString(f.b));
   system.print(_stdlib.asString(f.c));
   system.print(_stdlib.asString(f.d));
-  system.print(_stdlib.asString(f.a === system.defaultList()));
+  system.print(_stdlib.asString(system.objectEquals(f.a, system.defaultList())));
   system.print(_stdlib.asString(f.b === ""));
-  system.print(_stdlib.asString(f.c === system.defaultDictionary()));
-  system.print(_stdlib.asString(f.d === system.defaultArray()));
+  system.print(_stdlib.asString(system.objectEquals(f.c, system.defaultDictionary())));
+  system.print(_stdlib.asString(system.objectEquals(f.d, system.emptyArrayList())));
 }
 
 class Foo {
@@ -679,7 +679,7 @@ class Foo {
 
   c = system.defaultDictionary();
 
-  d = system.defaultArray();
+  d = system.emptyArrayList();
 
   asString() {
     return "A Foo";
