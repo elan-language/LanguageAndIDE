@@ -28,7 +28,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -52,6 +52,163 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "appleorangepear");
   });
 
+  test("Pass_EmptyEnumValue", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var e set to empty Fruit
+  print e
+end main
+   
+enum Fruit
+  apple, orange, pear
+end enum`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var e = Fruit._default;
+  system.print(_stdlib.asString(e));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "apple");
+  });
+
+  test("Pass_EmptyEnumProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to new Foo()
+  print foo.fruit
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property fruit as Fruit
+end class
+   
+enum Fruit
+  apple, orange, pear
+end enum`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var foo = system.initialise(new Foo());
+  system.print(_stdlib.asString(foo.fruit));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["fruit", "Fruit"]]);};
+  constructor() {
+
+  }
+
+  _fruit;
+  get fruit() {
+    return this._fruit ??= Fruit._default;
+  }
+  set fruit(fruit) {
+    this._fruit = fruit;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "apple");
+  });
+
+  test("Pass_EmptyEnumPropertyOnEmptyClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to empty Foo
+  print foo.fruit
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property fruit as Fruit
+end class
+   
+enum Fruit
+  apple, orange, pear
+end enum`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var foo = Foo.emptyInstance();
+  system.print(_stdlib.asString(foo.fruit));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["fruit", "Fruit"]]);};
+  constructor() {
+
+  }
+
+  _fruit;
+  get fruit() {
+    return this._fruit ??= Fruit._default;
+  }
+  set fruit(fruit) {
+    this._fruit = fruit;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "apple");
+  });
+
   test("Pass_useInVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -67,7 +224,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -106,7 +263,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -149,7 +306,7 @@ end function
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -194,7 +351,7 @@ end function
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -235,7 +392,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -281,7 +438,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {
@@ -331,7 +488,7 @@ end enum`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
-  apple : "apple", orange : "orange", pear : "pear"
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
 };
 
 async function main() {

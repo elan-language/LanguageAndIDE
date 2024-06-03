@@ -14,6 +14,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
 import { transforms } from "./ast-helpers";
+import { EnumType } from "../symbols/enum-type";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -68,6 +69,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Iter":
         return "system.emptyIter()";
     }
+    const st = this.symbolType();
+
+    if (st instanceof EnumType){
+      return `${this.id}._default`;
+    }
+
     return `${this.id}.emptyInstance()`;
   }
 

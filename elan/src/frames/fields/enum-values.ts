@@ -31,9 +31,18 @@ export class EnumValues extends AbstractField {
     const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
     if (ast) {
-      return ast.items
-        .map((n) => `${n.compile()} : "${n.compile()}"`)
-        .join(", ");
+      const items = ast.items;
+      if (items.length > 0) {
+        const def = `_default : "${items[0].compile()}", `;
+
+        const itStr = items
+          .map((n) => `${n.compile()} : "${n.compile()}"`)
+          .join(", ");
+      
+        return `${def}${itStr}`;
+      }
+
+      return `_default : ""`;
     }
 
     return "";
