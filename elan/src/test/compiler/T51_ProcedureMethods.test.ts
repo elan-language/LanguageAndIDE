@@ -398,4 +398,33 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["calculate is not defined"]);
   });
+
+  test("Fail_ParameterUnknownType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure changeValue(a as Bar)
+
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
+  });
 });
