@@ -1,0 +1,98 @@
+# e519c579cc3320c7261902b470bb481b872b5f486b1e39ee519e510db94de591 Elan v0.1 valid
+
+main 
+  let tm be new TuringMachine("init", "halt")
+end main
+
+enum Direction
+  left, right
+end enum
+
+immutable class Rule
+  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Direction)
+    set property.currentState to currentState
+    set property.currentSymbol to currentSymbol
+    set property.nextState to nextState
+    set property.writeSymbol to writeSymbol
+    set property.move to move
+  end constructor
+
+  property currentState as String
+
+  property currentSymbol as String
+
+  property nextState as String
+
+  property writeSymbol as String
+
+  property move as Direction
+
+end class
+
+class TuringMachine
+  constructor(initialState as String, haltState as String)
+    set property.initialState to initialState
+    set property.haltState to haltState
+    # change below to empty {Rule} when implemented
+    set rules to new ImmutableList<of Rule>()
+  end constructor
+
+  property currentState as String
+
+  property headPosition as Int
+
+  property haltState as String
+
+  property rules as {Rule}
+
+  property tape as String
+
+  procedure setTape(tape as String)
+    set property.tape to tape
+  end procedure
+
+  procedure setRules(rules as {Rule})
+    set property.rules to rules
+  end procedure
+
+  procedure add(rule as Rule) 
+    # set rules to rules.add(rule)
+  end procedure
+
+  procedure singleStep()
+    let rule be findMatchingRule()
+    call execute(rule)
+  end procedure
+
+  procedure runToEnd()
+    while not isHalted()
+      call singleStep()
+    end while
+  end procedure
+
+  function isHalted() return Boolean
+    return currentState is haltState
+  end function
+
+  function findMatchingRule() return Rule
+    let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
+    if matches.length() is 0
+      throw "No rule matching state {currentState} and symbol {tape[headPosition]}"
+    end if
+    return matches.head()
+  end function 
+
+  procedure execute(rule as Rule)
+    set currentState to rule.nextState
+    set tape[headPosition] to rule.writeSymbol
+    if rule.move is Direction.right
+      set headPosition to headPosition + 1
+      else
+        set headPosition to headPosition - 1
+        if headPosition < 0
+          set tape to " " + tape
+          set headPosition to 0
+        end if
+    end if
+  end procedure
+end class
