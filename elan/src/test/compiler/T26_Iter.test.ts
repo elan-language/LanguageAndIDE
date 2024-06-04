@@ -202,7 +202,7 @@ end procedure
   
 procedure printAsList(target as Iter<of Float>)
   var some set to target.asList()
-  print some[3..]
+  print some.getRange(3, 7)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -218,7 +218,7 @@ function printAsIter(target) {
 
 function printAsList(target) {
   var some = _stdlib.asList(target);
-  system.print(_stdlib.asString(system.immutableList(some.slice(3))));
+  system.print(_stdlib.asString(_stdlib.getRange(some, 3, 7)));
 }
 return [main, _tests];}`;
 

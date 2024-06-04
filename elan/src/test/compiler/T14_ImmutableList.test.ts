@@ -288,13 +288,13 @@ return [main, _tests];}`;
 
 main
     var a set to {4,5,6,7,8}
-    print a[2]
+    print a.get(2)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(a[2]));
+  system.print(_stdlib.asString(_stdlib.get(a, 2)));
 }
 return [main, _tests];}`;
 
@@ -312,17 +312,17 @@ return [main, _tests];}`;
 
 main
   var a set to {4,5,6,7,8}
-  print a[2..]
-  print a[1..3]
-  print a[..2]
+  print a.getRange(2, 5)
+  print a.getRange(1, 3)
+  print a.getRange(0, 2)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(system.immutableList(a.slice(2))));
-  system.print(_stdlib.asString(system.immutableList(a.slice(1, 3))));
-  system.print(_stdlib.asString(system.immutableList(a.slice(0, 2))));
+  system.print(_stdlib.asString(_stdlib.getRange(a, 2, 5)));
+  system.print(_stdlib.asString(_stdlib.getRange(a, 1, 3)));
+  system.print(_stdlib.asString(_stdlib.getRange(a, 0, 2)));
 }
 return [main, _tests];}`;
 
@@ -618,7 +618,7 @@ end main
 
 main
   var a set to {4, 5, 6, 7, 8}
-  var b set to a[5]
+  var b set to a.get(5)
 end main
 `;
 
@@ -628,5 +628,22 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+  });
+
+  test("Fail_CannotIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {4, 5, 6, 7, 8}
+  var b set to a[5]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList<of Int>"]);
   });
 });

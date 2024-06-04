@@ -209,10 +209,9 @@ export function mustBeIndexableSymbol(
 ) {
   if (
     !(
-      symbolType instanceof ImmutableListType ||
       symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
-      symbolType instanceof DictionaryType
+      (symbolType instanceof DictionaryType && !symbolType.isImmutable)
     )
   ) {
     compileErrors.push(
@@ -441,17 +440,21 @@ export function mustBeCompatibleType(
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
-  if (
-    lhs instanceof ImmutableListType &&
-    !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ImmutableListType).ofType).name)
-  ) {
+
+  if (lhs instanceof ImmutableListType && rhs instanceof ImmutableListType) {
+    mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
+  }
+
+  if (lhs instanceof ImmutableListType && !(rhs instanceof ImmutableListType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
-  if (
-    lhs instanceof ArrayListType &&
-    !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ArrayListType).ofType).name)
-  ) {
+
+  if (lhs instanceof ArrayListType && rhs instanceof ArrayListType) {
+    mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
+  }
+
+  if (lhs instanceof ArrayListType && !(rhs instanceof ArrayListType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }

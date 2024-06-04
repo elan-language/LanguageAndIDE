@@ -227,23 +227,23 @@ return [main, _tests];}`;
 
 main
   var a set to new Dictionary<of String, Int>()
-  var b set to a.setItem("Foo", 1)
-  set b to b.setItem("Bar", 3)
-  var k set to b.keys()
+  set a["Foo"] to 1
+  set a["Bar"] to 3
+  var k set to a.keys()
   print k.length()
-  print b["Foo"]
-  print b["Bar"]
+  print a["Foo"]
+  print a["Bar"]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  var b = _stdlib.setItem(a, "Foo", 1);
-  b = _stdlib.setItem(b, "Bar", 3);
-  var k = _stdlib.keys(b);
+  a["Foo"] = 1;
+  a["Bar"] = 3;
+  var k = _stdlib.keys(a);
   system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(b["Foo"]));
-  system.print(_stdlib.asString(b["Bar"]));
+  system.print(_stdlib.asString(a["Foo"]));
+  system.print(_stdlib.asString(a["Bar"]));
 }
 return [main, _tests];}`;
 

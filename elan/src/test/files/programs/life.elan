@@ -1,4 +1,4 @@
-# 0603df504f949acc0b3706d6073229c9016207ea6a933bcae2775aba4b46a3c8 Elan v0.1 valid
+# 072a395a184440aef2f60a4b2fbeef9dc3a770d4ec3eb22b6ceea99c633505ae Elan v0.1 valid
 
 main
   var g set to exampleCells
@@ -10,7 +10,7 @@ procedure draw(grid as {Boolean})
   for row from 0 to 19 step 1
     var line set to ""
     for col from 0 to 19 step 1
-      var cell set to grid[col*20 + row]
+      var cell set to grid.get(col*20 + row)
       var cha set to "  "
       if cell
         set cha to "* "
@@ -132,7 +132,7 @@ end test
 
 function liveNeighbours(cells as {Boolean}, c as Int) return Int
   let neighbours be neighbourCells(c)
-  let live be neighbours.filter(lambda i as Int => cells[i])
+  let live be neighbours.filter(lambda i as Int => cells.get(i))
   return live.count()
 end function
 
@@ -172,7 +172,7 @@ test willLive
 end test
 
 function nextCellValue(cells as {Boolean}, c as Int) return Boolean
-  return willLive(cells[c], liveNeighbours(cells, c))
+  return willLive(cells.get(c), liveNeighbours(cells, c))
 end function
 
 test nextCellValue_tests

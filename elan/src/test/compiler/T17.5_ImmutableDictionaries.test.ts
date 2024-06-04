@@ -67,14 +67,14 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a["z"]
+  print a.getItem("z")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  system.print(_stdlib.asString(a["z"]));
+  system.print(_stdlib.asString(_stdlib.getItem(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -266,8 +266,8 @@ main
   set b to b.setItem("Bar", 3)
   var k set to b.keys()
   print k.length()
-  print b["Foo"]
-  print b["Bar"]
+  print b.getItem("Foo")
+  print b.getItem("Bar")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -277,8 +277,8 @@ async function main() {
   b = _stdlib.setItem(b, "Bar", 3);
   var k = _stdlib.keys(b);
   system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(b["Foo"]));
-  system.print(_stdlib.asString(b["Bar"]));
+  system.print(_stdlib.asString(_stdlib.getItem(b, "Foo")));
+  system.print(_stdlib.asString(_stdlib.getItem(b, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -383,7 +383,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a["c"]
+  print a.getItem("c")
 end main
 `;
 

@@ -162,6 +162,20 @@ export class StdLib {
     return s1 < s2 || s1 === s2;
   }
 
+  get<T>(st: Array<T>, index: number) {
+    return st[index];
+  }
+
+  getItem<T>(st: { [key: string]: T }, index: string) {
+    return st[index];
+  }
+
+  getRange<T>(st: Array<T>, index1: number, index2: number) {
+    const list = st.slice(index1, index2);
+    (list as unknown as hasHiddenType)._type = "ImmutableList";
+    return list;
+  }
+
   first<T>(st: Array<T>) {
     return st[0];
   }

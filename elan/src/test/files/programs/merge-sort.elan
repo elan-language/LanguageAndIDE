@@ -1,4 +1,4 @@
-# 674b2afe3c8c90b7248191114560d1b1bf36706e734c28624c92d00d1249889e Elan v0.1 valid
+# d50f1f903fb3ea3ed359326714ae4a3be6e6cae771b99840122236ce901b53a7 Elan v0.1 valid
 
 main
   var li set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
@@ -9,7 +9,8 @@ function mergeSort(list as {String}) return {String}
   var result set to list
   if list.length() > 1
     var mid set to floor(list.length()/2)
-    set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
+    var len set to list.length()
+    set result to merge(mergeSort(list.getRange(0, mid)), mergeSort(list.getRange(mid, len)))
   end if
   return result
 end function
@@ -20,10 +21,10 @@ function merge(a as {String}, b as {String}) return {String}
     set result to b
     else if b.length() is 0
       set result to a
-    else if isBefore(a[0], b[0])
-      set result to {a[0]} + merge(a[1..], b)
+    else if isBefore(a.get(0), b.get(0))
+      set result to {a.get(0)} + merge(a.getRange(1, a.length()), b)
     else
-      set result to {b[0]} + merge(a, b[1..])
+      set result to {b.get(0)} + merge(a, b.getRange(1, b.length()))
   end if
   return result
 end function
