@@ -1,7 +1,9 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class ProcedureType implements SymbolType {
-  constructor(public readonly parametersTypes: SymbolType[]) {}
+  constructor(public readonly parametersTypes: SymbolType[],
+    public readonly isExtension: boolean,
+  ) { }
 
   isImmutable = true;
 

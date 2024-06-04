@@ -39,7 +39,7 @@ export abstract class ProcedureFrame
 
   symbolType(transforms: Transforms) {
     const pt = this.params.symbolTypes(transforms);
-    return new ProcedureType(pt);
+    return new ProcedureType(pt, false);
   }
 
   getFields(): Field[] {
