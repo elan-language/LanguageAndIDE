@@ -108,6 +108,7 @@ import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dictionary-node";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
+import { SetStatement } from "../statements/set-statement";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -244,9 +245,9 @@ export function transform(
   if (node instanceof IdentifierNode) {
     // kludge - fix
     if (
-      fieldId.startsWith("var") ||
+      (fieldId.startsWith("var") ||
       fieldId.startsWith("ident") ||
-      fieldId.startsWith("enumVals")
+      fieldId.startsWith("enumVals")) && !(scope instanceof SetStatement) // to catch range value 
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
