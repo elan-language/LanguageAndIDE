@@ -176,7 +176,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArray(system.list(["foo", "bar", "yon"]));
+  var a = _stdlib.asArray(system.immutableList(["foo", "bar", "yon"]));
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;

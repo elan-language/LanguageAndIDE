@@ -50,7 +50,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     if (this.typeNode.id === "ImmutableList") {
       mustMatchParameters(this.parameters, [], this.compileErrors, this.fieldId);
-      return `system.initialise(system.list(new ${typeAsString}()))`;
+      return `system.initialise(system.immutableList(new ${typeAsString}()))`;
     }
 
     if (this.typeNode.id === "ImmutableDictionary") {

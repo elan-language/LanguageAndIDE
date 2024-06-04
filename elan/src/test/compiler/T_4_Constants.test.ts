@@ -243,7 +243,7 @@ end main
 `;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.list([1, 2, 3]);
+const a = system.immutableList([1, 2, 3]);
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -299,7 +299,7 @@ end main
 `;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.list([system.list([4, 5]), system.list([6, 7, 8])]);
+const a = system.immutableList([system.immutableList([4, 5]), system.immutableList([6, 7, 8])]);
 
 async function main() {
   system.print(_stdlib.asString(a));

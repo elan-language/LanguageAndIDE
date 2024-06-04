@@ -69,7 +69,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1, 2]);
-  var b = system.list([3, 4]);
+  var b = system.immutableList([3, 4]);
   var c = system.dictionary({"a" : true, "b" : false});
   var d = system.immutableDictionary({"a" : true, "b" : false});
   foo(a, b, c, d);

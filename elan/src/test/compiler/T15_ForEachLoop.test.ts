@@ -28,7 +28,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.list([7, 8, 9]);
+  var a = system.immutableList([7, 8, 9]);
   var n = 0;
   for (const x of a) {
     n = n + x;
@@ -60,7 +60,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArray(system.list([7, 8, 9]));
+  var a = _stdlib.asArray(system.immutableList([7, 8, 9]));
   var n = 0;
   for (const x of a) {
     n = n + x;
@@ -157,7 +157,7 @@ async function main() {
 }
 
 function fruit() {
-  return system.list(["apple", "orange", "pear"]);
+  return system.immutableList(["apple", "orange", "pear"]);
 }
 return [main, _tests];}`;
 

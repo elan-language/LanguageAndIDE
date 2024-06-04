@@ -65,7 +65,7 @@ class Game {
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
-    this.previousScores = system.list([5, 2, 4]);
+    this.previousScores = system.immutableList([5, 2, 4]);
   }
 
   _p1;

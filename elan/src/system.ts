@@ -27,7 +27,7 @@ export class System {
   }
 
   // constant immutables
-  emptyImmutableListSingleton = this.list([]);
+  emptyImmutableListSingleton = this.immutableList([]);
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
 
@@ -56,7 +56,7 @@ export class System {
     return t;
   }
 
-  list(t: Array<any>) {
+  immutableList(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "ImmutableList";
     return t;
   }
@@ -146,15 +146,15 @@ export class System {
 
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
     if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.list(lhs.concat(rhs));
+      return this.immutableList(lhs.concat(rhs));
     }
 
     if (Array.isArray(lhs)) {
-      return this.list(lhs.concat([rhs as T]));
+      return this.immutableList(lhs.concat([rhs as T]));
     }
 
     // if (Array.isArray(rhs)){
-    return this.list([lhs as T].concat(rhs));
+    return this.immutableList([lhs as T].concat(rhs));
   }
 
   equals(i1: any, i2: any) {

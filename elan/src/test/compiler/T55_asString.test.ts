@@ -384,10 +384,10 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var l = system.list([1, 2, 3]);
+  var l = system.immutableList([1, 2, 3]);
   var sl = _stdlib.asString(l);
   system.print(_stdlib.asString(sl));
-  var a = _stdlib.asArray(system.list([1, 2, 3]));
+  var a = _stdlib.asArray(system.immutableList([1, 2, 3]));
   var sa = _stdlib.asString(a);
   system.print(_stdlib.asString(sa));
   var d = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
