@@ -102,12 +102,12 @@
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
     "test-compile": "tsc -p ./",
-    "compile": "npm run test-compile && npm run esbuild",
+    "compile": "npm run test-compile && npm run esbuild && npm run lint && npm run format",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "format": "prettier --ignore-path .gitignore --print-width 100 --write \"src/**/*.ts\""
+    "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --write \"src/**/*.ts\""
   },
   "dependencies": {
     "async-file": "2.0.2",

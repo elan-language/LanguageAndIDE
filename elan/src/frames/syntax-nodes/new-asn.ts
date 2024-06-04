@@ -33,15 +33,17 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    
+
     const parametersAsString = this.parameters.map((p) => p.compile()).join(", ");
     const typeAsString = this.typeNode.compile();
-    
+
     if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
 
-      const init = this.typeNode.genericParameters.map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`).join(", ");
+      const init = this.typeNode.genericParameters
+        .map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`)
+        .join(", ");
 
       return `system.initialise(system.array(${parametersAsString}), ${init})`;
     }
