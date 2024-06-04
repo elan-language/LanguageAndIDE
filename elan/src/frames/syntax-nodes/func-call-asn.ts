@@ -19,11 +19,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { transforms } from "./ast-helpers";
-import {
-  getParentScope,
-  scopePrefix,
-  updateScopeAndQualifier,
-} from "../symbols/symbol-helpers";
+import { getParentScope, scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
 
 class TypeHolder implements SymbolType {
@@ -74,11 +70,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       this.scope,
     );
 
-    const funcSymbol = currentScope.resolveSymbol(
-      this.id,
-      transforms(),
-      this.scope,
-    );
+    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const fst = funcSymbol.symbolType(transforms());
     let qualifier = updatedQualifier;
 
@@ -86,39 +78,23 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
 
     if (fst instanceof FunctionType) {
-      mustCallExtensionViaQualifier(
-        fst,
-        qualifier,
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustCallExtensionViaQualifier(fst, qualifier, this.compileErrors, this.fieldId);
 
       if (fst.isExtension && qualifier instanceof QualifierAsn) {
         parameters = [qualifier.value as AstNode].concat(parameters);
         qualifier = undefined;
       }
 
-      mustMatchParameters(
-        parameters,
-        fst.parametersTypes,
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustMatchParameters(parameters, fst.parametersTypes, this.compileErrors, this.fieldId);
     }
 
     const pp = parameters.map((p) => p.compile()).join(", ");
-    const q = qualifier
-      ? `${qualifier.compile()}`
-      : scopePrefix(funcSymbol?.symbolScope);
+    const q = qualifier ? `${qualifier.compile()}` : scopePrefix(funcSymbol?.symbolScope);
     return `${q}${this.id}(${pp})`;
   }
 
   flatten(p: SymbolType): SymbolType[] {
-    if (
-      p instanceof ArrayListType ||
-      p instanceof ImmutableListType ||
-      p instanceof IterType
-    ) {
+    if (p instanceof ArrayListType || p instanceof ImmutableListType || p instanceof IterType) {
       return this.flatten(p.ofType);
     }
 
@@ -158,10 +134,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return this.containsGenericType(type.ofType);
     }
     if (type instanceof DictionaryType) {
-      return (
-        this.containsGenericType(type.keyType) ||
-        this.containsGenericType(type.valueType)
-      );
+      return this.containsGenericType(type.keyType) || this.containsGenericType(type.valueType);
     }
 
     if (type instanceof TupleType) {
@@ -181,10 +154,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       return match ?? UnknownType.Instance;
     }
     if (type instanceof ArrayListType) {
-      return new ArrayListType(
-        this.generateType(type.ofType, matches),
-        type.is2d,
-      );
+      return new ArrayListType(this.generateType(type.ofType, matches), type.is2d);
     }
     if (type instanceof ImmutableListType) {
       return new ImmutableListType(this.generateType(type.ofType, matches));
@@ -207,11 +177,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     return a1.length < a2.length ? a1.length : a2.length;
   }
 
-  match(
-    flattened: SymbolType[][],
-    pTypes: SymbolType[][],
-    matches: Map<string, SymbolType>,
-  ) {
+  match(flattened: SymbolType[][], pTypes: SymbolType[][], matches: Map<string, SymbolType>) {
     const minLength = this.minOf(flattened, pTypes);
     for (let i = 0; i < minLength; i++) {
       const pt = flattened[i];
@@ -243,9 +209,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     const flattened = type.parametersTypes.map((n) => this.flatten(n));
 
     if (type.isExtension && this.qualifier) {
-      parameters = [(this.qualifier as QualifierAsn).value as AstNode].concat(
-        parameters,
-      );
+      parameters = [(this.qualifier as QualifierAsn).value as AstNode].concat(parameters);
     }
 
     const pTypes = parameters.map((p) => this.flatten(p.symbolType()));

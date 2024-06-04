@@ -9,13 +9,9 @@ export class DictionaryNode extends AbstractSequence {
   csv: CSV | undefined;
   elementConstructor: () => ParseNode;
 
-  constructor(
-    keyConstructor: () => ParseNode,
-    valueConstructor: () => ParseNode,
-  ) {
+  constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode) {
     super();
-    this.elementConstructor = () =>
-      new KVPnode(keyConstructor, valueConstructor);
+    this.elementConstructor = () => new KVPnode(keyConstructor, valueConstructor);
   }
 
   parseText(text: string): void {

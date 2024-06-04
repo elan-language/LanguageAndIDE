@@ -18,24 +18,15 @@ suite("Parse source and generate Html", () => {
   vscode.window.showInformationMessage("Start all tests.");
 
   test("Test Empty File", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T00_emptyFile.elan",
-      "T00_emptyFile.html",
-    );
+    await assertGeneratesHtmlandSameSource("T00_emptyFile.elan", "T00_emptyFile.html");
   });
 
   test("Test Hello World", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T01_helloWorld.elan",
-      "T01_helloWorld.html",
-    );
+    await assertGeneratesHtmlandSameSource("T01_helloWorld.elan", "T01_helloWorld.html");
   });
 
   test("Test Comments", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T02_comments.elan",
-      "T02_comments.html",
-    );
+    await assertGeneratesHtmlandSameSource("T02_comments.elan", "T02_comments.html");
   });
 
   test("Test Main With All Statements", async () => {
@@ -53,10 +44,7 @@ suite("Parse source and generate Html", () => {
   });
 
   test("Test Classes", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T05_classes.elan",
-      "T05_classes.html",
-    );
+    await assertGeneratesHtmlandSameSource("T05_classes.elan", "T05_classes.html");
   });
 
   test("Test Select Main By Id", async () => {
@@ -77,11 +65,7 @@ suite("Parse source and generate Html", () => {
 
   //-------------------
   test("ExpandAll", async () => {
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
-      ExpandAll,
-      "T08_expandAll.html",
-    );
+    await assertEffectOfAction("T03_mainWithAllStatements.elan", ExpandAll, "T08_expandAll.html");
   });
 
   test("CollapseAll", async () => {

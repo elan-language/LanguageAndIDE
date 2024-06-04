@@ -66,34 +66,17 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.compileErrors,
       this.assignable.getHtmlId(),
     );
-    mustBeCompatibleNode(
-      assignableAstNode,
-      exprAstNode,
-      this.compileErrors,
-      this.expr.getHtmlId(),
-    );
+    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
     mustNotBeParameter(
       assignableAstNode,
       this.getParent(),
       this.compileErrors,
       this.assignable.getHtmlId(),
     );
-    mustNotBeConstant(
-      assignableAstNode,
-      this.compileErrors,
-      this.assignable.getHtmlId(),
-    );
-    mustNotBeCounter(
-      assignableAstNode,
-      this.compileErrors,
-      this.assignable.getHtmlId(),
-    );
+    mustNotBeConstant(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
+    mustNotBeCounter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
 
-    const symbol = this.getParent().resolveSymbol(
-      assignableAstNode.id,
-      transforms,
-      this,
-    );
+    const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
     mustNotBeLet(symbol, this.compileErrors, this.assignable.getHtmlId());
 
     return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;

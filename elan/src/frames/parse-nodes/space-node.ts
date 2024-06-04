@@ -25,10 +25,7 @@ export class SpaceNode extends AbstractParseNode {
         this.remainingText = text.replace(matches[0], "");
         this.status = ParseStatus.valid;
       } else {
-        this.status =
-          this.type === Space.required
-            ? ParseStatus.invalid
-            : ParseStatus.valid;
+        this.status = this.type === Space.required ? ParseStatus.invalid : ParseStatus.valid;
       }
     }
   }
@@ -38,15 +35,11 @@ export class SpaceNode extends AbstractParseNode {
   }
 
   renderAsSource(): string {
-    return this.type === Space.ignored || this.status === ParseStatus.empty
-      ? ""
-      : " ";
+    return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
   }
 
   getCompletionAsHtml(): string {
-    return this.status === ParseStatus.empty && this.type === Space.required
-      ? " "
-      : "";
+    return this.status === ParseStatus.empty && this.type === Space.required ? " " : "";
   }
 
   compile(): string {

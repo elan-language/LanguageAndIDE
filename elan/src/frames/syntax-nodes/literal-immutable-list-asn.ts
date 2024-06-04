@@ -7,10 +7,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 
-export class LiteralImmutableListAsn
-  extends AbstractAstNode
-  implements AstCollectionNode
-{
+export class LiteralImmutableListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
@@ -32,12 +29,7 @@ export class LiteralImmutableListAsn
     const ofType = this.items[0]?.symbolType();
 
     for (const i of this.items) {
-      mustBeCompatibleType(
-        ofType,
-        i.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustBeCompatibleType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");

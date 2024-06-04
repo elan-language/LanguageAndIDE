@@ -2,13 +2,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { SymbolNode } from "./symbol-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import {
-  CLOSE_BRACE,
-  CLOSE_SQ_BRACKET,
-  COLON,
-  OPEN_BRACE,
-  OPEN_SQ_BRACKET,
-} from "../symbols";
+import { CLOSE_BRACE, CLOSE_SQ_BRACKET, COLON, OPEN_BRACE, OPEN_SQ_BRACKET } from "../symbols";
 
 export class TypeImmutableDictionaryNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;

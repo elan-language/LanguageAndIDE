@@ -79,15 +79,10 @@ export abstract class AbstractField implements Selectable, Field {
   parseCompleteTextUsingNode(text: string, root: ParseNode): void {
     this.parseErrorMsg = "";
     if (text.length === 0) {
-      this.setParseStatus(
-        this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete,
-      );
+      this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
     } else {
       root.parseText(text.trimStart());
-      if (
-        root.remainingText.trim().length > 0 ||
-        root.status === ParseStatus.invalid
-      ) {
+      if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
         this.setParseStatus(ParseStatus.invalid);
         this.text = text.trimStart();
       } else {
@@ -171,9 +166,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "Backspace": {
         if (this.cursorPos > 0) {
-          const reduced =
-            this.text.slice(0, this.cursorPos - 1) +
-            this.text.slice(this.cursorPos);
+          const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
           this.cursorPos--;
           const cursorBeforeParse = this.cursorPos;
@@ -189,9 +182,7 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "Delete": {
         if (this.cursorPos < textLen) {
-          this.text =
-            this.text.slice(0, this.cursorPos) +
-            this.text.slice(this.cursorPos + 1);
+          this.text = this.text.slice(0, this.cursorPos) + this.text.slice(this.cursorPos + 1);
           this.parseCurrentText();
           this.codeHasChanged = true;
         }
@@ -213,10 +204,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   private processInput(key: string) {
     if (this.overtyper.preProcessor(key)) {
-      this.text =
-        this.text.slice(0, this.cursorPos) +
-        key +
-        this.text.slice(this.cursorPos);
+      this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
       const preParse = this.text.length;
       this.parseCurrentText();
       const afterParse = this.text.length;
@@ -307,9 +295,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
   updateCompileStatus(): void {
     this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
-    this._compileStatus = helper_deriveCompileStatusFromErrors(
-      this.compileErrors,
-    );
+    this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
   select(withFocus?: boolean, multiSelect?: boolean, selection?: number): void {
     this.deselectAll();
@@ -414,17 +400,9 @@ export abstract class AbstractField implements Selectable, Field {
     if (!this.astNode || this.codeHasChanged) {
       if (this.rootNode instanceof CSV) {
         const scope = this.getHolder();
-        this.astNode = transforms.transformMany(
-          this.rootNode as CSV,
-          this.htmlId,
-          scope,
-        );
+        this.astNode = transforms.transformMany(this.rootNode as CSV, this.htmlId, scope);
       } else if (this.rootNode) {
-        this.astNode = transforms.transform(
-          this.rootNode,
-          this.htmlId,
-          this.getHolder(),
-        );
+        this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
       }
       this.codeHasChanged = false;
     }

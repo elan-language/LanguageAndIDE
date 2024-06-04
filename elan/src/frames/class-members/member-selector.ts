@@ -31,18 +31,9 @@ export class MemberSelector extends AbstractSelector implements Member {
       [procedureKeyword, (parent: Parent) => this.class.createProcedure()],
       [propertyKeyword, (parent: Parent) => this.class.createProperty()],
       [privateKeyword, (parent: Parent) => this.class.createProperty()],
-      [
-        abstractFunctionKeywords,
-        (parent: Parent) => this.class.createAbstractFunction(),
-      ],
-      [
-        abstractProcedureKeywords,
-        (parent: Parent) => this.class.createAbstractProcedure(),
-      ],
-      [
-        abstractPropertyKeywords,
-        (parent: Parent) => this.class.createAbstractProperty(),
-      ],
+      [abstractFunctionKeywords, (parent: Parent) => this.class.createAbstractFunction()],
+      [abstractProcedureKeywords, (parent: Parent) => this.class.createAbstractProcedure()],
+      [abstractPropertyKeywords, (parent: Parent) => this.class.createAbstractProperty()],
       [commentMarker, (parent: Parent) => this.class.createComment()],
     ];
     return options;
@@ -57,20 +48,15 @@ export class MemberSelector extends AbstractSelector implements Member {
     if (this.class.isAbstract()) {
       if (this.class.isImmutable()) {
         result =
-          (keyword.startsWith(abstractKeyword) &&
-            keyword !== abstractProcedureKeywords) ||
+          (keyword.startsWith(abstractKeyword) && keyword !== abstractProcedureKeywords) ||
           keyword === commentMarker;
       } else {
-        result =
-          keyword.startsWith(abstractKeyword) || keyword === commentMarker;
+        result = keyword.startsWith(abstractKeyword) || keyword === commentMarker;
       }
     } else if (this.class.isImmutable()) {
-      result =
-        !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword;
+      result = !keyword.startsWith(abstractKeyword) && keyword !== procedureKeyword;
     } else {
-      result =
-        !keyword.startsWith(abstractKeyword) &&
-        (keyword !== privateKeyword || !userEntry); //private
+      result = !keyword.startsWith(abstractKeyword) && (keyword !== privateKeyword || !userEntry); //private
     }
     return result;
   }

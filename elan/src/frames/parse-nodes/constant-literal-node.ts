@@ -12,9 +12,7 @@ export class ConstantLiteralNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     this.alternatives.push(new LitValueNode());
-    this.alternatives.push(
-      new ImmutableListNode(() => new ConstantLiteralNode()),
-    );
+    this.alternatives.push(new ImmutableListNode(() => new ConstantLiteralNode()));
     this.alternatives.push(
       new ImmutableDictionaryNode(
         () => new LitValueNode(),

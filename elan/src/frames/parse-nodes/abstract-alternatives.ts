@@ -18,10 +18,7 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
       while (i < this.alternatives.length && cont) {
         const alt = this.alternatives[i];
         alt.parseText(text);
-        if (
-          alt.status === ParseStatus.valid &&
-          alt.remainingText.length === 0
-        ) {
+        if (alt.status === ParseStatus.valid && alt.remainingText.length === 0) {
           this.bestMatch = alt;
           cont = false;
         } else if (
@@ -55,8 +52,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch ? this.bestMatch.compile() : "";
   }
   getCompletionAsHtml(): string {
-    return this.bestMatch
-      ? this.bestMatch.getCompletionAsHtml()
-      : super.getCompletionAsHtml();
+    return this.bestMatch ? this.bestMatch.getCompletionAsHtml() : super.getCompletionAsHtml();
   }
 }

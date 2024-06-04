@@ -137,10 +137,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       this.op === OperationSymbol.Add &&
       (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
     ) {
-      if (
-        lst instanceof ImmutableListType &&
-        rst instanceof ImmutableListType
-      ) {
+      if (lst instanceof ImmutableListType && rst instanceof ImmutableListType) {
         mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
       } else if (lst instanceof ImmutableListType) {
         mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
@@ -176,10 +173,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
     }
 
-    if (
-      this.op === OperationSymbol.Equals &&
-      (isValueType(lst) || isValueType(rst))
-    ) {
+    if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
       return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
     }
 
@@ -199,20 +193,11 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   symbolType() {
     switch (this.op) {
       case OperationSymbol.Add:
-        return this.MostPreciseSymbol(
-          this.lhs.symbolType(),
-          this.rhs.symbolType(),
-        );
+        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Minus:
-        return this.MostPreciseSymbol(
-          this.lhs.symbolType(),
-          this.rhs.symbolType(),
-        );
+        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
-        return this.MostPreciseSymbol(
-          this.lhs.symbolType(),
-          this.rhs.symbolType(),
-        );
+        return this.MostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;
       case OperationSymbol.Mod:

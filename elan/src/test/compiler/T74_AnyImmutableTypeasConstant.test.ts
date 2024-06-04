@@ -30,12 +30,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -61,12 +56,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -92,12 +82,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -123,21 +108,13 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "ImmutableDictionary {a:1, b:3, c:3}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, c:3}");
   });
 
   // no longer supported ?
@@ -183,12 +160,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

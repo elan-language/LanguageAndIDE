@@ -29,21 +29,13 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "ImmutableDictionary {a:1, b:3, z:10}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
   test("Pass_LiteralVarAndPrinting", async () => {
@@ -61,21 +53,13 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "ImmutableDictionary {a:1, b:3, z:10}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
   test("Pass_AccessByKey", async () => {
@@ -94,12 +78,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -124,12 +103,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -156,12 +130,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -186,12 +155,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -222,12 +186,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -259,12 +218,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -294,21 +248,13 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "ImmutableDictionary {a:1, b:3, z:10}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
@@ -336,12 +282,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -377,12 +318,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -403,12 +339,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -424,12 +355,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -445,12 +371,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -466,12 +387,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -487,12 +403,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -508,12 +419,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -529,12 +435,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

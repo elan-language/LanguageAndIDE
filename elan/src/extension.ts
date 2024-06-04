@@ -8,11 +8,7 @@ import * as yauzl from "yauzl";
 import * as path from "path";
 import { mkdirp } from "async-file";
 import * as fs from "fs";
-import {
-  LanguageClient,
-  LanguageClientOptions,
-  ServerOptions,
-} from "vscode-languageclient/node";
+import { LanguageClient, LanguageClientOptions, ServerOptions } from "vscode-languageclient/node";
 
 let client: LanguageClient | undefined;
 
@@ -99,24 +95,18 @@ async function downloadServer(urlString: string): Promise<Buffer> {
       if (response.statusCode === 301 || response.statusCode === 302) {
         // Redirect - download from new location
         if (response.headers.location === undefined) {
-          console.warn(
-            `Failed to download from appveyor. Redirected without location header`,
-          );
+          console.warn(`Failed to download from appveyor. Redirected without location header`);
           return reject();
         }
         return resolve(downloadServer(response.headers.location));
       } else if (response.statusCode !== 200) {
         // Download failed - print error message
-        console.warn(
-          `Failed to download from appveyor. Error code '${response.statusCode}')`,
-        );
+        console.warn(`Failed to download from appveyor. Error code '${response.statusCode}')`);
         return reject(); // Known to exist because this is from a ClientRequest
       }
 
       if (response.headers["content-length"] === undefined) {
-        console.warn(
-          `Failed to download from appveyor. No content-length header`,
-        );
+        console.warn(`Failed to download from appveyor. No content-length header`);
         return reject();
       }
 
@@ -168,10 +158,7 @@ export async function InstallZip(
       zipFile.readEntry();
 
       zipFile.on("entry", async (entry: yauzl.Entry) => {
-        const absoluteEntryPath = path.resolve(
-          destinationInstallPath,
-          entry.fileName,
-        );
+        const absoluteEntryPath = path.resolve(destinationInstallPath, entry.fileName);
 
         if (entry.fileName.endsWith("/")) {
           // Directory - create it
@@ -180,10 +167,7 @@ export async function InstallZip(
             zipFile.readEntry();
           } catch (err) {
             const error = err as NodeJS.ErrnoException; // Hack for TypeScript to type err correctly
-            console.warn(
-              "Error creating directory for zip directory entry:" +
-                (error.code ?? ""),
-            );
+            console.warn("Error creating directory for zip directory entry:" + (error.code ?? ""));
             return reject();
           }
         } else {
@@ -202,9 +186,7 @@ export async function InstallZip(
               //const fileMode = binaryPaths?.includes(absoluteEntryPath) ? 0o755 : 0o664;
               const fileMode = 0o755;
 
-              readStream.pipe(
-                fs.createWriteStream(absoluteEntryPath, { mode: fileMode }),
-              );
+              readStream.pipe(fs.createWriteStream(absoluteEntryPath, { mode: fileMode }));
               readStream.on("end", () => zipFile.readEntry());
             } catch (err) {
               console.warn("Error creating directory for zip file entry");
@@ -226,10 +208,7 @@ export async function InstallZip(
   });
 }
 
-export function startLanguageServer(
-  context: vscode.ExtensionContext,
-  languageServerPath: string,
-) {
+export function startLanguageServer(context: vscode.ExtensionContext, languageServerPath: string) {
   // The server is implemented in dotnet
   const serverExe = "dotnet";
 

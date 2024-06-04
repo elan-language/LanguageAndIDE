@@ -6,18 +6,11 @@ import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../symbols/procedure-type";
-import {
-  mustBeProcedure,
-  mustBeKnownSymbol,
-  mustMatchParameters,
-} from "../compile-rules";
+import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
 import { callKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
-import {
-  scopePrefix,
-  updateScopeAndQualifier,
-} from "../symbols/symbol-helpers";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 
 export class CallStatement extends AbstractFrame implements Statement {
@@ -64,44 +57,25 @@ export class CallStatement extends AbstractFrame implements Statement {
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const astNode = this.proc.getOrTransformAstNode(
-      transforms,
-    ) as AstQualifiedNode;
+    const astNode = this.proc.getOrTransformAstNode(transforms) as AstQualifiedNode;
     const id = astNode.id;
 
-    const [qualifier, currentScope] = updateScopeAndQualifier(
-      astNode.qualifier,
-      transforms,
-      this,
-    );
+    const [qualifier, currentScope] = updateScopeAndQualifier(astNode.qualifier, transforms, this);
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
     mustBeKnownSymbol(procSymbol, this.compileErrors, this.htmlId);
-    mustBeProcedure(
-      procSymbol.symbolType(transforms),
-      this.compileErrors,
-      this.htmlId,
-    );
+    mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
     const ps = procSymbol.symbolType(transforms);
 
     if (ps instanceof ProcedureType) {
-      const argList = this.args.getOrTransformAstNode(
-        transforms,
-      ) as AstCollectionNode;
+      const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
       const params = argList.items;
-      mustMatchParameters(
-        params!,
-        ps.parametersTypes,
-        this.compileErrors,
-        this.htmlId,
-      );
+      mustMatchParameters(params!, ps.parametersTypes, this.compileErrors, this.htmlId);
     }
 
-    const q = qualifier
-      ? `${qualifier.compile()}`
-      : scopePrefix(procSymbol.symbolScope);
+    const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
 
     return `${this.indent()}${q}${id}(${this.args.compile(transforms)});`;
   }

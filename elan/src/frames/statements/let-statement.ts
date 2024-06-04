@@ -13,10 +13,7 @@ import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { AstIdNode } from "../interfaces/ast-id-node";
 
-export class LetStatement
-  extends AbstractFrame
-  implements Statement, ElanSymbol
-{
+export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
   name: VarDefField;
   expr: ExpressionField;
@@ -82,11 +79,7 @@ export class LetStatement
     return this.name.renderAsSource();
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }

@@ -15,10 +15,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { TupleType } from "../symbols/tuple-type";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 
-export class VarStatement
-  extends AbstractFrame
-  implements Statement, ElanSymbol
-{
+export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
   name: VarDefField;
   expr: ExpressionField;
@@ -95,11 +92,7 @@ export class VarStatement
 
   symbolScope = SymbolScope.local;
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }

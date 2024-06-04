@@ -61,8 +61,7 @@ export const withKeyword = "with";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
-export const abstractProcedureKeywords =
-  abstractKeyword + " " + procedureKeyword;
+export const abstractProcedureKeywords = abstractKeyword + " " + procedureKeyword;
 export const abstractFunctionKeywords = abstractKeyword + " " + functionKeyword;
 
 export const commentMarker = "#";

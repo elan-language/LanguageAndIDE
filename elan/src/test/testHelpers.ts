@@ -69,10 +69,7 @@ export async function assertEffectOfAction(
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(
-  sourceFile: string,
-  htmlFile: string,
-) {
+export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
@@ -107,11 +104,7 @@ export async function assertGeneratesHtmlandSameSource(
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
   const edit = new vscode.WorkspaceEdit();
 
-  edit.replace(
-    testDoc.uri,
-    new vscode.Range(0, 0, testDoc.lineCount, 0),
-    newContent,
-  );
+  edit.replace(testDoc.uri, new vscode.Range(0, 0, testDoc.lineCount, 0), newContent);
 
   vscode.workspace.applyEdit(edit).then((ok) => {
     if (ok) {
@@ -143,10 +136,7 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(
-  htmlFile: string,
-  frame: () => File,
-) {
+export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
 
   const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
@@ -167,10 +157,7 @@ export async function assertAreEqualByHtml(
   }
 }
 
-export async function assertAreEqualBySource(
-  sourceFile: string,
-  frame: () => File,
-) {
+export async function assertAreEqualBySource(sourceFile: string, frame: () => File) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
 
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -232,40 +219,24 @@ export async function assertAreEqualByFile<T extends Selectable>(
   assert.strictEqual(actualHtml, expectedHtml);
 }
 
-export function assertElementsById(
-  dom: jsdom.JSDOM,
-  id: string,
-  expected: string,
-) {
+export function assertElementsById(dom: jsdom.JSDOM, id: string, expected: string) {
   const e = dom.window.document.getElementById(id);
   const c = e?.className;
   assert.strictEqual(c, expected);
 }
 
-export async function assertElementHasClasses(
-  f: File,
-  elementId: string,
-  classes: string,
-) {
+export async function assertElementHasClasses(f: File, elementId: string, classes: string) {
   const dom = await readAsDOM(f);
   assertElementsById(dom, elementId, classes);
 }
 
-export function assertElementHtmlById(
-  dom: jsdom.JSDOM,
-  id: string,
-  expected: string,
-) {
+export function assertElementHtmlById(dom: jsdom.JSDOM, id: string, expected: string) {
   const e = dom.window.document.getElementById(id);
   const c = e?.innerHTML;
   assert.strictEqual(c, expected);
 }
 
-export async function assertElementContainsHtml(
-  f: File,
-  id: string,
-  expectedHtml: string,
-) {
+export async function assertElementContainsHtml(f: File, id: string, expectedHtml: string) {
   const dom = await readAsDOM(f);
   const e = dom.window.document.getElementById(id);
   const c = e?.innerHTML;
@@ -303,12 +274,7 @@ export async function assertHtml(
   assertElementHtmlById(postDom, assertClasses[0], assertClasses[1]);
 }
 
-export function key(
-  k: string,
-  shift?: boolean,
-  control?: boolean,
-  alt?: boolean,
-): editorEvent {
+export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean): editorEvent {
   return {
     key: k,
     modKey: { shift: !!shift, control: !!control, alt: !!alt },
@@ -557,11 +523,7 @@ const stubHolder = {
         return {
           symbolId: "",
           symbolType: () =>
-            new FunctionType(
-              [new GenericParameterType("T")],
-              new GenericParameterType("T"),
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false),
           symbolScope: SymbolScope.unknown,
         };
       case "getItem":

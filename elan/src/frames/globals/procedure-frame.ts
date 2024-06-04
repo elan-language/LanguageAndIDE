@@ -14,10 +14,7 @@ import { procedureKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 
-export abstract class ProcedureFrame
-  extends FrameWithStatements
-  implements ElanSymbol, Scope
-{
+export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
   public name: IdentifierField;
   public params: ParamList;
   file: File;
@@ -68,19 +65,13 @@ ${this.renderChildrenAsHtml()}
     return this.parseStandardEnding(source, "end procedure");
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this as ElanSymbol;
     }
     const s = this.params.resolveSymbol(id, transforms, initialScope);
 
-    return s instanceof UnknownSymbol
-      ? super.resolveSymbol(id, transforms, initialScope)
-      : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
   public compile(transforms: Transforms): string {

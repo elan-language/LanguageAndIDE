@@ -20,8 +20,7 @@ export class OptionalNode extends AbstractParseNode {
       option.parseText(text);
       if (
         option.status === ParseStatus.valid ||
-        (option.status === ParseStatus.incomplete &&
-          option.remainingText.trim() === "")
+        (option.status === ParseStatus.incomplete && option.remainingText.trim() === "")
       ) {
         this.updateFrom(option);
         this.matchedNode = option;
@@ -41,8 +40,6 @@ export class OptionalNode extends AbstractParseNode {
   }
 
   getCompletionAsHtml(): string {
-    return this.matchedNode
-      ? this.matchedNode.getCompletionAsHtml()
-      : super.getCompletionAsHtml();
+    return this.matchedNode ? this.matchedNode.getCompletionAsHtml() : super.getCompletionAsHtml();
   }
 }

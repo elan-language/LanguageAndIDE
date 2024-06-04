@@ -1,11 +1,6 @@
 import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
-import {
-  CompileStatus,
-  ParseStatus,
-  RunStatus,
-  TestStatus,
-} from "../status-enums";
+import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";

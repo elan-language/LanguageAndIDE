@@ -37,12 +37,7 @@ import { SetClause } from "../parse-nodes/set-clause";
 import { BracketedExpression } from "../parse-nodes/bracketed-expression";
 import { BracketedAsn } from "./bracketed-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
-import {
-  globalKeyword,
-  libraryKeyword,
-  propertyKeyword,
-  thisKeyword,
-} from "../keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { IndexNode } from "../parse-nodes/index-node";
 import { IndexAsn } from "./index-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
@@ -163,11 +158,7 @@ export function transformMany(
   const asts = new Array<AstNode>();
 
   for (const elem of node.getElements()) {
-    if (
-      elem instanceof Multiple ||
-      elem instanceof CSV ||
-      elem instanceof Sequence
-    ) {
+    if (elem instanceof Multiple || elem instanceof CSV || elem instanceof Sequence) {
       const asns = transformMany(elem, fieldId, scope).items;
 
       for (const asn of asns) {
@@ -192,11 +183,7 @@ export function transform(
   scope: Scope,
 ): AstNode | undefined {
   if (node instanceof BracketedExpression) {
-    return new BracketedAsn(
-      transform(node.expr, fieldId, scope)!,
-      fieldId,
-      scope,
-    );
+    return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId, scope);
   }
 
   if (node instanceof UnaryExpression) {
@@ -231,9 +218,7 @@ export function transform(
   }
 
   if (node instanceof LitStringNonEmpty) {
-    const ss = node.segments
-      ? transformMany(node.segments, fieldId, scope).items
-      : [];
+    const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
 
     if (ss.map((i) => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
       return new SegmentedStringAsn(ss, fieldId, scope);
@@ -259,8 +244,7 @@ export function transform(
   if (node instanceof FunctionCallNode) {
     const qualifier = transform(node.qualifier, fieldId, scope);
     const id = node.name!.matchedText;
-    const parameters = transformMany(node.args as CSV, fieldId, scope)
-      .items as Array<ExprAsn>;
+    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
     return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
   }
@@ -270,11 +254,7 @@ export function transform(
       .items as Array<ParamDefAsn>;
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
     // wrap sig scope in another scope to prevent looking up a symbol in current scope.
-    const body = transform(
-      node.expr,
-      fieldId,
-      wrapScopeInScope(sig),
-    ) as ExprAsn;
+    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as ExprAsn;
 
     return new LambdaAsn(sig, body, fieldId, scope);
   }
@@ -300,10 +280,7 @@ export function transform(
     return new TypeAsn(type, [gp], fieldId, scope);
   }
 
-  if (
-    node instanceof TypeDictionaryNode ||
-    node instanceof TypeImmutableDictionaryNode
-  ) {
+  if (node instanceof TypeDictionaryNode || node instanceof TypeImmutableDictionaryNode) {
     const type = node.simpleType!.matchedText;
     const key = transform(node.keyType, fieldId, scope)!;
     const value = transform(node.valueType, fieldId, scope)!;
@@ -312,12 +289,8 @@ export function transform(
 
   if (node instanceof FuncTypeNode) {
     const type = "Func";
-    const inp = node.inputTypes
-      ? transformMany(node.inputTypes, fieldId, scope).items
-      : [];
-    const oup = node.returnType
-      ? [transform(node.returnType, fieldId, scope)!]
-      : [];
+    const inp = node.inputTypes ? transformMany(node.inputTypes, fieldId, scope).items : [];
+    const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
     return new TypeAsn(type, inp.concat(oup), fieldId, scope);
   }
@@ -418,8 +391,7 @@ export function transform(
   }
 
   if (node instanceof DeconstructedTuple) {
-    const items = transformMany(node.csv as CSV, fieldId, scope)
-      .items as AstIdNode[];
+    const items = transformMany(node.csv as CSV, fieldId, scope).items as AstIdNode[];
     return new DeconstructedTupleAsn(items, fieldId, scope);
   }
 
@@ -440,9 +412,7 @@ export function transform(
   }
 
   if (node instanceof VarRefCompound) {
-    const q = transform(node.optQualifier, fieldId, scope) as
-      | AstQualifierNode
-      | undefined;
+    const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     const index = transform(node.index, fieldId, scope);
     return new VarAsn(id, q, index, fieldId, scope);
@@ -450,11 +420,7 @@ export function transform(
 
   if (node instanceof TermWith) {
     const obj = transform(node.term, fieldId, scope) as ExprAsn;
-    const changes = transform(
-      node.with,
-      fieldId,
-      scope,
-    ) as LiteralImmutableListAsn;
+    const changes = transform(node.with, fieldId, scope) as LiteralImmutableListAsn;
     return new WithAsn(obj, changes, fieldId, scope);
   }
 
@@ -521,23 +487,17 @@ export function transform(
   }
 
   if (node instanceof AssignableNode) {
-    const q = transform(node.qualifier, fieldId, scope) as
-      | AstQualifierNode
-      | undefined;
+    const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple.matchedText;
     const index = transform(node.index, fieldId, scope);
     return new VarAsn(id, q, index, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
-    const q = transform(node.qualifier, fieldId, scope) as
-      | AstQualifierNode
-      | undefined;
+    const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     return new VarAsn(id, q, undefined, fieldId, scope);
   }
 
-  throw new Error(
-    "Not implemented " + (node ? node.constructor.name : "undefined"),
-  );
+  throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
 }

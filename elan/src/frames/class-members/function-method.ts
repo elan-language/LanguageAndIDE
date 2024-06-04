@@ -26,8 +26,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public override compile(transforms: Transforms): string {
-    const returnStatement =
-      this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+    const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const tt = returnStatement?.symbolType();
     mustBeCompatibleType(
       this.returnType?.symbolType(transforms),
@@ -47,11 +46,7 @@ ${this.indent()}}\r
     return super.parseBottom(source);
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this as ElanSymbol;
     }

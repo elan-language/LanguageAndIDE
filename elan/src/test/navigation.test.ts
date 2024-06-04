@@ -4,17 +4,7 @@ import {
   T04_allGlobalsExceptClass,
   T05_classes,
 } from "./model-generating-functions.";
-import {
-  assertClasses,
-  down,
-  end,
-  esc,
-  home,
-  right,
-  shift_tab,
-  tab,
-  up,
-} from "./testHelpers";
+import { assertClasses, down, end, esc, home, right, shift_tab, tab, up } from "./testHelpers";
 import assert from "assert";
 import { IdentifierField } from "../frames/fields/identifier-field";
 import { ExpressionField } from "../frames/fields/expression-field";

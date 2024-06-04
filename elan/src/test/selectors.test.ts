@@ -16,12 +16,7 @@ import { FunctionMethod } from "../frames/class-members/function-method";
 import { hash } from "../util";
 import { DefaultProfile } from "../frames/default-profile";
 import { TestFrame } from "../frames/globals/test-frame";
-import {
-  assertKeyword,
-  functionKeyword,
-  letKeyword,
-  testKeyword,
-} from "../frames/keywords";
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../frames/keywords";
 import { Profile } from "../frames/interfaces/profile";
 import { transforms } from "./compiler/compiler-test-helpers";
 
@@ -55,10 +50,7 @@ suite("Unit tests", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select12").processKey(key("f"));
     const v = file.getById("func13").renderAsSource();
-    assert.equal(
-      v,
-      "  function () return \r\n" + "    return \r\n" + "  end function\r\n",
-    );
+    assert.equal(v, "  function () return \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
   test("Member Select - procedure", () => {
@@ -112,24 +104,15 @@ suite("Unit tests", () => {
     const c = new ClassFrame(f);
     c.makeAbstract();
     const s = new MemberSelector(c);
-    assert.equal(
-      s.getCompletion(),
-      " abstract function, abstract procedure, abstract property, #",
-    );
+    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property, #");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
-    assert.equal(
-      s.getCompletion(),
-      " abstract function, abstract procedure, abstract property,",
-    );
+    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
     s.processKey(key("a"));
     assert.equal(s.text, "abstract ");
     s.processKey(key("b"));
     assert.equal(s.text, "abstract ");
-    assert.equal(
-      s.getCompletion(),
-      " abstract function, abstract procedure, abstract property,",
-    );
+    assert.equal(s.getCompletion(), " abstract function, abstract procedure, abstract property,");
     s.processKey(key("p"));
     assert.equal(s.text, "abstract pro");
     assert.equal(s.getCompletion(), " abstract procedure, abstract property,");
@@ -144,10 +127,7 @@ suite("Unit tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(
-      help,
-      " call each for if input let print repeat set switch throw try var while #",
-    );
+    assert.equal(help, " call each for if input let print repeat set switch throw try var while #");
     s.processKey(key("s"));
     help = s.getCompletion();
     assert.equal(help, " set switch");
@@ -162,10 +142,7 @@ suite("Unit tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
-    assert.equal(
-      help,
-      " each for if let repeat set switch throw try var while #",
-    );
+    assert.equal(help, " each for if let repeat set switch throw try var while #");
   });
 
   test("Selection Context - in a Test", () => {
@@ -183,10 +160,7 @@ suite("Unit tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     const help = s.getCompletion();
-    assert.equal(
-      help,
-      " each for if let repeat set switch throw try var while #",
-    ); //no else, print, call
+    assert.equal(help, " each for if let repeat set switch throw try var while #"); //no else, print, call
   });
 
   test("Selection Context - deeper nesting 2", () => {
@@ -196,10 +170,7 @@ suite("Unit tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(
-      help,
-      " each else for if let repeat set switch throw try var while #",
-    ); //else, but no print, call
+    assert.equal(help, " each else for if let repeat set switch throw try var while #"); //else, but no print, call
   });
 
   test("Selection Context - in a Switch", () => {

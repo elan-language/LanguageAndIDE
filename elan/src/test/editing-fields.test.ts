@@ -16,9 +16,7 @@ suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
 
   test("Entry of text with formatting", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const set = new SetStatement(main);
     const expr = set.expr;
     expr.processKey(key("3"));
@@ -61,9 +59,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of text with formatting 2", () => {
-    const f = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
     const t = f.returnType;
     t.processKey(key("F"));
     assert.equal(t.text, "F");
@@ -120,9 +116,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of text with formatting 3", () => {
-    const f = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const f = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
     const t = f.returnType;
     t.processKey(key("("));
     assert.equal(t.text, "(");
@@ -166,9 +160,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Entry of expression using 'is' - #464", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const if1 = new IfStatement(main);
     const expr = if1.condition;
     expr.processKey(key("a"));
@@ -189,9 +181,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Tabbing to use plain text completions #485", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const v = new VarStatement(main);
     const expr = v.expr;
     expr.processKey(key("l"));
@@ -204,10 +194,7 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key("a"));
     expr.processKey(key(" "));
     assert.equal(expr.text, "lambda a ");
-    assert.equal(
-      expr.getCompletion(),
-      "as <pr>Type</pr> => <pr>expression</pr>",
-    );
+    assert.equal(expr.getCompletion(), "as <pr>Type</pr> => <pr>expression</pr>");
     expr.processKey(key("Tab"));
     assert.equal(expr.text, "lambda a as ");
     assert.equal(expr.getCompletion(), "<pr>Type</pr> => <pr>expression</pr>");

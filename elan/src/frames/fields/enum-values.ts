@@ -35,9 +35,7 @@ export class EnumValues extends AbstractField {
       if (items.length > 0) {
         const def = `_default : "${items[0].compile()}", `;
 
-        const itStr = items
-          .map((n) => `${n.compile()} : "${n.compile()}"`)
-          .join(", ");
+        const itStr = items.map((n) => `${n.compile()} : "${n.compile()}"`).join(", ");
 
         return `${def}${itStr}`;
       }

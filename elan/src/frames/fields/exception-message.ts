@@ -18,10 +18,7 @@ export class ExceptionMessage extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new Alternatives([
-      () => new LitStringNonEmpty(),
-      () => new IdentifierNode(),
-    ]);
+    this.rootNode = new Alternatives([() => new LitStringNonEmpty(), () => new IdentifierNode()]);
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

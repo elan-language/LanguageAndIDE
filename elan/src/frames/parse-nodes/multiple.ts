@@ -30,10 +30,7 @@ export class Multiple extends AbstractParseNode {
         if (node.status === ParseStatus.valid) {
           this.elements.push(node);
           toParse = node.remainingText;
-        } else if (
-          node.status === ParseStatus.incomplete &&
-          node.remainingText.trim() === ""
-        ) {
+        } else if (node.status === ParseStatus.incomplete && node.remainingText.trim() === "") {
           this.elements.push(node);
           toParse = node.remainingText;
         } else {
@@ -57,16 +54,10 @@ export class Multiple extends AbstractParseNode {
   }
 
   renderAsHtml(): string {
-    return this.elements.reduce(
-      (result, current) => result + current.renderAsHtml(),
-      "",
-    );
+    return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
   renderAsSource(): string {
-    return this.elements.reduce(
-      (result, current) => result + current.renderAsSource(),
-      "",
-    );
+    return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
   }
 
   getCompletionAsHtml(): string {

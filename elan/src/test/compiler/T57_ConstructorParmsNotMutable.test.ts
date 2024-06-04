@@ -1,11 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import {
-  assertDoesNotCompile,
-  assertParses,
-  testHash,
-  transforms,
-} from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertParses, testHash, transforms } from "./compiler-test-helpers";
 
 suite("T57_ConstructorParmsNotMutable", () => {
   test("Fail_reassigningIntParam", async () => {
@@ -24,12 +19,7 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -49,12 +39,7 @@ class Foo
     end function
 end class`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

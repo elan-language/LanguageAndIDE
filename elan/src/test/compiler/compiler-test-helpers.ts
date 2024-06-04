@@ -6,10 +6,7 @@ import { getTestSystem } from "./test-system";
 import { isSymbol } from "../../frames/symbols/symbol-helpers";
 import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
-import {
-  transform,
-  transformMany,
-} from "../../frames/syntax-nodes/ast-visitor";
+import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../../frames/syntax-nodes/transforms";
 import { AssertOutcome } from "../../system";
 
@@ -103,11 +100,7 @@ export function executeTestCode(file: FileImpl, input?: string) {
   });
 }
 
-export async function assertObjectCodeExecutes(
-  file: FileImpl,
-  output: string,
-  input?: string,
-) {
+export async function assertObjectCodeExecutes(file: FileImpl, output: string, input?: string) {
   let actual;
 
   try {
@@ -131,11 +124,7 @@ export async function assertTestObjectCodeExecutes(
     assert.fail((e as { message: string }).message ?? "");
   }
 
-  assert.strictEqual(
-    actualOutcomes.length,
-    expectedOutcomes.length,
-    "mismatched all outcomes",
-  );
+  assert.strictEqual(actualOutcomes.length, expectedOutcomes.length, "mismatched all outcomes");
 
   for (let i = 0; i < expectedOutcomes.length; i++) {
     const ao = actualOutcomes[i];
@@ -156,10 +145,7 @@ export async function assertTestObjectCodeExecutes(
   }
 }
 
-export async function assertObjectCodeDoesNotExecute(
-  file: FileImpl,
-  msg?: string,
-) {
+export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg?: string) {
   try {
     await executeCode(file);
     assert.fail();

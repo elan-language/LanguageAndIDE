@@ -80,19 +80,11 @@ export class StatementSelector extends AbstractSelector {
       result = keyword === caseKeyword;
     } else if (keyword === assertKeyword || keyword === caseKeyword) {
       result = false;
-    } else if (
-      keyword === returnKeyword ||
-      keyword === catchKeyword ||
-      keyword === emptyKeyword
-    ) {
+    } else if (keyword === returnKeyword || keyword === catchKeyword || keyword === emptyKeyword) {
       result = !userEntry;
     } else if (keyword === elseKeyword) {
       result = this.getParent().getIdPrefix() === ifKeyword;
-    } else if (
-      keyword === printKeyword ||
-      keyword === callKeyword ||
-      keyword === inputKeyword
-    ) {
+    } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
       result = !this.isWithinAFunction(this.getParent());
     } else {
       result = true;

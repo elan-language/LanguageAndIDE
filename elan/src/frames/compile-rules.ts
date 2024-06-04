@@ -58,9 +58,7 @@ export function mustBeOfSymbolType(
 ) {
   const unknown = exprType?.name === undefined || ofType.name === undefined;
   if (exprType?.name !== ofType.name) {
-    compileErrors.push(
-      new TypeCompileError(ofType.toString(), location, unknown),
-    );
+    compileErrors.push(new TypeCompileError(ofType.toString(), location, unknown));
   }
 }
 
@@ -82,20 +80,10 @@ export function mustBeOneOrTwoOfTypeInt(
     compileErrors.push(new ArraySizeCompileError(location));
   }
   if (params.length > 0) {
-    mustBeOfSymbolType(
-      params[0].symbolType(),
-      IntType.Instance,
-      compileErrors,
-      location,
-    );
+    mustBeOfSymbolType(params[0].symbolType(), IntType.Instance, compileErrors, location);
   }
   if (params.length > 1) {
-    mustBeOfSymbolType(
-      params[1].symbolType(),
-      IntType.Instance,
-      compileErrors,
-      location,
-    );
+    mustBeOfSymbolType(params[1].symbolType(), IntType.Instance, compileErrors, location);
   }
 }
 
@@ -106,17 +94,12 @@ export function mustHaveLastSingleElse(
 ) {
   if (elses.filter((s) => !s.hasIf).length > 1) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `Cannot have multiple unconditional 'Else'`,
-        location,
-      ),
+      new SyntaxCompileError(`Cannot have multiple unconditional 'Else'`, location),
     );
   }
 
   if (elses[elses.length - 1].hasIf) {
-    compileErrors.push(
-      new SyntaxCompileError(`Must end with unconditional 'Else'`, location),
-    );
+    compileErrors.push(new SyntaxCompileError(`Must end with unconditional 'Else'`, location));
   }
 }
 
@@ -126,9 +109,7 @@ export function mustBeKnownSymbol(
   location: string,
 ) {
   if (symbol instanceof UnknownSymbol) {
-    compileErrors.push(
-      new UndefinedSymbolCompileError(symbol.symbolId, location),
-    );
+    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
   }
 }
 
@@ -159,21 +140,14 @@ export function mustBeImmutableType(
   }
 }
 
-export function mustNotBeKeyword(
-  id: string,
-  compileErrors: CompileError[],
-  location: string,
-) {
+export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
   if (id === thisKeyword) {
     return;
   }
 
   if (allKeywords.includes(id)) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `'${id}' keyword may not be used as identifier`,
-        location,
-      ),
+      new SyntaxCompileError(`'${id}' keyword may not be used as identifier`, location),
     );
   }
 }
@@ -256,14 +230,10 @@ export function mustBeIndexableSymbol(
       symbolType instanceof StringType ||
       symbolType instanceof DictionaryType)
   ) {
-    compileErrors.push(
-      new NotIndexableCompileError(symbolType.toString(), location, false),
-    );
+    compileErrors.push(new NotIndexableCompileError(symbolType.toString(), location, false));
   }
   if (!isDouble && symbolType instanceof ArrayListType && symbolType.is2d) {
-    compileErrors.push(
-      new NotIndexableCompileError(symbolType.toString(), location, false),
-    );
+    compileErrors.push(new NotIndexableCompileError(symbolType.toString(), location, false));
   }
 }
 
@@ -273,9 +243,7 @@ export function mustBeAbstractClass(
   location: string,
 ) {
   if (!classType.isAbstract) {
-    compileErrors.push(
-      new MustBeAbstractCompileError(classType.toString(), location),
-    );
+    compileErrors.push(new MustBeAbstractCompileError(classType.toString(), location));
   }
 }
 
@@ -285,9 +253,7 @@ export function mustBePublicProperty(
   location: string,
 ) {
   if (property instanceof Property && property.private === true) {
-    compileErrors.push(
-      new PrivatePropertyCompileError(property.name.text, location),
-    );
+    compileErrors.push(new PrivatePropertyCompileError(property.name.text, location));
   }
 }
 
@@ -302,11 +268,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols) {
-      const subSymbol = classType.resolveSymbol(
-        superSymbol.symbolId,
-        transforms,
-        classType,
-      );
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
 
       if (subSymbol instanceof UnknownSymbol) {
         compileErrors.push(
@@ -335,9 +297,7 @@ export function mustBeConcreteClass(
   location: string,
 ) {
   if (classType.isAbstract) {
-    compileErrors.push(
-      new MustBeConcreteCompileError(classType.toString(), location),
-    );
+    compileErrors.push(new MustBeConcreteCompileError(classType.toString(), location));
   }
 }
 
@@ -365,9 +325,7 @@ export function mustMatchParameters(
     const t = ofType[i];
 
     if (p === undefined || t === undefined) {
-      compileErrors.push(
-        new ParametersCompileError(ofType.length, parms.length, location),
-      );
+      compileErrors.push(new ParametersCompileError(ofType.length, parms.length, location));
     } else {
       mustBeCompatibleType(t, p.symbolType(), compileErrors, location);
     }
@@ -381,9 +339,7 @@ function FailIncompatible(
   location: string,
 ) {
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  compileErrors.push(
-    new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown),
-  );
+  compileErrors.push(new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown));
 }
 
 export function mustBeCoercibleType(
@@ -453,10 +409,7 @@ export function mustBeInvariantType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    lhs instanceof FloatType &&
-    !(rhs instanceof IntType || rhs instanceof FloatType)
-  ) {
+  if (lhs instanceof FloatType && !(rhs instanceof IntType || rhs instanceof FloatType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
@@ -484,29 +437,20 @@ export function mustBeCompatibleType(
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
-  if (
-    lhs instanceof FloatType &&
-    !(rhs instanceof IntType || rhs instanceof FloatType)
-  ) {
+  if (lhs instanceof FloatType && !(rhs instanceof IntType || rhs instanceof FloatType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
   if (
     lhs instanceof ImmutableListType &&
-    !(
-      lhs.name === rhs.name ||
-      lhs.name === new IterType((lhs as ImmutableListType).ofType).name
-    )
+    !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ImmutableListType).ofType).name)
   ) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
   if (
     lhs instanceof ArrayListType &&
-    !(
-      lhs.name === rhs.name ||
-      lhs.name === new IterType((lhs as ArrayListType).ofType).name
-    )
+    !(lhs.name === rhs.name || lhs.name === new IterType((lhs as ArrayListType).ofType).name)
   ) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
@@ -548,20 +492,13 @@ export function mustBeCompatibleType(
 
   if (
     lhs instanceof IterType &&
-    (rhs instanceof ImmutableListType ||
-      rhs instanceof ArrayListType ||
-      rhs instanceof IterType)
+    (rhs instanceof ImmutableListType || rhs instanceof ArrayListType || rhs instanceof IterType)
   ) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
   if (lhs instanceof IterType && rhs instanceof StringType) {
-    if (
-      !(
-        lhs.ofType instanceof GenericParameterType ||
-        lhs.ofType instanceof StringType
-      )
-    ) {
+    if (!(lhs.ofType instanceof GenericParameterType || lhs.ofType instanceof StringType)) {
       FailIncompatible(lhs, rhs, compileErrors, location);
       return;
     }
@@ -601,18 +538,8 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
-    mustBeCompatibleTypes(
-      lhs.parametersTypes,
-      rhs.parametersTypes,
-      compileErrors,
-      location,
-    );
-    mustBeCompatibleType(
-      lhs.returnType,
-      rhs.returnType,
-      compileErrors,
-      location,
-    );
+    mustBeCompatibleTypes(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
+    mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;
   }
 }
@@ -648,9 +575,7 @@ export function mustNotBePropertyOnFunctionMethod(
     const s = assignable.symbolScope;
 
     if (s !== SymbolScope.local) {
-      compileErrors.push(
-        new MutateCompileError(`non local data in function`, location),
-      );
+      compileErrors.push(new MutateCompileError(`non local data in function`, location));
     }
   }
 }
@@ -702,11 +627,7 @@ export function mustNotBeConstant(
   }
 }
 
-export function mustNotBeLet(
-  symbol: ElanSymbol,
-  compileErrors: CompileError[],
-  location: string,
-) {
+export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (symbol instanceof LetStatement) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, location));
   }
@@ -717,10 +638,7 @@ export function mustNotBeReassigned(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(variable instanceof UnknownSymbol) &&
-    variable.symbolScope === SymbolScope.local
-  ) {
+  if (!(variable instanceof UnknownSymbol) && variable.symbolScope === SymbolScope.local) {
     compileErrors.push(new ReassignCompileError(variable.symbolId, location));
   }
 }

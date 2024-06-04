@@ -82,11 +82,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
     source.remove("end enum");
   }
 
-  resolveSymbol(
-    id: string,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const names = this.values
       .renderAsSource()
       .split(",")

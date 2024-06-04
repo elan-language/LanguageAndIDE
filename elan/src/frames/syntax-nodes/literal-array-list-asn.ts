@@ -7,10 +7,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ArrayListType } from "../symbols/array-list-type";
 
-export class LiteralArrayListAsn
-  extends AbstractAstNode
-  implements AstCollectionNode
-{
+export class LiteralArrayListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
@@ -32,12 +29,7 @@ export class LiteralArrayListAsn
     const ofType = this.items[0]?.symbolType();
 
     for (const i of this.items) {
-      mustBeCompatibleType(
-        ofType,
-        i.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustBeCompatibleType(ofType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");

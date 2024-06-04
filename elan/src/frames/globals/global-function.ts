@@ -25,8 +25,7 @@ ${endKeyword} ${functionKeyword}\r
   }
 
   public compile(transforms: Transforms): string {
-    const returnStatement =
-      this.getReturnStatement().expr.getOrTransformAstNode(transforms);
+    const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const tt = returnStatement?.symbolType();
     mustBeCompatibleType(
       this.returnType?.symbolType(transforms),

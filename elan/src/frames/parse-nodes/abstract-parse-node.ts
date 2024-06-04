@@ -13,9 +13,7 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   getCompletionAsHtml(): string {
-    return this.status === ParseStatus.empty
-      ? `<pr>${this.completionWhenEmpty}</pr>`
-      : "";
+    return this.status === ParseStatus.empty ? `<pr>${this.completionWhenEmpty}</pr>` : "";
   }
 
   renderAsSource(): string {
@@ -32,12 +30,7 @@ export abstract class AbstractParseNode implements ParseNode {
     return this.matchedText.trim();
   } //TODO make abstract
 
-  protected set(
-    status: ParseStatus,
-    matched: string,
-    remaining: string,
-    errorMessage = "",
-  ) {
+  protected set(status: ParseStatus, matched: string, remaining: string, errorMessage = "") {
     this.status = status;
     this.matchedText = matched;
     this.remainingText = remaining;

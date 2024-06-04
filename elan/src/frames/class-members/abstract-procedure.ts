@@ -13,10 +13,7 @@ import { Parent } from "../interfaces/parent";
 import { abstractProcedureKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractProcedure
-  extends AbstractFrame
-  implements Member, ElanSymbol
-{
+export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
   public name: IdentifierField;

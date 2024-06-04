@@ -51,10 +51,7 @@ import {
   inheritsKeyword,
   thisKeyword,
 } from "../keywords";
-import {
-  mustBeAbstractClass,
-  mustImplementSuperClasses,
-} from "../compile-rules";
+import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
 import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -63,10 +60,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Class } from "../interfaces/class";
 
-export class ClassFrame
-  extends AbstractFrame
-  implements Class, Parent, Collapsible, ElanSymbol
-{
+export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
@@ -97,9 +91,7 @@ export class ClassFrame
   }
   private hasAddedMembers(): boolean {
     return (
-      this.getChildren().filter(
-        (m) => !("isConstructor" in m || "isSelector" in m),
-      ).length > 0
+      this.getChildren().filter((m) => !("isConstructor" in m || "isSelector" in m)).length > 0
     );
   }
   get symbolId() {
@@ -233,13 +225,7 @@ export class ClassFrame
   getFields(): Field[] {
     return this.hasAddedMembers()
       ? [this.name, this.inherits, this.superClasses]
-      : [
-          this.abstract,
-          this.immutable,
-          this.name,
-          this.inherits,
-          this.superClasses,
-        ];
+      : [this.abstract, this.immutable, this.name, this.inherits, this.superClasses];
   }
 
   getIdPrefix(): string {
@@ -308,9 +294,7 @@ end class\r\n`;
     this.compileErrors = [];
 
     if (this.doesInherit()) {
-      const superClasses = this.superClasses.getOrTransformAstNode(
-        transforms,
-      ) as AstCollectionNode;
+      const superClasses = this.superClasses.getOrTransformAstNode(transforms) as AstCollectionNode;
       const nodes = superClasses.items as AstIdNode[];
       const superClassSymbolTypes = nodes
         .map((n) => this.resolveSymbol(n.id, transforms, this))
@@ -366,9 +350,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   }
 
   public getConstructor(): Constructor {
-    return this.getChildren().filter(
-      (m) => "isConstructor" in m,
-    )[0] as Constructor;
+    return this.getChildren().filter((m) => "isConstructor" in m)[0] as Constructor;
   }
   parseFrom(source: CodeSource): void {
     this.parseTop(source);
@@ -421,11 +403,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     return new MemberSelector(this);
   }
 
-  resolveSymbol(
-    id: string,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }

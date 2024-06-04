@@ -26,12 +26,7 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    mustBeOfType(
-      this.condition,
-      BooleanType.Instance,
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
     return `${this.condition.compile()} ? ${this.expr1.compile()} : ${this.expr2.compile()}`;
   }
 

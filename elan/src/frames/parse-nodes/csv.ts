@@ -19,8 +19,7 @@ export class CSV extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     let commaNodesMin = 0;
-    const commaNode = () =>
-      new Sequence([() => new CommaNode(), this.elementConstructor]);
+    const commaNode = () => new Sequence([() => new CommaNode(), this.elementConstructor]);
 
     if (this.minimum === 0) {
       this.addElement(new OptionalNode(this.elementConstructor()));

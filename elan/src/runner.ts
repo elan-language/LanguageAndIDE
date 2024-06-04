@@ -1,9 +1,7 @@
 import { StdLib } from "./std-lib";
 import { AssertOutcome, System } from "./system";
 
-export function runTests(
-  tests: [string, (_outcomes: AssertOutcome[]) => void][],
-) {
+export function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]) {
   const allOutcomes: [string, AssertOutcome[]][] = [];
 
   for (const t of tests) {

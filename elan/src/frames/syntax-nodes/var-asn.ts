@@ -4,11 +4,7 @@ import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
-import {
-  mustBeIndexableSymbol,
-  mustBeKnownSymbol,
-  mustBePublicProperty,
-} from "../compile-rules";
+import { mustBeIndexableSymbol, mustBeKnownSymbol, mustBePublicProperty } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -29,10 +25,7 @@ import { LetStatement } from "../statements/let-statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 
-export class VarAsn
-  extends AbstractAstNode
-  implements AstIdNode, AstQualifiedNode
-{
+export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
     public readonly id: string,
     public readonly qualifier: AstQualifierNode | undefined,
@@ -51,15 +44,11 @@ export class VarAsn
   }
 
   private isRange() {
-    return (
-      this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn
-    );
+    return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
   }
 
   private isIndex() {
-    return (
-      this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn)
-    );
+    return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
   private getQualifier() {
@@ -95,21 +84,13 @@ export class VarAsn
 
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
     if (classScope instanceof ClassType) {
-      const classSymbol = this.scope.resolveSymbol(
-        classScope.className,
-        transforms(),
-        this.scope,
-      );
+      const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
         mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
       }
     } else {
-      symbol = getParentScope(this.scope).resolveSymbol(
-        this.id,
-        transforms(),
-        this.scope,
-      );
+      symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     }
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
@@ -141,19 +122,12 @@ export class VarAsn
   updateScope(currentScope: Scope) {
     const classScope = this.qualifier ? this.qualifier.symbolType() : undefined;
     if (classScope instanceof ClassType) {
-      const s = this.scope.resolveSymbol(
-        classScope.className,
-        transforms(),
-        this.scope,
-      );
+      const s = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       // replace scope with class scope
       currentScope = isScope(s) ? s : currentScope;
     } else if (classScope instanceof ClassType) {
       currentScope = classScope as Scope;
-    } else if (
-      this.qualifier instanceof QualifierAsn &&
-      this.qualifier?.value instanceof ThisAsn
-    ) {
+    } else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
       currentScope = getClassScope(currentScope as Frame);
     } else {
       currentScope = getParentScope(currentScope);
@@ -173,10 +147,7 @@ export class VarAsn
   symbolType() {
     const rootType = this.rootSymbolType();
     if (this.isIndex()) {
-      if (
-        rootType instanceof ImmutableListType ||
-        rootType instanceof ArrayListType
-      ) {
+      if (rootType instanceof ImmutableListType || rootType instanceof ArrayListType) {
         return rootType.ofType;
       }
 
@@ -189,11 +160,7 @@ export class VarAsn
 
   get symbolScope() {
     const currentScope = this.updateScope(this.scope);
-    const symbol = currentScope.resolveSymbol(
-      this.id,
-      transforms(),
-      this.scope,
-    );
+    const symbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     return symbol.symbolScope;
   }
 

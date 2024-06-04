@@ -38,11 +38,7 @@ export class StdLibSymbols implements Scope {
       "asString",
       this.getSymbol(
         "asString",
-        new FunctionType(
-          [new GenericParameterType("T")],
-          StringType.Instance,
-          true,
-        ),
+        new FunctionType([new GenericParameterType("T")], StringType.Instance, true),
       ),
     ],
     [
@@ -121,24 +117,14 @@ export class StdLibSymbols implements Scope {
       "mod",
       this.getSymbol(
         "mod",
-        new FunctionType(
-          [IntType.Instance, IntType.Instance],
-          IntType.Instance,
-          false,
-          true,
-        ),
+        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
       ),
     ],
     [
       "div",
       this.getSymbol(
         "div",
-        new FunctionType(
-          [IntType.Instance, IntType.Instance],
-          IntType.Instance,
-          false,
-          true,
-        ),
+        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, true),
       ),
     ],
     [
@@ -194,22 +180,14 @@ export class StdLibSymbols implements Scope {
       "length",
       this.getSymbol(
         "length",
-        new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
-          IntType.Instance,
-          true,
-        ),
+        new FunctionType([new IterType(new GenericParameterType("T"))], IntType.Instance, true),
       ),
     ],
     [
       "count",
       this.getSymbol(
         "count",
-        new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
-          IntType.Instance,
-          true,
-        ),
+        new FunctionType([new IterType(new GenericParameterType("T"))], IntType.Instance, true),
       ),
     ],
     [
@@ -226,11 +204,7 @@ export class StdLibSymbols implements Scope {
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
           ],
-          new DictionaryType(
-            new GenericParameterType("T1"),
-            new GenericParameterType("T2"),
-            true,
-          ),
+          new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"), true),
           true,
         ),
       ),
@@ -248,11 +222,7 @@ export class StdLibSymbols implements Scope {
             ),
             new GenericParameterType("T1"),
           ],
-          new DictionaryType(
-            new GenericParameterType("T1"),
-            new GenericParameterType("T2"),
-            true,
-          ),
+          new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"), true),
           true,
         ),
       ),
@@ -260,67 +230,42 @@ export class StdLibSymbols implements Scope {
     ["pi", this.getSymbol("pi", FloatType.Instance)],
     [
       "sin",
-      this.getSymbol(
-        "sin",
-        new FunctionType([FloatType.Instance], FloatType.Instance, false),
-      ),
+      this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "cos",
-      this.getSymbol(
-        "cos",
-        new FunctionType([FloatType.Instance], FloatType.Instance, false),
-      ),
+      this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "sqrt",
-      this.getSymbol(
-        "sqrt",
-        new FunctionType([FloatType.Instance], FloatType.Instance, false),
-      ),
+      this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "isBefore",
       this.getSymbol(
         "isBefore",
-        new FunctionType(
-          [StringType.Instance, StringType.Instance],
-          BooleanType.Instance,
-          false,
-        ),
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
       ),
     ],
     [
       "isAfter",
       this.getSymbol(
         "isAfter",
-        new FunctionType(
-          [StringType.Instance, StringType.Instance],
-          BooleanType.Instance,
-          false,
-        ),
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
       ),
     ],
     [
       "isBeforeOrSameAs",
       this.getSymbol(
         "isBeforeOrSameAs",
-        new FunctionType(
-          [StringType.Instance, StringType.Instance],
-          BooleanType.Instance,
-          false,
-        ),
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
       ),
     ],
     [
       "isAfterOrSameAs",
       this.getSymbol(
         "isAfterOrSameAs",
-        new FunctionType(
-          [StringType.Instance, StringType.Instance],
-          BooleanType.Instance,
-          false,
-        ),
+        new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
       ),
     ],
     ["newline", this.getSymbol("newline", StringType.Instance)],
@@ -329,12 +274,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "first",
         new FunctionType(
-          [
-            new TupleType([
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ]),
-          ],
+          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
           new GenericParameterType("T1"),
           true,
         ),
@@ -345,12 +285,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "second",
         new FunctionType(
-          [
-            new TupleType([
-              new GenericParameterType("T1"),
-              new GenericParameterType("T2"),
-            ]),
-          ],
+          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")])],
           new GenericParameterType("T2"),
           true,
         ),
@@ -360,64 +295,31 @@ export class StdLibSymbols implements Scope {
       "indexOf",
       this.getSymbol(
         "indexOf",
-        new FunctionType(
-          [StringType.Instance, StringType.Instance],
-          IntType.Instance,
-          true,
-        ),
+        new FunctionType([StringType.Instance, StringType.Instance], IntType.Instance, true),
       ),
     ],
     [
       "typeAndProperties",
       this.getSymbol(
         "typeAndProperties",
-        new FunctionType(
-          [new GenericParameterType("")],
-          StringType.Instance,
-          false,
-        ),
+        new FunctionType([new GenericParameterType("")], StringType.Instance, false),
       ),
     ],
-    [
-      "pause",
-      this.getSymbol("pause", new ProcedureType([IntType.Instance], false)),
-    ],
-    [
-      "readKey",
-      this.getSymbol(
-        "readKey",
-        new FunctionType([], FloatType.Instance, false, false),
-      ),
-    ],
-    [
-      "random",
-      this.getSymbol(
-        "random",
-        new FunctionType([], FloatType.Instance, false, false),
-      ),
-    ],
+    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false))],
+    ["readKey", this.getSymbol("readKey", new FunctionType([], FloatType.Instance, false, false))],
+    ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
       "randomInt",
       this.getSymbol(
         "randomInt",
-        new FunctionType(
-          [IntType.Instance, IntType.Instance],
-          IntType.Instance,
-          false,
-          false,
-        ),
+        new FunctionType([IntType.Instance, IntType.Instance], IntType.Instance, false, false),
       ),
     ],
     [
       "toPrecision",
       this.getSymbol(
         "toPrecision",
-        new FunctionType(
-          [FloatType.Instance, IntType.Instance],
-          StringType.Instance,
-          true,
-          true,
-        ),
+        new FunctionType([FloatType.Instance, IntType.Instance], StringType.Instance, true, true),
       ),
     ],
     [
@@ -427,11 +329,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),
-            new FunctionType(
-              [new GenericParameterType("T")],
-              BooleanType.Instance,
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false),
           ],
           new IterType(new GenericParameterType("T")),
           true,
@@ -445,11 +343,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),
-            new FunctionType(
-              [new GenericParameterType("T")],
-              new GenericParameterType("U"),
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], new GenericParameterType("U"), false),
           ],
           new IterType(new GenericParameterType("U")),
           true,
@@ -479,11 +373,7 @@ export class StdLibSymbols implements Scope {
       "max",
       this.getSymbol(
         "max",
-        new FunctionType(
-          [new IterType(FloatType.Instance)],
-          FloatType.Instance,
-          true,
-        ),
+        new FunctionType([new IterType(FloatType.Instance)], FloatType.Instance, true),
       ),
     ],
     [
@@ -493,11 +383,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),
-            new FunctionType(
-              [new GenericParameterType("T")],
-              FloatType.Instance,
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], FloatType.Instance, false),
           ],
           new GenericParameterType("T"),
           true,
@@ -508,11 +394,7 @@ export class StdLibSymbols implements Scope {
       "min",
       this.getSymbol(
         "min",
-        new FunctionType(
-          [new IterType(FloatType.Instance)],
-          FloatType.Instance,
-          true,
-        ),
+        new FunctionType([new IterType(FloatType.Instance)], FloatType.Instance, true),
       ),
     ],
     [
@@ -522,11 +404,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),
-            new FunctionType(
-              [new GenericParameterType("T")],
-              FloatType.Instance,
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], FloatType.Instance, false),
           ],
           new GenericParameterType("T"),
           true,
@@ -540,11 +418,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [
             new IterType(new GenericParameterType("T")),
-            new FunctionType(
-              [new GenericParameterType("T")],
-              BooleanType.Instance,
-              false,
-            ),
+            new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false),
           ],
           BooleanType.Instance,
           true,
@@ -567,23 +441,14 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "size",
         new ProcedureType(
-          [
-            new ArrayListType(new GenericParameterType("T"), false),
-            IntType.Instance,
-          ],
+          [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
           true,
         ),
       ),
     ],
   ]);
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    scope: Scope,
-  ): ElanSymbol {
-    return id
-      ? this.symbols.get(id) ?? new UnknownSymbol(id)
-      : new UnknownSymbol();
+  resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
+    return id ? this.symbols.get(id) ?? new UnknownSymbol(id) : new UnknownSymbol();
   }
 }

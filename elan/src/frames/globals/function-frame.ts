@@ -18,10 +18,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { mustBeCompatibleType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 
-export abstract class FunctionFrame
-  extends FrameWithStatements
-  implements Parent, ElanSymbol
-{
+export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
@@ -95,25 +92,17 @@ ${this.renderChildrenAsHtml()}
     return result;
   }
   protected getReturnStatement(): ReturnStatement {
-    return this.getChildren().filter(
-      (s) => "isReturnStatement" in s,
-    )[0] as ReturnStatement;
+    return this.getChildren().filter((s) => "isReturnStatement" in s)[0] as ReturnStatement;
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this as ElanSymbol;
     }
 
     const s = this.params.resolveSymbol(id, transforms, initialScope);
 
-    return s instanceof UnknownSymbol
-      ? super.resolveSymbol(id, transforms, initialScope)
-      : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
   public compile(transforms: Transforms): string {

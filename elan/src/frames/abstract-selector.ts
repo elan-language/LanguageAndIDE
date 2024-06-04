@@ -30,49 +30,30 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   abstract defaultOptions(): [string, (parent: Parent) => Frame][];
   abstract profileAllows(keyword: string): boolean;
-  abstract validWithinCurrentContext(
-    keyword: string,
-    userEntry: boolean,
-  ): boolean;
+  abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(
-    userEntry: boolean,
-  ): [string, (parent: Parent) => Frame][] {
-    return this.defaultOptions().filter((o) =>
-      this.validWithinCurrentContext(o[0], userEntry),
-    );
+  optionsFilteredByContext(userEntry: boolean): [string, (parent: Parent) => Frame][] {
+    return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByProfile(
-    userEntry: boolean,
-  ): [string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByContext(userEntry).filter((o) =>
-      this.profileAllows(o[0]),
-    );
+  optionsFilteredByProfile(userEntry: boolean): [string, (parent: Parent) => Frame][] {
+    return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
   }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    const options = this.optionsFilteredByContext(false).filter((o) =>
-      source.isMatch(o[0]),
-    );
+    const options = this.optionsFilteredByContext(false).filter((o) => source.isMatch(o[0]));
     if (options.length === 1) {
       const typeToAdd = options[0][0];
       const frame = this.addFrame(typeToAdd, "");
       frame.parseFrom(source);
     } else {
-      throw new Error(
-        `${options.length} matches found at ${source.readToEndOfLine()} `,
-      );
+      throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
     }
   }
 
-  optionsMatchingUserInput(
-    match: string,
-  ): [string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByProfile(true).filter((o) =>
-      o[0].startsWith(match),
-    );
+  optionsMatchingUserInput(match: string): [string, (parent: Parent) => Frame][] {
+    return this.optionsFilteredByProfile(true).filter((o) => o[0].startsWith(match));
   }
 
   commonStartText(match: string): string {
@@ -90,10 +71,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   getCompletion(): string {
     return this.optionsMatchingUserInput(this.text)
       .map((o) => o[0])
-      .reduce(
-        (soFar, kw) => `${soFar} ${kw}${kw.includes(" ") ? "," : ""}`,
-        "",
-      );
+      .reduce((soFar, kw) => `${soFar} ${kw}${kw.includes(" ") ? "," : ""}`, "");
   }
 
   addFrame(keyword: string, pendingChars: string): Frame {
@@ -221,9 +199,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     if (this.overtyper.preProcessor(key)) {
       const options = this.optionsMatchingUserInput(this.text + key);
       if (options.length > 1) {
-        this.text += this.commonStartText(this.text + key).substring(
-          this.text.length,
-        );
+        this.text += this.commonStartText(this.text + key).substring(this.text.length);
       } else if (options.length === 1) {
         const typeToAdd = options[0][0];
 

@@ -56,11 +56,7 @@ export abstract class AbstractFrame implements Frame {
     return this.htmlId;
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
@@ -338,10 +334,7 @@ export abstract class AbstractFrame implements Frame {
       } else {
         if (isFrame(parent) && parent.getFields().length === 0) {
           //e.g. main or default
-          result = this.selectLastFieldInPreviousGlobal(
-            parent.getParent() as File,
-            parent,
-          );
+          result = this.selectLastFieldInPreviousGlobal(parent.getParent() as File, parent);
         } else if (isFile(parent)) {
           result = this.selectLastFieldInPreviousGlobal(parent, this);
         }

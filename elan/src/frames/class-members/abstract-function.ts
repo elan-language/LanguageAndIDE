@@ -14,10 +14,7 @@ import { Parent } from "../interfaces/parent";
 import { abstractFunctionKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractFunction
-  extends AbstractFrame
-  implements Member, ElanSymbol
-{
+export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
   public name: IdentifierField;

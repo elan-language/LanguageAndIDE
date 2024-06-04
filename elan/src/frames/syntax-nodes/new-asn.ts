@@ -28,26 +28,18 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     for (const i of this.parameters) {
       cc = cc.concat(i.aggregateCompileErrors());
     }
-    return this.compileErrors
-      .concat(this.typeNode.aggregateCompileErrors())
-      .concat(cc);
+    return this.compileErrors.concat(this.typeNode.aggregateCompileErrors()).concat(cc);
   }
 
   compile(): string {
     this.compileErrors = [];
-    let gt = this.typeNode.genericParameters
-      .map((p) => `"${p.compile()}"`)
-      .join(", ");
+    let gt = this.typeNode.genericParameters.map((p) => `"${p.compile()}"`).join(", ");
     gt = gt ? `, [${gt}]` : "";
     const pp = this.parameters.map((p) => p.compile()).join(", ");
     const t = this.typeNode.compile();
     if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
-      mustBeOneOrTwoOfTypeInt(
-        this.parameters,
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
       return `system.initialise(system.array(${pp})${gt})`;
     }
 
@@ -63,11 +55,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.dictionary(new ${t}(${pp}))${gt})`;
     }
 
-    const cls = this.scope.resolveSymbol(
-      this.typeNode.id,
-      transforms(),
-      this.scope,
-    );
+    const cls = this.scope.resolveSymbol(this.typeNode.id, transforms(), this.scope);
 
     mustBeKnownSymbol(cls, this.compileErrors, this.fieldId);
 
@@ -81,12 +69,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
         const parameterTypes = (cls as ClassFrame)
           .getConstructor()
           .params.symbolTypes(transforms());
-        mustMatchParameters(
-          this.parameters,
-          parameterTypes,
-          this.compileErrors,
-          this.fieldId,
-        );
+        mustMatchParameters(this.parameters, parameterTypes, this.compileErrors, this.fieldId);
       }
     }
 

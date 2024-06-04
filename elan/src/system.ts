@@ -196,12 +196,7 @@ export class System {
     return true;
   }
 
-  assert(
-    actual: any,
-    expected: any,
-    htmlId: string,
-    stdlib: { asString: (a: any) => string },
-  ) {
+  assert(actual: any, expected: any, htmlId: string, stdlib: { asString: (a: any) => string }) {
     if (!this.equals(actual, expected)) {
       return new AssertOutcome(
         TestStatus.fail,

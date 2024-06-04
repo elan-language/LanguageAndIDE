@@ -21,22 +21,13 @@ export class FunctionCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const array = () =>
-        new Qualifier(new ArrayListNode(() => new ExprNode()));
-      const list = () =>
-        new Qualifier(new ImmutableListNode(() => new ExprNode()));
+      const array = () => new Qualifier(new ArrayListNode(() => new ExprNode()));
+      const list = () => new Qualifier(new ImmutableListNode(() => new ExprNode()));
       const literal = () => new Qualifier(new LitValueNode());
       const global = () => new Qualifier(new KeywordNode(globalKeyword));
       const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
       const instance = () => new Qualifier(new InstanceNode());
-      const qualifier = new Alternatives([
-        global,
-        lib,
-        instance,
-        literal,
-        list,
-        array,
-      ]);
+      const qualifier = new Alternatives([global, lib, instance, literal, list, array]);
       this.qualifier = new OptionalNode(qualifier);
       this.name = new IdentifierNode();
       this.args = new CSV(() => new ExprNode(), 0);

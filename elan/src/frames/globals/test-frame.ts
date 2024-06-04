@@ -3,10 +3,7 @@ import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import {
-  helper_testStatusAsDisplayStatus,
-  helper_CompileOrParseAsDisplayStatus,
-} from "../helpers";
+import { helper_testStatusAsDisplayStatus, helper_CompileOrParseAsDisplayStatus } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -52,10 +49,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
       .filter((c) => c instanceof AssertStatement)
       .map((c) => c as AssertStatement);
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
-    const worst = tests.reduce(
-      (prev, t) => worstOf(t.getTestStatus(), prev),
-      TestStatus.default,
-    );
+    const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
     this._testStatus = worst;
   }
 

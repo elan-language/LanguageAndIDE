@@ -91,10 +91,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "ImmutableList":
         return new ImmutableListType(this.genericParameters[0].symbolType());
       case "ArrayList":
-        return new ArrayListType(
-          this.genericParameters[0].symbolType(),
-          this.is2d,
-        );
+        return new ArrayListType(this.genericParameters[0].symbolType(), this.is2d);
       case "Dictionary":
         return new DictionaryType(
           this.genericParameters[0].symbolType(),
@@ -117,9 +114,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         const rType = types[types.length - 1];
         return new FunctionType(pTypes, rType, false);
       default: {
-        return this.scope
-          .resolveSymbol(this.id, transforms(), this.scope)
-          .symbolType(transforms());
+        return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
       }
     }
   }

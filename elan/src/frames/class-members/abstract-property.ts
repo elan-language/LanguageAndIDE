@@ -11,10 +11,7 @@ import { abstractPropertyKeywords } from "../keywords";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
-export class AbstractProperty
-  extends AbstractFrame
-  implements Member, ElanSymbol
-{
+export class AbstractProperty extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember = true;
   name: IdentifierField;

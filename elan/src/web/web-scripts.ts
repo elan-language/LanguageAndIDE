@@ -15,8 +15,7 @@ import { TestFrame } from "../frames/globals/test-frame";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
-const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0])
-  .dataset.code;
+const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 let doOnce = true;
 let profile: Profile;
 
@@ -24,9 +23,7 @@ async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join(""); // convert bytes to hex string
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
   return hashHex;
 }
 
@@ -106,8 +103,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateDisplayValues() {
-  (document.getElementById("code-title") as HTMLDivElement).innerText =
-    `Program: ${file.fileName}`; // ${getStatus()}`;
+  (document.getElementById("code-title") as HTMLDivElement).innerText = `Program: ${file.fileName}`; // ${getStatus()}`;
   (document.getElementById("parse") as HTMLDivElement).setAttribute(
     "class",
     file.readParseStatusForDashboard(),
@@ -207,9 +203,7 @@ function updateContent(text: string) {
 
     frame.addEventListener("click", (event) => {
       const ke = event as PointerEvent;
-      const selection = (event.target as HTMLInputElement).selectionStart as
-        | number
-        | undefined;
+      const selection = (event.target as HTMLInputElement).selectionStart as number | undefined;
       const msg: editorEvent = {
         type: "click",
         target: "frame",
@@ -296,9 +290,7 @@ function updateContent(text: string) {
     file.renderAsSource().then((code) => {
       localStorage.setItem("elan-code", code);
       localStorage.setItem("elan-file", file.fileName);
-      (document.getElementById("save") as HTMLButtonElement).classList.add(
-        "unsaved",
-      );
+      (document.getElementById("save") as HTMLButtonElement).classList.add("unsaved");
     });
   }
 

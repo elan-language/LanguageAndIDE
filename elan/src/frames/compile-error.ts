@@ -38,29 +38,14 @@ export class TypeCompileError extends CompileError {
 }
 
 export class TypesCompileError extends CompileError {
-  constructor(
-    type1: string,
-    type2: string,
-    location: string,
-    unknown: boolean,
-  ) {
-    super(
-      Priority.typeError,
-      `Incompatible types ${type1} to ${type2}`,
-      location,
-      unknown,
-    );
+  constructor(type1: string, type2: string, location: string, unknown: boolean) {
+    super(Priority.typeError, `Incompatible types ${type1} to ${type2}`, location, unknown);
   }
 }
 
 export class ArraySizeCompileError extends CompileError {
   constructor(location: string) {
-    super(
-      Priority.illegalOperation,
-      `ArrayList requires 1 or 2 parameters`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `ArrayList requires 1 or 2 parameters`, location, false);
   }
 }
 
@@ -79,12 +64,7 @@ export class UndefinedSymbolCompileError extends CompileError {
 export class NotCallableCompileError extends CompileError {
   constructor(id: string, location: string, imPure: boolean, unknown: boolean) {
     const impStr = imPure ? " impure" : "";
-    super(
-      Priority.illegalOperation,
-      `Cannot call${impStr} ${id}`,
-      location,
-      unknown,
-    );
+    super(Priority.illegalOperation, `Cannot call${impStr} ${id}`, location, unknown);
   }
 }
 
@@ -96,44 +76,24 @@ export class NotIndexableCompileError extends CompileError {
 
 export class NotIterableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
-    super(
-      Priority.illegalOperation,
-      `Cannot iterate ${type}`,
-      location,
-      unknown,
-    );
+    super(Priority.illegalOperation, `Cannot iterate ${type}`, location, unknown);
   }
 }
 
 export class MustBeAbstractCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Superclass ${type} must be abstract`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `Superclass ${type} must be abstract`, location, false);
   }
 }
 
 export class PrivatePropertyCompileError extends CompileError {
   constructor(id: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `Cannot reference private property ${id}`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `Cannot reference private property ${id}`, location, false);
   }
 }
 
 export class MustImplementCompileError extends CompileError {
-  constructor(
-    classType: string,
-    superClassType: string,
-    id: string,
-    location: string,
-  ) {
+  constructor(classType: string, superClassType: string, id: string, location: string) {
     super(
       Priority.illegalOperation,
       `${classType} must implement ${superClassType}.${id}`,
@@ -145,12 +105,7 @@ export class MustImplementCompileError extends CompileError {
 
 export class MustBeConcreteCompileError extends CompileError {
   constructor(type: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `${type} must be concrete to new`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `${type} must be concrete to new`, location, false);
   }
 }
 
@@ -162,12 +117,7 @@ export class MustBeImmutableCompileError extends CompileError {
 
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
-    super(
-      Priority.illegalOperation,
-      `Cannot call extension method directly`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `Cannot call extension method directly`, location, false);
   }
 }
 
@@ -184,23 +134,13 @@ export class ParametersCompileError extends CompileError {
 
 export class MutateCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `May not mutate ${thing}`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `May not mutate ${thing}`, location, false);
   }
 }
 
 export class ReassignCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(
-      Priority.illegalOperation,
-      `May not reassign ${thing}`,
-      location,
-      false,
-    );
+    super(Priority.illegalOperation, `May not reassign ${thing}`, location, false);
   }
 }
 

@@ -20,9 +20,7 @@ suite("Field Parsing Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
 
   test("parse CommentField", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const commentStatement = new CommentStatement(main);
     const text = commentStatement.text;
     assert.equal(text.textAsSource(), "");
@@ -36,9 +34,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   test("parse varDefField", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const variable = new VarStatement(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
@@ -60,9 +56,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse VarDefField 2", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const letSt = new LetStatement(main);
     const id = letSt.name;
     assert.equal(id.textAsSource(), "");
@@ -82,9 +76,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid); //Because use of a keyword should now be picked up as a compile error
   });
   test("parse CaseValueField", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const sw = new Switch(main);
     const c = new Case(sw);
     const f = c.value;
@@ -102,9 +94,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse  ArgListField", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const call = new CallStatement(main);
     const argList = call.args;
     argList.setFieldToKnownValidText("3,4,5");
@@ -122,9 +112,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ArgListField 2", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const call = new CallStatement(main);
     const argList = call.args;
     argList.setFieldToKnownValidText("");
@@ -133,9 +121,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse TypeField invalid", () => {
-    const func = new GlobalFunction(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const func = new GlobalFunction(new FileImpl(hash, new DefaultProfile(), transforms()));
     const type = func.returnType;
     type.setFieldToKnownValidText("Foo<of bar");
     type.parseCurrentText();
@@ -145,9 +131,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ExpressionField - literal string with interpolations", () => {
-    const main = new MainFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const v = new VarStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`"{op} times {op2} equals {op1*op2}"`);
@@ -161,9 +145,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ValueRefField", () => {
-    const test = new TestFrame(
-      new FileImpl(hash, new DefaultProfile(), transforms()),
-    );
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const a = new AssertStatement(test);
     const expected = a.expected;
     expected.setFieldToKnownValidText(`{4, 5, 6, 24, 26, 44, 45, 46}`);

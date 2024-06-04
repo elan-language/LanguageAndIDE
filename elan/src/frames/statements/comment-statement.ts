@@ -7,10 +7,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { commentMarker } from "../keywords";
 
-export class CommentStatement
-  extends AbstractFrame
-  implements Statement, Member
-{
+export class CommentStatement extends AbstractFrame implements Statement, Member {
   isStatement = true;
   isMember = true;
   public text: CommentField;

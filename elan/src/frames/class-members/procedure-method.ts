@@ -40,11 +40,7 @@ ${this.indent()}}\r
     return super.parseBottom(source);
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
       return this as ElanSymbol;
     }

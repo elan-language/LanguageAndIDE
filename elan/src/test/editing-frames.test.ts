@@ -1,8 +1,5 @@
 import * as vscode from "vscode";
-import {
-  T03_mainWithAllStatements,
-  T05_classes,
-} from "./model-generating-functions.";
+import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
 import {
   back,
   ctrl_d,
@@ -263,29 +260,26 @@ suite("Editing Frames", () => {
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst, globalSelect);
   });
-  ignore_test(
-    "#364 ParseError within in class member not showing up at class level",
-    () => {
-      const file = T05_classes();
-      const player = file.getById("class1");
-      assert.equal(player.readParseStatus(), ParseStatus.valid);
-      const field = file.getById("ident12");
-      assert.equal(field.readParseStatus(), ParseStatus.valid);
-      field.processKey(key("%"));
-      assert.equal(field.readParseStatus(), ParseStatus.invalid);
-      assert.equal(player.readParseStatus(), ParseStatus.invalid);
-      field.processKey(back());
-      assert.equal(field.readParseStatus(), ParseStatus.valid);
-      assert.equal(player.readParseStatus(), ParseStatus.valid);
-      const card = file.getById("class14");
-      const reset = file.getById("func27");
-      const ret = file.getById("return32");
-      const expr = file.getById("expr33");
-      expr.processKey(key("£"));
-      assert.equal(expr.readParseStatus(), ParseStatus.invalid);
-      assert.equal(ret.readParseStatus(), ParseStatus.invalid);
-      assert.equal(reset.readParseStatus(), ParseStatus.invalid);
-      assert.equal(card.readParseStatus(), ParseStatus.invalid);
-    },
-  );
+  ignore_test("#364 ParseError within in class member not showing up at class level", () => {
+    const file = T05_classes();
+    const player = file.getById("class1");
+    assert.equal(player.readParseStatus(), ParseStatus.valid);
+    const field = file.getById("ident12");
+    assert.equal(field.readParseStatus(), ParseStatus.valid);
+    field.processKey(key("%"));
+    assert.equal(field.readParseStatus(), ParseStatus.invalid);
+    assert.equal(player.readParseStatus(), ParseStatus.invalid);
+    field.processKey(back());
+    assert.equal(field.readParseStatus(), ParseStatus.valid);
+    assert.equal(player.readParseStatus(), ParseStatus.valid);
+    const card = file.getById("class14");
+    const reset = file.getById("func27");
+    const ret = file.getById("return32");
+    const expr = file.getById("expr33");
+    expr.processKey(key("£"));
+    assert.equal(expr.readParseStatus(), ParseStatus.invalid);
+    assert.equal(ret.readParseStatus(), ParseStatus.invalid);
+    assert.equal(reset.readParseStatus(), ParseStatus.invalid);
+    assert.equal(card.readParseStatus(), ParseStatus.invalid);
+  });
 });

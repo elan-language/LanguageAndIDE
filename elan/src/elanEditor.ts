@@ -68,11 +68,7 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
 
           // Just replace the entire document every time for this example extension.
           // A more complete extension should compute minimal edits instead.
-          edit.replace(
-            document.uri,
-            new vscode.Range(0, 0, document.lineCount, 0),
-            source,
-          );
+          edit.replace(document.uri, new vscode.Range(0, 0, document.lineCount, 0), source);
 
           vscode.workspace.applyEdit(edit);
         });
@@ -87,13 +83,11 @@ export class ElanEditorProvider implements vscode.CustomTextEditorProvider {
     // Remember that a single text document can also be shared between multiple custom
     // editors (this happens for example when you split a custom editor)
 
-    const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
-      (e) => {
-        if (e.document.uri.toString() === document.uri.toString()) {
-          updateWebview(this.file!);
-        }
-      },
-    );
+    const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
+      if (e.document.uri.toString() === document.uri.toString()) {
+        updateWebview(this.file!);
+      }
+    });
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {

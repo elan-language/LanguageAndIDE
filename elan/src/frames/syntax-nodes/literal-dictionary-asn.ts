@@ -35,18 +35,8 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     const ofValueType = first.symbolType();
 
     for (const i of items) {
-      mustBeCompatibleType(
-        ofKeyType,
-        i.keySymbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
-      mustBeCompatibleType(
-        ofValueType,
-        i.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustBeCompatibleType(ofKeyType, i.keySymbolType(), this.compileErrors, this.fieldId);
+      mustBeCompatibleType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
@@ -56,17 +46,9 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
   symbolType() {
     const first = this.list.items[0] as KvpAsn | undefined;
     if (first) {
-      return new DictionaryType(
-        first.keySymbolType(),
-        first.symbolType(),
-        false,
-      );
+      return new DictionaryType(first.keySymbolType(), first.symbolType(), false);
     }
-    return new DictionaryType(
-      UnknownType.Instance,
-      UnknownType.Instance,
-      false,
-    );
+    return new DictionaryType(UnknownType.Instance, UnknownType.Instance, false);
   }
 
   toString() {

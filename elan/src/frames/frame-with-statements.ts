@@ -37,10 +37,7 @@ import { StatementSelector } from "./statements/statement-selector";
 import { CompileError } from "./compile-error";
 import { Transforms } from "./syntax-nodes/transforms";
 
-export abstract class FrameWithStatements
-  extends AbstractFrame
-  implements Parent, Collapsible
-{
+export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   private _children: Array<Frame> = new Array<Frame>();
@@ -79,10 +76,7 @@ export abstract class FrameWithStatements
       parentHelper_readWorstCompileStatusOfChildren(this),
     );
     super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(
-      this.readCompileStatus(),
-      worstOfFieldsOrChildren,
-    );
+    const newStatus = Math.min(this.readCompileStatus(), worstOfFieldsOrChildren);
     this.setCompileStatus(newStatus);
   }
 
@@ -238,11 +232,7 @@ export abstract class FrameWithStatements
     return result;
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope);
     if (range.length > 1) {

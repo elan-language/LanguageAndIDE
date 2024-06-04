@@ -63,8 +63,7 @@ suite("File Parsing Tests", async () => {
   });
 
   test("parse Frames - let statement 2", () => {
-    const code =
-      "  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)";
+    const code = "  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
@@ -423,10 +422,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(
-      fl.parseError!.includes(`0 matches found at property value as Int`),
-      true,
-    );
+    assert.equal(fl.parseError!.includes(`0 matches found at property value as Int`), true);
   });
 
   test("#367 abstract class cannot contain concrete method", async () => {
@@ -442,10 +438,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(
-      fl.parseError!.includes(`0 matches found at function bar() return Int`),
-      true,
-    );
+    assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
   });
   test("#367 immutable class cannot contain procedure", async () => {
     const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
@@ -464,10 +457,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(
-      fl.parseError!.includes(`0 matches found at procedure foo()`),
-      true,
-    );
+    assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
   });
 
   test("#367 abstract class cannot contain constructor", async () => {
@@ -483,9 +473,6 @@ abstract class Card
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
     await await fl.parseFrom(source);
-    assert.equal(
-      fl.parseError!.includes(`0 matches found at constructor()`),
-      true,
-    );
+    assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
 });

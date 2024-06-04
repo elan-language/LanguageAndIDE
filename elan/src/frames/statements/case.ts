@@ -51,14 +51,8 @@ ${this.renderChildrenAsSource()}`;
     if (isSymbol(parent)) {
       const switchType = parent.symbolType(transforms);
       const caseType =
-        this.value.getOrTransformAstNode(transforms)?.symbolType() ??
-        UnknownType.Instance;
-      mustBeCompatibleType(
-        switchType,
-        caseType,
-        this.compileErrors,
-        this.htmlId,
-      );
+        this.value.getOrTransformAstNode(transforms)?.symbolType() ?? UnknownType.Instance;
+      mustBeCompatibleType(switchType, caseType, this.compileErrors, this.htmlId);
     }
 
     return `${this.indent()}case ${this.value.compile(transforms)}:\r

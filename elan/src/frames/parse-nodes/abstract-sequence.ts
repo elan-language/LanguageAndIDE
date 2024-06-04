@@ -23,9 +23,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
       remaining = node.remainingText;
       if (node.status === ParseStatus.empty) {
         worstStatus =
-          worstStatus === ParseStatus.default
-            ? ParseStatus.empty
-            : ParseStatus.incomplete;
+          worstStatus === ParseStatus.default ? ParseStatus.empty : ParseStatus.incomplete;
       } else {
         worstStatus = node.status < worstStatus ? node.status : worstStatus;
       }
@@ -34,38 +32,23 @@ export abstract class AbstractSequence extends AbstractParseNode {
     this.status = worstStatus;
     if (worstStatus > ParseStatus.invalid) {
       this.remainingText = remaining;
-      this.matchedText = text.substring(
-        0,
-        text.length - this.remainingText.length,
-      );
+      this.matchedText = text.substring(0, text.length - this.remainingText.length);
     } else {
       this.remainingText = text;
     }
   }
   renderAsHtml(): string {
-    return this.elements.reduce(
-      (result, current) => result + current.renderAsHtml(),
-      "",
-    );
+    return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
   renderAsSource(): string {
-    return this.elements.reduce(
-      (result, current) => result + current.renderAsSource(),
-      "",
-    );
+    return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
   }
   compile(): string {
-    return this.elements.reduce(
-      (result, current) => result + current.compile(),
-      "",
-    );
+    return this.elements.reduce((result, current) => result + current.compile(), "");
   }
   getCompletionAsHtml(): string {
     return this.elements.length > 0
-      ? this.elements.reduce(
-          (result, current) => `${result}${current.getCompletionAsHtml()}`,
-          "",
-        )
+      ? this.elements.reduce((result, current) => `${result}${current.getCompletionAsHtml()}`, "")
       : super.getCompletionAsHtml();
   }
 }

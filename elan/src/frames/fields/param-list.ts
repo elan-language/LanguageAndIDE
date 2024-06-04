@@ -45,11 +45,7 @@ export class ParamList extends AbstractField {
     return ast ? ast.items.map((i) => i.symbolType()) : [];
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
     if (ast) {

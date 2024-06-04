@@ -5,13 +5,7 @@ import { Parent } from "./interfaces/parent";
 import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { AbstractSelector } from "./abstract-selector";
-import {
-  CompileStatus,
-  DisplayStatus,
-  ParseStatus,
-  RunStatus,
-  TestStatus,
-} from "./status-enums";
+import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { CompileError } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
@@ -104,28 +98,20 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   return cls === "" ? "<msg></msg>" : ` <msg class="${cls}">${toDisplay}</msg>`;
 }
 
-export function helper_deriveCompileStatusFromErrors(
-  errors: CompileError[],
-): CompileStatus {
+export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {
   let result = CompileStatus.error;
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => !e.unknownType)
-      ? CompileStatus.error
-      : CompileStatus.unknownSymbol;
+    result = errors.some((e) => !e.unknownType) ? CompileStatus.error : CompileStatus.unknownSymbol;
   }
   return result;
 }
 
-export function helper_CompileOrParseAsDisplayStatus(
-  loc: Frame | Field,
-): DisplayStatus {
+export function helper_CompileOrParseAsDisplayStatus(loc: Frame | Field): DisplayStatus {
   let status = helper_parseStatusAsDisplayStatus(loc.readParseStatus());
   if (status === DisplayStatus.ok) {
-    const compile = helper_compileStatusAsDisplayStatus(
-      loc.readCompileStatus(),
-    );
+    const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
     if (compile !== DisplayStatus.default) {
       // Implies that the compiler has not been run
       status = compile;
@@ -134,9 +120,7 @@ export function helper_CompileOrParseAsDisplayStatus(
   return status;
 }
 
-export function helper_parseStatusAsDisplayStatus(
-  ps: ParseStatus,
-): DisplayStatus {
+export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayStatus {
   let overall = DisplayStatus.default;
   if (ps === ParseStatus.valid) {
     overall = DisplayStatus.ok;
@@ -148,9 +132,7 @@ export function helper_parseStatusAsDisplayStatus(
   return overall;
 }
 
-export function helper_compileStatusAsDisplayStatus(
-  cs: CompileStatus,
-): DisplayStatus {
+export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayStatus {
   let overall = DisplayStatus.default;
   if (cs === CompileStatus.ok) {
     overall = DisplayStatus.ok;
@@ -162,9 +144,7 @@ export function helper_compileStatusAsDisplayStatus(
   return overall;
 }
 
-export function helper_testStatusAsDisplayStatus(
-  ts: TestStatus,
-): DisplayStatus {
+export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus {
   let overall = DisplayStatus.default;
   if (ts === TestStatus.pass) {
     overall = DisplayStatus.ok;

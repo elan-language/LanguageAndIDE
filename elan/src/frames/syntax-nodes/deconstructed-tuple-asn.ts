@@ -4,10 +4,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleType } from "../symbols/tuple-type";
 import { AstIdNode } from "../interfaces/ast-id-node";
 
-export class DeconstructedTupleAsn
-  extends AbstractAstNode
-  implements AstIdNode
-{
+export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly items: AstIdNode[],
     public readonly fieldId: string,

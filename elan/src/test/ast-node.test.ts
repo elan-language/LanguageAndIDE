@@ -48,36 +48,12 @@ suite("ASTNodes", () => {
     testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
     testAST(new ExprNode(), stubField, "a", "a", intType);
     testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", floatType);
-    testAST(
-      new ExprNode(),
-      stubField,
-      "a + b - c",
-      "Add (a) (Minus (b) (c))",
-      floatType,
-    );
+    testAST(new ExprNode(), stubField, "a + b - c", "Add (a) (Minus (b) (c))", floatType);
     testAST(new ExprNode(), stubField, "a is b", "Equals (a) (b)", boolType);
 
-    testAST(
-      new ExprNode(),
-      stubField,
-      "3 * 4 + x",
-      "Multiply (3) (Add (4) (x))",
-      intType,
-    );
-    testAST(
-      new ExprNode(),
-      stubField,
-      "3 * foo(5)",
-      "Multiply (3) (Func Call foo (5))",
-      intType,
-    );
-    testAST(
-      new ExprNode(),
-      stubField,
-      "points.foo(0.0)",
-      "Func Call points.foo (0)",
-      intType,
-    );
+    testAST(new ExprNode(), stubField, "3 * 4 + x", "Multiply (3) (Add (4) (x))", intType);
+    testAST(new ExprNode(), stubField, "3 * foo(5)", "Multiply (3) (Func Call foo (5))", intType);
+    testAST(new ExprNode(), stubField, "points.foo(0.0)", "Func Call points.foo (0)", intType);
     const ast =
       "Func Call reduce (0, Lambda (Param s : Type String, Param p : Type ImmutableList<Type String>) => (Add (s) (Multiply (Func Call p.first ()) (Func Call p.first ()))))";
     testAST(
@@ -87,13 +63,7 @@ suite("ASTNodes", () => {
       ast,
       intType,
     );
-    testAST(
-      new ExprNode(),
-      stubField,
-      "empty String",
-      "Default (Type String)",
-      stringType,
-    );
+    testAST(new ExprNode(), stubField, "empty String", "Default (Type String)", stringType);
     testAST(
       new ExprNode(),
       stubField,
@@ -102,8 +72,7 @@ suite("ASTNodes", () => {
       new ImmutableListType(intType),
     );
 
-    const ast1 =
-      "With (p) ({Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))})";
+    const ast1 = "With (p) ({Set (x) (Add (p.x) (3)), Set (y) (Minus (p.y) (1))})";
     testAST(
       new ExprNode(),
       stubField,
@@ -115,20 +84,8 @@ suite("ASTNodes", () => {
 
   test("Unary", () => {
     testAST(new UnaryExpression(), stubField, "-3", "Minus (3)", intType);
-    testAST(
-      new UnaryExpression(),
-      stubField,
-      " not true",
-      "Not (true)",
-      boolType,
-    );
-    testAST(
-      new UnaryExpression(),
-      stubField,
-      " not boo",
-      "Not (boo)",
-      boolType,
-    );
+    testAST(new UnaryExpression(), stubField, " not true", "Not (true)", boolType);
+    testAST(new UnaryExpression(), stubField, " not boo", "Not (boo)", boolType);
   });
 
   test("Term", () => {
@@ -154,20 +111,8 @@ suite("ASTNodes", () => {
 
   test("Brackets", () => {
     testAST(new BracketedExpression(), stubField, "(3)", "(3)", intType);
-    testAST(
-      new BracketedExpression(),
-      stubField,
-      "(3 + 4)",
-      "(Add (3) (4))",
-      intType,
-    );
-    testAST(
-      new BracketedExpression(),
-      stubField,
-      "(a and not b)",
-      "(And (a) (Not (b)))",
-      boolType,
-    );
+    testAST(new BracketedExpression(), stubField, "(3 + 4)", "(Add (3) (4))", intType);
+    testAST(new BracketedExpression(), stubField, "(a and not b)", "(And (a) (Not (b)))", boolType);
     testAST(
       new BracketedExpression(),
       stubField,
@@ -191,13 +136,7 @@ suite("ASTNodes", () => {
   });
 
   test("Function", () => {
-    testAST(
-      new FunctionCallNode(),
-      stubField,
-      `foo()`,
-      "Func Call foo ()",
-      intType,
-    );
+    testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
     testAST(
       new FunctionCallNode(),
       stubField,
@@ -205,20 +144,8 @@ suite("ASTNodes", () => {
       'Func Call bar (x, 1, "hello")',
       stringType,
     );
-    testAST(
-      new FunctionCallNode(),
-      stubField,
-      `bar.foo()`,
-      "Func Call bar.foo ()",
-      intType,
-    );
-    testAST(
-      new FunctionCallNode(),
-      stubField,
-      `global.foo()`,
-      "Func Call foo ()",
-      intType,
-    );
+    testAST(new FunctionCallNode(), stubField, `bar.foo()`, "Func Call bar.foo ()", intType);
+    testAST(new FunctionCallNode(), stubField, `global.foo()`, "Func Call foo ()", intType);
     testAST(
       new FunctionCallNode(),
       stubField,
@@ -365,11 +292,7 @@ suite("ASTNodes", () => {
       stubField,
       `lambda s as Int, p as ImmutableList<of Int> => s + p.first()`,
       "Lambda (Param s : Type Int, Param p : Type ImmutableList<Type Int>) => (Add (s) (Func Call p.first ()))",
-      new FunctionType(
-        [intType, new ImmutableListType(intType)],
-        intType,
-        false,
-      ),
+      new FunctionType([intType, new ImmutableListType(intType)], intType, false),
     );
     testAST(
       new Lambda(),
@@ -407,13 +330,7 @@ suite("ASTNodes", () => {
       stringType,
     );
 
-    testAST(
-      new ParamDefNode(),
-      stubField,
-      `x as String`,
-      "Param x : Type String",
-      stringType,
-    );
+    testAST(new ParamDefNode(), stubField, `x as String`, "Param x : Type String", stringType);
   });
 
   test("Dictionary", () => {
@@ -460,13 +377,7 @@ suite("ASTNodes", () => {
   });
 
   test("LitTuple", () => {
-    testAST(
-      new LitTuple(),
-      stubField,
-      `(3,4)`,
-      "(3, 4)",
-      new TupleType([intType, intType]),
-    );
+    testAST(new LitTuple(), stubField, `(3,4)`, "(3, 4)", new TupleType([intType, intType]));
     testAST(
       new LitTuple(),
       stubField,
@@ -479,10 +390,7 @@ suite("ASTNodes", () => {
       stubField,
       `((3,4), ("a", true))`,
       `((3, 4), ("a", true))`,
-      new TupleType([
-        new TupleType([intType, intType]),
-        new TupleType([stringType, boolType]),
-      ]),
+      new TupleType([new TupleType([intType, intType]), new TupleType([stringType, boolType])]),
     );
 
     testAST(
@@ -537,13 +445,7 @@ suite("ASTNodes", () => {
   test("Var", () => {
     testAST(new VarRefNode(), stubField, `a`, "a", intType);
     testAST(new VarRefNode(), stubField, `result`, "result", unknownType);
-    testAST(
-      new VarRefNode(),
-      stubField,
-      `lst`,
-      "lst",
-      new ImmutableListType(intType),
-    );
+    testAST(new VarRefNode(), stubField, `lst`, "lst", new ImmutableListType(intType));
     testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
     testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
     testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
@@ -578,13 +480,7 @@ suite("ASTNodes", () => {
       "Func Call simpleGeneric (a)",
       intType,
     );
-    testAST(
-      new FunctionCallNode(),
-      stubField,
-      `getItem(lst)`,
-      "Func Call getItem (lst)",
-      intType,
-    );
+    testAST(new FunctionCallNode(), stubField, `getItem(lst)`, "Func Call getItem (lst)", intType);
     testAST(
       new FunctionCallNode(),
       stubField,

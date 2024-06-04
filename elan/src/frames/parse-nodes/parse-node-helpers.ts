@@ -3,10 +3,7 @@ import { FixedTextNode } from "./fixed-text-node";
 import { ParseNode } from "./parse-node";
 import { SpaceNode } from "./space-node";
 
-export function matchRegEx(
-  text: string,
-  regx: RegExp,
-): [ParseStatus, string, string] {
+export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, string] {
   let status = ParseStatus.invalid;
   let match = "";
   let remaining = text;

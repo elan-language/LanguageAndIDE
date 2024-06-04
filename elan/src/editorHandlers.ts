@@ -17,9 +17,7 @@ export function handleClick(e: editorEvent, file: File) {
       if (e.modKey.shift && isFrame(s)) {
         const parent = s.getParent();
         // all current selections with same parent
-        const curSel = getAllSelected(file).filter(
-          (i) => isFrame(i) && i.getParent() === parent,
-        );
+        const curSel = getAllSelected(file).filter((i) => isFrame(i) && i.getParent() === parent);
 
         if (curSel.length > 0) {
           const toSelect = new Set<Selectable>();

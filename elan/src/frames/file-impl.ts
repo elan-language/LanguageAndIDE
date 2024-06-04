@@ -1,12 +1,6 @@
 import { Selectable } from "./interfaces/selectable";
 import { StatementFactory } from "./interfaces/statement-factory";
-import {
-  CompileStatus,
-  DisplayStatus,
-  ParseStatus,
-  RunStatus,
-  TestStatus,
-} from "./status-enums";
+import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { File } from "./interfaces/file";
 import { MainFrame } from "./globals/main-frame";
 import { GlobalFunction } from "./globals/global-function";
@@ -209,9 +203,7 @@ export class FileImpl implements File, Scope {
         ss.push(frame.compile(this.transform));
       }
 
-      for (const frame of this._children.filter(
-        (g) => !("isSelector" in g || g instanceof Enum),
-      )) {
+      for (const frame of this._children.filter((g) => !("isSelector" in g || g instanceof Enum))) {
         ss.push(frame.compile(this.transform));
       }
 
@@ -242,9 +234,7 @@ export class FileImpl implements File, Scope {
   }
 
   public getFirstSelectorAsDirectChild(): AbstractSelector {
-    return this.getChildren().filter(
-      (g) => "isSelector" in g,
-    )[0] as GlobalSelector;
+    return this.getChildren().filter((g) => "isSelector" in g)[0] as GlobalSelector;
   }
 
   getChildNumber(n: number): Frame {
@@ -322,9 +312,7 @@ export class FileImpl implements File, Scope {
     this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
   }
 
-  async refreshAllStatuses(
-    testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
-  ) {
+  async refreshAllStatuses(testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>) {
     let code = "";
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
@@ -352,9 +340,7 @@ export class FileImpl implements File, Scope {
   }
   readCompileStatusForDashboard(): string {
     let status = DisplayStatus.default;
-    const parseStatus = helper_parseStatusAsDisplayStatus(
-      this.readParseStatus(),
-    );
+    const parseStatus = helper_parseStatusAsDisplayStatus(this.readParseStatus());
     if (parseStatus === DisplayStatus.ok) {
       status = helper_compileStatusAsDisplayStatus(this._compileStatus);
     }
@@ -388,10 +374,7 @@ export class FileImpl implements File, Scope {
     const tests = this.getTestFrames();
     tests.forEach((t) => t.updateTestStatus());
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
-    const worst = tests.reduce(
-      (prev, t) => worstOf(t.readTestStatus(), prev),
-      TestStatus.default,
-    );
+    const worst = tests.reduce((prev, t) => worstOf(t.readTestStatus(), prev), TestStatus.default);
     this._testStatus = worst;
   }
   resetAllTestStatus(): void {
@@ -563,15 +546,9 @@ export class FileImpl implements File, Scope {
     }
   }
 
-  resolveSymbol(
-    id: string | undefined,
-    transforms: Transforms,
-    initialScope: Frame,
-  ): ElanSymbol {
+  resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     // unknown because of typescript quirk
-    const globalSymbols = this.getChildren().filter((c) =>
-      isSymbol(c),
-    ) as unknown as ElanSymbol[];
+    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
 
     for (const s of globalSymbols) {
       if (s.symbolId === id) {
