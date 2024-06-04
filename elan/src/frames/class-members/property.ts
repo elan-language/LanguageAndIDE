@@ -61,7 +61,12 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     const mod = this.modifierAsObjectCode();
     const st = this.type.symbolType(transforms);
 
-    mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
+    mustBeKnownSymbolType(
+      st,
+      this.type.renderAsSource(),
+      this.compileErrors,
+      this.htmlId,
+    );
 
     if (st instanceof ClassType || st instanceof EnumType) {
       return `${this.indent()}_${pName};\r

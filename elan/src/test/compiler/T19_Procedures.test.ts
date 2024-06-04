@@ -99,9 +99,12 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [1, 2]ImmutableList {3, 4}Dictionary [a:true, b:false]ImmutableDictionary {a:true, b:false}");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [1, 2]ImmutableList {3, 4}Dictionary [a:true, b:false]ImmutableDictionary {a:true, b:false}",
+    );
   });
-  
+
   //TODO Fail for passing incompatible types
 
   test("Pass_ExternalCall", async () => {

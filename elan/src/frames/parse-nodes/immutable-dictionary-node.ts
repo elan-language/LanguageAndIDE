@@ -14,7 +14,8 @@ export class ImmutableDictionaryNode extends AbstractSequence {
     valueConstructor: () => ParseNode,
   ) {
     super();
-    this.elementConstructor = () => new KVPnode(keyConstructor, valueConstructor);
+    this.elementConstructor = () =>
+      new KVPnode(keyConstructor, valueConstructor);
   }
 
   parseText(text: string): void {

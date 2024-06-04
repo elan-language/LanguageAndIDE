@@ -19,7 +19,8 @@ export class TypeNode extends AbstractAlternatives {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      if (text.trimStart().startsWith("Func")) { // tested first because 'Func' is *syntactically* valid simple type
+      if (text.trimStart().startsWith("Func")) {
+        // tested first because 'Func' is *syntactically* valid simple type
         this.alternatives.push(new FuncTypeNode());
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
@@ -37,4 +38,3 @@ export class TypeNode extends AbstractAlternatives {
     }
   }
 }
- 

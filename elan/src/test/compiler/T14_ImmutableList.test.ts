@@ -651,7 +651,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty ImmutableListImmutableList {3}falsetruefalse");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "empty ImmutableListImmutableList {3}falsetruefalse",
+    );
   });
 
   test("Fail_emptyLiteralList", async () => {

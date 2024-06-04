@@ -342,10 +342,11 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:3]empty Dictionaryfalsefalsetrue");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:3]empty Dictionaryfalsefalsetrue",
+    );
   });
-
-
 
   test("Fail_RepeatedKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid

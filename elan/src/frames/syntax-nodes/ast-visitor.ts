@@ -246,8 +246,9 @@ export function transform(
     // kludge - fix
     if (
       (fieldId.startsWith("var") ||
-      fieldId.startsWith("ident") ||
-      fieldId.startsWith("enumVals")) && !(scope instanceof SetStatement) // to catch range value 
+        fieldId.startsWith("ident") ||
+        fieldId.startsWith("enumVals")) &&
+      !(scope instanceof SetStatement) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
@@ -299,7 +300,10 @@ export function transform(
     return new TypeAsn(type, [gp], fieldId, scope);
   }
 
-  if (node instanceof TypeDictionaryNode || node instanceof TypeImmutableDictionaryNode) {
+  if (
+    node instanceof TypeDictionaryNode ||
+    node instanceof TypeImmutableDictionaryNode
+  ) {
     const type = node.simpleType!.matchedText;
     const key = transform(node.keyType, fieldId, scope)!;
     const value = transform(node.valueType, fieldId, scope)!;
@@ -399,11 +403,7 @@ export function transform(
   }
 
   if (node instanceof ImmutableDictionaryNode) {
-    const items = transformMany(
-      node.csv!,
-      fieldId,
-      scope,
-    );
+    const items = transformMany(node.csv!, fieldId, scope);
     return new LiteralImmutableDictionaryAsn(items, fieldId, scope);
   }
 

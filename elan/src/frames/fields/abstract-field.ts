@@ -42,7 +42,7 @@ export abstract class AbstractField implements Selectable, Field {
   parseErrorMsg: string = "";
   protected help: string = "help TBD";
   overtyper = new Overtyper();
-  protected codeHasChanged : boolean = false;
+  protected codeHasChanged: boolean = false;
 
   constructor(holder: Frame) {
     this.holder = holder;

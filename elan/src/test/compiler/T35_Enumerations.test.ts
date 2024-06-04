@@ -617,7 +617,6 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Fruit is not defined"]);
   });
 
-
   test("Fail_undefinedEnumValue", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

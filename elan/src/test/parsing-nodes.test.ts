@@ -1625,14 +1625,7 @@ suite("Parsing Nodes", () => {
   });
   test("TypeNode", () => {
     //List (mutable) type shortform
-    testNodeParse(
-      new TypeNode(),
-      `[Foo]`,
-      ParseStatus.valid,
-      "[Foo]",
-      "",
-      "",
-    ); 
+    testNodeParse(new TypeNode(), `[Foo]`, ParseStatus.valid, "[Foo]", "", "");
     testNodeParse(
       new TypeNode(),
       `[Foo`,
@@ -1641,14 +1634,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParse(
-      new TypeNode(),
-      `[foo`,
-      ParseStatus.invalid,
-      "",
-      "[foo",
-      "",
-    );
+    testNodeParse(new TypeNode(), `[foo`, ParseStatus.invalid, "", "[foo", "");
     testNodeParse(
       new TypeNode(),
       `[Foo, Bar]`,
@@ -1658,14 +1644,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     //Immutable list type short form
-    testNodeParse(
-      new TypeNode(),
-      `{Foo}`,
-      ParseStatus.valid,
-      "{Foo}",
-      "",
-      "",
-    ); 
+    testNodeParse(new TypeNode(), `{Foo}`, ParseStatus.valid, "{Foo}", "", "");
     testNodeParse(
       new TypeNode(),
       `{Foo`,
@@ -1674,14 +1653,7 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-    testNodeParse(
-      new TypeNode(),
-      `{foo`,
-      ParseStatus.invalid,
-      "",
-      "{foo",
-      "",
-    );
+    testNodeParse(new TypeNode(), `{foo`, ParseStatus.invalid, "", "{foo", "");
     testNodeParse(
       new TypeNode(),
       `{Foo, Bar}`,
@@ -1723,47 +1695,47 @@ suite("Parsing Nodes", () => {
       "",
       "",
     );
-      //ImmtableDictionary
-      testNodeParse(
-        new TypeNode(),
-        `{Foo:Bar}`,
-        ParseStatus.valid,
-        "{Foo:Bar}",
-        "",
-        "",
-      );
-      testNodeParse(
-        new TypeNode(),
-        `{Foo: Bar}`,
-        ParseStatus.valid,
-        "{Foo: Bar}",
-        "",
-        "{Foo:Bar}",
-      );
-      testNodeParse(
-        new TypeNode(),
-        `{Foo:Bar`,
-        ParseStatus.incomplete,
-        "{Foo:Bar",
-        "",
-        "",
-      );
-      testNodeParse(
-        new TypeNode(),
-        `[Foo`,
-        ParseStatus.incomplete,
-        "[Foo",
-        "",
-        "",
-      );
-      testNodeParse(
-        new TypeNode(),
-        `[Foo, Bar}`,
-        ParseStatus.invalid,
-        "",
-        "[Foo, Bar}",
-        "",
-      );
+    //ImmtableDictionary
+    testNodeParse(
+      new TypeNode(),
+      `{Foo:Bar}`,
+      ParseStatus.valid,
+      "{Foo:Bar}",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `{Foo: Bar}`,
+      ParseStatus.valid,
+      "{Foo: Bar}",
+      "",
+      "{Foo:Bar}",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `{Foo:Bar`,
+      ParseStatus.incomplete,
+      "{Foo:Bar",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo`,
+      ParseStatus.incomplete,
+      "[Foo",
+      "",
+      "",
+    );
+    testNodeParse(
+      new TypeNode(),
+      `[Foo, Bar}`,
+      ParseStatus.invalid,
+      "",
+      "[Foo, Bar}",
+      "",
+    );
     testNodeParse(
       new TypeNode(),
       `Foo<of ImmutableList<of Bar>>`,

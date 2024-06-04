@@ -388,7 +388,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty ImmutableDictionaryImmutableDictionary {a:1}falsetruefalse");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "empty ImmutableDictionaryImmutableDictionary {a:1}falsetruefalse",
+    );
   });
 
   test("Fail_RepeatedKey", async () => {

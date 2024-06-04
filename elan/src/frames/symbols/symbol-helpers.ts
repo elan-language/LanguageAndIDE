@@ -127,10 +127,11 @@ export function wrapScopeInScope(wrapped: Scope) {
   } as Scope;
 }
 
-export function isValueType(type : SymbolType){
-  return type instanceof IntType ||
-         type instanceof FloatType || 
-         type instanceof BooleanType || 
-         type instanceof StringType;
-  
+export function isValueType(type: SymbolType) {
+  return (
+    type instanceof IntType ||
+    type instanceof FloatType ||
+    type instanceof BooleanType ||
+    type instanceof StringType
+  );
 }

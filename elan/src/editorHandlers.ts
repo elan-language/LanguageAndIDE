@@ -26,10 +26,12 @@ export function handleClick(e: editorEvent, file: File) {
 
           for (const cs of curSel) {
             const range = parent.getChildRange(cs as Frame, s);
-            const fr = range.filter(c => c);
+            const fr = range.filter((c) => c);
 
-            if (range.length !== fr.length){
-              console.warn(`getChildRange returned undefined element - cs: ${cs?.constructor?.name}  s: ${s?.constructor?.name}`);
+            if (range.length !== fr.length) {
+              console.warn(
+                `getChildRange returned undefined element - cs: ${cs?.constructor?.name}  s: ${s?.constructor?.name}`,
+              );
             }
 
             for (const r of fr) {

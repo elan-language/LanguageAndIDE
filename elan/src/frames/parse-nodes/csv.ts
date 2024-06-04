@@ -35,8 +35,8 @@ export class CSV extends AbstractSequence {
   getCompletionAsHtml(): string {
     let comp = super.getCompletionAsHtml();
     if (this.minimum > 0 && this.matchedText.length === 0) {
-        const el = this.elementConstructor();
-        comp = el.getCompletionAsHtml();
+      const el = this.elementConstructor();
+      comp = el.getCompletionAsHtml();
     }
     return comp;
   }

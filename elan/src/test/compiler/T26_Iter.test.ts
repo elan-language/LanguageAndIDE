@@ -382,7 +382,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1}empty Iterfalsefalsetrue");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableList {1}empty Iterfalsefalsetrue",
+    );
   });
 
   // TODO fails

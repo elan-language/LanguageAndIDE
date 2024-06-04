@@ -71,7 +71,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     }
     const st = this.symbolType();
 
-    if (st instanceof EnumType){
+    if (st instanceof EnumType) {
       return `${this.id}._default`;
     }
 

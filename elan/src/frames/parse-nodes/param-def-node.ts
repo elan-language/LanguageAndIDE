@@ -24,6 +24,8 @@ export class ParamDefNode extends AbstractSequence {
   }
 
   getCompletionAsHtml(): string {
-    return this.matchedText.length === 0 ? "<pr>parameter definition</pr>" : super.getCompletionAsHtml();
+    return this.matchedText.length === 0
+      ? "<pr>parameter definition</pr>"
+      : super.getCompletionAsHtml();
   }
 }

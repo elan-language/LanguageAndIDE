@@ -6,7 +6,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 export class EmptyAsn implements AstNode {
   constructor(public readonly fieldId: string) {}
 
-  items : AstNode[] = [];
+  items: AstNode[] = [];
 
   id = "";
 

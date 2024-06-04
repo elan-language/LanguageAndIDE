@@ -38,7 +38,7 @@ export class EnumValues extends AbstractField {
         const itStr = items
           .map((n) => `${n.compile()} : "${n.compile()}"`)
           .join(", ");
-      
+
         return `${def}${itStr}`;
       }
 

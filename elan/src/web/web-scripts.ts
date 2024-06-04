@@ -142,7 +142,7 @@ function updateDisplayValues() {
   }
   const stop = document.getElementById("stop") as HTMLButtonElement;
   const pause = document.getElementById("pause") as HTMLButtonElement;
-/*   if (isRunning) {
+  /*   if (isRunning) {
     enable(stop);
     enable(pause);
   } else {
@@ -159,20 +159,20 @@ function updateDisplayValues() {
   if (isRunning) {
     const msg = "Program is running";
     disable(load, msg);
-    disable(save, msg );
+    disable(save, msg);
     disable(newButton, msg);
   } else if (isEmpty) {
     disable(save, "Some code must be added in order to save");
   } else if (!isParsing) {
     disable(save, "Code must be parsing in order to save");
-  } 
+  }
 }
 
-function disable(button:HTMLButtonElement, msg = "") {
+function disable(button: HTMLButtonElement, msg = "") {
   button.setAttribute("disabled", "");
   button.setAttribute("title", msg);
 }
-function enable(button:HTMLButtonElement, msg = "") {
+function enable(button: HTMLButtonElement, msg = "") {
   button.removeAttribute("disabled");
   button.setAttribute("title", msg);
 }

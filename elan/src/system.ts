@@ -31,7 +31,6 @@ export class System {
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
 
-
   emptyIter() {
     return this.emptyIterableSingleton;
   }

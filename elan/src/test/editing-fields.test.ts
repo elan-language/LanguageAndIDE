@@ -204,16 +204,19 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key("a"));
     expr.processKey(key(" "));
     assert.equal(expr.text, "lambda a ");
-    assert.equal(expr.getCompletion(), "as <pr>Type</pr> => <pr>expression</pr>");
+    assert.equal(
+      expr.getCompletion(),
+      "as <pr>Type</pr> => <pr>expression</pr>",
+    );
     expr.processKey(key("Tab"));
     assert.equal(expr.text, "lambda a as ");
     assert.equal(expr.getCompletion(), "<pr>Type</pr> => <pr>expression</pr>");
     expr.processKey(key("I"));
     expr.processKey(key("n"));
     expr.processKey(key("t"));
-    assert.equal(expr.text,  "lambda a as Int");
+    assert.equal(expr.text, "lambda a as Int");
     assert.equal(expr.getCompletion(), " => <pr>expression</pr>");
     expr.processKey(key("Enter"));
-    assert.equal(expr.text,  "lambda a as Int => ");
+    assert.equal(expr.text, "lambda a as Int => ");
   });
 });

@@ -32,7 +32,7 @@ export class TypeGenericNode extends AbstractSequence {
         new Sequence([() => new CommaNode(), () => new TypeNode()]);
       const commaTypes = () => new Multiple(commaType, 0);
       const gt = () => new SymbolNode(GT);
-      this.generic =new Sequence([lt, of, sp, type, commaTypes, gt]);
+      this.generic = new Sequence([lt, of, sp, type, commaTypes, gt]);
       this.addElement(this.simpleType);
       this.addElement(this.generic);
       super.parseText(text);

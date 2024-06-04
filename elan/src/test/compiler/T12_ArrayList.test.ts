@@ -104,8 +104,10 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
   });
 
-  ignore_test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+  ignore_test(
+    "Pass_ConfirmStringElementsInitializedToEmptyClassNotNull",
+    async () => {
+      const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to new ArrayList<of Foo>(3)
@@ -123,7 +125,7 @@ class Foo
 end class
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+      const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), ["Foo"]);
   system.print(_stdlib.asString(a));
@@ -142,19 +144,20 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      transforms(),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+      const fileImpl = new FileImpl(
+        testHash,
+        new DefaultProfile(),
+        transforms(),
+        true,
+      );
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
-  });
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+      await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
+    },
+  );
 
   test("Pass_SetAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -258,7 +261,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayListfalsefalsetrue");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [3]empty ArrayListfalsefalsetrue",
+    );
   });
 
   ignore_test("Pass_SizeArrayList", async () => {
