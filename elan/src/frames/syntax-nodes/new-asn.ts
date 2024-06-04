@@ -33,29 +33,32 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    let gt = this.typeNode.genericParameters.map((p) => `"${p.compile()}"`).join(", ");
-    gt = gt ? `, [${gt}]` : "";
-    const pp = this.parameters.map((p) => p.compile()).join(", ");
-    const t = this.typeNode.compile();
+    
+    const parametersAsString = this.parameters.map((p) => p.compile()).join(", ");
+    const typeAsString = this.typeNode.compile();
+    
     if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
 
       const init = this.typeNode.genericParameters.map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`).join(", ");
 
-      return `system.initialise(system.array(${pp}), ${init})`;
+      return `system.initialise(system.array(${parametersAsString}), ${init})`;
     }
 
     if (this.typeNode.id === "ImmutableList") {
-      return `system.initialise(system.list(new ${t}(${pp})))`;
+      mustMatchParameters(this.parameters, [], this.compileErrors, this.fieldId);
+      return `system.initialise(system.list(new ${typeAsString}()))`;
     }
 
     if (this.typeNode.id === "ImmutableDictionary") {
-      return `system.initialise(system.immutableDictionary(new ${t}(${pp})))`;
+      mustMatchParameters(this.parameters, [], this.compileErrors, this.fieldId);
+      return `system.initialise(system.immutableDictionary(new ${typeAsString}()))`;
     }
 
     if (this.typeNode.id === "Dictionary") {
-      return `system.initialise(system.dictionary(new ${t}(${pp})))`;
+      mustMatchParameters(this.parameters, [], this.compileErrors, this.fieldId);
+      return `system.initialise(system.dictionary(new ${typeAsString}()))`;
     }
 
     const cls = this.scope.resolveSymbol(this.typeNode.id, transforms(), this.scope);
@@ -76,7 +79,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       }
     }
 
-    return `system.initialise(new ${t}(${pp})${gt})`;
+    return `system.initialise(new ${typeAsString}(${parametersAsString}))`;
   }
 
   symbolType() {
