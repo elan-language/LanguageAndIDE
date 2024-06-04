@@ -40,19 +40,22 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     if (this.typeNode.id === "ArrayList") {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
-      return `system.initialise(system.array(${pp})${gt})`;
+
+      const init = this.typeNode.genericParameters.map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`).join(", ");
+
+      return `system.initialise(system.array(${pp}), ${init})`;
     }
 
     if (this.typeNode.id === "ImmutableList") {
-      return `system.initialise(system.list(new ${t}(${pp}))${gt})`;
+      return `system.initialise(system.list(new ${t}(${pp})))`;
     }
 
     if (this.typeNode.id === "ImmutableDictionary") {
-      return `system.initialise(system.immutableDictionary(new ${t}(${pp}))${gt})`;
+      return `system.initialise(system.immutableDictionary(new ${t}(${pp})))`;
     }
 
     if (this.typeNode.id === "Dictionary") {
-      return `system.initialise(system.dictionary(new ${t}(${pp}))${gt})`;
+      return `system.initialise(system.dictionary(new ${t}(${pp})))`;
     }
 
     const cls = this.scope.resolveSymbol(this.typeNode.id, transforms(), this.scope);

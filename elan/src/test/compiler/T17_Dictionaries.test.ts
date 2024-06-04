@@ -237,7 +237,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.dictionary(new Object()), ["String", "Int"]);
+  var a = system.initialise(system.dictionary(new Object()));
   var b = _stdlib.setItem(a, "Foo", 1);
   b = _stdlib.setItem(b, "Bar", 3);
   var k = _stdlib.keys(b);

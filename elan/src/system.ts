@@ -99,13 +99,13 @@ export class System {
     return arr;
   }
 
-  initialise(toInit: any, toType?: string[]) {
+  initialise(toInit: any, toType?: () => any) {
     if (toType && Array.isArray(toInit) && toInit.length > 0) {
       for (let i = 0; i < toInit.length; i++) {
         if (Array.isArray(toInit[i])) {
           this.initialise(toInit[i], toType);
         } else {
-          toInit[i] = this.default(toType[0]);
+          toInit[i] = toType();
         }
       }
     }

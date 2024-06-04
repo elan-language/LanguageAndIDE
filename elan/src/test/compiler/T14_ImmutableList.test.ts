@@ -269,7 +269,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.list(new Array()), ["Int"]);
+  var a = system.initialise(system.list(new Array()));
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -470,7 +470,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.list(new Array()), ["Int"]);
+  var a = system.initialise(system.list(new Array()));
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;

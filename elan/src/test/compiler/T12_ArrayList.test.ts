@@ -49,7 +49,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), ["String"]);
+  var a = system.initialise(system.array(3), () => "");
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -74,7 +74,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), ["String"]);
+  var a = system.initialise(system.array(3), () => "");
   system.print(_stdlib.asString(_stdlib.length(a[0])));
   system.print(_stdlib.asString(a));
 }
@@ -89,7 +89,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
   });
 
-  ignore_test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
+  test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -110,7 +110,7 @@ end class
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), ["Foo"]);
+  var a = system.initialise(system.array(3), () => Foo.emptyInstance());
   system.print(_stdlib.asString(a));
   var foo = a[0];
   system.print(_stdlib.asString(foo.p1));
@@ -133,7 +133,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [a Foo, a Foo, a Foo]0");
   });
 
   test("Pass_SetAndReadElements", async () => {
@@ -149,7 +149,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), ["String"]);
+  var a = system.initialise(system.array(3), () => "");
   a[0] = "foo";
   a[2] = "yon";
   system.print(_stdlib.asString(a[0]));
@@ -226,27 +226,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayListfalsefalsetrue");
   });
 
-  ignore_test("Pass_SizeArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to empty [Int]
-  call a.size(10)
-  print a
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
-  });
-
   test("Pass_2DArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -260,7 +239,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3, 4), ["String"]);
+  var a = system.initialise(system.array(3, 4), () => "");
   a[0][0] = "foo";
   a[2][3] = "yon";
   system.print(_stdlib.asString(a[0][0]));
