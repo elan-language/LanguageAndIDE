@@ -104,6 +104,58 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
   });
 
+  ignore_test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of Foo>(3)
+  print a
+  var foo set to a[0]
+  print foo.p1
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  property p1 as Int
+end class
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.array(3), ["Foo"]);
+  system.print(_stdlib.asString(a));
+  var foo = a[0];
+  system.print(_stdlib.asString(foo.p1));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
+  });
+
   test("Pass_SetAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -207,6 +259,32 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayListfalsefalsetrue");
+  });
+
+  ignore_test("Pass_SizeArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [Int]
+  call a.size(10)
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
   });
 
   test("Pass_2DArray", async () => {

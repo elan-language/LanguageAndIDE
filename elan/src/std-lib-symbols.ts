@@ -378,7 +378,7 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance]))],
+    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false))],
     [
       "readKey",
       this.getSymbol(
@@ -555,6 +555,16 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [new IterType(StringType.Instance), StringType.Instance],
           BooleanType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
+      "size",
+      this.getSymbol(
+        "size",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
           true,
         ),
       ),
