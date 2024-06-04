@@ -1,7 +1,12 @@
-# 22924c8187070c855f1ada56585206a97e940a2edfa5b0e1c5aa368b367283ae Elan v0.1 valid
+# 7c7ef202ac98c040c213963ceb44bdef3216ae10a92af13db922831699938bfc Elan v0.1 valid
 
 main
-
+  var tm set to new TuringMachine("init", "halt")
+  call addRulesForRomanNumeralsInto(tm)
+  call tm.setTape(" ")
+  var rule set to tm.findMatchingRule()
+  call tm.singleStep()
+  print tm.headPosition
 end main
 
 class TuringMachine
@@ -102,6 +107,10 @@ immutable class Rule
   property writeSymbol as String
 
   property move as Dir
+
+  function asString() return String
+    return "{currentState},{currentSymbol},{nextState},{writeSymbol},{move}"
+  end function
 
 end class
 
