@@ -143,6 +143,121 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
+  test("Pass_UsingPropertyAsIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print f.bar()
+end main
+
+class Foo
+  constructor()
+    set p1 to 1
+  end constructor
+
+  property p1 as Int
+
+  function bar() return Int
+    var lst set to [1, 2]
+    return lst[p1]
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  system.print(_stdlib.asString(f.bar()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 1;
+  }
+
+  p1 = 0;
+
+  bar() {
+    var lst = system.literalArray([1, 2]);
+    return lst[this.p1];
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_UsingPropertyAsIndex1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var f set to new Foo()
+  print f.bar()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+
+  function bar() return Int
+    var lst set to [1, 2]
+    set lst[p1] to 3
+    return lst[0]
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  system.print(_stdlib.asString(f.bar()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  bar() {
+    var lst = system.literalArray([1, 2]);
+    lst[this.p1] = 3;
+    return lst[0];
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
   test("Fail_NoSuchProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
