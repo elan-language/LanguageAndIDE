@@ -66,7 +66,7 @@ end enum\r
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `var ${this.name.renderAsSource()} = {\r
+    return `var ${this.name.compile(transforms)} = {\r
 ${singleIndent()}${this.values.compile(transforms)}\r
 };\r
 `;

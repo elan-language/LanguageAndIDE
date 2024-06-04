@@ -581,7 +581,7 @@ main
   var a set to 1
   set a to Fruit.apple
 end main
-   
+
 enum Fruit
   apple, orange, pear
 end enum`;
@@ -596,5 +596,48 @@ end enum`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Enum Fruit to Int"]);
+  });
+
+  test("Fail_undefinedEnum", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print Fruit.apple
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Fruit is not defined"]);
+  });
+
+
+  test("Fail_undefinedEnumValue", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print Fruit.kiwi
+end main
+
+enum Fruit
+  apple, orange, pear
+end enum`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      transforms(),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["kiwi is not defined"]);
   });
 });
