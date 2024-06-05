@@ -63,6 +63,10 @@ class TuringMachine
     return currentState is haltState
   end function
 
+  function getTrimmedTape() return String
+    return tape.trim()
+  end function
+
   function findMatchingRule() return Rule
     let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
     if matches.length() is 0
@@ -472,8 +476,3 @@ procedure addRulesForRomanNumeralsInto(tm as TuringMachine)
   call tm.add(new Rule("barFound", " ", "removeBars", " ", Dir.right))
 end procedure
 
-procedure convertToRoman(tm as TuringMachine, tape as String)
-  call tm.reset()
-  call tm.setTape(tape)
-  call tm.runToEnd()
-end procedure
