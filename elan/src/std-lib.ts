@@ -191,6 +191,17 @@ export class StdLib {
     list.splice(index, 0, value);
   }
 
+  withRemove<T>(list: Array<T>, index: number) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newList = (list as any).toSpliced(index, 1);
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
+  }
+
+  remove<T>(list: Array<T>, index: number) {
+    list.splice(index, 1);
+  }
+
   add<T>(list: Array<T>, value: T) {
     list.push(value);
   }

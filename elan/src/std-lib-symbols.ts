@@ -263,6 +263,17 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "withRemove",
+      this.getSymbol(
+        "withRemove",
+        new FunctionType(
+          [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
+          new ImmutableListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
       "add",
       this.getSymbol(
         "add",
@@ -282,6 +293,16 @@ export class StdLibSymbols implements Scope {
             IntType.Instance,
             new GenericParameterType("T"),
           ],
+          true,
+        ),
+      ),
+    ],
+    [
+      "remove",
+      this.getSymbol(
+        "remove",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
           true,
         ),
       ),

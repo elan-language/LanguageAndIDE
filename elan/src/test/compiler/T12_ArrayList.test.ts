@@ -224,6 +224,34 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [one, foo, two, yon, three]");
   });
 
+  test("Pass_removeElements", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  call a.remove(0)
+  call a.remove(1)
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray(["one", "two", "three"]);
+  _stdlib.remove(a, 0);
+  _stdlib.remove(a, 1);
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [two]");
+  });
+
   test("Pass_InitializeAnArrayFromAList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -557,6 +585,23 @@ end main
 main
   var a set to ["one", "two", "three"]
   set a to a.withInsert(1, "TWO")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
+
+  test("Fail_withRemove", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to a.withRemove(1)
   print a
 end main
 `;
