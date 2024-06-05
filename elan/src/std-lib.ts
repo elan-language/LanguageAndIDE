@@ -198,8 +198,46 @@ export class StdLib {
     return newList;
   }
 
+  withRemoveFirst<T>(list: Array<T>, value: T) {
+    let newList = [...list];
+    const index = newList.indexOf(value);
+    if (index > -1) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      newList = (newList as any).toSpliced(index, 1);
+    }
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
+  }
+
+  withRemoveAll<T>(list: Array<T>, value: T) {
+    let newList = [...list];
+    let index = newList.indexOf(value);
+    while (index > -1) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      newList = (newList as any).toSpliced(index, 1);
+      index = newList.indexOf(value);
+    }
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
+  }
+
   remove<T>(list: Array<T>, index: number) {
     list.splice(index, 1);
+  }
+
+  removeFirst<T>(list: Array<T>, value: T) {
+    const index = list.indexOf(value);
+    if (index > -1) {
+      list.splice(index, 1);
+    }
+  }
+
+  removeAll<T>(list: Array<T>, value: T) {
+    let index = list.indexOf(value);
+    while (index > -1) {
+      list.splice(index, 1);
+      index = list.indexOf(value);
+    }
   }
 
   add<T>(list: Array<T>, value: T) {

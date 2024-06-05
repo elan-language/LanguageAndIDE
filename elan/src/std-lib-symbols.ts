@@ -17,7 +17,6 @@ import { ProcedureType } from "./frames/symbols/procedure-type";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { Parent } from "./frames/interfaces/parent";
-import { stringType } from "./test/testHelpers";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 
@@ -274,6 +273,28 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "withRemoveFirst",
+      this.getSymbol(
+        "withRemoveFirst",
+        new FunctionType(
+          [new ImmutableListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ImmutableListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "withRemoveAll",
+      this.getSymbol(
+        "withRemoveAll",
+        new FunctionType(
+          [new ImmutableListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ImmutableListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
       "add",
       this.getSymbol(
         "add",
@@ -303,6 +324,26 @@ export class StdLibSymbols implements Scope {
         "remove",
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
+          true,
+        ),
+      ),
+    ],
+    [
+      "removeFirst",
+      this.getSymbol(
+        "removeFirst",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
+          true,
+        ),
+      ),
+    ],
+    [
+      "removeAll",
+      this.getSymbol(
+        "removeAll",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
           true,
         ),
       ),
