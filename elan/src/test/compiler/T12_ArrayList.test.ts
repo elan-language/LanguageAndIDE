@@ -475,4 +475,38 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
   });
+
+  test("Fail_put", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to a.put(1, "TWO")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
+
+  test("Fail_putItem", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to a.putItem(1, "TWO")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ArrayList"]);
+  });
 });

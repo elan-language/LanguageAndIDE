@@ -679,4 +679,38 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
   });
+
+  test("Fail_CannotSetIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {4, 5, 6, 7, 8}
+  set a[0] to 0
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
+  });
+
+  test("Fail_putItem", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"one", "two", "three"}
+  set a to a.putItem(1, "TWO")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ImmutableList"]);
+  });
 });
