@@ -248,6 +248,16 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "add",
+      this.getSymbol(
+        "add",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
+          true,
+        ),
+      ),
+    ],
+    [
       "putItem",
       this.getSymbol(
         "putItem",
@@ -374,10 +384,7 @@ export class StdLibSymbols implements Scope {
     ],
     [
       "trim",
-      this.getSymbol(
-        "trim",
-        new FunctionType([StringType.Instance], StringType.Instance, true),
-      ),
+      this.getSymbol("trim", new FunctionType([StringType.Instance], StringType.Instance, true)),
     ],
     [
       "typeAndProperties",

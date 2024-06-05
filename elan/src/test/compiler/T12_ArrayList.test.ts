@@ -166,6 +166,36 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
+  test("Pass_AddAndReadElements", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of String>(3)
+  call a.add("foo")
+  call a.add("yon")
+  print a[3]
+  print a[4]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.array(3), () => "");
+  _stdlib.add(a, "foo");
+  _stdlib.add(a, "yon");
+  system.print(_stdlib.asString(a[3]));
+  system.print(_stdlib.asString(a[4]));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
   test("Pass_InitializeAnArrayFromAList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

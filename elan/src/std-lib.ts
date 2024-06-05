@@ -180,6 +180,10 @@ export class StdLib {
     return newList;
   }
 
+  add<T>(list: Array<T>, value: T) {
+    list.push(value);
+  }
+
   putItem<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
