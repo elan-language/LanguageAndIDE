@@ -122,13 +122,6 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  setItem<T>(dict: { [key: string]: T }, key: string, value: T) {
-    const newDict = { ...dict };
-    newDict[key] = value;
-    (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
-    return newDict;
-  }
-
   removeItem<T>(dict: { [key: string]: T }, key: string) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
@@ -178,6 +171,20 @@ export class StdLib {
     const list = st.slice(index1, index2);
     (list as unknown as hasHiddenType)._type = "ImmutableList";
     return list;
+  }
+
+  put<T>(list: Array<T>, index: number, value: T) {
+    const newList = [...list];
+    newList[index] = value;
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
+  }
+
+  putItem<T>(dict: { [key: string]: T }, key: string, value: T) {
+    const newDict = { ...dict };
+    newDict[key] = value;
+    (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";
+    return newDict;
   }
 
   first<T>(st: Array<T>) {

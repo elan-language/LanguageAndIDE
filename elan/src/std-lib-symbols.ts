@@ -233,9 +233,24 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "setItem",
+      "put",
       this.getSymbol(
-        "setItem",
+        "put",
+        new FunctionType(
+          [
+            new ImmutableListType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          new ImmutableListType(new GenericParameterType("T")),
+          true,
+        ),
+      ),
+    ],
+    [
+      "putItem",
+      this.getSymbol(
+        "putItem",
         new FunctionType(
           [
             new ImmutableDictionaryType(

@@ -283,7 +283,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_index", async () => {
+  test("Pass_get", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -307,7 +307,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test("Pass_range", async () => {
+  test("Pass_put", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to {"one", "two", "three"}
+    set a to a.put(1, "TWO")
+    var b set to a.put(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableList(["one", "two", "three"]);
+  a = _stdlib.put(a, 1, "TWO");
+  var b = _stdlib.put(a, 0, "ONE");
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableList {one, TWO, three}ImmutableList {ONE, TWO, three}",
+    );
+  });
+
+  test("Pass_getRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
