@@ -340,6 +340,39 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_withInsert", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to {"one", "two", "three"}
+    set a to a.withInsert(1, "TWO")
+    var b set to a.withInsert(0, "ONE")
+    print a
+    print b
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableList(["one", "two", "three"]);
+  a = _stdlib.withInsert(a, 1, "TWO");
+  var b = _stdlib.withInsert(a, 0, "ONE");
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableList {one, TWO, two, three}ImmutableList {ONE, one, TWO, two, three}",
+    );
+  });
+
   test("Pass_getRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -720,6 +753,23 @@ end main
 main
   var a set to {"one", "two", "three"}
   call a.add("four")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
+
+  test("Fail_insert", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"one", "two", "three"}
+  call a.insert(1, "four")
   print a
 end main
 `;

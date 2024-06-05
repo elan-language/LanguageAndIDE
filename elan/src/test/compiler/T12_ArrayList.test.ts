@@ -551,6 +551,23 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
   });
 
+  test("Fail_withInsert", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to a.withInsert(1, "TWO")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
+
   test("Fail_putItem", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

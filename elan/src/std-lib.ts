@@ -180,6 +180,13 @@ export class StdLib {
     return newList;
   }
 
+  withInsert<T>(list: Array<T>, index: number, value: T) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newList = (list as any).toSpliced(index, 0, value);
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
+  }
+
   insert<T>(list: Array<T>, index: number, value: T) {
     list.splice(index, 0, value);
   }
