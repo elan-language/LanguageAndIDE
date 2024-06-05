@@ -347,12 +347,12 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types String to Float",
-      "Incompatible types String to Float",
-      "Incompatible types String to Float",
-      "Incompatible types String to Float",
-      "Incompatible types String to Float",
-      "Incompatible types String to Float",
+      "Incompatible types String to Float or Int",
+      "Incompatible types String to Float or Int",
+      "Incompatible types String to Float or Int",
+      "Incompatible types String to Float or Int",
+      "Incompatible types String to Float or Int",
+      "Incompatible types String to Float or Int",
     ]);
   });
 

@@ -539,4 +539,38 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ArrayList"]);
   });
+
+  test("Fail_appendWithPlus", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to a + "four"
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Float or Int"]);
+  });
+
+  test("Fail_prependWithPlus", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  set a to "four" + a
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
+  });
 });

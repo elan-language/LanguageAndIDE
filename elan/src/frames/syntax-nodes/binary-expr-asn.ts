@@ -18,6 +18,7 @@ import { OperationSymbol } from "./operation-symbol";
 import { StringType } from "../symbols/string-type";
 import { ClassType } from "../symbols/class-type";
 import { isValueType } from "../symbols/symbol-helpers";
+import { EnumType } from "../symbols/enum-type";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -127,6 +128,15 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
   }
 
+  isAppendPrependable(st: SymbolType) {
+    return (
+      st instanceof StringType ||
+      st instanceof IntType ||
+      st instanceof FloatType ||
+      st instanceof EnumType
+    );
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -149,7 +159,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (
       this.op === OperationSymbol.Add &&
-      (lst instanceof StringType || rst instanceof StringType)
+      this.isAppendPrependable(lst) &&
+      this.isAppendPrependable(rst)
     ) {
       return `${this.lhs.compile()} + ${this.rhs.compile()}`;
     }

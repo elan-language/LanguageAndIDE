@@ -343,6 +343,11 @@ function FailIncompatible(
   compileErrors.push(new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown));
 }
 
+function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
+  const unknown = lhs === UnknownType.Instance;
+  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", location, unknown));
+}
+
 export function mustBeCoercibleType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -366,8 +371,12 @@ export function mustBeNumberType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  mustBeCompatibleType(FloatType.Instance, lhs, compileErrors, location);
-  mustBeCompatibleType(FloatType.Instance, rhs, compileErrors, location);
+  if (!(lhs instanceof IntType || lhs instanceof FloatType)) {
+    FailNotNumber(lhs, compileErrors, location);
+  }
+  if (!(rhs instanceof IntType || rhs instanceof FloatType)) {
+    FailNotNumber(rhs, compileErrors, location);
+  }
 }
 
 export function mustBeBooleanType(

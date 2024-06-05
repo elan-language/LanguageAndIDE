@@ -303,9 +303,9 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types Boolean to Float",
-      "Incompatible types Boolean to Float",
-      "Incompatible types Foo to Float",
+      "Incompatible types Boolean to Float or Int",
+      "Incompatible types Boolean to Float or Int",
+      "Incompatible types Foo to Float or Int",
     ]);
   });
 });

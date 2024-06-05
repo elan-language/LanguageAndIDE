@@ -243,7 +243,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
@@ -259,7 +259,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to Float or Int"]);
   });
 
   test("fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {

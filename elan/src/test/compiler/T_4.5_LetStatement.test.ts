@@ -111,7 +111,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Float", "x is not defined"]);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Unknown to Float or Int",
+      "x is not defined",
+    ]);
   });
 
   ignore_test("Fail_RecursiveDefinition1", async () => {
