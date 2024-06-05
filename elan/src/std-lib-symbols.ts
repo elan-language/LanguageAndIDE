@@ -329,9 +329,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "removeAt",
+      "removeKey",
       this.getSymbol(
-        "removeAt",
+        "removeKey",
         new ProcedureType(
           [
             new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
@@ -342,9 +342,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "removeItem",
+      "withRemoveKey",
       this.getSymbol(
-        "removeItem",
+        "withRemoveKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(

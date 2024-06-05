@@ -122,14 +122,14 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  removeItem<T>(dict: { [key: string]: T }, key: string) {
+  withRemoveKey<T>(dict: { [key: string]: T }, key: string) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
     delete newDict[key];
     return newDict;
   }
 
-  removeAt<T>(dict: { [key: string]: T }, key: string) {
+  removeKey<T>(dict: { [key: string]: T }, key: string) {
     delete dict[key];
   }
 

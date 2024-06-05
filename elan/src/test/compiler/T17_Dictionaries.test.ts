@@ -167,19 +167,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:4, z:10, d:2]");
   });
 
-  test("Pass_removeEntry", async () => {
+  test("Pass_removeKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeAt("b")
+  call a.removeKey("b")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  _stdlib.removeAt(a, "b");
+  _stdlib.removeKey(a, "b");
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -198,14 +198,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeAt("c")
+  call a.removeKey("c")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  _stdlib.removeAt(a, "c");
+  _stdlib.removeKey(a, "c");
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -358,7 +358,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeAt(10)
+  call a.removeKey(10)
 end main
 `;
 
@@ -432,5 +432,22 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [""]);
+  });
+
+  test("Fail_withRemoveKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":1, "b":3, "z":10]
+  var b set to a.withRemoveKey("b")
+  print a
+  print b
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
   });
 });

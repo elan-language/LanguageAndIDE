@@ -202,12 +202,12 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_removeEntry", async () => {
+  test("Pass_withRemoveKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.removeItem("b")
+  var b set to a.withRemoveKey("b")
   print a
   print b
 end main`;
@@ -216,7 +216,7 @@ end main`;
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  var b = _stdlib.removeItem(a, "b");
+  var b = _stdlib.withRemoveKey(a, "b");
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -239,7 +239,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.removeItem("c")
+  var b set to a.withRemoveKey("c")
   print b
 end main`;
 
@@ -247,7 +247,7 @@ end main`;
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  var b = _stdlib.removeItem(a, "c");
+  var b = _stdlib.withRemoveKey(a, "c");
   system.print(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -403,7 +403,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.removeItem(10)
+  var b set to a.withRemoveKey(10)
 end main
 `;
 
@@ -478,5 +478,22 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot index ImmutableDictionary"]);
+  });
+
+  test("Fail_removeKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"a":1, "b":3, "z":10}
+  call a.removeKey("b")
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
   });
 });
