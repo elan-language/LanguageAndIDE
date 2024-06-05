@@ -526,7 +526,7 @@ const stubHolder = {
             new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false),
           symbolScope: SymbolScope.unknown,
         };
-      case "getItem":
+      case "getForKey":
         return {
           symbolId: "",
           symbolType: () =>

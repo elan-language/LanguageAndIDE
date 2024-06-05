@@ -84,8 +84,8 @@ function displayFile() {
         refreshAndDisplay();
       });
   } else {
-    const previousCode = localStorage.getItem("elan-code");
-    const previousFileName = localStorage.getItem("elan-file");
+    const previousCode = localStorage.getForKey("elan-code");
+    const previousFileName = localStorage.getForKey("elan-file");
     if (previousCode) {
       const code = new CodeSourceFromString(previousCode);
       file.parseFrom(code).then(() => {

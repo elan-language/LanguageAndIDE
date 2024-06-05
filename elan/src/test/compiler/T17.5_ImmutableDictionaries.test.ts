@@ -67,14 +67,14 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getItem("z")
+  print a.getForKey("z")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.getItem(a, "z")));
+  system.print(_stdlib.asString(_stdlib.getForKey(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -168,13 +168,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 3, 10}");
   });
 
-  test("Pass_putItem", async () => {
+  test("Pass_putAtKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.putItem("b", 4)
-  var c set to b.putItem("d", 2)
+  var b set to a.putAtKey("b", 4)
+  var c set to b.putAtKey("d", 2)
   print a
   print c
 end main`;
@@ -183,8 +183,8 @@ end main`;
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  var b = _stdlib.putItem(a, "b", 4);
-  var c = _stdlib.putItem(b, "d", 2);
+  var b = _stdlib.putAtKey(a, "b", 4);
+  var c = _stdlib.putAtKey(b, "d", 2);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(c));
 }
@@ -266,23 +266,23 @@ return [main, _tests];}`;
 
 main
   var a set to new ImmutableDictionary<of String, Int>()
-  var b set to a.putItem("Foo", 1)
-  set b to b.putItem("Bar", 3)
+  var b set to a.putAtKey("Foo", 1)
+  set b to b.putAtKey("Bar", 3)
   var k set to b.keys()
   print k.length()
-  print b.getItem("Foo")
-  print b.getItem("Bar")
+  print b.getForKey("Foo")
+  print b.getForKey("Bar")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.immutableDictionary(new Object()));
-  var b = _stdlib.putItem(a, "Foo", 1);
-  b = _stdlib.putItem(b, "Bar", 3);
+  var b = _stdlib.putAtKey(a, "Foo", 1);
+  b = _stdlib.putAtKey(b, "Bar", 3);
   var k = _stdlib.keys(b);
   system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(_stdlib.getItem(b, "Foo")));
-  system.print(_stdlib.asString(_stdlib.getItem(b, "Bar")));
+  system.print(_stdlib.asString(_stdlib.getForKey(b, "Foo")));
+  system.print(_stdlib.asString(_stdlib.getForKey(b, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -301,7 +301,7 @@ return [main, _tests];}`;
 main
   var a set to empty {String:Int}
   var b set to empty {String:Int}
-  set b to a.putItem("a", 1)
+  set b to a.putAtKey("a", 1)
   print a
   print b
   print a is b
@@ -313,7 +313,7 @@ end main`;
 async function main() {
   var a = system.emptyImmutableDictionary();
   var b = system.emptyImmutableDictionary();
-  b = _stdlib.putItem(a, "a", 1);
+  b = _stdlib.putAtKey(a, "a", 1);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
   system.print(_stdlib.asString(system.objectEquals(a, b)));
@@ -387,7 +387,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getItem("c")
+  print a.getForKey("c")
 end main
 `;
 
@@ -419,7 +419,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.putItem(10, 4)
+  var b set to a.putAtKey(10, 4)
 end main
 `;
 
@@ -435,7 +435,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.setItem("b", 3.1)
+  var b set to a.putAtKey("b", 3.1)
 end main
 `;
 

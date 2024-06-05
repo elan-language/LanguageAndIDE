@@ -99,9 +99,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "getItem",
+      "getForKey",
       this.getSymbol(
-        "getItem",
+        "getForKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(
@@ -287,9 +287,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putItem",
+      "putAtKey",
       this.getSymbol(
-        "putItem",
+        "putAtKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(

@@ -480,12 +480,18 @@ suite("ASTNodes", () => {
       "Func Call simpleGeneric (a)",
       intType,
     );
-    testAST(new FunctionCallNode(), stubField, `getItem(lst)`, "Func Call getItem (lst)", intType);
     testAST(
       new FunctionCallNode(),
       stubField,
-      `getItem(lst1)`,
-      "Func Call getItem (lst1)",
+      `getForKey(lst)`,
+      "Func Call getForKey (lst)",
+      intType,
+    );
+    testAST(
+      new FunctionCallNode(),
+      stubField,
+      `getForKey(lst1)`,
+      "Func Call getForKey (lst1)",
       stringType,
     );
   });

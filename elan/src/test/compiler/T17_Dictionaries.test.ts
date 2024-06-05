@@ -385,12 +385,12 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
   });
 
-  test("Fail_getItem", async () => {
+  test("Fail_getForKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  print a.getItem("a")
+  print a.getForKey("a")
 end main
 `;
 
@@ -401,12 +401,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
   });
 
-  test("Fail_putItem", async () => {
+  test("Fail_putAtKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a to a.putItem("a", 2)
+  set a to a.putAtKey("a", 2)
   print a
 end main
 `;
@@ -423,7 +423,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.setItem("b", 3.1)
+  var b set to a.putAtKey("b", 3.1)
 end main
 `;
 
