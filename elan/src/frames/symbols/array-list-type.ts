@@ -14,6 +14,6 @@ export class ArrayListType implements GenericSymbolType {
 
   toString(): string {
     const twod = this.is2d ? "2D " : "";
-    return `${twod}ArrayList<of ${this.ofType.name}>`;
+    return `${twod}ArrayList`;
   }
 }

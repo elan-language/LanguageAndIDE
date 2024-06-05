@@ -10,6 +10,6 @@ export class ImmutableListType implements GenericSymbolType {
     return `ImmutableList <${this.ofType.name}>`;
   }
   toString(): string {
-    return `ImmutableList<of ${this.ofType.name}>`;
+    return `ImmutableList`;
   }
 }

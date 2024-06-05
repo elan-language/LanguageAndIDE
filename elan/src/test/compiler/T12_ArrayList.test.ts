@@ -269,7 +269,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call ArrayList<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call ArrayList"]);
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
@@ -317,7 +317,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ArrayList<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index ArrayList"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -333,7 +333,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList<of String>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList"]);
   });
 
   ignore_test("Fail_OutOfRange", async () => {
@@ -442,5 +442,21 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Array requires 1 or 2 parameters"]);
+  });
+
+  test("Fail_get", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  print a.get(1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
   });
 });

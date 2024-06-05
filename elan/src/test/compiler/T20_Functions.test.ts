@@ -516,7 +516,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList<of Int> must be immutable"]);
+    assertDoesNotCompile(fileImpl, ["ArrayList must be immutable"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -533,7 +533,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList<of Int> must be immutable"]);
+    assertDoesNotCompile(fileImpl, ["ArrayList must be immutable"]);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -634,7 +634,7 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ArrayList<of Int> must be immutable",
+      "ArrayList must be immutable",
       "Dictionary must be immutable",
       "Foo must be immutable",
     ]);

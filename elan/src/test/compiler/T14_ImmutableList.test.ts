@@ -644,6 +644,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
   });
 });

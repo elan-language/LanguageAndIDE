@@ -427,7 +427,7 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Float to Boolean",
       "Incompatible types Boolean to Int",
-      "Incompatible types ImmutableList<of Float> to String",
+      "Incompatible types ImmutableList to String",
       "Incompatible types Float to Int",
     ]);
   });
@@ -449,9 +449,9 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types ImmutableList<of Float> to ArrayList<of String>",
-      "Incompatible types ArrayList<of String> to ImmutableList<of Float>",
-      "Incompatible types ImmutableList<of Float> to Dictionary",
+      "Incompatible types ImmutableList to ArrayList",
+      "Incompatible types ArrayList to ImmutableList",
+      "Incompatible types ImmutableList to Dictionary",
     ]);
   });
 
