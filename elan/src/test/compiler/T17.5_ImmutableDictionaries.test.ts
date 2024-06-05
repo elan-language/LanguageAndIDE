@@ -445,4 +445,38 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [""]);
   });
+
+  test("Fail_CannotIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
+  var b set to a["a"]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableDictionary"]);
+  });
+
+  test("Fail_CannotSetIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
+  set a["a"] to 0
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableDictionary"]);
+  });
 });

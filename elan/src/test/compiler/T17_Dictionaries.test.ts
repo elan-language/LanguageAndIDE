@@ -401,6 +401,23 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
   });
 
+  test("Fail_putItem", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":1, "b":3, "z":10]
+  set a to a.putItem("a", 2)
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
+  });
+
   ignore_test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
