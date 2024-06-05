@@ -1,4 +1,4 @@
-# 789dfa5211639f48393aeb73a86fc325f230bce782cbc047ebd2f4387c2aeac9 Elan v0.1 valid
+# 512373c41d72a58206892f5f9e68236efe53e554d150496f9d0c5642b5695eff Elan v0.1 valid
 
 main
   var possible set to validWords
@@ -162,14 +162,14 @@ function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, a
   let d be emptyDictionaryOfAllOutcomes
   let d2 be possibleAnswers.reduce(d, lambda dd as {String:Int}, possAnswer as String => incrementCount(dd, possAnswer, attempt))
   let keys be d2.keys()
-  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2.getForKey(mark) > maxSoFar then d2.getForKey(mark) else maxSoFar)
+  return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2.getKey(mark) > maxSoFar then d2.getKey(mark) else maxSoFar)
 end function
 
 function incrementCount(dd as {String:Int}, possAnswer as String, attempt as String) return {String:Int}
   let mark be markAttempt(attempt, possAnswer)
   let keys be dd.keys()
-  let count be if keys.contains(mark) then dd.getForKey(mark) else 0
-  let dd2 be dd.putAtKey(mark, count + 1)
+  let count be if keys.contains(mark) then dd.getKey(mark) else 0
+  let dd2 be dd.withKey(mark, count + 1)
   return dd2
 end function
 

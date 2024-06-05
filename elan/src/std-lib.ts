@@ -163,7 +163,7 @@ export class StdLib {
     return st[index];
   }
 
-  getForKey<T>(st: { [key: string]: T }, index: string) {
+  getKey<T>(st: { [key: string]: T }, index: string) {
     return st[index];
   }
 
@@ -173,7 +173,7 @@ export class StdLib {
     return list;
   }
 
-  put<T>(list: Array<T>, index: number, value: T) {
+  with<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
     (newList as unknown as hasHiddenType)._type = "ImmutableList";
@@ -244,7 +244,7 @@ export class StdLib {
     list.push(value);
   }
 
-  putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+  withKey<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";

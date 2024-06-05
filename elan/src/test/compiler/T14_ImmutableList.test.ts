@@ -312,8 +312,8 @@ return [main, _tests];}`;
 
 main
     var a set to {"one", "two", "three"}
-    set a to a.put(1, "TWO")
-    var b set to a.put(0, "ONE")
+    set a to a.with(1, "TWO")
+    var b set to a.with(0, "ONE")
     print a
     print b
 end main`;
@@ -321,8 +321,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList(["one", "two", "three"]);
-  a = _stdlib.put(a, 1, "TWO");
-  var b = _stdlib.put(a, 0, "ONE");
+  a = _stdlib.with(a, 1, "TWO");
+  var b = _stdlib.with(a, 0, "ONE");
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -817,7 +817,7 @@ end main
 
 main
   var a set to {"one", "two", "three"}
-  set a to a.putAtKey(1, "TWO")
+  set a to a.withKey(1, "TWO")
   print a
 end main
 `;

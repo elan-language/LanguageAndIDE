@@ -390,7 +390,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  print a.getForKey("a")
+  print a.getKey("a")
 end main
 `;
 
@@ -406,7 +406,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a to a.putAtKey("a", 2)
+  set a to a.withKey("a", 2)
   print a
 end main
 `;
@@ -423,7 +423,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.putAtKey("b", 3.1)
+  var b set to a.withKey("b", 3.1)
 end main
 `;
 

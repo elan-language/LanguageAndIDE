@@ -619,7 +619,7 @@ end main
 
 main
   var a set to ["one", "two", "three"]
-  set a to a.put(1, "TWO")
+  set a to a.with(1, "TWO")
   print a
 end main
 `;
@@ -670,7 +670,7 @@ end main
 
 main
   var a set to ["one", "two", "three"]
-  set a to a.putAtKey(1, "TWO")
+  set a to a.withKey(1, "TWO")
   print a
 end main
 `;
