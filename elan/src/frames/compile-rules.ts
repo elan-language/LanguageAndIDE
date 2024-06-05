@@ -49,6 +49,8 @@ import { LetStatement } from "./statements/let-statement";
 import { allKeywords, thisKeyword } from "./keywords";
 import { FunctionMethod } from "./class-members/function-method";
 import { EnumType } from "./symbols/enum-type";
+import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
+import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -211,7 +213,7 @@ export function mustBeIndexableSymbol(
     !(
       symbolType instanceof ArrayListType ||
       symbolType instanceof StringType ||
-      (symbolType instanceof DictionaryType && !symbolType.isImmutable)
+      symbolType instanceof DictionaryType
     )
   ) {
     compileErrors.push(
@@ -227,7 +229,7 @@ export function mustBeIndexableSymbol(
     ((symbolType instanceof ArrayListType && !symbolType.is2d) ||
       symbolType instanceof ImmutableListType ||
       symbolType instanceof StringType ||
-      symbolType instanceof DictionaryType)
+      symbolType instanceof AbstractDictionaryType)
   ) {
     compileErrors.push(new NotIndexableCompileError(symbolType.toString(), location, false));
   }
@@ -301,7 +303,7 @@ export function mustBeConcreteClass(
 }
 
 export function mustCallExtensionViaQualifier(
-  ft: FunctionType,
+  ft: FunctionType | ProcedureType,
   qualifier: AstNode | undefined,
   compileErrors: CompileError[],
   location: string,
@@ -466,6 +468,28 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof DictionaryType && !(rhs instanceof DictionaryType)) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
+  }
+
+  if (lhs instanceof ImmutableDictionaryType && rhs instanceof ImmutableDictionaryType) {
+    mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location);
+    mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location);
+    return;
+  }
+
+  if (lhs instanceof ImmutableDictionaryType && !(rhs instanceof ImmutableDictionaryType)) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
+  }
+
+  if (lhs instanceof AbstractDictionaryType && rhs instanceof AbstractDictionaryType) {
+    mustBeCompatibleType(lhs.keyType, rhs.keyType, compileErrors, location);
+    mustBeCompatibleType(lhs.valueType, rhs.valueType, compileErrors, location);
+    return;
+  }
+
+  if (lhs instanceof AbstractDictionaryType && !(rhs instanceof AbstractDictionaryType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }

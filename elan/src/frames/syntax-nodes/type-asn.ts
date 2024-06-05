@@ -15,6 +15,7 @@ import { AstTypeNode } from "../interfaces/ast-type-node";
 import { FunctionType } from "../symbols/function-type";
 import { transforms } from "./ast-helpers";
 import { EnumType } from "../symbols/enum-type";
+import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -96,13 +97,11 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return new DictionaryType(
           this.genericParameters[0].symbolType(),
           this.genericParameters[1].symbolType(),
-          false,
         );
       case "ImmutableDictionary":
-        return new DictionaryType(
+        return new ImmutableDictionaryType(
           this.genericParameters[0].symbolType(),
           this.genericParameters[1].symbolType(),
-          true,
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));

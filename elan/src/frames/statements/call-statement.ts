@@ -6,12 +6,19 @@ import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
 import { Statement } from "../interfaces/statement";
 import { ProcedureType } from "../symbols/procedure-type";
-import { mustBeProcedure, mustBeKnownSymbol, mustMatchParameters } from "../compile-rules";
+import {
+  mustBeProcedure,
+  mustBeKnownSymbol,
+  mustMatchParameters,
+  mustCallExtensionViaQualifier,
+} from "../compile-rules";
 import { callKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { AstNode } from "../interfaces/ast-node";
+import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -60,7 +67,12 @@ export class CallStatement extends AbstractFrame implements Statement {
     const astNode = this.proc.getOrTransformAstNode(transforms) as AstQualifiedNode;
     const id = astNode.id;
 
-    const [qualifier, currentScope] = updateScopeAndQualifier(astNode.qualifier, transforms, this);
+    const [updatedQualifier, currentScope] = updateScopeAndQualifier(
+      astNode.qualifier,
+      transforms,
+      this,
+    );
+    let qualifier = updatedQualifier;
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
 
@@ -68,15 +80,23 @@ export class CallStatement extends AbstractFrame implements Statement {
     mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
     const ps = procSymbol.symbolType(transforms);
+    const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
+    let parameters = argList.items;
 
     if (ps instanceof ProcedureType) {
-      const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
-      const params = argList.items;
-      mustMatchParameters(params!, ps.parametersTypes, this.compileErrors, this.htmlId);
+      mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
+
+      if (ps.isExtension && qualifier instanceof QualifierAsn) {
+        parameters = [qualifier.value as AstNode].concat(parameters);
+        qualifier = undefined;
+      }
+
+      mustMatchParameters(parameters, ps.parametersTypes, this.compileErrors, this.htmlId);
     }
 
+    const pp = parameters.map((p) => p.compile()).join(", ");
     const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
 
-    return `${this.indent()}${q}${id}(${this.args.compile(transforms)});`;
+    return `${this.indent()}${q}${id}(${pp});`;
   }
 }

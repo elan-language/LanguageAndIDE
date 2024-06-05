@@ -136,6 +136,10 @@ export class StdLib {
     return newDict;
   }
 
+  removeAt<T>(dict: { [key: string]: T }, key: string) {
+    delete dict[key];
+  }
+
   length<T>(coll: string | T[] | { [key: string]: T }) {
     if (typeof coll === "string") {
       return coll.length;

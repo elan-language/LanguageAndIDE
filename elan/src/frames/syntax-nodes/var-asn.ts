@@ -24,6 +24,7 @@ import { DictionaryType } from "../symbols/dictionary-type";
 import { LetStatement } from "../statements/let-statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -151,7 +152,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         return rootType.ofType;
       }
 
-      if (rootType instanceof DictionaryType) {
+      if (rootType instanceof AbstractDictionaryType) {
         return rootType.valueType;
       }
     }

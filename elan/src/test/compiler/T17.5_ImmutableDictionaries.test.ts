@@ -92,14 +92,18 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.keys()
+  var b set to empty {String}
+  set b to a.keys()
+  print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.keys(a)));
+  var b = system.emptyImmutableList();
+  b = _stdlib.keys(a);
+  system.print(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 

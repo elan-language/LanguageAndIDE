@@ -66,13 +66,17 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  print a.keys()
+  var b set to empty {String}
+  set b to a.keys()
+  print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  system.print(_stdlib.asString(_stdlib.keys(a)));
+  var b = system.emptyImmutableList();
+  b = _stdlib.keys(a);
+  system.print(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -140,19 +144,17 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.setItem("b", 4)
-  var c set to b.setItem("d", 2)
+  set a["b"] to 4
+  set a["d"] to 2
   print a
-  print c
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  var b = _stdlib.setItem(a, "b", 4);
-  var c = _stdlib.setItem(b, "d", 2);
+  a["b"] = 4;
+  a["d"] = 2;
   system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -162,10 +164,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "Dictionary [a:1, b:3, z:10]Dictionary [a:1, b:4, z:10, d:2]",
-    );
+    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:4, z:10, d:2]");
   });
 
   test("Pass_removeEntry", async () => {
@@ -173,17 +172,15 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.removeItem("b")
+  call a.removeAt("b")
   print a
-  print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  var b = _stdlib.removeItem(a, "b");
+  _stdlib.removeAt(a, "b");
   system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -193,7 +190,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]Dictionary [a:1, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, z:10]");
   });
 
   test("Pass_removeInvalidKey", async () => {
@@ -201,15 +198,15 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.removeItem("c")
-  print b
+  call a.removeAt("c")
+  print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
-  var b = _stdlib.removeItem(a, "c");
-  system.print(_stdlib.asString(b));
+  _stdlib.removeAt(a, "c");
+  system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -361,7 +358,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.removeItem(10)
+  call a.removeAt(10)
 end main
 `;
 
@@ -377,7 +374,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.setItem(10, 4)
+  set a[10] to 4
 end main
 `;
 
@@ -386,6 +383,22 @@ end main
 
     assertParses(fileImpl);
     await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+  });
+
+  test("Fail_getItem", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":1, "b":3, "z":10]
+  print a.getItem("a")
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
   });
 
   ignore_test("Fail_SetInvalidValueType", async () => {

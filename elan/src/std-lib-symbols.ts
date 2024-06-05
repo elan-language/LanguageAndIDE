@@ -18,6 +18,8 @@ import { Transforms } from "./frames/syntax-nodes/transforms";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { Parent } from "./frames/interfaces/parent";
 import { stringType } from "./test/testHelpers";
+import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
+import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 
 export class StdLibSymbols implements Scope {
   getParent(): Parent {
@@ -102,7 +104,10 @@ export class StdLibSymbols implements Scope {
         "getItem",
         new FunctionType(
           [
-            new DictionaryType(new GenericParameterType("T"), new GenericParameterType("U"), true),
+            new ImmutableDictionaryType(
+              new GenericParameterType("T"),
+              new GenericParameterType("U"),
+            ),
             new GenericParameterType("T"),
           ],
           new GenericParameterType("U"),
@@ -142,10 +147,9 @@ export class StdLibSymbols implements Scope {
         "keys",
         new FunctionType(
           [
-            new DictionaryType(
+            new AbstractDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              true,
             ),
           ],
           new ImmutableListType(new GenericParameterType("T1")),
@@ -187,10 +191,9 @@ export class StdLibSymbols implements Scope {
         "values",
         new FunctionType(
           [
-            new DictionaryType(
+            new AbstractDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              true,
             ),
           ],
           new ImmutableListType(new GenericParameterType("T1")),
@@ -204,10 +207,9 @@ export class StdLibSymbols implements Scope {
         "hasKey",
         new FunctionType(
           [
-            new DictionaryType(
+            new AbstractDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              true,
             ),
             new GenericParameterType("T1"),
           ],
@@ -236,15 +238,30 @@ export class StdLibSymbols implements Scope {
         "setItem",
         new FunctionType(
           [
-            new DictionaryType(
+            new ImmutableDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              true,
             ),
             new GenericParameterType("T1"),
             new GenericParameterType("T2"),
           ],
-          new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"), true),
+          new ImmutableDictionaryType(
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ),
+          true,
+        ),
+      ),
+    ],
+    [
+      "removeAt",
+      this.getSymbol(
+        "removeAt",
+        new ProcedureType(
+          [
+            new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
+            new GenericParameterType("T1"),
+          ],
           true,
         ),
       ),
@@ -255,14 +272,16 @@ export class StdLibSymbols implements Scope {
         "removeItem",
         new FunctionType(
           [
-            new DictionaryType(
+            new ImmutableDictionaryType(
               new GenericParameterType("T1"),
               new GenericParameterType("T2"),
-              true,
             ),
             new GenericParameterType("T1"),
           ],
-          new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2"), true),
+          new ImmutableDictionaryType(
+            new GenericParameterType("T1"),
+            new GenericParameterType("T2"),
+          ),
           true,
         ),
       ),

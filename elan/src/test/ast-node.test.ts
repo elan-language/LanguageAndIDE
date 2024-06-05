@@ -342,7 +342,7 @@ suite("ASTNodes", () => {
       stubField,
       `["a":37]`,
       `[("a":37)]`,
-      new DictionaryType(stringType, intType, false),
+      new DictionaryType(stringType, intType),
     );
     testAST(
       new DictionaryNode(
@@ -352,7 +352,7 @@ suite("ASTNodes", () => {
       stubField,
       `["a":37, "b":42]`,
       `[("a":37), ("b":42)]`,
-      new DictionaryType(stringType, intType, false),
+      new DictionaryType(stringType, intType),
     );
     testAST(
       new DictionaryNode(
@@ -362,7 +362,7 @@ suite("ASTNodes", () => {
       stubField,
       `["a":37, "b":42]`,
       `[("a":37), ("b":42)]`,
-      new DictionaryType(stringType, intType, false),
+      new DictionaryType(stringType, intType),
     );
     testAST(
       new DictionaryNode(
@@ -372,7 +372,7 @@ suite("ASTNodes", () => {
       stubField,
       `["a":1.1, 5:"abc"]`,
       `[("a":1.1), (5:"abc")]`,
-      new DictionaryType(stringType, floatType, false),
+      new DictionaryType(stringType, floatType),
     );
   });
 
@@ -410,7 +410,7 @@ suite("ASTNodes", () => {
       stubField,
       `["a":37, 42:"b"]`,
       `[("a":37), (42:"b")]`,
-      new DictionaryType(stringType, intType, false),
+      new DictionaryType(stringType, intType),
     );
     testAST(
       new LiteralNode(),
