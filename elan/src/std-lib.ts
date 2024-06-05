@@ -198,6 +198,9 @@ export class StdLib {
   indexOf(s1: string, s2: string) {
     return s1.indexOf(s2);
   }
+  trim(s: string): string {
+    return s.trim();
+  }
   mod(n: number, d: number) {
     return n % d;
   }

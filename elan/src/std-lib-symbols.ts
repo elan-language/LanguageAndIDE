@@ -373,6 +373,13 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "trim",
+      this.getSymbol(
+        "trim",
+        new FunctionType([StringType.Instance], StringType.Instance, true),
+      ),
+    ],
+    [
       "typeAndProperties",
       this.getSymbol(
         "typeAndProperties",

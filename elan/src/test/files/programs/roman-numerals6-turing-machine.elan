@@ -1,7 +1,14 @@
 # 420df89d1b1e552662d2ba40e0f439b59c0f783d8ace47315519d725f1859fef Elan v0.1 valid
 
 main
-  set a to 0
+  var tm set to new TuringMachine("init", "halt")
+  call addRulesForRomanNumeralsInto(tm)
+  call tm.setTape("2024")
+  var rule set to tm.findMatchingRule()
+  while not tm.isHalted()
+    call tm.singleStep()
+    print tm.tape
+  end while
 end main
 
 class TuringMachine
@@ -56,6 +63,10 @@ class TuringMachine
     return currentState is haltState
   end function
 
+  function getTrimmedTape() return String
+    return tape.trim()
+  end function
+
   function findMatchingRule() return Rule
     let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
     if matches.length() is 0
@@ -64,11 +75,19 @@ class TuringMachine
     return matches.head()
   end function
 
+  procedure write(newSymbol as String)
+    var hp set to headPosition
+    set tape to tape[..hp] + newSymbol + tape[hp + 1..]
+  end procedure
+
   procedure execute(rule as Rule)
     set currentState to rule.nextState
-    set tape[headPosition] to rule.writeSymbol
+    call write(rule.writeSymbol)
     if rule.move is Dir.right
       set headPosition to headPosition + 1
+      if headPosition >= tape.length()
+        set tape to tape + " "
+      end if
       else
         set headPosition to headPosition - 1
         if headPosition < 0
@@ -102,6 +121,10 @@ immutable class Rule
   property writeSymbol as String
 
   property move as Dir
+
+  function asString() return String
+    return "{currentState},{currentSymbol},{nextState},{writeSymbol},{move}"
+  end function
 
 end class
 
@@ -460,74 +483,74 @@ procedure convertToRoman(tm as TuringMachine, tape as String)
 end procedure
 
 test 
-  let tm be new TuringMachine("init", "halt")
+  var tm set to new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
   call convertToRoman(tm, "1")
-  assert tm.tape is "I"
+  assert tm.getTrimmedTape() is "I"
   call convertToRoman(tm, "2")
-  assert tm.tape is "II"
+  assert tm.getTrimmedTape() is "II"
   call convertToRoman(tm, "3")
-  assert tm.tape is "III"
+  assert tm.getTrimmedTape() is "III"
   call convertToRoman(tm, "4")
-  assert tm.tape is "IV"
+  assert tm.getTrimmedTape() is "IV"
   call convertToRoman(tm, "5")
-  assert tm.tape is "V"
+  assert tm.getTrimmedTape() is "V"
   call convertToRoman(tm, "6")
-  assert tm.tape is "VI"
+  assert tm.getTrimmedTape() is "VI"
   call convertToRoman(tm, "7")
-  assert tm.tape is "VII"
+  assert tm.getTrimmedTape() is "VII"
   call convertToRoman(tm, "8")
-  assert tm.tape is "VIII"
+  assert tm.getTrimmedTape() is "VIII"
   call convertToRoman(tm, "9")
-  assert tm.tape is "IX"
+  assert tm.getTrimmedTape() is "IX"
   call convertToRoman(tm, "10")
-  assert tm.tape is "X"
+  assert tm.getTrimmedTape() is "X"
   call convertToRoman(tm, "11")
-  assert tm.tape is "XI"
+  assert tm.getTrimmedTape() is "XI"
   call convertToRoman(tm, "14")
-  assert tm.tape is "XIV"
+  assert tm.getTrimmedTape() is "XIV"
   call convertToRoman(tm, "15")
-  assert tm.tape is "XV"
+  assert tm.getTrimmedTape() is "XV"
   call convertToRoman(tm, "17")
-  assert tm.tape is "XVII"
+  assert tm.getTrimmedTape() is "XVII"
   call convertToRoman(tm, "19")
-  assert tm.tape is "XIX"
+  assert tm.getTrimmedTape() is "XIX"
   call convertToRoman(tm, "20")
-  assert tm.tape is "XX"
+  assert tm.getTrimmedTape() is "XX"
   call convertToRoman(tm, "21")
-  assert tm.tape is "XXI"
+  assert tm.getTrimmedTape() is "XXI"
   call convertToRoman(tm, "25")
-  assert tm.tape is "XXV"
+  assert tm.getTrimmedTape() is "XXV"
   call convertToRoman(tm, "28")
-  assert tm.tape is "XXVIII"
+  assert tm.getTrimmedTape() is "XXVIII"
   call convertToRoman(tm, "29")
-  assert tm.tape is "XXIX"
+  assert tm.getTrimmedTape() is "XXIX"
   call convertToRoman(tm, "30")
-  assert tm.tape is "XXX"
+  assert tm.getTrimmedTape() is "XXX"
   call convertToRoman(tm, "37")
-  assert tm.tape is "XXXVII"
+  assert tm.getTrimmedTape() is "XXXVII"
   call convertToRoman(tm, "41")
-  assert tm.tape is "XLI"
+  assert tm.getTrimmedTape() is "XLI"
   call convertToRoman(tm, "50")
-  assert tm.tape is "L"
+  assert tm.getTrimmedTape() is "L"
   call convertToRoman(tm, "54")
-  assert tm.tape is "LIV"
+  assert tm.getTrimmedTape() is "LIV"
   call convertToRoman(tm, "79")
-  assert tm.tape is "LXXIX"
+  assert tm.getTrimmedTape() is "LXXIX"
   call convertToRoman(tm, "95")
-  assert tm.tape is "XCV"
+  assert tm.getTrimmedTape() is "XCV"
   call convertToRoman(tm, "333")
-  assert tm.tape is "CCCXXXIII"
+  assert tm.getTrimmedTape() is "CCCXXXIII"
   call convertToRoman(tm, "444")
-  assert tm.tape is "CDXLIV"
+  assert tm.getTrimmedTape() is "CDXLIV"
   call convertToRoman(tm, "555")
-  assert tm.tape is "DLV"
+  assert tm.getTrimmedTape() is "DLV"
   call convertToRoman(tm, "666")
-  assert tm.tape is "DCLXVI"
+  assert tm.getTrimmedTape() is "DCLXVI"
   call convertToRoman(tm, "999")
-  assert tm.tape is "CMXCIX"
+  assert tm.getTrimmedTape() is "CMXCIX"
   call convertToRoman(tm, "1066")
-  assert tm.tape is "MLXVI"
+  assert tm.getTrimmedTape() is "MLXVI"
   call convertToRoman(tm, "1966")
-  assert tm.tape is "MCMLXVI"
+  assert tm.getTrimmedTape() is "MCMLXVI"
 end test
