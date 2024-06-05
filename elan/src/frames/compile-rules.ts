@@ -462,7 +462,12 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof ArrayListType && rhs instanceof ArrayListType) {
-    mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
+    if (lhs.is2d === rhs.is2d) {
+      mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
+    } else {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+      return;
+    }
   }
 
   if (lhs instanceof ArrayListType && !(rhs instanceof ArrayListType)) {

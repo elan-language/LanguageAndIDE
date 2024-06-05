@@ -196,6 +196,34 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
+  test("Pass_InsertElements", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["one", "two", "three"]
+  call a.insert(1, "foo")
+  call a.insert(3, "yon")
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray(["one", "two", "three"]);
+  _stdlib.insert(a, 1, "foo");
+  _stdlib.insert(a, 3, "yon");
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [one, foo, two, yon, three]");
+  });
+
   test("Pass_InitializeAnArrayFromAList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -572,5 +600,21 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
+  });
+
+  test("Fail_2DArrayAdd", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of String>(3, 3)
+  call a.add("foo")
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types 2D ArrayList to ArrayList"]);
   });
 });

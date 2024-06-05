@@ -713,4 +713,21 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ImmutableList"]);
   });
+
+  test("Fail_add", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to {"one", "two", "three"}
+  call a.add("four")
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
 });

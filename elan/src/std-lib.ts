@@ -180,6 +180,10 @@ export class StdLib {
     return newList;
   }
 
+  insert<T>(list: Array<T>, index: number, value: T) {
+    list.splice(index, 0, value);
+  }
+
   add<T>(list: Array<T>, value: T) {
     list.push(value);
   }
