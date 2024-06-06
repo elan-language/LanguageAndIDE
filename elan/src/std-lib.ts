@@ -384,4 +384,17 @@ export class StdLib {
   randomInt(low: number, high: number): number {
     return Math.floor(Math.random() * high) + low;
   }
+
+  parseAsFloat(s: string): [boolean, number] {
+    const f = parseFloat(s);
+    if (Number.isFinite(f)) {
+      return [true, f];
+    }
+    return [false, 0];
+  }
+
+  parseAsInt(s: string): [boolean, number] {
+    const [b, f] = this.parseAsFloat(s);
+    return [b, Math.floor(f)];
+  }
 }
