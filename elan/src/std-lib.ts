@@ -302,16 +302,6 @@ export class StdLib {
     return 0;
   }
 
-  // Returns an Int between the two inclusive boundaries.
-  randomInt(f: number, l: number) {
-    return 0;
-  }
-
-  // returns a Float in range 0 <= n < 1
-  random() {
-    return 0;
-  }
-
   filter<T>(source: T[], predicate: (value: T) => boolean) {
     return this.asIter(source.filter(predicate));
   }
@@ -385,5 +375,13 @@ export class StdLib {
 
   clock(): number {
     return new Date().getTime();
+  }
+
+  random(): number {
+    return Math.random();
+  }
+
+  randomInt(low: number, high: number): number {
+    return Math.floor(Math.random() * high) + low;
   }
 }

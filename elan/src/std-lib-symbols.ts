@@ -626,7 +626,7 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
-    ["clock", this.getSymbol("clock", new FunctionType([], IntType.Instance, false))],
+    ["clock", this.getSymbol("clock", new FunctionType([], IntType.Instance, false, false))],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

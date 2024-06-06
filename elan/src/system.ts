@@ -140,10 +140,6 @@ export class System {
       .map((f) => program[f]);
   }
 
-  pause(n: number) {
-    return new Promise((r) => setTimeout(r, n));
-  }
-
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
     if (Array.isArray(lhs) && Array.isArray(rhs)) {
       return this.immutableList(lhs.concat(rhs));
