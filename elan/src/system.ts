@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IElanConsole } from "./elan-io";
+import { ElanInputOutput } from "./elan-input-output";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
 
@@ -13,6 +13,8 @@ export class AssertOutcome {
 }
 
 export class System {
+  constructor(public readonly elanConsole: ElanInputOutput) {}
+
   private default(type: string) {
     switch (type) {
       case "Int":
@@ -123,18 +125,12 @@ export class System {
     return t;
   }
 
-  elanConsole?: IElanConsole;
-
-  // printer?: (s: string) => void;
-
-  // inputter?: () => Promise<string>;
-
   print(s: string) {
-    this.elanConsole?.printLine(s);
+    this.elanConsole.printLine(s);
   }
 
   async input() {
-    return this.elanConsole?.readLine();
+    return this.elanConsole.readLine();
   }
 
   getTests(program: any) {

@@ -2,7 +2,7 @@ import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/status-enums";
 import { Done } from "mocha";
-import { TestConsole, getTestSystem } from "./test-system";
+import { TestInputOutput, getTestSystem } from "./test-system";
 import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
 import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
@@ -96,7 +96,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
 
   try {
     const sl = await executeCode(file, input);
-    actual = (sl?.elanConsole as unknown as TestConsole).printed;
+    actual = (sl?.elanConsole as unknown as TestInputOutput).printed;
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }

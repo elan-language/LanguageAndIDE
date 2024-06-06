@@ -1,7 +1,9 @@
-import { IElanConsole } from "../elan-io";
+import { ElanInputOutput } from "../elan-input-output";
 
-export class ElanConsole implements IElanConsole {
-  constructor(private readonly consoleWindow: { innerHTML: string }) {}
+export class ElanInputOutputImpl implements ElanInputOutput {
+  constructor(private readonly consoleWindow: { innerHTML: string }) {
+    consoleWindow.innerHTML = this.render();
+  }
 
   previousContent: string = "";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

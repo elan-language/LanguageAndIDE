@@ -11,7 +11,7 @@ import { System } from "../system";
 import { doImport, getTestRunner } from "../runner";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../frames/syntax-nodes/transforms";
-import { ElanConsole } from "./elan-console";
+import { ElanInputOutputImpl } from "./elan-input-output-impl";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -324,16 +324,10 @@ function postMessage(e: editorEvent) {
   }
 }
 
-const consoleWindow = document.getElementById("console")!;
+const elanConsole = new ElanInputOutputImpl(document.getElementById("console")!);
 
-const elanConsole = new ElanConsole(consoleWindow);
-
-consoleWindow.innerHTML = elanConsole.render();
-
-const system = new System();
+const system = new System(elanConsole);
 const stdlib = new StdLib(system);
-
-system.elanConsole = elanConsole;
 
 const runButton = document.getElementById("run-button");
 const clearConsoleButton = document.getElementById("clear-console");

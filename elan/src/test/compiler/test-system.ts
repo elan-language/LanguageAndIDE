@@ -1,7 +1,7 @@
-import { IElanConsole } from "../../elan-io";
+import { ElanInputOutput } from "../../elan-input-output";
 import { System } from "../../system";
 
-export class TestConsole implements IElanConsole {
+export class TestInputOutput implements ElanInputOutput {
   printed: string = "";
   inputed: string = "";
 
@@ -14,9 +14,8 @@ export class TestConsole implements IElanConsole {
 }
 
 export function getTestSystem(input: string) {
-  const system = new System();
-  const tc = new TestConsole();
+  const tc = new TestInputOutput();
   tc.inputed = input;
-  system.elanConsole = tc;
+  const system = new System(tc);
   return system;
 }
