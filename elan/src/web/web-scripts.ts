@@ -12,6 +12,7 @@ import { doImport, getTestRunner, runTests } from "../runner";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../frames/syntax-nodes/transforms";
 import { TestFrame } from "../frames/globals/test-frame";
+import { ElanConsole } from "./elan-console";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -84,8 +85,8 @@ function displayFile() {
         refreshAndDisplay();
       });
   } else {
-    const previousCode = localStorage.getForKey("elan-code");
-    const previousFileName = localStorage.getForKey("elan-file");
+    const previousCode = localStorage.getItem("elan-code");
+    const previousFileName = localStorage.getItem("elan-file");
     if (previousCode) {
       const code = new CodeSourceFromString(previousCode);
       file.parseFrom(code).then(() => {
@@ -324,52 +325,11 @@ function postMessage(e: editorEvent) {
   }
 }
 
-class ElanConsole {
-  previousContent: string = "";
-  currentInterval?: any;
+const consoleWindow = document.getElementById("console")!;
 
-  printLine(line: string) {
-    this.previousContent = `${this.previousContent}${line}<br>`;
-    consoleWindow.innerHTML = this.render();
-  }
+const elanConsole = new ElanConsole(consoleWindow);
 
-  stopReading() {
-    clearInterval(this.currentInterval);
-    this.previousContent = `${this.previousContent.slice(0, -48)}`;
-  }
-
-  readLine() {
-    this.previousContent = `${this.previousContent}<input id = "inp" type="text" autofocus></input>`;
-    consoleWindow.innerHTML = this.render();
-    const inp = document.getElementById("inp") as HTMLInputElement;
-    inp.focus();
-
-    return new Promise<string>((rs, rj) => {
-      let entered = false;
-      inp.addEventListener("keydown", (k: KeyboardEvent) => {
-        entered = k.key === "Enter";
-      });
-      this.currentInterval = setInterval(() => {
-        if (entered) {
-          rs(inp.value);
-          this.stopReading();
-          this.printLine(inp.value);
-        }
-      }, 250);
-    });
-  }
-
-  render() {
-    return `<div>${this.previousContent}</div>`;
-  }
-
-  clear() {
-    this.previousContent = "";
-    consoleWindow.innerHTML = this.render();
-  }
-}
-
-const elanConsole = new ElanConsole();
+consoleWindow.innerHTML = elanConsole.render();
 
 const system = new System();
 const stdlib = new StdLib();
@@ -380,10 +340,6 @@ system.inputter = inputter;
 const runButton = document.getElementById("run-button");
 const clearConsoleButton = document.getElementById("clear-console");
 const newButton = document.getElementById("new");
-
-const consoleWindow = document.getElementById("console")!;
-
-consoleWindow.innerHTML = elanConsole.render();
 
 function printer(s: string) {
   elanConsole.printLine(s);
