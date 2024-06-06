@@ -298,8 +298,6 @@ export class StdLib {
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  async pause(period: number) {}
-
   readKey() {
     return 0;
   }
@@ -377,5 +375,15 @@ export class StdLib {
 
   contains(source: string[], substr: string) {
     return source.includes(substr);
+  }
+
+  pause(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), ms);
+    });
+  }
+
+  clock(): number {
+    
   }
 }

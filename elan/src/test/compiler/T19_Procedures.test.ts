@@ -107,7 +107,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  _stdlib.pause(1);
+  await _stdlib.pause(1);
   system.print(_stdlib.asString(1));
 }
 return [main, _tests];}`;

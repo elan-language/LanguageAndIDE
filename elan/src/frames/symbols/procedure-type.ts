@@ -4,6 +4,7 @@ export class ProcedureType implements SymbolType {
   constructor(
     public readonly parametersTypes: SymbolType[],
     public readonly isExtension: boolean,
+    public readonly isAsync: boolean = false,
   ) {}
 
   isImmutable = true;

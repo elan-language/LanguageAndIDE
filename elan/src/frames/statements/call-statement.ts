@@ -82,6 +82,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     const ps = procSymbol.symbolType(transforms);
     const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
     let parameters = argList.items;
+    let isAsync: boolean = false;
 
     if (ps instanceof ProcedureType) {
       mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
@@ -92,11 +93,13 @@ export class CallStatement extends AbstractFrame implements Statement {
       }
 
       mustMatchParameters(parameters, ps.parametersTypes, this.compileErrors, this.htmlId);
+      isAsync = ps.isAsync;
     }
 
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
+    const a = isAsync ? "await " : "";
 
-    return `${this.indent()}${q}${id}(${pp});`;
+    return `${this.indent()}${a}${q}${id}(${pp});`;
   }
 }
