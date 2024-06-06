@@ -9,44 +9,14 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
 import { doImport, getTestRunner } from "../runner";
-import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
-import { Transforms } from "../frames/syntax-nodes/transforms";
-import { ElanInputOutputImpl } from "./elan-input-output-impl";
+import { WebInputOutput } from "./web-input-output";
+import { fetchProfile, hash, transforms } from "./web-helpers";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
 const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 let doOnce = true;
 let profile: Profile;
-
-async function hash(toHash: string) {
-  const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
-  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
-  return hashHex;
-}
-
-function fetchProfile() {
-  if (window.location.protocol === "file:") {
-    const localProfile = (window as any).localProfile as Profile;
-    return localProfile ? Promise.resolve(localProfile) : Promise.reject();
-  } else {
-    const scriptUrl = document.getElementsByTagName("script")[0].src;
-    const scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
-    const jsonProfile = `${scriptName}.json`;
-    return fetch(jsonProfile, { mode: "same-origin" })
-      .then((f) => f.json())
-      .then((j) => j as Profile);
-  }
-}
-
-function transforms() {
-  return {
-    transform: transform,
-    transformMany: transformMany,
-  } as Transforms;
-}
 
 function setup(p: Profile) {
   profile = p;
@@ -324,7 +294,10 @@ function postMessage(e: editorEvent) {
   }
 }
 
-const elanConsole = new ElanInputOutputImpl(document.getElementById("console")!);
+const elanConsole = new WebInputOutput(
+  document.getElementById("console")!,
+  document.getElementById("graphics")!,
+);
 
 const system = new System(elanConsole);
 const stdlib = new StdLib(system);

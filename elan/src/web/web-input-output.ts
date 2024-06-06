@@ -1,7 +1,10 @@
 import { ElanInputOutput } from "../elan-input-output";
 
-export class ElanInputOutputImpl implements ElanInputOutput {
-  constructor(private readonly consoleWindow: { innerHTML: string }) {
+export class WebInputOutput implements ElanInputOutput {
+  constructor(
+    private readonly consoleWindow: { innerHTML: string },
+    private readonly graphicsWindow: { innerHTML: string },
+  ) {
     consoleWindow.innerHTML = this.render();
   }
 
