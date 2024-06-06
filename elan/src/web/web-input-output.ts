@@ -46,11 +46,38 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
+  keyBuffer?: string[];
+
+  readKey() {
+    const inp = document.getElementById("inp") as HTMLInputElement;
+    inp.focus();
+
+    return new Promise<string>((rs, rj) => {
+      if (this.keyBuffer && this.keyBuffer.length > 0) {
+        rs(this.keyBuffer.pop()!);
+      } else {
+        if (!this.keyBuffer) {
+          this.keyBuffer = [];
+          inp.addEventListener("keydown", (k: KeyboardEvent) => {
+            this.keyBuffer?.push(k.key);
+          });
+
+          this.currentInterval = setInterval(() => {
+            if (this.keyBuffer && this.keyBuffer.length > 0) {
+              rs(this.keyBuffer.pop()!);
+              this.printLine(inp.value);
+            }
+          }, 250);
+        }
+      }
+    });
+  }
+
   render() {
     return `<div>${this.previousContent}</div>`;
   }
 
-  clear() {
+  clearConsole() {
     this.previousContent = "";
     this.consoleWindow.innerHTML = this.render();
   }

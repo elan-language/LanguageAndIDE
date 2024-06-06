@@ -294,12 +294,12 @@ function postMessage(e: editorEvent) {
   }
 }
 
-const elanConsole = new WebInputOutput(
+const elanInputOutput = new WebInputOutput(
   document.getElementById("console")!,
   document.getElementById("graphics")!,
 );
 
-const system = new System(elanConsole);
+const system = new System(elanInputOutput);
 const stdlib = new StdLib(system);
 
 const runButton = document.getElementById("run-button");
@@ -339,7 +339,7 @@ runButton?.addEventListener("click", () => {
 });
 
 clearConsoleButton?.addEventListener("click", () => {
-  elanConsole.clear();
+  elanInputOutput.clearConsole();
 });
 
 newButton?.addEventListener("click", () => {

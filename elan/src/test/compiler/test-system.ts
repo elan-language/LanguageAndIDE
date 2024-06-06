@@ -18,6 +18,9 @@ export class TestInputOutput implements ElanInputOutput {
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);
   }
+  clearConsole(): void {
+    this.printed = "";
+  }
 }
 
 export function getTestSystem(input: string) {

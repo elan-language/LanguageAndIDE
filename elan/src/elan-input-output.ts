@@ -3,6 +3,8 @@ export interface ElanInputOutput {
 
   readLine(): Promise<string>;
 
+  clearConsole(): void;
+
   clearGraphics(): void;
 
   drawGraphics(html: string): void;

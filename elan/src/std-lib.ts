@@ -302,10 +302,6 @@ export class StdLib {
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  readKey() {
-    return 0;
-  }
-
   filter<T>(source: T[], predicate: (value: T) => boolean) {
     return this.asIter(source.filter(predicate));
   }
@@ -400,6 +396,22 @@ export class StdLib {
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
+  }
+
+  clearConsole() {
+    this.system.elanInputOutput.clearConsole();
+  }
+
+  refreshDisplay() {
+    return this.pause(1);
+  }
+
+  readKey() {
+    return this.pause(1);
+  }
+
+  hasKeyBeenPressed() {
+    return this.pause(1);
   }
 
   // charmapped display
