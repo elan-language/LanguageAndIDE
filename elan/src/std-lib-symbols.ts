@@ -651,6 +651,36 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    // char map
+    [
+      "getEmptyCharMap",
+      this.getSymbol(
+        "getEmptyCharMap",
+        new FunctionType(
+          [],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
+      "drawCharMap",
+      this.getSymbol(
+        "drawCharMap",
+        new ProcedureType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

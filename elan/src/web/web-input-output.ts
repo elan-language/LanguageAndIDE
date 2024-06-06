@@ -7,6 +7,9 @@ export class WebInputOutput implements ElanInputOutput {
   ) {
     consoleWindow.innerHTML = this.render();
   }
+  drawGraphics(html: string): void {
+    this.graphicsWindow.innerHTML = html;
+  }
 
   previousContent: string = "";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,5 +53,9 @@ export class WebInputOutput implements ElanInputOutput {
   clear() {
     this.previousContent = "";
     this.consoleWindow.innerHTML = this.render();
+  }
+
+  clearGraphics() {
+    this.graphicsWindow.innerHTML = `<div></div>`;
   }
 }

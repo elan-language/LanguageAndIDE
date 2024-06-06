@@ -1,6 +1,9 @@
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
 
+type Location = [string, number, number];
+type CharMap = Location[];
+
 export class StdLib {
   constructor(private readonly system: System) {}
 
@@ -397,5 +400,88 @@ export class StdLib {
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
+  }
+
+  // charmapped display
+
+  xSize = 80;
+  ySize = 60;
+
+  defaultForeground = 0;
+  defaultBackground = 0;
+
+  idx(x: number, y: number) {
+    return x * this.ySize + y;
+  }
+
+  getEmptyCharMap() {
+    const emptyMap: CharMap = [];
+    const emptyLocation: Location = ["", this.defaultForeground, this.defaultBackground];
+
+    for (let x = 0; x < this.xSize; x++) {
+      for (let y = 0; y < this.ySize; y++) {
+        emptyMap.push(emptyLocation);
+      }
+    }
+
+    return emptyMap;
+  }
+
+  putAt(map: CharMap, x: number, y: number, l: Location) {
+    const newMap = this.system.immutableList([...map]);
+    newMap[this.idx(x, y)] = l;
+    return newMap;
+  }
+
+  getAt(map: CharMap, x: number, y: number) {
+    return map[this.idx(x, y)];
+  }
+
+  putChar(map: CharMap, x: number, y: number, c: string) {
+    const [, f, b] = this.getAt(map, x, y);
+    return this.putAt(map, x, y, [c, f, b]);
+  }
+
+  getChar(map: CharMap, x: number, y: number) {
+    return this.getAt(map, x, y)[0];
+  }
+
+  putForeground(map: CharMap, x: number, y: number, f: number) {
+    const [c, , b] = this.getAt(map, x, y);
+    return this.putAt(map, x, y, [c, f, b]);
+  }
+
+  getForeground(map: CharMap, x: number, y: number) {
+    return this.getAt(map, x, y)[1];
+  }
+
+  putBackground(map: CharMap, x: number, y: number, b: number) {
+    const [c, f] = this.getAt(map, x, y);
+    return this.putAt(map, x, y, [c, f, b]);
+  }
+
+  getBackground(map: CharMap, x: number, y: number) {
+    return this.getAt(map, x, y)[2];
+  }
+
+  clearGraphics() {
+    this.system.elanInputOutput.clearGraphics();
+  }
+
+  setDefaultForeground(f: number) {
+    this.defaultForeground = f;
+  }
+
+  drawCharMap(map: CharMap) {
+    let rendered = "";
+
+    for (let x = 0; x < this.xSize; x++) {
+      for (let y = 0; y < this.ySize; y++) {
+        const [c, f, b] = this.getAt(map, x, y);
+        rendered = `${rendered}<div style="foreground-color:${f};background-color:${b};">${c}</div>`;
+      }
+    }
+
+    this.system.elanInputOutput.drawGraphics(rendered);
   }
 }

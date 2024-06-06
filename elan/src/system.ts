@@ -13,7 +13,7 @@ export class AssertOutcome {
 }
 
 export class System {
-  constructor(public readonly elanConsole: ElanInputOutput) {}
+  constructor(public readonly elanInputOutput: ElanInputOutput) {}
 
   private default(type: string) {
     switch (type) {
@@ -126,11 +126,11 @@ export class System {
   }
 
   print(s: string) {
-    this.elanConsole.printLine(s);
+    this.elanInputOutput.printLine(s);
   }
 
   async input() {
-    return this.elanConsole.readLine();
+    return this.elanInputOutput.readLine();
   }
 
   getTests(program: any) {

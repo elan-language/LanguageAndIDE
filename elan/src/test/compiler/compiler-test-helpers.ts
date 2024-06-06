@@ -96,7 +96,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
 
   try {
     const sl = await executeCode(file, input);
-    actual = (sl?.elanConsole as unknown as TestInputOutput).printed;
+    actual = (sl?.elanInputOutput as unknown as TestInputOutput).printed;
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
