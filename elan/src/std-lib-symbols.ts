@@ -667,6 +667,169 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "putAt",
+      this.getSymbol(
+        "putAt",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "getAt",
+      this.getSymbol(
+        "getAt",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "putChar",
+      this.getSymbol(
+        "putChar",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+            StringType.Instance,
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "getChar",
+      this.getSymbol(
+        "getChar",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          StringType.Instance,
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "putForeground",
+      this.getSymbol(
+        "putForeground",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "getForeground",
+      this.getSymbol(
+        "getForeground",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          IntType.Instance,
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "putBackground",
+      this.getSymbol(
+        "putBackground",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "getBackground",
+      this.getSymbol(
+        "getBackground",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          IntType.Instance,
+          true,
+          true,
+        ),
+      ),
+    ],
+    ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
+    [
+      "setDefaultForeground",
+      this.getSymbol("setDefaultForeground", new ProcedureType([IntType.Instance], false, false)),
+    ],
+    [
       "drawCharMap",
       this.getSymbol(
         "drawCharMap",

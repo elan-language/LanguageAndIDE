@@ -427,7 +427,7 @@ export class StdLib {
     return emptyMap;
   }
 
-  putAt(map: CharMap, x: number, y: number, l: Location) {
+  putAt(map: CharMap, x: number, y: number, l: Location): CharMap {
     const newMap = this.system.immutableList([...map]);
     newMap[this.idx(x, y)] = l;
     return newMap;
