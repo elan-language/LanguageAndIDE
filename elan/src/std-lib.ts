@@ -384,6 +384,6 @@ export class StdLib {
   }
 
   clock(): number {
-    
+    return new Date().getTime();
   }
 }
