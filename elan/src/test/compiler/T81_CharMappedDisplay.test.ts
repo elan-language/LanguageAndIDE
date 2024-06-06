@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertGraphicsContains,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -40,6 +41,10 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    await assertGraphicsContains(
+      fileImpl,
+      0,
+      '<div style="foreground-color:0;background-color:0;">',
+    );
   });
 });

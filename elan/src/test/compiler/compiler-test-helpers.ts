@@ -136,6 +136,24 @@ export async function assertTestObjectCodeExecutes(
   }
 }
 
+export async function assertGraphicsContains(file: FileImpl, offset: number, snippet: string) {
+  let graphics;
+
+  try {
+    const sl = await executeCode(file, "");
+    graphics = (sl?.elanInputOutput as unknown as TestInputOutput).drawn;
+  } catch (e) {
+    assert.fail((e as { message: string }).message ?? "");
+  }
+  const divs = graphics.split("</div>");
+
+  if (divs.length > offset) {
+    assert.strictEqual(divs[offset], snippet);
+  } else {
+    assert.fail("no offset");
+  }
+}
+
 export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg?: string) {
   try {
     await executeCode(file);
