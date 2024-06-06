@@ -179,4 +179,33 @@ return [main, _tests];}`;
       '<div style="foreground-color:0;background-color:4;">',
     );
   });
+
+  test("Pass_ClearGraphics", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to getEmptyCharMap()
+  call g.drawCharMap()
+  call clearGraphics()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = _stdlib.getEmptyCharMap();
+  _stdlib.drawCharMap(g);
+  _stdlib.clearGraphics();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(fileImpl, 0, "");
+  });
 });
