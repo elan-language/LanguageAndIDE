@@ -1,4 +1,6 @@
-export class ElanConsole {
+import { IElanConsole } from "../elan-io";
+
+export class ElanConsole implements IElanConsole {
   constructor(private readonly consoleWindow: { innerHTML: string }) {}
 
   previousContent: string = "";

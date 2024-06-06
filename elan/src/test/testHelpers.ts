@@ -566,7 +566,7 @@ export function testAST(
 }
 
 export function createTestRunner() {
-  const system = getTestSystem();
-  const stdlib = new StdLib();
+  const system = getTestSystem("");
+  const stdlib = new StdLib(system);
   return getTestRunner(system, stdlib);
 }

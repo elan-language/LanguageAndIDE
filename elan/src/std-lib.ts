@@ -1,8 +1,9 @@
-export interface hasHiddenType {
-  _type: "ImmutableList" | "ArrayList" | "Tuple" | "Iter" | "Dictionary" | "ImmutableDictionary";
-}
+import { hasHiddenType } from "./has-hidden-type";
+import { System } from "./system";
 
 export class StdLib {
+  constructor(private readonly system: System) {}
+
   asString<T>(v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
       throw new Error(`Out of range error`);

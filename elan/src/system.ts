@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IElanConsole } from "./elan-io";
 import { TestStatus } from "./frames/status-enums";
-import { hasHiddenType } from "./std-lib";
+import { hasHiddenType } from "./has-hidden-type";
 
 export class AssertOutcome {
   constructor(
@@ -122,16 +123,18 @@ export class System {
     return t;
   }
 
-  printer?: (s: string) => void;
+  elanConsole?: IElanConsole;
 
-  inputter?: () => Promise<string>;
+  // printer?: (s: string) => void;
+
+  // inputter?: () => Promise<string>;
 
   print(s: string) {
-    this.printer!(s);
+    this.elanConsole?.printLine(s);
   }
 
   async input() {
-    return this.inputter!();
+    return this.elanConsole?.readLine();
   }
 
   getTests(program: any) {

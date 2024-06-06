@@ -1,20 +1,22 @@
+import { IElanConsole } from "../../elan-io";
 import { System } from "../../system";
 
-class TestSystem extends System {
+export class TestConsole implements IElanConsole {
   printed: string = "";
   inputed: string = "";
+
+  printLine(line: string): void {
+    this.printed = this.printed + line;
+  }
+  readLine(): Promise<string> {
+    return Promise.resolve(this.inputed);
+  }
 }
 
-export function getTestSystem() {
-  const system = new TestSystem();
-
-  system.print = (s: string) => {
-    system.printed = system.printed + s;
-  };
-
-  system.input = () => {
-    return Promise.resolve(system.inputed);
-  };
-
+export function getTestSystem(input: string) {
+  const system = new System();
+  const tc = new TestConsole();
+  tc.inputed = input;
+  system.elanConsole = tc;
   return system;
 }

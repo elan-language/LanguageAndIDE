@@ -7,11 +7,10 @@ import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StdLib } from "../std-lib";
-import { AssertOutcome, System } from "../system";
-import { doImport, getTestRunner, runTests } from "../runner";
+import { System } from "../system";
+import { doImport, getTestRunner } from "../runner";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../frames/syntax-nodes/transforms";
-import { TestFrame } from "../frames/globals/test-frame";
 import { ElanConsole } from "./elan-console";
 
 const codeContainer = document.querySelector(".elan-code");
@@ -332,22 +331,13 @@ const elanConsole = new ElanConsole(consoleWindow);
 consoleWindow.innerHTML = elanConsole.render();
 
 const system = new System();
-const stdlib = new StdLib();
+const stdlib = new StdLib(system);
 
-system.printer = printer;
-system.inputter = inputter;
+system.elanConsole = elanConsole;
 
 const runButton = document.getElementById("run-button");
 const clearConsoleButton = document.getElementById("clear-console");
 const newButton = document.getElementById("new");
-
-function printer(s: string) {
-  elanConsole.printLine(s);
-}
-
-function inputter() {
-  return elanConsole.readLine();
-}
 
 runButton?.addEventListener("click", () => {
   try {
@@ -389,14 +379,6 @@ newButton?.addEventListener("click", () => {
   file = new FileImpl(hash, profile, transforms(), true);
   file.renderAsHtml().then((c) => updateContent(c));
 });
-
-function updateTestResults(outcomes: [string, AssertOutcome[]][]) {
-  for (const outcome of outcomes) {
-    const [tid, asserts] = outcome;
-    const test = file.getById(tid) as TestFrame;
-    test.setAssertOutcomes(asserts);
-  }
-}
 
 const upload = document.getElementById("load") as Element;
 upload.addEventListener("click", chooser);

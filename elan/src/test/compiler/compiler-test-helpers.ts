@@ -2,8 +2,7 @@ import assert from "assert";
 import { FileImpl } from "../../frames/file-impl";
 import { ParseStatus } from "../../frames/status-enums";
 import { Done } from "mocha";
-import { getTestSystem } from "./test-system";
-import { isSymbol } from "../../frames/symbols/symbol-helpers";
+import { TestConsole, getTestSystem } from "./test-system";
 import { StdLib } from "../../std-lib";
 import { runTests } from "../../runner";
 import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
@@ -60,12 +59,8 @@ function executeCode(file: FileImpl, input?: string) {
   const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
-  const system = getTestSystem();
-  const stdlib = new StdLib();
-
-  if (input) {
-    system.inputed = input;
-  }
+  const system = getTestSystem(input ?? "");
+  const stdlib = new StdLib(system);
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
@@ -83,12 +78,8 @@ export function executeTestCode(file: FileImpl, input?: string) {
   const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
-  const system = getTestSystem();
-  const stdlib = new StdLib();
-
-  if (input) {
-    system.inputed = input;
-  }
+  const system = getTestSystem(input ?? "");
+  const stdlib = new StdLib(system);
 
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
@@ -105,7 +96,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
 
   try {
     const sl = await executeCode(file, input);
-    actual = sl?.printed;
+    actual = (sl?.elanConsole as unknown as TestConsole).printed;
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
