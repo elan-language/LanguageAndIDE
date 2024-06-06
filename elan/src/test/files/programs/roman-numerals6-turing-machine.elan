@@ -1,14 +1,17 @@
-# 420df89d1b1e552662d2ba40e0f439b59c0f783d8ace47315519d725f1859fef Elan v0.1 valid
+# 80e726d1652c2cbeac25a009623dc135d5e0e2a8b9056d1493d89df14d0d82e9 Elan v0.1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
-  call tm.setTape("2024")
+  print "Enter a decimal number in range 0 to 2500"
+  input decimal
+  call tm.setTape(decimal.asString())
   var rule set to tm.findMatchingRule()
   while not tm.isHalted()
     call tm.singleStep()
     print tm.tape
   end while
+  print "The roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
 end main
 
 class TuringMachine
