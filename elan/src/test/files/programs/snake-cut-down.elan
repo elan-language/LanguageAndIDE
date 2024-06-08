@@ -1,0 +1,118 @@
+# afcbb699c86ad8d4f63ec5f5be19e514cbd72378d0ba002b15719a2302e70c6a Elan v0.1 valid
+
+main
+  var newGame set to true
+  while newGame is true
+    # call Playgame()
+    var answer set to ""
+    repeat
+      print "Do you want to play again? (y/n)"
+      input answer
+    end repeat when (answer is "y") or (answer is "n")
+    if answer is "n"
+      set newGame to false
+    end if
+  end while
+end main
+
+class Snake
+  constructor(boardWidth as Int, boardHeight as Int, startingDirection as Direction)
+    set property.boardWidth to boardWidth
+    set property.boardHeight to boardHeight
+    var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
+    set body to [tail]
+    set head to tail.getAdjacentSquare(startingDirection)
+    call setNewApplePosition()
+  end constructor
+
+  property head as Square
+
+  private property body as [Square]
+
+  function tail() return Square
+    # return body[0]
+    return new Square(0, 0)
+  end function
+
+  function length() return Int
+    return body.length()
+  end function
+
+  property boardHeight as Int
+
+  property boardWidth as Int
+
+  function bodyCovers(sq as Square) return Boolean
+    var result set to false
+    each seg in body
+      if (seg is sq)
+        set result to true
+      end if
+    end each
+    return result
+  end function
+
+  procedure clockTick(d as Direction)
+    call body.add(head)
+    set head to head.getAdjacentSquare(d)
+    if head is apple
+      call setNewApplePosition()
+      else
+        set body to body[1..]
+    end if
+  end procedure
+
+  function hasHitEdge() return Boolean
+    return (head.x < 0) or (head.y < 0) or (head.x is boardWidth) or (head.y is boardHeight)
+  end function
+
+  procedure setNewApplePosition()
+    repeat
+      var w set to boardWidth - 1
+      var h set to boardHeight - 1
+      var ranW set to randomInt(0, w)
+      var ranH set to randomInt(0, h)
+      set apple to new Square(ranW, ranH)
+    end repeat when not bodyCovers(apple)
+  end procedure
+
+  property apple as Square
+
+end class
+
+constant directionByKey set to {"w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right}
+
+# Standard library types and functions
+enum Direction
+  up, down, left, right
+end enum
+
+immutable class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  function getAdjacentSquare(d as Direction) return Square
+    var newX set to 0
+    var newY set to 0
+    switch d
+      case Direction.left
+        set newX to x - 1
+      case Direction.right
+        set newX to x + 1
+      case Direction.up
+        set newY to y - 1
+      case Direction.down
+        set newY to y + 1
+      default
+
+    end switch
+    return new Square(newX, newY)
+  end function
+
+end class
