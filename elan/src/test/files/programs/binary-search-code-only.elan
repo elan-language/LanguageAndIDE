@@ -1,4 +1,4 @@
-# f20e2c142adcae1fd7b4e720079768104477b424a2e02c51082161e43b8d0d2b Elan v0.1 valid
+# 0f301884a13d2816fa4412c869be08b381fd2675444e834ebb1982cad896138e Elan v0.1 valid
 
 main
   var exit set to false
@@ -22,13 +22,13 @@ function binarySearch(list as {String}, item as String) return Boolean
   var result set to false
   if list.length() > 0
     var mid set to div(list.length(), 2)
-    var value set to list[mid]
+    var value set to list.get(mid)
     if item is value
       set result to true
       else if isBefore(item, value)
-        set result to binarySearch(list[..mid], item)
+        set result to binarySearch(list.getRange(0, mid), item)
       else
-        set result to binarySearch(list[mid + 1..], item)
+        set result to binarySearch(list.getRange(mid + 1, list.length()), item)
     end if
   end if
   return result
