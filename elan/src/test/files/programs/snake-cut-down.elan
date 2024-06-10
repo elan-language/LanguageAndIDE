@@ -10,7 +10,9 @@ main
       input answer
     end repeat when (answer is "y") or (answer is "n")
     if answer is "n"
-      set newGame to false
+      then
+        set newGame to false
+      else
     end if
   end while
 end main

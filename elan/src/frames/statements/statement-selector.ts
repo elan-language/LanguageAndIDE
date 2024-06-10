@@ -82,7 +82,7 @@ export class StatementSelector extends AbstractSelector {
     } else if (this.getParent().getIdPrefix() === switchKeyword) {
       result = keyword === caseKeyword;
     } else if (this.getParent().getIdPrefix() === ifKeyword) {
-      result = (!userEntry && keyword === thenKeyword) || keyword === elseKeyword;
+      result = keyword === elseKeyword;
     } else if (keyword === assertKeyword || keyword === caseKeyword || keyword === elseKeyword) {
       result = false;
     } else if (

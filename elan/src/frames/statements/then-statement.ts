@@ -3,11 +3,11 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
-import { singleIndent } from "../helpers";
 import { Transforms } from "../syntax-nodes/transforms";
-import { defaultKeyword, thenKeyword } from "../keywords";
+import { thenKeyword } from "../keywords";
 
 export class ThenStatement extends FrameWithStatements implements Statement {
+  isThen = true;
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
@@ -42,6 +42,7 @@ ${this.renderChildrenAsSource()}`;
   }
 
   parseTop(source: CodeSource): void {
+    source.removeIndent();
     source.remove("then");
   }
   parseBottom(source: CodeSource): boolean {

@@ -8,9 +8,10 @@ end main
 function mergeSort(list as {String}) return {String}
   var result set to list
   if list.length() > 1
-    var mid set to floor(list.length()/2)
-    var len set to list.length()
-    set result to merge(mergeSort(list.getRange(0, mid)), mergeSort(list.getRange(mid, len)))
+    then
+      var mid set to floor(list.length()/2)
+      var len set to list.length()
+      set result to merge(mergeSort(list.getRange(0, mid)), mergeSort(list.getRange(mid, len)))
   end if
   return result
 end function
@@ -18,7 +19,8 @@ end function
 function merge(a as {String}, b as {String}) return {String}
   var result set to new ImmutableList<of String>()
   if a.length() is 0
-    set result to b
+    then
+      set result to b
     else if b.length() is 0
       set result to a
     else if isBefore(a.get(0), b.get(0))

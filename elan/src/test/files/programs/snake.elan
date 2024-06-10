@@ -26,6 +26,7 @@ procedure playGame()
     call pause(200)
     call snake.clockTick(currentDirection, gameOn)
     if snake.hasHitEdge() or snake.bodyCovers(head)
+    
       set gameOn to false
       else
         call charMap.draw(snake.head, Colour.green)

@@ -13,7 +13,8 @@ procedure draw(grid as {Boolean})
       var cell set to grid.get(col*20 + row)
       var cha set to "  "
       if cell
-        set cha to "* "
+        then
+          set cha to "* "
       end if
       set line to line + cha
     end for

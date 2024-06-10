@@ -67,9 +67,15 @@ ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }
 
+  public getThenStatement(): ThenStatement {
+    return this.getChildren().filter((m) => "isThen" in m)[0] as ThenStatement;
+  }
+
   parseTop(source: CodeSource): void {
     source.remove("if ");
     this.condition.parseFrom(source);
+    source.removeNewLine();
+    this.getThenStatement().parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();

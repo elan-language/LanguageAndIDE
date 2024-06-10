@@ -6,12 +6,14 @@ main
     print "What type of fruit do you want ('x' to exit)?"
     input wanted
     if wanted is not "x"
-      var result set to binarySearch(fruit, wanted)
-      if result
-        print "We can supply a {wanted}"
-        else
-          print "Sorry, we cannot supply a {wanted}"
-      end if
+      then
+        var result set to binarySearch(fruit, wanted)
+        if result
+          then
+            print "We can supply a {wanted}"
+          else
+            print "Sorry, we cannot supply a {wanted}"
+        end if
       else
         set exit to true
     end if
@@ -21,15 +23,17 @@ end main
 function binarySearch(list as {String}, item as String) return Boolean
   var result set to false
   if list.length() > 0
-    var mid set to div(list.length(), 2)
-    var value set to list.get(mid)
-    if item is value
-      set result to true
-      else if isBefore(item, value)
-        set result to binarySearch(list.getRange(0, mid), item)
-      else
-        set result to binarySearch(list.getRange(mid + 1, list.length()), item)
-    end if
+    then
+      var mid set to div(list.length(), 2)
+      var value set to list.get(mid)
+      if item is value
+        then
+          set result to true
+        else if isBefore(item, value)
+          set result to binarySearch(list.getRange(0, mid), item)
+        else
+          set result to binarySearch(list.getRange(mid + 1, list.length()), item)
+      end if
   end if
   return result
 end function
