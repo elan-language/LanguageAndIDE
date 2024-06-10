@@ -4,6 +4,7 @@ import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
 import { tryKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class TryCatch extends FrameWithStatements {
   private catch: Catch;
@@ -50,5 +51,13 @@ ${this.indent()}end try`;
       this.catch.parseFrom(source);
     }
     return result;
+  }
+
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+
+    return `${this.indent()}try {\r
+${this.compileStatements(transforms)}\r
+${this.indent()}}`;
   }
 }

@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
@@ -112,7 +113,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
   });
 
-  ignore_test("Pass_CatchException", async () => {
+  test("Pass_CatchException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -130,12 +131,12 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  try
-    foo()
-    print "not caught";
-  catch (_e) {
-    var e = _e as Error;
-    system.print(_stdlib.asString(e));
+  try {
+    foo();
+    system.print(_stdlib.asString("not caught"));
+  } catch (_e) {
+      var e = _e.message;
+      system.print(_stdlib.asString(e));
   }
 }
 
@@ -150,7 +151,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
+    await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
   ignore_test("Pass_CatchSystemGeneratedException", async () => {
