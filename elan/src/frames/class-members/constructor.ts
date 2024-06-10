@@ -73,6 +73,6 @@ ${this.indent()}}\r
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     const s = this.params.resolveSymbol(id, transforms, this);
-    return s instanceof UnknownSymbol ? this.getParent().resolveSymbol(id, transforms, this) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 }

@@ -128,6 +128,71 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7Apple");
   });
 
+  test("Pass_ConstructorAsScope", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Foo()
+end main
+
+class Foo
+    constructor()
+      var bar set to new Bar()
+      call bar.printP1()
+    end constructor
+
+end class
+
+class Bar
+    constructor()
+      set p1 to 5
+    end constructor
+
+    property p1 as Int
+
+    procedure printP1()
+      print p1
+    end procedure
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Foo());
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+    var bar = system.initialise(new Bar());
+    bar.printP1();
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  printP1() {
+    system.print(_stdlib.asString(this.p1));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
   test("Pass_ReferenceProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
