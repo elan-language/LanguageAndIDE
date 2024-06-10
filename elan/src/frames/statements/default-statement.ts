@@ -5,16 +5,16 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
 import { Transforms } from "../syntax-nodes/transforms";
-import { emptyKeyword } from "../keywords";
+import { defaultKeyword } from "../keywords";
 
-export class EmptyStatement extends FrameWithStatements implements Statement {
+export class DefaultStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
     this.movable = false;
   }
   initialKeywords(): string {
-    return emptyKeyword;
+    return defaultKeyword;
   }
   delete(): void {} //Does nothing as default cannot be deleted
 
