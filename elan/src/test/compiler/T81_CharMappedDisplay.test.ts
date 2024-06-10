@@ -1,20 +1,14 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { AssertOutcome } from "../../system";
-import { TestStatus } from "../../frames/status-enums";
 
 suite("Pass_PassingTest", () => {
   test("Pass_SimpleDraw", async () => {

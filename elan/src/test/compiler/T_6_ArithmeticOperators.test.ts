@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -169,17 +168,16 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  ignore_test("Pass_ModWithComparison", async () => {
+  test("Pass_ModWithComparison", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  print if 25.mod(20) < 19 then 1 else 2
+  print if mod(25, 20) < 19 then 1 else 2
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var c = 35;
-  system.print(_stdlib.asString(12 % 5 > 1));
+  system.print(_stdlib.asString(_stdlib.mod(25, 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 
@@ -188,8 +186,8 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    //assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "26");
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Pass_Power", async () => {

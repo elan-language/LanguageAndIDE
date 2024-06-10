@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -191,7 +190,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_RecursiveDefinition1", async () => {
+  test("Fail_RecursiveDefinition1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -204,6 +203,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to Float", "x is not defined"]);
+    assertDoesNotCompile(fileImpl, ["y is not defined"]);
   });
 });
