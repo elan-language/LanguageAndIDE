@@ -1,4 +1,4 @@
-# 23f99ba36c9e006f80e2f9d573940ed99a3d6d7e4d4eee8f98d85ee906a9be6b Elan v0.1 valid
+# 01732e0259503cfbe23d1274bb06540052373d2bbd8d5b5867365f3a5f8a8a34 Elan v0.1 valid
 
 main
   var a set to 3
@@ -20,7 +20,7 @@ main
   end each
   if y > 4
     then
-   
+
   end if
   if y > 4
     then
@@ -30,7 +30,7 @@ main
   end if
   if y > 4
     then
- 
+
     else if y > 10
 
     else

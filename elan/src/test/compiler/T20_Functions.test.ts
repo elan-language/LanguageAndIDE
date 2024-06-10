@@ -171,7 +171,7 @@ async function main() {
 function factorial(a) {
   var result = 0;
   if (a > 2) {
-    result = a * factorial(a - 1);
+      result = a * factorial(a - 1);
     } else {
       result = a;
   }

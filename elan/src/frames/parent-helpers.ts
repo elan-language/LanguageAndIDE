@@ -28,7 +28,11 @@ export function parentHelper_aggregateCompileErrorsOfChildren(parent: Parent): C
 
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {
   const i = parent.getChildren().indexOf(child);
-  parent.getChildren().splice(i, 1);
+  if (i >= 0) {
+    parent.getChildren().splice(i, 1);
+  } else {
+    parent.getFile().getMap().delete(child.getHtmlId());
+  }
 }
 
 export function parentHelper_getFirstChild(parent: Parent): Frame {

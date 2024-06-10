@@ -170,7 +170,7 @@ suite("Unit tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " each else for if let repeat set switch throw try var while #"); //else, but no print, call
+    assert.equal(help, " else #"); //else, but no print, call
   });
 
   test("Selection Context - in a Switch", () => {
@@ -179,21 +179,15 @@ suite("Unit tests", () => {
     const sw = new Switch(m);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
-    assert.equal(help, " case");
+    assert.equal(help, " case #");
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
-    let help = s.getCompletion();
-    assert.equal(
-      help,
-      " call each else for if input let print repeat set switch throw try var while #",
-    );
-    s.processKey(key("e"));
-    help = s.getCompletion();
-    assert.equal(help, " each else");
+    const help = s.getCompletion();
+    assert.equal(help, " else #");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

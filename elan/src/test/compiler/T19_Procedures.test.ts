@@ -290,9 +290,9 @@ async function main() {
 
 function foo(a) {
   if (a > 0) {
-    system.print(_stdlib.asString(a));
-    var b = a - 1;
-    foo(b);
+      system.print(_stdlib.asString(a));
+      var b = a - 1;
+      foo(b);
   }
 }
 return [main, _tests];}`;

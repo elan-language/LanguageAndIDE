@@ -1,4 +1,4 @@
-# 6d775b5cb0fdaace4415e8ee1d96fcd5490c37fffcc08992f2b94f7de63a14e8 Elan v0.1 valid
+# f6f39481b30123a13797f8597fb4561e3294b97aaffd6585a90faf3ddb7c5edd Elan v0.1 valid
 
 main
   var newGame set to true
@@ -10,7 +10,8 @@ main
       input answer
     end repeat when (answer is "y") or (answer is "n")
     if answer is "n"
-      set newGame to false
+      then
+        set newGame to false
     end if
   end while
 end main
@@ -26,18 +27,20 @@ procedure playGame()
     call pause(200)
     call snake.clockTick(currentDirection, gameOn)
     if snake.hasHitEdge() or snake.bodyCovers(head)
-    
-      set gameOn to false
+      then
+        set gameOn to false
       else
         call charMap.draw(snake.head, Colour.green)
         call charMap.draw(snake.apple, Colour.red)
         var priorTail set to snake.tail()
         if pressed
-          var k set to readKey()
-          set currentDirection to directionByKey[k]
+          then
+            var k set to readKey()
+            set currentDirection to directionByKey[k]
         end if
         if snake.tail() is not priorTail
-          call charMap.setToBackgroundColour(priorTail)
+          then
+            call charMap.setToBackgroundColour(priorTail)
         end if
     end if
   end while
@@ -76,7 +79,8 @@ class Snake
     var result set to false
     each seg in body
       if (seg is sq)
-        set result to true
+        then
+          set result to true
       end if
     end each
     return result
@@ -86,7 +90,8 @@ class Snake
     set body to body + head
     set head to head.getAdjacentSquare(d)
     if head is apple
-      call setNewApplePosition()
+      then
+        call setNewApplePosition()
       else
         set body to body[1..]
     end if

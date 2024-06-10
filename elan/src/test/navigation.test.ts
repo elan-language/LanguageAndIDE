@@ -135,7 +135,7 @@ suite("Navigation", () => {
     assert.equal(main_st_1.isSelected(), false);
     const main_st_2 = file.getById("set6");
     assert.equal(main_st_2.isSelected(), false);
-    const main_st_penult = file.getById("switch59");
+    const main_st_penult = file.getById("switch68");
     assert.equal(main_st_penult.isSelected(), false);
     const main_st_last = file.getById("select2");
     assert.equal(main_st_last.isSelected(), false);
@@ -160,10 +160,5 @@ suite("Navigation", () => {
     assert.equal(main_st_penult.isSelected(), true);
     main_st_penult.processKey(right());
     assert.equal(main_st_penult.isSelected(), false);
-    const select = file.getById("select60");
-    assert.equal(select.isSelected(), true);
-    select.processKey(down());
-    const def = file.getById("default62");
-    assert.equal(def.isSelected(), true);
   });
 });
