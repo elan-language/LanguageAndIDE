@@ -154,32 +154,49 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
-  ignore_test("Pass_CatchSystemGeneratedException", async () => {
+  test("Pass_CatchSystemGeneratedException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   try
-    var x set to 1
-    var y set to 0
-    var z set to x div y
-    print "not caught";
+    var x set to empty [Foo]
+    var y set to x[1]
+    var z set to y.p1
+    print "not caught"
   catch e
     print e
   end try
-end main`;
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property p1 as Int
+
+end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    var x = 1;
-    var y = 0;
-    var z = x / y;
+    var x = system.emptyArrayList();
+    var y = x[1];
+    var z = y.p1;
     system.print(_stdlib.asString("not caught"));
+  } catch (_e) {
+      var e = _e.message;
+      system.print(_stdlib.asString(e));
   }
-  catch (_e) {
-    var e = _e as Error;
-    system.print(_stdlib.asString(e));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
   }
+
+  p1 = 0;
+
 }
 return [main, _tests];}`;
 
@@ -189,18 +206,20 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
+    await assertObjectCodeExecutes(fileImpl, "Cannot read properties of undefined (reading 'p1')");
   });
 
-  ignore_test("Pass_UseException", async () => {
+  test("Pass_UseException", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   try
     call foo()
-    print ""not caught""
+    print "not caught"
   catch e
-    print e.message
+    var s set to ""
+    set s to e
+    print s
   end try
 end main
   
@@ -210,12 +229,14 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  try
-    foo()
-    print "not caught";
-  catch (_e) {
-    var e = _e as Error;
-    system.print(_stdlib.asString(e));
+  try {
+    foo();
+    system.print(_stdlib.asString("not caught"));
+  } catch (_e) {
+      var e = _e.message;
+      var s = "";
+      s = e;
+      system.print(_stdlib.asString(s));
   }
 }
 
@@ -230,7 +251,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Foo");
+    await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
   ignore_test("Fail_ThrowExceptionInFunction", async () => {
