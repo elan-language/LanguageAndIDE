@@ -8,26 +8,24 @@ import {
   callKeyword,
   caseKeyword,
   catchKeyword,
+  defaultKeyword,
   eachKeyword,
   elseKeyword,
   forKeyword,
   ifKeyword,
+  inputKeyword,
+  letKeyword,
   printKeyword,
   repeatKeyword,
   returnKeyword,
   setKeyword,
   switchKeyword,
+  testKeyword,
   throwKeyword,
   tryKeyword,
   varKeyword,
   whileKeyword,
-  testKeyword,
   commentMarker,
-  inputKeyword,
-  letKeyword,
-  emptyKeyword,
-  defaultKeyword,
-  thenKeyword,
 } from "../keywords";
 
 export class StatementSelector extends AbstractSelector {
@@ -57,7 +55,6 @@ export class StatementSelector extends AbstractSelector {
       [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
-      [thenKeyword, (parent: Parent) => this.factory.newThen(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
       [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
@@ -88,8 +85,7 @@ export class StatementSelector extends AbstractSelector {
     } else if (
       keyword === returnKeyword ||
       keyword === catchKeyword ||
-      keyword === defaultKeyword ||
-      keyword === thenKeyword
+      keyword === defaultKeyword
     ) {
       result = !userEntry;
     } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {

@@ -80,6 +80,7 @@ export const allKeywords = [
   constantKeyword,
   constructorKeyword,
   curryKeyword,
+  defaultKeyword,
   eachKeyword,
   elseKeyword,
   emptyKeyword,
