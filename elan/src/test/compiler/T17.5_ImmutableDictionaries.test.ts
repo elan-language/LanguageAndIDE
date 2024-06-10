@@ -398,7 +398,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  ignore_test("Fail_RemoveInvalidKeyType", async () => {
+  test("Fail_RemoveInvalidKeyType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
@@ -411,7 +411,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types String to Int");
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -427,7 +427,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types String to Int");
   });
 
   ignore_test("Fail_SetInvalidValueType", async () => {
@@ -443,7 +443,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["Failed"]);
   });
 
   test("Fail_CannotIndex", async () => {

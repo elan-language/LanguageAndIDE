@@ -12,6 +12,7 @@ import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IterType } from "../symbols/iter-type";
+import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
@@ -78,6 +79,10 @@ export function flatten(p: SymbolType): SymbolType {
     flattened = flattened.concat(flatten(p.returnType));
 
     return new TypeHolder(p, flattened);
+  }
+
+  if (p instanceof StringType) {
+    return new TypeHolder(p, [p]);
   }
 
   return p;
