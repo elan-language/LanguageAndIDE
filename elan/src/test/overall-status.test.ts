@@ -196,6 +196,14 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readCompileStatus(), CompileStatus.ok);
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
+  test("test roman-numerals6-turing-machine", async () => {
+    const f = (await loadFileAsModel("programs/roman-numerals6-turing-machine.elan")) as FileImpl;
+    const runner = createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
 
   test("test for enum default value", async () => {
     const f = (await loadFileAsModel("test-for-enum-default.elan")) as FileImpl;
