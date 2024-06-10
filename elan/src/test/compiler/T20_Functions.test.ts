@@ -155,9 +155,10 @@ end main
 function factorial(a as Int) return Int
     var result set to 0
     if a > 2
-      set result to a * factorial(a - 1)
-    else 
-      set result to a
+      then
+        set result to a * factorial(a - 1)
+      else 
+        set result to a
     end if
     return result
 end function`;

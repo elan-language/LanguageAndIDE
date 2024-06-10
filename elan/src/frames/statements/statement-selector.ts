@@ -26,6 +26,8 @@ import {
   inputKeyword,
   letKeyword,
   emptyKeyword,
+  defaultKeyword,
+  thenKeyword,
 } from "../keywords";
 
 export class StatementSelector extends AbstractSelector {
@@ -43,7 +45,7 @@ export class StatementSelector extends AbstractSelector {
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
       [caseKeyword, (parent: Parent) => this.factory.newCase(parent)],
       [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)],
-      [emptyKeyword, (parent: Parent) => this.factory.newEmpty(parent)],
+      [defaultKeyword, (parent: Parent) => this.factory.newDefault(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
@@ -55,6 +57,7 @@ export class StatementSelector extends AbstractSelector {
       [returnKeyword, (parent: Parent) => this.factory.newReturn(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [switchKeyword, (parent: Parent) => this.factory.newSwitch(parent)],
+      [thenKeyword, (parent: Parent) => this.factory.newThen(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
       [varKeyword, (parent: Parent) => this.factory.newVar(parent)],
@@ -78,12 +81,17 @@ export class StatementSelector extends AbstractSelector {
         keyword === commentMarker;
     } else if (this.getParent().getIdPrefix() === switchKeyword) {
       result = keyword === caseKeyword;
-    } else if (keyword === assertKeyword || keyword === caseKeyword) {
+    } else if (this.getParent().getIdPrefix() === ifKeyword) {
+      result = (!userEntry && keyword === thenKeyword) || keyword === elseKeyword;
+    } else if (keyword === assertKeyword || keyword === caseKeyword || keyword === elseKeyword) {
       result = false;
-    } else if (keyword === returnKeyword || keyword === catchKeyword || keyword === emptyKeyword) {
+    } else if (
+      keyword === returnKeyword ||
+      keyword === catchKeyword ||
+      keyword === defaultKeyword ||
+      keyword === thenKeyword
+    ) {
       result = !userEntry;
-    } else if (keyword === elseKeyword) {
-      result = this.getParent().getIdPrefix() === ifKeyword;
     } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
       result = !this.isWithinAFunction(this.getParent());
     } else {

@@ -9,6 +9,8 @@ import { BooleanType } from "../symbols/boolean-type";
 import { ifKeyword } from "../keywords";
 import { Else } from "./else";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ThenStatement } from "./then-statement";
+import { StatementSelector } from "./statement-selector";
 
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -18,6 +20,9 @@ export class IfStatement extends FrameWithStatements implements Statement {
     super(parent);
     this.condition = new ExpressionField(this);
     this.condition.setPlaceholder("condition");
+    this.getChildren().pop(); // To remove StatementSelector added by superclass
+    this.getChildren().push(new ThenStatement(this));
+    this.getChildren().push(new StatementSelector(this));
   }
 
   initialKeywords(): string {

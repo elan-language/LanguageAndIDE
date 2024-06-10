@@ -276,9 +276,10 @@ end main
 
 procedure foo(a as Int)
   if a > 0
-    print a
-    var b set to a - 1
-    call foo(b)
+    then
+      print a
+      var b set to a - 1
+      call foo(b)
   end if
 end procedure`;
 

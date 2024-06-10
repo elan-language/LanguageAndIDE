@@ -19,9 +19,10 @@ suite("T_7_IfStatement", () => {
 main
   var a set to true
   if a
-    print "yes"
-  else
-    print "no"
+    then
+      print "yes"
+    else
+      print "no"
   end if
 end main`;
 
@@ -52,9 +53,10 @@ return [main, _tests];}`;
 main
   var a set to false
   if a
-    print "yes"
-  else
-    print "no"
+    then
+      print "yes"
+    else
+      print "no"
   end if
 end main`;
 
@@ -84,11 +86,12 @@ return [main, _tests];}`;
 main
   var a set to 2
   if a is 1
-    print "one"
-  else if a is 2
-    print "two"
-  else
-    print "neither"
+    then
+      print "one"
+    else if a is 2
+      print "two"
+    else
+      print "neither"
   end if
 end main`;
 
@@ -120,11 +123,12 @@ return [main, _tests];}`;
 main
   var a set to 3
   if a is 1
-    print "one"
-  else if a is 2
-    print "two"
-  else
-    print "neither"
+    then
+      print "one"
+    else if a is 2
+      print "two"
+    else
+      print "neither"
   end if
 end main`;
 
@@ -156,7 +160,8 @@ return [main, _tests];}`;
 main
   var a set to true
   if a
-    print "yes"
+    then
+      print "yes"
   end if
 end main`;
 
@@ -184,13 +189,14 @@ return [main, _tests];}`;
 main
   var a set to 3
   if a is 1
-    print "one"
-  else if a is 2
-    print "two"
-  else if a is 3
-    print "three"
-  else
-    print "neither"
+    then
+      print "one"
+    else if a is 2
+      print "two"
+    else if a is 3
+      print "three"
+    else
+      print "neither"
   end if
 end main`;
 
@@ -239,11 +245,12 @@ end main`;
 main
   var a set to 3
   if a is 1
-    print "one"
-  else
-    print "not one"
-  else
-    print "two"
+    then
+      print "one"
+    else
+      print "not one"
+    else
+      print "two"
   end if
 end main`;
 
@@ -260,11 +267,12 @@ end main`;
 main
   var a set to 3
   if a is 1
-    print "one"
-  else
-    print "not one"
-  else if a is 2
-    print "two"
+    then
+      print "one"
+    else
+      print "not one"
+    else if a is 2
+      print "two"
   end if
 end main`;
 
@@ -281,9 +289,10 @@ end main`;
 main
   var a set to 3
   if a
-    print "yes"
-  else
-    print "no"
+    then
+      print "yes"
+    else
+      print "no"
   end if
 end main`;
 
@@ -300,11 +309,12 @@ end main`;
   main
     var a set to 2
     if a is 1
-      print "one"
-    else if a
-      print "two"
-    else
-      print "neither"
+      then
+        print "one"
+      else if a
+        print "two"
+      else
+        print "neither"
     end if
   end main`;
 

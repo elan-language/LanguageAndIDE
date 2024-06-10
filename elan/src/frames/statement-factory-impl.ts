@@ -22,6 +22,7 @@ import { Case } from "./statements/case";
 import { AssertStatement } from "./statements/assert-statement";
 import { Input } from "./statements/input";
 import { LetStatement } from "./statements/let-statement";
+import { ThenStatement } from "./statements/then-statement";
 
 export class StatementFactoryImpl implements StatementFactory {
   public newAssert(parent: Parent): Frame {
@@ -36,7 +37,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCatch(parent: Parent): Frame {
     return new Catch(parent);
   }
-  public newEmpty(parent: Parent): Frame {
+  public newDefault(parent: Parent): Frame {
     return new DefaultStatement(parent);
   }
   public newEach(parent: Parent): Frame {
@@ -71,6 +72,9 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newSwitch(parent: Parent): Frame {
     return new Switch(parent);
+  }
+  public newThen(parent: Parent): Frame {
+    return new ThenStatement(parent);
   }
   public newThrow(parent: Parent): Frame {
     return new Throw(parent);
