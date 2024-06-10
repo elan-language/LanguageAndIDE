@@ -53,14 +53,13 @@ class TypeHolder implements SymbolType {
   }
 }
 
-export function flatten(p: SymbolType): SymbolType[] {
+export function flatten(p: SymbolType): SymbolType {
   if (p instanceof ArrayListType || p instanceof ImmutableListType || p instanceof IterType) {
-    return flatten(p.ofType);
+    return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
   if (p instanceof AbstractDictionaryType) {
-    const tt = flatten(p.keyType).concat(p.valueType);
-    return [new TypeHolder(p, tt)];
+    return new TypeHolder(p, [flatten(p.keyType), flatten(p.valueType)]);
   }
 
   if (p instanceof TupleType) {
@@ -68,7 +67,7 @@ export function flatten(p: SymbolType): SymbolType[] {
     for (const t of p.ofTypes) {
       flattened = flattened.concat(flatten(t));
     }
-    return [new TupleType(flattened)];
+    return new TypeHolder(p, flattened);
   }
 
   if (p instanceof FunctionType) {
@@ -76,10 +75,12 @@ export function flatten(p: SymbolType): SymbolType[] {
     for (const t of p.parametersTypes) {
       flattened = flattened.concat(flatten(t));
     }
-    return flattened.concat(flatten(p.returnType));
+    flattened = flattened.concat(flatten(p.returnType));
+
+    return new TypeHolder(p, flattened);
   }
 
-  return [p];
+  return p;
 }
 
 export function containsGenericType(type: SymbolType): boolean {
@@ -143,31 +144,22 @@ export function minOf(a1: object[], a2: object[]) {
 }
 
 export function match(
-  flattened: SymbolType[][],
-  pTypes: SymbolType[][],
+  flattened: SymbolType[],
+  pTypes: SymbolType[],
   matches: Map<string, SymbolType>,
 ) {
   const minLength = minOf(flattened, pTypes);
+
   for (let i = 0; i < minLength; i++) {
-    const pt = flattened[i];
-    const pst = pTypes[i];
+    const t = flattened[i];
+    const st = pTypes[i];
 
-    const minLength1 = minOf(pt, pst);
-    for (let i = 0; i < minLength1; i++) {
-      const t = pt[i];
-      const st = pst[i];
+    if (t instanceof GenericParameterType) {
+      matches.set(t.id, st);
+    }
 
-      if (t instanceof GenericParameterType) {
-        matches.set(t.id, st);
-      }
-
-      if (t instanceof TupleType && st instanceof TupleType) {
-        match([t.ofTypes], [st.ofTypes], matches);
-      }
-
-      if (t instanceof TypeHolder && st instanceof TypeHolder) {
-        match([t.ofTypes], [st.ofTypes], matches);
-      }
+    if (t instanceof TypeHolder && st instanceof TypeHolder) {
+      match(t.ofTypes, st.ofTypes, matches);
     }
   }
 }

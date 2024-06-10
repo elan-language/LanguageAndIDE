@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -418,12 +417,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
   });
 
-  ignore_test("Fail_SetInvalidValueType", async () => {
+  test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.withKey("b", 3.1)
+  set a["b"] to 3.1
 end main
 `;
 
@@ -431,7 +430,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [""]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
   test("Fail_withRemoveKey", async () => {

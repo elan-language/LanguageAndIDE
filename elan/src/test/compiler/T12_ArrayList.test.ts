@@ -474,6 +474,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList"]);
   });
 
+  // TODO runtime range checking #474
   ignore_test("Fail_OutOfRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -564,22 +565,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-  });
-
-  // duplicate
-  ignore_test("Fail_SpecifyWithoutSizeOrInitializer", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ArrayList<of String>()
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Array requires 1 or 2 parameters"]);
   });
 
   test("Fail_get", async () => {
