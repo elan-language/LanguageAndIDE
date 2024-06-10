@@ -128,7 +128,10 @@ async function main() {
 }
 
 _tests.push(["test3", (_outcomes) => {
-  var t = () => system.tuple(["one", "two"]);
+  var t = (() => {
+    var _cache;
+    return () => _cache ??= system.tuple(["one", "two"]);
+  })();
   _outcomes.push(system.assert(t(), system.tuple(["one", "two"]), "assert9", _stdlib));
   _outcomes.push(system.assert(_stdlib.first(t()), "one", "assert12", _stdlib));
 }]);

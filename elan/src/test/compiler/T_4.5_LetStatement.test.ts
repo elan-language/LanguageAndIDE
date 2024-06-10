@@ -24,8 +24,14 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = () => 3;
-  var y = () => x() + 3;
+  var x = (() => {
+    var _cache;
+    return () => _cache ??= 3;
+  })();
+  var y = (() => {
+    var _cache;
+    return () => _cache ??= x() + 3;
+  })();
   system.print(_stdlib.asString(x() + y()));
 }
 return [main, _tests];}`;
@@ -39,6 +45,68 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
+  test("Pass_proveCached", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  let x be new Foo()
+  let y be x
+  call y.setP1(10)
+  print x.p1
+  print y.p1
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+
+  procedure setP1(i as Int)
+    set p1 to i
+  end procedure
+end class
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = (() => {
+    var _cache;
+    return () => _cache ??= system.initialise(new Foo());
+  })();
+  var y = (() => {
+    var _cache;
+    return () => _cache ??= x();
+  })();
+  y().setP1(10);
+  system.print(_stdlib.asString(x().p1));
+  system.print(_stdlib.asString(y().p1));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  setP1(i) {
+    this.p1 = i;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1010");
+  });
+
   test("Pass_proveLazilyEvaluated", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -50,8 +118,14 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = () => 1 / 0;
-  var y = () => 4;
+  var x = (() => {
+    var _cache;
+    return () => _cache ??= 1 / 0;
+  })();
+  var y = (() => {
+    var _cache;
+    return () => _cache ??= 4;
+  })();
   system.print(_stdlib.asString(y()));
 }
 return [main, _tests];}`;

@@ -72,7 +72,10 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
 
     const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
 
-    return `${this.indent()}var ${vid} = () => ${this.expr.compile(transforms)};`;
+    return `${this.indent()}var ${vid} = (() => {
+${this.indent()}${this.indent()}var _cache;
+${this.indent()}${this.indent()}return () => _cache ??= ${this.expr.compile(transforms)};
+${this.indent()}})();`;
   }
 
   get symbolId() {
