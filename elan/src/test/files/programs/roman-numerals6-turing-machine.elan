@@ -1,4 +1,4 @@
-# 80e726d1652c2cbeac25a009623dc135d5e0e2a8b9056d1493d89df14d0d82e9 Elan v0.1 valid
+# 8dc5f5c2c78043c7b680c08f2075ff0e64713eb79d1b098cb863a4a3c1f274cc Elan v0.1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
@@ -486,7 +486,7 @@ procedure convertToRoman(tm as TuringMachine, tape as String)
 end procedure
 
 test 
-  var tm set to new TuringMachine("init", "halt")
+  let tm be new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
   call convertToRoman(tm, "1")
   assert tm.getTrimmedTape() is "I"
