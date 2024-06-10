@@ -10,6 +10,7 @@ export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
 export const curryKeyword = "curry"; //for future use
+export const defaultKeyword = "default";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
 export const emptyKeyword = "empty";
