@@ -53,27 +53,27 @@ suite("Editing Frames", () => {
     assert.equal(var4.isSelected(), true);
   });
 
-  ignore_test("Enter on a frame to Insert new code - creating a selector", () => {
+  test("Enter on a frame to Insert new code - creating a selector", () => {
     const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if38");
+    const if_st = file.getById("if37");
     if_st.processKey(shift_enter()); //Insert above
-    const newSel = file.getById("select64");
+    const newSel = file.getById("select70");
     assert.equal(if_st.isSelected(), false);
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(down());
     assert.equal(if_st.isSelected(), true);
     assert.equal(newSel.isSelected(), false);
     if_st.processKey(enter()); //Insert below
-    const newSel2 = file.getById("select65");
+    const newSel2 = file.getById("select71");
     assert.equal(if_st.isSelected(), false);
     newSel2.processKey(up());
     assert.equal(if_st.isSelected(), true);
   });
-  ignore_test("Enter on a frame does not create a selector if there is already one there", () => {
+  test("Enter on a frame does not create a selector if there is already one there", () => {
     const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if43");
+    const if_st = file.getById("if47");
     if_st.processKey(enter()); //Should insert selector below
-    const newSel = file.getById("select64"); //New a selector
+    const newSel = file.getById("select70"); //New a selector
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up()); //Go back up to 'if'
     assert.equal(newSel.isSelected(), false);
@@ -101,46 +101,43 @@ suite("Editing Frames", () => {
     assert.equal(var4.isSelected(), true);
   });
 
-  ignore_test(
-    "Enter on last field in a frame (or shift-enter on first field) - is same effect as that key on the Frame itself",
-    () => {
-      const file = T03_mainWithAllStatements();
-      const varStatement = file.getById("var3");
-      const expr5 = file.getById("expr5") as ExpressionField;
-      expr5.select();
-      expr5.processKey(enter());
-      const newSel = file.getById("select73"); //New selector
-      assert.equal(newSel.isSelected(), true);
-      newSel.processKey(up());
-      assert.equal(newSel.isSelected(), false);
-      assert.equal(varStatement.isSelected(), true);
+  test("Enter on last field in a frame (or shift-enter on first field) - is same effect as that key on the Frame itself", () => {
+    const file = T03_mainWithAllStatements();
+    const varStatement = file.getById("var3");
+    const expr5 = file.getById("expr5") as ExpressionField;
+    expr5.select();
+    expr5.processKey(enter());
+    const newSel = file.getById("select70"); //New selector
+    assert.equal(newSel.isSelected(), true);
+    newSel.processKey(up());
+    assert.equal(newSel.isSelected(), false);
+    assert.equal(varStatement.isSelected(), true);
 
-      const var4 = file.getById("var4") as IdentifierField;
-      var4.select();
-      var4.processKey(shift_enter());
-      const newSel2 = file.getById("select65"); //New selector
-      assert.equal(newSel2.isSelected(), true);
-      newSel2.processKey(down());
-      assert.equal(newSel2.isSelected(), false);
-      assert.equal(varStatement.isSelected(), true);
-    },
-  );
+    const var4 = file.getById("var4") as IdentifierField;
+    var4.select();
+    var4.processKey(shift_enter());
+    const newSel2 = file.getById("select71"); //New selector
+    assert.equal(newSel2.isSelected(), true);
+    newSel2.processKey(down());
+    assert.equal(newSel2.isSelected(), false);
+    assert.equal(varStatement.isSelected(), true);
+  });
 
-  ignore_test("Enter on last field in a frame with statements", () => {
+  test("Enter on last field in a frame with statements", () => {
     const file = T03_mainWithAllStatements();
     const globSel = file.getById("select0");
     globSel.processKey(key("p"));
-    const params = file.getById("params67");
-    const stateSel = file.getById("select65");
+    const params = file.getById("params73");
+    const stateSel = file.getById("select71");
     assert.equal(stateSel.isSelected(), false);
     params.processKey(enter());
     assert.equal(stateSel.isSelected(), true);
   });
 
-  ignore_test("Move", () => {
+  test("Move", () => {
     const file = T03_mainWithAllStatements();
-    const if_st = file.getById("if48");
-    const try_st = file.getById("try62");
+    const if_st = file.getById("if47");
+    const try_st = file.getById("try60");
     assert.equal(try_st.isSelected(), false);
     if_st.processKey(down());
     assert.equal(try_st.isSelected(), true);
@@ -154,7 +151,7 @@ suite("Editing Frames", () => {
     if_st.select(true, false);
     if_st.processKey(ctrl_up());
     if_st.processKey(ctrl_up());
-    const each = file.getById("if38");
+    const each = file.getById("if37");
     assert.equal(each.isSelected(), false);
     if_st.processKey(down());
     assert.equal(each.isSelected(), true);
@@ -244,7 +241,7 @@ suite("Editing Frames", () => {
     const set6 = file.getById("set6");
     set6.processKey(enter());
     const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select73");
+    assert.equal(selector.getHtmlId(), "select70");
     selector.processKey(ctrl_v());
     const pasted = main.getChildren()[1];
     assert.equal(pasted.getHtmlId(), "var3");
@@ -258,7 +255,7 @@ suite("Editing Frames", () => {
     var3.processKey(ctrl_x());
     main.processKey(shift_enter());
     const globalSelect = file.getChildren()[0];
-    assert.equal(globalSelect.getHtmlId(), "select73");
+    assert.equal(globalSelect.getHtmlId(), "select70");
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst, globalSelect);

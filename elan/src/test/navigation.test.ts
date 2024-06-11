@@ -135,7 +135,7 @@ suite("Navigation", () => {
     assert.equal(main_st_1.isSelected(), false);
     const main_st_2 = file.getById("set6");
     assert.equal(main_st_2.isSelected(), false);
-    const main_st_penult = file.getById("switch68");
+    const main_st_penult = file.getById("switch65");
     assert.equal(main_st_penult.isSelected(), false);
     const main_st_last = file.getById("select2");
     assert.equal(main_st_last.isSelected(), false);
