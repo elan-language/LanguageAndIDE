@@ -44,7 +44,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  ignore_test("Pass_TupleArg", async () => {
+  test("Pass_TupleArg", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -98,6 +98,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
+  // #477
   ignore_test("Pass_AssignALambdaToAProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

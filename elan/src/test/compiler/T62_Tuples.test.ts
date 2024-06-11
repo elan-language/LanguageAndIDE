@@ -203,6 +203,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3Apple");
   });
 
+  // #466
   ignore_test("Pass_DeconstructIntoLetVariables", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
