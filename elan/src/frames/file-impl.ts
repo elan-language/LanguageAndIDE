@@ -318,6 +318,8 @@ export class FileImpl implements File, Scope {
 
   async refreshAllStatuses(testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>) {
     let code = "";
+    this._parseStatus = ParseStatus.default as ParseStatus;
+    this.parseError = undefined;
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
 

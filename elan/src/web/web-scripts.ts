@@ -53,17 +53,14 @@ function refreshAndDisplay() {
 
 function initialDisplay() {
   elanInputOutput.clearConsole();
-  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
-    const ps = file.readParseStatus();
-    if (ps === ParseStatus.valid) {
-      file.renderAsHtml().then((c) => {
-        updateContent(c);
-      });
-    } else {
-      const msg = file.parseError || "Failed load code";
-      showError(new Error(msg), file.fileName);
-    }
-  });
+
+  const ps = file.readParseStatus();
+  if (ps === ParseStatus.valid) {
+    refreshAndDisplay();
+  } else {
+    const msg = file.parseError || "Failed load code";
+    showError(new Error(msg), file.fileName);
+  }
 }
 
 function displayFile() {
