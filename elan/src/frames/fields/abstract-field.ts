@@ -222,6 +222,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.text = this.text + completions;
         this.parseCurrentText();
         this.cursorPos = this.text.length;
+        this.codeHasChanged = true;
       }
     }
   }

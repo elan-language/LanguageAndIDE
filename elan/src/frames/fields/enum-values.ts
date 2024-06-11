@@ -6,6 +6,7 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
+import { mustNotBeKeyword } from "../compile-rules";
 
 export class EnumValues extends AbstractField {
   isParseByNodes = true;
@@ -33,9 +34,15 @@ export class EnumValues extends AbstractField {
     if (ast) {
       const items = ast.items;
       if (items.length > 0) {
-        const def = `_default : "${items[0].compile()}", `;
+        const ids = items.map((i) => i.compile());
 
-        const itStr = items.map((n) => `${n.compile()} : "${n.compile()}"`).join(", ");
+        for (const id of ids) {
+          mustNotBeKeyword(id, this.compileErrors, this.htmlId);
+        }
+
+        const def = `_default : "${ids[0]}", `;
+
+        const itStr = ids.map((n) => `${n} : "${n}"`).join(", ");
 
         return `${def}${itStr}`;
       }

@@ -8,7 +8,7 @@ import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Parent } from "../interfaces/parent";
-import { mustBeCompatibleType } from "../compile-rules";
+import { mustBeCompatibleType, mustBeKnownSymbolType } from "../compile-rules";
 
 export class FunctionMethod extends FunctionFrame implements Member {
   isMember: boolean = true;
@@ -26,14 +26,14 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public override compile(transforms: Transforms): string {
+    const rt = this.symbolType(transforms).returnType;
+
+    mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);
+
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
-    const tt = returnStatement?.symbolType();
-    mustBeCompatibleType(
-      this.returnType?.symbolType(transforms),
-      tt!,
-      this.compileErrors,
-      returnStatement!.fieldId,
-    );
+    const rst = returnStatement.symbolType();
+
+    mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
     return `${this.indent()}${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;

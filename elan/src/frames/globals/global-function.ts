@@ -4,7 +4,7 @@ import { FunctionFrame } from "./function-frame";
 import { functionKeyword, returnKeyword, endKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
-import { mustBeCompatibleType } from "../compile-rules";
+import { mustBeCompatibleType, mustBeKnownSymbolType } from "../compile-rules";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   isGlobal = true;
@@ -25,14 +25,14 @@ ${endKeyword} ${functionKeyword}\r
   }
 
   public compile(transforms: Transforms): string {
+    const rt = this.symbolType(transforms).returnType;
+
+    mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);
+
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
-    const tt = returnStatement?.symbolType();
-    mustBeCompatibleType(
-      this.returnType?.symbolType(transforms),
-      tt!,
-      this.compileErrors,
-      returnStatement!.fieldId,
-    );
+    const rst = returnStatement.symbolType();
+
+    mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
 
     return `function ${super.compile(transforms)}\r
 }
