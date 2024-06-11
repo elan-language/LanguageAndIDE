@@ -81,21 +81,26 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    const type = getParentScope(this.scope)
-      .resolveSymbol(this.id, transforms(), this.scope)
-      .symbolType(transforms());
+    const [updatedQualifier, currentScope] = updateScopeAndQualifier(
+      this.qualifier as QualifierAsn | undefined,
+      transforms(),
+      this.scope,
+    );
 
-    if (type instanceof FunctionType) {
-      const returnType = type.returnType;
+    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
+    const fst = funcSymbol.symbolType(transforms());
+
+    if (fst instanceof FunctionType) {
+      const returnType = fst.returnType;
 
       if (containsGenericType(returnType)) {
-        const matches = matchGenericTypes(type, this.parameters, this.qualifier);
+        const matches = matchGenericTypes(fst, this.parameters, this.qualifier);
         return generateType(returnType, matches);
       }
       return returnType;
     }
 
-    return type;
+    return fst;
   }
 
   toString() {
