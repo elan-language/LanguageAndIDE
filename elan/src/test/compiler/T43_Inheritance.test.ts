@@ -1384,4 +1384,27 @@ end function
       "Incompatible types ArrayList<of Class Bar> to ArrayList<of Class Foo>",
     ]);
   });
+
+  test("Fail_InheritFromNonexistentClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Bar()
+  print x.p1
+end main
+
+class Bar inherits Foo
+    constructor()  
+    end constructor
+    
+    property p1 as Float
+    
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
+  });
 });

@@ -238,12 +238,12 @@ export function mustBeIndexableSymbol(
 }
 
 export function mustBeAbstractClass(
-  classType: ClassType,
+  type: ClassType | UnknownType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (!classType.isAbstract) {
-    compileErrors.push(new MustBeAbstractCompileError(classType.toString(), location));
+  if (type instanceof ClassType && !type.isAbstract) {
+    compileErrors.push(new MustBeAbstractCompileError(type.toString(), location));
   }
 }
 

@@ -51,7 +51,11 @@ import {
   inheritsKeyword,
   thisKeyword,
 } from "../keywords";
-import { mustBeAbstractClass, mustImplementSuperClasses } from "../compile-rules";
+import {
+  mustBeAbstractClass,
+  mustBeKnownSymbolType,
+  mustImplementSuperClasses,
+} from "../compile-rules";
 import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -59,6 +63,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Class } from "../interfaces/class";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
   isCollapsible: boolean = true;
@@ -296,18 +301,22 @@ end class\r\n`;
     if (this.doesInherit()) {
       const superClasses = this.superClasses.getOrTransformAstNode(transforms) as AstCollectionNode;
       const nodes = superClasses.items as AstIdNode[];
-      const superClassSymbolTypes = nodes
+      const typeAndName: [ClassType | UnknownType, string][] = nodes
         .map((n) => this.resolveSymbol(n.id, transforms, this))
-        .map((c) => c.symbolType(transforms) as ClassType);
+        .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
 
-      for (const st of superClassSymbolTypes) {
-        mustBeAbstractClass(st, this.compileErrors, this.htmlId);
+      for (const st of typeAndName) {
+        mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
+      }
+
+      for (const st of typeAndName) {
+        mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
       }
 
       mustImplementSuperClasses(
         transforms,
         this.symbolType(transforms),
-        superClassSymbolTypes,
+        typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
         this.compileErrors,
         this.htmlId,
       );
