@@ -825,6 +825,7 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
+    ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
     [
       "setDefaultForeground",
       this.getSymbol("setDefaultForeground", new ProcedureType([IntType.Instance], false, false)),
