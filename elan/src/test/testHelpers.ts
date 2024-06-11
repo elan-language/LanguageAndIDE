@@ -34,7 +34,7 @@ import { getTestRunner } from "../runner";
 import { ClassType } from "../frames/symbols/class-type";
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfAction(
   sourceFile: string,
