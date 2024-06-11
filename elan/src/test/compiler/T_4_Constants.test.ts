@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -39,6 +40,64 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  ignore_test("Pass_Int_Hex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 255
+main
+  print a
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const a = 0x00fe;
+
+async function main() {
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    //const symbols not yet implemented
+    //const varConst = fileImpl.getChildFloat(0);
+    //assertIsSymbol(varConst, "a", "Int");
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "254");
+  });
+
+  ignore_test("Pass_Int_Binary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 0b10101
+main
+  print a
+end main
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const a = 0b10101;
+
+async function main() {
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    //const symbols not yet implemented
+    //const varConst = fileImpl.getChildFloat(0);
+    //assertIsSymbol(varConst, "a", "Int");
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "21");
   });
 
   test("Pass_Float", async () => {

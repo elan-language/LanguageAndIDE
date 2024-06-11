@@ -329,6 +329,11 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitInt(), " 123a", ParseStatus.valid, " 123", "a", "123", "");
     testNodeParse(new LitInt(), "1.23", ParseStatus.valid, "1", ".23", "1", "");
     testNodeParse(new LitInt(), "a", ParseStatus.invalid, "", "a", "", "");
+    //Hex & binary
+    testNodeParse(new LitInt(), "0xfa3c", ParseStatus.valid, "0xfa3c", "", "", "0xfa3c");
+    testNodeParse(new LitInt(), "0xfa3g", ParseStatus.valid, "0xfa3", "g", "", "");
+    testNodeParse(new LitInt(), "0b01101", ParseStatus.valid, "0b01101", "", "", "0b01101");
+    testNodeParse(new LitInt(), "0b01102", ParseStatus.valid, "0b0110", "2", "", "");
   });
   test("LitFloat", () => {
     testNodeParse(new LitFloat(), "", ParseStatus.empty, "", "", "");
