@@ -20,8 +20,20 @@ let profile: Profile;
 
 function setup(p: Profile) {
   profile = p;
-  file = new FileImpl(hash, profile, transforms(), false);
+  file = new FileImpl(hash, profile, transforms());
   displayFile();
+}
+
+function resetFile() {
+  file = new FileImpl(hash, profile, transforms());
+  file.renderAsHtml().then((c) => updateContent(c));
+}
+
+function showError(err: Error, fileName : string) {
+  resetFile();
+  file.fileName = fileName;
+  elanInputOutput.clearConsole();
+  elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
 }
 
 fetchProfile()
@@ -33,9 +45,15 @@ fetchProfile()
 
 function refreshAndDisplay() {
   file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
-    file.renderAsHtml().then((c) => {
-      updateContent(c);
-    });
+    const ps = file.readParseStatus();
+    if (ps === ParseStatus.valid) {
+      file.renderAsHtml().then((c) => {
+        updateContent(c);
+      });
+    } else {
+      const msg = file.parseError || "Failed load code";
+      elanInputOutput.printLine(msg);
+    }
   });
 }
 
@@ -45,9 +63,14 @@ function displayFile() {
       .then((f) => f.text())
       .then((text) => {
         const code = new CodeSourceFromString(text);
-        file.parseFrom(code).then(() => {
-          refreshAndDisplay();
-        });
+        file.parseFrom(code).then(
+          () => {
+            refreshAndDisplay();
+          },
+          (e) => {
+            showError(e, file.fileName);
+          },
+        );
       })
       .catch((e) => {
         console.error(e);
@@ -58,10 +81,15 @@ function displayFile() {
     const previousFileName = localStorage.getItem("elan-file");
     if (previousCode) {
       const code = new CodeSourceFromString(previousCode);
-      file.parseFrom(code).then(() => {
-        file.fileName = previousFileName || file.defaultFileName;
-        refreshAndDisplay();
-      });
+      file.parseFrom(code).then(
+        () => {
+          file.fileName = previousFileName || file.defaultFileName;
+          refreshAndDisplay();
+        },
+        (e) => {
+          showError(e, previousFileName || file.defaultFileName);
+        },
+      );
     } else {
       refreshAndDisplay();
     }
@@ -343,8 +371,7 @@ clearConsoleButton?.addEventListener("click", () => {
 });
 
 newButton?.addEventListener("click", () => {
-  file = new FileImpl(hash, profile, transforms(), true);
-  file.renderAsHtml().then((c) => updateContent(c));
+  resetFile();
 });
 
 const upload = document.getElementById("load") as Element;
@@ -370,11 +397,16 @@ function handleUpload(event: Event) {
     reader.addEventListener("load", (event: any) => {
       const rawCode = event.target.result;
       const code = new CodeSourceFromString(rawCode);
-      file = new FileImpl(hash, profile, transforms(), false);
+      file = new FileImpl(hash, profile, transforms());
       file.fileName = fileName;
-      file.parseFrom(code).then(() => {
-        refreshAndDisplay();
-      });
+      file.parseFrom(code).then(
+        () => {
+          refreshAndDisplay();
+        },
+        (e) => {
+          showError(e, fileName);
+        },
+      );
     });
     reader.readAsText(elanFile);
   }

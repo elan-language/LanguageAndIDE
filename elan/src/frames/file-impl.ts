@@ -450,11 +450,17 @@ export class FileImpl implements File, Scope {
       }
       this.removeAllSelectorsThatCanBe();
       this.deselectAll();
+      this.getFirstChild().select(true, false);
+      this.updateAllParseStatus();
     } catch (e) {
-      this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+      if (e instanceof Error && e.message.startsWith("Hash")) {
+        throw e;
+      } else {
+        throw new Error(
+          `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`,
+        );
+      }
     }
-    this.getFirstChild().select(true, false);
-    this.updateAllParseStatus();
   }
 
   containsMain(): boolean {
@@ -468,14 +474,14 @@ export class FileImpl implements File, Scope {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
       if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error("Invalid file header format");
+        throw new Error("Hash missing or invalid file header format");
       }
       const fileHash = tokens[1];
       const toHash = code.substring(code.indexOf("Elan"));
       const newHash = await this.getHash(toHash);
 
       if (fileHash !== newHash) {
-        throw new Error("Code does not match the hash in the file header");
+        throw new Error("Hash missing or does not match the code");
       }
     }
   }
