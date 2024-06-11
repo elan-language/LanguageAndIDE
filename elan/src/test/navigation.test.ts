@@ -10,7 +10,6 @@ import { IdentifierField } from "../frames/fields/identifier-field";
 import { ExpressionField } from "../frames/fields/expression-field";
 import { isParent } from "../frames/helpers";
 import { Selectable } from "../frames/interfaces/selectable";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("Navigation", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -135,7 +134,7 @@ suite("Navigation", () => {
     assert.equal(main_st_1.isSelected(), false);
     const main_st_2 = file.getById("set6");
     assert.equal(main_st_2.isSelected(), false);
-    const main_st_penult = file.getById("switch68");
+    const main_st_penult = file.getById("switch65");
     assert.equal(main_st_penult.isSelected(), false);
     const main_st_last = file.getById("select2");
     assert.equal(main_st_last.isSelected(), false);
