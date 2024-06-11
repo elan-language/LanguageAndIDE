@@ -431,4 +431,21 @@ end main
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Fail_UseOfKeywordAsName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant if set to 3
+
+main
+
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
+  });
 });

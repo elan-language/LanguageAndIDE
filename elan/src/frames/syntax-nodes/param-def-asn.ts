@@ -4,7 +4,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { FunctionFrame } from "../globals/function-frame";
-import { mustBeImmutableType, mustBeKnownSymbolType } from "../compile-rules";
+import { mustBeImmutableType, mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
 import { transforms } from "./ast-helpers";
 import { ClassType } from "../symbols/class-type";
 
@@ -24,6 +24,9 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
+
+    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
+
     let st = this.symbolType();
     if (this.scope instanceof FunctionFrame) {
       if (st instanceof ClassType) {

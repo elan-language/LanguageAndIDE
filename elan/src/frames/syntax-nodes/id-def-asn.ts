@@ -6,6 +6,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { getParentScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isMember } from "../helpers";
+import { mustNotBeKeyword } from "../compile-rules";
 
 export class IdDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -23,7 +24,7 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-
+    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
     return this.id;
   }
 
