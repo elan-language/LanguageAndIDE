@@ -1279,6 +1279,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Bar");
   });
 
+  // #482
   // todo fix by resolveing all types properly in func call
   ignore_test("Fail_Invariance1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -1314,6 +1315,7 @@ end function
     ]);
   });
 
+  // #482
   // as invariance 1
   ignore_test("Fail_Invariance2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
@@ -1349,6 +1351,7 @@ end procedure
     ]);
   });
 
+  // #482
   ignore_test("Fail_Invariance3", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
