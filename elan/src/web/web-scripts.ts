@@ -46,15 +46,15 @@ fetchProfile()
 function refreshAndDisplay() {
   elanInputOutput.clearConsole();
   file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
-    const ps = file.readParseStatus();
-    if (ps === ParseStatus.valid) {
+    // const ps = file.readParseStatus();
+    // if (ps === ParseStatus.valid) {
       file.renderAsHtml().then((c) => {
         updateContent(c);
       });
-    } else {
-      const msg = file.parseError || "Failed load code";
-      showError(new Error(msg), file.fileName);
-    }
+    // } else {
+    //   const msg = file.parseError || "Failed load code";
+    //   showError(new Error(msg), file.fileName);
+    // }
   });
 }
 
