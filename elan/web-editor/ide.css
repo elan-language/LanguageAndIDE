@@ -27,6 +27,10 @@ body {
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
   }
+  #graphics div {
+    font-size: 10pt;
+    text-align: center;
+  }
   #code-title {
     grid-row: 1;
     grid-column: 1 / 24;

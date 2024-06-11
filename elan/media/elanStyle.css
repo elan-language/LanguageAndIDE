@@ -2,17 +2,18 @@ code {
     padding: 0px;
 }
 
-.elan-code, #console {
-    color: var(--defaultText);
+* {
     font-family: consolas;
     font-size: 11pt;
+}
+.elan-code, #console {
+    color: var(--defaultText);
     background-color: var(--defaultBackground);
     border-color: var(--defaultBackground);
     font-style: normal;
 }
 
-/*TODO - change this tag to something clearer e.g. 'it' */
-pr { 
+pr { /* 'prompt' */
     font-style: italic;
 }
 
@@ -21,6 +22,7 @@ pr {
 }
 
 input, input:focus , input:active{
+    font-family: consolas;
     border: none;
     outline: none;
     padding: 0px;
