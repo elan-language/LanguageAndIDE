@@ -3,7 +3,6 @@ import { BooleanType } from "./symbols/boolean-type";
 import { ClassType } from "./symbols/class-type";
 import { DictionaryType } from "./symbols/dictionary-type";
 import { FunctionType } from "./symbols/function-type";
-import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
 import { ImmutableListType } from "./symbols/immutable-list-type";
@@ -539,7 +538,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof IterType && rhs instanceof StringType) {
-    if (!(lhs.ofType instanceof GenericParameterType || lhs.ofType instanceof StringType)) {
+    if (!(lhs.ofType instanceof StringType)) {
       FailIncompatible(lhs, rhs, compileErrors, location);
       return;
     }

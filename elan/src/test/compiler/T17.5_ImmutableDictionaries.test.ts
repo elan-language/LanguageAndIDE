@@ -411,7 +411,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types String to Int");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types Int to String");
   });
 
   test("Fail_SetInvalidKeyType", async () => {
@@ -427,10 +427,10 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types String to Int");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Incompatible types Int to String");
   });
 
-  ignore_test("Fail_SetInvalidValueType", async () => {
+  test("Fail_SetInvalidValueType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to {"a":1, "b":3, "z":10}
@@ -443,7 +443,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Failed"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
   test("Fail_CannotIndex", async () => {

@@ -160,7 +160,9 @@ export function match(
     const st = pTypes[i];
 
     if (t instanceof GenericParameterType) {
-      matches.set(t.id, st);
+      if (!matches.has(t.id)) {
+        matches.set(t.id, st);
+      }
     }
 
     if (t instanceof TypeHolder && st instanceof TypeHolder) {
