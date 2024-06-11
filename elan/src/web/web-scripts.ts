@@ -44,17 +44,25 @@ fetchProfile()
   });
 
 function refreshAndDisplay() {
+  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
+    file.renderAsHtml().then((c) => {
+      updateContent(c);
+    });
+  });
+}
+
+function initialDisplay() {
   elanInputOutput.clearConsole();
   file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
-    // const ps = file.readParseStatus();
-    // if (ps === ParseStatus.valid) {
+    const ps = file.readParseStatus();
+    if (ps === ParseStatus.valid) {
       file.renderAsHtml().then((c) => {
         updateContent(c);
       });
-    // } else {
-    //   const msg = file.parseError || "Failed load code";
-    //   showError(new Error(msg), file.fileName);
-    // }
+    } else {
+      const msg = file.parseError || "Failed load code";
+      showError(new Error(msg), file.fileName);
+    }
   });
 }
 
@@ -66,7 +74,7 @@ function displayFile() {
         const code = new CodeSourceFromString(text);
         file.parseFrom(code).then(
           () => {
-            refreshAndDisplay();
+            initialDisplay();
           },
           (e) => {
             showError(e, file.fileName);
@@ -74,8 +82,7 @@ function displayFile() {
         );
       })
       .catch((e) => {
-        console.error(e);
-        refreshAndDisplay();
+        showError(e, file.fileName);
       });
   } else {
     const previousCode = localStorage.getItem("elan-code");
@@ -85,14 +92,14 @@ function displayFile() {
       file.parseFrom(code).then(
         () => {
           file.fileName = previousFileName || file.defaultFileName;
-          refreshAndDisplay();
+          initialDisplay();
         },
         (e) => {
           showError(e, previousFileName || file.defaultFileName);
         },
       );
     } else {
-      refreshAndDisplay();
+      initialDisplay();
     }
   }
 }
@@ -403,7 +410,7 @@ function handleUpload(event: Event) {
       file.fileName = fileName;
       file.parseFrom(code).then(
         () => {
-          refreshAndDisplay();
+          initialDisplay();
         },
         (e) => {
           showError(e, fileName);
