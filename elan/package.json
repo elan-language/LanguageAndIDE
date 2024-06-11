@@ -107,7 +107,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --write \"src/**/*.ts\""
+    "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\""
   },
   "dependencies": {
     "async-file": "2.0.2",
