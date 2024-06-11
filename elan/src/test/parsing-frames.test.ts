@@ -423,7 +423,7 @@ end class
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms(), true);
-    await await fl.parseFrom(source);
+    await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at property value as Int`), true);
   });
 

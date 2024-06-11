@@ -25,14 +25,14 @@ function setup(p: Profile) {
 }
 
 function resetFile() {
+  elanInputOutput.clearConsole();
   file = new FileImpl(hash, profile, transforms());
   file.renderAsHtml().then((c) => updateContent(c));
 }
 
-function showError(err: Error, fileName : string) {
+function showError(err: Error, fileName: string) {
   resetFile();
   file.fileName = fileName;
-  elanInputOutput.clearConsole();
   elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
 }
 
@@ -44,6 +44,7 @@ fetchProfile()
   });
 
 function refreshAndDisplay() {
+  elanInputOutput.clearConsole();
   file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
     const ps = file.readParseStatus();
     if (ps === ParseStatus.valid) {
@@ -52,7 +53,7 @@ function refreshAndDisplay() {
       });
     } else {
       const msg = file.parseError || "Failed load code";
-      elanInputOutput.printLine(msg);
+      showError(new Error(msg), file.fileName);
     }
   });
 }
@@ -392,6 +393,7 @@ function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
+    elanInputOutput.clearConsole();
     const fileName = elanFile.name;
     const reader = new FileReader();
     reader.addEventListener("load", (event: any) => {

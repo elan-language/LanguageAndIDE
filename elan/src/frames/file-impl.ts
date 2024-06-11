@@ -42,6 +42,7 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
+  worstParseStatus,
 } from "./parent-helpers";
 import { Profile } from "./interfaces/profile";
 import { ElanSymbol } from "./interfaces/symbol";
@@ -309,7 +310,10 @@ export class FileImpl implements File, Scope {
 
   updateAllParseStatus(): void {
     this.getChildren().forEach((c) => c.updateParseStatus());
-    this._parseStatus = parentHelper_readWorstParseStatusOfChildren(this);
+    this._parseStatus = worstParseStatus(
+      this._parseStatus,
+      parentHelper_readWorstParseStatusOfChildren(this),
+    );
   }
 
   async refreshAllStatuses(testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>) {
@@ -435,6 +439,7 @@ export class FileImpl implements File, Scope {
   async parseFrom(source: CodeSource): Promise<void> {
     try {
       this.parseError = undefined;
+      this._parseStatus = ParseStatus.default;
       await this.validateHeader(source.getRemainingCode());
       if (source.isMatch("#")) {
         source.removeRegEx(Regexes.comment, false);
@@ -454,12 +459,11 @@ export class FileImpl implements File, Scope {
       this.updateAllParseStatus();
     } catch (e) {
       if (e instanceof Error && e.message.startsWith("Hash")) {
-        throw e;
+        this.parseError = e.message;
       } else {
-        throw new Error(
-          `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`,
-        );
+        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
       }
+      this._parseStatus = ParseStatus.invalid;
     }
   }
 
