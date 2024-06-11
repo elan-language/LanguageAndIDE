@@ -15,7 +15,6 @@ export class LitInt extends AbstractParseNode {
         text,
         Regexes.negatableLitInt,
       );
-      const b = 0b1011;
     }
   }
 }

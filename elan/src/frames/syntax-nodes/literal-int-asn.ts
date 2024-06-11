@@ -10,7 +10,12 @@ export class LiteralIntAsn extends AbstractAstNode implements AstNode {
     public readonly fieldId: string,
   ) {
     super();
-    this.value = parseInt(rawValue.trim());
+    const trimmed = rawValue.trim();
+    if (trimmed.startsWith("0b")) {
+      this.value = parseInt(trimmed.substring(2), 2);
+    } else {
+      this.value = parseInt(trimmed);
+    }
   }
 
   aggregateCompileErrors(): CompileError[] {

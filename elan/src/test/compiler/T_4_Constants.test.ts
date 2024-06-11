@@ -71,7 +71,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "254");
   });
 
-  ignore_test("Pass_Int_Binary", async () => {
+  test("Pass_Int_Binary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 0b10101
@@ -81,7 +81,7 @@ end main
 `;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 0b10101;
+const a = 21;
 
 async function main() {
   system.print(_stdlib.asString(a));
