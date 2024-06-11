@@ -1,3 +1,4 @@
+import { TestStatus } from "./frames/status-enums";
 import { StdLib } from "./std-lib";
 import { AssertOutcome, System } from "./system";
 
@@ -6,7 +7,12 @@ export function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]
 
   for (const t of tests) {
     const outcomes: AssertOutcome[] = [];
-    t[1](outcomes);
+    try {
+      t[1](outcomes);
+    } catch (e) {
+      const msg = (e as Error).message || "Test threw error";
+      outcomes.push(new AssertOutcome(TestStatus.error, msg, "", ""));
+    }
     allOutcomes.push([t[0], outcomes]);
   }
 

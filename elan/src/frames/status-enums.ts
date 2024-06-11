@@ -14,6 +14,7 @@ export enum CompileStatus {
 }
 
 export enum TestStatus {
+  error,
   fail,
   pending,
   pass,

@@ -50,7 +50,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
       .map((c) => c as AssertStatement);
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
-    this._testStatus = worst;
+    this._testStatus = worstOf(this._testStatus, worst);
   }
 
   resetTestStatus(): void {
@@ -99,6 +99,7 @@ ${this.compileChildren(transforms)}\r
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {
+    this.resetTestStatus();
     for (const assert of this.getChildren().filter(
       (c) => c instanceof AssertStatement,
     ) as AssertStatement[]) {
@@ -106,6 +107,9 @@ ${this.compileChildren(transforms)}\r
       if (match.length === 1) {
         assert.setOutcome(match[0]);
       }
+    }
+    if (outcomes.some((o) => o.status === TestStatus.error)) {
+      this._testStatus = TestStatus.error;
     }
   }
 }

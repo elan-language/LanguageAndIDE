@@ -201,6 +201,69 @@ return [main, _tests];}`;
     ]);
   });
 
+  test("Pass_ErrorTest", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+test square
+  var arr set to empty [Foo]
+  var foo set to arr[1]
+  assert foo.p1 is 0
+end test
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Int
+end class
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+_tests.push(["test3", (_outcomes) => {
+  var arr = system.emptyArrayList();
+  var foo = arr[1];
+  _outcomes.push(system.assert(foo.p1, 0, "assert12", _stdlib));
+}]);
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test3",
+        [
+          new AssertOutcome(
+            TestStatus.error,
+            "Cannot read properties of undefined (reading 'p1')",
+            "",
+            "",
+          ),
+        ],
+      ],
+    ]);
+  });
+
   test("Pass_VariousTestsOnAssert", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
