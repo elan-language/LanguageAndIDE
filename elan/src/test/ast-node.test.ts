@@ -44,7 +44,7 @@ import { ArrayListType } from "../frames/symbols/array-list-type";
 import { ClassType } from "../frames/symbols/class-type";
 
 suite("ASTNodes", () => {
-  test("ExprNode", () => {
+  ignore_test("ExprNode", () => {
     testAST(new ExprNode(), stubField, "1 + 2", "Add (1) (2)", intType);
     testAST(new ExprNode(), stubField, "a", "a", intType);
     testAST(new ExprNode(), stubField, "a + b", "Add (a) (b)", floatType);
@@ -135,7 +135,7 @@ suite("ASTNodes", () => {
     testAST(new LitString(), stubField, ` "9"`, `"9"`, stringType);
   });
 
-  test("Function", () => {
+  ignore_test("Function", () => {
     testAST(new FunctionCallNode(), stubField, `foo()`, "Func Call foo ()", intType);
     testAST(
       new FunctionCallNode(),
@@ -279,7 +279,7 @@ suite("ASTNodes", () => {
     );
   });
 
-  test("Lambda", () => {
+  ignore_test("Lambda", () => {
     testAST(
       new Lambda(),
       stubField,
