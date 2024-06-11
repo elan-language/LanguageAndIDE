@@ -416,11 +416,11 @@ export class StdLib {
 
   // charmapped display
 
-  xSize = 80;
-  ySize = 60;
+  xSize = 40;
+  ySize = 30;
 
-  defaultForeground = 0;
-  defaultBackground = 0;
+  defaultForeground = 0x000000;
+  defaultBackground = 0xffffff;
 
   idx(x: number, y: number) {
     return x * this.ySize + y;
@@ -487,13 +487,19 @@ export class StdLib {
   drawCharMap(map: CharMap) {
     let rendered = "";
 
-    for (let x = 0; x < this.xSize; x++) {
-      for (let y = 0; y < this.ySize; y++) {
+    for (let y = 0; y < this.ySize; y++) {
+      for (let x = 0; x < this.xSize; x++) {
         const [c, f, b] = this.getAt(map, x, y);
-        rendered = `${rendered}<div style="foreground-color:${f};background-color:${b};">${c}</div>`;
+        rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
 
     this.system.elanInputOutput.drawGraphics(rendered);
+  }
+
+  private asHex(n: number): string {
+    const h = "000000" + n.toString(16);
+    const h6 = h.substring(h.length - 6);
+    return `#${h6}`;
   }
 }

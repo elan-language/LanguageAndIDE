@@ -101,7 +101,11 @@ body {
     background-color: var(--idePanelBackground);
     overflow: hidden;
     margin: 0;
-    }
+  /* Define it as a sub-grid within the overall grid */
+    display: grid;
+    grid-template-columns: repeat(40, 1fr);
+    grid-template-rows: repeat(30, 1fr);
+}
 
  #code-controls, #run-controls {
     grid-column: 25/31;

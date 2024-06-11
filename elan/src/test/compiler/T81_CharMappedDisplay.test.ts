@@ -38,7 +38,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       0,
-      '<div style="foreground-color:0;background-color:0;">',
+      '<div style="color:#000000;background-color:#ffffff;">',
     );
   });
 
@@ -71,7 +71,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       0,
-      '<div style="foreground-color:1;background-color:2;">F',
+      '<div style="color:#000001;background-color:#000002;">F',
     );
   });
 
@@ -133,7 +133,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       0,
-      '<div style="foreground-color:0;background-color:0;">Z',
+      '<div style="color:#000000;background-color:#ffffff;">Z',
     );
   });
 
@@ -195,7 +195,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       0,
-      '<div style="foreground-color:3;background-color:0;">',
+      '<div style="color:#000003;background-color:#ffffff;">',
     );
   });
 
@@ -233,14 +233,14 @@ return [main, _tests];}`;
 
 main
   var g set to getEmptyCharMap()
-  set g to g.putBackground(0, 1, 4)
+  set g to g.putBackground(1, 0, 4)
   call g.drawCharMap()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = _stdlib.getEmptyCharMap();
-  g = _stdlib.putBackground(g, 0, 1, 4);
+  g = _stdlib.putBackground(g, 1, 0, 4);
   _stdlib.drawCharMap(g);
 }
 return [main, _tests];}`;
@@ -257,7 +257,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       1,
-      '<div style="foreground-color:0;background-color:4;">',
+      '<div style="color:#000000;background-color:#000004;">',
     );
   });
 
@@ -348,7 +348,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(
       fileImpl,
       0,
-      '<div style="foreground-color:5;background-color:0;">',
+      '<div style="color:#000005;background-color:#ffffff;">',
     );
   });
 });
