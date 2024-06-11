@@ -2,7 +2,7 @@ code {
     padding: 0px;
 }
 
-* {
+.elan-code, #console {
     color: var(--defaultText);
     font-family: consolas;
     font-size: 11pt;
@@ -85,6 +85,7 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
     background-color: var(--defaultBackground);
     border-left-style: solid;
     border-left-width: 2ch;
+    border-color: var(--defaultBackground);
 }
 
 header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
@@ -279,3 +280,4 @@ selector placeholder  {
 .selected > selector placeholder {
     display: none;
 }
+
