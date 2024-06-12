@@ -33,7 +33,14 @@ function resetFile() {
 function showError(err: Error, fileName: string) {
   resetFile();
   file.fileName = fileName;
-  elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
+
+  if (err.stack) {
+    const msg = "This is a message to tell the user to report this error";
+    elanInputOutput.printLine(msg);
+    elanInputOutput.printLine(err.stack);
+  } else {
+    elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
+  }
 }
 
 fetchProfile()
@@ -44,11 +51,16 @@ fetchProfile()
   });
 
 function refreshAndDisplay() {
-  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(() => {
-    file.renderAsHtml().then((c) => {
-      updateContent(c);
-    });
-  });
+  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(
+    () => {
+      file.renderAsHtml().then((c) => {
+        updateContent(c);
+      });
+    },
+    (e) => {
+      showError(e as Error, file.fileName);
+    },
+  );
 }
 
 function initialDisplay() {
