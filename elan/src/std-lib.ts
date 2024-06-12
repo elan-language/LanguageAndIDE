@@ -500,10 +500,10 @@ export class StdLib {
   }
 
   readKeyWithModifier() {
-    return this.system.elanInputOutput.readKeyWithModifier();
+    return this.system.tuple(this.system.elanInputOutput.readKeyWithModifier());
   }
 
-  clearkeyBuffer() {
+  clearKeyBuffer() {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 }
