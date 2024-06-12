@@ -352,6 +352,7 @@ const stdlib = new StdLib(system);
 
 const runButton = document.getElementById("run-button");
 const clearConsoleButton = document.getElementById("clear-console");
+const clearGraphicsButton = document.getElementById("clear-graphics");
 const newButton = document.getElementById("new");
 
 runButton?.addEventListener("click", () => {
@@ -389,6 +390,10 @@ runButton?.addEventListener("click", () => {
 
 clearConsoleButton?.addEventListener("click", () => {
   elanInputOutput.clearConsole();
+});
+
+clearGraphicsButton?.addEventListener("click", () => {
+  elanInputOutput.clearGraphics();
 });
 
 newButton?.addEventListener("click", () => {

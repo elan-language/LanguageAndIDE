@@ -171,3 +171,7 @@ button#clear-console {
   grid-row: 1;
   grid-column: 47;
 }
+button#clear-graphics {
+  grid-row: 18;
+  grid-column: 47;
+}
