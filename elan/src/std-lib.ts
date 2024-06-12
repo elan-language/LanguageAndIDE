@@ -406,14 +406,6 @@ export class StdLib {
     return this.pause(1);
   }
 
-  readKey() {
-    return this.pause(1);
-  }
-
-  hasKeyBeenPressed() {
-    return this.pause(1);
-  }
-
   // charmapped display
 
   xSize = 40;
@@ -501,5 +493,17 @@ export class StdLib {
     const h = "000000" + n.toString(16);
     const h6 = h.substring(h.length - 6);
     return `#${h6}`;
+  }
+
+  readKey(): string {
+    return this.system.elanInputOutput.readKey();
+  }
+
+  readKeyWithModifier() {
+    return this.system.elanInputOutput.readKeyWithModifier();
+  }
+
+  clearkeyBuffer() {
+    this.system.elanInputOutput.clearKeyBuffer();
   }
 }

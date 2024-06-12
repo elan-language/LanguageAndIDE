@@ -8,4 +8,10 @@ export interface ElanInputOutput {
   clearGraphics(): void;
 
   drawGraphics(html: string): void;
+
+  readKey(): string;
+
+  readKeyWithModifier(): [string, string];
+
+  clearKeyBuffer(): void;
 }

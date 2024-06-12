@@ -2,6 +2,13 @@ import { ElanInputOutput } from "../../elan-input-output";
 import { System } from "../../system";
 
 export class TestInputOutput implements ElanInputOutput {
+  readKey(): string {
+    return "";
+  }
+  readKeyWithModifier(): [string, string] {
+    return ["", ""];
+  }
+  clearKeyBuffer(): void {}
   printed: string = "";
   inputed: string = "";
   drawn: string = "";
