@@ -43,6 +43,10 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "unicode",
+      this.getSymbol("unicode", new FunctionType([IntType.Instance], StringType.Instance, false)),
+    ],
+    [
       "asArray",
       this.getSymbol(
         "asArray",

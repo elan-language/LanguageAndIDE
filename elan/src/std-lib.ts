@@ -76,6 +76,10 @@ export class StdLib {
     throw new Error("Not implemented: " + typeof v);
   }
 
+  unicode(n: number): string {
+    return String.fromCharCode(n);
+  }
+
   asArray<T>(list: T[]): T[] {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "ArrayList";
