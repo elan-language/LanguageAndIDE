@@ -24,14 +24,16 @@ function setup(p: Profile) {
   displayFile();
 }
 
-function resetFile() {
+function resetFile(reset: boolean) {
   elanInputOutput.clearConsole();
-  file = new FileImpl(hash, profile, transforms());
-  file.renderAsHtml().then((c) => updateContent(c));
+  if (reset) {
+    file = new FileImpl(hash, profile, transforms());
+    file.renderAsHtml().then((c) => updateContent(c));
+  }
 }
 
-function showError(err: Error, fileName: string) {
-  resetFile();
+function showError(err: Error, fileName: string, reset: boolean) {
+  resetFile(reset);
   file.fileName = fileName;
 
   if (err.stack) {
@@ -59,7 +61,7 @@ function refreshAndDisplay() {
       });
     },
     (e) => {
-      showError(e as Error, file.fileName);
+      showError(e as Error, file.fileName, false);
     },
   );
 }
@@ -72,7 +74,7 @@ function initialDisplay() {
     refreshAndDisplay();
   } else {
     const msg = file.parseError || "Failed load code";
-    showError(new Error(msg), file.fileName);
+    showError(new Error(msg), file.fileName, true);
   }
 }
 
@@ -87,12 +89,12 @@ function displayFile() {
             initialDisplay();
           },
           (e) => {
-            showError(e, file.fileName);
+            showError(e, file.fileName, true);
           },
         );
       })
       .catch((e) => {
-        showError(e, file.fileName);
+        showError(e, file.fileName, true);
       });
   } else {
     const previousCode = localStorage.getItem("elan-code");
@@ -105,7 +107,7 @@ function displayFile() {
           initialDisplay();
         },
         (e) => {
-          showError(e, previousFileName || file.defaultFileName);
+          showError(e, previousFileName || file.defaultFileName, true);
         },
       );
     } else {
@@ -354,6 +356,7 @@ const newButton = document.getElementById("new");
 
 runButton?.addEventListener("click", () => {
   try {
+    elanInputOutput.clearConsole();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
     const jsCode = file.compile();
@@ -371,7 +374,7 @@ runButton?.addEventListener("click", () => {
             updateDisplayValues();
           })
           .catch((e: any) => {
-            console.warn(e);
+            showError(e, file.fileName, false);
             file.setRunStatus(RunStatus.error);
             updateDisplayValues();
           });
@@ -389,7 +392,7 @@ clearConsoleButton?.addEventListener("click", () => {
 });
 
 newButton?.addEventListener("click", () => {
-  resetFile();
+  resetFile(true);
 });
 
 const upload = document.getElementById("load") as Element;
@@ -423,7 +426,7 @@ function handleUpload(event: Event) {
           initialDisplay();
         },
         (e) => {
-          showError(e, fileName);
+          showError(e, fileName, true);
         },
       );
     });
