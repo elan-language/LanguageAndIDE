@@ -3,19 +3,23 @@ import { ElanInputOutput } from "../elan-input-output";
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
 
+  private graphics: HTMLElement;
+
   constructor(
     private readonly consoleWindow: { innerHTML: string },
     private readonly graphicsWindow: { innerHTML: string },
   ) {
     consoleWindow.innerHTML = this.renderConsole();
 
-    const graphics = document.getElementById("graphics") as HTMLElement;
-    graphics.addEventListener("keydown", (k: KeyboardEvent) => {
+    this.graphics = document.getElementById("graphics") as HTMLElement;
+    this.graphics.addEventListener("keydown", (k: KeyboardEvent) => {
       if (k.key === "Shift" || k.key === "Control" || k.key === "Alt") {
         return;
       }
       this.keyBuffer.push(k);
     });
+
+    this.graphics.focus();
   }
 
   drawGraphics(html: string): void {
@@ -35,6 +39,7 @@ export class WebInputOutput implements ElanInputOutput {
   stopReading() {
     clearInterval(this.currentInterval);
     this.previousContent = `${this.previousContent.slice(0, -48)}`;
+    this.graphics.focus();
   }
 
   readLine() {
