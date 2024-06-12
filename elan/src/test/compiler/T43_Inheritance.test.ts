@@ -59,7 +59,7 @@ async function main() {
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
-  x.setP1(4);
+  await x.setP1(4);
   system.print(_stdlib.asString(x.product()));
 }
 
@@ -100,7 +100,7 @@ class Bar {
 
   p2 = 0;
 
-  setP1(p1) {
+  async setP1(p1) {
     this.p1 = p1;
   }
 
@@ -271,7 +271,7 @@ async function main() {
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
-  x.setP1(4);
+  await x.setP1(4);
   system.print(_stdlib.asString(x.product()));
 }
 
@@ -319,7 +319,7 @@ class Bar {
 
   p2 = 0;
 
-  setP1(p1) {
+  async setP1(p1) {
     this.p1 = p1;
   }
 
@@ -393,7 +393,7 @@ async function main() {
   system.print(_stdlib.asString(x.p1));
   system.print(_stdlib.asString(x.p2));
   system.print(_stdlib.asString(x.product()));
-  x.setP1(4);
+  await x.setP1(4);
   system.print(_stdlib.asString(x.product()));
 }
 
@@ -447,7 +447,7 @@ class Bar {
 
   p2 = 0;
 
-  setP1(p1) {
+  async setP1(p1) {
     this.p1 = p1;
   }
 
@@ -531,7 +531,7 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
-  proc(f);
+  await proc(f);
 }
 
 class Foo {
@@ -557,7 +557,7 @@ class Bar {
 
 }
 
-function proc(foo) {
+async function proc(foo) {
   system.print(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
@@ -597,7 +597,7 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
-  proc(f);
+  await proc(f);
 }
 
 class Foo {
@@ -623,7 +623,7 @@ class Bar {
 
 }
 
-function proc(foo) {
+async function proc(foo) {
   system.print(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
@@ -735,7 +735,7 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
-  proc(f);
+  await proc(f);
 }
 
 class Foo {
@@ -782,7 +782,7 @@ class Bar {
 
 }
 
-function proc(foo) {
+async function proc(foo) {
   system.print(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;

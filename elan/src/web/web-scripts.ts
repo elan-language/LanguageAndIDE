@@ -54,16 +54,18 @@ fetchProfile()
   });
 
 function refreshAndDisplay() {
-  file.refreshAllStatuses(getTestRunner(system, stdlib)).then(
-    () => {
-      file.renderAsHtml().then((c) => {
-        updateContent(c);
-      });
-    },
-    (e) => {
-      showError(e as Error, file.fileName, false);
-    },
-  );
+  getTestRunner(system, stdlib).then((t) => {
+    file.refreshAllStatuses(t).then(
+      () => {
+        file.renderAsHtml().then((c) => {
+          updateContent(c);
+        });
+      },
+      (e) => {
+        showError(e as Error, file.fileName, false);
+      },
+    );
+  });
 }
 
 function initialDisplay() {

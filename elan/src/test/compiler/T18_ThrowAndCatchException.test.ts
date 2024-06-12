@@ -95,10 +95,10 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  foo();
+  await foo();
 }
 
-function foo() {
+async function foo() {
   throw new Error("Foo");
 }
 return [main, _tests];}`;
@@ -131,7 +131,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    foo();
+    await foo();
     system.print(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
@@ -139,7 +139,7 @@ async function main() {
   }
 }
 
-function foo() {
+async function foo() {
   throw new Error("Foo");
 }
 return [main, _tests];}`;
@@ -229,7 +229,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   try {
-    foo();
+    await foo();
     system.print(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
@@ -239,7 +239,7 @@ async function main() {
   }
 }
 
-function foo() {
+async function foo() {
   throw new Error("Foo");
 }
 return [main, _tests];}`;

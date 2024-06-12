@@ -77,7 +77,7 @@ async function main() {
     var _cache;
     return () => _cache ??= x();
   })();
-  y().setP1(10);
+  await y().setP1(10);
   system.print(_stdlib.asString(x().p1));
   system.print(_stdlib.asString(y().p1));
 }
@@ -90,7 +90,7 @@ class Foo {
 
   p1 = 0;
 
-  setP1(i) {
+  async setP1(i) {
     this.p1 = i;
   }
 

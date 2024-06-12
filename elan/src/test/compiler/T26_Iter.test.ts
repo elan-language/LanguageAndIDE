@@ -27,10 +27,10 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var it = system.immutableList([1, 5, 6]);
-  printEach(it);
+  await printEach(it);
 }
 
-function printEach(target) {
+async function printEach(target) {
   for (const x of target) {
     system.print(_stdlib.asString(x));
   }
@@ -131,10 +131,10 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var arr = system.literalArray([1, 3, 6]);
-  printEach(arr);
+  await printEach(arr);
 }
 
-function printEach(target) {
+async function printEach(target) {
   for (const x of target) {
     system.print(_stdlib.asString(x));
   }
@@ -167,10 +167,10 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var s = "Foo";
-  printEach(s);
+  await printEach(s);
 }
 
-function printEach(target) {
+async function printEach(target) {
   for (const x of target) {
     system.print(_stdlib.asString(x));
   }
@@ -207,15 +207,15 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var it = system.immutableList([1, 2, 3, 4, 5, 6, 7]);
-  printAsIter(it);
-  printAsList(it);
+  await printAsIter(it);
+  await printAsList(it);
 }
 
-function printAsIter(target) {
+async function printAsIter(target) {
   system.print(_stdlib.asString(target));
 }
 
-function printAsList(target) {
+async function printAsList(target) {
   var some = _stdlib.asList(target);
   system.print(_stdlib.asString(_stdlib.getRange(some, 3, 7)));
 }
@@ -312,7 +312,7 @@ end class`;
 async function main() {
   var foo = system.initialise(new Foo());
   var foo1 = system.initialise(new Foo());
-  foo.update();
+  await foo.update();
   system.print(_stdlib.asString(foo.i));
   system.print(_stdlib.asString(foo1.i));
   system.print(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
@@ -328,7 +328,7 @@ class Foo {
 
   i = system.emptyIter();
 
-  update() {
+  async update() {
     this.i = system.immutableList([1]);
   }
 

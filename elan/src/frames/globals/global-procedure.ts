@@ -23,7 +23,7 @@ end procedure\r
   }
 
   public compile(transforms: Transforms): string {
-    return `function ${super.compile(transforms)}\r
+    return `async function ${super.compile(transforms)}\r
 }
 `;
   }

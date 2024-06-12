@@ -60,7 +60,7 @@ class Foo {
 
   p2 = "";
 
-  setP1(v) {
+  async setP1(v) {
     this.p1 = v;
   }
 
@@ -119,7 +119,7 @@ class Foo {
 
   p2 = "";
 
-  setP1(v) {
+  async setP1(v) {
     this.p1 = v;
   }
 
@@ -174,7 +174,7 @@ end class`;
 async function main() {
   var x = system.initialise(new Foo(7, "Apple"));
   var y = x;
-  y.setP1(3);
+  await y.setP1(3);
   var z = system.initialise(new Foo(8, "Orange"));
   system.print(_stdlib.asString(system.objectEquals(x, x)));
   system.print(_stdlib.asString(system.objectEquals(x, y)));
@@ -192,7 +192,7 @@ class Foo {
 
   p2 = "";
 
-  setP1(v) {
+  async setP1(v) {
     this.p1 = v;
   }
 

@@ -41,7 +41,7 @@ function square(x) {
   return x ** 2;
 }
 
-_tests.push(["test10", (_outcomes) => {
+_tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(square(3), 9, "assert13", _stdlib));
   var actual = square(4);
   var expected = 16;
@@ -84,7 +84,7 @@ async function main() {
 
 }
 
-_tests.push(["test3", (_outcomes) => {
+_tests.push(["test3", async (_outcomes) => {
   var t = system.tuple(["one", "two"]);
   _outcomes.push(system.assert(t, system.tuple(["one", "two"]), "assert9", _stdlib));
   _outcomes.push(system.assert(_stdlib.first(t), "one", "assert12", _stdlib));
@@ -126,7 +126,7 @@ async function main() {
 
 }
 
-_tests.push(["test3", (_outcomes) => {
+_tests.push(["test3", async (_outcomes) => {
   var t = (() => {
     var _cache;
     return () => _cache ??= system.tuple(["one", "two"]);
@@ -178,7 +178,7 @@ function square(x) {
   return x ** 2;
 }
 
-_tests.push(["test10", (_outcomes) => {
+_tests.push(["test10", async (_outcomes) => {
   _outcomes.push(system.assert(square(3), 10, "assert13", _stdlib));
   _outcomes.push(system.assert(square(4), 16, "assert16", _stdlib));
 }]);
@@ -226,7 +226,7 @@ async function main() {
 
 }
 
-_tests.push(["test3", (_outcomes) => {
+_tests.push(["test3", async (_outcomes) => {
   var arr = system.emptyArrayList();
   var foo = arr[1];
   _outcomes.push(system.assert(foo.p1, 0, "assert12", _stdlib));
@@ -326,25 +326,25 @@ async function main() {
 
 }
 
-_tests.push(["test3", (_outcomes) => {
+_tests.push(["test3", async (_outcomes) => {
   var a = system.immutableList([3, 2, 4, 0]);
   var b = system.immutableList([3, 2, 4, 0]);
   _outcomes.push(system.assert(a, b, "assert12", _stdlib));
 }]);
 
-_tests.push(["test15", (_outcomes) => {
+_tests.push(["test15", async (_outcomes) => {
   var a = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
   var b = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
   _outcomes.push(system.assert(a, b, "assert24", _stdlib));
 }]);
 
-_tests.push(["test27", (_outcomes) => {
+_tests.push(["test27", async (_outcomes) => {
   var a = "Hello World";
   var b = "Hello" + " " + "World";
   _outcomes.push(system.assert(a, b, "assert36", _stdlib));
 }]);
 
-_tests.push(["test39", (_outcomes) => {
+_tests.push(["test39", async (_outcomes) => {
   var a = 0;
   var b = 0;
   _outcomes.push(system.assert(a, b, "assert48", _stdlib));
@@ -352,7 +352,7 @@ _tests.push(["test39", (_outcomes) => {
 
 const a = "Hello";
 
-_tests.push(["test54", (_outcomes) => {
+_tests.push(["test54", async (_outcomes) => {
   var b = "Hello";
   _outcomes.push(system.assert(a, b, "assert60", _stdlib));
 }]);
@@ -367,13 +367,13 @@ class Foo {
 
 }
 
-_tests.push(["test79", (_outcomes) => {
+_tests.push(["test79", async (_outcomes) => {
   var a = system.initialise(new Foo(3));
   var b = system.initialise(new Foo(3));
   _outcomes.push(system.assert(a, b, "assert88", _stdlib));
 }]);
 
-_tests.push(["test91", (_outcomes) => {
+_tests.push(["test91", async (_outcomes) => {
   var a = Foo.emptyInstance();
   var b = Foo.emptyInstance();
   _outcomes.push(system.assert(a, b, "assert100", _stdlib));
@@ -454,25 +454,25 @@ async function main() {
 
 }
 
-_tests.push(["test3", (_outcomes) => {
+_tests.push(["test3", async (_outcomes) => {
   var a = 1 / 3;
   var b = _stdlib.toPrecision(a, 2);
   _outcomes.push(system.assert(b, "0.33", "assert12", _stdlib));
 }]);
 
-_tests.push(["test15", (_outcomes) => {
+_tests.push(["test15", async (_outcomes) => {
   var a = 0.9999;
   var b = _stdlib.toPrecision(a, 3);
   _outcomes.push(system.assert(b, "1.00", "assert24", _stdlib));
 }]);
 
-_tests.push(["test27", (_outcomes) => {
+_tests.push(["test27", async (_outcomes) => {
   var a = 1.25;
   var b = _stdlib.toPrecision(a, 2);
   _outcomes.push(system.assert(b, "1.3", "assert36", _stdlib));
 }]);
 
-_tests.push(["test39", (_outcomes) => {
+_tests.push(["test39", async (_outcomes) => {
   var a = 4444;
   var b = _stdlib.toPrecision(a, 2);
   _outcomes.push(system.assert(b, "4.4e+3", "assert48", _stdlib));
@@ -490,6 +490,50 @@ return [main, _tests];}`;
       ["test15", [new AssertOutcome(TestStatus.pass, "1.00", "1.00", "assert24")]],
       ["test27", [new AssertOutcome(TestStatus.pass, "1.3", "1.3", "assert36")]],
       ["test39", [new AssertOutcome(TestStatus.pass, "4.4e+3", "4.4e+3", "assert48")]],
+    ]);
+  });
+
+  test("Pass_PassingTestWithProcedure", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+end main
+
+procedure square(x as Int, y as [Int])
+  set y[0] to x ^ 2
+end procedure
+
+test square
+  var arr set to new ArrayList<of Int>(1)
+  call square(3, arr)
+  assert arr[0] is 9
+end test
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+}
+
+async function square(x, y) {
+  y[0] = x ** 2;
+}
+
+_tests.push(["test10", async (_outcomes) => {
+  var arr = system.initialise(system.array(1), () => 0);
+  await square(3, arr);
+  _outcomes.push(system.assert(arr[0], 9, "assert19", _stdlib));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert19")]],
     ]);
   });
 

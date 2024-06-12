@@ -31,11 +31,11 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   system.print(_stdlib.asString(1));
-  foo();
+  await foo();
   system.print(_stdlib.asString(3));
 }
 
-function foo() {
+async function foo() {
   system.print(_stdlib.asString(2));
 }
 return [main, _tests];}`;
@@ -72,10 +72,10 @@ async function main() {
   var b = system.immutableList([3, 4]);
   var c = system.dictionary({"a" : true, "b" : false});
   var d = system.immutableDictionary({"a" : true, "b" : false});
-  foo(a, b, c, d);
+  await foo(a, b, c, d);
 }
 
-function foo(x, y, z, t) {
+async function foo(x, y, z, t) {
   system.print(_stdlib.asString(x));
   system.print(_stdlib.asString(y));
   system.print(_stdlib.asString(z));
@@ -139,10 +139,10 @@ end procedure`;
 async function main() {
   var a = 2;
   var b = "hello";
-  foo(a, b);
+  await foo(a, b);
 }
 
-function foo(a, b) {
+async function foo(a, b) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -173,11 +173,11 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([2, 3]);
-  changeFirst(a);
+  await changeFirst(a);
   system.print(_stdlib.asString(a));
 }
 
-function changeFirst(a) {
+async function changeFirst(a) {
   a[0] = 5;
 }
 return [main, _tests];}`;
@@ -207,10 +207,10 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 1;
-  foo(a + 1, "hello");
+  await foo(a + 1, "hello");
 }
 
-function foo(a, b) {
+async function foo(a, b) {
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
 }
@@ -244,16 +244,16 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  foo();
+  await foo();
   system.print(_stdlib.asString(3));
 }
 
-function foo() {
+async function foo() {
   system.print(_stdlib.asString(1));
-  bar();
+  await bar();
 }
 
-function bar() {
+async function bar() {
   system.print(_stdlib.asString(2));
 }
 return [main, _tests];}`;
@@ -285,14 +285,14 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  foo(3);
+  await foo(3);
 }
 
-function foo(a) {
+async function foo(a) {
   if (a > 0) {
       system.print(_stdlib.asString(a));
       var b = a - 1;
-      foo(b);
+      await foo(b);
   }
 }
 return [main, _tests];}`;
@@ -351,7 +351,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  f.length();
+  await f.length();
 }
 
 class Foo {
@@ -368,8 +368,8 @@ class Foo {
     this._p1 = p1;
   }
 
-  length() {
-    this.p1.length(2);
+  async length() {
+    await this.p1.length(2);
   }
 
   asString() {
@@ -386,7 +386,7 @@ class Bar {
 
   p1 = 0;
 
-  length(plus) {
+  async length(plus) {
     system.print(_stdlib.asString(this.p1 + plus));
   }
 

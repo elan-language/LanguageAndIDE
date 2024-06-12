@@ -19,6 +19,8 @@ import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers"
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstNode } from "../interfaces/ast-node";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
+import { Constructor } from "../class-members/constructor";
+import { TestFrame } from "../globals/test-frame";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -94,6 +96,11 @@ export class CallStatement extends AbstractFrame implements Statement {
 
       mustMatchParameters(parameters, ps.parametersTypes, this.compileErrors, this.htmlId);
       isAsync = ps.isAsync;
+    }
+
+    // todo temp fix pending constructor
+    if (this.getParent() instanceof Constructor) {
+      isAsync = false;
     }
 
     const pp = parameters.map((p) => p.compile()).join(", ");

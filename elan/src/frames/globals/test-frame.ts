@@ -93,7 +93,7 @@ end test\r
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    return `_tests.push(["${this.htmlId}", (_outcomes) => {\r
+    return `_tests.push(["${this.htmlId}", async (_outcomes) => {\r
 ${this.compileChildren(transforms)}\r
 }]);\r\n`;
   }

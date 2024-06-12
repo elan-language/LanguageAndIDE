@@ -301,6 +301,7 @@ export class StdLibSymbols implements Scope {
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
           true,
+          false,
         ),
       ),
     ],
@@ -315,6 +316,7 @@ export class StdLibSymbols implements Scope {
             new GenericParameterType("T"),
           ],
           true,
+          false,
         ),
       ),
     ],
@@ -325,6 +327,7 @@ export class StdLibSymbols implements Scope {
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
           true,
+          false,
         ),
       ),
     ],
@@ -335,6 +338,7 @@ export class StdLibSymbols implements Scope {
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
           true,
+          false,
         ),
       ),
     ],
@@ -345,6 +349,7 @@ export class StdLibSymbols implements Scope {
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
           true,
+          false,
         ),
       ),
     ],
@@ -379,6 +384,7 @@ export class StdLibSymbols implements Scope {
             new GenericParameterType("T1"),
           ],
           true,
+          false,
         ),
       ),
     ],
@@ -484,7 +490,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType([new GenericParameterType("")], StringType.Instance, false),
       ),
     ],
-    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false))],
+    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
     ["readKey", this.getSymbol("readKey", new FunctionType([], FloatType.Instance, false, false))],
     ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
@@ -622,6 +628,7 @@ export class StdLibSymbols implements Scope {
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
           true,
+          false,
         ),
       ),
     ],

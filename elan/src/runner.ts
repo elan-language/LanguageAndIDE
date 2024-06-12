@@ -2,13 +2,13 @@ import { TestStatus } from "./frames/status-enums";
 import { StdLib } from "./std-lib";
 import { AssertOutcome, System } from "./system";
 
-export function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]) {
+export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]) {
   const allOutcomes: [string, AssertOutcome[]][] = [];
 
   for (const t of tests) {
     const outcomes: AssertOutcome[] = [];
     try {
-      t[1](outcomes);
+      await t[1](outcomes);
     } catch (e) {
       const msg = (e as Error).message || "Test threw error";
       outcomes.push(new AssertOutcome(TestStatus.error, msg, "", ""));
@@ -27,19 +27,19 @@ export function doImport(str: string) {
   return import(url);
 }
 
-function testRunner(jsCode: string, system: System, stdlib: StdLib) {
+async function testRunner(jsCode: string, system: System, stdlib: StdLib) {
   return doImport(jsCode).then(async (elan) => {
     if (elan.program) {
       elan._inject(system, stdlib);
       const [, tests] = await elan.program();
       if (tests && tests.length > 0) {
-        return runTests(tests);
+        return await runTests(tests);
       }
     }
     return [];
   });
 }
 
-export function getTestRunner(system: System, stdlib: StdLib) {
-  return (jsCode: string) => testRunner(jsCode, system, stdlib);
+export async function getTestRunner(system: System, stdlib: StdLib) {
+  return async (jsCode: string) => await testRunner(jsCode, system, stdlib);
 }
