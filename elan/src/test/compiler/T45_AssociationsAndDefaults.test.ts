@@ -520,7 +520,7 @@ end class`;
 async function main() {
   var g = system.initialise(new Game());
   system.print(_stdlib.asString(g.score));
-  g.setScore(0);
+  await g.setScore(0);
   system.print(_stdlib.asString(g.score));
 }
 
@@ -550,7 +550,7 @@ class Game {
     this._p2 = p2;
   }
 
-  setScore(newScore) {
+  async setScore(newScore) {
     this.score = newScore;
   }
 

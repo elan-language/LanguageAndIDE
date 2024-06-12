@@ -303,7 +303,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  f.prt();
+  await f.prt();
 }
 
 class Foo {
@@ -314,7 +314,7 @@ class Foo {
 
   p1 = 0;
 
-  prt() {
+  async prt() {
     system.print(_stdlib.asString(this.asString()));
   }
 

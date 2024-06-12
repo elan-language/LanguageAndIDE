@@ -565,8 +565,8 @@ export function testAST(
   }
 }
 
-export function createTestRunner() {
+export async function createTestRunner() {
   const system = getTestSystem("");
   const stdlib = new StdLib(system);
-  return getTestRunner(system, stdlib);
+  return await getTestRunner(system, stdlib);
 }

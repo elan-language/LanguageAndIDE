@@ -37,16 +37,16 @@ async function main() {
   var k = _stdlib.readKey();
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
-  bar(_stdlib.randomInt(1, 6));
+  await bar(_stdlib.randomInt(1, 6));
 }
 
-function foo() {
+async function foo() {
   var k = _stdlib.readKey();
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }
 
-function bar(x) {
+async function bar(x) {
 
 }
 return [main, _tests];}`;

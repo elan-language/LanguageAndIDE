@@ -27,10 +27,10 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  printModified(3, twice);
+  await printModified(3, twice);
 }
 
-function printModified(i, f) {
+async function printModified(i, f) {
   system.print(_stdlib.asString(f(i)));
 }
 
@@ -65,10 +65,10 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  printIt("Hello", "e", find);
+  await printIt("Hello", "e", find);
 }
 
-function printIt(s, c, f) {
+async function printIt(s, c, f) {
   system.print(_stdlib.asString(f(s, c)));
 }
 

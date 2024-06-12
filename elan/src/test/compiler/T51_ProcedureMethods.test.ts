@@ -38,7 +38,7 @@ end class`;
 async function main() {
   var f = system.initialise(new Foo());
   system.print(_stdlib.asString(f.p1));
-  f.setP1(7);
+  await f.setP1(7);
   system.print(_stdlib.asString(f.p1));
 }
 
@@ -50,7 +50,7 @@ class Foo {
 
   p1 = 0;
 
-  setP1(value) {
+  async setP1(value) {
     this.p1 = value;
   }
 
@@ -98,7 +98,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  f.display();
+  await f.display();
 }
 
 class Foo {
@@ -109,7 +109,7 @@ class Foo {
 
   p1 = 0;
 
-  display() {
+  async display() {
     system.print(_stdlib.asString(this.p1));
   }
 
@@ -158,7 +158,7 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  f.setP1(7);
+  await f.setP1(7);
 }
 
 class Foo {
@@ -169,9 +169,9 @@ class Foo {
 
   p1 = 0;
 
-  setP1(value) {
+  async setP1(value) {
     this.p1 = value;
-    setP1(value);
+    await setP1(value);
   }
 
   asString() {
@@ -180,7 +180,7 @@ class Foo {
 
 }
 
-function setP1(value) {
+async function setP1(value) {
   system.print(_stdlib.asString(value));
 }
 return [main, _tests];}`;
@@ -248,7 +248,7 @@ end class`;
 async function main() {
   var f = system.initialise(new Foo());
   var b = system.initialise(new Bar());
-  f.times(b);
+  await f.times(b);
 }
 
 class Foo {
@@ -259,14 +259,14 @@ class Foo {
 
   p1 = 0;
 
-  times(b) {
-    b.p1PlusOne();
-    this.p1PlusOne();
+  async times(b) {
+    await b.p1PlusOne();
+    await this.p1PlusOne();
     this.p1 = this.p1 + b.p1;
     system.print(_stdlib.asString(this.p1));
   }
 
-  p1PlusOne() {
+  async p1PlusOne() {
     this.p1 = this.p1 + 1;
   }
 
@@ -284,7 +284,7 @@ class Bar {
 
   p1 = 0;
 
-  p1PlusOne() {
+  async p1PlusOne() {
     this.p1 = this.p1 + 1;
   }
 

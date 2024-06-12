@@ -177,7 +177,7 @@ class Bar {
 
   p1 = 0;
 
-  printP1() {
+  async printP1() {
     system.print(_stdlib.asString(this.p1));
   }
 
@@ -323,7 +323,7 @@ end procedure
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  proc(f);
+  await proc(f);
 }
 
 class Foo {
@@ -336,7 +336,7 @@ class Foo {
 
 }
 
-function proc(foo) {
+async function proc(foo) {
   system.print(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;

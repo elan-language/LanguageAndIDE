@@ -73,7 +73,7 @@ ${this.indent()}}\r
 
   symbolType(transforms: Transforms) {
     const pt = this.params.symbolTypes(transforms);
-    return new ProcedureType(pt, false);
+    return new ProcedureType(pt, false, true);
   }
 
   symbolScope = SymbolScope.property;

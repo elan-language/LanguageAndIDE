@@ -73,7 +73,7 @@ function executeCode(file: FileImpl, input?: string) {
   });
 }
 
-export function executeTestCode(file: FileImpl, input?: string) {
+export async function executeTestCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
   const errors = file.aggregateCompileErrors();
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
@@ -85,7 +85,7 @@ export function executeTestCode(file: FileImpl, input?: string) {
     if (elan.program) {
       elan._inject(system, stdlib);
       const [, tests] = await elan.program();
-      return runTests(tests);
+      return await runTests(tests);
     }
     return [];
   });
