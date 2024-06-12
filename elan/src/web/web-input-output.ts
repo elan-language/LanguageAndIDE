@@ -25,6 +25,7 @@ export class WebInputOutput implements ElanInputOutput {
   drawGraphics(html: string): void {
     this.clearKeyBuffer();
     this.graphicsWindow.innerHTML = html;
+    this.graphics.focus();
   }
 
   previousContent: string = "";
