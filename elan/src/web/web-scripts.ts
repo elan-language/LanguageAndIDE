@@ -35,7 +35,8 @@ function showError(err: Error, fileName: string) {
   file.fileName = fileName;
 
   if (err.stack) {
-    const msg = "This is a message to tell the user to report this error";
+    const msg =
+      "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
     elanInputOutput.printLine(msg);
     elanInputOutput.printLine(err.stack);
   } else {

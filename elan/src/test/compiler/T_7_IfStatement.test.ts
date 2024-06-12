@@ -224,6 +224,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "three");
   });
 
+  test("Pass_7_end_with_else_if", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 3
+  if a is 1
+    then
+      print "one"
+    else if a is 2
+      print "two"
+    else if a is 3
+      print "three"
+  end if
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 3;
+  if (a === 1) {
+      system.print(_stdlib.asString("one"));
+    } else if (a === 2) {
+      system.print(_stdlib.asString("two"));
+    } else if (a === 3) {
+      system.print(_stdlib.asString("three"));
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "three");
+  });
+
   test("Fail_noEndIf", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -258,7 +295,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot have multiple unconditional 'Else'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot have any clause after unconditional 'else'"]);
   });
 
   test("Fail_ElseIfAfterElse", async () => {
@@ -280,7 +317,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Must end with unconditional 'Else'"]);
+    assertDoesNotCompile(fileImpl, ["Cannot have any clause after unconditional 'else'"]);
   });
 
   test("Fail_IfConditionNotBool", async () => {

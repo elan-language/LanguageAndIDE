@@ -4,7 +4,7 @@ import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
-import { mustBeOfType, mustHaveLastSingleElse } from "../compile-rules";
+import { mustBeOfType, cannotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
 import { BooleanType } from "../symbols/boolean-type";
 import { ifKeyword } from "../keywords";
 import { Else } from "./else";
@@ -58,7 +58,7 @@ ${this.indent()}end if`;
     );
     const elses = this.getChildren().filter((c) => c instanceof Else) as Else[];
     if (elses.length > 0) {
-      mustHaveLastSingleElse(elses, this.compileErrors, this.htmlId);
+      cannotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
     }
 
     return `${this.indent()}if (${this.condition.compile(transforms)}) {\r
