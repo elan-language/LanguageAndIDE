@@ -356,6 +356,7 @@ const newButton = document.getElementById("new");
 
 runButton?.addEventListener("click", () => {
   try {
+    elanInputOutput.clearConsole();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
     const jsCode = file.compile();
@@ -373,7 +374,7 @@ runButton?.addEventListener("click", () => {
             updateDisplayValues();
           })
           .catch((e: any) => {
-            showError(e, file.fileName, true);
+            showError(e, file.fileName, false);
             file.setRunStatus(RunStatus.error);
             updateDisplayValues();
           });
