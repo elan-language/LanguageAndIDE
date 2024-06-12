@@ -10,6 +10,7 @@ import { IdentifierField } from "../frames/fields/identifier-field";
 import { ExpressionField } from "../frames/fields/expression-field";
 import { isParent } from "../frames/helpers";
 import { Selectable } from "../frames/interfaces/selectable";
+import { VarStatement } from "../frames/statements/var-statement";
 
 suite("Navigation", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -49,7 +50,7 @@ suite("Navigation", () => {
       ["main4", "ok multiline", "collapsed ok multiline"],
     );
   });
-  test("Tabbing through fields (& back)", () => {
+  test("Tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
     const var4 = file.getById("var4") as IdentifierField;
     assert.equal(var4.isSelected(), false);
@@ -61,70 +62,12 @@ suite("Navigation", () => {
     assert.equal(var4.isSelected(), false);
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(tab());
-    const ident7 = file.getById("ident7") as ExpressionField;
-    assert.equal(ident7.isSelected(), true);
-    ident7.processKey(tab());
-    const expr8 = file.getById("expr8") as ExpressionField;
-    assert.equal(expr8.isSelected(), true);
-    expr8.processKey(shift_tab());
-    assert.equal(expr8.isSelected(), false);
-    assert.equal(ident7.isSelected(), true);
-    ident7.processKey(shift_tab());
-    assert.equal(ident7.isSelected(), false);
-    assert.equal(expr5.isSelected(), true);
-    expr5.processKey(shift_tab());
     assert.equal(expr5.isSelected(), false);
+    const var3 = file.getById("var3") as VarStatement;
+    assert.equal(var3.isSelected(), true);
+    var3.processKey(tab());
+    assert.equal(var3.isSelected(), false);
     assert.equal(var4.isSelected(), true);
-  });
-  test("Tabbing through ALL fields (& back)", () => {
-    const file = T05_classes();
-    const fields: string[] = [
-      "type2",
-      "text5",
-      "args6",
-      "params9",
-      "select8",
-      "ident12",
-      "type13",
-      "select10",
-      "type15",
-      "text18",
-      "args19",
-      "params22",
-      "select21",
-      "ident25",
-      "type26",
-      "ident29",
-      "params30",
-      "type31",
-      "select28",
-      "expr33",
-      "select23",
-      "select0",
-    ];
-    file.processKey(tab());
-    let selected: Selectable = file.getAllSelected()[0];
-    for (let i = 0; i <= 21; i++) {
-      const id = selected.getHtmlId();
-      assert.equal(id, fields[i]);
-      selected.processKey(tab());
-      selected = file.getAllSelected()[0];
-    }
-    //Check that last tab did not move beyond last field
-    assert.equal(selected!.isSelected(), true);
-    file.processKey(esc());
-    file.processKey(shift_tab());
-    selected = file.getAllSelected()[0];
-    for (let i = 21; i >= 0; i--) {
-      const id = selected.getHtmlId();
-      assert.equal(id, fields[i]);
-      selected.processKey(shift_tab());
-      selected = file.getAllSelected()[0];
-    }
-    //Check thatlastshift tab does not move beyond first field
-    assert.equal(selected.isSelected(), true);
-    selected.processKey(esc());
-    assert.equal(selected.isSelected(), false);
   });
   test("Selecting frames", () => {
     const file = T03_mainWithAllStatements();

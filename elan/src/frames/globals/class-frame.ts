@@ -31,7 +31,6 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsSource,
-  parentHelper_selectLastField,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_readWorstCompileStatusOfChildren,
 } from "../parent-helpers";
@@ -179,9 +178,6 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
   moveSelectedChildrenDownOne(): void {
     parentHelper_moveSelectedChildrenDownOne(this);
-  }
-  selectLastField(): boolean {
-    return parentHelper_selectLastField(this);
   }
 
   fieldUpdated(field: Field): void {

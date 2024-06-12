@@ -42,6 +42,14 @@ span {
 keyword {
     color: var(--keyword);
 } 
+field text {
+    border-style:hidden;
+    border-width: 1px;
+}
+field.selected text{
+    border-style: solid;
+    border-color: black;
+}
 method, method field.ok text {
     color: var(--method);
 }
@@ -52,12 +60,7 @@ string {
     color: var(--string);
     white-space: pre;
 }
-field.warning, field.warning  keyword, field.warning  type, field.warning  string, field.warning method {
-    color: var(--warning);
-}
-.error field, field.error  keyword, field.error  type, field.error  string, field.error method {
-    color: var(--error);
-}
+
 /* Header & comments */
 comment *, comment field.ok text  {
     color: var(--comment);
@@ -131,31 +134,29 @@ expand {
 }
 
 /* Fields */
-/* field-text*/
-field.error text {
-    color: var(--error);
-}
-field.warning text {
-    color: var(--warning);
-}
-field.ok text {
-    color: var(--defaultText);
-}
-field.selected.error text, field.selected.error input  {
-    background-color: var(--error);
-    color: var(--defaultText);
-}
-field.selected.warning text, field.selected.warning input {
+field.warning, field.warning keyword, field.warning type, field.warning string, field.warning method {
     background-color: var(--warning);
+}
+.error field, field.error keyword, field.error  type, field.error  string, field.error method {
     color: var(--defaultText);
+}
+
+/* field-text*/
+field text {
+    color: var(--defaultText);
+    background-color: var(--defaultBackground);
+}
+field.error text, field.error input  {
+    background-color: var(--error);
+}
+field.warning text, field.warning input {
+    background-color: var(--warning);
 }
 field.selected.ok text, field.selected.ok input {
     background-color: var(--ok);
-    color: var(--defaultText);
 }
 field.selected.ok.optional.empty text, field.selected.ok.optional.empty input {
     background-color: var(--optional);
-    color: var(--reverseText);
 }
 
 /* field placeholder */
@@ -165,7 +166,7 @@ field placeholder {
 
 field.empty placeholder, field.empty placeholder * {
     display: inline;
-    color: var(--warning);
+    color: var(--reverseText);
 }
 
 field.empty.optional placeholder, field.empty.optional placeholder * {

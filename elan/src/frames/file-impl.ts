@@ -513,7 +513,7 @@ export class FileImpl implements File, Scope {
         break;
       }
       case "Tab": {
-        this.tab(e.modKey.shift);
+        this.tab();
         break;
       }
       case "ArrowDown": {
@@ -538,12 +538,8 @@ export class FileImpl implements File, Scope {
     this.getFirstChild().select(true, false);
   }
 
-  private tab(back: boolean) {
-    if (back) {
-      this.getLastChild().selectLastField();
-    } else {
-      this.getFirstChild().selectFirstField();
-    }
+  private tab() {
+    this.getFirstChild().selectFirstField();
   }
 
   newChildSelector(): AbstractSelector {

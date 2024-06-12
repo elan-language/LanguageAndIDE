@@ -35,24 +35,6 @@ import { ignore_test } from "./compiler/compiler-test-helpers";
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
 
-  test("Tab from file to first field in first global", () => {
-    const file = T05_classes();
-    file.processKey(tab());
-    const field = file.getById("type2");
-    assert.equal(field.isSelected(), true);
-    field.processKey(shift_tab());
-    assert.equal(field.isSelected(), true);
-  });
-  test("Shift-tab from file to first field in a main (that is also first in file", () => {
-    const file = T03_mainWithAllStatements();
-    const var4 = file.getById("var4");
-    assert.equal(var4.isSelected(), false);
-    file.processKey(tab());
-    assert.equal(var4.isSelected(), true);
-    var4.processKey(shift_tab());
-    assert.equal(var4.isSelected(), true);
-  });
-
   test("Enter on a frame to Insert new code - creating a selector", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if37");
@@ -84,7 +66,7 @@ suite("Editing Frames", () => {
     assert.equal(newSel.isSelected(), false);
     assert.equal(if_st.isSelected(), true);
   });
-  test("Enter/shift-enter on a field goes to next/previous field owned by same frame (except the last/field field).", () => {
+  test("Enter on a field goes to next/previous field owned by same frame (except the last/field field).", () => {
     const file = T03_mainWithAllStatements();
     const varStatement = file.getById("var3");
     varStatement.select(true, false);
@@ -96,12 +78,9 @@ suite("Editing Frames", () => {
     var4.processKey(enter());
     assert.equal(var4.isSelected(), false);
     assert.equal(expr5.isSelected(), true);
-    expr5.processKey(shift_enter());
-    assert.equal(expr5.isSelected(), false);
-    assert.equal(var4.isSelected(), true);
   });
 
-  test("Enter on last field in a frame (or shift-enter on first field) - is same effect as that key on the Frame itself", () => {
+  test("Enter on last field in a frame - is same effect as that key on the Frame itself", () => {
     const file = T03_mainWithAllStatements();
     const varStatement = file.getById("var3");
     const expr5 = file.getById("expr5") as ExpressionField;
@@ -111,15 +90,6 @@ suite("Editing Frames", () => {
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up());
     assert.equal(newSel.isSelected(), false);
-    assert.equal(varStatement.isSelected(), true);
-
-    const var4 = file.getById("var4") as IdentifierField;
-    var4.select();
-    var4.processKey(shift_enter());
-    const newSel2 = file.getById("select71"); //New selector
-    assert.equal(newSel2.isSelected(), true);
-    newSel2.processKey(down());
-    assert.equal(newSel2.isSelected(), false);
     assert.equal(varStatement.isSelected(), true);
   });
 

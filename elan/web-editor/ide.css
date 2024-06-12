@@ -146,7 +146,6 @@ button.icon:hover, button.icon:active, button.icon:focus {
   border-color: white;
 }
 
-
 button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     background-color: var(--idePanelBackground);
     border: none;
@@ -157,6 +156,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     padding-top: 0px;
     padding-bottom: 0px;
     margin-top: 0px;
+    width: 50px;
 }
 
 button.plain:hover, button.plain:active {
