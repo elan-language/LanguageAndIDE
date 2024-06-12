@@ -139,11 +139,11 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Tab": {
-        this.tab(e.modKey.shift);
+        this.tab();
         break;
       }
       case "Enter": {
-        this.enter(e.modKey.shift);
+        this.enter();
         break;
       }
       case "ArrowLeft": {
@@ -227,20 +227,16 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private tab(back: boolean) {
-    if (back) {
-      this.holder.selectFieldBefore(this);
+  private tab() {
+    const completions = this.getPlainTextCompletion();
+    if (completions.length > 0) {
+      this.cursorRight();
     } else {
-      const completions = this.getPlainTextCompletion();
-      if (completions.length > 0) {
-        this.cursorRight();
-      } else {
-        this.holder.selectFieldAfter(this);
-      }
+      this.holder.selectFieldAfter(this);
     }
   }
 
-  private enter(before: boolean) {
+  private enter() {
     const completions = this.getPlainTextCompletion();
     if (completions.length > 0) {
       this.cursorRight();
@@ -248,12 +244,10 @@ export abstract class AbstractField implements Selectable, Field {
       const peerFields = this.holder.getFields();
       const last = peerFields.length - 1;
       const thisField = peerFields.indexOf(this);
-      if (before && thisField === 0) {
-        this.holder.insertPeerSelector(before);
-      } else if (!before && thisField === last) {
+      if (thisField === last) {
         this.holder.insertSelectorAfterLastField();
       } else {
-        this.tab(before);
+        this.tab();
       }
     }
   }

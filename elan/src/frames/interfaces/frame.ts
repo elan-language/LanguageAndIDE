@@ -25,8 +25,6 @@ export interface Frame extends Selectable, Scope {
   updateParseStatus(): void;
 
   selectFirstField(): boolean;
-  selectLastField(): boolean;
-  selectFieldBefore(current: Field): void;
   selectFieldAfter(current: Field): void;
 
   //If none, return this

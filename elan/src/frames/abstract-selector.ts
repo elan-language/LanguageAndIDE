@@ -122,14 +122,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     let codeHasChanged = false;
     let key = e.key;
     switch (key) {
-      case "Tab": {
-        this.tab(e.modKey.shift);
-        break;
-      }
-      case "Enter": {
-        this.tab(e.modKey.shift);
-        break;
-      }
       case "Backspace": {
         this.text = this.text.substring(0, this.text.length - 1);
         break;
@@ -207,17 +199,6 @@ export abstract class AbstractSelector extends AbstractFrame {
 
         this.addFrame(typeToAdd, pendingChars);
         this.text = "";
-      }
-    }
-  }
-
-  tab(shift: boolean): void {
-    if (shift) {
-      this.selectLastFieldAboveThisFrame();
-    } else {
-      const next = this.getNextFrameInTabOrder();
-      if (next !== this) {
-        next.selectFirstField();
       }
     }
   }

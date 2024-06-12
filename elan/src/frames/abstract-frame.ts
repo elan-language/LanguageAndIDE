@@ -83,30 +83,13 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().getChildAfter(this);
   }
 
-  selectFieldBefore(current: Field) {
-    const fields = this.getFields();
-    const i = fields.indexOf(current);
-    if (i > 0) {
-      fields[i - 1].select(true, false);
-    } else {
-      this.selectLastFieldAboveThisFrame();
-    }
-  }
-
   selectFieldAfter(current: Field) {
     const fields = this.getFields();
     const i = fields.indexOf(current);
     if (i < fields.length - 1) {
       fields[i + 1].select(true, false);
     } else {
-      if (isParent(this)) {
-        this.getFirstChild().selectFirstField();
-      } else {
-        const next = this.getNextFrameInTabOrder();
-        if (next !== this) {
-          next.selectFirstField();
-        }
-      }
+      this.select(true, false);
     }
   }
 
@@ -151,16 +134,6 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
-  selectLastField(): boolean {
-    let result = false;
-    const n = this.getFields().length;
-    if (n > 0) {
-      this.getFields()[n - 1].select(true, false);
-      result = true;
-    }
-    return result;
-  }
-
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
     const key = e.key;
@@ -174,7 +147,7 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Tab": {
-        this.tab(e.modKey.shift);
+        this.selectFirstField();
         break;
       }
       case "Enter": {
@@ -309,48 +282,6 @@ export abstract class AbstractFrame implements Frame {
 
   canInsertAfter(): boolean {
     return true;
-  }
-
-  tab(back: boolean) {
-    if (back) {
-      this.selectLastFieldAboveThisFrame();
-    } else {
-      this.selectFirstField();
-    }
-  }
-
-  selectLastFieldAboveThisFrame(): boolean {
-    let result = false;
-    const peer = this.getPreviousPeerFrame();
-    if (peer !== this) {
-      result = peer.selectLastField();
-    } else {
-      const parent = this.getParent();
-      const fields = parent.getFields();
-      const n = fields.length;
-      if (n > 0) {
-        fields[n - 1].select(true, false);
-        result = true;
-      } else {
-        if (isFrame(parent) && parent.getFields().length === 0) {
-          //e.g. main or default
-          result = this.selectLastFieldInPreviousGlobal(parent.getParent() as File, parent);
-        } else if (isFile(parent)) {
-          result = this.selectLastFieldInPreviousGlobal(parent, this);
-        }
-      }
-    }
-    return result;
-  }
-
-  private selectLastFieldInPreviousGlobal(file: File, frame: Frame): boolean {
-    let result = false;
-    const prior = file.getChildBefore(frame);
-    if (prior !== frame) {
-      prior.selectLastField();
-      result = true;
-    }
-    return result;
   }
 
   private selectSingleOrMulti(s: Frame, multiSelect: boolean) {

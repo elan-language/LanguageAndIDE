@@ -28,7 +28,6 @@ import {
   parentHelper_compileChildren,
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
-  parentHelper_selectLastField,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_readWorstCompileStatusOfChildren,
 } from "./parent-helpers";
@@ -149,9 +148,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   addChildAfter(child: Frame, before: Frame): void {
     parentHelper_addChildAfter(this, child, before);
   }
-  selectLastField(): boolean {
-    return parentHelper_selectLastField(this);
-  }
 
   protected renderChildrenAsHtml(): string {
     return parentHelper_renderChildrenAsHtml(this);
@@ -169,14 +165,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       result = this.getChildren()[0].selectFirstField();
     }
     return result;
-  }
-
-  selectFieldBefore(current: Field): void {
-    if (this.getFields().includes(current)) {
-      super.selectFieldBefore(current);
-    } else {
-      this.getLastChild().selectLastField();
-    }
   }
 
   selectFirstChildIfAny(): boolean {
