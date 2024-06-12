@@ -1,26 +1,35 @@
-# 9bb8471e221c19858152c7a292702f53c10ff0c16e40f6c530c645a7b9b754ec Elan v0.1 valid
+# 53d7755d8b58f7231a67112a7134dff81e4a847d821ba191fc18e287e21e76aa Elan v0.1 valid
 
 main
-  var g set to exampleCells
-  call draw(g)
-  set g to nextGeneration(g)
+  var cm set to getEmptyCharMap()
+  var grid set to exampleCells
+  for i from 1 to 100 step 1
+    set cm to updateCharMap(grid, cm)
+    call cm.drawCharMap()
+    set grid to nextGeneration(grid)
+    call pause(50)
+  end for
 end main
 
-procedure draw(grid as {Boolean})
+function updateCharMap(grid as {Boolean}, cm as {(String, Int, Int)}) return {(String, Int, Int)}
+  var cm2 set to cm
   for row from 0 to 19 step 1
-    var line set to ""
     for col from 0 to 19 step 1
       var cell set to grid.get(col*20 + row)
-      var cha set to "  "
       if cell
         then
-          set cha to "* "
+          set cm2 to cm2.putBackground(col, row, black)
+        else
+          set cm2 to cm2.putBackground(col, row, white)
       end if
-      set line to line + cha
     end for
-    print line
   end for
-end procedure
+  return cm2
+end function
+
+constant black set to 0x000000
+
+constant white set to 0xffffff
 
 function north(c as Int) return Int
   return if c > 19 then c - 20 else c + 380
