@@ -5,6 +5,9 @@ import { ParseStatus } from "../status-enums";
 import { CodeSource } from "../code-source";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { Regexes } from "./regexes";
+import { OptionalNode } from "../parse-nodes/optional-node";
+import { ifKeyword } from "../keywords";
+import { KeywordNode } from "../parse-nodes/keyword-node";
 
 export class IfSelector extends AbstractField {
   protected placeholderIsCode: boolean = true;
@@ -20,7 +23,9 @@ export class IfSelector extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    throw new Error("Method not implemented.");
+    this.astNode = undefined;
+    this.rootNode = new OptionalNode(new KeywordNode(ifKeyword));
+    return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => "";
 

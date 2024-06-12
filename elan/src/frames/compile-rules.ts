@@ -88,19 +88,16 @@ export function mustBeOneOrTwoOfTypeInt(
   }
 }
 
-export function mustHaveLastSingleElse(
+export function cannotHaveConditionalAfterUnconditionalElse(
   elses: { hasIf: boolean }[],
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (elses.filter((s) => !s.hasIf).length > 1) {
+  const unconditionals = elses.filter((s) => !s.hasIf).length;
+  if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(`Cannot have multiple unconditional 'Else'`, location),
+      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'`, location),
     );
-  }
-
-  if (elses[elses.length - 1].hasIf) {
-    compileErrors.push(new SyntaxCompileError(`Must end with unconditional 'Else'`, location));
   }
 }
 
