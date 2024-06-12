@@ -11,6 +11,7 @@ import { System } from "../system";
 import { doImport, getTestRunner } from "../runner";
 import { WebInputOutput } from "./web-input-output";
 import { fetchProfile, hash, transforms } from "./web-helpers";
+import { CollapseAll } from "../test/model-generating-functions.";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -355,6 +356,7 @@ const stdlib = new StdLib(system);
 const runButton = document.getElementById("run-button");
 const clearConsoleButton = document.getElementById("clear-console");
 const clearGraphicsButton = document.getElementById("clear-graphics");
+const expandCollapseButton = document.getElementById("expand-collapse");
 const newButton = document.getElementById("new");
 
 runButton?.addEventListener("click", () => {
@@ -396,6 +398,11 @@ clearConsoleButton?.addEventListener("click", () => {
 
 clearGraphicsButton?.addEventListener("click", () => {
   elanInputOutput.clearGraphics();
+});
+
+expandCollapseButton?.addEventListener("click", () => {
+  file.expandCollapseAll();
+  file.renderAsHtml().then((c) => updateContent(c));
 });
 
 newButton?.addEventListener("click", () => {

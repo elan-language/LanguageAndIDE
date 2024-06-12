@@ -175,3 +175,7 @@ button#clear-graphics {
   grid-row: 18;
   grid-column: 47;
 }
+button#expand-collapse {
+  grid-row: 1;
+  grid-column: 23;
+}
