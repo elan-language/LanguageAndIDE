@@ -42,17 +42,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test("Pass_Int_Hex", async () => {
+  test("Pass_Int_Hex", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-constant a set to 255
+constant a set to 0xFF
 main
+  
   print a
 end main
 `;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = 0x00fe;
+const a = 255;
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -62,13 +63,10 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "254");
+    await assertObjectCodeExecutes(fileImpl, "255");
   });
 
   test("Pass_Int_Binary", async () => {
@@ -91,9 +89,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -506,5 +501,23 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
+  });
+
+  test("Fail_Int_HexType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 0xFF
+main
+  var b set to ""
+  set b to a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 });

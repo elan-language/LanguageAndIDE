@@ -396,7 +396,12 @@ function mustBeCompatibleTypes(
 ) {
   const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
   for (let i = 0; i < maxLen; i++) {
-    mustBeCompatibleType(lhss[i], rhss[i], compileErrors, location);
+    mustBeCompatibleType(
+      lhss[i] ?? UnknownType.Instance,
+      rhss[i] ?? UnknownType.Instance,
+      compileErrors,
+      location,
+    );
   }
   return;
 }
@@ -508,8 +513,11 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof TupleType && rhs instanceof TupleType) {
-    mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
-    return;
+    if (lhs.ofTypes.length === rhs.ofTypes.length) {
+      mustBeCompatibleTypes(lhs.ofTypes, rhs.ofTypes, compileErrors, location);
+    } else {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
   }
 
   if (lhs instanceof TupleType && !(rhs instanceof TupleType)) {
