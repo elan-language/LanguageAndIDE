@@ -33,9 +33,13 @@ function resetFile() {
 function showError(err: Error, fileName: string) {
   resetFile();
   file.fileName = fileName;
-  elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
+
   if (err.stack) {
+    const msg = "This is a message to tell the user to report this error";
+    elanInputOutput.printLine(msg);
     elanInputOutput.printLine(err.stack);
+  } else {
+    elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
   }
 }
 
