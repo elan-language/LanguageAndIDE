@@ -108,18 +108,12 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["fruit", "Fruit"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
   constructor() {
 
   }
 
-  _fruit;
-  get fruit() {
-    return this._fruit ??= Fruit._default;
-  }
-  set fruit(fruit) {
-    this._fruit = fruit;
-  }
+  fruit = Fruit._default;
 
 }
 return [main, _tests];}`;
@@ -163,18 +157,12 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["fruit", "Fruit"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["fruit", Fruit._default]]);};
   constructor() {
 
   }
 
-  _fruit;
-  get fruit() {
-    return this._fruit ??= Fruit._default;
-  }
-  set fruit(fruit) {
-    this._fruit = fruit;
-  }
+  fruit = Fruit._default;
 
 }
 return [main, _tests];}`;

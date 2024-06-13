@@ -189,7 +189,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
 
   }

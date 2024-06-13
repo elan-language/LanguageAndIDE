@@ -259,7 +259,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", "Iter<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyIter()]]);};
   constructor() {
 
   }
@@ -321,7 +321,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["i", "Iter<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["i", system.emptyIter()]]);};
   constructor() {
 
   }

@@ -442,7 +442,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p", "CharMap"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p", system.emptyImmutableList()]]);};
   constructor() {
 
   }

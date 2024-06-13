@@ -10,6 +10,7 @@ import { Member } from "../interfaces/member";
 import { abstractPropertyKeywords } from "../keywords";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
+import { ClassType } from "../symbols/class-type";
 
 export class AbstractProperty extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -62,7 +63,11 @@ ${this.indent()}}\r\n`;
   }
 
   public initCode() {
-    return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
+    const tst = this.symbolType();
+    if (!(tst instanceof ClassType)) {
+      return `["${this.name.text}", ${tst.initialValue}]`;
+    }
+    return "";
   }
 
   get symbolId() {

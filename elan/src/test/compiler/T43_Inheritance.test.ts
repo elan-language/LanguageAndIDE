@@ -64,7 +64,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
   get p1() {
     return 0;
   }
@@ -90,7 +90,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -166,7 +166,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -179,7 +179,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p2", ""]]);};
   get p2() {
     return "";
   }
@@ -192,7 +192,7 @@ class Bar {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", ""]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = "apple";
@@ -276,7 +276,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
   get p1() {
     return 0;
   }
@@ -309,7 +309,7 @@ class Yon {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -398,7 +398,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
   get p1() {
     return 0;
   }
@@ -417,7 +417,7 @@ class Foo {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -437,7 +437,7 @@ class Yon {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Float"], ["p2", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
     this.p1 = 3;
     this.p2 = 4;
@@ -535,7 +535,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -548,7 +548,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
 
   }
@@ -601,7 +601,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -614,7 +614,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
 
   }
@@ -667,7 +667,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -680,7 +680,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
 
   }
@@ -739,7 +739,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -752,7 +752,7 @@ class Foo {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", "Int"], ["p2", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", 0]]);};
   get p1() {
     return 0;
   }
@@ -771,7 +771,7 @@ class Yon {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
 
   }
@@ -832,7 +832,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -845,7 +845,7 @@ class Foo {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", "Int"], ["p2", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", 0]]);};
   get p1() {
     return 0;
   }
@@ -864,7 +864,7 @@ class Yon {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"], ["p2", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
   constructor() {
 
   }
@@ -1243,7 +1243,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   get p1() {
     return 0;
   }
@@ -1256,7 +1256,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
 
   }

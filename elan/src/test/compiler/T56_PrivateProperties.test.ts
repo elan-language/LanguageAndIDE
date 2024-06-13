@@ -42,7 +42,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";

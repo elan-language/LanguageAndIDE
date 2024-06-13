@@ -8,10 +8,11 @@ import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "../symbols/class-type";
 import { EnumType } from "../symbols/enum-type";
 import { mustBeKnownSymbolType } from "../compile-rules";
+import { transforms } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
@@ -63,7 +64,7 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
 
     mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
 
-    if (st instanceof ClassType || st instanceof EnumType) {
+    if (st instanceof ClassType) {
       return `${this.indent()}_${pName};\r
 ${this.indent()}${mod}get ${pName}() {\r
 ${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
@@ -101,6 +102,10 @@ ${this.indent()}}\r\n`;
   }
 
   public initCode() {
-    return `["${this.name.renderAsSource()}", "${this.type.renderAsSource()}"]`;
+    const tst = this.symbolType(transforms());
+    if (!(tst instanceof ClassType)) {
+      return `["${this.name.text}", ${tst.initialValue}]`;
+    }
+    return "";
   }
 }

@@ -658,7 +658,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["it", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["it", system.emptyImmutableList()]]);};
   constructor() {
 
   }

@@ -287,7 +287,10 @@ end class\r\n`;
     const pp = this.getChildren().filter(
       (c) => c instanceof Property || c instanceof AbstractProperty,
     ) as (AbstractProperty | Property)[];
-    const ps = pp.map((p) => p.initCode()).join(", ");
+    const ps = pp
+      .map((p) => p.initCode())
+      .filter((s) => s)
+      .join(", ");
     return `[${ps}]`;
   }
 

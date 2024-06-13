@@ -233,7 +233,7 @@ _tests.push(["test3", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
 
   }
@@ -358,7 +358,7 @@ _tests.push(["test54", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["bar", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["bar", 0]]);};
   constructor(b) {
     this.bar = b;
   }

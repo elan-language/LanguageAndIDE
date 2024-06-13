@@ -39,7 +39,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor(p1) {
     this.p1 = p1;
   }
@@ -102,7 +102,7 @@ function doubled(f) {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
     this.p1 = 3;
   }
@@ -157,7 +157,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
     this.p1 = 1;
   }
@@ -209,7 +209,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Int"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
 
   }

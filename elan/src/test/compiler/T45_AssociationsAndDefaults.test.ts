@@ -61,7 +61,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["p2", "Player"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.emptyImmutableList()]]);};
   constructor() {
     this.p2 = system.initialise(new Player("Chloe"));
     this.p1 = system.initialise(new Player("Joe"));
@@ -93,7 +93,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
   constructor(name) {
     this.name = name;
   }
@@ -167,7 +167,125 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["ds", "Dictionary<of String, Int>"], ["dsi", "ImmutableDictionary<of String, Int>"], ["ai", "ArrayList<of Int>"], ["t", "Tuple<of Int, String, ImmutableList<of Int>>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
+  constructor() {
+
+  }
+
+  i = 0;
+
+  f = 0;
+
+  b = false;
+
+  s = "";
+
+  li = system.emptyImmutableList();
+
+  ds = system.emptyDictionary();
+
+  dsi = system.emptyImmutableDictionary();
+
+  ai = system.emptyArrayList();
+
+  t = system.emptyTuple([0, "", system.emptyImmutableList()]);
+
+  asString() {
+    return "A game";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)",
+    );
+  });
+
+  test("Pass_DefaultValuesOnEmptyClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var p set to new Player()
+  var g set to p.g
+  print g.i
+  print g.f
+  print g.b
+  print g.s
+  print g.li
+  print g.ds
+  print g.dsi
+  print g.ai
+  print g.t
+end main
+
+class Player
+    constructor()
+    end constructor
+
+    property g as Game
+end class
+
+class Game
+    constructor()
+    end constructor
+
+    property i as Int
+    property f as Float
+    property b as Boolean
+    property s as String
+    property li as ImmutableList<of Int>
+    property ds as Dictionary<of String, Int>
+    property dsi as ImmutableDictionary<of String, Int>
+    property ai as ArrayList<of Int>
+    property t as Tuple<of Int, String, ImmutableList<of Int>>
+
+    function asString() return String
+        return "A game"
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var p = system.initialise(new Player());
+  var g = p.g;
+  system.print(_stdlib.asString(g.i));
+  system.print(_stdlib.asString(g.f));
+  system.print(_stdlib.asString(g.b));
+  system.print(_stdlib.asString(g.s));
+  system.print(_stdlib.asString(g.li));
+  system.print(_stdlib.asString(g.ds));
+  system.print(_stdlib.asString(g.dsi));
+  system.print(_stdlib.asString(g.ai));
+  system.print(_stdlib.asString(g.t));
+}
+
+class Player {
+  static emptyInstance() { return system.emptyClass(Player, []);};
+  constructor() {
+
+  }
+
+  _g;
+  get g() {
+    return this._g ??= Game.emptyInstance();
+  }
+  set g(g) {
+    this._g = g;
+  }
+
+}
+
+class Game {
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
   constructor() {
 
   }
@@ -237,7 +355,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0]]);};
   constructor() {
     this.i = 100;
   }
@@ -303,7 +421,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["previousGame", "Game"]]);};
+  static emptyInstance() { return system.emptyClass(Game, []);};
   constructor() {
 
   }
@@ -331,7 +449,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
   constructor(name) {
     this.name = name;
   }
@@ -413,7 +531,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", "Float"], ["best", "Float"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()]]);};
   constructor() {
     this.score = 1;
   }
@@ -455,7 +573,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
   constructor(name) {
     this.name = name;
   }
@@ -535,7 +653,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["score", "Int"], ["best", "Int"], ["p1", "Player"], ["p2", "Player"], ["previousGame", "Game"], ["previousScores", "ImmutableList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.emptyImmutableList()]]);};
   constructor() {
     this.score = 10;
   }
@@ -581,7 +699,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
   constructor(name) {
     this.name = name;
   }
@@ -648,7 +766,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["a", "ImmutableList<of Int>"], ["b", "String"], ["c", "Dictionary<of String, Int>"], ["d", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()], ["b", ""], ["c", system.emptyDictionary()], ["d", system.emptyArrayList()]]);};
   constructor() {
 
   }
@@ -715,7 +833,7 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", "Player"], ["p2", "Player"]]);};
+  static emptyInstance() { return system.emptyClass(Game, []);};
   constructor() {
 
   }
@@ -743,7 +861,7 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
   get name() {
     return "";
   }

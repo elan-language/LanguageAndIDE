@@ -60,7 +60,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   constructor() {
     this.p1 = 5;
   }
@@ -105,7 +105,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   constructor() {
 
   }
@@ -165,7 +165,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Foo"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   constructor() {
 
   }
@@ -227,7 +227,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -284,7 +284,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";
@@ -341,7 +341,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Float"], ["p2", "String"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
   constructor() {
     this.p1 = 5;
     this.p2 = "Apple";

@@ -355,7 +355,7 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Bar"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   constructor() {
     this.p1 = system.initialise(new Bar());
   }
@@ -379,7 +379,7 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", "Float"]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
   constructor() {
     this.p1 = 5;
   }

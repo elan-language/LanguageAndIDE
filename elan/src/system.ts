@@ -15,20 +15,6 @@ export class AssertOutcome {
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
 
-  private default(type: string) {
-    switch (type) {
-      case "Int":
-        return 0;
-      case "Float":
-        return 0.0;
-      case "Boolean":
-        return false;
-      case "String":
-        return "";
-    }
-    return undefined;
-  }
-
   // constant immutables
   emptyImmutableListSingleton = this.immutableList([]);
   emptyIterableSingleton = this.iter([]);
@@ -124,7 +110,7 @@ export class System {
     const t = Object.create(type.prototype);
 
     for (const p of properties) {
-      t[p[0]] = this.default(p[1]);
+      t[p[0]] = p[1];
     }
 
     return t;
