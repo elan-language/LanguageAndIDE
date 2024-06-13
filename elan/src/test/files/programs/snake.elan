@@ -1,4 +1,4 @@
-# 4bdd2e1d3a795c9029781864761d0976618243456297c9619512e91876d8a3d1 Elan v0.1 valid
+# 9775a284acd65a30d17e8a8bc17fd6acb0a10a71d8140b84fc37392bef3ff410 Elan v0.1 valid
 
 main
   var cm set to getEmptyCharMap()
@@ -39,7 +39,6 @@ class Snake
     var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
     set body to [tail]
     set head to tail.getAdjacentSquare(startingDirection)
-    call setNewApplePosition()
   end constructor
 
   property head as Square
