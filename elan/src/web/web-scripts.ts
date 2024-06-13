@@ -350,7 +350,7 @@ function postMessage(e: editorEvent) {
     }
   }
   catch (e) {
-    showError(e, file.fileName, false);
+    showError(e as Error, file.fileName, false);
   }
 }
 
