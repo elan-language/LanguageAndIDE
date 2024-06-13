@@ -133,13 +133,17 @@ return [main, _tests];}`;
 
 main
   var x set to new Foo()
+  var y set to x.b
+  call y.printP1()
 end main
 
 class Foo
     constructor()
       var bar set to new Bar()
-      call bar.printP1()
+      set b to bar
     end constructor
+
+    property b as Bar 
 
 end class
 
@@ -158,13 +162,23 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
+  var y = x.b;
+  await y.printP1();
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
+  static emptyInstance() { return system.emptyClass(Foo, [["b", "Bar"]]);};
   constructor() {
     var bar = system.initialise(new Bar());
-    bar.printP1();
+    this.b = bar;
+  }
+
+  _b;
+  get b() {
+    return this._b ??= Bar.emptyInstance();
+  }
+  set b(b) {
+    this._b = b;
   }
 
 }

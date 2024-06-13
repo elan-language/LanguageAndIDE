@@ -89,7 +89,9 @@ export class StatementSelector extends AbstractSelector {
     ) {
       result = !userEntry;
     } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
-      result = !this.isWithinAFunction(this.getParent());
+      result = !(
+        this.isWithinAFunction(this.getParent()) || this.isWithinAConstructor(this.getParent())
+      );
     } else {
       result = true;
     }
@@ -101,6 +103,13 @@ export class StatementSelector extends AbstractSelector {
       ? true
       : parent.hasParent() && this.isWithinAFunction(parent.getParent());
   }
+
+  private isWithinAConstructor(parent: Parent): boolean {
+    return parent.getIdPrefix() === "constructor"
+      ? true
+      : parent.hasParent() && this.isWithinAConstructor(parent.getParent());
+  }
+
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">${this.textToDisplayAsHtml()}</statement>`;
   }

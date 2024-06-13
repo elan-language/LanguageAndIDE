@@ -1,4 +1,4 @@
-# f6f39481b30123a13797f8597fb4561e3294b97aaffd6585a90faf3ddb7c5edd Elan v0.1 valid
+# 5f73afdfa4f5c1600f2311e96075ecdc9e618d798d064991155cef7ea7184f4e Elan v0.1 valid
 
 main
   var newGame set to true
@@ -21,6 +21,7 @@ procedure playGame()
   call charMap.fillBackground()
   var currentDirection set to Direction.right
   var snake set to new Snake(div(charMap.width, 2), charMap.height, currentDirection)
+  call snake.setNewApplePosition()
   var gameOn set to true
   while gameOn
     var pressed set to keyHasBeenPressed()
@@ -55,7 +56,6 @@ class Snake
     var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
     set body to {tail}
     set head to tail.getAdjacentSquare(startingDirection)
-    call setNewApplePosition()
   end constructor
 
   property head as Square

@@ -1,4 +1,4 @@
-# 7c56224f7097f7da781fa5653e012f443b268b1300433d75c80c6f4ed1f4947f Elan v0.1 valid
+# a2614e29531d9db03e9ddcb897d0251c12e9ec4f5d0e926f24a7c3108f2a4ab6 Elan v0.1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
@@ -19,7 +19,8 @@ class TuringMachine
     set property.initialState to initialState
     set property.haltState to haltState
     set rules to empty {Rule}
-    call reset()
+    set currentState to initialState
+    set headPosition to 0
   end constructor
 
   property initialState as String
