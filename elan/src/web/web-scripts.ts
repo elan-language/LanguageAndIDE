@@ -322,7 +322,7 @@ function updateContent(text: string) {
   // debug check
   if (dbgFocused.length > 1) {
     let msg = "multiple focused ";
-    dbgFocused.forEach((n) => (msg = `${msg}, Node: ${n.nodeName, n.id} `));
+    dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
     showError(new Error(msg), file.fileName, false);
   }
 }
@@ -348,8 +348,7 @@ function postMessage(e: editorEvent) {
         // undefined just return
         return;
     }
-  }
-  catch (e) {
+  } catch (e) {
     showError(e as Error, file.fileName, false);
   }
 }

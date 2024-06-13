@@ -126,8 +126,10 @@ main
   print g.b
   print g.s
   print g.li
+  print g.ds
   print g.dsi
   print g.ai
+  print g.t
 end main
 
 class Game
@@ -139,8 +141,10 @@ class Game
     property b as Boolean
     property s as String
     property li as ImmutableList<of Int>
-    property dsi as Dictionary<of String, Int>
+    property ds as Dictionary<of String, Int>
+    property dsi as ImmutableDictionary<of String, Int>
     property ai as ArrayList<of Int>
+    property t as Tuple<of Int, String, ImmutableList<of Int>>
 
     function asString() return String
         return "A game"
@@ -156,12 +160,14 @@ async function main() {
   system.print(_stdlib.asString(g.b));
   system.print(_stdlib.asString(g.s));
   system.print(_stdlib.asString(g.li));
+  system.print(_stdlib.asString(g.ds));
   system.print(_stdlib.asString(g.dsi));
   system.print(_stdlib.asString(g.ai));
+  system.print(_stdlib.asString(g.t));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["dsi", "Dictionary<of String, Int>"], ["ai", "ArrayList<of Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", "Int"], ["f", "Float"], ["b", "Boolean"], ["s", "String"], ["li", "ImmutableList<of Int>"], ["ds", "Dictionary<of String, Int>"], ["dsi", "ImmutableDictionary<of String, Int>"], ["ai", "ArrayList<of Int>"], ["t", "Tuple<of Int, String, ImmutableList<of Int>>"]]);};
   constructor() {
 
   }
@@ -176,9 +182,13 @@ class Game {
 
   li = system.emptyImmutableList();
 
-  dsi = system.emptyDictionary();
+  ds = system.emptyDictionary();
+
+  dsi = system.emptyImmutableDictionary();
 
   ai = system.emptyArrayList();
+
+  t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
   asString() {
     return "A game";
@@ -195,7 +205,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty ImmutableListempty Dictionaryempty ArrayList",
+      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)",
     );
   });
 
