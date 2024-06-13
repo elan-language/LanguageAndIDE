@@ -14,8 +14,10 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { EnumType } from "../symbols/enum-type";
+import { Collapsible } from "../interfaces/collapsible";
 
-export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame {
+export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
+  isCollapsible: boolean = true;
   isGlobal = true;
   name: TypeNameField;
   values: EnumValues;
@@ -27,6 +29,11 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame {
     this.name = new TypeNameField(this);
     this.name.setPlaceholder("Name");
     this.values = new EnumValues(this);
+  }
+
+  protected setClasses() {
+    super.setClasses();
+    this.pushClass(true, "multiline");
   }
 
   get symbolId() {
