@@ -8,8 +8,6 @@ import { AbstractField } from "./abstract-field";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 
 export class AssignableField extends AbstractField {
-  isParseByNodes = true;
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("variable");

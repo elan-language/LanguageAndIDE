@@ -11,6 +11,7 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { testHash, transforms } from "./compiler/compiler-test-helpers";
 import { IfStatement } from "../frames/statements/if-statement";
 import { VarStatement } from "../frames/statements/var-statement";
+import { CallStatement } from "../frames/statements/call-statement";
 
 suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -205,5 +206,49 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.getCompletion(), " => <pr>expression</pr>");
     expr.processKey(key("Enter"));
     assert.equal(expr.text, "lambda a as Int => ");
+  });
+  test("End of field marker automatically skips to next field #496", () => {
+    const file = new FileImpl(hash, new DefaultProfile(), transforms());
+    const main = new MainFrame(file);
+    const c = new CallStatement(main);
+    const proc = c.proc;
+    const args = c.args;
+    proc.select(true, false);
+    assert.equal(proc.isSelected(), true);
+    assert.equal(args.isSelected(), false);
+    proc.processKey(key("f"));
+    proc.processKey(key("o"));
+    proc.processKey(key("o"));
+    assert.equal(proc.text, "foo");
+    proc.processKey(key("("));
+    assert.equal(proc.text, "foo");
+    assert.equal(proc.isSelected(), false);
+    assert.equal(args.isSelected(), true);
+    args.processKey(key(")"));
+    assert.equal(args.text, "");
+    assert.equal(args.isSelected(), false);
+    const con = new Constant(file);
+    const name = con.name;
+    const val = con.literal;
+    name.processKey(key("a"));
+    name.processKey(key(" "));
+    assert.equal(name.text, "a");
+    const lit = con.literal;
+    assert.equal(lit.isSelected(), true);
+    const fun = new GlobalFunction(file);
+    const fn = fun.name;
+    fn.processKey(key("b"));
+    fn.processKey(key("("));
+    assert.equal(fn.text, "b");
+    const fparams = fun.params;
+    assert.equal(fparams.isSelected(), true);
+    fparams.processKey(key(")"));
+    assert.equal(fparams.isSelected(), false);
+    //Control case:
+    const fun2 = new GlobalFunction(file);
+    const fn2 = fun2.name;
+    fn2.processKey(key("c"));
+    fn2.processKey(key(")"));
+    assert.equal(fn2.text, "c)");
   });
 });
