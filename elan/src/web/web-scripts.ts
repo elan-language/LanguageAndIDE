@@ -317,31 +317,40 @@ function updateContent(text: string) {
 
   updateDisplayValues();
 
+  const dbgFocused = document.querySelectorAll(".focused");
+
   // debug check
-  if (document.querySelectorAll(".focused").length > 1) {
-    console.warn("multiple focused");
+  if (dbgFocused.length > 1) {
+    let msg = "multiple focused ";
+    dbgFocused.forEach((n) => (msg = `${msg}, Node: ${n.nodeName, n.id} `));
+    showError(new Error(msg), file.fileName, false);
   }
 }
 
 function postMessage(e: editorEvent) {
-  switch (e.type) {
-    case "click":
-      handleClick(e, file);
-      file.renderAsHtml().then((c) => updateContent(c));
-      return;
-    case "dblclick":
-      handleDblClick(e, file);
-      file.renderAsHtml().then((c) => updateContent(c));
-      return;
-    case "key":
-      const codeChanged = handleKey(e, file);
-      if (codeChanged === true) {
-        refreshAndDisplay();
-      } else if (codeChanged === false) {
+  try {
+    switch (e.type) {
+      case "click":
+        handleClick(e, file);
         file.renderAsHtml().then((c) => updateContent(c));
-      }
-      // undefined just return
-      return;
+        return;
+      case "dblclick":
+        handleDblClick(e, file);
+        file.renderAsHtml().then((c) => updateContent(c));
+        return;
+      case "key":
+        const codeChanged = handleKey(e, file);
+        if (codeChanged === true) {
+          refreshAndDisplay();
+        } else if (codeChanged === false) {
+          file.renderAsHtml().then((c) => updateContent(c));
+        }
+        // undefined just return
+        return;
+    }
+  }
+  catch (e) {
+    showError(e, file.fileName, false);
   }
 }
 
