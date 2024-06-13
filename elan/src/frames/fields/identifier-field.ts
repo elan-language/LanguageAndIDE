@@ -25,4 +25,7 @@ export class IdentifierField extends AbstractField {
   getIdPrefix(): string {
     return "ident";
   }
+  isEndMarker(key: string) {
+    return key === " " || key === "(";
+  }
 }

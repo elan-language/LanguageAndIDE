@@ -48,4 +48,8 @@ export class ProcRefField extends AbstractField {
     }
     return text;
   }
+
+  isEndMarker(key: string) {
+    return key === "(";
+  }
 }
