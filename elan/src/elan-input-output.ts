@@ -9,9 +9,9 @@ export interface ElanInputOutput {
 
   drawGraphics(html: string): void;
 
-  readKey(): string;
+  getKeypress(): string;
 
-  readKeyWithModifier(): [string, string];
+  getKeypressWithModifier(): [string, string];
 
   clearKeyBuffer(): void;
 }

@@ -499,12 +499,12 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  readKey(): string {
-    return this.system.elanInputOutput.readKey();
+  getKeypress(): string {
+    return this.system.elanInputOutput.getKeypress();
   }
 
-  readKeyWithModifier() {
-    return this.system.tuple(this.system.elanInputOutput.readKeyWithModifier());
+  getKeypressWithModifier() {
+    return this.system.tuple(this.system.elanInputOutput.getKeypressWithModifier());
   }
 
   clearKeyBuffer() {

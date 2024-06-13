@@ -2,10 +2,10 @@ import { ElanInputOutput } from "../../elan-input-output";
 import { System } from "../../system";
 
 export class TestInputOutput implements ElanInputOutput {
-  readKey(): string {
+  getKeypress(): string {
     return "";
   }
-  readKeyWithModifier(): [string, string] {
+  getKeypressWithModifier(): [string, string] {
     return ["", ""];
   }
   clearKeyBuffer(): void {}

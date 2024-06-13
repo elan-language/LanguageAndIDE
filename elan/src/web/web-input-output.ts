@@ -64,7 +64,7 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
-  readKey() {
+  getKeypress() {
     const evt = this.keyBuffer.pop();
     return evt ? evt.key : "";
   }
@@ -73,7 +73,7 @@ export class WebInputOutput implements ElanInputOutput {
     return e.ctrlKey ? "Control" : e.shiftKey ? "Shift" : e.altKey ? "Alt" : "";
   }
 
-  readKeyWithModifier(): [string, string] {
+  getKeypressWithModifier(): [string, string] {
     const evt = this.keyBuffer.pop();
     return evt ? [evt.key, this.getModKey(evt)] : ["", ""];
   }

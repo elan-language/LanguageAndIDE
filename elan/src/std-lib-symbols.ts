@@ -495,7 +495,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
-    ["readKey", this.getSymbol("readKey", new FunctionType([], FloatType.Instance, false, false))],
     ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
       "randomInt",
@@ -838,11 +837,14 @@ export class StdLibSymbols implements Scope {
     ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
     ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
     ["clearKeyBuffer", this.getSymbol("clearKeyBuffer", new ProcedureType([], false, false))],
-    ["readKey", this.getSymbol("readKey", new FunctionType([], StringType.Instance, false, false))],
     [
-      "readKeyWithModifier",
+      "getKeypress",
+      this.getSymbol("getKeypress", new FunctionType([], StringType.Instance, false, false)),
+    ],
+    [
+      "getKeypressWithModifier",
       this.getSymbol(
-        "readKey",
+        "getKeypressWithModifier",
         new FunctionType(
           [],
           new TupleType([StringType.Instance, StringType.Instance]),
