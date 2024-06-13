@@ -28,4 +28,8 @@ export class VarDefField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/(\s+((set to)|(be))\s+)|\r|\n/);
+
+  isEndMarker(key: string) {
+    return key === " ";
+  }
 }

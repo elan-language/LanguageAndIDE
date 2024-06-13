@@ -61,4 +61,7 @@ export class ParamList extends AbstractField {
     }
     return new UnknownSymbol(id);
   }
+  isEndMarker(key: string) {
+    return this.text === "" && key === ")";
+  }
 }

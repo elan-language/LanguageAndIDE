@@ -31,4 +31,8 @@ export class ArgListField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToNonMatchingCloseBracket();
+
+  isEndMarker(key: string) {
+    return this.text === "" && key === ")";
+  }
 }

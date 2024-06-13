@@ -30,4 +30,8 @@ export class ValueRefField extends AbstractField {
 
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(this.readUntil);
+
+  isEndMarker(key: string) {
+    return key === " ";
+  }
 }
