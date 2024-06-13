@@ -149,3 +149,14 @@ export class DuplicateKeyCompileError extends CompileError {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location, false);
   }
 }
+
+export class PrintFunctionCompileError extends CompileError {
+  constructor(location: string) {
+    super(
+      Priority.typeError,
+      `Cannot print a function. To print the result of evaluating a function, add brackets after function name.`,
+      location,
+      false,
+    );
+  }
+}

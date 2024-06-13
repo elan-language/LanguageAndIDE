@@ -28,6 +28,7 @@ import {
   NotIndexableCompileError,
   NotIterableCompileError,
   ParametersCompileError,
+  PrintFunctionCompileError,
   PrivatePropertyCompileError,
   ReassignCompileError,
   SyntaxCompileError,
@@ -164,6 +165,16 @@ export function mustBeProcedure(
         symbolType instanceof UnknownType,
       ),
     );
+  }
+}
+
+export function mustNotBeFunction(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbolType instanceof ProcedureType || symbolType instanceof FunctionType) {
+    compileErrors.push(new PrintFunctionCompileError(location));
   }
 }
 
