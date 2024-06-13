@@ -357,7 +357,10 @@ export function transform(
   }
 
   if (node instanceof AbstractAlternatives) {
-    return transform(node.bestMatch, fieldId, scope);
+    if (node.bestMatch) {
+      return transform(node.bestMatch, fieldId, scope);
+    }
+    return new EmptyAsn(fieldId);
   }
 
   if (node instanceof ImmutableListNode) {
