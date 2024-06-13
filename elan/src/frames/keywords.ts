@@ -55,6 +55,7 @@ export const throwKeyword = "throw";
 export const toKeyword = "to";
 export const trueKeyword = "true";
 export const tryKeyword = "try";
+export const typeofKeyword = "typeof";
 export const varKeyword = "var";
 export const whenKeyword = "when";
 export const whileKeyword = "while";
@@ -124,6 +125,7 @@ export const allKeywords = [
   toKeyword,
   trueKeyword,
   tryKeyword,
+  typeofKeyword,
   varKeyword,
   whenKeyword,
   whileKeyword,
