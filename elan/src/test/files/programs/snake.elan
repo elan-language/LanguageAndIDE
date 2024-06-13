@@ -1,70 +1,53 @@
-# f6f39481b30123a13797f8597fb4561e3294b97aaffd6585a90faf3ddb7c5edd Elan v0.1 valid
+# 4bdd2e1d3a795c9029781864761d0976618243456297c9619512e91876d8a3d1 Elan v0.1 valid
 
 main
-  var newGame set to true
-  while newGame is true
-    call playGame()
-    var answer set to ""
-    repeat
-      print "Do you want to play again? (y/n)"
-      input answer
-    end repeat when (answer is "y") or (answer is "n")
-    if answer is "n"
-      then
-        set newGame to false
-    end if
-  end while
-end main
-
-procedure playGame()
-  var charMap set to new CharMap()
-  call charMap.fillBackground()
-  var currentDirection set to Direction.right
-  var snake set to new Snake(div(charMap.width, 2), charMap.height, currentDirection)
+  var cm set to getEmptyCharMap()
+  var currentDirection set to Direction.up
+  var snake set to new Snake(40, 30, currentDirection)
   var gameOn set to true
   while gameOn
-    var pressed set to keyHasBeenPressed()
-    call pause(200)
-    call snake.clockTick(currentDirection, gameOn)
-    if snake.hasHitEdge() or snake.bodyCovers(head)
+    var priorTail set to snake.tail()
+    call snake.clockTick(currentDirection)
+    if (snake.hasHitEdge()) or (snake.bodyCovers(snake.head))
       then
         set gameOn to false
       else
-        call charMap.draw(snake.head, Colour.green)
-        call charMap.draw(snake.apple, Colour.red)
-        var priorTail set to snake.tail()
-        if pressed
+        var head set to snake.head
+        set cm to cm.putBackground(head.x, head.y, green)
+        var apple set to snake.apple
+        set cm to cm.putBackground(apple.x, apple.y, red)
+        var k set to getKeypress()
+        if k is not ""
           then
-            var k set to readKey()
-            set currentDirection to directionByKey[k]
+            set currentDirection to directionByKey.getKey(k)
         end if
         if snake.tail() is not priorTail
           then
-            call charMap.setToBackgroundColour(priorTail)
+            set cm to cm.putBackground(priorTail.x, priorTail.y, white)
         end if
     end if
+    call cm.drawCharMap()
+    call pause(150)
   end while
-  call charMap.setCursor(0, 0)
-  print "Game Over! Score: {snake.length() - 2}"
-end procedure
+  print "Game Over! Score: {snake.length() - 1}"
+end main
 
 class Snake
   constructor(boardWidth as Int, boardHeight as Int, startingDirection as Direction)
     set property.boardWidth to boardWidth
     set property.boardHeight to boardHeight
     var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
-    set body to {tail}
+    set body to [tail]
     set head to tail.getAdjacentSquare(startingDirection)
     call setNewApplePosition()
   end constructor
 
   property head as Square
 
-  private property body as [Square]
+  property body as [Square]
 
   function tail() return Square
-    # return body[0]
-    return new Square(0, 0)
+    return body[0]
   end function
 
   function length() return Int
@@ -87,7 +70,7 @@ class Snake
   end function
 
   procedure clockTick(d as Direction)
-    set body to body + head
+    call body.add(head)
     set head to head.getAdjacentSquare(d)
     if head is apple
       then
@@ -115,13 +98,6 @@ class Snake
 
 end class
 
-constant directionByKey set to {"w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right}
-
-# Standard library types and functions
-enum Direction
-  up, down, left, right
-end enum
-
 immutable class Square
   constructor(x as Int, y as Int)
     set property.x to x
@@ -133,8 +109,8 @@ immutable class Square
   property y as Int
 
   function getAdjacentSquare(d as Direction) return Square
-    var newX set to 0
-    var newY set to 0
+    var newX set to x
+    var newY set to y
     switch d
       case Direction.left
         set newX to x - 1
@@ -150,11 +126,29 @@ immutable class Square
     return new Square(newX, newY)
   end function
 
-end class
-
-immutable class CharMapDisplay
-  constructor()
-
-  end constructor
+  function asString() return String
+    return "x{x}y{y}"
+  end function
 
 end class
+
+enum Direction
+  up, down, left, right
+end enum
+
+constant directionByKey set to {"w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right}
+
+constant green set to 0x00ff00
+
+constant red set to 0xff0000
+
+constant white set to 0xffffff
+
+test square
+  var tail set to new Square(20, 15)
+  var expected set to new Square(20, 15)
+  assert tail is expected
+  var head set to tail.getAdjacentSquare(Direction.right)
+  let exp2 be new Square(21, 15)
+  assert head is exp2
+end test
