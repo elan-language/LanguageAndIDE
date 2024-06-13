@@ -1,14 +1,14 @@
-# 7b38afa235fa4bc9d7360a6ae022f5ca96ee86748a8ff1947f866ac79532554c Elan v0.1 valid
+# 151fb436bd7bdfaf07db186af8479a56b8537391efcf3af3786b236709b649fa Elan v0.1 valid
 
 main
   var currentDirection set to Direction.up
   var snake set to new Snake(40, 30, currentDirection)
   call snake.setNewApplePosition()
-  var cm set to getEmptyCharMap()
+  var cm set to initialisedCharMap()
   var gameOn set to true
   while gameOn
     set cm to snake.updateCharMap(cm)
-    call cm.drawCharMap()
+    call cm.drawAsGraphics()
     call pause(150)
     var k set to getKeypress()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
@@ -29,13 +29,13 @@ class Snake
 
   property head as Square
 
-  private property body as [Square]
+  property body as [Square]
 
   property apple as Square
 
-  private property boardHeight as Int
+  property boardHeight as Int
 
-  private property boardWidth as Int
+  property boardWidth as Int
 
   property priorTail as Square
 

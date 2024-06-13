@@ -663,9 +663,9 @@ export class StdLibSymbols implements Scope {
     ],
     // char map
     [
-      "getEmptyCharMap",
+      "initialisedCharMap",
       this.getSymbol(
-        "getEmptyCharMap",
+        "initialisedCharMap",
         new FunctionType(
           [],
           new ImmutableListType(
@@ -859,9 +859,9 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("setDefaultForeground", new ProcedureType([IntType.Instance], false, false)),
     ],
     [
-      "drawCharMap",
+      "drawAsGraphics",
       this.getSymbol(
-        "drawCharMap",
+        "drawAsGraphics",
         new ProcedureType(
           [
             new ImmutableListType(

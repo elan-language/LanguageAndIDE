@@ -405,11 +405,6 @@ export class StdLib {
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
-
-  refreshDisplay() {
-    return this.pause(1);
-  }
-
   // charmapped display
 
   xSize = 40;
@@ -422,7 +417,7 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
-  getEmptyCharMap() {
+  initialisedCharMap() {
     const emptyMap: CharMap = [];
     const emptyLocation: Location = ["", this.defaultForeground, this.defaultBackground];
 
@@ -480,7 +475,7 @@ export class StdLib {
     this.defaultForeground = f;
   }
 
-  drawCharMap(map: CharMap) {
+  drawAsGraphics(map: CharMap) {
     let rendered = "";
 
     for (let y = 0; y < this.ySize; y++) {
@@ -489,7 +484,6 @@ export class StdLib {
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }
-
     this.system.elanInputOutput.drawGraphics(rendered);
   }
 
