@@ -1,33 +1,19 @@
-# 9775a284acd65a30d17e8a8bc17fd6acb0a10a71d8140b84fc37392bef3ff410 Elan v0.1 valid
+# c0da07ea63ba1db5d204a6099e6cbaf027771fba17653c550edfc1cadae7638e Elan v0.1 valid
 
 main
-  var cm set to getEmptyCharMap()
   var currentDirection set to Direction.up
   var snake set to new Snake(40, 30, currentDirection)
+  call snake.setNewApplePosition()
+  var cm set to getEmptyCharMap()
   var gameOn set to true
   while gameOn
-    var priorTail set to snake.tail()
-    call snake.clockTick(currentDirection)
-    if (snake.hasHitEdge()) or (snake.bodyCovers(snake.head))
-      then
-        set gameOn to false
-      else
-        var head set to snake.head
-        set cm to cm.putBackground(head.x, head.y, green)
-        var apple set to snake.apple
-        set cm to cm.putBackground(apple.x, apple.y, red)
-        var k set to getKeypress()
-        if k is not ""
-          then
-            set currentDirection to directionByKey.getKey(k)
-        end if
-        if snake.tail() is not priorTail
-          then
-            set cm to cm.putBackground(priorTail.x, priorTail.y, white)
-        end if
-    end if
+    set cm to snake.updateCharMap(cm)
     call cm.drawCharMap()
     call pause(150)
+    var k set to getKeypress()
+    set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
+    call snake.clockTick(currentDirection)
+    set gameOn to not snake.gameOver()
   end while
   print "Game Over! Score: {snake.length() - 1}"
 end main
@@ -57,6 +43,8 @@ class Snake
 
   property boardWidth as Int
 
+  property priorTail as Square
+
   function bodyCovers(sq as Square) return Boolean
     var result set to false
     each seg in body
@@ -69,6 +57,7 @@ class Snake
   end function
 
   procedure clockTick(d as Direction)
+    set priorTail to tail()
     call body.add(head)
     set head to head.getAdjacentSquare(d)
     if head is apple
@@ -78,6 +67,20 @@ class Snake
         set body to body[1..]
     end if
   end procedure
+
+  function gameOver() return Boolean
+    return hasHitEdge() or bodyCovers(head)
+  end function
+
+  function updateCharMap(cm as CharMap) return CharMap
+    var cm2 set to cm.putBackground(head.x, head.y, green)
+    set cm2 to cm2.putBackground(apple.x, apple.y, red)
+    if tail() is not priorTail
+      then
+        set cm2 to cm2.putBackground(priorTail.x, priorTail.y, white)
+    end if
+    return cm2
+  end function
 
   function hasHitEdge() return Boolean
     return (head.x < 0) or (head.y < 0) or (head.x is boardWidth) or (head.y is boardHeight)
