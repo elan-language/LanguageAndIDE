@@ -243,26 +243,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  // TODO
-  ignore_test("Fail_ToInvestigate", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-constant a set to {"a":1}
-
-main
-  var a set to a.getKey("a")
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Parameters expected: 1 got: 2",
-      "Parameters expected: 1 got: 0",
-    ]);
-  });
-
   test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

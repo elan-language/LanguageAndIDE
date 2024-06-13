@@ -466,7 +466,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
+  var a set to {"a":4, "b":5, "c":6, "d":7, "e":8}
   set a["a"] to 0
 end main
 `;
@@ -494,5 +494,19 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to Dictionary"]);
+  });
+
+  test("Fail_recursive definition", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to a.getKey("a")
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Unknown to ImmutableDictionary"]);
   });
 });

@@ -7,6 +7,7 @@ import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { getParentScope } from "../symbols/symbol-helpers";
 
 export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   constructor(
@@ -43,7 +44,9 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   symbolType() {
     const id = this.value.id;
     return id
-      ? this.scope.resolveSymbol(id, transforms(), this.scope).symbolType(transforms())
+      ? getParentScope(this.scope)
+          .resolveSymbol(id, transforms(), this.scope)
+          .symbolType(transforms())
       : UnknownType.Instance;
   }
 
