@@ -17,14 +17,14 @@ suite("Pass_PassingTest", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
-  call g.drawCharMap()
+  var g set to initialisedCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
-  _stdlib.drawCharMap(g);
+  var g = _stdlib.initialisedCharMap();
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -45,16 +45,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putAt(0, 0, ("F", 1, 2))
-  call g.drawCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putAt(g, 0, 0, system.tuple(["F", 1, 2]));
-  _stdlib.drawCharMap(g);
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -75,14 +75,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putAt(10, 20, ("a", 1, 2))
   print g.getAt(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
   system.print(_stdlib.asString(_stdlib.getAt(g, 10, 20)));
 }
@@ -101,16 +101,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putChar(0, 0, "Z")
-  call g.drawCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putChar(g, 0, 0, "Z");
-  _stdlib.drawCharMap(g);
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -131,14 +131,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putAt(10, 20, ("a", 1, 2))
   print g.getChar(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
   system.print(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
 }
@@ -157,16 +157,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putForeground(0, 0, 3)
-  call g.drawCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putForeground(g, 0, 0, 3);
-  _stdlib.drawCharMap(g);
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -187,14 +187,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putAt(10, 20, ("a", 1, 2))
   print g.getForeground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
   system.print(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
 }
@@ -213,16 +213,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putBackground(1, 0, 4)
-  call g.drawCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putBackground(g, 1, 0, 4);
-  _stdlib.drawCharMap(g);
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -243,14 +243,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
+  var g set to initialisedCharMap()
   set g to g.putAt(10, 20, ("a", 1, 2))
   print g.getBackground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
+  var g = _stdlib.initialisedCharMap();
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
   system.print(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
 }
@@ -269,15 +269,15 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to getEmptyCharMap()
-  call g.drawCharMap()
+  var g set to initialisedCharMap()
+  call g.drawAsGraphics()
   call clearGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = _stdlib.getEmptyCharMap();
-  _stdlib.drawCharMap(g);
+  var g = _stdlib.initialisedCharMap();
+  _stdlib.drawAsGraphics(g);
   _stdlib.clearGraphics();
 }
 return [main, _tests];}`;
@@ -296,15 +296,15 @@ return [main, _tests];}`;
 
 main
   call setDefaultForeground(5)
-  var g set to getEmptyCharMap()
-  call g.drawCharMap()
+  var g set to initialisedCharMap()
+  call g.drawAsGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   _stdlib.setDefaultForeground(5);
-  var g = _stdlib.getEmptyCharMap();
-  _stdlib.drawCharMap(g);
+  var g = _stdlib.initialisedCharMap();
+  _stdlib.drawAsGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -399,13 +399,13 @@ return [main, _tests];}`;
 
 main
   var a set to new CharMap()
-  set a to getEmptyCharMap()
+  set a to initialisedCharMap()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.immutableList(new Array()));
-  a = _stdlib.getEmptyCharMap();
+  a = _stdlib.initialisedCharMap();
 }
 return [main, _tests];}`;
 
@@ -424,7 +424,7 @@ return [main, _tests];}`;
 main
   var foo set to new Foo()
   var a set to foo.p
-  set a to getEmptyCharMap()
+  set a to initialisedCharMap()
 end main
 
 class Foo
@@ -438,7 +438,7 @@ end class`;
 async function main() {
   var foo = system.initialise(new Foo());
   var a = foo.p;
-  a = _stdlib.getEmptyCharMap();
+  a = _stdlib.initialisedCharMap();
 }
 
 class Foo {
@@ -466,7 +466,7 @@ return [main, _tests];}`;
 
 main
   var a set to empty CharMap()
-  set a to getEmptyCharMap()
+  set a to initialisedCharMap()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

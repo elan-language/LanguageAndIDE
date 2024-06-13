@@ -1,7 +1,7 @@
 # 71f7a6ea00b62c9bfc7a2b0d9fd8a32a377cf26de6f3b7b8c897ffacedc59ea3 Elan v0.1 valid
 
 main
-  var cm set to getEmptyCharMap()
+  var cm set to initialisedCharMap()
   set cm to cm.putChar(1, 1, "1")
   set cm to cm.putChar(38, 1, "2")
   set cm to cm.putChar(1, 28, "3")
@@ -13,7 +13,7 @@ main
         set cm to cm.putBackground(x, y, r)
       end for
     end for
-    call cm.drawCharMap()
+    call cm.drawAsGraphics()
     call pause(10)
   end for
 end main

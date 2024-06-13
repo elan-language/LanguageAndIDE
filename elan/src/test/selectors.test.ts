@@ -209,4 +209,13 @@ suite("Unit tests", () => {
     const filtered = gs.optionsMatchingUserInput(`f`);
     assert.equal(filtered.length, 1);
   });
+  test("#535 - Selector should not respond to Enter", () => {
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const gs = new GlobalSelector(fl);
+    gs.select(true, false);
+    assert.equal(fl.getChildren().length, 1);
+    gs.processKey(key("Enter"));
+    assert.equal(gs.isSelected(), true);
+    assert.equal(fl.getChildren().length, 1);
+  });
 });

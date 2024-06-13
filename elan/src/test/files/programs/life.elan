@@ -1,17 +1,18 @@
-# 53d7755d8b58f7231a67112a7134dff81e4a847d821ba191fc18e287e21e76aa Elan v0.1 valid
+# 3510758353098b48ae7d33418763b1a90952fed5e9e77e3a8ef395dca4865d1a Elan v0.1 valid
 
 main
-  var cm set to getEmptyCharMap()
+  var cm set to initialisedCharMap()
   var grid set to exampleCells
   for i from 1 to 100 step 1
     set cm to updateCharMap(grid, cm)
-    call cm.drawCharMap()
+    call cm.drawAsGraphics()
     set grid to nextGeneration(grid)
     call pause(50)
   end for
 end main
 
-function updateCharMap(grid as {Boolean}, cm as {(String, Int, Int)}) return {(String, Int, Int)}
+function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
+  # Could do all this with a map function, as each cell knows its coordinates
   var cm2 set to cm
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
@@ -27,15 +28,18 @@ function updateCharMap(grid as {Boolean}, cm as {(String, Int, Int)}) return {(S
   return cm2
 end function
 
-constant black set to 0x000000
-
-constant white set to 0xffffff
+test 
+  let init be initialisedCharMap()
+  let cm2 be updateCharMap(exampleCells, init)
+  assert cm2.getBackground(0, 0) is white
+  assert cm2.getBackground(1, 0) is black
+end test
 
 function north(c as Int) return Int
   return if c > 19 then c - 20 else c + 380
 end function
 
-test north
+test 
   assert north(25) is 5
   assert north(19) is 399
   assert north(0) is 380
@@ -46,7 +50,7 @@ function south(c as Int) return Int
   return if c < 380 then c + 20 else c - 380
 end function
 
-test south
+test 
   assert south(25) is 45
   assert south(19) is 39
   assert south(20) is 40
@@ -58,7 +62,7 @@ function east(c as Int) return Int
   return if mod(c, 20) < 19 then c + 1 else c - 19
 end function
 
-test east
+test 
   assert east(25) is 26
   assert east(19) is 0
   assert east(20) is 21
@@ -69,7 +73,7 @@ function west(c as Int) return Int
   return if mod(c, 20) > 0 then c - 1 else c + 19
 end function
 
-test west
+test 
   assert west(25) is 24
   assert west(19) is 18
   assert west(0) is 19
@@ -80,7 +84,7 @@ function northEast(c as Int) return Int
   return north(east(c))
 end function
 
-test northEast
+test 
   assert northEast(25) is 6
   assert northEast(0) is 381
   assert northEast(19) is 380
@@ -92,7 +96,7 @@ function southEast(c as Int) return Int
   return south(east(c))
 end function
 
-test southEast
+test 
   assert southEast(25) is 46
   assert southEast(0) is 21
   assert southEast(19) is 20
@@ -104,7 +108,7 @@ function northWest(c as Int) return Int
   return north(west(c))
 end function
 
-test northWest
+test 
   assert northWest(25) is 4
   assert northWest(0) is 399
   assert northWest(19) is 398
@@ -116,7 +120,7 @@ function southWest(c as Int) return Int
   return south(west(c))
 end function
 
-test southWest
+test 
   assert southWest(25) is 44
   assert southWest(0) is 39
   assert southWest(19) is 38
@@ -128,7 +132,7 @@ function neighbourCells(c as Int) return {Int}
   return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 end function
 
-test neighbourCells
+test 
   assert neighbourCells(25) is {4, 5, 6, 24, 26, 44, 45, 46}
   assert neighbourCells(10) is {389, 390, 391, 9, 11, 29, 30, 31}
   assert neighbourCells(390) is {369, 370, 371, 389, 391, 9, 10, 11}
@@ -146,7 +150,7 @@ function liveNeighbours(cells as {Boolean}, c as Int) return Int
   return live.count()
 end function
 
-test liveNeighbours
+test 
   assert liveNeighbours(exampleCells, 0) is 5
   assert liveNeighbours(exampleCells, 19) is 4
   assert liveNeighbours(exampleCells, 30) is 2
@@ -160,7 +164,7 @@ function willLive(currentlyAlive as Boolean, liveNeighbours as Int) return Boole
   return if currentlyAlive then (liveNeighbours > 1) and (liveNeighbours < 4) else liveNeighbours is 3
 end function
 
-test willLive
+test 
   assert willLive(false, 0) is false
   assert willLive(false, 1) is false
   assert willLive(false, 2) is false
@@ -185,7 +189,7 @@ function nextCellValue(cells as {Boolean}, c as Int) return Boolean
   return willLive(cells.get(c), liveNeighbours(cells, c))
 end function
 
-test nextCellValue_tests
+test 
   assert nextCellValue(exampleCells, 0) is false
   assert nextCellValue(exampleCells, 19) is false
   assert nextCellValue(exampleCells, 30) is true
@@ -201,10 +205,14 @@ function nextGeneration(cells as {Boolean}) return {Boolean}
   return next.asList()
 end function
 
-test nextGeneration_tests
+test 
   var expected set to {false, true, false, true, true, true, true, false, true, false, true, true, true, false, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, true, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, false, false, true, false, true, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, false, false, true, false, true, false, true, false, true, false, false, false, false, false, false, false, true, true, true, true, true, false, true, false, true, false, true, true, false, true, false, true, false, true, true, false, false, false, true, false, true, false, false, false, true, false, false, false, false, true, false, true, false, false, true, false, false, false, true, false, true, false, true, true, false, true, false, false, true, true, false, true, false, false, false, false, false, false, true, false, true, true, false, false, true, false, false, true, true, false, true, true, false, false, false, true, true, false, true, true, false, false, false, true, false, false, false, false, false, true, false, true, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, true, false, false, true, false, true, false, true, false, false, true, false, true, true, false, false, false, false, true, false, true, true, true, false, false, true, true, false, true, false, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, true, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, true, true, false, false, false, true, false, false, false, true, true, false, false, false, true, false, true, false, true, false, false, false, true, true, true, true}
   var actual set to nextGeneration(exampleCells)
   assert actual is expected
 end test
+
+constant black set to 0x000000
+
+constant white set to 0xffffff
 
 constant exampleCells set to {false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false}
