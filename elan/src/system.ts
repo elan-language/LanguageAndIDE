@@ -54,6 +54,11 @@ export class System {
     return this.emptyImmutableListSingleton;
   }
 
+  emptyTuple(toInit: any[]) {
+    const t = [...toInit];
+    return this.tuple(t);
+  }
+
   tuple(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
