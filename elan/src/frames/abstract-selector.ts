@@ -131,6 +131,10 @@ export abstract class AbstractSelector extends AbstractFrame {
         codeHasChanged = true;
         break;
       }
+      case "Enter": {
+        //do nothing. This is to prevent it being passed up to superclass
+        break;
+      }
       case "d": {
         if (e.modKey.control) {
           this.deleteIfPermissible(); // Deleting selector is not a code change
