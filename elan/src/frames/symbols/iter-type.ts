@@ -4,6 +4,8 @@ import { SymbolType } from "../interfaces/symbol-type";
 export class IterType implements GenericSymbolType {
   constructor(public readonly ofType: SymbolType) {}
 
+  initialValue = "system.emptyIter()";
+
   isImmutable = true;
 
   get name() {

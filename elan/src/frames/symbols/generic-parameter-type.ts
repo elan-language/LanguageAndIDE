@@ -5,6 +5,8 @@ export class GenericParameterType implements SymbolType {
 
   isImmutable = false;
 
+  initialValue = "";
+
   get name() {
     return `Generic Parameter ${this.id}`;
   }

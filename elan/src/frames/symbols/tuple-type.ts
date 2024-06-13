@@ -5,6 +5,8 @@ export class TupleType implements SymbolType {
 
   isImmutable = true;
 
+  initialValue = "";
+
   get name() {
     return `Tuple <${this.ofTypes.map((t) => t.name).join(", ")}>`;
   }

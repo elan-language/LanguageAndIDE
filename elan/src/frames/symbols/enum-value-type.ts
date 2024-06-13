@@ -7,6 +7,8 @@ export class EnumValueType implements SymbolType {
   ) {}
   isImmutable = true;
 
+  initialValue = "";
+
   toString() {
     return `${this.owner}.${this.name}`;
   }

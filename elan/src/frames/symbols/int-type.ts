@@ -2,6 +2,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 
 export class IntType implements SymbolType {
   private constructor() {}
+  initialValue = "0";
 
   isImmutable = true;
 

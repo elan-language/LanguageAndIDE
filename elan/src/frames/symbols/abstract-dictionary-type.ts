@@ -7,6 +7,8 @@ export class AbstractDictionaryType implements SymbolType {
   ) {}
   isImmutable = false;
 
+  initialValue = "";
+
   get name() {
     return `AbstractDictionary <${this.keyType.name},${this.valueType.name}>`;
   }

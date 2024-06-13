@@ -6,6 +6,8 @@ export class LetType implements GenericSymbolType {
 
   isImmutable = true;
 
+  initialValue = "";
+
   get name() {
     return `Let <${this.ofType.name}>`;
   }

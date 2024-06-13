@@ -51,32 +51,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   compileToEmptyObjectCode(): string {
-    switch (this.id) {
-      case "Int":
-      case "Float":
-        return "0";
-      case "String":
-        return '""';
-      case "Boolean":
-        return "false";
-      case "ImmutableList":
-        return "system.emptyImmutableList()";
-      case "ArrayList":
-        return "system.emptyArrayList()";
-      case "Dictionary":
-        return "system.emptyDictionary()";
-      case "ImmutableDictionary":
-        return "system.emptyImmutableDictionary()";
-      case "Iter":
-        return "system.emptyIter()";
-    }
     const st = this.symbolType();
-
-    if (st instanceof EnumType) {
-      return `${this.id}._default`;
-    }
-
-    return `${this.id}.emptyInstance()`;
+    return st.initialValue;
   }
 
   symbolType() {

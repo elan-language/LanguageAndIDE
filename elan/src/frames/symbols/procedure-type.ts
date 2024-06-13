@@ -9,6 +9,8 @@ export class ProcedureType implements SymbolType {
 
   isImmutable = true;
 
+  initialValue = "";
+
   get name() {
     return `Procedure (${this.parametersTypes.map((p) => p.name).join(", ")})`;
   }

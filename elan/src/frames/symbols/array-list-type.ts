@@ -8,6 +8,8 @@ export class ArrayListType implements GenericSymbolType {
   ) {}
   isImmutable = false;
 
+  initialValue = "system.emptyArrayList()";
+
   get name() {
     return `ArrayList <${this.ofType.name}>`;
   }

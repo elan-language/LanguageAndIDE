@@ -3,6 +3,8 @@ import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbol,
+  mustBeKnownSymbolType,
+  mustBeNewable,
   mustBeOneOrTwoOfTypeInt,
   mustMatchParameters,
 } from "../compile-rules";
@@ -12,6 +14,10 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { TypeAsn } from "./type-asn";
+import { ImmutableListType } from "../symbols/immutable-list-type";
+import { ArrayListType } from "../symbols/array-list-type";
+import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
+import { DictionaryType } from "../symbols/dictionary-type";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -36,8 +42,11 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     const parametersAsString = this.parameters.map((p) => p.compile()).join(", ");
     const typeAsString = this.typeNode.compile();
+    const type = this.typeNode.symbolType();
 
-    if (this.typeNode.id === "ArrayList") {
+    mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
+
+    if (type instanceof ArrayListType) {
       this.typeNode.is2d = this.parameters.length === 2;
       mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
 
@@ -48,33 +57,29 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.array(${parametersAsString}), ${init})`;
     }
 
-    if (this.typeNode.id === "ImmutableList") {
+    if (type instanceof ImmutableListType) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.immutableList(new ${typeAsString}()))`;
+      return `system.initialise(system.immutableList(new Array()))`;
     }
 
-    if (this.typeNode.id === "ImmutableDictionary") {
+    if (type instanceof ImmutableDictionaryType) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.immutableDictionary(new ${typeAsString}()))`;
+      return `system.initialise(system.immutableDictionary(new Object()))`;
     }
 
-    if (this.typeNode.id === "Dictionary") {
+    if (type instanceof DictionaryType) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.dictionary(new ${typeAsString}()))`;
+      return `system.initialise(system.dictionary(new Object()))`;
     }
 
-    const cls = this.scope.resolveSymbol(this.typeNode.id, transforms(), this.scope);
+    if (type instanceof ClassType) {
+      mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
-    mustBeKnownSymbol(cls, this.compileErrors, this.fieldId);
+      if (type.isAbstract === false) {
+        const classSymbol = this.scope.resolveSymbol(type.className, transforms(), this.scope);
 
-    const cdt = cls.symbolType(transforms());
-
-    if (cdt instanceof ClassType) {
-      mustBeConcreteClass(cdt, this.compileErrors, this.fieldId);
-
-      if (cdt.isAbstract === false) {
         // todo is this right - or should we resolve constructor on class scope and get constructor symbol ?
-        const parameterTypes = (cls as ClassFrame)
+        const parameterTypes = (classSymbol as ClassFrame)
           .getConstructor()
           .params.symbolTypes(transforms());
         mustMatchParameters(
@@ -85,9 +90,12 @@ export class NewAsn extends AbstractAstNode implements AstNode {
           this.fieldId,
         );
       }
+
+      return `system.initialise(new ${type.className}(${parametersAsString}))`;
     }
 
-    return `system.initialise(new ${typeAsString}(${parametersAsString}))`;
+    mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
+    return "";
   }
 
   symbolType() {

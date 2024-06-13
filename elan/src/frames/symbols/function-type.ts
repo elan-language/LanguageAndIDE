@@ -7,6 +7,7 @@ export class FunctionType implements SymbolType {
     public readonly isExtension: boolean,
     public readonly isPure: boolean = true,
   ) {}
+  initialValue = "";
 
   isImmutable = true;
 

@@ -6,6 +6,8 @@ export class ImmutableDictionaryType extends AbstractDictionaryType implements S
     super(keyType, valueType);
   }
 
+  initialValue = "system.emptyImmutableDictionary()";
+
   isImmutable = true;
 
   get name() {

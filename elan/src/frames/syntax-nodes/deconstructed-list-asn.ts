@@ -23,7 +23,7 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return { name: "", isImmutable: true };
+    return { name: "", isImmutable: true, initialValue: "" };
   }
 
   toString() {

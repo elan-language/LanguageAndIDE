@@ -1,6 +1,8 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -390,5 +392,86 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_newCharMap", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new CharMap()
+  set a to getEmptyCharMap()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.immutableList(new Array()));
+  a = _stdlib.getEmptyCharMap();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_defaultCharMap", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to new Foo()
+  var a set to foo.p
+  set a to getEmptyCharMap()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p as CharMap
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo = system.initialise(new Foo());
+  var a = foo.p;
+  a = _stdlib.getEmptyCharMap();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p", "CharMap"]]);};
+  constructor() {
+
+  }
+
+  p = system.emptyImmutableList();
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Fail_emptyCharMap", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty CharMap()
+  set a to getEmptyCharMap()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });

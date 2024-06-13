@@ -49,6 +49,7 @@ class TypeHolder implements SymbolType {
   ) {}
   isImmutable = false;
   name = "TypeHolder";
+  initialValue = "";
   toString() {
     return this.name;
   }

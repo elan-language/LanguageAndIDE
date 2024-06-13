@@ -27,6 +27,7 @@ import {
   NotCallableCompileError,
   NotIndexableCompileError,
   NotIterableCompileError,
+  NotNewableCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
   PrivatePropertyCompileError,
@@ -734,4 +735,8 @@ export function mustHaveUniqueKeys(
   if (set.size !== keys.length) {
     compileErrors.push(new DuplicateKeyCompileError(location));
   }
+}
+
+export function mustBeNewable(type: string, compileErrors: CompileError[], location: string) {
+  compileErrors.push(new NotNewableCompileError(type, location, false));
 }
