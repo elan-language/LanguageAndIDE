@@ -500,6 +500,25 @@ end procedure
     assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 1"]);
   });
 
+  test("Fail_ExtensionParameterCount", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1]
+  call a.add()
+  call a.add(1, 2)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameters expected: 1 got: 0",
+      "Parameters expected: 1 got: 2",
+    ]);
+  });
+
   test("Fail_PassingWrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

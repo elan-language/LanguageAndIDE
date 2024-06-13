@@ -323,6 +323,7 @@ export function mustCallExtensionViaQualifier(
 export function mustMatchParameters(
   parms: AstNode[],
   ofType: SymbolType[],
+  isExtension: boolean,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -333,7 +334,9 @@ export function mustMatchParameters(
     const t = ofType[i];
 
     if (p === undefined || t === undefined) {
-      compileErrors.push(new ParametersCompileError(ofType.length, parms.length, location));
+      const expected = isExtension ? ofType.length - 1 : ofType.length;
+      const actual = isExtension ? parms.length - 1 : parms.length;
+      compileErrors.push(new ParametersCompileError(expected, actual, location));
     } else {
       mustBeCompatibleType(t, p.symbolType(), compileErrors, location);
     }

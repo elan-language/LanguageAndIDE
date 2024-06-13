@@ -72,7 +72,13 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
       }
 
-      mustMatchParameters(parameters, parameterTypes, this.compileErrors, this.fieldId);
+      mustMatchParameters(
+        parameters,
+        parameterTypes,
+        fst.isExtension,
+        this.compileErrors,
+        this.fieldId,
+      );
     }
 
     const pp = parameters.map((p) => p.compile()).join(", ");

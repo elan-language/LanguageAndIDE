@@ -94,7 +94,13 @@ export class CallStatement extends AbstractFrame implements Statement {
         qualifier = undefined;
       }
 
-      mustMatchParameters(parameters, ps.parametersTypes, this.compileErrors, this.htmlId);
+      mustMatchParameters(
+        parameters,
+        ps.parametersTypes,
+        ps.isExtension,
+        this.compileErrors,
+        this.htmlId,
+      );
       isAsync = ps.isAsync;
     }
 
