@@ -47,9 +47,9 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("unicode", new FunctionType([IntType.Instance], StringType.Instance, false)),
     ],
     [
-      "asArray",
+      "asArrayList",
       this.getSymbol(
-        "asArray",
+        "asArrayList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
           new ArrayListType(new GenericParameterType("T"), false),
@@ -58,9 +58,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "asList",
+      "asImmutableList",
       this.getSymbol(
-        "asList",
+        "asImmutableList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
           new ImmutableListType(new GenericParameterType("T")),

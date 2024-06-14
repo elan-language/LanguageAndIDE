@@ -46,7 +46,7 @@ class GridGraph
   # Returns a list of nodes that can be reached from the specified node
   function neighbours(p Point) return [Point]
     var list set to [ new Point(p.x, p.y-1),new* Point(p.x+1, p.y-1),new* Point(p.x+1, p.y),new* Point(p.x+1, p.y+1),new* Point(p.x, p.y+1),new* Point(p.x-1, p.y+1), new Point(p.x-1, p.y),new* Point(p.x-1, p.y-1) ]
-    return list.filter(lambda n => nodeExists(n)).asList()
+    return list.filter(lambda n => nodeExists(n)).asImmutableList()
   end function
 
   # Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm

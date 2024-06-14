@@ -308,13 +308,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to {"foo","bar","yon"}.asArray()
+  var a set to {"foo","bar","yon"}.asArrayList()
   print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.asArray(system.immutableList(["foo", "bar", "yon"]));
+  var a = _stdlib.asArrayList(system.immutableList(["foo", "bar", "yon"]));
   system.print(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;

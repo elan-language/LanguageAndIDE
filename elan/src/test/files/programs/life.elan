@@ -1,7 +1,7 @@
-# f964c7497fa30566e8f2d1eff2a43c8a84788eac446ae0403b7aa78adfe78612 Elan v0.1 valid
+# 4ec60ffe7b7f2cc05ffcef32f0a3932a113b88f98dd0a2eecb5ee15138ad39ae Elan v0.1 valid
 
 main
-  var cm set to initialisedCharMap(0, 0)
+  var cm set to initialisedCharMap(black, white)
   var grid set to exampleCells
   for i from 1 to 100 step 1
     set cm to updateCharMap(grid, cm)
@@ -202,7 +202,7 @@ end test
 function nextGeneration(cells as {Boolean}) return {Boolean}
   let cellRange be range(0, cells.length() - 1)
   let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.asList()
+  return next.asImmutableList()
 end function
 
 test 

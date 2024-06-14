@@ -1,10 +1,10 @@
-# a36b4793d628c9319e7dfa009b63b2a8b6b3341189fa270295e90b563b90b69e Elan v0.1 valid
+# b2ddad90a15b3345358f1905edbb28c93770dc78353d80ea2fafd8386d6cf596 Elan v0.1 valid
 
 main
   var currentDirection set to Direction.up
   var snake set to new Snake(40, 30, currentDirection)
   call snake.setNewApplePosition()
-  var cm set to initialisedCharMap(0, 0)
+  var cm set to initialisedCharMap(black, white)
   var gameOn set to true
   while gameOn
     set cm to snake.updateCharMap(cm)
@@ -141,6 +141,8 @@ constant green set to 0x00ff00
 constant red set to 0xff0000
 
 constant white set to 0xffffff
+
+constant black set to 0x000000
 
 test square
   var tail set to new Square(20, 15)

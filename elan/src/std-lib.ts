@@ -81,7 +81,7 @@ export class StdLib {
     return String.fromCharCode(n);
   }
 
-  asArray<T>(list: T[]): T[] {
+  asArrayList<T>(list: T[]): T[] {
     const arr = [...list];
     (arr as unknown as hasHiddenType)._type = "ArrayList";
     return arr;
@@ -91,7 +91,7 @@ export class StdLib {
     return arr;
   }
 
-  asList<T>(arr: T[]): T[] {
+  asImmutableList<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "ImmutableList";
     return list;
@@ -363,7 +363,7 @@ export class StdLib {
       if (result[i]) {
         result[i].push(i);
       } else {
-        result[i] = this.asList([i]);
+        result[i] = this.asImmutableList([i]);
       }
     }
   }
