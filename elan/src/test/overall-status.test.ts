@@ -219,8 +219,16 @@ suite("Editing Fields Tests", () => {
     //assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 
-  ignore_test("test snake2", async () => {
-    const f = (await loadFileAsModel("programs/snake2.elan")) as FileImpl;
+  test("test snake", async () => {
+    const f = (await loadFileAsModel("programs/snake.elan")) as FileImpl;
+    const runner = await createTestRunner();
+    await f.refreshAllStatuses(runner);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
+    assert.equal(f.readCompileStatus(), CompileStatus.ok);
+    assert.equal(f.readTestStatus(), TestStatus.pass);
+  });
+  ignore_test("test cards", async () => {
+    const f = (await loadFileAsModel("programs/cards.elan")) as FileImpl;
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);

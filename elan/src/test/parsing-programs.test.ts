@@ -22,4 +22,7 @@ suite("File Parsing Tests", () => {
   test("parse Frames - binary-search", async () => {
     await assertFileParses("programs/binary-search.elan");
   });
+  test("parse Frames - cards", async () => {
+    await assertFileParses("programs/cards.elan");
+  });
 });
