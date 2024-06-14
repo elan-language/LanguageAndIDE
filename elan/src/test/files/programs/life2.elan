@@ -1,4 +1,4 @@
-# 95e26c0781a46c3749f6270118781a0bcab75a56d0ba79915a2faa0c22be370f Elan v0.1 valid
+# 332ce1169cf4f5e718a260350c13fc3c89ecee1430962c8b7aa6dc8918b57864 Elan v0.1 valid
 
 main
   var cm set to initialisedCharMap(black, white)
@@ -11,153 +11,23 @@ main
   end for
 end main
 
-function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
-  var cm2 set to cm
-  for row from 0 to 19 step 1
-    for col from 0 to 19 step 1
-      var cell set to grid.get(col*20 + row)
-      if cell
-        then
-          set cm2 to cm2.putBackground(col, row, black)
-        else
-          set cm2 to cm2.putBackground(col, row, white)
-      end if
+function convertGridToCharMap(grid as {Boolean}) return CharMap
+  var cm set to initialisedCharMap(black, white)
+  for x from 0 to 39 step 1
+    for y from 0 to 29 step 1
+      var isAlive set to grid.get(y*40 + x)
+      var colour set to if isAlive then black else white
+      set cm to cm.putBackground(x, y, colour)
     end for
   end for
-  return cm2
+  return cm
 end function
 
-test 
-  let init be initialisedCharMap(0, 0)
-  let cm2 be updateCharMap(exampleCells, init)
-  assert cm2.getBackground(0, 0) is white
-  assert cm2.getBackground(1, 0) is black
-end test
-
-function north(c as Int) return Int
-  return if c > 19 then c - 20 else c + 380
-end function
-
-test 
-  assert north(25) is 5
-  assert north(19) is 399
-  assert north(0) is 380
-  assert north(20) is 0
-end test
-
-function south(c as Int) return Int
-  return if c < 380 then c + 20 else c - 380
-end function
-
-test 
-  assert south(25) is 45
-  assert south(19) is 39
-  assert south(20) is 40
-  assert south(380) is 0
-  assert south(399) is 19
-end test
-
-function east(c as Int) return Int
-  return if mod(c, 20) < 19 then c + 1 else c - 19
-end function
-
-test 
-  assert east(25) is 26
-  assert east(19) is 0
-  assert east(20) is 21
-  assert east(399) is 380
-end test
-
-function west(c as Int) return Int
-  return if mod(c, 20) > 0 then c - 1 else c + 19
-end function
-
-test 
-  assert west(25) is 24
-  assert west(19) is 18
-  assert west(0) is 19
-  assert west(380) is 399
-end test
-
-function northEast(c as Int) return Int
-  return north(east(c))
-end function
-
-test 
-  assert northEast(25) is 6
-  assert northEast(0) is 381
-  assert northEast(19) is 380
-  assert northEast(380) is 361
-  assert northEast(399) is 360
-end test
-
-function southEast(c as Int) return Int
-  return south(east(c))
-end function
-
-test 
-  assert southEast(25) is 46
-  assert southEast(0) is 21
-  assert southEast(19) is 20
-  assert southEast(380) is 1
-  assert southEast(399) is 0
-end test
-
-function northWest(c as Int) return Int
-  return north(west(c))
-end function
-
-test 
-  assert northWest(25) is 4
-  assert northWest(0) is 399
-  assert northWest(19) is 398
-  assert northWest(380) is 379
-  assert northWest(399) is 378
-end test
-
-function southWest(c as Int) return Int
-  return south(west(c))
-end function
-
-test 
-  assert southWest(25) is 44
-  assert southWest(0) is 39
-  assert southWest(19) is 38
-  assert southWest(380) is 19
-  assert southWest(399) is 18
-end test
-
-function neighbourCells(c as Int) return {Int}
-  return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
-end function
-
-test 
-  assert neighbourCells(25) is {4, 5, 6, 24, 26, 44, 45, 46}
-  assert neighbourCells(10) is {389, 390, 391, 9, 11, 29, 30, 31}
-  assert neighbourCells(390) is {369, 370, 371, 389, 391, 9, 10, 11}
-  assert neighbourCells(60) is {59, 40, 41, 79, 61, 99, 80, 81}
-  assert neighbourCells(79) is {58, 59, 40, 78, 60, 98, 99, 80}
-  assert neighbourCells(0) is {399, 380, 381, 19, 1, 39, 20, 21}
-  assert neighbourCells(19) is {398, 399, 380, 18, 0, 38, 39, 20}
-  assert neighbourCells(399) is {378, 379, 360, 398, 380, 18, 19, 0}
-  assert neighbourCells(380) is {379, 360, 361, 399, 381, 19, 0, 1}
-end test
-
-function liveNeighbours(cells as {Boolean}, c as Int) return Int
-  let neighbours be neighbourCells(c)
-  let live be neighbours.filter(lambda i as Int => cells.get(i))
-  return live.count()
-end function
-
-test 
-  assert liveNeighbours(exampleCells, 0) is 5
-  assert liveNeighbours(exampleCells, 19) is 4
-  assert liveNeighbours(exampleCells, 30) is 2
-  assert liveNeighbours(exampleCells, 44) is 3
-  assert liveNeighbours(exampleCells, 59) is 5
-  assert liveNeighbours(exampleCells, 60) is 3
-  assert liveNeighbours(exampleCells, 399) is 3
-end test
+procedure fillRandomGrid(grid as [Boolean])
+  for i from 0 to 1199 step 1
+    set grid[i] to random() > 0.5
+  end for
+end procedure
 
 function willLive(currentlyAlive as Boolean, liveNeighbours as Int) return Boolean
   return if currentlyAlive then (liveNeighbours > 1) and (liveNeighbours < 4) else liveNeighbours is 3
