@@ -1,7 +1,7 @@
-# 3510758353098b48ae7d33418763b1a90952fed5e9e77e3a8ef395dca4865d1a Elan v0.1 valid
+# f964c7497fa30566e8f2d1eff2a43c8a84788eac446ae0403b7aa78adfe78612 Elan v0.1 valid
 
 main
-  var cm set to initialisedCharMap()
+  var cm set to initialisedCharMap(0, 0)
   var grid set to exampleCells
   for i from 1 to 100 step 1
     set cm to updateCharMap(grid, cm)
@@ -29,7 +29,7 @@ function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
 end function
 
 test 
-  let init be initialisedCharMap()
+  let init be initialisedCharMap(0, 0)
   let cm2 be updateCharMap(exampleCells, init)
   assert cm2.getBackground(0, 0) is white
   assert cm2.getBackground(1, 0) is black

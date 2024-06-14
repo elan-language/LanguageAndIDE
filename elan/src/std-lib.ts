@@ -1,3 +1,4 @@
+import { integer } from "vscode-languageclient";
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
 
@@ -410,16 +411,13 @@ export class StdLib {
   xSize = 40;
   ySize = 30;
 
-  defaultForeground = 0x000000;
-  defaultBackground = 0xffffff;
-
   idx(x: number, y: number) {
     return x * this.ySize + y;
   }
 
-  initialisedCharMap() {
+  initialisedCharMap(foreground: integer, background: integer) {
     const emptyMap: CharMap = [];
-    const emptyLocation: Location = ["", this.defaultForeground, this.defaultBackground];
+    const emptyLocation: Location = ["", foreground, background];
 
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
@@ -469,10 +467,6 @@ export class StdLib {
 
   clearGraphics() {
     this.system.elanInputOutput.clearGraphics();
-  }
-
-  setDefaultForeground(f: number) {
-    this.defaultForeground = f;
   }
 
   drawAsGraphics(map: CharMap) {

@@ -667,7 +667,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "initialisedCharMap",
         new FunctionType(
-          [],
+          [IntType.Instance, IntType.Instance],
           new ImmutableListType(
             new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
           ),
@@ -853,10 +853,6 @@ export class StdLibSymbols implements Scope {
           false,
         ),
       ),
-    ],
-    [
-      "setDefaultForeground",
-      this.getSymbol("setDefaultForeground", new ProcedureType([IntType.Instance], false, false)),
     ],
     [
       "drawAsGraphics",
