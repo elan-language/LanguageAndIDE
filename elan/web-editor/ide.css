@@ -18,10 +18,10 @@ body {
     height: 100vh;
     width: 100%;
     overflow: hidden;
-    padding: 15px;
+    padding: 10px;
     margin: 0;
   }
-  #code-title, #console-title, #graphics-title, #status-title, #status .row {
+  #code-title, #console-title, #graphics-title, #status .row {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
@@ -38,35 +38,42 @@ body {
 }
 #console-title {
   grid-row: 1;
-  grid-column: 25 / 48;
+  grid-column: 32 / 48;
   }
 
 .elan-code{
-  grid-column: 1 / 24;
+  grid-column: 1 / 26;
   grid-row: 2/36; 
   padding: 5px;
   margin-left: 10px;
 }
 
+#logo {
+  grid-row: 2;
+  grid-column: 27 / 31;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
   #console {
-    grid-column: 25 / 48;
+    grid-column: 32 / 48;
     grid-row: 2/17;
     white-space: pre;
     padding: 5px;
   }
   #status-title {
-    grid-column: 25 / 31;
+    grid-column: 27 / 31;
     grid-row: 18;
   }
   #status-names {
-    grid-column: 25 / 27;
-    grid-row: 19 / 35;
+    grid-column: 27 / 28;
+    grid-row: 5;
     background-color: var(--ideDefaultBackground);
     color: var(--ideDefaultText);
   }
   #status-values {
-    grid-column: 27 / 31;
-    grid-row: 19 / 35;
+    grid-column: 28 / 31;
+    grid-row: 5;
     margin-left: 20px;
     background-color: var(--ideDefaultBackground);
   }
@@ -110,16 +117,15 @@ body {
     grid-template-columns: repeat(40, 1fr);
     grid-template-rows: repeat(30, 1fr);
 }
-
- #code-controls, #run-controls {
-    grid-column: 25/31;
+ #code-controls {
+    grid-row: 1;
+    grid-column: 19/28;
     background-color: var(--ideDefaultBackground);
   }
   #run-controls {
-    grid-row: 30;;
-  }
-  #code-controls {
-    grid-row: 35;
+    grid-row: 6;
+    grid-column: 27/31;
+    background-color: var(--ideDefaultBackground);
   }
 
 /* Buttons */
