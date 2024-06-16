@@ -33,12 +33,12 @@ body {
   }
   #code-title {
     grid-row: 1;
-    grid-column: 1 / 24;
+    grid-column: 14 / 26;
     margin-left: 10px;
 }
 #console-title {
-  grid-row: 1;
-  grid-column: 32 / 48;
+  grid-row: 5;
+  grid-column: 29 / 48;
   }
 
 .elan-code{
@@ -49,31 +49,25 @@ body {
 }
 
 #logo {
-  grid-row: 2;
-  grid-column: 27 / 31;
+  grid-row: 1/4;
+  grid-column: 44 / 48;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
   #console {
-    grid-column: 32 / 48;
-    grid-row: 2/17;
+    grid-column: 27 / 48;
+    grid-row: 6/17;
     white-space: pre;
     padding: 5px;
   }
-  #status-title {
-    grid-column: 27 / 31;
-    grid-row: 18;
-  }
   #status-names {
-    grid-column: 27 / 28;
-    grid-row: 5;
+    grid-column: 35 / 36;
+    grid-row: 1/5;
     background-color: var(--ideDefaultBackground);
     color: var(--ideDefaultText);
   }
   #status-values {
-    grid-column: 28 / 31;
-    grid-row: 5;
+    grid-column: 36 / 40;
+    grid-row: 1/5;
     margin-left: 20px;
     background-color: var(--ideDefaultBackground);
   }
@@ -81,15 +75,14 @@ body {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
-  }
-  #status-names div, #status-values div{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   #status-values div {
     font-family: var(--ideTitleFont);
     text-align: center;
     background-color: var(--ideDefaultBackground);
     height:20px;
+    margin-bottom: 10px;
   }
   #status-values .ok {
     background-color: var(--ok);
@@ -102,16 +95,18 @@ body {
   }
 
   #graphics-title {
-    grid-column: 32 / 48;
+    grid-column: 29 / 48;
     grid-row: 18;
     }
   #graphics {
     /* position pane within outer grid */
-    grid-column: 32 / 48;
+    grid-column: 27 / 48;
     grid-row: 19/36;
     background-color: var(--idePanelBackground);
     overflow: hidden;
     margin: 0;
+    height: 100%;
+    aspect-ratio: 4/3;
   /* Define it as a sub-grid within the overall grid */
     display: grid;
     grid-template-columns: repeat(40, 1fr);
@@ -119,12 +114,14 @@ body {
 }
  #code-controls {
     grid-row: 1;
-    grid-column: 19/28;
+    grid-column: 1/13;
     background-color: var(--ideDefaultBackground);
+    margin-left: 10px;
   }
   #run-controls {
-    grid-row: 6;
-    grid-column: 27/31;
+    grid-row: 2/3;
+    grid-column: 27/31
+    ;
     background-color: var(--ideDefaultBackground);
   }
 
@@ -174,12 +171,12 @@ button.plain:hover, button.plain:active {
 }
 
 button#clear-console {
-  grid-row: 1;
-  grid-column: 47;
+  grid-row: 5;
+  grid-column: 27 / 28;
 }
 button#clear-graphics {
   grid-row: 18;
-  grid-column: 47;
+  grid-column: 27 / 28;
 }
 button#expand-collapse {
   grid-row: 1;
