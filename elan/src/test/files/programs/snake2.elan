@@ -1,4 +1,4 @@
-# cd6ed25412ca6b6c2f806d3b8675c49854fcd083b5cbd68454c51b01fdaafece Elan v0.1 valid
+# 35ff5be49d9545198440e90756d3ca3f6532ca95768c055b3c8c07af287b91dd Elan v0.1 valid
 
 main
   var board set to new Board(40, 30)
@@ -6,7 +6,7 @@ main
   var snake set to new Snake(board, currentDirection)
   var apple set to new Apple(board)
   call apple.newRandomPosition(snake)
-  var cm set to initialisedCharMap(black, white)
+  var cm set to initialisedCharMap(white, white)
   var gameOn set to true
   while gameOn
     set cm to snake.updateCharMap(cm)
@@ -21,51 +21,10 @@ main
   print "Game Over! Score: {snake.length() - 1}"
 end main
 
-class Board
-  constructor(width as Int, height as Int)
-    set property.width to width
-    set property.height to height
-  end constructor
-
-  property width as Int
-
-  property height as Int
-
-  function isAtEdge(head as Square) return Boolean
-    return (head.x < 0) or (head.y < 0) or (head.x is width) or (head.y is height)
-  end function
-
-end class
-
-class Apple
-  constructor(board as Board)
-    set property.board to board
-  end constructor
-
-  property board as Board
-
-  property location as Square
-
-  procedure newRandomPosition(snake as Snake)
-    repeat
-      var w set to board.width - 1
-      var h set to board.height - 1
-      var ranW set to randomInt(0, w)
-      var ranH set to randomInt(0, h)
-      set location to new Square(ranW, ranH)
-    end repeat when not snake.bodyCovers(location)
-  end procedure
-
-  function updateCharMap(cm as CharMap) return CharMap
-    return cm.putBackground(location.x, location.y, red)
-  end function
-
-end class
-
 class Snake
   constructor(board as Board, startingDirection as Direction)
     set property.board to board
-    var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
+    var tail set to new Square(div(board.width, 2), div(board.height, 2))
     set body to [tail]
     set head to tail.getAdjacentSquare(startingDirection)
     set priorTail to tail
@@ -76,10 +35,6 @@ class Snake
   property head as Square
 
   property body as [Square]
-
-  property boardHeight as Int
-
-  property boardWidth as Int
 
   property priorTail as Square
 
@@ -125,6 +80,47 @@ class Snake
 
 end class
 
+class Apple
+  constructor(board as Board)
+    set property.board to board
+  end constructor
+
+  property board as Board
+
+  property location as Square
+
+  procedure newRandomPosition(snake as Snake)
+    repeat
+      var w set to board.width - 1
+      var h set to board.height - 1
+      var ranW set to randomInt(0, w)
+      var ranH set to randomInt(0, h)
+      set location to new Square(ranW, ranH)
+    end repeat when not snake.bodyCovers(location)
+  end procedure
+
+  function updateCharMap(cm as CharMap) return CharMap
+    return cm.putBackground(location.x, location.y, red)
+  end function
+
+end class
+
+immutable class Board
+  constructor(width as Int, height as Int)
+    set property.width to width
+    set property.height to height
+  end constructor
+
+  property width as Int
+
+  property height as Int
+
+  function isAtEdge(head as Square) return Boolean
+    return (head.x < 0) or (head.y < 0) or (head.x is width) or (head.y is height)
+  end function
+
+end class
+
 immutable class Square
   constructor(x as Int, y as Int)
     set property.x to x
@@ -153,10 +149,6 @@ immutable class Square
     return new Square(newX, newY)
   end function
 
-  function asString() return String
-    return "x{x}y{y}"
-  end function
-
 end class
 
 enum Direction
@@ -170,8 +162,6 @@ constant green set to 0x00ff00
 constant red set to 0xff0000
 
 constant white set to 0xffffff
-
-constant black set to 0x000000
 
 test square
   var tail set to new Square(20, 15)
