@@ -28,6 +28,7 @@ import {
   NotIndexableCompileError,
   NotIterableCompileError,
   NotNewableCompileError,
+  NotUniqueNameCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
   PrivatePropertyCompileError,
@@ -53,6 +54,8 @@ import { EnumType } from "./symbols/enum-type";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 import { isInsideFunctionOrConstructor } from "./helpers";
+import { getGlobalScope } from "./symbols/symbol-helpers";
+import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -685,6 +688,21 @@ export function mustNotBeConstant(
 
   if (s === SymbolScope.program) {
     compileErrors.push(new MutateCompileError(`constant`, location));
+  }
+}
+
+export function mustBeUniqueGlobalName(
+  name: string,
+  scope: Scope,
+  transforms: Transforms,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  const gs = getGlobalScope(scope);
+  const symbol = gs.resolveSymbol(name, transforms, scope);
+
+  if (symbol instanceof DuplicateSymbol) {
+    compileErrors.push(new NotUniqueNameCompileError(name, location));
   }
 }
 

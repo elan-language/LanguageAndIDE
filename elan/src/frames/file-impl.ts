@@ -53,6 +53,7 @@ import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
 import { Transforms } from "./syntax-nodes/transforms";
 import { AssertOutcome } from "../system";
+import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -557,11 +558,13 @@ export class FileImpl implements File, Scope {
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     // unknown because of typescript quirk
     const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
+    const matches = globalSymbols.filter((s) => s.symbolId === id);
 
-    for (const s of globalSymbols) {
-      if (s.symbolId === id) {
-        return s;
-      }
+    if (matches.length === 1) {
+      return matches[0];
+    }
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
     }
 
     return this.libraryScope.resolveSymbol(id, transforms, this);
