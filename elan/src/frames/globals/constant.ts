@@ -11,7 +11,8 @@ import { GlobalFrame } from "../interfaces/global-frame";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Collapsible } from "../interfaces/collapsible";
-import { mustBeUniqueGlobalName } from "../compile-rules";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
@@ -64,7 +65,13 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const name = this.name.compile(transforms);
-    mustBeUniqueGlobalName(name, this, transforms, this.compileErrors, this.htmlId);
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
 
     return `const ${name} = ${this.literal.compile(transforms)};\r
 `;

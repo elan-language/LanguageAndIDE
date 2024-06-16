@@ -26,7 +26,7 @@ ${this.indent()}end procedure\r
   }
 
   public override compile(transforms: Transforms): string {
-    super.compile(transforms);
+    this.compileErrors = [];
     return `${this.indent()}async ${super.compile(transforms)}\r
 ${this.indent()}}\r
 `;

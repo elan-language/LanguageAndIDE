@@ -13,6 +13,8 @@ import { Scope } from "../interfaces/scope";
 import { procedureKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export abstract class ProcedureFrame extends FrameWithStatements implements ElanSymbol, Scope {
   public name: IdentifierField;
@@ -75,9 +77,16 @@ ${this.renderChildrenAsHtml()}
   }
 
   public compile(transforms: Transforms): string {
-    this.compileErrors = [];
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
 
-    return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+    return `${name}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r`;
   }
 }

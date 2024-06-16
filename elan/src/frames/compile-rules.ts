@@ -691,15 +691,14 @@ export function mustNotBeConstant(
   }
 }
 
-export function mustBeUniqueGlobalName(
+export function mustBeUniqueNameInScope(
   name: string,
   scope: Scope,
   transforms: Transforms,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const gs = getGlobalScope(scope);
-  const symbol = gs.resolveSymbol(name, transforms, scope);
+  const symbol = scope.resolveSymbol(name, transforms, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     compileErrors.push(new NotUniqueNameCompileError(name, location));
