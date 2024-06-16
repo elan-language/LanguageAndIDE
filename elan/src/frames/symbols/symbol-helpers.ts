@@ -84,7 +84,7 @@ export function updateScopeAndQualifier(
   return [qualifier, currentScope];
 }
 
-function getGlobalScope(start: Scope): File {
+export function getGlobalScope(start: Scope): File {
   if (isFile(start)) {
     return start;
   }

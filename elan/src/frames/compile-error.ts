@@ -144,6 +144,12 @@ export class MutateCompileError extends CompileError {
   }
 }
 
+export class NotUniqueNameCompileError extends CompileError {
+  constructor(name: string, location: string) {
+    super(Priority.illegalOperation, `Name ${name} not unique in scope`, location, false);
+  }
+}
+
 export class ReassignCompileError extends CompileError {
   constructor(thing: string, location: string) {
     super(Priority.illegalOperation, `May not reassign ${thing}`, location, false);

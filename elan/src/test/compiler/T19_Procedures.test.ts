@@ -735,4 +735,39 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
   });
+
+  test("Fail_NotUniqueName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+procedure foo()
+
+end procedure
+
+procedure foo()
+
+end procedure
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name foo not unique in scope"]);
+  });
+
+  test("Fail_NotUniqueParameterName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+procedure foo(a as Int, b as String, a as Int)
+
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+  });
 });

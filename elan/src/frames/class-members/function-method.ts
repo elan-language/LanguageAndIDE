@@ -26,6 +26,8 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public override compile(transforms: Transforms): string {
+    this.compileErrors = [];
+
     const rt = this.symbolType(transforms).returnType;
 
     mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);

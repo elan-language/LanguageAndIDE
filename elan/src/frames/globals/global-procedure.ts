@@ -23,6 +23,7 @@ end procedure\r
   }
 
   public compile(transforms: Transforms): string {
+    this.compileErrors = [];
     return `async function ${super.compile(transforms)}\r
 }
 `;

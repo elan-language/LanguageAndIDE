@@ -15,8 +15,9 @@ import { FunctionType } from "../symbols/function-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { mustBeCompatibleType } from "../compile-rules";
+import { mustBeCompatibleType, mustBeUniqueNameInScope } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: IdentifierField;

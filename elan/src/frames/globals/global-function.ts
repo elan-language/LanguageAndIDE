@@ -4,7 +4,12 @@ import { FunctionFrame } from "./function-frame";
 import { functionKeyword, returnKeyword, endKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Transforms } from "../syntax-nodes/transforms";
-import { mustBeCompatibleType, mustBeKnownSymbolType } from "../compile-rules";
+import {
+  mustBeCompatibleType,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+} from "../compile-rules";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   isGlobal = true;
@@ -25,6 +30,16 @@ ${endKeyword} ${functionKeyword}\r
   }
 
   public compile(transforms: Transforms): string {
+    this.compileErrors = [];
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
+
     const rt = this.symbolType(transforms).returnType;
 
     mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);

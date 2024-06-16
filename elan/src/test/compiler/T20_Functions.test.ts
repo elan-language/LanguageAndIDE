@@ -732,4 +732,24 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
   });
+
+  test("Fail_NotUniqueName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function foo() return Int
+  return 0
+end function
+
+function foo() return Int
+  return 1
+end function
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name foo not unique in scope"]);
+  });
 });
