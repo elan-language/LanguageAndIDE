@@ -39,6 +39,14 @@ export function isMember(f?: Scope | Member): f is Member {
   return !!f && "isMember" in f;
 }
 
+export function isFunction(f?: Scope | Member): f is Member {
+  return !!f && "isFunction" in f;
+}
+
+export function isConstructor(f?: Scope | Member): f is Member {
+  return !!f && "isConstructor" in f;
+}
+
 export function isSelector(f?: Selectable): f is AbstractSelector {
   return !!f && "isSelector" in f;
 }
@@ -166,4 +174,17 @@ export function helper_runStatusAsDisplayStatus(rs: RunStatus): DisplayStatus {
     overall = DisplayStatus.error;
   }
   return overall;
+}
+
+export function isInsideFunctionOrConstructor(parent: Parent): boolean {
+  if (isFunction(parent)) {
+    return true;
+  }
+  if (isConstructor(parent)) {
+    return true;
+  }
+  if (isFile(parent)) {
+    return false;
+  }
+  return isInsideFunctionOrConstructor(parent.getParent());
 }

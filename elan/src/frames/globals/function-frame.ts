@@ -23,6 +23,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   public params: ParamList;
   public returnType: TypeField;
   file: File;
+  isFunction = true;
 
   constructor(parent: Parent) {
     super(parent);

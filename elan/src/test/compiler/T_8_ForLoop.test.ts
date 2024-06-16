@@ -169,6 +169,43 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
+  test("Pass_forInProcedure", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [Int]
+  call foo(a)
+end main
+
+procedure foo(arr as [Int])
+  for i from 0 to 10 step 1
+    set arr[i] to 1
+  end for
+  print arr[0]
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.emptyArrayList();
+  await foo(a);
+}
+
+async function foo(arr) {
+  for (var i = 0; i <= 10; i = i + 1) {
+    arr[i] = 1;
+  }
+  system.print(_stdlib.asString(arr[0]));
+}
+return [main, _tests];}`;
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Fail_useOfFloat", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

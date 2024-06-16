@@ -52,6 +52,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { EnumType } from "./symbols/enum-type";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
+import { isInsideFunctionOrConstructor } from "./helpers";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -649,7 +650,9 @@ export function mustNotBeParameter(
   const s = assignable.symbolScope;
 
   if (s === SymbolScope.parameter) {
-    if (parent instanceof ProcedureFrame) {
+    if (isInsideFunctionOrConstructor(parent)) {
+      compileErrors.push(new MutateCompileError(`parameter`, location));
+    } else {
       // only mutate indexed arraylist
       const rst = assignable.rootSymbolType();
       const st = assignable.symbolType();
@@ -657,8 +660,6 @@ export function mustNotBeParameter(
         // ie not indexed
         compileErrors.push(new MutateCompileError(`parameter`, location));
       }
-    } else {
-      compileErrors.push(new MutateCompileError(`parameter`, location));
     }
   }
 }
