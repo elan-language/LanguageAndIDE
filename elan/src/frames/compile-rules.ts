@@ -45,16 +45,14 @@ import { AstNode } from "./interfaces/ast-node";
 import { Transforms } from "./syntax-nodes/transforms";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { Property } from "./class-members/property";
-import { ProcedureFrame } from "./globals/procedure-frame";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { LetStatement } from "./statements/let-statement";
 import { allKeywords, thisKeyword } from "./keywords";
-import { FunctionMethod } from "./class-members/function-method";
 import { EnumType } from "./symbols/enum-type";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
-import { isInsideFunctionOrConstructor } from "./helpers";
-import { getGlobalScope } from "./symbols/symbol-helpers";
+import { isInsideFunctionOrConstructor, isMember } from "./helpers";
+import { isFunction } from "./helpers";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 
 export function mustBeOfSymbolType(
@@ -635,7 +633,7 @@ export function mustNotBePropertyOnFunctionMethod(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (parent instanceof FunctionMethod) {
+  if (isFunction(parent) && isMember(parent)) {
     const s = assignable.symbolScope;
 
     if (s !== SymbolScope.local) {

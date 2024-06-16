@@ -11,6 +11,10 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { Scope } from "../interfaces/scope";
+import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { ParseStatus } from "../status-enums";
 
 export class ParamList extends AbstractField {
   isParseByNodes = true;
@@ -49,19 +53,54 @@ export class ParamList extends AbstractField {
     const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
 
     if (ast) {
+      const matches: ElanSymbol[] = [];
       for (const n of ast.items as AstIdNode[]) {
         if (n.id === id) {
-          return {
+          matches.push({
             symbolId: id,
             symbolType: () => n.symbolType(),
             symbolScope: SymbolScope.parameter,
-          };
+          });
         }
+      }
+
+      if (matches.length === 1) {
+        return matches[0];
+      }
+
+      if (matches.length > 1) {
+        return new DuplicateSymbol(matches);
       }
     }
     return new UnknownSymbol(id);
   }
   isEndMarker(key: string) {
     return this.text === "" && key === ")";
+  }
+
+  compile(transforms: Transforms): string {
+    this.compileErrors = [];
+
+    if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
+      const parms = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+
+      if (parms.items.length > 1) {
+        const ids = parms.items as AstIdNode[];
+
+        for (const idNode of ids) {
+          mustBeUniqueNameInScope(
+            idNode.id,
+            this as unknown as Scope,
+            transforms,
+            this.compileErrors,
+            this.htmlId,
+          );
+        }
+      }
+
+      return parms.compile() ?? "";
+    }
+
+    return "";
   }
 }
