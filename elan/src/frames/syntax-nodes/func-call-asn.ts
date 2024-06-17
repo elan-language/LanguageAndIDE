@@ -12,7 +12,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { containsGenericType, generateType, matchGenericTypes, transforms } from "./ast-helpers";
-import { getParentScope, scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(

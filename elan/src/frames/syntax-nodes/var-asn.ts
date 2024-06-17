@@ -20,7 +20,6 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { DictionaryType } from "../symbols/dictionary-type";
 import { LetStatement } from "../statements/let-statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";

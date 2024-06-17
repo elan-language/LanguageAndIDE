@@ -4,7 +4,6 @@ import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { getParentScope } from "../symbols/symbol-helpers";

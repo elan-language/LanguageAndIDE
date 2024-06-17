@@ -79,6 +79,8 @@ export function updateScopeAndQualifier(
     qualifier = undefined;
   } else if (qualifier) {
     currentScope = getGlobalScope(currentScope).libraryScope;
+  } else {
+    currentScope = getParentScope(currentScope);
   }
 
   return [qualifier, currentScope];
