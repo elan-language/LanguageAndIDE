@@ -169,11 +169,11 @@ export class StdLib {
   }
 
   get<T>(st: Array<T>, index: number) {
-    return st[index];
+    return this.system.safeIndex(st, index);
   }
 
   getKey<T>(st: { [key: string]: T }, index: string) {
-    return st[index];
+    return this.system.safeIndex(st, index);
   }
 
   getRange<T>(st: Array<T>, index1: number, index2: number) {
@@ -261,11 +261,11 @@ export class StdLib {
   }
 
   first<T>(st: Array<T>) {
-    return st[0];
+    return this.system.safeIndex(st, 0);
   }
 
   second<T>(st: Array<T>) {
-    return st[1];
+    return this.system.safeIndex(st, 1);
   }
 
   indexOf(s1: string, s2: string) {
@@ -435,7 +435,7 @@ export class StdLib {
   }
 
   getAt(map: CharMap, x: number, y: number) {
-    return map[this.idx(x, y)];
+    return this.system.safeIndex(map, this.idx(x, y));
   }
 
   putChar(map: CharMap, x: number, y: number, c: string) {
@@ -444,7 +444,7 @@ export class StdLib {
   }
 
   getChar(map: CharMap, x: number, y: number) {
-    return this.getAt(map, x, y)[0];
+    return this.system.safeIndex(this.getAt(map, x, y), 0);
   }
 
   putForeground(map: CharMap, x: number, y: number, f: number) {
@@ -453,7 +453,7 @@ export class StdLib {
   }
 
   getForeground(map: CharMap, x: number, y: number) {
-    return this.getAt(map, x, y)[1];
+    return this.system.safeIndex(this.getAt(map, x, y), 1);
   }
 
   putBackground(map: CharMap, x: number, y: number, b: number) {
@@ -462,7 +462,7 @@ export class StdLib {
   }
 
   getBackground(map: CharMap, x: number, y: number) {
-    return this.getAt(map, x, y)[2];
+    return this.system.safeIndex(this.getAt(map, x, y), 2);
   }
 
   clearGraphics() {

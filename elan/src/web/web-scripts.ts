@@ -12,6 +12,7 @@ import { doImport, getTestRunner } from "../runner";
 import { WebInputOutput } from "./web-input-output";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { CollapseAll } from "../test/model-generating-functions.";
+import { ElanRuntimeError } from "../elan-runtime-error";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -38,8 +39,13 @@ function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.stack) {
-    const msg =
-      "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+    let msg = "";
+    if (err instanceof ElanRuntimeError) {
+      msg = "A Runtime error occured in the Elan code";
+    } else {
+      msg =
+        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+    }
     elanInputOutput.printLine(msg);
     elanInputOutput.printLine(err.stack);
   } else {

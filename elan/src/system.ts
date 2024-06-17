@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ElanRuntimeError } from "./elan-runtime-error";
 import { ElanInputOutput } from "./elan-input-output";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
@@ -114,6 +115,20 @@ export class System {
     }
 
     return t;
+  }
+
+  safeIndex(toIndex: any, index: any) {
+    const r = toIndex[index];
+
+    if (r === undefined) {
+      const size = toIndex.length;
+      if (size !== undefined) {
+        throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
+      }
+      throw new ElanRuntimeError(`No such key: ${index}`);
+    }
+
+    return r;
   }
 
   print(s: string) {

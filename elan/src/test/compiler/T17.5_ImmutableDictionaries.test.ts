@@ -468,7 +468,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+    await assertObjectCodeDoesNotExecute(fileImpl, "No such key: c");
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {
