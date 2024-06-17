@@ -37,11 +37,13 @@ export abstract class AbstractFrame implements Frame {
 
   constructor(parent: Parent) {
     this._parent = parent;
-    const map = this.getFile().getMap();
-    this.htmlId = `${this.getIdPrefix()}${map.size}`;
+    const file = this.getFile();
+    const map = file.getMap();
+    this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
     map.set(this.htmlId, this);
     this.setMap(map);
   }
+
   getFile(): File {
     return this.getParent().getFile();
   }

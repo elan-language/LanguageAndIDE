@@ -24,6 +24,7 @@ export interface File extends Parent {
   addChildAfter(g: Frame, after: Frame): void;
 
   getMap(): Map<string, Selectable>;
+  getNextId(): number;
   getFactory(): StatementFactory;
   getProfile(): Profile;
   getScratchPad(): ScratchPad;

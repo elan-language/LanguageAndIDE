@@ -294,6 +294,48 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
+  test("Pass_EnumKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+enum Fruit
+  apple, orange, pear
+end enum  
+
+main
+  var a set to new ImmutableDictionary<of Fruit, Int>()
+  var b set to a.withKey(Fruit.apple, 1)
+  set b to b.withKey(Fruit.orange, 3)
+  var k set to b.keys()
+  print k.length()
+  print b.getKey(Fruit.apple)
+  print b.getKey(Fruit.orange)
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var a = system.initialise(system.immutableDictionary(new Object()));
+  var b = _stdlib.withKey(a, Fruit.apple, 1);
+  b = _stdlib.withKey(b, Fruit.orange, 3);
+  var k = _stdlib.keys(b);
+  system.print(_stdlib.asString(_stdlib.length(k)));
+  system.print(_stdlib.asString(_stdlib.getKey(b, Fruit.apple)));
+  system.print(_stdlib.asString(_stdlib.getKey(b, Fruit.orange)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "213");
+  });
+
   test("Pass_EmptyImmutableDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

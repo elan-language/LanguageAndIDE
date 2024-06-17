@@ -68,6 +68,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
       let parameterTypes = fst.parametersTypes;
 
       if (parameterTypes.some((pt) => containsGenericType(pt))) {
+        // this.parameters is correct - function adds qualifier if extension
         const matches = matchGenericTypes(fst, this.parameters, this.qualifier);
         parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
       }
