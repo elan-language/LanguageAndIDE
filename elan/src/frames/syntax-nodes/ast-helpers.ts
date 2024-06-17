@@ -141,6 +141,12 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
       generateType(type.valueType, matches),
     );
   }
+  if (type instanceof AbstractDictionaryType) {
+    return new AbstractDictionaryType(
+      generateType(type.keyType, matches),
+      generateType(type.valueType, matches),
+    );
+  }
 
   return type;
 }
