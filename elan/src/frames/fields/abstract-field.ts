@@ -134,6 +134,7 @@ export abstract class AbstractField implements Selectable, Field {
     switch (key) {
       case "Escape": {
         this.holder.select(true, false);
+        this.noLongerEditingField();
         break;
       }
       case "Home": {
@@ -146,10 +147,12 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "Tab": {
         this.tab(e.modKey.shift);
+        this.noLongerEditingField();
         break;
       }
       case "Enter": {
         this.enter();
+        this.noLongerEditingField();
         break;
       }
       case "ArrowLeft": {
@@ -164,10 +167,12 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "ArrowUp": {
         this.getHolder().getPreviousFrameInTabOrder().select(true, false);
+        this.noLongerEditingField();
         break;
       }
       case "ArrowDown": {
         this.getHolder().getNextFrameInTabOrder().select(true, false);
+        this.noLongerEditingField();
         break;
       }
       case "Backspace": {
@@ -183,6 +188,7 @@ export abstract class AbstractField implements Selectable, Field {
             this.cursorPos = cursorBeforeParse;
           }
           this.codeHasChanged = true;
+          this.editingField();
         }
         break;
       }
@@ -191,21 +197,33 @@ export abstract class AbstractField implements Selectable, Field {
           this.text = this.text.slice(0, this.cursorPos) + this.text.slice(this.cursorPos + 1);
           this.parseCurrentText();
           this.codeHasChanged = true;
+          this.editingField();
         }
         break;
       }
       default: {
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
           this.holder.expandCollapse();
+          this.noLongerEditingField();
         } else if (key === "O" && e.modKey.control) {
           this.holder.expandCollapseAll();
+          this.noLongerEditingField();
         } else if (key?.length === 1) {
           this.processInput(key);
           this.codeHasChanged = true;
+          this.editingField();
         }
       }
     }
     return this.codeHasChanged;
+  }
+
+  editingField(): void {
+    this.getFile().setFieldBeingEdited(true);
+  }
+
+  noLongerEditingField(): void {
+    this.getFile().setFieldBeingEdited(false);
   }
 
   isEndMarker(key: string) {
@@ -292,6 +310,7 @@ export abstract class AbstractField implements Selectable, Field {
         f.deselect();
       }
     }
+    this.noLongerEditingField();
   }
   protected setParseStatus(newStatus: ParseStatus) {
     this._parseStatus = newStatus;
@@ -324,6 +343,7 @@ export abstract class AbstractField implements Selectable, Field {
   deselect(): void {
     this.selected = false;
     this.defocus();
+    this.noLongerEditingField();
   }
 
   setPlaceholder(placeholder: string): void {

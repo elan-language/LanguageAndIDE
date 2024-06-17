@@ -208,17 +208,10 @@ main
 end main
 
 test square
-  var arr set to empty [Foo]
-  var foo set to arr[1]
-  assert foo.p1 is 0
+  var arr set to empty [Int]
+  var b set to arr[1]
+  assert b is 0
 end test
-
-class Foo
-  constructor()
-  end constructor
-
-  property p1 as Int
-end class
 `;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -228,19 +221,9 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   var arr = system.emptyArrayList();
-  var foo = arr[1];
-  _outcomes.push(system.assert(foo.p1, 0, "assert12", _stdlib));
+  var b = arr[1];
+  _outcomes.push(system.assert(b, 0, "assert12", _stdlib));
 }]);
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-}
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -250,17 +233,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      [
-        "test3",
-        [
-          new AssertOutcome(
-            TestStatus.error,
-            "Cannot read properties of undefined (reading 'p1')",
-            "",
-            "",
-          ),
-        ],
-      ],
+      ["test3", [new AssertOutcome(TestStatus.error, "Out of range error", "", "")]],
     ]);
   });
 

@@ -77,4 +77,6 @@ export interface File extends Parent {
   refreshAllStatuses(
     testRunner: (jsCode: string) => Promise<[string, AssertOutcome[]][]>,
   ): Promise<void>;
+
+  setFieldBeingEdited(value: boolean): void;
 }

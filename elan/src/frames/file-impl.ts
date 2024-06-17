@@ -71,6 +71,7 @@ export class FileImpl implements File, Scope {
   private _compileStatus: CompileStatus = CompileStatus.default;
   private _testStatus: TestStatus = TestStatus.default;
   private _runStatus: RunStatus = RunStatus.default;
+  private _fieldBeingEdited: boolean = false;
 
   private scratchPad: ScratchPad;
 
@@ -100,6 +101,18 @@ export class FileImpl implements File, Scope {
 
   getFile(): File {
     return this;
+  }
+
+  getFieldBeingEdited() {
+    return this._fieldBeingEdited;
+  }
+
+  setFieldBeingEdited(value: boolean) {
+    const prior = this._fieldBeingEdited;
+    this._fieldBeingEdited = value;
+    if (prior && !value) {
+      // refresh all statuses
+    }
   }
 
   getScratchPad(): ScratchPad {
