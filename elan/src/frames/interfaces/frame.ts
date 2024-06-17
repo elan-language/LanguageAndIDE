@@ -26,6 +26,7 @@ export interface Frame extends Selectable, Scope {
 
   selectFirstField(): boolean;
   selectFieldAfter(current: Field): void;
+  selectFieldBefore(current: Field): void;
 
   //If none, return this
   getNextFrameInTabOrder(): Frame;

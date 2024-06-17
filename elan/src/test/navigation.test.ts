@@ -69,6 +69,23 @@ suite("Navigation", () => {
     assert.equal(var3.isSelected(), false);
     assert.equal(var4.isSelected(), true);
   });
+  test("Shift-tabbing through fields and back to the frame", () => {
+    const file = T03_mainWithAllStatements();
+
+    const var3 = file.getById("var3") as VarStatement;
+    var3.select(true, false);
+    var3.processKey(shift_tab());
+    assert.equal(var3.isSelected(), false);
+    const expr5 = file.getById("expr5") as ExpressionField;
+    assert.equal(expr5.isSelected(), true);
+    expr5.processKey(shift_tab());
+    assert.equal(expr5.isSelected(), false);
+    const var4 = file.getById("var4") as IdentifierField;
+    assert.equal(var4.isSelected(), true);
+    var4.processKey(shift_tab());
+    assert.equal(var4.isSelected(), false);
+    assert.equal(var3.isSelected(), true);
+  });
   test("Selecting frames", () => {
     const file = T03_mainWithAllStatements();
     const main = file.getById("main1");

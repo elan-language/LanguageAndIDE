@@ -85,6 +85,16 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().getChildAfter(this);
   }
 
+  selectFieldBefore(current: Field) {
+    const fields = this.getFields();
+    const i = fields.indexOf(current);
+    if (i > 0) {
+      this.getFields()[i - 1].select(true, false);
+    } else {
+      this.select(true, false);
+    }
+  }
+
   selectFieldAfter(current: Field) {
     const fields = this.getFields();
     const i = fields.indexOf(current);
@@ -136,6 +146,16 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
+  selectLastField(): boolean {
+    let result = false;
+    const length = this.getFields().length;
+    if (length > 0) {
+      this.getFields()[length - 1].select(true, false);
+      result = true;
+    }
+    return result;
+  }
+
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
     const key = e.key;
@@ -149,7 +169,11 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Tab": {
-        this.selectFirstField();
+        if (e.modKey.shift) {
+          this.selectLastField();
+        } else {
+          this.selectFirstField();
+        }
         break;
       }
       case "Enter": {

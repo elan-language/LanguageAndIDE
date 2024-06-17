@@ -145,7 +145,7 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Tab": {
-        this.tab();
+        this.tab(e.modKey.shift);
         break;
       }
       case "Enter": {
@@ -241,12 +241,16 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private tab() {
-    const completions = this.getPlainTextCompletion();
-    if (completions.length > 0) {
-      this.cursorRight();
+  private tab(back: boolean) {
+    if (back) {
+      this.holder.selectFieldBefore(this);
     } else {
-      this.holder.selectFieldAfter(this);
+      const completions = this.getPlainTextCompletion();
+      if (completions.length > 0) {
+        this.cursorRight();
+      } else {
+        this.holder.selectFieldAfter(this);
+      }
     }
   }
 
@@ -261,7 +265,7 @@ export abstract class AbstractField implements Selectable, Field {
       if (thisField === last) {
         this.holder.insertSelectorAfterLastField();
       } else {
-        this.tab();
+        this.tab(false);
       }
     }
   }
