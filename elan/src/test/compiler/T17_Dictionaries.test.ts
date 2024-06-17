@@ -36,6 +36,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
   });
 
+  test("Pass_LiteralEnumKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+enum Fruit
+  apple, orange, pear
+end enum
+
+main
+  var a set to [Fruit.apple:1, Fruit.orange:3, Fruit.pear:10]
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var a = system.dictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Dictionary [apple:1, orange:3, pear:10]");
+  });
+
   test("Pass_AccessByKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -240,6 +272,48 @@ async function main() {
   system.print(_stdlib.asString(_stdlib.length(k)));
   system.print(_stdlib.asString(a["Foo"]));
   system.print(_stdlib.asString(a["Bar"]));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "213");
+  });
+
+  test("Pass_EnumKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+    enum Fruit
+  apple, orange, pear
+end enum  
+
+main
+  var a set to new Dictionary<of Fruit, Int>()
+  set a[Fruit.apple] to 1
+  set a[Fruit.orange] to 3
+  var k set to a.keys()
+  print k.length()
+  print a[Fruit.apple]
+  print a[Fruit.orange]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var a = system.initialise(system.dictionary(new Object()));
+  a[Fruit.apple] = 1;
+  a[Fruit.orange] = 3;
+  var k = _stdlib.keys(a);
+  system.print(_stdlib.asString(_stdlib.length(k)));
+  system.print(_stdlib.asString(a[Fruit.apple]));
+  system.print(_stdlib.asString(a[Fruit.orange]));
 }
 return [main, _tests];}`;
 
