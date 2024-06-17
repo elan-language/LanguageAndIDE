@@ -19,6 +19,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Overtyper } from "../overtyper";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { File } from "../interfaces/file";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -47,11 +48,16 @@ export abstract class AbstractField implements Selectable, Field {
   constructor(holder: Frame) {
     this.holder = holder;
     const map = holder.getMap();
-    this.htmlId = `${this.getIdPrefix()}${map.size}`;
+    this.htmlId = `${this.getIdPrefix()}${this.getFile().getNextId()}`;
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
   }
+
+  getFile(): File {
+    return this.holder.getFile();
+  }
+
   getHtmlId(): string {
     return this.htmlId;
   }

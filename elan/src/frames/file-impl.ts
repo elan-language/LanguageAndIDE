@@ -79,6 +79,7 @@ export class FileImpl implements File, Scope {
   private _factory: StatementFactory;
   private ignoreHashOnParsing: boolean = false;
   private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts
+  private _nextId: number = 0;
 
   constructor(
     private hash: (toHash: string) => Promise<string>,
@@ -410,6 +411,11 @@ export class FileImpl implements File, Scope {
   getMap(): Map<string, Selectable> {
     return this._map;
   }
+
+  getNextId() {
+    return this._nextId++;
+  }
+
   getFactory(): StatementFactory {
     return this._factory;
   }
