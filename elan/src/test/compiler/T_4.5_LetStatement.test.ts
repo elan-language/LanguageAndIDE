@@ -138,6 +138,50 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4"); //i.e. does not generate a division by zero error from the first let (are we testing that it DOES for a var/set!)
   });
 
+  test("Pass_IdShadowsFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  print foo()
+end main
+
+function foo() return Int
+  return 1
+end function
+
+function bar() return Int
+  let foo be foo()
+  return foo
+end function
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  system.print(_stdlib.asString(foo()));
+}
+
+function foo() {
+  return 1;
+}
+
+function bar() {
+  var foo = (() => {
+    var _cache;
+    return () => _cache ??= foo();
+  })();
+  return foo();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Fail_cannotRedefine ", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

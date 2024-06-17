@@ -3,9 +3,6 @@ import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { getParentScope } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { isMember } from "../helpers";
 import { mustNotBeKeyword } from "../compile-rules";
 
 export class IdDefAsn extends AbstractAstNode implements AstIdNode {
