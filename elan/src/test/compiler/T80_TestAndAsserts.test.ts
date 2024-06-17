@@ -333,8 +333,8 @@ _tests.push(["test3", async (_outcomes) => {
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
-  var a = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
-  var b = system.dictionary({3 : "a", 2 : "b", 4 : "c"});
+  var a = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
+  var b = system.dictionary({[3] : "a", [2] : "b", [4] : "c"});
   _outcomes.push(system.assert(a, b, "assert24", _stdlib));
 }]);
 

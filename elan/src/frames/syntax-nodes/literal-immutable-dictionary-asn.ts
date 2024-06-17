@@ -41,7 +41,7 @@ export class LiteralImmutableDictionaryAsn extends AbstractAstNode implements As
       mustBeCompatibleType(ofValueType, i.symbolType(), this.compileErrors, this.fieldId);
     }
 
-    const itemList = this.list.items.map((p) => p.compile()).join(", ");
+    const itemList = this.list.items.map((p) => `${p.compile()}`).join(", ");
     return `system.immutableDictionary({${itemList}})`;
   }
 

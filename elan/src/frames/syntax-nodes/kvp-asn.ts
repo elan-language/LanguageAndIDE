@@ -21,7 +21,7 @@ export class KvpAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.key.compile()} : ${this.value.compile()}`;
+    return `[${this.key.compile()}] : ${this.value.compile()}`;
   }
 
   keySymbolType() {

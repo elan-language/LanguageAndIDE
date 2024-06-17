@@ -177,7 +177,7 @@ end main`;
 const source = system.immutableList(["three", "four"]);
 
 async function main() {
-  var ed = system.immutableDictionary({"one" : 1, "two" : 2});
+  var ed = system.immutableDictionary({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(source, ed, (d, x) => _stdlib.withKey(d, x, 1));
   system.print(_stdlib.asString(ed));
 }
