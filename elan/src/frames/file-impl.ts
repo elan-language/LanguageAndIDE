@@ -108,11 +108,7 @@ export class FileImpl implements File, Scope {
   }
 
   setFieldBeingEdited(value: boolean) {
-    const prior = this._fieldBeingEdited;
     this._fieldBeingEdited = value;
-    if (prior && !value) {
-      // refresh all statuses
-    }
   }
 
   getScratchPad(): ScratchPad {
@@ -338,7 +334,7 @@ export class FileImpl implements File, Scope {
     this.updateAllParseStatus();
     this.resetAllCompileStatusAndErrors();
 
-    if (this._parseStatus === ParseStatus.valid) {
+    if (this._parseStatus === ParseStatus.valid && !this._fieldBeingEdited) {
       code = this.compile();
       this.updateAllCompileStatus();
     }
@@ -522,7 +518,7 @@ export class FileImpl implements File, Scope {
   }
 
   processKey(e: editorEvent): boolean {
-    const codeHasChanged = false; // Can change to let if future expansion provides code-changing ops at file level
+    const codeHasChanged = this._fieldBeingEdited;
     switch (e.key) {
       case "Home": {
         this.selectFirstGlobal();
@@ -551,6 +547,7 @@ export class FileImpl implements File, Scope {
         break;
       }
     }
+    this.setFieldBeingEdited(false);
     return codeHasChanged;
   }
 

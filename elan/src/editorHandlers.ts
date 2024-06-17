@@ -51,9 +51,10 @@ export function handleClick(e: editorEvent, file: File) {
       } else {
         s?.select(true, false, e.selection);
       }
-      break;
+      return true;
     }
   }
+  return false;
 }
 export function handleDblClick(e: editorEvent, file: File) {
   switch (e.target) {
@@ -62,9 +63,10 @@ export function handleDblClick(e: editorEvent, file: File) {
       if (isCollapsible(s)) {
         s.expandCollapse();
       }
-      break;
+      return true;
     }
   }
+  return false;
 }
 
 export function handleKey(e: editorEvent, file: File) {
