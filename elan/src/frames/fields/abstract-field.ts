@@ -224,6 +224,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   noLongerEditingField(): void {
     this.getFile().setFieldBeingEdited(false);
+    this.codeHasChanged = true;
   }
 
   isEndMarker(key: string) {

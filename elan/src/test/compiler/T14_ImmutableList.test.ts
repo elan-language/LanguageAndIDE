@@ -775,7 +775,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 
   test("Fail_CannotIndex", async () => {

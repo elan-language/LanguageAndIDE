@@ -79,4 +79,5 @@ export interface File extends Parent {
   ): Promise<void>;
 
   setFieldBeingEdited(value: boolean): void;
+  getFieldBeingEdited(): boolean;
 }

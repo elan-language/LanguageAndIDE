@@ -12,6 +12,7 @@ import { doImport, getTestRunner } from "../runner";
 import { WebInputOutput } from "./web-input-output";
 import { fetchProfile, hash, transforms } from "./web-helpers";
 import { CollapseAll } from "../test/model-generating-functions.";
+import { ElanRuntimeError } from "../elan-runtime-error";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -25,11 +26,15 @@ function setup(p: Profile) {
   displayFile();
 }
 
+function renderAsHtml() {
+  file.renderAsHtml().then((c) => updateContent(c));
+}
+
 function resetFile(reset: boolean) {
   elanInputOutput.clearConsole();
   if (reset) {
     file = new FileImpl(hash, profile, transforms());
-    file.renderAsHtml().then((c) => updateContent(c));
+    renderAsHtml();
   }
 }
 
@@ -38,8 +43,13 @@ function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.stack) {
-    const msg =
-      "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+    let msg = "";
+    if (err instanceof ElanRuntimeError) {
+      msg = "A Runtime error occured in the Elan code";
+    } else {
+      msg =
+        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+    }
     elanInputOutput.printLine(msg);
     elanInputOutput.printLine(err.stack);
   } else {
@@ -58,9 +68,7 @@ function refreshAndDisplay() {
   getTestRunner(system, stdlib).then((t) => {
     file.refreshAllStatuses(t).then(
       () => {
-        file.renderAsHtml().then((c) => {
-          updateContent(c);
-        });
+        renderAsHtml();
       },
       (e) => {
         showError(e as Error, file.fileName, false);
@@ -329,21 +337,30 @@ function updateContent(text: string) {
 
 function postMessage(e: editorEvent) {
   try {
+    let isBeingEdited = false;
     switch (e.type) {
       case "click":
-        handleClick(e, file);
-        file.renderAsHtml().then((c) => updateContent(c));
+        isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
+        if (handleClick(e, file) && isBeingEdited) {
+          refreshAndDisplay();
+        } else {
+          renderAsHtml();
+        }
         return;
       case "dblclick":
-        handleDblClick(e, file);
-        file.renderAsHtml().then((c) => updateContent(c));
+        isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
+        if (handleDblClick(e, file) && isBeingEdited) {
+          refreshAndDisplay();
+        } else {
+          renderAsHtml();
+        }
         return;
       case "key":
         const codeChanged = handleKey(e, file);
         if (codeChanged === true) {
           refreshAndDisplay();
         } else if (codeChanged === false) {
-          file.renderAsHtml().then((c) => updateContent(c));
+          renderAsHtml();
         }
         // undefined just return
         return;
@@ -410,7 +427,7 @@ clearGraphicsButton?.addEventListener("click", () => {
 
 expandCollapseButton?.addEventListener("click", () => {
   file.expandCollapseAll();
-  file.renderAsHtml().then((c) => updateContent(c));
+  renderAsHtml();
 });
 
 newButton?.addEventListener("click", () => {
@@ -490,6 +507,6 @@ function handleDownload(event: Event) {
     URL.revokeObjectURL(href);
     (download as HTMLButtonElement).classList.remove("unsaved");
     event.preventDefault();
-    file.renderAsHtml().then((c) => updateContent(c));
+    renderAsHtml();
   });
 }
