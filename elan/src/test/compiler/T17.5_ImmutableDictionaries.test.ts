@@ -21,7 +21,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   system.print(_stdlib.asString(a));
@@ -37,6 +37,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
   });
 
+  test("Pass_LiteralEnumKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+enum Fruit
+  apple, orange, pear
+end enum  
+constant a set to {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10}
+main
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+const a = system.immutableDictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
+
+async function main() {
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {apple:1, orange:3, pear:10}");
+  });
+
   test("Pass_LiteralVarAndPrinting", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -47,7 +79,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -70,7 +102,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.getKey(a, "z")));
@@ -97,7 +129,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = system.emptyImmutableList();
@@ -125,7 +157,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
@@ -151,7 +183,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   system.print(_stdlib.asString(_stdlib.values(a)));
@@ -179,7 +211,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = _stdlib.withKey(a, "b", 4);
@@ -212,7 +244,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = _stdlib.withRemoveKey(a, "b");
@@ -243,7 +275,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableDictionary({"a" : 1, "b" : 3, "z" : 10});
+const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = _stdlib.withRemoveKey(a, "c");

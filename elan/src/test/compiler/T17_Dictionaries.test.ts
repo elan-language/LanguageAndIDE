@@ -22,7 +22,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -46,7 +46,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(a["z"]));
 }
 return [main, _tests];}`;
@@ -72,7 +72,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   var b = system.emptyImmutableList();
   b = _stdlib.keys(a);
   system.print(_stdlib.asString(b));
@@ -99,7 +99,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
   system.print(_stdlib.asString(_stdlib.hasKey(a, "d")));
 }
@@ -124,7 +124,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(_stdlib.values(a)));
 }
 return [main, _tests];}`;
@@ -150,7 +150,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   a["b"] = 4;
   a["d"] = 2;
   system.print(_stdlib.asString(a));
@@ -177,7 +177,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   _stdlib.removeKey(a, "b");
   system.print(_stdlib.asString(a));
 }
@@ -203,7 +203,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.dictionary({"a" : 1, "b" : 3, "z" : 10});
+  var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   _stdlib.removeKey(a, "c");
   system.print(_stdlib.asString(a));
 }
