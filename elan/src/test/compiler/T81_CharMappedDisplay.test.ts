@@ -291,17 +291,17 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  test("Pass_getKeypress", async () => {
+  test("Pass_getKeystroke", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeypress()
+  var a set to getKeystroke()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeypress();
+  var a = _stdlib.getKeystroke();
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -315,17 +315,17 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_getKeypressWithModifier", async () => {
+  test("Pass_getKeystrokeWithModifier", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeypressWithModifier()
+  var a set to getKeystrokeWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeypressWithModifier();
+  var a = _stdlib.getKeystrokeWithModifier();
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;

@@ -1,4 +1,4 @@
-# b2ddad90a15b3345358f1905edbb28c93770dc78353d80ea2fafd8386d6cf596 Elan v0.1 valid
+# d7df72557344adb72d6497a65b714d6d10251c340336b52d48d33598a0496acb Elan v0.1 valid
 
 main
   var currentDirection set to Direction.up
@@ -10,7 +10,7 @@ main
     set cm to snake.updateCharMap(cm)
     call cm.drawAsGraphics()
     call pause(150)
-    var k set to getKeypress()
+    var k set to getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
     call snake.clockTick(currentDirection)
     set gameOn to not snake.gameOver()

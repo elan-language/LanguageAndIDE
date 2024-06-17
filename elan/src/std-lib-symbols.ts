@@ -839,13 +839,13 @@ export class StdLibSymbols implements Scope {
     ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
     ["clearKeyBuffer", this.getSymbol("clearKeyBuffer", new ProcedureType([], false, false))],
     [
-      "getKeypress",
-      this.getSymbol("getKeypress", new FunctionType([], StringType.Instance, false, false)),
+      "getKeystroke",
+      this.getSymbol("getKeystroke", new FunctionType([], StringType.Instance, false, false)),
     ],
     [
-      "getKeypressWithModifier",
+      "getKeystrokeWithModifier",
       this.getSymbol(
-        "getKeypressWithModifier",
+        "getKeystrokeWithModifier",
         new FunctionType(
           [],
           new TupleType([StringType.Instance, StringType.Instance]),

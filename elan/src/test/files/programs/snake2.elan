@@ -13,7 +13,7 @@ main
     set cm to apple.updateCharMap(cm)
     call cm.drawAsGraphics()
     call pause(150)
-    var k set to getKeypress()
+    var k set to getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
     call snake.clockTick(currentDirection, apple)
     set gameOn to not snake.gameOver()

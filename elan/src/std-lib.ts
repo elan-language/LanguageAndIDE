@@ -487,12 +487,12 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  getKeypress(): string {
-    return this.system.elanInputOutput.getKeypress();
+  getKeystroke(): string {
+    return this.system.elanInputOutput.getKeystroke();
   }
 
-  getKeypressWithModifier() {
-    return this.system.tuple(this.system.elanInputOutput.getKeypressWithModifier());
+  getKeystrokeWithModifier() {
+    return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
   }
 
   clearKeyBuffer() {
