@@ -752,4 +752,19 @@ end function
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name foo not unique in scope"]);
   });
+
+  test("Fail_NotUniqueParameterName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+function foo(a as Int, b as String, a as Int) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+  });
 });
