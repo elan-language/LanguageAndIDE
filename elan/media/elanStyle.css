@@ -46,7 +46,7 @@ field text {
     border-style:hidden;
     border-width: 1px;
 }
-field.selected text{
+field.selected text {
     border-style: solid;
     border-color: black;
 }
@@ -264,6 +264,9 @@ field.selected msg, field.selected msg * {
     display: none; 
   }
   .selected > selector help {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
     display: inline;
     background-color: var(--optional);
     color: var(--reverseText);
