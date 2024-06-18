@@ -4,7 +4,7 @@ export class ElanRuntimeError extends Error {
   }
 
   useLine(token: string) {
-    return !(token.startsWith("System") || token.startsWith("data") || token.startsWith("web"));
+    return !(token.startsWith("System") || token.startsWith("data") || token.startsWith("http"));
   }
 
   get elanStack() {
