@@ -18,15 +18,15 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;
-  literal: ConstantValueField;
+  value: ConstantValueField;
   file: File;
 
   constructor(parent: File) {
     super(parent);
     this.file = parent;
     this.name = new IdentifierField(this);
-    this.literal = new ConstantValueField(this);
-    this.literal.setPlaceholder("literal value or data structure");
+    this.value = new ConstantValueField(this);
+    this.value.setPlaceholder("literal value or data structure");
   }
   initialKeywords(): string {
     return constantKeyword;
@@ -35,7 +35,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     source.remove("constant ");
     this.name.parseFrom(source);
     source.remove(" set to ");
-    this.literal.parseFrom(source);
+    this.value.parseFrom(source);
   }
 
   protected setClasses() {
@@ -44,21 +44,21 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   }
 
   getFields(): Field[] {
-    return [this.name, this.literal];
+    return [this.name, this.value];
   }
 
   getIdPrefix(): string {
     return "const";
   }
   renderAsHtml(): string {
-    return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>constant </keyword>${this.name.renderAsHtml()}</top><keyword> set to </keyword>${this.literal.renderAsHtml()}${this.compileMsgAsHtml()}</constant>`;
+    return `<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>constant </keyword>${this.name.renderAsHtml()}</top><keyword> set to </keyword>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}</constant>`;
   }
 
   indent(): string {
     return "";
   }
   renderAsSource(): string {
-    return `constant ${this.name.renderAsSource()} set to ${this.literal.renderAsSource()}\r
+    return `constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
 `;
   }
 
@@ -73,7 +73,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
       this.htmlId,
     );
 
-    return `const ${name} = ${this.literal.compile(transforms)};\r
+    return `const ${name} = ${this.value.compile(transforms)};\r
 `;
   }
 
@@ -82,7 +82,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   }
 
   symbolType(transforms: Transforms) {
-    return this.literal.symbolType(transforms);
+    return this.value.symbolType(transforms);
   }
 
   symbolScope = SymbolScope.program;

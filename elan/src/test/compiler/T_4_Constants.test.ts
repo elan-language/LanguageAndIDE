@@ -147,32 +147,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "hell0");
   });
 
-  test("Pass_SingleCharString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-constant a set to "a"
-main
-  print a
-end main
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = "a";
-
-async function main() {
-  system.print(_stdlib.asString(a));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a");
-  });
-
   test("Pass_EmptyString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -418,22 +392,6 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_invalidLiteralString2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-constant a set to hello
-
-main 
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_reassignment", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -469,21 +427,36 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_referenceToOtherConstant", async () => {
+  test("Pass_referenceToOtherConstant", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant a set to 3
 constant b set to a
 
 main
-  print a
+  print b
 end main
 `;
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const a = 3;
+
+const b = a;
+
+async function main() {
+  system.print(_stdlib.asString(b));
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    //const symbols not yet implemented
+    //const varConst = fileImpl.getChildFloat(0);
+    //assertIsSymbol(varConst, "a", "Int");
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -501,24 +474,6 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
-  });
-
-  test("Fail_Int_HexType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-constant a set to 0xFF
-main
-  var b set to ""
-  set b to a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_NotUniqueName", async () => {

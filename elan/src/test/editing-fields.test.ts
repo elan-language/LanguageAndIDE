@@ -229,11 +229,11 @@ suite("Editing Fields Tests", () => {
     assert.equal(args.isSelected(), false);
     const con = new Constant(file);
     const name = con.name;
-    const val = con.literal;
+    const val = con.value;
     name.processKey(key("a"));
     name.processKey(key(" "));
     assert.equal(name.text, "a");
-    const lit = con.literal;
+    const lit = con.value;
     assert.equal(lit.isSelected(), true);
     const fun = new GlobalFunction(file);
     const fn = fun.name;
