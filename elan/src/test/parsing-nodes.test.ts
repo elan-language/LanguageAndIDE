@@ -47,6 +47,7 @@ import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
 import { BinaryExpression } from "../frames/parse-nodes/binary-expression";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
 import { IndexNode } from "../frames/parse-nodes/index-node";
+import { IndexDouble } from "../frames/parse-nodes/index-double";
 
 suite("Parsing Nodes", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -1474,8 +1475,10 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IndexNode(), `[3..]`, ParseStatus.valid, "[3..]", "");
     testNodeParse(new IndexNode(), `[..4]`, ParseStatus.valid, "[..4]", "");
     testNodeParse(new IndexNode(), `[3..`, ParseStatus.incomplete, "[3..", "");
-    testNodeParse(new IndexNode(), `[3,4]`, ParseStatus.valid, "[3,4]", "");
-    testNodeParse(new IndexNode(), `[3,4,5]`, ParseStatus.invalid, "", "[3,4,5]");
-    testNodeParse(new IndexNode(), `[3..4,5]`, ParseStatus.invalid, "", "[3..4,5]");
+
+    testNodeParse(new IndexDouble(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
+    testNodeParse(new IndexNode(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
+    testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.invalid, "", "[3][4][5]");
+    testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[3..4][5]");
   });
 });

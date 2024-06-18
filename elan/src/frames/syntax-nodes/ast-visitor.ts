@@ -85,7 +85,7 @@ import { QualifierAsn } from "./qualifier-asn";
 import { ThisAsn } from "./this-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { IdDefAsn } from "./id-def-asn";
-import { DoubleIndexNode } from "../parse-nodes/double-index-node";
+import { IndexDouble } from "../parse-nodes/index-double";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { ExprAsn } from "./expr-asn";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -104,6 +104,7 @@ import { TypeImmutableDictionaryNode } from "../parse-nodes/type-immutable-dicti
 import { EmptyAsn } from "./empty-asn";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { SetStatement } from "../statements/set-statement";
+import { IndexSingle } from "../parse-nodes/index-single";
 
 function mapOperation(op: string) {
   switch (op.trim()) {
@@ -351,11 +352,6 @@ export function transform(
     return undefined;
   }
 
-  if (node instanceof IndexNode) {
-    const index = transform(node.contents, fieldId, scope) as ExprAsn;
-    return new IndexAsn(index, undefined, fieldId, scope);
-  }
-
   if (node instanceof AbstractAlternatives) {
     if (node.bestMatch) {
       return transform(node.bestMatch, fieldId, scope);
@@ -440,7 +436,7 @@ export function transform(
     return new RangeAsn(from, to, fieldId, scope);
   }
 
-  if (node instanceof DoubleIndexNode) {
+  if (node instanceof IndexDouble) {
     const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
     const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
 
