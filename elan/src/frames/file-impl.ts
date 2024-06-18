@@ -81,6 +81,7 @@ export class FileImpl implements File, Scope {
   private ignoreHashOnParsing: boolean = false;
   private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts
   private _nextId: number = 0;
+  private _testError?: Error;
 
   constructor(
     private hash: (toHash: string) => Promise<string>,
@@ -340,11 +341,14 @@ export class FileImpl implements File, Scope {
     }
     if (this._compileStatus === CompileStatus.ok) {
       const outcomes = await testRunner(code);
+      let errors: Error[] = [];
       for (const outcome of outcomes) {
         const [tid, asserts] = outcome;
         const test = this.getById(tid) as TestFrame;
         test.setAssertOutcomes(asserts);
+        errors = errors.concat(asserts.map((a) => a.error).filter((e) => e) as Error[]);
       }
+      this._testError = errors.length > 0 ? errors[0] : undefined; // TODO aggregate to display all ?
       this.updateAllTestStatus();
     } else {
       this.resetAllTestStatus();
@@ -370,11 +374,17 @@ export class FileImpl implements File, Scope {
   resetAllCompileStatusAndErrors(): void {
     this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
     this._compileStatus = CompileStatus.default;
+    this._testError = undefined;
   }
 
   readTestStatus(): TestStatus {
     return this._testStatus;
   }
+
+  getTestError(): Error | undefined {
+    return this._testError;
+  }
+
   readTestStatusForDashboard(): string {
     let status: DisplayStatus;
     if (

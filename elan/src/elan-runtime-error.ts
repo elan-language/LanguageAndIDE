@@ -4,7 +4,13 @@ export class ElanRuntimeError extends Error {
   }
 
   useLine(token: string) {
-    return !(token.startsWith("System") || token.startsWith("data") || token.startsWith("http"));
+    return !(
+      token.startsWith("System") ||
+      token.startsWith("data") ||
+      token.startsWith("http") ||
+      token.startsWith("async") ||
+      token.startsWith("Array")
+    );
   }
 
   get elanStack() {
@@ -22,8 +28,11 @@ export class ElanRuntimeError extends Error {
           const line = l.split(" ");
 
           if (line.length > 1) {
-            if (this.useLine(line[1])) {
-              elanStack.push(`at ${line[1]}`);
+            let fn = line[1];
+            fn = fn === "runTests" ? "test" : fn;
+
+            if (this.useLine(fn)) {
+              elanStack.push(`at ${fn}`);
             }
           }
         }

@@ -1,19 +1,21 @@
+import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { StdLib } from "./std-lib";
 import { AssertOutcome, System } from "./system";
 
-export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => void][]) {
+export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
   const allOutcomes: [string, AssertOutcome[]][] = [];
 
   for (const t of tests) {
     const outcomes: AssertOutcome[] = [];
+    const testId = t[0];
     try {
       await t[1](outcomes);
     } catch (e) {
       const msg = (e as Error).message || "Test threw error";
-      outcomes.push(new AssertOutcome(TestStatus.error, msg, "", ""));
+      outcomes.push(new AssertOutcome(TestStatus.error, msg, "", "", e as Error));
     }
-    allOutcomes.push([t[0], outcomes]);
+    allOutcomes.push([testId, outcomes]);
   }
 
   // clear tests each time or the tests array in the program gets duplicates

@@ -196,6 +196,10 @@ function updateDisplayValues() {
   } else if (!isParsing) {
     disable(save, "Code must be parsing in order to save");
   }
+  const testErr = file.getTestError();
+  if (testErr) {
+    showError(testErr, file.fileName, false);
+  }
 }
 
 function disable(button: HTMLButtonElement, msg = "") {
