@@ -179,7 +179,7 @@ end class`;
 async function main() {
   try {
     var x = system.emptyArrayList();
-    var y = x[1];
+    var y = system.safeIndex(x, 1);
     var z = y.p1;
     system.print(_stdlib.asString("not caught"));
   } catch (_e) {
@@ -205,7 +205,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Cannot read properties of undefined (reading 'p1')");
+    await assertObjectCodeExecutes(fileImpl, "Out of range index: 1 size: 0");
   });
 
   test("Pass_UseException", async () => {

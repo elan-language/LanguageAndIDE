@@ -221,7 +221,7 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   var arr = system.emptyArrayList();
-  var b = arr[1];
+  var b = system.safeIndex(arr, 1);
   _outcomes.push(system.assert(b, 0, "assert12", _stdlib));
 }]);
 return [main, _tests];}`;
@@ -233,7 +233,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.error, "Out of range error", "", "")]],
+      ["test3", [new AssertOutcome(TestStatus.error, "Out of range index: 1 size: 0", "", "")]],
     ]);
   });
 
@@ -489,13 +489,13 @@ async function main() {
 }
 
 async function square(x, y) {
-  y[0] = x ** 2;
+  system.safeSet(y, 0, x ** 2);
 }
 
 _tests.push(["test10", async (_outcomes) => {
   var arr = system.initialise(system.array(1), () => 0);
   await square(3, arr);
-  _outcomes.push(system.assert(arr[0], 9, "assert19", _stdlib));
+  _outcomes.push(system.assert(system.safeIndex(arr, 0), 9, "assert19", _stdlib));
 }]);
 return [main, _tests];}`;
 

@@ -112,7 +112,7 @@ export class StdLib {
   }
 
   head<T>(arr: T[]): T {
-    return arr[0];
+    return this.system.safeIndex(arr, 0);
   }
 
   keys<T>(dict: { [key: string]: T }): string[] {
