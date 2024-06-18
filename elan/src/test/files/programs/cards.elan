@@ -1,36 +1,45 @@
-# 73c01596c13c6d3cab32982515bca9b8e18b235ae1904f343c8ff13b2adedbed Elan v0.1 valid
+# 4a4e4f536ce176001b5c0a5b81d7c94a388d7ea46c33424034841f64b343c553 Elan v0.1 valid
 
 main
   var cm set to initialisedCharMap(black, green)
-  var card set to new Card(Rank.ace, Suit.spades)
+  var cAH set to new Card(Rank.ace, Suit.hearts)
+  var c2S set to new Card(Rank.two, Suit.spades)
+  set cm to cAH.addTo(cm, 1, 1)
+  set cm to c2S.addTo(cm, 8, 1)
   call cm.drawAsGraphics()
 end main
-
-function addCard(card as Card, cm as CharMap, x as Int, y as Int) return CharMap
-  var cm2 set to cm
-  for row from y to y + 9 step 1
-    for col from x to x + 7 step 1
-      set cm2 to cm2.putBackground(col, row, white)
-    end for
-  end for
-  return cm2
-end function
 
 immutable class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit
+    set symbol to unicode(symbols.getKey(suit))
     set colour to colours.getKey(suit)
     set label to labels.getKey(rank)
   end constructor
 
   property suit as Suit
 
+  property symbol as String
+
   property rank as Rank
 
   property label as String
 
   property colour as Int
+
+  function addTo(cm as CharMap, x as Int, y as Int) return CharMap
+    var cm2 set to cm
+    for row from y to y + 8 step 1
+      for col from x to x + 5 step 1
+        set cm2 to cm2.putBackground(col, row, white)
+        set cm2 to cm2.putForeground(col, row, colour)
+      end for
+    end for
+    set cm2 to cm2.putChar(x, y, label)
+    set cm2 to cm2.putChar(x + 1, y, symbol)
+    return cm2
+  end function
 
 end class
 
@@ -66,6 +75,8 @@ constant green set to 0x008000
 
 constant red set to 0xff0000
 
-constant colours set to {Suit.clubs:0, Suit.diamonds:0xff0000, Suit.hearts:0, Suit.spades:0xff0000}
+constant colours set to {Suit.clubs:0, Suit.diamonds:0xff0000, Suit.hearts:0xff0000, Suit.spades:0}
+
+constant symbols set to {Suit.clubs:0x2663, Suit.diamonds:0x2666, Suit.hearts:0x2665, Suit.spades:0x2660}
 
 constant labels set to {Rank.ace:"A", Rank.two:"2", Rank.three:"3", Rank.four:"four", Rank.five:"5", Rank.six:"6", Rank.seven:"7", Rank.eight:"8", Rank.nine:"9", Rank.ten:"10", Rank.jack:"J", Rank.queen:"Q", Rank.king:"K"}
