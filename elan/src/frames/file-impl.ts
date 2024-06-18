@@ -486,7 +486,7 @@ export class FileImpl implements File, Scope {
       this.getFirstChild().select(true, false);
       this.updateAllParseStatus();
     } catch (e) {
-      if (e instanceof Error && e.message.startsWith("Hash")) {
+      if (e instanceof Error && e.message.startsWith("Cannot load file")) {
         this.parseError = e.message;
       } else {
         this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
@@ -501,19 +501,20 @@ export class FileImpl implements File, Scope {
   }
 
   async validateHeader(code: string) {
+    const msg = `Cannot load file: it has been created or modified outside Elan IDE`;
     if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
       if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
-        throw new Error("Hash missing or invalid file header format");
+        throw new Error(msg);
       }
       const fileHash = tokens[1];
       const toHash = code.substring(code.indexOf("Elan"));
       const newHash = await this.getHash(toHash);
 
       if (fileHash !== newHash) {
-        throw new Error("Hash missing or does not match the code");
+        throw new Error(msg);
       }
     }
   }

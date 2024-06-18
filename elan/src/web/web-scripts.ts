@@ -42,7 +42,7 @@ function showError(err: Error, fileName: string, reset: boolean) {
   resetFile(reset);
   file.fileName = fileName;
 
-  if (err.message.startsWith("Hash")) {
+  if (err.message.startsWith("Cannot load file")) {
     elanInputOutput.printLine(err.message);
   } else if (err.stack) {
     let msg = "";
