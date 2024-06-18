@@ -9,6 +9,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { LetStatement } from "../statements/let-statement";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { mangle } from "../keywords";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -24,6 +25,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
     return this.compileErrors;
   }
 
+  get mId() {
+    return mangle(this.id);
+  }
+
   compile(): string {
     this.compileErrors = [];
 
@@ -31,23 +36,23 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
 
     if (isMember(this.scope)) {
       // don't prefix properties with this
-      return this.id;
+      return this.mId;
     }
     const symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
 
     if (symbol instanceof LetStatement) {
-      return `${this.id}()`;
+      return `${this.mId}()`;
     }
     if (symbol.symbolScope === SymbolScope.stdlib) {
       return `_stdlib.${this.id}`;
     }
     if (symbol.symbolScope === SymbolScope.property) {
-      return `this.${this.id}`;
+      return `this.${this.mId}`;
     }
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
-    return this.id;
+    return this.mId;
   }
 
   symbolType() {
