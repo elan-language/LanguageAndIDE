@@ -461,6 +461,7 @@ function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
+    document.body.style.cursor = 'wait';
     elanInputOutput.clearConsole();
     const fileName = elanFile.name;
     const reader = new FileReader();
@@ -472,9 +473,11 @@ function handleUpload(event: Event) {
       file.parseFrom(code).then(
         () => {
           initialDisplay();
+          document.body.style.cursor = 'default';
         },
         (e) => {
           showError(e, fileName, true);
+          document.body.style.cursor = 'default';
         },
       );
     });
