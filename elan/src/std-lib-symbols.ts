@@ -182,6 +182,13 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "round",
+      this.getSymbol(
+        "round",
+        new FunctionType([FloatType.Instance, IntType.Instance], FloatType.Instance, false, true),
+      ),
+    ],
+    [
       "ceiling",
       this.getSymbol(
         "ceiling",
