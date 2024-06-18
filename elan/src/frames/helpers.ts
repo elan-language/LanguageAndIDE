@@ -166,7 +166,7 @@ export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayStatus 
     overall = DisplayStatus.ok;
   } else if (ts === TestStatus.pending) {
     overall = DisplayStatus.warning;
-  } else if (ts === TestStatus.fail) {
+  } else if (ts === TestStatus.fail || ts === TestStatus.error) {
     overall = DisplayStatus.error;
   }
   return overall;

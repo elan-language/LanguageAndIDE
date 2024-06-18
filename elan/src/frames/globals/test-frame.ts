@@ -68,7 +68,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
   public renderAsHtml(): string {
     return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>${this.compileOrTestMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;
@@ -98,18 +98,37 @@ ${this.compileChildren(transforms)}\r
 }]);\r\n`;
   }
 
+  getAsserts() {
+    return this.getChildren().filter((c) => c instanceof AssertStatement) as AssertStatement[];
+  }
+
   setAssertOutcomes(outcomes: AssertOutcome[]) {
     this.resetTestStatus();
-    for (const assert of this.getChildren().filter(
-      (c) => c instanceof AssertStatement,
-    ) as AssertStatement[]) {
-      const match = outcomes.filter((o) => o.htmlId === assert.getHtmlId());
-      if (match.length === 1) {
-        assert.setOutcome(match[0]);
-      }
-    }
+
     if (outcomes.some((o) => o.status === TestStatus.error)) {
       this._testStatus = TestStatus.error;
+
+      for (const assert of this.getAsserts()) {
+        assert.outcome = undefined;
+      }
+    } else {
+      for (const assert of this.getAsserts()) {
+        const match = outcomes.filter((o) => o.htmlId === assert.getHtmlId());
+        if (match.length === 1) {
+          assert.setOutcome(match[0]);
+        }
+      }
     }
+  }
+
+  compileOrTestMsgAsHtml() {
+    if (this._testStatus === TestStatus.error) {
+      return this.testMsgAsHtml();
+    }
+    return super.compileMsgAsHtml();
+  }
+
+  testMsgAsHtml(): string {
+    return ` <msg class="${DisplayStatus[DisplayStatus.error]}">failed to run</msg>`;
   }
 }
