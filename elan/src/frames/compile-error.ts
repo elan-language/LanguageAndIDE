@@ -14,6 +14,7 @@ export abstract class CompileError {
     console.warn(this.toString());
   }
 
+  //
   public get priority() {
     return this.basePriority === Priority.illegalOperation
       ? this.unknownType
