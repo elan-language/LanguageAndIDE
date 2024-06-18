@@ -6,7 +6,7 @@ import { Frame } from "./interfaces/frame";
 import { File } from "./interfaces/file";
 import { AbstractSelector } from "./abstract-selector";
 import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { CompileError } from "./compile-error";
+import { CompileError, Priority } from "./compile-error";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Class } from "./interfaces/class";
 import { Scope } from "./interfaces/scope";
@@ -95,8 +95,16 @@ export function escapeAngleBrackets(str: string): string {
 }
 
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
-  /* To display first message only use: */
-  const msg = loc.compileErrors.length > 0 ? loc.compileErrors[0].message : "";
+  let msg = "";
+  const first = loc.compileErrors[0];
+  const n = loc.compileErrors.length;
+  if (n > 0) {
+    const highest = loc.compileErrors.reduce(
+      (prev, curr) => (curr.priority < prev.priority ? curr : prev),
+      first,
+    );
+    msg = highest.message;
+  }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
   if (compile === DisplayStatus.error || compile === DisplayStatus.warning) {
