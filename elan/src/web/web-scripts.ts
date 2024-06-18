@@ -42,16 +42,21 @@ function showError(err: Error, fileName: string, reset: boolean) {
   resetFile(reset);
   file.fileName = fileName;
 
-  if (err.stack) {
+  if (err.message.startsWith("Hash")) {
+    elanInputOutput.printLine(err.message);
+  } else if (err.stack) {
     let msg = "";
+    let stack = "";
     if (err instanceof ElanRuntimeError) {
       msg = "A Runtime error occured in the Elan code";
+      stack = err.elanStack;
     } else {
       msg =
         "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+      stack = err.stack;
     }
     elanInputOutput.printLine(msg);
-    elanInputOutput.printLine(err.stack);
+    elanInputOutput.printLine(stack);
   } else {
     elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
   }
