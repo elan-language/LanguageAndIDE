@@ -80,4 +80,5 @@ export interface File extends Parent {
 
   setFieldBeingEdited(value: boolean): void;
   getFieldBeingEdited(): boolean;
+  getTestError(): Error | undefined;
 }

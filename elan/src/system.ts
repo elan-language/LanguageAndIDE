@@ -10,6 +10,7 @@ export class AssertOutcome {
     public readonly actual: string,
     public readonly expected: string,
     public readonly htmlId: string,
+    public readonly error?: Error,
   ) {}
 }
 
