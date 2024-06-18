@@ -166,7 +166,7 @@ class Foo {
 
   bar() {
     var lst = system.literalArray([1, 2]);
-    return lst[this.p1];
+    return system.safeIndex(lst, this.p1);
   }
 
 }
@@ -218,8 +218,8 @@ class Foo {
 
   bar() {
     var lst = system.literalArray([1, 2]);
-    lst[this.p1] = 3;
-    return lst[0];
+    system.safeSet(lst, this.p1, 3);
+    return system.safeIndex(lst, 0);
   }
 
 }

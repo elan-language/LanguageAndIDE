@@ -117,7 +117,11 @@ export class System {
     return t;
   }
 
-  safeIndex(toIndex: any, index: any) {
+  safeIndex(toIndex?: any, index?: any) {
+    if (toIndex === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
     const r = toIndex[index];
 
     if (r === undefined) {
@@ -129,6 +133,19 @@ export class System {
     }
 
     return r;
+  }
+
+  safeSet<T>(toIndex?: T[], index?: number, value?: T) {
+    if (toIndex === undefined || index === undefined || value === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    const size = toIndex.length;
+    if (index >= size) {
+      throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
+    }
+
+    toIndex[index] = value;
   }
 
   print(s: string) {

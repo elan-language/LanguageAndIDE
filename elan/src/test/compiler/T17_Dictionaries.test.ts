@@ -79,7 +79,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.print(_stdlib.asString(a["z"]));
+  system.print(_stdlib.asString(system.safeIndex(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -183,8 +183,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  a["b"] = 4;
-  a["d"] = 2;
+  system.safeSet(a, "b", 4);
+  system.safeSet(a, "d", 2);
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -266,12 +266,12 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  a["Foo"] = 1;
-  a["Bar"] = 3;
+  system.safeSet(a, "Foo", 1);
+  system.safeSet(a, "Bar", 3);
   var k = _stdlib.keys(a);
   system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(a["Foo"]));
-  system.print(_stdlib.asString(a["Bar"]));
+  system.print(_stdlib.asString(system.safeIndex(a, "Foo")));
+  system.print(_stdlib.asString(system.safeIndex(a, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -308,12 +308,12 @@ var Fruit = {
 
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  a[Fruit.apple] = 1;
-  a[Fruit.orange] = 3;
+  system.safeSet(a, Fruit.apple, 1);
+  system.safeSet(a, Fruit.orange, 3);
   var k = _stdlib.keys(a);
   system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(a[Fruit.apple]));
-  system.print(_stdlib.asString(a[Fruit.orange]));
+  system.print(_stdlib.asString(system.safeIndex(a, Fruit.apple)));
+  system.print(_stdlib.asString(system.safeIndex(a, Fruit.orange)));
 }
 return [main, _tests];}`;
 
@@ -344,7 +344,7 @@ end main`;
 async function main() {
   var a = system.emptyDictionary();
   var b = system.emptyDictionary();
-  a["a"] = 3;
+  system.safeSet(a, "a", 3);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
   system.print(_stdlib.asString(system.objectEquals(a, b)));
@@ -423,7 +423,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
+    await assertObjectCodeDoesNotExecute(fileImpl, "No such key: c");
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {

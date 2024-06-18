@@ -31,10 +31,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.index2) {
-      return `[${this.index1.compile()}][${this.index2.compile()}]`;
+      return `${this.index1.compile()}, ${this.index2.compile()}`;
     }
 
-    return `[${this.index1.compile()}]`;
+    return `${this.index1.compile()}`;
   }
 
   symbolType() {

@@ -173,7 +173,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to empty [Int]
+  var a set to new ArrayList<of Int>(11)
   call foo(a)
 end main
 
@@ -186,15 +186,15 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.emptyArrayList();
+  var a = system.initialise(system.array(11), () => 0);
   await foo(a);
 }
 
 async function foo(arr) {
   for (var i = 0; i <= 10; i = i + 1) {
-    arr[i] = 1;
+    system.safeSet(arr, i, 1);
   }
-  system.print(_stdlib.asString(arr[0]));
+  system.print(_stdlib.asString(system.safeIndex(arr, 0)));
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

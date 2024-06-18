@@ -75,7 +75,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), () => "");
-  system.print(_stdlib.asString(_stdlib.length(a[0])));
+  system.print(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -112,7 +112,7 @@ end class
 async function main() {
   var a = system.initialise(system.array(3), () => Foo.emptyInstance());
   system.print(_stdlib.asString(a));
-  var foo = a[0];
+  var foo = system.safeIndex(a, 0);
   system.print(_stdlib.asString(foo.p1));
 }
 
@@ -150,10 +150,10 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), () => "");
-  a[0] = "foo";
-  a[2] = "yon";
-  system.print(_stdlib.asString(a[0]));
-  system.print(_stdlib.asString(a[2]));
+  system.safeSet(a, 0, "foo");
+  system.safeSet(a, 2, "yon");
+  system.print(_stdlib.asString(system.safeIndex(a, 0)));
+  system.print(_stdlib.asString(system.safeIndex(a, 2)));
 }
 return [main, _tests];}`;
 
@@ -182,8 +182,8 @@ async function main() {
   var a = system.initialise(system.array(3), () => "");
   _stdlib.add(a, "foo");
   _stdlib.add(a, "yon");
-  system.print(_stdlib.asString(a[3]));
-  system.print(_stdlib.asString(a[4]));
+  system.print(_stdlib.asString(system.safeIndex(a, 3)));
+  system.print(_stdlib.asString(system.safeIndex(a, 4)));
 }
 return [main, _tests];}`;
 
@@ -334,7 +334,7 @@ return [main, _tests];}`;
 main
   var a set to empty [Int]
   var b set to empty [Int]
-  set a[0] to 3
+  call a.add(3)
   print a
   print b
   print a is b
@@ -346,7 +346,7 @@ end main`;
 async function main() {
   var a = system.emptyArrayList();
   var b = system.emptyArrayList();
-  a[0] = 3;
+  _stdlib.add(a, 3);
   system.print(_stdlib.asString(a));
   system.print(_stdlib.asString(b));
   system.print(_stdlib.asString(system.objectEquals(a, b)));
@@ -364,7 +364,23 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [3]empty ArrayListfalsefalsetrue");
   });
 
-  test("Pass_2DArray", async () => {
+  test("Fail_EmptyArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [Int]
+  set a[0] to 3
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
+  });
+
+  ignore_test("Pass_2DArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

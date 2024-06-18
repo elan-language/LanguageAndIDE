@@ -17,6 +17,7 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { VarAsn } from "../syntax-nodes/var-asn";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -78,6 +79,12 @@ export class SetStatement extends AbstractFrame implements Statement {
 
     const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
     mustNotBeLet(symbol, this.compileErrors, this.assignable.getHtmlId());
+
+    const assignable = this.assignable.getOrTransformAstNode(transforms);
+
+    if (assignable instanceof VarAsn && assignable.isIndex()) {
+      return `${this.indent()}system.safeSet(${this.assignable.compile(transforms)}, ${this.expr.compile(transforms)});`;
+    }
 
     return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;
   }

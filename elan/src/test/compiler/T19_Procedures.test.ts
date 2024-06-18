@@ -178,7 +178,7 @@ async function main() {
 }
 
 async function changeFirst(a) {
-  a[0] = 5;
+  system.safeSet(a, 0, 5);
 }
 return [main, _tests];}`;
 

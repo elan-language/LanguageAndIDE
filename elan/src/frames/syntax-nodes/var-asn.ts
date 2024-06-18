@@ -24,6 +24,7 @@ import { LetStatement } from "../statements/let-statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
+import { SetStatement } from "../statements/set-statement";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -47,7 +48,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
   }
 
-  private isIndex() {
+  isIndex() {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
@@ -75,6 +76,10 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       return this.wrapListOrArray(rootType.returnType, code);
     }
     return code;
+  }
+
+  wrapIndex(code: string): string {
+    return `system.safeIndex(${code})`;
   }
 
   compile(): string {
@@ -110,6 +115,12 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
           this.compileErrors,
           this.fieldId,
         );
+      }
+      if (this.isIndex()) {
+        code = `${q}${this.id}${call}, ${idx}`;
+        if (!(this.scope instanceof SetStatement)) {
+          code = this.wrapIndex(code);
+        }
       }
       if (this.isRange()) {
         code = this.wrapListOrArray(rootType, code);
