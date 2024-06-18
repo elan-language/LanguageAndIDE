@@ -346,6 +346,17 @@ export function mustMatchParameters(
   }
 }
 
+export function mustMatchGenericParameters(
+  parms: AstNode[],
+  expected: number,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (parms.length < expected) {
+    compileErrors.push(new ParametersCompileError(expected, parms.length, location, true));
+  }
+}
+
 function FailIncompatible(
   lhs: SymbolType,
   rhs: SymbolType,

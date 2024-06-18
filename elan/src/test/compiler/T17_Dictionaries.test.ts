@@ -523,4 +523,19 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Dictionary to ImmutableDictionary"]);
   });
+
+  test("Fail_withoutGenericType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to new Dictionary()
+    print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 2 got: 0"]);
+  });
 });
