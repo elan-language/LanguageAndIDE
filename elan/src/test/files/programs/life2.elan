@@ -1,7 +1,9 @@
 # 332ce1169cf4f5e718a260350c13fc3c89ecee1430962c8b7aa6dc8918b57864 Elan v0.1 valid
 
 main
-  var cm set to initialisedCharMap(black, white)
+  var grid set to empty [Boolean]
+  call fillRandom(grid)
+  var cm set to convertGridToCharMap(exampleCells)
   var grid set to exampleCells
   for i from 1 to 100 step 1
     set cm to updateCharMap(grid, cm)
@@ -10,6 +12,23 @@ main
     call pause(50)
   end for
 end main
+
+function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
+  var cm2 set to cm
+  for row from 0 to 19 step 1
+    for col from 0 to 19 step 1
+      var cell set to grid.get(col*20 + row)
+      if cell
+        then
+          set cm2 to cm2.putBackground(col, row, black)
+        else
+          set cm2 to cm2.putBackground(col, row, white)
+      end if
+    end for
+  end for
+  return cm2
+end function
+
 
 function convertGridToCharMap(grid as {Boolean}) return CharMap
   var cm set to initialisedCharMap(black, white)
@@ -23,9 +42,9 @@ function convertGridToCharMap(grid as {Boolean}) return CharMap
   return cm
 end function
 
-procedure fillRandomGrid(grid as [Boolean])
+procedure fillRandom(grid as [Boolean])
   for i from 0 to 1199 step 1
-    set grid[i] to random() > 0.5
+    call grid.add(random() > 0.5)
   end for
 end procedure
 
