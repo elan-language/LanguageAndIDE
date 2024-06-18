@@ -667,7 +667,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new InstanceNode(), `bar`, ParseStatus.valid, `bar`, "", "");
     testNodeParse(new InstanceNode(), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
-    testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo]`, "[0]", "");
+    testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
   test("Function Call", () => {
@@ -1478,7 +1478,7 @@ suite("Parsing Nodes", () => {
 
     testNodeParse(new IndexDouble(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
     testNodeParse(new IndexNode(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
-    testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.invalid, "", "[3][4][5]");
-    testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[3..4][5]");
+    testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.valid, "", "[5]");
+    testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[5]");
   });
 });

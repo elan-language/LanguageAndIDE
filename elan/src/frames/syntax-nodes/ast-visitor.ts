@@ -443,6 +443,11 @@ export function transform(
     return new IndexAsn(indexOne, indexTwo, fieldId, scope);
   }
 
+  if (node instanceof IndexSingle) {
+    const index = transform(node.contents, fieldId, scope) as ExprAsn;
+    return new IndexAsn(index, undefined, fieldId, scope);
+  }
+
   if (node instanceof Qualifier) {
     const q = transform(node.qualifier, fieldId, scope) as AstIdNode;
     return new QualifierAsn(q, fieldId, scope);
