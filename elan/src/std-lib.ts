@@ -285,6 +285,10 @@ export class StdLib {
   floor(n: number) {
     return Math.floor(n);
   }
+  round(n: number, places: number) {
+    const shift = 10 ** places;
+    return Math.floor(n * shift + 0.5) / shift;
+  }
   ceiling(n: number) {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
