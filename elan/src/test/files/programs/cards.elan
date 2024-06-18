@@ -1,4 +1,4 @@
-# 4a4e4f536ce176001b5c0a5b81d7c94a388d7ea46c33424034841f64b343c553 Elan v0.1 valid
+# 3f8856143b3d206c20637529258f73f0fcb34b8d11374ece33bfaf65faea53f1 Elan v0.1 valid
 
 main
   var cm set to initialisedCharMap(black, green)
@@ -75,8 +75,8 @@ constant green set to 0x008000
 
 constant red set to 0xff0000
 
-constant colours set to {Suit.clubs:0, Suit.diamonds:0xff0000, Suit.hearts:0xff0000, Suit.spades:0}
+constant colours set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
 
 constant symbols set to {Suit.clubs:0x2663, Suit.diamonds:0x2666, Suit.hearts:0x2665, Suit.spades:0x2660}
 
-constant labels set to {Rank.ace:"A", Rank.two:"2", Rank.three:"3", Rank.four:"four", Rank.five:"5", Rank.six:"6", Rank.seven:"7", Rank.eight:"8", Rank.nine:"9", Rank.ten:"10", Rank.jack:"J", Rank.queen:"Q", Rank.king:"K"}
+constant labels set to {Rank.ace:"A", Rank.two:"2", Rank.three:"3", Rank.four:"4", Rank.five:"5", Rank.six:"6", Rank.seven:"7", Rank.eight:"8", Rank.nine:"9", Rank.ten:"10", Rank.jack:"J", Rank.queen:"Q", Rank.king:"K"}
