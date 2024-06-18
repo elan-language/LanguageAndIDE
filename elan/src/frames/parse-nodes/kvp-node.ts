@@ -27,10 +27,4 @@ export class KVPnode extends AbstractSequence {
       super.parseText(text);
     }
   }
-
-  getCompletionAsHtml(): string {
-    const k = !this.key || this.key.status === ParseStatus.empty ? "<pr>key</pr>" : "";
-    const v = !this.value || this.value.status === ParseStatus.empty ? " <pr>value</pr>" : "";
-    return `${k}:${v}`;
-  }
 }

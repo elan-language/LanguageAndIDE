@@ -1,5 +1,5 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { DictionaryNode } from "./dictionary-node";
+import { IdentifierNode } from "./identifier-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ImmutableListNode } from "./immutable-list-node";
 import { LitValueNode } from "./lit-value";
@@ -19,6 +19,7 @@ export class ConstantLiteralNode extends AbstractAlternatives {
         () => new ConstantLiteralNode(),
       ),
     );
+    this.alternatives.push(new IdentifierNode()); // But compile rule to enforce that it can only be another constant, not a variable
     super.parseText(text);
   }
 }

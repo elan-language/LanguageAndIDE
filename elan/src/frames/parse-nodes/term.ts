@@ -30,9 +30,9 @@ export class Term extends AbstractAlternatives {
     this.alternatives.push(new NewInstance());
     this.alternatives.push(new UnaryExpression());
     this.alternatives.push(new LiteralNode()); // Literal must be before Var to detect true/false
+    this.alternatives.push(new KeywordNode(thisKeyword));
     this.alternatives.push(new VarRefNode());
     this.alternatives.push(new FunctionCallNode());
-    this.alternatives.push(new KeywordNode(thisKeyword));
     this.alternatives.push(new EmptyOfTypeNode());
     this.alternatives.push(new ImmutableListNode(() => new ExprNode()));
     this.alternatives.push(new ArrayListNode(() => new ExprNode()));

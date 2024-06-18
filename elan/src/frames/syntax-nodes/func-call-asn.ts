@@ -13,6 +13,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { containsGenericType, generateType, matchGenericTypes, transforms } from "./ast-helpers";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { mangle } from "../keywords";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -24,6 +25,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   ) {
     super();
     this.id = id.trim();
+  }
+
+  get mId() {
+    return mangle(this.id);
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -84,7 +89,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q = qualifier ? `${qualifier.compile()}` : scopePrefix(funcSymbol?.symbolScope);
-    return `${q}${this.id}(${pp})`;
+    return q ? `${q}${this.id}(${pp})` : `${this.mId}(${pp})`;
   }
 
   symbolType() {

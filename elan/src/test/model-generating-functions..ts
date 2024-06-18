@@ -150,7 +150,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   const gs = f.getFirstSelectorAsDirectChild();
   const con = new Constant(f);
   con.name.setFieldToKnownValidText("phi");
-  con.literal.setFieldToKnownValidText("1.618");
+  con.value.setFieldToKnownValidText("1.618");
   f.addChildBefore(con, gs);
   const main = new MainFrame(f);
   f.addChildBefore(main, gs);
