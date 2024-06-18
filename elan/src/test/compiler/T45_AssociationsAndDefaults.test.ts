@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -930,5 +931,27 @@ return [main, _tests];}`;
       fileImpl,
       "empty Listempty Dictionaryempty Arraytruetruetruetrue",
     );
+  });
+
+  test("Fail_UseOfKeywordAsName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property if as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
   });
 });

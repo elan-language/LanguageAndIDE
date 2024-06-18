@@ -16,6 +16,8 @@ import { FunctionType } from "../symbols/function-type";
 import { transforms } from "./ast-helpers";
 import { EnumType } from "../symbols/enum-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
+import { mustMatchGenericParameters } from "../compile-rules";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -37,8 +39,31 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return this.compileErrors.concat(cc);
   }
 
+  expectedMinimumGenericParameters() {
+    switch (this.id) {
+      case "ImmutableList":
+      case "ArrayList":
+      case "Func":
+      case "Iter":
+        return 1;
+      case "Dictionary":
+      case "ImmutableDictionary":
+      case "Tuple":
+        return 2;
+    }
+    return 0;
+  }
+
   compile(): string {
     this.compileErrors = [];
+
+    mustMatchGenericParameters(
+      this.genericParameters,
+      this.expectedMinimumGenericParameters(),
+      this.compileErrors,
+      this.fieldId,
+    );
+
     if (this.id === "Dictionary" || this.id === "ImmutableDictionary") {
       return "Object";
     }
@@ -55,6 +80,10 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     return st.initialValue;
   }
 
+  safeGetGenericParameterSymbolType(index: number) {
+    return this.genericParameters[index]?.symbolType() ?? UnknownType.Instance;
+  }
+
   symbolType() {
     switch (this.id) {
       case "Int":
@@ -66,18 +95,18 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "String":
         return StringType.Instance;
       case "ImmutableList":
-        return new ImmutableListType(this.genericParameters[0].symbolType());
+        return new ImmutableListType(this.safeGetGenericParameterSymbolType(0));
       case "ArrayList":
-        return new ArrayListType(this.genericParameters[0].symbolType(), this.is2d);
+        return new ArrayListType(this.safeGetGenericParameterSymbolType(0), this.is2d);
       case "Dictionary":
         return new DictionaryType(
-          this.genericParameters[0].symbolType(),
-          this.genericParameters[1].symbolType(),
+          this.safeGetGenericParameterSymbolType(0),
+          this.safeGetGenericParameterSymbolType(1),
         );
       case "ImmutableDictionary":
         return new ImmutableDictionaryType(
-          this.genericParameters[0].symbolType(),
-          this.genericParameters[1].symbolType(),
+          this.safeGetGenericParameterSymbolType(0),
+          this.safeGetGenericParameterSymbolType(1),
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
@@ -86,7 +115,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "Func":
         const types = this.genericParameters.map((p) => p.symbolType());
         const pTypes = types.slice(0, -1);
-        const rType = types[types.length - 1];
+        const rType = types[types.length - 1] ?? UnknownType.Instance;
         return new FunctionType(pTypes, rType, false);
       default: {
         return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());

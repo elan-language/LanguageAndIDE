@@ -129,10 +129,10 @@ export class ExtensionCompileError extends CompileError {
 }
 
 export class ParametersCompileError extends CompileError {
-  constructor(expected: number, actual: number, location: string) {
+  constructor(expected: number, actual: number, location: string, generic?: boolean) {
     super(
       Priority.illegalOperation,
-      `Parameters expected: ${expected} got: ${actual}`,
+      `${generic ? "Generic parameters" : "Parameters"} expected: ${expected} got: ${actual}`,
       location,
       false,
     );
