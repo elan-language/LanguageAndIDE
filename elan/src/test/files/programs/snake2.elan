@@ -1,4 +1,4 @@
-# 35ff5be49d9545198440e90756d3ca3f6532ca95768c055b3c8c07af287b91dd Elan v0.1 valid
+# 418eb4caec5965d2f9e3f82b43f153f0e14f634d9524a38e4792421b54c07056 Elan v0.1 valid
 
 main
   var board set to new Board(40, 30)
