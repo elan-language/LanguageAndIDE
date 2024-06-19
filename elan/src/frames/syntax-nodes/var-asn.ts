@@ -26,6 +26,7 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { SetStatement } from "../statements/set-statement";
 import { UnknownType } from "../symbols/unknown-type";
+import { StringType } from "../symbols/string-type";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -118,9 +119,9 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         .symbolType(transforms());
       if (this.index) {
         if (this.isDoubleIndex() && isGenericSymbolType(rootType)) {
-          mustBeIndexableSymbol(rootType.ofType, this.compileErrors, this.fieldId);
+          mustBeIndexableSymbol(rootType.ofType, true, this.compileErrors, this.fieldId);
         } else {
-          mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
+          mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
         }
       }
       if (this.isIndex()) {
@@ -171,7 +172,11 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       return rootType.valueType;
     }
 
-    return rootType;
+    if (rootType instanceof StringType) {
+      return rootType;
+    }
+
+    return UnknownType.Instance;
   }
 
   symbolType() {

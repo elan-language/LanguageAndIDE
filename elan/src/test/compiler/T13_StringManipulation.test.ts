@@ -329,6 +329,24 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 
+  test("Fail_SetIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to "abcde"
+  set a[0] to "b"
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index String"]);
+  });
+
   test("Fail_ComparisonOperators", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

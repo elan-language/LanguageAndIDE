@@ -199,13 +199,14 @@ export function mustBePureFunctionSymbol(
 
 export function mustBeIndexableSymbol(
   symbolType: SymbolType,
+  read: boolean,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (
     !(
       symbolType instanceof ArrayListType ||
-      symbolType instanceof StringType ||
+      (read && symbolType instanceof StringType) ||
       symbolType instanceof DictionaryType
     )
   ) {
@@ -591,15 +592,6 @@ export function mustBeCompatibleNode(
 ) {
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
-
-  if (
-    lst instanceof UnknownType ||
-    lst === undefined ||
-    rst instanceof UnknownType ||
-    rst === undefined
-  ) {
-    return; //Because there will be a higher priority compile error
-  }
 
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }

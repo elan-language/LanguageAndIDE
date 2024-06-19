@@ -599,13 +599,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
   });
 
-  //Needs re-writing to use new pattern
-  ignore_test("Fail_1DArrayAccessedAs2D", async () => {
+  test("Fail_1DArrayAccessedAs2D1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to new ArrayList<of String>(3)
-  set a[0, 0] to "foo"
+  set a[0][0] to "foo"
 end main
 `;
 
@@ -613,14 +612,30 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index String"]);
   });
 
-  ignore_test("Fail_2DArrayAccessedAs1D", async () => {
+  test("Fail_1DArrayAccessedAs2D2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3, 3)
+  var a set to new ArrayList<of Int>(3)
+  set a[0][0] to 1
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
+  });
+
+  test("Fail_2DArrayAccessedAs1D", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of ArrayList<of String>>(3)
   set a[0] to "foo"
 end main
 `;
@@ -629,7 +644,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
   // TODO runtime range checking #474
