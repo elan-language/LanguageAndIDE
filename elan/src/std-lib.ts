@@ -520,7 +520,7 @@ export class StdLib {
 
     for (let i = 0; i < x; i++) {
       const subArr = [];
-      for (let j = 0; j < x; j++) {
+      for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
       toInit[i] = subArr;
