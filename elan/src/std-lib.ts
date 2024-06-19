@@ -207,9 +207,20 @@ export class StdLib {
     return newList;
   }
 
+  // custom impl
+  elanIndexOf<T>(list: T[], elem: T) {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (this.system.equals(item, elem)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   withRemoveFirst<T>(list: Array<T>, value: T) {
     let newList = [...list];
-    const index = newList.indexOf(value);
+    const index = this.elanIndexOf(newList, value);
     if (index > -1) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       newList = (newList as any).toSpliced(index, 1);
@@ -220,11 +231,11 @@ export class StdLib {
 
   withRemoveAll<T>(list: Array<T>, value: T) {
     let newList = [...list];
-    let index = newList.indexOf(value);
+    let index = this.elanIndexOf(newList, value);
     while (index > -1) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       newList = (newList as any).toSpliced(index, 1);
-      index = newList.indexOf(value);
+      index = this.elanIndexOf(newList, value);
     }
     (newList as unknown as hasHiddenType)._type = "ImmutableList";
     return newList;
@@ -235,17 +246,17 @@ export class StdLib {
   }
 
   removeFirst<T>(list: Array<T>, value: T) {
-    const index = list.indexOf(value);
+    const index = this.elanIndexOf(list, value);
     if (index > -1) {
       list.splice(index, 1);
     }
   }
 
   removeAll<T>(list: Array<T>, value: T) {
-    let index = list.indexOf(value);
+    let index = this.elanIndexOf(list, value);
     while (index > -1) {
       list.splice(index, 1);
-      index = list.indexOf(value);
+      index = this.elanIndexOf(list, value);
     }
   }
 
@@ -271,6 +282,7 @@ export class StdLib {
   indexOf(s1: string, s2: string) {
     return s1.indexOf(s2);
   }
+
   trim(s: string): string {
     return s.trim();
   }
@@ -330,7 +342,7 @@ export class StdLib {
   maxBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
     const max = Math.max(...mm);
-    const i = mm.indexOf(max);
+    const i = this.elanIndexOf(mm, max);
     return source[i];
   }
 
@@ -340,8 +352,8 @@ export class StdLib {
 
   minBy<T>(source: T[], predicate: (value: T) => number): T {
     const mm = source.map(predicate);
-    const max = Math.min(...mm);
-    const i = mm.indexOf(max);
+    const min = Math.min(...mm);
+    const i = this.elanIndexOf(mm, min);
     return source[i];
   }
 

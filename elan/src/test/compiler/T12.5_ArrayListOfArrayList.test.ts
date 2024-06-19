@@ -324,11 +324,11 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_remove", async () => {
+  test("Pass_remove1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["one", "two", "three"]
+  var a set to [["one"], ["two"], ["three"]]
   call a.remove(0)
   call a.remove(1)
   print a
@@ -336,7 +336,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.literalArray(["one", "two", "three"]);
+  var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.remove(a, 0);
   _stdlib.remove(a, 1);
   system.print(_stdlib.asString(a));
@@ -349,22 +349,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [two]");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [two]]");
   });
 
-  ignore_test("Pass_removeFirst", async () => {
+  test("Pass_remove2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["one", "two", "three", "one", "two", "three"]
-  call a.removeFirst("two")
+  var a set to [["one"], ["two"], ["three"]]
+  call a[0].remove(0)
+  call a[2].remove(0)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.literalArray(["one", "two", "three", "one", "two", "three"]);
-  _stdlib.removeFirst(a, "two");
+  var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  _stdlib.remove(system.safeIndex(a, 0), 0);
+  _stdlib.remove(system.safeIndex(a, 2), 0);
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -375,7 +377,39 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [one, three, one, two, three]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [empty ArrayList, ArrayList [two], empty ArrayList]",
+    );
+  });
+
+  test("Pass_removeFirst", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]]
+  call a.removeFirst(["two"])
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  _stdlib.removeFirst(a, system.literalArray(["two"]));
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [ArrayList [one], ArrayList [three], ArrayList [one], ArrayList [two], ArrayList [three]]",
+    );
   });
 
   ignore_test("Pass_removeAll", async () => {
