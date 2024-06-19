@@ -19,7 +19,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { VarAsn } from "../syntax-nodes/var-asn";
-import { isGenericSymbolType } from "../symbols/symbol-helpers";
+import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -89,6 +89,9 @@ export class SetStatement extends AbstractFrame implements Statement {
       const rootType = assignable.rootSymbolType();
       if (assignable.isDoubleIndex() && isGenericSymbolType(rootType)) {
         mustBeIndexableSymbol(rootType.ofType, false, this.compileErrors, this.htmlId);
+        safeSet = "system.safeDoubleSet";
+      } else if (assignable.isDoubleIndex() && isDictionarySymbolType(rootType)) {
+        mustBeIndexableSymbol(rootType.valueType, false, this.compileErrors, this.htmlId);
         safeSet = "system.safeDoubleSet";
       } else {
         mustBeIndexableSymbol(rootType, false, this.compileErrors, this.htmlId);

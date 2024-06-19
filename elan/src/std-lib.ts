@@ -67,7 +67,7 @@ export class StdLib {
 
       const o = v as { [key: string]: object };
 
-      return `${tn} ${pf}${items.map((n) => `${n}:${o[n]}`).join(", ")}${sf}`;
+      return `${tn} ${pf}${items.map((n) => `${n}:${this.asString(o[n])}`).join(", ")}${sf}`;
     }
 
     if (typeof v === "object") {

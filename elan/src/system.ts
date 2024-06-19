@@ -160,11 +160,7 @@ export class System {
     return r1;
   }
 
-  safeSet<T>(toIndex?: T[], index?: number, value?: T) {
-    if (toIndex === undefined || index === undefined || value === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
-
+  safeArrayListSet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {
       throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
@@ -173,7 +169,39 @@ export class System {
     toIndex[index] = value;
   }
 
-  safeDoubleSet<T>(toIndex?: T[][], index1?: number, index2?: number, value?: T) {
+  safeDictionarySet<T>(toIndex: any, index: any, value: any) {
+    const d = this.dictionary(toIndex ?? {}) as any;
+    d[index] = value;
+  }
+
+  safeSet<T>(toIndex?: any, index?: any, value?: any) {
+    if (toIndex === undefined || index === undefined || value === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    if ((toIndex as unknown as hasHiddenType)._type === "ArrayList") {
+      this.safeArrayListSet(toIndex, index, value);
+    } else {
+      this.safeDictionarySet(toIndex, index, value);
+    }
+  }
+
+  safeArrayListDoubleSet<T>(toIndex: T[][], index1: number, index2: number, value: T) {
+    const size1 = toIndex.length;
+    if (index1 >= size1) {
+      throw new ElanRuntimeError(`Out of range index: ${index1} size: ${size1}`);
+    }
+
+    this.safeSet(toIndex[index1], index2, value);
+  }
+
+  safeDictionaryDoubleSet<T>(toIndex: any[][], index1: any, index2: any, value: any) {
+    const entry = toIndex[index1] ?? (this.dictionary({}) as any);
+    toIndex[index1] = entry;
+    this.safeSet(toIndex[index1], index2, value);
+  }
+
+  safeDoubleSet<T>(toIndex?: any[][], index1?: any, index2?: any, value?: any) {
     if (
       toIndex === undefined ||
       index1 === undefined ||
@@ -183,17 +211,11 @@ export class System {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const size1 = toIndex.length;
-    if (index1 >= size1) {
-      throw new ElanRuntimeError(`Out of range index: ${index1} size: ${size1}`);
+    if ((toIndex as unknown as hasHiddenType)._type === "ArrayList") {
+      this.safeArrayListDoubleSet(toIndex, index1, index2, value);
+    } else {
+      this.safeDictionaryDoubleSet(toIndex, index1, index2, value);
     }
-
-    const size2 = toIndex[index1].length;
-    if (index2 >= size2) {
-      throw new ElanRuntimeError(`Out of range index: ${index2} size: ${size2}`);
-    }
-
-    toIndex[index1][index2] = value;
   }
 
   print(s: string) {

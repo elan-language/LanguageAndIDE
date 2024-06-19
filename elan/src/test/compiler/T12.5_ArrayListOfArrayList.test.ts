@@ -2,17 +2,14 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T12.5_ArrayListOfArrayList", () => {
   test("Pass_literalArrayListOfArrayList", async () => {
@@ -94,53 +91,6 @@ return [main, _tests];}`;
       fileImpl,
       "0ArrayList [empty ArrayList, empty ArrayList, empty ArrayList]",
     );
-  });
-
-  ignore_test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of Foo>(3)
-  print a
-  var foo set to a[0]
-  print foo.p1
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-
-  property p1 as Int
-end class
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.initialise(system.array(3), () => Foo.emptyInstance());
-  system.print(_stdlib.asString(a));
-  var foo = system.safeIndex(a, 0);
-  system.print(_stdlib.asString(foo.p1));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [a Foo, a Foo, a Foo]0");
   });
 
   test("Pass_SetAndReadElements1", async () => {

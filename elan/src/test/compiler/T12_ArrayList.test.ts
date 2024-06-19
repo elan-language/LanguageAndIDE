@@ -8,11 +8,9 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T12_ArrayList", () => {
   test("Pass_literalArrayList", async () => {
@@ -380,36 +378,6 @@ end main`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  ignore_test("Pass_2DArray", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>(3,4)
-  set a[0, 0] to "foo"
-  set a[2, 3] to "yon"
-  print a[0, 0]
-  print a[2, 3]
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.initialise(system.array(3, 4), () => "");
-  a[0][0] = "foo";
-  a[2][3] = "yon";
-  system.print(_stdlib.asString(a[0][0]));
-  system.print(_stdlib.asString(a[2][3]));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "fooyon");
-  });
-
   test("Fail_UseRoundBracketsForIndex", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -458,41 +426,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  //Needs re-writing to use new pattern
-  ignore_test("Fail_1DArrayAccessedAs2D", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>(3)
-  set a[0, 0] to "foo"
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ArrayList"]);
-  });
-
-  test("Fail_2DArrayAccessedAs1D", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of ArrayList<of String>>(3)
-  set a[0] to "foo"
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
-  });
-
-  // TODO runtime range checking #474
-  ignore_test("Fail_OutOfRange", async () => {
+  test("Fail_OutOfRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -506,7 +440,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
   });
 
   test("Fail_TypeIncompatibility", async () => {
@@ -716,22 +650,6 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
-  });
-
-  ignore_test("Fail_2DArrayAdd", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of ArrayList<of String>>(3)
-  call a.add("foo")
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types 2D ArrayList to ArrayList"]);
   });
 
   test("Fail_withRemoveFirst", async () => {

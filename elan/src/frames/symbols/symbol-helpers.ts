@@ -17,6 +17,7 @@ import { ClassType } from "./class-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { StringType } from "./string-type";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { DictionaryType } from "./dictionary-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -24,6 +25,10 @@ export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
   return !!s && "ofType" in s;
+}
+
+export function isDictionarySymbolType(s?: SymbolType | DictionaryType): s is DictionaryType {
+  return !!s && "keyType" in s && "valueType" in s;
 }
 
 export function rawSymbolToType(s: string) {

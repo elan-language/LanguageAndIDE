@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T17_Dictionaries", () => {
-  test("Pass_LiteralConstantAndPrinting", async () => {
+  test("Pass_LiteralDictionary", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -34,6 +34,33 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+  });
+
+  test("Pass_LiteralDictionaryOfDictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:Dictionary [a:1], b:Dictionary [b:3, z:10]]",
+    );
   });
 
   test("Pass_LiteralEnumKey", async () => {
@@ -80,6 +107,30 @@ end main`;
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   system.print(_stdlib.asString(system.safeIndex(a, "z")));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10");
+  });
+
+  test("Pass_AccessByDoubleKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  print a["b"]["z"]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  system.print(_stdlib.asString(system.safeDoubleIndex(a, "b", "z")));
 }
 return [main, _tests];}`;
 
@@ -198,6 +249,37 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:4, z:10, d:2]");
   });
 
+  test("Pass_set2d", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  set a["b"] to ["c":4]
+  set a["a"]["x"] to 2
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  system.safeSet(a, "b", system.dictionary({["c"] : 4}));
+  system.safeDoubleSet(a, "a", "x", 2);
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:Dictionary [a:1, x:2], b:Dictionary [c:4]]",
+    );
+  });
+
   test("Pass_removeKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -222,6 +304,35 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, z:10]");
+  });
+
+  test("Pass_remove2dKey", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":["a":1], "b":["b":3, "z":10]]
+  call a["b"].removeKey("b")
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
+  _stdlib.removeKey(system.safeIndex(a, "b"), "b");
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:Dictionary [a:1], b:Dictionary [z:10]]",
+    );
   });
 
   test("Pass_removeInvalidKey", async () => {
@@ -282,6 +393,40 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "213");
+  });
+
+  test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new Dictionary<of String, Dictionary<of String, Int>>()
+  set a["Foo"] to ["ff":1]
+  set a["Bar"]["bb"] to 3
+  var k set to a.keys()
+  print k.length()
+  print a["Foo"]
+  print a["Bar"]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.dictionary(new Object()));
+  system.safeSet(a, "Foo", system.dictionary({["ff"] : 1}));
+  system.safeDoubleSet(a, "Bar", "bb", 3);
+  var k = _stdlib.keys(a);
+  system.print(_stdlib.asString(_stdlib.length(k)));
+  system.print(_stdlib.asString(system.safeIndex(a, "Foo")));
+  system.print(_stdlib.asString(system.safeIndex(a, "Bar")));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2Dictionary [ff:1]Dictionary [bb:3]");
   });
 
   test("Pass_EnumKey", async () => {
@@ -360,6 +505,45 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Dictionary [a:3]empty Dictionaryfalsefalsetrue");
+  });
+
+  test("Pass_Empty2dDictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [String:[String:Int]]
+  var b set to empty [String:[String:Int]]
+  set a["a"] to ["a":1]
+  print a
+  print b
+  print a is b
+  print a is empty [String:[String:Int]]
+  print b is empty [String:[String:Int]]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.emptyDictionary();
+  var b = system.emptyDictionary();
+  system.safeSet(a, "a", system.dictionary({["a"] : 1}));
+  system.print(_stdlib.asString(a));
+  system.print(_stdlib.asString(b));
+  system.print(_stdlib.asString(system.objectEquals(a, b)));
+  system.print(_stdlib.asString(system.objectEquals(a, system.emptyDictionary())));
+  system.print(_stdlib.asString(system.objectEquals(b, system.emptyDictionary())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Dictionary [a:Dictionary [a:1]]empty Dictionaryfalsefalsetrue",
+    );
   });
 
   test("Fail_RepeatedKey", async () => {
