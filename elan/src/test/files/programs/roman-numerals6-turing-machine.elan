@@ -1,4 +1,4 @@
-# a2614e29531d9db03e9ddcb897d0251c12e9ec4f5d0e926f24a7c3108f2a4ab6 Elan v0.1 valid
+# 9d9179df0768d4aebc61ebd83eb197432975085c0e3682026d9754edaa8c2a04 Elan v0.1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
@@ -6,10 +6,13 @@ main
   print "Enter a decimal number in range 0 to 2500"
   input decimal
   call tm.setTape(decimal.asString())
-  var rule set to tm.findMatchingRule()
   while not tm.isHalted()
     call tm.singleStep()
+    call clearConsole()
     print tm.tape
+    print "{spaces.substring(0, tm.headPosition - 1)}^"
+    print tm.currentState
+    call pause(40)
   end while
   print "The roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
 end main
@@ -53,7 +56,7 @@ class TuringMachine
   end procedure
 
   procedure singleStep()
-    let rule be findMatchingRule()
+    var rule set to findMatchingRule()
     call execute(rule)
   end procedure
 
@@ -107,10 +110,6 @@ class TuringMachine
 
 end class
 
-enum Dir
-  left, right
-end enum
-
 immutable class Rule
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
     set property.currentState to currentState
@@ -135,6 +134,12 @@ immutable class Rule
   end function
 
 end class
+
+enum Dir
+  left, right
+end enum
+
+constant spaces set to "                                                  "
 
 procedure addRulesForRomanNumeralsInto(tm as TuringMachine)
   # name: Denary to Roman "Numerals", init: "init", accept: halt
@@ -491,7 +496,7 @@ procedure convertToRoman(tm as TuringMachine, tape as String)
 end procedure
 
 test 
-  let tm be new TuringMachine("init", "halt")
+  var tm set to new TuringMachine("init", "halt")
   call addRulesForRomanNumeralsInto(tm)
   call convertToRoman(tm, "1")
   assert tm.getTrimmedTape() is "I"

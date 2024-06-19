@@ -1,6 +1,7 @@
 import { integer } from "vscode-languageclient";
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
+import { end } from "./test/testHelpers";
 
 type Location = [string, number, number];
 type CharMap = Location[];
@@ -150,6 +151,10 @@ export class StdLib {
       return coll.length;
     }
     return this.keys(coll).length;
+  }
+
+  substring(s1: string, start: number, end: number) {
+    return s1.substring(start, end);
   }
 
   isBefore(s1: string, s2: string) {

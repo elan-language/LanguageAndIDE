@@ -433,6 +433,18 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
+      "substring",
+      this.getSymbol(
+        "substring",
+        new FunctionType(
+          [StringType.Instance, IntType.Instance, IntType.Instance],
+          StringType.Instance,
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
       "isBefore",
       this.getSymbol(
         "isBefore",
