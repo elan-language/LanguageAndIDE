@@ -173,24 +173,22 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
-  ignore_test("Pass_SetAndReadElements2", async () => {
+  test("Pass_SetAndReadElements2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to new ArrayList<of ArrayList<of String>>(3)
   set a[0] to ["bar", "foo"]
-  set a[2] to ["yon", "xan"]
+  set a[0][1] to "yon"
   print a[0][1]
-  print a[2][0]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
-  system.safeSet(a, 0, system.literalArray(["foo", "bar"]));
-  system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
-  system.print(_stdlib.asString(system.safeIndex(a, 0, 1)));
-  system.print(_stdlib.asString(system.safeIndex(a, 2, 0)));
+  system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
+  system.safeDoubleSet(a, 0, 1, "yon");
+  system.print(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
 }
 return [main, _tests];}`;
 
@@ -200,24 +198,25 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "fooyon");
+    await assertObjectCodeExecutes(fileImpl, "yon");
   });
-  ignore_test("Pass_AddAndReadElements", async () => {
+
+  test("Pass_AddAndReadElements1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
-  call a.add("foo")
-  call a.add("yon")
+  var a set to new ArrayList<of ArrayList<of String>>(3)
+  call a.add(["foo"])
+  call a.add(["yon"])
   print a[3]
   print a[4]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
-  _stdlib.add(a, "foo");
-  _stdlib.add(a, "yon");
+  var a = system.initialise(system.array(3), () => system.emptyArrayList());
+  _stdlib.add(a, system.literalArray(["foo"]));
+  _stdlib.add(a, system.literalArray(["yon"]));
   system.print(_stdlib.asString(system.safeIndex(a, 3)));
   system.print(_stdlib.asString(system.safeIndex(a, 4)));
 }
@@ -229,24 +228,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "fooyon");
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [foo]ArrayList [yon]");
   });
 
-  ignore_test("Pass_InsertElements", async () => {
+  test("Pass_AddAndReadElements2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to ["one", "two", "three"]
-  call a.insert(1, "foo")
-  call a.insert(3, "yon")
+  var a set to new ArrayList<of ArrayList<of String>>(3)
+  call a[1].add("foo")
+  call a[2].add("yon")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.literalArray(["one", "two", "three"]);
-  _stdlib.insert(a, 1, "foo");
-  _stdlib.insert(a, 3, "yon");
+  var a = system.initialise(system.array(3), () => system.emptyArrayList());
+  _stdlib.add(system.safeIndex(a, 1), "foo");
+  _stdlib.add(system.safeIndex(a, 2), "yon");
   system.print(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -257,7 +256,72 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [one, foo, two, yon, three]");
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [empty ArrayList, ArrayList [foo], ArrayList [yon]]",
+    );
+  });
+
+  test("Pass_InsertElements1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [["one"], ["two"], ["three"]]
+  call a.insert(1, ["foo"])
+  call a.insert(3, ["yon"])
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  _stdlib.insert(a, 1, system.literalArray(["foo"]));
+  _stdlib.insert(a, 3, system.literalArray(["yon"]));
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [ArrayList [one], ArrayList [foo], ArrayList [two], ArrayList [yon], ArrayList [three]]",
+    );
+  });
+
+  test("Pass_InsertElements2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [["one"], ["two"], ["three"]]
+  call a[0].insert(0, "foo")
+  call a[2].insert(1, "yon")
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
+  _stdlib.insert(system.safeIndex(a, 0), 0, "foo");
+  _stdlib.insert(system.safeIndex(a, 2), 1, "yon");
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ArrayList [ArrayList [foo, one], ArrayList [two], ArrayList [three, yon]]",
+    );
   });
 
   ignore_test("Pass_remove", async () => {

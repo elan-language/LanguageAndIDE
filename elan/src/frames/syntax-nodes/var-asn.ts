@@ -25,6 +25,7 @@ import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { SetStatement } from "../statements/set-statement";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -157,16 +158,25 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     return rootType;
   }
 
+  getOfType(rootType: SymbolType) {
+    if (rootType instanceof ImmutableListType || rootType instanceof ArrayListType) {
+      return rootType.ofType;
+    }
+
+    if (rootType instanceof AbstractDictionaryType) {
+      return rootType.valueType;
+    }
+
+    return rootType;
+  }
+
   symbolType() {
     const rootType = this.rootSymbolType();
+    if (this.isDoubleIndex()) {
+      return this.getOfType(this.getOfType(rootType));
+    }
     if (this.isIndex()) {
-      if (rootType instanceof ImmutableListType || rootType instanceof ArrayListType) {
-        return rootType.ofType;
-      }
-
-      if (rootType instanceof AbstractDictionaryType) {
-        return rootType.valueType;
-      }
+      return this.getOfType(rootType);
     }
     return rootType;
   }
