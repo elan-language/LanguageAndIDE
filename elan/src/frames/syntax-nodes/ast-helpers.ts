@@ -121,7 +121,7 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
     return match ?? UnknownType.Instance;
   }
   if (type instanceof ArrayListType) {
-    return new ArrayListType(generateType(type.ofType, matches), type.is2d);
+    return new ArrayListType(generateType(type.ofType, matches));
   }
   if (type instanceof ImmutableListType) {
     return new ImmutableListType(generateType(type.ofType, matches));

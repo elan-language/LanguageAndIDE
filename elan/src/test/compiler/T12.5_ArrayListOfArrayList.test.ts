@@ -14,7 +14,7 @@ import {
 } from "./compiler-test-helpers";
 import { createHash } from "node:crypto";
 
-suite("T12_ArrayList", () => {
+suite("T12.5_ArrayListOfArrayList", () => {
   test("Pass_literalArrayListOfArrayList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -143,7 +143,37 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [a Foo, a Foo, a Foo]0");
   });
 
-  ignore_test("Pass_SetAndReadElements", async () => {
+  test("Pass_SetAndReadElements1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of ArrayList<of String>>(3)
+  set a[0] to ["bar", "foo"]
+  set a[2] to ["yon", "xan"]
+  print a[0][1]
+  print a[2][0]
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(system.array(3), () => system.emptyArrayList());
+  system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
+  system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
+  system.print(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
+  system.print(_stdlib.asString(system.safeDoubleIndex(a, 2, 0)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "fooyon");
+  });
+
+  ignore_test("Pass_SetAndReadElements2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -172,7 +202,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
-
   ignore_test("Pass_AddAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

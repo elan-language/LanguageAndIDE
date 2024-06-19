@@ -2,10 +2,7 @@ import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
 export class ArrayListType implements GenericSymbolType {
-  constructor(
-    public readonly ofType: SymbolType,
-    public readonly is2d: boolean,
-  ) {}
+  constructor(public readonly ofType: SymbolType) {}
   isImmutable = false;
 
   initialValue = "system.emptyArrayList()";
@@ -15,7 +12,6 @@ export class ArrayListType implements GenericSymbolType {
   }
 
   toString(): string {
-    const twod = this.is2d ? "2D " : "";
-    return `${twod}ArrayList`;
+    return `ArrayList`;
   }
 }

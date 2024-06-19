@@ -424,7 +424,7 @@ suite("ASTNodes", () => {
       stubField,
       `[(3,4), (5,6)]`,
       "[(3, 4), (5, 6)]",
-      new ArrayListType(new TupleType([intType, intType]), false),
+      new ArrayListType(new TupleType([intType, intType])),
     );
     testAST(
       new LiteralNode(),
@@ -438,7 +438,7 @@ suite("ASTNodes", () => {
       stubField,
       `["apple", "pear"]`,
       `["apple", "pear"]`,
-      new ArrayListType(stringType, false),
+      new ArrayListType(stringType),
     );
   });
 

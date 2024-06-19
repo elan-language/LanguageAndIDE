@@ -39,9 +39,9 @@ export class LiteralArrayListAsn extends AbstractAstNode implements AstCollectio
   symbolType() {
     const ofType = this.items[0]?.symbolType();
     if (ofType) {
-      return new ArrayListType(ofType, false);
+      return new ArrayListType(ofType);
     }
-    return new ArrayListType(UnknownType.Instance, false);
+    return new ArrayListType(UnknownType.Instance);
   }
 
   toString() {

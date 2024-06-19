@@ -52,7 +52,7 @@ export class StdLibSymbols implements Scope {
         "asArrayList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          new ArrayListType(new GenericParameterType("T"), false),
+          new ArrayListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -310,7 +310,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "add",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
+          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -322,7 +322,7 @@ export class StdLibSymbols implements Scope {
         "insert",
         new ProcedureType(
           [
-            new ArrayListType(new GenericParameterType("T"), false),
+            new ArrayListType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
@@ -336,7 +336,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "remove",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
+          [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
           true,
           false,
         ),
@@ -347,7 +347,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "removeFirst",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
+          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -358,7 +358,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "removeAll",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T"), false), new GenericParameterType("T")],
+          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
           true,
           false,
         ),
@@ -636,7 +636,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "size",
         new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T"), false), IntType.Instance],
+          [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
           true,
           false,
         ),

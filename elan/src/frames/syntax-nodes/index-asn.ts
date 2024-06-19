@@ -21,7 +21,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
   }
 
   isDoubleIndex() {
-    return this.index1 instanceof IndexAsn;
+    return this.index2 !== undefined;
   }
 
   compile(): string {

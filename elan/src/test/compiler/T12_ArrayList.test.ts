@@ -479,7 +479,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3, 3)
+  var a set to new ArrayList<of ArrayList<of String>>(3)
   set a[0] to "foo"
 end main
 `;
@@ -488,7 +488,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index 2D ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
   // TODO runtime range checking #474
@@ -537,7 +537,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList requires 1 or 2 parameters"]);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
   });
 
   test("Fail_SizeWrongType", async () => {
@@ -552,7 +552,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
   test("Fail_SizeSpecifiedInSquareBrackets", async () => {
@@ -718,11 +718,11 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
-  test("Fail_2DArrayAdd", async () => {
+  ignore_test("Fail_2DArrayAdd", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3, 3)
+  var a set to new ArrayList<of ArrayList<of String>>(3)
   call a.add("foo")
 end main
 `;

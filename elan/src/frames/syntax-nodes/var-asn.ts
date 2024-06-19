@@ -52,6 +52,10 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
+  isDoubleIndex() {
+    return this.index instanceof IndexAsn && this.index.isDoubleIndex();
+  }
+
   private getQualifier() {
     if (this.qualifier) {
       return `${this.qualifier.compile()}`;
@@ -79,6 +83,9 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
   }
 
   wrapIndex(code: string): string {
+    if (this.isDoubleIndex()) {
+      return `system.safeDoubleIndex(${code})`;
+    }
     return `system.safeIndex(${code})`;
   }
 
@@ -109,12 +116,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         .resolveSymbol(this.id, transforms(), this.scope)
         .symbolType(transforms());
       if (this.index) {
-        mustBeIndexableSymbol(
-          rootType,
-          (this.index as IndexAsn).isDoubleIndex(),
-          this.compileErrors,
-          this.fieldId,
-        );
+        mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
       }
       if (this.isIndex()) {
         code = `${q}${this.id}${call}, ${idx}`;

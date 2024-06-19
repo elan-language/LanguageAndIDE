@@ -76,22 +76,6 @@ export function mustBeOfType(
   mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
 }
 
-export function mustBeOneOrTwoOfTypeInt(
-  params: AstNode[],
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (params.length === 0 || params.length > 2) {
-    compileErrors.push(new ArraySizeCompileError(location));
-  }
-  if (params.length > 0) {
-    mustBeOfSymbolType(params[0].symbolType(), IntType.Instance, compileErrors, location);
-  }
-  if (params.length > 1) {
-    mustBeOfSymbolType(params[1].symbolType(), IntType.Instance, compileErrors, location);
-  }
-}
-
 export function cannotHaveConditionalAfterUnconditionalElse(
   elses: { hasIf: boolean }[],
   compileErrors: CompileError[],
@@ -215,7 +199,6 @@ export function mustBePureFunctionSymbol(
 
 export function mustBeIndexableSymbol(
   symbolType: SymbolType,
-  isDouble: boolean,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -233,18 +216,6 @@ export function mustBeIndexableSymbol(
         symbolType instanceof UnknownType,
       ),
     );
-  }
-  if (
-    isDouble &&
-    ((symbolType instanceof ArrayListType && !symbolType.is2d) ||
-      symbolType instanceof ImmutableListType ||
-      symbolType instanceof StringType ||
-      symbolType instanceof AbstractDictionaryType)
-  ) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.toString(), location, false));
-  }
-  if (!isDouble && symbolType instanceof ArrayListType && symbolType.is2d) {
-    compileErrors.push(new NotIndexableCompileError(symbolType.toString(), location, false));
   }
 }
 
@@ -491,12 +462,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof ArrayListType && rhs instanceof ArrayListType) {
-    if (lhs.is2d === rhs.is2d) {
-      mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
-    } else {
-      FailIncompatible(lhs, rhs, compileErrors, location);
-      return;
-    }
+    mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
   if (lhs instanceof ArrayListType && !(rhs instanceof ArrayListType)) {

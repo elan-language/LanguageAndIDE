@@ -118,7 +118,7 @@ export class System {
     return t;
   }
 
-  safeIndex(toIndex?: any, index?: any) {
+  safeIndex(toIndex: any, index: any) {
     if (toIndex === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
@@ -126,14 +126,38 @@ export class System {
     const r = toIndex[index];
 
     if (r === undefined) {
-      const size = toIndex.length;
-      if (size !== undefined) {
-        throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
-      }
-      throw new ElanRuntimeError(`No such key: ${index}`);
+      this.throwRangeError(toIndex, index);
     }
 
     return r;
+  }
+
+  throwRangeError(toIndex: any, index: any) {
+    const size = toIndex.length;
+    if (size !== undefined) {
+      throw new ElanRuntimeError(`Out of range index: ${index} size: ${size}`);
+    }
+    throw new ElanRuntimeError(`No such key: ${index}`);
+  }
+
+  safeDoubleIndex(toIndex: any, index1: any, index2: any) {
+    if (toIndex === undefined) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    const r = toIndex[index1];
+
+    if (r === undefined) {
+      this.throwRangeError(toIndex, index1);
+    }
+
+    const r1 = r[index2];
+
+    if (r1 === undefined) {
+      this.throwRangeError(r, index2);
+    }
+
+    return r1;
   }
 
   safeSet<T>(toIndex?: T[], index?: number, value?: T) {
@@ -147,6 +171,29 @@ export class System {
     }
 
     toIndex[index] = value;
+  }
+
+  safeDoubleSet<T>(toIndex?: T[][], index1?: number, index2?: number, value?: T) {
+    if (
+      toIndex === undefined ||
+      index1 === undefined ||
+      index2 === undefined ||
+      value === undefined
+    ) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
+
+    const size1 = toIndex.length;
+    if (index1 >= size1) {
+      throw new ElanRuntimeError(`Out of range index: ${index1} size: ${size1}`);
+    }
+
+    const size2 = toIndex[index1].length;
+    if (index2 >= size2) {
+      throw new ElanRuntimeError(`Out of range index: ${index2} size: ${size2}`);
+    }
+
+    toIndex[index1][index2] = value;
   }
 
   print(s: string) {

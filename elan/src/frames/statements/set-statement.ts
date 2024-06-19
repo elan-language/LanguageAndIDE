@@ -83,7 +83,8 @@ export class SetStatement extends AbstractFrame implements Statement {
     const assignable = this.assignable.getOrTransformAstNode(transforms);
 
     if (assignable instanceof VarAsn && assignable.isIndex()) {
-      return `${this.indent()}system.safeSet(${this.assignable.compile(transforms)}, ${this.expr.compile(transforms)});`;
+      const safeSet = assignable.isDoubleIndex() ? "system.safeDoubleSet" : "system.safeSet";
+      return `${this.indent()}${safeSet}(${this.assignable.compile(transforms)}, ${this.expr.compile(transforms)});`;
     }
 
     return `${this.indent()}${this.assignable.compile(transforms)} = ${this.expr.compile(transforms)};`;

@@ -29,8 +29,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     super();
   }
 
-  is2d: boolean = false;
-
   aggregateCompileErrors(): CompileError[] {
     let cc: CompileError[] = [];
     for (const i of this.genericParameters) {
@@ -97,7 +95,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "ImmutableList":
         return new ImmutableListType(this.safeGetGenericParameterSymbolType(0));
       case "ArrayList":
-        return new ArrayListType(this.safeGetGenericParameterSymbolType(0), this.is2d);
+        return new ArrayListType(this.safeGetGenericParameterSymbolType(0));
       case "Dictionary":
         return new DictionaryType(
           this.safeGetGenericParameterSymbolType(0),

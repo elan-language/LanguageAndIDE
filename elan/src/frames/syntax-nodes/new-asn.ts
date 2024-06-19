@@ -2,10 +2,8 @@ import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
-  mustBeKnownSymbol,
   mustBeKnownSymbolType,
   mustBeNewable,
-  mustBeOneOrTwoOfTypeInt,
   mustMatchParameters,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
@@ -18,6 +16,7 @@ import { ImmutableListType } from "../symbols/immutable-list-type";
 import { ArrayListType } from "../symbols/array-list-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { DictionaryType } from "../symbols/dictionary-type";
+import { IntType } from "../symbols/int-type";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -47,8 +46,13 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
     if (type instanceof ArrayListType) {
-      this.typeNode.is2d = this.parameters.length === 2;
-      mustBeOneOrTwoOfTypeInt(this.parameters, this.compileErrors, this.fieldId);
+      mustMatchParameters(
+        this.parameters,
+        [IntType.Instance],
+        false,
+        this.compileErrors,
+        this.fieldId,
+      );
 
       const init = this.typeNode.genericParameters
         .map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`)
