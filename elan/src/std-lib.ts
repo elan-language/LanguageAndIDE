@@ -514,4 +514,16 @@ export class StdLib {
   clearKeyBuffer() {
     this.system.elanInputOutput.clearKeyBuffer();
   }
+
+  initialise2DArrayList<T>(toInit: T[][], x: number, y: number, value: T) {
+    toInit.length = x;
+
+    for (let i = 0; i < x; i++) {
+      const subArr = [];
+      for (let j = 0; j < x; j++) {
+        subArr[j] = value;
+      }
+      toInit[i] = subArr;
+    }
+  }
 }
