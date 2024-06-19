@@ -584,10 +584,9 @@ export function mustBeCompatibleType(
     return;
   }
 
-  // if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
-  //   mustBeCompatibleType(lhs, rhs, compileErrors, location);
-  //   return;
-  // }
+  if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
+    throw new Error(`Failed to match generic parameter ${lhs} ${rhs}`);
+  }
 }
 
 export function mustBeCompatibleNode(

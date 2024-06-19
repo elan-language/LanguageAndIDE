@@ -10,4 +10,8 @@ export class GenericParameterType implements SymbolType {
   get name() {
     return `Generic Parameter ${this.id}`;
   }
+
+  toString() {
+    return this.name;
+  }
 }

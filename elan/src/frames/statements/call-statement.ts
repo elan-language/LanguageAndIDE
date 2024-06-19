@@ -21,6 +21,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Constructor } from "../class-members/constructor";
 import { TestFrame } from "../globals/test-frame";
+import { containsGenericType, matchGenericTypes, generateType } from "../syntax-nodes/ast-helpers";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -94,9 +95,17 @@ export class CallStatement extends AbstractFrame implements Statement {
         qualifier = undefined;
       }
 
+      let parameterTypes = ps.parametersTypes;
+
+      if (parameterTypes.some((pt) => containsGenericType(pt))) {
+        // this.parameters is correct - function adds qualifier if extension
+        const matches = matchGenericTypes(ps, argList.items, updatedQualifier);
+        parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
+      }
+
       mustMatchParameters(
         parameters,
-        ps.parametersTypes,
+        parameterTypes,
         ps.isExtension,
         this.compileErrors,
         this.htmlId,

@@ -696,7 +696,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
   });
 
-  ignore_test("Fail_2DArrayAdd", async () => {
+  test("Fail_2DArrayAdd", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -709,6 +709,6 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types 2D ArrayList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 });

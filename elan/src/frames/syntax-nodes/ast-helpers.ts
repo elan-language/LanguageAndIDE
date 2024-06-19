@@ -12,6 +12,7 @@ import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IterType } from "../symbols/iter-type";
+import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
@@ -147,6 +148,18 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
       generateType(type.valueType, matches),
     );
   }
+  if (type instanceof TupleType) {
+    return new TupleType(type.ofTypes.map((t) => generateType(t, matches)));
+  }
+
+  if (type instanceof FunctionType) {
+    return new FunctionType(
+      type.parametersTypes.map((t) => generateType(t, matches)),
+      generateType(type.returnType, matches),
+      type.isExtension,
+      type.isPure,
+    );
+  }
 
   return type;
 }
@@ -179,7 +192,7 @@ export function match(
 }
 
 export function matchGenericTypes(
-  type: FunctionType,
+  type: FunctionType | ProcedureType,
   parameters: AstNode[],
   qualifier: AstNode | undefined,
 ) {
