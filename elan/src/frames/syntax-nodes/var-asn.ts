@@ -15,7 +15,7 @@ import { IndexAsn } from "./index-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
-import { getClassScope, getParentScope } from "../symbols/symbol-helpers";
+import { getClassScope, getParentScope, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { isScope } from "../helpers";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
@@ -25,6 +25,7 @@ import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { SetStatement } from "../statements/set-statement";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -116,7 +117,11 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         .resolveSymbol(this.id, transforms(), this.scope)
         .symbolType(transforms());
       if (this.index) {
-        mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
+        if (this.isDoubleIndex() && isGenericSymbolType(rootType)) {
+          mustBeIndexableSymbol(rootType.ofType, this.compileErrors, this.fieldId);
+        } else {
+          mustBeIndexableSymbol(rootType, this.compileErrors, this.fieldId);
+        }
       }
       if (this.isIndex()) {
         code = `${q}${this.id}${call}, ${idx}`;
@@ -157,16 +162,25 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     return rootType;
   }
 
+  getOfType(rootType: SymbolType) {
+    if (rootType instanceof ImmutableListType || rootType instanceof ArrayListType) {
+      return rootType.ofType;
+    }
+
+    if (rootType instanceof AbstractDictionaryType) {
+      return rootType.valueType;
+    }
+
+    return rootType;
+  }
+
   symbolType() {
     const rootType = this.rootSymbolType();
+    if (this.isDoubleIndex()) {
+      return this.getOfType(this.getOfType(rootType));
+    }
     if (this.isIndex()) {
-      if (rootType instanceof ImmutableListType || rootType instanceof ArrayListType) {
-        return rootType.ofType;
-      }
-
-      if (rootType instanceof AbstractDictionaryType) {
-        return rootType.valueType;
-      }
+      return this.getOfType(rootType);
     }
     return rootType;
   }

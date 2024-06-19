@@ -16,10 +16,16 @@ import { Parent } from "../interfaces/parent";
 import { ClassType } from "./class-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { StringType } from "./string-type";
+import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }
+
+export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
+  return !!s && "ofType" in s;
+}
+
 export function rawSymbolToType(s: string) {
   switch (s) {
     case ">":
