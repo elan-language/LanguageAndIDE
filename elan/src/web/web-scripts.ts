@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { DefaultProfile } from "../frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
+import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
@@ -42,7 +42,7 @@ function showError(err: Error, fileName: string, reset: boolean) {
   resetFile(reset);
   file.fileName = fileName;
 
-  if (err.message.startsWith("Cannot load file")) {
+  if (err.message === cannotLoadFile) {
     elanInputOutput.printLine(err.message);
   } else if (err.stack) {
     let msg = "";

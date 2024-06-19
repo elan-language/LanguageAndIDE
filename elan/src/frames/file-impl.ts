@@ -486,7 +486,7 @@ export class FileImpl implements File, Scope {
       this.getFirstChild().select(true, false);
       this.updateAllParseStatus();
     } catch (e) {
-      if (e instanceof Error && e.message.startsWith("Cannot load file")) {
+      if (e instanceof Error && e.message === cannotLoadFile) {
         this.parseError = e.message;
       } else {
         this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
@@ -501,7 +501,7 @@ export class FileImpl implements File, Scope {
   }
 
   async validateHeader(code: string) {
-    const msg = `Cannot load file: it has been created or modified outside Elan IDE`;
+    const msg = cannotLoadFile;
     if (!this.ignoreHashOnParsing && !this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
@@ -599,3 +599,5 @@ export class FileImpl implements File, Scope {
 
   libraryScope = this._stdLibSymbols as Scope;
 }
+
+export const cannotLoadFile = `Cannot load file: it has been created or modified outside Elan IDE`;
