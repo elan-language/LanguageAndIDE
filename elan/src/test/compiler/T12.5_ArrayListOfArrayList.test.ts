@@ -647,13 +647,13 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
-  // TODO runtime range checking #474
-  ignore_test("Fail_OutOfRange", async () => {
+  test("Fail_OutOfRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
-  var b set to a[3]
+  var a set to new ArrayList<of ArrayList<of String>>(3)
+  set a[0] to empty [String]
+  var b set to a[0][0]
 end main
 `;
 
@@ -662,14 +662,14 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 0 size: 0");
   });
 
-  ignore_test("Fail_TypeIncompatibility", async () => {
+  test("Fail_TypeIncompatibility", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of ArrayList<of String>>(3)
   set a[0] to true
 end main
 `;
@@ -678,14 +678,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to ArrayList"]);
   });
 
-  ignore_test("Fail_SizeNotSpecified", async () => {
+  test("Fail_SizeNotSpecified", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>()
+  var a set to new ArrayList<of ArrayList<of String>>()
 end main
 `;
 
@@ -693,192 +693,14 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList requires 1 or 2 parameters"]);
-  });
-
-  ignore_test("Fail_SizeWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>(1.1)
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be Int"]);
-  });
-
-  ignore_test("Fail_SizeSpecifiedInSquareBrackets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>[3]
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  // obsolete code
-  ignore_test("Fail_SpecifySizeAndInitializer", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>(3) {"foo","bar","yon"}
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  ignore_test("Fail_get", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  print a.get(1)
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
-  });
-
-  ignore_test("Fail_getRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  print a.getRange(1, 2)
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
-  });
-
-  ignore_test("Fail_put", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to a.with(1, "TWO")
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
-  });
-
-  ignore_test("Fail_withInsert", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to a.withInsert(1, "TWO")
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
-  });
-
-  ignore_test("Fail_withRemove", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to a.withRemove(1)
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
-  });
-
-  ignore_test("Fail_putAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to a.withKey(1, "TWO")
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ArrayList"]);
-  });
-
-  ignore_test("Fail_appendWithPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to a + "four"
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Float or Int"]);
-  });
-
-  ignore_test("Fail_prependWithPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to ["one", "two", "three"]
-  set a to "four" + a
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
   });
 
   ignore_test("Fail_2DArrayAdd", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3, 3)
+  var a set to new ArrayList<of ArrayList<of String>>(3)
   call a.add("foo")
 end main
 `;
@@ -888,52 +710,5 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types 2D ArrayList to ArrayList"]);
-  });
-
-  ignore_test("Fail_withRemoveFirst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-    var a set to ["one", "two", "three", "one", "two", "three"]
-    set a to a.withRemoveFirst("two")
-    print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
-  });
-
-  ignore_test("Fail_withRemoveAll", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-    var a set to ["one", "two", "three", "one", "two", "three"]
-    set a to a.withRemoveAll("two")
-    print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
-  });
-
-  ignore_test("Fail_withoutGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-    var a set to new ArrayList(1)
-    print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
   });
 });

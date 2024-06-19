@@ -54,6 +54,7 @@ import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 import { isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { isFunction } from "./helpers";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
+import { GenericParameterType } from "./symbols/generic-parameter-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -582,6 +583,11 @@ export function mustBeCompatibleType(
     mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;
   }
+
+  // if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
+  //   mustBeCompatibleType(lhs, rhs, compileErrors, location);
+  //   return;
+  // }
 }
 
 export function mustBeCompatibleNode(
