@@ -9,7 +9,6 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
-export const curryKeyword = "curry"; //for future use
 export const defaultKeyword = "default";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
@@ -25,7 +24,6 @@ export const ifKeyword = "if";
 export const immutableKeyword = "immutable";
 export const importKeyword = "import";
 export const inKeyword = "in";
-export const intoKeyword = "into";
 export const inheritsKeyword = "inherits";
 export const inputKeyword = "input";
 export const isKeyword = "is";
@@ -37,8 +35,6 @@ export const newKeyword = "new";
 export const notKeyword = "not";
 export const ofKeyword = "of";
 export const orKeyword = "or";
-export const packageKeyword = "package";
-export const partialKeyword = "partial"; //for future use
 export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
@@ -80,7 +76,6 @@ export const allKeywords = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  curryKeyword,
   defaultKeyword,
   eachKeyword,
   elseKeyword,
@@ -96,7 +91,6 @@ export const allKeywords = [
   immutableKeyword,
   importKeyword,
   inKeyword,
-  intoKeyword,
   inheritsKeyword,
   inputKeyword,
   lambdaKeyword,
@@ -108,8 +102,6 @@ export const allKeywords = [
   ofKeyword,
   isKeyword,
   orKeyword,
-  packageKeyword,
-  partialKeyword,
   printKeyword,
   privateKeyword,
   procedureKeyword,
@@ -132,75 +124,53 @@ export const allKeywords = [
   withKeyword,
 ];
 
-const jsKeywords = [
-  "abstract",
+const reservedWords = [
   "arguments",
   "await",
   "boolean",
   "break",
   "byte",
-  "case",
-  "catch",
   "char",
-  "class",
   "const",
   "continue",
+  "curry",
   "debugger",
-  "default",
   "delete",
   "do",
   "double",
-  "else",
-  "enum",
   "eval",
   "export",
   "extends",
-  "false",
   "final",
   "finally",
   "float",
-  "for",
-  "function",
   "goto",
-  "if",
   "implements",
   "import",
-  "in",
   "instanceof",
   "int",
+  "into",
   "interface",
-  "let",
   "long",
   "native",
-  "new",
   "null",
   "package",
-  "private",
+  "partial",
   "protected",
   "public",
-  "return",
   "short",
   "static",
   "super",
-  "switch",
   "synchronized",
-  "this",
-  "throw",
   "throws",
   "transient",
-  "true",
-  "try",
-  "typeof",
-  "var",
   "void",
   "volatile",
-  "while",
-  "with",
   "yield",
 ];
 
 export function mangle(id: string) {
-  if (jsKeywords.includes(id)) {
+  if (reservedWords.includes(id)) {
     return `__${id}`;
   }
   return id;
