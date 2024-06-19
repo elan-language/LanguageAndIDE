@@ -1,4 +1,4 @@
-# 3f8856143b3d206c20637529258f73f0fcb34b8d11374ece33bfaf65faea53f1 Elan v0.1 valid
+# c4f94c5a93ee43592a4bc2ccf6e8c27a643cfb28b2698607c318176506bfe714 Elan v0.1 valid
 
 main
   var cm set to initialisedCharMap(black, green)
@@ -59,10 +59,6 @@ function clubs() return String
   return unicode(0x2663)
 end function
 
-enum Suit
-  clubs, diamonds, hearts, spades
-end enum
-
 enum Rank
   ace, one, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
 end enum
@@ -74,6 +70,10 @@ constant white set to 0xffffff
 constant green set to 0x008000
 
 constant red set to 0xff0000
+
+enum Suit
+  clubs, diamonds, hearts, spades
+end enum
 
 constant colours set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
 
