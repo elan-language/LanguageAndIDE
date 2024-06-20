@@ -391,7 +391,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate non local data in function"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign property: p1"]);
   });
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
