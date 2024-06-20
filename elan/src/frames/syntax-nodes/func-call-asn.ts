@@ -13,7 +13,6 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { QualifierAsn } from "./qualifier-asn";
 import { containsGenericType, generateType, matchGenericTypes, transforms } from "./ast-helpers";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
-import { mangle } from "../keywords";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -28,7 +27,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   }
 
   get mId() {
-    return mangle(this.id);
+    return this.id;
   }
 
   aggregateCompileErrors(): CompileError[] {

@@ -711,7 +711,27 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
+    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+  });
+
+  test("Fail_UseOfReservedwordAsName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  
+end main
+
+function break(a as Int) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' is a reserved word, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -729,7 +749,27 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
+    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+  });
+
+  test("Fail_UseOfReservedWordAsParamName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  
+end main
+
+function fun(break as Int) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' is a reserved word, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_NotUniqueName", async () => {

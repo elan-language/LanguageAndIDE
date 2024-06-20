@@ -47,7 +47,7 @@ import { SymbolScope } from "./symbols/symbol-scope";
 import { Property } from "./class-members/property";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { LetStatement } from "./statements/let-statement";
-import { allKeywords, thisKeyword } from "./keywords";
+import { allKeywords, reservedWords, thisKeyword } from "./keywords";
 import { EnumType } from "./symbols/enum-type";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
@@ -134,7 +134,18 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
 
   if (allKeywords.includes(id)) {
     compileErrors.push(
-      new SyntaxCompileError(`'${id}' keyword may not be used as identifier`, location),
+      new SyntaxCompileError(
+        `'${id}' is a keyword, and may not be used as an identifier`,
+        location,
+      ),
+    );
+  }
+  if (reservedWords.includes(id)) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `'${id}' is a reserved word, and may not be used as an identifier`,
+        location,
+      ),
     );
   }
 }

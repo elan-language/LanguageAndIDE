@@ -472,7 +472,26 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' keyword may not be used as identifier"]);
+    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+  });
+
+  test("Fail_UseOfReservedAsName", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant break set to 3
+
+main
+
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' is a reserved word, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_NotUniqueName", async () => {

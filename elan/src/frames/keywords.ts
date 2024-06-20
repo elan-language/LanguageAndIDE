@@ -124,7 +124,7 @@ export const allKeywords = [
   withKeyword,
 ];
 
-const reservedWords = [
+export const reservedWords = [
   "arguments",
   "await",
   "boolean",
@@ -168,10 +168,3 @@ const reservedWords = [
   "volatile",
   "yield",
 ];
-
-export function mangle(id: string) {
-  if (reservedWords.includes(id)) {
-    return `__${id}`;
-  }
-  return id;
-}
