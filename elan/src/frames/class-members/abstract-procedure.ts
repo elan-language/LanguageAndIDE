@@ -12,6 +12,8 @@ import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractProcedureKeywords } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { getClassScope } from "../symbols/symbol-helpers";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -54,7 +56,11 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
 
   public override compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
+
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
+
+    return `${this.indent()}${name}(${this.params.compile(transforms)}) {\r
 ${this.indent()}}\r
 `;
   }

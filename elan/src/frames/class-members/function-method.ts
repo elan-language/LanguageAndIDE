@@ -8,7 +8,12 @@ import { Member } from "../interfaces/member";
 import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
 import { Parent } from "../interfaces/parent";
-import { mustBeCompatibleType, mustBeKnownSymbolType } from "../compile-rules";
+import {
+  mustBeCompatibleType,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+} from "../compile-rules";
+import { getClassScope } from "../symbols/symbol-helpers";
 
 export class FunctionMethod extends FunctionFrame implements Member {
   isMember: boolean = true;
@@ -27,6 +32,9 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
   }
   public override compile(transforms: Transforms): string {
     this.compileErrors = [];
+
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
 
     const rt = this.symbolType(transforms).returnType;
 

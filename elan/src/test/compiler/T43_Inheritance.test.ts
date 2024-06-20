@@ -1407,4 +1407,147 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Foo is not defined"]);
   });
+
+  test("Fail_DuplicateNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract property p1 as Int
+end class
+
+abstract class Foo
+  abstract property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name Foo not unique in scope"]);
+  });
+
+  test("Fail_DuplicatePropertyNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract property p1 as Int
+  abstract property p1 as String
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name p1 not unique in scope"]);
+  });
+
+  test("Fail_DuplicateFunctionNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract function ff() return Int
+  abstract function ff() return Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+  });
+
+  test("Fail_DuplicateProcedureNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract procedure ff()
+  abstract procedure ff()
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMemberNames1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract procedure ff()
+  abstract property ff as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMemberNames2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract function ff() return Int
+  abstract property ff as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+  });
+
+  test("Fail_DuplicateMemberNames3", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+abstract class Foo
+  abstract function ff() return Int
+  abstract procedure ff()
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name ff not unique in scope"]);
+  });
 });

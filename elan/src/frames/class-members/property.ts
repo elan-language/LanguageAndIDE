@@ -10,9 +10,10 @@ import { Member } from "../interfaces/member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 import { EnumType } from "../symbols/enum-type";
-import { mustBeKnownSymbolType } from "../compile-rules";
+import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
+import { getClassScope } from "../symbols/symbol-helpers";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
@@ -61,6 +62,14 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
     const pName = this.name.compile(transforms);
     const mod = this.modifierAsObjectCode();
     const st = this.type.symbolType(transforms);
+
+    mustBeUniqueNameInScope(
+      pName,
+      getClassScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
 
     mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
 

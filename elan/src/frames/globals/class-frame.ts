@@ -64,6 +64,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Class } from "../interfaces/class";
 import { UnknownType } from "../symbols/unknown-type";
+import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 
 export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
   isCollapsible: boolean = true;
@@ -425,10 +426,15 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
       return this;
     }
 
-    for (const f of this.getChildren()) {
-      if (isSymbol(f) && f.symbolId === id) {
-        return f;
-      }
+    const matches = this.getChildren().filter(
+      (f) => isSymbol(f) && f.symbolId === id,
+    ) as unknown as ElanSymbol[];
+
+    if (matches.length === 1) {
+      return matches[0];
+    }
+    if (matches.length > 1) {
+      return new DuplicateSymbol(matches);
     }
 
     return this.getParent().resolveSymbol(id, transforms, this);

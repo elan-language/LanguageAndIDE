@@ -11,6 +11,8 @@ import { abstractPropertyKeywords } from "../keywords";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { ClassType } from "../symbols/class-type";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { getClassScope } from "../symbols/symbol-helpers";
 
 export class AbstractProperty extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -47,6 +49,14 @@ export class AbstractProperty extends AbstractFrame implements Member, ElanSymbo
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     const pName = this.name.compile(transforms);
+
+    mustBeUniqueNameInScope(
+      pName,
+      getClassScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
 
     return `${this.indent()}get ${pName}() {\r
 ${this.indent()}${this.indent()}return ${this.type.compile(transforms)};\r
