@@ -63,4 +63,68 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
+
+  test("Fail_IndexWrongType1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to [["a":1], ["b":3, "z":10]]
+  set a["b"]["b"] to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
+  test("Fail_IndexWrongType2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to [["a":1], ["b":3, "z":10]]
+  set a[0][0] to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+  test("Fail_IndexWrongType3", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to ["a":[1,2], "b":[3,4,5]]
+  set a[0][0] to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+  test("Fail_IndexWrongType4", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main 
+  var a set to ["a":[1,2], "b":[3,4,5]]
+  set a["b"]["b"] to 2
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
 });
