@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
+import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl, cannotLoadFile } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { File } from "../frames/interfaces/file";
 import { Profile } from "../frames/interfaces/profile";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
+import { doImport, getTestRunner } from "../runner";
 import { StdLib } from "../std-lib";
 import { System } from "../system";
-import { doImport, getTestRunner } from "../runner";
-import { WebInputOutput } from "./web-input-output";
 import { fetchProfile, hash, transforms } from "./web-helpers";
-import { CollapseAll } from "../test/model-generating-functions.";
-import { ElanRuntimeError } from "../elan-runtime-error";
+import { WebInputOutput } from "./web-input-output";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
@@ -52,7 +51,7 @@ function showError(err: Error, fileName: string, reset: boolean) {
       stack = err.elanStack;
     } else {
       msg =
-        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\n To continue, try clicking the Refresh icon on the browser.";
+        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\nTo continue, try clicking the Refresh icon on the browser.";
       stack = err.stack;
     }
     elanInputOutput.printLine(msg);
