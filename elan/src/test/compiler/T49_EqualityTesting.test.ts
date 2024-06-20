@@ -5,6 +5,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -199,6 +200,57 @@ class Foo {
   asString() {
     return \`\${_stdlib.asString(this.p1)} \${_stdlib.asString(this.p2)}\`;
   }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+  });
+
+  ignore_test("Pass_CompareLambdas", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var x set to new Foo()
+  print x.p1 is x.p1
+  print x.p1 is x.p2
+  print x.p1 is x.p3
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property p1 as Func<of Int => Int>
+  property p2 as Func<of Int => Int>
+  property p3 as Func<of Int => Int>
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var x = system.initialise(new Foo());
+  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p1)));
+  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p2)));
+  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p3)));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)], ["p2", system.emptyFunc(0)], ["p3", system.emptyFunc(0)]]);};
+  constructor() {
+
+  }
+
+  p1 = system.emptyFunc(0);
+
+  p2 = system.emptyFunc(0);
+
+  p3 = system.emptyFunc(0);
 
 }
 return [main, _tests];}`;

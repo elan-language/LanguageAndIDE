@@ -268,6 +268,10 @@ export class System {
       return false;
     }
 
+    if (o1?.constructor?.name === o2?.constructor?.name && o2?.constructor?.name === "Function") {
+      return false;
+    }
+
     const o1items = Object.getOwnPropertyNames(o1);
     const o2items = Object.getOwnPropertyNames(o2);
 
