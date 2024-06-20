@@ -639,7 +639,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Failed");
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_getForKey", async () => {
@@ -721,5 +721,21 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Generic parameters expected: 2 got: 0"]);
+  });
+
+  test("Fail_IndexWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["a":1, "d":2]
+  set a[1] to 1
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 });

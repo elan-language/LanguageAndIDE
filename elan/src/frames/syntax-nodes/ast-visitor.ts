@@ -413,7 +413,7 @@ export function transform(
   if (node instanceof VarRefCompound) {
     const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
-    const index = transform(node.index, fieldId, scope);
+    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
     return new VarAsn(id, q, index, fieldId, scope);
   }
 
@@ -455,7 +455,7 @@ export function transform(
 
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
-    const index = transform(node.index, fieldId, scope);
+    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
     return new VarAsn(id, undefined, index, fieldId, scope);
   }
 
@@ -493,7 +493,7 @@ export function transform(
   if (node instanceof AssignableNode) {
     const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple.matchedText;
-    const index = transform(node.index, fieldId, scope);
+    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
     return new VarAsn(id, q, index, fieldId, scope);
   }
 

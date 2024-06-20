@@ -164,6 +164,32 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "fooyon");
   });
 
+  test("Pass_Range1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to ["foo", "bar", "yon"]
+  set a to a[1..]
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray(["foo", "bar", "yon"]);
+  a = system.wrapArray(a.slice(1));
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [bar, yon]");
+  });
+
   test("Pass_AddAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -472,6 +498,22 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
+  });
+
+  test("Fail_IndexWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of String>(1)
+  set a["b"] to "fred"
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 
   test("Fail_SizeWrongType", async () => {
