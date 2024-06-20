@@ -166,7 +166,7 @@ function updateDisplayValues() {
   } else if (!file.containsMain()) {
     disable(run, "Code must have a 'main' routine to be run");
   } else if (!isCompiling) {
-    disable(run, "Program is not compiling");
+    disable(run, "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.");
   } else {
     enable(run, "Run the program");
   }
