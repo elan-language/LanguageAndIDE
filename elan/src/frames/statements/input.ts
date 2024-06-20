@@ -51,10 +51,10 @@ export class Input extends AbstractFrame implements Statement, ElanSymbol {
     this.compileErrors = [];
 
     const id = getParentScope(this).resolveSymbol(this.varName.text, transforms, this);
-    let prefix = "";
+    let declare = "";
 
     if (id instanceof UnknownSymbol) {
-      prefix = "var ";
+      declare = "var ";
     } else {
       mustBeOfSymbolType(
         id.symbolType(transforms),
@@ -64,7 +64,7 @@ export class Input extends AbstractFrame implements Statement, ElanSymbol {
       );
     }
 
-    return `${this.indent()}${prefix}${this.varName.compile(transforms)} = await system.input();`;
+    return `${this.indent()}${declare}${this.varName.compile(transforms)} = await system.input();`;
   }
 
   get symbolId() {

@@ -50,6 +50,7 @@ ${this.indent()}end if`;
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
+
     mustBeOfType(
       this.condition.getOrTransformAstNode(transforms),
       BooleanType.Instance,

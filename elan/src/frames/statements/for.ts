@@ -2,7 +2,6 @@ import { IdentifierField } from "../fields/identifier-field";
 import { Parent } from "../interfaces/parent";
 import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { ValueRefField } from "../fields/value-ref-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Statement } from "../interfaces/statement";
 import { forKeyword } from "../keywords";
@@ -13,6 +12,8 @@ import { IntType } from "../symbols/int-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { ExpressionField } from "../fields/expression-field";
+import { getParentScope } from "../symbols/symbol-helpers";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
@@ -63,6 +64,20 @@ ${this.indent()}end for`;
     const t = this.to.compile(transforms);
     let s = this.step.compile(transforms);
 
+    const id = getParentScope(this).resolveSymbol(v, transforms, this);
+    let declare = "";
+
+    if (id instanceof UnknownSymbol) {
+      declare = "var ";
+    } else {
+      mustBeOfSymbolType(
+        id.symbolType(transforms),
+        IntType.Instance,
+        this.compileErrors,
+        this.htmlId,
+      );
+    }
+
     mustBeOfSymbolType(
       this.from.symbolType(transforms),
       IntType.Instance,
@@ -91,7 +106,7 @@ ${this.indent()}end for`;
       s = s.slice(1);
     }
 
-    return `${this.indent()}for (var ${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+    return `${this.indent()}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileStatements(transforms)}\r
 ${this.indent()}}`;
   }

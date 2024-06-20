@@ -43,6 +43,38 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "55");
   });
 
+  test("Pass_reuseVariable", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var tot set to 0
+  var i set to 0
+  for i from 1 to 10 step 1
+    set tot to tot + i
+  end for
+  print tot
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var tot = 0;
+  var i = 0;
+  for (i = 1; i <= 10; i = i + 1) {
+    tot = tot + i;
+  }
+  system.print(_stdlib.asString(tot));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "55");
+  });
+
   test("Pass_withStep", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -206,6 +238,26 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Fail_reuseVariableWrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var tot set to 0
+  var i set to ""
+  for i from 1 to 10 step 1
+    set tot to tot + i
+  end for
+  print tot
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Int"]);
+  });
+
   test("Fail_useOfFloat", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -245,6 +297,25 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
+  });
+
+  test("Fail_scopeOfCounter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var tot set to 0
+  for i from 1 to 10 step 1
+    set tot to 10
+  end for
+  print i
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["i is not defined"]);
   });
 
   test("Fail_missingEnd", async () => {
