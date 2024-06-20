@@ -52,7 +52,7 @@ function showError(err: Error, fileName: string, reset: boolean) {
       stack = err.elanStack;
     } else {
       msg =
-        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org";
+        "An unexpected error has occurred; please email whole-screen snapshot to rpawson@nakedobjects.org\n To continue, try clicking the Refresh icon on the browser.";
       stack = err.stack;
     }
     elanInputOutput.printLine(msg);
@@ -166,7 +166,10 @@ function updateDisplayValues() {
   } else if (!file.containsMain()) {
     disable(run, "Code must have a 'main' routine to be run");
   } else if (!isCompiling) {
-    disable(run, "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.");
+    disable(
+      run,
+      "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
+    );
   } else {
     enable(run, "Run the program");
   }
