@@ -42,7 +42,7 @@ import { Collapsible } from "../interfaces/collapsible";
 import { Profile } from "../interfaces/profile";
 import { TypeNameField } from "../fields/type-name-field";
 import { ElanSymbol } from "../interfaces/symbol";
-import { isSymbol } from "../symbols/symbol-helpers";
+import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import {
   abstractKeyword,
   classKeyword,
@@ -53,6 +53,7 @@ import {
 import {
   mustBeAbstractClass,
   mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
   mustImplementSuperClasses,
 } from "../compile-rules";
 import { ClassType } from "../symbols/class-type";
@@ -297,6 +298,15 @@ end class\r\n`;
   public compile(transforms: Transforms): string {
     this.compileErrors = [];
 
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
+
     if (this.doesInherit()) {
       const superClasses = this.superClasses.getOrTransformAstNode(transforms) as AstCollectionNode;
       const nodes = superClasses.items as AstIdNode[];
@@ -321,7 +331,6 @@ end class\r\n`;
       );
     }
 
-    const name = this.name.compile(transforms);
     const asString = this.isAbstract()
       ? `
   asString() {

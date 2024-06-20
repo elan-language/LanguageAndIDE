@@ -596,4 +596,44 @@ end enum`;
       "'break' is a reserved word, and may not be used as an identifier",
     ]);
   });
+
+  test("Fail_DuplicateNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+
+end main
+
+enum Fruit
+  banana, kiwi
+end enum
+
+enum Fruit
+  apple, orange, pear
+end enum`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name Fruit not unique in scope"]);
+  });
+
+  test("Fail_DuplicateValues", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+
+end main
+
+enum Fruit
+  apple, orange, pear, orange
+end enum`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name orange not unique in scope"]);
+  });
 });

@@ -11,4 +11,7 @@
     "elanLanguageServer.trace.server": "verbose",
     "workbench.editor.enablePreview": false,
     "files.eol": "\n",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always"
+    },
 }

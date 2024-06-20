@@ -688,6 +688,14 @@ export function mustBeUniqueNameInScope(
   }
 }
 
+export function mustBeUniqueValueInScope(
+  name: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new NotUniqueNameCompileError(name, location));
+}
+
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (symbol instanceof LetStatement) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, location));

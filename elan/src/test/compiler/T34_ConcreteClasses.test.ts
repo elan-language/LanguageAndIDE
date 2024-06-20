@@ -692,4 +692,31 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Bar is not defined"]);
   });
+
+  test("Fail_DuplicateNames", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+ 
+end main
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+class Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name Foo not unique in scope"]);
+  });
 });

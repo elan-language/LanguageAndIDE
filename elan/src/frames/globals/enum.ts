@@ -15,6 +15,8 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { EnumType } from "../symbols/enum-type";
 import { Collapsible } from "../interfaces/collapsible";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
@@ -73,7 +75,17 @@ end enum\r
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `var ${this.name.compile(transforms)} = {\r
+
+    const name = this.name.compile(transforms);
+    mustBeUniqueNameInScope(
+      name,
+      getGlobalScope(this),
+      transforms,
+      this.compileErrors,
+      this.htmlId,
+    );
+
+    return `var ${name} = {\r
 ${singleIndent()}${this.values.compile(transforms)}\r
 };\r
 `;
