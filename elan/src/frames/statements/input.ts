@@ -10,6 +10,9 @@ import { ElanSymbol } from "../interfaces/symbol";
 import { StringType } from "../symbols/string-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { getParentScope } from "../symbols/symbol-helpers";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { mustBeOfSymbolType } from "../compile-rules";
 
 export class Input extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
@@ -46,11 +49,26 @@ export class Input extends AbstractFrame implements Statement, ElanSymbol {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    return `${this.indent()}var ${this.varName.compile(transforms)} = await system.input();`;
+
+    const id = getParentScope(this).resolveSymbol(this.varName.text, transforms, this);
+    let prefix = "";
+
+    if (id instanceof UnknownSymbol) {
+      prefix = "var ";
+    } else {
+      mustBeOfSymbolType(
+        id.symbolType(transforms),
+        StringType.Instance,
+        this.compileErrors,
+        this.htmlId,
+      );
+    }
+
+    return `${this.indent()}${prefix}${this.varName.compile(transforms)} = await system.input();`;
   }
 
   get symbolId() {
-    return this.varName.renderAsSource();
+    return this.varName.text;
   }
 
   symbolType(transforms: Transforms) {
