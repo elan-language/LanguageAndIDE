@@ -524,7 +524,7 @@ export class StdLib {
     toInit.length = x;
 
     for (let i = 0; i < x; i++) {
-      const subArr = [];
+      const subArr = this.system.wrapArray([]);
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }

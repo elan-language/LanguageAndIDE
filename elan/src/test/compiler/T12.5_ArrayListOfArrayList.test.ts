@@ -517,6 +517,75 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_InitialiseEmptyArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [[Int]]
+  call a.initialise2DArrayList(2,2,0)
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.emptyArrayList();
+  _stdlib.initialise2DArrayList(a, 2, 2, 0);
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [0, 0], ArrayList [0, 0]]");
+  });
+
+  test("Pass_InitialiseArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [[1,2], [3,4,5], [6]]
+  call a.initialise2DArrayList(2,2,1)
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([system.literalArray([1, 2]), system.literalArray([3, 4, 5]), system.literalArray([6])]);
+  _stdlib.initialise2DArrayList(a, 2, 2, 1);
+  system.print(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [1, 1], ArrayList [1, 1]]");
+  });
+
+  test("Fail_InitialiseEmptyArrayList", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to empty [[Int]]
+  call a.initialise2DArrayList(2,2,"")
+  print a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
+
   test("Fail_EmptyArrayList1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
