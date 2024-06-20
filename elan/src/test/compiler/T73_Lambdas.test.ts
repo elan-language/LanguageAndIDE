@@ -98,13 +98,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "25");
   });
 
-  // #477
-  ignore_test("Pass_AssignALambdaToAProperty", async () => {
+  test("Pass_AssignALambdaToAProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var foo set to new Foo()
-  call foo.set(lambda x as Int => x)
+  call foo.setP1(lambda x as Int => x)
   var v set to foo.p1(5)
   print v
 end main
@@ -113,7 +112,7 @@ class Foo
   constructor()
   end constructor
 
-  procedure set(p as Func<of Int => Int>)
+  procedure setP1(p as Func<of Int => Int>)
     set p1 to p
   end procedure
 
@@ -123,22 +122,22 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var foo = system.initialise(new Foo());
-  foo.set((x) => x);
+  await foo.setP1((x) => x);
   var v = foo.p1(5);
   system.print(_stdlib.asString(v));
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", "Func<of Int => Int>"]]);};
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)]]);};
   constructor() {
 
   }
 
-  set(p) {
+  async setP1(p) {
     this.p1 = p;
   }
 
-  p1 = Func.emptyInstance();
+  p1 = system.emptyFunc(0);
 
 }
 return [main, _tests];}`;
