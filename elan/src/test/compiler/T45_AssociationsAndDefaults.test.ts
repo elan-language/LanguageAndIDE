@@ -131,6 +131,7 @@ main
   print g.dsi
   print g.ai
   print g.t
+  print g.ff("a", "b")
 end main
 
 class Game
@@ -146,6 +147,7 @@ class Game
     property dsi as ImmutableDictionary<of String, Int>
     property ai as ArrayList<of Int>
     property t as Tuple<of Int, String, ImmutableList<of Int>>
+    property ff as Func<of String, String => Int>
 
     function asString() return String
         return "A game"
@@ -165,10 +167,11 @@ async function main() {
   system.print(_stdlib.asString(g.dsi));
   system.print(_stdlib.asString(g.ai));
   system.print(_stdlib.asString(g.t));
+  system.print(_stdlib.asString(g.ff("a", "b")));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.emptyImmutableList()], ["ds", system.emptyDictionary()], ["dsi", system.emptyImmutableDictionary()], ["ai", system.emptyArrayList()], ["t", system.emptyTuple([0, "", system.emptyImmutableList()])], ["ff", system.emptyFunc(0)]]);};
   constructor() {
 
   }
@@ -191,6 +194,8 @@ class Game {
 
   t = system.emptyTuple([0, "", system.emptyImmutableList()]);
 
+  ff = system.emptyFunc(0);
+
   asString() {
     return "A game";
   }
@@ -206,7 +211,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)",
+      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)0",
     );
   });
 

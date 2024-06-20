@@ -47,6 +47,10 @@ export class System {
     return this.tuple(t);
   }
 
+  emptyFunc(rt: any) {
+    return () => rt;
+  }
+
   tuple(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "Tuple";
     return t;
