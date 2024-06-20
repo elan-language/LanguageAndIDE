@@ -517,7 +517,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_CannotPassInArray", async () => {

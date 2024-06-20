@@ -23,7 +23,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: p_1"]);
   });
 
   test("Fail_MutatingArrayParam", async () => {
@@ -43,6 +43,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 });

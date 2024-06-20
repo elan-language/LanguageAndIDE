@@ -602,7 +602,7 @@ export function mustBeCompatibleNode(
 }
 
 export function mustNotBePropertyOnFunctionMethod(
-  assignable: AstNode,
+  assignable: AstQualifiedNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
@@ -610,8 +610,8 @@ export function mustNotBePropertyOnFunctionMethod(
   if (isFunction(parent) && isMember(parent)) {
     const s = assignable.symbolScope;
 
-    if (s !== SymbolScope.local) {
-      compileErrors.push(new MutateCompileError(`non local data in function`, location));
+    if (s === SymbolScope.property) {
+      compileErrors.push(new ReassignCompileError(`property: ${assignable.id}`, location));
     }
   }
 }
@@ -626,14 +626,14 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new MutateCompileError(`parameter`, location));
+      compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
     } else {
       // only mutate indexed arraylist
       const rst = assignable.rootSymbolType();
       const st = assignable.symbolType();
       if (rst.name === st.name) {
         // ie not indexed
-        compileErrors.push(new MutateCompileError(`parameter`, location));
+        compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
       }
     }
   }

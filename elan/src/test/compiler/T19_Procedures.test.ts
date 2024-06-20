@@ -634,7 +634,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_ArrayListParamMayNotBeReassigned", async () => {
@@ -655,7 +655,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
@@ -678,7 +678,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate parameter"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
