@@ -872,6 +872,13 @@ export class StdLibSymbols implements Scope {
     ["refreshDisplay", this.getSymbol("refreshDisplay", new ProcedureType([], false, false))],
     ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
     ["print", this.getSymbol("print", new ProcedureType([StringType.Instance], false, false))],
+    [
+      "printTab",
+      this.getSymbol(
+        "printTab",
+        new ProcedureType([IntType.Instance, StringType.Instance], false, false),
+      ),
+    ],
     ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
     ["clearKeyBuffer", this.getSymbol("clearKeyBuffer", new ProcedureType([], false, false))],
     [

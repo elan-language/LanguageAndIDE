@@ -3,6 +3,8 @@ export interface ElanInputOutput {
 
   printLine(text: string): void;
 
+  printTab(position: number, text: string): void;
+
   readLine(): Promise<string>;
 
   clearConsole(): void;

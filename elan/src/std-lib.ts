@@ -426,6 +426,9 @@ export class StdLib {
   print(s: string) {
     this.system.elanInputOutput.print(s);
   }
+  printTab(position: number, s: string) {
+    this.system.elanInputOutput.printTab(position, s);
+  }
 
   clearConsole() {
     this.system.elanInputOutput.clearConsole();

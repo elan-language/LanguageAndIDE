@@ -25,6 +25,13 @@ export class TestInputOutput implements ElanInputOutput {
   printLine(line: string): void {
     this.print(line); //Currently, newline is not added for testing purposes
   }
+  printTab(position: number, text: string): void {
+    const charsSinceNl = this.printed.length;
+    const spaces =
+      "                                                                                ";
+    const tab = spaces.substring(0, position - charsSinceNl);
+    this.print(`${tab}${text}`);
+  }
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);
   }

@@ -41,6 +41,17 @@ export class WebInputOutput implements ElanInputOutput {
     this.consoleWindow.innerHTML = this.renderConsole();
   }
 
+  printTab(position: number, text: string) {
+    const lastNl = this.previousContent.lastIndexOf("\n");
+    const afterLastNl = lastNl === -1 ? 0 : lastNl + 1;
+    const spaces =
+      "                                                                                ";
+    const charsSinceNl = this.previousContent.length - lastNl;
+    const tab = spaces.substring(0, position - charsSinceNl + 1);
+    this.previousContent = `${this.previousContent}${tab}${text}`;
+    this.consoleWindow.innerHTML = this.renderConsole();
+  }
+
   stopReading() {
     clearInterval(this.currentInterval);
     this.previousContent = `${this.previousContent.slice(0, -48)}`;
