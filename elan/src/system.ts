@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanRuntimeError } from "./elan-runtime-error";
 import { ElanInputOutput } from "./elan-input-output";
+import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { hasHiddenType } from "./has-hidden-type";
 
@@ -222,7 +222,7 @@ export class System {
     }
   }
 
-  print(s: string) {
+  printLine(s: string) {
     this.elanInputOutput.printLine(s);
   }
 

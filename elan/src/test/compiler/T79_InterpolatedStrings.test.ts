@@ -25,7 +25,7 @@ async function main() {
   var a = 1;
   var b = "Apple";
   var c = system.immutableList([1, 2, 3]);
-  system.print(_stdlib.asString(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`));
+  system.printLine(_stdlib.asString(\`\${_stdlib.asString(a)} \${_stdlib.asString(b)} \${_stdlib.asString(c)}\`));
 }
 return [main, _tests];}`;
 

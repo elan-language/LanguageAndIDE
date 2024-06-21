@@ -21,7 +21,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 + 4));
+  system.printLine(_stdlib.asString(3 + 4));
 }
 return [main, _tests];}`;
 
@@ -43,7 +43,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 - 4));
+  system.printLine(_stdlib.asString(3 - 4));
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 * 4));
+  system.printLine(_stdlib.asString(3 * 4));
 }
 return [main, _tests];}`;
 
@@ -89,7 +89,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 3;
-  system.print(_stdlib.asString(a + 4));
+  system.printLine(_stdlib.asString(a + 4));
 }
 return [main, _tests];}`;
 
@@ -111,7 +111,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 / 2));
+  system.printLine(_stdlib.asString(3 / 2));
 }
 return [main, _tests];}`;
 
@@ -133,7 +133,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.div(7, 2)));
+  system.printLine(_stdlib.asString(_stdlib.div(7, 2)));
 }
 return [main, _tests];}`;
 
@@ -155,7 +155,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.mod(11, 3)));
+  system.printLine(_stdlib.asString(_stdlib.mod(11, 3)));
 }
 return [main, _tests];}`;
 
@@ -177,7 +177,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.mod(25, 20) < 19 ? 1 : 2));
+  system.printLine(_stdlib.asString(_stdlib.mod(25, 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 
@@ -199,7 +199,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 ** 3));
+  system.printLine(_stdlib.asString(3 ** 3));
 }
 return [main, _tests];}`;
 
@@ -225,7 +225,7 @@ end main`;
 async function main() {
   var a = 3;
   a = a + 1;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

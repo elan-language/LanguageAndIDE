@@ -31,9 +31,9 @@ var Fruit = {
 };
 
 async function main() {
-  system.print(_stdlib.asString(Fruit.apple));
-  system.print(_stdlib.asString(Fruit.orange));
-  system.print(_stdlib.asString(Fruit.pear));
+  system.printLine(_stdlib.asString(Fruit.apple));
+  system.printLine(_stdlib.asString(Fruit.orange));
+  system.printLine(_stdlib.asString(Fruit.pear));
 }
 return [main, _tests];}`;
 
@@ -65,7 +65,7 @@ var Fruit = {
 
 async function main() {
   var e = Fruit._default;
-  system.print(_stdlib.asString(e));
+  system.printLine(_stdlib.asString(e));
 }
 return [main, _tests];}`;
 
@@ -104,7 +104,7 @@ var Fruit = {
 
 async function main() {
   var foo = system.initialise(new Foo());
-  system.print(_stdlib.asString(foo.fruit));
+  system.printLine(_stdlib.asString(foo.fruit));
 }
 
 class Foo {
@@ -153,7 +153,7 @@ var Fruit = {
 
 async function main() {
   var foo = Foo.emptyInstance();
-  system.print(_stdlib.asString(foo.fruit));
+  system.printLine(_stdlib.asString(foo.fruit));
 }
 
 class Foo {
@@ -197,7 +197,7 @@ var Fruit = {
 async function main() {
   var x = Fruit.apple;
   x = Fruit.pear;
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 
@@ -231,7 +231,7 @@ var Fruit = {
 async function main() {
   var x = Fruit.apple;
   var y = x;
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -267,8 +267,8 @@ var Fruit = {
 };
 
 async function main() {
-  system.print(_stdlib.asString(isFavourite(Fruit.apple)));
-  system.print(_stdlib.asString(isFavourite(Fruit.pear)));
+  system.printLine(_stdlib.asString(isFavourite(Fruit.apple)));
+  system.printLine(_stdlib.asString(isFavourite(Fruit.pear)));
 }
 
 function isFavourite(f) {
@@ -307,7 +307,7 @@ var Fruit = {
 };
 
 async function main() {
-  system.print(_stdlib.asString(system.objectEquals(firstFruit(), Fruit.apple)));
+  system.printLine(_stdlib.asString(system.objectEquals(firstFruit(), Fruit.apple)));
 }
 
 function firstFruit() {
@@ -344,8 +344,8 @@ var Fruit = {
 
 async function main() {
   var x = Fruit.apple;
-  system.print(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
-  system.print(_stdlib.asString(system.objectEquals(x, Fruit.pear)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.apple)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, Fruit.pear)));
 }
 return [main, _tests];}`;
 
@@ -387,13 +387,13 @@ async function main() {
   var f = Fruit.orange;
   switch (f) {
     case Fruit.apple:
-      system.print(_stdlib.asString("a"));
+      system.printLine(_stdlib.asString("a"));
       break;
     case Fruit.orange:
-      system.print(_stdlib.asString("o"));
+      system.printLine(_stdlib.asString("o"));
       break;
     case Fruit.pear:
-      system.print(_stdlib.asString("p"));
+      system.printLine(_stdlib.asString("p"));
       break;
     default:
 
@@ -430,7 +430,7 @@ var Fruit = {
 
 async function main() {
   var a = "Eat more " + Fruit.apple + "s!";
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

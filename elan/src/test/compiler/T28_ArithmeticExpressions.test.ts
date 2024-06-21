@@ -27,9 +27,9 @@ async function main() {
   var x = 2 + 3 * 5 + 1;
   var y = (2 + 3) * 5 + 1;
   var z = (2 + 3) * (5 + 1);
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
 }
 return [main, _tests];}`;
 
@@ -59,9 +59,9 @@ async function main() {
   var x = 2 + (3 * 5) + 1;
   var y = ((2 + 3)) * 5 + (1);
   var z = ((2 + 3) * (5 + 1));
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
 }
 return [main, _tests];}`;
 
@@ -88,8 +88,8 @@ end main`;
 async function main() {
   var x = 2 + 3 ** 2;
   var y = (2 + 3) ** 2;
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -116,8 +116,8 @@ end main`;
 async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -144,8 +144,8 @@ end main`;
 async function main() {
   var x = 16 / 2 ** 3;
   var y = (16 / 2) ** 3;
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -172,8 +172,8 @@ end main`;
 async function main() {
   var x = -4.7;
   var y = 5 * -3;
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -200,8 +200,8 @@ end main`;
 async function main() {
   var x = _stdlib.mod(11, 3);
   var y = _stdlib.mod(5 + 6, 3);
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -228,8 +228,8 @@ end main`;
 async function main() {
   var x = _stdlib.div(11, 3);
   var y = _stdlib.div(5 + 6, 3);
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 

@@ -32,7 +32,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.print(_stdlib.asString(x));
+    system.printLine(_stdlib.asString(x));
   }
 }
 return [main, _tests];}`;
@@ -61,7 +61,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var it = system.immutableList(["one", "two"]);
-  system.print(_stdlib.asString(printEach(it)));
+  system.printLine(_stdlib.asString(printEach(it)));
 }
 
 function printEach(target) {
@@ -97,7 +97,7 @@ async function main() {
   var lst = system.immutableList(["one", "two"]);
   var it = printEach(lst);
   lst = _stdlib.asImmutableList(it);
-  system.print(_stdlib.asString(lst));
+  system.printLine(_stdlib.asString(lst));
 }
 
 function printEach(target) {
@@ -136,7 +136,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.print(_stdlib.asString(x));
+    system.printLine(_stdlib.asString(x));
   }
 }
 return [main, _tests];}`;
@@ -172,7 +172,7 @@ async function main() {
 
 async function printEach(target) {
   for (const x of target) {
-    system.print(_stdlib.asString(x));
+    system.printLine(_stdlib.asString(x));
   }
 }
 return [main, _tests];}`;
@@ -212,12 +212,12 @@ async function main() {
 }
 
 async function printAsIter(target) {
-  system.print(_stdlib.asString(target));
+  system.printLine(_stdlib.asString(target));
 }
 
 async function printasImmutableList(target) {
   var some = _stdlib.asImmutableList(target);
-  system.print(_stdlib.asString(_stdlib.getRange(some, 3, 7)));
+  system.printLine(_stdlib.asString(_stdlib.getRange(some, 3, 7)));
 }
 return [main, _tests];}`;
 
@@ -255,7 +255,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f.it));
+  system.printLine(_stdlib.asString(f.it));
 }
 
 class Foo {
@@ -313,11 +313,11 @@ async function main() {
   var foo = system.initialise(new Foo());
   var foo1 = system.initialise(new Foo());
   await foo.update();
-  system.print(_stdlib.asString(foo.i));
-  system.print(_stdlib.asString(foo1.i));
-  system.print(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
-  system.print(_stdlib.asString(system.objectEquals(foo.i, system.emptyIter())));
-  system.print(_stdlib.asString(system.objectEquals(foo1.i, system.emptyIter())));
+  system.printLine(_stdlib.asString(foo.i));
+  system.printLine(_stdlib.asString(foo1.i));
+  system.printLine(_stdlib.asString(system.objectEquals(foo.i, foo1.i)));
+  system.printLine(_stdlib.asString(system.objectEquals(foo.i, system.emptyIter())));
+  system.printLine(_stdlib.asString(system.objectEquals(foo1.i, system.emptyIter())));
 }
 
 class Foo {

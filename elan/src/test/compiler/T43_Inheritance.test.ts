@@ -56,11 +56,11 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(x.p2));
+  system.printLine(_stdlib.asString(x.product()));
   await x.setP1(4);
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.product()));
 }
 
 class Foo {
@@ -161,8 +161,8 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Yon());
-  system.print(_stdlib.asString(f(x)));
-  system.print(_stdlib.asString(b(x)));
+  system.printLine(_stdlib.asString(f(x)));
+  system.printLine(_stdlib.asString(b(x)));
 }
 
 class Foo {
@@ -268,11 +268,11 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(x.p2));
+  system.printLine(_stdlib.asString(x.product()));
   await x.setP1(4);
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.product()));
 }
 
 class Foo {
@@ -390,11 +390,11 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Bar());
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(x.p2));
+  system.printLine(_stdlib.asString(x.product()));
   await x.setP1(4);
-  system.print(_stdlib.asString(x.product()));
+  system.printLine(_stdlib.asString(x.product()));
 }
 
 class Foo {
@@ -558,7 +558,7 @@ class Bar {
 }
 
 async function proc(foo) {
-  system.print(_stdlib.asString(foo.p1));
+  system.printLine(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
 
@@ -624,7 +624,7 @@ class Bar {
 }
 
 async function proc(foo) {
-  system.print(_stdlib.asString(foo.p1));
+  system.printLine(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
 
@@ -663,7 +663,7 @@ end function
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
-  system.print(_stdlib.asString(fun(f)));
+  system.printLine(_stdlib.asString(fun(f)));
 }
 
 class Foo {
@@ -783,7 +783,7 @@ class Bar {
 }
 
 async function proc(foo) {
-  system.print(_stdlib.asString(foo.p1));
+  system.printLine(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
 
@@ -828,7 +828,7 @@ end function
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Bar());
-  system.print(_stdlib.asString(fun(f)));
+  system.printLine(_stdlib.asString(fun(f)));
 }
 
 class Foo {
@@ -1239,7 +1239,7 @@ end function
 async function main() {
   var b = system.initialise(new Bar());
   var lst = system.immutableList([b]);
-  system.print(_stdlib.asString(fun(lst)));
+  system.printLine(_stdlib.asString(fun(lst)));
 }
 
 class Foo {

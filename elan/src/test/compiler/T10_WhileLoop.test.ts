@@ -10,7 +10,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T10_WhileLoop", () => {
   test("Pass_minimal", async () => {
@@ -30,7 +29,7 @@ async function main() {
   while (x < 10) {
     x = x + 1;
   }
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 
@@ -72,7 +71,7 @@ async function main() {
     }
     x = x + 1;
   }
-  system.print(_stdlib.asString(t));
+  system.printLine(_stdlib.asString(t));
 }
 return [main, _tests];}`;
 

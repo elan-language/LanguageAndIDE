@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -12,7 +11,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T13_StringManipulation", () => {
   test("Pass_AppendStrings", async () => {
@@ -28,7 +26,7 @@ end main`;
 async function main() {
   var a = "Hello";
   var b = "World!";
-  system.print(_stdlib.asString(a + " " + b));
+  system.printLine(_stdlib.asString(a + " " + b));
 }
 return [main, _tests];}`;
 
@@ -50,7 +48,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString("_" + "Hello" + "!"));
+  system.printLine(_stdlib.asString("_" + "Hello" + "!"));
 }
 return [main, _tests];}`;
 
@@ -72,7 +70,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString("Hello" + 3.1));
+  system.printLine(_stdlib.asString("Hello" + 3.1));
 }
 return [main, _tests];}`;
 
@@ -96,7 +94,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = "abcde";
-  system.print(_stdlib.asString(system.safeIndex(a, 2)));
+  system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
 }
 return [main, _tests];}`;
 
@@ -122,9 +120,9 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = "abcde";
-  system.print(_stdlib.asString(a.slice(1, 3)));
-  system.print(_stdlib.asString(a.slice(2)));
-  system.print(_stdlib.asString(a.slice(0, 2)));
+  system.printLine(_stdlib.asString(a.slice(1, 3)));
+  system.printLine(_stdlib.asString(a.slice(2)));
+  system.printLine(_stdlib.asString(a.slice(0, 2)));
 }
 return [main, _tests];}`;
 
@@ -152,13 +150,13 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString("abc" === "abc"));
-  system.print(_stdlib.asString("abc" === "abcd"));
-  system.print(_stdlib.asString("abc" === "Abc"));
-  system.print(_stdlib.asString("abc" === "abc"));
-  system.print(_stdlib.asString("abc" !== "abcd"));
-  system.print(_stdlib.asString("abc" !== "abcd"));
-  system.print(_stdlib.asString("abc" !== "Abc"));
+  system.printLine(_stdlib.asString("abc" === "abc"));
+  system.printLine(_stdlib.asString("abc" === "abcd"));
+  system.printLine(_stdlib.asString("abc" === "Abc"));
+  system.printLine(_stdlib.asString("abc" === "abc"));
+  system.printLine(_stdlib.asString("abc" !== "abcd"));
+  system.printLine(_stdlib.asString("abc" !== "abcd"));
+  system.printLine(_stdlib.asString("abc" !== "Abc"));
 }
 return [main, _tests];}`;
 
@@ -185,12 +183,12 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.isBefore("abc", "abC")));
-  system.print(_stdlib.asString(_stdlib.isAfter("abcd", "abc")));
-  system.print(_stdlib.asString(_stdlib.isAfterOrSameAs("abc", "abc")));
-  system.print(_stdlib.asString(_stdlib.isBeforeOrSameAs("abc", "abc")));
-  system.print(_stdlib.asString(_stdlib.isAfterOrSameAs("abcd", "abc")));
-  system.print(_stdlib.asString(_stdlib.isBeforeOrSameAs("abcd", "abc")));
+  system.printLine(_stdlib.asString(_stdlib.isBefore("abc", "abC")));
+  system.printLine(_stdlib.asString(_stdlib.isAfter("abcd", "abc")));
+  system.printLine(_stdlib.asString(_stdlib.isAfterOrSameAs("abc", "abc")));
+  system.printLine(_stdlib.asString(_stdlib.isBeforeOrSameAs("abc", "abc")));
+  system.printLine(_stdlib.asString(_stdlib.isAfterOrSameAs("abcd", "abc")));
+  system.printLine(_stdlib.asString(_stdlib.isBeforeOrSameAs("abcd", "abc")));
 }
 return [main, _tests];}`;
 
@@ -218,7 +216,7 @@ async function main() {
   var a = "abcde";
   var b = 2.1 + 3.4;
   a = _stdlib.asString(b);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -246,7 +244,7 @@ async function main() {
   var a = 3;
   var b = 4;
   var c = \`\${_stdlib.asString(a)} x \${_stdlib.asString(b)} = \${_stdlib.asString(a * b)}\`;
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -275,7 +273,7 @@ async function main() {
   var a = 3;
   var b = 4;
   var c = \`\${a} x \${b} = \${a * b}\`;
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -299,7 +297,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 3.1 + "Hello";
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

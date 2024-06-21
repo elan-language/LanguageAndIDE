@@ -31,10 +31,10 @@ async function main() {
   var b = false && true;
   var c = true && false;
   var d = true && true;
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
-  system.print(_stdlib.asString(d));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(d));
 }
 return [main, _tests];}`;
 
@@ -67,10 +67,10 @@ async function main() {
   var b = false || true;
   var c = true || false;
   var d = true || true;
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
-  system.print(_stdlib.asString(d));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(d));
 }
 return [main, _tests];}`;
 
@@ -103,10 +103,10 @@ async function main() {
   var b = !true;
   var c = !!true;
   var d = !!false;
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
-  system.print(_stdlib.asString(d));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(d));
 }
 return [main, _tests];}`;
 
@@ -133,8 +133,8 @@ end main`;
 async function main() {
   var a = !false && true;
   var b = !(false && true);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -163,9 +163,9 @@ async function main() {
   var a = (4 > 3) && (6 > 5);
   var b = (3 > 4) || (6 === 6);
   var c = !(4 > 3);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -188,7 +188,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = (true && false) === (true || false);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -273,7 +273,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = true && false === true || false;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

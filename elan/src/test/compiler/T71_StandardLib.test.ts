@@ -29,12 +29,12 @@ const lst = system.immutableList(["one", "two"]);
 
 async function main() {
   var arr = system.literalArray(["three", "four"]);
-  system.print(_stdlib.asString(_stdlib.contains(lst, "two")));
-  system.print(_stdlib.asString(_stdlib.contains(lst, "three")));
-  system.print(_stdlib.asString(_stdlib.contains(arr, "four")));
-  system.print(_stdlib.asString(_stdlib.contains(arr, "five")));
-  system.print(_stdlib.asString(_stdlib.contains("onetwo", "two")));
-  system.print(_stdlib.asString(_stdlib.contains("onetwo", "three")));
+  system.printLine(_stdlib.asString(_stdlib.contains(lst, "two")));
+  system.printLine(_stdlib.asString(_stdlib.contains(lst, "three")));
+  system.printLine(_stdlib.asString(_stdlib.contains(arr, "four")));
+  system.printLine(_stdlib.asString(_stdlib.contains(arr, "five")));
+  system.printLine(_stdlib.asString(_stdlib.contains("onetwo", "two")));
+  system.printLine(_stdlib.asString(_stdlib.contains("onetwo", "three")));
 }
 return [main, _tests];}`;
 
@@ -58,9 +58,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(1));
+  system.printLine(_stdlib.asString(1));
   await _stdlib.pause(100);
-  system.print(_stdlib.asString(2));
+  system.printLine(_stdlib.asString(2));
 }
 return [main, _tests];}`;
 
@@ -88,7 +88,7 @@ async function main() {
   var a = _stdlib.clock();
   await _stdlib.pause(100);
   var b = _stdlib.clock();
-  system.print(_stdlib.asString(b > a));
+  system.printLine(_stdlib.asString(b > a));
 }
 return [main, _tests];}`;
 
@@ -115,8 +115,8 @@ end main`;
 async function main() {
   var a = _stdlib.random();
   var b = _stdlib.random();
-  system.print(_stdlib.asString(a < 1));
-  system.print(_stdlib.asString(a !== b));
+  system.printLine(_stdlib.asString(a < 1));
+  system.printLine(_stdlib.asString(a !== b));
 }
 return [main, _tests];}`;
 
@@ -133,7 +133,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to  "10.1".parseAsFloat()
+  var a set to  parseAsFloat("10.1")
   print a.first()
   print a.second()
 end main`;
@@ -141,8 +141,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsFloat("10.1");
-  system.print(_stdlib.asString(_stdlib.first(a)));
-  system.print(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(_stdlib.first(a)));
+  system.printLine(_stdlib.asString(_stdlib.second(a)));
 }
 return [main, _tests];}`;
 
@@ -159,7 +159,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to  "x12".parseAsFloat()
+  var a set to parseAsFloat("x12")
   print a.first()
   print a.second()
 end main`;
@@ -167,8 +167,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsFloat("x12");
-  system.print(_stdlib.asString(_stdlib.first(a)));
-  system.print(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(_stdlib.first(a)));
+  system.printLine(_stdlib.asString(_stdlib.second(a)));
 }
 return [main, _tests];}`;
 
@@ -185,7 +185,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to  "10.1".parseAsInt()
+  var a set to parseAsInt("10.1")
   print a.first()
   print a.second()
 end main`;
@@ -193,8 +193,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsInt("10.1");
-  system.print(_stdlib.asString(_stdlib.first(a)));
-  system.print(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(_stdlib.first(a)));
+  system.printLine(_stdlib.asString(_stdlib.second(a)));
 }
 return [main, _tests];}`;
 
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to  "".parseAsInt()
+  var a set to parseAsInt("")
   print a.first()
   print a.second()
 end main`;
@@ -219,8 +219,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.parseAsInt("");
-  system.print(_stdlib.asString(_stdlib.first(a)));
-  system.print(_stdlib.asString(_stdlib.second(a)));
+  system.printLine(_stdlib.asString(_stdlib.first(a)));
+  system.printLine(_stdlib.asString(_stdlib.second(a)));
 }
 return [main, _tests];}`;
 

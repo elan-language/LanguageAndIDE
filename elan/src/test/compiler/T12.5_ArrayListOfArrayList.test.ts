@@ -27,7 +27,7 @@ async function main() {
   var a = system.literalArray([1, 2]);
   var b = system.literalArray([3, 4]);
   var c = system.literalArray([a, b]);
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -51,7 +51,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
-  system.print(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
 
@@ -76,8 +76,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
-  system.print(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -109,8 +109,8 @@ async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
-  system.print(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
-  system.print(_stdlib.asString(system.safeDoubleIndex(a, 2, 0)));
+  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
+  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 2, 0)));
 }
 return [main, _tests];}`;
 
@@ -138,7 +138,7 @@ async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeDoubleSet(a, 0, 1, "yon");
-  system.print(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
+  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
 }
 return [main, _tests];}`;
 
@@ -167,8 +167,8 @@ async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
   _stdlib.add(a, system.literalArray(["foo"]));
   _stdlib.add(a, system.literalArray(["yon"]));
-  system.print(_stdlib.asString(system.safeIndex(a, 3)));
-  system.print(_stdlib.asString(system.safeIndex(a, 4)));
+  system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
+  system.printLine(_stdlib.asString(system.safeIndex(a, 4)));
 }
 return [main, _tests];}`;
 
@@ -196,7 +196,7 @@ async function main() {
   var a = system.initialise(system.array(3), () => system.emptyArrayList());
   _stdlib.add(system.safeIndex(a, 1), "foo");
   _stdlib.add(system.safeIndex(a, 2), "yon");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -227,7 +227,7 @@ async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.insert(a, 1, system.literalArray(["foo"]));
   _stdlib.insert(a, 3, system.literalArray(["yon"]));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -258,7 +258,7 @@ async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.insert(system.safeIndex(a, 0), 0, "foo");
   _stdlib.insert(system.safeIndex(a, 2), 1, "yon");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -289,7 +289,7 @@ async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.remove(a, 0);
   _stdlib.remove(a, 1);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -317,7 +317,7 @@ async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.remove(system.safeIndex(a, 0), 0);
   _stdlib.remove(system.safeIndex(a, 2), 0);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -346,7 +346,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.removeFirst(a, system.literalArray(["two"]));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -375,7 +375,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.removeFirst(system.safeIndex(a, 1), "two");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -404,7 +404,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.removeAll(a, system.literalArray(["two"]));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -433,7 +433,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two", "two"]), system.literalArray(["three"]), system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
   _stdlib.removeAll(system.safeIndex(a, 1), "two");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -461,8 +461,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.asArrayList(system.immutableList([system.immutableList(["foo"]), system.immutableList(["bar", "yon"])]));
-  system.print(_stdlib.asString(_stdlib.length(a)));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -497,11 +497,11 @@ async function main() {
   var a = system.emptyArrayList();
   var b = system.emptyArrayList();
   _stdlib.add(a, system.literalArray([3]));
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(system.objectEquals(a, b)));
-  system.print(_stdlib.asString(system.objectEquals(a, system.emptyArrayList())));
-  system.print(_stdlib.asString(system.objectEquals(b, system.emptyArrayList())));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
+  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyArrayList())));
+  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyArrayList())));
 }
 return [main, _tests];}`;
 
@@ -530,7 +530,7 @@ end main`;
 async function main() {
   var a = system.emptyArrayList();
   _stdlib.initialise2DArrayList(a, 2, 2, 0);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -556,7 +556,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.literalArray([1, 2]), system.literalArray([3, 4, 5]), system.literalArray([6])]);
   _stdlib.initialise2DArrayList(a, 2, 2, 1);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

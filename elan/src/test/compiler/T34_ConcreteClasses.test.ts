@@ -40,9 +40,9 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
-  system.print(_stdlib.asString(x.asString()));
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(x.p2));
+  system.printLine(_stdlib.asString(x.asString()));
 }
 
 class Foo {
@@ -97,8 +97,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo(7, "Apple"));
-  system.print(_stdlib.asString(x.p1));
-  system.print(_stdlib.asString(x.p2));
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(x.p2));
 }
 
 class Foo {
@@ -192,7 +192,7 @@ class Bar {
   p1 = 0;
 
   async printP1() {
-    system.print(_stdlib.asString(this.p1));
+    system.printLine(_stdlib.asString(this.p1));
   }
 
 }
@@ -253,12 +253,12 @@ end class`;
 async function main() {
   var foo = system.initialise(new Foo());
   var bar = foo.bar;
-  system.print(_stdlib.asString(bar.p1));
-  system.print(_stdlib.asString(bar.p2));
+  system.printLine(_stdlib.asString(bar.p1));
+  system.printLine(_stdlib.asString(bar.p2));
   var foo2 = bar.foo;
   var bar2 = foo2.bar;
-  system.print(_stdlib.asString(bar2.p1));
-  system.print(_stdlib.asString(bar2.p2));
+  system.printLine(_stdlib.asString(bar2.p1));
+  system.printLine(_stdlib.asString(bar2.p2));
 }
 
 class Foo {
@@ -351,7 +351,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  system.print(_stdlib.asString(foo.p1));
+  system.printLine(_stdlib.asString(foo.p1));
 }
 return [main, _tests];}`;
 

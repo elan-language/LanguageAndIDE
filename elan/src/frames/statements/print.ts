@@ -1,14 +1,12 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
 import { AbstractFrame } from "../abstract-frame";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { mustNotBeFunction } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { printKeyword } from "../keywords";
 import { Transforms } from "../syntax-nodes/transforms";
-import { FunctionType } from "../symbols/function-type";
-import { ProcedureType } from "../symbols/procedure-type";
-import { mustNotBeFunction } from "../compile-rules";
 
 export class Print extends AbstractFrame implements Statement {
   isStatement = true;
@@ -51,6 +49,6 @@ export class Print extends AbstractFrame implements Statement {
     mustNotBeFunction(st, this.compileErrors, this.htmlId);
 
     const toPrint = this.expr.compile(transforms) || '""';
-    return `${this.indent()}system.print(_stdlib.asString(${toPrint}));`;
+    return `${this.indent()}system.printLine(_stdlib.asString(${toPrint}));`;
   }
 }

@@ -34,13 +34,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(_stdlib.asString("a"));
+        system.printLine(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString("b"));
+        system.printLine(_stdlib.asString("b"));
         break;
       case 3:
-        system.print(_stdlib.asString("c"));
+        system.printLine(_stdlib.asString("c"));
         break;
       default:
 
@@ -81,13 +81,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch ((i)) {
       case 1:
-        system.print(_stdlib.asString("a"));
+        system.printLine(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString("b"));
+        system.printLine(_stdlib.asString("b"));
         break;
       case 3:
-        system.print(_stdlib.asString("c"));
+        system.printLine(_stdlib.asString("c"));
         break;
       default:
 
@@ -125,10 +125,10 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i) {
       case 1:
-        system.print(_stdlib.asString("a"));
+        system.printLine(_stdlib.asString("a"));
         break;
       default:
-        system.print(_stdlib.asString("b"));
+        system.printLine(_stdlib.asString("b"));
         break;
     }
   }
@@ -166,13 +166,13 @@ async function main() {
   for (var i = 1; i <= 3; i = i + 1) {
     switch (i + 1) {
       case 1:
-        system.print(_stdlib.asString("a"));
+        system.printLine(_stdlib.asString("a"));
         break;
       case 2:
-        system.print(_stdlib.asString("b"));
+        system.printLine(_stdlib.asString("b"));
         break;
       default:
-        system.print(_stdlib.asString("c"));
+        system.printLine(_stdlib.asString("c"));
         break;
     }
   }
@@ -208,13 +208,13 @@ end main
 async function main() {
   switch (3.1) {
     case 1:
-      system.print(_stdlib.asString("a"));
+      system.printLine(_stdlib.asString("a"));
       break;
     case 2:
-      system.print(_stdlib.asString("b"));
+      system.printLine(_stdlib.asString("b"));
       break;
     case 3.1:
-      system.print(_stdlib.asString("c"));
+      system.printLine(_stdlib.asString("c"));
       break;
     default:
 

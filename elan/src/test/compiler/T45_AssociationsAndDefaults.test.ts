@@ -56,9 +56,9 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(g.p2));
-  system.print(_stdlib.asString(g.p1));
-  system.print(_stdlib.asString(g.previousScores));
+  system.printLine(_stdlib.asString(g.p2));
+  system.printLine(_stdlib.asString(g.p1));
+  system.printLine(_stdlib.asString(g.previousScores));
 }
 
 class Game {
@@ -158,16 +158,16 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(g.i));
-  system.print(_stdlib.asString(g.f));
-  system.print(_stdlib.asString(g.b));
-  system.print(_stdlib.asString(g.s));
-  system.print(_stdlib.asString(g.li));
-  system.print(_stdlib.asString(g.ds));
-  system.print(_stdlib.asString(g.dsi));
-  system.print(_stdlib.asString(g.ai));
-  system.print(_stdlib.asString(g.t));
-  system.print(_stdlib.asString(g.ff("a", "b")));
+  system.printLine(_stdlib.asString(g.i));
+  system.printLine(_stdlib.asString(g.f));
+  system.printLine(_stdlib.asString(g.b));
+  system.printLine(_stdlib.asString(g.s));
+  system.printLine(_stdlib.asString(g.li));
+  system.printLine(_stdlib.asString(g.ds));
+  system.printLine(_stdlib.asString(g.dsi));
+  system.printLine(_stdlib.asString(g.ai));
+  system.printLine(_stdlib.asString(g.t));
+  system.printLine(_stdlib.asString(g.ff("a", "b")));
 }
 
 class Game {
@@ -263,15 +263,15 @@ end class`;
 async function main() {
   var p = system.initialise(new Player());
   var g = p.g;
-  system.print(_stdlib.asString(g.i));
-  system.print(_stdlib.asString(g.f));
-  system.print(_stdlib.asString(g.b));
-  system.print(_stdlib.asString(g.s));
-  system.print(_stdlib.asString(g.li));
-  system.print(_stdlib.asString(g.ds));
-  system.print(_stdlib.asString(g.dsi));
-  system.print(_stdlib.asString(g.ai));
-  system.print(_stdlib.asString(g.t));
+  system.printLine(_stdlib.asString(g.i));
+  system.printLine(_stdlib.asString(g.f));
+  system.printLine(_stdlib.asString(g.b));
+  system.printLine(_stdlib.asString(g.s));
+  system.printLine(_stdlib.asString(g.li));
+  system.printLine(_stdlib.asString(g.ds));
+  system.printLine(_stdlib.asString(g.dsi));
+  system.printLine(_stdlib.asString(g.ai));
+  system.printLine(_stdlib.asString(g.t));
 }
 
 class Player {
@@ -357,7 +357,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = Game.emptyInstance();
-  system.print(_stdlib.asString(g.i));
+  system.printLine(_stdlib.asString(g.i));
 }
 
 class Game {
@@ -422,8 +422,8 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(g.p1));
-  system.print(_stdlib.asString(g.previousGame));
+  system.printLine(_stdlib.asString(g.p1));
+  system.printLine(_stdlib.asString(g.previousGame));
 }
 
 class Game {
@@ -528,12 +528,12 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.p2, Player.emptyInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.previousGame, Game.emptyInstance())));
-  system.print(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
-  system.print(_stdlib.asString(g.score === 0));
-  system.print(_stdlib.asString(g.best === 0));
+  system.printLine(_stdlib.asString(system.objectEquals(g.p1, Player.emptyInstance())));
+  system.printLine(_stdlib.asString(system.objectEquals(g.p2, Player.emptyInstance())));
+  system.printLine(_stdlib.asString(system.objectEquals(g.previousGame, Game.emptyInstance())));
+  system.printLine(_stdlib.asString(system.objectEquals(g.previousScores, system.emptyImmutableList())));
+  system.printLine(_stdlib.asString(g.score === 0));
+  system.printLine(_stdlib.asString(g.best === 0));
 }
 
 class Game {
@@ -653,9 +653,9 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(new Game());
-  system.print(_stdlib.asString(g.score));
+  system.printLine(_stdlib.asString(g.score));
   await g.setScore(0);
-  system.print(_stdlib.asString(g.score));
+  system.printLine(_stdlib.asString(g.score));
 }
 
 class Game {
@@ -761,14 +761,14 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f.a));
-  system.print(_stdlib.asString(f.b));
-  system.print(_stdlib.asString(f.c));
-  system.print(_stdlib.asString(f.d));
-  system.print(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
-  system.print(_stdlib.asString(f.b === ""));
-  system.print(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
-  system.print(_stdlib.asString(system.objectEquals(f.d, system.emptyArrayList())));
+  system.printLine(_stdlib.asString(f.a));
+  system.printLine(_stdlib.asString(f.b));
+  system.printLine(_stdlib.asString(f.c));
+  system.printLine(_stdlib.asString(f.d));
+  system.printLine(_stdlib.asString(system.objectEquals(f.a, system.emptyImmutableList())));
+  system.printLine(_stdlib.asString(f.b === ""));
+  system.printLine(_stdlib.asString(system.objectEquals(f.c, system.emptyDictionary())));
+  system.printLine(_stdlib.asString(system.objectEquals(f.d, system.emptyArrayList())));
 }
 
 class Foo {
@@ -835,7 +835,7 @@ end class`;
 async function main() {
   var g = system.initialise(new Game());
   var p = g.p1;
-  system.print(_stdlib.asString(p.ucName()));
+  system.printLine(_stdlib.asString(p.ucName()));
 }
 
 class Game {

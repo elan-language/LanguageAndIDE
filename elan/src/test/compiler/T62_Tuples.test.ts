@@ -26,9 +26,9 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.tuple([3, "Apple"]);
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(_stdlib.first(x)));
-  system.print(_stdlib.asString(_stdlib.second(x)));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(_stdlib.first(x)));
+  system.printLine(_stdlib.asString(_stdlib.second(x)));
 }
 return [main, _tests];}`;
 
@@ -58,9 +58,9 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = f();
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(_stdlib.first(x)));
-  system.print(_stdlib.asString(_stdlib.second(x)));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(_stdlib.first(x)));
+  system.printLine(_stdlib.asString(_stdlib.second(x)));
 }
 
 function f() {
@@ -92,7 +92,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var t = f();
-  system.print(_stdlib.asString(_stdlib.first(t)));
+  system.printLine(_stdlib.asString(_stdlib.first(t)));
 }
 
 function f() {
@@ -121,7 +121,7 @@ constant a set to {(1,2)}`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var t = _stdlib.reduce(a, system.tuple([1, 1]), (i, j) => j);
-  system.print(_stdlib.asString(_stdlib.first(t)));
+  system.printLine(_stdlib.asString(_stdlib.first(t)));
 }
 
 const a = system.immutableList([system.tuple([1, 2])]);
@@ -153,7 +153,7 @@ end function`;
 async function main() {
   var x = "one";
   var y = "two";
-  system.print(_stdlib.asString(f(system.tuple([x, y]))));
+  system.printLine(_stdlib.asString(f(system.tuple([x, y]))));
 }
 
 function f(t) {
@@ -189,8 +189,8 @@ async function main() {
   var y = 0;
   var z = "";
   [y, z] = x;
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
 }
 return [main, _tests];}`;
 
@@ -219,8 +219,8 @@ end main
 async function main() {
   var x = system.tuple([3, "Apple"]);
   var [_y, _z] = x; var y = () => _y; var z = () => _z;
-  system.print(_stdlib.asString(y()));
-  system.print(_stdlib.asString(z()));
+  system.printLine(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString(z()));
 }
 return [main, _tests];}`;
 
@@ -248,8 +248,8 @@ end main
 async function main() {
   var x = system.tuple([3, "Apple"]);
   var [y, z] = x;
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
 }
 return [main, _tests];}`;
 
@@ -285,8 +285,8 @@ async function main() {
   var b = "";
   a = y;
   b = z;
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -313,7 +313,7 @@ end main
 async function main() {
   var x = system.tuple([3, "Apple"]);
   x = system.tuple([4, "Pear"]);
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 

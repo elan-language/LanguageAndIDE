@@ -1,5 +1,7 @@
 export interface ElanInputOutput {
-  printLine(line: string): void;
+  print(text: string): void;
+
+  printLine(text: string): void;
 
   readLine(): Promise<string>;
 

@@ -20,7 +20,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(_stdlib.pi));
+  system.printLine(_stdlib.asString(_stdlib.pi));
 }
 return [main, _tests];}`;
 
@@ -44,7 +44,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = _stdlib.sin(_stdlib.pi / 180 * 30);
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 
@@ -71,7 +71,7 @@ end main`;
 async function main() {
   var x = _stdlib.pi / 180 * 30;
   var y set to sin(x);
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -97,7 +97,7 @@ end main`;
 async function main() {
   var x = _stdlib.pi / 180 * 30;
   var y set to 2 + sin(x);
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -123,7 +123,7 @@ end main`;
 async function main() {
   var x = 0.7;
   var y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
-  system.print(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
 
@@ -147,7 +147,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = _stdlib.min(system.immutableList([3.1, 3]));
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 
@@ -172,7 +172,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = _stdlib.min(system.immutableList([3.1, 3]));
-  system.print(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
 

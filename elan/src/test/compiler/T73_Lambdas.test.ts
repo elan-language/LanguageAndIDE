@@ -7,11 +7,9 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T73_Lambdas", () => {
   test("Pass_PassAsParam", async () => {
@@ -31,7 +29,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  system.print(_stdlib.asString(f(i)));
+  system.printLine(_stdlib.asString(f(i)));
 }
 return [main, _tests];}`;
 
@@ -61,7 +59,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  system.print(_stdlib.asString(f(i)));
+  system.printLine(_stdlib.asString(f(i)));
 }
 return [main, _tests];}`;
 
@@ -85,7 +83,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = (x) => x * 5;
-  system.print(_stdlib.asString(l(5)));
+  system.printLine(_stdlib.asString(l(5)));
 }
 return [main, _tests];}`;
 
@@ -124,7 +122,7 @@ async function main() {
   var foo = system.initialise(new Foo());
   await foo.setP1((x) => x);
   var v = foo.p1(5);
-  system.print(_stdlib.asString(v));
+  system.printLine(_stdlib.asString(v));
 }
 
 class Foo {
@@ -162,7 +160,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = (x) => x * 5;
-  system.print(_stdlib.asString(l(5) + 5));
+  system.printLine(_stdlib.asString(l(5) + 5));
 }
 return [main, _tests];}`;
 
@@ -190,7 +188,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var l = getFunc();
-  system.print(_stdlib.asString(l(5)));
+  system.printLine(_stdlib.asString(l(5)));
 }
 
 function getFunc() {

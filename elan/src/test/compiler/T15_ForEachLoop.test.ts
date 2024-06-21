@@ -10,7 +10,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T15_eachLoop", () => {
   test("Pass_List", async () => {
@@ -32,7 +31,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.print(_stdlib.asString(n));
+  system.printLine(_stdlib.asString(n));
 }
 return [main, _tests];}`;
 
@@ -64,7 +63,7 @@ async function main() {
   for (const x of a) {
     n = n + x;
   }
-  system.print(_stdlib.asString(n));
+  system.printLine(_stdlib.asString(n));
 }
 return [main, _tests];}`;
 
@@ -91,7 +90,7 @@ end main`;
 async function main() {
   var a = "hello";
   for (const x of a) {
-    system.print(_stdlib.asString(x));
+    system.printLine(_stdlib.asString(x));
   }
 }
 return [main, _tests];}`;
@@ -120,7 +119,7 @@ end main`;
 async function main() {
   for (const x of "12") {
     for (const y of "34") {
-      system.print(_stdlib.asString(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`));
+      system.printLine(_stdlib.asString(\`\${_stdlib.asString(x)}\${_stdlib.asString(y)}\`));
     }
   }
 }
@@ -151,7 +150,7 @@ end function`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   for (const x of fruit()) {
-    system.print(_stdlib.asString(x));
+    system.printLine(_stdlib.asString(x));
   }
 }
 

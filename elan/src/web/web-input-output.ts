@@ -32,8 +32,12 @@ export class WebInputOutput implements ElanInputOutput {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   currentInterval?: any;
 
-  printLine(line: string) {
-    this.previousContent = `${this.previousContent}${line}<br>`;
+  printLine(text: string) {
+    this.print(`${text}<br>`);
+  }
+
+  print(text: string) {
+    this.previousContent = `${this.previousContent}${text}`;
     this.consoleWindow.innerHTML = this.renderConsole();
   }
 

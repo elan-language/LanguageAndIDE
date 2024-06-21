@@ -10,7 +10,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T_9_Conditions", () => {
   test("Pass_lessThan", async () => {
@@ -24,9 +23,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 < 4));
-  system.print(_stdlib.asString(3 < 2));
-  system.print(_stdlib.asString(3 < 3));
+  system.printLine(_stdlib.asString(3 < 4));
+  system.printLine(_stdlib.asString(3 < 2));
+  system.printLine(_stdlib.asString(3 < 3));
 }
 return [main, _tests];}`;
 
@@ -50,9 +49,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 > 4));
-  system.print(_stdlib.asString(3 > 2));
-  system.print(_stdlib.asString(3 > 3));
+  system.printLine(_stdlib.asString(3 > 4));
+  system.printLine(_stdlib.asString(3 > 2));
+  system.printLine(_stdlib.asString(3 > 3));
 }
 return [main, _tests];}`;
 
@@ -76,9 +75,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 <= 4));
-  system.print(_stdlib.asString(3 <= 2));
-  system.print(_stdlib.asString(3 <= 3));
+  system.printLine(_stdlib.asString(3 <= 4));
+  system.printLine(_stdlib.asString(3 <= 2));
+  system.printLine(_stdlib.asString(3 <= 3));
 }
 return [main, _tests];}`;
 
@@ -102,9 +101,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 >= 4));
-  system.print(_stdlib.asString(3 >= 2));
-  system.print(_stdlib.asString(3 >= 3));
+  system.printLine(_stdlib.asString(3 >= 4));
+  system.printLine(_stdlib.asString(3 >= 2));
+  system.printLine(_stdlib.asString(3 >= 3));
 }
 return [main, _tests];}`;
 
@@ -128,9 +127,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 !== 4));
-  system.print(_stdlib.asString(3 !== 2));
-  system.print(_stdlib.asString(3 !== 3));
+  system.printLine(_stdlib.asString(3 !== 4));
+  system.printLine(_stdlib.asString(3 !== 2));
+  system.printLine(_stdlib.asString(3 !== 3));
 }
 return [main, _tests];}`;
 
@@ -154,9 +153,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 === 4));
-  system.print(_stdlib.asString(3 === 2));
-  system.print(_stdlib.asString(3 === 3));
+  system.printLine(_stdlib.asString(3 === 4));
+  system.printLine(_stdlib.asString(3 === 2));
+  system.printLine(_stdlib.asString(3 === 3));
 }
 return [main, _tests];}`;
 
@@ -187,16 +186,16 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(3 < 3.1));
-  system.print(_stdlib.asString(3 <= 3.1));
-  system.print(_stdlib.asString(3 > 3.1));
-  system.print(_stdlib.asString(3 >= 3.1));
-  system.print(_stdlib.asString(3 === 3));
-  system.print(_stdlib.asString(3 !== 3));
-  system.print(_stdlib.asString(3.1 < 3));
-  system.print(_stdlib.asString(3.1 <= 3));
-  system.print(_stdlib.asString(3.1 > 3));
-  system.print(_stdlib.asString(3.1 >= 3));
+  system.printLine(_stdlib.asString(3 < 3.1));
+  system.printLine(_stdlib.asString(3 <= 3.1));
+  system.printLine(_stdlib.asString(3 > 3.1));
+  system.printLine(_stdlib.asString(3 >= 3.1));
+  system.printLine(_stdlib.asString(3 === 3));
+  system.printLine(_stdlib.asString(3 !== 3));
+  system.printLine(_stdlib.asString(3.1 < 3));
+  system.printLine(_stdlib.asString(3.1 <= 3));
+  system.printLine(_stdlib.asString(3.1 > 3));
+  system.printLine(_stdlib.asString(3.1 >= 3));
 }
 return [main, _tests];}`;
 
@@ -220,9 +219,9 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString((5 + 3) > (4 + 2)));
-  system.print(_stdlib.asString((5 + 3) === (4 + 4)));
-  system.print(_stdlib.asString((5 + 3) > (4 + 6)));
+  system.printLine(_stdlib.asString((5 + 3) > (4 + 2)));
+  system.printLine(_stdlib.asString((5 + 3) === (4 + 4)));
+  system.printLine(_stdlib.asString((5 + 3) > (4 + 6)));
 }
 return [main, _tests];}`;
 

@@ -24,7 +24,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 3;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -51,7 +51,7 @@ end main`;
 async function main() {
   var a = 3;
   var b = a;
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -76,7 +76,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = 3 + 4;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -103,7 +103,7 @@ end main`;
 async function main() {
   var a = 3;
   a = 4;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -129,7 +129,7 @@ end main`;
 async function main() {
   var a = 3.1;
   a = 4;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -157,7 +157,7 @@ const a = 3;
 
 async function main() {
   var a = 4;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -205,15 +205,15 @@ async function main() {
   var g = 3 !== 4;
   var h = !false;
   var k = 4 / 3;
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
-  system.print(_stdlib.asString(d));
-  system.print(_stdlib.asString(e));
-  system.print(_stdlib.asString(f));
-  system.print(_stdlib.asString(g));
-  system.print(_stdlib.asString(h));
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(d));
+  system.printLine(_stdlib.asString(e));
+  system.printLine(_stdlib.asString(f));
+  system.printLine(_stdlib.asString(g));
+  system.printLine(_stdlib.asString(h));
+  system.printLine(_stdlib.asString(k));
 }
 return [main, _tests];}`;
 
@@ -243,7 +243,7 @@ var Fruit = {
 
 async function main() {
   var a = Fruit.apple;
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -277,7 +277,7 @@ function f() {
 async function main() {
   var a = f();
   a = system.immutableList([1, 2]);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -309,7 +309,7 @@ end function
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(foo()));
+  system.printLine(_stdlib.asString(foo()));
 }
 
 function foo() {

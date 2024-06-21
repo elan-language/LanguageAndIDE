@@ -30,9 +30,9 @@ end main`;
 async function main() {
   var a = true;
   if (a) {
-      system.print(_stdlib.asString("yes"));
+      system.printLine(_stdlib.asString("yes"));
     } else {
-      system.print(_stdlib.asString("no"));
+      system.printLine(_stdlib.asString("no"));
   }
 }
 return [main, _tests];}`;
@@ -64,9 +64,9 @@ end main`;
 async function main() {
   var a = false;
   if (a) {
-      system.print(_stdlib.asString("yes"));
+      system.printLine(_stdlib.asString("yes"));
     } else {
-      system.print(_stdlib.asString("no"));
+      system.printLine(_stdlib.asString("no"));
   }
 }
 return [main, _tests];}`;
@@ -99,11 +99,11 @@ end main`;
 async function main() {
   var a = 2;
   if (a === 1) {
-      system.print(_stdlib.asString("one"));
+      system.printLine(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(_stdlib.asString("two"));
+      system.printLine(_stdlib.asString("two"));
     } else {
-      system.print(_stdlib.asString("neither"));
+      system.printLine(_stdlib.asString("neither"));
   }
 }
 return [main, _tests];}`;
@@ -136,11 +136,11 @@ end main`;
 async function main() {
   var a = 3;
   if (a === 1) {
-      system.print(_stdlib.asString("one"));
+      system.printLine(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(_stdlib.asString("two"));
+      system.printLine(_stdlib.asString("two"));
     } else {
-      system.print(_stdlib.asString("neither"));
+      system.printLine(_stdlib.asString("neither"));
   }
 }
 return [main, _tests];}`;
@@ -169,7 +169,7 @@ end main`;
 async function main() {
   var a = true;
   if (a) {
-      system.print(_stdlib.asString("yes"));
+      system.printLine(_stdlib.asString("yes"));
   }
 }
 return [main, _tests];}`;
@@ -204,13 +204,13 @@ end main`;
 async function main() {
   var a = 3;
   if (a === 1) {
-      system.print(_stdlib.asString("one"));
+      system.printLine(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(_stdlib.asString("two"));
+      system.printLine(_stdlib.asString("two"));
     } else if (a === 3) {
-      system.print(_stdlib.asString("three"));
+      system.printLine(_stdlib.asString("three"));
     } else {
-      system.print(_stdlib.asString("neither"));
+      system.printLine(_stdlib.asString("neither"));
   }
 }
 return [main, _tests];}`;
@@ -243,11 +243,11 @@ end main`;
 async function main() {
   var a = 3;
   if (a === 1) {
-      system.print(_stdlib.asString("one"));
+      system.printLine(_stdlib.asString("one"));
     } else if (a === 2) {
-      system.print(_stdlib.asString("two"));
+      system.printLine(_stdlib.asString("two"));
     } else if (a === 3) {
-      system.print(_stdlib.asString("three"));
+      system.printLine(_stdlib.asString("three"));
   }
 }
 return [main, _tests];}`;

@@ -10,7 +10,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T_8_ForLoop", () => {
   test("Pass_minimal", async () => {
@@ -30,7 +29,7 @@ async function main() {
   for (var i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
 
@@ -62,7 +61,7 @@ async function main() {
   for (i = 1; i <= 10; i = i + 1) {
     tot = tot + i;
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
 
@@ -92,7 +91,7 @@ async function main() {
   for (var i = 1; i <= 10; i = i + 2) {
     tot = tot + i;
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
 
@@ -122,7 +121,7 @@ async function main() {
   for (var i = 10; i >= 3; i = i - 1) {
     tot = tot + i;
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
 
@@ -156,7 +155,7 @@ async function main() {
       tot = tot + 1;
     }
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -189,7 +188,7 @@ async function main() {
   for (var i = lower; i <= upper; i = i + 2) {
     tot = tot + i;
   }
-  system.print(_stdlib.asString(tot));
+  system.printLine(_stdlib.asString(tot));
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -226,7 +225,7 @@ async function foo(arr) {
   for (var i = 0; i <= 10; i = i + 1) {
     system.safeSet(arr, i, 1);
   }
-  system.print(_stdlib.asString(system.safeIndex(arr, 0)));
+  system.printLine(_stdlib.asString(system.safeIndex(arr, 0)));
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

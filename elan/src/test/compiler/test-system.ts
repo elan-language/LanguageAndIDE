@@ -19,8 +19,11 @@ export class TestInputOutput implements ElanInputOutput {
   clearGraphics(): void {
     this.drawn = "";
   }
-  printLine(line: string): void {
+  print(line: string): void {
     this.printed = this.printed + line;
+  }
+  printLine(line: string): void {
+    this.print(line); //Currently, newline is not added for testing purposes
   }
   readLine(): Promise<string> {
     return Promise.resolve(this.inputed);

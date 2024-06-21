@@ -21,7 +21,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = 1;
-  system.print(_stdlib.asString(_stdlib.asString(f)));
+  system.printLine(_stdlib.asString(_stdlib.asString(f)));
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ end class`;
 async function main() {
   var f = system.initialise(new Foo());
   var s = _stdlib.asString(f);
-  system.print(_stdlib.asString(s));
+  system.printLine(_stdlib.asString(s));
 }
 
 class Foo {
@@ -101,7 +101,7 @@ async function main() {
   var f = system.initialise(new Foo());
   var p = f.p1;
   var s = _stdlib.asString(p);
-  system.print(_stdlib.asString(s));
+  system.printLine(_stdlib.asString(s));
 }
 
 class Foo {
@@ -160,8 +160,8 @@ async function main() {
   var s1 = f.asString();
   var p = f.p1;
   var s2 = p.asString();
-  system.print(_stdlib.asString(s1));
-  system.print(_stdlib.asString(s2));
+  system.printLine(_stdlib.asString(s1));
+  system.printLine(_stdlib.asString(s2));
 }
 
 class Foo {
@@ -223,7 +223,7 @@ end class`;
 async function main() {
   var f = system.initialise(new Foo());
   var s = f.asString();
-  system.print(_stdlib.asString(s));
+  system.printLine(_stdlib.asString(s));
 }
 
 class Foo {
@@ -280,7 +280,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f));
+  system.printLine(_stdlib.asString(f));
 }
 
 class Foo {
@@ -337,7 +337,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f));
+  system.printLine(_stdlib.asString(f));
 }
 
 class Foo {
@@ -386,13 +386,13 @@ end main`;
 async function main() {
   var l = system.immutableList([1, 2, 3]);
   var sl = _stdlib.asString(l);
-  system.print(_stdlib.asString(sl));
+  system.printLine(_stdlib.asString(sl));
   var a = _stdlib.asArrayList(system.immutableList([1, 2, 3]));
   var sa = _stdlib.asString(a);
-  system.print(_stdlib.asString(sa));
+  system.printLine(_stdlib.asString(sa));
   var d = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
   var sd = _stdlib.asString(d);
-  system.print(_stdlib.asString(sd));
+  system.printLine(_stdlib.asString(sd));
 }
 return [main, _tests];}`;
 

@@ -3,7 +3,6 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -12,7 +11,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T19_Procedures", () => {
   test("Pass_BasicOperationIncludingPrint", async () => {
@@ -30,13 +28,13 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(1));
+  system.printLine(_stdlib.asString(1));
   await foo();
-  system.print(_stdlib.asString(3));
+  system.printLine(_stdlib.asString(3));
 }
 
 async function foo() {
-  system.print(_stdlib.asString(2));
+  system.printLine(_stdlib.asString(2));
 }
 return [main, _tests];}`;
 
@@ -76,10 +74,10 @@ async function main() {
 }
 
 async function foo(x, y, z, t) {
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
-  system.print(_stdlib.asString(t));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(t));
 }
 return [main, _tests];}`;
 
@@ -108,7 +106,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   await _stdlib.pause(1);
-  system.print(_stdlib.asString(1));
+  system.printLine(_stdlib.asString(1));
 }
 return [main, _tests];}`;
 
@@ -143,8 +141,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -174,7 +172,7 @@ end procedure`;
 async function main() {
   var a = system.literalArray([2, 3]);
   await changeFirst(a);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 
 async function changeFirst(a) {
@@ -211,8 +209,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -245,16 +243,16 @@ end procedure`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   await foo();
-  system.print(_stdlib.asString(3));
+  system.printLine(_stdlib.asString(3));
 }
 
 async function foo() {
-  system.print(_stdlib.asString(1));
+  system.printLine(_stdlib.asString(1));
   await bar();
 }
 
 async function bar() {
-  system.print(_stdlib.asString(2));
+  system.printLine(_stdlib.asString(2));
 }
 return [main, _tests];}`;
 
@@ -290,7 +288,7 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-      system.print(_stdlib.asString(a));
+      system.printLine(_stdlib.asString(a));
       var b = a - 1;
       await foo(b);
   }
@@ -387,7 +385,7 @@ class Bar {
   p1 = 0;
 
   async length(plus) {
-    system.print(_stdlib.asString(this.p1 + plus));
+    system.printLine(_stdlib.asString(this.p1 + plus));
   }
 
   asString() {

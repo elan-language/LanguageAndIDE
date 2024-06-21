@@ -40,7 +40,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f.times(2)));
+  system.printLine(_stdlib.asString(f.times(2)));
 }
 
 class Foo {
@@ -116,7 +116,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f.length()));
+  system.printLine(_stdlib.asString(f.length()));
 }
 
 class Foo {
@@ -222,7 +222,7 @@ end class`;
 async function main() {
   var f = system.initialise(new Foo());
   var b = system.initialise(new Bar());
-  system.print(_stdlib.asString(f.times(b)));
+  system.printLine(_stdlib.asString(f.times(b)));
 }
 
 class Foo {
@@ -315,7 +315,7 @@ class Foo {
   p1 = 0;
 
   async prt() {
-    system.print(_stdlib.asString(this.asString()));
+    system.printLine(_stdlib.asString(this.asString()));
   }
 
   asString() {

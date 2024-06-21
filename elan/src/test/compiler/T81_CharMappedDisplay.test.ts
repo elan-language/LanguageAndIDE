@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeExecutes,
@@ -84,7 +83,7 @@ end main`;
 async function main() {
   var g = _stdlib.initialisedCharMap(0, 16777215);
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
-  system.print(_stdlib.asString(_stdlib.getAt(g, 10, 20)));
+  system.printLine(_stdlib.asString(_stdlib.getAt(g, 10, 20)));
 }
 return [main, _tests];}`;
 
@@ -140,7 +139,7 @@ end main`;
 async function main() {
   var g = _stdlib.initialisedCharMap(0, 16777215);
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
-  system.print(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
+  system.printLine(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
 }
 return [main, _tests];}`;
 
@@ -196,7 +195,7 @@ end main`;
 async function main() {
   var g = _stdlib.initialisedCharMap(0, 16777215);
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
-  system.print(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
+  system.printLine(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
 }
 return [main, _tests];}`;
 
@@ -252,7 +251,7 @@ end main`;
 async function main() {
   var g = _stdlib.initialisedCharMap(0, 16777215);
   g = _stdlib.putAt(g, 10, 20, system.tuple(["a", 1, 2]));
-  system.print(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
+  system.printLine(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
 }
 return [main, _tests];}`;
 
@@ -302,7 +301,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.getKeystroke();
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -326,7 +325,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.getKeystrokeWithModifier();
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 

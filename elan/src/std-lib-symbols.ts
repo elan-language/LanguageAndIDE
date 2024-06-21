@@ -663,7 +663,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [StringType.Instance],
           new TupleType([BooleanType.Instance, FloatType.Instance]),
-          true,
+          false,
           true,
         ),
       ),
@@ -675,7 +675,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType(
           [StringType.Instance],
           new TupleType([BooleanType.Instance, IntType.Instance]),
-          true,
+          false,
           true,
         ),
       ),

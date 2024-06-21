@@ -1,6 +1,5 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { MainFrame } from "../../frames/globals/main-frame";
 import {
   assertDoesNotCompile,
   assertObjectCodeExecutes,
@@ -31,7 +30,7 @@ async function main() {
     var _cache;
     return () => _cache ??= x() + 3;
   })();
-  system.print(_stdlib.asString(x() + y()));
+  system.printLine(_stdlib.asString(x() + y()));
 }
 return [main, _tests];}`;
 
@@ -78,8 +77,8 @@ async function main() {
     return () => _cache ??= x();
   })();
   await y().setP1(10);
-  system.print(_stdlib.asString(x().p1));
-  system.print(_stdlib.asString(y().p1));
+  system.printLine(_stdlib.asString(x().p1));
+  system.printLine(_stdlib.asString(y().p1));
 }
 
 class Foo {
@@ -125,7 +124,7 @@ async function main() {
     var _cache;
     return () => _cache ??= 4;
   })();
-  system.print(_stdlib.asString(y()));
+  system.printLine(_stdlib.asString(y()));
 }
 return [main, _tests];}`;
 
@@ -157,7 +156,7 @@ end function
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(foo()));
+  system.printLine(_stdlib.asString(foo()));
 }
 
 function foo() {

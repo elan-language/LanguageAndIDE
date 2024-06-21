@@ -26,9 +26,9 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.filter(source, (x) => x > 20)));
-  system.print(_stdlib.asString(_stdlib.filter(source, (x) => x > 20)));
-  system.print(_stdlib.asString(_stdlib.filter(source, (x) => (x < 3) || (x > 35))));
+  system.printLine(_stdlib.asString(_stdlib.filter(source, (x) => x > 20)));
+  system.printLine(_stdlib.asString(_stdlib.filter(source, (x) => x > 20)));
+  system.printLine(_stdlib.asString(_stdlib.filter(source, (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -61,7 +61,7 @@ end function
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(filterIt(source)));
+  system.printLine(_stdlib.asString(filterIt(source)));
 }
 
 function filterIt(tofilter) {
@@ -91,8 +91,8 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.map(source, (x) => x + 1)));
-  system.print(_stdlib.asString(_stdlib.map(source, (x) => _stdlib.asString(x) + "*")));
+  system.printLine(_stdlib.asString(_stdlib.map(source, (x) => x + 1)));
+  system.printLine(_stdlib.asString(_stdlib.map(source, (x) => _stdlib.asString(x) + "*")));
 }
 return [main, _tests];}`;
 
@@ -121,7 +121,7 @@ end main`;
 async function main() {
   var source = _stdlib.asIter(system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
-  system.print(_stdlib.asString(source));
+  system.printLine(_stdlib.asString(source));
 }
 return [main, _tests];}`;
 
@@ -148,9 +148,9 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.reduce(source, 0, (s, x) => s + x)));
-  system.print(_stdlib.asString(_stdlib.reduce(source, 100, (s, x) => s + x)));
-  system.print(_stdlib.asString(_stdlib.reduce(source, "Concat:", (s, x) => s + _stdlib.asString(x))));
+  system.printLine(_stdlib.asString(_stdlib.reduce(source, 0, (s, x) => s + x)));
+  system.printLine(_stdlib.asString(_stdlib.reduce(source, 100, (s, x) => s + x)));
+  system.printLine(_stdlib.asString(_stdlib.reduce(source, "Concat:", (s, x) => s + _stdlib.asString(x))));
 }
 return [main, _tests];}`;
 
@@ -179,7 +179,7 @@ const source = system.immutableList(["three", "four"]);
 async function main() {
   var ed = system.immutableDictionary({["one"] : 1, ["two"] : 2});
   ed = _stdlib.reduce(source, ed, (d, x) => _stdlib.withKey(d, x, 1));
-  system.print(_stdlib.asString(ed));
+  system.printLine(_stdlib.asString(ed));
 }
 return [main, _tests];}`;
 
@@ -204,7 +204,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.max(source)));
+  system.printLine(_stdlib.asString(_stdlib.max(source)));
 }
 return [main, _tests];}`;
 
@@ -229,7 +229,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.mod(x, 5))));
+  system.printLine(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.mod(x, 5))));
 }
 return [main, _tests];}`;
 
@@ -254,7 +254,7 @@ end main`;
 const source = system.immutableList([system.immutableList([1]), system.immutableList([2, 2])]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.length(x))));
+  system.printLine(_stdlib.asString(_stdlib.maxBy(source, (x) => _stdlib.length(x))));
 }
 return [main, _tests];}`;
 
@@ -279,7 +279,7 @@ end main`;
 const source = system.immutableList(["apple", "orange", "pear"]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.maxBy(source, (t) => _stdlib.length(t))));
+  system.printLine(_stdlib.asString(_stdlib.maxBy(source, (t) => _stdlib.length(t))));
 }
 return [main, _tests];}`;
 
@@ -304,7 +304,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.count(source)));
+  system.printLine(_stdlib.asString(_stdlib.count(source)));
 }
 return [main, _tests];}`;
 
@@ -329,7 +329,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.min(source)));
+  system.printLine(_stdlib.asString(_stdlib.min(source)));
 }
 return [main, _tests];}`;
 
@@ -354,7 +354,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.minBy(source, (x) => _stdlib.mod(x, 5))));
+  system.printLine(_stdlib.asString(_stdlib.minBy(source, (x) => _stdlib.mod(x, 5))));
 }
 return [main, _tests];}`;
 
@@ -381,9 +381,9 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.any(source, (x) => x > 20)));
-  system.print(_stdlib.asString(_stdlib.any(source, (x) => _stdlib.mod(x, 2) === 0)));
-  system.print(_stdlib.asString(_stdlib.any(source, (x) => x > 40)));
+  system.printLine(_stdlib.asString(_stdlib.any(source, (x) => x > 20)));
+  system.printLine(_stdlib.asString(_stdlib.any(source, (x) => _stdlib.mod(x, 2) === 0)));
+  system.printLine(_stdlib.asString(_stdlib.any(source, (x) => x > 40)));
 }
 return [main, _tests];}`;
 
@@ -408,7 +408,7 @@ end main`;
 const source = system.immutableList({2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.groupBy(source, (x) => x % 5)));
+  system.printLine(_stdlib.asString(_stdlib.groupBy(source, (x) => x % 5)));
 }
 return [main, _tests];}`;
 

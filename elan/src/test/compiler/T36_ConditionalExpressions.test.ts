@@ -26,10 +26,10 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.print(_stdlib.asString(grade(90)));
-  system.print(_stdlib.asString(grade(70)));
-  system.print(_stdlib.asString(grade(50)));
-  system.print(_stdlib.asString(grade(30)));
+  system.printLine(_stdlib.asString(grade(90)));
+  system.printLine(_stdlib.asString(grade(70)));
+  system.printLine(_stdlib.asString(grade(50)));
+  system.printLine(_stdlib.asString(grade(30)));
 }
 
 function grade(score) {
@@ -60,7 +60,7 @@ end main
 async function main() {
   var score = 70;
   var grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
-  system.print(_stdlib.asString(grade));
+  system.printLine(_stdlib.asString(grade));
 }
 return [main, _tests];}`;
 

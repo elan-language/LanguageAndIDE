@@ -24,7 +24,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -48,7 +48,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([system.immutableList([4, 5]), system.immutableList([6, 7, 8])]);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -87,7 +87,7 @@ end class`;
 async function main() {
   var a = system.initialise(new Foo());
   var b = system.immutableList([a]);
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(b));
 }
 
 class Foo {
@@ -155,11 +155,11 @@ async function main() {
   var x = system.immutableList([c]);
   var y = system.immutableList([d]);
   var z = system.immutableList([e]);
-  system.print(_stdlib.asString(v));
-  system.print(_stdlib.asString(w));
-  system.print(_stdlib.asString(x));
-  system.print(_stdlib.asString(y));
-  system.print(_stdlib.asString(z));
+  system.printLine(_stdlib.asString(v));
+  system.printLine(_stdlib.asString(w));
+  system.printLine(_stdlib.asString(x));
+  system.printLine(_stdlib.asString(y));
+  system.printLine(_stdlib.asString(z));
 }
 
 class Foo {
@@ -198,7 +198,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList(["Foo", "Bar"]);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -222,7 +222,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4.1, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -246,7 +246,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
 
@@ -270,7 +270,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.immutableList(new Array()));
-  system.print(_stdlib.asString(_stdlib.length(a)));
+  system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
 
@@ -294,7 +294,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(_stdlib.get(a, 2)));
+  system.printLine(_stdlib.asString(_stdlib.get(a, 2)));
 }
 return [main, _tests];}`;
 
@@ -323,8 +323,8 @@ async function main() {
   var a = system.immutableList(["one", "two", "three"]);
   a = _stdlib.with(a, 1, "TWO");
   var b = _stdlib.with(a, 0, "ONE");
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -356,8 +356,8 @@ async function main() {
   var a = system.immutableList(["one", "two", "three"]);
   a = _stdlib.withInsert(a, 1, "TWO");
   var b = _stdlib.withInsert(a, 0, "ONE");
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -389,8 +389,8 @@ async function main() {
   var a = system.immutableList(["one", "two", "three"]);
   a = _stdlib.withRemove(a, 1);
   var b = _stdlib.withRemove(a, 0);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -416,7 +416,7 @@ end main`;
 async function main() {
   var a = system.immutableList(["one", "two", "three", "one", "two", "three"]);
   a = _stdlib.withRemoveFirst(a, "two");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -442,7 +442,7 @@ end main`;
 async function main() {
   var a = system.immutableList(["one", "two", "three", "one", "two", "three"]);
   a = _stdlib.withRemoveAll(a, "two");
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -468,9 +468,9 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.print(_stdlib.asString(_stdlib.getRange(a, 2, 5)));
-  system.print(_stdlib.asString(_stdlib.getRange(a, 1, 3)));
-  system.print(_stdlib.asString(_stdlib.getRange(a, 0, 2)));
+  system.printLine(_stdlib.asString(_stdlib.getRange(a, 2, 5)));
+  system.printLine(_stdlib.asString(_stdlib.getRange(a, 1, 3)));
+  system.printLine(_stdlib.asString(_stdlib.getRange(a, 0, 2)));
 }
 return [main, _tests];}`;
 
@@ -500,8 +500,8 @@ end main`;
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
   var b = system.concat(a, 9);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -531,8 +531,8 @@ end main`;
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
   var b = system.concat(9, a);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -565,9 +565,9 @@ async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
   var b = system.immutableList([1, 2, 3]);
   var c = system.concat(a, b);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -595,7 +595,7 @@ end main`;
 const a = system.immutableList([4, 5, 6, 7, 8]);
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -619,7 +619,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.immutableList(new Array()));
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -654,7 +654,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
-  system.print(_stdlib.asString(f.it));
+  system.printLine(_stdlib.asString(f.it));
 }
 
 class Foo {
@@ -700,11 +700,11 @@ async function main() {
   var a = system.emptyImmutableList();
   var b = system.emptyImmutableList();
   b = system.concat(a, 3);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(system.objectEquals(a, b)));
-  system.print(_stdlib.asString(system.objectEquals(a, system.emptyImmutableList())));
-  system.print(_stdlib.asString(system.objectEquals(b, system.emptyImmutableList())));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
+  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyImmutableList())));
+  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyImmutableList())));
 }
 return [main, _tests];}`;
 

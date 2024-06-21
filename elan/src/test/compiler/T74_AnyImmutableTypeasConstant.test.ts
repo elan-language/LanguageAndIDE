@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -10,7 +9,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T74_AnyImmutableTypeAsConstant", () => {
   test("Pass_String", async () => {
@@ -26,7 +24,7 @@ end main`;
 const k = "Apple";
 
 async function main() {
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(k));
 }
 return [main, _tests];}`;
 
@@ -52,7 +50,7 @@ end main`;
 const k = system.tuple([3, "Apple"]);
 
 async function main() {
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(k));
 }
 return [main, _tests];}`;
 
@@ -78,7 +76,7 @@ end main`;
 const k = system.immutableList([1, 2, 3]);
 
 async function main() {
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(k));
 }
 return [main, _tests];}`;
 
@@ -104,7 +102,7 @@ end main`;
 const k = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["c"] : 3});
 
 async function main() {
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(k));
 }
 return [main, _tests];}`;
 
@@ -143,7 +141,7 @@ end class`;
 const k = new Foo(3);
 
 async function main() {
-  system.print(_stdlib.asString(k));
+  system.printLine(_stdlib.asString(k));
 }
 
 class Foo {

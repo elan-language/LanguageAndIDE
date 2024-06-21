@@ -24,7 +24,7 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ var Fruit = {
 const a = system.immutableDictionary({[Fruit.apple] : 1, [Fruit.orange] : 3, [Fruit.pear] : 10});
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -80,7 +80,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -105,7 +105,7 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.getKey(a, "z")));
+  system.printLine(_stdlib.asString(_stdlib.getKey(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -134,7 +134,7 @@ const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 async function main() {
   var b = system.emptyImmutableList();
   b = _stdlib.keys(a);
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -160,8 +160,8 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.hasKey(a, "b")));
-  system.print(_stdlib.asString(_stdlib.hasKey(a, "d")));
+  system.printLine(_stdlib.asString(_stdlib.hasKey(a, "b")));
+  system.printLine(_stdlib.asString(_stdlib.hasKey(a, "d")));
 }
 return [main, _tests];}`;
 
@@ -186,7 +186,7 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.print(_stdlib.asString(_stdlib.values(a)));
+  system.printLine(_stdlib.asString(_stdlib.values(a)));
 }
 return [main, _tests];}`;
 
@@ -216,8 +216,8 @@ const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 async function main() {
   var b = _stdlib.withKey(a, "b", 4);
   var c = _stdlib.withKey(b, "d", 2);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(c));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(c));
 }
 return [main, _tests];}`;
 
@@ -248,8 +248,8 @@ const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = _stdlib.withRemoveKey(a, "b");
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -279,7 +279,7 @@ const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
   var b = _stdlib.withRemoveKey(a, "c");
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 
@@ -311,9 +311,9 @@ async function main() {
   var b = _stdlib.withKey(a, "Foo", 1);
   b = _stdlib.withKey(b, "Bar", 3);
   var k = _stdlib.keys(b);
-  system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(_stdlib.getKey(b, "Foo")));
-  system.print(_stdlib.asString(_stdlib.getKey(b, "Bar")));
+  system.printLine(_stdlib.asString(_stdlib.length(k)));
+  system.printLine(_stdlib.asString(_stdlib.getKey(b, "Foo")));
+  system.printLine(_stdlib.asString(_stdlib.getKey(b, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -353,9 +353,9 @@ async function main() {
   var b = _stdlib.withKey(a, Fruit.apple, 1);
   b = _stdlib.withKey(b, Fruit.orange, 3);
   var k = _stdlib.keys(b);
-  system.print(_stdlib.asString(_stdlib.length(k)));
-  system.print(_stdlib.asString(_stdlib.getKey(b, Fruit.apple)));
-  system.print(_stdlib.asString(_stdlib.getKey(b, Fruit.orange)));
+  system.printLine(_stdlib.asString(_stdlib.length(k)));
+  system.printLine(_stdlib.asString(_stdlib.getKey(b, Fruit.apple)));
+  system.printLine(_stdlib.asString(_stdlib.getKey(b, Fruit.orange)));
 }
 return [main, _tests];}`;
 
@@ -387,11 +387,11 @@ async function main() {
   var a = system.emptyImmutableDictionary();
   var b = system.emptyImmutableDictionary();
   b = _stdlib.withKey(a, "a", 1);
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(b));
-  system.print(_stdlib.asString(system.objectEquals(a, b)));
-  system.print(_stdlib.asString(system.objectEquals(a, system.emptyImmutableDictionary())));
-  system.print(_stdlib.asString(system.objectEquals(b, system.emptyImmutableDictionary())));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(system.objectEquals(a, b)));
+  system.printLine(_stdlib.asString(system.objectEquals(a, system.emptyImmutableDictionary())));
+  system.printLine(_stdlib.asString(system.objectEquals(b, system.emptyImmutableDictionary())));
 }
 return [main, _tests];}`;
 

@@ -45,9 +45,9 @@ async function main() {
   var x = system.initialise(new Foo(7, "Apple"));
   var y = system.initialise(new Foo(7, "Orange"));
   var z = system.initialise(new Foo(7, "Orange"));
-  system.print(_stdlib.asString(system.objectEquals(x, x)));
-  system.print(_stdlib.asString(system.objectEquals(x, y)));
-  system.print(_stdlib.asString(system.objectEquals(y, z)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, x)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, y)));
+  system.printLine(_stdlib.asString(system.objectEquals(y, z)));
 }
 
 class Foo {
@@ -107,7 +107,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
-  system.print(_stdlib.asString(system.objectEquals(x, Foo.emptyInstance())));
+  system.printLine(_stdlib.asString(system.objectEquals(x, Foo.emptyInstance())));
 }
 
 class Foo {
@@ -177,9 +177,9 @@ async function main() {
   var y = x;
   await y.setP1(3);
   var z = system.initialise(new Foo(8, "Orange"));
-  system.print(_stdlib.asString(system.objectEquals(x, x)));
-  system.print(_stdlib.asString(system.objectEquals(x, y)));
-  system.print(_stdlib.asString(system.objectEquals(x, z)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, x)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, y)));
+  system.printLine(_stdlib.asString(system.objectEquals(x, z)));
 }
 
 class Foo {
@@ -235,9 +235,9 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = system.initialise(new Foo());
-  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p1)));
-  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p2)));
-  system.print(_stdlib.asString(system.objectEquals(x.p1, x.p3)));
+  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p1)));
+  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p2)));
+  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p3)));
 }
 
 class Foo {

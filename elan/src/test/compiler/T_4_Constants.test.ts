@@ -25,7 +25,7 @@ end main
 const a = 3;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -55,7 +55,7 @@ end main
 const a = 255;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -81,7 +81,7 @@ end main
 const a = 21;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -107,7 +107,7 @@ end main
 const a = 3.1;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -133,7 +133,7 @@ end main
 const a = "hell0";
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -160,8 +160,8 @@ end main
 const a = "";
 
 async function main() {
-  system.print(_stdlib.asString(a));
-  system.print(_stdlib.asString(a === ""));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a === ""));
 }
 return [main, _tests];}`;
 
@@ -187,7 +187,7 @@ end main
 const a = " ";
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -213,7 +213,7 @@ end main
 const a = true;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -246,7 +246,7 @@ var Fruit = {
 const a = Fruit.apple;
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -272,7 +272,7 @@ end main
 const a = system.immutableList([1, 2, 3]);
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -328,7 +328,7 @@ end main
 const a = system.immutableList([system.immutableList([4, 5]), system.immutableList([6, 7, 8])]);
 
 async function main() {
-  system.print(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
 
@@ -442,7 +442,7 @@ const a = 3;
 const b = a;
 
 async function main() {
-  system.print(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 

@@ -132,10 +132,10 @@ end procedure`;
 async function main() {
   try {
     await foo();
-    system.print(_stdlib.asString("not caught"));
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
-      system.print(_stdlib.asString(e));
+      system.printLine(_stdlib.asString(e));
   }
 }
 
@@ -181,10 +181,10 @@ async function main() {
     var x = system.emptyArrayList();
     var y = system.safeIndex(x, 1);
     var z = y.p1;
-    system.print(_stdlib.asString("not caught"));
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
-      system.print(_stdlib.asString(e));
+      system.printLine(_stdlib.asString(e));
   }
 }
 
@@ -230,12 +230,12 @@ end procedure`;
 async function main() {
   try {
     await foo();
-    system.print(_stdlib.asString("not caught"));
+    system.printLine(_stdlib.asString("not caught"));
   } catch (_e) {
       var e = _e.message;
       var s = "";
       s = e;
-      system.print(_stdlib.asString(s));
+      system.printLine(_stdlib.asString(s));
   }
 }
 
