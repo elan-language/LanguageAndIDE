@@ -1,7 +1,6 @@
 import { integer } from "vscode-languageclient";
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
-import { end } from "./test/testHelpers";
 
 type Location = [string, number, number];
 type CharMap = Location[];
@@ -422,6 +421,10 @@ export class StdLib {
   parseAsInt(s: string): [boolean, number] {
     const [b, f] = this.parseAsFloat(s);
     return [b, Math.floor(f)];
+  }
+
+  print(s: string) {
+    this.system.elanInputOutput.print(s);
   }
 
   clearConsole() {

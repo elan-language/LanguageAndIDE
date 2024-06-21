@@ -1,24 +1,24 @@
+import { Parent } from "./frames/interfaces/parent";
+import { Scope } from "./frames/interfaces/scope";
+import { ElanSymbol } from "./frames/interfaces/symbol";
+import { SymbolType } from "./frames/interfaces/symbol-type";
+import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
 import { ArrayListType } from "./frames/symbols/array-list-type";
 import { BooleanType } from "./frames/symbols/boolean-type";
 import { DictionaryType } from "./frames/symbols/dictionary-type";
 import { FloatType } from "./frames/symbols/float-type";
-import { IntType } from "./frames/symbols/int-type";
-import { ImmutableListType } from "./frames/symbols/immutable-list-type";
-import { StringType } from "./frames/symbols/string-type";
-import { ElanSymbol } from "./frames/interfaces/symbol";
-import { SymbolType } from "./frames/interfaces/symbol-type";
-import { Scope } from "./frames/interfaces/scope";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
-import { IterType } from "./frames/symbols/iter-type";
-import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
-import { TupleType } from "./frames/symbols/tuple-type";
-import { ProcedureType } from "./frames/symbols/procedure-type";
-import { Transforms } from "./frames/syntax-nodes/transforms";
-import { SymbolScope } from "./frames/symbols/symbol-scope";
-import { Parent } from "./frames/interfaces/parent";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
-import { AbstractDictionaryType } from "./frames/symbols/abstract-dictionary-type";
+import { ImmutableListType } from "./frames/symbols/immutable-list-type";
+import { IntType } from "./frames/symbols/int-type";
+import { IterType } from "./frames/symbols/iter-type";
+import { ProcedureType } from "./frames/symbols/procedure-type";
+import { StringType } from "./frames/symbols/string-type";
+import { SymbolScope } from "./frames/symbols/symbol-scope";
+import { TupleType } from "./frames/symbols/tuple-type";
+import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
+import { Transforms } from "./frames/syntax-nodes/transforms";
 
 export class StdLibSymbols implements Scope {
   getParent(): Parent {
@@ -871,6 +871,7 @@ export class StdLibSymbols implements Scope {
     ],
     ["refreshDisplay", this.getSymbol("refreshDisplay", new ProcedureType([], false, false))],
     ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
+    ["print", this.getSymbol("print", new ProcedureType([StringType.Instance], false, false))],
     ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
     ["clearKeyBuffer", this.getSymbol("clearKeyBuffer", new ProcedureType([], false, false))],
     [
