@@ -440,4 +440,73 @@ end main`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  test("Pass_PutText", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to initialisedCharMap(0x000000, 0xffffff)
+  set g to g.putText(0, 0, "Hello", 1, 2)
+  call g.drawAsGraphics()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = _stdlib.initialisedCharMap(0, 16777215);
+  g = _stdlib.putText(g, 0, 0, "Hello", 1, 2);
+  _stdlib.drawAsGraphics(g);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(
+      fileImpl,
+      0,
+      '<div style="color:#000001;background-color:#000002;">H',
+    );
+    await assertGraphicsContains(
+      fileImpl,
+      1,
+      '<div style="color:#000001;background-color:#000002;">e',
+    );
+  });
+  test("Pass_PutText overrunning both limits", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to initialisedCharMap(0x000000, 0xffffff)
+  set g to g.putText(39, 29, "Hello", 1, 2)
+  call g.drawAsGraphics()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = _stdlib.initialisedCharMap(0, 16777215);
+  g = _stdlib.putText(g, 39, 29, "Hello", 1, 2);
+  _stdlib.drawAsGraphics(g);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(
+      fileImpl,
+      1199,
+      '<div style="color:#000001;background-color:#000002;">H',
+    );
+    await assertGraphicsContains(
+      fileImpl,
+      0,
+      '<div style="color:#000001;background-color:#000002;">e',
+    );
+  });
 });

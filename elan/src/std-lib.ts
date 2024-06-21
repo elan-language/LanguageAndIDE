@@ -1,4 +1,5 @@
 import { integer } from "vscode-languageclient";
+import { ElanRuntimeError } from "./elan-runtime-error";
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
 
@@ -439,13 +440,15 @@ export class StdLib {
   ySize = 30;
 
   idx(x: number, y: number) {
+    if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
+      throw new ElanRuntimeError(`Out of range index`);
+    }
     return x * this.ySize + y;
   }
 
   initialisedCharMap(foreground: integer, background: integer) {
     const emptyMap: CharMap = [];
     const emptyLocation: Location = ["", foreground, background];
-
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
         emptyMap.push(emptyLocation);
@@ -466,8 +469,31 @@ export class StdLib {
   }
 
   putChar(map: CharMap, x: number, y: number, c: string) {
-    const [, f, b] = this.getAt(map, x, y);
-    return this.putAt(map, x, y, [c, f, b]);
+    if (c.length > 0) {
+      const [, f, b] = this.getAt(map, x, y);
+      return this.putAt(map, x, y, [c[0], f, b]);
+    }
+  }
+
+  putText(
+    map: CharMap,
+    x: number,
+    y: number,
+    text: string,
+    foreground: number,
+    background: number,
+  ) {
+    let cm = map;
+    for (let i = 0; i < text.length; i++) {
+      if (x + i < this.xSize) {
+        cm = this.putAt(cm, x + i, y, [text[i], foreground, background]);
+      } else {
+        const newX = (x + i) % this.xSize;
+        const newY = (y + this.floor((x + i) / this.xSize)) % this.ySize;
+        cm = this.putAt(cm, newX, newY, [text[i], foreground, background]);
+      }
+    }
+    return cm;
   }
 
   getChar(map: CharMap, x: number, y: number) {

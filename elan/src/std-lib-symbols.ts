@@ -774,6 +774,29 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "putText",
+      this.getSymbol(
+        "putChar",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            IntType.Instance,
+            IntType.Instance,
+            StringType.Instance,
+            IntType.Instance,
+            IntType.Instance,
+          ],
+          new ImmutableListType(
+            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+          ),
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
       "getChar",
       this.getSymbol(
         "getChar",

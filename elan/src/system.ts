@@ -122,15 +122,15 @@ export class System {
     return t;
   }
 
-  safeIndex(toIndex: any, index: any) {
-    if (toIndex === undefined) {
+  safeIndex(indexable: any, index: any) {
+    if (indexable === undefined) {
       throw new ElanRuntimeError(`Out of range index`);
     }
 
-    const r = toIndex[index];
+    const r = indexable[index];
 
     if (r === undefined) {
-      this.throwRangeError(toIndex, index);
+      this.throwRangeError(indexable, index);
     }
 
     return r;
