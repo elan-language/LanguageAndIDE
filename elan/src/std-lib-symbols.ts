@@ -472,7 +472,6 @@ export class StdLibSymbols implements Scope {
         new FunctionType([StringType.Instance, StringType.Instance], BooleanType.Instance, false),
       ),
     ],
-    ["newline", this.getSymbol("newline", StringType.Instance)],
     [
       "first",
       this.getSymbol(
@@ -513,7 +512,7 @@ export class StdLibSymbols implements Scope {
         new FunctionType([new GenericParameterType("")], StringType.Instance, false),
       ),
     ],
-    ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
+
     ["random", this.getSymbol("random", new FunctionType([], FloatType.Instance, false, false))],
     [
       "randomInt",
@@ -892,7 +891,6 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["refreshDisplay", this.getSymbol("refreshDisplay", new ProcedureType([], false, false))],
     ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
     ["print", this.getSymbol("print", new ProcedureType([StringType.Instance], false, false))],
     [
