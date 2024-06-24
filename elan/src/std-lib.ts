@@ -450,7 +450,7 @@ export class StdLib {
 
   initialisedCharMap(c: string, foreground: integer, background: integer) {
     const emptyMap: CharMap = [];
-    const emptyLocation: Location = [c, foreground, background];
+    const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
         emptyMap.push(emptyLocation);
@@ -476,7 +476,7 @@ export class StdLib {
     background: integer,
   ): CharMap {
     const cm = this.ensureInitialised(map);
-    cm[this.idx(x, y)] = [char, foreground, background];
+    cm[this.idx(x, y)] = this.system.tuple([char, foreground, background]) as Location;
     return cm;
   }
 

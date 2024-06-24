@@ -71,7 +71,7 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_GetAt", async () => {
+  test("Pass_GetAt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main

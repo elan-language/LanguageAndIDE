@@ -752,9 +752,9 @@ export class StdLibSymbols implements Scope {
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+
+          new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+
           true,
           true,
         ),
