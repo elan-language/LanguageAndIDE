@@ -997,6 +997,20 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
+    [
+      "inputString",
+      this.getSymbol(
+        "inputString",
+        new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
+      ),
+    ],
+    [
+      "inputInt",
+      this.getSymbol(
+        "inputInt",
+        new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
+      ),
+    ],
     ["pi", this.getSymbol("pi", FloatType.Instance)],
     [
       "abs",

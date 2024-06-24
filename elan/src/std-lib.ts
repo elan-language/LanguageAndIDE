@@ -606,6 +606,25 @@ export class StdLib {
     }
   }
 
+  inputString(prompt: string): Promise<string> {
+    this.system.printLine(prompt);
+    return this.system.input();
+  }
+
+  inputInt(prompt: string): Promise<number> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      const [b, i] = this.parseAsInt(s);
+
+      if (b) {
+        return i;
+      } else {
+        this.system.printLine("not an int");
+      }
+
+      return this.inputInt(prompt);
+    });
+  }
   //Math
   pi = Math.PI;
 
