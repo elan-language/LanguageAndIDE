@@ -1010,6 +1010,7 @@ export class StdLibSymbols implements Scope {
         "inputInt",
         new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
       ),
+    ],
     ["pi", this.getSymbol("pi", FloatType.Instance)],
     [
       "abs",
