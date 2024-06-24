@@ -1,42 +1,40 @@
-# 2efd2c4c3d480421646f41acfee589f4afdc62fa1d96d89503546b3f43b01454 Elan v0.1 valid
+# 222bf92fbf96379e8d9484d7538a285baa3e95c2029ae26155d86b28444417ba Elan v0.1 valid
 
 main
+  var board set to new Board(40, 30)
   var currentDirection set to Direction.up
-  var snake set to new Snake(40, 30, currentDirection)
-  call snake.setNewApplePosition()
+  var snake set to new Snake(board, currentDirection)
+  var apple set to new Apple(board)
+  call apple.newRandomPosition(snake)
   var cm set to new Graphics()
-  set cm to cm.fill("", black, white)
   var gameOn set to true
   while gameOn
     set cm to snake.updateGraphics(cm)
+    set cm to apple.updateGraphics(cm)
     call cm.draw()
     call pause(150)
     var k set to getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
-    call snake.clockTick(currentDirection)
+    call snake.clockTick(currentDirection, apple)
     set gameOn to not snake.gameOver()
   end while
   print "Game Over! Score: {snake.length() - 1}"
 end main
 
 class Snake
-  constructor(boardWidth as Int, boardHeight as Int, startingDirection as Direction)
-    set property.boardWidth to boardWidth
-    set property.boardHeight to boardHeight
-    var tail set to new Square(div(boardWidth, 2), div(boardHeight, 2))
+  constructor(board as Board, startingDirection as Direction)
+    set property.board to board
+    var tail set to new Square(div(board.width, 2), div(board.height, 2))
     set body to [tail]
     set head to tail.getAdjacentSquare(startingDirection)
+    set priorTail to tail
   end constructor
+
+  property board as Board
 
   property head as Square
 
   property body as [Square]
-
-  property apple as Square
-
-  property boardHeight as Int
-
-  property boardWidth as Int
 
   property priorTail as Square
 
@@ -45,11 +43,7 @@ class Snake
   end function
 
   function gameOver() return Boolean
-    return hasHitEdge() or bodyCovers(head)
-  end function
-
-  function hasHitEdge() return Boolean
-    return (head.x < 0) or (head.y < 0) or (head.x is boardWidth) or (head.y is boardHeight)
+    return bodyCovers(head) or board.isAtEdge(head)
   end function
 
   function bodyCovers(sq as Square) return Boolean
@@ -65,7 +59,6 @@ class Snake
 
   function updateGraphics(cm as Graphics) return Graphics
     var cm2 set to cm.putBackground(head.x, head.y, green)
-    set cm2 to cm2.putBackground(apple.x, apple.y, red)
     if body[0] is not priorTail
       then
         set cm2 to cm2.putBackground(priorTail.x, priorTail.y, white)
@@ -73,27 +66,58 @@ class Snake
     return cm2
   end function
 
-  procedure clockTick(d as Direction)
+  procedure clockTick(d as Direction, apple as Apple)
     set priorTail to body[0]
     call body.add(head)
     set head to head.getAdjacentSquare(d)
-    if head is apple
+    if head is apple.location
       then
-        call setNewApplePosition()
+        call apple.newRandomPosition(this)
       else
         set body to body[1..]
     end if
   end procedure
 
-  procedure setNewApplePosition()
+end class
+
+class Apple
+  constructor(board as Board)
+    set property.board to board
+  end constructor
+
+  property board as Board
+
+  property location as Square
+
+  procedure newRandomPosition(snake as Snake)
     repeat
-      var w set to boardWidth - 1
-      var h set to boardHeight - 1
+      var w set to board.width - 1
+      var h set to board.height - 1
       var ranW set to randomInt(0, w)
       var ranH set to randomInt(0, h)
-      set apple to new Square(ranW, ranH)
-    end repeat when not bodyCovers(apple)
+      set location to new Square(ranW, ranH)
+    end repeat when not snake.bodyCovers(location)
   end procedure
+
+  function updateGraphics(cm as Graphics) return Graphics
+    return cm.putBackground(location.x, location.y, red)
+  end function
+
+end class
+
+immutable class Board
+  constructor(width as Int, height as Int)
+    set property.width to width
+    set property.height to height
+  end constructor
+
+  property width as Int
+
+  property height as Int
+
+  function isAtEdge(head as Square) return Boolean
+    return (head.x < 0) or (head.y < 0) or (head.x is width) or (head.y is height)
+  end function
 
 end class
 
@@ -125,10 +149,6 @@ immutable class Square
     return new Square(newX, newY)
   end function
 
-  function asString() return String
-    return "x{x}y{y}"
-  end function
-
 end class
 
 enum Direction
@@ -142,14 +162,3 @@ constant green set to 0x00ff00
 constant red set to 0xff0000
 
 constant white set to 0xffffff
-
-constant black set to 0x000000
-
-test square
-  var tail set to new Square(20, 15)
-  var expected set to new Square(20, 15)
-  assert tail is expected
-  var head set to tail.getAdjacentSquare(Direction.right)
-  let exp2 be new Square(21, 15)
-  assert head is exp2
-end test

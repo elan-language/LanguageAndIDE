@@ -1,4 +1,4 @@
-# 379c5bcc22bc1eb5b66c925efe905a4d0c12a6560313b3c61ec2829940c7a5d0 Elan v0.1 valid
+# 6450d967e65a76476f11b19df5f3bdebf7664cd2dd9d9e7956ab853c4d46c075 Elan v0.1 valid
 
 main
   var cm set to new Graphics()
@@ -15,7 +15,7 @@ immutable class Card
     set property.rank to rank
     set property.suit to suit
     set symbol to unicode(symbols.getKey(suit))
-    set colour to colours.getKey(suit)
+    set colour to colourForSuit.getKey(suit)
     set label to labels.getKey(rank)
   end constructor
 
@@ -60,6 +60,10 @@ function clubs() return String
   return unicode(0x2663)
 end function
 
+enum Suit
+  clubs, diamonds, hearts, spades
+end enum
+
 enum Rank
   ace, one, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
 end enum
@@ -72,11 +76,7 @@ constant green set to 0x008000
 
 constant red set to 0xff0000
 
-enum Suit
-  clubs, diamonds, hearts, spades
-end enum
-
-constant colours set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
+constant colourForSuit set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
 
 constant symbols set to {Suit.clubs:0x2663, Suit.diamonds:0x2666, Suit.hearts:0x2665, Suit.spades:0x2660}
 
