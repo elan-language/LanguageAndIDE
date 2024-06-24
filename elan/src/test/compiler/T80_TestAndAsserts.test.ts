@@ -1,5 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
+import { TestStatus } from "../../frames/status-enums";
+import { AssertOutcome } from "../../system";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
@@ -10,8 +12,6 @@ import {
   testHash,
   transforms,
 } from "./compiler-test-helpers";
-import { AssertOutcome } from "../../system";
-import { TestStatus } from "../../frames/status-enums";
 
 suite("Pass_PassingTest", () => {
   test("Pass_PassingTest", async () => {
@@ -390,34 +390,34 @@ return [main, _tests];}`;
     ]);
   });
 
-  test("Pass_TestUseOfToPrecisionForFloats", async () => {
+  test("Pass_TestUseOfRoundForFloats", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
 end main
 
-test toPrecision1
+test round1
   var a set to 1/3
-  var b set to a.toPrecision(2)
-  assert b is "0.33"
+  var b set to round(a, 4)
+  assert b is 0.3333
 end test
 
-test toPrecision2
+test round2
   var a set to 0.9999
-  var b set to a.toPrecision(3)
-  assert b is "1.00"
+  var b set to round(a, 2)
+  assert b is 1
 end test
 
-test toPrecision3
+test round3
   var a set to 1.25
-  var b set to a.toPrecision(2)
-  assert b is "1.3"
+  var b set to round(a, 1)
+  assert b is 1.3
 end test
 
-test toPrecision4
-  var a set to 4444
-  var b set to a.toPrecision(2)
-  assert b is "4.4e+3"
+test round4
+  var a set to 44.444
+  var b set to round(a, 2)
+  assert b is 44.44
 end test
 
 `;
@@ -429,26 +429,26 @@ async function main() {
 
 _tests.push(["test3", async (_outcomes) => {
   var a = 1 / 3;
-  var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "0.33", "assert12", _stdlib));
+  var b = _stdlib.round(a, 4);
+  _outcomes.push(system.assert(b, 0.3333, "assert12", _stdlib));
 }]);
 
 _tests.push(["test15", async (_outcomes) => {
   var a = 0.9999;
-  var b = _stdlib.toPrecision(a, 3);
-  _outcomes.push(system.assert(b, "1.00", "assert24", _stdlib));
+  var b = _stdlib.round(a, 2);
+  _outcomes.push(system.assert(b, 1, "assert24", _stdlib));
 }]);
 
 _tests.push(["test27", async (_outcomes) => {
   var a = 1.25;
-  var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "1.3", "assert36", _stdlib));
+  var b = _stdlib.round(a, 1);
+  _outcomes.push(system.assert(b, 1.3, "assert36", _stdlib));
 }]);
 
 _tests.push(["test39", async (_outcomes) => {
-  var a = 4444;
-  var b = _stdlib.toPrecision(a, 2);
-  _outcomes.push(system.assert(b, "4.4e+3", "assert48", _stdlib));
+  var a = 44.444;
+  var b = _stdlib.round(a, 2);
+  _outcomes.push(system.assert(b, 44.44, "assert48", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -459,10 +459,10 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test3", [new AssertOutcome(TestStatus.pass, "0.33", "0.33", "assert12")]],
-      ["test15", [new AssertOutcome(TestStatus.pass, "1.00", "1.00", "assert24")]],
+      ["test3", [new AssertOutcome(TestStatus.pass, "0.3333", "0.3333", "assert12")]],
+      ["test15", [new AssertOutcome(TestStatus.pass, "1", "1", "assert24")]],
       ["test27", [new AssertOutcome(TestStatus.pass, "1.3", "1.3", "assert36")]],
-      ["test39", [new AssertOutcome(TestStatus.pass, "4.4e+3", "4.4e+3", "assert48")]],
+      ["test39", [new AssertOutcome(TestStatus.pass, "44.44", "44.44", "assert48")]],
     ]);
   });
 

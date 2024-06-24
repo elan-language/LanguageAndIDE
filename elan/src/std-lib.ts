@@ -314,9 +314,6 @@ export class StdLib {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }
-  toPrecision(n: number, digits: number) {
-    return n.toPrecision(digits);
-  }
 
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;

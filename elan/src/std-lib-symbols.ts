@@ -509,13 +509,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "toPrecision",
-      this.getSymbol(
-        "toPrecision",
-        new FunctionType([FloatType.Instance, IntType.Instance], StringType.Instance, true, true),
-      ),
-    ],
-    [
       "filter",
       this.getSymbol(
         "filter",
