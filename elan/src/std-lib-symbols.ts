@@ -900,7 +900,6 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["clearGraphics", this.getSymbol("clearGraphics", new ProcedureType([], false, false))],
     ["print", this.getSymbol("print", new ProcedureType([StringType.Instance], false, false))],
     [
       "printTab",
@@ -910,19 +909,64 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["clearConsole", this.getSymbol("clearConsole", new ProcedureType([], false, false))],
-    ["clearKeyBuffer", this.getSymbol("clearKeyBuffer", new ProcedureType([], false, false))],
+    [
+      "clearGraphics",
+      this.getSymbol(
+        "clearGraphics",
+        new ProcedureType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "clearKeyBuffer",
+      this.getSymbol(
+        "clearKeyBuffer",
+        new ProcedureType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
     [
       "getKeystroke",
-      this.getSymbol("getKeystroke", new FunctionType([], StringType.Instance, false, false)),
+      this.getSymbol(
+        "getKeystroke",
+        new FunctionType(
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+          ],
+          StringType.Instance,
+          true,
+          false,
+        ),
+      ),
     ],
     [
       "getKeystrokeWithModifier",
       this.getSymbol(
         "getKeystrokeWithModifier",
         new FunctionType(
-          [],
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+          ],
           new TupleType([StringType.Instance, StringType.Instance]),
-          false,
+          true,
           false,
         ),
       ),

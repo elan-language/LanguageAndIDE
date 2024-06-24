@@ -1,4 +1,4 @@
-# 222bf92fbf96379e8d9484d7538a285baa3e95c2029ae26155d86b28444417ba Elan v0.1 valid
+# 586892cb4f16f5fff645ffd9745bff04e288d56c6a48842e916d212bce13ae66 Elan v0.1 valid
 
 main
   var board set to new Board(40, 30)
@@ -6,14 +6,14 @@ main
   var snake set to new Snake(board, currentDirection)
   var apple set to new Apple(board)
   call apple.newRandomPosition(snake)
-  var cm set to new Graphics()
+  var gr set to new Graphics()
   var gameOn set to true
   while gameOn
-    set cm to snake.updateGraphics(cm)
-    set cm to apple.updateGraphics(cm)
-    call cm.draw()
+    set gr to snake.updateGraphics(gr)
+    set gr to apple.updateGraphics(gr)
+    call gr.draw()
     call pause(150)
-    var k set to getKeystroke()
+    var k set to gr.getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
     call snake.clockTick(currentDirection, apple)
     set gameOn to not snake.gameOver()
@@ -57,13 +57,13 @@ class Snake
     return result
   end function
 
-  function updateGraphics(cm as Graphics) return Graphics
-    var cm2 set to cm.putBackground(head.x, head.y, green)
+  function updateGraphics(gr as Graphics) return Graphics
+    var gr2 set to gr.putBackground(head.x, head.y, green)
     if body[0] is not priorTail
       then
-        set cm2 to cm2.putBackground(priorTail.x, priorTail.y, white)
+        set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
     end if
-    return cm2
+    return gr2
   end function
 
   procedure clockTick(d as Direction, apple as Apple)
@@ -99,8 +99,8 @@ class Apple
     end repeat when not snake.bodyCovers(location)
   end procedure
 
-  function updateGraphics(cm as Graphics) return Graphics
-    return cm.putBackground(location.x, location.y, red)
+  function updateGraphics(gr as Graphics) return Graphics
+    return gr.putBackground(location.x, location.y, red)
   end function
 
 end class

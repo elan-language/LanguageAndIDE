@@ -268,16 +268,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new Graphics()
-  call g.draw()
-  call clearGraphics()
+  var gr set to new Graphics()
+  call gr.draw()
+  call gr.clearGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.immutableList(new Array()));
-  _stdlib.draw(g);
-  _stdlib.clearGraphics();
+  var gr = system.initialise(system.immutableList(new Array()));
+  _stdlib.draw(gr);
+  _stdlib.clearGraphics(gr);
 }
 return [main, _tests];}`;
 
@@ -294,13 +294,15 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeystroke()
+  var gr set to new Graphics()
+  var a set to gr.getKeystroke()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeystroke();
+  var gr = system.initialise(system.immutableList(new Array()));
+  var a = _stdlib.getKeystroke(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -318,13 +320,15 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeystrokeWithModifier()
+  var gr set to new Graphics()
+  var a set to gr.getKeystrokeWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeystrokeWithModifier();
+  var gr = system.initialise(system.immutableList(new Array()));
+  var a = _stdlib.getKeystrokeWithModifier(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -342,12 +346,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call clearKeyBuffer()
+  var gr set to new Graphics()
+  call gr.clearKeyBuffer()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  _stdlib.clearKeyBuffer();
+  var gr = system.initialise(system.immutableList(new Array()));
+  _stdlib.clearKeyBuffer(gr);
 }
 return [main, _tests];}`;
 

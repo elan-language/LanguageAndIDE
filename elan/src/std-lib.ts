@@ -543,7 +543,7 @@ export class StdLib {
     return this.initialisedGraphics(c, f, b);
   }
 
-  clearGraphics() {
+  clearGraphics(map: Graphics) {
     this.system.elanInputOutput.clearGraphics();
   }
 
@@ -566,15 +566,15 @@ export class StdLib {
     return `#${h6}`;
   }
 
-  getKeystroke(): string {
+  getKeystroke(map: Graphics): string {
     return this.system.elanInputOutput.getKeystroke();
   }
 
-  getKeystrokeWithModifier() {
+  getKeystrokeWithModifier(map: Graphics) {
     return this.system.tuple(this.system.elanInputOutput.getKeystrokeWithModifier());
   }
 
-  clearKeyBuffer() {
+  clearKeyBuffer(map: Graphics) {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
