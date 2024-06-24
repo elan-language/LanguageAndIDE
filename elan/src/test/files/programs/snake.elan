@@ -1,14 +1,15 @@
-# d7df72557344adb72d6497a65b714d6d10251c340336b52d48d33598a0496acb Elan v0.1 valid
+# 283c6d1310f294f899a75a3ad0e25fb45d8c7edafc8a6cda4c663839c2022e66 Elan v0.1 valid
 
 main
   var currentDirection set to Direction.up
   var snake set to new Snake(40, 30, currentDirection)
   call snake.setNewApplePosition()
-  var cm set to initialisedCharMap(black, white)
+  var cm set to new CharMap()
+  set cm to cm.fill("", black, white)
   var gameOn set to true
   while gameOn
     set cm to snake.updateCharMap(cm)
-    call cm.drawAsGraphics()
+    call cm.draw()
     call pause(150)
     var k set to getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)

@@ -7,7 +7,7 @@ main
   var grid set to exampleCells
   for i from 1 to 100 step 1
     set cm to updateCharMap(grid, cm)
-    call cm.drawAsGraphics()
+    call cm.draw()
     set grid to nextGeneration(grid)
     call pause(50)
   end for
@@ -31,7 +31,8 @@ end function
 
 
 function convertGridToCharMap(grid as {Boolean}) return CharMap
-  var cm set to initialisedCharMap(black, white)
+  var cm set to new CharMap()
+  set cm to cm.fill(black, white, "")
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
       var isAlive set to grid.get(y*40 + x)

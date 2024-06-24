@@ -697,15 +697,22 @@ export class StdLibSymbols implements Scope {
     ],
     // char map
     [
-      "initialisedCharMap",
+      "fill",
       this.getSymbol(
-        "initialisedCharMap",
+        "fill",
         new FunctionType(
-          [IntType.Instance, IntType.Instance],
+          [
+            new ImmutableListType(
+              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            ),
+            StringType.Instance,
+            IntType.Instance,
+            IntType.Instance,
+          ],
           new ImmutableListType(
             new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
           ),
-          false,
+          true,
           true,
         ),
       ),
@@ -721,7 +728,9 @@ export class StdLibSymbols implements Scope {
             ),
             IntType.Instance,
             IntType.Instance,
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
+            StringType.Instance,
+            IntType.Instance,
+            IntType.Instance,
           ],
           new ImmutableListType(
             new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
@@ -919,9 +928,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "drawAsGraphics",
+      "draw",
       this.getSymbol(
-        "drawAsGraphics",
+        "draw",
         new ProcedureType(
           [
             new ImmutableListType(

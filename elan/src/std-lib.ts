@@ -439,6 +439,8 @@ export class StdLib {
   xSize = 40;
   ySize = 30;
 
+  charMapLength = this.xSize * this.ySize;
+
   idx(x: number, y: number) {
     if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
       throw new ElanRuntimeError(`Out of range index`);
@@ -446,33 +448,47 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
-  initialisedCharMap(foreground: integer, background: integer) {
+  initialisedCharMap(c: string, foreground: integer, background: integer) {
     const emptyMap: CharMap = [];
-    const emptyLocation: Location = ["", foreground, background];
+    const emptyLocation: Location = [c, foreground, background];
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
         emptyMap.push(emptyLocation);
       }
     }
-
     return emptyMap;
   }
 
-  putAt(map: CharMap, x: number, y: number, l: Location): CharMap {
-    const newMap = this.system.immutableList([...map]);
-    newMap[this.idx(x, y)] = l;
-    return newMap;
+  ensureInitialised(cm: CharMap): CharMap {
+    if (cm.length === this.charMapLength) {
+      return cm;
+    } else {
+      return this.initialisedCharMap("", 0, 0xffffff);
+    }
+  }
+
+  putAt(
+    map: CharMap,
+    x: number,
+    y: number,
+    char: string,
+    foreground: integer,
+    background: integer,
+  ): CharMap {
+    const cm = this.ensureInitialised(map);
+    cm[this.idx(x, y)] = [char, foreground, background];
+    return cm;
   }
 
   getAt(map: CharMap, x: number, y: number) {
-    return this.system.safeIndex(map, this.idx(x, y));
+    const cm = this.ensureInitialised(map);
+    return this.system.safeIndex(cm, this.idx(x, y));
   }
 
   putChar(map: CharMap, x: number, y: number, c: string) {
-    if (c.length > 0) {
-      const [, f, b] = this.getAt(map, x, y);
-      return this.putAt(map, x, y, [c[0], f, b]);
-    }
+    const cm = this.ensureInitialised(map);
+    const [, f, b] = this.getAt(cm, x, y);
+    return this.putAt(cm, x, y, c[0], f, b);
   }
 
   putText(
@@ -483,51 +499,61 @@ export class StdLib {
     foreground: number,
     background: number,
   ) {
-    let cm = map;
+    let cm = this.ensureInitialised(map);
     for (let i = 0; i < text.length; i++) {
       if (x + i < this.xSize) {
-        cm = this.putAt(cm, x + i, y, [text[i], foreground, background]);
+        cm = this.putAt(cm, x + i, y, text[i], foreground, background);
       } else {
         const newX = (x + i) % this.xSize;
         const newY = (y + this.floor((x + i) / this.xSize)) % this.ySize;
-        cm = this.putAt(cm, newX, newY, [text[i], foreground, background]);
+        cm = this.putAt(cm, newX, newY, text[i], foreground, background);
       }
     }
     return cm;
   }
 
   getChar(map: CharMap, x: number, y: number) {
-    return this.system.safeIndex(this.getAt(map, x, y), 0);
+    const cm = this.ensureInitialised(map);
+    return this.system.safeIndex(this.getAt(cm, x, y), 0);
   }
 
   putForeground(map: CharMap, x: number, y: number, f: number) {
+    const cm = this.ensureInitialised(map);
     const [c, , b] = this.getAt(map, x, y);
-    return this.putAt(map, x, y, [c, f, b]);
+    return this.putAt(cm, x, y, c, f, b);
   }
 
   getForeground(map: CharMap, x: number, y: number) {
-    return this.system.safeIndex(this.getAt(map, x, y), 1);
+    const cm = this.ensureInitialised(map);
+    return this.system.safeIndex(this.getAt(cm, x, y), 1);
   }
 
   putBackground(map: CharMap, x: number, y: number, b: number) {
-    const [c, f] = this.getAt(map, x, y);
-    return this.putAt(map, x, y, [c, f, b]);
+    const cm = this.ensureInitialised(map);
+    const [c, f] = this.getAt(cm, x, y);
+    return this.putAt(cm, x, y, c, f, b);
   }
 
   getBackground(map: CharMap, x: number, y: number) {
-    return this.system.safeIndex(this.getAt(map, x, y), 2);
+    const cm = this.ensureInitialised(map);
+    return this.system.safeIndex(this.getAt(cm, x, y), 2);
+  }
+
+  fill(map: CharMap, c: string, f: number, b: number): CharMap {
+    return this.initialisedCharMap(c, f, b);
   }
 
   clearGraphics() {
     this.system.elanInputOutput.clearGraphics();
   }
 
-  drawAsGraphics(map: CharMap) {
+  draw(map: CharMap) {
+    const cm = this.ensureInitialised(map);
     let rendered = "";
 
     for (let y = 0; y < this.ySize; y++) {
       for (let x = 0; x < this.xSize; x++) {
-        const [c, f, b] = this.getAt(map, x, y);
+        const [c, f, b] = this.getAt(cm, x, y);
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }

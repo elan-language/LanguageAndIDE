@@ -6,12 +6,12 @@ main
   var snake set to new Snake(board, currentDirection)
   var apple set to new Apple(board)
   call apple.newRandomPosition(snake)
-  var cm set to initialisedCharMap(white, white)
+  var cm set to new CharMap()
   var gameOn set to true
   while gameOn
     set cm to snake.updateCharMap(cm)
     set cm to apple.updateCharMap(cm)
-    call cm.drawAsGraphics()
+    call cm.draw()
     call pause(150)
     var k set to getKeystroke()
     set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)

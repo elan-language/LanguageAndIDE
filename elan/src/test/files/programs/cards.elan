@@ -1,12 +1,13 @@
-# c4f94c5a93ee43592a4bc2ccf6e8c27a643cfb28b2698607c318176506bfe714 Elan v0.1 valid
+# 619ae57c30f4df237120868899e2d96f5dad0342e034119321491a18613e218d Elan v0.1 valid
 
 main
-  var cm set to initialisedCharMap(black, green)
+  var cm set to new CharMap()
+  set cm to cm.fill("", black, green)
   var cAH set to new Card(Rank.ace, Suit.hearts)
   var c2S set to new Card(Rank.two, Suit.spades)
   set cm to cAH.addTo(cm, 1, 1)
   set cm to c2S.addTo(cm, 8, 1)
-  call cm.drawAsGraphics()
+  call cm.draw()
 end main
 
 immutable class Card
