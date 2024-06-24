@@ -893,6 +893,61 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  test("Pass_PropertyOfArrayType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var g set to new Game()
+  call g.something()
+end main
+
+class Game
+  constructor()
+    set p1 to [1,2,3]
+  end constructor
+
+  property p1 as [Int]
+
+  procedure something()
+    var a set to 1
+    set a to p1[0]
+    print a
+  end procedure
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var g = system.initialise(new Game());
+  await g.something();
+}
+
+class Game {
+  static emptyInstance() { return system.emptyClass(Game, [["p1", system.emptyArrayList()]]);};
+  constructor() {
+    this.p1 = system.literalArray([1, 2, 3]);
+  }
+
+  p1 = system.emptyArrayList();
+
+  async something() {
+    var a = 1;
+    a = system.safeIndex(this.p1, 0);
+    system.printLine(_stdlib.asString(a));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   // pending with implementation
   ignore_test("Pass_defaultCannotBeReplacedUsingWith", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
