@@ -37,4 +37,21 @@ export class AssignableField extends AbstractField {
 
     return [];
   }
+
+  public textAsHtml(): string {
+    let popup = "";
+    if (this.selected) {
+      const autocomplete = this.autocomplete(this.getHolder());
+      const select: string[] = [];
+
+      for (const l of autocomplete) {
+        select.push(`<div class="autocomplete-item">${l}</div>`);
+      }
+
+      if (select.length > 0) {
+        popup = `<div class="autocomplete-popup">${select.join("")}</div>`;
+      }
+    }
+    return super.textAsHtml() + popup;
+  }
 }

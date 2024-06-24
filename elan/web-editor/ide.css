@@ -182,3 +182,18 @@ button#expand-collapse {
   grid-row: 1;
   grid-column: 23;
 }
+
+.autocomplete-popup {
+  visibility: visible;
+  width: fit-content;
+  background-color:aqua;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  height: fit-content;
+  margin-top: 1%;
+  display: inline-block;
+}
