@@ -3,17 +3,17 @@
 main
   var grid set to empty [Boolean]
   call fillRandom(grid)
-  var cm set to convertGridToCharMap(exampleCells)
+  var cm set to convertGridToGraphics(exampleCells)
   var grid set to exampleCells
   for i from 1 to 100 step 1
-    set cm to updateCharMap(grid, cm)
+    set cm to updateGraphics(grid, cm)
     call cm.draw()
     set grid to nextGeneration(grid)
     call pause(50)
   end for
 end main
 
-function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
+function updateGraphics(grid as {Boolean}, cm as Graphics) return Graphics
   var cm2 set to cm
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
@@ -30,8 +30,8 @@ function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
 end function
 
 
-function convertGridToCharMap(grid as {Boolean}) return CharMap
-  var cm set to new CharMap()
+function convertGridToGraphics(grid as {Boolean}) return Graphics
+  var cm set to new Graphics()
   set cm to cm.fill(black, white, "")
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1

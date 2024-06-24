@@ -6,11 +6,11 @@ main
   var snake set to new Snake(board, currentDirection)
   var apple set to new Apple(board)
   call apple.newRandomPosition(snake)
-  var cm set to new CharMap()
+  var cm set to new Graphics()
   var gameOn set to true
   while gameOn
-    set cm to snake.updateCharMap(cm)
-    set cm to apple.updateCharMap(cm)
+    set cm to snake.updateGraphics(cm)
+    set cm to apple.updateGraphics(cm)
     call cm.draw()
     call pause(150)
     var k set to getKeystroke()
@@ -57,7 +57,7 @@ class Snake
     return result
   end function
 
-  function updateCharMap(cm as CharMap) return CharMap
+  function updateGraphics(cm as Graphics) return Graphics
     var cm2 set to cm.putBackground(head.x, head.y, green)
     if body[0] is not priorTail
       then
@@ -99,7 +99,7 @@ class Apple
     end repeat when not snake.bodyCovers(location)
   end procedure
 
-  function updateCharMap(cm as CharMap) return CharMap
+  function updateGraphics(cm as Graphics) return Graphics
     return cm.putBackground(location.x, location.y, red)
   end function
 

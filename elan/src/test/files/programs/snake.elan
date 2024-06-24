@@ -1,14 +1,14 @@
-# 283c6d1310f294f899a75a3ad0e25fb45d8c7edafc8a6cda4c663839c2022e66 Elan v0.1 valid
+# 2efd2c4c3d480421646f41acfee589f4afdc62fa1d96d89503546b3f43b01454 Elan v0.1 valid
 
 main
   var currentDirection set to Direction.up
   var snake set to new Snake(40, 30, currentDirection)
   call snake.setNewApplePosition()
-  var cm set to new CharMap()
+  var cm set to new Graphics()
   set cm to cm.fill("", black, white)
   var gameOn set to true
   while gameOn
-    set cm to snake.updateCharMap(cm)
+    set cm to snake.updateGraphics(cm)
     call cm.draw()
     call pause(150)
     var k set to getKeystroke()
@@ -63,7 +63,7 @@ class Snake
     return result
   end function
 
-  function updateCharMap(cm as CharMap) return CharMap
+  function updateGraphics(cm as Graphics) return Graphics
     var cm2 set to cm.putBackground(head.x, head.y, green)
     set cm2 to cm2.putBackground(apple.x, apple.y, red)
     if body[0] is not priorTail

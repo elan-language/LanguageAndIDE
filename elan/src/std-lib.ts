@@ -4,7 +4,7 @@ import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
 
 type Location = [string, number, number];
-type CharMap = Location[];
+type Graphics = Location[];
 
 export class StdLib {
   constructor(private readonly system: System) {}
@@ -434,12 +434,12 @@ export class StdLib {
   clearConsole() {
     this.system.elanInputOutput.clearConsole();
   }
-  // charmapped display
+  // Graphicsped display
 
   xSize = 40;
   ySize = 30;
 
-  charMapLength = this.xSize * this.ySize;
+  GraphicsLength = this.xSize * this.ySize;
 
   idx(x: number, y: number) {
     if (x < 0 || x >= this.xSize || y < 0 || y >= this.ySize) {
@@ -448,8 +448,8 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
-  initialisedCharMap(c: string, foreground: integer, background: integer) {
-    const emptyMap: CharMap = [];
+  initialisedGraphics(c: string, foreground: integer, background: integer) {
+    const emptyMap: Graphics = [];
     const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
       for (let y = 0; y < this.ySize; y++) {
@@ -459,40 +459,40 @@ export class StdLib {
     return emptyMap;
   }
 
-  ensureInitialised(cm: CharMap): CharMap {
-    if (cm.length === this.charMapLength) {
+  ensureInitialised(cm: Graphics): Graphics {
+    if (cm.length === this.GraphicsLength) {
       return cm;
     } else {
-      return this.initialisedCharMap("", 0, 0xffffff);
+      return this.initialisedGraphics("", 0, 0xffffff);
     }
   }
 
   putAt(
-    map: CharMap,
+    map: Graphics,
     x: number,
     y: number,
     char: string,
     foreground: integer,
     background: integer,
-  ): CharMap {
+  ): Graphics {
     const cm = this.ensureInitialised(map);
     cm[this.idx(x, y)] = this.system.tuple([char, foreground, background]) as Location;
     return cm;
   }
 
-  getAt(map: CharMap, x: number, y: number) {
+  getAt(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
-  putChar(map: CharMap, x: number, y: number, c: string) {
+  putChar(map: Graphics, x: number, y: number, c: string) {
     const cm = this.ensureInitialised(map);
     const [, f, b] = this.getAt(cm, x, y);
     return this.putAt(cm, x, y, c[0], f, b);
   }
 
   putText(
-    map: CharMap,
+    map: Graphics,
     x: number,
     y: number,
     text: string,
@@ -512,42 +512,42 @@ export class StdLib {
     return cm;
   }
 
-  getChar(map: CharMap, x: number, y: number) {
+  getChar(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getAt(cm, x, y), 0);
   }
 
-  putForeground(map: CharMap, x: number, y: number, f: number) {
+  putForeground(map: Graphics, x: number, y: number, f: number) {
     const cm = this.ensureInitialised(map);
     const [c, , b] = this.getAt(map, x, y);
     return this.putAt(cm, x, y, c, f, b);
   }
 
-  getForeground(map: CharMap, x: number, y: number) {
+  getForeground(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getAt(cm, x, y), 1);
   }
 
-  putBackground(map: CharMap, x: number, y: number, b: number) {
+  putBackground(map: Graphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
     const [c, f] = this.getAt(cm, x, y);
     return this.putAt(cm, x, y, c, f, b);
   }
 
-  getBackground(map: CharMap, x: number, y: number) {
+  getBackground(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(this.getAt(cm, x, y), 2);
   }
 
-  fill(map: CharMap, c: string, f: number, b: number): CharMap {
-    return this.initialisedCharMap(c, f, b);
+  fill(map: Graphics, c: string, f: number, b: number): Graphics {
+    return this.initialisedGraphics(c, f, b);
   }
 
   clearGraphics() {
     this.system.elanInputOutput.clearGraphics();
   }
 
-  draw(map: CharMap) {
+  draw(map: Graphics) {
     const cm = this.ensureInitialised(map);
     let rendered = "";
 

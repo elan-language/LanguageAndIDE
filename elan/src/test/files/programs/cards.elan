@@ -1,7 +1,7 @@
-# 619ae57c30f4df237120868899e2d96f5dad0342e034119321491a18613e218d Elan v0.1 valid
+# 379c5bcc22bc1eb5b66c925efe905a4d0c12a6560313b3c61ec2829940c7a5d0 Elan v0.1 valid
 
 main
-  var cm set to new CharMap()
+  var cm set to new Graphics()
   set cm to cm.fill("", black, green)
   var cAH set to new Card(Rank.ace, Suit.hearts)
   var c2S set to new Card(Rank.two, Suit.spades)
@@ -29,7 +29,7 @@ immutable class Card
 
   property colour as Int
 
-  function addTo(cm as CharMap, x as Int, y as Int) return CharMap
+  function addTo(cm as Graphics, x as Int, y as Int) return Graphics
     var cm2 set to cm
     for row from y to y + 8 step 1
       for col from x to x + 5 step 1

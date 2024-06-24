@@ -943,9 +943,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "CharMap",
+      "Graphics",
       this.getSymbol(
-        "CharMap",
+        "Graphics",
         new ImmutableListType(
           new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
         ),
