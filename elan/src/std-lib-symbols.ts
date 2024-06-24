@@ -419,19 +419,6 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    ["pi", this.getSymbol("pi", FloatType.Instance)],
-    [
-      "sin",
-      this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "cos",
-      this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
-    [
-      "sqrt",
-      this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
-    ],
     [
       "substring",
       this.getSymbol(
@@ -994,6 +981,55 @@ export class StdLibSymbols implements Scope {
           new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
         ),
       ),
+    ],
+    ["pi", this.getSymbol("pi", FloatType.Instance)],
+    [
+      "abs",
+      this.getSymbol("abs", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "acos",
+      this.getSymbol("acos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "asin",
+      this.getSymbol("asin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "atan",
+      this.getSymbol("atan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "cos",
+      this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "exp",
+      this.getSymbol("exp", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "logE",
+      this.getSymbol("logE", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "log10",
+      this.getSymbol("log10", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "log2",
+      this.getSymbol("log2", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "sin",
+      this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "sqrt",
+      this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "tan",
+      this.getSymbol("tan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
   ]);
 

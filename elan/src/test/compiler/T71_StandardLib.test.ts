@@ -1,10 +1,13 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
+import { TestStatus } from "../../frames/status-enums";
+import { AssertOutcome } from "../../system";
 import {
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  assertTestObjectCodeExecutes,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -278,5 +281,74 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Hello     World");
+  });
+
+  test("Pass_maths_tests", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+test 
+  assert pi is 3.141592653589793
+  assert abs(-3.7) is 3.7
+  assert round(acos(0.5), 3) is 1.047
+  assert round(asin(0.5), 3) is 0.524
+  assert round(atan(1), 2) is 0.79
+  assert round(cos(pi/4), 3) is 0.707
+  assert round(exp(2), 3) is 7.389
+  assert round(logE(7.398), 2) is 2
+  assert log10(1000) is 3
+  assert log2(65536) is 16
+  assert round(sin(pi/6), 2) is 0.5
+  assert round(sqrt(2), 3) is 1.414
+  assert round(tan(pi/4), 2) is 1
+end test`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+_tests.push(["test1", async (_outcomes) => {
+  _outcomes.push(system.assert(_stdlib.pi, 3.141592653589793, "assert4", _stdlib));
+  _outcomes.push(system.assert(_stdlib.abs(-3.7), 3.7, "assert7", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.acos(0.5), 3), 1.047, "assert10", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.asin(0.5), 3), 0.524, "assert13", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.atan(1), 2), 0.79, "assert16", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), 0.707, "assert19", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.exp(2), 3), 7.389, "assert22", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.logE(7.398), 2), 2, "assert25", _stdlib));
+  _outcomes.push(system.assert(_stdlib.log10(1000), 3, "assert28", _stdlib));
+  _outcomes.push(system.assert(_stdlib.log2(65536), 16, "assert31", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), 0.5, "assert34", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.sqrt(2), 3), 1.414, "assert37", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), 1, "assert40", _stdlib));
+}]);
+
+async function main() {
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "test1",
+        [
+          new AssertOutcome(TestStatus.pass, "3.141592653589793", "3.141592653589793", "assert4"),
+          new AssertOutcome(TestStatus.pass, "3.7", "3.7", "assert7"),
+          new AssertOutcome(TestStatus.pass, "1.047", "1.047", "assert10"),
+          new AssertOutcome(TestStatus.pass, "0.524", "0.524", "assert13"),
+          new AssertOutcome(TestStatus.pass, "0.79", "0.79", "assert16"),
+          new AssertOutcome(TestStatus.pass, "0.707", "0.707", "assert19"),
+          new AssertOutcome(TestStatus.pass, "7.389", "7.389", "assert22"),
+          new AssertOutcome(TestStatus.pass, "2", "2", "assert25"),
+          new AssertOutcome(TestStatus.pass, "3", "3", "assert28"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "assert31"),
+          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert34"),
+          new AssertOutcome(TestStatus.pass, "1.414", "1.414", "assert37"),
+          new AssertOutcome(TestStatus.pass, "1", "1", "assert40"),
+        ],
+      ],
+    ]);
   });
 });

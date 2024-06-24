@@ -314,14 +314,6 @@ export class StdLib {
     return n.toPrecision(digits);
   }
 
-  pi = Math.PI;
-
-  sin = Math.sin;
-
-  cos = Math.cos;
-
-  sqrt = Math.sqrt;
-
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;
     const items = Object.getOwnPropertyNames(o);
@@ -589,4 +581,43 @@ export class StdLib {
       toInit[i] = subArr;
     }
   }
+
+  //Math
+  pi = Math.PI;
+
+  abs = Math.abs;
+  // Returns the absolute value of the input.
+
+  acos = Math.acos;
+  // Returns the arccosine of the input.
+
+  asin = Math.asin;
+  // Returns the arcsine of the input.
+
+  atan = Math.atan;
+  // Returns the arctangent of the input.
+
+  cos = Math.cos;
+  // Returns the cosine of the input.
+
+  exp = Math.exp;
+  // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
+
+  logE = Math.log;
+  // Returns the natural logarithm (㏒e; also, ㏑) of the input.
+
+  log10 = Math.log10;
+  // Returns the base-10 logarithm of the input.
+
+  log2 = Math.log2;
+  // Returns the base-2 logarithm of the input.
+
+  sin = Math.sin;
+  // Returns the sine of the input.
+
+  sqrt = Math.sqrt;
+  // Returns the positive square root of the input.
+
+  tan = Math.tan;
+  // Returns the tangent of the input.
 }
