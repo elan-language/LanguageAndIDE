@@ -57,6 +57,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const fst = funcSymbol.symbolType(transforms());
     let qualifier = updatedQualifier;
+    let isAsync: boolean = false;
 
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
     mustBePureFunctionSymbol(fst, this.scope, this.compileErrors, this.fieldId);
@@ -84,11 +85,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
         this.compileErrors,
         this.fieldId,
       );
+
+      isAsync = fst.isAsync;
     }
 
+    const a = isAsync ? "await " : "";
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q = qualifier ? `${qualifier.compile()}` : scopePrefix(funcSymbol?.symbolScope);
-    return q ? `${q}${this.id}(${pp})` : `${this.mId}(${pp})`;
+    return q ? `${a}${q}${this.id}(${pp})` : `${this.mId}(${pp})`;
   }
 
   symbolType() {

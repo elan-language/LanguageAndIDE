@@ -6,6 +6,7 @@ export class FunctionType implements SymbolType {
     public readonly returnType: SymbolType,
     public readonly isExtension: boolean,
     public readonly isPure: boolean = true,
+    public readonly isAsync: boolean = false,
   ) {}
   get initialValue() {
     return `system.emptyFunc(${this.returnType.initialValue})`;
