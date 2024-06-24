@@ -1,26 +1,27 @@
-import { Selectable } from "../interfaces/selectable";
-import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
-import { editorEvent } from "../interfaces/editor-event";
 import { CodeSource } from "../code-source";
+import { CompileError } from "../compile-error";
 import {
   escapeAngleBrackets,
+  helper_CompileOrParseAsDisplayStatus,
   helper_compileMsgAsHtml,
   helper_deriveCompileStatusFromErrors,
-  helper_CompileOrParseAsDisplayStatus,
   isCollapsible,
 } from "../helpers";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { AstNode } from "../interfaces/ast-node";
-import { CSV } from "../parse-nodes/csv";
-import { CompileError } from "../compile-error";
-import { UnknownType } from "../symbols/unknown-type";
-import { Transforms } from "../syntax-nodes/transforms";
-import { Overtyper } from "../overtyper";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { editorEvent } from "../interfaces/editor-event";
+import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
+import { Selectable } from "../interfaces/selectable";
+import { ElanSymbol } from "../interfaces/symbol";
+import { Overtyper } from "../overtyper";
+import { CSV } from "../parse-nodes/csv";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { UnknownType } from "../symbols/unknown-type";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -467,7 +468,7 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  autocomplete(scope: Scope): string[] {
+  matchingSymbols(scope: Scope): ElanSymbol[] {
     return [];
   }
 }

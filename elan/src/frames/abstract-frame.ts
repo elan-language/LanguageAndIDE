@@ -62,7 +62,7 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     return this.getParent().symbolMatches(id);
   }
 

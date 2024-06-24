@@ -249,7 +249,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     // todo need to
     let matches = this.getParent().symbolMatches(id);
 
@@ -258,7 +258,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       for (const f of range) {
         if (isSymbol(f) && id) {
           if (f.symbolId.startsWith(id)) {
-            matches = [f.symbolId].concat(matches);
+            matches = [f as ElanSymbol].concat(matches);
           }
         }
       }

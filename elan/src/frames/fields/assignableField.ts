@@ -1,12 +1,13 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
+import { ElanSymbol } from "../interfaces/symbol";
 import { Alternatives } from "../parse-nodes/alternatives";
+import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
-import { AssignableNode } from "../parse-nodes/assignable-node";
-import { Scope } from "../interfaces/scope";
 
 export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
@@ -28,7 +29,7 @@ export class AssignableField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
-  autocomplete(scope: Scope): string[] {
+  matchingSymbols(scope: Scope): ElanSymbol[] {
     const id = this.rootNode?.matchedText;
 
     if (id) {
@@ -41,15 +42,15 @@ export class AssignableField extends AbstractField {
   public textAsHtml(): string {
     let popup = "";
     if (this.selected) {
-      const autocomplete = this.autocomplete(this.getHolder());
-      const select: string[] = [];
+      const autocomplete = this.matchingSymbols(this.getHolder());
+      const symbols: string[] = [];
 
       for (const l of autocomplete) {
-        select.push(`<div class="autocomplete-item">${l}</div>`);
+        symbols.push(`<div class="autocomplete-item">${l.symbolId}</div>`);
       }
 
-      if (select.length > 0) {
-        popup = `<div class="autocomplete-popup">${select.join("")}</div>`;
+      if (symbols.length > 0) {
+        popup = `<div class="autocomplete-popup">${symbols.join("")}</div>`;
       }
     }
     return super.textAsHtml() + popup;

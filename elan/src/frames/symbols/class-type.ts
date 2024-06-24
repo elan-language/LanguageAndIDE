@@ -16,7 +16,7 @@ export class ClassType implements SymbolType, Scope {
     private readonly scope: ClassFrame,
   ) {}
 
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     return [];
   }
 

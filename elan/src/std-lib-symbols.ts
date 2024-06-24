@@ -21,7 +21,7 @@ import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 
 export class StdLibSymbols implements Scope {
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     return [];
   }
 

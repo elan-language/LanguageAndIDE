@@ -19,7 +19,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     super();
   }
 
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     return [];
   }
 

@@ -100,7 +100,7 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
-  symbolMatches(id: string): string[] {
+  symbolMatches(id: string): ElanSymbol[] {
     return [];
   }
 
