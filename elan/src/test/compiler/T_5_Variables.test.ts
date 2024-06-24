@@ -491,7 +491,8 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   var b set to {1.0, 2}
   var c set to ["a":1.0, "b":3, "z":10]
   set a to {1.0, 2}

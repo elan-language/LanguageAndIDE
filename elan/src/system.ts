@@ -81,22 +81,9 @@ export class System {
     return t;
   }
 
-  wrapArray(t: Array<any>) {
+  array(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "ArrayList";
     return t;
-  }
-
-  array(size1: number, size2?: number) {
-    const arr = new Array(size1);
-    if (size2) {
-      for (let i = 0; i <= size1; i++) {
-        const a2 = new Array(size2);
-        (<any>a2)._type = "ArrayList";
-        arr[i] = a2;
-      }
-    }
-    (arr as unknown as hasHiddenType)._type = "ArrayList";
-    return arr;
   }
 
   initialise(toInit: any, toType?: () => any) {

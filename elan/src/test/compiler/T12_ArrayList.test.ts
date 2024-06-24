@@ -41,13 +41,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
   print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
+  var a = system.initialise(system.array(new Array()));
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -58,21 +58,23 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   print a[0].length()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 3, "");
   system.printLine(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
   system.printLine(_stdlib.asString(a));
 }
@@ -87,11 +89,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0ArrayList [, , ]");
   });
 
-  test("Pass_ConfirmStringElementsInitializedToEmptyClassNotNull", async () => {
+  test("Pass_InitialiseToEnum", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of Foo>(3)
+  var a set to new ArrayList<of Fruit>()
+  call a.initialiseAsArray(3, Fruit.apple)
+  print a
+end main
+
+enum Fruit
+  apple, orange, pear
+end enum
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+var Fruit = {
+  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
+};
+
+async function main() {
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 3, Fruit.apple);
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [apple, apple, apple]");
+  });
+
+  test("Fail_CannotinitialiseToReferenceType1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to new ArrayList<of Foo>()
+  call a.initialiseAsArray(3, empty Foo)
   print a
   var foo set to a[0]
   print foo.p1
@@ -106,39 +144,43 @@ class Foo
 end class
 `;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.initialise(system.array(3), () => Foo.emptyInstance());
-  system.printLine(_stdlib.asString(a));
-  var foo = system.safeIndex(a, 0);
-  system.printLine(_stdlib.asString(foo.p1));
-}
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Can only initialise array with simple value, not: a Foo",
+    );
+  });
 
-  }
+  test("Fail_CannotinitialiseToReferenceType2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
-  p1 = 0;
-
-}
-return [main, _tests];}`;
+main
+  var a set to new ArrayList<of ArrayList<of Int>>()
+  call a.initialiseAsArray(3, empty [Int])
+  print a
+end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [a Foo, a Foo, a Foo]0");
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Can only initialise array with simple value, not: empty ArrayList",
+    );
   });
 
   test("Pass_SetAndReadElements", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   set a[0] to "foo"
   set a[2] to "yon"
   print a[0]
@@ -147,7 +189,8 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 3, "");
   system.safeSet(a, 0, "foo");
   system.safeSet(a, 2, "yon");
   system.printLine(_stdlib.asString(system.safeIndex(a, 0)));
@@ -176,7 +219,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray(["foo", "bar", "yon"]);
-  a = system.wrapArray(a.slice(1));
+  a = system.array(a.slice(1));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -194,7 +237,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   call a.add("foo")
   call a.add("yon")
   print a[3]
@@ -203,7 +247,8 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 3, "");
   _stdlib.add(a, "foo");
   _stdlib.add(a, "yon");
   system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
@@ -224,7 +269,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   call a.add("foo")
   call a.add("yon")
   var c set to ""
@@ -237,7 +283,8 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(3), () => "");
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 3, "");
   _stdlib.add(a, "foo");
   _stdlib.add(a, "yon");
   var c = "";
@@ -446,7 +493,8 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   var b set to a(0)
 end main
 `;
@@ -494,7 +542,8 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   var b set to a[3]
 end main
 `;
@@ -511,7 +560,8 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(3, "")
   set a[0] to true
 end main
 `;
@@ -523,26 +573,11 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to String"]);
   });
 
-  test("Fail_SizeNotSpecified", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var a set to new ArrayList<of String>()
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
-  });
-
   test("Fail_IndexWrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(1)
+  var a set to new ArrayList<of String>()
   set a["b"] to "fred"
 end main
 `;
@@ -558,7 +593,8 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(1.1)
+  var a set to new ArrayList<of String>()
+  call a.initialiseAsArray(1.1, "")
 end main
 `;
 
@@ -588,7 +624,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>(3) {"foo","bar","yon"}
+  var a set to new ArrayList<of String>() {"foo","bar","yon"}
 end main
 `;
 
@@ -768,7 +804,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-    var a set to new ArrayList(1)
+    var a set to new ArrayList()
     print a
 end main`;
 

@@ -46,19 +46,8 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
     if (type instanceof ArrayListType) {
-      mustMatchParameters(
-        this.parameters,
-        [IntType.Instance],
-        false,
-        this.compileErrors,
-        this.fieldId,
-      );
-
-      const init = this.typeNode.genericParameters
-        .map((gp) => `() => ${(gp as TypeAsn).compileToEmptyObjectCode()}`)
-        .join(", ");
-
-      return `system.initialise(system.array(${parametersAsString}), ${init})`;
+      mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
+      return `system.initialise(system.array(new Array()))`;
     }
 
     if (type instanceof ImmutableListType) {

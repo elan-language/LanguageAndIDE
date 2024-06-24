@@ -91,9 +91,9 @@ suite("Parsing Nodes", () => {
   test("Term", () => {
     testNodeParse(
       new Term(),
-      "new ArrayList<of String>(3)",
+      "new ArrayList<of String>()",
       ParseStatus.valid,
-      "new ArrayList<of String>(3)",
+      "new ArrayList<of String>()",
       "",
     );
     testNodeParse(new Term(), "", ParseStatus.empty, "", "", "");

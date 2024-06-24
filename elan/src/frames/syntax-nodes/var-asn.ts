@@ -87,7 +87,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       return `system.immutableList(${code})`;
     }
     if (rootType instanceof ArrayListType) {
-      return `system.wrapArray(${code})`;
+      return `system.array(${code})`;
     }
     if (rootType instanceof FunctionType) {
       return this.wrapListOrArray(rootType.returnType, code);

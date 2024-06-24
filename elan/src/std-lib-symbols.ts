@@ -680,13 +680,28 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "initialise2DArrayList",
+      "initialiseAs2DArray",
       this.getSymbol(
-        "initialise2DArrayList",
+        "initialiseAs2DArray",
         new ProcedureType(
           [
             new ArrayListType(new ArrayListType(new GenericParameterType("T"))),
             IntType.Instance,
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "initialiseAsArray",
+      this.getSymbol(
+        "initialiseAsArray",
+        new ProcedureType(
+          [
+            new ArrayListType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
