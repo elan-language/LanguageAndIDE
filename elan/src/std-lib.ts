@@ -9,6 +9,10 @@ type Graphics = Location[];
 export class StdLib {
   constructor(private readonly system: System) {}
 
+  isValueType<T>(v: T) {
+    return typeof v === "boolean" || typeof v === "string" || typeof v === "number";
+  }
+
   asString<T>(v: T | T[] | undefined): string {
     if (v === undefined || v === null) {
       throw new Error(`Out of range error`);
@@ -570,11 +574,31 @@ export class StdLib {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
-  initialise2DArrayList<T>(toInit: T[][], x: number, y: number, value: T) {
+  initialiseAsArray<T>(toInit: T[], x: number, value: T) {
+    if (!this.isValueType(value)) {
+      throw new ElanRuntimeError(
+        `Can only initialise array with simple value, not: ${this.asString(value)}`,
+      );
+    }
+
     toInit.length = x;
 
     for (let i = 0; i < x; i++) {
-      const subArr = this.system.wrapArray([]);
+      toInit[i] = value;
+    }
+  }
+
+  initialiseAs2DArray<T>(toInit: T[][], x: number, y: number, value: T) {
+    if (!this.isValueType(value)) {
+      throw new ElanRuntimeError(
+        `Can only initialise array with simple value, not: ${this.asString(value)}`,
+      );
+    }
+
+    toInit.length = x;
+
+    for (let i = 0; i < x; i++) {
+      const subArr = this.system.array([]);
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }

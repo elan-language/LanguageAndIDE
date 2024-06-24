@@ -204,7 +204,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of Int>(11)
+  var a set to new ArrayList<of Int>()
+  call a.initialiseAsArray(11, 0)
   call foo(a)
 end main
 
@@ -217,7 +218,8 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(11), () => 0);
+  var a = system.initialise(system.array(new Array()));
+  _stdlib.initialiseAsArray(a, 11, 0);
   await foo(a);
 }
 
