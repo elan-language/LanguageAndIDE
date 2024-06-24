@@ -468,7 +468,22 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbols(scope: Scope): ElanSymbol[] {
+  matchingSymbolsForId(scope: Scope): ElanSymbol[] {
     return [];
+  }
+
+  protected popupAsHtml(symbolIds: string[]) {
+    let popupAsHtml = "";
+    const symbolAsHtml: string[] = [];
+
+    for (const symbolId of symbolIds) {
+      symbolAsHtml.push(`<div class="autocomplete-item">${symbolId}</div>`);
+    }
+
+    if (symbolAsHtml.length > 0) {
+      popupAsHtml = `<div class="autocomplete-popup">${symbolAsHtml.join("")}</div>`;
+    }
+
+    return popupAsHtml;
   }
 }

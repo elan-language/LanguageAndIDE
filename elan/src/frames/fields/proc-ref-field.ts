@@ -6,6 +6,11 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { AbstractField } from "./abstract-field";
 import { ParseStatus } from "../status-enums";
+import { ProcedureFrame } from "../globals/procedure-frame";
+import { Scope } from "../interfaces/scope";
+import { ElanSymbol } from "../interfaces/symbol";
+import { transforms } from "../syntax-nodes/ast-helpers";
+import { ProcedureType } from "../symbols/procedure-type";
 
 export class ProcRefField extends AbstractField {
   isParseByNodes = true;
@@ -27,10 +32,20 @@ export class ProcRefField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
 
+  matchingSymbolsForId(scope: Scope): ElanSymbol[] {
+    const id = this.rootNode?.matchedText;
+    return id ? scope.symbolMatches(id, this.getHolder()) : [];
+  }
+
   public textAsHtml(): string {
     let text: string;
     if (this.selected) {
-      text = super.textAsHtml();
+      const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
+      const filteredSymbolIds = matchedSymbols
+        .filter((s) => s.symbolType(transforms()) instanceof ProcedureType)
+        .map((s) => s.symbolId);
+      const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
+      text = super.textAsHtml() + popupAsHtml;
     } else {
       if (
         this.readParseStatus() === ParseStatus.valid ||
