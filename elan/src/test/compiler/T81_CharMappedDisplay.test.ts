@@ -7,7 +7,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -17,7 +16,7 @@ suite("Pass_PassingTest", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to  new CharMap()
+  var g set to  new Graphics()
   call g.draw()
 end main`;
 
@@ -45,7 +44,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putAt(0, 0, "F", 1, 2)
   call g.draw()
 end main`;
@@ -75,7 +74,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putAt(10, 20, "a", 1, 2)
   print g.getAt(10, 20)
 end main`;
@@ -101,7 +100,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putChar(0, 0, "Z")
   call g.draw()
 end main`;
@@ -131,7 +130,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putAt(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
@@ -157,7 +156,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putForeground(0, 0, 3)
   call g.draw()
 end main`;
@@ -187,7 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putAt(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
@@ -213,7 +212,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putBackground(1, 0, 4)
   call g.draw()
 end main`;
@@ -243,7 +242,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putAt(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
@@ -269,16 +268,16 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
-  call g.draw()
-  call clearGraphics()
+  var gr set to new Graphics()
+  call gr.draw()
+  call gr.clearGraphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var g = system.initialise(system.immutableList(new Array()));
-  _stdlib.draw(g);
-  _stdlib.clearGraphics();
+  var gr = system.initialise(system.immutableList(new Array()));
+  _stdlib.draw(gr);
+  _stdlib.clearGraphics(gr);
 }
 return [main, _tests];}`;
 
@@ -295,13 +294,15 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeystroke()
+  var gr set to new Graphics()
+  var a set to gr.getKeystroke()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeystroke();
+  var gr = system.initialise(system.immutableList(new Array()));
+  var a = _stdlib.getKeystroke(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -319,13 +320,15 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to getKeystrokeWithModifier()
+  var gr set to new Graphics()
+  var a set to gr.getKeystrokeWithModifier()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = _stdlib.getKeystrokeWithModifier();
+  var gr = system.initialise(system.immutableList(new Array()));
+  var a = _stdlib.getKeystrokeWithModifier(gr);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -343,12 +346,14 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  call clearKeyBuffer()
+  var gr set to new Graphics()
+  call gr.clearKeyBuffer()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  _stdlib.clearKeyBuffer();
+  var gr = system.initialise(system.immutableList(new Array()));
+  _stdlib.clearKeyBuffer(gr);
 }
 return [main, _tests];}`;
 
@@ -361,11 +366,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_newCharMap", async () => {
+  test("Pass_newGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new CharMap()
+  var a set to new Graphics()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -383,7 +388,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_defaultCharMap", async () => {
+  test("Pass_defaultGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -396,7 +401,7 @@ class Foo
   constructor()
   end constructor
 
-  property p as CharMap
+  property p as Graphics
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -426,12 +431,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "empty ImmutableList");
   });
 
-  test("Fail_emptyCharMap", async () => {
+  test("Fail_emptyGraphics", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to empty CharMap()
-  set a to initialisedCharMap()
+  var a set to empty Graphics()
+  set a to initialisedGraphics()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -444,7 +449,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putText(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
@@ -478,7 +483,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var g set to new CharMap()
+  var g set to new Graphics()
   set g to g.putText(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;

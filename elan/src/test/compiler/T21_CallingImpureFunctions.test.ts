@@ -16,14 +16,15 @@ suite("T21_Functions_Procedures_ImpureFunctions_rules", () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var k set to getKeystroke()
+  var gr set to new Graphics()
+  var k set to gr.getKeystroke()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
   call bar(randomInt(1,6))
 end main
 
-procedure foo()
-  var k set to getKeystroke()
+procedure foo(gr as Graphics)
+  var k set to gr.getKeystroke()
   var r set to randomInt(1, 6)
   set r to randomInt(1, 6) * 10
 end procedure
@@ -34,14 +35,15 @@ end procedure
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var k = _stdlib.getKeystroke();
+  var gr = system.initialise(system.immutableList(new Array()));
+  var k = _stdlib.getKeystroke(gr);
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
   await bar(_stdlib.randomInt(1, 6));
 }
 
-async function foo() {
-  var k = _stdlib.getKeystroke();
+async function foo(gr) {
+  var k = _stdlib.getKeystroke(gr);
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;
 }

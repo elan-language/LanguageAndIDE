@@ -1,12 +1,12 @@
 ﻿# 7c8171cb1b3b77fbc3d50ec32eee4ea7ac0e0e5fcb4ca4854b3860b9b376d177 Elan v0.1 valid
 
-# public class CharMap {
+# public class Graphics {
 #     public const char empty = ' ';
 #     public readonly int height;
 #     public readonly int width;
 #     protected int cursorCol;
 #     protected int cursorRow;
-#     public CharMap() {
+#     public Graphics() {
 #         //TODO specify size in constructor (with default option) and make the console window that size.
 #         width = Console.WindowWidth;
 #         height = Console.WindowHeight;
@@ -69,9 +69,9 @@
 #         public override string ToString() => $"{ch} + ({foreground}, {background})";
 #     }
 #     [ElanStandardLibrary]
-#     public class CharMapBuffered : CharMap {
+#     public class GraphicsBuffered : Graphics {
 #         private readonly Character[,] buffer;
-#         public CharMapBuffered() => buffer = new Character[width, height];
+#         public GraphicsBuffered() => buffer = new Character[width, height];
 #         public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background) {
 #             buffer[col, row] = new Character(c, foreground, background);
 #         }

@@ -1,18 +1,18 @@
-# 6bc884eb176313845e8e804e3a22731b657c7f01df763ef6f6f8f6384138b955 Elan v0.1 valid
+# b152e5f740dfb80e69841b066ab1adab13cd4eb719ff1c5bb2f751591b2488a4 Elan v0.1 valid
 
 main
-  var cm set to new CharMap()
+  var cm set to new Graphics()
   set cm to cm.fill("", black, white)
   var grid set to exampleCells
   for i from 1 to 100 step 1
-    set cm to updateCharMap(grid, cm)
+    set cm to updateGraphics(grid, cm)
     call cm.draw()
     set grid to nextGeneration(grid)
     call pause(50)
   end for
 end main
 
-function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
+function updateGraphics(grid as {Boolean}, cm as Graphics) return Graphics
   var cm2 set to cm
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
@@ -29,8 +29,8 @@ function updateCharMap(grid as {Boolean}, cm as CharMap) return CharMap
 end function
 
 test 
-  let init be new CharMap()
-  let cm2 be updateCharMap(exampleCells, init)
+  let init be new Graphics()
+  let cm2 be updateGraphics(exampleCells, init)
   assert cm2.getBackground(0, 0) is white
   assert cm2.getBackground(1, 0) is black
 end test
