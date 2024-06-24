@@ -101,7 +101,11 @@ export class FileImpl implements File, Scope {
   }
 
   symbolMatches(id: string): ElanSymbol[] {
-    return [];
+    const libMatches = this.libraryScope.symbolMatches(id);
+    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
+    const matches = globalSymbols.filter((s) => s.symbolId.startsWith(id));
+
+    return matches.concat(libMatches);
   }
 
   getFile(): File {

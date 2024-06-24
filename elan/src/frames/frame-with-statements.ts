@@ -249,22 +249,37 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string): ElanSymbol[] {
-    // todo need to
-    let matches = this.getParent().symbolMatches(id);
+  symbolMatches(id: string, initialScope?: Frame): ElanSymbol[] {
+    const matches = this.getParent().symbolMatches(id);
+    const localMatches: ElanSymbol[] = [];
 
-    const range = this.getChildren();
+    const fst = this.getFirstChild();
+    let range = this.getChildRange(fst, initialScope!);
     if (range.length > 1) {
+      range = range.slice(0, range.length - 1);
+
       for (const f of range) {
         if (isSymbol(f) && id) {
-          if (f.symbolId.startsWith(id)) {
-            matches = [f as ElanSymbol].concat(matches);
+          // todo kludge
+          const sid = f.symbolId;
+
+          if (sid.startsWith("(")) {
+            const sids = sid
+              .slice(1, -1)
+              .split(",")
+              .map((s) => s.trim());
+
+            if (sids.some((sid) => sid.startsWith(id))) {
+              localMatches.push(f);
+            }
+          } else if (sid.startsWith(id)) {
+            localMatches.push(f);
           }
         }
       }
     }
 
-    return matches;
+    return localMatches.concat(matches);
   }
 
   aggregateCompileErrors(): CompileError[] {

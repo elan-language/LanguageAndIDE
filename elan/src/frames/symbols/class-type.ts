@@ -6,6 +6,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
 import { Parent } from "../interfaces/parent";
+import { match } from "assert";
 
 export class ClassType implements SymbolType, Scope {
   constructor(
@@ -17,7 +18,13 @@ export class ClassType implements SymbolType, Scope {
   ) {}
 
   symbolMatches(id: string): ElanSymbol[] {
-    return [];
+    const matches: ElanSymbol[] = [];
+    for (const f of this.scope.getChildren()) {
+      if (isSymbol(f) && f.symbolId.startsWith(id)) {
+        matches.push(f);
+      }
+    }
+    return matches;
   }
 
   isAssignableFrom(otherType: SymbolType): boolean {

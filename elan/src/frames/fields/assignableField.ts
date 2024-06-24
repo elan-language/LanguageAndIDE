@@ -7,6 +7,7 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { VarStatement } from "../statements/var-statement";
 import { AbstractField } from "./abstract-field";
 
 export class AssignableField extends AbstractField {
@@ -31,28 +32,23 @@ export class AssignableField extends AbstractField {
 
   matchingSymbols(scope: Scope): ElanSymbol[] {
     const id = this.rootNode?.matchedText;
-
-    if (id) {
-      return scope.symbolMatches(id);
-    }
-
-    return [];
+    return id ? scope.symbolMatches(id, this.getHolder()) : [];
   }
 
   public textAsHtml(): string {
-    let popup = "";
+    let popupAsHtml = "";
     if (this.selected) {
-      const autocomplete = this.matchingSymbols(this.getHolder());
-      const symbols: string[] = [];
+      const matchedSymbols = this.matchingSymbols(this.getHolder());
+      const symbolAsHtml: string[] = [];
 
-      for (const l of autocomplete) {
-        symbols.push(`<div class="autocomplete-item">${l.symbolId}</div>`);
+      for (const symbol of matchedSymbols.filter((s) => s instanceof VarStatement)) {
+        symbolAsHtml.push(`<div class="autocomplete-item">${symbol.symbolId}</div>`);
       }
 
-      if (symbols.length > 0) {
-        popup = `<div class="autocomplete-popup">${symbols.join("")}</div>`;
+      if (symbolAsHtml.length > 0) {
+        popupAsHtml = `<div class="autocomplete-popup">${symbolAsHtml.join("")}</div>`;
       }
     }
-    return super.textAsHtml() + popup;
+    return super.textAsHtml() + popupAsHtml;
   }
 }

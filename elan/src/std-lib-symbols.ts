@@ -22,7 +22,9 @@ import { Transforms } from "./frames/syntax-nodes/transforms";
 
 export class StdLibSymbols implements Scope {
   symbolMatches(id: string): ElanSymbol[] {
-    return [];
+    return [...this.symbols.keys()]
+      .filter((k) => k.startsWith(id))
+      .map((k) => this.symbols.get(k)!);
   }
 
   getParent(): Parent {
