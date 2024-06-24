@@ -16,6 +16,10 @@ export class ClassType implements SymbolType, Scope {
     private readonly scope: ClassFrame,
   ) {}
 
+  symbolMatches(id: string): string[] {
+    return [];
+  }
+
   isAssignableFrom(otherType: SymbolType): boolean {
     if (otherType instanceof ClassType) {
       if (otherType.className === this.className) {

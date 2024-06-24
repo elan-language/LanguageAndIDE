@@ -62,6 +62,10 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
+  symbolMatches(id: string): string[] {
+    return this.getParent().symbolMatches(id);
+  }
+
   compile(transforms: Transforms): string {
     throw new Error("Method not implemented.");
   }

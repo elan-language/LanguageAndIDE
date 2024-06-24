@@ -100,6 +100,10 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
+  symbolMatches(id: string): string[] {
+    return [];
+  }
+
   getFile(): File {
     return this;
   }

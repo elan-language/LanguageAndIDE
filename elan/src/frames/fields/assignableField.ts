@@ -6,6 +6,7 @@ import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 import { AssignableNode } from "../parse-nodes/assignable-node";
+import { Scope } from "../interfaces/scope";
 
 export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
@@ -26,4 +27,14 @@ export class AssignableField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/(\s+to\s+)|\r|\n/);
+
+  autocomplete(scope: Scope): string[] {
+    const id = this.rootNode?.matchedText;
+
+    if (id) {
+      return scope.symbolMatches(id);
+    }
+
+    return [];
+  }
 }

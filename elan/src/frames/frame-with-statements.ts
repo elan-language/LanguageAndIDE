@@ -249,6 +249,24 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
+  symbolMatches(id: string): string[] {
+    // todo need to
+    let matches = this.getParent().symbolMatches(id);
+
+    const range = this.getChildren();
+    if (range.length > 1) {
+      for (const f of range) {
+        if (isSymbol(f) && id) {
+          if (f.symbolId.startsWith(id)) {
+            matches = [f.symbolId].concat(matches);
+          }
+        }
+      }
+    }
+
+    return matches;
+  }
+
   aggregateCompileErrors(): CompileError[] {
     const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
     return cc.concat(super.aggregateCompileErrors());

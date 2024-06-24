@@ -20,6 +20,7 @@ import { Transforms } from "../syntax-nodes/transforms";
 import { Overtyper } from "../overtyper";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { File } from "../interfaces/file";
+import { Scope } from "../interfaces/scope";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -43,7 +44,7 @@ export abstract class AbstractField implements Selectable, Field {
   parseErrorMsg: string = "";
   protected help: string = "help TBD";
   overtyper = new Overtyper();
-  protected codeHasChanged: boolean = false;
+  codeHasChanged: boolean = false;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -464,5 +465,9 @@ export abstract class AbstractField implements Selectable, Field {
       return astNode.symbolType();
     }
     return UnknownType.Instance;
+  }
+
+  autocomplete(scope: Scope): string[] {
+    return [];
   }
 }

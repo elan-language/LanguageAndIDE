@@ -94,4 +94,14 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
 
     return super.resolveSymbol(id, transforms, initialScope);
   }
+
+  symbolMatches(id: string): string[] {
+    const matches = super.symbolMatches(id);
+
+    if (this.symbolId.startsWith(id)) {
+      return [this.symbolId].concat(matches);
+    }
+
+    return matches;
+  }
 }

@@ -6,4 +6,6 @@ export interface Scope {
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol;
 
   getParent(): Parent;
+
+  symbolMatches(id: string): string[];
 }

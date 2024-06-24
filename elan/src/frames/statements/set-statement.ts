@@ -51,7 +51,23 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${this.assignable.renderAsHtml()}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
+    let htm = "";
+    if (this.assignable.codeHasChanged) {
+      const autocomplete = this.assignable.autocomplete(this);
+      const select: string[] = [];
+
+      for (const l of autocomplete) {
+        select.push(`<option value="${l}"}>${l}</option>"`);
+      }
+
+      if (select.length > 0) {
+        htm = `<select name="">${select.join("\n")}<\select>`;
+      }
+    }
+
+    htm = htm ? htm : this.assignable.renderAsHtml();
+
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><keyword>${setKeyword} </keyword>${htm}<keyword> ${toKeyword} </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}</statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
