@@ -1005,10 +1005,69 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "inputStringWithLimits",
+      this.getSymbol(
+        "inputStringWithLimits",
+        new FunctionType(
+          [StringType.Instance, IntType.Instance, IntType.Instance],
+          IntType.Instance,
+          false,
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
+      "inputStringFromOptions",
+      this.getSymbol(
+        "inputStringFromOptions",
+        new FunctionType(
+          [StringType.Instance, new ImmutableListType(StringType.Instance)],
+          IntType.Instance,
+          false,
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
       "inputInt",
       this.getSymbol(
         "inputInt",
         new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
+      ),
+    ],
+    [
+      "inputIntBetween",
+      this.getSymbol(
+        "inputIntBetween",
+        new FunctionType(
+          [StringType.Instance, IntType.Instance, IntType.Instance],
+          IntType.Instance,
+          false,
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
+      "inputFloat",
+      this.getSymbol(
+        "inputFloat",
+        new FunctionType([StringType.Instance], FloatType.Instance, false, false, true),
+      ),
+    ],
+    [
+      "inputFloatBetween",
+      this.getSymbol(
+        "inputFloatBetween",
+        new FunctionType(
+          [StringType.Instance, FloatType.Instance, FloatType.Instance],
+          IntType.Instance,
+          false,
+          false,
+          true,
+        ),
       ),
     ],
     ["pi", this.getSymbol("pi", FloatType.Instance)],
