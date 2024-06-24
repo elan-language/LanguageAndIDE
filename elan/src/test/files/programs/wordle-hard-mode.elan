@@ -233,7 +233,7 @@ end test
 immutable class WordCount
   constructor(word as String, count as Int)
     set property.word to word
-    set property.count to count
+    set property.length() to count
   end constructor
 
   property word as String

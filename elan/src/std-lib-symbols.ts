@@ -236,13 +236,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "count",
-      this.getSymbol(
-        "count",
-        new FunctionType([new IterType(new GenericParameterType("T"))], IntType.Instance, true),
-      ),
-    ],
-    [
       "with",
       this.getSymbol(
         "with",

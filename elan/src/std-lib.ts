@@ -355,16 +355,6 @@ export class StdLib {
     return source[i];
   }
 
-  count<T>(coll: string | T[] | { [key: string]: T }) {
-    if (typeof coll === "string") {
-      return coll.length;
-    }
-    if (Array.isArray(coll)) {
-      return coll.length;
-    }
-    return this.keys(coll).length;
-  }
-
   any<T>(source: T[], predicate: (value: T) => boolean) {
     return source.some(predicate);
   }

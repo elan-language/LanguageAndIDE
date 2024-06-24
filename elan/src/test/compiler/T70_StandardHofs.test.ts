@@ -292,19 +292,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "orange");
   });
 
-  test("Pass_count", async () => {
+  test("Pass_length", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.count()
+  print source.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.count(source)));
+  system.printLine(_stdlib.asString(_stdlib.length(source)));
 }
 return [main, _tests];}`;
 
