@@ -225,5 +225,5 @@ export function matchingSymbols(id: string, transforms: Transforms, scope: Scope
     return allExtensions;
   }
 
-  return scope.symbolMatches(id, false, scope as Frame);
+  return scope.symbolMatches(id, false, scope);
 }

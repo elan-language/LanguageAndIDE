@@ -38,16 +38,14 @@ export class ProcRefField extends AbstractField {
       return [];
     }
 
-    return matchingSymbols(id, transforms(), scope);
+    return matchingSymbols(id, transforms(), scope).filter((s) => isIdOrProcedure(s, transforms()));
   }
 
   public textAsHtml(): string {
     let text: string;
     if (this.selected) {
       const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
-      const filteredSymbolIds = matchedSymbols
-        .filter((s) => isIdOrProcedure(s, transforms()))
-        .map((s) => s.symbolId);
+      const filteredSymbolIds = matchedSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
       text = super.textAsHtml() + popupAsHtml;
     } else {

@@ -8,6 +8,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { VarStatement } from "../statements/var-statement";
+import { isVarStatement } from "../symbols/symbol-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class AssignableField extends AbstractField {
@@ -32,16 +33,14 @@ export class AssignableField extends AbstractField {
 
   matchingSymbolsForId(scope: Scope): ElanSymbol[] {
     const id = this.rootNode?.matchedText;
-    return id ? scope.symbolMatches(id, false, this.getHolder()) : [];
+    return id ? scope.symbolMatches(id, false, scope).filter((s) => isVarStatement(s)) : [];
   }
 
   public textAsHtml(): string {
     let popupAsHtml = "";
     if (this.selected) {
       const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
-      const filteredSymbolIds = matchedSymbols
-        .filter((s) => s instanceof VarStatement)
-        .map((s) => s.symbolId);
+      const filteredSymbolIds = matchedSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(filteredSymbolIds);
     }
     return super.textAsHtml() + popupAsHtml;

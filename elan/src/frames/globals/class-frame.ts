@@ -441,7 +441,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, initialScope);
+    const otherMatches = this.getParent().symbolMatches(id, all, this);
 
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && (f.symbolId.startsWith(id) || all),

@@ -14,6 +14,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { TupleType } from "../symbols/tuple-type";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { Scope } from "../interfaces/scope";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
@@ -96,8 +97,8 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     return super.resolveSymbol(id, transforms, initialScope);
   }
 
-  symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all);
+  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
 
     if (this.symbolId.startsWith(id) || all) {
       return [this as ElanSymbol].concat(matches);

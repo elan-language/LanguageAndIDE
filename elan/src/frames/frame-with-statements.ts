@@ -250,7 +250,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
-    const matches = this.getParent().symbolMatches(id, all);
+    const matches = this.getParent().symbolMatches(id, all, this);
     const localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();

@@ -21,6 +21,7 @@ import { ElanSymbol } from "./interfaces/symbol";
 import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
 import { Transforms } from "./syntax-nodes/transforms";
+import { Scope } from "./interfaces/scope";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -62,8 +63,8 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
-    return this.getParent().symbolMatches(id, all, initialScope);
+  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+    return this.getParent().symbolMatches(id, all, this);
   }
 
   compile(transforms: Transforms): string {
