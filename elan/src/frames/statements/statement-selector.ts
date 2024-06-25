@@ -67,6 +67,11 @@ export class StatementSelector extends AbstractSelector {
     return this.profile.statements.includes(keyword);
   }
 
+  noPeerLevelDefault(): boolean {
+    const peers = this.getParent().getChildren();
+    return peers.filter((p) => "isDefault" in p).length === 0;
+  }
+
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
@@ -78,7 +83,7 @@ export class StatementSelector extends AbstractSelector {
         keyword === varKeyword ||
         keyword === commentMarker;
     } else if (parent.getIdPrefix() === switchKeyword) {
-      result = keyword === caseKeyword || keyword === defaultKeyword;
+      result = keyword === caseKeyword || (keyword === defaultKeyword && this.noPeerLevelDefault());
     } else if (parent.getIdPrefix() === ifKeyword) {
       result = keyword === elseKeyword || keyword === commentMarker;
     } else if (

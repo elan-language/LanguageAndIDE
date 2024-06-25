@@ -11,6 +11,7 @@ import { MainFrame } from "../frames/globals/main-frame";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Profile } from "../frames/interfaces/profile";
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../frames/keywords";
+import { DefaultStatement } from "../frames/statements/default-statement";
 import { IfStatement } from "../frames/statements/if-statement";
 import { StatementSelector } from "../frames/statements/statement-selector";
 import { Switch } from "../frames/statements/switch";
@@ -180,6 +181,16 @@ suite("Unit tests", () => {
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
     assert.equal(help, " case default");
+  });
+  test("Selection Context - in a Switch with a default", () => {
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const m = new MainFrame(fl);
+    const sw = new Switch(m);
+    const def = new DefaultStatement(sw);
+    sw.getChildren().push(def);
+    const s = new StatementSelector(sw);
+    const help = s.getCompletion();
+    assert.equal(help, " case");
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
