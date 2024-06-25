@@ -105,13 +105,15 @@ export class ProcRefField extends AbstractField {
 
       if (isGenericSymbolType(firstParmType) && isGenericSymbolType(parmType)) {
         return (
-          firstParmType.ofType instanceof GenericParameterType ||
-          firstParmType.ofType.name === parmType.ofType.name
+          firstParmType.constructor.name === parmType.constructor.name &&
+          (firstParmType.ofType instanceof GenericParameterType ||
+            firstParmType.ofType.name === parmType.ofType.name)
         );
       }
 
       if (isDictionarySymbolType(firstParmType) && isDictionarySymbolType(parmType)) {
         return (
+          firstParmType.constructor.name === parmType.constructor.name &&
           (firstParmType.keyType instanceof GenericParameterType ||
             firstParmType.keyType.name === parmType.keyType.name) &&
           (firstParmType.valueType instanceof GenericParameterType ||
