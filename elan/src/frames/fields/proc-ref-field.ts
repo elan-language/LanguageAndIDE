@@ -14,9 +14,16 @@ import { ProcedureType } from "../symbols/procedure-type";
 import { VarStatement } from "../statements/var-statement";
 import { ClassType } from "../symbols/class-type";
 import { isClass } from "../helpers";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import {
+  getGlobalScope,
+  isDictionarySymbolType,
+  isGenericSymbolType,
+} from "../symbols/symbol-helpers";
 import { Class } from "../interfaces/class";
 import { Property } from "../class-members/property";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { SymbolType } from "../interfaces/symbol-type";
+import { GenericParameterType } from "../symbols/generic-parameter-type";
 
 export class ProcRefField extends AbstractField {
   isParseByNodes = true;
@@ -54,24 +61,66 @@ export class ProcRefField extends AbstractField {
       const qual = scope.resolveSymbol(qualId, transforms(), scope);
 
       // class scope so all or matching symbols on class
-      const st = qual.symbolType(transforms());
-      if (st instanceof ClassType) {
-        const cls = getGlobalScope(scope).resolveSymbol(st.className, transforms(), scope);
+      const qualSt = qual.symbolType(transforms());
+      if (qualSt instanceof ClassType) {
+        const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms(), scope);
 
         if (isClass(cls as unknown as Scope)) {
-          return (cls as unknown as Scope).symbolMatches(propId, !propId);
+          return (cls as unknown as Scope)
+            .symbolMatches(propId, !propId)
+            .filter((s) => s.symbolScope === SymbolScope.property)
+            .filter((s) => s.symbolType(transforms()) instanceof ProcedureType);
         }
         return [];
       }
 
-      //look for extensions
+      const allExtensions = getGlobalScope(scope)
+        .libraryScope.symbolMatches(propId, !propId)
+        .filter((s) => {
+          const st = s.symbolType(transforms());
+          return (
+            st instanceof ProcedureType &&
+            st.isExtension &&
+            this.isPossibleExtensionForType(qualSt, st)
+          );
+        });
 
-      // if (propId) {
-      //   getGlobalScope(scope).libraryScope.symbolMatches(propId);
-      // }
+      return allExtensions;
     }
 
     return scope.symbolMatches(id, false, this.getHolder());
+  }
+
+  isPossibleExtensionForType(parmType: SymbolType, proc: ProcedureType) {
+    if (proc.parametersTypes.length > 0) {
+      const firstParmType = proc.parametersTypes[0];
+
+      if (firstParmType.name === parmType.name) {
+        return true;
+      }
+
+      if (firstParmType instanceof GenericParameterType) {
+        return true;
+      }
+
+      if (isGenericSymbolType(firstParmType) && isGenericSymbolType(parmType)) {
+        return (
+          firstParmType.ofType instanceof GenericParameterType ||
+          firstParmType.ofType.name === parmType.ofType.name
+        );
+      }
+
+      if (isDictionarySymbolType(firstParmType) && isDictionarySymbolType(parmType)) {
+        return (
+          (firstParmType.keyType instanceof GenericParameterType ||
+            firstParmType.keyType.name === parmType.keyType.name) &&
+          (firstParmType.valueType instanceof GenericParameterType ||
+            firstParmType.valueType.name === parmType.valueType.name)
+        );
+      }
+    }
+
+    return false;
   }
 
   isIdOrProcedure(s: ElanSymbol) {
