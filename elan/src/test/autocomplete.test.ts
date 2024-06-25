@@ -129,4 +129,31 @@ end main`;
 
     await assertAutocompletes(fileImpl, "ident39", ".", 3, expected);
   });
+
+  test("Pass_CallExtensions", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to [1, 2]
+  call foo()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["insert", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
+      ["remove", "Procedure (ArrayList <Generic Parameter T>, Int)"],
+      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["size", "Procedure (ArrayList <Generic Parameter T>, Int)"],
+      [
+        "initialiseAsArray",
+        "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)",
+      ],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+  });
 });

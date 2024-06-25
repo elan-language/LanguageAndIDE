@@ -92,6 +92,7 @@ export class StdLib {
     return arr;
   }
 
+  // todo need to remove
   size<T>(arr: T[], newSize: number): T[] {
     return arr;
   }
