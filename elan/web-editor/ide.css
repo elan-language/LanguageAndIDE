@@ -187,13 +187,21 @@ button#expand-collapse {
   visibility: visible;
   width: fit-content;
   background-color:rgb(198, 222, 247);
-  color: black;
-  text-align: left;
-  padding-left: 1px;
   position: absolute;
   z-index: 1;
   height: fit-content;
   display: block;
   margin-left: 32px;
   margin-top: -1px;
+}
+
+.autocomplete-item {
+  color: black;
+  text-align: left;
+  padding-left: 1px;
+}
+
+.autocomplete-item.selected {
+  color: white;
+  background-color: blue;
 }
