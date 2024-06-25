@@ -17,9 +17,6 @@ export class AssignableField extends AbstractField {
     this.help = `A previously defined variable, but NOT a parameter. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)`;
   }
 
-  // to make testing easier
-  autocompleteSymbols: ElanSymbol[] = [];
-
   getIdPrefix(): string {
     return "ident";
   }

@@ -46,6 +46,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected help: string = "help TBD";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
+  autocompleteSymbols: ElanSymbol[] = [];
 
   constructor(holder: Frame) {
     this.holder = holder;

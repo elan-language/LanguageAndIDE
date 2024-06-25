@@ -44,8 +44,8 @@ export class ProcRefField extends AbstractField {
   public textAsHtml(): string {
     let text: string;
     if (this.selected) {
-      const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
-      const filteredSymbolIds = matchedSymbols.map((s) => s.symbolId);
+      this.autocompleteSymbols = this.matchingSymbolsForId(this.getHolder());
+      const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
       text = super.textAsHtml() + popupAsHtml;
     } else {

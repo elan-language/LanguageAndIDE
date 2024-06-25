@@ -33,6 +33,7 @@ import { hash } from "../util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { AssignableField } from "../frames/fields/assignableField";
+import { AbstractField } from "../frames/fields/abstract-field";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -244,13 +245,27 @@ export async function assertElementContainsHtml(f: File, id: string, expectedHtm
   assert.strictEqual(c, expectedHtml);
 }
 
+function getEvent(char: string) {
+  return {
+    type: "key",
+    target: "frame",
+    key: char,
+    modKey: { control: false, shift: false, alt: false },
+  } as editorEvent;
+}
+
 export async function assertAutocompletes(
   f: FileImpl,
   id: string,
+  char: string,
+  at: number,
   expected: [string, string][],
 ): Promise<void> {
+  const fld = f.getById(id) as AbstractField;
+  fld.select();
+  fld.cursorPos = at;
+  fld.processKey(getEvent(char));
   await f.renderAsHtml();
-  const fld = f.getById(id) as AssignableField;
   const symbols = fld.autocompleteSymbols;
 
   assert.strictEqual(symbols.length, expected.length);
