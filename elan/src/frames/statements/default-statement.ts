@@ -1,23 +1,22 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
 import { defaultKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class DefaultStatement extends FrameWithStatements implements Statement {
+  isDefault = true;
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
-    this.movable = false;
+    this.movable = true;
   }
   initialKeywords(): string {
     return defaultKeyword;
   }
-  delete(): void {} //Does nothing as default cannot be deleted
-
   getFields(): Field[] {
     return [];
   }
@@ -48,7 +47,7 @@ ${this.indent()}${singleIndent()}break;`;
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
-    return source.isMatch("end switch");
+    return source.isMatch("case ") || source.isMatch("end switch");
   }
   canInsertAfter(): boolean {
     return false;

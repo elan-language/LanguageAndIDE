@@ -232,7 +232,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "c");
   });
 
-  test("Fail_NoDefault", async () => {
+  test("Pass_NoDefault", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -243,7 +243,7 @@ main
       case 2
         print "b"
       case 3
-        print "c"   
+        print "c"
     end switch
   end for
 end main
@@ -252,7 +252,7 @@ end main
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_NoCase", async () => {
@@ -346,7 +346,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CaseAfterDefault", async () => {
+  test("Pass_CaseAfterDefault", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -365,8 +365,7 @@ end main
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_WithColons", async () => {

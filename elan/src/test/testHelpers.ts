@@ -1,40 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as vscode from "vscode";
-import { Selectable } from "../frames/interfaces/selectable";
 import assert from "assert";
-import { File } from "../frames/interfaces/file";
 import * as jsdom from "jsdom";
-import { editorEvent } from "../frames/interfaces/editor-event";
-import { FileImpl } from "../frames/file-impl";
+import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
-import { hash } from "../util";
 import { DefaultProfile } from "../frames/default-profile";
-import { ParseStatus } from "../frames/status-enums";
-import { ParseNode } from "../frames/parse-nodes/parse-node";
-import { SymbolType } from "../frames/interfaces/symbol-type";
-import { transform } from "../frames/syntax-nodes/ast-visitor";
+import { FileImpl } from "../frames/file-impl";
+import { editorEvent } from "../frames/interfaces/editor-event";
 import { Field } from "../frames/interfaces/field";
-import { FloatType } from "../frames/symbols/float-type";
+import { File } from "../frames/interfaces/file";
 import { Parent } from "../frames/interfaces/parent";
-import { BooleanType } from "../frames/symbols/boolean-type";
-import { IntType } from "../frames/symbols/int-type";
-import { StringType } from "../frames/symbols/string-type";
-import { ElanSymbol } from "../frames/interfaces/symbol";
-import { UnknownType } from "../frames/symbols/unknown-type";
 import { Scope } from "../frames/interfaces/scope";
-import { ImmutableListType } from "../frames/symbols/immutable-list-type";
+import { Selectable } from "../frames/interfaces/selectable";
+import { ElanSymbol } from "../frames/interfaces/symbol";
+import { SymbolType } from "../frames/interfaces/symbol-type";
+import { ParseNode } from "../frames/parse-nodes/parse-node";
+import { ParseStatus } from "../frames/status-enums";
+import { BooleanType } from "../frames/symbols/boolean-type";
+import { ClassType } from "../frames/symbols/class-type";
+import { FloatType } from "../frames/symbols/float-type";
 import { FunctionType } from "../frames/symbols/function-type";
 import { GenericParameterType } from "../frames/symbols/generic-parameter-type";
-import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { ImmutableListType } from "../frames/symbols/immutable-list-type";
+import { IntType } from "../frames/symbols/int-type";
+import { StringType } from "../frames/symbols/string-type";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
-import { StdLib } from "../std-lib";
-import { getTestSystem } from "./compiler/test-system";
+import { UnknownSymbol } from "../frames/symbols/unknown-symbol";
+import { UnknownType } from "../frames/symbols/unknown-type";
+import { transform } from "../frames/syntax-nodes/ast-visitor";
 import { getTestRunner } from "../runner";
-import { ClassType } from "../frames/symbols/class-type";
+import { StdLib } from "../std-lib";
+import { hash } from "../util";
+import { transforms } from "./compiler/compiler-test-helpers";
+import { getTestSystem } from "./compiler/test-system";
 
 // flag to update test file
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertEffectOfAction(
   sourceFile: string,

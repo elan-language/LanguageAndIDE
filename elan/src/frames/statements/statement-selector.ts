@@ -1,13 +1,14 @@
-import { StatementFactory } from "../interfaces/statement-factory";
-import { FrameWithStatements } from "../frame-with-statements";
 import { AbstractSelector } from "../abstract-selector";
-import { Parent } from "../interfaces/parent";
+import { FrameWithStatements } from "../frame-with-statements";
 import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
+import { StatementFactory } from "../interfaces/statement-factory";
 import {
   assertKeyword,
   callKeyword,
   caseKeyword,
   catchKeyword,
+  commentMarker,
   defaultKeyword,
   eachKeyword,
   elseKeyword,
@@ -25,8 +26,8 @@ import {
   tryKeyword,
   varKeyword,
   whileKeyword,
-  commentMarker,
 } from "../keywords";
+import { Switch } from "./switch";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
@@ -68,25 +69,29 @@ export class StatementSelector extends AbstractSelector {
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+    const parent = this.getParent();
     let result = false;
-    if (this.getParent().getIdPrefix() === testKeyword) {
+    if (parent.getIdPrefix() === testKeyword) {
       result =
         keyword === assertKeyword ||
         keyword === callKeyword ||
         keyword === letKeyword ||
         keyword === varKeyword ||
         keyword === commentMarker;
-    } else if (this.getParent().getIdPrefix() === switchKeyword) {
-      result = keyword === caseKeyword || keyword === commentMarker;
-    } else if (this.getParent().getIdPrefix() === ifKeyword) {
+    } else if (parent.getIdPrefix() === switchKeyword) {
+      result =
+        keyword === caseKeyword ||
+        (keyword === defaultKeyword && !(parent as Switch).containsDefault());
+    } else if (parent.getIdPrefix() === ifKeyword) {
       result = keyword === elseKeyword || keyword === commentMarker;
-    } else if (keyword === assertKeyword || keyword === caseKeyword || keyword === elseKeyword) {
-      result = false;
     } else if (
-      keyword === returnKeyword ||
-      keyword === catchKeyword ||
-      keyword === defaultKeyword
+      keyword === assertKeyword ||
+      keyword === caseKeyword ||
+      keyword === defaultKeyword ||
+      keyword === elseKeyword
     ) {
+      result = false;
+    } else if (keyword === returnKeyword || keyword === catchKeyword) {
       result = !userEntry;
     } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
       result = !(

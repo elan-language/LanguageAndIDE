@@ -1,24 +1,25 @@
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { ElanSymbol } from "../interfaces/symbol";
 import { switchKeyword } from "../keywords";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../syntax-nodes/transforms";
-import { DefaultStatement } from "./default-statement";
 
 export class Switch extends FrameWithStatements implements ElanSymbol {
   isStatement = true;
   expr: ExpressionField;
-  default: DefaultStatement;
 
   constructor(parent: Parent) {
     super(parent);
     this.expr = new ExpressionField(this);
-    this.default = new DefaultStatement(this);
-    this.getChildren().push(this.default);
+  }
+
+  containsDefault(): boolean {
+    const defaults = this.getChildren().filter((c) => "isDefault" in c);
+    return defaults.length > 0;
   }
 
   get symbolId() {
@@ -70,12 +71,7 @@ ${this.indent()}}`;
     this.expr.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
-    let result = false;
-    if (source.isMatch("default")) {
-      result = true;
-      this.default.parseFrom(source);
-      source.remove("end switch");
-    }
-    return result;
+    source.removeIndent();
+    return this.parseStandardEnding(source, "end switch");
   }
 }

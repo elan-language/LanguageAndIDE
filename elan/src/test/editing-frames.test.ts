@@ -1,4 +1,15 @@
+import assert from "assert";
 import * as vscode from "vscode";
+import { Constructor } from "../frames/class-members/constructor";
+import { MemberSelector } from "../frames/class-members/member-selector";
+import { Property } from "../frames/class-members/property";
+import { ExpressionField } from "../frames/fields/expression-field";
+import { IdentifierField } from "../frames/fields/identifier-field";
+import { ClassFrame } from "../frames/globals/class-frame";
+import { GlobalFunction } from "../frames/globals/global-function";
+import { MainFrame } from "../frames/globals/main-frame";
+import { ParseStatus } from "../frames/status-enums";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
 import {
   back,
@@ -14,23 +25,8 @@ import {
   key,
   shift_down,
   shift_enter,
-  shift_ins,
-  shift_tab,
-  tab,
   up,
 } from "./testHelpers";
-import assert from "assert";
-import { GlobalFunction } from "../frames/globals/global-function";
-import { Constructor } from "../frames/class-members/constructor";
-import { IdentifierField } from "../frames/fields/identifier-field";
-import { ExpressionField } from "../frames/fields/expression-field";
-import { Property } from "../frames/class-members/property";
-import { ClassFrame } from "../frames/globals/class-frame";
-import { MemberSelector } from "../frames/class-members/member-selector";
-import { StatementSelector } from "../frames/statements/statement-selector";
-import { MainFrame } from "../frames/globals/main-frame";
-import { ParseStatus } from "../frames/status-enums";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -39,14 +35,14 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if37");
     if_st.processKey(shift_enter()); //Insert above
-    const newSel = file.getById("select70");
+    const newSel = file.getById("select68");
     assert.equal(if_st.isSelected(), false);
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(down());
     assert.equal(if_st.isSelected(), true);
     assert.equal(newSel.isSelected(), false);
     if_st.processKey(enter()); //Insert below
-    const newSel2 = file.getById("select71");
+    const newSel2 = file.getById("select69");
     assert.equal(if_st.isSelected(), false);
     newSel2.processKey(up());
     assert.equal(if_st.isSelected(), true);
@@ -55,7 +51,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if47");
     if_st.processKey(enter()); //Should insert selector below
-    const newSel = file.getById("select70"); //New a selector
+    const newSel = file.getById("select68"); //New a selector
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up()); //Go back up to 'if'
     assert.equal(newSel.isSelected(), false);
@@ -86,7 +82,7 @@ suite("Editing Frames", () => {
     const expr5 = file.getById("expr5") as ExpressionField;
     expr5.select();
     expr5.processKey(enter());
-    const newSel = file.getById("select70"); //New selector
+    const newSel = file.getById("select68"); //New selector
     assert.equal(newSel.isSelected(), true);
     newSel.processKey(up());
     assert.equal(newSel.isSelected(), false);
@@ -211,7 +207,7 @@ suite("Editing Frames", () => {
     const set6 = file.getById("set6");
     set6.processKey(enter());
     const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select70");
+    assert.equal(selector.getHtmlId(), "select68");
     selector.processKey(ctrl_v());
     const pasted = main.getChildren()[1];
     assert.equal(pasted.getHtmlId(), "var3");
@@ -225,7 +221,7 @@ suite("Editing Frames", () => {
     var3.processKey(ctrl_x());
     main.processKey(shift_enter());
     const globalSelect = file.getChildren()[0];
-    assert.equal(globalSelect.getHtmlId(), "select70");
+    assert.equal(globalSelect.getHtmlId(), "select68");
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst, globalSelect);
