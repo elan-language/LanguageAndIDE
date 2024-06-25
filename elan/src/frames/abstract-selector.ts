@@ -1,6 +1,6 @@
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSource } from "./code-source";
-import { FrameWithStatements } from "./frame-with-statements";
+import { isFrameWithStatements } from "./helpers";
 import { editorEvent } from "./interfaces/editor-event";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
@@ -82,7 +82,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     const fields = newFrame.getFields();
     if (fields.length > 0) {
       fields[0].overtyper.consumeChars(pendingChars, 500);
-    } else if (newFrame instanceof FrameWithStatements) {
+    } else if (isFrameWithStatements(newFrame)) {
       const ss = newFrame.getFirstChild();
       if (ss instanceof AbstractSelector) {
         ss.overtyper.consumeChars(pendingChars, 500);
