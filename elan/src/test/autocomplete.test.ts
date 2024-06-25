@@ -4,6 +4,7 @@ import { DefaultProfile } from "../frames/default-profile";
 import { AssignableField } from "../frames/fields/assignableField";
 import { FileImpl } from "../frames/file-impl";
 import { testHash, transforms } from "./compiler/compiler-test-helpers";
+import { assertAutocompletes } from "./testHelpers";
 
 suite("Autocomplete", () => {
   test("Pass_Minimal", async () => {
@@ -17,24 +18,12 @@ end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    await fileImpl.renderAsHtml();
-
-    const fld = fileImpl.getById("ident10") as AssignableField;
-    const symbols = fld.autocompleteSymbols;
 
     const expected = [
       ["foo", "Int"],
       ["foobar", "Int"],
-    ];
+    ] as [string, string][];
 
-    assert.strictEqual(symbols.length, expected.length);
-
-    for (let i = 0; i < expected.length; i++) {
-      const s = symbols[i];
-      const e = expected[i];
-
-      assert.strictEqual(s.symbolId, e[0]);
-      assert.strictEqual(s.symbolType(transforms()).name, e[1]);
-    }
+    await assertAutocompletes(fileImpl, "ident10", expected);
   });
 });

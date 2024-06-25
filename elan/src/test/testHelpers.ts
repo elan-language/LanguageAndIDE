@@ -32,6 +32,7 @@ import { StdLib } from "../std-lib";
 import { hash } from "../util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
+import { AssignableField } from "../frames/fields/assignableField";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -241,6 +242,26 @@ export async function assertElementContainsHtml(f: File, id: string, expectedHtm
   const e = dom.window.document.getElementById(id);
   const c = e?.innerHTML;
   assert.strictEqual(c, expectedHtml);
+}
+
+export async function assertAutocompletes(
+  f: FileImpl,
+  id: string,
+  expected: [string, string][],
+): Promise<void> {
+  await f.renderAsHtml();
+  const fld = f.getById(id) as AssignableField;
+  const symbols = fld.autocompleteSymbols;
+
+  assert.strictEqual(symbols.length, expected.length);
+
+  for (let i = 0; i < expected.length; i++) {
+    const s = symbols[i];
+    const e = expected[i];
+
+    assert.strictEqual(s.symbolId, e[0]);
+    assert.strictEqual(s.symbolType(transforms()).name, e[1]);
+  }
 }
 
 export async function readAsDOM(f: File) {
