@@ -480,7 +480,6 @@ export abstract class AbstractField implements Selectable, Field {
   protected popupAsHtml(symbolIds: string[]) {
     let popupAsHtml = "";
     const symbolAsHtml: string[] = [];
-
     for (const symbolId of symbolIds) {
       symbolAsHtml.push(
         `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,

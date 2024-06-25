@@ -32,8 +32,17 @@ export class AssignableField extends AbstractField {
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
   matchingSymbolsForId(scope: Scope): ElanSymbol[] {
+    let result: ElanSymbol[] = [];
     const id = this.rootNode?.matchedText;
-    return id ? scope.symbolMatches(id, false, scope).filter((s) => isVarStatement(s)) : [];
+    if (id) {
+      const filtered = scope.symbolMatches(id, false, scope).filter((s) => isVarStatement(s));
+      if (filtered.length === 1 && filtered[0].symbolId === this.rootNode?.matchedText) {
+        result = [];
+      } else {
+        result = filtered;
+      }
+    }
+    return result;
   }
 
   public textAsHtml(): string {

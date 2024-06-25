@@ -1,15 +1,15 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Alternatives } from "../parse-nodes/alternatives";
-import { IdentifierNode } from "../parse-nodes/identifier-node";
-import { ParseNode } from "../parse-nodes/parse-node";
-import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
-import { AbstractField } from "./abstract-field";
-import { ParseStatus } from "../status-enums";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
+import { Alternatives } from "../parse-nodes/alternatives";
+import { IdentifierNode } from "../parse-nodes/identifier-node";
+import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { ParseStatus } from "../status-enums";
 import { isIdOrProcedure, matchingSymbols } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
   isParseByNodes = true;
@@ -47,7 +47,7 @@ export class ProcRefField extends AbstractField {
       this.autocompleteSymbols = this.matchingSymbolsForId(this.getHolder());
       const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
-      text = super.textAsHtml() + popupAsHtml;
+      text = popupAsHtml + super.textAsHtml();
     } else {
       if (
         this.readParseStatus() === ParseStatus.valid ||
