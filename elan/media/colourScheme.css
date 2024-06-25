@@ -9,6 +9,7 @@
     --error:  rgb(248, 74, 74);
     --optional:  lightgrey;
     --help: rgb(56,0,255);
+    --autoCompHighlight: rgb(68,114,196);
 
     --keyword: rgb(56,0,255);
     --method: rgb(152, 118, 49);

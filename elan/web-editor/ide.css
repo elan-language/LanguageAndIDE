@@ -186,7 +186,7 @@ button#expand-collapse {
 .autocomplete-popup {
   visibility: visible;
   width: fit-content;
-  background-color:rgb(198, 222, 247);
+  background-color: lightgrey;
   position: absolute;
   z-index: 1;
   height: fit-content;
@@ -197,11 +197,12 @@ button#expand-collapse {
 
 .autocomplete-item {
   color: black;
+  background-color: lightgrey;
   text-align: left;
   padding-left: 1px;
 }
 
 .autocomplete-item.selected {
   color: white;
-  background-color: blue;
+  background-color: var(--autoCompHighlight);
 }

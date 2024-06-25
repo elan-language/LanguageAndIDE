@@ -169,13 +169,11 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "ArrowUp": {
-        this.getHolder().getPreviousFrameInTabOrder().select(true, false);
-        this.noLongerEditingField();
+        this.selectFromAutoCompleteItems(true);
         break;
       }
       case "ArrowDown": {
-        this.getHolder().getNextFrameInTabOrder().select(true, false);
-        this.noLongerEditingField();
+        this.selectFromAutoCompleteItems(false);
         break;
       }
       case "Backspace": {
@@ -281,6 +279,12 @@ export abstract class AbstractField implements Selectable, Field {
     if (completions.length > 0) {
       this.cursorRight();
     } else {
+      if (this.autoCompSelected !== "") {
+        this.text = this.autoCompSelected;
+        this.autoCompSelected = "";
+        this.parseCurrentText();
+        this.codeHasChanged = true;
+      }
       const peerFields = this.holder.getFields();
       const last = peerFields.length - 1;
       const thisField = peerFields.indexOf(this);
@@ -478,7 +482,9 @@ export abstract class AbstractField implements Selectable, Field {
     const symbolAsHtml: string[] = [];
 
     for (const symbolId of symbolIds) {
-      symbolAsHtml.push(`<div class="autocomplete-item">${symbolId}</div>`);
+      symbolAsHtml.push(
+        `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,
+      );
     }
 
     if (symbolAsHtml.length > 0) {
@@ -486,5 +492,30 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     return popupAsHtml;
+  }
+
+  private markIfSelected(symbolId: string) {
+    return symbolId === this.autoCompSelected ? "selected" : "";
+  }
+
+  private autoCompSelected: string = "";
+
+  selectFromAutoCompleteItems(up: boolean) {
+    const options = this.matchingSymbolsForId(this.getHolder());
+    let matched = false;
+    for (let i = 0; i < options.length; i++) {
+      if (!matched && options[i].symbolId === this.autoCompSelected) {
+        if (i > 0 && up) {
+          this.autoCompSelected = options[i - 1].symbolId;
+          matched = true;
+        } else if (i < options.length - 1 && !up) {
+          this.autoCompSelected = options[i + 1].symbolId;
+          matched = true;
+        }
+      }
+    }
+    if (!matched && options.length > 0) {
+      this.autoCompSelected = options[0].symbolId;
+    }
   }
 }
