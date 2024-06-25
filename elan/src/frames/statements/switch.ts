@@ -17,11 +17,6 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
     this.expr = new ExpressionField(this);
   }
 
-  containsDefault(): boolean {
-    const defaults = this.getChildren().filter((c) => "isDefault" in c);
-    return defaults.length > 0;
-  }
-
   get symbolId() {
     return "_";
   }

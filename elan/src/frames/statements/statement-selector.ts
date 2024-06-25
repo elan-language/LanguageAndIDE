@@ -27,7 +27,6 @@ import {
   varKeyword,
   whileKeyword,
 } from "../keywords";
-import { Switch } from "./switch";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
@@ -79,9 +78,7 @@ export class StatementSelector extends AbstractSelector {
         keyword === varKeyword ||
         keyword === commentMarker;
     } else if (parent.getIdPrefix() === switchKeyword) {
-      result =
-        keyword === caseKeyword ||
-        (keyword === defaultKeyword && !(parent as Switch).containsDefault());
+      result = keyword === caseKeyword || keyword === defaultKeyword;
     } else if (parent.getIdPrefix() === ifKeyword) {
       result = keyword === elseKeyword || keyword === commentMarker;
     } else if (

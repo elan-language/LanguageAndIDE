@@ -91,12 +91,9 @@ suite("Editing Frames", () => {
 
   test("Enter on last field in a frame with statements", () => {
     const file = T03_mainWithAllStatements();
-    const globSel = file.getById("select0");
-    globSel.processKey(key("p"));
-    const params = file.getById("params73");
-    const stateSel = file.getById("select71");
-    assert.equal(stateSel.isSelected(), false);
-    params.processKey(enter());
+    const printEx = file.getById("expr15");
+    printEx.processKey(enter());
+    const stateSel = file.getById("select69");
     assert.equal(stateSel.isSelected(), true);
   });
 
