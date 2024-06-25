@@ -93,7 +93,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const printEx = file.getById("expr15");
     printEx.processKey(enter());
-    const stateSel = file.getById("select69");
+    const stateSel = file.getById("select68");
     assert.equal(stateSel.isSelected(), true);
   });
 
