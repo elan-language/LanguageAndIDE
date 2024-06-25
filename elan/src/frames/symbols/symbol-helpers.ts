@@ -18,8 +18,6 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { StringType } from "./string-type";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { DictionaryType } from "./dictionary-type";
-import { VarStatement } from "../statements/var-statement";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ProcedureType } from "./procedure-type";
 
@@ -33,6 +31,10 @@ export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is Ge
 
 export function isDictionarySymbolType(s?: SymbolType | DictionaryType): s is DictionaryType {
   return !!s && "keyType" in s && "valueType" in s;
+}
+
+export function isVarStatement(s?: ElanSymbol): s is ElanSymbol {
+  return !!s && "isVarStatement" in s;
 }
 
 export function rawSymbolToType(s: string) {
@@ -184,29 +186,29 @@ export function isPossibleExtensionForType(parmType: SymbolType, proc: Procedure
   return false;
 }
 
-export function isIdOrProcedure(s: ElanSymbol) {
-  return s instanceof VarStatement || s.symbolType(transforms()) instanceof ProcedureType;
+export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
+  return s.symbolType(transforms) instanceof ProcedureType || isVarStatement(s);
 }
 
-export function matchingSymbols(id: string, scope: Scope): ElanSymbol[] {
+export function matchingSymbols(id: string, transforms: Transforms, scope: Scope): ElanSymbol[] {
   const dotIndex = id.indexOf(".");
 
   if (dotIndex >= 0) {
     const qualId = id.slice(0, dotIndex);
     const propId = id.slice(dotIndex + 1);
 
-    const qual = scope.resolveSymbol(qualId, transforms(), scope);
+    const qual = scope.resolveSymbol(qualId, transforms, scope);
 
     // class scope so all or matching symbols on class
-    const qualSt = qual.symbolType(transforms());
+    const qualSt = qual.symbolType(transforms);
     if (qualSt instanceof ClassType) {
-      const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms(), scope);
+      const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
       if (isClass(cls as unknown as Scope)) {
         return (cls as unknown as Scope)
           .symbolMatches(propId, !propId)
           .filter((s) => s.symbolScope === SymbolScope.property)
-          .filter((s) => s.symbolType(transforms()) instanceof ProcedureType);
+          .filter((s) => s.symbolType(transforms) instanceof ProcedureType);
       }
       return [];
     }
@@ -214,7 +216,7 @@ export function matchingSymbols(id: string, scope: Scope): ElanSymbol[] {
     const allExtensions = getGlobalScope(scope)
       .libraryScope.symbolMatches(propId, !propId)
       .filter((s) => {
-        const st = s.symbolType(transforms());
+        const st = s.symbolType(transforms);
         return (
           st instanceof ProcedureType && st.isExtension && isPossibleExtensionForType(qualSt, st)
         );

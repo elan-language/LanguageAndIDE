@@ -9,6 +9,7 @@ import { ParseStatus } from "../status-enums";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { isIdOrProcedure, matchingSymbols } from "../symbols/symbol-helpers";
+import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class ProcRefField extends AbstractField {
   isParseByNodes = true;
@@ -37,7 +38,7 @@ export class ProcRefField extends AbstractField {
       return [];
     }
 
-    return matchingSymbols(id, scope);
+    return matchingSymbols(id, transforms(), scope);
   }
 
   public textAsHtml(): string {
@@ -45,7 +46,7 @@ export class ProcRefField extends AbstractField {
     if (this.selected) {
       const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
       const filteredSymbolIds = matchedSymbols
-        .filter((s) => isIdOrProcedure(s))
+        .filter((s) => isIdOrProcedure(s, transforms()))
         .map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
       text = super.textAsHtml() + popupAsHtml;
