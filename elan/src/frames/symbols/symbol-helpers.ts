@@ -20,6 +20,11 @@ import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { DictionaryType } from "./dictionary-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ProcedureType } from "./procedure-type";
+import { IterType } from "./iter-type";
+import { ImmutableListType } from "./immutable-list-type";
+import { ArrayListType } from "./array-list-type";
+import { AbstractDictionaryType } from "./abstract-dictionary-type";
+import { ImmutableDictionaryType } from "./immutable-dictionary-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -152,35 +157,72 @@ export function isValueType(type: SymbolType) {
   );
 }
 
-export function isPossibleExtensionForType(parmType: SymbolType, proc: ProcedureType) {
-  if (proc.parametersTypes.length > 0) {
-    const firstParmType = proc.parametersTypes[0];
+function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
+  if (paramType.constructor.name === actualType.constructor.name) {
+    return true;
+  }
 
-    if (firstParmType.name === parmType.name) {
-      return true;
-    }
+  if (
+    paramType instanceof IterType &&
+    (actualType instanceof ImmutableListType || actualType instanceof ArrayListType)
+  ) {
+    return true;
+  }
 
-    if (firstParmType instanceof GenericParameterType) {
-      return true;
-    }
+  return false;
+}
 
-    if (isGenericSymbolType(firstParmType) && isGenericSymbolType(parmType)) {
-      return (
-        firstParmType.constructor.name === parmType.constructor.name &&
-        (firstParmType.ofType instanceof GenericParameterType ||
-          firstParmType.ofType.name === parmType.ofType.name)
-      );
-    }
+function matchDictionaryTypes(actualType: SymbolType, paramType: SymbolType) {
+  if (paramType.constructor.name === actualType.constructor.name) {
+    return true;
+  }
 
-    if (isDictionarySymbolType(firstParmType) && isDictionarySymbolType(parmType)) {
-      return (
-        firstParmType.constructor.name === parmType.constructor.name &&
-        (firstParmType.keyType instanceof GenericParameterType ||
-          firstParmType.keyType.name === parmType.keyType.name) &&
-        (firstParmType.valueType instanceof GenericParameterType ||
-          firstParmType.valueType.name === parmType.valueType.name)
-      );
-    }
+  if (
+    paramType instanceof AbstractDictionaryType &&
+    (actualType instanceof DictionaryType || actualType instanceof ImmutableDictionaryType)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
+  if (paramType.name === actualType.name) {
+    return true;
+  }
+
+  if (paramType instanceof GenericParameterType) {
+    return true;
+  }
+
+  if (isGenericSymbolType(paramType) && isGenericSymbolType(actualType)) {
+    return (
+      matchGenericTypes(actualType, paramType) &&
+      (paramType.ofType instanceof GenericParameterType ||
+        matchType(actualType.ofType, paramType.ofType))
+    );
+  }
+
+  if (isDictionarySymbolType(paramType) && isDictionarySymbolType(actualType)) {
+    return (
+      matchDictionaryTypes(actualType, paramType) &&
+      (paramType.keyType instanceof GenericParameterType ||
+        matchType(actualType.keyType, paramType.keyType)) &&
+      (paramType.valueType instanceof GenericParameterType ||
+        matchType(actualType.valueType, paramType.valueType))
+    );
+  }
+
+  // Todo when we have extensions on Class
+
+  return false;
+}
+
+export function isPossibleExtensionForType(actualType: SymbolType, procType: ProcedureType) {
+  if (procType.parametersTypes.length > 0) {
+    const firstParmType = procType.parametersTypes[0];
+    return matchType(actualType, firstParmType);
   }
 
   return false;
