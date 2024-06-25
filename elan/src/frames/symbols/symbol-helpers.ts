@@ -18,6 +18,10 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { StringType } from "./string-type";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { DictionaryType } from "./dictionary-type";
+import { VarStatement } from "../statements/var-statement";
+import { transforms } from "../syntax-nodes/ast-helpers";
+import { GenericParameterType } from "./generic-parameter-type";
+import { ProcedureType } from "./procedure-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -144,4 +148,80 @@ export function isValueType(type: SymbolType) {
     type instanceof BooleanType ||
     type instanceof StringType
   );
+}
+
+export function isPossibleExtensionForType(parmType: SymbolType, proc: ProcedureType) {
+  if (proc.parametersTypes.length > 0) {
+    const firstParmType = proc.parametersTypes[0];
+
+    if (firstParmType.name === parmType.name) {
+      return true;
+    }
+
+    if (firstParmType instanceof GenericParameterType) {
+      return true;
+    }
+
+    if (isGenericSymbolType(firstParmType) && isGenericSymbolType(parmType)) {
+      return (
+        firstParmType.constructor.name === parmType.constructor.name &&
+        (firstParmType.ofType instanceof GenericParameterType ||
+          firstParmType.ofType.name === parmType.ofType.name)
+      );
+    }
+
+    if (isDictionarySymbolType(firstParmType) && isDictionarySymbolType(parmType)) {
+      return (
+        firstParmType.constructor.name === parmType.constructor.name &&
+        (firstParmType.keyType instanceof GenericParameterType ||
+          firstParmType.keyType.name === parmType.keyType.name) &&
+        (firstParmType.valueType instanceof GenericParameterType ||
+          firstParmType.valueType.name === parmType.valueType.name)
+      );
+    }
+  }
+
+  return false;
+}
+
+export function isIdOrProcedure(s: ElanSymbol) {
+  return s instanceof VarStatement || s.symbolType(transforms()) instanceof ProcedureType;
+}
+
+export function matchingSymbols(id: string, scope: Scope): ElanSymbol[] {
+  const dotIndex = id.indexOf(".");
+
+  if (dotIndex >= 0) {
+    const qualId = id.slice(0, dotIndex);
+    const propId = id.slice(dotIndex + 1);
+
+    const qual = scope.resolveSymbol(qualId, transforms(), scope);
+
+    // class scope so all or matching symbols on class
+    const qualSt = qual.symbolType(transforms());
+    if (qualSt instanceof ClassType) {
+      const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms(), scope);
+
+      if (isClass(cls as unknown as Scope)) {
+        return (cls as unknown as Scope)
+          .symbolMatches(propId, !propId)
+          .filter((s) => s.symbolScope === SymbolScope.property)
+          .filter((s) => s.symbolType(transforms()) instanceof ProcedureType);
+      }
+      return [];
+    }
+
+    const allExtensions = getGlobalScope(scope)
+      .libraryScope.symbolMatches(propId, !propId)
+      .filter((s) => {
+        const st = s.symbolType(transforms());
+        return (
+          st instanceof ProcedureType && st.isExtension && isPossibleExtensionForType(qualSt, st)
+        );
+      });
+
+    return allExtensions;
+  }
+
+  return scope.symbolMatches(id, false, scope as Frame);
 }

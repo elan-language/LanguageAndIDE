@@ -6,24 +6,9 @@ import { ParseNode } from "../parse-nodes/parse-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { AbstractField } from "./abstract-field";
 import { ParseStatus } from "../status-enums";
-import { ProcedureFrame } from "../globals/procedure-frame";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
-import { transforms } from "../syntax-nodes/ast-helpers";
-import { ProcedureType } from "../symbols/procedure-type";
-import { VarStatement } from "../statements/var-statement";
-import { ClassType } from "../symbols/class-type";
-import { isClass } from "../helpers";
-import {
-  getGlobalScope,
-  isDictionarySymbolType,
-  isGenericSymbolType,
-} from "../symbols/symbol-helpers";
-import { Class } from "../interfaces/class";
-import { Property } from "../class-members/property";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { GenericParameterType } from "../symbols/generic-parameter-type";
+import { isIdOrProcedure, matchingSymbols } from "../symbols/symbol-helpers";
 
 export class ProcRefField extends AbstractField {
   isParseByNodes = true;
@@ -52,81 +37,7 @@ export class ProcRefField extends AbstractField {
       return [];
     }
 
-    const dotIndex = id.indexOf(".");
-
-    if (dotIndex >= 0) {
-      const qualId = id.slice(0, dotIndex);
-      const propId = id.slice(dotIndex + 1);
-
-      const qual = scope.resolveSymbol(qualId, transforms(), scope);
-
-      // class scope so all or matching symbols on class
-      const qualSt = qual.symbolType(transforms());
-      if (qualSt instanceof ClassType) {
-        const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms(), scope);
-
-        if (isClass(cls as unknown as Scope)) {
-          return (cls as unknown as Scope)
-            .symbolMatches(propId, !propId)
-            .filter((s) => s.symbolScope === SymbolScope.property)
-            .filter((s) => s.symbolType(transforms()) instanceof ProcedureType);
-        }
-        return [];
-      }
-
-      const allExtensions = getGlobalScope(scope)
-        .libraryScope.symbolMatches(propId, !propId)
-        .filter((s) => {
-          const st = s.symbolType(transforms());
-          return (
-            st instanceof ProcedureType &&
-            st.isExtension &&
-            this.isPossibleExtensionForType(qualSt, st)
-          );
-        });
-
-      return allExtensions;
-    }
-
-    return scope.symbolMatches(id, false, this.getHolder());
-  }
-
-  isPossibleExtensionForType(parmType: SymbolType, proc: ProcedureType) {
-    if (proc.parametersTypes.length > 0) {
-      const firstParmType = proc.parametersTypes[0];
-
-      if (firstParmType.name === parmType.name) {
-        return true;
-      }
-
-      if (firstParmType instanceof GenericParameterType) {
-        return true;
-      }
-
-      if (isGenericSymbolType(firstParmType) && isGenericSymbolType(parmType)) {
-        return (
-          firstParmType.constructor.name === parmType.constructor.name &&
-          (firstParmType.ofType instanceof GenericParameterType ||
-            firstParmType.ofType.name === parmType.ofType.name)
-        );
-      }
-
-      if (isDictionarySymbolType(firstParmType) && isDictionarySymbolType(parmType)) {
-        return (
-          firstParmType.constructor.name === parmType.constructor.name &&
-          (firstParmType.keyType instanceof GenericParameterType ||
-            firstParmType.keyType.name === parmType.keyType.name) &&
-          (firstParmType.valueType instanceof GenericParameterType ||
-            firstParmType.valueType.name === parmType.valueType.name)
-        );
-      }
-    }
-
-    return false;
-  }
-
-  isIdOrProcedure(s: ElanSymbol) {
-    return s instanceof VarStatement || s.symbolType(transforms()) instanceof ProcedureType;
+    return matchingSymbols(id, scope);
   }
 
   public textAsHtml(): string {
@@ -134,7 +45,7 @@ export class ProcRefField extends AbstractField {
     if (this.selected) {
       const matchedSymbols = this.matchingSymbolsForId(this.getHolder());
       const filteredSymbolIds = matchedSymbols
-        .filter((s) => this.isIdOrProcedure(s))
+        .filter((s) => isIdOrProcedure(s))
         .map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
       text = super.textAsHtml() + popupAsHtml;
