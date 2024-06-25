@@ -1,4 +1,4 @@
-# b152e5f740dfb80e69841b066ab1adab13cd4eb719ff1c5bb2f751591b2488a4 Elan v0.1 valid
+# b6c92147da16636e36293774308369a56f7f6a23e98eadb86b39f0e98a22c854 Elan v0.1 valid
 
 main
   var cm set to new Graphics()
@@ -147,7 +147,7 @@ end test
 function liveNeighbours(cells as {Boolean}, c as Int) return Int
   let neighbours be neighbourCells(c)
   let live be neighbours.filter(lambda i as Int => cells.get(i))
-  return live.count()
+  return live.length()
 end function
 
 test 

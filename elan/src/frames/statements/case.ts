@@ -1,16 +1,15 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CaseValueField } from "../fields/case-value-field";
 import { CodeSource } from "../code-source";
+import { mustBeCompatibleType } from "../compile-rules";
+import { CaseValueField } from "../fields/case-value-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Statement } from "../interfaces/statement";
 import { singleIndent } from "../helpers";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
 import { caseKeyword } from "../keywords";
-import { ElanSymbol } from "../interfaces/symbol";
-import { mustBeCompatibleNode, mustBeCompatibleType } from "../compile-rules";
-import { Transforms } from "../syntax-nodes/transforms";
 import { isSymbol } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Case extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -66,6 +65,6 @@ ${this.indent()}${singleIndent()}break;`;
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();
-    return source.isMatch("case ") || source.isMatch("default");
+    return source.isMatch("case ") || source.isMatch("default") || source.isMatch("end switch");
   }
 }

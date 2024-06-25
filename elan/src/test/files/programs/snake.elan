@@ -1,4 +1,4 @@
-# 586892cb4f16f5fff645ffd9745bff04e288d56c6a48842e916d212bce13ae66 Elan v0.1 valid
+# bded956396d28398906a6dd1ce5ef1cd4ef8c27d120bb0aa97ab1c63d6188507 Elan v0.1 valid
 
 main
   var board set to new Board(40, 30)
@@ -143,8 +143,6 @@ immutable class Square
         set newY to y - 1
       case Direction.down
         set newY to y + 1
-      default
-
     end switch
     return new Square(newX, newY)
   end function

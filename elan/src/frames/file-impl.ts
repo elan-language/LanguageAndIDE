@@ -1,32 +1,36 @@
-import { Selectable } from "./interfaces/selectable";
-import { StatementFactory } from "./interfaces/statement-factory";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { File } from "./interfaces/file";
-import { MainFrame } from "./globals/main-frame";
+import { StdLibSymbols } from "../std-lib-symbols";
+import { AssertOutcome } from "../system";
+import { AbstractSelector } from "./abstract-selector";
+import { CodeSource, CodeSourceFromString } from "./code-source";
+import { CompileError } from "./compile-error";
+import { Regexes } from "./fields/regexes";
+import { ClassFrame } from "./globals/class-frame";
+import { Constant } from "./globals/constant";
+import { Enum } from "./globals/enum";
+import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { Enum } from "./globals/enum";
-import { ClassFrame } from "./globals/class-frame";
-import { GlobalComment } from "./globals/global-comment";
-import { Constant } from "./globals/constant";
+import { GlobalSelector } from "./globals/global-selector";
+import { MainFrame } from "./globals/main-frame";
 import { TestFrame } from "./globals/test-frame";
-import { StatementFactoryImpl } from "./statement-factory-impl";
 import {
-  helper_compileStatusAsDisplayStatus,
   expandCollapseAll,
-  isSelector,
+  helper_compileStatusAsDisplayStatus,
   helper_parseStatusAsDisplayStatus,
-  helper_testStatusAsDisplayStatus,
   helper_runStatusAsDisplayStatus,
+  helper_testStatusAsDisplayStatus,
+  isSelector,
 } from "./helpers";
+import { editorEvent } from "./interfaces/editor-event";
+import { Field } from "./interfaces/field";
+import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { CodeSource, CodeSourceFromString } from "./code-source";
-import { Regexes } from "./fields/regexes";
-import { GlobalSelector } from "./globals/global-selector";
-import { Field } from "./interfaces/field";
-import { editorEvent } from "./interfaces/editor-event";
-import { AbstractSelector } from "./abstract-selector";
+import { Profile } from "./interfaces/profile";
+import { Scope } from "./interfaces/scope";
+import { Selectable } from "./interfaces/selectable";
+import { StatementFactory } from "./interfaces/statement-factory";
+import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -37,23 +41,19 @@ import {
   parentHelper_getFirstChild,
   parentHelper_getLastChild,
   parentHelper_insertOrGotoChildSelector,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
-  parentHelper_readWorstCompileStatusOfChildren,
-  parentHelper_readWorstParseStatusOfChildren,
   worstParseStatus,
 } from "./parent-helpers";
-import { Profile } from "./interfaces/profile";
-import { ElanSymbol } from "./interfaces/symbol";
-import { StdLibSymbols } from "../std-lib-symbols";
-import { isSymbol } from "./symbols/symbol-helpers";
-import { Scope } from "./interfaces/scope";
-import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
-import { Transforms } from "./syntax-nodes/transforms";
-import { AssertOutcome } from "../system";
+import { StatementFactoryImpl } from "./statement-factory-impl";
+import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
+import { isSymbol } from "./symbols/symbol-helpers";
+import { Transforms } from "./syntax-nodes/transforms";
 
 // for web editor bundle
 export { CodeSourceFromString };

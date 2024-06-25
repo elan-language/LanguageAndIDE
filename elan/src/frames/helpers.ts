@@ -31,6 +31,10 @@ export function isFrame(f?: Selectable | Scope): f is Frame {
   return !!f && "isFrame" in f;
 }
 
+export function isFrameWithStatements(f?: Selectable | Parent): f is Parent {
+  return !!f && "isFrameWithStatements" in f;
+}
+
 export function isParent(f?: Selectable | Parent): f is Parent {
   return !!f && "isParent" in f;
 }

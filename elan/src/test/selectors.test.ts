@@ -1,24 +1,25 @@
-import * as vscode from "vscode";
-import { T09_emptyMainAndClassWithGlobalSelector } from "./model-generating-functions.";
-import { key } from "./testHelpers";
 import assert from "assert";
+import * as vscode from "vscode";
+import { FunctionMethod } from "../frames/class-members/function-method";
+import { MemberSelector } from "../frames/class-members/member-selector";
+import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
 import { ClassFrame } from "../frames/globals/class-frame";
-import { MemberSelector } from "../frames/class-members/member-selector";
-import { MainFrame } from "../frames/globals/main-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
-import { StatementSelector } from "../frames/statements/statement-selector";
 import { GlobalSelector } from "../frames/globals/global-selector";
-import { Switch } from "../frames/statements/switch";
-import { IfStatement } from "../frames/statements/if-statement";
-import { While } from "../frames/statements/while";
-import { FunctionMethod } from "../frames/class-members/function-method";
-import { hash } from "../util";
-import { DefaultProfile } from "../frames/default-profile";
+import { MainFrame } from "../frames/globals/main-frame";
 import { TestFrame } from "../frames/globals/test-frame";
-import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../frames/keywords";
 import { Profile } from "../frames/interfaces/profile";
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../frames/keywords";
+import { DefaultStatement } from "../frames/statements/default-statement";
+import { IfStatement } from "../frames/statements/if-statement";
+import { StatementSelector } from "../frames/statements/statement-selector";
+import { Switch } from "../frames/statements/switch";
+import { While } from "../frames/statements/while";
+import { hash } from "../util";
 import { transforms } from "./compiler/compiler-test-helpers";
+import { T09_emptyMainAndClassWithGlobalSelector } from "./model-generating-functions.";
+import { key } from "./testHelpers";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
@@ -179,7 +180,17 @@ suite("Unit tests", () => {
     const sw = new Switch(m);
     const s = new StatementSelector(sw);
     const help = s.getCompletion();
-    assert.equal(help, " case #");
+    assert.equal(help, " case default");
+  });
+  test("Selection Context - in a Switch with a default", () => {
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const m = new MainFrame(fl);
+    const sw = new Switch(m);
+    const def = new DefaultStatement(sw);
+    sw.getChildren().push(def);
+    const s = new StatementSelector(sw);
+    const help = s.getCompletion();
+    assert.equal(help, " case");
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

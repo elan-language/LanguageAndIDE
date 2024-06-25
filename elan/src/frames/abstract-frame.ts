@@ -1,25 +1,24 @@
-import { Parent } from "./interfaces/parent";
-import { Selectable } from "./interfaces/selectable";
+import { CodeSource } from "./code-source";
+import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtml,
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
-  isFile,
   isFrame,
   isParent,
   singleIndent,
 } from "./helpers";
-import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
-import { Frame } from "./interfaces/frame";
-import { File } from "./interfaces/file";
-import { Field } from "./interfaces/field";
 import { editorEvent } from "./interfaces/editor-event";
-import { CodeSource } from "./code-source";
+import { Field } from "./interfaces/field";
+import { File } from "./interfaces/file";
+import { Frame } from "./interfaces/frame";
+import { Parent } from "./interfaces/parent";
+import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
-import { CompileError } from "./compile-error";
 import { ScratchPad } from "./scratch-pad";
+import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
 import { Transforms } from "./syntax-nodes/transforms";
 import { Scope } from "./interfaces/scope";
 
@@ -188,14 +187,14 @@ export abstract class AbstractFrame implements Frame {
       case "o": {
         if (e.modKey.control && isCollapsible(this)) {
           this.expandCollapse();
+          break;
         }
-        break;
       }
       case "O": {
         if (e.modKey.control) {
           this.expandCollapseAll();
+          break;
         }
-        break;
       }
       case "ArrowUp": {
         if (e.modKey.control && this.movable) {
@@ -239,15 +238,15 @@ export abstract class AbstractFrame implements Frame {
         if (e.modKey.control) {
           this.deleteIfPermissible();
           codeHasChanged = true;
+          break;
         }
-        break;
       }
       case "x": {
         if (e.modKey.control) {
           this.cut();
           codeHasChanged = true;
+          break;
         }
-        break;
       }
     }
     return codeHasChanged;

@@ -36,6 +36,7 @@ import { CompileError } from "./compile-error";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
+  isFrameWithStatements = true;
   isCollapsible: boolean = true;
   isParent: boolean = true;
   private _children: Array<Frame> = new Array<Frame>();

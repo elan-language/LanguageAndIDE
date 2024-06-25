@@ -314,9 +314,6 @@ export class StdLib {
     const fl = this.floor(n);
     return n > fl ? fl + 1 : fl;
   }
-  toPrecision(n: number, digits: number) {
-    return n.toPrecision(digits);
-  }
 
   typeAndProperties(o: { [key: string]: object }) {
     const type = o.constructor.name;
@@ -356,16 +353,6 @@ export class StdLib {
     const min = Math.min(...mm);
     const i = this.elanIndexOf(mm, min);
     return source[i];
-  }
-
-  count<T>(coll: string | T[] | { [key: string]: T }) {
-    if (typeof coll === "string") {
-      return coll.length;
-    }
-    if (Array.isArray(coll)) {
-      return coll.length;
-    }
-    return this.keys(coll).length;
   }
 
   any<T>(source: T[], predicate: (value: T) => boolean) {
@@ -606,9 +593,36 @@ export class StdLib {
     }
   }
 
+  //Input functions
   inputString(prompt: string): Promise<string> {
     this.system.printLine(prompt);
     return this.system.input();
+  }
+
+  inputStringWithLimits(prompt: string, minLength: number, maxLength: number): Promise<string> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      if (s.length < minLength) {
+        this.system.printLine(`minimum length ${minLength} characters`);
+      } else if (s.length > maxLength) {
+        this.system.printLine(`maximum length ${maxLength} characters`);
+      } else {
+        return s;
+      }
+      return this.inputStringWithLimits(prompt, minLength, maxLength);
+    });
+  }
+
+  inputStringFromOptions(prompt: string, options: string[]): Promise<string> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      if (options.includes(s)) {
+        return s;
+      } else {
+        this.system.printLine(`response must be one of ${options}`);
+      }
+      return this.inputStringFromOptions(prompt, options);
+    });
   }
 
   inputInt(prompt: string): Promise<number> {
@@ -619,10 +633,51 @@ export class StdLib {
       if (b) {
         return i;
       } else {
-        this.system.printLine("not an int");
+        this.system.printLine("not an Int");
       }
 
       return this.inputInt(prompt);
+    });
+  }
+
+  inputIntBetween(prompt: string, min: number, max: number): Promise<number> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      const [b, i] = this.parseAsInt(s);
+      if (b && i >= min && i <= max) {
+        return i;
+      } else {
+        this.system.printLine(`must be an Int between ${min} and ${max} inclusive`);
+      }
+      return this.inputIntBetween(prompt, min, max);
+    });
+  }
+
+  inputFloat(prompt: string): Promise<number> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      const [b, i] = this.parseAsFloat(s);
+
+      if (b) {
+        return i;
+      } else {
+        this.system.printLine("not a Float");
+      }
+
+      return this.inputFloat(prompt);
+    });
+  }
+
+  inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
+    this.system.printLine(prompt);
+    return this.system.input().then((s) => {
+      const [b, i] = this.parseAsFloat(s);
+      if (b && i >= min && i <= max) {
+        return i;
+      } else {
+        this.system.printLine(`must be a Float between ${min} and ${max} inclusive`);
+      }
+      return this.inputFloatBetween(prompt, min, max);
     });
   }
   //Math

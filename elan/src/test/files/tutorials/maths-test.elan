@@ -1,0 +1,17 @@
+# 2683dabb3e419bef0ec51423a68bdb2a3ae77cd3bcfd3ee48de2bf6f967227eb Elan v0.1 valid
+
+test 
+  assert pi is 3.141592653589793
+  assert abs(-3.7) is 3.7
+  assert round(acos(0.5), 3) is 1.047
+  assert round(asin(0.5), 3) is 0.524
+  assert round(atan(1), 2) is 0.79
+  assert round(cos(pi/4), 3) is 0.707
+  assert round(exp(2), 3) is 7.389
+  assert round(logE(7.398), 2) is 2
+  assert log10(1000) is 3
+  assert log2(65536) is 16
+  assert round(sin(pi/6), 2) is 0.5
+  assert round(sqrt(2), 3) is 1.414
+  assert round(tan(pi/4), 2) is 1
+end test

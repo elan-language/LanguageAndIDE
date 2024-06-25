@@ -1,6 +1,4 @@
-import { FileImpl } from "../file-impl";
-import { FunctionFrame } from "../globals/function-frame";
-import { isFrame } from "../helpers";
+import { isFile, isFrame, isFunction } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -21,11 +19,11 @@ import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
 
 export function InFunctionScope(start: Scope): boolean {
-  if (start instanceof FunctionFrame) {
+  if (isFunction(start)) {
     return true;
   }
 
-  if (start instanceof FileImpl) {
+  if (isFile(start)) {
     return false;
   }
 

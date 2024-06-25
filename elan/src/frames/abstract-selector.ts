@@ -1,13 +1,12 @@
+import { AbstractFrame } from "./abstract-frame";
+import { CodeSource } from "./code-source";
+import { isFrameWithStatements } from "./helpers";
+import { editorEvent } from "./interfaces/editor-event";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
-import { editorEvent } from "./interfaces/editor-event";
 import { Parent } from "./interfaces/parent";
-import { CodeSource } from "./code-source";
-import { AbstractFrame } from "./abstract-frame";
 import { Profile } from "./interfaces/profile";
-import { MainFrame } from "./globals/main-frame";
 import { Overtyper } from "./overtyper";
-import { FrameWithStatements } from "./frame-with-statements";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {
@@ -83,7 +82,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     const fields = newFrame.getFields();
     if (fields.length > 0) {
       fields[0].overtyper.consumeChars(pendingChars, 500);
-    } else if (newFrame instanceof FrameWithStatements) {
+    } else if (isFrameWithStatements(newFrame)) {
       const ss = newFrame.getFirstChild();
       if (ss instanceof AbstractSelector) {
         ss.overtyper.consumeChars(pendingChars, 500);
@@ -139,8 +138,8 @@ export abstract class AbstractSelector extends AbstractFrame {
         if (e.modKey.control) {
           this.deleteIfPermissible(); // Deleting selector is not a code change
           codeHasChanged = true;
+          break;
         }
-        break;
       }
       case "v": {
         if (e.modKey.control) {
