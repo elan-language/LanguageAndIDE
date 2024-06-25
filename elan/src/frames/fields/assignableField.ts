@@ -43,6 +43,6 @@ export class AssignableField extends AbstractField {
       const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(filteredSymbolIds);
     }
-    return super.textAsHtml() + popupAsHtml;
+    return popupAsHtml + super.textAsHtml();
   }
 }

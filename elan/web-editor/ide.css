@@ -190,9 +190,9 @@ button#expand-collapse {
   position: absolute;
   z-index: 1;
   height: fit-content;
-  display: block;
-  margin-left: 32px;
-  margin-top: -1px;
+  display: inline-block;
+  margin-top: 17px;
+  margin-left: -1px;
 }
 
 .autocomplete-item {

@@ -89,7 +89,7 @@ end main`;
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
   });
 
-  ignore_test("Pass_CallMembers", async () => {
+  test("Pass_CallMembers", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 class Foo
