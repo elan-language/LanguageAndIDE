@@ -17,6 +17,7 @@ import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
+  isVarStatement = true;
   name: VarDefField;
   expr: ExpressionField;
 
