@@ -11,7 +11,7 @@ suite("Autocomplete", () => {
 main
   var foo set to 1
   var foobar set to 2
-  set f
+  set f to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -31,7 +31,7 @@ end main`;
 main
   var foo set to 1
   var foobar set to 2
-  set foo
+  set foo to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -50,7 +50,7 @@ constant fooyon set to 3
 main
   var foo set to 1
   var foobar set to 2
-  set f
+  set f to 1
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -74,7 +74,7 @@ end procedure
 main
   var foo set to 1
   var foobar set to 2
-  call f
+  call f()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -115,7 +115,7 @@ end class
 
 main
   var foo set to new Foo()
-  call foo
+  call foo()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

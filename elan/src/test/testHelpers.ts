@@ -30,7 +30,7 @@ import { transform } from "../frames/syntax-nodes/ast-visitor";
 import { getTestRunner } from "../runner";
 import { StdLib } from "../std-lib";
 import { hash } from "../util";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { AssignableField } from "../frames/fields/assignableField";
 import { AbstractField } from "../frames/fields/abstract-field";
@@ -261,6 +261,7 @@ export async function assertAutocompletes(
   at: number,
   expected: [string, string][],
 ): Promise<void> {
+  assertParses(f);
   const fld = f.getById(id) as AbstractField;
   fld.select();
   fld.cursorPos = at;
