@@ -278,6 +278,12 @@ export abstract class AbstractField implements Selectable, Field {
     if (completions.length > 0) {
       this.cursorRight();
     } else {
+      if (this.autoCompSelected !== "") {
+        this.text = this.autoCompSelected;
+        this.autoCompSelected = "";
+        this.parseCurrentText();
+        this.codeHasChanged = true;
+      }
       const peerFields = this.holder.getFields();
       const last = peerFields.length - 1;
       const thisField = peerFields.indexOf(this);
@@ -488,27 +494,27 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private markIfSelected(symbolId: string) {
-    return symbolId === this.currentOption ? "selected" : "";
+    return symbolId === this.autoCompSelected ? "selected" : "";
   }
 
-  private currentOption: string = "";
+  private autoCompSelected: string = "";
 
   selectFromAutoCompleteItems(up: boolean) {
     const options = this.matchingSymbolsForId(this.getHolder());
     let matched = false;
     for (let i = 0; i < options.length; i++) {
-      if (!matched && options[i].symbolId === this.currentOption) {
+      if (!matched && options[i].symbolId === this.autoCompSelected) {
         if (i > 0 && up) {
-          this.currentOption = options[i - 1].symbolId;
+          this.autoCompSelected = options[i - 1].symbolId;
           matched = true;
         } else if (i < options.length - 1 && !up) {
-          this.currentOption = options[i + 1].symbolId;
+          this.autoCompSelected = options[i + 1].symbolId;
           matched = true;
         }
       }
     }
     if (!matched && options.length > 0) {
-      this.currentOption = options[0].symbolId;
+      this.autoCompSelected = options[0].symbolId;
     }
   }
 }
