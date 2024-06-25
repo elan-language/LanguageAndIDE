@@ -439,6 +439,17 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 
     return this.getParent().resolveSymbol(id, transforms, this);
   }
+
+  symbolMatches(id: string, all: boolean, initialScope?: Frame | undefined): ElanSymbol[] {
+    const otherMatches = this.getParent().symbolMatches(id, all, initialScope);
+
+    const matches = this.getChildren().filter(
+      (f) => isSymbol(f) && (f.symbolId.startsWith(id) || all),
+    ) as unknown as ElanSymbol[];
+
+    return matches.concat(otherMatches);
+  }
+
   aggregateCompileErrors(): CompileError[] {
     const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
     return cc.concat(super.aggregateCompileErrors());

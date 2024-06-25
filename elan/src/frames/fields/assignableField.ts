@@ -32,7 +32,7 @@ export class AssignableField extends AbstractField {
 
   matchingSymbolsForId(scope: Scope): ElanSymbol[] {
     const id = this.rootNode?.matchedText;
-    return id ? scope.symbolMatches(id, this.getHolder()) : [];
+    return id ? scope.symbolMatches(id, false, this.getHolder()) : [];
   }
 
   public textAsHtml(): string {

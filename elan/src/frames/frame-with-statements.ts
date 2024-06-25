@@ -249,8 +249,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return this.getParent().resolveSymbol(id, transforms, this);
   }
 
-  symbolMatches(id: string, initialScope?: Frame): ElanSymbol[] {
-    const matches = this.getParent().symbolMatches(id);
+  symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+    const matches = this.getParent().symbolMatches(id, all);
     const localMatches: ElanSymbol[] = [];
 
     const fst = this.getFirstChild();
@@ -269,10 +269,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
               .split(",")
               .map((s) => s.trim());
 
-            if (sids.some((sid) => sid.startsWith(id))) {
+            if (sids.some((sid) => sid.startsWith(id) || all)) {
               localMatches.push(f);
             }
-          } else if (sid.startsWith(id)) {
+          } else if (sid.startsWith(id) || all) {
             localMatches.push(f);
           }
         }

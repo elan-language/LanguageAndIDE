@@ -100,10 +100,10 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
-  symbolMatches(id: string): ElanSymbol[] {
-    const libMatches = this.libraryScope.symbolMatches(id);
+  symbolMatches(id: string, all: boolean): ElanSymbol[] {
+    const libMatches = this.libraryScope.symbolMatches(id, all);
     const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
-    const matches = globalSymbols.filter((s) => s.symbolId.startsWith(id));
+    const matches = globalSymbols.filter((s) => s.symbolId.startsWith(id) || all);
 
     return matches.concat(libMatches);
   }

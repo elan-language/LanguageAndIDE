@@ -17,10 +17,10 @@ export class ClassType implements SymbolType, Scope {
     private readonly scope: ClassFrame,
   ) {}
 
-  symbolMatches(id: string): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const matches: ElanSymbol[] = [];
     for (const f of this.scope.getChildren()) {
-      if (isSymbol(f) && f.symbolId.startsWith(id)) {
+      if (isSymbol(f) && (f.symbolId.startsWith(id) || all)) {
         matches.push(f);
       }
     }

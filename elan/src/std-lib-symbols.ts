@@ -21,9 +21,9 @@ import { UnknownSymbol } from "./frames/symbols/unknown-symbol";
 import { Transforms } from "./frames/syntax-nodes/transforms";
 
 export class StdLibSymbols implements Scope {
-  symbolMatches(id: string): ElanSymbol[] {
+  symbolMatches(id: string, all: boolean): ElanSymbol[] {
     return [...this.symbols.keys()]
-      .filter((k) => k.startsWith(id))
+      .filter((k) => k.startsWith(id) || all)
       .map((k) => this.symbols.get(k)!);
   }
 
