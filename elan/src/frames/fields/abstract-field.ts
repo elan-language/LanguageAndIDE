@@ -286,6 +286,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.text = this.text + this.getAutocompleteText();
     this.autoCompSelected = "";
     this.parseCurrentText();
+    this.cursorPos = this.text.length;
     this.codeHasChanged = true;
   }
 
@@ -293,10 +294,9 @@ export abstract class AbstractField implements Selectable, Field {
     const completions = this.getPlainTextCompletion();
     if (completions.length > 0) {
       this.cursorRight();
+    } else if (this.autoCompSelected !== "") {
+      this.replaceAutocompletedText();
     } else {
-      if (this.autoCompSelected !== "") {
-        this.replaceAutocompletedText();
-      }
       const peerFields = this.holder.getFields();
       const last = peerFields.length - 1;
       const thisField = peerFields.indexOf(this);
