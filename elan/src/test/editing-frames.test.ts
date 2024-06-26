@@ -192,6 +192,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const main = file.getById("main1") as MainFrame;
     const var3 = file.getById("var3");
+    var3.select();
     var3.processKey(ctrl_x());
     const firstStatement = main.getChildren()[0];
     assert.equal(firstStatement.getHtmlId(), "set6");
@@ -200,6 +201,7 @@ suite("Editing Frames", () => {
     const file = T03_mainWithAllStatements();
     const main = file.getById("main1") as MainFrame;
     const var3 = file.getById("var3");
+    var3.select();
     var3.processKey(ctrl_x());
     const set6 = file.getById("set6");
     set6.processKey(enter());

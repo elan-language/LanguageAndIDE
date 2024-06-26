@@ -4,7 +4,6 @@ export class ScratchPad {
   private frames: Frame[] | undefined;
 
   addSnippet(frames: Frame[]): void {
-    frames[0].getFile().deselectAll();
     this.frames = frames;
   }
   readSnippet(): Frame[] | undefined {

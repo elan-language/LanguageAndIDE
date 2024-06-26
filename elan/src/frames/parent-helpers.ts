@@ -37,6 +37,7 @@ export function parentHelper_removeChild(parent: Parent, child: Frame): void {
   } else {
     parent.getFile().getMap().delete(child.getHtmlId());
   }
+  child.deselect();
 }
 
 export function parentHelper_removeAllSelectedChildren(parent: Parent): Frame[] {
