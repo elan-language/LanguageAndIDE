@@ -1,21 +1,21 @@
 import { Frame } from "./interfaces/frame";
 
 export class ScratchPad {
-  private frame: Frame | undefined;
+  private frames: Frame[] | undefined;
 
-  addSnippet(frame: Frame): void {
-    frame.deselect();
-    this.frame = frame;
+  addSnippet(frames: Frame[]): void {
+    frames[0].getFile().deselectAll();
+    this.frames = frames;
   }
-  readSnippet(): Frame | undefined {
-    const toPaste = this.frame;
-    this.frame = undefined;
+  readSnippet(): Frame[] | undefined {
+    const toPaste = this.frames;
+    this.frames = undefined;
     return toPaste;
   }
 
-  remove(frame: Frame) {
-    if (this.frame === frame) {
-      this.frame = undefined;
+  remove(frames: Frame[]) {
+    if (this.frames === frames) {
+      this.frames = undefined;
     }
   }
 }

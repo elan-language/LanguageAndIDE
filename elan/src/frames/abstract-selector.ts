@@ -176,13 +176,20 @@ export abstract class AbstractSelector extends AbstractFrame {
   paste(): void {
     const parent = this.getParent();
     const sp = this.getScratchPad();
-    const frame = sp.readSnippet();
-    if (frame && this.canBePastedIn(frame)) {
-      sp.remove(frame);
-      parent.addChildBefore(frame, this);
-      frame.setParent(parent);
-      frame.select(true, false);
-      this.deleteIfPermissible();
+    const frames = sp.readSnippet();
+    let ok = true;
+    if (frames) {
+      for (const fr of frames) {
+        ok = ok && this.canBePastedIn(fr);
+      }
+      if (ok) {
+        for (const fr of frames) {
+          parent.addChildBefore(fr, this);
+          fr.setParent(parent);
+          fr.select(true, false);
+        }
+        this.deleteIfPermissible();
+      }
     }
   }
 
