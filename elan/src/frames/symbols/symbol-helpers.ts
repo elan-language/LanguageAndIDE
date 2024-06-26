@@ -321,5 +321,6 @@ export function filteredSymbols(
 ): [string, ElanSymbol[]] {
   const [match, matches] = matchingSymbols(id, transforms, scope);
   const filtered = removeIfSingleFullMatch(matches.filter(filter), match);
-  return [match, filtered];
+  const ordered = filtered.sort((s1, s2) => s1.symbolId.localeCompare(s2.symbolId));
+  return [match, ordered];
 }

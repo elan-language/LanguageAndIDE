@@ -122,9 +122,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
+      ["pproc3", "Procedure ()"],
       ["proc1", "Procedure ()"],
       ["proc2", "Procedure ()"],
-      ["pproc3", "Procedure ()"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident39", ".", 3, expected);
@@ -180,15 +180,15 @@ end main`;
 
     const expected = [
       ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["insert", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["remove", "Procedure (ArrayList <Generic Parameter T>, Int)"],
-      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["size", "Procedure (ArrayList <Generic Parameter T>, Int)"],
       [
         "initialiseAsArray",
         "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)",
       ],
+      ["insert", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
+      ["remove", "Procedure (ArrayList <Generic Parameter T>, Int)"],
+      ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["size", "Procedure (ArrayList <Generic Parameter T>, Int)"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
