@@ -130,6 +130,43 @@ end main`;
     await assertAutocompletes(fileImpl, "ident39", ".", 3, expected);
   });
 
+  test("Pass_CallMembersFilter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+class Foo
+  constructor()
+  end constructor
+
+  procedure proc1()
+  end procedure
+
+  procedure proc2()
+  end procedure
+
+  procedure pproc3()
+  end procedure
+
+  property prop1 as Int
+
+  function func1() return Int
+    return 0
+  end function
+
+end class
+
+main
+  var foo set to new Foo()
+  call foo.p()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["pproc3", "Procedure ()"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident39", "p", 5, expected);
+  });
+
   test("Pass_CallExtensions", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -155,5 +192,23 @@ end main`;
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
+  });
+
+  test("Pass_CallExtensionsFilter", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to [1, 2]
+  call foo.a()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident7", "d", 5, expected);
   });
 });
