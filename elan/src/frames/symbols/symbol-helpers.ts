@@ -234,7 +234,7 @@ export function isProcedure(s: ElanSymbol, transforms: Transforms) {
 }
 
 export function isFunction(s: ElanSymbol, transforms: Transforms) {
-  return s.symbolType(transforms) instanceof ProcedureType;
+  return s.symbolType(transforms) instanceof FunctionType;
 }
 
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {

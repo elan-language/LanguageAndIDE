@@ -4,7 +4,7 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 import { ElanSymbol } from "../interfaces/symbol";
-import { filteredSymbols, isExpression } from "../symbols/symbol-helpers";
+import { filteredSymbols, isExpression, isFunction } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class ExpressionField extends AbstractField {
@@ -46,5 +46,20 @@ export class ExpressionField extends AbstractField {
       popupAsHtml = this.popupAsHtml(ids);
     }
     return popupAsHtml + super.textAsHtml();
+  }
+
+  private getId(s: ElanSymbol) {
+    if (isFunction(s, transforms())) {
+      return s.symbolId + "(";
+    }
+    return s.symbolId;
+  }
+
+  protected getAutocompleteText() {
+    const matches = this.autocompleteSymbols.filter((s) => s.symbolId === this.autoCompSelected);
+    if (matches.length > 0) {
+      return this.getId(matches[0]);
+    }
+    return this.autoCompSelected;
   }
 }
