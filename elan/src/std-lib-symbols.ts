@@ -1066,16 +1066,32 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("acos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
+      "acosDeg",
+      this.getSymbol("acosDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
       "asin",
       this.getSymbol("asin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "asinDeg",
+      this.getSymbol("asinDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "atan",
       this.getSymbol("atan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
+      "atanDeg",
+      this.getSymbol("atanDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
       "cos",
       this.getSymbol("cos", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "cosDeg",
+      this.getSymbol("cosDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "exp",
@@ -1098,12 +1114,28 @@ export class StdLibSymbols implements Scope {
       this.getSymbol("sin", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
+      "sinDeg",
+      this.getSymbol("sinDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
       "sqrt",
       this.getSymbol("sqrt", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
     [
       "tan",
       this.getSymbol("tan", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "tanDeg",
+      this.getSymbol("tanDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "degToRad",
+      this.getSymbol("degToRad", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
+    ],
+    [
+      "radToDeg",
+      this.getSymbol("radToDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
   ]);
 
