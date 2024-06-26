@@ -300,6 +300,14 @@ test
   assert round(sin(pi/6), 2) is 0.5
   assert round(sqrt(2), 3) is 1.414
   assert round(tan(pi/4), 2) is 1
+  assert round(sinDeg(30), 2) is 0.5
+  assert round(asinDeg(0.5), 2) is 30
+  assert round(cosDeg(60), 2) is 0.5
+  assert round(acosDeg(0.5), 2) is 60
+  assert round(tanDeg(45), 2) is 1
+  assert round(atanDeg(1), 2) is 45
+  assert round(degToRad(90), 2) is 1.57
+  assert round(radToDeg(1), 0) is 57
 end test`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -317,6 +325,14 @@ _tests.push(["test1", async (_outcomes) => {
   _outcomes.push(system.assert(_stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), 0.5, "assert34", _stdlib));
   _outcomes.push(system.assert(_stdlib.round(_stdlib.sqrt(2), 3), 1.414, "assert37", _stdlib));
   _outcomes.push(system.assert(_stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), 1, "assert40", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.sinDeg(30), 2), 0.5, "assert43", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.asinDeg(0.5), 2), 30, "assert46", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.cosDeg(60), 2), 0.5, "assert49", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.acosDeg(0.5), 2), 60, "assert52", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.tanDeg(45), 2), 1, "assert55", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.atanDeg(1), 2), 45, "assert58", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.degToRad(90), 2), 1.57, "assert61", _stdlib));
+  _outcomes.push(system.assert(_stdlib.round(_stdlib.radToDeg(1), 0), 57, "assert64", _stdlib));
 }]);
 
 async function main() {
@@ -347,6 +363,14 @@ return [main, _tests];}`;
           new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert34"),
           new AssertOutcome(TestStatus.pass, "1.414", "1.414", "assert37"),
           new AssertOutcome(TestStatus.pass, "1", "1", "assert40"),
+          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert43"),
+          new AssertOutcome(TestStatus.pass, "30", "30", "assert46"),
+          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "assert49"),
+          new AssertOutcome(TestStatus.pass, "60", "60", "assert52"),
+          new AssertOutcome(TestStatus.pass, "1", "1", "assert55"),
+          new AssertOutcome(TestStatus.pass, "45", "45", "assert58"),
+          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "assert61"),
+          new AssertOutcome(TestStatus.pass, "57", "57", "assert64"),
         ],
       ],
     ]);

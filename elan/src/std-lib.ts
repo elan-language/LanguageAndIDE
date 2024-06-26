@@ -690,14 +690,30 @@ export class StdLib {
   acos = Math.acos;
   // Returns the arccosine of the input.
 
+  acosDeg(n: number) {
+    return this.radToDeg(this.acos(n));
+  }
+
   asin = Math.asin;
   // Returns the arcsine of the input.
+
+  asinDeg(n: number) {
+    return this.radToDeg(this.asin(n));
+  }
 
   atan = Math.atan;
   // Returns the arctangent of the input.
 
+  atanDeg(n: number) {
+    return this.radToDeg(this.atan(n));
+  }
+
   cos = Math.cos;
   // Returns the cosine of the input.
+
+  cosDeg(n: number) {
+    return this.cos(this.degToRad(n));
+  }
 
   exp = Math.exp;
   // Returns ex, where x is the argument, and e is Euler's number (2.718…, the base of the natural logarithm).
@@ -714,9 +730,23 @@ export class StdLib {
   sin = Math.sin;
   // Returns the sine of the input.
 
+  sinDeg(n: number) {
+    return this.sin(this.degToRad(n));
+  }
   sqrt = Math.sqrt;
   // Returns the positive square root of the input.
 
   tan = Math.tan;
   // Returns the tangent of the input.
+
+  tanDeg(n: number) {
+    return this.tan(this.degToRad(n));
+  }
+
+  degToRad(d: number) {
+    return (d * this.pi) / 180;
+  }
+  radToDeg(r: number) {
+    return (r / this.pi) * 180;
+  }
 }

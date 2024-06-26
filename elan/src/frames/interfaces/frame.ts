@@ -1,11 +1,11 @@
-import { Field } from "./field";
-import { Selectable } from "./selectable";
+import { CompileError } from "../compile-error";
 import { CompileStatus, ParseStatus } from "../status-enums";
+import { Transforms } from "../syntax-nodes/transforms";
+import { Field } from "./field";
+import { File } from "./file";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
-import { CompileError } from "../compile-error";
-import { File } from "./file";
-import { Transforms } from "../syntax-nodes/transforms";
+import { Selectable } from "./selectable";
 
 export interface Frame extends Selectable, Scope {
   isFrame: boolean;
@@ -32,6 +32,7 @@ export interface Frame extends Selectable, Scope {
   getNextFrameInTabOrder(): Frame;
   getPreviousFrameInTabOrder(): Frame;
 
+  isMovable(): boolean;
   canInsertBefore(): boolean;
   canInsertAfter(): boolean;
 

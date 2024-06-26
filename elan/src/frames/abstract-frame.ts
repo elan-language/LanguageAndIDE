@@ -17,6 +17,11 @@ import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
+import {
+  parentHelper_getAllSelectedChildren,
+  parentHelper_getChildAfter,
+  parentHelper_removeAllSelectedChildren,
+} from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
 import { Transforms } from "./syntax-nodes/transforms";
@@ -42,6 +47,10 @@ export abstract class AbstractFrame implements Frame {
     this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
     map.set(this.htmlId, this);
     this.setMap(map);
+  }
+
+  isMovable(): boolean {
+    return this.movable;
   }
 
   getFile(): File {
@@ -252,14 +261,15 @@ export abstract class AbstractFrame implements Frame {
     return codeHasChanged;
   }
   cut(): void {
-    if (this.movable) {
-      this.insertNewSelectorIfNecessary();
-      const newFocus = this.getAdjacentPeer();
-      this.deselect();
-      const sp = this.getScratchPad();
-      this.getParent().removeChild(this);
-      sp.addSnippet(this);
+    const selected = parentHelper_getAllSelectedChildren(this.getParent());
+    const movable = selected.filter((s) => s.isMovable());
+    const last = selected[selected.length - 1];
+    if (movable.length === selected.length) {
+      parentHelper_removeAllSelectedChildren(this.getParent());
+      const newFocus = parentHelper_getChildAfter(this.getParent(), last);
       newFocus.select(true, false);
+      const sp = this.getScratchPad();
+      sp.addSnippet(selected);
     }
   }
 

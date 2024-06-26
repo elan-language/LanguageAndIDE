@@ -1,4 +1,4 @@
-# ec68e357a9204bc88def1344c50f87a29fa64f0feb4950eddae40ab9b5572be5 Elan v0.1 valid
+# 36d3c963bff5abd7dadecdb8b7301a2b5fc733422e00e831280396c82df4834c Elan v0.1 valid
 
 main
   var exit set to false
@@ -38,7 +38,7 @@ function binarySearch(list as {String}, item as String) return Boolean
   return result
 end function
 
-test binarySearch
+test 
   var li1 set to {"lemon", "lime", "orange"}
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
@@ -51,7 +51,7 @@ test binarySearch
   var li3 set to {"lemon"}
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  var li4 set to new ImmutableList<of String>()
+  var li4 set to empty {String}
   assert binarySearch(li4, "pear") is false
 end test
 

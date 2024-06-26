@@ -37,6 +37,15 @@ export function parentHelper_removeChild(parent: Parent, child: Frame): void {
   } else {
     parent.getFile().getMap().delete(child.getHtmlId());
   }
+  child.deselect();
+}
+
+export function parentHelper_removeAllSelectedChildren(parent: Parent): Frame[] {
+  const selected = parentHelper_getAllSelectedChildren(parent);
+  for (const child of selected) {
+    parentHelper_removeChild(parent, child);
+  }
+  return selected;
 }
 
 export function parentHelper_getFirstChild(parent: Parent): Frame {
@@ -156,8 +165,12 @@ function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame) {
   }
 }
 
+export function parentHelper_getAllSelectedChildren(parent: Parent): Frame[] {
+  return parent.getChildren().filter((g) => g.isSelected());
+}
+
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
-  const toMove = parent.getChildren().filter((g) => g.isSelected());
+  const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;
   let i = 0;
   while (cont && i < toMove.length) {
@@ -165,8 +178,9 @@ export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
     i++;
   }
 }
+
 export function parentHelper_moveSelectedChildrenDownOne(parent: Parent): void {
-  const toMove = parent.getChildren().filter((g) => g.isSelected());
+  const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;
   let i = toMove.length - 1;
   while (cont && i >= 0) {
