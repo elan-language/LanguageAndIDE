@@ -281,8 +281,12 @@ export abstract class AbstractField implements Selectable, Field {
 
   private replaceAutocompletedText() {
     // todo this will need refinement
-    const li = this.text.lastIndexOf(this.autocompleteMatch);
-    this.text = this.text.slice(0, li);
+
+    if (this.autocompleteMatch !== "") {
+      const li = this.text.lastIndexOf(this.autocompleteMatch);
+      this.text = this.text.slice(0, li);
+    }
+
     this.text = this.text + this.getAutocompleteText();
     this.autoCompSelected = "";
     this.parseCurrentText();

@@ -267,7 +267,7 @@ export function matchingSymbols(
 
       if (isClass(cls as unknown as Scope)) {
         return [
-          "propId",
+          propId,
           (cls as unknown as Scope)
             .symbolMatches(propId, !propId)
             .filter((s) => s.symbolScope === SymbolScope.property),
