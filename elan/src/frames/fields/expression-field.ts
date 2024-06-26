@@ -51,7 +51,7 @@ export class ExpressionField extends AbstractField {
 
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.selected && this.readParseStatus() !== ParseStatus.invalid) {
+    if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(ids);

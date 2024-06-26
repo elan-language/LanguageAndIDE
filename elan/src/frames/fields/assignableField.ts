@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { AssignableNode } from "../parse-nodes/assignable-node";
@@ -8,12 +7,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import {
-  filteredSymbols,
-  isVarStatement,
-  matchingSymbols,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { filteredSymbols, isVarStatement } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -45,7 +39,7 @@ export class AssignableField extends AbstractField {
 
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.selected && this.readParseStatus() !== ParseStatus.invalid) {
+    if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(ids);

@@ -545,4 +545,12 @@ export abstract class AbstractField implements Selectable, Field {
       this.autoCompSelected = options[0].symbolId;
     }
   }
+
+  protected showAutoComplete() {
+    return (
+      this.selected &&
+      this.readParseStatus() !== ParseStatus.invalid &&
+      this.cursorPos === this.text.length
+    );
+  }
 }
