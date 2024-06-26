@@ -7,7 +7,12 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { isVarStatement } from "../symbols/symbol-helpers";
+import {
+  isVarStatement,
+  matchingSymbols,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
+import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class AssignableField extends AbstractField {
@@ -32,17 +37,13 @@ export class AssignableField extends AbstractField {
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
   matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
-    let result: ElanSymbol[] = [];
-    const id = this.rootNode?.matchedText;
-    if (id) {
-      const filtered = scope.symbolMatches(id, false, scope).filter((s) => isVarStatement(s));
-      if (filtered.length === 1 && filtered[0].symbolId === this.rootNode?.matchedText) {
-        result = [];
-      } else {
-        result = filtered;
-      }
-    }
-    return [id ?? "", result];
+    const id = this.rootNode?.matchedText ?? "";
+    const [match, matches] = matchingSymbols(id, transforms(), scope);
+    const filtered = removeIfSingleFullMatch(
+      matches.filter((s) => isVarStatement(s)),
+      match,
+    );
+    return [match, filtered];
   }
 
   public textAsHtml(): string {
@@ -51,8 +52,8 @@ export class AssignableField extends AbstractField {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         this.getHolder(),
       );
-      const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
-      popupAsHtml = this.popupAsHtml(filteredSymbolIds);
+      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
+      popupAsHtml = this.popupAsHtml(ids);
     }
     return popupAsHtml + super.textAsHtml();
   }

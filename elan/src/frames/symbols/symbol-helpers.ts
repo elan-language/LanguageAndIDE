@@ -25,6 +25,7 @@ import { ImmutableListType } from "./immutable-list-type";
 import { ArrayListType } from "./array-list-type";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { ImmutableDictionaryType } from "./immutable-dictionary-type";
+import { FunctionType } from "./function-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -232,8 +233,16 @@ export function isProcedure(s: ElanSymbol, transforms: Transforms) {
   return s.symbolType(transforms) instanceof ProcedureType;
 }
 
+export function isFunction(s: ElanSymbol, transforms: Transforms) {
+  return s.symbolType(transforms) instanceof ProcedureType;
+}
+
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
   return isProcedure(s, transforms) || isVarStatement(s);
+}
+
+export function isExpression(s: ElanSymbol, transforms: Transforms) {
+  return !isProcedure(s, transforms);
 }
 
 export function matchingSymbols(
@@ -241,6 +250,8 @@ export function matchingSymbols(
   transforms: Transforms,
   scope: Scope,
 ): [string, ElanSymbol[]] {
+  const tokens = id.split(" ");
+  id = tokens.length > 0 ? tokens[tokens.length - 1].trim() : "";
   const dotIndex = id.indexOf(".");
 
   if (dotIndex >= 0) {
@@ -259,8 +270,7 @@ export function matchingSymbols(
           "propId",
           (cls as unknown as Scope)
             .symbolMatches(propId, !propId)
-            .filter((s) => s.symbolScope === SymbolScope.property)
-            .filter((s) => s.symbolType(transforms) instanceof ProcedureType),
+            .filter((s) => s.symbolScope === SymbolScope.property),
         ];
       }
       return [propId, []];
@@ -271,12 +281,34 @@ export function matchingSymbols(
       .filter((s) => {
         const st = s.symbolType(transforms);
         return (
-          st instanceof ProcedureType && st.isExtension && isPossibleExtensionForType(qualSt, st)
+          (st instanceof ProcedureType || st instanceof FunctionType) &&
+          st.isExtension &&
+          isPossibleExtensionForType(qualSt, st)
         );
       });
 
     return [propId, allExtensions];
   }
 
-  return [id, scope.symbolMatches(id, false, scope)];
+  const allNotExtensions = scope.symbolMatches(id, !id).filter((s) => {
+    const st = s.symbolType(transforms);
+    let isCall = false;
+    let isExtension = false;
+
+    if (st instanceof ProcedureType || st instanceof FunctionType) {
+      isCall = true;
+      isExtension = st.isExtension;
+    }
+    return !isCall || (isCall && !isExtension);
+  });
+
+  return [id, allNotExtensions];
+}
+
+export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): ElanSymbol[] {
+  if (symbols.length === 1 && symbols[0].symbolId === id) {
+    return [];
+  } else {
+    return symbols;
+  }
 }

@@ -5,6 +5,16 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 import { Regexes } from "./regexes";
+import { Scope } from "../interfaces/scope";
+import { ElanSymbol } from "../interfaces/symbol";
+import {
+  isExpression,
+  isIdOrProcedure,
+  isVarStatement,
+  matchingSymbols,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
+import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class ExpressionField extends AbstractField {
   isParseByNodes = true;
@@ -26,4 +36,26 @@ export class ExpressionField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(this.readUntil);
+
+  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
+    const id = this.rootNode?.matchedText ?? "";
+    const [match, matches] = matchingSymbols(id, transforms(), scope);
+    const filtered = removeIfSingleFullMatch(
+      matches.filter((s) => isExpression(s, transforms())),
+      match,
+    );
+    return [match, filtered];
+  }
+
+  public textAsHtml(): string {
+    let popupAsHtml = "";
+    if (this.selected) {
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
+        this.getHolder(),
+      );
+      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
+      popupAsHtml = this.popupAsHtml(ids);
+    }
+    return popupAsHtml + super.textAsHtml();
+  }
 }

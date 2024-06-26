@@ -211,4 +211,36 @@ end main`;
 
     await assertAutocompletes(fileImpl, "ident7", "d", 5, expected);
   });
+
+  test("Pass_ExpressionId", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to 1
+  var bar set to f
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["foo", "Int"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr8", "o", 1, expected);
+  });
+
+  test("Pass_ExpressionLocalVar", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to 1
+  var bar set to 1 + f
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["foo", "Int"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
+  });
 });

@@ -7,7 +7,12 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import { isIdOrProcedure, isProcedure, matchingSymbols } from "../symbols/symbol-helpers";
+import {
+  isIdOrProcedure,
+  isProcedure,
+  matchingSymbols,
+  removeIfSingleFullMatch,
+} from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -32,14 +37,13 @@ export class ProcRefField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
 
   matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
-    const id = this.rootNode?.matchedText;
-
-    if (id === undefined || id === "") {
-      return ["", []];
-    }
-
-    const [match, ms] = matchingSymbols(id, transforms(), scope);
-    return [match, ms.filter((s) => isIdOrProcedure(s, transforms()))];
+    const id = this.rootNode?.matchedText ?? "";
+    const [match, matches] = matchingSymbols(id, transforms(), scope);
+    const filtered = removeIfSingleFullMatch(
+      matches.filter((s) => isIdOrProcedure(s, transforms())),
+      match,
+    );
+    return [match, filtered];
   }
 
   private getId(s: ElanSymbol) {
@@ -63,8 +67,8 @@ export class ProcRefField extends AbstractField {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
         this.getHolder(),
       );
-      const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
-      const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
+      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
+      const popupAsHtml = this.popupAsHtml(ids);
       text = popupAsHtml + super.textAsHtml();
     } else {
       if (
