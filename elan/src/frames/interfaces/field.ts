@@ -16,7 +16,5 @@ export interface Field extends Selectable {
   aggregateCompileErrors(): CompileError[];
   overtyper: Overtyper;
   updateCompileStatus(): void;
-
-  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]];
   autocompleteSymbols: ElanSymbol[];
 }

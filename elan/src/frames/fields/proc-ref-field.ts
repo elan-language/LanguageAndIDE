@@ -37,9 +37,14 @@ export class ProcRefField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
 
-  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
+  matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(id, transforms(), (s) => isIdOrProcedure(s, transforms()), scope);
+    return filteredSymbols(
+      id,
+      transforms(),
+      (s) => isIdOrProcedure(s, transforms()),
+      this.getHolder(),
+    );
   }
 
   private getId(s: ElanSymbol) {
@@ -60,9 +65,7 @@ export class ProcRefField extends AbstractField {
   public textAsHtml(): string {
     let text: string;
     if (this.selected) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        this.getHolder(),
-      );
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(ids);
       text = popupAsHtml + super.textAsHtml();

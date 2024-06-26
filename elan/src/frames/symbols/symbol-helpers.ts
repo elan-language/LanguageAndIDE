@@ -290,7 +290,7 @@ export function matchingSymbols(
     return [propId, allExtensions];
   }
 
-  const allNotExtensions = scope.symbolMatches(id, !id).filter((s) => {
+  const allNotExtensions = scope.symbolMatches(id, !id, scope).filter((s) => {
     const st = s.symbolType(transforms);
     let isCall = false;
     let isExtension = false;

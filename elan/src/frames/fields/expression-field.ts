@@ -38,17 +38,20 @@ export class ExpressionField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(this.readUntil);
 
-  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
+  matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(id, transforms(), (s) => isExpression(s, transforms()), scope);
+    return filteredSymbols(
+      id,
+      transforms(),
+      (s) => isExpression(s, transforms()),
+      this.getHolder(),
+    );
   }
 
   public textAsHtml(): string {
     let popupAsHtml = "";
     if (this.selected) {
-      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
-        this.getHolder(),
-      );
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(ids);
     }

@@ -260,7 +260,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       range = range.slice(0, range.length - 1);
 
       for (const f of range) {
-        if (isSymbol(f) && id) {
+        if (isSymbol(f) && (id || all)) {
           // todo kludge
           const sid = f.symbolId;
 

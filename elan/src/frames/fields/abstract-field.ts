@@ -485,7 +485,7 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
+  matchingSymbolsForId(): [string, ElanSymbol[]] {
     return ["", []];
   }
 
