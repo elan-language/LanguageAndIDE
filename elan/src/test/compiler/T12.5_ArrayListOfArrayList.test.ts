@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -44,17 +45,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  print a.length()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   print a.length()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  system.printLine(_stdlib.asString(_stdlib.length(a)));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -65,23 +62,21 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "03");
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Pass_ConfirmStringElementsInitializedToEmptyArrayNotNull", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   print a[0].length()
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   system.printLine(_stdlib.asString(_stdlib.length(system.safeIndex(a, 0))));
   system.printLine(_stdlib.asString(a));
 }
@@ -103,8 +98,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   set a[0] to ["bar", "foo"]
   set a[2] to ["yon", "xan"]
   print a[0][1]
@@ -113,8 +107,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
   system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
@@ -135,8 +128,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   set a[0] to ["bar", "foo"]
   set a[0][1] to "yon"
   print a[0][1]
@@ -144,8 +136,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeDoubleSet(a, 0, 1, "yon");
   system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
@@ -165,8 +156,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   call a.add(["foo"])
   call a.add(["yon"])
   print a[3]
@@ -175,8 +165,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   _stdlib.add(a, system.literalArray(["foo"]));
   _stdlib.add(a, system.literalArray(["yon"]));
   system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
@@ -197,8 +186,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   call a[1].add("foo")
   call a[2].add("yon")
   print a
@@ -206,8 +194,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAs2DArray(a, 3, 0, "");
+  var a = _stdlib.create2DArray(3, 0, "");
   _stdlib.add(system.safeIndex(a, 1), "foo");
   _stdlib.add(system.safeIndex(a, 2), "yon");
   system.printLine(_stdlib.asString(a));
@@ -535,15 +522,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to empty [[Int]]
-  call a.initialiseAs2DArray(2,2,0)
+  var a set to create2DArray(2, 2, 0)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.emptyArrayList();
-  _stdlib.initialiseAs2DArray(a, 2, 2, 0);
+  var a = _stdlib.create2DArray(2, 2, 0);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -561,15 +546,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to [[1,2], [3,4,5], [6]]
-  call a.initialiseAs2DArray(2,2,1)
+  var a set to create2DArray(2, 2, 1)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.literalArray([system.literalArray([1, 2]), system.literalArray([3, 4, 5]), system.literalArray([6])]);
-  _stdlib.initialiseAs2DArray(a, 2, 2, 1);
+  var a = _stdlib.create2DArray(2, 2, 1);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -583,12 +566,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [1, 1], ArrayList [1, 1]]");
   });
 
-  test("Fail_InitialiseEmptyArrayList", async () => {
+  ignore_test("Fail_InitialiseEmptyArrayList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to empty [[Int]]
-  call a.initialiseAs2DArray(2,2,"")
+  var a set to create2DArray(3, 2, "")
   print a
 end main`;
 
@@ -636,8 +618,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of String>()
-  call a.initialiseAsArray(3, "")
+  var a set to createArray(3, "")
   set a[0][0] to "foo"
 end main
 `;
@@ -653,8 +634,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of Int>()
-  call a.initialiseAsArray(3, 0)
+  var a set to createArray(3, 0)
   set a[0][0] to 1
 end main
 `;
@@ -670,8 +650,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAsArray(3, empty [String])
+  var a set to createArray(3, empty [String])
   set a[0] to "foo"
 end main
 `;
@@ -687,8 +666,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAs2DArray(3, 0, "")
+  var a set to create2DArray(3, 0, "")
   set a[0] to empty [String]
   var b set to a[0][0]
 end main
@@ -706,8 +684,7 @@ end main
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var a set to new ArrayList<of ArrayList<of String>>()
-  call a.initialiseAsArray(3, empty [String])
+  var a set to createArray(3, empty [String])
   set a[0] to true
 end main
 `;

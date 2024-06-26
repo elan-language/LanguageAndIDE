@@ -477,8 +477,7 @@ procedure square(x as Int, y as [Int])
 end procedure
 
 test square
-  var arr set to new ArrayList<of Int>()
-  call arr.initialiseAsArray(1, 0)
+  var arr set to createArray(1, 0)
   call square(3, arr)
   assert arr[0] is 9
 end test
@@ -494,10 +493,9 @@ async function square(x, y) {
 }
 
 _tests.push(["test10", async (_outcomes) => {
-  var arr = system.initialise(system.array(new Array()));
-  _stdlib.initialiseAsArray(arr, 1, 0);
+  var arr = _stdlib.createArray(1, 0);
   await square(3, arr);
-  _outcomes.push(system.assert(system.safeIndex(arr, 0), 9, "assert22", _stdlib));
+  _outcomes.push(system.assert(system.safeIndex(arr, 0), 9, "assert19", _stdlib));
 }]);
 return [main, _tests];}`;
 
@@ -508,7 +506,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert22")]],
+      ["test10", [new AssertOutcome(TestStatus.pass, "9", "9", "assert19")]],
     ]);
   });
 
