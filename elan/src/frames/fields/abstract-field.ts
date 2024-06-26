@@ -451,10 +451,10 @@ export abstract class AbstractField implements Selectable, Field {
 
   getOrTransformAstNode(transforms: Transforms) {
     if (!this.astNode || this.codeHasChanged) {
-      if (this.rootNode instanceof CSV) {
+      if (this.rootNode instanceof CSV && this.rootNode.status === ParseStatus.valid) {
         const scope = this.getHolder();
         this.astNode = transforms.transformMany(this.rootNode as CSV, this.htmlId, scope);
-      } else if (this.rootNode) {
+      } else if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
         this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
       }
       this.codeHasChanged = false;
@@ -492,10 +492,26 @@ export abstract class AbstractField implements Selectable, Field {
   protected popupAsHtml(symbolIds: string[]) {
     let popupAsHtml = "";
     const symbolAsHtml: string[] = [];
-    for (const symbolId of symbolIds) {
+    const count = symbolIds.length;
+    const selectedIndex = symbolIds.indexOf(this.autoCompSelected);
+    let startIndex = 0;
+    let lastIndex = count > 10 ? 10 : count;
+
+    if (count > 10 && selectedIndex > 5) {
+      startIndex = selectedIndex - 5;
+      lastIndex = selectedIndex + 5;
+      lastIndex = lastIndex > count ? count : lastIndex;
+    }
+
+    for (let i = startIndex; i < lastIndex; i++) {
+      const symbolId = symbolIds[i];
       symbolAsHtml.push(
         `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,
       );
+    }
+
+    if (count > 10 && selectedIndex + 5 < count) {
+      symbolAsHtml.push(`<div class="autocomplete-item">...</div>`);
     }
 
     if (symbolAsHtml.length > 0) {

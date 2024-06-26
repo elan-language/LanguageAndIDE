@@ -26,7 +26,10 @@ function setup(p: Profile) {
 }
 
 function renderAsHtml() {
-  file.renderAsHtml().then((c) => updateContent(c));
+  file.renderAsHtml().then(
+    (c) => updateContent(c),
+    (e) => showError(e as Error, file.fileName, false),
+  );
 }
 
 function resetFile(reset: boolean) {
