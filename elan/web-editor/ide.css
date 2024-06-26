@@ -193,6 +193,8 @@ button#expand-collapse {
   display: inline-block;
   margin-top: 17px;
   margin-left: -1px;
+  padding: 2px;
+  border: solid 1px;
 }
 
 .autocomplete-item {
