@@ -31,7 +31,7 @@ export class AssignableField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
-  matchingSymbolsForId(scope: Scope): ElanSymbol[] {
+  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
     let result: ElanSymbol[] = [];
     const id = this.rootNode?.matchedText;
     if (id) {
@@ -42,13 +42,15 @@ export class AssignableField extends AbstractField {
         result = filtered;
       }
     }
-    return result;
+    return [id ?? "", result];
   }
 
   public textAsHtml(): string {
     let popupAsHtml = "";
     if (this.selected) {
-      this.autocompleteSymbols = this.matchingSymbolsForId(this.getHolder());
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
+        this.getHolder(),
+      );
       const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(filteredSymbolIds);
     }

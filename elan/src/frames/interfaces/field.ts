@@ -17,6 +17,6 @@ export interface Field extends Selectable {
   overtyper: Overtyper;
   updateCompileStatus(): void;
 
-  matchingSymbolsForId(scope: Scope): ElanSymbol[];
+  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]];
   autocompleteSymbols: ElanSymbol[];
 }

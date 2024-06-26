@@ -47,6 +47,7 @@ export abstract class AbstractField implements Selectable, Field {
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
   autocompleteSymbols: ElanSymbol[] = [];
+  autocompleteMatch: string = "";
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -274,16 +275,23 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  private replaceAutcompletedText() {
+    // todo this will need refinement
+    const li = this.text.lastIndexOf(this.autocompleteMatch);
+    this.text = this.text.slice(0, li);
+    this.text = this.text + this.autoCompSelected;
+    this.autoCompSelected = "";
+    this.parseCurrentText();
+    this.codeHasChanged = true;
+  }
+
   private enter() {
     const completions = this.getPlainTextCompletion();
     if (completions.length > 0) {
       this.cursorRight();
     } else {
       if (this.autoCompSelected !== "") {
-        this.text = this.autoCompSelected;
-        this.autoCompSelected = "";
-        this.parseCurrentText();
-        this.codeHasChanged = true;
+        this.replaceAutcompletedText();
       }
       const peerFields = this.holder.getFields();
       const last = peerFields.length - 1;
@@ -473,8 +481,8 @@ export abstract class AbstractField implements Selectable, Field {
     return UnknownType.Instance;
   }
 
-  matchingSymbolsForId(scope: Scope): ElanSymbol[] {
-    return [];
+  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
+    return ["", []];
   }
 
   protected popupAsHtml(symbolIds: string[]) {
@@ -500,7 +508,7 @@ export abstract class AbstractField implements Selectable, Field {
   private autoCompSelected: string = "";
 
   selectFromAutoCompleteItems(up: boolean) {
-    const options = this.matchingSymbolsForId(this.getHolder());
+    const options = this.autocompleteSymbols;
     let matched = false;
     for (let i = 0; i < options.length; i++) {
       if (!matched && options[i].symbolId === this.autoCompSelected) {

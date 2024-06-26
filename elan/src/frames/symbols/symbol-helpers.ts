@@ -232,7 +232,11 @@ export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
   return s.symbolType(transforms) instanceof ProcedureType || isVarStatement(s);
 }
 
-export function matchingSymbols(id: string, transforms: Transforms, scope: Scope): ElanSymbol[] {
+export function matchingSymbols(
+  id: string,
+  transforms: Transforms,
+  scope: Scope,
+): [string, ElanSymbol[]] {
   const dotIndex = id.indexOf(".");
 
   if (dotIndex >= 0) {
@@ -247,12 +251,15 @@ export function matchingSymbols(id: string, transforms: Transforms, scope: Scope
       const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
       if (isClass(cls as unknown as Scope)) {
-        return (cls as unknown as Scope)
-          .symbolMatches(propId, !propId)
-          .filter((s) => s.symbolScope === SymbolScope.property)
-          .filter((s) => s.symbolType(transforms) instanceof ProcedureType);
+        return [
+          "propId",
+          (cls as unknown as Scope)
+            .symbolMatches(propId, !propId)
+            .filter((s) => s.symbolScope === SymbolScope.property)
+            .filter((s) => s.symbolType(transforms) instanceof ProcedureType),
+        ];
       }
-      return [];
+      return [propId, []];
     }
 
     const allExtensions = getGlobalScope(scope)
@@ -264,8 +271,8 @@ export function matchingSymbols(id: string, transforms: Transforms, scope: Scope
         );
       });
 
-    return allExtensions;
+    return [propId, allExtensions];
   }
 
-  return scope.symbolMatches(id, false, scope);
+  return [id, scope.symbolMatches(id, false, scope)];
 }

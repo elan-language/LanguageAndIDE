@@ -31,20 +31,23 @@ export class ProcRefField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) => source.readUntil(/\(/);
 
-  matchingSymbolsForId(scope: Scope): ElanSymbol[] {
+  matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText;
 
     if (id === undefined || id === "") {
-      return [];
+      return ["", []];
     }
 
-    return matchingSymbols(id, transforms(), scope).filter((s) => isIdOrProcedure(s, transforms()));
+    const [match, ms] = matchingSymbols(id, transforms(), scope);
+    return [match, ms.filter((s) => isIdOrProcedure(s, transforms()))];
   }
 
   public textAsHtml(): string {
     let text: string;
     if (this.selected) {
-      this.autocompleteSymbols = this.matchingSymbolsForId(this.getHolder());
+      [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId(
+        this.getHolder(),
+      );
       const filteredSymbolIds = this.autocompleteSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(filteredSymbolIds);
       text = popupAsHtml + super.textAsHtml();
