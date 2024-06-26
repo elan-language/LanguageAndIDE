@@ -8,6 +8,7 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
+  filteredSymbols,
   isVarStatement,
   matchingSymbols,
   removeIfSingleFullMatch,
@@ -38,12 +39,7 @@ export class AssignableField extends AbstractField {
 
   matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    const [match, matches] = matchingSymbols(id, transforms(), scope);
-    const filtered = removeIfSingleFullMatch(
-      matches.filter((s) => isVarStatement(s)),
-      match,
-    );
-    return [match, filtered];
+    return filteredSymbols(id, transforms(), (s) => isVarStatement(s), scope);
   }
 
   public textAsHtml(): string {

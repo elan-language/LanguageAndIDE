@@ -8,6 +8,7 @@ import { Regexes } from "./regexes";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import {
+  filteredSymbols,
   isExpression,
   isIdOrProcedure,
   isVarStatement,
@@ -39,12 +40,7 @@ export class ExpressionField extends AbstractField {
 
   matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    const [match, matches] = matchingSymbols(id, transforms(), scope);
-    const filtered = removeIfSingleFullMatch(
-      matches.filter((s) => isExpression(s, transforms())),
-      match,
-    );
-    return [match, filtered];
+    return filteredSymbols(id, transforms(), (s) => isExpression(s, transforms()), scope);
   }
 
   public textAsHtml(): string {

@@ -312,3 +312,14 @@ export function removeIfSingleFullMatch(symbols: ElanSymbol[], id: string): Elan
     return symbols;
   }
 }
+
+export function filteredSymbols(
+  id: string,
+  transforms: Transforms,
+  filter: (s: ElanSymbol) => boolean,
+  scope: Scope,
+): [string, ElanSymbol[]] {
+  const [match, matches] = matchingSymbols(id, transforms, scope);
+  const filtered = removeIfSingleFullMatch(matches.filter(filter), match);
+  return [match, filtered];
+}

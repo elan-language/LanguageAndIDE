@@ -8,6 +8,7 @@ import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import {
+  filteredSymbols,
   isIdOrProcedure,
   isProcedure,
   matchingSymbols,
@@ -38,12 +39,7 @@ export class ProcRefField extends AbstractField {
 
   matchingSymbolsForId(scope: Scope): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    const [match, matches] = matchingSymbols(id, transforms(), scope);
-    const filtered = removeIfSingleFullMatch(
-      matches.filter((s) => isIdOrProcedure(s, transforms())),
-      match,
-    );
-    return [match, filtered];
+    return filteredSymbols(id, transforms(), (s) => isIdOrProcedure(s, transforms()), scope);
   }
 
   private getId(s: ElanSymbol) {
