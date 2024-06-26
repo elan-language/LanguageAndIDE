@@ -228,8 +228,12 @@ export function isPossibleExtensionForType(actualType: SymbolType, procType: Pro
   return false;
 }
 
+export function isProcedure(s: ElanSymbol, transforms: Transforms) {
+  return s.symbolType(transforms) instanceof ProcedureType;
+}
+
 export function isIdOrProcedure(s: ElanSymbol, transforms: Transforms) {
-  return s.symbolType(transforms) instanceof ProcedureType || isVarStatement(s);
+  return isProcedure(s, transforms) || isVarStatement(s);
 }
 
 export function matchingSymbols(
