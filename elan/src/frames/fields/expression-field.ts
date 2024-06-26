@@ -16,6 +16,7 @@ import {
   removeIfSingleFullMatch,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { ParseStatus } from "../status-enums";
 
 export class ExpressionField extends AbstractField {
   isParseByNodes = true;
@@ -50,7 +51,7 @@ export class ExpressionField extends AbstractField {
 
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.selected) {
+    if (this.selected && this.readParseStatus() !== ParseStatus.invalid) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(ids);

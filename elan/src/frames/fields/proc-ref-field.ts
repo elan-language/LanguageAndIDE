@@ -64,7 +64,7 @@ export class ProcRefField extends AbstractField {
 
   public textAsHtml(): string {
     let text: string;
-    if (this.selected) {
+    if (this.selected && this.readParseStatus() !== ParseStatus.invalid) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       const popupAsHtml = this.popupAsHtml(ids);

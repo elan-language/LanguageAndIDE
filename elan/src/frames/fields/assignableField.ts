@@ -7,6 +7,7 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { ParseStatus } from "../status-enums";
 import {
   filteredSymbols,
   isVarStatement,
@@ -44,7 +45,7 @@ export class AssignableField extends AbstractField {
 
   public textAsHtml(): string {
     let popupAsHtml = "";
-    if (this.selected) {
+    if (this.selected && this.readParseStatus() !== ParseStatus.invalid) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const ids = this.autocompleteSymbols.map((s) => s.symbolId);
       popupAsHtml = this.popupAsHtml(ids);
