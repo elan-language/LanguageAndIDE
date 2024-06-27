@@ -562,36 +562,42 @@ export class StdLib {
     this.system.elanInputOutput.clearKeyBuffer();
   }
 
-  initialiseAsArray<T>(toInit: T[], x: number, value: T) {
+  createArray<T>(x: number, value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
-        `Can only initialise array with simple value, not: ${this.asString(value)}`,
+        `Can only create array with simple value, not: ${this.asString(value)}`,
       );
     }
 
+    const toInit = this.system.array([]);
     toInit.length = x;
 
     for (let i = 0; i < x; i++) {
       toInit[i] = value;
     }
+
+    return toInit;
   }
 
-  initialiseAs2DArray<T>(toInit: T[][], x: number, y: number, value: T) {
+  create2DArray<T>(x: number, y: number, value: T) {
     if (!this.isValueType(value)) {
       throw new ElanRuntimeError(
         `Can only initialise array with simple value, not: ${this.asString(value)}`,
       );
     }
 
+    const toInit = this.system.array([]);
     toInit.length = x;
 
     for (let i = 0; i < x; i++) {
       const subArr = this.system.array([]);
+      subArr.length = y;
       for (let j = 0; j < y; j++) {
         subArr[j] = value;
       }
       toInit[i] = subArr;
     }
+    return toInit;
   }
 
   //Input functions
