@@ -46,6 +46,7 @@ body {
   grid-row: 2/36; 
   padding: 5px;
   margin-left: 10px;
+  position: relative;
 }
 
 #logo {
@@ -206,5 +207,5 @@ button#expand-collapse {
 
 .autocomplete-item.selected {
   color: white;
-  background-color: var(--autoCompHighlight);
+  background-color: var(--help);
 }
