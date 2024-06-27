@@ -211,11 +211,10 @@ end main`;
 
     const expected = [
       ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["insert", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
-      ["remove", "Procedure (ArrayList <Generic Parameter T>, Int)"],
+      ["insertAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
       ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["removeAt", "Procedure (ArrayList <Generic Parameter T>, Int)"],
       ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      ["size", "Procedure (ArrayList <Generic Parameter T>, Int)"],
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);
