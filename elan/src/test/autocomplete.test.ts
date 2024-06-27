@@ -25,6 +25,37 @@ end main`;
     await assertAutocompletes(fileImpl, "ident10", "o", 1, expected);
   });
 
+  test("Pass_InClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+
+end main
+
+class Foo
+  constructor()
+
+  end constructor
+
+  procedure pp1()
+    set a to 2
+  end procedure
+
+  property aa2 as Int
+  property aa3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["aa2", "Int"],
+      ["aa3", "Int"],
+    ] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "ident18", "a", 1, expected);
+  });
+
   test("Pass_FiltersByInput", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

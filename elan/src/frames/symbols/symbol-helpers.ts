@@ -39,8 +39,16 @@ export function isDictionarySymbolType(s?: SymbolType | DictionaryType): s is Di
   return !!s && "keyType" in s && "valueType" in s;
 }
 
-export function isVarStatement(s?: ElanSymbol): s is ElanSymbol {
+export function isVarStatement(s?: ElanSymbol): boolean {
   return !!s && "isVarStatement" in s;
+}
+
+export function isProperty(s?: ElanSymbol): boolean {
+  return !!s && "isProperty" in s;
+}
+
+export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
+  return !!s && (isVarStatement(s) || isProperty(s));
 }
 
 export function rawSymbolToType(s: string) {

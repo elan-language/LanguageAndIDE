@@ -4,7 +4,7 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 import { ElanSymbol } from "../interfaces/symbol";
-import { filteredSymbols, isExpression, isFunction } from "../symbols/symbol-helpers";
+import { filteredSymbols, isExpression, isFunction, isProperty } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class ExpressionField extends AbstractField {
@@ -42,24 +42,18 @@ export class ExpressionField extends AbstractField {
     let popupAsHtml = "";
     if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
-      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
-      popupAsHtml = this.popupAsHtml(ids);
+      popupAsHtml = this.popupAsHtml();
     }
     return popupAsHtml + super.textAsHtml();
   }
 
-  private getId(s: ElanSymbol) {
+  protected override getId(s: ElanSymbol) {
     if (isFunction(s, transforms())) {
       return s.symbolId + "(";
     }
-    return s.symbolId;
-  }
-
-  protected getAutocompleteText() {
-    const matches = this.autocompleteSymbols.filter((s) => s.symbolId === this.autoCompSelected);
-    if (matches.length > 0) {
-      return this.getId(matches[0]);
+    if (isProperty(s)) {
+      return "property." + s.symbolId;
     }
-    return this.autoCompSelected;
+    return s.symbolId;
   }
 }

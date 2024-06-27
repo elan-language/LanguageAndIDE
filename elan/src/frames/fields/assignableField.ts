@@ -7,7 +7,12 @@ import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import { filteredSymbols, isVarStatement } from "../symbols/symbol-helpers";
+import {
+  filteredSymbols,
+  isProperty,
+  isVarOrPropertyStatement,
+  isVarStatement,
+} from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -34,15 +39,21 @@ export class AssignableField extends AbstractField {
 
   matchingSymbolsForId(): [string, ElanSymbol[]] {
     const id = this.rootNode?.matchedText ?? "";
-    return filteredSymbols(id, transforms(), (s) => isVarStatement(s), this.getHolder());
+    return filteredSymbols(id, transforms(), (s) => isVarOrPropertyStatement(s), this.getHolder());
+  }
+
+  protected override getId(s: ElanSymbol) {
+    if (isProperty(s)) {
+      return "property." + s.symbolId;
+    }
+    return s.symbolId;
   }
 
   public textAsHtml(): string {
     let popupAsHtml = "";
     if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
-      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
-      popupAsHtml = this.popupAsHtml(ids);
+      popupAsHtml = this.popupAsHtml();
     }
     return popupAsHtml + super.textAsHtml();
   }

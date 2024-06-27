@@ -275,8 +275,12 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  protected getAutocompleteText() {
-    return this.autoCompSelected;
+  protected getId(s?: ElanSymbol) {
+    return s ? s.symbolId : "";
+  }
+
+  private getAutocompleteText() {
+    return this.getId(this.autoCompSelected);
   }
 
   private replaceAutocompletedText() {
@@ -288,7 +292,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     this.text = this.text + this.getAutocompleteText();
-    this.autoCompSelected = "";
+    this.autoCompSelected = undefined;
     this.parseCurrentText();
     this.cursorPos = this.text.length;
     this.codeHasChanged = true;
@@ -298,7 +302,7 @@ export abstract class AbstractField implements Selectable, Field {
     const completions = this.getPlainTextCompletion();
     if (completions.length > 0) {
       this.cursorRight();
-    } else if (this.autoCompSelected !== "") {
+    } else if (this.autoCompSelected) {
       this.replaceAutocompletedText();
     } else {
       const peerFields = this.holder.getFields();
@@ -493,11 +497,12 @@ export abstract class AbstractField implements Selectable, Field {
     return ["", []];
   }
 
-  protected popupAsHtml(symbolIds: string[]) {
+  protected popupAsHtml() {
     let popupAsHtml = "";
+    const symbols = this.autocompleteSymbols;
     const symbolAsHtml: string[] = [];
-    const count = symbolIds.length;
-    const selectedIndex = symbolIds.indexOf(this.autoCompSelected);
+    const count = this.autocompleteSymbols.length;
+    const selectedIndex = this.autoCompSelected ? symbols.indexOf(this.autoCompSelected) : 0;
     let startIndex = 0;
     let lastIndex = count > 10 ? 10 : count;
 
@@ -508,9 +513,10 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     for (let i = startIndex; i < lastIndex; i++) {
-      const symbolId = symbolIds[i];
+      const symbol = symbols[i];
+      const symbolId = symbol.symbolId;
       symbolAsHtml.push(
-        `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,
+        `<div class="autocomplete-item ${this.markIfSelected(symbol)}">${symbolId}</div>`,
       );
     }
 
@@ -525,28 +531,28 @@ export abstract class AbstractField implements Selectable, Field {
     return popupAsHtml;
   }
 
-  private markIfSelected(symbolId: string) {
-    return symbolId === this.autoCompSelected ? "selected" : "";
+  private markIfSelected(symbol: ElanSymbol) {
+    return symbol === this.autoCompSelected ? "selected" : "";
   }
 
-  protected autoCompSelected: string = "";
+  protected autoCompSelected?: ElanSymbol;
 
   selectFromAutoCompleteItems(up: boolean) {
     const options = this.autocompleteSymbols;
     let matched = false;
     for (let i = 0; i < options.length; i++) {
-      if (!matched && options[i].symbolId === this.autoCompSelected) {
+      if (!matched && options[i] === this.autoCompSelected) {
         if (i > 0 && up) {
-          this.autoCompSelected = options[i - 1].symbolId;
+          this.autoCompSelected = options[i - 1];
           matched = true;
         } else if (i < options.length - 1 && !up) {
-          this.autoCompSelected = options[i + 1].symbolId;
+          this.autoCompSelected = options[i + 1];
           matched = true;
         }
       }
     }
     if (!matched && options.length > 0) {
-      this.autoCompSelected = options[0].symbolId;
+      this.autoCompSelected = options[0];
     }
   }
 

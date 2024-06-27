@@ -17,6 +17,7 @@ import { getClassScope } from "../symbols/symbol-helpers";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
+  isProperty = true;
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;

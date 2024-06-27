@@ -47,27 +47,18 @@ export class ProcRefField extends AbstractField {
     );
   }
 
-  private getId(s: ElanSymbol) {
+  protected override getId(s: ElanSymbol) {
     if (isProcedure(s, transforms())) {
       return s.symbolId;
     }
     return s.symbolId + ".";
   }
 
-  protected getAutocompleteText() {
-    const matches = this.autocompleteSymbols.filter((s) => s.symbolId === this.autoCompSelected);
-    if (matches.length > 0) {
-      return this.getId(matches[0]);
-    }
-    return this.autoCompSelected;
-  }
-
   public textAsHtml(): string {
     let text: string;
     if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
-      const ids = this.autocompleteSymbols.map((s) => s.symbolId);
-      const popupAsHtml = this.popupAsHtml(ids);
+      const popupAsHtml = this.popupAsHtml();
       text = popupAsHtml + super.textAsHtml();
     } else {
       if (
