@@ -201,7 +201,7 @@ export class StdLib {
     return newList;
   }
 
-  insert<T>(list: Array<T>, index: number, value: T) {
+  insertAt<T>(list: Array<T>, index: number, value: T) {
     list.splice(index, 0, value);
   }
 
@@ -246,7 +246,7 @@ export class StdLib {
     return newList;
   }
 
-  remove<T>(list: Array<T>, index: number) {
+  removeAt<T>(list: Array<T>, index: number) {
     list.splice(index, 1);
   }
 
