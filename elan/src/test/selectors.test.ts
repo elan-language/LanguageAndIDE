@@ -171,7 +171,7 @@ suite("Unit tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " else #"); //else, but no print, call
+    assert.equal(help, " else"); //else, but no print, call
   });
 
   test("Selection Context - in a Switch", () => {
@@ -198,7 +198,7 @@ suite("Unit tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     const help = s.getCompletion();
-    assert.equal(help, " else #");
+    assert.equal(help, " else");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

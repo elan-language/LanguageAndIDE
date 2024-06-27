@@ -846,12 +846,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
   });
 
-  test("Fail_insert", async () => {
+  test("Fail_insertAt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to {"one", "two", "three"}
-  call a.insert(1, "four")
+  call a.insertAt(1, "four")
   print a
 end main
 `;
@@ -863,12 +863,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
   });
 
-  test("Fail_remove", async () => {
+  test("Fail_removeAt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to {"one", "two", "three"}
-  call a.remove(1)
+  call a.removeAt(1)
   print a
 end main
 `;
