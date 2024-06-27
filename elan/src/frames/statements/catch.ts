@@ -29,7 +29,7 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
     return this.variable.text;
   }
 
-  symbolType(transforms: Transforms): SymbolType {
+  symbolType(transforms?: Transforms): SymbolType {
     return StringType.Instance;
   }
 

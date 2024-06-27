@@ -86,7 +86,7 @@ ${this.indent()}}\r
     return this.name.text;
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     const pt = this.params.symbolTypes(transforms);
     const rt = this.returnType.symbolType(transforms);
     return new FunctionType(pt, rt, false);

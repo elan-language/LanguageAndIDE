@@ -42,7 +42,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return this.name.text;
   }
 
-  symbolType(transforms: Transforms): SymbolType {
+  symbolType(transforms?: Transforms): SymbolType {
     return new EnumType(this.symbolId);
   }
   symbolScope = SymbolScope.program;

@@ -71,7 +71,7 @@ export class Input extends AbstractFrame implements Statement, ElanSymbol {
     return this.varName.text;
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return StringType.Instance;
   }
 

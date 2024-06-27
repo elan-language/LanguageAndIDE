@@ -36,7 +36,7 @@ export abstract class ProcedureFrame extends FrameWithStatements implements Elan
 
   abstract get symbolScope(): SymbolScope;
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     const pt = this.params.symbolTypes(transforms);
     return new ProcedureType(pt, false, true);
   }

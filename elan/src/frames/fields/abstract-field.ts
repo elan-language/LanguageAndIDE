@@ -18,6 +18,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { isProperty } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -456,8 +457,8 @@ export abstract class AbstractField implements Selectable, Field {
     this._parseStatus = ParseStatus.valid;
   }
 
-  getOrTransformAstNode(transforms: Transforms) {
-    if (!this.astNode || this.codeHasChanged) {
+  getOrTransformAstNode(transforms?: Transforms) {
+    if (transforms && (!this.astNode || this.codeHasChanged)) {
       if (this.rootNode instanceof CSV && this.rootNode.status === ParseStatus.valid) {
         const scope = this.getHolder();
         this.astNode = transforms.transformMany(this.rootNode as CSV, this.htmlId, scope);
@@ -484,7 +485,7 @@ export abstract class AbstractField implements Selectable, Field {
     return this.compileErrors.concat(cc);
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     const astNode = this.getOrTransformAstNode(transforms);
     if (astNode) {
       return astNode.symbolType();
@@ -497,11 +498,11 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected popupAsHtml() {
-    let popupAsHtml = "";
     const symbols = this.autocompleteSymbols;
     const symbolAsHtml: string[] = [];
     const count = this.autocompleteSymbols.length;
     const selectedIndex = this.autoCompSelected ? symbols.indexOf(this.autoCompSelected) : 0;
+    let popupAsHtml = "";
     let startIndex = 0;
     let lastIndex = count > 10 ? 10 : count;
 
@@ -513,17 +514,22 @@ export abstract class AbstractField implements Selectable, Field {
 
     if (count === 0) {
       this.autoCompSelected = undefined;
-    } else if (count === 1) {
-      symbolAsHtml.push(`<div class="autocomplete-item selected">${symbols[0].symbolId}</div>`);
+    }
+
+    if (count === 1) {
       this.autoCompSelected = symbols[0];
-    } else {
-      for (let i = startIndex; i < lastIndex; i++) {
-        const symbol = symbols[i];
-        const symbolId = symbol.symbolId;
-        symbolAsHtml.push(
-          `<div class="autocomplete-item ${this.markIfSelected(symbol)}">${symbolId}</div>`,
-        );
-      }
+    }
+
+    for (let i = startIndex; i < lastIndex; i++) {
+      const symbol = symbols[i];
+      const isP = isProperty(symbol) ? "property." : "";
+      const symbolId = symbol.symbolId;
+      const selected = count === 1 || this.markIfSelected(symbol) ? "selected" : "";
+      const symbolType = symbol.symbolType().name;
+
+      symbolAsHtml.push(
+        `<div class="autocomplete-item ${selected}">${isP}${symbolId} (${symbolType})</div>`,
+      );
     }
 
     if (count > 10 && selectedIndex + 5 < count) {
@@ -538,7 +544,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private markIfSelected(symbol: ElanSymbol) {
-    return symbol === this.autoCompSelected ? "selected" : "";
+    return symbol === this.autoCompSelected;
   }
 
   protected autoCompSelected?: ElanSymbol;

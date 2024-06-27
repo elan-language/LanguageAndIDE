@@ -53,7 +53,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     return `${this.indent()}${varKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 
-  ids(transforms: Transforms) {
+  ids(transforms?: Transforms) {
     const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
     return id.includes(",") ? id.split(",") : [id];
   }
@@ -77,7 +77,7 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     return this.name.renderAsSource();
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     const ids = this.ids(transforms);
     const st = this.expr.symbolType(transforms);
     if (ids.length > 1 && st instanceof TupleType) {

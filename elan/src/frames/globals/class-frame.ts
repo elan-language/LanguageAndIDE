@@ -103,7 +103,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   get symbolId() {
     return this.name.text;
   }
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return new ClassType(
       this.symbolId,
       this.isAbstract(),

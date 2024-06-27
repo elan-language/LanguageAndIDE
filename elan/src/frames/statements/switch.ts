@@ -21,7 +21,7 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
     return "_";
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return this.expr.symbolType(transforms);
   }
 

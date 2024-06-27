@@ -4,6 +4,6 @@ import { SymbolType } from "./symbol-type";
 
 export interface ElanSymbol {
   symbolId: string;
-  symbolType(transforms: Transforms): SymbolType;
+  symbolType(transforms?: Transforms): SymbolType;
   symbolScope: SymbolScope;
 }

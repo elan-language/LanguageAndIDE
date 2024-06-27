@@ -81,7 +81,7 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
     return this.name.renderAsSource();
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return this.value.symbolType(transforms);
   }
 

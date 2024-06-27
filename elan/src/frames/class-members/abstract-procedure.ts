@@ -77,7 +77,7 @@ ${this.indent()}}\r
     return this.name.text;
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     const pt = this.params.symbolTypes(transforms);
     return new ProcedureType(pt, false, true);
   }

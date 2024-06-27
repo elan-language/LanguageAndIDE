@@ -27,8 +27,8 @@ export class InheritsFrom extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 
-  symbolTypes(transforms: Transforms): SymbolType[] {
-    if (this.rootNode) {
+  symbolTypes(transforms?: Transforms): SymbolType[] {
+    if (transforms && this.rootNode) {
       const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
       return ast ? ast.items.map((i) => i.symbolType()) : [];
     }

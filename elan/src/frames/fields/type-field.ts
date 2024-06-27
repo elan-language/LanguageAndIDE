@@ -35,7 +35,7 @@ export class TypeField extends AbstractField {
     return super.compile(transforms);
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return this.getOrTransformAstNode(transforms).symbolType();
   }
 }

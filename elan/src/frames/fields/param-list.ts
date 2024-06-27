@@ -44,7 +44,7 @@ export class ParamList extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToNonMatchingCloseBracket();
 
-  symbolTypes(transforms: Transforms): SymbolType[] {
+  symbolTypes(transforms?: Transforms): SymbolType[] {
     const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
     return ast ? ast.items.map((i) => i.symbolType()) : [];
   }

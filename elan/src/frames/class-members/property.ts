@@ -103,7 +103,7 @@ ${this.indent()}}\r\n`;
     return this.name.renderAsSource();
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return this.type.symbolType(transforms);
   }
 

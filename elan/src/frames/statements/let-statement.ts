@@ -24,7 +24,7 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
     this.expr = new ExpressionField(this);
   }
 
-  symbolType(transforms: Transforms) {
+  symbolType(transforms?: Transforms) {
     return this.expr.symbolType(transforms);
   }
 
