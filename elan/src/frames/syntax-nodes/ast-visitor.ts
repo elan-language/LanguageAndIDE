@@ -491,8 +491,20 @@ export function transform(
   }
 
   if (node instanceof AssignableNode) {
-    const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
-    const id = node.simple.matchedText;
+    let q: AstQualifierNode | undefined;
+    let id: string = "";
+
+    const sp = node.simpleOrProp;
+
+    if (sp.bestMatch instanceof IdentifierNode) {
+      const idNode = transform(sp.bestMatch, fieldId, scope) as AstIdNode;
+      id = idNode.id;
+    } else if (sp.bestMatch instanceof Sequence) {
+      const seq = transformMany(sp.bestMatch, fieldId, scope);
+      q = seq.items[0] as AstQualifierNode;
+      id = (seq.items[1] as AstIdNode).id;
+    }
+
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
     return new VarAsn(id, q, index, fieldId, scope);
   }
