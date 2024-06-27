@@ -528,7 +528,8 @@ export abstract class AbstractField implements Selectable, Field {
       const symbolType = symbol.symbolType().name;
 
       symbolAsHtml.push(
-        `<div class="autocomplete-item ${selected}">${isP}${symbolId} (${symbolType})</div>`,
+        // Can add back in ${isP}  and ${symbolType}
+        `<div class="autocomplete-item ${selected}">${symbolId}</div>`,
       );
     }
 
