@@ -180,10 +180,6 @@ end main`;
 
     const expected = [
       ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
-      [
-        "initialiseAsArray",
-        "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)",
-      ],
       ["insert", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
       ["remove", "Procedure (ArrayList <Generic Parameter T>, Int)"],
       ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
@@ -240,6 +236,29 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [["foo", "Int"]] as [string, string][];
+
+    await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
+  });
+
+  test("Pass_ExpressionLocalFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var foo set to 1
+  var bar set to 1 + f
+end main
+
+function foobar() return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["foo", "Int"],
+      ["foobar", "Function () : Int"],
+    ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
   });
