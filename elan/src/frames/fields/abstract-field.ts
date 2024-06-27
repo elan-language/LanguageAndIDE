@@ -12,7 +12,6 @@ import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { Selectable } from "../interfaces/selectable";
 import { ElanSymbol } from "../interfaces/symbol";
 import { Overtyper } from "../overtyper";
@@ -156,7 +155,6 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "Enter": {
         this.enter();
-        this.noLongerEditingField();
         break;
       }
       case "ArrowLeft": {
@@ -313,6 +311,7 @@ export abstract class AbstractField implements Selectable, Field {
       } else {
         this.tab(false);
       }
+      this.noLongerEditingField();
     }
   }
 
@@ -512,12 +511,19 @@ export abstract class AbstractField implements Selectable, Field {
       lastIndex = lastIndex > count ? count : lastIndex;
     }
 
-    for (let i = startIndex; i < lastIndex; i++) {
-      const symbol = symbols[i];
-      const symbolId = symbol.symbolId;
-      symbolAsHtml.push(
-        `<div class="autocomplete-item ${this.markIfSelected(symbol)}">${symbolId}</div>`,
-      );
+    if (count === 0) {
+      this.autoCompSelected = undefined;
+    } else if (count === 1) {
+      symbolAsHtml.push(`<div class="autocomplete-item selected">${symbols[0].symbolId}</div>`);
+      this.autoCompSelected = symbols[0];
+    } else {
+      for (let i = startIndex; i < lastIndex; i++) {
+        const symbol = symbols[i];
+        const symbolId = symbol.symbolId;
+        symbolAsHtml.push(
+          `<div class="autocomplete-item ${this.markIfSelected(symbol)}">${symbolId}</div>`,
+        );
+      }
     }
 
     if (count > 10 && selectedIndex + 5 < count) {
