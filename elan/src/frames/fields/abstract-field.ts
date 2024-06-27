@@ -506,11 +506,16 @@ export abstract class AbstractField implements Selectable, Field {
       lastIndex = lastIndex > count ? count : lastIndex;
     }
 
-    for (let i = startIndex; i < lastIndex; i++) {
-      const symbolId = symbolIds[i];
-      symbolAsHtml.push(
-        `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,
-      );
+    if (count === 1) {
+      symbolAsHtml.push(`<div class="autocomplete-item selected">${symbolIds[0]}</div>`);
+      this.autoCompSelected = symbolIds[0];
+    } else {
+      for (let i = startIndex; i < lastIndex; i++) {
+        const symbolId = symbolIds[i];
+        symbolAsHtml.push(
+          `<div class="autocomplete-item ${this.markIfSelected(symbolId)}">${symbolId}</div>`,
+        );
+      }
     }
 
     if (count > 10 && selectedIndex + 5 < count) {
