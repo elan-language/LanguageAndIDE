@@ -62,6 +62,7 @@ function showError(err: Error, fileName: string, reset: boolean) {
   } else {
     elanInputOutput.printLine(err.message ?? "Unknown error parsing file");
   }
+  document.body.style.cursor = "default";
 }
 
 fetchProfile()
@@ -74,12 +75,8 @@ fetchProfile()
 function refreshAndDisplay() {
   getTestRunner(system, stdlib).then((t) => {
     file.refreshAllStatuses(t).then(
-      () => {
-        renderAsHtml();
-      },
-      (e) => {
-        showError(e as Error, file.fileName, false);
-      },
+      () => renderAsHtml(),
+      (e) => showError(e as Error, file.fileName, false),
     );
   });
 }
@@ -103,17 +100,11 @@ function displayFile() {
       .then((text) => {
         const code = new CodeSourceFromString(text);
         file.parseFrom(code).then(
-          () => {
-            initialDisplay();
-          },
-          (e) => {
-            showError(e, file.fileName, true);
-          },
+          () => initialDisplay(),
+          (e) => showError(e, file.fileName, true),
         );
       })
-      .catch((e) => {
-        showError(e, file.fileName, true);
-      });
+      .catch((e) => showError(e, file.fileName, true));
   } else {
     const previousCode = localStorage.getItem("elan-code");
     const previousFileName = localStorage.getItem("elan-file");
@@ -124,9 +115,7 @@ function displayFile() {
           file.fileName = previousFileName || file.defaultFileName;
           initialDisplay();
         },
-        (e) => {
-          showError(e, previousFileName || file.defaultFileName, true);
-        },
+        (e) => showError(e, previousFileName || file.defaultFileName, true),
       );
     } else {
       initialDisplay();
@@ -347,6 +336,7 @@ function updateContent(text: string) {
     dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
     showError(new Error(msg), file.fileName, false);
   }
+  document.body.style.cursor = "default";
 }
 
 function postMessage(e: editorEvent) {
@@ -476,14 +466,8 @@ function handleUpload(event: Event) {
       file = new FileImpl(hash, profile, transforms());
       file.fileName = fileName;
       file.parseFrom(code).then(
-        () => {
-          initialDisplay();
-          document.body.style.cursor = "default";
-        },
-        (e) => {
-          showError(e, fileName, true);
-          document.body.style.cursor = "default";
-        },
+        () => initialDisplay(),
+        (e) => showError(e, fileName, true),
       );
     });
     reader.readAsText(elanFile);
