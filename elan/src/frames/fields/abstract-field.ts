@@ -505,7 +505,9 @@ export abstract class AbstractField implements Selectable, Field {
       lastIndex = selectedIndex + 5;
       lastIndex = lastIndex > count ? count : lastIndex;
     }
-
+    if (count === 0) {
+      this.autoCompSelected = "";
+    }
     if (count === 1) {
       symbolAsHtml.push(`<div class="autocomplete-item selected">${symbolIds[0]}</div>`);
       this.autoCompSelected = symbolIds[0];
