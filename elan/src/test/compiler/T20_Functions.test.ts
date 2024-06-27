@@ -806,4 +806,31 @@ end function`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
   });
+
+  test("Fail_OperatorsAndProcedures", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to p1 is p2
+  var b set to p1 + p2
+  var c set to -p1
+end main
+
+function p1() return Int
+  return 0
+end function
+function p2() return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot do equality operations on Procedures or Functions",
+      "Incompatible types Function to Float or Int",
+      "Incompatible types Function to Float or Int",
+    ]);
+  });
 });

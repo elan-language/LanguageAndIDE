@@ -356,6 +356,12 @@ function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location:
   compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", location, unknown));
 }
 
+function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError("Cannot do equality operations on Procedures or Functions", location),
+  );
+}
+
 export function mustBeCoercibleType(
   lhs: SymbolType,
   rhs: SymbolType,
@@ -368,6 +374,16 @@ export function mustBeCoercibleType(
     (rhs instanceof IntType || rhs instanceof FloatType)
   ) {
     return;
+  }
+
+  // disallow comparing Procedures and Functions
+  if (
+    lhs instanceof ProcedureType ||
+    lhs instanceof FunctionType ||
+    rhs instanceof ProcedureType ||
+    rhs instanceof FunctionType
+  ) {
+    FailCannotCompareProcFunc(compileErrors, location);
   }
 
   mustBeCompatibleType(lhs, rhs, compileErrors, location);

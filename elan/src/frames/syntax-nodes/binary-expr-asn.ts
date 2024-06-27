@@ -45,7 +45,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return lhs;
   }
 
-  private isCoercibleOp() {
+  private isEqualityOp() {
     switch (this.op) {
       case OperationSymbol.Equals:
       case OperationSymbol.NotEquals:
@@ -165,7 +165,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       return `${this.lhs.compile()} + ${this.rhs.compile()}`;
     }
 
-    if (this.isCoercibleOp()) {
+    if (this.isEqualityOp()) {
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 
