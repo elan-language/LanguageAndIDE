@@ -510,6 +510,7 @@ export abstract class AbstractField implements Selectable, Field {
       symbolAsHtml.push(`<div class="autocomplete-item selected">${symbolIds[0]}</div>`);
       this.autoCompSelected = symbolIds[0];
     } else {
+      this.autoCompSelected = "";
       for (let i = startIndex; i < lastIndex; i++) {
         const symbolId = symbolIds[i];
         symbolAsHtml.push(
