@@ -615,17 +615,6 @@ export class StdLibSymbols implements Scope {
         ),
       ),
     ],
-    [
-      "size",
-      this.getSymbol(
-        "size",
-        new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
-          true,
-          false,
-        ),
-      ),
-    ],
     ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
     ["clock", this.getSymbol("clock", new FunctionType([], IntType.Instance, false, false))],
     [

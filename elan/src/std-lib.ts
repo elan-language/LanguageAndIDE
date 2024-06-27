@@ -92,10 +92,6 @@ export class StdLib {
     return arr;
   }
 
-  size<T>(arr: T[], newSize: number): T[] {
-    return arr;
-  }
-
   asImmutableList<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "ImmutableList";
