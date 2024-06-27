@@ -85,7 +85,7 @@ export class StatementSelector extends AbstractSelector {
     } else if (parent.getIdPrefix() === switchKeyword) {
       result = keyword === caseKeyword || (keyword === defaultKeyword && this.noPeerLevelDefault());
     } else if (parent.getIdPrefix() === ifKeyword) {
-      result = keyword === elseKeyword || keyword === commentMarker;
+      result = keyword === elseKeyword;
     } else if (
       keyword === assertKeyword ||
       keyword === caseKeyword ||
