@@ -54,26 +54,33 @@ export class ProcRefField extends AbstractField {
     return s.symbolId + ".";
   }
 
+  private nonAutoTextAsHtml() {
+    let text: string;
+    if (
+      this.readParseStatus() === ParseStatus.valid ||
+      this.readParseStatus() === ParseStatus.valid
+    ) {
+      const bestMatch = (this.rootNode! as Alternatives).bestMatch;
+      if (bestMatch instanceof IdentifierNode) {
+        text = `<method>${this.text}</method>`;
+      } else {
+        text = (bestMatch as InstanceProcRef).renderAsHtml();
+      }
+    } else {
+      text = super.textAsHtml();
+    }
+
+    return text;
+  }
+
   public textAsHtml(): string {
     let text: string;
     if (this.showAutoComplete()) {
       [this.autocompleteMatch, this.autocompleteSymbols] = this.matchingSymbolsForId();
       const popupAsHtml = this.popupAsHtml();
-      text = popupAsHtml + super.textAsHtml();
+      text = popupAsHtml + this.nonAutoTextAsHtml();
     } else {
-      if (
-        this.readParseStatus() === ParseStatus.valid ||
-        this.readParseStatus() === ParseStatus.valid
-      ) {
-        const bestMatch = (this.rootNode! as Alternatives).bestMatch;
-        if (bestMatch instanceof IdentifierNode) {
-          text = `<method>${this.text}</method>`;
-        } else {
-          text = (bestMatch as InstanceProcRef).renderAsHtml();
-        }
-      } else {
-        text = super.textAsHtml();
-      }
+      text = this.nonAutoTextAsHtml();
     }
     return text;
   }
