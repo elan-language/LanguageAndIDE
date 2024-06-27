@@ -271,6 +271,9 @@ export abstract class AbstractFrame implements Frame {
       const sp = this.getScratchPad();
       sp.addSnippet(selected);
     }
+    if (!this.getParent().minimumNumberOfChildrenExceeded()) {
+      this.insertPeerSelector(true);
+    }
   }
 
   deleteIfPermissible(): void {

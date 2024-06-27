@@ -316,9 +316,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "insert",
+      "insertAt",
       this.getSymbol(
-        "insert",
+        "insertAt",
         new ProcedureType(
           [
             new ArrayListType(new GenericParameterType("T")),
@@ -331,9 +331,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "remove",
+      "removeAt",
       this.getSymbol(
-        "remove",
+        "removeAt",
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
           true,
@@ -618,17 +618,6 @@ export class StdLibSymbols implements Scope {
           [new IterType(StringType.Instance), StringType.Instance],
           BooleanType.Instance,
           true,
-        ),
-      ),
-    ],
-    [
-      "size",
-      this.getSymbol(
-        "size",
-        new ProcedureType(
-          [new ArrayListType(new GenericParameterType("T")), IntType.Instance],
-          true,
-          false,
         ),
       ),
     ],

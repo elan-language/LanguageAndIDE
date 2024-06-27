@@ -454,4 +454,9 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
     return cc.concat(super.aggregateCompileErrors());
   }
+
+  resetCompileStatusAndErrors(): void {
+    this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
+    super.resetCompileStatusAndErrors();
+  }
 }

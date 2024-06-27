@@ -299,16 +299,16 @@ return [main, _tests];}`;
 
 main
   var a set to ["one", "two", "three"]
-  call a.insert(1, "foo")
-  call a.insert(3, "yon")
+  call a.insertAt(1, "foo")
+  call a.insertAt(3, "yon")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray(["one", "two", "three"]);
-  _stdlib.insert(a, 1, "foo");
-  _stdlib.insert(a, 3, "yon");
+  _stdlib.insertAt(a, 1, "foo");
+  _stdlib.insertAt(a, 3, "yon");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -322,21 +322,21 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [one, foo, two, yon, three]");
   });
 
-  test("Pass_remove", async () => {
+  test("Pass_removeAt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var a set to ["one", "two", "three"]
-  call a.remove(0)
-  call a.remove(1)
+  call a.removeAt(0)
+  call a.removeAt(1)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray(["one", "two", "three"]);
-  _stdlib.remove(a, 0);
-  _stdlib.remove(a, 1);
+  _stdlib.removeAt(a, 0);
+  _stdlib.removeAt(a, 1);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

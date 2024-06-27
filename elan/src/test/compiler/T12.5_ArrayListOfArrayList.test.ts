@@ -218,16 +218,16 @@ return [main, _tests];}`;
 
 main
   var a set to [["one"], ["two"], ["three"]]
-  call a.insert(1, ["foo"])
-  call a.insert(3, ["yon"])
+  call a.insertAt(1, ["foo"])
+  call a.insertAt(3, ["yon"])
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.insert(a, 1, system.literalArray(["foo"]));
-  _stdlib.insert(a, 3, system.literalArray(["yon"]));
+  _stdlib.insertAt(a, 1, system.literalArray(["foo"]));
+  _stdlib.insertAt(a, 3, system.literalArray(["yon"]));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -249,16 +249,16 @@ return [main, _tests];}`;
 
 main
   var a set to [["one"], ["two"], ["three"]]
-  call a[0].insert(0, "foo")
-  call a[2].insert(1, "yon")
+  call a[0].insertAt(0, "foo")
+  call a[2].insertAt(1, "yon")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.insert(system.safeIndex(a, 0), 0, "foo");
-  _stdlib.insert(system.safeIndex(a, 2), 1, "yon");
+  _stdlib.insertAt(system.safeIndex(a, 0), 0, "foo");
+  _stdlib.insertAt(system.safeIndex(a, 2), 1, "yon");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -280,16 +280,16 @@ return [main, _tests];}`;
 
 main
   var a set to [["one"], ["two"], ["three"]]
-  call a.remove(0)
-  call a.remove(1)
+  call a.removeAt(0)
+  call a.removeAt(1)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.remove(a, 0);
-  _stdlib.remove(a, 1);
+  _stdlib.removeAt(a, 0);
+  _stdlib.removeAt(a, 1);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -308,16 +308,16 @@ return [main, _tests];}`;
 
 main
   var a set to [["one"], ["two"], ["three"]]
-  call a[0].remove(0)
-  call a[2].remove(0)
+  call a[0].removeAt(0)
+  call a[2].removeAt(0)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([system.literalArray(["one"]), system.literalArray(["two"]), system.literalArray(["three"])]);
-  _stdlib.remove(system.safeIndex(a, 0), 0);
-  _stdlib.remove(system.safeIndex(a, 2), 0);
+  _stdlib.removeAt(system.safeIndex(a, 0), 0);
+  _stdlib.removeAt(system.safeIndex(a, 2), 0);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
