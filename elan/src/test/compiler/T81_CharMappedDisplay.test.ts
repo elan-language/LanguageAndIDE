@@ -445,19 +445,19 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_PutText", async () => {
+  test("Pass_putString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var g set to new Graphics()
-  set g to g.putText(0, 0, "Hello", 1, 2)
+  set g to g.putString(0, 0, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putText(g, 0, 0, "Hello", 1, 2);
+  g = _stdlib.putString(g, 0, 0, "Hello", 1, 2);
   _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -479,19 +479,19 @@ return [main, _tests];}`;
       '<div style="color:#000001;background-color:#000002;">e',
     );
   });
-  test("Pass_PutText overrunning both limits", async () => {
+  test("Pass_putString overrunning both limits", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var g set to new Graphics()
-  set g to g.putText(39, 29, "Hello", 1, 2)
+  set g to g.putString(39, 29, "Hello", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putText(g, 39, 29, "Hello", 1, 2);
+  g = _stdlib.putString(g, 39, 29, "Hello", 1, 2);
   _stdlib.draw(g);
 }
 return [main, _tests];}`;
