@@ -93,9 +93,13 @@ statement, constructor, property, classDef > function, classDef > procedure, cla
     border-color: var(--defaultBackground);
 }
 
-statement:not(.multiline), constant{
+statement, constant{
     padding-left: 1ch; /* Indent 2nd and subsequent lines if text wraps */
     text-indent: -1ch;
+}
+statement.multiline, statement *, constant * {
+    padding-left: 0; /* Indent 2nd and subsequent lines if text wraps */
+    text-indent: 0;
 }
 
 header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
