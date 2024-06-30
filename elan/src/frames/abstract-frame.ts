@@ -15,6 +15,7 @@ import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
+import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
 import {
@@ -25,7 +26,6 @@ import {
 import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
 import { Transforms } from "./syntax-nodes/transforms";
-import { Scope } from "./interfaces/scope";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -270,9 +270,9 @@ export abstract class AbstractFrame implements Frame {
       newFocus.select(true, false);
       const sp = this.getScratchPad();
       sp.addSnippet(selected);
-    }
-    if (!this.getParent().minimumNumberOfChildrenExceeded()) {
-      this.insertPeerSelector(true);
+      if (!newFocus.getParent().minimumNumberOfChildrenExceeded()) {
+        newFocus.insertPeerSelector(false);
+      }
     }
   }
 
