@@ -351,6 +351,11 @@ export class StdLib {
     return source[i];
   }
 
+  sortBy<T>(source: T[], predicate: (a: T, b: T) => number): T[] {
+    const clone = [...source];
+    return this.asIter(clone.sort(predicate));
+  }
+
   any<T>(source: T[], predicate: (value: T) => boolean) {
     return source.some(predicate);
   }

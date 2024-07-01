@@ -421,6 +421,36 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
+  test("Pass_sortBy", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+main
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
+  print source
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.sortBy(source, (x, y) => x === y ? 0 : x < y ? 1 : -1)));
+  system.printLine(_stdlib.asString(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "Iter [37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2]ImmutableList {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+    );
+  });
+
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
