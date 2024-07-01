@@ -1,16 +1,30 @@
-# b6c92147da16636e36293774308369a56f7f6a23e98eadb86b39f0e98a22c854 Elan v0.1 valid
+# c5c2d8959fb43ac33c11819bf797b6c90c1be99bfd5f420d7c55060ffbf96a10 Elan v0.1 valid
 
 main
+  print "Press any key to halt"
   var cm set to new Graphics()
   set cm to cm.fill("", black, white)
-  var grid set to exampleCells
-  for i from 1 to 100 step 1
+  var starter set to empty [Boolean]
+  call fillRandom(starter)
+  var grid set to starter.asImmutableList()
+  var cont set to true
+  while cont
     set cm to updateGraphics(grid, cm)
     call cm.draw()
     set grid to nextGeneration(grid)
     call pause(50)
-  end for
+    if cm.getKeystroke() is not ""
+      then
+        set cont to false
+    end if
+  end while
 end main
+
+procedure fillRandom(starter as [Boolean])
+  for i from 0 to 399 step 1
+    call starter.add(random() > 0.5)
+  end for
+end procedure
 
 function updateGraphics(grid as {Boolean}, cm as Graphics) return Graphics
   var cm2 set to cm

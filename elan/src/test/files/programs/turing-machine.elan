@@ -1,41 +1,24 @@
-# e519c579cc3320c7261902b470bb481b872b5f486b1e39ee519e510db94de591 Elan v0.1 valid
+# 9ea5ace3de6ef67ce3c2f78545a79aa00131d17705b6ff552d5681e0b78675ad Elan v0.1 valid
 
-main 
+main
+  # Minimal example - 1 rule, writes * onto empty tape and halts
   let tm be new TuringMachine("init", "halt")
+  call tm.add(new Rule("init", " ", "halt", "*", Dir.right))
+  call tm.runToEnd()
+  print tm.tape
 end main
-
-enum Direction
-  left, right
-end enum
-
-immutable class Rule
-  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Direction)
-    set property.currentState to currentState
-    set property.currentSymbol to currentSymbol
-    set property.nextState to nextState
-    set property.writeSymbol to writeSymbol
-    set property.move to move
-  end constructor
-
-  property currentState as String
-
-  property currentSymbol as String
-
-  property nextState as String
-
-  property writeSymbol as String
-
-  property move as Direction
-
-end class
 
 class TuringMachine
   constructor(initialState as String, haltState as String)
     set property.initialState to initialState
     set property.haltState to haltState
-    # change below to empty {Rule} when implemented
-    set rules to new ImmutableList<of Rule>()
+    set rules to empty {Rule}
+    set currentState to initialState
+    set headPosition to 0
+    set tape to " "
   end constructor
+
+  property initialState as String
 
   property currentState as String
 
@@ -55,12 +38,17 @@ class TuringMachine
     set property.rules to rules
   end procedure
 
-  procedure add(rule as Rule) 
-    # set rules to rules.add(rule)
+  procedure add(rule as Rule)
+    set rules to rules + rule
+  end procedure
+
+  procedure reset()
+    set currentState to initialState
+    set headPosition to 0
   end procedure
 
   procedure singleStep()
-    let rule be findMatchingRule()
+    var rule set to findMatchingRule()
     call execute(rule)
   end procedure
 
@@ -74,25 +62,71 @@ class TuringMachine
     return currentState is haltState
   end function
 
+  function getTrimmedTape() return String
+    return tape.trim()
+  end function
+
   function findMatchingRule() return Rule
     let matches be rules.filter(lambda r as Rule => (r.currentState is currentState) and (r.currentSymbol is tape[headPosition]))
     if matches.length() is 0
-      throw "No rule matching state {currentState} and symbol {tape[headPosition]}"
+      then
+        throw "No rule matching state {currentState} and symbol {tape[headPosition]}"
     end if
     return matches.head()
-  end function 
+  end function
+
+  procedure write(newSymbol as String)
+    var hp set to headPosition
+    set tape to tape[..hp] + newSymbol + tape[hp + 1..]
+  end procedure
 
   procedure execute(rule as Rule)
     set currentState to rule.nextState
-    set tape[headPosition] to rule.writeSymbol
-    if rule.move is Direction.right
-      set headPosition to headPosition + 1
+    call write(rule.writeSymbol)
+    if rule.move is Dir.right
+      then
+        set headPosition to headPosition + 1
+        if headPosition >= tape.length()
+          then
+            set tape to tape + " "
+        end if
       else
         set headPosition to headPosition - 1
         if headPosition < 0
-          set tape to " " + tape
-          set headPosition to 0
+          then
+            set tape to " " + tape
+            set headPosition to 0
         end if
     end if
   end procedure
+
 end class
+
+immutable class Rule
+  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
+    set property.currentState to currentState
+    set property.currentSymbol to currentSymbol
+    set property.nextState to nextState
+    set property.writeSymbol to writeSymbol
+    set property.move to move
+  end constructor
+
+  property currentState as String
+
+  property currentSymbol as String
+
+  property nextState as String
+
+  property writeSymbol as String
+
+  property move as Dir
+
+  function asString() return String
+    return "{currentState},{currentSymbol},{nextState},{writeSymbol},{move}"
+  end function
+
+end class
+
+enum Dir
+  left, right
+end enum

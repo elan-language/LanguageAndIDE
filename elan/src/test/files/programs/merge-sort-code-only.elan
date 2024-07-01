@@ -1,0 +1,36 @@
+# 3657ceca49e784e6359712160fe7d05acb576c52e6e44683dc5a9ca6b210bd5c Elan v0.1 valid
+
+main
+  var li set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}
+  print mergeSort(li)
+end main
+
+function mergeSort(li as {String}) return {String}
+  var result set to li
+  let len be li.length()
+  if len > 1
+    then
+      let mid be floor(len/2)
+      let frontHalf be mergeSort(li.getRange(0, mid))
+      let backHalf be mergeSort(li.getRange(mid, len))
+      set result to merge(frontHalf, backHalf)
+  end if
+  return result
+end function
+
+function merge(a as {String}, b as {String}) return {String}
+  var result set to empty {String}
+  let aLen be a.length()
+  let bLen be b.length()
+  if a.length() is 0
+    then
+      set result to b
+    else if bLen is 0
+      set result to a
+    else if isBefore(a.get(0), b.get(0))
+      set result to {a.get(0)} + merge(a.getRange(1, aLen), b)
+    else
+      set result to {b.get(0)} + merge(a, b.getRange(1, bLen))
+  end if
+  return result
+end function
