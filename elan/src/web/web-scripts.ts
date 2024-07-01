@@ -85,7 +85,7 @@ function initialDisplay() {
   elanInputOutput.clearConsole();
 
   const ps = file.readParseStatus();
-  if (ps === ParseStatus.valid) {
+  if (ps === ParseStatus.valid || ps === ParseStatus.default) {
     refreshAndDisplay();
   } else {
     const msg = file.parseError || "Failed load code";
