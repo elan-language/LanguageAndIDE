@@ -470,7 +470,7 @@ export class StdLib {
     return this.putAt(cm, x, y, c[0], f, b);
   }
 
-  putText(
+  putString(
     map: Graphics,
     x: number,
     y: number,

@@ -756,7 +756,7 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putText",
+      "putString",
       this.getSymbol(
         "putChar",
         new FunctionType(
