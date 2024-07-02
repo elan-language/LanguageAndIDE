@@ -1,21 +1,5 @@
-import { ArrayListType } from "./symbols/array-list-type";
-import { BooleanType } from "./symbols/boolean-type";
-import { ClassType } from "./symbols/class-type";
-import { DictionaryType } from "./symbols/dictionary-type";
-import { FunctionType } from "./symbols/function-type";
-import { IntType } from "./symbols/int-type";
-import { IterType } from "./symbols/iter-type";
-import { ImmutableListType } from "./symbols/immutable-list-type";
-import { FloatType } from "./symbols/float-type";
-import { ProcedureType } from "./symbols/procedure-type";
-import { StringType } from "./symbols/string-type";
-import { ElanSymbol } from "./interfaces/symbol";
-import { SymbolType } from "./interfaces/symbol-type";
-import { TupleType } from "./symbols/tuple-type";
-import { UnknownSymbol } from "./symbols/unknown-symbol";
-import { UnknownType } from "./symbols/unknown-type";
+import { Property } from "./class-members/property";
 import {
-  ArraySizeCompileError,
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
@@ -39,23 +23,37 @@ import {
   TypesCompileError,
   UndefinedSymbolCompileError,
 } from "./compile-error";
+import { isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
+import { AstNode } from "./interfaces/ast-node";
+import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
-import { InFunctionScope } from "./syntax-nodes/ast-helpers";
-import { AstNode } from "./interfaces/ast-node";
-import { Transforms } from "./syntax-nodes/transforms";
-import { SymbolScope } from "./symbols/symbol-scope";
-import { Property } from "./class-members/property";
-import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
-import { LetStatement } from "./statements/let-statement";
+import { ElanSymbol } from "./interfaces/symbol";
+import { SymbolType } from "./interfaces/symbol-type";
 import { allKeywords, reservedWords, thisKeyword } from "./keywords";
-import { EnumType } from "./symbols/enum-type";
+import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
-import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
-import { isInsideFunctionOrConstructor, isMember } from "./helpers";
-import { isFunction } from "./helpers";
+import { ArrayListType } from "./symbols/array-list-type";
+import { BooleanType } from "./symbols/boolean-type";
+import { ClassType } from "./symbols/class-type";
+import { DictionaryType } from "./symbols/dictionary-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
+import { EnumType } from "./symbols/enum-type";
+import { FloatType } from "./symbols/float-type";
+import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
+import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
+import { ImmutableListType } from "./symbols/immutable-list-type";
+import { IntType } from "./symbols/int-type";
+import { IterType } from "./symbols/iter-type";
+import { ProcedureType } from "./symbols/procedure-type";
+import { StringType } from "./symbols/string-type";
+import { SymbolScope } from "./symbols/symbol-scope";
+import { TupleType } from "./symbols/tuple-type";
+import { UnknownSymbol } from "./symbols/unknown-symbol";
+import { UnknownType } from "./symbols/unknown-type";
+import { InFunctionScope } from "./syntax-nodes/ast-helpers";
+import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -78,7 +76,7 @@ export function mustBeOfType(
   mustBeOfSymbolType(expr?.symbolType(), ofType, compileErrors, location);
 }
 
-export function cannotHaveConditionalAfterUnconditionalElse(
+export function mustNotHaveConditionalAfterUnconditionalElse(
   elses: { hasIf: boolean }[],
   compileErrors: CompileError[],
   location: string,
@@ -240,10 +238,7 @@ export function mustBeRangeableSymbol(
   location: string,
 ) {
   if (
-    !(
-      symbolType instanceof ArrayListType ||
-      symbolType instanceof StringType
-    )
+    !((read && symbolType instanceof ArrayListType) || (read && symbolType instanceof StringType))
   ) {
     compileErrors.push(
       new NotRangeableCompileError(

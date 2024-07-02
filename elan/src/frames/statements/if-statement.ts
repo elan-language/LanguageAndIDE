@@ -1,14 +1,14 @@
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { mustBeOfType, cannotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
-import { BooleanType } from "../symbols/boolean-type";
 import { ifKeyword } from "../keywords";
-import { Else } from "./else";
+import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
+import { Else } from "./else";
 import { ThenStatement } from "./then-statement";
 
 export class IfStatement extends FrameWithStatements implements Statement {
@@ -59,7 +59,7 @@ ${this.indent()}end if`;
     );
     const elses = this.getChildren().filter((c) => c instanceof Else) as Else[];
     if (elses.length > 0) {
-      cannotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
+      mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
     }
 
     return `${this.indent()}if (${this.condition.compile(transforms)}) {\r

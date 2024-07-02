@@ -59,7 +59,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     return this.compileErrors.concat(q).concat(i);
   }
 
-  private isRange() {
+  isRange() {
     return this.index instanceof IndexAsn && this.index.index1 instanceof RangeAsn;
   }
 
