@@ -177,13 +177,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       mustBeBooleanType(lst, rst, this.compileErrors, this.fieldId);
     }
 
-    if (
-      this.op === OperationSymbol.Add &&
-      (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
-    ) {
-      return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;
-    }
-
     if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
       return `${this.lhs.compile()} ${this.opToJs()} ${this.rhs.compile()}`;
     }

@@ -121,6 +121,32 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ArrayList [apple, apple, apple]");
   });
 
+  test("Pass_SetAndReadIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1,2,3]
+  set a[0] to a[1]
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2, 3]);
+  system.safeSet(a, 0, system.safeIndex(a, 1));
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ArrayList [2, 2, 3]");
+  });
+
   test("Fail_CannotinitialiseToReferenceType1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 

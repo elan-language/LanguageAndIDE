@@ -583,6 +583,41 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_addListToListUsingPlus1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+    var a set to {"a", "b"}
+    var b set to "cd"
+    var c set to a + b[0]
+    print a
+    print b
+    print c
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableList(["a", "b"]);
+  var b = "cd";
+  var c = system.concat(a, system.safeIndex(b, 0));
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+  system.printLine(_stdlib.asString(c));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "ImmutableList {a, b}cdImmutableList {a, b, c}",
+    );
+  });
+
   test("Pass_constantLists", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
