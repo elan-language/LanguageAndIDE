@@ -8,6 +8,9 @@ import { IdentifierField } from "../frames/fields/identifier-field";
 import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { MainFrame } from "../frames/globals/main-frame";
+import { Else } from "../frames/statements/else";
+import { StatementSelector } from "../frames/statements/statement-selector";
+import { ThenStatement } from "../frames/statements/then-statement";
 import { ParseStatus } from "../frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
@@ -27,6 +30,7 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
+import { IfStatement } from "../frames/statements/if-statement";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -280,5 +284,14 @@ suite("Editing Frames", () => {
     assert.equal(ret.readParseStatus(), ParseStatus.invalid);
     assert.equal(reset.readParseStatus(), ParseStatus.invalid);
     assert.equal(card.readParseStatus(), ParseStatus.invalid);
+  });
+  test("#596 - cutting an else must not result in a selector inserted above the then", () => {
+    const file = T03_mainWithAllStatements();
+    const if37 = file.getById("if37") as IfStatement;
+    assert.equal(if37.getChildren().length, 4);
+    const else42 = file.getById("else42") as Else;
+    else42.select(true, false);
+    else42.processKey(ctrl_x());
+    assert.equal(if37.getChildren().length, 3);
   });
 });
