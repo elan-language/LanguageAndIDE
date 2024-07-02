@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -213,7 +214,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  ignore_test("Pass_CompareLambdas", async () => {
+  test("Pass_CompareLambdas", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
@@ -232,37 +233,10 @@ class Foo
   property p3 as Func<of Int => Int>
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var x = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p1)));
-  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p2)));
-  system.printLine(_stdlib.asString(system.objectEquals(x.p1, x.p3)));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.emptyFunc(0)], ["p2", system.emptyFunc(0)], ["p3", system.emptyFunc(0)]]);};
-  constructor() {
-
-  }
-
-  p1 = system.emptyFunc(0);
-
-  p2 = system.emptyFunc(0);
-
-  p3 = system.emptyFunc(0);
-
-}
-return [main, _tests];}`;
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+    assertDoesNotCompile(fileImpl, ["Cannot do equality operations on Procedures or Functions"]);
   });
-
-  // Fails TODO
 });
