@@ -422,6 +422,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Iter<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot range Iter<of Int>"]);
   });
 });

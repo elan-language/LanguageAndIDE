@@ -75,6 +75,12 @@ export class NotIndexableCompileError extends CompileError {
   }
 }
 
+export class NotRangeableCompileError extends CompileError {
+  constructor(type: string, location: string, unknown: boolean) {
+    super(Priority.illegalOperation, `Cannot range ${type}`, location, unknown);
+  }
+}
+
 export class NotNewableCompileError extends CompileError {
   constructor(type: string, location: string, unknown: boolean) {
     super(Priority.illegalOperation, `Cannot new ${type}`, location, unknown);

@@ -28,6 +28,7 @@ import {
   NotIndexableCompileError,
   NotIterableCompileError,
   NotNewableCompileError,
+  NotRangeableCompileError,
   NotUniqueNameCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
@@ -224,6 +225,28 @@ export function mustBeIndexableSymbol(
   ) {
     compileErrors.push(
       new NotIndexableCompileError(
+        symbolType.toString(),
+        location,
+        symbolType instanceof UnknownType,
+      ),
+    );
+  }
+}
+
+export function mustBeRangeableSymbol(
+  symbolType: SymbolType,
+  read: boolean,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    !(
+      symbolType instanceof ArrayListType ||
+      symbolType instanceof StringType
+    )
+  ) {
+    compileErrors.push(
+      new NotRangeableCompileError(
         symbolType.toString(),
         location,
         symbolType instanceof UnknownType,

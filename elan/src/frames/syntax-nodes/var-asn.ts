@@ -9,6 +9,7 @@ import {
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
   mustBePublicProperty,
+  mustBeRangeableSymbol,
 } from "../compile-rules";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
@@ -130,9 +131,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       );
     } else {
       mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
-
       const [indexType] = this.getIndexType(rootType);
-
       mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
     }
 
@@ -174,7 +173,9 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         code = this.compileIndex(rootType, this.index!, q, call, idx);
       }
       if (this.isRange()) {
-        mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
+        mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
+        const [indexType] = this.getIndexType(rootType);
+        mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
         code = this.wrapListOrArray(rootType, code);
       }
     }

@@ -770,4 +770,20 @@ end main
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
+
+  test("Fail_Range", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to [1:1, 2:2]
+  set a to a[1..]
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot range Dictionary"]);
+  });
 });
