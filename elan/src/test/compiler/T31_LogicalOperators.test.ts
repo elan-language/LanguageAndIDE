@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -201,7 +202,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "false");
   });
 
-  // TODO fails
   test("Fail_TypeCheck", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -230,6 +230,7 @@ end main`;
       "Incompatible types Int to Boolean",
     ]);
   });
+
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -284,5 +285,19 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "false");
+  });
+
+  test("Fail_UseNotWithTwoArgs", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to true not false
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+    
   });
 });
