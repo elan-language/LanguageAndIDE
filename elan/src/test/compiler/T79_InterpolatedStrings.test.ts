@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -38,5 +39,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1 Apple ImmutableList {1, 2, 3}");
   });
 
-  // Fails TODO
+  test("Fail_missingBrace", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  var b set to "Apple"
+  var c set to {1,2,3}
+  print "{a {b} {c}"
+end main`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_extraBrace", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to 1
+  var b set to "Apple"
+  var c set to {1,2,3}
+  print "{a} {b} {{c}"
+end main`;
+
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
 });
