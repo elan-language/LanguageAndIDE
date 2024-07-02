@@ -889,6 +889,74 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_Invariance", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var b set to new Bar()
+  var lst set to {b}
+  print fun(lst)
+end main
+
+abstract immutable class Foo
+  abstract property p1 as Int
+end class
+
+immutable class Bar inherits Foo
+  constructor()
+  end constructor
+  property p1 as Int
+end class
+
+function fun(l as ImmutableList<of Bar>) return Bar
+    return l.get(0)
+end function
+`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var b = system.initialise(new Bar());
+  var lst = system.immutableList([b]);
+  system.printLine(_stdlib.asString(fun(lst)));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+
+function fun(l) {
+  return _stdlib.get(l, 0);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Bar");
+  });
+
   test("Fail_AbstractMutableClassAsFunctionParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
@@ -1209,74 +1277,6 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Foo to Bar"]);
-  });
-
-  test("Pass_Invariance", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
-
-main
-  var b set to new Bar()
-  var lst set to {b}
-  print fun(lst)
-end main
-
-abstract immutable class Foo
-  abstract property p1 as Int
-end class
-
-immutable class Bar inherits Foo
-  constructor()
-  end constructor
-  property p1 as Int
-end class
-
-function fun(l as ImmutableList<of Bar>) return Bar
-    return l.get(0)
-end function
-`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var b = system.initialise(new Bar());
-  var lst = system.immutableList([b]);
-  system.printLine(_stdlib.asString(fun(lst)));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  asString() {
-    return "empty Abstract Class Foo";
-  }
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-}
-
-function fun(l) {
-  return _stdlib.get(l, 0);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "a Bar");
   });
 
   // #482
