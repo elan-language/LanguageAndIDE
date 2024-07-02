@@ -137,7 +137,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     }
 
     let code = `${q}${this.id}${call}, ${idx}`;
-    if (!(this.isAssignable)) {
+    if (!this.isAssignable) {
       code = this.wrapIndex(code);
     }
     return code;
@@ -174,6 +174,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         code = this.compileIndex(rootType, this.index!, q, call, idx);
       }
       if (this.isRange()) {
+        mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
         code = this.wrapListOrArray(rootType, code);
       }
     }

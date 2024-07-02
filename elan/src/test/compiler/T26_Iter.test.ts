@@ -359,11 +359,69 @@ procedure printEach(target as Iter)
   end each
 end procedure`;
 
-  
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
+  });
+
+  test("Fail_PassArgumentWithWrongGenericType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var it set to {1,2,3,4,5,6,7}
+  call printEach(it)
+end main
+
+procedure printEach(target as Iter<of String>)
+  each x in target
+    print x
+  end each
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+  });
+
+  test("Fail_Indexing1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var it set to {1,2,3,4,5,6,7}
+  call printEach(it)
+end main
+
+procedure printEach(target as Iter<of Int>)
+  print target[0]
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Iter<of Int>"]);
+  });
+
+  test("Fail_Indexing2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var it set to {1,2,3,4,5,6,7}
+  call printEach(it)
+end main
+
+procedure printEach(target as Iter<of Int>)
+  print target[2..4]
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot index Iter<of Int>"]);
   });
 });

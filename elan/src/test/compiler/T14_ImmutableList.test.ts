@@ -612,10 +612,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      "ImmutableList {a, b}cdImmutableList {a, b, c}",
-    );
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {a, b}cdImmutableList {a, b, c}");
   });
 
   test("Pass_constantLists", async () => {
