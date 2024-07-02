@@ -170,4 +170,27 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
+
+  test("Fail_UsingReturnedFuncWithoutArgs", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  var a set to getFunc()
+  print a()
+end main
+
+function getFunc() return Func<of Int => Int>
+  return twice
+end function
+
+function twice(x as Int) return Int
+  return x * 2
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 1 got: 0"]);
+  });
 });
