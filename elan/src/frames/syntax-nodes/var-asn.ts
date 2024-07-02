@@ -42,6 +42,7 @@ import { IntType } from "../symbols/int-type";
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
     public readonly id: string,
+    public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | undefined,
     private readonly index: IndexAsn | undefined,
     public readonly fieldId: string,
@@ -136,7 +137,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
     }
 
     let code = `${q}${this.id}${call}, ${idx}`;
-    if (!(this.scope instanceof SetStatement)) {
+    if (!(this.isAssignable)) {
       code = this.wrapIndex(code);
     }
     return code;

@@ -414,7 +414,7 @@ export function transform(
     const q = transform(node.optQualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, q, index, fieldId, scope);
+    return new VarAsn(id, false, q, index, fieldId, scope);
   }
 
   if (node instanceof TermWith) {
@@ -456,7 +456,7 @@ export function transform(
   if (node instanceof InstanceNode) {
     const id = node.variable!.matchedText;
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, undefined, index, fieldId, scope);
+    return new VarAsn(id, false, undefined, index, fieldId, scope);
   }
 
   if (node instanceof IfExpr) {
@@ -506,13 +506,13 @@ export function transform(
     }
 
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new VarAsn(id, q, index, fieldId, scope);
+    return new VarAsn(id, true, q, index, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {
     const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
-    return new VarAsn(id, q, undefined, fieldId, scope);
+    return new VarAsn(id, false, q, undefined, fieldId, scope);
   }
 
   throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
