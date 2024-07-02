@@ -57,20 +57,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0.49999999999999994");
   });
 
-  // not yet implemented
-  ignore_test("Pass_DotSyntax", async () => {
+  test("Pass_Sin", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
   var x set to  pi/180*30
-  var y set to x.sin()
+  var y set to sin(x)
   print y
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = _stdlib.pi / 180 * 30;
-  var y set to sin(x);
+  var y = _stdlib.sin(x);
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -84,19 +83,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0.49999999999999994");
   });
 
-  ignore_test("Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators", async () => {
+  test("Pass_FunctionsInExpression", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
 main
-  var x set to  pi/180*30
-  var y set to 2 + x.sin()
+  var x set to pi/180*30
+  var y set to sin(x) + cos(x)
   print y
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var x = _stdlib.pi / 180 * 30;
-  var y set to 2 + sin(x);
+  var y = _stdlib.sin(x) + _stdlib.cos(x);
   system.printLine(_stdlib.asString(y));
 }
 return [main, _tests];}`;
@@ -107,7 +106,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0.49999999999999994");
+    await assertObjectCodeExecutes(fileImpl, "1.3660254037844386");
   });
 
   test("Pass_MoreComplexExpression", async () => {
