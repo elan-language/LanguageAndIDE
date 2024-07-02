@@ -93,8 +93,6 @@ return [main, _tests];}`;
     );
   });
 
-  //TODO Fail for passing incompatible types
-
   test("Pass_ExternalCall", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
 
