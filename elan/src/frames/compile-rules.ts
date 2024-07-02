@@ -437,6 +437,11 @@ function mustBeCompatibleTypes(
   compileErrors: CompileError[],
   location: string,
 ) {
+
+  if (lhss.length !== rhss.length){
+    compileErrors.push(new ParametersCompileError(rhss.length, lhss.length, location));
+  } 
+
   const maxLen = lhss.length > rhss.length ? lhss.length : rhss.length;
   for (let i = 0; i < maxLen; i++) {
     mustBeCompatibleType(
@@ -624,6 +629,7 @@ export function mustBeCompatibleType(
   }
 
   if (lhs instanceof FunctionType && rhs instanceof FunctionType) {
+    
     mustBeCompatibleTypes(lhs.parametersTypes, rhs.parametersTypes, compileErrors, location);
     mustBeCompatibleType(lhs.returnType, rhs.returnType, compileErrors, location);
     return;

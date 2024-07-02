@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -126,5 +127,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  // Fails TODO
+  test("Fail_FunctionSignatureDoesntMatch1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call printModified(3, power)
+end main
+  
+procedure printModified(i as Int, f as Func<of Int => Int>)
+  print f(i)
+end procedure
+  
+function power(x as Int, y as Int) return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Parameters expected: 2 got: 1"]);
+  });
+
+  test("Fail_FunctionSignatureDoesntMatch2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+main
+  call printModified(3, power)
+end main
+  
+procedure printModified(i as Int, f as Func<of Int => Int>)
+  print f(i)
+end procedure
+  
+function power(x as Int) return String
+  return "one"
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+  });
 });
