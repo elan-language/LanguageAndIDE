@@ -1,19 +1,19 @@
-# d71dabb2070d50d13ff5f917573232062c27c42716cf1308ef0b56f6cf4fe55f Elan Beta 1 valid
+# dfa0c83115a5a512a90989c18911e459d1d365ded252ddba0bcdde5661b0b329 Elan Beta 1 valid
 
 main
   print "Press any key to halt"
-  var cm set to new Graphics()
-  set cm to cm.fill("", black, white)
+  var gr set to new Graphics()
+  set gr to gr.fill("", black, white)
   var starter set to empty [Boolean]
   call fillRandom(starter)
   var grid set to starter.asImmutableList()
   var cont set to true
   while cont
-    set cm to updateGraphics(grid, cm)
-    call cm.draw()
+    set gr to updateGraphics(grid, gr)
+    call gr.draw()
     set grid to nextGeneration(grid)
     call pause(50)
-    if cm.getKeystroke() is not ""
+    if gr.getKeystroke() is not ""
       then
         set cont to false
     end if
@@ -26,27 +26,27 @@ procedure fillRandom(starter as [Boolean])
   end for
 end procedure
 
-function updateGraphics(grid as {Boolean}, cm as Graphics) return Graphics
-  var cm2 set to cm
+function updateGraphics(grid as {Boolean}, gr as Graphics) return Graphics
+  var gr2 set to gr
   for row from 0 to 19 step 1
     for col from 0 to 19 step 1
       var cell set to grid.get(col*20 + row)
       if cell
         then
-          set cm2 to cm2.putBackground(col, row, black)
+          set gr2 to gr2.putBackground(col, row, black)
         else
-          set cm2 to cm2.putBackground(col, row, white)
+          set gr2 to gr2.putBackground(col, row, white)
       end if
     end for
   end for
-  return cm2
+  return gr2
 end function
 
 test 
   let init be new Graphics()
-  let cm2 be updateGraphics(exampleCells, init)
-  assert cm2.getBackground(0, 0) is white
-  assert cm2.getBackground(1, 0) is black
+  let gr2 be updateGraphics(exampleCells, init)
+  assert gr2.getBackground(0, 0) is white
+  assert gr2.getBackground(1, 0) is black
 end test
 
 function north(c as Int) return Int

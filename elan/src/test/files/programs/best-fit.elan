@@ -1,55 +1,31 @@
-# 09f2d3547237dbbcb67a5ed237211f01ebbff4ba9a925c2d28fccea094b3baa6 Elan Beta 1 valid
+# f3b15749a35bb6db5a9a4f2af43ea86f34d93ef688037801436586a97ec30f0f Elan Beta 1 valid
 
-function sumX(points as {(Float, Float)}) return Float
-  return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first())
+function bestFitLine(points as {Point}) return (Float, Float)
+  let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
+  let sumXsq be points.reduce(0.0, lambda s as Float, p as Point => s + p.x^2)
+  let sumY be points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
+  let sumXY be points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
+  let n be points.length()
+  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  return (a, b)
 end function
 
-function sumXY(points as {(Float, Float)}) return Float
-  return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first()*p.second())
-end function
+class Point
+  constructor(x as Float, y as Float)
+    set property.x to x
+    set property.y to y
+  end constructor
 
-function sumY(points as {(Float, Float)}) return Float
-  return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.second())
-end function
+  property x as Float
 
-function sumXsq(points as {(Float, Float)}) return Float
-  return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first()*p.first())
-end function
+  property y as Float
 
-function bestFitFromPoints(points as {(Float, Float)}) return (Float, Float)
-  return bestFitFromSummaryTerms(sumX(points), sumXsq(points), sumY(points), sumXY(points), points.length())
-end function
+end class
 
-function calcB(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
-  return (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
-end function
-
-function calcA(sumX as Float, sumXsq as Float, sumY as Float, sumXY as Float, n as Int) return Float
-  return (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
-end function
-
-function bestFitFromSummaryTerms(sumX as Float, sumX2 as Float, sumY as Float, sumXY as Float, n as Int) return (Float, Float)
-  return (calcA(sumX, sumX2, sumY, sumXY, n), calcB(sumX, sumX2, sumY, sumXY, n))
-end function
-
-constant example set to {(0, 2.673040396), (1, 3.550437254), (2, 5.063963424), (3, 6.445493589), (4, 5.959864362), (5, 7.826499306), (6, 5.628729698), (7, 10.65942485), (8, 8.010532477), (9, 10.67121885), (10, 9.000669447), (11, 13.50830072), (12, 11.43464406), (13, 13.58275437), (14, 13.10821319), (15, 10.28617997), (16, 17.86384888), (17, 15.20409345), (18, 17.00764549), (19, 12.11596949)}
-
-test allFunctions
-  let emp be new ImmutableList<of (Float, Float)>()
-  let l1 be {(0.71, 1.12), (3.56, 5.36), (7.83, 9.04)}
-  assert sumX(emp) is 0.0
-  assert sumX(l1) is 12.1
-  assert sumY(emp) is 0.0
-  assert sumY(l1) is 15.52
-  assert sumXsq(emp) is 0.0
-  assert sumXsq(l1) is 74.4866
-  assert sumXY(emp) is 0.0
-  assert sumXY(l1) is 90.66
-  let actual1 be calcA(sumX(l1), sumXsq(l1), sumY(l1), sumXY(l1), l1.length())
-  assert actual1 is 0.76633595414913458
-  let actual2 be calcB(sumX(l1), sumXsq(l1), sumY(l1), sumXY(l1), l1.length())
-  assert actual2 is 1.0926439783101325
-  let actual3 be bestFitFromSummaryTerms(sumX(l1), sumXsq(l1), sumY(l1), sumXY(l1), l1.length())
-  assert actual3 is (0.76633595414913458, 1.0926439783101325)
-  assert bestFitFromPoints(l1) is (0.76633595414913458, 1.0926439783101325)
+test 
+  let l1 be {new Point(0.71, 1.12), new Point(3.56, 5.36), new Point(7.83, 9.04)}
+  let result be bestFitLine(l1)
+  assert round(result.first(), 3) is 0.766
+  assert round(result.second(), 3) is 1.093
 end test
