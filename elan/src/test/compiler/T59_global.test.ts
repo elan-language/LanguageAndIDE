@@ -305,4 +305,43 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["a is not defined"]);
   });
+
+  test("Fail_NoSuchGlobalSubroutine", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var f set to new Foo()
+  print f.loc()
+  print f.glob()
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    function loc() return Int
+      return bar()
+    end function
+
+    function glob() return Int
+      return global.bar()
+    end function
+
+    function bar() return Int
+      return 3
+    end function
+
+    function asString() return String
+      return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["bar is not defined"]);
+  });
 });
