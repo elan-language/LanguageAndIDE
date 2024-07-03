@@ -381,7 +381,7 @@ export abstract class AbstractField implements Selectable, Field {
   public textAsHtml(): string {
     let html = "";
     if (this.selected) {
-      html = `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
+      html = this.fieldAsInput();
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
@@ -390,6 +390,10 @@ export abstract class AbstractField implements Selectable, Field {
       }
     }
     return html;
+  }
+
+  protected fieldAsInput(): string {
+    return `<input spellcheck="false" data-cursor="${this.cursorPos}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotes(this.text)}">`;
   }
 
   public charCount(): number {

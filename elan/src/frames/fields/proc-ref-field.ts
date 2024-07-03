@@ -1,19 +1,12 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
-import {
-  filteredSymbols,
-  isIdOrProcedure,
-  isProcedure,
-  matchingSymbols,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { filteredSymbols, isIdOrProcedure, isProcedure } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
@@ -56,10 +49,9 @@ export class ProcRefField extends AbstractField {
 
   private nonAutoTextAsHtml() {
     let text: string;
-    if (
-      this.readParseStatus() === ParseStatus.valid ||
-      this.readParseStatus() === ParseStatus.valid
-    ) {
+    if (this.isSelected()) {
+      text = this.fieldAsInput();
+    } else if (this.readParseStatus() === ParseStatus.valid) {
       const bestMatch = (this.rootNode! as Alternatives).bestMatch;
       if (bestMatch instanceof IdentifierNode) {
         text = `<method>${this.text}</method>`;
@@ -69,7 +61,6 @@ export class ProcRefField extends AbstractField {
     } else {
       text = super.textAsHtml();
     }
-
     return text;
   }
 
