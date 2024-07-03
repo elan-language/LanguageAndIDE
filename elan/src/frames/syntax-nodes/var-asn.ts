@@ -23,6 +23,7 @@ import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
 import {
   getClassScope,
+  getGlobalScope,
   getParentScope,
   isDictionarySymbolType,
   isGenericSymbolType,
@@ -39,6 +40,7 @@ import { SetStatement } from "../statements/set-statement";
 import { UnknownType } from "../symbols/unknown-type";
 import { StringType } from "../symbols/string-type";
 import { IntType } from "../symbols/int-type";
+import { globalKeyword } from "../keywords";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -153,6 +155,8 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
         mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
       }
+    } else if (this.qualifier?.value.id === globalKeyword) {
+      symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     } else {
       symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     }
@@ -193,6 +197,8 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       currentScope = classScope as Scope;
     } else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
       currentScope = getClassScope(currentScope as Frame);
+    } else if (this.qualifier?.value.id === globalKeyword) {
+      currentScope = getGlobalScope(currentScope);
     } else {
       currentScope = getParentScope(currentScope);
     }

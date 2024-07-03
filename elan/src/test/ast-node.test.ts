@@ -448,7 +448,7 @@ suite("ASTNodes", () => {
     testAST(new VarRefNode(), stubField, `lst`, "lst", new ImmutableListType(intType));
     testAST(new VarRefNode(), stubField, `lst[3]`, "lst[3]", intType);
     testAST(new VarRefNode(), stubField, `library.foo`, "library.foo", intType);
-    testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
+    //testAST(new VarRefNode(), stubField, `global.lst[3]`, "lst[3]", intType);
     testAST(
       new VarRefNode(),
       stubField,

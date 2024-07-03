@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -247,5 +248,61 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2221110.8414709848078965");
+  });
+
+  ignore_test("Fail_NoSuchGlobal", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+constant b set to 4
+
+main
+  var a set to 3
+  print global.a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String, Int) to (Int, String)"]);
+  });
+
+  test("Fail_NoSuchGlobalConstant", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var f set to new Foo()
+  print f.prop()
+  print f.cons()
+end main
+
+class Foo
+    constructor()
+        set a to 3
+    end constructor
+
+    property a as Int
+
+    function prop() return Int
+        return a
+    end function
+
+    function cons() return Int
+        return global.a
+    end function
+
+    function asString() return String
+        return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["a is not defined"]);
   });
 });
