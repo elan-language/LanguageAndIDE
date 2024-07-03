@@ -131,10 +131,18 @@ export abstract class AbstractField implements Selectable, Field {
   isOptional(): boolean {
     return this._optional;
   }
+
+  processAutocompleteText(txt: string | undefined) {
+    if (txt) {
+      this.autoCompSelected = this.autocompleteSymbols.find((s) => s.symbolId === txt);
+    }
+  }
+
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
     const key = e.key;
     const textLen = this.text.length;
+    this.processAutocompleteText(e.autocomplete);
     switch (key) {
       case "Escape": {
         this.holder.select(true, false);
@@ -522,14 +530,12 @@ export abstract class AbstractField implements Selectable, Field {
 
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
-      const isP = isProperty(symbol) ? "property." : "";
       const symbolId = symbol.symbolId;
-      const selected = count === 1 || this.markIfSelected(symbol) ? "selected" : "";
-      const symbolType = symbol.symbolType().name;
+      const selected = count === 1 || this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
         // Can add back in ${isP}  and ${symbolType}
-        `<div class="autocomplete-item ${selected}">${symbolId}</div>`,
+        `<div class="autocomplete-item${selected}" data-id="${this.htmlId}">${symbolId}</div>`,
       );
     }
 

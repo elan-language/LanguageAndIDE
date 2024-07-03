@@ -5,4 +5,5 @@ export interface editorEvent {
   modKey: { control: boolean; shift: boolean; alt: boolean };
   id?: string;
   selection?: number;
+  autocomplete?: string;
 }
