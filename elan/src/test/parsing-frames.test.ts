@@ -1,20 +1,20 @@
 import assert from "assert";
 import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
+import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
 import { MainFrame } from "../frames/globals/main-frame";
-import { SetStatement } from "../frames/statements/set-statement";
-import { StatementSelector } from "../frames/statements/statement-selector";
-import { VarStatement } from "../frames/statements/var-statement";
-import { Print } from "../frames/statements/print";
-import { Throw } from "../frames/statements/throw";
-import { CallStatement } from "../frames/statements/call-statement";
-import { hash } from "../util";
-import { DefaultProfile } from "../frames/default-profile";
 import { TestFrame } from "../frames/globals/test-frame";
 import { AssertStatement } from "../frames/statements/assert-statement";
+import { CallStatement } from "../frames/statements/call-statement";
 import { LetStatement } from "../frames/statements/let-statement";
-import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { Print } from "../frames/statements/print";
+import { SetStatement } from "../frames/statements/set-statement";
+import { StatementSelector } from "../frames/statements/statement-selector";
+import { Throw } from "../frames/statements/throw";
+import { VarStatement } from "../frames/statements/var-statement";
+import { hash } from "../util";
+import { transforms } from "./compiler/compiler-test-helpers";
 
 suite("File Parsing Tests", async () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -156,7 +156,7 @@ suite("File Parsing Tests", async () => {
   });
 
   test("parse Frames - header file", async () => {
-    const code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
+    const code = `# 3d5cc500bca56a6ef67992ad5ba558b08fcae4d47cb1c10d7487bdf2ec842b86 Elan Beta 1 valid
 
 `;
     const source = new CodeSourceFromString(code);
@@ -167,7 +167,7 @@ suite("File Parsing Tests", async () => {
   });
 
   test("parse Frames - constant only", async () => {
-    const code = `# 83e1b601b037b88345a6441e68c281a520c5919d159b62b13c216ece8457ad42 Elan v0.1 valid
+    const code = `# 310f1d83068ac9ff4816c9721be5afb62faa10ddf1fca12e603b5ad176e3d6ec Elan Beta 1 valid
 
 constant pi set to 3.142
 `;
@@ -179,7 +179,7 @@ constant pi set to 3.142
   });
 
   test("parse Frames - two constants", async () => {
-    const code = `# 1e1d3aa095463fa2aab8601b090744c2e670e90a5333ade81ad565f36767866a Elan v0.1 valid
+    const code = `# 3f430b6b7b3ca6d84b7ea87feba0e29e9febc2eda6f3931f6a1ead6de309e1ac Elan Beta 1 valid
 
 constant pi set to 3.142
 
@@ -193,7 +193,7 @@ constant e set to 2.718
   });
 
   test("parse Frames - main", async () => {
-    const code = `# 5642a0933550c6081bce260e8e0c4cf2cdf112193b0cc034980e23636a796bfc Elan v0.1 valid
+    const code = `# e68356a6d36851aa57929bf0af10d12543ec5d03379305cfd9194a3e9444cd7a Elan Beta 1 valid
 
 main
 
@@ -207,7 +207,7 @@ end main
   });
 
   test("parse Frames - hello world", async () => {
-    const code = `# 244696ccd30157219b43a148c6139816206b9269b1de2665cf230de346df30c3 Elan v0.1 valid
+    const code = `# c7398146918abc6b9ebf189bb394afcc0a42649da83c7a5f4cb1102fd5f5a130 Elan Beta 1 valid
 
 # my comment
 main
@@ -226,7 +226,7 @@ end main
   });
 
   test("parse Frames - main with all single-line statements", async () => {
-    const code = `# 55a316ade19e2e61cf48355ed7e92e75892157dcb631211d4080aa2649df6dfe Elan v0.1 valid
+    const code = `# ac293187de8ec2eccd77331be6d830e7ee398e7cba4284855d204c2015fd1834 Elan Beta 1 valid
 
 main
   var name set to value or expression
@@ -244,7 +244,7 @@ end main
   });
 
   test("parse Frames - all globals except class", async () => {
-    const code = `# 8dfeafb5c3ac7b5950d3cc432937e3dce295a2186dd08ec7a8c77c8b212199d2 Elan v0.1 valid
+    const code = `# d42e30f3e2fae50239f698d1df8d8ba0d45d3c21073ce4536018af90636a58ad Elan Beta 1 valid
 
 constant phi set to 1.618
 
@@ -272,7 +272,7 @@ end enum
   });
 
   test("parse Frames - class", async () => {
-    const code = `# 834c9e198f709067045ddf39de7a96f9f926021b95df792d5dc55a0bae618736 Elan v0.1 valid
+    const code = `# 042309db601330031fd5630196ae80eeeb019689cc8b7d83a94af5ed371ebc72 Elan Beta 1 valid
 
 class Player inherits Foo, Bar
   constructor()
@@ -299,7 +299,7 @@ end class
   });
 
   test("parse Frames - immutable class", async () => {
-    const code = `# c716652d0078c118b606b66848e0ea87e5618f5f0e9196cf41c34f8b8409ede2 Elan v0.1 valid
+    const code = `# 80b5755821cac2bc654b1efd4190044716fc74a1ccf395dc1e7110bb1550b697 Elan Beta 1 valid
 
 immutable class Card inherits Foo, Bar
   constructor()
@@ -318,7 +318,7 @@ end class
   });
 
   test("parse Frames - abstract class", async () => {
-    const code = `# cc887504cf1fe1864e92e7d759fc8b8e95b0e0626c7f9b56328076222486c6e5 Elan v0.1 valid
+    const code = `# 9a6f7f51bc012e41827de880e16107ee60dc10319dd26ff8d53cf17b7463f659 Elan Beta 1 valid
 
 abstract class Foo
   abstract property p1 as Int
@@ -339,7 +339,7 @@ end class
   });
 
   test("parse Frames - abstract immutable class", async () => {
-    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+    const code = `# 5aaa481aabfcdbc413ba11a0c875d0a9cf516727a7f0a265803eed91a125efba Elan Beta 1 valid
 
 abstract immutable class Card
   abstract property value as Int
@@ -356,7 +356,7 @@ end class
   });
 
   test("parse Frames - switch 1", async () => {
-    const code = `# 66c88e1b3c6d6cf3d54f6b7cb336e426eda4a6c54219026aa772eea34a20e771 Elan v0.1 valid
+    const code = `# be559a968a35319f2a662847449c2f1c8039559e87e4036803fe4df3adf9c3a2 Elan Beta 1 valid
 
 main
   switch i
@@ -374,7 +374,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
   test("parse Frames - switch 2", async () => {
-    const code = `# cea6cdc7ee252b7d3bef59d737cb0a8aa25bb53e485105264a561060c589cea2 Elan v0.1 valid
+    const code = `# 0f2176abe724bba7f88e23fdce7d02fb04c94817d2c2506899283bffeb985e9f Elan Beta 1 valid
 
 main
   switch i
@@ -393,7 +393,7 @@ end main
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `# 11b255dd0182f67b9082df52d21ecc6ca8eb12b830da0db6b5912dd358fee8a8 Elan v0.1 valid
+    const code = `# b126924227c6a2c795c6332427fe352affd3b9ddf41362fe9d4a26c068ff5dee Elan Beta 1 valid
 
 main
   if true
@@ -414,7 +414,7 @@ end main
   });
 
   test("#367 abstract class cannot contain concrete property", async () => {
-    const code = `# Elan v0.1 valid
+    const code = `# Elan Beta 1 valid
 
 abstract class Card
   property value as Int
@@ -428,7 +428,7 @@ end class
   });
 
   test("#367 abstract class cannot contain concrete method", async () => {
-    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan Beta 1 valid
 
 abstract class Card
   function bar() return Int
@@ -443,7 +443,7 @@ end class
     assert.equal(fl.parseError!.includes(`0 matches found at function bar() return Int`), true);
   });
   test("#367 immutable class cannot contain procedure", async () => {
-    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan Beta 1 valid
 
 immutable class Card
   constructor()
@@ -463,7 +463,7 @@ end class
   });
 
   test("#367 abstract class cannot contain constructor", async () => {
-    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan v0.1 valid
+    const code = `# a84a6db387a793b0e3493b26f384f0496485bc1f7f8cc686918ecbfd4c78c1b5 Elan Beta 1 valid
 
 abstract class Card
   constructor()

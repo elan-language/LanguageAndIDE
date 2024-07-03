@@ -2,23 +2,15 @@ import assert from "assert";
 import * as vscode from "vscode";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
-import { createTestRunner, key, loadFileAsModel } from "./testHelpers";
-import {
-  assertObjectCodeIs,
-  ignore_test,
-  testHash,
-  transforms,
-} from "./compiler/compiler-test-helpers";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
-import { getTestRunner } from "../runner";
-import { getTestSystem } from "./compiler/test-system";
-import { StdLib } from "../std-lib";
+import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
+import { createTestRunner, key, loadFileAsModel } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
 
   ignore_test("Pattern for starting from literal program", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
   
       constant a set to 3
       main

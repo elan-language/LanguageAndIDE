@@ -13,7 +13,7 @@ import {
 
 suite("Pass_PassingTest", () => {
   test("Pass_SimpleDraw", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to  new Graphics()
@@ -41,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PutAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -71,7 +71,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GetAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -97,7 +97,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PutChar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -127,7 +127,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GetChar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -153,7 +153,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PutForeground", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GetForeground", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -209,7 +209,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PutBackground", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -239,7 +239,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GetBackground", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -265,7 +265,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ClearGraphics", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -291,7 +291,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKeystroke", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -317,7 +317,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKeystrokeWithModifier", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -343,7 +343,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clearKeyBuffer", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -367,7 +367,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_newGraphics", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new Graphics()
@@ -389,7 +389,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultGraphics", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to new Foo()
@@ -432,7 +432,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_emptyGraphics", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to empty Graphics()
@@ -446,7 +446,7 @@ end main`;
   });
 
   test("Pass_putString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()
@@ -480,7 +480,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_putString overrunning both limits", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var g set to new Graphics()

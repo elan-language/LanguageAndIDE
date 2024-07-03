@@ -14,7 +14,7 @@ import {
 
 suite("T13_StringManipulation", () => {
   test("Pass_AppendStrings", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "Hello"
@@ -40,7 +40,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendOrPrependChar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print "_" + "Hello" + "!"
@@ -62,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendFloat", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print "Hello" + 3.1
@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Indexing", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -108,7 +108,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexingAndAppend", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -136,7 +136,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -164,7 +164,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Ranges", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -192,7 +192,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EqualityTesting", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     print "abc" is "abc"
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ComparisonMethods", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print isBefore("abc", "abC")
@@ -258,7 +258,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseAsStringExplicitly", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -286,7 +286,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Interpolation", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -315,7 +315,7 @@ return [main, _tests];}`;
 
   // not supported also Pass_literalNewline
   ignore_test("Pass_UseBracesInString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -343,7 +343,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendStringToFloat", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3.1 + "Hello"
@@ -367,7 +367,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IndexOutOfRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -384,7 +384,7 @@ end main
   });
 
   test("Fail_SetIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"
@@ -402,7 +402,7 @@ end main
   });
 
   test("Fail_ComparisonOperators", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print "abc" < "abC"
@@ -429,7 +429,7 @@ end main
   });
 
   test("Fail_CoerceNumberToString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "abcde"

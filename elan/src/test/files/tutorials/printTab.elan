@@ -1,4 +1,4 @@
-# 8aa7426ebf916a9047adae1fcda0e365300692bb1003b5a8663d1ae2cdf3d0e0 Elan v0.1 valid
+# 8aa7426ebf916a9047adae1fcda0e365300692bb1003b5a8663d1ae2cdf3d0e0 Elan Beta 1 valid
 
 main
   call printTab(0, "No.")

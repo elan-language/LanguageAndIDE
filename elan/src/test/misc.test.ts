@@ -1,13 +1,13 @@
-import * as vscode from "vscode";
-import { T03_mainWithAllStatements } from "./model-generating-functions.";
-import { assertElementHasClasses, key } from "./testHelpers";
 import assert from "assert";
-import { Regexes } from "../frames/fields/regexes";
+import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
+import { DefaultProfile } from "../frames/default-profile";
+import { Regexes } from "../frames/fields/regexes";
 import { FileImpl } from "../frames/file-impl";
 import { hash } from "../util";
-import { DefaultProfile } from "../frames/default-profile";
 import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
+import { T03_mainWithAllStatements } from "./model-generating-functions.";
+import { assertElementHasClasses, key } from "./testHelpers";
 
 suite("Misc Tests", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -72,7 +72,7 @@ suite("Misc Tests", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     await await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    const code = `# c86776f84624ecbc12d2eef7883c0a525c2c11b6ddcab8a3010430a7580c1ab3 Elan v0.1 valid
+    const code = `# 3d5cc500bca56a6ef67992ad5ba558b08fcae4d47cb1c10d7487bdf2ec842b86 Elan Beta 1 valid
 
 `;
     assert.equal(elan, code.replaceAll("\n", "\r\n"));

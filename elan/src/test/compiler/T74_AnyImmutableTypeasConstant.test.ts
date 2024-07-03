@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -14,7 +13,7 @@ import {
 
 suite("T74_AnyImmutableTypeAsConstant", () => {
   test("Pass_String", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to "Apple"
 
@@ -40,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Tuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to (3, "Apple")
 
@@ -66,7 +65,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to {1, 2, 3}
 
@@ -92,7 +91,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Dictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to {"a":1, "b":3, "c":3}
 
@@ -119,7 +118,7 @@ return [main, _tests];}`;
 
   // no longer supported ?
   ignore_test("Pass_ImmutableClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to 0
 
@@ -170,7 +169,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Array1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to [1, 2, 3]
 
@@ -185,7 +184,7 @@ end main`;
   });
 
   test("Fail_Array2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to new ArrayList<of Int>()
 
@@ -200,7 +199,7 @@ end main`;
   });
 
   test("Fail_Array3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to empty [Int]
 
@@ -215,7 +214,7 @@ end main`;
   });
 
   test("Fail_Dictionary1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to ["a":1]
 
@@ -230,7 +229,7 @@ end main`;
   });
 
   test("Fail_Dictionary2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to new Dictionary<of String, Int>()
 
@@ -245,7 +244,7 @@ end main`;
   });
 
   test("Fail_Dictionary3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to empty [String:Int]
 
@@ -260,7 +259,7 @@ end main`;
   });
 
   test("Fail_Class", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant k set to new Foo()
 

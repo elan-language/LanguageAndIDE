@@ -12,7 +12,7 @@ import {
 
 suite("T72_PassingFunctionAsParameterOrReturn", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call printModified(3, twice)
@@ -50,7 +50,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call printIt("Hello", "e", find)
@@ -88,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to getFunc()
@@ -128,7 +128,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call printModified(3, power)
@@ -150,7 +150,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call printModified(3, power)
@@ -172,7 +172,7 @@ end function`;
   });
 
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to getFunc()

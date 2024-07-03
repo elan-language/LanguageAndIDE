@@ -1,4 +1,4 @@
-# 1048e9ac02911de96372c1b9fff0815718fa4511dc5ff0c7320dc53c231a0738 Elan v0.1 valid
+# 09f2d3547237dbbcb67a5ed237211f01ebbff4ba9a925c2d28fccea094b3baa6 Elan Beta 1 valid
 
 function sumX(points as {(Float, Float)}) return Float
   return points.reduce(0.0, lambda s as Float, p as (Float, Float) => s + p.first())

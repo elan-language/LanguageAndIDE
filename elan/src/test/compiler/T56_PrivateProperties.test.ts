@@ -12,7 +12,7 @@ import {
 
 suite("T56_PrivateProperties", () => {
   test("Pass_PrivatePropertyCanBeDeclared", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -69,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PrivatePropertyCannotBeAccessed", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -100,7 +100,7 @@ end class`;
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()

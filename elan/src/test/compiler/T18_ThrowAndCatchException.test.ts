@@ -13,7 +13,7 @@ import {
 
 suite("T18_ThrowAndCatchException", () => {
   test("Pass_ThrowExceptionInMain", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     throw "Foo"
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var msg set to "Foo"
@@ -59,7 +59,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var bar set to 1
@@ -83,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call foo()
@@ -113,7 +113,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchException", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   try
@@ -154,7 +154,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchSystemGeneratedException", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   try
@@ -209,7 +209,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseException", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   try
@@ -254,7 +254,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var s set to foo("s")
@@ -273,7 +273,7 @@ end function
   });
 
   test("Fail_catchMissingVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   try
@@ -296,7 +296,7 @@ end procedure
   });
 
   test("Fail_UseExpressionForMessage", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var msg set to "Foo"

@@ -12,7 +12,7 @@ import {
 
 suite("T_4.5_LetStatement", () => {
   test("Pass_normal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be 3
@@ -44,7 +44,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_proveCached", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be new Foo()
@@ -106,7 +106,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_proveLazilyEvaluated", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be  1 / 0
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print foo()
@@ -182,7 +182,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_cannotRedefine ", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be 3
@@ -199,7 +199,7 @@ end main`;
   });
 
   test("Fail_cannotAssign", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be 3
@@ -216,7 +216,7 @@ end main`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   let x be x + 1
@@ -234,7 +234,7 @@ end main`;
   });
 
   test("Fail_RecursiveDefinition1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 1

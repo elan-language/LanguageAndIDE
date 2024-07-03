@@ -13,7 +13,7 @@ import {
 
 suite("T34_ConcreteClasses", () => {
   test("Pass_Class_SimpleInstantiation_PropertyAccess_Methods", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -72,7 +72,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ConstructorWithParm", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo(7, "Apple")
@@ -129,7 +129,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ConstructorAsScope", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -208,7 +208,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReferenceProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to new Foo()
@@ -316,7 +316,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MutableClassAsProcedureParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -365,7 +365,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MutableClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -392,7 +392,7 @@ end function
   });
 
   test("Fail_NoConstructor", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 class Foo
 
@@ -412,7 +412,7 @@ end class`;
   });
 
   test("Fail_InitialisePropertyInLine", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 class Foo
 
@@ -432,7 +432,7 @@ end class`;
   });
 
   test("Fail_AttemptToModifyAPropertyDirectly", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -457,7 +457,7 @@ end class`;
   });
 
   test("Fail_OverloadedConstructor", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 class Foo
   constructor()
@@ -482,7 +482,7 @@ end class`;
   });
 
   test("Fail_InstantiateWithoutRequiredArgs", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -509,7 +509,7 @@ end class`;
   });
 
   test("Fail_InstantiateWithWrongArgType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo(7.1)
@@ -536,7 +536,7 @@ end class`;
   });
 
   test("Fail_SupplyingArgumentNotSpecified", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo(7)
@@ -562,7 +562,7 @@ end class`;
   });
 
   test("Fail_MissingNewOnInstantiation", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to Foo()
@@ -593,7 +593,7 @@ end class`;
   });
 
   test("Fail_MissingClassOnInstantiation", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -607,7 +607,7 @@ end main`;
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -640,7 +640,7 @@ end procedure
   });
 
   test("Fail_IncompatibleClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -673,7 +673,7 @@ end function
   });
 
   test("Fail_UnknownPropertyType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -694,7 +694,7 @@ end class`;
   });
 
   test("Fail_DuplicateNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -721,7 +721,7 @@ end class`;
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -743,7 +743,7 @@ end class`;
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -769,7 +769,7 @@ end class`;
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -793,7 +793,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -816,7 +816,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -840,7 +840,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  

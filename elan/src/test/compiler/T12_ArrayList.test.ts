@@ -15,7 +15,7 @@ import {
 
 suite("T12_ArrayList", () => {
   test("Pass_literalArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to [4,5,6,7,8]
@@ -39,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new ArrayList<of String>()
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -89,7 +89,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseToEnum", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, Fruit.apple)
@@ -122,7 +122,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to [1,2,3]
@@ -148,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotinitialiseToReferenceType1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, empty Foo)
@@ -178,7 +178,7 @@ end class
   });
 
   test("Fail_CannotinitialiseToReferenceType2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, empty [Int])
@@ -197,7 +197,7 @@ end main`;
   });
 
   test("Pass_SetAndReadElements", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -227,7 +227,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["foo", "bar", "yon"]
@@ -253,7 +253,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddAndReadElements", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -283,7 +283,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetFromIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -321,7 +321,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InsertElements", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -349,7 +349,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -377,7 +377,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeFirst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three", "one", "two", "three"]
@@ -403,7 +403,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAll", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three", "one", "two", "three"]
@@ -429,7 +429,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitializeAnArrayFromAList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to {"foo","bar","yon"}.asArrayList()
@@ -453,7 +453,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to empty [Int]
@@ -489,7 +489,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EmptyArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to empty [Int]
@@ -505,7 +505,7 @@ end main`;
   });
 
   test("Fail_UseRoundBracketsForIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -521,7 +521,7 @@ end main
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -537,7 +537,7 @@ end main
   });
 
   test("Fail_2DArrayCreatedByDoubleIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new ArrayList<of String>[3][4]
@@ -553,7 +553,7 @@ end main
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -570,7 +570,7 @@ end main
   });
 
   test("Fail_TypeIncompatibility", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, "")
@@ -586,7 +586,7 @@ end main
   });
 
   test("Fail_IndexWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new ArrayList<of String>()
@@ -602,7 +602,7 @@ end main
   });
 
   ignore_test("Fail_SizeWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to createArray(3, 1.1)
@@ -617,7 +617,7 @@ end main
   });
 
   test("Fail_SizeSpecifiedInSquareBrackets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new ArrayList<of String>[3]
@@ -632,7 +632,7 @@ end main
 
   // obsolete code
   test("Fail_SpecifySizeAndInitializer", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to new ArrayList<of String>() {"foo","bar","yon"}
@@ -646,7 +646,7 @@ end main
   });
 
   test("Fail_get", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -662,7 +662,7 @@ end main
   });
 
   test("Fail_getRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -678,7 +678,7 @@ end main
   });
 
   test("Fail_put", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -695,7 +695,7 @@ end main
   });
 
   test("Fail_withInsert", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -712,7 +712,7 @@ end main
   });
 
   test("Fail_withRemove", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -729,7 +729,7 @@ end main
   });
 
   test("Fail_putAtKey", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -746,7 +746,7 @@ end main
   });
 
   test("Fail_appendWithPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -763,7 +763,7 @@ end main
   });
 
   test("Fail_prependWithPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ["one", "two", "three"]
@@ -780,7 +780,7 @@ end main
   });
 
   test("Fail_withRemoveFirst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var a set to ["one", "two", "three", "one", "two", "three"]
@@ -796,7 +796,7 @@ end main`;
   });
 
   test("Fail_withRemoveAll", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var a set to ["one", "two", "three", "one", "two", "three"]
@@ -812,7 +812,7 @@ end main`;
   });
 
   test("Fail_assignRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var a set to [1,2,3,4]
@@ -828,7 +828,7 @@ end main`;
   });
 
   test("Fail_withoutGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var a set to new ArrayList()

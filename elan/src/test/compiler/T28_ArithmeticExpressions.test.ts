@@ -12,7 +12,7 @@ import {
 
 suite("T28_Expressions2_Brackets", () => {
   test("Pass_BracketsChangeOperatorEvaluation", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 2 + 3 * 5 + 1
@@ -44,7 +44,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RedundantBracketsIgnored", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
     main
     var x set to 2 + (3 * 5) + 1
@@ -76,7 +76,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 2 + 3 ^ 2
@@ -104,7 +104,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 16.0 / 2 ^ 3
@@ -132,7 +132,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThanIntDivision", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 16 / 2 ^ 3
@@ -160,7 +160,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MinusAsAUnaryOperator", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to - 4.7
@@ -188,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorPrecedenceForMod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to mod(11, 3)
@@ -216,7 +216,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorPrecedenceForDiv", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to div(11, 3)
@@ -244,7 +244,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PlusIsNotUnary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3 * + 4
@@ -257,7 +257,7 @@ end main`;
   });
 
   test("Fail_MultiplyAfterMinus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3 - * 4

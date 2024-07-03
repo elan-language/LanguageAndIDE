@@ -13,7 +13,7 @@ import {
 
 suite("T_6_ArithmeticOperators", () => {
   test("Pass_IntAddition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print 3 + 4
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntSubtraction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print 3 - 4
@@ -57,7 +57,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntMultiplication", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print 3 * 4
@@ -79,7 +79,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IncludeVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -103,7 +103,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DivideIntegersToFloat", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print 3 / 2
@@ -125,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerDivision", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print div(7, 2)
@@ -147,7 +147,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Mod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print mod(11, 3)
@@ -169,7 +169,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ModWithComparison", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print if mod(25, 20) < 19 then 1 else 2
@@ -191,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Power", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print 3 ^ 3
@@ -213,7 +213,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseVariableBothSides", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -239,7 +239,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InvalidExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a = 3 4
@@ -252,7 +252,7 @@ end main`;
   });
 
   test("Fail_PlusEquals", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -266,7 +266,7 @@ end main`;
   });
 
   test("Fail_PlusPlus", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3
@@ -280,7 +280,7 @@ end main`;
   });
 
   test("Fail_AddWrongTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 3 + true

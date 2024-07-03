@@ -14,7 +14,7 @@ import {
 
 suite("T62_Tuples", () => {
   test("Pass_CreatingTuplesAndReadingContents", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var x set to (3, "Apple")
@@ -42,7 +42,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionReturnsTuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to f()
@@ -78,7 +78,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var t set to f()
@@ -110,7 +110,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexGenericFunctionReturnsTuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var t set to a.reduce((1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
@@ -137,7 +137,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionTupleParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to "one"
@@ -171,7 +171,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoExistingVariables", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -205,7 +205,7 @@ return [main, _tests];}`;
 
   // #466
   ignore_test("Pass_DeconstructIntoLetVariables", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -234,7 +234,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariables", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -263,7 +263,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeconstructIntoNewVariablesTypeCheck", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -300,7 +300,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignANewTupleOfSameType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -327,7 +327,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_OutOfRangeError", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -344,7 +344,7 @@ end main
   });
 
   test("Fail_AssignItemToWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -363,7 +363,7 @@ end main
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -378,7 +378,7 @@ end main
   });
 
   test("Fail_DeconstructIntoWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -402,7 +402,7 @@ end main
   });
 
   test("Fail_DeconstructIntoMixed1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -422,7 +422,7 @@ end main
   });
 
   test("Fail_DeconstructIntoMixed2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3,"Apple")
@@ -442,7 +442,7 @@ end main
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")
@@ -459,7 +459,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple", 4)
@@ -476,7 +476,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to (3, "Apple")

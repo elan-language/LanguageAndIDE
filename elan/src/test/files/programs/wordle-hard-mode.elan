@@ -1,4 +1,4 @@
-# 12ef1c9115441dddd5008a47b46c944123c8812121a03b18faf90e6ab991ade3 Elan v0.1 valid
+# 12ef1c9115441dddd5008a47b46c944123c8812121a03b18faf90e6ab991ade3 Elan Beta 1 valid
 
 main
   var possible set to allPossibleAnswers.asIter()

@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -13,7 +12,7 @@ import {
 
 suite("T26_Iter", () => {
   test("Pass_List", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {1.0, 5, 6}
@@ -49,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ListToFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {"one", "two"}
@@ -81,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IterAssignToList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var lst set to {"one", "two"}
@@ -117,7 +116,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Array", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var arr set to [1, 3, 6]
@@ -153,7 +152,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var s set to "Foo"
@@ -189,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Printing", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {1.0, 2, 3, 4, 5, 6, 7}
@@ -236,7 +235,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Default", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -285,7 +284,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyIter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to new Foo()
@@ -347,7 +346,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_NoGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -367,7 +366,7 @@ end procedure`;
   });
 
   test("Fail_PassArgumentWithWrongGenericType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {1,2,3,4,5,6,7}
@@ -388,7 +387,7 @@ end procedure`;
   });
 
   test("Fail_Indexing1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {1,2,3,4,5,6,7}
@@ -407,7 +406,7 @@ end procedure`;
   });
 
   test("Fail_Indexing2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var it set to {1,2,3,4,5,6,7}

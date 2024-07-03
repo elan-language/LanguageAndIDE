@@ -1,12 +1,12 @@
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
-import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
+import { testHash, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes } from "./testHelpers";
 
 suite("Autocomplete", () => {
   test("Pass_LocalVars", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to 1
@@ -26,7 +26,7 @@ end main`;
   });
 
   test("Pass_InClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -57,7 +57,7 @@ end class`;
   });
 
   test("Pass_FiltersByInput", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to 1
@@ -74,7 +74,7 @@ end main`;
   });
 
   test("Pass_NoConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant fooyon set to 3
 
@@ -96,7 +96,7 @@ end main`;
   });
 
   test("Pass_CallLocalVars", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 procedure fooyon()
 
@@ -121,7 +121,7 @@ end main`;
   });
 
   test("Pass_CallMembers", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 class Foo
   constructor()
@@ -162,7 +162,7 @@ end main`;
   });
 
   test("Pass_CallMembersFilter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 class Foo
   constructor()
@@ -199,7 +199,7 @@ end main`;
   });
 
   test("Pass_CallExtensions", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to [1, 2]
@@ -221,7 +221,7 @@ end main`;
   });
 
   test("Pass_CallExtensionsFilter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to [1, 2]
@@ -239,7 +239,7 @@ end main`;
   });
 
   test("Pass_ExpressionId", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to 1
@@ -255,7 +255,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalVar", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to 1
@@ -271,7 +271,7 @@ end main`;
   });
 
   test("Pass_ExpressionLocalFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to 1

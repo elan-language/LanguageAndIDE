@@ -12,7 +12,7 @@ import {
 
 suite("Interpolated strings", () => {
   test("Pass_String", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 1
@@ -40,7 +40,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_missingBrace", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 1
@@ -49,8 +49,6 @@ main
   print "{a {b} {c}"
 end main`;
 
-
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
@@ -58,7 +56,7 @@ end main`;
   });
 
   test("Fail_extraBrace", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 1
@@ -66,8 +64,6 @@ main
   var c set to {1,2,3}
   print "{a} {b} {{c}"
 end main`;
-
-
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

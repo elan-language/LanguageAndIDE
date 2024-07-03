@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { hash } from "../../util";
 import {
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -10,11 +9,10 @@ import {
   ignore_test,
   transforms,
 } from "./compiler-test-helpers";
-import { createHash } from "node:crypto";
 
 suite("T_3_Header", () => {
   ignore_test("Pass_hash", async () => {
-    const code = `# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan v0.1 valid
+    const code = `# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan Beta 1 valid
 
 main
   # My first program

@@ -208,7 +208,7 @@ export class FileImpl implements File, Scope {
   }
 
   private getVersion() {
-    return "Elan v0.1";
+    return "Elan Beta 1";
   }
 
   private getProfileName() {
@@ -514,7 +514,7 @@ export class FileImpl implements File, Scope {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length !== 5 || tokens[0] !== "#" || tokens[2] !== "Elan") {
+      if (tokens.length !== 6 || tokens[0] !== "#" || tokens[2] !== "Elan") {
         throw new Error(msg);
       }
       const fileHash = tokens[1];

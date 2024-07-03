@@ -1,4 +1,4 @@
-# a16d74db32d502c5b8dc0ac84a525ec96fd9ac4c9bfee57ca4a05945666a08ed Elan v0.1 valid
+# 30b682f25dae4ce2642136505948d29dd88fe3e53015b3f114d408b70975bcbf Elan Beta 1 valid
 
 function asRoman(d as Int) return String
   var result set to ""

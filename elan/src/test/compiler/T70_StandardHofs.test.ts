@@ -13,7 +13,7 @@ import {
 
 suite("T70_StandardHofs", () => {
   test("Pass_filter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -45,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterInFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -79,7 +79,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_map", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -109,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapTestType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduce", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -164,7 +164,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceToImmutableDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {"three", "four"}
 main
@@ -193,7 +193,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_max", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -218,7 +218,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -243,7 +243,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {{1}, {2, 2}}
 main
@@ -268,7 +268,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {"apple", "orange", "pear"}
 main
@@ -293,7 +293,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_length", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -318,7 +318,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_min", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -343,7 +343,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minBy", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -368,7 +368,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_any", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -397,7 +397,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_groupBy", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -422,7 +422,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sortBy", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
@@ -452,7 +452,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MaxOnNonNumeric", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {"apple", "orange", "pair"}
 main
@@ -467,7 +467,7 @@ end main`;
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {"apple", "orange", "pair"}
 main

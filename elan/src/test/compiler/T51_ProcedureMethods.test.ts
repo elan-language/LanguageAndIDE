@@ -12,7 +12,7 @@ import {
 
 suite("T51_ProcedureMethods", () => {
   test("Pass_HappyCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -71,7 +71,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureCanContainSystemCall", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -130,7 +130,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CallGlobalProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -195,7 +195,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureMethodMayCallOtherClassProcedureMethod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -305,7 +305,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ProcedureMethodCannotBeCalledDirectly", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -337,7 +337,7 @@ end class`;
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to new Foo()
@@ -366,7 +366,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -390,7 +390,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -413,7 +413,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -438,7 +438,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 

@@ -12,7 +12,7 @@ import {
 
 suite("T46_TypeMethod", () => {
   ignore_test("Pass_TypeOfStandardTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print typeof 1

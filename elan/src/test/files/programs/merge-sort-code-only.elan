@@ -1,4 +1,4 @@
-# 3657ceca49e784e6359712160fe7d05acb576c52e6e44683dc5a9ca6b210bd5c Elan v0.1 valid
+# 3657ceca49e784e6359712160fe7d05acb576c52e6e44683dc5a9ca6b210bd5c Elan Beta 1 valid
 
 main
   var li set to {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"}

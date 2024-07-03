@@ -14,7 +14,7 @@ import {
 
 suite("T29_Expressions3_FunctionCalls", () => {
   test("Pass_LibraryConst", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print pi
@@ -36,7 +36,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SingleFunctionCall", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to sin(pi / 180 * 30)
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Sin", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to  pi/180*30
@@ -86,7 +86,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionsInExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to pi/180*30
@@ -112,7 +112,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MoreComplexExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 0.7
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultiParamCall", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to {3.1, 3}.min()
@@ -163,7 +163,7 @@ return [main, _tests];}`;
 
   // not implemented
   ignore_test("Pass_MultiParamCallUsingDotSyntax", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to 3.max(3.1)
@@ -187,7 +187,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IncorrectType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to "hello".max()
@@ -201,7 +201,7 @@ end main`;
   });
 
   test("Fail_UnconsumedExpressionResult1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call sin(1)
@@ -215,7 +215,7 @@ end main`;
   });
 
   test("Fail_UnconsumedExpressionResult2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   1 + 2
@@ -228,7 +228,7 @@ end main`;
   });
 
   test("Fail_UnconsumedExpressionResult3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to [1,2]

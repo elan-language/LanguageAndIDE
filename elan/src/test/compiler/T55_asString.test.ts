@@ -11,7 +11,7 @@ import {
 
 suite("T55_asString", () => {
   test("Pass_SimpleExtension", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to 1
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ClassHasNoAsString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -80,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_emptyClassAsString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -132,7 +132,7 @@ return [main, _tests];}`;
 
   // this behaviour has changed from c# compiler
   test("Pass_emptyClassReplacesAsString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -195,7 +195,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AsStringMayBeCalled", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var f set to new Foo()
@@ -254,7 +254,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AsStringCalledWhenObjectPrinted", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var f set to new Foo()
@@ -311,7 +311,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AsStringUsingDefaultHelper", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var f set to new Foo()
@@ -368,7 +368,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AsStringOnVariousDataTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var l set to {1,2,3}

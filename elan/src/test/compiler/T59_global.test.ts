@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -13,7 +12,7 @@ import {
 
 suite("T59_Global", () => {
   ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant a set to 4
 
@@ -40,9 +39,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-
   test("Pass_DisambiguateConstantFromInstanceProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant a set to 4
 
@@ -115,7 +113,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateGlobalFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var f set to new Foo()
@@ -195,7 +193,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     var f set to new Foo()

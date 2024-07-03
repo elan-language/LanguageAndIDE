@@ -13,7 +13,7 @@ import {
 
 suite("T44_ImmutableClass", () => {
   test("Pass_BasicImmutableClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo(3)
@@ -70,7 +70,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractImmutableClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo(3)
@@ -149,7 +149,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ProcedureMethod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 immutable class Foo
   constructor(p1 as Int)
@@ -174,7 +174,7 @@ end class`;
   });
 
   test("Pass_ImmutableClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -223,7 +223,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ImmutableClassAsProcedureParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -272,7 +272,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UpcastImmutableClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()
@@ -340,7 +340,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DowncastImmutableClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to new Foo()

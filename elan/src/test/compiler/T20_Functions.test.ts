@@ -13,7 +13,7 @@ import {
 
 suite("T20_Functions", () => {
   test("Pass_SimpleCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print foo(3,4)
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnSimpleDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print foo(3,4)
@@ -73,7 +73,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnClassDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print foo(3,4)
@@ -116,7 +116,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnCollectionDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
     print foo(3,4)
@@ -146,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Recursive", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print factorial(5)
@@ -189,7 +189,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GlobalFunctionOnClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var b set to new Bar()
@@ -243,7 +243,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ExtensionParameterCount", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant a set to {"a":1}
 
@@ -263,7 +263,7 @@ end main`;
   });
 
   test("Fail_ParameterCount", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p as Float) return Float
   return 0
@@ -285,7 +285,7 @@ end main`;
   });
 
   test("Fail_ParameterType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p as Int) return Float
   return 0.0
@@ -307,7 +307,7 @@ end main`;
   });
 
   test("Fail_ReturnType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p as Boolean) return Int
   return p
@@ -325,7 +325,7 @@ end main`;
   });
 
   test("Fail_noReturnType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p as Int)
   return p
@@ -342,7 +342,7 @@ end main`;
   });
 
   test("Fail_noAs", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p Int) return Int 
   return p
@@ -359,7 +359,7 @@ end main`;
   });
 
   test("Fail_noReturn", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function f(p Int) return Int 
   var c set to p
@@ -376,7 +376,7 @@ end main`;
   });
 
   test("Fail_ReturnTypeIncompatible", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to ""
@@ -396,7 +396,7 @@ end function`;
   });
 
   test("Fail_NoReturn2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -413,7 +413,7 @@ end function`;
   });
 
   test("Fail_embeddedReturns", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -433,7 +433,7 @@ end function`;
   });
 
   test("Fail_nonMatchingReturn2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -450,7 +450,7 @@ end function`;
   });
 
   test("Fail_statementAfterReturn", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -467,7 +467,7 @@ end function`;
   });
 
   test("Fail_CanNotContainPrint", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -484,7 +484,7 @@ end function`;
   });
 
   test("Fail_CanNotContainInput", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -501,7 +501,7 @@ end function`;
   });
 
   test("Fail_CannotModifyParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var result set to foo(3,4)
@@ -521,7 +521,7 @@ end function`;
   });
 
   test("Fail_CannotPassInArray", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -538,7 +538,7 @@ end function`;
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -555,7 +555,7 @@ end function`;
   });
 
   test("Fail_TooManyParams", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var result set to foo(3, 4, 5)
@@ -574,7 +574,7 @@ end function`;
   });
 
   test("Fail_NotEnoughParams", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var result set to foo(3)
@@ -593,7 +593,7 @@ end function`;
   });
 
   test("Fail_WrongParamType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var result set to foo(3, "b")
@@ -612,7 +612,7 @@ end function`;
   });
 
   test("Fail_CannotSpecifyParamByRef", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var result set to foo(3, "b")
@@ -630,7 +630,7 @@ end function`;
   });
 
   test("Fail_PassMutableTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -659,7 +659,7 @@ end class
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -678,7 +678,7 @@ end function`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
  
@@ -697,7 +697,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   
@@ -715,7 +715,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   
@@ -735,7 +735,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   
@@ -753,7 +753,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedWordAsParamName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   
@@ -773,7 +773,7 @@ end function`;
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function foo() return Int
   return 0
@@ -793,7 +793,7 @@ end function
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 function foo(a as Int, b as String, a as Int) return Int
   return 0
@@ -808,7 +808,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProcedures", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to p1 is p2

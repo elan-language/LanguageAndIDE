@@ -11,5 +11,5 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T54_With", () => {
- // TODO
+  // TODO
 });

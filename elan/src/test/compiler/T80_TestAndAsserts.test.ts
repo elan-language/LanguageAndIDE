@@ -15,7 +15,7 @@ import {
 
 suite("Pass_PassingTest", () => {
   test("Pass_PassingTest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -67,7 +67,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertTuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -109,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertLetTuple", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -154,7 +154,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FailingTest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -202,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ErrorTest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -238,7 +238,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_VariousTestsOnAssert", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -391,7 +391,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TestUseOfRoundForFloats", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -467,7 +467,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassingTestWithProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -511,7 +511,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_expressionForExpected", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -532,7 +532,7 @@ end test
   });
 
   test("Fail_AssertOutsideAtest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   assert square(3) is 3 * 3
@@ -550,7 +550,7 @@ end function
   });
 
   test("Fail_callATest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call squareTest()
@@ -572,7 +572,7 @@ end test
   });
 
   test("Fail_useTestAsAReference", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to squareTest

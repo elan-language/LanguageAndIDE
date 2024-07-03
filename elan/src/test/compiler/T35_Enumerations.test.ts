@@ -13,7 +13,7 @@ import {
 
 suite("T35_enums", () => {
   test("Pass_PrintValues", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print Fruit.apple
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyEnumValue", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var e set to empty Fruit
@@ -79,7 +79,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyEnumProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to new Foo()
@@ -128,7 +128,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyEnumPropertyOnEmptyClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var foo set to empty Foo
@@ -177,7 +177,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_useInVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to Fruit.apple
@@ -211,7 +211,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_useAsType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to Fruit.apple
@@ -245,7 +245,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_passAsArgument", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print isFavourite(Fruit.apple)
@@ -286,7 +286,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_returnFromFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print firstFruit() is Fruit.apple
@@ -325,7 +325,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_equality", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var x set to Fruit.apple
@@ -359,7 +359,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SwitchCaseOnEnum", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var f set to Fruit.orange
@@ -412,7 +412,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_coercionToString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "Eat more " + Fruit.apple + "s!"
@@ -444,7 +444,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InvalidTypeName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -460,7 +460,7 @@ end enum`;
   });
 
   test("Fail_InvalidValueName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -476,7 +476,7 @@ end enum`;
   });
 
   test("Fail_AssigningIntsToValues", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
@@ -492,7 +492,7 @@ end enum`;
   });
 
   test("Fail_coercionToInt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to 1
@@ -511,7 +511,7 @@ end enum`;
   });
 
   test("Fail_undefinedEnum", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print Fruit.apple
@@ -525,7 +525,7 @@ end main`;
   });
 
   test("Fail_undefinedEnumValue", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   print Fruit.kiwi
@@ -543,7 +543,7 @@ end enum`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -560,7 +560,7 @@ end enum`;
   });
 
   test("Fail_UseOfKeywordAsValue", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -578,7 +578,7 @@ end enum`;
   });
 
   test("Fail_UseOfReservedWordAsValue", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -598,7 +598,7 @@ end enum`;
   });
 
   test("Fail_DuplicateNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
@@ -620,7 +620,7 @@ end enum`;
   });
 
   test("Fail_DuplicateValues", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan v0.1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 
