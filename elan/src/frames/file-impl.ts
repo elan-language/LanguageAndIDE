@@ -521,7 +521,7 @@ export class FileImpl implements File, Scope {
       const toHash = code.substring(code.indexOf("Elan"));
       const newHash = await this.getHash(toHash);
 
-      if (fileHash !== newHash) {
+      if (fileHash !== newHash && fileHash !== "FFFF") {
         throw new Error(msg);
       }
     }
