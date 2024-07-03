@@ -103,6 +103,7 @@ export class StdLib {
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
+    (seq as unknown as hasHiddenType)._type = "Iter";
     return seq;
   }
 
