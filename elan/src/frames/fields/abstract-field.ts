@@ -48,6 +48,7 @@ export abstract class AbstractField implements Selectable, Field {
   codeHasChanged: boolean = false;
   autocompleteSymbols: ElanSymbol[] = [];
   autocompleteMatch: string = "";
+  protected autoCompSelected?: ElanSymbol;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -224,6 +225,10 @@ export abstract class AbstractField implements Selectable, Field {
         }
       }
     }
+    if (this.codeHasChanged) {
+      this.autoCompSelected = undefined;
+    }
+
     return this.codeHasChanged;
   }
 
@@ -557,8 +562,6 @@ export abstract class AbstractField implements Selectable, Field {
   private markIfSelected(symbol: ElanSymbol) {
     return symbol === this.autoCompSelected;
   }
-
-  protected autoCompSelected?: ElanSymbol;
 
   selectFromAutoCompleteItems(up: boolean) {
     const options = this.autocompleteSymbols;
