@@ -317,6 +317,29 @@ function updateContent(text: string) {
     elanCode.focus();
   }
 
+  if (document.querySelector(".autocomplete-popup")) {
+    const items = document.querySelectorAll(".autocomplete-item");
+
+    for (const item of items) {
+      item.addEventListener("click", (event) => {
+        const ke = event as PointerEvent;
+        const tgt = ke.target as HTMLDivElement;
+        const id = tgt.dataset.id;
+        const msg: editorEvent = {
+          type: "key",
+          target: "frame",
+          key: "Enter",
+          id: id,
+          modKey: getModKey(ke),
+          autocomplete: tgt.innerText,
+        };
+        postMessage(msg);
+        event.preventDefault();
+        event.stopPropagation();
+      });
+    }
+  }
+
   if (file.readParseStatus() === ParseStatus.valid) {
     // save to local store
     file.renderAsSource().then((code) => {
