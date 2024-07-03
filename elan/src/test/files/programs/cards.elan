@@ -1,13 +1,13 @@
-# 897a124a788a6c4e09269ba99848adf0d0f38671917f978fdc1a273541cd9b4c Elan Beta 1 valid
+# 4d580b033bd51e841f40ffa7e8f139fa12f98ffff0728955f338adfc70ad3f5d Elan Beta 1 valid
 
 main
-  var cm set to new Graphics()
-  set cm to cm.fill("", black, green)
+  var gr set to new Graphics()
+  set gr to gr.fill("", black, green)
   var cAH set to new Card(Rank.ace, Suit.hearts)
   var c2S set to new Card(Rank.two, Suit.spades)
-  set cm to cAH.addTo(cm, 1, 1)
-  set cm to c2S.addTo(cm, 8, 1)
-  call cm.draw()
+  set gr to cAH.addTo(gr, 1, 1)
+  set gr to c2S.addTo(gr, 8, 1)
+  call gr.draw()
 end main
 
 immutable class Card
@@ -43,22 +43,6 @@ immutable class Card
   end function
 
 end class
-
-function spades() return String
-  return unicode(0x2660)
-end function
-
-function hearts() return String
-  return unicode(0x2665)
-end function
-
-function diamonds() return String
-  return unicode(0x2666)
-end function
-
-function clubs() return String
-  return unicode(0x2663)
-end function
 
 enum Suit
   clubs, diamonds, hearts, spades

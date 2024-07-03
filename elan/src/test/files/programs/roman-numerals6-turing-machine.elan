@@ -1,4 +1,4 @@
-# 5e8e21e3b2c2838edc40486ea6980b151db6bae2811917dd268629f45f67fd5b Elan Beta 1 valid
+# 083f8a7be90d3b8500b860dce19f50354d4eaf4e5a1258a803136853945ec9ad Elan Beta 1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
@@ -6,15 +6,18 @@ main
   print "Enter a decimal number in range 0 to 2500"
   input decimal
   call tm.setTape(decimal.asString())
+  var steps set to 0
   while not tm.isHalted()
+    var rule set to tm.findMatchingRule()
     call tm.singleStep()
+    set steps to steps + 1
     call clearConsole()
     print tm.tape
     print "{spaces.substring(0, tm.headPosition - 1)}^"
-    print tm.currentState
+    print "Step: {steps}\nState: {tm.currentState}\nRule applied: {rule}"
     call pause(40)
   end while
-  print "The roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
+  print "\n\nThe roman numeral equivalent for {decimal} is {tm.getTrimmedTape()}"
 end main
 
 class TuringMachine
