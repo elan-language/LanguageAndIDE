@@ -100,7 +100,6 @@ export class CallStatement extends AbstractFrame implements Statement {
         mustNotBeCounter(p, this.compileErrors, this.htmlId);
       }
 
-
       let parameterTypes = ps.parametersTypes;
 
       if (parameterTypes.some((pt) => containsGenericType(pt))) {

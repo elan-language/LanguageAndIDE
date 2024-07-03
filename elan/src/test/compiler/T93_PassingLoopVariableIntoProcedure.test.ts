@@ -58,7 +58,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  ignore_test("Fail_InvalidPattern", async () => {
+  test("Fail_InvalidPattern", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 procedure removeLetters(wordAsPlayed as String)
@@ -77,6 +77,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
   });
 });

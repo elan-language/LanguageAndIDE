@@ -169,7 +169,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'break' is a reserved word, and may not be used as an identifier"]);
+    assertDoesNotCompile(fileImpl, [
+      "'break' is a reserved word, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_SameVariableNameInScope", async () => {

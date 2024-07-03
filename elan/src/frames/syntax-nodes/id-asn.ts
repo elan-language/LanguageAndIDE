@@ -61,6 +61,16 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
     return st;
   }
 
+  get symbolScope() {
+    const st = getParentScope(this.scope).resolveSymbol(
+      this.id,
+      transforms(),
+      this.scope,
+    ).symbolScope;
+
+    return st;
+  }
+
   toString() {
     return this.id;
   }
