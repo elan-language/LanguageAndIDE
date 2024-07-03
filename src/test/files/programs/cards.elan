@@ -1,14 +1,27 @@
-# 4d580b033bd51e841f40ffa7e8f139fa12f98ffff0728955f338adfc70ad3f5d Elan Beta 1 valid
+# 506492b9b9038f2290e78f6ac1bb1c3663978578c2486d4b661aa02623467e48 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
   set gr to gr.fill("", black, green)
-  var cAH set to new Card(Rank.ace, Suit.hearts)
-  var c2S set to new Card(Rank.two, Suit.spades)
-  set gr to cAH.addTo(gr, 1, 1)
-  set gr to c2S.addTo(gr, 8, 1)
+  var card1 set to new Card(Rank.ace, Suit.hearts)
+  var card2 set to new Card(Rank.two, Suit.spades)
+  set gr to placeCard(gr, card1, 1, 1)
+  set gr to placeCard(gr, card2, 8, 1)
   call gr.draw()
 end main
+
+function placeCard(gr as Graphics, c as Card, x as Int, y as Int) return Graphics
+  var gr2 set to gr
+  for row from y to y + 8 step 1
+    for col from x to x + 5 step 1
+      set gr2 to gr2.putBackground(col, row, white)
+      set gr2 to gr2.putForeground(col, row, c.colour)
+    end for
+  end for
+  set gr2 to gr2.putChar(x, y, c.label)
+  set gr2 to gr2.putChar(x + 1, y, c.symbol)
+  return gr2
+end function
 
 immutable class Card
   constructor(rank as Rank, suit as Suit)
@@ -28,19 +41,6 @@ immutable class Card
   property label as String
 
   property colour as Int
-
-  function addTo(cm as Graphics, x as Int, y as Int) return Graphics
-    var cm2 set to cm
-    for row from y to y + 8 step 1
-      for col from x to x + 5 step 1
-        set cm2 to cm2.putBackground(col, row, white)
-        set cm2 to cm2.putForeground(col, row, colour)
-      end for
-    end for
-    set cm2 to cm2.putChar(x, y, label)
-    set cm2 to cm2.putChar(x + 1, y, symbol)
-    return cm2
-  end function
 
 end class
 
