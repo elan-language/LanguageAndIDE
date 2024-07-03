@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Interpolated strings", () => {
+suite("T79_Interpolated strings", () => {
   test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
