@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import { TestStatus } from "../../frames/status-enums";
 import { AssertOutcome } from "../../system";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeExecutes,
@@ -10,6 +11,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -54,5 +56,27 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
+  });
+
+  ignore_test("Fail_InvalidPattern", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+procedure removeLetters(wordAsPlayed as String)
+  each letter in wordAsPlayed
+    call removeLetter(letter)
+  end each
+end procedure
+
+procedure removeLetter(l as String)
+end procedure
+
+main
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 });

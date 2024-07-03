@@ -85,7 +85,7 @@ ${this.indent()}}`;
       return {
         symbolId: id,
         symbolType: () => st,
-        symbolScope: SymbolScope.local,
+        symbolScope: SymbolScope.counter,
       };
     }
 

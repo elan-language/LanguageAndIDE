@@ -11,6 +11,7 @@ import {
   mustBeKnownSymbol,
   mustMatchParameters,
   mustCallExtensionViaQualifier,
+  mustNotBeCounter,
 } from "../compile-rules";
 import { callKeyword } from "../keywords";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -94,6 +95,11 @@ export class CallStatement extends AbstractFrame implements Statement {
         parameters = [qualifier.value as AstNode].concat(parameters);
         qualifier = undefined;
       }
+
+      for (const p of parameters) {
+        mustNotBeCounter(p, this.compileErrors, this.htmlId);
+      }
+
 
       let parameterTypes = ps.parametersTypes;
 
