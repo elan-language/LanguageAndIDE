@@ -1,0 +1,35 @@
+# 7700c32a6044308ec66989153a778a654bbc775cd1ea792a011cf58824e40f7b Elan Beta 1 valid
+
+main
+  var gr set to new Graphics()
+  set gr to gr.fill("", black, darkGreen)
+  set gr to addBoard(gr)
+  call gr.draw()
+end main
+
+function addBoard(gr as Graphics) return Graphics
+  var gr2 set to gr
+  for x from 0 to 7 step 1
+    for y from 0 to 7 step 1
+      let colour be if mod(x + y, 2) is 1 then black else white
+      set gr2 to addSquare(gr2, x*3, y*3, colour)
+    end for
+  end for
+  return gr2
+end function
+
+function addSquare(gr as Graphics, x as Int, y as Int, colour as Int) return Graphics
+  var gr2 set to gr
+  for col from x to x + 2 step 1
+    for row from y to y + 2 step 1
+      set gr2 to gr2.putBackground(col, row, colour)
+    end for
+  end for
+  return gr2
+end function
+
+constant white set to 0xffffff
+
+constant black set to 0x000000
+
+constant darkGreen set to 0x008000
