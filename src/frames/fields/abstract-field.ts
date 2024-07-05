@@ -18,7 +18,6 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
-import { isProperty } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -274,19 +273,6 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private tab(back: boolean) {
-    if (back) {
-      this.holder.selectFieldBefore(this);
-    } else {
-      const completions = this.getPlainTextCompletion();
-      if (completions.length > 0) {
-        this.cursorRight();
-      } else {
-        this.holder.selectFieldAfter(this);
-      }
-    }
-  }
-
   protected getId(s?: ElanSymbol) {
     return s ? s.symbolId : "";
   }
@@ -308,6 +294,21 @@ export abstract class AbstractField implements Selectable, Field {
     this.parseCurrentText();
     this.cursorPos = this.text.length;
     this.codeHasChanged = true;
+  }
+
+  private tab(back: boolean) {
+    if (back) {
+      this.holder.selectFieldBefore(this);
+    } else if (this.autoCompSelected) {
+      this.replaceAutocompletedText();
+    } else {
+      const completions = this.getPlainTextCompletion();
+      if (completions.length > 0) {
+        this.cursorRight();
+      } else {
+        this.holder.selectFieldAfter(this);
+      }
+    }
   }
 
   private enter() {
