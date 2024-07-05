@@ -81,4 +81,8 @@ ${this.indent()}}`;
     source.removeIndent();
     return this.parseStandardEnding(source, "end if");
   }
+
+  override insertSelectorAfterLastField(): void {
+    this.getFirstChild().select(true, false);
+  }
 }

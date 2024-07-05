@@ -1,19 +1,19 @@
-import { ElanSymbol } from "./interfaces/symbol";
-import { isSymbol } from "./symbols/symbol-helpers";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
+import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import { Collapsible } from "./interfaces/collapsible";
-import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
 import { StatementFactory } from "./interfaces/statement-factory";
+import { ElanSymbol } from "./interfaces/symbol";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_compileChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -23,16 +23,15 @@ import {
   parentHelper_insertOrGotoChildSelector,
   parentHelper_moveSelectedChildrenDownOne,
   parentHelper_moveSelectedChildrenUpOne,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
-  parentHelper_compileChildren,
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_readWorstCompileStatusOfChildren,
 } from "./parent-helpers";
 import { StatementSelector } from "./statements/statement-selector";
-import { CompileError } from "./compile-error";
+import { isSymbol } from "./symbols/symbol-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -108,7 +107,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   insertSelectorAfterLastField(): void {
-    //intende to overridden byFrameWithStatements
     const firstChild = this._children[0];
     if ("isSelector" in firstChild) {
       firstChild.select(true, false);

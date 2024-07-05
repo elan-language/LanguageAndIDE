@@ -9,7 +9,7 @@ import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { MainFrame } from "../frames/globals/main-frame";
 import { Else } from "../frames/statements/else";
-import { StatementSelector } from "../frames/statements/statement-selector";
+import { IfStatement } from "../frames/statements/if-statement";
 import { ThenStatement } from "../frames/statements/then-statement";
 import { ParseStatus } from "../frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
@@ -30,7 +30,6 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
-import { IfStatement } from "../frames/statements/if-statement";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -293,5 +292,13 @@ suite("Editing Frames", () => {
     else42.select(true, false);
     else42.processKey(ctrl_x());
     assert.equal(if37.getChildren().length, 3);
+  });
+  test("#617 - Enter on condition field in if statement should select the then clause", () => {
+    const file = T03_mainWithAllStatements();
+    const condition = file.getById("expr34") as ExpressionField;
+    condition.select(true, false);
+    condition.processKey(enter());
+    const then = file.getById("then35") as ThenStatement;
+    assert.equal(then.isSelected(), true);
   });
 });
