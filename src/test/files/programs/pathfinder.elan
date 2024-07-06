@@ -34,7 +34,7 @@ procedure shortestPath(source Point, destination Point, alg Algorithm,  as [Poin
   var currentNode set to source
   set costFromSource to costFromSource.setItem(currentNode, 0)
   # Iterate until shortest path found
-  while currentNode is not destination
+  while currentNode isnt destination
     set visited to visited.setItem(currentNode,true)
     call updateCostAndViaOfEachNeighbourIfApplicable(costFromSource, via, currentNode, destination)
     set currentNode to nextNodeToVisit(currentNode, visited, costFromSource, destination, alg)
@@ -112,7 +112,7 @@ end function
 function retraceRoute(destination Point, source Point, via [Point:Point]) return [Point]
   var result set to [ destination ]
   var currentNode set to destination
-  while currentNode is not source
+  while currentNode isnt source
     var previous set to via[currentNode]
     set result to result.insert(0, previous)
     set currentNode to previous

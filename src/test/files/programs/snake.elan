@@ -1,4 +1,4 @@
-# 2e0258eb4d03911e97a91b6458cda29289b56179428c5209d797f5f8afbaedb9 Elan Beta 1 valid
+# 41db0f28322a88443c24b77735c3157cbaa73acc9e38e5670b366ba131987795 Elan Beta 1 valid
 
 main
   var board set to new Board(40, 30)
@@ -59,7 +59,7 @@ class Snake
 
   function updateGraphics(gr as Graphics) return Graphics
     var gr2 set to gr.putBackground(head.x, head.y, green)
-    if body[0] is not priorTail
+    if body[0] isnt priorTail
       then
         set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
     end if

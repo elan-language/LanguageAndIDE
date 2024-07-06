@@ -180,7 +180,7 @@ main
   var d set to 3 > 4
   var e set to 3 >= 4
   var f set to 3 is 4
-  var g set to 3 is not 4
+  var g set to 3 isnt 4
   var h set to not false
   var k set to 4 / 3
   print a

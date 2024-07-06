@@ -27,6 +27,7 @@ export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const inputKeyword = "input";
 export const isKeyword = "is";
+export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
 export const letKeyword = "let";
 export const libraryKeyword = "library";

@@ -1,10 +1,10 @@
-# a5d884c8b88cad59f62da003746c5a87b7917f7d0037deac73b8b2b9b65e5a67 Elan Beta 1 valid
+# 551169386ca909879f70e350c5f5a084cf8d3990fd3b0898427caed525aaf4e3 Elan Beta 1 valid
 
 main
   var possible set to validWords
   var marking set to ""
   var attempt set to "RAISE"
-  while marking is not "*****"
+  while marking isnt "*****"
     print attempt
     input marking
     var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)

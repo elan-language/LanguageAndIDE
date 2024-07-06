@@ -111,7 +111,7 @@ main
   var a set to random()
   var b set to random()
   print a < 1
-  print a is not b
+  print a isnt b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

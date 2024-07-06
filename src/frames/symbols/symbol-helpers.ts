@@ -1,31 +1,31 @@
-import { BooleanType } from "./boolean-type";
-import { FloatType } from "./float-type";
-import { ElanSymbol } from "../interfaces/symbol";
-import { IntType } from "./int-type";
-import { UnknownType } from "./unknown-type";
-import { Transforms } from "../syntax-nodes/transforms";
-import { Scope } from "../interfaces/scope";
-import { globalKeyword, libraryKeyword } from "../keywords";
+import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
-import { SymbolScope } from "./symbol-scope";
-import { isClass as isClass, isFile, isFrame, isScope } from "../helpers";
-import { File } from "../interfaces/file";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
-import { Parent } from "../interfaces/parent";
-import { ClassType } from "./class-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { StringType } from "./string-type";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { DictionaryType } from "./dictionary-type";
-import { GenericParameterType } from "./generic-parameter-type";
-import { ProcedureType } from "./procedure-type";
-import { IterType } from "./iter-type";
-import { ImmutableListType } from "./immutable-list-type";
-import { ArrayListType } from "./array-list-type";
+import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolType } from "../interfaces/symbol-type";
+import { globalKeyword, libraryKeyword } from "../keywords";
+import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
-import { ImmutableDictionaryType } from "./immutable-dictionary-type";
+import { ArrayListType } from "./array-list-type";
+import { BooleanType } from "./boolean-type";
+import { ClassType } from "./class-type";
+import { DictionaryType } from "./dictionary-type";
+import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
+import { GenericParameterType } from "./generic-parameter-type";
+import { ImmutableDictionaryType } from "./immutable-dictionary-type";
+import { ImmutableListType } from "./immutable-list-type";
+import { IntType } from "./int-type";
+import { IterType } from "./iter-type";
+import { ProcedureType } from "./procedure-type";
+import { StringType } from "./string-type";
+import { SymbolScope } from "./symbol-scope";
+import { UnknownType } from "./unknown-type";
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
@@ -58,7 +58,7 @@ export function rawSymbolToType(s: string) {
     case "<=":
     case ">=":
     case "is":
-    case "is not":
+    case "isnt":
     case "and":
     case "or":
     case "xor":

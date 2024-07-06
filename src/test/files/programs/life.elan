@@ -1,4 +1,4 @@
-# dfa0c83115a5a512a90989c18911e459d1d365ded252ddba0bcdde5661b0b329 Elan Beta 1 valid
+# 23bcc5bb9d1e431449051030c3504819636f9d4459acc5aa1142f88eb6ad46d3 Elan Beta 1 valid
 
 main
   print "Press any key to halt"
@@ -13,7 +13,7 @@ main
     call gr.draw()
     set grid to nextGeneration(grid)
     call pause(50)
-    if gr.getKeystroke() is not ""
+    if gr.getKeystroke() isnt ""
       then
         set cont to false
     end if

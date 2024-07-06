@@ -199,9 +199,9 @@ main
     print "abc" is "abcd"
     print "abc" is "Abc"
     print "abc" is "abc"
-    print "abc" is not "abcd"
-    print "abc" is not "abcd"
-    print "abc" is not "Abc"
+    print "abc" isnt "abcd"
+    print "abc" isnt "abcd"
+    print "abc" isnt "Abc"
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

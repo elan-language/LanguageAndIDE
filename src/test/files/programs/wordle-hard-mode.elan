@@ -4,7 +4,7 @@ main
   var possible set to allPossibleAnswers.asIter()
   var marking set to ""
   var attempt set to "RAISE"
-  while marking is not "*****"
+  while marking isnt "*****"
     print attempt
     input marking
     set possible to possibleAnswersAfterAttempt(possible, attempt, marking)

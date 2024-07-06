@@ -1,11 +1,8 @@
-import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
+import { andKeyword, isKeyword, isntKeyword, orKeyword } from "../keywords";
+import { DIVIDE, GE, GT, LE, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
-import { Sequence } from "./sequence";
-import { PLUS, MINUS, MULT, DIVIDE, GT, LT, GE, LE, POWER } from "../symbols";
 import { OperatorNode } from "./operator-node";
-import { SpaceNode } from "./space-node";
-import { Space } from "./parse-node-helpers";
 
 export class BinaryOperation extends AbstractAlternatives {
   constructor() {
@@ -23,10 +20,7 @@ export class BinaryOperation extends AbstractAlternatives {
     this.alternatives.push(new OperatorNode(LE));
     this.alternatives.push(new OperatorNode(POWER));
     this.alternatives.push(new KeywordNode(isKeyword));
-    const is = () => new KeywordNode(isKeyword);
-    const sp = () => new SpaceNode(Space.required);
-    const not = () => new KeywordNode(notKeyword);
-    this.alternatives.push(new Sequence([is, sp, not]));
+    this.alternatives.push(new KeywordNode(isntKeyword));
     this.alternatives.push(new KeywordNode(andKeyword));
     this.alternatives.push(new KeywordNode(orKeyword));
     super.parseText(text.trimStart());

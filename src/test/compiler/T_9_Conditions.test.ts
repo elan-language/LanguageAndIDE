@@ -116,13 +116,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "falsetruetrue");
   });
 
-  test("Pass_isNot", async () => {
+  test("Pass_isnt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  print 3 is not 4
-  print 3 is not 2
-  print 3 is not 3
+  print 3 isnt 4
+  print 3 isnt 2
+  print 3 isnt 3
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -177,7 +177,7 @@ main
   print 3 > 3.1
   print 3 >= 3.1
   print 3 is 3.0
-  print 3 is not 3.0
+  print 3 isnt 3.0
   print 3.1 < 3
   print 3.1 <= 3
   print 3.1 > 3
@@ -323,7 +323,7 @@ end main
 
 main
   print 3 is "3"
-  print 3 is not "3"
+  print 3 isnt "3"
   print 3 < "3"
   print 3 <= "3"
   print 3 > "3"

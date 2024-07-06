@@ -132,7 +132,7 @@ function mapOperation(op: string) {
       return OperationSymbol.Not;
     case "is":
       return OperationSymbol.Equals;
-    case "is not":
+    case "isnt":
       return OperationSymbol.NotEquals;
     case "div":
       return OperationSymbol.Div;
