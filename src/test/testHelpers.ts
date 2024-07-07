@@ -4,6 +4,7 @@ import * as jsdom from "jsdom";
 import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
+import { AbstractField } from "../frames/fields/abstract-field";
 import { FileImpl } from "../frames/file-impl";
 import { editorEvent } from "../frames/interfaces/editor-event";
 import { Field } from "../frames/interfaces/field";
@@ -32,11 +33,9 @@ import { StdLib } from "../std-lib";
 import { hash } from "../util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
-import { AssignableField } from "../frames/fields/assignableField";
-import { AbstractField } from "../frames/fields/abstract-field";
 
 // flag to update test file
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 export async function assertEffectOfAction(
   sourceFile: string,
