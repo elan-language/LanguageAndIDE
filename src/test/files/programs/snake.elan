@@ -1,4 +1,4 @@
-# 41db0f28322a88443c24b77735c3157cbaa73acc9e38e5670b366ba131987795 Elan Beta 1 valid
+# a5e25713eec021da59f2536cde26a24471ef5697092e2bbf1e8c0ed4e30038eb Elan Beta 1 valid
 
 main
   var board set to new Board(40, 30)
@@ -91,11 +91,9 @@ class Apple
 
   procedure newRandomPosition(snake as Snake)
     repeat
-      var w set to board.width - 1
-      var h set to board.height - 1
-      var ranW set to randomInt(0, w)
-      var ranH set to randomInt(0, h)
-      set location to new Square(ranW, ranH)
+      let ranX be randomInt(0, board.width - 1)
+      let ranY be randomInt(0, board.height - 1)
+      set location to new Square(ranX, ranY)
     end repeat when not snake.bodyCovers(location)
   end procedure
 
@@ -116,7 +114,7 @@ immutable class Board
   property height as Int
 
   function isAtEdge(head as Square) return Boolean
-    return (head.x < 0) or (head.y < 0) or (head.x is width) or (head.y is height)
+    return (head.x is -1) or (head.y is -1) or (head.x is width) or (head.y is height)
   end function
 
 end class
