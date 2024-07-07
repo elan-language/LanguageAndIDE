@@ -1,19 +1,21 @@
-# 4a535eae0675ccdd9007a5d54fa0af87475774fbae64ab4cc8095d75cd598d84 Elan Beta 1 valid
+# 931f2a35b676035e366987e524ba3a3cd2940be492cc6dafbf7acaa5df460106 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
   var head set to [20, 15]
-  var snake set to [head]
-  var priorTail set to head
+  var tail set to [19, 15]
+  var snake set to [tail, head]
   var apple set to [0, 0]
   call randomNewApplePosition(apple, snake)
   var currentDirection set to "right"
   var gameOn set to true
   while gameOn
     set gr to gr.putBackground(head[0], head[1], green)
-    if snake[0] isnt priorTail
+    if snake[0] is tail
       then
-        set gr to gr.putBackground(priorTail[0], priorTail[1], white)
+        set gr to gr.putBackground(tail[0], tail[1], green)
+      else
+        set gr to gr.putBackground(tail[0], tail[1], white)
     end if
     set gr to gr.putBackground(apple[0], apple[1], red)
     call gr.draw()
@@ -22,7 +24,7 @@ main
       then
         set currentDirection to directionbyKey(k)
     end if
-    set priorTail to snake[0]
+    set tail to snake[0]
     call snake.add(head)
     set head to getAdjacentSquare(head, currentDirection)
     if head is apple
@@ -31,7 +33,7 @@ main
       else
         set snake to snake[1..]
     end if
-    set gameOn to not clashes(snake, head) and not hasHitEdge(head)
+    set gameOn to not hasHitEdge(head) and not overlaps(snake, head)
     call pause(150)
   end while
   print "Game Over! Score: {snake.length() - 1}"
@@ -41,7 +43,7 @@ procedure randomNewApplePosition(apple as [Int], snake as [[Int]])
   repeat
     set apple[0] to randomInt(0, 39)
     set apple[1] to randomInt(0, 29)
-  end repeat when not clashes(snake, apple)
+  end repeat when not overlaps(snake, apple)
 end procedure
 
 function hasHitEdge(head as [Int]) return Boolean
@@ -64,7 +66,7 @@ function getAdjacentSquare(sq as [Int], dir as String) return [Int]
   return [newX, newY]
 end function
 
-function clashes(snake as [[Int]], sq as [Int]) return Boolean
+function overlaps(snake as [[Int]], sq as [Int]) return Boolean
   var result set to false
   each seg in snake
     if (seg is sq)
