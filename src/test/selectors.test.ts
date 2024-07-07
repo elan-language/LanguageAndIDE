@@ -128,7 +128,7 @@ suite("Unit tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if input let print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
     s.processKey(key("s"));
     help = s.getCompletion();
     assert.equal(help, " set switch");

@@ -6,7 +6,7 @@ main
   var attempt set to "RAISE"
   while marking isnt "*****"
     print attempt
-    input marking
+    set marking to inputString("")
     set possible to possibleAnswersAfterAttempt(possible, attempt, marking)
     set attempt to bestAttempt(possible, possible)
   end while

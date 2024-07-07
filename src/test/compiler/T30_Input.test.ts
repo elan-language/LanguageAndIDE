@@ -12,17 +12,17 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T30_Input", () => {
-  test("Pass_Input1", async () => {
+  test("Pass_InputString", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  input a
+  var a set to inputString("")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = await system.input();
+  var a = await _stdlib.inputString("");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -36,19 +36,17 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Felicity", "Felicity");
   });
 
-  test("Pass_Input2", async () => {
+  test("Pass_InputStringWithPrompt", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  print "Your name"
-  input a
+  var a set to inputString("Your name")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  system.printLine(_stdlib.asString("Your name"));
-  var a = await system.input();
+  var a = await _stdlib.inputString("Your name");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -62,13 +60,65 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Your nameFred", "Fred");
   });
 
+  test("Pass_InputInt", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to 0
+  set a to inputInt("")
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 0;
+  a = await _stdlib.inputInt("");
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123", "123");
+  });
+
+  test("Pass_InputFloat", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to 0.0
+  set a to inputFloat("")
+  print a
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 0;
+  a = await _stdlib.inputFloat("");
+  system.printLine(_stdlib.asString(a));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123.4", "123.4");
+  });
+
   test("Pass_ReuseVariable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var a set to "value"
   var b set to "value1"
-  input a
+  set a to inputString("")
   set b to a
   print b
 end main`;
@@ -77,7 +127,7 @@ end main`;
 async function main() {
   var a = "value";
   var b = "value1";
-  a = await system.input();
+  a = await _stdlib.inputString("");
   b = a;
   system.printLine(_stdlib.asString(b));
 }
@@ -90,30 +140,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "Fred", "Fred");
-  });
-
-  test("Pass_InputString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
-
-main
-  var a set to inputString("aprompt")
-  print a
-end main`;
-
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = await _stdlib.inputString("aprompt");
-  system.printLine(_stdlib.asString(a));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "apromptFelicity", "Felicity");
   });
 
   test("Pass_InputStringWithLimits", async () => {
@@ -272,8 +298,8 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var a set to true
-  input a
+  var a set to ""
+  set a to inputInt("")
   print a
 end main`;
 
@@ -282,7 +308,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Expression must be String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   // not implemented - grammar change ?

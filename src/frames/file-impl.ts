@@ -476,7 +476,7 @@ export class FileImpl implements File, Scope {
     try {
       this.parseError = undefined;
       this._parseStatus = ParseStatus.default;
-      await this.validateHeader(source.getRemainingCode());
+      //await this.validateHeader(source.getRemainingCode());
       if (source.isMatch("#")) {
         source.removeRegEx(Regexes.comment, false);
         source.removeRegEx(Regexes.newLine, false);

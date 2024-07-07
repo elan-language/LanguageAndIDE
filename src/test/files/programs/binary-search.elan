@@ -1,10 +1,9 @@
-# 2cec46eea8255cb217b5fa9313c3400703d7e483b725e986bce7ff0717ab2114 Elan Beta 1 valid
+# 7260289b730b42555e249b6c478526a8b168a0cc2b3b81d01c2c9b67261f7eb8 Elan Beta 1 valid
 
 main
   var exit set to false
   while not exit
-    print "What type of fruit do you want ('x' to exit)?"
-    input wanted
+    var wanted set to inputString("What type of fruit do you want ('x' to exit)?")
     if wanted isnt "x"
       then
         var result set to binarySearch(fruit, wanted)

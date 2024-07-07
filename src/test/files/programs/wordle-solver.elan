@@ -1,4 +1,4 @@
-# 551169386ca909879f70e350c5f5a084cf8d3990fd3b0898427caed525aaf4e3 Elan Beta 1 valid
+# 30a5adb8a028d641fe27a4294c7ac189c7966114ff5977c3c93d060d0f46de37 Elan Beta 1 valid
 
 main
   var possible set to validWords
@@ -6,7 +6,7 @@ main
   var attempt set to "RAISE"
   while marking isnt "*****"
     print attempt
-    input marking
+    set marking to inputString("")
     var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
     set attempt to bestAttempt(possAnswers.asImmutableList(), validWords)
   end while

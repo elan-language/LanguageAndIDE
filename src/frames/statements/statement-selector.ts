@@ -14,7 +14,6 @@ import {
   elseKeyword,
   forKeyword,
   ifKeyword,
-  inputKeyword,
   letKeyword,
   printKeyword,
   repeatKeyword,
@@ -48,7 +47,6 @@ export class StatementSelector extends AbstractSelector {
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
-      [inputKeyword, (parent: Parent) => this.factory.newInput(parent)],
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
       [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
@@ -95,7 +93,7 @@ export class StatementSelector extends AbstractSelector {
       result = false;
     } else if (keyword === returnKeyword || keyword === catchKeyword) {
       result = !userEntry;
-    } else if (keyword === printKeyword || keyword === callKeyword || keyword === inputKeyword) {
+    } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(
         this.isWithinAFunction(this.getParent()) || this.isWithinAConstructor(this.getParent())
       );

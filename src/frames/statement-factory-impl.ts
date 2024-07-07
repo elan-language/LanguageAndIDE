@@ -20,7 +20,6 @@ import { DefaultStatement } from "./statements/default-statement";
 import { Catch } from "./statements/catch";
 import { Case } from "./statements/case";
 import { AssertStatement } from "./statements/assert-statement";
-import { Input } from "./statements/input";
 import { LetStatement } from "./statements/let-statement";
 import { ThenStatement } from "./statements/then-statement";
 
@@ -51,9 +50,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
-  }
-  public newInput(parent: Parent): Frame {
-    return new Input(parent);
   }
   public newLet(parent: Parent): Frame {
     return new LetStatement(parent);

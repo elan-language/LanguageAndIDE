@@ -991,7 +991,7 @@ export class StdLibSymbols implements Scope {
       "inputString",
       this.getSymbol(
         "inputString",
-        new FunctionType([StringType.Instance], IntType.Instance, false, false, true),
+        new FunctionType([StringType.Instance], StringType.Instance, false, false, true),
       ),
     ],
     [
@@ -1000,7 +1000,7 @@ export class StdLibSymbols implements Scope {
         "inputStringWithLimits",
         new FunctionType(
           [StringType.Instance, IntType.Instance, IntType.Instance],
-          IntType.Instance,
+          StringType.Instance,
           false,
           false,
           true,
@@ -1013,7 +1013,7 @@ export class StdLibSymbols implements Scope {
         "inputStringFromOptions",
         new FunctionType(
           [StringType.Instance, new ImmutableListType(StringType.Instance)],
-          IntType.Instance,
+          StringType.Instance,
           false,
           false,
           true,
@@ -1053,7 +1053,7 @@ export class StdLibSymbols implements Scope {
         "inputFloatBetween",
         new FunctionType(
           [StringType.Instance, FloatType.Instance, FloatType.Instance],
-          IntType.Instance,
+          FloatType.Instance,
           false,
           false,
           true,

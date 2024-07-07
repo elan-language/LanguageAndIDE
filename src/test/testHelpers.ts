@@ -36,7 +36,7 @@ import { AssignableField } from "../frames/fields/assignableField";
 import { AbstractField } from "../frames/fields/abstract-field";
 
 // flag to update test file
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertEffectOfAction(
   sourceFile: string,
