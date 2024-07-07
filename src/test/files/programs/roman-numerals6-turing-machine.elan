@@ -1,4 +1,4 @@
-# 083f8a7be90d3b8500b860dce19f50354d4eaf4e5a1258a803136853945ec9ad Elan Beta 1 valid
+# dcc01d37e0b1ae6e9e372567cdeea70ce5916bd1c8595db849ef5679a477fbcc Elan Beta 1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
