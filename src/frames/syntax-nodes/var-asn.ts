@@ -36,7 +36,6 @@ import { LetStatement } from "../statements/let-statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
-import { SetStatement } from "../statements/set-statement";
 import { UnknownType } from "../symbols/unknown-type";
 import { StringType } from "../symbols/string-type";
 import { IntType } from "../symbols/int-type";

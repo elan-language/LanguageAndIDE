@@ -3,6 +3,7 @@ import {
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
+  IndexCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeImmutableCompileError,
@@ -24,6 +25,7 @@ import {
   UndefinedSymbolCompileError,
 } from "./compile-error";
 import { isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
+import { AstIdNode } from "./interfaces/ast-id-node";
 import { AstNode } from "./interfaces/ast-node";
 import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { Parent } from "./interfaces/parent";
@@ -52,7 +54,7 @@ import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { InFunctionScope } from "./syntax-nodes/ast-helpers";
+import { InFunctionScope, isAstQualifiedNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
@@ -651,7 +653,7 @@ export function mustBeCompatibleNode(
 }
 
 export function mustNotBePropertyOnFunctionMethod(
-  assignable: AstQualifiedNode,
+  assignable: AstIdNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
@@ -665,8 +667,30 @@ export function mustNotBePropertyOnFunctionMethod(
   }
 }
 
+export function mustNotIndexOnFunctionMethod(
+  assignable: AstIdNode,
+  parent: Parent,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isFunction(parent)) {
+    if (isIndexed(assignable)) {
+      compileErrors.push(new IndexCompileError(`${assignable.id}`, location));
+    }
+  }
+}
+
+function isIndexed(assignable: AstIdNode) {
+  if (isAstQualifiedNode(assignable)) {
+    const rst = assignable.rootSymbolType();
+    const st = assignable.symbolType();
+    return rst.name !== st.name;
+  }
+  return false;
+}
+
 export function mustNotBeParameter(
-  assignable: AstQualifiedNode,
+  assignable: AstIdNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
@@ -678,10 +702,7 @@ export function mustNotBeParameter(
       compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
     } else {
       // only mutate indexed arraylist
-      const rst = assignable.rootSymbolType();
-      const st = assignable.symbolType();
-      if (rst.name === st.name) {
-        // ie not indexed
+      if (!isIndexed(assignable)) {
         compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
       }
     }

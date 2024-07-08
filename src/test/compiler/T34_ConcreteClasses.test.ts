@@ -387,8 +387,7 @@ function fun(foo as Foo) return Int
 end function
 `;
 
-   
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var f = system.initialise(new Foo());
   system.printLine(_stdlib.asString(fun(f)));
@@ -412,14 +411,14 @@ function fun(foo) {
   return foo.p1;
 }
 return [main, _tests];}`;
-    
-        const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-        await fileImpl.parseFrom(new CodeSourceFromString(code));
-    
-        assertParses(fileImpl);
-        assertStatusIsValid(fileImpl);
-        assertObjectCodeIs(fileImpl, objectCode);
-        await assertObjectCodeExecutes(fileImpl, "0");
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_NoConstructor", async () => {
