@@ -176,7 +176,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   paste(): void {
     const parent = this.getParent();
     const sp = this.getScratchPad();
-    const frames = sp.readSnippet();
+    const frames = sp.readFrames();
     let ok = true;
     if (frames) {
       for (const fr of frames) {
@@ -188,12 +188,13 @@ export abstract class AbstractSelector extends AbstractFrame {
           fr.setParent(parent);
           fr.select(true, false);
         }
+        sp.remove(frames);
         this.deleteIfPermissible();
       }
     }
   }
 
-  private canBePastedIn(frame: Frame): boolean {
+  canBePastedIn(frame: Frame): boolean {
     return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
   }
 
