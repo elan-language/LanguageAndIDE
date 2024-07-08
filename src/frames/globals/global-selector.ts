@@ -1,11 +1,12 @@
-import { File } from "../interfaces/file";
 import { AbstractSelector } from "../abstract-selector";
+import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
+import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
 import {
-  commentMarker,
   abstractKeyword,
   classKeyword,
+  commentMarker,
   constantKeyword,
   enumKeyword,
   functionKeyword,
@@ -14,7 +15,6 @@ import {
   procedureKeyword,
   testKeyword,
 } from "../keywords";
-import { GlobalFrame } from "../interfaces/global-frame";
 import { ParseStatus } from "../status-enums";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
@@ -65,5 +65,13 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   indent(): string {
     return "";
+  }
+
+  override canBePastedIn(frame: Frame): boolean {
+    if ("isGlobal" in frame) {
+      return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
+    } else {
+      return false;
+    }
   }
 }

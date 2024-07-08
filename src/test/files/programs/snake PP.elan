@@ -1,17 +1,17 @@
-# 931f2a35b676035e366987e524ba3a3cd2940be492cc6dafbf7acaa5df460106 Elan Beta 1 valid
+# 490f21a0781ff38b14e7f691c176fd5abfabf4a3e2b3a875d7f2ac5c13565345 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
   var head set to [20, 15]
-  var tail set to [19, 15]
-  var snake set to [tail, head]
+  var tail set to head
+  var body set to [head]
   var apple set to [0, 0]
-  call randomNewApplePosition(apple, snake)
+  call randomNewApplePosition(apple, body)
   var currentDirection set to "right"
   var gameOn set to true
   while gameOn
     set gr to gr.putBackground(head[0], head[1], green)
-    if snake[0] is tail
+    if body[0] is tail
       then
         set gr to gr.putBackground(tail[0], tail[1], green)
       else
@@ -24,26 +24,26 @@ main
       then
         set currentDirection to directionbyKey(k)
     end if
-    set tail to snake[0]
-    call snake.add(head)
+    set tail to body[0]
+    call body.add(head)
     set head to getAdjacentSquare(head, currentDirection)
     if head is apple
       then
-        call randomNewApplePosition(apple, snake)
+        call randomNewApplePosition(apple, body)
       else
-        set snake to snake[1..]
+        set body to body[1..]
     end if
-    set gameOn to not hasHitEdge(head) and not overlaps(snake, head)
+    set gameOn to not hasHitEdge(head) and not overlaps(body, head)
     call pause(150)
   end while
-  print "Game Over! Score: {snake.length() - 1}"
+  print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure randomNewApplePosition(apple as [Int], snake as [[Int]])
+procedure randomNewApplePosition(apple as [Int], body as [[Int]])
   repeat
     set apple[0] to randomInt(0, 39)
     set apple[1] to randomInt(0, 29)
-  end repeat when not overlaps(snake, apple)
+  end repeat when not overlaps(body, apple)
 end procedure
 
 function hasHitEdge(head as [Int]) return Boolean
@@ -66,9 +66,9 @@ function getAdjacentSquare(sq as [Int], dir as String) return [Int]
   return [newX, newY]
 end function
 
-function overlaps(snake as [[Int]], sq as [Int]) return Boolean
+function overlaps(body as [[Int]], sq as [Int]) return Boolean
   var result set to false
-  each seg in snake
+  each seg in body
     if (seg is sq)
       then
         set result to true

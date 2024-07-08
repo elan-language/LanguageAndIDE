@@ -6,9 +6,8 @@ export class ScratchPad {
   addSnippet(frames: Frame[]): void {
     this.frames = frames;
   }
-  readSnippet(): Frame[] | undefined {
+  readFrames(): Frame[] | undefined {
     const toPaste = this.frames;
-    this.frames = undefined;
     return toPaste;
   }
 

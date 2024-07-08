@@ -1,4 +1,4 @@
-# a5e25713eec021da59f2536cde26a24471ef5697092e2bbf1e8c0ed4e30038eb Elan Beta 1 valid
+# f2014e9d5c650041396e6dbdda1cd7a02607152114f4bee847edd5e4d2d57c5a Elan Beta 1 valid
 
 main
   var board set to new Board(40, 30)
@@ -14,7 +14,7 @@ main
     call gr.draw()
     call pause(150)
     var k set to gr.getKeystroke()
-    set currentDirection to if k is "" then currentDirection else directionByKey.getKey(k)
+    set currentDirection to directionByKey(k, currentDirection)
     call snake.clockTick(currentDirection, apple)
     set gameOn to not snake.gameOver()
   end while
@@ -147,11 +147,24 @@ immutable class Square
 
 end class
 
+function directionByKey(key as String, current as Direction) return Direction
+  var dir set to current
+  switch key
+    case "w"
+      set dir to Direction.up
+    case "s"
+      set dir to Direction.down
+    case "a"
+      set dir to Direction.left
+    case "d"
+      set dir to Direction.right
+  end switch
+  return dir
+end function
+
 enum Direction
   up, down, left, right
 end enum
-
-constant directionByKey set to {"w":Direction.up, "s":Direction.down, "a":Direction.left, "d":Direction.right}
 
 constant green set to 0x00ff00
 
