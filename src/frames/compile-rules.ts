@@ -657,7 +657,6 @@ export function mustBeCompatibleType(
     return;
   }
 
-  
   if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
     FailIncompatible(lhs, rhs, compileErrors, location);
   }

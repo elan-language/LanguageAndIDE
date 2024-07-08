@@ -1,0 +1,173 @@
+# FFFF Elan Beta 1 valid
+
+main
+  var board set to new Board(40, 30)
+  var currentDirection set to Direction.up
+  var snake set to new Snake(board, currentDirection)
+  var apple set to new Apple(board)
+  # call apple.newRandomPosition(snake)
+  var gr set to new Graphics()
+  var gameOn set to true
+  while gameOn
+    set gr to snake.updateGraphics(gr)
+    set gr to apple.updateGraphics(gr)
+    call gr.draw()
+    call pause(150)
+    var k set to gr.getKeystroke()
+    set currentDirection to directionByKey(k, currentDirection)
+    # call snake.clockTick(currentDirection, apple)
+    set gameOn to not snake.gameOver()
+  end while
+  print "Game Over! Score: {snake.length() - 1}"
+end main
+
+# procedure clockTick(d as Direction, apple as Apple)
+#  set priorTail to body[0]
+#  call body.add(head)
+#  set head to head.getAdjacentSquare(d)
+#  if head is apple.location
+#    then
+#      call apple.newRandomPosition(this)
+#    else
+#      set body to body[1..]
+#  end if
+# end procedure
+
+# procedure newRandomPosition(snake as Snake)
+#  repeat
+#    let ranX be randomInt(0, board.width - 1)
+#    let ranY be randomInt(0, board.height - 1)
+#    set location to new Square(ranX, ranY)
+#  end repeat when not snake.bodyCovers(location)
+# end procedure
+
+immutable class Snake
+  constructor(board as Board, startingDirection as Direction)
+    set property.board to board
+    var tail set to new Square(div(board.width, 2), div(board.height, 2))
+    set body to [tail]
+    set head to tail.getAdjacentSquare(startingDirection)
+    set priorTail to tail
+  end constructor
+
+  property board as Board
+
+  property head as Square
+
+  property body as [Square]
+
+  property priorTail as Square
+
+  function length() return Int
+    return body.length()
+  end function
+
+  function gameOver() return Boolean
+    return bodyCovers(head) or board.isAtEdge(head)
+  end function
+
+  function bodyCovers(sq as Square) return Boolean
+    var result set to false
+    each seg in body
+      if (seg is sq)
+        then
+          set result to true
+      end if
+    end each
+    return result
+  end function
+
+  function updateGraphics(gr as Graphics) return Graphics
+    var gr2 set to gr.putBackground(head.x, head.y, green)
+    if body[0] isnt priorTail
+      then
+        set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
+    end if
+    return gr2
+  end function
+
+end class
+
+immutable class Apple
+  constructor(board as Board)
+    set property.board to board
+  end constructor
+
+  property board as Board
+
+  property location as Square
+
+  function updateGraphics(gr as Graphics) return Graphics
+    return gr.putBackground(location.x, location.y, red)
+  end function
+
+end class
+
+immutable class Board
+  constructor(width as Int, height as Int)
+    set property.width to width
+    set property.height to height
+  end constructor
+
+  property width as Int
+
+  property height as Int
+
+  function isAtEdge(head as Square) return Boolean
+    return (head.x is -1) or (head.y is -1) or (head.x is width) or (head.y is height)
+  end function
+
+end class
+
+immutable class Square
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  function getAdjacentSquare(d as Direction) return Square
+    var newX set to x
+    var newY set to y
+    switch d
+      case Direction.left
+        set newX to x - 1
+      case Direction.right
+        set newX to x + 1
+      case Direction.up
+        set newY to y - 1
+      case Direction.down
+        set newY to y + 1
+    end switch
+    return new Square(newX, newY)
+  end function
+
+end class
+
+function directionByKey(key as String, current as Direction) return Direction
+  var dir set to current
+  switch key
+    case "w"
+      set dir to Direction.up
+    case "s"
+      set dir to Direction.down
+    case "a"
+      set dir to Direction.left
+    case "d"
+      set dir to Direction.right
+  end switch
+  return dir
+end function
+
+enum Direction
+  up, down, left, right
+end enum
+
+constant green set to 0x00ff00
+
+constant red set to 0xff0000
+
+constant white set to 0xffffff

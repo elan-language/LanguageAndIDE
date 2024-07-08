@@ -9,7 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T12_ArrayList", () => {
@@ -848,18 +848,18 @@ main
     var body set to [head]
 end main`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var body = system.literalArray([_stdlib.head]);
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
   });
 
   test("Pass_listOfFunction", async () => {
@@ -876,7 +876,7 @@ function foo(i as Int) return Int
   return i
 end function`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var foo1 = foo;
   var body = system.literalArray([foo, foo1]);
@@ -888,14 +888,14 @@ function foo(i) {
   return i;
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, "1");
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
   test("Pass_listOfGenericFunction", async () => {
