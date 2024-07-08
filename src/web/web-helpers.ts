@@ -25,9 +25,7 @@ export function fetchProfile() {
     const localProfile = (window as any).localProfile as Profile;
     return localProfile ? Promise.resolve(localProfile) : Promise.reject();
   } else {
-    const scriptUrl = document.getElementsByTagName("script")[0].src;
-    const scriptName = scriptUrl.split("/").slice(-1)[0].split(".")[0];
-    const jsonProfile = `${scriptName}.json`;
+    const jsonProfile = `profile.json`;
     return fetch(jsonProfile, { mode: "same-origin" })
       .then((f) => f.json())
       .then((j) => j as Profile);
