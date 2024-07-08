@@ -1,4 +1,4 @@
-# 506492b9b9038f2290e78f6ac1bb1c3663978578c2486d4b661aa02623467e48 Elan Beta 1 valid
+# 76427088b639c5ecf867fed8845b6dca640de9853a11426678883dd784fc6ca9 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -23,7 +23,7 @@ function placeCard(gr as Graphics, c as Card, x as Int, y as Int) return Graphic
   return gr2
 end function
 
-immutable class Card
+class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit

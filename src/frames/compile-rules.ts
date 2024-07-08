@@ -183,11 +183,11 @@ export function mustNotBeFunction(
     return;
   }
 
-  if (isGenericSymbolType(symbolType)){
+  if (isGenericSymbolType(symbolType)) {
     mustNotBeFunction(symbolType.ofType, compileErrors, location);
   }
 
-  if (isDictionarySymbolType(symbolType)){
+  if (isDictionarySymbolType(symbolType)) {
     mustNotBeFunction(symbolType.keyType, compileErrors, location);
     mustNotBeFunction(symbolType.valueType, compileErrors, location);
   }

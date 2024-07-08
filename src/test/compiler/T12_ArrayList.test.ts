@@ -907,20 +907,20 @@ main
   print tp1("")
 end main`;
 
-const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var arr = system.literalArray([_stdlib.typeAndProperties]);
   var tp1 = system.safeIndex(arr, 0);
   system.printLine(_stdlib.asString(tp1("")));
 }
 return [main, _tests];}`;
-  
-      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-      await fileImpl.parseFrom(new CodeSourceFromString(code));
-  
-      assertParses(fileImpl);
-      assertStatusIsValid(fileImpl);
-      assertObjectCodeIs(fileImpl, objectCode);
-      await assertObjectCodeExecutes(fileImpl, `String ["length":0]`);
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, `String ["length":0]`);
   });
 });

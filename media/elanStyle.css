@@ -98,6 +98,10 @@ statement:not(.multiline), constant{
     text-indent: -1ch;
 }
 
+.autocomplete-popup * {
+    text-indent: 0;
+}
+
 header, constant, main, procedure, function, enum, classDef, constructor, property, member, global, test {
     display: block;
     padding-bottom: 1ch;

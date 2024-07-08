@@ -1,4 +1,4 @@
-# dcc01d37e0b1ae6e9e372567cdeea70ce5916bd1c8595db849ef5679a477fbcc Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 main
   var tm set to new TuringMachine("init", "halt")
@@ -112,7 +112,7 @@ class TuringMachine
 
 end class
 
-immutable class Rule
+class Rule
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
     set property.currentState to currentState
     set property.currentSymbol to currentSymbol

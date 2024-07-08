@@ -249,18 +249,6 @@ suite("Editing Frames", () => {
     const fourth = main.getChildren()[3];
     assert.equal(fourth.getHtmlId(), "call11");
   });
-  ignore_test("Paste at wrong level has no effect", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.processKey(ctrl_x());
-    main.processKey(shift_enter());
-    const globalSelect = file.getChildren()[0];
-    assert.equal(globalSelect.getHtmlId(), "select68");
-    globalSelect.processKey(ctrl_v());
-    const newFirst = file.getChildren()[0];
-    assert.equal(newFirst, globalSelect);
-  }); //Ignored due to async/promise issue - possibly because nothing happens!
 
   ignore_test("#364 ParseError within in class member not showing up at class level", () => {
     const file = T05_classes();

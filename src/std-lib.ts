@@ -602,13 +602,17 @@ export class StdLib {
   }
 
   //Input functions
+  prompt(prompt: string) {
+    this.print(prompt);
+  }
+
   inputString(prompt: string): Promise<string> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input();
   }
 
   inputStringWithLimits(prompt: string, minLength: number, maxLength: number): Promise<string> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       if (s.length < minLength) {
         this.system.printLine(`minimum length ${minLength} characters`);
@@ -622,7 +626,7 @@ export class StdLib {
   }
 
   inputStringFromOptions(prompt: string, options: string[]): Promise<string> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       if (options.includes(s)) {
         return s;
@@ -634,7 +638,7 @@ export class StdLib {
   }
 
   inputInt(prompt: string): Promise<number> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsInt(s);
 
@@ -649,7 +653,7 @@ export class StdLib {
   }
 
   inputIntBetween(prompt: string, min: number, max: number): Promise<number> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsInt(s);
       if (b && i >= min && i <= max) {
@@ -662,7 +666,7 @@ export class StdLib {
   }
 
   inputFloat(prompt: string): Promise<number> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsFloat(s);
 
@@ -677,7 +681,7 @@ export class StdLib {
   }
 
   inputFloatBetween(prompt: string, min: number, max: number): Promise<number> {
-    this.system.printLine(prompt);
+    this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsFloat(s);
       if (b && i >= min && i <= max) {

@@ -178,7 +178,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     const sp = this.getScratchPad();
     const frames = sp.readFrames();
     let ok = true;
-    if (frames) {
+    if (frames && frames.length > 0) {
       for (const fr of frames) {
         ok = ok && this.canBePastedIn(fr);
       }
