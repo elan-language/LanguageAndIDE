@@ -27,7 +27,6 @@ import {
 import { isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { AstIdNode } from "./interfaces/ast-id-node";
 import { AstNode } from "./interfaces/ast-node";
-import { AstQualifiedNode } from "./interfaces/ast-qualified-node";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { ElanSymbol } from "./interfaces/symbol";
@@ -635,8 +634,16 @@ export function mustBeCompatibleType(
     return;
   }
 
+  if (lhs instanceof GenericParameterType && rhs instanceof GenericParameterType) {
+    if (lhs.name !== rhs.name) {
+      FailIncompatible(lhs, rhs, compileErrors, location);
+    }
+    return;
+  }
+
+  
   if (lhs instanceof GenericParameterType || rhs instanceof GenericParameterType) {
-    throw new Error(`Failed to match generic parameter ${lhs} ${rhs}`);
+    FailIncompatible(lhs, rhs, compileErrors, location);
   }
 }
 
