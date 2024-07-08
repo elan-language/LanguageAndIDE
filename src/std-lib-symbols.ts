@@ -495,7 +495,7 @@ export class StdLibSymbols implements Scope {
       "typeAndProperties",
       this.getSymbol(
         "typeAndProperties",
-        new FunctionType([new GenericParameterType("")], StringType.Instance, false),
+        new FunctionType([new GenericParameterType("T")], StringType.Instance, false),
       ),
     ],
 
