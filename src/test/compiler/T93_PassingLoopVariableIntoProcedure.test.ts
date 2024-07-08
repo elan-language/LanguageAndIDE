@@ -1,19 +1,12 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { TestStatus } from "../../frames/status-enums";
-import { AssertOutcome } from "../../system";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
-  assertGraphicsContains,
-  assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T93_PassingLoopVariableIntoProcedure", () => {

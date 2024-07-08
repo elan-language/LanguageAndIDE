@@ -16,6 +16,7 @@ import { ignore_test } from "./compiler/compiler-test-helpers";
 import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
 import {
   back,
+  createTestRunner,
   ctrl_d,
   ctrl_del,
   ctrl_down,
@@ -26,6 +27,7 @@ import {
   down,
   enter,
   key,
+  loadFileAsModel,
   shift_down,
   shift_enter,
   up,
@@ -289,4 +291,23 @@ suite("Editing Frames", () => {
     const then = file.getById("then35") as ThenStatement;
     assert.equal(then.isSelected(), true);
   });
+
+  // new tests
+
+  test("Paste at wrong level has no effect", async () => {
+    const file = await loadFileAsModel("single_var.elan");
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+
+    const main = file.getById("main1") as MainFrame;
+    const var3 = file.getById("var3");
+    var3.select();
+    var3.processKey(ctrl_x());
+    main.processKey(shift_enter());
+    const globalSelect = file.getChildren()[0];
+    assert.equal(globalSelect.getHtmlId(), "select7");
+    globalSelect.processKey(ctrl_v());
+    const newFirst = file.getChildren()[0];
+    assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+  }); 
 });

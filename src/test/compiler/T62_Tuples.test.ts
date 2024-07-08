@@ -326,7 +326,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Tuple (4, Pear)");
   });
 
-  ignore_test("Fail_OutOfRangeError", async () => {
+  test("Fail_OutOfRangeError", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -340,7 +340,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertObjectCodeExecutes(fileImpl, "Tuple (4, Pear)");
+    await assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String) to (Int, String, Unknown)"]);
   });
 
   test("Fail_AssignItemToWrongType", async () => {

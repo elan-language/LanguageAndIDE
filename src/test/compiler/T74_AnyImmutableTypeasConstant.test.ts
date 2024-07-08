@@ -6,9 +6,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T74_AnyImmutableTypeAsConstant", () => {
@@ -116,13 +115,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, c:3}");
   });
 
-  // no longer supported ?
-  ignore_test("Pass_ImmutableClass", async () => {
+  
+  test("Fail_ImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
-constant k set to 0
+constant k = new Foo(3)
 
-main 
+main
   print k
 end main
 
@@ -138,34 +137,13 @@ immutable class Foo
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = new Foo(3);
-
-async function main() {
-  system.printLine(_stdlib.asString(k));
-}
-
-class Foo {
-  constructor(p1) {
-    property.p1 = p1 * 2;
-  }
-
-  p1 = 0;
-
-  asString() {
-    return \`\${p1}\`;
-  }
-
-}
-return [main, _tests];}`;
+   
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, c:3]");
+    assertDoesNotParse(fileImpl);
+   
   });
 
   test("Fail_Array1", async () => {
