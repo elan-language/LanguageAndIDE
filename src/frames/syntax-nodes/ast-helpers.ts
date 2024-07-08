@@ -19,7 +19,6 @@ import { transform, transformMany } from "./ast-visitor";
 import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
 
-
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n && "rootSymbolType" in n;
 }

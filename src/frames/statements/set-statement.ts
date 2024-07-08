@@ -61,9 +61,7 @@ export class SetStatement extends AbstractFrame implements Statement {
   }
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const assignableAstNode = this.assignable.getOrTransformAstNode(
-      transforms,
-    )! as AstIdNode;
+    const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstIdNode;
     const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
     mustNotBePropertyOnFunctionMethod(
