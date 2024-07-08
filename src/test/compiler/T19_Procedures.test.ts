@@ -3,13 +3,13 @@ import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T19_Procedures", () => {
@@ -535,15 +535,14 @@ end procedure
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  // not really compiler
-  ignore_test("Fail_UnterminatedRecursion", async () => {
+  test("Fail_UnterminatedRecursion", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   call foo(3)
 end main
 
-procedure foo(a Int)
+procedure foo(a as Int)
   call foo(a)
 end procedure
 `;
@@ -551,7 +550,9 @@ end procedure
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Maximum call stack size exceeded");
   });
 
   test("Fail_CannotCallPrintAsAProcedure", async () => {

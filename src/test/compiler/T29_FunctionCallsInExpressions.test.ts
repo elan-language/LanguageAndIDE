@@ -7,9 +7,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T29_Expressions3_FunctionCalls", () => {
@@ -161,18 +160,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  // not implemented
-  ignore_test("Pass_MultiParamCallUsingDotSyntax", async () => {
+  test("Pass_MultiParamCallUsingDotSyntax", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var x set to 3.max(3.1)
+  var i set to ["a", "b"]
+  var x set to i.contains("b")
   print x
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = _stdlib.min(system.immutableList([3.1, 3]));
+  var i = system.literalArray(["a", "b"]);
+  var x = _stdlib.contains(i, "b");
   system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;
@@ -183,7 +183,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
   test("Fail_IncorrectType", async () => {
