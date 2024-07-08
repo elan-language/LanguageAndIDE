@@ -163,6 +163,12 @@ export class ReassignCompileError extends CompileError {
   }
 }
 
+export class IndexCompileError extends CompileError {
+  constructor(thing: string, location: string) {
+    super(Priority.illegalOperation, `May not index: ${thing}`, location, false);
+  }
+}
+
 export class DuplicateKeyCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.typeError, `Duplicate Dictionary key(s)`, location, false);

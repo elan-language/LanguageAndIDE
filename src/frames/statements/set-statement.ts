@@ -15,12 +15,14 @@ import {
   mustNotBeLet,
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
+  mustNotIndexOnFunctionMethod,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { VarAsn } from "../syntax-nodes/var-asn";
 import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
+import { AstIdNode } from "../interfaces/ast-id-node";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -61,7 +63,7 @@ export class SetStatement extends AbstractFrame implements Statement {
     this.compileErrors = [];
     const assignableAstNode = this.assignable.getOrTransformAstNode(
       transforms,
-    )! as AstQualifiedNode;
+    )! as AstIdNode;
     const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
     mustNotBePropertyOnFunctionMethod(
@@ -70,6 +72,14 @@ export class SetStatement extends AbstractFrame implements Statement {
       this.compileErrors,
       this.assignable.getHtmlId(),
     );
+
+    mustNotIndexOnFunctionMethod(
+      assignableAstNode,
+      this.getParent(),
+      this.compileErrors,
+      this.assignable.getHtmlId(),
+    );
+
     mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
     mustNotBeParameter(
       assignableAstNode,

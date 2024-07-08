@@ -181,7 +181,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_UsingPropertyAsIndex1", async () => {
+  test("Fail_UsingPropertyAsIndex1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -202,36 +202,14 @@ class Foo
   end function
 end class`;
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var f = system.initialise(new Foo());
-  system.printLine(_stdlib.asString(f.bar()));
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  constructor() {
-
-  }
-
-  p1 = 0;
-
-  bar() {
-    var lst = system.literalArray([1, 2]);
-    system.safeSet(lst, this.p1, 3);
-    return system.safeIndex(lst, 0);
-  }
-
-}
-return [main, _tests];}`;
+   
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
+    assertDoesNotCompile(fileImpl, ["May not index: lst"]);
   });
 
   test("Fail_NoSuchProperty", async () => {

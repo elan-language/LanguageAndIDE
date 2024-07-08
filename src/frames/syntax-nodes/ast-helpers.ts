@@ -1,5 +1,6 @@
 import { isFile, isFrame, isFunction } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
@@ -17,6 +18,11 @@ import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
+
+
+export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
+  return !!n && "qualifier" in n && "rootSymbolType" in n;
+}
 
 export function InFunctionScope(start: Scope): boolean {
   if (isFunction(start)) {

@@ -535,7 +535,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, ["May not index: a"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -553,7 +553,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotCompile(fileImpl, ["May not index: a"]);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -654,9 +654,7 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not reassign parameter: b",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not index: b"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
@@ -832,6 +830,35 @@ end function`;
       "Cannot do equality operations on Procedures or Functions",
       "Incompatible types Function to Float or Int",
       "Incompatible types Function to Float or Int",
+    ]);
+  });
+
+  test("Fail_NoIndexing", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to p1()
+  var b set to p2()
+end main
+
+function p1() return Int
+  var a set to [1,2]
+  set a[0] to 2
+  return a[0]
+end function
+
+function p2() return Int
+  var a set to ["a":1, "b":2]
+  set a["a"] to 2
+  return a["a"]
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not index: a",
     ]);
   });
 });
