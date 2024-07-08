@@ -359,4 +359,26 @@ end function
       "Cannot print a function. To print the result of evaluating a function, add brackets after function name.",
     ]);
   });
+
+  test("Fail_printIndirectFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  print [foo]
+end main
+
+function foo() return Int
+  return 0
+end function
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot print a function. To print the result of evaluating a function, add brackets after function name.",
+    ]);
+  });
 });

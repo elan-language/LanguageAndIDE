@@ -545,7 +545,7 @@ end main`;
     ]);
   });
 
-  test("Fail_referenceToExtensionFunction", async () => {
+  test("Fail_referenceToExtensionFunction1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main

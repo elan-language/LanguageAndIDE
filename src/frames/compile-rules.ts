@@ -49,6 +49,7 @@ import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
+import { isDictionarySymbolType, isGenericSymbolType } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
@@ -174,6 +175,21 @@ export function mustNotBeFunction(
 ) {
   if (symbolType instanceof ProcedureType || symbolType instanceof FunctionType) {
     compileErrors.push(new PrintFunctionCompileError(location));
+    return;
+  }
+
+  if (symbolType instanceof StringType) {
+    // todo - string are recusrsively of type string needs to be fixed.
+    return;
+  }
+
+  if (isGenericSymbolType(symbolType)){
+    mustNotBeFunction(symbolType.ofType, compileErrors, location);
+  }
+
+  if (isDictionarySymbolType(symbolType)){
+    mustNotBeFunction(symbolType.keyType, compileErrors, location);
+    mustNotBeFunction(symbolType.valueType, compileErrors, location);
   }
 }
 
