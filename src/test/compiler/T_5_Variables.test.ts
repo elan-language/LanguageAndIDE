@@ -9,7 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_5_Variables", () => {
@@ -540,9 +540,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot call extension method directly",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot call extension method directly"]);
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
@@ -558,8 +556,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "x is not defined",
-    ]);
+    assertDoesNotCompile(fileImpl, ["x is not defined"]);
   });
 });
