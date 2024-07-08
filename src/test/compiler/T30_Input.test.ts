@@ -6,9 +6,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T30_Input", () => {
@@ -311,18 +310,17 @@ end main`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  // not implemented - grammar change ?
-  ignore_test("Pass_InputInExpression", async () => {
+  test("Pass_InputInExpression", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var a set to "Hello " + input 
+  var a set to "Hello " + inputString("")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = await system.input();
+  var a = "Hello " + await _stdlib.inputString("");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -333,6 +331,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Your nameFred", "Fred");
+    await assertObjectCodeExecutes(fileImpl, "Hello Fred", "Fred");
   });
 });
