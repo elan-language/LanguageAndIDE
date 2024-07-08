@@ -30,16 +30,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
 
-    let st = this.symbolType();
-    if (this.scope instanceof FunctionFrame) {
-      if (st instanceof ClassType) {
-        const tt = transforms();
-        st = this.scope.resolveSymbol(st.className, tt, this.scope).symbolType(tt);
-      }
-      mustBeImmutableType(st, this.compileErrors, this.fieldId);
-    }
-
-    mustBeKnownSymbolType(st, this.type.id, this.compileErrors, this.fieldId);
+    mustBeKnownSymbolType(this.symbolType(), this.type.id, this.compileErrors, this.fieldId);
 
     return `${this.id}`;
   }

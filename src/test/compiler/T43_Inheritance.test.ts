@@ -957,7 +957,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Bar");
   });
 
-  test("Fail_AbstractMutableClassAsFunctionParameter", async () => {
+  test("Pass_AbstractMutableClassAsFunctionParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -976,16 +976,51 @@ class Bar inherits Foo
 end class
 
 function fun(foo as Foo) return Int
-    return foo.p1
+  return foo.p1
 end function
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Bar());
+  system.printLine(_stdlib.asString(fun(f)));
+}
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  get p1() {
+    return 0;
+  }
+  set p1(p1) {
+  }
+
+  asString() {
+    return "empty Abstract Class Foo";
+  }
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+}
+
+function fun(foo) {
+  return foo.p1;
+}
+return [main, _tests];}`;
+  
+      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+  
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+      await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {

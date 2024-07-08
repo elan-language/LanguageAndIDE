@@ -376,6 +376,10 @@ class Foo
   constructor()
   end constructor
   property p1 as Int
+
+  procedure updateP1()
+    set p1 to 0
+  end procedure
 end class
 
 function fun(foo as Foo) return Int
@@ -383,12 +387,39 @@ function fun(foo as Foo) return Int
 end function
 `;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
+   
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  system.printLine(_stdlib.asString(fun(f)));
+}
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+
+  }
+
+  p1 = 0;
+
+  async updateP1() {
+    this.p1 = 0;
+  }
+
+}
+
+function fun(foo) {
+  return foo.p1;
+}
+return [main, _tests];}`;
+    
+        const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+        await fileImpl.parseFrom(new CodeSourceFromString(code));
+    
+        assertParses(fileImpl);
+        assertStatusIsValid(fileImpl);
+        assertObjectCodeIs(fileImpl, objectCode);
+        await assertObjectCodeExecutes(fileImpl, "0");
   });
 
   test("Fail_NoConstructor", async () => {

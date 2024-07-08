@@ -520,13 +520,14 @@ end function`;
     assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
-  test("Fail_CannotPassInArray", async () => {
+  test("Fail_CannotUpdateArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
 end main
 
 function foo(a as ArrayList<of Int>) return Int
+    set a[0] to 1
     return a[0]
 end function`;
 
@@ -534,7 +535,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList must be immutable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -544,6 +545,7 @@ main
 end main
 
 function foo(b as Int, a as ArrayList<of Int>) return Int
+    set a[0] to b
     return a[0]
 end function`;
 
@@ -551,7 +553,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["ArrayList must be immutable"]);
+    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -637,7 +639,8 @@ main
 end main
 
 function foo(a as ArrayList<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
-    return 1
+  set b["key"] to 1
+  return 1
 end function
 
 class Foo
@@ -652,9 +655,7 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ArrayList must be immutable",
-      "Dictionary must be immutable",
-      "Foo must be immutable",
+      "May not reassign parameter: b",
     ]);
   });
 
