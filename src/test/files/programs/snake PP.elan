@@ -1,4 +1,4 @@
-# 490f21a0781ff38b14e7f691c176fd5abfabf4a3e2b3a875d7f2ac5c13565345 Elan Beta 1 valid
+# 6cb81632df62847389a9934e00e938cb55d98c67454161c91c253b2f103140f7 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -10,14 +10,7 @@ main
   var currentDirection set to "right"
   var gameOn set to true
   while gameOn
-    set gr to gr.putBackground(head[0], head[1], green)
-    if body[0] is tail
-      then
-        set gr to gr.putBackground(tail[0], tail[1], green)
-      else
-        set gr to gr.putBackground(tail[0], tail[1], white)
-    end if
-    set gr to gr.putBackground(apple[0], apple[1], red)
+    set gr to updateGraphics(gr, head, tail, body, apple)
     call gr.draw()
     var k set to gr.getKeystroke()
     if k isnt ""
@@ -27,17 +20,21 @@ main
     set tail to body[0]
     call body.add(head)
     set head to getAdjacentSquare(head, currentDirection)
-    if head is apple
-      then
-        call randomNewApplePosition(apple, body)
-      else
-        set body to body[1..]
-    end if
+    call checkForEatenApple(head, body, apple)
     set gameOn to not hasHitEdge(head) and not overlaps(body, head)
     call pause(150)
   end while
   print "Game Over! Score: {body.length() - 1}"
 end main
+
+procedure checkForEatenApple(head as [Int], body as [[Int]], apple as [Int])
+  if head is apple
+    then
+      call randomNewApplePosition(apple, body)
+    else
+      call body.removeAt(0)
+  end if
+end procedure
 
 procedure randomNewApplePosition(apple as [Int], body as [[Int]])
   repeat
@@ -45,6 +42,19 @@ procedure randomNewApplePosition(apple as [Int], body as [[Int]])
     set apple[1] to randomInt(0, 29)
   end repeat when not overlaps(body, apple)
 end procedure
+
+function updateGraphics(gr as Graphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return Graphics
+  var gr2 set to gr
+  set gr2 to gr2.putBackground(head[0], head[1], green)
+  if body[0] is tail
+    then
+      set gr2 to gr2.putBackground(tail[0], tail[1], green)
+    else
+      set gr2 to gr2.putBackground(tail[0], tail[1], white)
+  end if
+  set gr2 to gr2.putBackground(apple[0], apple[1], red)
+  return gr2
+end function
 
 function hasHitEdge(head as [Int]) return Boolean
   return (head[0] < 0) or (head[1] < 0) or (head[0] > 39) or (head[1] > 29)
