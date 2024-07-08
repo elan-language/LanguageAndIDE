@@ -1,4 +1,4 @@
-# f2014e9d5c650041396e6dbdda1cd7a02607152114f4bee847edd5e4d2d57c5a Elan Beta 1 valid
+# b23faee5af257b1c44f03c5ae17638ceafdb9fd294731548428f1fbb3ec9bd4a Elan Beta 1 valid
 
 main
   var board set to new Board(40, 30)
@@ -103,7 +103,7 @@ class Apple
 
 end class
 
-immutable class Board
+class Board
   constructor(width as Int, height as Int)
     set property.width to width
     set property.height to height
@@ -119,7 +119,7 @@ immutable class Board
 
 end class
 
-immutable class Square
+class Square
   constructor(x as Int, y as Int)
     set property.x to x
     set property.y to y
