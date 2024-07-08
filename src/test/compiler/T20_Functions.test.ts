@@ -857,8 +857,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not index: a",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not index: a"]);
   });
 });

@@ -6,21 +6,22 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T_3_Header", () => {
-  ignore_test("Pass_hash", async () => {
-    const code = `# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan Beta 1 valid
+  test("Pass_hash", async () => {
+    const code = `# f563a4748f657e668b43072b5826950ee08a62b67f705cc648d8e16dafff2449 Elan Beta 1 valid
 
 main
   # My first program
-  print ""Hello World!""
+  print "Hello World!"
 end main`;
 
-    const objectCode = `export async function main(system : any) {
-  system.print ("Hello World!");
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+
+  system.printLine(_stdlib.asString("Hello World!"));
 }
 return [main, _tests];}`;
 

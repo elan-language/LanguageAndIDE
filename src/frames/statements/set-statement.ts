@@ -1,11 +1,5 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
-import { setKeyword, toKeyword } from "../keywords";
-import { AssignableField } from "../fields/assignableField";
+import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
   mustBeIndexableSymbol,
@@ -17,12 +11,16 @@ import {
   mustNotBePropertyOnFunctionMethod,
   mustNotIndexOnFunctionMethod,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Transforms } from "../syntax-nodes/transforms";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { VarAsn } from "../syntax-nodes/var-asn";
-import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
+import { AssignableField } from "../fields/assignableField";
+import { ExpressionField } from "../fields/expression-field";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
+import { setKeyword, toKeyword } from "../keywords";
+import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
+import { VarAsn } from "../syntax-nodes/var-asn";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -61,9 +59,7 @@ export class SetStatement extends AbstractFrame implements Statement {
   }
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const assignableAstNode = this.assignable.getOrTransformAstNode(
-      transforms,
-    )! as AstIdNode;
+    const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstIdNode;
     const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
 
     mustNotBePropertyOnFunctionMethod(
