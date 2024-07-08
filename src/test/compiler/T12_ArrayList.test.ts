@@ -8,9 +8,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T12_ArrayList", () => {
@@ -601,11 +600,11 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 
-  ignore_test("Fail_SizeWrongType", async () => {
+  test("Fail_SizeWrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var a set to createArray(3, 1.1)
+  var a set to createArray(3.1, 1)
 end main
 `;
 

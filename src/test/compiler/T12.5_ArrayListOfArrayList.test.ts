@@ -7,9 +7,8 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T12.5_ArrayListOfArrayList", () => {
@@ -564,22 +563,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [1, 1], ArrayList [1, 1]]");
-  });
-
-  ignore_test("Fail_InitialiseEmptyArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
-
-main
-  var a set to create2DArray(3, 2, "")
-  print a
-end main`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 
   test("Fail_EmptyArrayList1", async () => {
