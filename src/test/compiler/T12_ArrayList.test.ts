@@ -840,4 +840,61 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
   });
+
+  test("Pass_listOfFunctionGenericType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+    var body set to [head]
+end main`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var body = system.literalArray([_stdlib.head]);
+}
+return [main, _tests];}`;
+  
+      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+  
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+  });
+
+  test("Pass_listOfFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var foo1 set to foo
+  var body set to [foo, foo1]
+  var foo2 set to body[0]
+  print foo2(1)
+end main
+
+function foo(i as Int) return Int
+  return i
+end function`;
+
+const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo1 = foo;
+  var body = system.literalArray([foo, foo1]);
+  var foo2 = system.safeIndex(body, 0);
+  system.printLine(_stdlib.asString(foo2(1)));
+}
+
+function foo(i) {
+  return i;
+}
+return [main, _tests];}`;
+  
+      const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+      await fileImpl.parseFrom(new CodeSourceFromString(code));
+  
+      assertParses(fileImpl);
+      assertStatusIsValid(fileImpl);
+      assertObjectCodeIs(fileImpl, objectCode);
+      await assertObjectCodeExecutes(fileImpl, "1");
+  });
 });

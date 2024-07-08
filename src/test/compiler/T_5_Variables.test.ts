@@ -9,7 +9,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T_5_Variables", () => {
@@ -523,6 +523,42 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Unknown to Float or Int",
+      "x is not defined",
+    ]);
+  });
+
+  test("Fail_referenceToExtensionFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var i set to [1,2]
+  var x set to head
+  var y set to x(i)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call extension method directly",
+    ]);
+  });
+
+  test("Fail_referenceToExtensionFunction", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var i set to [1,2]
+  var x set to head
+  var y set to i.x()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
       "x is not defined",
     ]);
   });
