@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from "assert";
 import * as jsdom from "jsdom";
-import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
 import { AbstractField } from "../frames/fields/abstract-field";
@@ -11,7 +10,6 @@ import { Field } from "../frames/interfaces/field";
 import { File } from "../frames/interfaces/file";
 import { Parent } from "../frames/interfaces/parent";
 import { Scope } from "../frames/interfaces/scope";
-import { Selectable } from "../frames/interfaces/selectable";
 import { ElanSymbol } from "../frames/interfaces/symbol";
 import { SymbolType } from "../frames/interfaces/symbol-type";
 import { ParseNode } from "../frames/parse-nodes/parse-node";
@@ -38,39 +36,6 @@ import { readFileSync, writeFileSync } from "fs";
 // flag to update test file
 const updateTestFiles = false;
 
-export async function assertEffectOfAction(
-  sourceFile: string,
-  action: (f: FileImpl) => void,
-  htmlFile: string,
-) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  action(fl);
-
-  const rendered = await fl.renderAsHtml();
-  const actualHtml = wrap(rendered).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-  try {
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      updateTestFile(htmlDoc, actualHtml);
-    }
-    throw e;
-  }
-}
-
 export async function assertEffectOfActionNew(
   sourceFile: string,
   action: (f: FileImpl) => void,
@@ -94,45 +59,13 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  const renderedSource = await fl.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-  const renderedHtml = await fl.renderAsHtml();
-  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-  try {
-    assert.strictEqual(actualSource, expectedSource);
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      updateTestFile(sourceDoc, actualSource);
-      updateTestFile(htmlDoc, actualHtml);
-    }
-    throw e;
-  }
-}
-
 export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, htmlFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
   const renderedSource = await fl.renderAsSource();
   const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = loadFileAsSourceNew(sourceFile);
+  const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
   const renderedHtml = await fl.renderAsHtml();
   const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
   const expectedHtml = htm.replaceAll("\r", "");
@@ -146,24 +79,6 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     }
     throw e;
   }
-}
-
-function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
-  const edit = new vscode.WorkspaceEdit();
-
-  edit.replace(testDoc.uri, new vscode.Range(0, 0, testDoc.lineCount, 0), newContent);
-
-  vscode.workspace.applyEdit(edit).then((ok) => {
-    if (ok) {
-      testDoc.save().then((b) => {
-        if (!b) {
-          console.warn("Save failed: " + testDoc.fileName);
-        }
-      });
-    } else {
-      console.warn("Edit failed: " + testDoc.fileName);
-    }
-  });
 }
 
 function updateTestFileNew(testDoc: string, newContent: string) {
@@ -187,23 +102,6 @@ ${html}
 </html>`;
 }
 
-export async function assertFileParses(sourceFile: string) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  const renderedSource = await fl.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-
-  assert.strictEqual(actualSource, expectedSource);
-}
-
 export async function assertFileParsesNew(sourceFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
 
@@ -212,19 +110,6 @@ export async function assertFileParsesNew(sourceFile: string) {
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
 
   assert.strictEqual(actualSource, expectedSource);
-}
-
-export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  return fl;
 }
 
 export function loadFileAsSourceNew(sourceFile: string): string {
@@ -343,29 +228,6 @@ export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean
     type: "key",
     target: "frame",
   };
-}
-
-export async function activate(docUri: vscode.Uri) {
-  // The extensionId is `publisher.name` from package.json
-  const ext = vscode.extensions.getExtension("undefined_publisher.elan")!;
-
-  if (!ext) {
-    const all = vscode.extensions.all;
-    assert.fail(all[all.length - 1].id);
-  }
-
-  await ext.activate();
-  try {
-    const doc = await vscode.workspace.openTextDocument(docUri);
-    const editor = await vscode.window.showTextDocument(doc);
-    await sleep(20000); // Wait for server activation
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 //Keys

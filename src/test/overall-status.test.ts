@@ -1,14 +1,11 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
-import { createTestRunner, key, loadFileAsModel } from "./testHelpers";
+import { createTestRunner, key, loadFileAsModelNew } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   ignore_test("Pattern for starting from literal program", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
   
@@ -32,7 +29,7 @@ suite("Editing Fields Tests", () => {
   });
 
   ignore_test("test top-level Parse, Compile, Test Status changes", async () => {
-    const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs/merge-sort.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -97,7 +94,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test wordle-solver", async () => {
-    const f = (await loadFileAsModel("programs/wordle-solver.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\wordle-solver.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -106,7 +103,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test wordle-player", async () => {
-    const f = (await loadFileAsModel("programs/wordle-player.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\wordle-player.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -115,7 +112,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test best-fit", async () => {
-    const f = (await loadFileAsModel("programs/best-fit.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\best-fit.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -124,7 +121,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test binary-search", async () => {
-    const f = (await loadFileAsModel("programs/binary-search.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\binary-search.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -133,7 +130,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test merge-sort", async () => {
-    const f = (await loadFileAsModel("programs/merge-sort.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\merge-sort.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -142,7 +139,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test life", async () => {
-    const f = (await loadFileAsModel("programs/life.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\life.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -151,9 +148,9 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test roman-numerals1-multiple-while-loops", async () => {
-    const f = (await loadFileAsModel(
-      "programs/roman-numerals1-multiple-while-loops.elan",
-    )) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals1-multiple-while-loops.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -162,7 +159,9 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test roman-numerals2-processSymbol", async () => {
-    const f = (await loadFileAsModel("programs/roman-numerals2-processSymbol.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals2-processSymbol.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -170,7 +169,9 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   test("test roman-numerals3-two-lists", async () => {
-    const f = (await loadFileAsModel("programs/roman-numerals3-two-lists.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals3-two-lists.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -178,7 +179,9 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   test("test roman-numerals4-list-of-tuples", async () => {
-    const f = (await loadFileAsModel("programs/roman-numerals4-list-of-tuples.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals4-list-of-tuples.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -186,7 +189,9 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   test("test roman-numerals5-recursive", async () => {
-    const f = (await loadFileAsModel("programs/roman-numerals5-recursive.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals5-recursive.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -194,7 +199,9 @@ suite("Editing Fields Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   test("test roman-numerals6-turing-machine", async () => {
-    const f = (await loadFileAsModel("programs/roman-numerals6-turing-machine.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(
+      `${__dirname}\\files\\programs\\roman-numerals6-turing-machine.elan`,
+    );
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -203,7 +210,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test for enum default value", async () => {
-    const f = (await loadFileAsModel("test-for-enum-default.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\test-for-enum-default.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -212,7 +219,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("test snake OOP", async () => {
-    const f = (await loadFileAsModel("programs/snake OOP.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\snake OOP.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -220,7 +227,7 @@ suite("Editing Fields Tests", () => {
     //assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   test("test snake PP", async () => {
-    const f = (await loadFileAsModel("programs/snake PP.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\snake PP.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -228,7 +235,7 @@ suite("Editing Fields Tests", () => {
     //assert.equal(f.readTestStatus(), TestStatus.pass);
   });
   ignore_test("test cards", async () => {
-    const f = (await loadFileAsModel("programs/cards.elan")) as FileImpl;
+    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\cards.elan`);
     const runner = await createTestRunner();
     await f.refreshAllStatuses(runner);
     assert.equal(f.readParseStatus(), ParseStatus.valid);

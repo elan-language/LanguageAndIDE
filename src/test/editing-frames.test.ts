@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { Constructor } from "../frames/class-members/constructor";
 import { MemberSelector } from "../frames/class-members/member-selector";
 import { Property } from "../frames/class-members/property";
@@ -29,7 +28,6 @@ import {
   down,
   enter,
   key,
-  loadFileAsModel,
   loadFileAsModelNew,
   shift_down,
   shift_enter,
@@ -38,8 +36,6 @@ import {
 import { GlobalSelector } from "../frames/globals/global-selector";
 
 suite("Editing Frames", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("Enter on a frame to Insert new code - creating a selector", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if37");
@@ -297,8 +293,7 @@ suite("Editing Frames", () => {
   });
 
   test("Paste at wrong level has no effect", async () => {
-    // const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
-    const file = await loadFileAsModel("single_var.elan");
+    const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
 
@@ -315,7 +310,7 @@ suite("Editing Frames", () => {
   });
 
   test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
-    const file = await loadFileAsModel("single_var.elan");
+    const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
 
@@ -344,7 +339,7 @@ suite("Editing Frames", () => {
     assert.equal(scratchpad.readFrames(), undefined);
   });
   test("#622 can't cut and paste a method to global level", async () => {
-    const file = await loadFileAsModel("testcode622.elan");
+    const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
     const func11 = file.getById("func11");

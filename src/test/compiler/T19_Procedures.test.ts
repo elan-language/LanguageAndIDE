@@ -834,4 +834,22 @@ end procedure`;
       "Incompatible types Procedure to Float or Int",
     ]);
   });
+
+  test("Fail_ProcedureInExpression", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to [1,2]
+  set a to a.add(3)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types Procedure to ArrayList",
+      "Cannot call Procedure",
+    ]);
+  });
 });

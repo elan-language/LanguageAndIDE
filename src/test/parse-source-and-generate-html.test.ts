@@ -1,73 +1,84 @@
-import * as vscode from "vscode";
 import {
   CollapseAll,
   ExpandAll,
   SelectMainById,
   SelectStatementById,
-  T03_mainWithAllStatements,
 } from "./model-generating-functions.";
-import { assertEffectOfAction, assertGeneratesHtmlandSameSource } from "./testHelpers";
+import { assertEffectOfActionNew, assertGeneratesHtmlandSameSourceNew } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
-  vscode.window.showInformationMessage("Start all tests.");
-
   test("Test Empty File", async () => {
-    await assertGeneratesHtmlandSameSource("T00_emptyFile.elan", "T00_emptyFile.html");
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T00_emptyFile.elan`,
+      `${__dirname}\\files\\T00_emptyFile.html`,
+    );
   });
 
   test("Test Hello World", async () => {
-    await assertGeneratesHtmlandSameSource("T01_helloWorld.elan", "T01_helloWorld.html");
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T01_helloWorld.elan`,
+      `${__dirname}\\files\\T01_helloWorld.html`,
+    );
   });
 
   test("Test Comments", async () => {
-    await assertGeneratesHtmlandSameSource("T02_comments.elan", "T02_comments.html");
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T02_comments.elan`,
+      `${__dirname}\\files\\T02_comments.html`,
+    );
   });
 
   test("Test Main With All Statements", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T03_mainWithAllStatements.elan",
-      "T03_mainWithAllStatements.html",
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      `${__dirname}\\files\\T03_mainWithAllStatements.html`,
     );
   });
 
   test("Test All Globals Except Class", async () => {
-    await assertGeneratesHtmlandSameSource(
-      "T04_allGlobalsExceptClass.elan",
-      "T04_allGlobalsExceptClass.html",
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T04_allGlobalsExceptClass.elan`,
+      `${__dirname}\\files\\T04_allGlobalsExceptClass.html`,
     );
   });
 
   test("Test Classes", async () => {
-    await assertGeneratesHtmlandSameSource("T05_classes.elan", "T05_classes.html");
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\T05_classes.elan`,
+      `${__dirname}\\files\\T05_classes.html`,
+    );
   });
 
   test("Test Select Main By Id", async () => {
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectMainById,
-      "T07_mainSelected.html",
+      `${__dirname}\\files\\T07_mainSelected.html`,
     );
   });
 
   test("Test Select Statement By Id", async () => {
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectStatementById,
-      "T07_statementSelected.html",
+      `${__dirname}\\files\\T07_statementSelected.html`,
     );
   });
 
   //-------------------
   test("ExpandAll", async () => {
-    await assertEffectOfAction("T03_mainWithAllStatements.elan", ExpandAll, "T08_expandAll.html");
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      ExpandAll,
+      `${__dirname}\\files\\T08_expandAll.html`,
+    );
   });
 
   test("CollapseAll", async () => {
-    const ff = T03_mainWithAllStatements();
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       CollapseAll,
-      "T08_collapseAll.html",
+      `${__dirname}\\files\\T08_collapseAll.html`,
     );
   });
 });

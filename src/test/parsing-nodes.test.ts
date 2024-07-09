@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import { Regexes } from "../frames/fields/regexes";
 import { abstractKeyword } from "../frames/keywords";
 import { Alternatives } from "../frames/parse-nodes/alternatives";
@@ -50,7 +49,6 @@ import { ParseStatus } from "../frames/status-enums";
 import { testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
   test("UnaryExpression", () => {
     testNodeParse(new UnaryExpression(), "", ParseStatus.empty, "", "", "", "");
     testNodeParse(new UnaryExpression(), "-3", ParseStatus.valid, "-3", "", "-3", "");

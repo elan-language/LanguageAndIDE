@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { MemberSelector } from "../frames/class-members/member-selector";
 import { DefaultProfile } from "../frames/default-profile";
@@ -31,8 +30,6 @@ export class TestProfileSPJ implements Profile {
 }
 
 suite("Unit tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("Statement Select - variable", () => {
     const file = T09_emptyMainAndClassWithGlobalSelector();
     file.getById("select2").processKey(key("v"));

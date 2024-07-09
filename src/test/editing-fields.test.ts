@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { hash } from "../util";
@@ -14,8 +13,6 @@ import { VarStatement } from "../frames/statements/var-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 
 suite("Editing Fields Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("Entry of text with formatting", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const set = new SetStatement(main);
