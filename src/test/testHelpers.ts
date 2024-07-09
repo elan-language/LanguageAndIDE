@@ -61,45 +61,13 @@ export async function assertEffectOfActionNew(
   }
 }
 
-export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  const renderedSource = await fl.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-  const renderedHtml = await fl.renderAsHtml();
-  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-  try {
-    assert.strictEqual(actualSource, expectedSource);
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      updateTestFile(sourceDoc, actualSource);
-      updateTestFile(htmlDoc, actualHtml);
-    }
-    throw e;
-  }
-}
-
 export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, htmlFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
   const renderedSource = await fl.renderAsSource();
   const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = loadFileAsSourceNew(sourceFile);
+  const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
   const renderedHtml = await fl.renderAsHtml();
   const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
   const expectedHtml = htm.replaceAll("\r", "");
