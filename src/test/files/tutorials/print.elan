@@ -1,8 +1,0 @@
-# 0696d833374d2e8fac7c7d1e8fc6ae9b39a95e2afab61a53467d15f1002ffc99 Elan Beta 1 valid
-
-main
-  print "No. Square Cube"
-  for x from 1 to 10 step 1
-    print "{x}   {x^2}   {x^3}"
-  end for
-end main

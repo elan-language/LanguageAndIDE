@@ -1,0 +1,51 @@
+# 08ca82eb2d770f2b431f729ccfc8c2c6161f2e9179d5cb888b4f4d9b95bf1227 Elan Beta 1 valid
+
+main
+  var d set to new Person("Dan", 16)
+  call d.setAge(17)
+  print d
+  var e set to new Student("Ellie", 16)
+  set e to e.withAge(17)
+  print e
+end main
+
+class Person
+  constructor(name as String, age as Int)
+    set property.name to name
+    set property.age to age
+  end constructor
+
+  property name as String
+
+  property age as Int
+
+  procedure setAge(age as Int)
+    set property.age to age
+  end procedure
+
+  function asString() return String
+    return "{name} ({age})"
+  end function
+
+end class
+
+immutable class Student
+  constructor(name as String, age as Int)
+    set property.name to name
+    set property.age to age
+  end constructor
+
+  property name as String
+
+  property age as Int
+
+  # No procedures permissible in an immutable class
+  function withAge(age as Int) return Student
+    return new Student(name, age)
+  end function
+
+  function asString() return String
+    return "{name} ({age})"
+  end function
+
+end class

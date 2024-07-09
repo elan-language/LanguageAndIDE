@@ -1,0 +1,10 @@
+# 13b972b0878d5dc2a8a9a6d9c54cab22080ce82ddb4dab4f0f1796b7c33cddad Elan Beta 1 valid
+
+main
+  call print("Table of Squares\nNumber    Square    Cube\n")
+  for x from 1 to 10 step 1
+    call printTab(0, "{x}")
+    call printTab(10, "{x^2}")
+    call printTab(20, "{x^3}\n")
+  end for
+end main
