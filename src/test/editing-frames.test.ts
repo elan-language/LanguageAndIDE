@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { Constructor } from "../frames/class-members/constructor";
 import { MemberSelector } from "../frames/class-members/member-selector";
 import { Property } from "../frames/class-members/property";
@@ -38,8 +37,6 @@ import {
 import { GlobalSelector } from "../frames/globals/global-selector";
 
 suite("Editing Frames", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("Enter on a frame to Insert new code - creating a selector", () => {
     const file = T03_mainWithAllStatements();
     const if_st = file.getById("if37");

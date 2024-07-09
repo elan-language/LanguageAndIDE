@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
 import { Regexes } from "../frames/fields/regexes";
@@ -10,8 +9,6 @@ import { T03_mainWithAllStatements } from "./model-generating-functions.";
 import { assertElementHasClasses, key } from "./testHelpers";
 
 suite("Misc Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   ignore_test("Invalid identifier", async () => {
     const file = T03_mainWithAllStatements();
     await assertElementHasClasses(file, "fileStatus", "incomplete");

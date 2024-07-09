@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { DefaultProfile } from "../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
@@ -7,8 +6,6 @@ import { ignore_test, testHash, transforms } from "./compiler/compiler-test-help
 import { createTestRunner, key, loadFileAsModel } from "./testHelpers";
 
 suite("Editing Fields Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   ignore_test("Pattern for starting from literal program", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
   

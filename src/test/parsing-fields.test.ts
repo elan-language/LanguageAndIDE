@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { FileImpl } from "../frames/file-impl";
 import { MainFrame } from "../frames/globals/main-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
@@ -17,8 +16,6 @@ import { AssertStatement } from "../frames/statements/assert-statement";
 import { transforms } from "./compiler/compiler-test-helpers";
 
 suite("Field Parsing Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("parse CommentField", () => {
     const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
     const commentStatement = new CommentStatement(main);

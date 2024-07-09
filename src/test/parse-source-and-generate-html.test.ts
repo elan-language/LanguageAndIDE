@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import {
   CollapseAll,
   ExpandAll,
@@ -8,8 +7,6 @@ import {
 import { assertEffectOfActionNew, assertGeneratesHtmlandSameSourceNew } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
-  vscode.window.showInformationMessage("Start all tests.");
-
   test("Test Empty File", async () => {
     await assertGeneratesHtmlandSameSourceNew(
       `${__dirname}\\files\\T00_emptyFile.elan`,

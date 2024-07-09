@@ -1,9 +1,6 @@
-import * as vscode from "vscode";
 import { assertFileParsesNew } from "./testHelpers";
 
 suite("File Parsing Tests", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("parse Frames - merge-sort", async () => {
     await assertFileParsesNew(`${__dirname}\\files\\programs\\merge-sort.elan`);
   });

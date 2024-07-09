@@ -1,5 +1,4 @@
 import assert from "assert";
-import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
@@ -17,8 +16,6 @@ import { hash } from "../util";
 import { transforms } from "./compiler/compiler-test-helpers";
 
 suite("File Parsing Tests", async () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("parse Frames - set statement", () => {
     const code = "  set fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");

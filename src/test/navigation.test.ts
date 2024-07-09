@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import {
   T03_mainWithAllStatements,
   T04_allGlobalsExceptClass,
@@ -13,8 +12,6 @@ import { Selectable } from "../frames/interfaces/selectable";
 import { VarStatement } from "../frames/statements/var-statement";
 
 suite("Navigation", () => {
-  vscode.window.showInformationMessage("Start all unit tests.");
-
   test("Selectable Select", async () => {
     await assertClasses(
       T04_allGlobalsExceptClass,
