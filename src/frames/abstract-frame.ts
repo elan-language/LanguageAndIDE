@@ -270,7 +270,7 @@ export abstract class AbstractFrame implements Frame {
       newFocus.select(true, false);
       const sp = this.getScratchPad();
       sp.addSnippet(selected);
-      if (!newFocus.getParent().minimumNumberOfChildrenExceeded()) {
+      if (!("isSelector" in newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
         newFocus.insertPeerSelector(false);
       }
     }
