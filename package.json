@@ -104,7 +104,7 @@
     "test-compile": "tsc -p ./ && npm run esbuild-web-scripts",
     "compile": "npm run test-compile && npm run format && npm run lint",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run test-compile",
+    "pretest": "npm run test-compile && cpr ./src/test/files ./out/test/files -o",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\""

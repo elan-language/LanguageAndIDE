@@ -33,6 +33,7 @@ import { StdLib } from "../std-lib";
 import { hash } from "../util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
+import { readFileSync } from "fs";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -194,6 +195,17 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
   const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
   const codeSource = new CodeSourceFromString(sourceDoc.getText());
+  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+  await fl.parseFrom(codeSource);
+  if (fl.parseError) {
+    throw new Error(fl.parseError);
+  }
+  return fl;
+}
+
+export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
+  const source = readFileSync(sourceFile, "utf-8");
+  const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
   if (fl.parseError) {

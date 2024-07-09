@@ -28,6 +28,7 @@ import {
   enter,
   key,
   loadFileAsModel,
+  loadFileAsModelNew,
   shift_down,
   shift_enter,
   up,
@@ -295,6 +296,7 @@ suite("Editing Frames", () => {
   // new tests
 
   test("Paste at wrong level has no effect", async () => {
+    // const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const file = await loadFileAsModel("single_var.elan");
     const runner = await createTestRunner();
     await file.refreshAllStatuses(runner);
