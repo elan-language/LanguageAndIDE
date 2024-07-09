@@ -33,7 +33,7 @@ import { StdLib } from "../std-lib";
 import { hash } from "../util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 // flag to update test file
 const updateTestFiles = false;
@@ -71,6 +71,29 @@ export async function assertEffectOfAction(
   }
 }
 
+export async function assertEffectOfActionNew(
+  sourceFile: string,
+  action: (f: FileImpl) => void,
+  htmlFile: string,
+) {
+  const fl = await loadFileAsModelNew(sourceFile);
+  const htm = loadFileAsHtmlNew(htmlFile);
+
+  action(fl);
+
+  const rendered = await fl.renderAsHtml();
+  const actualHtml = wrap(rendered).replaceAll("\r", "");
+  const expectedHtml = htm.replaceAll("\r", "");
+  try {
+    assert.strictEqual(actualHtml, expectedHtml);
+  } catch (e) {
+    if (updateTestFiles) {
+      updateTestFileNew(htmlFile, actualHtml);
+    }
+    throw e;
+  }
+}
+
 export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -103,6 +126,28 @@ export async function assertGeneratesHtmlandSameSource(sourceFile: string, htmlF
   }
 }
 
+export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, htmlFile: string) {
+  const fl = await loadFileAsModelNew(sourceFile);
+  const htm = loadFileAsHtmlNew(htmlFile);
+
+  const renderedSource = await fl.renderAsSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
+  const expectedSource = loadFileAsSourceNew(sourceFile);
+  const renderedHtml = await fl.renderAsHtml();
+  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
+  const expectedHtml = htm.replaceAll("\r", "");
+  try {
+    assert.strictEqual(actualSource, expectedSource);
+    assert.strictEqual(actualHtml, expectedHtml);
+  } catch (e) {
+    if (updateTestFiles) {
+      updateTestFileNew(sourceFile, actualSource);
+      updateTestFileNew(htmlFile, actualHtml);
+    }
+    throw e;
+  }
+}
+
 function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
   const edit = new vscode.WorkspaceEdit();
 
@@ -119,6 +164,10 @@ function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
       console.warn("Edit failed: " + testDoc.fileName);
     }
   });
+}
+
+function updateTestFileNew(testDoc: string, newContent: string) {
+  writeFileSync(testDoc, newContent);
 }
 
 export function wrap(html: string) {
@@ -138,41 +187,6 @@ ${html}
 </html>`;
 }
 
-export async function assertAreEqualByHtml(htmlFile: string, frame: () => File) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-  const model = frame();
-  // get rid of \r for appveyor
-  const renderedHtml = await model.renderAsHtml();
-  const actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-
-  try {
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      updateTestFile(htmlDoc, actualHtml);
-    }
-    throw e;
-  }
-}
-
-export async function assertAreEqualBySource(sourceFile: string, frame: () => File) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const model = frame();
-  // get rid of \r for appveyor
-  const renderedSource = await model.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-
-  assert.strictEqual(actualSource, expectedSource);
-}
-
 export async function assertFileParses(sourceFile: string) {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -190,6 +204,16 @@ export async function assertFileParses(sourceFile: string) {
   assert.strictEqual(actualSource, expectedSource);
 }
 
+export async function assertFileParsesNew(sourceFile: string) {
+  const fl = await loadFileAsModelNew(sourceFile);
+
+  const renderedSource = await fl.renderAsSource();
+  const actualSource = renderedSource.replaceAll("\r", "");
+  const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
+
+  assert.strictEqual(actualSource, expectedSource);
+}
+
 export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const ws = vscode.workspace.workspaceFolders![0].uri;
   const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
@@ -203,8 +227,12 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   return fl;
 }
 
+export function loadFileAsSourceNew(sourceFile: string): string {
+  return readFileSync(sourceFile, "utf-8");
+}
+
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
-  const source = readFileSync(sourceFile, "utf-8");
+  const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new DefaultProfile(), transforms());
   await fl.parseFrom(codeSource);
@@ -214,22 +242,8 @@ export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> 
   return fl;
 }
 
-export async function assertAreEqualByFile<T extends Selectable>(
-  htmlFile: string,
-  elanFile: string,
-  frame: (s: string) => T,
-) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-
-  const elanUri = vscode.Uri.joinPath(ws, elanFile);
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const elanDoc = await vscode.workspace.openTextDocument(elanUri);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-  const model = frame(elanDoc.getText());
-  const actualHtml = wrap(model.renderAsHtml()).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-
-  assert.strictEqual(actualHtml, expectedHtml);
+export function loadFileAsHtmlNew(sourceFile: string): string {
+  return loadFileAsSourceNew(sourceFile);
 }
 
 export function assertElementsById(dom: jsdom.JSDOM, id: string, expected: string) {

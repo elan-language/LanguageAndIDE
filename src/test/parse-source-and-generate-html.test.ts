@@ -1,18 +1,12 @@
 import * as vscode from "vscode";
 import {
-  assertAreEqualByHtml,
-  assertAreEqualBySource,
-  assertEffectOfAction,
-  assertGeneratesHtmlandSameSource,
-} from "./testHelpers";
-import {
   CollapseAll,
   ExpandAll,
   SelectMainById,
   SelectStatementById,
   T03_mainWithAllStatements,
-  T09_emptyMainAndClassWithGlobalSelector,
 } from "./model-generating-functions.";
+import { assertEffectOfAction, assertGeneratesHtmlandSameSource } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
   vscode.window.showInformationMessage("Start all tests.");
