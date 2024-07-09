@@ -309,5 +309,5 @@ suite("Editing Frames", () => {
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
-  }); 
+  });
 });

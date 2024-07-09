@@ -8,7 +8,7 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T78_identifiersMustBeUniqueIgnoringCase", () => {

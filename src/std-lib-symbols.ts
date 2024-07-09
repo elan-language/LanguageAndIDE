@@ -485,7 +485,13 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "third",
         new FunctionType(
-          [new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2"), new GenericParameterType("T3")])],
+          [
+            new TupleType([
+              new GenericParameterType("T1"),
+              new GenericParameterType("T2"),
+              new GenericParameterType("T3"),
+            ]),
+          ],
           new GenericParameterType("T3"),
           true,
         ),

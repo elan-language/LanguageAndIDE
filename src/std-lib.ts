@@ -277,15 +277,15 @@ export class StdLib {
     return newDict;
   }
 
-  first<T, T1>(st: [T, T1]) : T {
+  first<T, T1>(st: [T, T1]): T {
     return this.system.safeIndex(st, 0);
   }
 
-  second<T, T1>(st: [T, T1]) : T1 {
+  second<T, T1>(st: [T, T1]): T1 {
     return this.system.safeIndex(st, 1);
   }
 
-  third<T, T1, T2>(st: [T, T1]) : T2 {
+  third<T, T1, T2>(st: [T, T1]): T2 {
     return this.system.safeIndex(st, 2);
   }
 

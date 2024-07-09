@@ -340,7 +340,9 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    await assertDoesNotCompile(fileImpl, ["Incompatible types (Int, String) to (Int, String, Unknown)"]);
+    await assertDoesNotCompile(fileImpl, [
+      "Incompatible types (Int, String) to (Int, String, Unknown)",
+    ]);
   });
 
   test("Fail_AssignItemToWrongType", async () => {

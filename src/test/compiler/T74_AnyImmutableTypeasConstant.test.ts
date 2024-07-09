@@ -7,7 +7,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  transforms
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T74_AnyImmutableTypeAsConstant", () => {
@@ -115,7 +115,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, c:3}");
   });
 
-  
   test("Fail_ImmutableClass", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -137,13 +136,10 @@ immutable class Foo
   end function
 end class`;
 
-   
-
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-   
   });
 
   test("Fail_Array1", async () => {
