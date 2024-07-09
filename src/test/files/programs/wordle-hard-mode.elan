@@ -1,5 +1,11 @@
-# dee8d37c4382b454ad982b8b5d1769beb859b2ccca4978a936f1d4f76d994b4c Elan Beta 1 valid
+# a41c3b89f33c6a8f7246a4372fc354e6248e19a6b3f443f24ea38f3c113e8369 Elan Beta 1 valid
 
+# Wordle Solver: Hard mode (every attempt must be a valid possible answer)
+# Mark each letter of attempt with:
+# * for in-place match (Green)
+# + for out-of-place match (Yellow)
+# _ (underscore) for no match (Grey)
+# e.g.  _*_+_
 main
   var possible set to allPossibleAnswers.asIter()
   var marking set to ""
