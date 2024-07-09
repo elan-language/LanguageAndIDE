@@ -431,7 +431,8 @@ runButton?.addEventListener("click", () => {
             updateDisplayValues();
           })
           .catch((e: any) => {
-            showError(e, file.fileName, false);
+            const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e);
+            showError(err, file.fileName, false);
             file.setRunStatus(RunStatus.error);
             updateDisplayValues();
           });
