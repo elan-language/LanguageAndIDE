@@ -192,7 +192,8 @@ function updateDisplayValues() {
   }
   const testErr = file.getTestError();
   if (testErr) {
-    showError(testErr, file.fileName, false);
+    const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
+    showError(err, file.fileName, false);
   }
 }
 
