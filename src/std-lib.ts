@@ -158,6 +158,14 @@ export class StdLib {
     return s1.substring(start, end);
   }
 
+  upperCase(s1: string): string {
+    return s1.toUpperCase();
+  }
+
+  lowerCase(s1: string): string {
+    return s1.toLowerCase();
+  }
+
   isBefore(s1: string, s2: string) {
     return s1 < s2;
   }

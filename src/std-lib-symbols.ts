@@ -431,6 +431,20 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "upperCase",
+      this.getSymbol(
+        "upperCase",
+        new FunctionType([StringType.Instance], StringType.Instance, true, true),
+      ),
+    ],
+    [
+      "lowerCase",
+      this.getSymbol(
+        "lowerCase",
+        new FunctionType([StringType.Instance], StringType.Instance, true, true),
+      ),
+    ],
+    [
       "isBefore",
       this.getSymbol(
         "isBefore",
