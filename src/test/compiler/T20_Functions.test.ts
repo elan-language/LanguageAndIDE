@@ -857,6 +857,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a", "May not set an indexed value in a function: a"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not set an indexed value in a function: a",
+      "May not set an indexed value in a function: a",
+    ]);
   });
 });

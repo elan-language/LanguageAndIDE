@@ -189,7 +189,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "aprompty", "y");
   });
 
-  test("Pass_InputInt", async () => {
+  test("Pass_InputInt1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -241,7 +241,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "aprompt5", "5");
   });
 
-  test("Pass_InputFloat", async () => {
+  test("Pass_InputFloat1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
