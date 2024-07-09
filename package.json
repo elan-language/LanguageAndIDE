@@ -96,12 +96,8 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-web-scripts": "cpr ./media/colourScheme.css ./web-editor/colourScheme.css -o && cpr ./media/elanStyle.css ./web-editor/elanStyle.css -o && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
-    "esbuild": "npm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "test-compile": "tsc -p ./ && npm run esbuild-web-scripts",
+    "esbuild-web-scripts": "esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
+    "test-compile": "tsc -p ./ && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
     "compile": "npm run test-compile && npm run format && npm run lint",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run test-compile && cpr ./src/test/files ./out/test/files -o",
