@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from "assert";
 import * as jsdom from "jsdom";
-import * as vscode from "vscode";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
 import { AbstractField } from "../frames/fields/abstract-field";
@@ -11,7 +10,6 @@ import { Field } from "../frames/interfaces/field";
 import { File } from "../frames/interfaces/file";
 import { Parent } from "../frames/interfaces/parent";
 import { Scope } from "../frames/interfaces/scope";
-import { Selectable } from "../frames/interfaces/selectable";
 import { ElanSymbol } from "../frames/interfaces/symbol";
 import { SymbolType } from "../frames/interfaces/symbol-type";
 import { ParseNode } from "../frames/parse-nodes/parse-node";
@@ -112,19 +110,6 @@ export async function assertFileParsesNew(sourceFile: string) {
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
 
   assert.strictEqual(actualSource, expectedSource);
-}
-
-export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  return fl;
 }
 
 export function loadFileAsSourceNew(sourceFile: string): string {
@@ -243,29 +228,6 @@ export function key(k: string, shift?: boolean, control?: boolean, alt?: boolean
     type: "key",
     target: "frame",
   };
-}
-
-export async function activate(docUri: vscode.Uri) {
-  // The extensionId is `publisher.name` from package.json
-  const ext = vscode.extensions.getExtension("undefined_publisher.elan")!;
-
-  if (!ext) {
-    const all = vscode.extensions.all;
-    assert.fail(all[all.length - 1].id);
-  }
-
-  await ext.activate();
-  try {
-    const doc = await vscode.workspace.openTextDocument(docUri);
-    const editor = await vscode.window.showTextDocument(doc);
-    await sleep(20000); // Wait for server activation
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 //Keys
