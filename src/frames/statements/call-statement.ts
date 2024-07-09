@@ -1,28 +1,26 @@
-import { ArgListField } from "../fields/arg-list-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { ProcRefField } from "../fields/proc-ref-field";
 import { AbstractFrame } from "../abstract-frame";
-import { Statement } from "../interfaces/statement";
-import { ProcedureType } from "../symbols/procedure-type";
-import {
-  mustBeProcedure,
-  mustBeKnownSymbol,
-  mustMatchParameters,
-  mustCallExtensionViaQualifier,
-  mustNotBeCounter,
-} from "../compile-rules";
-import { callKeyword } from "../keywords";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { Transforms } from "../syntax-nodes/transforms";
-import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { AstNode } from "../interfaces/ast-node";
-import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Constructor } from "../class-members/constructor";
-import { TestFrame } from "../globals/test-frame";
-import { containsGenericType, matchGenericTypes, generateType } from "../syntax-nodes/ast-helpers";
+import { CodeSource } from "../code-source";
+import {
+  mustBeKnownSymbol,
+  mustBeProcedure,
+  mustCallExtensionViaQualifier,
+  mustMatchParameters,
+} from "../compile-rules";
+import { ArgListField } from "../fields/arg-list-field";
+import { ProcRefField } from "../fields/proc-ref-field";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstNode } from "../interfaces/ast-node";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
+import { callKeyword } from "../keywords";
+import { ProcedureType } from "../symbols/procedure-type";
+import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { containsGenericType, generateType, matchGenericTypes } from "../syntax-nodes/ast-helpers";
+import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -94,10 +92,6 @@ export class CallStatement extends AbstractFrame implements Statement {
       if (ps.isExtension && qualifier instanceof QualifierAsn) {
         parameters = [qualifier.value as AstNode].concat(parameters);
         qualifier = undefined;
-      }
-
-      for (const p of parameters) {
-        mustNotBeCounter(p, this.compileErrors, this.htmlId);
       }
 
       let parameterTypes = ps.parametersTypes;

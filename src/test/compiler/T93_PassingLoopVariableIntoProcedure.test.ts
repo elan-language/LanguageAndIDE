@@ -10,7 +10,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T93_PassingLoopVariableIntoProcedure", () => {
-  test("Pass_CorrectedPattern", async () => {
+  test("Pass_Pattern1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 procedure removeLetters(wordAsPlayed as String)
@@ -51,7 +51,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Fail_InvalidPattern", async () => {
+  test("Pass_Pattern2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 procedure removeLetters(wordAsPlayed as String)
@@ -66,10 +66,27 @@ end procedure
 main
 end main`;
 
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function removeLetters(wordAsPlayed) {
+  for (const letter of wordAsPlayed) {
+    await removeLetter(letter);
+  }
+}
+
+async function removeLetter(l) {
+
+}
+
+async function main() {
+
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate counter"]);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
   });
 });
