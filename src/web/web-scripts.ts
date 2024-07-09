@@ -15,7 +15,6 @@ import { WebInputOutput } from "./web-input-output";
 
 const codeContainer = document.querySelector(".elan-code");
 let file: File;
-const codeFile = (<any>document.getElementsByClassName("elan-code")?.[0]).dataset.code;
 let doOnce = true;
 let profile: Profile;
 
@@ -94,32 +93,19 @@ function initialDisplay() {
 }
 
 function displayFile() {
-  if (codeFile) {
-    fetch(codeFile, { mode: "same-origin" })
-      .then((f) => f.text())
-      .then((text) => {
-        const code = new CodeSourceFromString(text);
-        file.parseFrom(code).then(
-          () => initialDisplay(),
-          (e) => showError(e, file.fileName, true),
-        );
-      })
-      .catch((e) => showError(e, file.fileName, true));
+  const previousCode = localStorage.getItem("elan-code");
+  const previousFileName = localStorage.getItem("elan-file");
+  if (previousCode) {
+    const code = new CodeSourceFromString(previousCode);
+    file.parseFrom(code).then(
+      () => {
+        file.fileName = previousFileName || file.defaultFileName;
+        initialDisplay();
+      },
+      (e) => showError(e, previousFileName || file.defaultFileName, true),
+    );
   } else {
-    const previousCode = localStorage.getItem("elan-code");
-    const previousFileName = localStorage.getItem("elan-file");
-    if (previousCode) {
-      const code = new CodeSourceFromString(previousCode);
-      file.parseFrom(code).then(
-        () => {
-          file.fileName = previousFileName || file.defaultFileName;
-          initialDisplay();
-        },
-        (e) => showError(e, previousFileName || file.defaultFileName, true),
-      );
-    } else {
-      initialDisplay();
-    }
+    initialDisplay();
   }
 }
 

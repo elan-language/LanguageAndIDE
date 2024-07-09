@@ -5,7 +5,7 @@ import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/sta
 import { ignore_test, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { createTestRunner, key, loadFileAsModelNew } from "./testHelpers";
 
-suite("Editing Fields Tests", () => {
+suite("Overall Status Tests", () => {
   ignore_test("Pattern for starting from literal program", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
   
