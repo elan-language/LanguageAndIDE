@@ -83,24 +83,6 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
   }
 }
 
-function updateTestFile(testDoc: vscode.TextDocument, newContent: string) {
-  const edit = new vscode.WorkspaceEdit();
-
-  edit.replace(testDoc.uri, new vscode.Range(0, 0, testDoc.lineCount, 0), newContent);
-
-  vscode.workspace.applyEdit(edit).then((ok) => {
-    if (ok) {
-      testDoc.save().then((b) => {
-        if (!b) {
-          console.warn("Save failed: " + testDoc.fileName);
-        }
-      });
-    } else {
-      console.warn("Edit failed: " + testDoc.fileName);
-    }
-  });
-}
-
 function updateTestFileNew(testDoc: string, newContent: string) {
   writeFileSync(testDoc, newContent);
 }
@@ -120,23 +102,6 @@ ${html}
 </elan-code>
 </body>
 </html>`;
-}
-
-export async function assertFileParses(sourceFile: string) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  const renderedSource = await fl.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = sourceDoc.getText().replaceAll("\r", "");
-
-  assert.strictEqual(actualSource, expectedSource);
 }
 
 export async function assertFileParsesNew(sourceFile: string) {
