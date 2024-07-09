@@ -9,92 +9,10 @@
   },
   "license": "Apache-2.0",
   "icon": "images/icon.png",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
   "categories": [
     "Programming Languages",
     "Education"
   ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "languages": [
-      {
-        "id": "elan",
-        "extensions": [
-          ".elan"
-        ],
-        "aliases": [
-          "Elan",
-          "elan"
-        ]
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "Elan configuration",
-      "properties": {
-        "elanLanguageServer.maxNumberOfProblems": {
-          "scope": "resource",
-          "type": "number",
-          "default": 100,
-          "description": "Controls the maximum number of problems produced by the server."
-        },
-        "elanLanguageServer.trace.server": {
-          "scope": "window",
-          "type": "string",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
-          "default": "verbose",
-          "description": "Traces the communication between VS Code and the language server."
-        }
-      }
-    },
-    "customEditors": [
-      {
-        "viewType": "elan.elanEditor",
-        "displayName": "Elan Editor",
-        "selector": [
-          {
-            "filenamePattern": "*.elan"
-          }
-        ],
-        "priority": "default"
-      }
-    ],
-    "taskDefinitions": [
-      {
-        "type": "elan",
-        "when": "resourceExtname == .elan"
-      }
-    ],
-    "debuggers": [
-      {
-        "type": "elan",
-        "label": "Elan",
-        "languages": [
-          "elan"
-        ],
-        "initialConfigurations": [
-          {
-            "name": "Elan Launch",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "${defaultBuildTask}",
-            "program": "${workspaceFolder}/obj/bin/Debug/net7.0/${fileBasenameNoExtension}.exe",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "console": "externalTerminal"
-          }
-        ]
-      }
-    ]
-  },
   "scripts": {
     "esbuild-web-scripts": "esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
     "test-compile": "tsc -p ./ && esbuild ./src/web/web-scripts.ts --bundle --outfile=web-editor/web-scripts.js",
@@ -107,20 +25,16 @@
   },
   "dependencies": {
     "async-file": "2.0.2",
-    "vscode-jsonrpc": "^8.2.0",
-    "vscode-languageclient": "^9.0.0",
     "yauzl": "2.10.0"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.7",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
-    "@types/vscode": "^1.85.0",
     "@types/yauzl": "2.10.0",
     "@typescript-eslint/eslint-plugin": "^7.12.0",
     "@typescript-eslint/parser": "^7.12.0",
-    "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.8",
+    "mocha": "^10.6.0",
     "cpr": "~3.0.1",
     "esbuild": "^0.20.0",
     "eslint": "^8.56.0",

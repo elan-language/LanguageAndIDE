@@ -1,4 +1,3 @@
-import { integer } from "vscode-languageclient";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { hasHiddenType } from "./has-hidden-type";
 import { System } from "./system";
@@ -437,7 +436,7 @@ export class StdLib {
     return x * this.ySize + y;
   }
 
-  initialisedGraphics(c: string, foreground: integer, background: integer) {
+  initialisedGraphics(c: string, foreground: number, background: number) {
     const emptyMap: Graphics = [];
     const emptyLocation: Location = this.system.tuple([c, foreground, background]) as Location;
     for (let x = 0; x < this.xSize; x++) {
@@ -461,8 +460,8 @@ export class StdLib {
     x: number,
     y: number,
     char: string,
-    foreground: integer,
-    background: integer,
+    foreground: number,
+    background: number,
   ): Graphics {
     const cm = this.ensureInitialised(map);
     cm[this.idx(x, y)] = this.system.tuple([char, foreground, background]) as Location;
