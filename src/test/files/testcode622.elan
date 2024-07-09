@@ -1,0 +1,12 @@
+# facd11e3d19ce68eeccba46ada7030f28fb54af1ef4c704e13bc07998cade4e0 Elan Beta 1 valid
+
+class Foo
+  constructor()
+
+  end constructor
+
+  function bar() return Int
+    return 0
+  end function
+
+end class

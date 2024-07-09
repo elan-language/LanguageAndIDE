@@ -5,11 +5,13 @@ import { MemberSelector } from "../frames/class-members/member-selector";
 import { Property } from "../frames/class-members/property";
 import { ExpressionField } from "../frames/fields/expression-field";
 import { IdentifierField } from "../frames/fields/identifier-field";
+import { FileImpl } from "../frames/file-impl";
 import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { MainFrame } from "../frames/globals/main-frame";
 import { Else } from "../frames/statements/else";
 import { IfStatement } from "../frames/statements/if-statement";
+import { StatementSelector } from "../frames/statements/statement-selector";
 import { ThenStatement } from "../frames/statements/then-statement";
 import { ParseStatus } from "../frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
@@ -33,6 +35,7 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
+import { GlobalSelector } from "../frames/globals/global-selector";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -293,8 +296,6 @@ suite("Editing Frames", () => {
     assert.equal(then.isSelected(), true);
   });
 
-  // new tests
-
   test("Paste at wrong level has no effect", async () => {
     // const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
     const file = await loadFileAsModel("single_var.elan");
@@ -311,5 +312,51 @@ suite("Editing Frames", () => {
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+  });
+
+  test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
+    const file = await loadFileAsModel("single_var.elan");
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+
+    const main = file.getById("main1") as MainFrame;
+    const var3 = file.getById("var3");
+    var3.select();
+    var3.processKey(ctrl_x());
+    let scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames()?.length, 1);
+    main.processKey(shift_enter());
+    let mainStatements = main.getChildren();
+    assert.equal(mainStatements.length, 1);
+    const mainSel = file.getById("select6") as StatementSelector;
+    const globalSelect = file.getChildren()[0];
+    assert.equal(globalSelect.getHtmlId(), "select7");
+    globalSelect.select(true, false);
+    globalSelect.processKey(ctrl_v());
+    const newFirst = file.getChildren()[0];
+    assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+    //Now paste back into main
+    mainSel.processKey(ctrl_v());
+    mainStatements = main.getChildren();
+    assert.equal(mainStatements.length, 1);
+    assert.equal(mainStatements[0].renderAsHtml(), var3.renderAsHtml());
+    scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames(), undefined);
+  });
+  test("#622 can't cut and paste a method to global level", async () => {
+    const file = await loadFileAsModel("testcode622.elan");
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+    const func11 = file.getById("func11");
+    func11.select();
+    func11.processKey(ctrl_x());
+    const scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames()?.length, 1);
+    const class1 = file.getById("class1");
+    class1.processKey(enter());
+    const sel20 = file.getById("select21") as GlobalSelector;
+    sel20.select(true, false);
+    sel20.processKey(ctrl_v());
+    assert.equal(scratchpad.readFrames()?.length, 1);
   });
 });
