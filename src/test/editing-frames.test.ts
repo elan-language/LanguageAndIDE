@@ -5,6 +5,7 @@ import { MemberSelector } from "../frames/class-members/member-selector";
 import { Property } from "../frames/class-members/property";
 import { ExpressionField } from "../frames/fields/expression-field";
 import { IdentifierField } from "../frames/fields/identifier-field";
+import { FileImpl } from "../frames/file-impl";
 import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { MainFrame } from "../frames/globals/main-frame";
@@ -33,7 +34,7 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
-import { FileImpl } from "../frames/file-impl";
+import { GlobalSelector } from "../frames/globals/global-selector";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -328,6 +329,7 @@ suite("Editing Frames", () => {
     const mainSel = file.getById("select6") as StatementSelector;
     const globalSelect = file.getChildren()[0];
     assert.equal(globalSelect.getHtmlId(), "select7");
+    globalSelect.select(true, false);
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
@@ -338,5 +340,21 @@ suite("Editing Frames", () => {
     assert.equal(mainStatements[0].renderAsHtml(), var3.renderAsHtml());
     scratchpad = (file as FileImpl).getScratchPad();
     assert.equal(scratchpad.readFrames(), undefined);
+  });
+  test("#622 can't cut and paste a method to global level", async () => {
+    const file = await loadFileAsModel("testcode622.elan");
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+    const func11 = file.getById("func11");
+    func11.select();
+    func11.processKey(ctrl_x());
+    const scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames()?.length, 1);
+    const class1 = file.getById("class1");
+    class1.processKey(enter());
+    const sel20 = file.getById("select21") as GlobalSelector;
+    sel20.select(true, false);
+    sel20.processKey(ctrl_v());
+    assert.equal(scratchpad.readFrames()?.length, 1);
   });
 });
