@@ -7,6 +7,7 @@ import { IdentifierField } from "../frames/fields/identifier-field";
 import { FileImpl } from "../frames/file-impl";
 import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
+import { GlobalSelector } from "../frames/globals/global-selector";
 import { MainFrame } from "../frames/globals/main-frame";
 import { Else } from "../frames/statements/else";
 import { IfStatement } from "../frames/statements/if-statement";
@@ -33,7 +34,6 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
-import { GlobalSelector } from "../frames/globals/global-selector";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -353,5 +353,18 @@ suite("Editing Frames", () => {
     sel20.select(true, false);
     sel20.processKey(ctrl_v());
     assert.equal(scratchpad.readFrames()?.length, 1);
+  });
+  test("#644 cutting statement when there is already a selector following", async () => {
+    const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+    const var3 = file.getById("var3");
+    var3.select();
+    var3.processKey(enter()); //To create selector following
+    const select6 = file.getById("select6");
+    var3.select();
+    var3.processKey(ctrl_x());
+    const main = file.getById("main1") as MainFrame;
+    assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
 });
