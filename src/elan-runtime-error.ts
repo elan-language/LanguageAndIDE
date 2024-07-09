@@ -1,6 +1,6 @@
 export class ElanRuntimeError extends Error {
-  constructor(msg: string) {
-    super(msg);
+  constructor(private readonly err: string | Error) {
+    super(err instanceof Error ? err.message : err);
   }
 
   useLine(token: string) {
@@ -13,15 +13,22 @@ export class ElanRuntimeError extends Error {
     );
   }
 
+  updateLine0(l0: string) {
+    if (l0.startsWith("RangeError")) {
+      return "Error: Stack Overflow";
+    }
+    return l0;
+  }
+
   get elanStack() {
-    const jsStack = this.stack;
+    const jsStack = this.err instanceof Error ? this.err.stack : this.stack;
     const elanStack: string[] = [];
 
     if (jsStack) {
       let lines = jsStack.split("\n").map((l) => l.trim());
 
       if (lines.length > 0) {
-        elanStack.push(lines[0]);
+        elanStack.push(this.updateLine0(lines[0]));
         lines = lines.slice(1);
 
         for (const l of lines) {
