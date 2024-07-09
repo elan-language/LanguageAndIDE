@@ -38,39 +38,6 @@ import { readFileSync, writeFileSync } from "fs";
 // flag to update test file
 const updateTestFiles = false;
 
-export async function assertEffectOfAction(
-  sourceFile: string,
-  action: (f: FileImpl) => void,
-  htmlFile: string,
-) {
-  const ws = vscode.workspace.workspaceFolders![0].uri;
-  const sourceUri = vscode.Uri.joinPath(ws, sourceFile);
-  const sourceDoc = await vscode.workspace.openTextDocument(sourceUri);
-  const htmlUri = vscode.Uri.joinPath(ws, htmlFile);
-  const htmlDoc = await vscode.workspace.openTextDocument(htmlUri);
-
-  const codeSource = new CodeSourceFromString(sourceDoc.getText());
-
-  const fl = new FileImpl(hash, new DefaultProfile(), transforms());
-  await fl.parseFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(fl.parseError);
-  }
-  action(fl);
-
-  const rendered = await fl.renderAsHtml();
-  const actualHtml = wrap(rendered).replaceAll("\r", "");
-  const expectedHtml = htmlDoc.getText().replaceAll("\r", "");
-  try {
-    assert.strictEqual(actualHtml, expectedHtml);
-  } catch (e) {
-    if (updateTestFiles) {
-      updateTestFile(htmlDoc, actualHtml);
-    }
-    throw e;
-  }
-}
-
 export async function assertEffectOfActionNew(
   sourceFile: string,
   action: (f: FileImpl) => void,

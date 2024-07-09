@@ -4,9 +4,8 @@ import {
   ExpandAll,
   SelectMainById,
   SelectStatementById,
-  T03_mainWithAllStatements,
 } from "./model-generating-functions.";
-import { assertEffectOfAction, assertGeneratesHtmlandSameSource } from "./testHelpers";
+import { assertEffectOfActionNew, assertGeneratesHtmlandSameSource } from "./testHelpers";
 
 suite("Parse source and generate Html", () => {
   vscode.window.showInformationMessage("Start all tests.");
@@ -42,32 +41,35 @@ suite("Parse source and generate Html", () => {
   });
 
   test("Test Select Main By Id", async () => {
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectMainById,
-      "T07_mainSelected.html",
+      `${__dirname}\\files\\T07_mainSelected.html`,
     );
   });
 
   test("Test Select Statement By Id", async () => {
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       SelectStatementById,
-      "T07_statementSelected.html",
+      `${__dirname}\\files\\T07_statementSelected.html`,
     );
   });
 
   //-------------------
   test("ExpandAll", async () => {
-    await assertEffectOfAction("T03_mainWithAllStatements.elan", ExpandAll, "T08_expandAll.html");
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
+      ExpandAll,
+      `${__dirname}\\files\\T08_expandAll.html`,
+    );
   });
 
   test("CollapseAll", async () => {
-    const ff = T03_mainWithAllStatements();
-    await assertEffectOfAction(
-      "T03_mainWithAllStatements.elan",
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\T03_mainWithAllStatements.elan`,
       CollapseAll,
-      "T08_collapseAll.html",
+      `${__dirname}\\files\\T08_collapseAll.html`,
     );
   });
 });
