@@ -535,7 +535,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not index: a"]);
+    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a"]);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -553,7 +553,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not index: a"]);
+    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a"]);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -654,7 +654,7 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not index: b"]);
+    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: b"]);
   });
 
   test("Fail_ParameterUnknownType", async () => {
@@ -857,6 +857,6 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not index: a"]);
+    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a", "May not set an indexed value in a function: a"]);
   });
 });

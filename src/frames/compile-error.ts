@@ -165,7 +165,12 @@ export class ReassignCompileError extends CompileError {
 
 export class IndexCompileError extends CompileError {
   constructor(thing: string, location: string) {
-    super(Priority.illegalOperation, `May not index: ${thing}`, location, false);
+    super(
+      Priority.illegalOperation,
+      `May not set an indexed value in a function: ${thing}`,
+      location,
+      false,
+    );
   }
 }
 

@@ -207,7 +207,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not index: lst"]);
+    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: lst"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
