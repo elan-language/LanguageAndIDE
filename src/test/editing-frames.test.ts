@@ -10,6 +10,7 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { MainFrame } from "../frames/globals/main-frame";
 import { Else } from "../frames/statements/else";
 import { IfStatement } from "../frames/statements/if-statement";
+import { StatementSelector } from "../frames/statements/statement-selector";
 import { ThenStatement } from "../frames/statements/then-statement";
 import { ParseStatus } from "../frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
@@ -32,6 +33,7 @@ import {
   shift_enter,
   up,
 } from "./testHelpers";
+import { FileImpl } from "../frames/file-impl";
 
 suite("Editing Frames", () => {
   vscode.window.showInformationMessage("Start all unit tests.");
@@ -292,8 +294,6 @@ suite("Editing Frames", () => {
     assert.equal(then.isSelected(), true);
   });
 
-  // new tests
-
   test("Paste at wrong level has no effect", async () => {
     const file = await loadFileAsModel("single_var.elan");
     const runner = await createTestRunner();
@@ -309,5 +309,34 @@ suite("Editing Frames", () => {
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+  });
+
+  test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
+    const file = await loadFileAsModel("single_var.elan");
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+
+    const main = file.getById("main1") as MainFrame;
+    const var3 = file.getById("var3");
+    var3.select();
+    var3.processKey(ctrl_x());
+    let scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames()?.length, 1);
+    main.processKey(shift_enter());
+    let mainStatements = main.getChildren();
+    assert.equal(mainStatements.length, 1);
+    const mainSel = file.getById("select6") as StatementSelector;
+    const globalSelect = file.getChildren()[0];
+    assert.equal(globalSelect.getHtmlId(), "select7");
+    globalSelect.processKey(ctrl_v());
+    const newFirst = file.getChildren()[0];
+    assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+    //Now paste back into main
+    mainSel.processKey(ctrl_v());
+    mainStatements = main.getChildren();
+    assert.equal(mainStatements.length, 1);
+    assert.equal(mainStatements[0].renderAsHtml(), var3.renderAsHtml());
+    scratchpad = (file as FileImpl).getScratchPad();
+    assert.equal(scratchpad.readFrames(), undefined);
   });
 });
