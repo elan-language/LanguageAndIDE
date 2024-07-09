@@ -11,7 +11,6 @@ export abstract class CompileError {
     public readonly locationId: string,
     public readonly unknownType: boolean,
   ) {
-    console.warn(this.toString());
   }
 
   //
