@@ -32,5 +32,5 @@
     "semi": "off",
     "@typescript-eslint/no-unused-vars" : "off"
   },
-  "ignorePatterns": ["out", "dist", "**/*.d.ts"]
+  "ignorePatterns": ["out", "dist", "**/*.d.ts", "**/*.html"]
 }
