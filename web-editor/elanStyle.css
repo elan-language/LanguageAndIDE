@@ -49,6 +49,7 @@ field text {
 field.selected text {
     border-style: solid;
     border-color: black;
+    position:relative; /* Ensures that the border is not overwritten by text fields in the line below */ 
 }
 method, method field.ok text {
     color: var(--method);
