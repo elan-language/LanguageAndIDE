@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -228,7 +228,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign x"]);
+    assertDoesNotCompileWithId(fileImpl, "let15", ["May not reassign x"]);
   });
 
   test("Fail_cannotAssign", async () => {
@@ -249,7 +249,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate x"]);
+    assertDoesNotCompileWithId(fileImpl, "set15", ["May not mutate x"]);
   });
 
   test("Fail_RecursiveDefinition", async () => {
@@ -269,10 +269,12 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "expr17", [
       "Incompatible types Unknown to Float or Int",
       "x is not defined",
     ]);
+
+    assertDoesNotCompileWithId(fileImpl, "func8", ["Incompatible types Unknown to Float or Int"]);
   });
 
   test("Fail_RecursiveDefinition1", async () => {
@@ -292,6 +294,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["y is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr17", ["y is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "func5", ["y is not defined"]);
   });
 });

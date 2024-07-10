@@ -63,9 +63,9 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     const ids = this.ids(transforms);
 
     for (const i of ids) {
-      mustNotBeKeyword(i, this.compileErrors, this.name.getHtmlId());
+      mustNotBeKeyword(i, this.compileErrors, this.htmlId);
       const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-      mustNotBeReassigned(symbol, this.compileErrors, this.name.getHtmlId());
+      mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
     }
 
     const vid = ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];

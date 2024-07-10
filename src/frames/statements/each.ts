@@ -57,7 +57,7 @@ ${this.indent()}end each`;
     const id = this.variable.getOrTransformAstNode(transforms)?.compile();
     const symbol = this.getParent().resolveSymbol(id!, transforms, this);
 
-    mustNotBeReassigned(symbol, this.compileErrors, this.variable.getHtmlId());
+    mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
 
     const iterType = this.iter.getOrTransformAstNode(transforms)?.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.htmlId);
