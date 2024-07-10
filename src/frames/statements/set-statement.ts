@@ -66,28 +66,23 @@ export class SetStatement extends AbstractFrame implements Statement {
       assignableAstNode,
       this.getParent(),
       this.compileErrors,
-      this.assignable.getHtmlId(),
+      this.htmlId,
     );
 
     mustNotIndexOnFunctionMethod(
       assignableAstNode,
       this.getParent(),
       this.compileErrors,
-      this.assignable.getHtmlId(),
+      this.htmlId,
     );
 
-    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.expr.getHtmlId());
-    mustNotBeParameter(
-      assignableAstNode,
-      this.getParent(),
-      this.compileErrors,
-      this.assignable.getHtmlId(),
-    );
-    mustNotBeConstant(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
-    mustNotBeCounter(assignableAstNode, this.compileErrors, this.assignable.getHtmlId());
+    mustBeCompatibleNode(assignableAstNode, exprAstNode, this.compileErrors, this.htmlId);
+    mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.htmlId);
+    mustNotBeConstant(assignableAstNode, this.compileErrors, this.htmlId);
+    mustNotBeCounter(assignableAstNode, this.compileErrors, this.htmlId);
 
     const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
-    mustNotBeLet(symbol, this.compileErrors, this.assignable.getHtmlId());
+    mustNotBeLet(symbol, this.compileErrors, this.htmlId);
 
     const assignable = this.assignable.getOrTransformAstNode(transforms);
 
