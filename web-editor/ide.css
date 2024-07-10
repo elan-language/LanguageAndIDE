@@ -154,7 +154,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus, #help
     background-color: var(--idePanelBackground);
     border: none;
     outline:none;
-    height: 20px;
+    height: 22px;
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
     padding-top: 0px;
