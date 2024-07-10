@@ -8,6 +8,8 @@ import { runTests } from "../../runner";
 import { transform, transformMany } from "../../frames/syntax-nodes/ast-visitor";
 import { Transforms } from "../../frames/syntax-nodes/transforms";
 import { AssertOutcome } from "../../system";
+import { Frame } from "../../frames/interfaces/frame";
+import { Field } from "../../frames/interfaces/field";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error");
@@ -41,6 +43,20 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   file.compile();
 
   const errors = file.aggregateCompileErrors();
+
+  for (let i = 0; i < msgs.length; i++) {
+    const m = msgs[i];
+    const e = errors[i];
+    const id = e.locationId; // to help test migration
+    assert.strictEqual(e.message, m);
+  }
+}
+
+export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: string[]) {
+  file.compile();
+
+  const hasErrors = file.getById(id) as Frame | Field;
+  const errors = hasErrors.compileErrors;
 
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
