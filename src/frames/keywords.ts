@@ -9,6 +9,7 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
+export const copyKeyword = "copy";
 export const defaultKeyword = "default";
 export const eachKeyword = "each";
 export const elseKeyword = "else";
@@ -76,6 +77,7 @@ export const allKeywords = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
+  copyKeyword,
   defaultKeyword,
   eachKeyword,
   elseKeyword,
