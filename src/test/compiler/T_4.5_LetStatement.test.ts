@@ -12,17 +12,25 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T_4.5_LetStatement", () => {
-  ignore_test("Pass_normal", async () => {
+  test("Pass_normal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
+  print add()
+end main
+
+function add() return Int
   let x be 3
   let y be x + 3
-  print x + y
-end main`;
+  return x + y
+end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
+  system.printLine(_stdlib.asString(add()));
+}
+
+function add() {
   var x = (() => {
     var _cache;
     return () => _cache ??= 3;
@@ -31,7 +39,7 @@ async function main() {
     var _cache;
     return () => _cache ??= x() + 3;
   })();
-  system.printLine(_stdlib.asString(x() + y()));
+  return x() + y();
 }
 return [main, _tests];}`;
 
@@ -44,12 +52,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
-  ignore_test("Pass_proveCached", async () => {
+  test("Pass_proveCached", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  let x be new Foo()
-  let y be x
+  var z set to foo1()
+  var x set to z.first()
+  var y set to z.second()
   call y.setP1(10)
   print x.p1
   print y.p1
@@ -65,21 +74,21 @@ class Foo
     set p1 to i
   end procedure
 end class
-`;
+
+function foo1() return (Foo, Foo) 
+  let x be new Foo()
+  let y be x
+  return (x, y)
+end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = (() => {
-    var _cache;
-    return () => _cache ??= system.initialise(new Foo());
-  })();
-  var y = (() => {
-    var _cache;
-    return () => _cache ??= x();
-  })();
-  await y().setP1(10);
-  system.printLine(_stdlib.asString(x().p1));
-  system.printLine(_stdlib.asString(y().p1));
+  var z = foo1();
+  var x = _stdlib.first(z);
+  var y = _stdlib.second(z);
+  await y.setP1(10);
+  system.printLine(_stdlib.asString(x.p1));
+  system.printLine(_stdlib.asString(y.p1));
 }
 
 class Foo {
@@ -94,6 +103,18 @@ class Foo {
     this.p1 = i;
   }
 
+}
+
+function foo1() {
+  var x = (() => {
+    var _cache;
+    return () => _cache ??= system.initialise(new Foo());
+  })();
+  var y = (() => {
+    var _cache;
+    return () => _cache ??= x();
+  })();
+  return system.tuple([x(), y()]);
 }
 return [main, _tests];}`;
 
