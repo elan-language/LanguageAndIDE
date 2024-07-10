@@ -47,7 +47,7 @@ ${endKeyword} ${functionKeyword}\r
     const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
     const rst = returnStatement.symbolType();
 
-    mustBeCompatibleType(rt, rst, this.compileErrors, returnStatement!.fieldId);
+    mustBeCompatibleType(rt, rst, this.compileErrors, this.htmlId);
 
     return `function ${super.compile(transforms)}\r
 }

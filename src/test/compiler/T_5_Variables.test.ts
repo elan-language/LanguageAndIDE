@@ -1,8 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
-import { MainFrame } from "../../frames/globals/main-frame";
 import {
-  assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -31,7 +30,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -58,7 +56,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[1];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -83,7 +80,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -136,7 +132,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -284,7 +279,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const varDef = (fileImpl.getChildNumber(0) as MainFrame).getChildren()[0];
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -356,7 +350,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign a"]);
+    assertDoesNotCompileWithId(fileImpl, "var6", ["May not reassign a"]);
   });
 
   test("Fail_GlobalVariable", async () => {
@@ -385,7 +379,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Float to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", ["Incompatible types Float to String"]);
   });
 
   test("Fail_NotInitialized", async () => {
@@ -439,7 +433,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompileWithId(fileImpl, "var3", [
+      "'if' is a keyword, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
@@ -453,7 +449,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "var3", [
       "'break' is a reserved word, and may not be used as an identifier",
     ]);
   });
@@ -479,12 +475,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Float to Boolean",
-      "Incompatible types Boolean to Int",
-      "Incompatible types ImmutableList to String",
-      "Incompatible types Float to Int",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "set22", ["Incompatible types Float to Boolean"]);
+    assertDoesNotCompileWithId(fileImpl, "set25", ["Incompatible types Boolean to Int"]);
+    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types ImmutableList to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set31", ["Incompatible types Float to Int"]);
   });
 
   test("Fail_TypeCheck2", async () => {
@@ -503,9 +497,15 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "set12", [
       "Incompatible types ImmutableList to ArrayList",
+    ]);
+
+    assertDoesNotCompileWithId(fileImpl, "set15", [
       "Incompatible types ArrayList to ImmutableList",
+    ]);
+
+    assertDoesNotCompileWithId(fileImpl, "set18", [
       "Incompatible types ImmutableList to Dictionary",
     ]);
   });
@@ -521,7 +521,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "expr5", [
       "Incompatible types Unknown to Float or Int",
       "x is not defined",
     ]);
@@ -540,7 +540,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call extension method directly"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["Cannot call extension method directly"]);
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
@@ -556,6 +556,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["x is not defined"]);
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["x is not defined", "Cannot call Unknown"]);
   });
 });

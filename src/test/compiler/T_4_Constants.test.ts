@@ -1,7 +1,6 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -407,7 +406,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not mutate constant"]);
+    assertDoesNotCompileWithId(fileImpl, "set6", ["May not mutate constant"]);
   });
 
   test("Fail_expression", async () => {
@@ -470,7 +469,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'if' is a keyword, and may not be used as an identifier"]);
+    assertDoesNotCompileWithId(fileImpl, "ident2", [
+      "'if' is a keyword, and may not be used as an identifier",
+    ]);
   });
 
   test("Fail_UseOfReservedAsName", async () => {
@@ -487,7 +488,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "ident2", [
       "'break' is a reserved word, and may not be used as an identifier",
     ]);
   });
@@ -507,6 +508,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
+    assertDoesNotCompileWithId(fileImpl, "const1", ["Name a not unique in scope"]);
   });
 });
