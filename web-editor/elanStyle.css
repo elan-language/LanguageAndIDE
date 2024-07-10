@@ -108,6 +108,10 @@ header, constant, main, procedure, function, enum, classDef, constructor, proper
     padding-bottom: 1ch;
 }
 
+global:has(comment) {
+    padding-bottom: 0;
+}
+
 /* Frame selection */
 .selected > * , .selected > clause *{
     border-left-color: var(--selection);
