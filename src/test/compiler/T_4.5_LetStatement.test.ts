@@ -6,7 +6,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -127,17 +126,25 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1010");
   });
 
-  ignore_test("Pass_proveLazilyEvaluated", async () => {
+  test("Pass_proveLazilyEvaluated", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
+  print lazy()
+end main
+
+function lazy() return Int
   let x be  1 / 0
   let y be 4
-  print y
-end main`;
+  return y
+end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
+  system.printLine(_stdlib.asString(lazy()));
+}
+
+function lazy() {
   var x = (() => {
     var _cache;
     return () => _cache ??= 1 / 0;
@@ -146,7 +153,7 @@ async function main() {
     var _cache;
     return () => _cache ??= 4;
   })();
-  system.printLine(_stdlib.asString(y()));
+  return y();
 }
 return [main, _tests];}`;
 
@@ -159,7 +166,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4"); //i.e. does not generate a division by zero error from the first let (are we testing that it DOES for a var/set!)
   });
 
-  ignore_test("Pass_IdShadowsFunction", async () => {
+  test("Pass_IdShadowsFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -203,14 +210,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Fail_cannotRedefine ", async () => {
+  test("Fail_cannotRedefine ", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
+  print foo()
+end main
+
+function foo() return Int
   let x be 3
   let x be 4
-  print x + y
-end main`;
+  return x
+end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -220,14 +231,18 @@ end main`;
     assertDoesNotCompile(fileImpl, ["May not reassign x"]);
   });
 
-  ignore_test("Fail_cannotAssign", async () => {
+  test("Fail_cannotAssign", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
+  print foo()
+end main
+
+function foo() return Int
   let x be 3
   set x to 4
-  print x + y
-end main`;
+  return x
+end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -237,13 +252,18 @@ end main`;
     assertDoesNotCompile(fileImpl, ["May not mutate x"]);
   });
 
-  ignore_test("Fail_RecursiveDefinition", async () => {
+  test("Fail_RecursiveDefinition", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  let x be x + 1
+  var x set to foo()
   print x
-end main`;
+end main
+
+function foo() return Int
+  let x be x + 1
+  return x
+end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -255,14 +275,18 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_RecursiveDefinition1", async () => {
+  test("Fail_RecursiveDefinition1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
+  print foo()
+end main
+
+function foo() return Int
   var x set to 1
   let y be x.y
-  print y
-end main`;
+  return y
+end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
