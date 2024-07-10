@@ -1,4 +1,4 @@
-# 11c940fdf48a070bec6b720a370b0badf2f65b47d06eceb1dd754ca3a8e7ab92 Elan Beta 1 valid
+# fb4275e0ef841c3da4768c5e194f4421e9e65ffcbfc85e3a7d0aa88ee95f9848 Elan Beta 1 valid
 
 main
   var board set to new Board(40, 30)
@@ -91,8 +91,8 @@ class Apple
 
   procedure newRandomPosition(snake as Snake)
     repeat
-      let ranX be randomInt(0, board.width - 1)
-      let ranY be randomInt(0, board.height - 1)
+      var ranX set to randomInt(0, board.width - 1)
+      var ranY set to randomInt(0, board.height - 1)
       set location to new Square(ranX, ranY)
     end repeat when not snake.bodyCovers(location)
   end procedure

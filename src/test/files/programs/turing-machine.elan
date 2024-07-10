@@ -1,8 +1,8 @@
-# d85fedd1f0566900aa592bc43b9e02b41cbbab28d9a9a93302df2d48105910f8 Elan Beta 1 valid
+# a1a8143ac967d7c716cfc0998123f9fd334c4dafebbebbd9443d96f3cc2707a6 Elan Beta 1 valid
 
 main
   # Minimal example - 1 rule, writes * onto empty tape and halts
-  let tm be new TuringMachine("init", "halt")
+  var tm set to new TuringMachine("init", "halt")
   call tm.add(new Rule("init", " ", "halt", "*", Dir.right))
   call tm.runToEnd()
   print tm.tape

@@ -1,7 +1,7 @@
-# 8cf88117132cf80fd4b3150c8c9fedd3ef7c2cf5d13b8969ee670cc8faf5b6be Elan Beta 1 valid
+# 2b1f8c095bab0338628f30b910143738212bff8310eb1479823b83c45f9249af Elan Beta 1 valid
 
 main
-  let r be new Rule("a", "b", "c", "d", Dir.left)
+  var r set to new Rule("a", "b", "c", "d", Dir.left)
   print r
 end main
 
