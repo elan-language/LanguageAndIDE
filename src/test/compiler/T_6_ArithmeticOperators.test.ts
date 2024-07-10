@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -300,10 +300,10 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types Boolean to Float or Int",
-      "Incompatible types Boolean to Float or Int",
-      "Incompatible types Foo to Float or Int",
-    ]);
+    assertDoesNotCompileWithId(fileImpl, "expr5", ["Incompatible types Boolean to Float or Int"]);
+
+    assertDoesNotCompileWithId(fileImpl, "expr8", ["Incompatible types Boolean to Float or Int"]);
+
+    assertDoesNotCompileWithId(fileImpl, "expr11", ["Incompatible types Foo to Float or Int"]);
   });
 });
