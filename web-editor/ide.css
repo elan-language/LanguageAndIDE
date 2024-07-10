@@ -209,3 +209,18 @@ button#expand-collapse {
   color: white;
   background-color: var(--help);
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: white
+}
+
