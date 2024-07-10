@@ -473,22 +473,6 @@ export const stubField = {
   },
 } as Field;
 
-export function testAST(
-  node: ParseNode,
-  field: Field,
-  text: string,
-  astAsString: string,
-  st: SymbolType,
-) {
-  node.parseText(text);
-  if (node.status === ParseStatus.valid) {
-    const ast = transform(node, "", field.getHolder() as Scope);
-
-    assert.strictEqual(ast?.toString(), astAsString);
-    assert.strictEqual(ast.symbolType()?.name, st.name, text);
-  }
-}
-
 export async function createTestRunner() {
   const system = getTestSystem("");
   const stdlib = new StdLib(system);
