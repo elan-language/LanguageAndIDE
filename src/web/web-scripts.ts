@@ -397,6 +397,7 @@ const clearConsoleButton = document.getElementById("clear-console");
 const clearGraphicsButton = document.getElementById("clear-graphics");
 const expandCollapseButton = document.getElementById("expand-collapse");
 const newButton = document.getElementById("new");
+const demosButton = document.getElementById("demos");
 
 runButton?.addEventListener("click", () => {
   try {
@@ -467,9 +468,9 @@ function handleUpload(event: Event) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
+    const fileName = elanFile.name;
     document.body.style.cursor = "wait";
     elanInputOutput.clearConsole();
-    const fileName = elanFile.name;
     const reader = new FileReader();
     reader.addEventListener("load", (event: any) => {
       const rawCode = event.target.result;
@@ -520,5 +521,24 @@ function handleDownload(event: Event) {
     (download as HTMLButtonElement).classList.remove("unsaved");
     event.preventDefault();
     renderAsHtml();
+  });
+}
+
+const demoFiles = document.getElementsByClassName("demo-file");
+
+for (const elem of demoFiles) {
+  elem.addEventListener("click", () => {
+    const fileName = `demos/${elem.id}`;
+    return fetch(fileName, { mode: "same-origin" })
+      .then((f) => f.text())
+      .then((rawCode) => {
+        const code = new CodeSourceFromString(rawCode);
+        file = new FileImpl(hash, profile, transforms());
+        file.fileName = fileName;
+        file.parseFrom(code).then(
+          () => initialDisplay(),
+          (e) => showError(e, fileName, true),
+        );
+      });
   });
 }
