@@ -131,7 +131,7 @@ button:disabled {
   opacity: 0.5;
 } 
 
-button.icon, button.icon img {
+button.icon, button.icon img{
   padding: 0px;
   border: 2px;
   border-style: solid;
@@ -142,7 +142,7 @@ button.icon img {
   height: 40px;
 }
 
-button.icon {
+button.icon, #help {
   height: 47px;
 }
 
@@ -150,7 +150,7 @@ button.icon:hover, button.icon:active, button.icon:focus {
   border-color: white;
 }
 
-button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
+button.plain, button.plain:hover, button.plain:active, button.plain:focus, #help  {
     background-color: var(--idePanelBackground);
     border: none;
     outline:none;
@@ -160,10 +160,13 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     padding-top: 0px;
     padding-bottom: 0px;
     margin-top: 0px;
-    width: 50px;
+    text-decoration: none;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: black; /* To prevent the help a-link being coloured mauve when visited*/
 }
 
-button.plain:hover, button.plain:active {
+button.plain:hover, button.plain:active, #help:hover {
     background-color: lightblue;
 }
 
