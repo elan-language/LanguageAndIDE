@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from "assert";
+import { readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
 import { CodeSourceFromString } from "../frames/code-source";
 import { DefaultProfile } from "../frames/default-profile";
@@ -31,7 +32,6 @@ import { StdLib } from "../std-lib";
 import { hash } from "../util";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
-import { readFileSync, writeFileSync } from "fs";
 
 // flag to update test file
 const updateTestFiles = false;

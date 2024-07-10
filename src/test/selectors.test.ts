@@ -5,6 +5,7 @@ import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
 import { ClassFrame } from "../frames/globals/class-frame";
 import { GlobalFunction } from "../frames/globals/global-function";
+import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { GlobalSelector } from "../frames/globals/global-selector";
 import { MainFrame } from "../frames/globals/main-frame";
 import { TestFrame } from "../frames/globals/test-frame";
@@ -125,7 +126,7 @@ suite("Unit tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if print repeat set switch throw try var while #");
     s.processKey(key("s"));
     help = s.getCompletion();
     assert.equal(help, " set switch");
@@ -141,6 +142,14 @@ suite("Unit tests", () => {
     const s = new StatementSelector(func);
     const help = s.getCompletion();
     assert.equal(help, " each for if let repeat set switch throw try var while #");
+  });
+
+  test("Selection Context - in a Procedire", () => {
+    const fl = new FileImpl(hash, new DefaultProfile(), transforms());
+    const proc = new GlobalProcedure(fl);
+    const s = new StatementSelector(proc);
+    const help = s.getCompletion();
+    assert.equal(help, " call each for if print repeat set switch throw try var while #");
   });
 
   test("Selection Context - in a Test", () => {
