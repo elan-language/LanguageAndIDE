@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -300,21 +301,6 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Dictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
-
-constant a set to ["a":1]
-main
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Pass_ListofList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -342,6 +328,21 @@ return [main, _tests];}`;
       fileImpl,
       "ImmutableList {ImmutableList {4, 5}, ImmutableList {6, 7, 8}}",
     );
+  });
+
+  test("Fail_Dictionary", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+constant a set to ["a":1]
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_useInsideMain", async () => {
@@ -449,9 +450,6 @@ return [main, _tests];}`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    //const symbols not yet implemented
-    //const varConst = fileImpl.getChildFloat(0);
-    //assertIsSymbol(varConst, "a", "Int");
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);

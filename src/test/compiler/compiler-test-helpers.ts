@@ -56,7 +56,7 @@ export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: str
   file.compile();
 
   const hasErrors = file.getById(id) as Frame | Field;
-  const errors = hasErrors.compileErrors;
+  const errors = hasErrors.aggregateCompileErrors();
 
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];

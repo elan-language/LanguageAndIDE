@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
-  assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -76,7 +76,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types String to Int"]);
   });
 
   test("Fail_IndexWrongType2", async () => {
@@ -92,7 +92,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types Int to String"]);
   });
 
   test("Fail_IndexWrongType3", async () => {
@@ -108,7 +108,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
+    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types Int to String"]);
   });
 
   test("Fail_IndexWrongType4", async () => {
@@ -124,6 +124,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
+    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types String to Int"]);
   });
 });

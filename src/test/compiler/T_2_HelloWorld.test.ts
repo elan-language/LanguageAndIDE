@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -355,7 +356,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "print3", [
       "Cannot print a function. To print the result of evaluating a function, add brackets after function name.",
     ]);
   });
@@ -377,7 +378,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
+    assertDoesNotCompileWithId(fileImpl, "print3", [
       "Cannot print a function. To print the result of evaluating a function, add brackets after function name.",
     ]);
   });
