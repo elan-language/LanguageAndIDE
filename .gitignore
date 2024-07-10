@@ -14,3 +14,5 @@ node_modules
 .vscode-test/
 .elanCompiler/
 .elanLanguageServer/
+coverage
+.nyc_output

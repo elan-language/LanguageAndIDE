@@ -21,6 +21,7 @@
     "pretest": "npm run test-compile && cpr ./src/test/files ./out/test/files -o",
     "lint": "eslint src --ext ts",
     "test": "mocha out/test/**/*.test.js",
+    "test-coverage": "nyc  --reporter=lcov mocha out/test/**/*.test.js",
     "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\""
   },
   "dependencies": {
@@ -37,8 +38,9 @@
     "eslint": "^8.56.0",
     "jsdom": "^24.1.0",
     "mocha": "^10.6.0",
+    "nyc": "^17.0.0",
     "prettier": "^3.3.2",
-    "typescript": "^5.5.3",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.5.3"
   }
 }

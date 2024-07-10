@@ -10,8 +10,7 @@ export abstract class CompileError {
     public readonly message: string,
     public readonly locationId: string,
     public readonly unknownType: boolean,
-  ) {
-  }
+  ) {}
 
   //
   public get priority() {
