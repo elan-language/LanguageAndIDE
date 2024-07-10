@@ -21,7 +21,7 @@
     "pretest": "npm run test-compile && cpr ./src/test/files ./out/test/files -o",
     "lint": "eslint src --ext ts",
     "test": "mocha out/test/**/*.test.js",
-    "test-coverage": "nyc  --reporter=lcov mocha out/test/**/*.test.js",
+    "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\""
   },
   "dependencies": {
