@@ -224,3 +224,17 @@ button#expand-collapse {
   background-color: white
 }
 
+.demo-file {
+  font-family: var(--ideTitleFont);
+}
+
+.demo-file:hover, demo-file:active {
+  background-color: var(--ideDefaultBackground);
+  color: white;
+}
+
+.dropdown-content {
+  border: black 1px solid;
+  width: 282px;  /* width of button bar */
+}
+
