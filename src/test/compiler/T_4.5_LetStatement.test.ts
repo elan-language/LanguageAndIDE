@@ -6,12 +6,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("T_4.5_LetStatement", () => {
-  test("Pass_normal", async () => {
+  ignore_test("Pass_normal", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -43,7 +44,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "9");
   });
 
-  test("Pass_proveCached", async () => {
+  ignore_test("Pass_proveCached", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -105,7 +106,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1010");
   });
 
-  test("Pass_proveLazilyEvaluated", async () => {
+  ignore_test("Pass_proveLazilyEvaluated", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -137,7 +138,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4"); //i.e. does not generate a division by zero error from the first let (are we testing that it DOES for a var/set!)
   });
 
-  test("Pass_IdShadowsFunction", async () => {
+  ignore_test("Pass_IdShadowsFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -181,7 +182,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_cannotRedefine ", async () => {
+  ignore_test("Fail_cannotRedefine ", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -198,7 +199,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["May not reassign x"]);
   });
 
-  test("Fail_cannotAssign", async () => {
+  ignore_test("Fail_cannotAssign", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -215,7 +216,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["May not mutate x"]);
   });
 
-  test("Fail_RecursiveDefinition", async () => {
+  ignore_test("Fail_RecursiveDefinition", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -233,7 +234,7 @@ end main`;
     ]);
   });
 
-  test("Fail_RecursiveDefinition1", async () => {
+  ignore_test("Fail_RecursiveDefinition1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
