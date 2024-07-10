@@ -1,7 +1,5 @@
-# ec706c4d28e67de2a8031aed661cf55629d05ac9cf63c06972956531f15cb116 Elan Beta 1 valid
+# 6cb81632df62847389a9934e00e938cb55d98c67454161c91c253b2f103140f7 Elan Beta 1 valid
 
-# Run the program and use the standard W,A,S,D keys to change Snake direction
-# Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var gr set to new Graphics()
   var head set to [20, 15]

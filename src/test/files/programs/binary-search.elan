@@ -1,10 +1,10 @@
-# 4dc3e1751ca0d3abd145c26316f102ab5d38c54b87ff4a04ac6f31cc2aecc556 Elan Beta 1 valid
+# 0a84f5011bc43d08f4a3fa1ca3805f79757e9d4a71e21975337125f261f39613 Elan Beta 1 valid
 
 main
   var fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pinapple", "plumb", "raspberry", "strawberry", "watermelon"]
   var exit set to false
   while not exit
-    var wanted set to inputString("What type of fruit do you want ('x' to exit)?")
+    var wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x"
       then
         var result set to binarySearch(fruit, wanted)
