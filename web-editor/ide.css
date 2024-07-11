@@ -48,12 +48,6 @@ body {
   margin-left: 10px;
   position: relative;
 }
-
-#logo {
-  grid-row: 1/4;
-  grid-column: 44 / 48;
-  width: 100%;
-}
   #console {
     grid-column: 27 / 48;
     grid-row: 6/17;
@@ -126,6 +120,20 @@ body {
     background-color: var(--ideDefaultBackground);
   }
 
+  #help {
+    grid-row: 3;
+    grid-column: 44;
+    font-family: var(--ideTitleFont);
+    font-size: var(--ideTitleSize);
+    color: white;
+  }
+
+  #logo {
+    grid-row: 1/4;
+    grid-column: 44 / 48;
+    width: 100%;
+  }
+
 /* Buttons */
 button:disabled {
   opacity: 0.5;
@@ -136,21 +144,18 @@ button.icon, button.icon img{
   border: 2px;
   border-style: solid;
   border-color: var(--ideDefaultBackground);
+  background-color: var(--ideDefaultBackground);
 }
 
 button.icon img {
   height: 40px;
 }
 
-button.icon, #help {
-  height: 47px;
-}
-
-button.icon:hover, button.icon:active, button.icon:focus {
+button.icon img:hover, button.icon:active, button.icon:focus {
   border-color: white;
 }
 
-button.plain, button.plain:hover, button.plain:active, button.plain:focus, #help  {
+button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     background-color: var(--idePanelBackground);
     border: none;
     outline:none;
@@ -158,11 +163,11 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus, #help
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
     padding-top: 0px;
-    padding-bottom: 0px;
     margin-top: 0px;
+    margin-bottom: 5px;
     text-decoration: none;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     color: black; /* To prevent the help a-link being coloured mauve when visited*/
 }
 
