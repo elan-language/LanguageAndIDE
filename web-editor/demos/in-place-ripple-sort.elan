@@ -1,0 +1,50 @@
+# 499dab6927b19c2eaaace728af0cb910584dedbb1114558525263bca420ce3a9 Elan Beta 1 valid
+
+main
+  var li set to [3, 6, 1, 0, 99, 4, 67]
+  call inPlaceRippleSort(li)
+  print li
+end main
+
+procedure inPlaceRippleSort(list as [Int])
+  var changes set to true
+  var lastComp set to list.length() - 2
+  repeat
+    set changes to false
+    for i from 0 to lastComp step 1
+      if list[i] > list[i + 1]
+        then
+          var temp set to list[i]
+          set list[i] to list[i + 1]
+          set list[i + 1] to temp
+          set changes to true
+      end if
+    end for
+    set lastComp to lastComp - 1
+  end repeat when not changes
+end procedure
+
+test 
+  var emptyList set to empty [Int]
+  var li1 set to empty [Int]
+  call inPlaceRippleSort(li1)
+  assert li1 is emptyList
+  var li2 set to [1]
+  call inPlaceRippleSort(li2)
+  assert li2 is [1]
+  var li3 set to [2, 1]
+  call inPlaceRippleSort(li3)
+  assert li3 is [1, 2]
+  var li4 set to [1, 2, 3]
+  call inPlaceRippleSort(li4)
+  assert li4 is [1, 2, 3]
+  var li5 set to [3, 1, 2]
+  call inPlaceRippleSort(li5)
+  assert li5 is [1, 2, 3]
+  var li6 set to [3, 2, 1]
+  call inPlaceRippleSort(li6)
+  assert li6 is [1, 2, 3]
+  var li7 set to [3, 3, 0]
+  call inPlaceRippleSort(li7)
+  assert li7 is [0, 3, 3]
+end test

@@ -1,0 +1,33 @@
+# c64c150f7e7607ce7e16010fe3880fcfec50bfbfbd5b2207ddeda234d0d9bf5b Elan Beta 1 valid
+
+main
+  var li set to [3, 6, 1, 0, 99, 4, 67]
+  call rippleSort(li)
+  print li
+  var a set to average(li)
+  print "Average: {round(a, 2)}"
+end main
+
+procedure rippleSort(list as [Int])
+  var changes set to true
+  repeat
+    set changes to false
+    for i from 0 to list.length() - 2 step 1
+      if list[i] > list[i + 1]
+        then
+          var temp set to list[i]
+          set list[i] to list[i + 1]
+          set list[i + 1] to temp
+          set changes to true
+      end if
+    end for
+  end repeat when not changes
+end procedure
+
+function average(list as [Int]) return Float
+  var sum set to 0
+  each n in list
+    set sum to sum + n
+  end each
+  return sum/list.length()
+end function
