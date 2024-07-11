@@ -3,7 +3,7 @@ code {
 }
 
 * {
-    font-family: consolas;
+    font-family: consolas, monospace;
     font-size: 11pt;
 }
 .elan-code, #console {
