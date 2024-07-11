@@ -169,13 +169,13 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var a set to inputStringFromOptions("aprompt", {"y", "n"})
+  var a set to inputStringFromOptions("aprompt", ["y", "n"])
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = await _stdlib.inputStringFromOptions("aprompt", system.immutableList(["y", "n"]));
+  var a = await _stdlib.inputStringFromOptions("aprompt", system.literalArray(["y", "n"]));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

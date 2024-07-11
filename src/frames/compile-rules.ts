@@ -1,5 +1,8 @@
 import { Property } from "./class-members/property";
 import {
+  CannotCallAFunction,
+  CannotUseLikeAFunction,
+  CannotUseSystemMethodInAFunction,
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
@@ -9,7 +12,6 @@ import {
   MustBeImmutableCompileError,
   MustImplementCompileError,
   MutateCompileError,
-  NotCallableCompileError,
   NotIndexableCompileError,
   NotIterableCompileError,
   NotNewableCompileError,
@@ -158,12 +160,7 @@ export function mustBeProcedure(
 ) {
   if (!(symbolType instanceof ProcedureType)) {
     compileErrors.push(
-      new NotCallableCompileError(
-        symbolType.toString(),
-        location,
-        false,
-        symbolType instanceof UnknownType,
-      ),
+      new CannotCallAFunction(symbolType.toString(), location, symbolType instanceof UnknownType),
     );
   }
 }
@@ -203,25 +200,21 @@ export function mustBePureFunctionSymbol(
     if (!(symbolType instanceof FunctionType) || !symbolType.isPure) {
       const imPure = symbolType instanceof FunctionType && !symbolType.isPure;
       compileErrors.push(
-        new NotCallableCompileError(
+        new CannotUseSystemMethodInAFunction(
           symbolType.toString(),
           location,
-          imPure,
           symbolType instanceof UnknownType,
         ),
       );
     }
-  } else {
-    if (!(symbolType instanceof FunctionType)) {
-      compileErrors.push(
-        new NotCallableCompileError(
-          symbolType.toString(),
-          location,
-          false,
-          symbolType instanceof UnknownType,
-        ),
-      );
-    }
+  } else if (!(symbolType instanceof FunctionType)) {
+    compileErrors.push(
+      new CannotUseLikeAFunction(
+        symbolType.toString(),
+        location,
+        symbolType instanceof UnknownType,
+      ),
+    );
   }
 }
 

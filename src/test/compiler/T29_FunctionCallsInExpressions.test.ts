@@ -211,7 +211,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Function"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure"]);
   });
 
   test("Fail_UnconsumedExpressionResult2", async () => {
@@ -239,6 +239,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Function"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure"]);
   });
 });

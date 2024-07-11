@@ -96,7 +96,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call Function"]);
+    assertDoesNotCompile(fileImpl, ["Cannot call a function as a procedure"]);
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
@@ -137,6 +137,6 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot call impure Function"]);
+    assertDoesNotCompile(fileImpl, ["Cannot use a system method in a function"]);
   });
 });

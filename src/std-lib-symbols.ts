@@ -1043,7 +1043,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "inputStringFromOptions",
         new FunctionType(
-          [StringType.Instance, new ImmutableListType(StringType.Instance)],
+          [StringType.Instance, new ArrayListType(StringType.Instance)],
           StringType.Instance,
           false,
           false,
