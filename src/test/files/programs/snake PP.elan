@@ -1,14 +1,12 @@
-# ec706c4d28e67de2a8031aed661cf55629d05ac9cf63c06972956531f15cb116 Elan Beta 1 valid
+# 01c96398b08ab0beec54ab4040725e5605f0c2c1d671c0a2dcb754bf8aa838ec Elan Beta 1 valid
 
-# Run the program and use the standard W,A,S,D keys to change Snake direction
-# Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var gr set to new Graphics()
   var head set to [20, 15]
   var tail set to head
   var body set to [head]
   var apple set to [0, 0]
-  call randomNewApplePosition(apple, body)
+  call setAppleToNewPosition(apple, body)
   var currentDirection set to "right"
   var gameOn set to true
   while gameOn
@@ -17,28 +15,28 @@ main
     var k set to gr.getKeystroke()
     if k isnt ""
       then
-        set currentDirection to directionbyKey(k)
+        set currentDirection to directionByKey(k)
     end if
     set tail to body[0]
     call body.add(head)
     set head to getAdjacentSquare(head, currentDirection)
-    call checkForEatenApple(head, body, apple)
+    call eatAppleifPoss(head, body, apple)
     set gameOn to not hasHitEdge(head) and not overlaps(body, head)
     call pause(150)
   end while
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure checkForEatenApple(head as [Int], body as [[Int]], apple as [Int])
+procedure eatAppleifPoss(head as [Int], body as [[Int]], apple as [Int])
   if head is apple
     then
-      call randomNewApplePosition(apple, body)
+      call setAppleToNewPosition(apple, body)
     else
       call body.removeAt(0)
   end if
 end procedure
 
-procedure randomNewApplePosition(apple as [Int], body as [[Int]])
+procedure setAppleToNewPosition(apple as [Int], body as [[Int]])
   repeat
     set apple[0] to randomInt(0, 39)
     set apple[1] to randomInt(0, 29)
@@ -89,7 +87,7 @@ function overlaps(body as [[Int]], sq as [Int]) return Boolean
   return result
 end function
 
-function directionbyKey(key as String) return String
+function directionByKey(key as String) return String
   var dir set to ""
   switch key
     case "w"
