@@ -1,4 +1,4 @@
-# 08ca82eb2d770f2b431f729ccfc8c2c6161f2e9179d5cb888b4f4d9b95bf1227 Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 main
   var d set to new Person("Dan", 16)
