@@ -125,7 +125,11 @@ body {
     grid-column: 44;
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
-    color: white;
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
   #logo {
