@@ -653,10 +653,10 @@ export class StdLib {
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsInt(s);
 
-      if (b) {
+      if (b && i.toString() === s) {
         return i;
       } else {
-        this.system.printLine("not an Int");
+        this.system.printLine("must be an integer");
       }
 
       return this.inputInt(prompt);
@@ -667,10 +667,10 @@ export class StdLib {
     this.prompt(prompt);
     return this.system.input().then((s) => {
       const [b, i] = this.parseAsInt(s);
-      if (b && i >= min && i <= max) {
+      if (b && i.toString() === s && i >= min && i <= max) {
         return i;
       } else {
-        this.system.printLine(`must be an Int between ${min} and ${max} inclusive`);
+        this.system.printLine(`must be an integer between ${min} and ${max} inclusive`);
       }
       return this.inputIntBetween(prompt, min, max);
     });
@@ -684,7 +684,7 @@ export class StdLib {
       if (b) {
         return i;
       } else {
-        this.system.printLine("not a Float");
+        this.system.printLine("not a number");
       }
 
       return this.inputFloat(prompt);
@@ -698,7 +698,7 @@ export class StdLib {
       if (b && i >= min && i <= max) {
         return i;
       } else {
-        this.system.printLine(`must be a Float between ${min} and ${max} inclusive`);
+        this.system.printLine(`must be a number between ${min} and ${max} inclusive`);
       }
       return this.inputFloatBetween(prompt, min, max);
     });
