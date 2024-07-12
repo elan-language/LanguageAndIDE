@@ -1,12 +1,11 @@
-# 23bcc5bb9d1e431449051030c3504819636f9d4459acc5aa1142f88eb6ad46d3 Elan Beta 1 valid
+# 3181fc8621665f5e2b02bfd783199cf627a3f7f6a9efb353afffb58952b14dc9 Elan Beta 1 valid
 
 main
   print "Press any key to halt"
   var gr set to new Graphics()
   set gr to gr.fill("", black, white)
-  var starter set to empty [Boolean]
-  call fillRandom(starter)
-  var grid set to starter.asImmutableList()
+  var grid set to empty [Boolean]
+  call fillRandom(grid)
   var cont set to true
   while cont
     set gr to updateGraphics(grid, gr)
@@ -21,162 +20,130 @@ main
 end main
 
 procedure fillRandom(starter as [Boolean])
-  for i from 0 to 399 step 1
+  for i from 0 to 1199 step 1
     call starter.add(random() > 0.5)
   end for
 end procedure
 
-function updateGraphics(grid as {Boolean}, gr as Graphics) return Graphics
+function updateGraphics(grid as [Boolean], gr as Graphics) return Graphics
   var gr2 set to gr
-  for row from 0 to 19 step 1
-    for col from 0 to 19 step 1
-      var cell set to grid.get(col*20 + row)
-      if cell
-        then
-          set gr2 to gr2.putBackground(col, row, black)
-        else
-          set gr2 to gr2.putBackground(col, row, white)
-      end if
+  for row from 0 to 29 step 1
+    for col from 0 to 39 step 1
+      var cell set to grid[row*40 + col]
+      var colour set to if cell then black else white
+      set gr2 to gr2.putBackground(col, row, colour)
     end for
   end for
   return gr2
 end function
 
-test 
-  let init be new Graphics()
-  let gr2 be updateGraphics(exampleCells, init)
-  assert gr2.getBackground(0, 0) is white
-  assert gr2.getBackground(1, 0) is black
-end test
-
-function north(c as Int) return Int
-  return if c > 19 then c - 20 else c + 380
+function n(c as Int) return Int
+  return if c > 39 then c - 40 else c + 1160
 end function
 
-test 
-  assert north(25) is 5
-  assert north(19) is 399
-  assert north(0) is 380
-  assert north(20) is 0
-end test
-
-function south(c as Int) return Int
-  return if c < 380 then c + 20 else c - 380
+function s(c as Int) return Int
+  return if c < 1160 then c + 40 else c - 1160
 end function
 
-test 
-  assert south(25) is 45
-  assert south(19) is 39
-  assert south(20) is 40
-  assert south(380) is 0
-  assert south(399) is 19
-end test
-
-function east(c as Int) return Int
-  return if mod(c, 20) < 19 then c + 1 else c - 19
+function e(c as Int) return Int
+  return if mod(c, 40) < 39 then c + 1 else c - 39
 end function
 
-test 
-  assert east(25) is 26
-  assert east(19) is 0
-  assert east(20) is 21
-  assert east(399) is 380
-end test
-
-function west(c as Int) return Int
-  return if mod(c, 20) > 0 then c - 1 else c + 19
+function w(c as Int) return Int
+  return if mod(c, 40) > 0 then c - 1 else c + 39
 end function
 
-test 
-  assert west(25) is 24
-  assert west(19) is 18
-  assert west(0) is 19
-  assert west(380) is 399
-end test
-
-function northEast(c as Int) return Int
-  return north(east(c))
+function neighbourCells(c as Int) return [Int]
+  return [n(w(c)), n(c), n(e(c)), w(c), e(c), s(w(c)), s(c), s(e(c))]
 end function
 
-test 
-  assert northEast(25) is 6
-  assert northEast(0) is 381
-  assert northEast(19) is 380
-  assert northEast(380) is 361
-  assert northEast(399) is 360
-end test
-
-function southEast(c as Int) return Int
-  return south(east(c))
-end function
-
-test 
-  assert southEast(25) is 46
-  assert southEast(0) is 21
-  assert southEast(19) is 20
-  assert southEast(380) is 1
-  assert southEast(399) is 0
-end test
-
-function northWest(c as Int) return Int
-  return north(west(c))
-end function
-
-test 
-  assert northWest(25) is 4
-  assert northWest(0) is 399
-  assert northWest(19) is 398
-  assert northWest(380) is 379
-  assert northWest(399) is 378
-end test
-
-function southWest(c as Int) return Int
-  return south(west(c))
-end function
-
-test 
-  assert southWest(25) is 44
-  assert southWest(0) is 39
-  assert southWest(19) is 38
-  assert southWest(380) is 19
-  assert southWest(399) is 18
-end test
-
-function neighbourCells(c as Int) return {Int}
-  return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
-end function
-
-test 
-  assert neighbourCells(25) is {4, 5, 6, 24, 26, 44, 45, 46}
-  assert neighbourCells(10) is {389, 390, 391, 9, 11, 29, 30, 31}
-  assert neighbourCells(390) is {369, 370, 371, 389, 391, 9, 10, 11}
-  assert neighbourCells(60) is {59, 40, 41, 79, 61, 99, 80, 81}
-  assert neighbourCells(79) is {58, 59, 40, 78, 60, 98, 99, 80}
-  assert neighbourCells(0) is {399, 380, 381, 19, 1, 39, 20, 21}
-  assert neighbourCells(19) is {398, 399, 380, 18, 0, 38, 39, 20}
-  assert neighbourCells(399) is {378, 379, 360, 398, 380, 18, 19, 0}
-  assert neighbourCells(380) is {379, 360, 361, 399, 381, 19, 0, 1}
-end test
-
-function liveNeighbours(cells as {Boolean}, c as Int) return Int
+function liveNeighbours(cells as [Boolean], c as Int) return Int
   let neighbours be neighbourCells(c)
-  let live be neighbours.filter(lambda i as Int => cells.get(i))
+  let live be neighbours.filter(lambda i as Int => cells[i])
   return live.length()
 end function
-
-test 
-  assert liveNeighbours(exampleCells, 0) is 5
-  assert liveNeighbours(exampleCells, 19) is 4
-  assert liveNeighbours(exampleCells, 30) is 2
-  assert liveNeighbours(exampleCells, 44) is 3
-  assert liveNeighbours(exampleCells, 59) is 5
-  assert liveNeighbours(exampleCells, 60) is 3
-  assert liveNeighbours(exampleCells, 399) is 3
-end test
 
 function willLive(currentlyAlive as Boolean, liveNeighbours as Int) return Boolean
   return if currentlyAlive then (liveNeighbours > 1) and (liveNeighbours < 4) else liveNeighbours is 3
 end function
+
+function nextCellValue(cells as [Boolean], c as Int) return Boolean
+  return willLive(cells[c], liveNeighbours(cells, c))
+end function
+
+function nextGeneration(cells as [Boolean]) return [Boolean]
+  let cellRange be range(0, cells.length() - 1)
+  let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
+  return next.asArrayList()
+end function
+
+constant black set to 0x000000
+
+constant white set to 0xffffff
+
+test north
+  assert n(90) is 50
+  assert n(39) is 1199
+  assert n(0) is 1160
+  assert n(40) is 0
+end test
+
+test south
+  assert s(90) is 130
+  assert s(39) is 79
+  assert s(1160) is 0
+  assert s(1199) is 39
+end test
+
+test east
+  assert e(90) is 91
+  assert e(39) is 0
+  assert e(40) is 41
+  assert e(1199) is 1160
+end test
+
+test 
+  assert w(90) is 89
+  assert w(39) is 38
+  assert w(0) is 39
+  assert w(1160) is 1199
+end test
+
+test north_east
+  assert n(e(90)) is 51
+  assert n(e(0)) is 1161
+  assert n(e(39)) is 1160
+  assert n(e(1160)) is 1121
+  assert n(e(1199)) is 1120
+end test
+
+test 
+  assert s(e(90)) is 131
+  assert s(e(0)) is 41
+  assert s(e(39)) is 40
+  assert s(e(1160)) is 1
+  assert s(e(1199)) is 0
+end test
+
+test 
+  assert n(w(90)) is 49
+  assert n(w(0)) is 1199
+  assert n(w(39)) is 1198
+  assert n(w(1160)) is 1159
+  assert n(w(1199)) is 1158
+end test
+
+test 
+  assert s(w(90)) is 129
+  assert s(w(0)) is 79
+  assert s(w(39)) is 78
+  assert s(w(1160)) is 39
+  assert s(w(1199)) is 38
+end test
+
+test 
+  assert neighbourCells(90) is {49, 50, 51, 89,91, 129, 130, 131}
+end test
 
 test 
   assert willLive(false, 0) is false
@@ -198,35 +165,3 @@ test
   assert willLive(true, 7) is false
   assert willLive(true, 8) is false
 end test
-
-function nextCellValue(cells as {Boolean}, c as Int) return Boolean
-  return willLive(cells.get(c), liveNeighbours(cells, c))
-end function
-
-test 
-  assert nextCellValue(exampleCells, 0) is false
-  assert nextCellValue(exampleCells, 19) is false
-  assert nextCellValue(exampleCells, 30) is true
-  assert nextCellValue(exampleCells, 44) is true
-  assert nextCellValue(exampleCells, 59) is false
-  assert nextCellValue(exampleCells, 60) is true
-  assert nextCellValue(exampleCells, 399) is true
-end test
-
-function nextGeneration(cells as {Boolean}) return {Boolean}
-  let cellRange be range(0, cells.length() - 1)
-  let next be cellRange.map(lambda n as Int => nextCellValue(cells, n))
-  return next.asImmutableList()
-end function
-
-test 
-  var expected set to {false, true, false, true, true, true, true, false, true, false, true, true, true, false, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, true, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, false, false, true, false, true, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, false, false, true, false, true, false, true, false, true, false, false, false, false, false, false, false, true, true, true, true, true, false, true, false, true, false, true, true, false, true, false, true, false, true, true, false, false, false, true, false, true, false, false, false, true, false, false, false, false, true, false, true, false, false, true, false, false, false, true, false, true, false, true, true, false, true, false, false, true, true, false, true, false, false, false, false, false, false, true, false, true, true, false, false, true, false, false, true, true, false, true, true, false, false, false, true, true, false, true, true, false, false, false, true, false, false, false, false, false, true, false, true, true, true, true, true, true, false, false, false, false, false, false, false, true, true, false, true, false, false, true, false, true, false, true, false, false, true, false, true, true, false, false, false, false, true, false, true, true, true, false, false, true, true, false, true, false, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, true, false, false, true, true, false, false, false, false, false, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, true, true, false, false, false, true, false, false, false, true, true, false, false, false, true, false, true, false, true, false, false, false, true, true, true, true}
-  var actual set to nextGeneration(exampleCells)
-  assert actual is expected
-end test
-
-constant black set to 0x000000
-
-constant white set to 0xffffff
-
-constant exampleCells set to {false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false}
