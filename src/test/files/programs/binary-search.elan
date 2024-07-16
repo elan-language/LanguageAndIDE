@@ -1,7 +1,7 @@
-# 2a7ad0bdfba6f8f2488aabd35fb4b12db2e840c01a76304fd9a084bc2c8abfa5 Elan Beta 1 valid
+# 3ed44db350cff4c4bfffbca5d3d2126569816b175ddacfd8746fc1faa73ac49b Elan Beta 1 valid
 
 main
-  var fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pinapple", "plum", "raspberry", "strawberry", "watermelon"]
+  var fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   var exit set to false
   while not exit
     var wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
