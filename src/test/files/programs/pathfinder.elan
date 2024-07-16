@@ -1,4 +1,4 @@
-﻿# c7af523ddf163bb3fe3bb7f3a00e15cca9ebbb230bfeb632cf56f60a683512f0 Elan Beta 1 valid
+﻿# FFFF Elan Beta 1 valid
 
 main
 
@@ -13,19 +13,20 @@ function pointsAreAdjacentDiagonally(p1 as Point, p2 as Point) return Boolean
 end function
 
 # Assumes that it will only be called if the points ARE immediate neighbours
-function findEdge(p1 Point, p2 Point) return Float
+function findEdge(p1 as Point, p2 as Point) return Float
   return p1.distanceFrom(p2)
 end function
 
 # Returns a list of nodes that can be reached from the specified node
 function neighbours(p as Point) return [Point]
-  var list set to [new Point(p.x, p.y - 1), new Point(p.x + 1, p.y - 1), new Point(p.x + 1, p.y), new Point(p.x + 1, p.y + 1), new Point(p.x, p.y + 1), new Point(p.x - 1, p.y + 1), new Point(p.x - 1, p.y), new Point(p.x - 1, p.y - 1)]
-  return list.filter(lambda n => nodeExists(n)).asImmutableList()
+  let l1 be [new Point(p.x, p.y - 1), new Point(p.x + 1, p.y - 1), new Point(p.x + 1, p.y), new Point(p.x + 1, p.y + 1), new Point(p.x, p.y + 1), new Point(p.x - 1, p.y + 1), new Point(p.x - 1, p.y), new Point(p.x - 1, p.y - 1)]
+  let l2 be l1.filter(lambda n as Point => nodeExists(n))
+  return l2.asImmutableList()
 end function
 
 # Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
 # You may make use of existing methods such a s Neignbours, or findEdge.
-procedure shortestPath(source Point, destination Point, alg Algorithm,  as [Point])
+procedure shortestPath(source as Point, destination as Point, alg as Algorithm, x as [Point])
   # Initialise the 'table' with three 'columns' - one 'row' per node
   var visited set to newDictionaryOfAllPointsReturningFalseValues()
   var costFromSource set to  newDictionaryOfAllPointsReturningDoublesSetToInfinity()
@@ -47,23 +48,23 @@ procedure shortestPath(source Point, destination Point, alg Algorithm,  as [Poin
 end procedure
 
 function newDictionaryOfAllPointsReturningNull() return [Point:Point]
-  var dict set to new Dictionary<of Point, Point>()
+  var dict set to empty [Point:Point]
   each p in nodes
-    set dict to dict.setItem(p, default Point)
+    set dict[p] to empty Point
   end each
   return dict
 end function
 
 function newDictionaryOfAllPointsReturningDoublesSetToInfinity() return [Point:Float]
-  var dict set to new Dictionary<of Point, Float>() 
+  var dict set to empty [Point:Float]
   each p in nodes
-    set dict to dict.setItem(p, infinity)
+    set dict[p] to infinity
   end each
   return dict
 end function
 
 function newDictionaryOfAllPointsReturningFalseValues() return [Point:Boolean]
-  var dict set to new Dictionary<of Point, Boolean>()
+  var dict set to empty [Point:Boolean]
   each p in nodes
     set dict to dict.setItem(p, false)
   end each
@@ -71,25 +72,26 @@ function newDictionaryOfAllPointsReturningFalseValues() return [Point:Boolean]
 end function
 
   # needs converting to a function as dictionaries are immutable 
-procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource [Point:Float], via [Point:Point],  currentNode Point,  destination Point)
+procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource as [Point:Float], via as [Point:Point],  currentNode as Point,  destination as Point)
   each neighbour in neighbours(currentNode)
     var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
     if newCost < costFromSource[neighbour]
       then
-        set costFromSource to costFromSource.setItem(neighbour, newCost) # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
-        set via to via.setItem(neighbour,currentNode)
+        # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
+        set costFromSource[neighbour] to newCost
+        set via[neighbour] to currentNode
     end if
   end each
 end procedure
 
-function estimatedCostToDestination(current Point, destination Point) return Float
+function estimatedCostToDestination(current as Point, destination as Point) return Float
   return sqrt((current.x - destination.x)^2 + (current.y - destination.y)^2)
 end function
 
-function nextNodeToVisit(currentNode Point, visited [Point:Boolean], costFromSource [Point:Float], destination Point ,alg Algorithm) return Point
+function nextNodeToVisit(currentNode as Point, visited as [Point:Boolean], costFromSource as [Point:Float], destination as Point, alg as Algorithm) return Point
   var lowestCostSoFar set to infinity
   var lowestCostNode set to nodes.element(0)
-  var possibilities set to nodes.filter(lambda n =>  not visited[n] and costFromSource[n] < infinity)
+  var possibilities set to nodes.filter(lambda n as Point => (not visited[n]) and (costFromSource[n] < infinity))
   each p in possibilities
     var cost set to 0.0
     switch alg
@@ -109,28 +111,26 @@ function nextNodeToVisit(currentNode Point, visited [Point:Boolean], costFromSou
   return lowestCostNode
 end function 
 
-function retraceRoute(destination Point, source Point, via [Point:Point]) return [Point]
-  var result set to [ destination ]
+function retraceRoute(destination as Point, source as Point, via as [Point:Point]) return [Point]
+  var result set to [destination]
   var currentNode set to destination
   while currentNode isnt source
     var previous set to via[currentNode]
     set result to result.insert(0, previous)
     set currentNode to previous
   end while
-  return result  
+  return result
 end function
 
-  function sumOfEdges(route [Point]) return Float
-    var result set to 0.0 
-    var stage set to 0
-    while stage < route.length() - 1
-      set result to result + findEdge(route[stage], route[stage + 1])
-      set stage to stage + 1
-    end while
-    return result
-  end function
-
-end class
+function sumOfEdges(route as [Point]) return Float
+  var result set to 0.0
+  var stage set to 0
+  while stage < route.length() - 1
+    set result to result + findEdge(route[stage], route[stage + 1])
+    set stage to stage + 1
+  end while
+  return result
+end function
 
 immutable class Point
   constructor(x as Int, y as Int)
@@ -142,7 +142,7 @@ immutable class Point
 
   property y as Int
 
-  function distanceFrom(p2 Point) return Float
+  function distanceFrom(p2 as Point) return Float
     return sqrt((p2.x - x)^2 + (p2.y - y)^2)
   end function
 
@@ -153,4 +153,4 @@ enum Algorithm
 end enum
 
 # big enough for this purpose
-constant infinity set to 1000000.0
+constant infinity set to 1000000
