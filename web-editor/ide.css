@@ -122,14 +122,19 @@ body {
 
   #help {
     grid-row: 3;
-    grid-column: 44;
+    grid-column: 44/48;
+  }
+
+  #help * {
+    float:left;
     font-family: var(--ideTitleFont);
     font-size: var(--ideTitleSize);
     color: black;
     text-decoration: none;
     background-color: white;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 5px;
   }
 
   #logo {
@@ -175,7 +180,7 @@ button.plain, button.plain:hover, button.plain:active, button.plain:focus  {
     color: black; /* To prevent the help a-link being coloured mauve when visited*/
 }
 
-button.plain:hover, button.plain:active, #help:hover {
+button.plain:hover, button.plain:active, #help *:hover {
     background-color: lightblue;
 }
 
