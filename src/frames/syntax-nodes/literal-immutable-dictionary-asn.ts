@@ -1,13 +1,10 @@
-import { DictionaryType } from "../symbols/dictionary-type";
 import { UnknownType } from "../symbols/unknown-type";
-import { unknownType } from "../../test/testHelpers";
 import { CompileError } from "../compile-error";
 import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
 import { KvpAsn } from "./kvp-asn";
-import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 

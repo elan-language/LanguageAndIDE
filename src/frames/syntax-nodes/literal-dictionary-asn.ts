@@ -1,6 +1,5 @@
 import { DictionaryType } from "../symbols/dictionary-type";
 import { UnknownType } from "../symbols/unknown-type";
-import { unknownType } from "../../test/testHelpers";
 import { CompileError } from "../compile-error";
 import { mustBeCompatibleType, mustHaveUniqueKeys } from "../compile-rules";
 import { Scope } from "../interfaces/scope";
