@@ -1,0 +1,18 @@
+version: 1.0.{build}
+image: Visual Studio 2022
+install:
+- pwsh: >-
+    node -v
+
+    npm -v
+build_script:
+- pwsh: >-
+    npm i
+
+    npm run compile
+test_script:
+- cmd: npm run test
+artifacts:
+- path: web-editor\web-scripts.js
+- path: web-editor
+  name: web-editor
