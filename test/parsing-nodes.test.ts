@@ -194,40 +194,12 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Set Clause", () => {
-    testNodeParse(new SetClause(), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new SetClause(), "y set to p.y - 1", ParseStatus.valid, "", "", "", "");
-    testNodeParse(
-      new SetClause(),
-      "y setto p.y - 1",
-      ParseStatus.invalid,
-      "",
-      "y setto p.y - 1",
-      "",
-      "",
-    );
-    testNodeParse(
-      new SetClause(),
-      "yset to p.y - 1",
-      ParseStatus.invalid,
-      "",
-      "yset to p.y - 1",
-      "",
-      "",
-    );
-    testNodeParse(
-      new SetClause(),
-      "x set top.x + 3",
-      ParseStatus.invalid,
-      "",
-      "x set top.x + 3",
-      "",
-      "",
-    );
+    testNodeParse(new SetClause(), "x to p.x + 3", ParseStatus.valid, "", "", "", "");
   });
-  test("ImmutableList of set clauses", () => {
+  test("CSV of set clauses", () => {
     testNodeParse(
-      new ImmutableListNode(() => new SetClause()),
-      "{x set to p.x + 3, y set to p.y - 1}",
+      new CSV(() => new SetClause(),1),
+      "x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
       "",
@@ -238,16 +210,7 @@ suite("Parsing Nodes", () => {
   test("with clause", () => {
     testNodeParse(
       new WithClause(),
-      " with {x set to p.x + 3, y set to p.y - 1}",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new WithClause(),
-      "with {x set to p.x + 3, y set to p.y - 1}",
+      " with x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
       "",
@@ -258,19 +221,10 @@ suite("Parsing Nodes", () => {
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
-      "p with {x set to p.x + 3, y set to p.y - 1}",
+      "copy p with x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
       "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new ExprNode(),
-      "pwith {x set to p.x + 3, y set to p.y - 1}",
-      ParseStatus.valid,
-      "pwith",
-      " {x set to p.x + 3, y set to p.y - 1}",
       "",
       "",
     );

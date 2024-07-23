@@ -1,14 +1,14 @@
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { CSV } from "../parse-nodes/csv";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
-import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 
 export class WithAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly obj: ExprAsn,
-    private readonly withClause: LiteralImmutableListAsn,
+    private readonly withClause: CSV | undefined,
     public readonly fieldId: string,
     scope: Scope,
   ) {
@@ -16,9 +16,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
   }
 
   aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.obj.aggregateCompileErrors())
-      .concat(this.withClause.aggregateCompileErrors());
+    return this.compileErrors.concat(this.obj.aggregateCompileErrors());
   }
 
   compile(): string {
