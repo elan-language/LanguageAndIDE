@@ -54,7 +54,6 @@ export const trueKeyword = "true";
 export const tryKeyword = "try";
 export const typeofKeyword = "typeof";
 export const varKeyword = "var";
-export const whenKeyword = "when";
 export const whileKeyword = "while";
 export const withKeyword = "with";
 
@@ -103,7 +102,6 @@ export const allKeywords = [
   newKeyword,
   notKeyword,
   ofKeyword,
-  isKeyword,
   orKeyword,
   printKeyword,
   privateKeyword,
@@ -122,7 +120,6 @@ export const allKeywords = [
   tryKeyword,
   typeofKeyword,
   varKeyword,
-  whenKeyword,
   whileKeyword,
   withKeyword,
 ];
@@ -169,5 +166,6 @@ export const reservedWords = [
   "transient",
   "void",
   "volatile",
+  "when",
   "yield",
 ];
