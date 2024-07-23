@@ -55,7 +55,6 @@ export const tryKeyword = "try";
 export const typeofKeyword = "typeof";
 export const varKeyword = "var";
 export const whileKeyword = "while";
-export const withKeyword = "with";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
@@ -121,7 +120,6 @@ export const allKeywords = [
   typeofKeyword,
   varKeyword,
   whileKeyword,
-  withKeyword,
 ];
 
 export const reservedWords = [
@@ -167,5 +165,6 @@ export const reservedWords = [
   "void",
   "volatile",
   "when",
+  "with",
   "yield",
 ];
