@@ -123,6 +123,7 @@ export const allKeywords = [
   varKeyword,
   withKeyword,
   whileKeyword,
+  withKeyword,
 ];
 
 export const reservedWords = [

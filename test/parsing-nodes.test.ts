@@ -44,8 +44,8 @@ import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { VarRefNode } from "../src/frames/parse-nodes/var-ref-node";
+import { WithClause } from "../src/frames/parse-nodes/with-clause";
 import { ParseStatus } from "../src/frames/status-enums";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
@@ -194,13 +194,40 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Set Clause", () => {
-    testNodeParse(new SetClause(), "x to p.x + 3", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new SetClause(), "y to p.y - 1", ParseStatus.valid, "", "", "", "");
-  });
-  test("CSV of set clauses", () => {
+    testNodeParse(new SetClause(), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new SetClause(), "y set to p.y - 1", ParseStatus.valid, "", "", "", "");
     testNodeParse(
-      new CSV(() => new SetClause(), 1),
-      "x to p.x + 3, y to p.y - 1",
+      new SetClause(),
+      "y setto p.y - 1",
+      ParseStatus.invalid,
+      "",
+      "y setto p.y - 1",
+      "",
+      "",
+    );
+    testNodeParse(
+      new SetClause(),
+      "yset to p.y - 1",
+      ParseStatus.invalid,
+      "",
+      "yset to p.y - 1",
+      "",
+      "",
+    );
+    testNodeParse(
+      new SetClause(),
+      "x set top.x + 3",
+      ParseStatus.invalid,
+      "",
+      "x set top.x + 3",
+      "",
+      "",
+    );
+  });
+  test("ImmutableList of set clauses", () => {
+    testNodeParse(
+      new ImmutableListNode(() => new SetClause()),
+      "{x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
@@ -208,13 +235,42 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  ignore_test("Expression + with clause", () => {
+  test("with clause", () => {
     testNodeParse(
-      new ExprNode(),
-      "copy p set x to p.x + 3, y to p.y - 1",
+      new WithClause(),
+      " with {x set to p.x + 3, y set to p.y - 1}",
       ParseStatus.valid,
       "",
       "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new WithClause(),
+      "with {x set to p.x + 3, y set to p.y - 1}",
+      ParseStatus.valid,
+      "",
+      "",
+      "",
+      "",
+    );
+  });
+  test("Expression + with clause", () => {
+    testNodeParse(
+      new ExprNode(),
+      "p with {x set to p.x + 3, y set to p.y - 1}",
+      ParseStatus.valid,
+      "",
+      "",
+      "",
+      "",
+    );
+    testNodeParse(
+      new ExprNode(),
+      "pwith {x set to p.x + 3, y set to p.y - 1}",
+      ParseStatus.valid,
+      "pwith",
+      " {x set to p.x + 3, y set to p.y - 1}",
       "",
       "",
     );
