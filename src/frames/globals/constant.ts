@@ -1,18 +1,18 @@
-import { IdentifierField } from "../fields/identifier-field";
 import { AbstractFrame } from "../abstract-frame";
-import { File } from "../interfaces/file";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { ConstantValueField } from "../fields/constant-value-field";
-import { ElanSymbol } from "../interfaces/symbol";
-import { constantKeyword } from "../keywords";
+import { IdentifierField } from "../fields/identifier-field";
+import { Collapsible } from "../interfaces/collapsible";
+import { Field } from "../interfaces/field";
+import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { Collapsible } from "../interfaces/collapsible";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ElanSymbol } from "../interfaces/symbol";
+import { constantKeyword } from "../keywords";
 import { getGlobalScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;

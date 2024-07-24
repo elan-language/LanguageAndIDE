@@ -1,22 +1,22 @@
+import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
+import { Frame } from "../interfaces/frame";
+import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { CodeSource } from "../code-source";
-import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { ParseStatus } from "../status-enums";
+import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { mustBeUniqueNameInScope } from "../compile-rules";
-import { Scope } from "../interfaces/scope";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { ParseStatus } from "../status-enums";
 
-export class ParamList extends AbstractField {
+export class ParamList extends AbstractField implements Scope {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
@@ -24,6 +24,14 @@ export class ParamList extends AbstractField {
     this.useHtmlTags = true;
     this.setOptional(true);
     this.help = `Zero or more parameter definitions comma-separated. Each parameter definition consists of a parameter name followed by the 'as' keyword and a Type. A parameter name follows the same rules as for a variable name - starting with a lower-case letter.`;
+  }
+
+  getParentScope(): Scope {
+    return this.getHolder();
+  }
+
+  symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
+    return []; // todo ?
   }
 
   getIdPrefix(): string {
@@ -74,6 +82,7 @@ export class ParamList extends AbstractField {
     }
     return new UnknownSymbol(id);
   }
+
   isEndMarker(key: string) {
     return this.text === "" && key === ")";
   }

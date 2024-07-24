@@ -3,8 +3,8 @@ import { CodeSource } from "../code-source";
 import { CommentField } from "../fields/comment-field";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { commentMarker } from "../keywords";
 import { GlobalFrame } from "../interfaces/global-frame";
+import { commentMarker } from "../keywords";
 
 export class GlobalComment extends AbstractFrame implements GlobalFrame {
   isGlobal = true;
