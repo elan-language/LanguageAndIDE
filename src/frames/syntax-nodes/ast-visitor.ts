@@ -64,7 +64,7 @@ import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
-import { isAstIdNode } from "./ast-helpers";
+import { isAstIdNode, isAstQualifierNode } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CsvAsn } from "./csv-asn";
@@ -394,7 +394,9 @@ export function transform(
   }
 
   if (node instanceof DeconstructedTuple) {
-    const items = transformMany(node.csv as CSV, fieldId, scope).items as AstIdNode[];
+    const items = transformMany(node.csv as CSV, fieldId, scope).items.filter((i) =>
+      isAstIdNode(i),
+    );
     return new DeconstructedTupleAsn(items, fieldId, scope);
   }
 
@@ -501,12 +503,18 @@ export function transform(
     const sp = node.simpleOrProp;
 
     if (sp.bestMatch instanceof IdentifierNode) {
-      const idNode = transform(sp.bestMatch, fieldId, scope) as AstIdNode;
-      id = idNode.id;
+      const idNode = transform(sp.bestMatch, fieldId, scope);
+      if (isAstIdNode(idNode)) {
+        id = idNode.id;
+      }
     } else if (sp.bestMatch instanceof Sequence) {
-      const seq = transformMany(sp.bestMatch, fieldId, scope);
-      q = seq.items[0] as AstQualifierNode;
-      id = (seq.items[1] as AstIdNode).id;
+      const [i0, i1] = transformMany(sp.bestMatch, fieldId, scope).items;
+      if (isAstQualifierNode(i0)) {
+        q = i0;
+      }
+      if (isAstIdNode(i1)) {
+        id = i1.id;
+      }
     }
 
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
