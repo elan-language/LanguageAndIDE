@@ -25,7 +25,9 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
     return this.expr.symbolType(transforms);
   }
 
-  symbolScope = SymbolScope.local;
+  get symbolScope() {
+    return SymbolScope.local;
+  }
 
   initialKeywords(): string {
     return switchKeyword;

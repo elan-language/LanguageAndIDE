@@ -82,5 +82,7 @@ ${this.indent()}}\r
     return new ProcedureType(pt, false, true);
   }
 
-  symbolScope = SymbolScope.property;
+  get symbolScope() {
+    return SymbolScope.property;
+  }
 }

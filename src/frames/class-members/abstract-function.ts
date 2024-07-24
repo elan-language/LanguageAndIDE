@@ -92,5 +92,7 @@ ${this.indent()}}\r
     return new FunctionType(pt, rt, false);
   }
 
-  symbolScope = SymbolScope.property;
+  get symbolScope() {
+    return SymbolScope.property;
+  }
 }

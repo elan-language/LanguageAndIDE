@@ -45,7 +45,9 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   symbolType(transforms?: Transforms): SymbolType {
     return new EnumType(this.symbolId);
   }
-  symbolScope = SymbolScope.program;
+  get symbolScope() {
+    return SymbolScope.program;
+  }
 
   initialKeywords(): string {
     return enumKeyword;

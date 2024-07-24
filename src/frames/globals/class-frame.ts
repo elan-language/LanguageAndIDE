@@ -112,7 +112,9 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
       this,
     );
   }
-  symbolScope = SymbolScope.program;
+  get symbolScope() {
+    return SymbolScope.program;
+  }
   getProfile(): Profile {
     return this.getFile().getProfile();
   }

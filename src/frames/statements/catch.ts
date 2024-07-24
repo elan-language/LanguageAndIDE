@@ -33,7 +33,9 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
     return StringType.Instance;
   }
 
-  symbolScope = SymbolScope.parameter;
+  get symbolScope() {
+    return SymbolScope.parameter;
+  }
 
   initialKeywords(): string {
     return catchKeyword;

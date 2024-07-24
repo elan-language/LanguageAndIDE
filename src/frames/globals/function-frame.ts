@@ -48,7 +48,9 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return new FunctionType(pt, rt, false);
   }
 
-  symbolScope = SymbolScope.program;
+  get symbolScope() {
+    return SymbolScope.program;
+  }
 
   getProfile(): Profile {
     return this.getFile().getProfile();

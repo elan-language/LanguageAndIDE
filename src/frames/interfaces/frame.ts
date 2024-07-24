@@ -6,8 +6,9 @@ import { File } from "./file";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
+import { ElanSymbol } from "./symbol";
 
-export interface Frame extends Selectable, Scope {
+export interface Frame extends Selectable, Scope, ElanSymbol {
   isFrame: boolean;
 
   getFile(): File;
