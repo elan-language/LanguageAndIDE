@@ -97,13 +97,7 @@ export class ParamList extends AbstractField implements Scope {
         const ids = parms.items as AstIdNode[];
 
         for (const idNode of ids) {
-          mustBeUniqueNameInScope(
-            idNode.id,
-            this as unknown as Scope,
-            transforms,
-            this.compileErrors,
-            this.htmlId,
-          );
+          mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
         }
       }
 

@@ -273,12 +273,10 @@ export function matchingSymbols(
     if (qualSt instanceof ClassType) {
       const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
 
-      if (isClass(cls as unknown as Scope)) {
+      if (isClass(cls)) {
         return [
           propId,
-          (cls as unknown as Scope)
-            .symbolMatches(propId, !propId)
-            .filter((s) => s.symbolScope === SymbolScope.property),
+          cls.symbolMatches(propId, !propId).filter((s) => s.symbolScope === SymbolScope.property),
         ];
       }
       return [propId, []];

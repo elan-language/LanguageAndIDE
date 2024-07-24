@@ -1,19 +1,19 @@
-import { Member } from "./interfaces/member";
-import { Field } from "./interfaces/field";
-import { Collapsible } from "./interfaces/collapsible";
-import { Parent } from "./interfaces/parent";
-import { Frame } from "./interfaces/frame";
-import { File } from "./interfaces/file";
 import { AbstractSelector } from "./abstract-selector";
-import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { CompileError, Priority } from "./compile-error";
-import { GlobalFrame } from "./interfaces/global-frame";
-import { Class } from "./interfaces/class";
-import { Scope } from "./interfaces/scope";
-import { AstTypeNode } from "./interfaces/ast-type-node";
+import { CompileError } from "./compile-error";
 import { AstNode } from "./interfaces/ast-node";
+import { AstTypeNode } from "./interfaces/ast-type-node";
+import { Class } from "./interfaces/class";
+import { Collapsible } from "./interfaces/collapsible";
+import { Field } from "./interfaces/field";
+import { File } from "./interfaces/file";
+import { Frame } from "./interfaces/frame";
+import { GlobalFrame } from "./interfaces/global-frame";
+import { Member } from "./interfaces/member";
+import { Parent } from "./interfaces/parent";
+import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
+import { CompileStatus, DisplayStatus, ParseStatus, RunStatus, TestStatus } from "./status-enums";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
@@ -23,7 +23,7 @@ export function isFile(f?: Scope): f is File {
   return !!f && "isFile" in f;
 }
 
-export function isClass(f?: Scope): f is Class {
+export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
 }
 
