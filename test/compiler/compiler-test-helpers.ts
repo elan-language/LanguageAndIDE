@@ -112,7 +112,7 @@ export async function assertObjectCodeExecutes(file: FileImpl, output: string, i
 
   try {
     const sl = await executeCode(file, input);
-    actual = (sl?.elanInputOutput as unknown as TestInputOutput).printed;
+    actual = (sl?.elanInputOutput as TestInputOutput).printed;
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }
@@ -157,7 +157,7 @@ export async function assertGraphicsContains(file: FileImpl, offset: number, sni
 
   try {
     const sl = await executeCode(file, "");
-    graphics = (sl?.elanInputOutput as unknown as TestInputOutput).drawn;
+    graphics = (sl?.elanInputOutput as TestInputOutput).drawn;
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
   }

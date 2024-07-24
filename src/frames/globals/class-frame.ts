@@ -430,7 +430,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && f.symbolId === id,
-    ) as unknown as ElanSymbol[];
+    ) as ElanSymbol[];
 
     if (matches.length === 1) {
       return matches[0];
@@ -447,7 +447,7 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 
     const matches = this.getChildren().filter(
       (f) => isSymbol(f) && (f.symbolId.startsWith(id) || all),
-    ) as unknown as ElanSymbol[];
+    ) as ElanSymbol[];
 
     return matches.concat(otherMatches);
   }
