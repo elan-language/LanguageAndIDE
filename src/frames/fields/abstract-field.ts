@@ -550,7 +550,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
 
     if (count > 10 && selectedIndex + 5 < count) {
-      symbolAsHtml.push(`<div class="autocomplete-item">...</div>`);
+      symbolAsHtml.push(`<div>...</div>`);
     }
 
     if (symbolAsHtml.length > 0) {

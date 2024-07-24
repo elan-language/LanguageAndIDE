@@ -215,14 +215,14 @@ button#expand-collapse {
   border: solid 1px;
 }
 
-.autocomplete-item {
+.autocomplete-popup > div {
   color: black;
   background-color: lightgrey;
   text-align: left;
   padding-left: 1px;
 }
 
-.autocomplete-item.selected {
+.autocomplete-popup > div.selected {
   color: white;
   background-color: var(--help);
 }
@@ -238,7 +238,9 @@ button#expand-collapse {
   display: none;
   position: absolute;
   z-index: 1;
-  background-color: white
+  background-color: white;
+  border: black 1px solid;
+  width: 282px;  /* width of button bar */
 }
 
 .demo-file {
@@ -249,9 +251,3 @@ button#expand-collapse {
   background-color: var(--ideDefaultBackground);
   color: white;
 }
-
-.dropdown-content {
-  border: black 1px solid;
-  width: 282px;  /* width of button bar */
-}
-
