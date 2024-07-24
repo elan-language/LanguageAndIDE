@@ -1,5 +1,6 @@
 import { isFile, isFrame, isFunction } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { Scope } from "../interfaces/scope";
@@ -26,6 +27,10 @@ export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
 
 export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
   return !!n && "items" in n;
+}
+
+export function isAstIdNode(n: AstNode): n is AstIdNode {
+  return !!n && "id" in n;
 }
 
 export function InFunctionScope(start: Scope): boolean {

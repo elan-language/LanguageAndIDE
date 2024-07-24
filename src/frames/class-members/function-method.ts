@@ -1,19 +1,19 @@
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
-import { FunctionFrame } from "../globals/function-frame";
-import { singleIndent } from "../helpers";
-import { Frame } from "../interfaces/frame";
-import { Member } from "../interfaces/member";
-import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
-import { Parent } from "../interfaces/parent";
 import {
   mustBeCompatibleType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../compile-rules";
+import { FunctionFrame } from "../globals/function-frame";
+import { singleIndent } from "../helpers";
+import { Frame } from "../interfaces/frame";
+import { Member } from "../interfaces/member";
+import { Parent } from "../interfaces/parent";
+import { ElanSymbol } from "../interfaces/symbol";
+import { endKeyword, functionKeyword, returnKeyword } from "../keywords";
 import { getClassScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class FunctionMethod extends FunctionFrame implements Member {
   isMember: boolean = true;
@@ -58,7 +58,7 @@ ${this.indent()}}\r
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
-      return this as ElanSymbol;
+      return this;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);

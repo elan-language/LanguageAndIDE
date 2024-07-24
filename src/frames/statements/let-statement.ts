@@ -1,17 +1,17 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
 import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
+import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
+import { VarDefField } from "../fields/var-def-field";
+import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { beKeyword, letKeyword } from "../keywords";
-import { VarDefField } from "../fields/var-def-field";
-import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
-import { Frame } from "../interfaces/frame";
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class LetStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
@@ -61,21 +61,27 @@ export class LetStatement extends AbstractFrame implements Statement, ElanSymbol
   compile(transforms: Transforms): string {
     this.compileErrors = [];
     // todo common code with var statement
-    const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
-    const ids = id.includes(",") ? id.split(",") : [id];
+    const ast = this.name.getOrTransformAstNode(transforms);
 
-    for (const i of ids) {
-      mustNotBeKeyword(i, this.compileErrors, this.htmlId);
-      const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-      mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
-    }
+    if (isAstIdNode(ast)) {
+      const id = ast.id;
 
-    const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
+      const ids = id.includes(",") ? id.split(",") : [id];
 
-    return `${this.indent()}var ${vid} = (() => {
+      for (const i of ids) {
+        mustNotBeKeyword(i, this.compileErrors, this.htmlId);
+        const symbol = this.getParent().resolveSymbol(i!, transforms, this);
+        mustNotBeReassigned(symbol, this.compileErrors, this.htmlId);
+      }
+
+      const vid = ids.length > 1 ? `[${ids.join(", ")}]` : id;
+
+      return `${this.indent()}var ${vid} = (() => {
 ${this.indent()}${this.indent()}var _cache;
 ${this.indent()}${this.indent()}return () => _cache ??= ${this.expr.compile(transforms)};
 ${this.indent()}})();`;
+    }
+    return "";
   }
 
   get symbolId() {

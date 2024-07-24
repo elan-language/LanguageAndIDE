@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
@@ -12,7 +11,7 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
+import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -67,13 +66,15 @@ export class ParamList extends AbstractField implements Scope {
 
     if (isAstCollectionNode(ast)) {
       const matches: ElanSymbol[] = [];
-      for (const n of ast.items as AstIdNode[]) {
-        if (n.id === id) {
-          matches.push({
-            symbolId: id,
-            symbolType: () => n.symbolType(),
-            symbolScope: SymbolScope.parameter,
-          });
+      for (const n of ast.items) {
+        if (isAstIdNode(n)) {
+          if (n.id === id) {
+            matches.push({
+              symbolId: id,
+              symbolType: () => n.symbolType(),
+              symbolScope: SymbolScope.parameter,
+            });
+          }
         }
       }
 
@@ -100,10 +101,12 @@ export class ParamList extends AbstractField implements Scope {
 
       if (isAstCollectionNode(parms)) {
         if (parms.items.length > 1) {
-          const ids = parms.items as AstIdNode[];
+          const ids = parms.items;
 
           for (const idNode of ids) {
-            mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
+            if (isAstIdNode(idNode)) {
+              mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
+            }
           }
         }
 

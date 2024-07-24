@@ -1,14 +1,14 @@
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { singleIndent } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { Member } from "../interfaces/member";
-import { Transforms } from "../syntax-nodes/transforms";
 import { Parent } from "../interfaces/parent";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ElanSymbol } from "../interfaces/symbol";
 import { getClassScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class ProcedureMethod extends ProcedureFrame implements Member {
   isMember: boolean = true;
@@ -48,7 +48,7 @@ ${this.indent()}}\r
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
-      return this as ElanSymbol;
+      return this;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);

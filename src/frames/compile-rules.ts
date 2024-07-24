@@ -27,7 +27,6 @@ import {
   UndefinedSymbolCompileError,
 } from "./compile-error";
 import { isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
-import { AstIdNode } from "./interfaces/ast-id-node";
 import { AstNode } from "./interfaces/ast-node";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
@@ -56,7 +55,7 @@ import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { InFunctionScope, isAstQualifiedNode } from "./syntax-nodes/ast-helpers";
+import { InFunctionScope, isAstIdNode, isAstQualifiedNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
@@ -667,8 +666,15 @@ export function mustBeCompatibleNode(
   mustBeCompatibleType(lst, rst, compileErrors, location);
 }
 
+function getId(astNode: AstNode) {
+  if (isAstIdNode(astNode)) {
+    return astNode.id;
+  }
+  return "unknown";
+}
+
 export function mustNotBePropertyOnFunctionMethod(
-  assignable: AstIdNode,
+  assignable: AstNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
@@ -677,25 +683,25 @@ export function mustNotBePropertyOnFunctionMethod(
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.property) {
-      compileErrors.push(new ReassignCompileError(`property: ${assignable.id}`, location));
+      compileErrors.push(new ReassignCompileError(`property: ${getId(assignable)}`, location));
     }
   }
 }
 
 export function mustNotIndexOnFunctionMethod(
-  assignable: AstIdNode,
+  assignable: AstNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (isFunction(parent)) {
     if (isIndexed(assignable)) {
-      compileErrors.push(new IndexCompileError(`${assignable.id}`, location));
+      compileErrors.push(new IndexCompileError(`${getId(assignable)}`, location));
     }
   }
 }
 
-function isIndexed(assignable: AstIdNode) {
+function isIndexed(assignable: AstNode) {
   if (isAstQualifiedNode(assignable)) {
     const rst = assignable.rootSymbolType();
     const st = assignable.symbolType();
@@ -705,7 +711,7 @@ function isIndexed(assignable: AstIdNode) {
 }
 
 export function mustNotBeParameter(
-  assignable: AstIdNode,
+  assignable: AstNode,
   parent: Parent,
   compileErrors: CompileError[],
   location: string,
@@ -714,11 +720,11 @@ export function mustNotBeParameter(
 
   if (s === SymbolScope.parameter) {
     if (isInsideFunctionOrConstructor(parent)) {
-      compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
+      compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
     } else {
       // only mutate indexed arraylist
       if (!isIndexed(assignable)) {
-        compileErrors.push(new ReassignCompileError(`parameter: ${assignable.id}`, location));
+        compileErrors.push(new ReassignCompileError(`parameter: ${getId(assignable)}`, location));
       }
     }
   }

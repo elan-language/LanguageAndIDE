@@ -20,7 +20,6 @@ import { InheritsFrom } from "../fields/inheritsFrom";
 import { OptionalKeyword } from "../fields/optionalKeyword";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { Class } from "../interfaces/class";
 import { Collapsible } from "../interfaces/collapsible";
 import { Field } from "../interfaces/field";
@@ -63,7 +62,7 @@ import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
-import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
+import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 
 export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
@@ -314,7 +313,7 @@ end class\r\n`;
       const superClasses = this.superClasses.getOrTransformAstNode(transforms);
 
       if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items as AstIdNode[];
+        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
         const typeAndName: [ClassType | UnknownType, string][] = nodes
           .map((n) => this.resolveSymbol(n.id, transforms, this))
           .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);

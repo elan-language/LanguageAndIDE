@@ -13,12 +13,12 @@ import {
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
 import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
+import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { VarAsn } from "../syntax-nodes/var-asn";
 
@@ -59,8 +59,8 @@ export class SetStatement extends AbstractFrame implements Statement {
   }
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const assignableAstNode = this.assignable.getOrTransformAstNode(transforms)! as AstIdNode;
-    const exprAstNode = this.expr.getOrTransformAstNode(transforms)!;
+    const assignableAstNode = this.assignable.getOrTransformAstNode(transforms);
+    const exprAstNode = this.expr.getOrTransformAstNode(transforms);
 
     mustNotBePropertyOnFunctionMethod(
       assignableAstNode,
@@ -81,8 +81,10 @@ export class SetStatement extends AbstractFrame implements Statement {
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.htmlId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.htmlId);
 
-    const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
-    mustNotBeLet(symbol, this.compileErrors, this.htmlId);
+    if (isAstIdNode(assignableAstNode)) {
+      const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);
+      mustNotBeLet(symbol, this.compileErrors, this.htmlId);
+    }
 
     const assignable = this.assignable.getOrTransformAstNode(transforms);
 
