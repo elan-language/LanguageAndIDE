@@ -149,13 +149,16 @@ export function getParentScope(start: Scope): Scope {
   return start;
 }
 
-export function wrapScopeInScope(wrapped: Scope) {
+export function wrapScopeInScope(wrapped: Scope): Scope {
   return {
     resolveSymbol: (id: string | undefined, transforms: Transforms, scope: Scope) =>
       wrapped.resolveSymbol(id, transforms, scope),
 
     getParentScope: () => wrapped,
-  } as Scope;
+
+    symbolMatches: (id: string, all: boolean, initialScope?: Scope) =>
+      wrapped.symbolMatches(id, all, initialScope),
+  };
 }
 
 export function isValueType(type: SymbolType) {

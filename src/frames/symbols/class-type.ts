@@ -40,9 +40,8 @@ export class ClassType implements SymbolType, Scope {
     return this.scope;
   }
 
-  childSymbols() {
-    // unknown because of typescript quirk
-    return this.scope.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
+  childSymbols(): ElanSymbol[] {
+    return this.scope.getChildren().filter((c) => isSymbol(c));
   }
 
   resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {

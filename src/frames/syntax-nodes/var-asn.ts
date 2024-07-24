@@ -192,7 +192,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       // replace scope with class scope
       currentScope = isScope(s) ? s : currentScope;
     } else if (classScope instanceof ClassType) {
-      currentScope = classScope as Scope;
+      currentScope = classScope;
     } else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
       currentScope = getClassScope(currentScope as Frame);
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {

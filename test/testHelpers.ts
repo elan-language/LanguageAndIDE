@@ -7,26 +7,14 @@ import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
 import { editorEvent } from "../src/frames/interfaces/editor-event";
-import { Field } from "../src/frames/interfaces/field";
 import { File } from "../src/frames/interfaces/file";
-import { Parent } from "../src/frames/interfaces/parent";
-import { Scope } from "../src/frames/interfaces/scope";
-import { ElanSymbol } from "../src/frames/interfaces/symbol";
-import { SymbolType } from "../src/frames/interfaces/symbol-type";
 import { ParseNode } from "../src/frames/parse-nodes/parse-node";
 import { ParseStatus } from "../src/frames/status-enums";
 import { BooleanType } from "../src/frames/symbols/boolean-type";
-import { ClassType } from "../src/frames/symbols/class-type";
 import { FloatType } from "../src/frames/symbols/float-type";
-import { FunctionType } from "../src/frames/symbols/function-type";
-import { GenericParameterType } from "../src/frames/symbols/generic-parameter-type";
-import { ImmutableListType } from "../src/frames/symbols/immutable-list-type";
 import { IntType } from "../src/frames/symbols/int-type";
 import { StringType } from "../src/frames/symbols/string-type";
-import { SymbolScope } from "../src/frames/symbols/symbol-scope";
-import { UnknownSymbol } from "../src/frames/symbols/unknown-symbol";
 import { UnknownType } from "../src/frames/symbols/unknown-type";
-import { transform } from "../src/frames/syntax-nodes/ast-visitor";
 import { getTestRunner } from "../src/runner";
 import { StdLib } from "../src/std-lib";
 import { hash } from "../src/util";
@@ -337,141 +325,6 @@ export const floatType = FloatType.Instance;
 export const boolType = BooleanType.Instance;
 export const stringType = StringType.Instance;
 export const unknownType = UnknownType.Instance;
-
-const stubIntSymbol = {
-  symbolId: "a",
-  symbolType: () => intType,
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubFloatSymbol = {
-  symbolId: "b",
-  symbolType: () => floatType,
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubStringSymbol = {
-  symbolId: "bar",
-  symbolType: () => stringType,
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubBoolSymbol = {
-  symbolId: "bar",
-  symbolType: () => boolType,
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubClassSymbol = {
-  symbolId: "p",
-  symbolType: () => new ClassType("p", false, false, [], undefined as any),
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubFooClassSymbol = {
-  symbolId: "p",
-  symbolType: () => new ClassType("Foo", false, false, [], undefined as any),
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubBarClassSymbol = {
-  symbolId: "p",
-  symbolType: () => new ClassType("Bar", false, false, [], undefined as any),
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubYonClassSymbol = {
-  symbolId: "p",
-  symbolType: () => new ClassType("Yon", false, false, [], undefined as any),
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubQuxClassSymbol = {
-  symbolId: "p",
-  symbolType: () => new ClassType("Qux", false, false, [], undefined as any),
-  symbolScope: SymbolScope.unknown,
-} as ElanSymbol;
-
-const stubHolder = {
-  resolveSymbol(id, transforms, initialScope): ElanSymbol {
-    switch (id) {
-      case "a":
-        return stubIntSymbol;
-      case "b":
-        return stubFloatSymbol;
-      case "c":
-        return stubFloatSymbol;
-      case "x":
-        return stubIntSymbol;
-      case "foo":
-        return stubIntSymbol;
-      case "bar":
-        return stubStringSymbol;
-      case "boo":
-        return stubBoolSymbol;
-      case "reduce":
-        return stubIntSymbol;
-      case "p":
-        return stubClassSymbol;
-      case "isBefore":
-        return stubBoolSymbol;
-      case "betterOf":
-        return stubStringSymbol;
-      case "attempt":
-        return stubBoolSymbol;
-      case "target":
-        return stubStringSymbol;
-      case "first":
-        return stubIntSymbol;
-      case "Foo":
-        return stubFooClassSymbol;
-      case "Bar":
-        return stubBarClassSymbol;
-      case "Yon":
-        return stubYonClassSymbol;
-      case "Qux":
-        return stubQuxClassSymbol;
-      case "lst":
-        return {
-          symbolId: "",
-          symbolType: () => new ImmutableListType(intType),
-          symbolScope: SymbolScope.unknown,
-        };
-      case "lst1":
-        return {
-          symbolId: "",
-          symbolType: () => new ImmutableListType(stringType),
-          symbolScope: SymbolScope.unknown,
-        };
-      case "simpleGeneric":
-        return {
-          symbolId: "",
-          symbolType: () =>
-            new FunctionType([new GenericParameterType("T")], new GenericParameterType("T"), false),
-          symbolScope: SymbolScope.unknown,
-        };
-      case "getKey":
-        return {
-          symbolId: "",
-          symbolType: () =>
-            new FunctionType(
-              [new ImmutableListType(new GenericParameterType("T"))],
-              new GenericParameterType("T"),
-              false,
-            ),
-          symbolScope: SymbolScope.unknown,
-        };
-    }
-
-    return new UnknownSymbol(id);
-  },
-} as Parent;
-
-export const stubField = {
-  getHolder() {
-    return stubHolder;
-  },
-} as Field;
 
 export async function createTestRunner() {
   const system = getTestSystem("");

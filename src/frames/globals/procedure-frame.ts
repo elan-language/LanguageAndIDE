@@ -69,7 +69,7 @@ ${this.renderChildrenAsHtml()}
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.name.text === id) {
-      return this as ElanSymbol;
+      return this;
     }
     const s = this.params.resolveSymbol(id, transforms, initialScope);
 

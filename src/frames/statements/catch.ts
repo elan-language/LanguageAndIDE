@@ -88,7 +88,7 @@ ${this.compileStatements(transforms)}\r`;
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (this.variable.text === id) {
-      return this as ElanSymbol;
+      return this;
     }
 
     return super.resolveSymbol(id, transforms, initialScope);
