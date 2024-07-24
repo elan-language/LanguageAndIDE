@@ -64,5 +64,7 @@ ${this.indent()}}\r
     return super.resolveSymbol(id, transforms, initialScope);
   }
 
-  symbolScope = SymbolScope.property;
+  get symbolScope() {
+    return SymbolScope.property;
+  }
 }

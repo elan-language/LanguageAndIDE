@@ -87,7 +87,9 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
     return st;
   }
 
-  symbolScope = SymbolScope.local;
+  get symbolScope() {
+    return SymbolScope.local;
+  }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     if (id === this.symbolId) {

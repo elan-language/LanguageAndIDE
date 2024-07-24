@@ -102,7 +102,7 @@ export class FileImpl implements File, Scope {
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const libMatches = this.libraryScope.symbolMatches(id, all);
-    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
+    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
     const matches = globalSymbols.filter((s) => s.symbolId.startsWith(id) || all);
 
     return matches.concat(libMatches);
@@ -592,7 +592,7 @@ export class FileImpl implements File, Scope {
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
     // unknown because of typescript quirk
-    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as unknown as ElanSymbol[];
+    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
     const matches = globalSymbols.filter((s) => s.symbolId === id);
 
     if (matches.length === 1) {

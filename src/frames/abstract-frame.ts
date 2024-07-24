@@ -18,6 +18,7 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
+import { SymbolType } from "./interfaces/symbol-type";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -25,6 +26,8 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayStatus, ParseStatus } from "./status-enums";
+import { SymbolScope } from "./symbols/symbol-scope";
+import { UnknownType } from "./symbols/unknown-type";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {
@@ -47,6 +50,18 @@ export abstract class AbstractFrame implements Frame {
     this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
     map.set(this.htmlId, this);
     this.setMap(map);
+  }
+
+  get symbolId() {
+    return "";
+  }
+
+  symbolType(transforms?: Transforms) {
+    return UnknownType.Instance;
+  }
+
+  get symbolScope() {
+    return SymbolScope.unknown;
   }
 
   isMovable(): boolean {
