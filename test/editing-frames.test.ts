@@ -367,4 +367,20 @@ suite("Editing Frames", () => {
     const main = file.getById("main1") as MainFrame;
     assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
+  test("#666 able to move a frame past a selector", async () => {
+    const file = await loadFileAsModelNew(`${__dirname}\\files\\test666.elan`);
+    const runner = await createTestRunner();
+    await file.refreshAllStatuses(runner);
+    const var3 = file.getById("var3");
+    var3.select();
+    var3.processKey(enter()); //To create selector following
+    const select6 = file.getById("select6");
+    var3.select();
+    var3.processKey(ctrl_down());
+    const main = file.getById("main1") as MainFrame;
+    assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
+    var3.processKey(ctrl_up());
+    assert.equal(main.getChildren()[0].renderAsHtml(), var3.renderAsHtml());
+
+  });
 });
