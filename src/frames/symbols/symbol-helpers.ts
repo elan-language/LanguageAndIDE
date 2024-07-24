@@ -123,7 +123,7 @@ export function getGlobalScope(start: Scope): File {
   }
 
   if (isScope(start)) {
-    return getGlobalScope(start.getParent());
+    return getGlobalScope(start.getParentScope());
   }
 
   throw new Error("Global scope not found");
@@ -135,7 +135,7 @@ export function getClassScope(start: Scope): Scope {
   }
 
   if (isScope(start)) {
-    return getClassScope(start.getParent());
+    return getClassScope(start.getParentScope());
   }
 
   return start;
@@ -143,7 +143,7 @@ export function getClassScope(start: Scope): Scope {
 
 export function getParentScope(start: Scope): Scope {
   if (isScope(start)) {
-    return start.getParent();
+    return start.getParentScope();
   }
   return start;
 }
@@ -153,7 +153,7 @@ export function wrapScopeInScope(wrapped: Scope) {
     resolveSymbol: (id: string | undefined, transforms: Transforms, scope: Scope) =>
       wrapped.resolveSymbol(id, transforms, scope),
 
-    getParent: () => wrapped,
+    getParentScope: () => wrapped,
   } as Scope;
 }
 

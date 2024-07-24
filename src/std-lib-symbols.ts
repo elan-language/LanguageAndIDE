@@ -27,7 +27,7 @@ export class StdLibSymbols implements Scope {
       .map((k) => this.symbols.get(k)!);
   }
 
-  getParent(): Parent {
+  getParentScope(): Scope {
     throw new Error("Method not implemented.");
   }
 

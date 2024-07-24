@@ -449,6 +449,10 @@ export abstract class AbstractFrame implements Frame {
     throw new Error(`Frame : ${this.htmlId} has no Parent`);
   }
 
+  getParentScope(): Scope {
+    return this.getParent();
+  }
+
   expandCollapse(): void {
     if (this.isCollapsed()) {
       this.expand();

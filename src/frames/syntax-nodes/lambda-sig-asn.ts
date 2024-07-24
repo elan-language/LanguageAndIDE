@@ -23,8 +23,8 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return [];
   }
 
-  getParent(): Parent {
-    return this.scope as Parent;
+  getParentScope(): Scope {
+    return this.scope;
   }
 
   aggregateCompileErrors(): CompileError[] {

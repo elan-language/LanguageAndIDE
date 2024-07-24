@@ -6,7 +6,6 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { isSymbol } from "./symbol-helpers";
 import { UnknownSymbol } from "./unknown-symbol";
 import { Parent } from "../interfaces/parent";
-import { match } from "assert";
 
 export class ClassType implements SymbolType, Scope {
   constructor(
@@ -37,8 +36,8 @@ export class ClassType implements SymbolType, Scope {
     return false;
   }
 
-  getParent(): Parent {
-    return this.scope as Parent;
+  getParentScope(): Scope {
+    return this.scope;
   }
 
   childSymbols() {

@@ -184,6 +184,10 @@ export class FileImpl implements File, Scope {
     );
   }
 
+  getParentScope(): Scope {
+    return this.libraryScope;
+  }
+
   getById(id: string): Selectable {
     return this._map.get(id) as Selectable;
   }
