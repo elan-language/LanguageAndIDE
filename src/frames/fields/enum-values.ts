@@ -1,10 +1,10 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -29,9 +29,9 @@ export class EnumValues extends AbstractField {
 
   compile(transforms: Transforms): string {
     this.compileErrors = [];
-    const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+    const ast = this.getOrTransformAstNode(transforms);
 
-    if (ast) {
+    if (isAstCollectionNode(ast)) {
       const items = ast.items;
       if (items.length > 0) {
         const ids = items.map((i) => i.compile());

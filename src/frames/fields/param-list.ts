@@ -1,6 +1,5 @@
 import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
@@ -13,6 +12,7 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -53,14 +53,19 @@ export class ParamList extends AbstractField implements Scope {
     source.readToNonMatchingCloseBracket();
 
   symbolTypes(transforms?: Transforms): SymbolType[] {
-    const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
-    return ast ? ast.items.map((i) => i.symbolType()) : [];
+    const ast = this.getOrTransformAstNode(transforms);
+
+    if (isAstCollectionNode(ast)) {
+      return ast.items.map((i) => i.symbolType());
+    }
+
+    return [];
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {
-    const ast = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+    const ast = this.getOrTransformAstNode(transforms);
 
-    if (ast) {
+    if (isAstCollectionNode(ast)) {
       const matches: ElanSymbol[] = [];
       for (const n of ast.items as AstIdNode[]) {
         if (n.id === id) {
@@ -91,17 +96,19 @@ export class ParamList extends AbstractField implements Scope {
     this.compileErrors = [];
 
     if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-      const parms = this.getOrTransformAstNode(transforms) as AstCollectionNode;
+      const parms = this.getOrTransformAstNode(transforms);
 
-      if (parms.items.length > 1) {
-        const ids = parms.items as AstIdNode[];
+      if (isAstCollectionNode(parms)) {
+        if (parms.items.length > 1) {
+          const ids = parms.items as AstIdNode[];
 
-        for (const idNode of ids) {
-          mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
+          for (const idNode of ids) {
+            mustBeUniqueNameInScope(idNode.id, this, transforms, this.compileErrors, this.htmlId);
+          }
         }
-      }
 
-      return parms.compile() ?? "";
+        return parms.compile();
+      }
     }
 
     return "";

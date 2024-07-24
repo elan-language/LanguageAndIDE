@@ -1,4 +1,5 @@
 import { isFile, isFrame, isFunction } from "../helpers";
+import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { Scope } from "../interfaces/scope";
@@ -21,6 +22,10 @@ import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n && "rootSymbolType" in n;
+}
+
+export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
+  return !!n && "items" in n;
 }
 
 export function InFunctionScope(start: Scope): boolean {

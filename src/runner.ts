@@ -1,4 +1,3 @@
-import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { StdLib } from "./std-lib";
 import { AssertOutcome, System } from "./system";

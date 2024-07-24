@@ -609,7 +609,7 @@ export class FileImpl implements File, Scope {
     return this.libraryScope.resolveSymbol(id, transforms, this);
   }
 
-  libraryScope = this._stdLibSymbols as Scope;
+  libraryScope = this._stdLibSymbols;
 }
 
 export const cannotLoadFile = `Cannot load file: it has been created or modified outside Elan IDE`;

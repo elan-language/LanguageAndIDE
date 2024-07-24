@@ -1,30 +1,27 @@
-import { ProcedureType } from "../symbols/procedure-type";
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
-import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { ElanSymbol } from "../interfaces/symbol";
 import { abstractProcedureKeywords } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { ProcedureType } from "../symbols/procedure-type";
 import { getClassScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
   public name: IdentifierField;
   public params: ParamList;
-  private class: ClassFrame;
 
   constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
   }

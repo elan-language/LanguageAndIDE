@@ -1,19 +1,18 @@
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
+import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
+import { ElanSymbol } from "../interfaces/symbol";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
-import { EnumType } from "../symbols/enum-type";
-import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
+import { getClassScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
-import { getClassScope } from "../symbols/symbol-helpers";
 
 export class Property extends AbstractFrame implements Member, ElanSymbol {
   isMember = true;
@@ -21,11 +20,9 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;
-  private class: ClassFrame;
 
   constructor(parent: ClassFrame) {
     super(parent);
-    this.class = parent as ClassFrame;
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
   }

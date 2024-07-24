@@ -479,7 +479,7 @@ export abstract class AbstractField implements Selectable, Field {
     if (transforms && (!this.astNode || this.codeHasChanged)) {
       if (this.rootNode instanceof CSV && this.rootNode.status === ParseStatus.valid) {
         const scope = this.getHolder();
-        this.astNode = transforms.transformMany(this.rootNode as CSV, this.htmlId, scope);
+        this.astNode = transforms.transformMany(this.rootNode, this.htmlId, scope);
       } else if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
         this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
       }

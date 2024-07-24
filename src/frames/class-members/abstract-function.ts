@@ -1,20 +1,19 @@
-import { FunctionType } from "../symbols/function-type";
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
+import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
-import { ClassFrame } from "../globals/class-frame";
 import { singleIndent } from "../helpers";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
+import { ElanSymbol } from "../interfaces/symbol";
 import { abstractFunctionKeywords } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
-import { mustBeUniqueNameInScope } from "../compile-rules";
+import { FunctionType } from "../symbols/function-type";
 import { getClassScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
   isAbstract = true;
@@ -22,11 +21,9 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   public name: IdentifierField;
   public params: ParamList;
   public returnType: TypeField;
-  private class: ClassFrame;
 
   constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
     this.name = new IdentifierField(this);
     this.params = new ParamList(this);
     this.returnType = new TypeField(this);

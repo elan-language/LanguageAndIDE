@@ -1,23 +1,47 @@
-import { InheritsFrom } from "../fields/inheritsFrom";
+import { AbstractFrame } from "../abstract-frame";
+import { AbstractSelector } from "../abstract-selector";
+import { AbstractFunction } from "../class-members/abstract-function";
+import { AbstractProcedure } from "../class-members/abstract-procedure";
+import { AbstractProperty } from "../class-members/abstract-property";
+import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
-import { Property } from "../class-members/property";
+import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
-import { Frame } from "../interfaces/frame";
+import { Property } from "../class-members/property";
+import { CodeSource } from "../code-source";
+import { CompileError } from "../compile-error";
+import {
+  mustBeAbstractClass,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+  mustImplementSuperClasses,
+} from "../compile-rules";
+import { InheritsFrom } from "../fields/inheritsFrom";
+import { OptionalKeyword } from "../fields/optionalKeyword";
+import { Regexes } from "../fields/regexes";
+import { TypeNameField } from "../fields/type-name-field";
+import { AstIdNode } from "../interfaces/ast-id-node";
+import { Class } from "../interfaces/class";
+import { Collapsible } from "../interfaces/collapsible";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { MemberSelector } from "../class-members/member-selector";
-import { Constructor } from "../class-members/constructor";
-import { CodeSource } from "../code-source";
-import { AbstractFunction as AbstractFunction } from "../class-members/abstract-function";
-import { AbstractProperty } from "../class-members/abstract-property";
-import { AbstractProcedure as AbstractProcedure } from "../class-members/abstract-procedure";
-import { CommentStatement } from "../statements/comment-statement";
-import { OptionalKeyword } from "../fields/optionalKeyword";
-import { AbstractSelector } from "../abstract-selector";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
+import { Profile } from "../interfaces/profile";
+import { StatementFactory } from "../interfaces/statement-factory";
+import { ElanSymbol } from "../interfaces/symbol";
+import {
+  abstractKeyword,
+  classKeyword,
+  immutableKeyword,
+  inheritsKeyword,
+  thisKeyword,
+} from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
   parentHelper_aggregateCompileErrorsOfChildren,
+  parentHelper_compileChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
   parentHelper_getChildRange,
@@ -27,44 +51,20 @@ import {
   parentHelper_insertOrGotoChildSelector,
   parentHelper_moveSelectedChildrenDownOne,
   parentHelper_moveSelectedChildrenUpOne,
+  parentHelper_readWorstCompileStatusOfChildren,
+  parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsHtml,
-  parentHelper_compileChildren,
   parentHelper_renderChildrenAsSource,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_readWorstCompileStatusOfChildren,
 } from "../parent-helpers";
-import { AbstractFrame } from "../abstract-frame";
-import { Parent } from "../interfaces/parent";
-import { StatementFactory } from "../interfaces/statement-factory";
-import { Regexes } from "../fields/regexes";
-import { Collapsible } from "../interfaces/collapsible";
-import { Profile } from "../interfaces/profile";
-import { TypeNameField } from "../fields/type-name-field";
-import { ElanSymbol } from "../interfaces/symbol";
-import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
-import {
-  abstractKeyword,
-  classKeyword,
-  immutableKeyword,
-  inheritsKeyword,
-  thisKeyword,
-} from "../keywords";
-import {
-  mustBeAbstractClass,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-  mustImplementSuperClasses,
-} from "../compile-rules";
+import { CommentStatement } from "../statements/comment-statement";
 import { ClassType } from "../symbols/class-type";
-import { CompileError } from "../compile-error";
-import { Transforms } from "../syntax-nodes/transforms";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { Class } from "../interfaces/class";
-import { UnknownType } from "../symbols/unknown-type";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
+import { getGlobalScope, isSymbol } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
+import { isAstCollectionNode } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsible, ElanSymbol {
   isCollapsible: boolean = true;
@@ -311,27 +311,30 @@ end class\r\n`;
     );
 
     if (this.doesInherit()) {
-      const superClasses = this.superClasses.getOrTransformAstNode(transforms) as AstCollectionNode;
-      const nodes = superClasses.items as AstIdNode[];
-      const typeAndName: [ClassType | UnknownType, string][] = nodes
-        .map((n) => this.resolveSymbol(n.id, transforms, this))
-        .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
+      const superClasses = this.superClasses.getOrTransformAstNode(transforms);
 
-      for (const st of typeAndName) {
-        mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
+      if (isAstCollectionNode(superClasses)) {
+        const nodes = superClasses.items as AstIdNode[];
+        const typeAndName: [ClassType | UnknownType, string][] = nodes
+          .map((n) => this.resolveSymbol(n.id, transforms, this))
+          .map((c) => [c.symbolType(transforms) as ClassType | UnknownType, c.symbolId]);
+
+        for (const st of typeAndName) {
+          mustBeKnownSymbolType(st[0], st[1], this.compileErrors, this.htmlId);
+        }
+
+        for (const st of typeAndName) {
+          mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
+        }
+
+        mustImplementSuperClasses(
+          transforms,
+          this.symbolType(transforms),
+          typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
+          this.compileErrors,
+          this.htmlId,
+        );
       }
-
-      for (const st of typeAndName) {
-        mustBeAbstractClass(st[0], this.compileErrors, this.htmlId);
-      }
-
-      mustImplementSuperClasses(
-        transforms,
-        this.symbolType(transforms),
-        typeAndName.map((tn) => tn[0]).filter((st) => st instanceof ClassType) as ClassType[],
-        this.compileErrors,
-        this.htmlId,
-      );
     }
 
     const asString = this.isAbstract()

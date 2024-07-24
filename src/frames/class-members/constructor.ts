@@ -1,11 +1,11 @@
-import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../code-source";
 import { ParamList } from "../fields/param-list";
-import { Member } from "../interfaces/member";
+import { FrameWithStatements } from "../frame-with-statements";
 import { ClassFrame } from "../globals/class-frame";
 import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { ElanSymbol } from "../interfaces/symbol";
 import { Frame } from "../interfaces/frame";
+import { Member } from "../interfaces/member";
+import { ElanSymbol } from "../interfaces/symbol";
 import { constructorKeyword } from "../keywords";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -14,11 +14,9 @@ export class Constructor extends FrameWithStatements implements Member {
   isConstructor = true;
   isMember = true;
   public params: ParamList;
-  private class: ClassFrame;
 
   constructor(parent: ClassFrame) {
     super(parent);
-    this.class = parent as ClassFrame;
     this.movable = false;
     this.params = new ParamList(this);
   }
