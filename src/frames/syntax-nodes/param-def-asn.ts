@@ -1,12 +1,8 @@
 import { CompileError } from "../compile-error";
+import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "../interfaces/ast-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { FunctionFrame } from "../globals/function-frame";
-import { mustBeImmutableType, mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
-import { transforms } from "./ast-helpers";
-import { ClassType } from "../symbols/class-type";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(

@@ -1,20 +1,19 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
-import { CodeSource } from "../code-source";
-import { VarDefField as VarDefField } from "../fields/var-def-field";
 import { AbstractFrame } from "../abstract-frame";
+import { CodeSource } from "../code-source";
+import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
+import { VarDefField } from "../fields/var-def-field";
+import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { setKeyword, toKeyword, varKeyword } from "../keywords";
-import { mustNotBeKeyword, mustNotBeReassigned } from "../compile-rules";
-import { Frame } from "../interfaces/frame";
-import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { TupleType } from "../symbols/tuple-type";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { Scope } from "../interfaces/scope";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
+import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class VarStatement extends AbstractFrame implements Statement, ElanSymbol {
   isStatement = true;
@@ -54,8 +53,12 @@ export class VarStatement extends AbstractFrame implements Statement, ElanSymbol
   }
 
   ids(transforms?: Transforms) {
-    const id = (this.name.getOrTransformAstNode(transforms) as AstIdNode).id;
-    return id.includes(",") ? id.split(",") : [id];
+    const ast = this.name.getOrTransformAstNode(transforms);
+    if (isAstIdNode(ast)) {
+      const id = ast.id;
+      return id.includes(",") ? id.split(",") : [id];
+    }
+    return [];
   }
 
   compile(transforms: Transforms): string {

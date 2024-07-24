@@ -64,6 +64,7 @@ import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
+import { isAstIdNode } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CsvAsn } from "./csv-asn";
@@ -260,10 +261,14 @@ export function transform(
   }
 
   if (node instanceof ParamDefNode) {
-    const id = node.name!.matchedText;
-    const type = transform(node.type, fieldId, scope) as AstIdNode;
+    const id = node.name?.matchedText ?? "";
+    const type = transform(node.type, fieldId, scope);
 
-    return new ParamDefAsn(id, type, fieldId, scope);
+    if (isAstIdNode(type)) {
+      return new ParamDefAsn(id, type, fieldId, scope);
+    }
+
+    return undefined;
   }
 
   if (node instanceof TypeGenericNode) {

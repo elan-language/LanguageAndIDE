@@ -9,7 +9,6 @@ import {
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { Field } from "../interfaces/field";
@@ -18,7 +17,12 @@ import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
-import { containsGenericType, generateType, matchGenericTypes } from "../syntax-nodes/ast-helpers";
+import {
+  containsGenericType,
+  generateType,
+  isAstCollectionNode,
+  matchGenericTypes,
+} from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -82,45 +86,49 @@ export class CallStatement extends AbstractFrame implements Statement {
     mustBeProcedure(procSymbol.symbolType(transforms), this.compileErrors, this.htmlId);
 
     const ps = procSymbol.symbolType(transforms);
-    const argList = this.args.getOrTransformAstNode(transforms) as AstCollectionNode;
-    let parameters = argList.items;
-    let isAsync: boolean = false;
+    const argList = this.args.getOrTransformAstNode(transforms);
 
-    if (ps instanceof ProcedureType) {
-      mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
+    if (isAstCollectionNode(argList)) {
+      let parameters = argList.items;
+      let isAsync: boolean = false;
 
-      if (ps.isExtension && qualifier instanceof QualifierAsn) {
-        parameters = [qualifier.value as AstNode].concat(parameters);
-        qualifier = undefined;
+      if (ps instanceof ProcedureType) {
+        mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
+
+        if (ps.isExtension && qualifier instanceof QualifierAsn) {
+          parameters = [qualifier.value as AstNode].concat(parameters);
+          qualifier = undefined;
+        }
+
+        let parameterTypes = ps.parametersTypes;
+
+        if (parameterTypes.some((pt) => containsGenericType(pt))) {
+          // this.parameters is correct - function adds qualifier if extension
+          const matches = matchGenericTypes(ps, argList.items, updatedQualifier);
+          parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
+        }
+
+        mustMatchParameters(
+          parameters,
+          parameterTypes,
+          ps.isExtension,
+          this.compileErrors,
+          this.htmlId,
+        );
+        isAsync = ps.isAsync;
       }
 
-      let parameterTypes = ps.parametersTypes;
-
-      if (parameterTypes.some((pt) => containsGenericType(pt))) {
-        // this.parameters is correct - function adds qualifier if extension
-        const matches = matchGenericTypes(ps, argList.items, updatedQualifier);
-        parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
+      // todo temp fix pending constructor
+      if (this.getParent() instanceof Constructor) {
+        isAsync = false;
       }
 
-      mustMatchParameters(
-        parameters,
-        parameterTypes,
-        ps.isExtension,
-        this.compileErrors,
-        this.htmlId,
-      );
-      isAsync = ps.isAsync;
+      const pp = parameters.map((p) => p.compile()).join(", ");
+      const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
+      const a = isAsync ? "await " : "";
+
+      return `${this.indent()}${a}${q}${id}(${pp});`;
     }
-
-    // todo temp fix pending constructor
-    if (this.getParent() instanceof Constructor) {
-      isAsync = false;
-    }
-
-    const pp = parameters.map((p) => p.compile()).join(", ");
-    const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
-    const a = isAsync ? "await " : "";
-
-    return `${this.indent()}${a}${q}${id}(${pp});`;
+    return "";
   }
 }

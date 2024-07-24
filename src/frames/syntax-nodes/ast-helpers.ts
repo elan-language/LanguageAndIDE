@@ -29,7 +29,7 @@ export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
   return !!n && "items" in n;
 }
 
-export function isAstIdNode(n: AstNode): n is AstIdNode {
+export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
