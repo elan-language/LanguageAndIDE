@@ -1,16 +1,15 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
+import { AstNode } from "../interfaces/ast-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { getParentScope } from "../symbols/symbol-helpers";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode, transforms } from "./ast-helpers";
 
 export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   constructor(
-    public readonly value: AstIdNode,
+    public readonly value: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -41,12 +40,13 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   }
 
   symbolType() {
-    const id = this.value.id;
-    return id
-      ? getParentScope(this.scope)
-          .resolveSymbol(id, transforms(), this.scope)
-          .symbolType(transforms())
-      : UnknownType.Instance;
+    if (isAstIdNode(this.value)) {
+      return getParentScope(this.scope)
+        .resolveSymbol(this.value.id, transforms(), this.scope)
+        .symbolType(transforms());
+    }
+
+    return this.value.symbolType();
   }
 
   toString() {

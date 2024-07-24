@@ -1,8 +1,3 @@
-import { ArrayListType } from "../symbols/array-list-type";
-import { ClassType } from "../symbols/class-type";
-import { FunctionType } from "../symbols/function-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
-import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeCompatibleType,
@@ -11,16 +6,23 @@ import {
   mustBePublicProperty,
   mustBeRangeableSymbol,
 } from "../compile-rules";
+import { isScope } from "../helpers";
+import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
-import { AstNode } from "../interfaces/ast-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { IndexAsn } from "./index-asn";
-import { QualifierAsn } from "./qualifier-asn";
-import { RangeAsn } from "./range-asn";
-import { ThisAsn } from "./this-asn";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolType } from "../interfaces/symbol-type";
+import { globalKeyword } from "../keywords";
+import { LetStatement } from "../statements/let-statement";
+import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
+import { ArrayListType } from "../symbols/array-list-type";
+import { ClassType } from "../symbols/class-type";
+import { FunctionType } from "../symbols/function-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
+import { IntType } from "../symbols/int-type";
+import { StringType } from "../symbols/string-type";
 import {
   getClassScope,
   getGlobalScope,
@@ -29,17 +31,14 @@ import {
   isGenericSymbolType,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { isScope } from "../helpers";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { LetStatement } from "../statements/let-statement";
-import { ElanSymbol } from "../interfaces/symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { UnknownType } from "../symbols/unknown-type";
-import { StringType } from "../symbols/string-type";
-import { IntType } from "../symbols/int-type";
-import { globalKeyword } from "../keywords";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode, transforms } from "./ast-helpers";
+import { IndexAsn } from "./index-asn";
+import { QualifierAsn } from "./qualifier-asn";
+import { RangeAsn } from "./range-asn";
+import { ThisAsn } from "./this-asn";
 
 export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
   constructor(
@@ -154,7 +153,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
         mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
       }
-    } else if (this.qualifier?.value.id === globalKeyword) {
+    } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     } else {
       symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
@@ -196,7 +195,7 @@ export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNo
       currentScope = classScope as Scope;
     } else if (this.qualifier instanceof QualifierAsn && this.qualifier?.value instanceof ThisAsn) {
       currentScope = getClassScope(currentScope as Frame);
-    } else if (this.qualifier?.value.id === globalKeyword) {
+    } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       currentScope = getGlobalScope(currentScope);
     } else {
       currentScope = getParentScope(currentScope);

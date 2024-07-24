@@ -3,6 +3,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
@@ -23,6 +24,10 @@ import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n && "rootSymbolType" in n;
+}
+
+export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
+  return !!n && "value" in n;
 }
 
 export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {

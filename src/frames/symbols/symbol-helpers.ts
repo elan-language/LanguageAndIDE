@@ -9,6 +9,7 @@ import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { ArrayListType } from "./array-list-type";
@@ -101,11 +102,11 @@ export function updateScopeAndQualifier(
     );
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
-  } else if (value?.id === globalKeyword) {
+  } else if (isAstIdNode(value) && value.id === globalKeyword) {
     // todo kludge
     currentScope = getGlobalScope(currentScope);
     qualifier = undefined;
-  } else if (value?.id === libraryKeyword) {
+  } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
     qualifier = undefined;
   } else if (qualifier) {

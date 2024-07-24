@@ -453,7 +453,7 @@ export function transform(
   }
 
   if (node instanceof Qualifier) {
-    const q = transform(node.qualifier, fieldId, scope) as AstIdNode;
+    const q = transform(node.qualifier, fieldId, scope)!;
     return new QualifierAsn(q, fieldId, scope);
   }
 
