@@ -1,20 +1,19 @@
+import { thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { LitValueNode } from "./lit-value";
-import { UnaryExpression } from "./unary-expression";
+import { ArrayListNode } from "./array-list-node";
 import { BracketedExpression } from "./bracketed-expression";
-import { NewInstance } from "./new-instance";
-import { TupleNode as TupleNode } from "./tuple-node";
-import { Lambda } from "./lambda";
+import { EmptyOfTypeNode } from "./empty-of-type-node";
+import { ExprNode } from "./expr-node";
+import { FunctionCallNode } from "./function-call-node";
 import { IfExpr } from "./if-expr";
 import { ImmutableListNode } from "./immutable-list-node";
-import { ExprNode } from "./expr-node";
-import { VarRefNode } from "./var-ref-node";
-import { FunctionCallNode } from "./function-call-node";
-import { LiteralNode } from "./literal-node";
 import { KeywordNode } from "./keyword-node";
-import { thisKeyword } from "../keywords";
-import { ArrayListNode } from "./array-list-node";
-import { EmptyOfTypeNode } from "./empty-of-type-node";
+import { Lambda } from "./lambda";
+import { LiteralNode } from "./literal-node";
+import { NewInstance } from "./new-instance";
+import { TupleNode } from "./tuple-node";
+import { UnaryExpression } from "./unary-expression";
+import { VarRefNode } from "./var-ref-node";
 
 export class Term extends AbstractAlternatives {
   constructor() {

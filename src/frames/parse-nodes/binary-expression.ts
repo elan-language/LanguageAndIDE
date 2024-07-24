@@ -3,7 +3,7 @@ import { BinaryOperation } from "./binary-operation";
 import { AbstractSequence } from "./abstract-sequence";
 import { Term } from "./term";
 import { SpaceNode } from "./space-node";
-import { Space as Space } from "./parse-node-helpers";
+import { Space } from "./parse-node-helpers";
 import { DIVIDE, MULT, POWER } from "../symbols";
 import { ParseStatus } from "../status-enums";
 

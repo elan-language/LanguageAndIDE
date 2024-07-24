@@ -78,6 +78,7 @@ export class CallStatement extends AbstractFrame implements Statement {
       transforms,
       this,
     );
+    
     let qualifier = updatedQualifier;
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);
