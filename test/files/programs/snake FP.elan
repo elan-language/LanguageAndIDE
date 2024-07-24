@@ -1,126 +1,107 @@
 # FFFF Elan Beta 1 valid
 
 main
-  var board set to new Board(40, 30)
-  var currentDirection set to Direction.up
-  var snake set to new Snake(board, currentDirection)
-  var apple set to new Apple(board)
-  # call apple.newRandomPosition(snake)
-  var gr set to new Graphics()
-  var gameOn set to true
-  while gameOn
-    set gr to snake.updateGraphics(gr)
-    set gr to apple.updateGraphics(gr)
+  var game set to new Game(createRandom())
+  while game.isOn
+    var gr set to game.graphics
     call gr.draw()
     call pause(150)
-    var k set to gr.getKeystroke()
-    set currentDirection to directionByKey(k, currentDirection)
-    # call snake.clockTick(currentDirection, apple)
-    set gameOn to not snake.gameOver()
+    set game to clockTick(game, gr.getKeystroke()) 
   end while
-  print "Game Over! Score: {snake.length() - 1}"
+  print "Game Over! Score: {score(game)}"
 end main
 
-# procedure clockTick(d as Direction, apple as Apple)
-#  set priorTail to body[0]
-#  call body.add(head)
-#  set head to head.getAdjacentSquare(d)
-#  if head is apple.location
-#    then
-#      call apple.newRandomPosition(this)
-#    else
-#      set body to body[1..]
-#  end if
-# end procedure
+function clockTick(game as Game, k as String) return Game 
+  let g2 be copy game with key to k
+  let g3 to moveSnake(g2, currentDirection)
+  # prior tail needs to be set
+  let g4 be if g3.head is g3.apple then moveApple(g3) else copy g3 with body to body[1..]
+  let g5 be updateGraphics(g4)
+  return g5
+end function
 
-# procedure newRandomPosition(snake as Snake)
-#  repeat
-#    let ranX be randomInt(0, board.width - 1)
-#    let ranY be randomInt(0, board.height - 1)
-#    set location to new Square(ranX, ranY)
-#  end repeat when not snake.bodyCovers(location)
-# end procedure
+function updateGraphics(g as Game) return Game
+  let gr be g.graphics
+  let apple be g.apple
+  let g2 be copy g with graphics to gr.putBackground(apple.x, apple.y, red) 
+  let gr2 be g2.graphics
+  let head be g2.head
+  let g3 be copy g2 with graphics to gr2.putBackground(head.x, head.y, green)
+  let body be g3.body
+  let tail be body.getAt(0)
+  let tailColour be if tail is g2.priorTail then green else white
+  let gr3 be g3.graphics
+  return copy g3 with graphics to gr3.putBackground(tail.x, tail.y, tailColour)
+end function
 
-immutable class Snake
-  constructor(board as Board, startingDirection as Direction)
-    set property.board to board
-    var tail set to new Square(div(board.width, 2), div(board.height, 2))
-    set body to [tail]
-    set head to tail.getAdjacentSquare(startingDirection)
+function moveApple(g as Game) return Game
+  let rnd1 be g.rnd
+  let rndX be rnd1.nextInt(0, 39)
+  let rnd2 be rndx.random()
+  let rndY be rnd2.nextInt(0, 29)
+  let newApple be new Square(rndX.value(), rndY.value())
+  let g2 copy g with apple to newApple, rnd to rndY.random()
+  let body be g2.body
+  return if body.contains(g2.apple) then moveApple(g2) else g2
+end function
+
+function score(game as Game) as Int
+  let body be game.body
+  return body.length() -1
+end function
+
+function moveSnake(game as Game) as Game 
+  let body be game.body
+  let head be game.head
+  let key be game.key
+  let newX be if key is "a" then sq.x - 1 else if key is "d" then sq.x + 1 else sq.x
+  let newY be if key is "w" then sq.y - 1 else if key is "s" then sq.y + 1 else sq.y
+  return  copy game with priorTail to body.getAt(0), body to body + head, head to new Square(newX, newY)
+end function
+
+function gameOver(game as Game) return Boolean
+  let body be game.body
+  return body.contains(game.head) or headIsAtEdge(game)
+end function
+
+function headIsAtEdge(game as Game) return Boolean
+  let head be game.head
+  return (head.x is -1) or (head.y is -1) or (head.x is 40) or (head.y is 30)
+end function
+
+immutable class Game
+  constructor(rnd as Random)
+    set graphics to new Graphics()
+    var tail set to new Square(20, 15)
+    set head to tail.getAdjacentSquare(Direction.right)
     set priorTail to tail
+    set body to {tail, head}
+    set apple to new Square(20, 10)
+    set isOn to true
+    set property rnd to rnd
+    set currentDir to Direction.right
   end constructor
-
-  property board as Board
 
   property head as Square
 
-  property body as [Square]
+  property body as {Square}
 
   property priorTail as Square
 
-  function length() return Int
-    return body.length()
-  end function
+  property apple as Square
 
-  function gameOver() return Boolean
-    return bodyCovers(head) or board.isAtEdge(head)
-  end function
+  property isOn as Boolean
 
-  function bodyCovers(sq as Square) return Boolean
-    var result set to false
-    each seg in body
-      if (seg is sq)
-        then
-          set result to true
-      end if
-    end each
-    return result
-  end function
+  property rnd as Random
 
-  function updateGraphics(gr as Graphics) return Graphics
-    var gr2 set to gr.putBackground(head.x, head.y, green)
-    if body[0] isnt priorTail
-      then
-        set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
-    end if
-    return gr2
-  end function
+  property graphics as Graphics
 
-end class
-
-immutable class Apple
-  constructor(board as Board)
-    set property.board to board
-  end constructor
-
-  property board as Board
-
-  property location as Square
-
-  function updateGraphics(gr as Graphics) return Graphics
-    return gr.putBackground(location.x, location.y, red)
-  end function
-
-end class
-
-immutable class Board
-  constructor(width as Int, height as Int)
-    set property.width to width
-    set property.height to height
-  end constructor
-
-  property width as Int
-
-  property height as Int
-
-  function isAtEdge(head as Square) return Boolean
-    return (head.x is -1) or (head.y is -1) or (head.x is width) or (head.y is height)
-  end function
+  property key as String
 
 end class
 
 immutable class Square
-  constructor(x as Int, y as Int)
+  constructor(x as Int, y as int)
     set property.x to x
     set property.y to y
   end constructor
@@ -129,42 +110,7 @@ immutable class Square
 
   property y as Int
 
-  function getAdjacentSquare(d as Direction) return Square
-    var newX set to x
-    var newY set to y
-    switch d
-      case Direction.left
-        set newX to x - 1
-      case Direction.right
-        set newX to x + 1
-      case Direction.up
-        set newY to y - 1
-      case Direction.down
-        set newY to y + 1
-    end switch
-    return new Square(newX, newY)
-  end function
-
 end class
-
-function directionByKey(key as String, current as Direction) return Direction
-  var dir set to current
-  switch key
-    case "w"
-      set dir to Direction.up
-    case "s"
-      set dir to Direction.down
-    case "a"
-      set dir to Direction.left
-    case "d"
-      set dir to Direction.right
-  end switch
-  return dir
-end function
-
-enum Direction
-  up, down, left, right
-end enum
 
 constant green set to 0x00ff00
 
