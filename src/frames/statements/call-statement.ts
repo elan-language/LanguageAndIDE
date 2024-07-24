@@ -10,7 +10,6 @@ import {
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { AstNode } from "../interfaces/ast-node";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
@@ -21,6 +20,7 @@ import {
   containsGenericType,
   generateType,
   isAstCollectionNode,
+  isAstIdNode,
   matchGenericTypes,
 } from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
@@ -70,15 +70,11 @@ export class CallStatement extends AbstractFrame implements Statement {
   compile(transforms: Transforms): string {
     this.compileErrors = [];
 
-    const astNode = this.proc.getOrTransformAstNode(transforms) as AstQualifiedNode;
-    const id = astNode.id;
+    const astNode = this.proc.getOrTransformAstNode(transforms);
+    const id = isAstIdNode(astNode) ? astNode.id : "";
 
-    const [updatedQualifier, currentScope] = updateScopeAndQualifier(
-      astNode.qualifier,
-      transforms,
-      this,
-    );
-    
+    const [updatedQualifier, currentScope] = updateScopeAndQualifier(astNode, transforms, this);
+
     let qualifier = updatedQualifier;
 
     const procSymbol = currentScope.resolveSymbol(id, transforms, this);

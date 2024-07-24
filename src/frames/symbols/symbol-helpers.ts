@@ -1,6 +1,5 @@
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
@@ -9,7 +8,7 @@ import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, isAstQualifiedNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
 import { ArrayListType } from "./array-list-type";
@@ -87,11 +86,12 @@ export function scopePrefix(symbolScope: SymbolScope | undefined) {
 }
 
 export function updateScopeAndQualifier(
-  qualifier: AstQualifierNode | undefined,
+  rootNode: AstNode,
   transforms: Transforms,
   currentScope: Scope,
 ): [AstNode | undefined, Scope] {
-  const qualifierScope = qualifier ? qualifier.symbolType() : undefined;
+  let qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : undefined;
+  const qualifierScope = qualifier?.symbolType();
   const value = qualifier?.value;
 
   if (qualifierScope instanceof ClassType) {

@@ -55,7 +55,7 @@ import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
-import { InFunctionScope, isAstIdNode, isAstQualifiedNode } from "./syntax-nodes/ast-helpers";
+import { InFunctionScope, isAstIdNode, isAstIndexableNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
 
 export function mustBeOfSymbolType(
@@ -702,7 +702,7 @@ export function mustNotIndexOnFunctionMethod(
 }
 
 function isIndexed(assignable: AstNode) {
-  if (isAstQualifiedNode(assignable)) {
+  if (isAstIndexableNode(assignable)) {
     const rst = assignable.rootSymbolType();
     const st = assignable.symbolType();
     return rst.name !== st.name;

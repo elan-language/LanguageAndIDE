@@ -7,8 +7,7 @@ import {
   mustBeRangeableSymbol,
 } from "../compile-rules";
 import { isScope } from "../helpers";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
@@ -40,7 +39,7 @@ import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { ThisAsn } from "./this-asn";
 
-export class VarAsn extends AbstractAstNode implements AstIdNode, AstQualifiedNode {
+export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
     public readonly id: string,
     public readonly isAssignable: boolean,

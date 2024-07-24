@@ -1,6 +1,7 @@
 import { isFile, isFrame, isFunction } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
@@ -23,7 +24,11 @@ import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
-  return !!n && "qualifier" in n && "rootSymbolType" in n;
+  return !!n && "qualifier" in n;
+}
+
+export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {
+  return !!n && "rootSymbolType" in n;
 }
 
 export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {

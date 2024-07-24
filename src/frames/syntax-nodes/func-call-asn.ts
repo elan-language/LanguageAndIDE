@@ -1,4 +1,3 @@
-import { FunctionType } from "../symbols/function-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeKnownSymbol,
@@ -6,13 +5,14 @@ import {
   mustCallExtensionViaQualifier,
   mustMatchParameters,
 } from "../compile-rules";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { AstNode } from "../interfaces/ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { QualifierAsn } from "./qualifier-asn";
-import { containsGenericType, generateType, matchGenericTypes, transforms } from "./ast-helpers";
+import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { FunctionType } from "../symbols/function-type";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { containsGenericType, generateType, matchGenericTypes, transforms } from "./ast-helpers";
+import { QualifierAsn } from "./qualifier-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -49,7 +49,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
     let parameters = [...this.parameters];
     const [updatedQualifier, currentScope] = updateScopeAndQualifier(
-      this.qualifier as QualifierAsn | undefined,
+      this,
       transforms(),
       this.scope,
     );
@@ -97,7 +97,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode {
 
   symbolType() {
     const [updatedQualifier, currentScope] = updateScopeAndQualifier(
-      this.qualifier as QualifierAsn | undefined,
+      this,
       transforms(),
       this.scope,
     );
