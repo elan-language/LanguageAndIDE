@@ -1,12 +1,11 @@
-# 6fdf4d19dcb7a89c971d22bdd2d97edb3e2bf17ab8df7ca046a36155fd6cc87f Elan Beta 1 valid
+# 3e3e6ebc880a28cc32cc1f4c9d17f7f8f56fe3d8b39c975d8e5b64874a4ae10e Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
 main
-  var board set to new Board(40, 30)
-  var currentDirection set to Direction.up
-  var snake set to new Snake(board, currentDirection)
-  var apple set to new Apple(board)
+  var currentDir set to Direction.up
+  var snake set to new Snake(currentDir)
+  var apple set to new Apple()
   call apple.newRandomPosition(snake)
   var gr set to new Graphics()
   var gameOn set to true
@@ -16,23 +15,20 @@ main
     call gr.draw()
     call pause(150)
     var k set to gr.getKeystroke()
-    set currentDirection to board.directionByKey(k, currentDirection)
-    call snake.clockTick(currentDirection, apple)
+    set currentDir to directionByKey(k, currentDir)
+    call snake.clockTick(currentDir, apple)
     set gameOn to not snake.gameOver()
   end while
   print "Game Over! Score: {snake.length() - 1}"
 end main
 
 class Snake
-  constructor(board as Board, startingDirection as Direction)
-    set property.board to board
-    var tail set to new Square(div(board.width, 2), div(board.height, 2))
+  constructor(startingDirection as Direction)
+    var tail set to new Square(20, 15)
     set body to [tail]
     set head to tail.getAdjacentSquare(startingDirection)
     set priorTail to tail
   end constructor
-
-  property board as Board
 
   property head as Square
 
@@ -45,7 +41,7 @@ class Snake
   end function
 
   function gameOver() return Boolean
-    return bodyCovers(head) or board.isAtEdge(head)
+    return bodyCovers(head) or head.isAtEdge()
   end function
 
   function bodyCovers(sq as Square) return Boolean
@@ -83,55 +79,22 @@ class Snake
 end class
 
 class Apple
-  constructor(board as Board)
-    set property.board to board
-  end constructor
+  constructor()
 
-  property board as Board
+  end constructor
 
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
     repeat
-      var ranX set to randomInt(0, board.width - 1)
-      var ranY set to randomInt(0, board.height - 1)
+      var ranX set to randomInt(0, 39)
+      var ranY set to randomInt(0, 29)
       set location to new Square(ranX, ranY)
     end repeat when not snake.bodyCovers(location)
   end procedure
 
   function updateGraphics(gr as Graphics) return Graphics
     return gr.putBackground(location.x, location.y, red)
-  end function
-
-end class
-
-class Board
-  constructor(width as Int, height as Int)
-    set property.width to width
-    set property.height to height
-  end constructor
-
-  property width as Int
-
-  property height as Int
-
-  function isAtEdge(head as Square) return Boolean
-    return (head.x is -1) or (head.y is -1) or (head.x is width) or (head.y is height)
-  end function
-
-  function directionByKey(key as String, current as Direction) return Direction
-    var dir set to current
-    switch key
-      case "w"
-        set dir to Direction.up
-      case "s"
-        set dir to Direction.down
-      case "a"
-        set dir to Direction.left
-      case "d"
-        set dir to Direction.right
-    end switch
-    return dir
   end function
 
 end class
@@ -162,11 +125,30 @@ class Square
     return new Square(newX, newY)
   end function
 
+  function isAtEdge() return Boolean
+    return (x is -1) or (y is -1) or (x is 40) or (y is 30)
+  end function
+
 end class
 
 enum Direction
   up, down, left, right
 end enum
+
+function directionByKey(key as String, current as Direction) return Direction
+  var dir set to current
+  switch key
+    case "w"
+      set dir to Direction.up
+    case "s"
+      set dir to Direction.down
+    case "a"
+      set dir to Direction.left
+    case "d"
+      set dir to Direction.right
+  end switch
+  return dir
+end function
 
 constant green set to 0x00ff00
 
