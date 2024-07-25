@@ -10,13 +10,11 @@ main
   print "Game Over! Score: {score(game)}"
 end main
 
-function clockTick(game as Game, k as String) return Game 
-  let g2 be copy game with key to k
+function clockTick(g as Game, k as String) return Game 
+  let g2 be copy g with key to k
   let g3 be moveSnake(g2, currentDirection)
-  # prior tail needs to be set
   let g4 be if g3.head is g3.apple then moveApple(g3) else copy g3 with body to body[1..]
-  let g5 be updateGraphics(g4)
-  return g5
+  return updateGraphics(g4)
 end function
 
 function updateGraphics(g as Game) return Game
