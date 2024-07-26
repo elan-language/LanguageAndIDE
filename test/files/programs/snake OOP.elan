@@ -1,4 +1,4 @@
-# 3e3e6ebc880a28cc32cc1f4c9d17f7f8f56fe3d8b39c975d8e5b64874a4ae10e Elan Beta 1 valid
+# bb0291027e4ac62c2ce294d9c7ddc75129779e43d088edec65110fe4b130c877 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
@@ -14,8 +14,7 @@ main
     set gr to apple.updateGraphics(gr)
     call gr.draw()
     call pause(150)
-    var k set to gr.getKeystroke()
-    set currentDir to directionByKey(k, currentDir)
+    set currentDir to directionByKey(gr.getKeystroke(), currentDir)
     call snake.clockTick(currentDir, apple)
     set gameOn to not snake.gameOver()
   end while

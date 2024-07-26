@@ -1,14 +1,14 @@
-# 59b0e825cfadc7429b1821ce9a3e0d84a39e588947b1f70c40f332a8ee09135c Elan Beta 1 valid
+# d7b36a74d4c6e73d545b5de5fd3d4a56a89e3e7d60ac9d31f6d5503c9f7a2bb6 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
   var head set to [20, 15]
   var tail set to head
   var body set to [head]
-  var apple set to [0, 0]
-  call setAppleToRandomPosition(apple, body)
   var currentDir set to "right"
   var gameOn set to true
+  var apple set to [0, 0]
+  call setAppleToRandomPosition(apple, body)
   while gameOn
     set gr to updateGraphics(gr, head, tail, body, apple)
     call gr.draw()
@@ -17,26 +17,26 @@ main
     call body.add(head)
     set head to getAdjacentSquare(head, currentDir)
     set gameOn to not hasHitEdge(head) and not overlaps(body, head)
-    call eatAppleifPoss(head, body, apple)
+    call eatAppleIfPoss(head, body, apple)
     call pause(150)
   end while
   print "Game Over! Score: {body.length() - 1}"
 end main
-
-procedure eatAppleifPoss(head as [Int], body as [[Int]], apple as [Int])
-  if head is apple
-    then
-      call setAppleToRandomPosition(apple, body)
-    else
-      call body.removeAt(0)
-  end if
-end procedure
 
 procedure setAppleToRandomPosition(apple as [Int], body as [[Int]])
   repeat
     set apple[0] to randomInt(0, 39)
     set apple[1] to randomInt(0, 29)
   end repeat when not overlaps(body, apple)
+end procedure
+
+procedure eatAppleIfPoss(head as [Int], body as [[Int]], apple as [Int])
+  if head is apple
+    then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+  end if
 end procedure
 
 function updateGraphics(gr as Graphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return Graphics
@@ -119,12 +119,12 @@ test eatAppleIfPoss
   var body set to [[0, 0], [1, 0]]
   var head set to [0, 2]
   var apple set to [0, 2]
-  call eatAppleifPoss(head, body, apple)
+  call eatAppleIfPoss(head, body, apple)
   var appleInSamePosition set to apple is [0, 2]
   assert appleInSamePosition is false
   assert body is [[0, 0], [1, 0]]
   var apple2 set to [5, 6]
-  call eatAppleifPoss(head, body, apple2)
+  call eatAppleIfPoss(head, body, apple2)
   var apple2inSamePosition set to apple2 is [5, 6]
   assert apple2inSamePosition is true
   assert body is [[1, 0]]
