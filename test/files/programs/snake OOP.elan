@@ -1,10 +1,9 @@
-# bb0291027e4ac62c2ce294d9c7ddc75129779e43d088edec65110fe4b130c877 Elan Beta 1 valid
+# 76dbde44d6044da5e53f8b18dbeb35183d2987ff74b7726feb2389d66ae66bb4 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
 main
-  var currentDir set to Direction.up
-  var snake set to new Snake(currentDir)
+  var snake set to new Snake()
   var apple set to new Apple()
   call apple.newRandomPosition(snake)
   var gr set to new Graphics()
@@ -14,20 +13,23 @@ main
     set gr to apple.updateGraphics(gr)
     call gr.draw()
     call pause(150)
-    set currentDir to directionByKey(gr.getKeystroke(), currentDir)
-    call snake.clockTick(currentDir, apple)
+    call snake.setDirection(gr.getKeystroke())
+    call snake.clockTick(apple)
     set gameOn to not snake.gameOver()
   end while
   print "Game Over! Score: {snake.length() - 1}"
 end main
 
 class Snake
-  constructor(startingDirection as Direction)
+  constructor()
     var tail set to new Square(20, 15)
+    set currentDir to Direction.right
     set body to [tail]
-    set head to tail.getAdjacentSquare(startingDirection)
+    set head to tail.getAdjacentSquare(currentDir)
     set priorTail to tail
   end constructor
+
+  property currentDir as Direction
 
   property head as Square
 
@@ -63,16 +65,29 @@ class Snake
     return gr2
   end function
 
-  procedure clockTick(d as Direction, apple as Apple)
+  procedure clockTick(apple as Apple)
     set priorTail to body[0]
     call body.add(head)
-    set head to head.getAdjacentSquare(d)
+    set head to head.getAdjacentSquare(currentDir)
     if head is apple.location
       then
         call apple.newRandomPosition(this)
       else
         set body to body[1..]
     end if
+  end procedure
+
+  procedure setDirection(key as String)
+    switch key
+      case "w"
+        set currentDir to Direction.up
+      case "s"
+        set currentDir to Direction.down
+      case "a"
+        set currentDir to Direction.left
+      case "d"
+        set currentDir to Direction.right
+    end switch
   end procedure
 
 end class
@@ -133,21 +148,6 @@ end class
 enum Direction
   up, down, left, right
 end enum
-
-function directionByKey(key as String, current as Direction) return Direction
-  var dir set to current
-  switch key
-    case "w"
-      set dir to Direction.up
-    case "s"
-      set dir to Direction.down
-    case "a"
-      set dir to Direction.left
-    case "d"
-      set dir to Direction.right
-  end switch
-  return dir
-end function
 
 constant green set to 0x00ff00
 
