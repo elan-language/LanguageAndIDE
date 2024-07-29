@@ -82,6 +82,8 @@ export class FileImpl implements File, Scope {
   private _stdLibSymbols = new StdLibSymbols(); // todo needs to be populated with .d.ts
   private _nextId: number = 0;
   private _testError?: Error;
+  private _frNo: number = 0;
+  private _showFrameNos: boolean = true;
 
   constructor(
     private hash: (toHash: string) => Promise<string>,
@@ -110,6 +112,11 @@ export class FileImpl implements File, Scope {
 
   getFile(): File {
     return this;
+  }
+
+  getFrNo(): string {
+    const n = this._frNo++;
+    return this._showFrameNos ? `<frno>${n}</frno>` : ``;
   }
 
   getFieldBeingEdited() {
@@ -196,10 +203,13 @@ export class FileImpl implements File, Scope {
     return "file";
   }
 
+  private frNo = 1;
+
   public async renderAsHtml(): Promise<string> {
+    this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     const hash = await this.getHash();
-    return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
+    return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span><frno>Frame:</frno></header>\r\n${globals}`;
   }
 
   public indent(): string {

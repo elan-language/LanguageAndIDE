@@ -69,7 +69,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   public renderAsHtml(): string {
     return `<function class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${returnKeyword} </keyword>${this.returnType.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>${functionKeyword} </keyword><method>${this.name.renderAsHtml()}</method>(${this.params.renderAsHtml()})<keyword> ${returnKeyword} </keyword>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>${endKeyword} ${functionKeyword}</keyword>
 </function>`;

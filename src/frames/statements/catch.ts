@@ -1,18 +1,17 @@
-import { IdentifierField } from "../fields/identifier-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { singleIndent } from "../helpers";
+import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Statement } from "../interfaces/statement";
-import { catchKeyword } from "../keywords";
-import { Transforms } from "../syntax-nodes/transforms";
+import { singleIndent } from "../helpers";
+import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
+import { Parent } from "../interfaces/parent";
+import { Statement } from "../interfaces/statement";
 import { ElanSymbol } from "../interfaces/symbol";
 import { SymbolType } from "../interfaces/symbol-type";
-import { SymbolScope } from "../symbols/symbol-scope";
+import { catchKeyword } from "../keywords";
 import { StringType } from "../symbols/string-type";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Catch extends FrameWithStatements implements Statement, ElanSymbol {
   isStatement = true;
@@ -60,7 +59,7 @@ export class Catch extends FrameWithStatements implements Statement, ElanSymbol 
   }
 
   renderAsHtml(): string {
-    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><keyword>catch </keyword>${this.variable.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+    return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>catch </keyword>${this.variable.renderAsHtml()}${this.compileMsgAsHtml()}{${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}        
 </statement>`;
   }

@@ -45,7 +45,7 @@ export class Switch extends FrameWithStatements implements ElanSymbol {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>switch </keyword>${this.expr.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>end switch</keyword>
 </statement>`;

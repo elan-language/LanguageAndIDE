@@ -1,9 +1,8 @@
-import { Test } from "mocha";
 import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
-import { helper_testStatusAsDisplayStatus, helper_CompileOrParseAsDisplayStatus } from "../helpers";
+import { helper_CompileOrParseAsDisplayStatus, helper_testStatusAsDisplayStatus } from "../helpers";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
@@ -68,7 +67,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
   public renderAsHtml(): string {
     return `<test class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}</top>${this.compileOrTestMsgAsHtml()}
+<top><expand>+</expand><keyword>test </keyword>${this.testName.renderAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>end test</keyword>
 </test>`;

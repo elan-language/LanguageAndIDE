@@ -33,7 +33,7 @@ export class Case extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>case </keyword>${this.value.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>case </keyword>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 </statement>`;
   }

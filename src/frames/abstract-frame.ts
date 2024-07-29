@@ -18,7 +18,6 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { ElanSymbol } from "./interfaces/symbol";
-import { SymbolType } from "./interfaces/symbol-type";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -80,6 +79,10 @@ export abstract class AbstractFrame implements Frame {
 
   getHtmlId(): string {
     return this.htmlId;
+  }
+
+  getFrNo(): string {
+    return this.getFile().getFrNo();
   }
 
   resolveSymbol(id: string | undefined, transforms: Transforms, initialScope: Frame): ElanSymbol {

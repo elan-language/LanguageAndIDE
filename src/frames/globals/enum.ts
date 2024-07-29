@@ -60,7 +60,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   }
   renderAsHtml(): string {
     return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 <statement>${this.values.renderAsHtml()}</statement>       
 <keyword>end enum</keyword>
 </enum>`;

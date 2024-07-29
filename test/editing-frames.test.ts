@@ -17,22 +17,22 @@ import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
 import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
 import {
-    back,
-    createTestRunner,
-    ctrl_d,
-    ctrl_del,
-    ctrl_down,
-    ctrl_up,
-    ctrl_v,
-    ctrl_x,
-    del,
-    down,
-    enter,
-    key,
-    loadFileAsModelNew,
-    shift_down,
-    shift_enter,
-    up,
+  back,
+  createTestRunner,
+  ctrl_d,
+  ctrl_del,
+  ctrl_down,
+  ctrl_up,
+  ctrl_v,
+  ctrl_x,
+  del,
+  down,
+  enter,
+  key,
+  loadFileAsModelNew,
+  shift_down,
+  shift_enter,
+  up,
 } from "./testHelpers";
 
 suite("Editing Frames", () => {
@@ -329,12 +329,12 @@ suite("Editing Frames", () => {
     globalSelect.select(true, false);
     globalSelect.processKey(ctrl_v());
     const newFirst = file.getChildren()[0];
-    assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+    assert.equal(newFirst.renderAsSource(), globalSelect.renderAsSource());
     //Now paste back into main
     mainSel.processKey(ctrl_v());
     mainStatements = main.getChildren();
     assert.equal(mainStatements.length, 1);
-    assert.equal(mainStatements[0].renderAsHtml(), var3.renderAsHtml());
+    assert.equal(mainStatements[0].renderAsSource(), var3.renderAsSource());
     scratchpad = (file as FileImpl).getScratchPad();
     assert.equal(scratchpad.readFrames(), undefined);
   });
@@ -378,9 +378,9 @@ suite("Editing Frames", () => {
     var3.select();
     var3.processKey(ctrl_down());
     const main = file.getById("main1") as MainFrame;
-    assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
+    assert.equal(main.getChildren()[0].renderAsSource(), select6.renderAsSource());
     var3.processKey(ctrl_up());
-    assert.equal(main.getChildren()[0].renderAsHtml(), var3.renderAsHtml());
+    assert.equal(main.getChildren()[0].renderAsSource(), var3.renderAsSource());
 
   });
 });

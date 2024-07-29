@@ -270,7 +270,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
 
   public renderAsHtml(): string {
     return `<classDef class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand>${this.modifiersAsHtml()}<keyword>class </keyword>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${parentHelper_renderChildrenAsHtml(this)}
 <keyword>end class</keyword>
 </classDef>`;

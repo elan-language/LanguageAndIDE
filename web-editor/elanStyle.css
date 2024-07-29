@@ -301,3 +301,21 @@ selector placeholder  {
     display: none;
 }
 
+frno {
+    float: right;
+    color: darkgrey;
+    font-size: 8pt;
+    margin-left: 5px;
+    text-indent: 0;
+}
+
+constant frno, constant.multiline.collapsed frno {
+    display: inline-block;
+}
+
+statement.selected:not(.multiline) frno, .multiline.selected > top frno, constant.selected frno {
+    background-color: var(--selection);
+    color: white;
+    text-indent: 0;
+}
+

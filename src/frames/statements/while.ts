@@ -1,10 +1,10 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { FrameWithStatements } from "../frame-with-statements";
-import { whileKeyword } from "../keywords";
 import { mustBeOfType } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
+import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
+import { whileKeyword } from "../keywords";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -29,7 +29,7 @@ export class While extends FrameWithStatements {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}</top>${this.compileMsgAsHtml()}
+<top><expand>+</expand><keyword>while </keyword>${this.condition.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
 ${this.renderChildrenAsHtml()}
 <keyword>end while</keyword>
 </statement>`;
