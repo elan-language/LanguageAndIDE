@@ -27,11 +27,11 @@ function updateGraphics(g as Game) return Game
 end function
 
 function moveApple(g as Game) return Game
-  let rndX be g.rnd.nextInt(0, 39)
-  let rnd2 be rndx.random()
-  let rndY be rnd2.nextInt(0, 29)
-  let newApple be new Square(rndX.value(), rndY.value())
-  let g2 be copy g with apple to newApple, rnd to rndY.random()
+  let x be g.random.valueAsInt(0,39)
+  let rnd2 be g.random.next()
+  let y be rnd2.valueAsInt(0, 29)
+  let newApple be new Square(x, y)
+  let g2 be copy g with apple to newApple, rnd to rnd2.next()
   return if bodyOverlaps(g2, g2.apple) then moveApple(g2) else g2
 end function
 
