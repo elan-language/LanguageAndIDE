@@ -1,10 +1,7 @@
-# FFFF Elan Beta 1 valid
+# 044b397b3975fad3a4761d2a2954dcfb1575c455e9c12fda662dbac736859379 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
-
-# TODO introduce a Game class (as in FP, which holds Snake, Apple & delegates down)
-# Could FP version have same structure?
 main
   var gr set to new Graphics()
   var snake set to new Snake()
