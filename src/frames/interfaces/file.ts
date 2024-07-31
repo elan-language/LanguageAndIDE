@@ -1,15 +1,15 @@
-import { editorEvent } from "../interfaces/editor-event";
+import { AssertOutcome } from "../../system";
 import { CodeSource } from "../code-source";
+import { CompileError } from "../compile-error";
+import { editorEvent } from "../interfaces/editor-event";
+import { ScratchPad } from "../scratch-pad";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../status-enums";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
-import { Selectable } from "./selectable";
-import { StatementFactory } from "./statement-factory";
-import { CompileError } from "../compile-error";
-import { ScratchPad } from "../scratch-pad";
 import { Profile } from "./profile";
 import { Scope } from "./scope";
-import { AssertOutcome } from "../../system";
+import { Selectable } from "./selectable";
+import { StatementFactory } from "./statement-factory";
 
 export interface File extends Parent {
   isFile: boolean;
@@ -83,4 +83,5 @@ export interface File extends Parent {
   getTestError(): Error | undefined;
 
   getFrNo(): string;
+  removeAllSelectorsThatCanBe(): void;
 }

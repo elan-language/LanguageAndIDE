@@ -398,6 +398,11 @@ const clearGraphicsButton = document.getElementById("clear-graphics");
 const expandCollapseButton = document.getElementById("expand-collapse");
 const newButton = document.getElementById("new");
 const demosButton = document.getElementById("demos");
+const trimButton = document.getElementById("trim") as HTMLButtonElement;
+trimButton.addEventListener("click", () => {
+  const keys = file.removeAllSelectorsThatCanBe();
+  renderAsHtml();
+});
 
 runButton?.addEventListener("click", () => {
   try {
