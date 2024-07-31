@@ -42,8 +42,10 @@ export async function assertEffectOfActionNew(
   } catch (e) {
     if (updateTestFiles) {
       updateTestFileNew(htmlFile, actualHtml);
+      throw new Error("Files updated");
+    } else {
+      throw e;
     }
-    throw e;
   }
 }
 
@@ -64,8 +66,11 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     if (updateTestFiles) {
       updateTestFileNew(sourceFile, actualSource);
       updateTestFileNew(htmlFile, actualHtml);
+      throw new Error("Files updated");
+    } else {
+      throw e;
     }
-    throw e;
+    
   }
 }
 
