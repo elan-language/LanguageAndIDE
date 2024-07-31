@@ -1,11 +1,11 @@
-import { ExpressionField } from "../fields/expression-field";
-import { Parent } from "../interfaces/parent";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
+import { mustBeOfType } from "../compile-rules";
+import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { Field } from "../interfaces/field";
+import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { repeatKeyword } from "../keywords";
-import { mustBeOfType } from "../compile-rules";
 import { BooleanType } from "../symbols/boolean-type";
 import { Transforms } from "../syntax-nodes/transforms";
 
@@ -30,7 +30,7 @@ export class Repeat extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<statement class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>repeat</keyword>${this.getFrNo()}</top>
+<top><expand>+</expand><keyword>repeat</keyword></top>${this.getFrNo()}
 ${this.renderChildrenAsHtml()}
 <keyword>end repeat when </keyword>${this.condition.renderAsHtml()}
 ${this.compileMsgAsHtml()}</statement>`;

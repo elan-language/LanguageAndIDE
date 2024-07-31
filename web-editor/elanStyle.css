@@ -313,7 +313,14 @@ constant frno, constant.multiline.collapsed frno {
     display: inline-block;
 }
 
-statement.selected:not(.multiline) frno, .multiline.selected > top frno, constant.selected frno {
+statement.selected:not(.multiline) frno, 
+.multiline.selected > top frno, 
+constant.selected frno, 
+.selected ~ frno, 
+method:has(field.selected) ~ frno,
+frno:has(~ field.selected), /* this and next clause specifically for 'repeat expression' field */
+statement.selected > frno  
+ {
     background-color: var(--selection);
     color: white;
     text-indent: 0;
