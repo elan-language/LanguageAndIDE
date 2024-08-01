@@ -114,7 +114,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateDisplayValues() {
-  (document.getElementById("code-title") as HTMLDivElement).innerText = `Program: ${file.fileName}`; // ${getStatus()}`;
+  (document.getElementById("code-title") as HTMLDivElement).innerText = `File: ${file.fileName}`;
   (document.getElementById("parse") as HTMLDivElement).setAttribute(
     "class",
     file.readParseStatusForDashboard(),
