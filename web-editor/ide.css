@@ -33,35 +33,36 @@ body {
   }
   #code-title {
     grid-row: 1;
-    grid-column: 14 / 26;
+    grid-column: 17 / 32;
     margin-left: 10px;
 }
 #console-title {
   grid-row: 5;
-  grid-column: 29 / 48;
+  grid-column: 34 / 48;
+  margin-left: 5px;
   }
 
 .elan-code{
-  grid-column: 1 / 26;
+  grid-column: 1 / 32;
   grid-row: 2/36; 
   padding: 5px;
   margin-left: 10px;
   position: relative;
 }
   #console {
-    grid-column: 27 / 48;
+    grid-column:33 / 48;
     grid-row: 6/17;
     white-space: pre;
     padding: 5px;
   }
   #status-names {
-    grid-column: 35 / 36;
+    grid-column: 38 / 39;
     grid-row: 1/5;
     background-color: var(--ideDefaultBackground);
     color: var(--ideDefaultText);
   }
   #status-values {
-    grid-column: 36 / 40;
+    grid-column: 39 / 43;
     grid-row: 1/5;
     margin-left: 20px;
     background-color: var(--ideDefaultBackground);
@@ -70,14 +71,14 @@ body {
     background-color: var(--ideDefaultBackground);
     color: var(--ideReverseText);
     font-family: var(--ideTitleFont);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   #status-values div {
     font-family: var(--ideTitleFont);
     text-align: center;
     background-color: var(--ideDefaultBackground);
     height:20px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   #status-values .ok {
     background-color: var(--ok);
@@ -90,12 +91,13 @@ body {
   }
 
   #graphics-title {
-    grid-column: 29 / 48;
+    grid-column: 34 / 48;
     grid-row: 18;
+    margin-left: 5px;
     }
   #graphics {
     /* position pane within outer grid */
-    grid-column: 27 / 48;
+    grid-column: 33 / 48;
     grid-row: 19/36;
     background-color: var(--idePanelBackground);
     overflow: hidden;
@@ -105,7 +107,7 @@ body {
   /* Define it as a sub-grid within the overall grid */
     display: grid;
     grid-template-columns: repeat(40, 1fr);
-    grid-template-rows: repeat(30, 1fr);
+    grid-template-rows: repeat(32, 1fr);
 }
  #code-controls {
     grid-row: 1;
@@ -114,8 +116,8 @@ body {
     margin-left: 10px;
   }
   #run-controls {
-    grid-row: 2/3;
-    grid-column: 27/31
+    grid-row: 1/3;
+    grid-column: 33/37
     ;
     background-color: var(--ideDefaultBackground);
   }
@@ -123,6 +125,7 @@ body {
   #help {
     grid-row: 3;
     grid-column: 44/48;
+    margin-top: 5px;
   }
 
   #help * {
@@ -135,12 +138,14 @@ body {
     padding-left: 2px;
     padding-right: 2px;
     margin-left: 5px;
+    margin-bottom: 5px;
   }
 
   #logo {
     grid-row: 1/4;
     grid-column: 44 / 48;
     width: 100%;
+    margin-left: 5px;
   }
 
 /* Buttons */
@@ -190,11 +195,11 @@ button.plain:hover, button.plain:active, #help *:hover {
 
 button#clear-console {
   grid-row: 5;
-  grid-column: 27 / 28;
+  grid-column: 33 / 34;
 }
 button#clear-graphics {
   grid-row: 18;
-  grid-column: 27 / 28;
+  grid-column: 33 / 34;
 }
 button#expand-collapse {
   grid-row: 1;
