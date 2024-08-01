@@ -209,7 +209,7 @@ export class FileImpl implements File, Scope {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     const hash = await this.getHash();
-    return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span><frno>Frame:</frno></header>\r\n${globals}`;
+    return `<header># <hash>${hash}</hash> ${this.getVersion()}${this.getProfileName()} <span id="fileStatus" class="${this.parseStatusAsString()}">${this.parseStatusAsString()}</span></header>\r\n${globals}`;
   }
 
   public indent(): string {
