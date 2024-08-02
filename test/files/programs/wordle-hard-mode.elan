@@ -1,4 +1,4 @@
-# 8c332568c7c4eaa533efd1b4aba9a24e9b8b8aae42cee478628222d0ac438ecf Elan Beta 1 valid
+# 08c1cff0201e61be152362c504f111697101885a2637bfd54343b38fb794903d Elan Beta 1 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Mark each letter of program's attempt word with:
@@ -9,13 +9,13 @@
 # _*_+_
 main
   var possible set to allPossibleAnswers.asIter()
-  var marking set to ""
+  var mark set to ""
   var attempt set to "RAISE"
-  while marking isnt "*****"
+  while mark isnt "*****"
     print attempt
-    set marking to inputString("")
-    set possible to possibleAnswersAfterAttempt(possible, attempt, marking)
-    set attempt to bestAttempt(possible, possible)
+    set mark to inputString("")
+    set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+    set attempt to bestAttempt(possible)
   end while
 end main
 
@@ -188,17 +188,10 @@ test maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-function allRemainingWordCounts(possAnswers as Iter<of String>, possAttempts as Iter<of String>) return Iter<of WordCount>
-  let parallel be possAttempts
+function allRemainingWordCounts(possAnswers as Iter<of String>) return Iter<of WordCount>
+  let parallel be possAnswers
   return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
-
-test allRemainingWordCounts
-  let possAnswers be {"AAAAA", "BBBBB", "CCCCC", "DDDDD"}
-  let possAttempts be {"ABABA", "BCBCB", "ABCBC"}
-  let expected be {new WordCount("ABABA", 2), new WordCount("BCBCB", 2), new WordCount("ABCBC", 1)}
-  assert allRemainingWordCounts(possAnswers, possAttempts) is expected
-end test
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
   let isBetter be wc2.count < wc1.count
@@ -222,19 +215,17 @@ test betterOf
   assert betterOf(b2, a2, possAnswers3) is a2
 end test
 
-function bestAttempt(possAnswers as Iter<of String>, possAttempts as Iter<of String>) return String
-  let wordCounts be allRemainingWordCounts(possAnswers, possAttempts)
+function bestAttempt(possAnswers as Iter<of String>) return String
+  let wordCounts be allRemainingWordCounts(possAnswers)
   let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 
 test bestAttempt
   let possAnswers be {"ABCDE", "ABBBB", "EDCBA"}
-  let possAttempts be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
-  assert bestAttempt(possAnswers, possAttempts) is "EDCBA"
+  assert bestAttempt(possAnswers) is "EDCBA"
   let possAnswers2 be {"ABCDE", "ABBBB", "BCDEA"}
-  let possAttempts2 be {"AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE", "EDCBA", "DEABC"}
-  assert bestAttempt(possAnswers2, possAttempts2) is "BBBBB"
+  assert bestAttempt(possAnswers2) is "BCDEA"
 end test
 
 immutable class WordCount
