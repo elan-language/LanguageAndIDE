@@ -20,8 +20,7 @@ end function
 function updateGraphics(g as Game) return Game
   let g2 be copy g with graphics to g.graphics.putBackground(g.apple.x, g.apple.y, red) 
   let g3 be copy g2 with graphics to g2.graphics.putBackground(g2.head.x, g2.head.y, green)
-  let body be g3.body
-  let tail be body.getAt(0)
+  let tail be g3.body.getAt(0)
   let tailColour be if tail is g2.priorTail then green else white
   return copy g3 with graphics to g3.graphics.putBackground(tail.x, tail.y, tailColour)
 end function
@@ -30,8 +29,7 @@ function moveApple(g as Game) return Game
   let x be g.random.valueAsInt(0,39)
   let rnd2 be g.random.next()
   let y be rnd2.valueAsInt(0, 29)
-  let newApple be new Square(x, y)
-  let g2 be copy g with apple to newApple, rnd to rnd2.next()
+  let g2 be copy g with apple to new Square(x, y), rnd to rnd2.next()
   return if bodyOverlaps(g2, g2.apple) then moveApple(g2) else g2
 end function
 
@@ -40,9 +38,8 @@ function score(g as Game) as Int
 end function
 
 function moveSnake(g as Game) as Game 
-  let key be g.key
-  let newX be if key is "a" then sq.x - 1 else if key is "d" then sq.x + 1 else sq.x
-  let newY be if key is "w" then sq.y - 1 else if key is "s" then sq.y + 1 else sq.y
+  let newX be if g.key is "a" then sq.x - 1 else if g.key is "d" then sq.x + 1 else sq.x
+  let newY be if g.key is "w" then sq.y - 1 else if g.key is "s" then sq.y + 1 else sq.y
   return  copy game with priorTail to g.body.getAt(0), body to g.body + g.head, head to new Square(newX, newY)
 end function
 
@@ -51,12 +48,11 @@ function gameOver(g as Game) return Boolean
 end function
 
 function headIsAtEdge(g as Game) return Boolean
-  let head be g.head
-  return (head.x is -1) or (head.y is -1) or (head.x is 40) or (head.y is 30)
+  return (g.head.x is -1) or (g.head.y is -1) or (g.head.x is 40) or (g.head.y is 30)
 end function
 
-function bodyOverlaps(g as Game, sq as Square) return Boolean
-  return g.body.any(lambda s as Square => s is sq)
+function bodyOverlaps(g as Game, target as Square) return Boolean
+  return g.body.any(lambda s as Square => s is target)
 end function
 
 immutable class Game

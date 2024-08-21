@@ -1,0 +1,327 @@
+# 4c6531ed31fedf20f8709ffa6283db3f49f4ef7d0050eb9d124a0f772e36799c Elan Beta 1 valid
+
+# Prevent overwriting start and destination with blue or gold
+main
+  var alg set to Algorithm.heuristic
+  var exit set to false
+  var percentRocks set to inputIntBetween("Enter percent to fill with rocks (0-100): ", 0, 100)
+  var start set to new Point(0, 0)
+  var destination set to new Point(39, 29)
+  var rocks set to empty [Point]
+  var nodes set to empty [Node]
+  call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
+  var solver set to new Solver(nodes, start, destination, alg)
+  while not exit
+    var gr set to initialiseGraphics(start, destination, rocks)
+    call gr.draw()
+    var option set to inputStringFromOptions("Enter 'd' for Dijkstra, 'a' for A-Star, 'h' for Heuristic: ", ["d", "a", "h"])
+    call solver.reset(getAlgorithm(option))
+    while solver.running
+      call solver.visitNextPoint()
+      var last set to solver.getLastVisited()
+      set gr to renderVisited(gr, last)
+      call gr.draw()
+      call pause(0)
+    end while
+    var visited set to solver.nodes
+    if solver.getLastVisited() is destination
+      then
+        var (route, length) set to solver.getRouteAndLength()
+        set gr to addRoute(gr, route)
+        call gr.draw()
+        print "Length of route: {round(length, 2)}"
+      else
+        print "No route from start to destination found through these rocks."
+    end if
+    set option to inputString("Enter 'x' to exit, or any other key to re-run with same rocks: ")
+    set exit to option is "x"
+  end while
+end main
+
+function getAlgorithm(option as String) return Algorithm
+  var alg set to empty Algorithm
+  switch option
+    case "d"
+      set alg to Algorithm.dijkstra
+    case "a"
+      set alg to Algorithm.aStar
+    case "h"
+      set alg to Algorithm.heuristic
+  end switch
+  return alg
+end function
+
+procedure createRocksAndNodes(percentRocks as Int, rocks as [Point], nodes as [Node], start as Point, dest as Point)
+  for x from 0 to 39 step 1
+    for y from 0 to 29 step 1
+      var p set to new Point(x, y)
+      if p is start
+        then
+          call nodes.add(new Node(p, 0, p.minDistTo(dest)))
+        else if p is dest
+          call nodes.add(new Node(p, infinity, 0))
+        else if random() < percentRocks/100
+          call rocks.add(p)
+        else
+          call nodes.add(new Node(p, infinity, p.minDistTo(dest)))
+      end if
+    end for
+  end for
+end procedure
+
+function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return Graphics
+  var gr set to new Graphics()
+  each rock in rocks
+    set gr to gr.putBackground(rock.x, rock.y, black)
+  end each
+  set gr to gr.putBackground(start.x, start.y, green)
+  set gr to gr.putBackground(dest.x, dest.y, red)
+  return gr
+end function
+
+function renderVisited(gr as Graphics, visited as Point) return Graphics
+  return gr.putBackground(visited.x, visited.y, lightBlue)
+end function
+
+function addRoute(gr as Graphics, route as {Point}) return Graphics
+  var gr2 set to gr
+  each p in route
+    set gr2 to gr2.putBackground(p.x, p.y, yellow)
+  end each
+  return gr2
+end function
+
+class Solver
+  constructor(nodes as [Node], start as Point, destination as Point, alg as Algorithm)
+    set property.nodes to nodes
+    set property.start to start
+    set property.destination to destination
+    set property.current to new Node(start, 0, infinity)
+    set property.alg to alg
+    set property.running to true
+  end constructor
+
+  property nodes as [Node]
+
+  property start as Point
+
+  property destination as Point
+
+  property current as Node
+
+  property alg as Algorithm
+
+  property running as Boolean
+
+  procedure reset(newAlg as Algorithm)
+    set property.alg to newAlg
+    set property.current to new Node(start, 0, infinity)
+    set property.running to true
+    each node in nodes
+      call node.setDistanceFromStart(infinity)
+      call node.setVia(empty Point)
+      call node.setVisited(false)
+    end each
+  end procedure
+
+  procedure visitNextPoint()
+    call updateNeighbours()
+    set current to nextNodeToVisit()
+    if (current is empty Node) or (current.point is destination)
+      then
+        set running to false
+      else
+        call current.setVisited(true)
+    end if
+  end procedure
+
+  procedure updateNeighbours()
+    var distToCurrent set to current.distFromStart
+    each neighbour in currentNeighbours()
+      var currentPoint set to current.point
+      var distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
+      if distViaCurrent < neighbour.distFromStart
+        then
+          call neighbour.setVia(current.point)
+          call neighbour.setDistanceFromStart(distViaCurrent)
+      end if
+    end each
+  end procedure
+
+  function currentNeighbours() return [Node]
+    var neighbours set to empty {Node}
+    let currentPoint be current.point
+    each p in currentPoint.neighbouringPoints()
+      let node be getNodeFor(p)
+      let point be node.point
+      if point.isValid
+        then
+          set neighbours to neighbours + node
+      end if
+    end each
+    return neighbours.asArrayList()
+  end function
+
+  function getNodeFor(p as Point) return Node
+    var matches set to nodes.filter(lambda n as Node => n.point is p)
+    return if matches.length() is 1 then matches.head() else empty Node
+  end function
+
+  function getLastVisited() return Point
+    return current.point
+  end function
+
+  function nextNodeToVisit() return Node
+    var lowestCostSoFar set to infinity
+    var lowestCostNode set to empty Node
+    var possibilities set to nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    each nd in possibilities
+      let cost be getCost(nd)
+      if cost < lowestCostSoFar
+        then
+          set lowestCostSoFar to cost
+          set lowestCostNode to nd
+      end if
+    end each
+    return lowestCostNode
+  end function
+
+  function getCost(nd as Node) return Float
+    var cost set to 0.0
+    var fromSource set to nd.distFromStart
+    var toDestination set to nd.estDistToDest
+    switch alg
+      case Algorithm.dijkstra
+        set cost to fromSource
+      case Algorithm.heuristic
+        set cost to toDestination
+      case Algorithm.aStar
+        set cost to fromSource + toDestination
+    end switch
+    return cost
+  end function
+
+  function getRouteAndLength() return ({Point}, Float)
+    var route set to {destination}
+    var length set to 0.0
+    var node set to getNodeFor(destination)
+    repeat
+      var previous set to node.via
+      var p set to node.point
+      set length to length + p.minDistTo(previous)
+      set route to route.withInsert(0, previous)
+      set node to getNodeFor(previous)
+    end repeat when node.point is start
+    return (route, length)
+  end function
+
+end class
+
+class Node
+  constructor(p as Point, distFromStart as Float, estDistToDest as Float)
+    set property.point to p
+    set visited to false
+    set property.distFromStart to distFromStart
+    set via to empty Point
+    set property.estDistToDest to estDistToDest
+  end constructor
+
+  property point as Point
+
+  property visited as Boolean
+
+  property distFromStart as Float
+
+  property via as Point
+
+  property estDistToDest as Float
+
+  procedure setVisited(value as Boolean)
+    set visited to value
+  end procedure
+
+  procedure setDistanceFromStart(d as Float)
+    set distFromStart to d
+  end procedure
+
+  procedure setVia(p as Point)
+    set via to p
+  end procedure
+
+  function asString() return String
+    return "{point} {visited} fromStart:{distFromStart} via:{via} toDest:{estDistToDest}"
+  end function
+
+end class
+
+immutable class Point
+  constructor(x as Int, y as Int)
+    set property.x to x
+    set property.y to y
+    set property.isValid to true
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  property isValid as Boolean
+
+  function minDistTo(p as Point) return Float
+    return sqrt((p.x - x)^2 + (p.y - y)^2)
+  end function
+
+  function isAdjacentTo(p as Point) return Boolean
+    return (minDistTo(p) is 1) or round(minDistTo(p), 2) is 1.41
+  end function
+
+  # Returns the 8 theoretical neighbouring points, whether or not within bounds
+  function neighbouringPoints() return {Point}
+    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
+  end function
+
+  function asString() return String
+    return if isValid then "[{x},{y}]" else "empty"
+  end function
+
+end class
+
+# 'infinity' need only to be larger than longest possible route
+constant infinity set to 2000.0
+
+enum Algorithm
+  dijkstra, aStar, heuristic
+end enum
+
+constant white set to 0xffffff
+
+constant red set to 0xff0000
+
+constant green set to 0x00ff00
+
+constant yellow set to 0xffd000
+
+constant lightBlue set to 0x80abff
+
+constant black set to 0x000000
+
+test point
+  let p be new Point(0, 0)
+  let n be p.neighbouringPoints()
+  let expected be {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)}
+  assert n is expected
+end test
+
+test solver
+  var start set to new Point(0, 0)
+  var dest set to new Point(39, 29)
+  var alg set to Algorithm.dijkstra
+  var nodes set to empty [Node]
+  call createRocksAndNodes(0, empty [Point], nodes, start, dest)
+  var solver set to new Solver(nodes, start, dest, alg)
+  var emptyNode set to empty Node
+  assert solver.getNodeFor(new Point(-1, -1)) is emptyNode
+  var emptyListOfNodes set to empty [Node]
+  var currNeighbours set to solver.currentNeighbours()
+  assert currNeighbours.length() is 3
+end test

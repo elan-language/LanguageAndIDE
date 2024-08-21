@@ -1,4 +1,4 @@
-# 044b397b3975fad3a4761d2a2954dcfb1575c455e9c12fda662dbac736859379 Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
@@ -14,7 +14,7 @@ main
     call pause(150)
     call snake.clockTick(gr.getKeystroke(), apple)
   end while
-  print "Game Over! Score: {snake.length() - 1}"
+  print "Game Over! Score: {snake.score()}"
 end main
 
 class Snake
@@ -60,10 +60,6 @@ class Snake
     end if
   end procedure
 
-  function length() return Int
-    return body.length()
-  end function
-
   function gameOver() return Boolean
     return bodyCovers(head) or head.isAtEdge()
   end function
@@ -86,6 +82,10 @@ class Snake
         set gr2 to gr2.putBackground(priorTail.x, priorTail.y, white)
     end if
     return gr2
+  end function
+
+  function score(g as Game) as Int
+    return body.length() -1
   end function
 
 end class

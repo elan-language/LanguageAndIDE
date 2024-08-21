@@ -1,4 +1,4 @@
-# d7b36a74d4c6e73d545b5de5fd3d4a56a89e3e7d60ac9d31f6d5503c9f7a2bb6 Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -40,8 +40,7 @@ procedure eatAppleIfPoss(head as [Int], body as [[Int]], apple as [Int])
 end procedure
 
 function updateGraphics(gr as Graphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return Graphics
-  var gr2 set to gr
-  set gr2 to gr2.putBackground(head[0], head[1], green)
+  var gr2 set to gr.putBackground(head[0], head[1], green)
   if body[0] is tail
     then
       set gr2 to gr2.putBackground(tail[0], tail[1], green)
