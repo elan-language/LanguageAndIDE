@@ -1,6 +1,5 @@
-# cdeecfceb2ef650b79cdb607fda20a43206f2af986e64ffc73f4f39b6eaaa114 Elan Beta 1 valid
+# 1cbf63bc92e7d46aab3a7eeb36cdb54b7484da5097c38b17cf507e69da337625 Elan Beta 1 valid
 
-# Prevent overwriting start and destination with blue or gold
 main
   var alg set to Algorithm.heuristic
   var exit set to false
