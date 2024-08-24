@@ -1,156 +1,308 @@
-﻿# FFFF Elan Beta 1 valid
+# c579cd79e78ef9ebf873efb2520b318df19eae7a0261aab7a7f4a00ddda1fe40 Elan Beta 1 valid
 
 main
-
+  var start set to new Point(0, 0)
+  var destination set to new Point(39, 29)
+  var rocks set to empty [Point]
+  var nodes set to empty [Node]
+  var percentRocks set to inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
+  call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
+  var solver set to new Solver(nodes, start, destination)
+  var exit set to false
+  while not exit
+    call runSolver(start, destination, rocks, solver)
+    set exit to inputString("Enter 'x' to exit, 'r' to run again: ") is "x"
+  end while
 end main
 
-function nodeExists(p as Point) return Boolean
-  return nodes.contains(p)
-end function
-
-function pointsAreAdjacentDiagonally(p1 as Point, p2 as Point) return Boolean
-  return (abs(p1.x - p2.x) is 1) and (abs(p1.y - p2.y) is 1)
-end function
-
-# Assumes that it will only be called if the points ARE immediate neighbours
-function findEdge(p1 as Point, p2 as Point) return Float
-  return p1.distanceFrom(p2)
-end function
-
-# Returns a list of nodes that can be reached from the specified node
-function neighbours(p as Point) return [Point]
-  let l1 be [new Point(p.x, p.y - 1), new Point(p.x + 1, p.y - 1), new Point(p.x + 1, p.y), new Point(p.x + 1, p.y + 1), new Point(p.x, p.y + 1), new Point(p.x - 1, p.y + 1), new Point(p.x - 1, p.y), new Point(p.x - 1, p.y - 1)]
-  let l2 be l1.filter(lambda n as Point => nodeExists(n))
-  return l2.asImmutableList()
-end function
-
-# Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
-# You may make use of existing methods such a s Neignbours, or findEdge.
-procedure shortestPath(source as Point, destination as Point, alg as Algorithm, x as [Point])
-  # Initialise the 'table' with three 'columns' - one 'row' per node
-  var visited set to newDictionaryOfAllPointsReturningFalseValues()
-  var costFromSource set to  newDictionaryOfAllPointsReturningDoublesSetToInfinity()
-  var via set to newDictionaryOfAllPointsReturningNull()
-  # Set start
-  var currentNode set to source
-  set costFromSource to costFromSource.setItem(currentNode, 0)
-  # Iterate until shortest path found
-  while currentNode isnt destination
-    set visited to visited.setItem(currentNode,true)
-    call updateCostAndViaOfEachNeighbourIfApplicable(costFromSource, via, currentNode, destination)
-    set currentNode to nextNodeToVisit(currentNode, visited, costFromSource, destination, alg)
-    if costFromSource[currentNode] is infinity
-      then
-        throw "Cannot reach destination -  graph is 'disconnected'"
-    end if
+procedure runSolver(start as Point, destination as Point, rocks as [Point], solver as Solver)
+  var gr set to initialiseGraphics(start, destination, rocks)
+  call gr.draw()
+  var option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
+  call solver.initialise(algFromLetter.getKey(option))
+  while solver.running
+    call solver.visitNextPoint()
+    set gr to addVisited(gr, solver.getLastVisited())
+    call gr.draw()
+    call pause(0)
   end while
-  set route to retraceRoute(destination, source, via)
+  if solver.getLastVisited() is destination
+    then
+      var (route, length) set to solver.getRouteAndLength()
+      set gr to addRoute(gr, route)
+      call gr.draw()
+      print "Length of route: {round(length, 2)}"
+    else
+      print "No route from start to destination found through these rocks."
+  end if
 end procedure
 
-function newDictionaryOfAllPointsReturningNull() return [Point:Point]
-  var dict set to empty [Point:Point]
-  each p in nodes
-    set dict[p] to empty Point
+procedure createRocksAndNodes(percentRocks as Int, rocks as [Point], nodes as [Node], start as Point, dest as Point)
+  for x from 0 to 39 step 1
+    for y from 0 to 29 step 1
+      var p set to new Point(x, y)
+      if p is start
+        then
+          call nodes.add(new Node(p, 0, p.minDistTo(dest)))
+        else if p is dest
+          call nodes.add(new Node(p, infinity, 0))
+        else if random() < percentRocks/100
+          call rocks.add(p)
+        else
+          call nodes.add(new Node(p, infinity, p.minDistTo(dest)))
+      end if
+    end for
+  end for
+end procedure
+
+function initialiseGraphics(start as Point, dest as Point, rocks as [Point]) return Graphics
+  var gr set to new Graphics()
+  each rock in rocks
+    set gr to gr.putBackground(rock.x, rock.y, black)
   end each
-  return dict
+  set gr to gr.putBackground(start.x, start.y, green)
+  set gr to gr.putBackground(dest.x, dest.y, red)
+  return gr
 end function
 
-function newDictionaryOfAllPointsReturningDoublesSetToInfinity() return [Point:Float]
-  var dict set to empty [Point:Float]
-  each p in nodes
-    set dict[p] to infinity
-  end each
-  return dict
+function addVisited(gr as Graphics, visited as Point) return Graphics
+  return gr.putBackground(visited.x, visited.y, lightBlue)
 end function
 
-function newDictionaryOfAllPointsReturningFalseValues() return [Point:Boolean]
-  var dict set to empty [Point:Boolean]
-  each p in nodes
-    set dict to dict.setItem(p, false)
+function addRoute(gr as Graphics, route as {Point}) return Graphics
+  var gr2 set to gr
+  each p in route
+    set gr2 to gr2.putBackground(p.x, p.y, yellow)
   end each
-  return dict
+  return gr2
 end function
 
-  # needs converting to a function as dictionaries are immutable 
-procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource as [Point:Float], via as [Point:Point],  currentNode as Point,  destination as Point)
-  each neighbour in neighbours(currentNode)
-    var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
-    if newCost < costFromSource[neighbour]
+class Solver
+  constructor(nodes as [Node], start as Point, destination as Point)
+    set property.nodes to nodes
+    set property.start to start
+    set property.destination to destination
+  end constructor
+
+  property nodes as [Node]
+
+  property start as Point
+
+  property destination as Point
+
+  property current as Node
+
+  property alg as Algorithm
+
+  property running as Boolean
+
+  procedure initialise(alg as Algorithm)
+    set property.alg to alg
+    set property.current to new Node(start, 0, infinity)
+    set property.running to true
+    each node in nodes
+      call node.setDistanceFromStart(infinity)
+      call node.setVia(empty Point)
+      call node.setVisited(false)
+    end each
+  end procedure
+
+  procedure visitNextPoint()
+    call updateNeighbours()
+    set current to nextNodeToVisit()
+    if (current is empty Node) or (current.point is destination)
       then
-        # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
-        set costFromSource[neighbour] to newCost
-        set via[neighbour] to currentNode
+        set running to false
+      else
+        call current.setVisited(true)
     end if
-  end each
-end procedure
+  end procedure
 
-function estimatedCostToDestination(current as Point, destination as Point) return Float
-  return sqrt((current.x - destination.x)^2 + (current.y - destination.y)^2)
-end function
+  procedure updateNeighbours()
+    var distToCurrent set to current.distFromStart
+    each neighbour in currentNeighbours()
+      var currentPoint set to current.point
+      var distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
+      if distViaCurrent < neighbour.distFromStart
+        then
+          call neighbour.setVia(current.point)
+          call neighbour.setDistanceFromStart(distViaCurrent)
+      end if
+    end each
+  end procedure
 
-function nextNodeToVisit(currentNode as Point, visited as [Point:Boolean], costFromSource as [Point:Float], destination as Point, alg as Algorithm) return Point
-  var lowestCostSoFar set to infinity
-  var lowestCostNode set to nodes.element(0)
-  var possibilities set to nodes.filter(lambda n as Point => (not visited[n]) and (costFromSource[n] < infinity))
-  each p in possibilities
+  function currentNeighbours() return [Node]
+    var neighbours set to empty {Node}
+    let currentPoint be current.point
+    each p in currentPoint.neighbouringPoints()
+      let node be getNodeFor(p)
+      let point be node.point
+      if point.isNotEmpty
+        then
+          set neighbours to neighbours + node
+      end if
+    end each
+    return neighbours.asArrayList()
+  end function
+
+  function getNodeFor(p as Point) return Node
+    var matches set to nodes.filter(lambda n as Node => n.point is p)
+    return if matches.length() is 1 then matches.head() else empty Node
+  end function
+
+  function getLastVisited() return Point
+    return current.point
+  end function
+
+  function nextNodeToVisit() return Node
+    var lowestCostSoFar set to infinity
+    var lowestCostNode set to empty Node
+    var possibilities set to nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    each nd in possibilities
+      let cost be calculateCost(nd)
+      if cost < lowestCostSoFar
+        then
+          set lowestCostSoFar to cost
+          set lowestCostNode to nd
+      end if
+    end each
+    return lowestCostNode
+  end function
+
+  function calculateCost(node as Node) return Float
     var cost set to 0.0
+    var fromStart set to node.distFromStart
+    var estToDest set to node.estDistToDest
     switch alg
       case Algorithm.dijkstra
-        set cost to costFromSource[p]
-      case Algorithm.optimistic
-        set cost to estimatedCostToDestination(p, destination)
+        set cost to fromStart
       case Algorithm.aStar
-        set cost to costFromSource[p] + estimatedCostToDestination(p, destination)
+        set cost to fromStart + estToDest
+      case Algorithm.heuristic
+        set cost to estToDest
     end switch
-    if cost < lowestCostSoFar
-      then
-        set lowestCostSoFar to cost
-        set lowestCostNode to p
-    end if
-  end each
-  return lowestCostNode
-end function 
+    return cost
+  end function
 
-function retraceRoute(destination as Point, source as Point, via as [Point:Point]) return [Point]
-  var result set to [destination]
-  var currentNode set to destination
-  while currentNode isnt source
-    var previous set to via[currentNode]
-    set result to result.insert(0, previous)
-    set currentNode to previous
-  end while
-  return result
-end function
+  function getRouteAndLength() return ({Point}, Float)
+    var route set to {destination}
+    var length set to 0.0
+    var node set to getNodeFor(destination)
+    repeat
+      var previous set to node.via
+      var p set to node.point
+      set length to length + p.minDistTo(previous)
+      set route to route.withInsert(0, previous)
+      set node to getNodeFor(previous)
+    end repeat when node.point is start
+    return (route, length)
+  end function
 
-function sumOfEdges(route as [Point]) return Float
-  var result set to 0.0
-  var stage set to 0
-  while stage < route.length() - 1
-    set result to result + findEdge(route[stage], route[stage + 1])
-    set stage to stage + 1
-  end while
-  return result
-end function
+end class
+
+class Node
+  constructor(p as Point, distFromStart as Float, estDistToDest as Float)
+    set property.point to p
+    set visited to false
+    set property.distFromStart to distFromStart
+    set via to empty Point
+    set property.estDistToDest to estDistToDest
+  end constructor
+
+  property point as Point
+
+  property visited as Boolean
+
+  property distFromStart as Float
+
+  property via as Point
+
+  property estDistToDest as Float
+
+  procedure setVisited(value as Boolean)
+    set visited to value
+  end procedure
+
+  procedure setDistanceFromStart(d as Float)
+    set distFromStart to d
+  end procedure
+
+  procedure setVia(p as Point)
+    set via to p
+  end procedure
+
+end class
 
 immutable class Point
   constructor(x as Int, y as Int)
     set property.x to x
     set property.y to y
+    # isNotEmpty is needed to distinguish Point(0,0) from empty Point, which will also have zero values
+    set isNotEmpty to true
   end constructor
 
   property x as Int
 
   property y as Int
 
-  function distanceFrom(p2 as Point) return Float
-    return sqrt((p2.x - x)^2 + (p2.y - y)^2)
+  property isNotEmpty as Boolean
+
+  function minDistTo(p as Point) return Float
+    return sqrt((p.x - x)^2 + (p.y - y)^2)
+  end function
+
+  function isAdjacentTo(p as Point) return Boolean
+    return (minDistTo(p) is 1) or round(minDistTo(p), 4) is round(sqrt(2), 4)
+  end function
+
+  # Returns the 8 theoretically-neighbouring points, whether or not within bounds
+  function neighbouringPoints() return {Point}
+    return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 
 end class
 
 enum Algorithm
-  dijkstra, optimistic, aStar
+  dijkstra, aStar, heuristic
 end enum
 
-# big enough for this purpose
-constant infinity set to 1000000
+# 'infinity' need only be larger than longest possible route
+constant infinity set to 2000.0
+
+constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
+
+constant white set to 0xffffff
+
+constant red set to 0xff0000
+
+constant green set to 0x00ff00
+
+constant yellow set to 0xffd000
+
+constant lightBlue set to 0x80abff
+
+constant black set to 0x000000
+
+constant algPrompt set to "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic: "
+
+test point
+  let p be new Point(0, 0)
+  let n be p.neighbouringPoints()
+  let expected be {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)}
+  assert n is expected
+end test
+
+test solver
+  var start set to new Point(0, 0)
+  var dest set to new Point(39, 29)
+  var alg set to Algorithm.dijkstra
+  var nodes set to empty [Node]
+  call createRocksAndNodes(0, empty [Point], nodes, start, dest)
+  var solver set to new Solver(nodes, start, dest)
+  call solver.initialise(alg)
+  var emptyNode set to empty Node
+  assert solver.getNodeFor(new Point(-1, -1)) is emptyNode
+  var emptyListOfNodes set to empty [Node]
+  var currNeighbours set to solver.currentNeighbours()
+  assert currNeighbours.length() is 3
+end test
