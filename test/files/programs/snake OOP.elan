@@ -84,7 +84,7 @@ class Snake
     return gr2
   end function
 
-  function score(g as Game) as Int
+  function score(g as Game) return Int
     return body.length() -1
   end function
 
