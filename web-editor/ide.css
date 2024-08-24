@@ -107,7 +107,7 @@ body {
   /* Define it as a sub-grid within the overall grid */
     display: grid;
     grid-template-columns: repeat(40, 1fr);
-    grid-template-rows: repeat(32, 1fr);
+    grid-template-rows: repeat(30, 1fr);
 }
  #code-controls {
     grid-row: 1;
