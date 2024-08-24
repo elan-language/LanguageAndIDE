@@ -1,4 +1,4 @@
-# 415ffb5ff86c1b7995b36a4d7b499c5bbb70580ecf1b26822d13bc197821cf78 Elan Beta 1 valid
+# 9cea1aeca25bb8f49f48ae7ebec527ad490715d41ca956243cb0c310ab406b29 Elan Beta 1 valid
 
 main
   var start set to new Point(0, 0)
@@ -137,7 +137,7 @@ class Solver
     each p in currentPoint.neighbouringPoints()
       let node be getNodeFor(p)
       let point be node.point
-      if point.isValid
+      if point.isNotEmpty
         then
           set neighbours to neighbours + node
       end if
@@ -159,7 +159,7 @@ class Solver
     var lowestCostNode set to empty Node
     var possibilities set to nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
-      let cost be getCost(nd)
+      let cost be calculateCost(nd)
       if cost < lowestCostSoFar
         then
           set lowestCostSoFar to cost
@@ -169,7 +169,7 @@ class Solver
     return lowestCostNode
   end function
 
-  function getCost(node as Node) return Float
+  function calculateCost(node as Node) return Float
     var cost set to 0.0
     var fromStart set to node.distFromStart
     var estToDest set to node.estDistToDest
@@ -231,45 +231,38 @@ class Node
     set via to p
   end procedure
 
-  function asString() return String
-    return "{point} {visited} fromStart:{distFromStart} via:{via} toDest:{estDistToDest}"
-  end function
-
 end class
 
 immutable class Point
   constructor(x as Int, y as Int)
     set property.x to x
     set property.y to y
-    set property.isValid to true
+    # isNotEmpty is needed to distinguish Point(0,0) from empty Point, which will also have zero values
+    set isNotEmpty to true
   end constructor
 
   property x as Int
 
   property y as Int
 
-  property isValid as Boolean
+  property isNotEmpty as Boolean
 
   function minDistTo(p as Point) return Float
     return sqrt((p.x - x)^2 + (p.y - y)^2)
   end function
 
   function isAdjacentTo(p as Point) return Boolean
-    return (minDistTo(p) is 1) or round(minDistTo(p), 2) is 1.41
+    return (minDistTo(p) is 1) or round(minDistTo(p), 4) is round(sqrt(2), 4)
   end function
 
-  # Returns the 8 theoretical neighbouring points, whether or not within bounds
+  # Returns the 8 theoretically-neighbouring points, whether or not within bounds
   function neighbouringPoints() return {Point}
     return {new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)}
   end function
 
-  function asString() return String
-    return if isValid then "[{x},{y}]" else "empty"
-  end function
-
 end class
 
-# 'infinity' need only to be larger than longest possible route
+# 'infinity' need only be larger than longest possible route
 constant infinity set to 2000.0
 
 enum Algorithm
