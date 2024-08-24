@@ -1,4 +1,4 @@
-# 99e74b7a49c7c52d9d5068115b70897abaa9650a06d5228524d8e41963ce3bdc Elan Beta 1 valid
+# 415ffb5ff86c1b7995b36a4d7b499c5bbb70580ecf1b26822d13bc197821cf78 Elan Beta 1 valid
 
 main
   var start set to new Point(0, 0)
@@ -10,29 +10,32 @@ main
   var solver set to new Solver(nodes, start, destination)
   var exit set to false
   while not exit
-    var gr set to initialiseGraphics(start, destination, rocks)
-    call gr.draw()
-    var option set to inputStringFromOptions("Enter 'd' for Dijkstra, 'a' for A-Star, 'h' for Heuristic: ", ["d", "a", "h"])
-    call solver.initialise(algFromLetter.getKey(option))
-    while solver.running
-      call solver.visitNextPoint()
-      var last set to solver.getLastVisited()
-      set gr to renderVisited(gr, last)
-      call gr.draw()
-      call pause(0)
-    end while
-    if solver.getLastVisited() is destination
-      then
-        var (route, length) set to solver.getRouteAndLength()
-        set gr to addRoute(gr, route)
-        call gr.draw()
-        print "Length of route: {round(length, 2)}"
-      else
-        print "No route from start to destination found through these rocks."
-    end if
+    call runSolver(start, destination, rocks, solver)
     set exit to inputString("Enter 'x' to exit, 'r' to run again: ") is "x"
   end while
 end main
+
+procedure runSolver(start as Point, destination as Point, rocks as [Point], solver as Solver)
+  var gr set to initialiseGraphics(start, destination, rocks)
+  call gr.draw()
+  var option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
+  call solver.initialise(algFromLetter.getKey(option))
+  while solver.running
+    call solver.visitNextPoint()
+    set gr to renderVisited(gr, solver.getLastVisited())
+    call gr.draw()
+    call pause(0)
+  end while
+  if solver.getLastVisited() is destination
+    then
+      var (route, length) set to solver.getRouteAndLength()
+      set gr to addRoute(gr, route)
+      call gr.draw()
+      print "Length of route: {round(length, 2)}"
+    else
+      print "No route from start to destination found through these rocks."
+  end if
+end procedure
 
 procedure createRocksAndNodes(percentRocks as Int, rocks as [Point], nodes as [Node], start as Point, dest as Point)
   for x from 0 to 39 step 1
@@ -166,17 +169,17 @@ class Solver
     return lowestCostNode
   end function
 
-  function getCost(nd as Node) return Float
+  function getCost(node as Node) return Float
     var cost set to 0.0
-    var fromSource set to nd.distFromStart
-    var estToDest set to nd.estDistToDest
+    var fromStart set to node.distFromStart
+    var estToDest set to node.estDistToDest
     switch alg
       case Algorithm.dijkstra
-        set cost to fromSource
+        set cost to fromStart
+      case Algorithm.aStar
+        set cost to fromStart + estToDest
       case Algorithm.heuristic
         set cost to estToDest
-      case Algorithm.aStar
-        set cost to fromSource + estToDest
     end switch
     return cost
   end function
@@ -286,6 +289,8 @@ constant yellow set to 0xffd000
 constant lightBlue set to 0x80abff
 
 constant black set to 0x000000
+
+constant algPrompt set to "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic: "
 
 test point
   let p be new Point(0, 0)
