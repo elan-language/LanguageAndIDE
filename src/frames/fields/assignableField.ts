@@ -1,5 +1,4 @@
 import { CodeSource } from "../code-source";
-import { isClass } from "../helpers";
 import { Frame } from "../interfaces/frame";
 import { ElanSymbol } from "../interfaces/symbol";
 import { propertyKeyword } from "../keywords";
@@ -8,13 +7,10 @@ import { AssignableNode } from "../parse-nodes/assignable-node";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { ParseStatus } from "../status-enums";
 import {
   filteredSymbols,
-  getClassScope,
-  isProperty,
+  isPropertyOnFieldsClass,
   isVarOrPropertyStatement,
-  isVarStatement,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -46,12 +42,8 @@ export class AssignableField extends AbstractField {
   }
 
   protected override getId(s: ElanSymbol) {
-    if (isProperty(s)) {
-      const scope = getClassScope(this.getHolder());
-      if (s.getParent() === scope) {
-        // ie property's class is same as this field's class
-        return `${propertyKeyword}.${s.symbolId}`;
-      }
+    if (isPropertyOnFieldsClass(s, this)) {
+      return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;
   }

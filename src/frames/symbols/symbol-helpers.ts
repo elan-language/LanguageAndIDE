@@ -1,4 +1,5 @@
 import { Property } from "../class-members/property";
+import { AbstractField } from "../fields/abstract-field";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Class } from "../interfaces/class";
@@ -52,6 +53,10 @@ export function isProperty(s?: ElanSymbol): s is Property {
 
 export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s));
+}
+
+export function isPropertyOnFieldsClass(s: ElanSymbol, f: AbstractField) {
+  return isProperty(s) && s.getParent() === getClassScope(f.getHolder());
 }
 
 export function rawSymbolToType(s: string) {

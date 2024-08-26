@@ -6,10 +6,9 @@ import { AbstractField } from "./abstract-field";
 import { ElanSymbol } from "../interfaces/symbol";
 import {
   filteredSymbols,
-  getClassScope,
   isExpression,
   isFunction,
-  isProperty,
+  isPropertyOnFieldsClass,
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { propertyKeyword } from "../keywords";
@@ -58,12 +57,8 @@ export class ExpressionField extends AbstractField {
     if (isFunction(s, transforms())) {
       return s.symbolId + "(";
     }
-    if (isProperty(s)) {
-      const scope = getClassScope(this.getHolder());
-      if (s.getParent() === scope) {
-        // ie property's class is same as this field's class
-        return `${propertyKeyword}.${s.symbolId}`;
-      }
+    if (isPropertyOnFieldsClass(s, this)) {
+      return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;
   }
