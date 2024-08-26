@@ -1,51 +1,46 @@
-# 01c96398b08ab0beec54ab4040725e5605f0c2c1d671c0a2dcb754bf8aa838ec Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
   var head set to [20, 15]
   var tail set to head
   var body set to [head]
-  var apple set to [0, 0]
-  call setAppleToNewPosition(apple, body)
-  var currentDirection set to "right"
+  var currentDir set to "right"
   var gameOn set to true
+  var apple set to [0, 0]
+  call setAppleToRandomPosition(apple, body)
   while gameOn
     set gr to updateGraphics(gr, head, tail, body, apple)
     call gr.draw()
-    var k set to gr.getKeystroke()
-    if k isnt ""
-      then
-        set currentDirection to directionByKey(k)
-    end if
+    set currentDir to directionByKey(currentDir, gr.getKeystroke())
     set tail to body[0]
     call body.add(head)
-    set head to getAdjacentSquare(head, currentDirection)
-    call eatAppleifPoss(head, body, apple)
+    set head to getAdjacentSquare(head, currentDir)
     set gameOn to not hasHitEdge(head) and not overlaps(body, head)
+    call eatAppleIfPoss(head, body, apple)
     call pause(150)
   end while
   print "Game Over! Score: {body.length() - 1}"
 end main
 
-procedure eatAppleifPoss(head as [Int], body as [[Int]], apple as [Int])
-  if head is apple
-    then
-      call setAppleToNewPosition(apple, body)
-    else
-      call body.removeAt(0)
-  end if
-end procedure
-
-procedure setAppleToNewPosition(apple as [Int], body as [[Int]])
+procedure setAppleToRandomPosition(apple as [Int], body as [[Int]])
   repeat
     set apple[0] to randomInt(0, 39)
     set apple[1] to randomInt(0, 29)
   end repeat when not overlaps(body, apple)
 end procedure
 
+procedure eatAppleIfPoss(head as [Int], body as [[Int]], apple as [Int])
+  if head is apple
+    then
+      call setAppleToRandomPosition(apple, body)
+    else
+      call body.removeAt(0)
+  end if
+end procedure
+
 function updateGraphics(gr as Graphics, head as [Int], tail as [Int], body as [[Int]], apple as [Int]) return Graphics
-  var gr2 set to gr
-  set gr2 to gr2.putBackground(head[0], head[1], green)
+  var gr2 set to gr.putBackground(head[0], head[1], green)
   if body[0] is tail
     then
       set gr2 to gr2.putBackground(tail[0], tail[1], green)
@@ -87,8 +82,8 @@ function overlaps(body as [[Int]], sq as [Int]) return Boolean
   return result
 end function
 
-function directionByKey(key as String) return String
-  var dir set to ""
+function directionByKey(current as String, key as String) return String
+  var dir set to current
   switch key
     case "w"
       set dir to "up"
@@ -107,3 +102,37 @@ constant green set to 0x00ff00
 constant red set to 0xff0000
 
 constant white set to 0xffffff
+
+test hasHitEdge
+  assert hasHitEdge([0, 0]) is false
+  assert hasHitEdge([0, 29]) is false
+  assert hasHitEdge([39, 0]) is false
+  assert hasHitEdge([29, 29]) is false
+  assert hasHitEdge([-1, 5]) is true
+  assert hasHitEdge([5, 30]) is true
+  assert hasHitEdge([40, 5]) is true
+  assert hasHitEdge([5, -1]) is true
+end test
+
+test eatAppleIfPoss
+  var body set to [[0, 0], [1, 0]]
+  var head set to [0, 2]
+  var apple set to [0, 2]
+  call eatAppleIfPoss(head, body, apple)
+  var appleInSamePosition set to apple is [0, 2]
+  assert appleInSamePosition is false
+  assert body is [[0, 0], [1, 0]]
+  var apple2 set to [5, 6]
+  call eatAppleIfPoss(head, body, apple2)
+  var apple2inSamePosition set to apple2 is [5, 6]
+  assert apple2inSamePosition is true
+  assert body is [[1, 0]]
+end test
+
+test overlaps
+  let body be [[1, 2], [3, 4]]
+  assert overlaps(body, [1, 2]) is true
+  assert overlaps(body, [3, 4]) is true
+  assert overlaps(body, [1]) is false
+  assert overlaps(body, [2, 1]) is false
+end test
