@@ -24,7 +24,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
 
   property p1 as Float
@@ -82,8 +82,8 @@ end main
 
 class Foo
     constructor(p_1 as Float,  p_2 as String)
-        set p1 to p_1
-        set p2 to p_2
+        set property.p1 to p_1
+        set property.p2 to p_2
     end constructor
 
     property p1 as Float
@@ -140,7 +140,7 @@ end main
 class Foo
     constructor()
       var bar set to new Bar()
-      set b to bar
+      set property.b to bar
     end constructor
 
     property b as Bar 
@@ -149,7 +149,7 @@ end class
 
 class Bar
     constructor()
-      set p1 to 5
+      set property.p1 to 5
     end constructor
 
     property p1 as Int
@@ -378,7 +378,7 @@ class Foo
   property p1 as Int
 
   procedure updateP1()
-    set p1 to 0
+    set property.p1 to 0
   end procedure
 end class
 
@@ -494,7 +494,7 @@ class Foo
   end constructor
 
   constructor(val as Int)
-      set p1 to val
+      set property.p1 to val
   end constructor
 
   property p1 as Int
@@ -520,7 +520,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set p1 to val
+      set property.p1 to val
   end constructor
 
   property p1 as Int
@@ -547,7 +547,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      set p1 to val
+      set property.p1 to val
   end constructor
 
   property p1 as Int
@@ -603,7 +603,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
 
   property p1 as Int

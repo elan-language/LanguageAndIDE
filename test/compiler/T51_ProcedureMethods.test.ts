@@ -23,11 +23,11 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
+        set property.p1 to 5
     end constructor
     property p1 as Float
     procedure setP1(value as Float)
-        set p1 to value
+        set property.p1 to value
     end procedure
     function asString() return String
          return ""
@@ -80,7 +80,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
 
   property p1 as Float
@@ -139,11 +139,11 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
+        set property.p1 to 5
     end constructor
     property p1 as Float
     procedure setP1(value as Float)
-        set p1 to value
+        set property.p1 to value
         call global.setP1(value)
     end procedure
     function asString() return String
@@ -205,7 +205,7 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
+        set property.p1 to 5
     end constructor
 
     property p1 as Float
@@ -213,12 +213,12 @@ class Foo
     procedure times(b as Bar)
         call b.p1PlusOne()
         call p1PlusOne()
-        set p1 to p1 + b.p1
+        set property.p1 to p1 + b.p1
         print p1
     end procedure
 
     procedure p1PlusOne()
-        set p1 to p1 + 1
+        set property.p1 to p1 + 1
     end procedure
 
     function asString() return String
@@ -229,13 +229,13 @@ end class
 
 class Bar
     constructor()
-        set p1 to 1
+        set property.p1 to 1
     end constructor
 
     property p1 as Float
 
     procedure p1PlusOne()
-        set p1 to p1 + 1
+        set property.p1 to p1 + 1
     end procedure
 
     function asString() return String
@@ -314,7 +314,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
 
   property p1 as Float
@@ -346,7 +346,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
   property p1 as Int
 

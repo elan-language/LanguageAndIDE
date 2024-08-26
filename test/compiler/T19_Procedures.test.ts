@@ -312,7 +312,7 @@ end main
 
 class Foo
     constructor()
-        set p1 to new Bar()
+        set property.p1 to new Bar()
     end constructor
 
     property p1 as Bar
@@ -329,7 +329,7 @@ end class
 
 class Bar
     constructor()
-        set p1 to 5
+        set property.p1 to 5
     end constructor
 
     property p1 as Float

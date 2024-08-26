@@ -53,7 +53,7 @@ end main
 
 class Foo
     constructor()
-        set a to 3
+        set property.a to 3
     end constructor
 
     property a as Int
@@ -279,7 +279,7 @@ end main
 
 class Foo
     constructor()
-        set a to 3
+        set property.a to 3
     end constructor
 
     property a as Int

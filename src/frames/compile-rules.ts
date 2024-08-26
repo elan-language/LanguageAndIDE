@@ -50,13 +50,18 @@ import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
-import { isDictionarySymbolType, isGenericSymbolType } from "./symbols/symbol-helpers";
+import {
+  isDictionarySymbolType,
+  isGenericSymbolType,
+  isPropertyOnFieldsClass,
+} from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import { InFunctionScope, isAstIdNode, isAstIndexableNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
+import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -684,6 +689,25 @@ export function mustNotBePropertyOnFunctionMethod(
 
     if (s === SymbolScope.property) {
       compileErrors.push(new ReassignCompileError(`property: ${getId(assignable)}`, location));
+    }
+  }
+}
+
+export function mustBePropertyPrefixedOnAssignable(
+  assignable: AstNode,
+  parent: Parent,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isMember(parent)) {
+    const s = assignable.symbolScope;
+
+    if (s === SymbolScope.property) {
+      if (isAstIndexableNode(assignable) && !assignable.qualifier) {
+        compileErrors.push(
+          new SyntaxCompileError(`assigning to a property requires a prefix`, location),
+        );
+      }
     }
   }
 }

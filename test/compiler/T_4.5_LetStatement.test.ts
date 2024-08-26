@@ -70,7 +70,7 @@ class Foo
   property p1 as Int
 
   procedure setP1(i as Int)
-    set p1 to i
+    set property.p1 to i
   end procedure
 end class
 

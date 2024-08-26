@@ -305,7 +305,7 @@ class Foo
   property i as Iter<of Int>
 
   procedure update()
-    set i to {1}
+    set property.i to {1}
   end procedure
 end class`;
 

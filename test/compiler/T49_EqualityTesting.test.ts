@@ -32,7 +32,7 @@ class Foo
     property p2 as String
 
     procedure setP1(v as Float)
-        set p1 to v
+        set property.p1 to v
     end procedure
 
     function asString() return String
@@ -96,7 +96,7 @@ class Foo
     property p2 as String
 
     procedure setP1(v as Int)
-        set p1 to v
+        set property.p1 to v
     end procedure
 
     function asString() return String
@@ -163,7 +163,7 @@ class Foo
   property p2 as String
 
   procedure setP1(v as Int)
-    set p1 to v
+    set property.p1 to v
   end procedure
 
   function asString() return String

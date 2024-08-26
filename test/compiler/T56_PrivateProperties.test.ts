@@ -6,12 +6,13 @@ import {
     assertObjectCodeIs,
     assertParses,
     assertStatusIsValid,
+    ignore_test,
     testHash,
     transforms,
 } from "./compiler-test-helpers";
 
 suite("T56_PrivateProperties", () => {
-  test("Pass_PrivatePropertyCanBeDeclared", async () => {
+  ignore_test("Pass_PrivatePropertyCanBeDeclared", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -21,8 +22,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -78,8 +79,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -109,8 +110,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float

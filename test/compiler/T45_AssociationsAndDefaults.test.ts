@@ -24,9 +24,9 @@ end main
 
 class Game
     constructor()
-      set p2 to new Player("Chloe")
-      set p1 to new Player("Joe")
-      set previousScores to {5, 2, 4}
+      set property.p2 to new Player("Chloe")
+      set property.p1 to new Player("Joe")
+      set property.previousScores to {5, 2, 4}
     end constructor
 
     property p1 as Player
@@ -343,7 +343,7 @@ end main
 
 class Game
     constructor()
-       set i to 100
+      set property.i to 100
     end constructor
 
     property i as Float
@@ -493,7 +493,7 @@ end main
 
 class Game
   constructor()
-    set score to 1
+    set property.score to 1
   end constructor
 
   property score as Float
@@ -614,7 +614,7 @@ end main
 
 class Game
   constructor()
-    set score to 10
+    set property.score to 10
   end constructor
 
   property score as Int
@@ -624,7 +624,7 @@ class Game
   property p2 as Player
 
   procedure setScore(newScore as Int)
-    set score to newScore
+    set property.score to newScore
   end procedure
 
   property previousGame as Game
@@ -903,7 +903,7 @@ end main
 
 class Game
   constructor()
-    set p1 to [1,2,3]
+    set property.p1 to [1,2,3]
   end constructor
 
   property p1 as [Int]

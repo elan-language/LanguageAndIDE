@@ -45,7 +45,7 @@ end main
 
 class Foo
   constructor()
-      set p1 to 5
+      set property.p1 to 5
   end constructor
 
   property p1 as Float
@@ -205,8 +205,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -263,8 +263,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -320,8 +320,8 @@ end main
 
 class Foo
     constructor()
-        set p1 to 5
-        set p2 to "Apple"
+        set property.p1 to 5
+        set property.p2 to "Apple"
     end constructor
 
     property p1 as Float

@@ -34,8 +34,8 @@ end class
 
 class Bar inherits Foo
     constructor()
-        set p1 to 3
-        set p2 to 4
+        set property.p1 to 3
+        set property.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
@@ -143,8 +143,8 @@ end class
 
 immutable class Yon inherits Foo, Bar
     constructor()
-        set p1 to 3
-        set p2 to "apple"
+        set property.p1 to 3
+        set property.p2 to "apple"
     end constructor
     property p1 as Float
     property p2 as String
@@ -246,8 +246,8 @@ end class
 
 class Bar inherits Foo, Yon
     constructor()
-        set p1 to 3
-        set p2 to 4
+        set property.p1 to 3
+        set property.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
@@ -368,8 +368,8 @@ end class
 
 class Bar inherits Foo, Yon
     constructor()
-        set p1 to 3
-        set p2 to 4
+        set property.p1 to 3
+        set property.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float
@@ -1072,7 +1072,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      set p1 to 3
+      set property.p1 to 3
     end constructor
 
     property p1 as Float
@@ -1111,7 +1111,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      set p1 to 3
+      set property.p1 to 3
     end constructor
 
     property p1 as Float
@@ -1158,8 +1158,8 @@ end class
 
 class Bar inherits Foo
     constructor()
-        set p1 to 3
-        set p2 to 4
+        set property.p1 to 3
+        set property.p2 to 4
     end constructor
     property p1 as Float
     property p2 as Float

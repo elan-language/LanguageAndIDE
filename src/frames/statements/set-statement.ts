@@ -3,6 +3,7 @@ import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
   mustBeIndexableSymbol,
+  mustBePropertyPrefixedOnAssignable,
   mustBeRangeableSymbol,
   mustNotBeConstant,
   mustNotBeCounter,
@@ -80,6 +81,13 @@ export class SetStatement extends AbstractFrame implements Statement {
     mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.htmlId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.htmlId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.htmlId);
+
+    mustBePropertyPrefixedOnAssignable(
+      assignableAstNode,
+      this.getParent(),
+      this.compileErrors,
+      this.htmlId,
+    );
 
     if (isAstIdNode(assignableAstNode)) {
       const symbol = this.getParent().resolveSymbol(assignableAstNode.id, transforms, this);

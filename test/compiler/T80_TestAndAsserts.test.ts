@@ -276,7 +276,7 @@ end test
 
 class Foo
   constructor(b as Int)
-    set bar to b
+    set property.bar to b
   end constructor
 
   property bar as Int

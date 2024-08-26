@@ -76,7 +76,7 @@ end function
 
 immutable class Foo
     constructor()
-        set p1 to 3
+        set property.p1 to 3
     end constructor
 
     property p1 as Float
@@ -139,7 +139,7 @@ end main
 
 class Foo
   constructor()
-    set p1 to 1
+    set property.p1 to 1
   end constructor
 
   property p1 as Int
