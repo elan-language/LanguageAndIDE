@@ -1,6 +1,7 @@
 import assert from "assert";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
+import { ClassFrame } from "../src/frames/globals/class-frame";
 import { GlobalFunction } from "../src/frames/globals/global-function";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
@@ -14,6 +15,7 @@ import { VarStatement } from "../src/frames/statements/var-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
+import { key } from "./testHelpers";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
@@ -151,4 +153,17 @@ suite("Field Parsing Tests", () => {
     assert.equal(expected.textAsSource(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
     assert.equal(expected.textAsHtml(), `{4, 5, 6, 24, 26, 44, 45, 46}`);
   });
+
+  test("#706 - optionalKeyword should ignore all invalid chars", () => {
+    const cls = new ClassFrame(new FileImpl(hash, new DefaultProfile(), transforms()));
+    const abs = cls.abstract;
+    assert.equal(ParseStatus.valid, abs.readParseStatus());
+    abs.processKey(key("b"));
+    assert.equal("", abs.textAsHtml());
+    assert.equal(ParseStatus.valid, abs.readParseStatus());
+    abs.processKey(key("a"));
+    assert.equal("<keyword> abstract</keyword>", abs.textAsHtml());
+    assert.equal(ParseStatus.valid, abs.readParseStatus());
+  });
+
 });
