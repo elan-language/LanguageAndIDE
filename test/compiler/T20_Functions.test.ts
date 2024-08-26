@@ -248,8 +248,8 @@ return [main, _tests];}`;
 constant a set to {"a":1}
 
 main
-  var b set to a.getKey()
-  var c set to a.getKey("a", 1)
+  var b set to a.getValueByKey()
+  var c set to a.getValueByKey("a", 1)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

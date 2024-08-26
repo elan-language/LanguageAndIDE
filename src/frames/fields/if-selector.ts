@@ -1,13 +1,13 @@
-import { AbstractField } from "./abstract-field";
-import { editorEvent } from "../interfaces/editor-event";
-import { Else } from "../statements/else";
-import { ParseStatus } from "../status-enums";
 import { CodeSource } from "../code-source";
-import { ParseNode } from "../parse-nodes/parse-node";
-import { Regexes } from "./regexes";
-import { OptionalNode } from "../parse-nodes/optional-node";
+import { editorEvent } from "../interfaces/editor-event";
 import { ifKeyword } from "../keywords";
 import { KeywordNode } from "../parse-nodes/keyword-node";
+import { OptionalNode } from "../parse-nodes/optional-node";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { Else } from "../statements/else";
+import { ParseStatus } from "../status-enums";
+import { AbstractField } from "./abstract-field";
+import { Regexes } from "./regexes";
 
 export class IfSelector extends AbstractField {
   protected placeholderIsCode: boolean = true;
@@ -51,11 +51,12 @@ export class IfSelector extends AbstractField {
   processKey(keyEvent: editorEvent): boolean {
     this.codeHasChanged = false;
     const char = keyEvent.key;
-    const empty = this.text === "";
-    if (empty && char === "i") {
-      this.else.setIfExtension(true);
-      this.else.condition.select();
-      this.codeHasChanged = true;
+    if (char?.length === 1) {
+      if (char === "i" && this.text === "") {
+        this.else.setIfExtension(true);
+        this.else.condition.select();
+        this.codeHasChanged = true;
+      }
     } else {
       this.codeHasChanged = super.processKey(keyEvent);
     }

@@ -139,7 +139,7 @@ export class StdLib {
     return newDict;
   }
 
-  removeKey<T>(dict: { [key: string]: T }, key: string) {
+  removeByKey<T>(dict: { [key: string]: T }, key: string) {
     delete dict[key];
   }
 
@@ -185,7 +185,7 @@ export class StdLib {
     return this.system.safeIndex(st, index);
   }
 
-  getKey<T>(st: { [key: string]: T }, index: string) {
+  getValueByKey<T>(st: { [key: string]: T }, index: string) {
     return this.system.safeIndex(st, index);
   }
 
@@ -213,7 +213,7 @@ export class StdLib {
     list.splice(index, 0, value);
   }
 
-  withRemove<T>(list: Array<T>, index: number) {
+  withRemoveByKey<T>(list: Array<T>, index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
     (newList as unknown as hasHiddenType)._type = "ImmutableList";
@@ -277,7 +277,7 @@ export class StdLib {
     list.push(value);
   }
 
-  withKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+  withKeyValue<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";

@@ -40,8 +40,8 @@ export class OptionalKeyword extends AbstractField {
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = true;
     const key = e.key;
-    if (key && key.length === 1 && this.keyword.startsWith(key.toLowerCase())) {
-      if (this.overtyper.hasNotConsumed(key)) {
+    if (key && key.length === 1) {
+      if (this.overtyper.hasNotConsumed(key) && this.keyword.startsWith(key.toLowerCase())) {
         this.text = this.keyword;
         this.alertHolderToUpdate();
         this.getHolder().selectFieldAfter(this);

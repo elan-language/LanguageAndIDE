@@ -1,4 +1,3 @@
-import { Parent } from "./frames/interfaces/parent";
 import { Scope } from "./frames/interfaces/scope";
 import { ElanSymbol } from "./frames/interfaces/symbol";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -109,9 +108,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "getKey",
+      "getValueByKey",
       this.getSymbol(
-        "getKey",
+        "getValueByKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(
@@ -273,9 +272,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withRemove",
+      "withRemoveByKey",
       this.getSymbol(
-        "withRemove",
+        "withRemoveByKey",
         new FunctionType(
           [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
           new ImmutableListType(new GenericParameterType("T")),
@@ -365,9 +364,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withKey",
+      "withKeyValue",
       this.getSymbol(
-        "withKey",
+        "withKeyValue",
         new FunctionType(
           [
             new ImmutableDictionaryType(
@@ -386,9 +385,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "removeKey",
+      "removeByKey",
       this.getSymbol(
-        "removeKey",
+        "removeByKey",
         new ProcedureType(
           [
             new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),

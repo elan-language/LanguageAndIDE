@@ -28,9 +28,9 @@ class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit
-    set symbol to unicode(symbols.getKey(suit))
-    set colour to colourForSuit.getKey(suit)
-    set label to labels.getKey(rank)
+    set symbol to unicode(symbols.getValueByKey(suit))
+    set colour to colourForSuit.getValueByKey(suit)
+    set label to labels.getValueByKey(rank)
   end constructor
 
   property suit as Suit

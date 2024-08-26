@@ -169,7 +169,7 @@ return [main, _tests];}`;
 constant source set to {"three", "four"}
 main
   var ed set to {"one":1, "two":2}
-  set ed to source.reduce(ed, lambda d as ImmutableDictionary<of String, Int>, x as String => d.withKey(x, 1))
+  set ed to source.reduce(ed, lambda d as ImmutableDictionary<of String, Int>, x as String => d.withKeyValue(x, 1))
   print ed
 end main`;
 
@@ -178,7 +178,7 @@ const source = system.immutableList(["three", "four"]);
 
 async function main() {
   var ed = system.immutableDictionary({["one"] : 1, ["two"] : 2});
-  ed = _stdlib.reduce(source, ed, (d, x) => _stdlib.withKey(d, x, 1));
+  ed = _stdlib.reduce(source, ed, (d, x) => _stdlib.withKeyValue(d, x, 1));
   system.printLine(_stdlib.asString(ed));
 }
 return [main, _tests];}`;
