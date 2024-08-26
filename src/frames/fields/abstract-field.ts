@@ -18,6 +18,7 @@ import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayStatus, ParseStatus } from "../status-enums";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { Transforms } from "../syntax-nodes/transforms";
@@ -515,10 +516,24 @@ export abstract class AbstractField implements Selectable, Field {
     return ["", []];
   }
 
+  protected getSymbolId(symbol: ElanSymbol) {
+    return symbol.symbolScope === SymbolScope.property && !this.text.includes(".")
+      ? `property.${symbol.symbolId}`
+      : symbol.symbolId;
+  }
+
   protected popupAsHtml() {
     const symbols = this.autocompleteSymbols;
     const symbolAsHtml: string[] = [];
     const count = this.autocompleteSymbols.length;
+    // we're doing a ref equality below so make sure same objects!
+    this.autoCompSelected = this.autoCompSelected
+      ? symbols.filter(
+          (s) =>
+            s.symbolId === this.autoCompSelected?.symbolId &&
+            s.symbolScope === this.autoCompSelected.symbolScope,
+        )[0]
+      : undefined;
     const selectedIndex = this.autoCompSelected ? symbols.indexOf(this.autoCompSelected) : 0;
     let popupAsHtml = "";
     let startIndex = 0;
@@ -540,7 +555,7 @@ export abstract class AbstractField implements Selectable, Field {
 
     for (let i = startIndex; i < lastIndex; i++) {
       const symbol = symbols[i];
-      const symbolId = symbol.symbolId;
+      const symbolId = this.getSymbolId(symbol);
       const selected = count === 1 || this.markIfSelected(symbol) ? " selected" : "";
 
       symbolAsHtml.push(
