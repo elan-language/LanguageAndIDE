@@ -715,7 +715,7 @@ end main
 
 main
   var a set to ["one", "two", "three"]
-  set a to a.withRemove(1)
+  set a to a.withRemoveByKey(1)
   print a
 end main
 `;

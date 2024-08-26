@@ -271,9 +271,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withRemove",
+      "withRemoveByKey",
       this.getSymbol(
-        "withRemove",
+        "withRemoveByKey",
         new FunctionType(
           [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
           new ImmutableListType(new GenericParameterType("T")),
