@@ -1,10 +1,10 @@
-import { Frame } from "../interfaces/frame";
-import { editorEvent } from "../interfaces/editor-event";
-import { AbstractField } from "./abstract-field";
 import { CodeSource } from "../code-source";
-import { ParseNode } from "../parse-nodes/parse-node";
-import { OptionalNode } from "../parse-nodes/optional-node";
+import { editorEvent } from "../interfaces/editor-event";
+import { Frame } from "../interfaces/frame";
 import { KeywordNode } from "../parse-nodes/keyword-node";
+import { OptionalNode } from "../parse-nodes/optional-node";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { AbstractField } from "./abstract-field";
 
 export class OptionalKeyword extends AbstractField {
   isParseByNodes = true;
@@ -41,10 +41,12 @@ export class OptionalKeyword extends AbstractField {
     this.codeHasChanged = true;
     const key = e.key;
     if (key && key.length === 1 && this.keyword.startsWith(key.toLowerCase())) {
-      this.text = this.keyword;
-      this.alertHolderToUpdate();
-      this.getHolder().selectFieldAfter(this);
-      this.codeHasChanged = true;
+      if (this.overtyper.hasNotConsumed(key)) {
+        this.text = this.keyword;
+        this.alertHolderToUpdate();
+        this.getHolder().selectFieldAfter(this);
+        this.codeHasChanged = true;
+      }
     } else if (key === "Delete" || key === "Backspace") {
       this.text = "";
       this.alertHolderToUpdate();

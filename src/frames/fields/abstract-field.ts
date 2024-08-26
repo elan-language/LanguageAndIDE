@@ -245,7 +245,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   private processInput(key: string) {
-    if (this.overtyper.finishedConsuming(key)) {
+    if (this.overtyper.hasNotConsumed(key)) {
       if (this.isEndMarker(key)) {
         this.enter();
       } else {
