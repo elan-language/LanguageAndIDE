@@ -81,4 +81,12 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\T08_collapseAll.html`,
     );
   });
+
+  test("#702 - last line is a comment", async () => {
+    await assertEffectOfActionNew(
+      `${__dirname}\\files\\test702.elan`,
+      CollapseAll,
+      `${__dirname}\\files\\test702.html`,
+    );
+  });
 });
