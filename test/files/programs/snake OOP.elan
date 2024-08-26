@@ -1,4 +1,4 @@
-# FFFF Elan Beta 1 valid
+# 183a4629061e5863f73f9c22d1551ec67c1dcd9a12335e7bf6fe94452adeae85 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
@@ -84,8 +84,8 @@ class Snake
     return gr2
   end function
 
-  function score(g as Game) return Int
-    return body.length() -1
+  function score() return Int
+    return body.length() - 1
   end function
 
 end class
