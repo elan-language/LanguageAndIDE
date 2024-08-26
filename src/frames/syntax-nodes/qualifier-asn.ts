@@ -3,7 +3,6 @@ import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword } from "../keywords";
-import { getParentScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstIdNode, transforms } from "./ast-helpers";
 
@@ -41,7 +40,8 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
 
   symbolType() {
     if (isAstIdNode(this.value)) {
-      return getParentScope(this.scope)
+      return this.scope
+        .getParentScope()
         .resolveSymbol(this.value.id, transforms(), this.scope)
         .symbolType(transforms());
     }

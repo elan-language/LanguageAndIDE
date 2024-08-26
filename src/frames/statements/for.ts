@@ -12,7 +12,6 @@ import { IntType } from "../symbols/int-type";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { ExpressionField } from "../fields/expression-field";
-import { getParentScope } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class For extends FrameWithStatements implements Statement {
@@ -64,7 +63,7 @@ ${this.indent()}end for`;
     const t = this.to.compile(transforms);
     let s = this.step.compile(transforms);
 
-    const id = getParentScope(this).resolveSymbol(v, transforms, this);
+    const id = this.getParentScope().resolveSymbol(v, transforms, this);
     let declare = "";
 
     if (id instanceof UnknownSymbol) {
