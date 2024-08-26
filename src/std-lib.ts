@@ -404,7 +404,7 @@ export class StdLib {
   }
 
   randomInt(low: number, high: number): number {
-    return Math.floor(Math.random() * high) + low;
+    return Math.floor(Math.random() * (high - low + 1)) + low;
   }
 
   parseAsFloat(s: string): [boolean, number] {
@@ -771,5 +771,40 @@ export class StdLib {
   }
   radToDeg(r: number) {
     return (r / this.pi) * 180;
+  }
+
+  // Functional random
+  next(current: [number, number]): [number, number] {
+    const u = current[0];
+    const v = current[1];
+    const u2 = 36969 * this.lo16(u) + u / 65536;
+    const v2 = 18000 * this.lo16(v) + v / 65536;
+    return [u2, v2];
+  }
+
+  value(current: [number, number]): number {
+    const u = current[0];
+    const v = current[1];
+    return this.lo32(this.lo32(u * 65536) + v + 1) * 2.328306435454494e-10;
+  }
+
+  lo32(n: number): number {
+    return n % 4294967296;
+  }
+  lo16(n: number): number {
+    return n % 65536;
+  }
+
+  valueInt(current: [number, number], min: number, max: number): number {
+    const float = this.value(current);
+    return Math.floor(float * (max - min + 1) + min);
+  }
+  functionalRandomSeed(u: number, v: number): [number, number] {
+    return [u === 0 ? 521288629 : u, v === 0 ? 362436069 : v];
+  }
+
+  functionalRandom(): [number, number] {
+    const c = this.clock();
+    return this.functionalRandomSeed(this.lo16(c / 65536), this.lo16(c));
   }
 }
