@@ -1173,6 +1173,59 @@ export class StdLibSymbols implements Scope {
       "radToDeg",
       this.getSymbol("radToDeg", new FunctionType([FloatType.Instance], FloatType.Instance, false)),
     ],
+    ["Random", this.getSymbol("Random", new TupleType([IntType.Instance, IntType.Instance]))],
+    [
+      "next",
+      this.getSymbol(
+        "next",
+        new FunctionType(
+          [new TupleType([IntType.Instance, IntType.Instance])],
+          new TupleType([IntType.Instance, IntType.Instance]),
+          true,
+        ),
+      ),
+    ],
+    [
+      "value",
+      this.getSymbol(
+        "value",
+        new FunctionType(
+          [new TupleType([IntType.Instance, IntType.Instance])],
+          FloatType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
+      "valueInt",
+      this.getSymbol(
+        "valueInt",
+        new FunctionType(
+          [new TupleType([IntType.Instance, IntType.Instance]), IntType.Instance, IntType.Instance],
+          IntType.Instance,
+          true,
+        ),
+      ),
+    ],
+    [
+      "functionalRandom",
+      this.getSymbol(
+        "functionalRandom",
+        new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
+      ),
+    ],
+    [
+      "functionalRandomSeed",
+      this.getSymbol(
+        "functionalRandomSeed",
+        new FunctionType(
+          [IntType.Instance, IntType.Instance],
+          new TupleType([IntType.Instance, IntType.Instance]),
+          false,
+          false,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {
