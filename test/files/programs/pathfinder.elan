@@ -19,7 +19,7 @@ procedure runSolver(start as Point, destination as Point, rocks as [Point], solv
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()
   var option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
-  call solver.initialise(algFromLetter.getKey(option))
+  call solver.initialise(algFromLetter.getValueByKey(option))
   while solver.running
     call solver.visitNextPoint()
     set gr to addVisited(gr, solver.getLastVisited())

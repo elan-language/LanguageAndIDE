@@ -107,9 +107,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "getKey",
+      "getValueByKey",
       this.getSymbol(
-        "getKey",
+        "getValueByKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(

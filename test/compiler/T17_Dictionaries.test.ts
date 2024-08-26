@@ -647,7 +647,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  print a.getKey("a")
+  print a.getValueByKey("a")
 end main
 `;
 

@@ -98,14 +98,14 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getKey("z")
+  print a.getValueByKey("z")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.getKey(a, "z")));
+  system.printLine(_stdlib.asString(_stdlib.getValueByKey(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -301,8 +301,8 @@ main
   set b to b.withKeyValue("Bar", 3)
   var k set to b.keys()
   print k.length()
-  print b.getKey("Foo")
-  print b.getKey("Bar")
+  print b.getValueByKey("Foo")
+  print b.getValueByKey("Bar")
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -312,8 +312,8 @@ async function main() {
   b = _stdlib.withKeyValue(b, "Bar", 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(_stdlib.getKey(b, "Foo")));
-  system.printLine(_stdlib.asString(_stdlib.getKey(b, "Bar")));
+  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, "Foo")));
+  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -339,8 +339,8 @@ main
   set b to b.withKeyValue(Fruit.orange, 3)
   var k set to b.keys()
   print k.length()
-  print b.getKey(Fruit.apple)
-  print b.getKey(Fruit.orange)
+  print b.getValueByKey(Fruit.apple)
+  print b.getValueByKey(Fruit.orange)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -354,8 +354,8 @@ async function main() {
   b = _stdlib.withKeyValue(b, Fruit.orange, 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(_stdlib.getKey(b, Fruit.apple)));
-  system.printLine(_stdlib.asString(_stdlib.getKey(b, Fruit.orange)));
+  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, Fruit.apple)));
+  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, Fruit.orange)));
 }
 return [main, _tests];}`;
 
@@ -460,7 +460,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getKey("c")
+  print a.getValueByKey("c")
 end main
 `;
 
@@ -574,7 +574,7 @@ end main`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
-  var a set to a.getKey("a")
+  var a set to a.getValueByKey("a")
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

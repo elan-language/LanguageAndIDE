@@ -185,7 +185,7 @@ export class StdLib {
     return this.system.safeIndex(st, index);
   }
 
-  getKey<T>(st: { [key: string]: T }, index: string) {
+  getValueByKey<T>(st: { [key: string]: T }, index: string) {
     return this.system.safeIndex(st, index);
   }
 
