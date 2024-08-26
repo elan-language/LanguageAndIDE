@@ -543,7 +543,7 @@ export class StdLib {
     this.system.elanInputOutput.clearGraphics();
   }
 
-  draw(map: Graphics) {
+  draw(map: Graphics): Promise<void> {
     const cm = this.ensureInitialised(map);
     let rendered = "";
 
@@ -554,6 +554,7 @@ export class StdLib {
       }
     }
     this.system.elanInputOutput.drawGraphics(rendered);
+    return this.pause(0);
   }
 
   private asHex(n: number): string {
