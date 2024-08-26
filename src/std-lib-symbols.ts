@@ -671,6 +671,7 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     ["pause", this.getSymbol("pause", new ProcedureType([IntType.Instance], false, true))],
+
     ["clock", this.getSymbol("clock", new FunctionType([], IntType.Instance, false, false))],
     [
       "parseAsFloat",
@@ -1005,7 +1006,7 @@ export class StdLibSymbols implements Scope {
             ),
           ],
           true,
-          false,
+          true,
         ),
       ),
     ],

@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotParse,
-    assertGraphicsContains,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T81_CharMappedDisplay", () => {
@@ -23,7 +23,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putAt(g, 0, 0, "F", 1, 2);
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -109,7 +109,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putChar(g, 0, 0, "Z");
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -165,7 +165,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putForeground(g, 0, 0, 3);
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -221,7 +221,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putBackground(g, 1, 0, 4);
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -276,7 +276,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var gr = system.initialise(system.immutableList(new Array()));
-  _stdlib.draw(gr);
+  await _stdlib.draw(gr);
   _stdlib.clearGraphics(gr);
 }
 return [main, _tests];}`;
@@ -458,7 +458,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putString(g, 0, 0, "Hello", 1, 2);
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 
@@ -492,7 +492,7 @@ end main`;
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
   g = _stdlib.putString(g, 39, 29, "Hello", 1, 2);
-  _stdlib.draw(g);
+  await _stdlib.draw(g);
 }
 return [main, _tests];}`;
 

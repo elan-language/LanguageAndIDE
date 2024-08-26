@@ -1,38 +1,32 @@
-# 6fdf4d19dcb7a89c971d22bdd2d97edb3e2bf17ab8df7ca046a36155fd6cc87f Elan Beta 1 valid
+# 183a4629061e5863f73f9c22d1551ec67c1dcd9a12335e7bf6fe94452adeae85 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
 main
-  var board set to new Board(40, 30)
-  var currentDirection set to Direction.up
-  var snake set to new Snake(board, currentDirection)
-  var apple set to new Apple(board)
-  call apple.newRandomPosition(snake)
   var gr set to new Graphics()
-  var gameOn set to true
-  while gameOn
+  var snake set to new Snake()
+  var apple set to new Apple()
+  call apple.newRandomPosition(snake)
+  while not snake.gameOver()
     set gr to snake.updateGraphics(gr)
     set gr to apple.updateGraphics(gr)
     call gr.draw()
     call pause(150)
-    var k set to gr.getKeystroke()
-    set currentDirection to board.directionByKey(k, currentDirection)
-    call snake.clockTick(currentDirection, apple)
-    set gameOn to not snake.gameOver()
+    call snake.clockTick(gr.getKeystroke(), apple)
   end while
-  print "Game Over! Score: {snake.length() - 1}"
+  print "Game Over! Score: {snake.score()}"
 end main
 
 class Snake
-  constructor(board as Board, startingDirection as Direction)
-    set property.board to board
-    var tail set to new Square(div(board.width, 2), div(board.height, 2))
+  constructor()
+    var tail set to new Square(20, 15)
+    set currentDir to Direction.right
     set body to [tail]
-    set head to tail.getAdjacentSquare(startingDirection)
+    set head to tail.getAdjacentSquare(currentDir)
     set priorTail to tail
   end constructor
 
-  property board as Board
+  property currentDir as Direction
 
   property head as Square
 
@@ -40,12 +34,34 @@ class Snake
 
   property priorTail as Square
 
-  function length() return Int
-    return body.length()
-  end function
+  procedure setDirection(key as String)
+    switch key
+      case "w"
+        set currentDir to Direction.up
+      case "s"
+        set currentDir to Direction.down
+      case "a"
+        set currentDir to Direction.left
+      case "d"
+        set currentDir to Direction.right
+    end switch
+  end procedure
+
+  procedure clockTick(key as String, apple as Apple)
+    call setDirection(key)
+    set priorTail to body[0]
+    call body.add(head)
+    set head to head.getAdjacentSquare(currentDir)
+    if head is apple.location
+      then
+        call apple.newRandomPosition(this)
+      else
+        set body to body[1..]
+    end if
+  end procedure
 
   function gameOver() return Boolean
-    return bodyCovers(head) or board.isAtEdge(head)
+    return bodyCovers(head) or head.isAtEdge()
   end function
 
   function bodyCovers(sq as Square) return Boolean
@@ -68,70 +84,29 @@ class Snake
     return gr2
   end function
 
-  procedure clockTick(d as Direction, apple as Apple)
-    set priorTail to body[0]
-    call body.add(head)
-    set head to head.getAdjacentSquare(d)
-    if head is apple.location
-      then
-        call apple.newRandomPosition(this)
-      else
-        set body to body[1..]
-    end if
-  end procedure
+  function score() return Int
+    return body.length() - 1
+  end function
 
 end class
 
 class Apple
-  constructor(board as Board)
-    set property.board to board
-  end constructor
+  constructor()
 
-  property board as Board
+  end constructor
 
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
     repeat
-      var ranX set to randomInt(0, board.width - 1)
-      var ranY set to randomInt(0, board.height - 1)
+      var ranX set to randomInt(0, 39)
+      var ranY set to randomInt(0, 29)
       set location to new Square(ranX, ranY)
     end repeat when not snake.bodyCovers(location)
   end procedure
 
   function updateGraphics(gr as Graphics) return Graphics
     return gr.putBackground(location.x, location.y, red)
-  end function
-
-end class
-
-class Board
-  constructor(width as Int, height as Int)
-    set property.width to width
-    set property.height to height
-  end constructor
-
-  property width as Int
-
-  property height as Int
-
-  function isAtEdge(head as Square) return Boolean
-    return (head.x is -1) or (head.y is -1) or (head.x is width) or (head.y is height)
-  end function
-
-  function directionByKey(key as String, current as Direction) return Direction
-    var dir set to current
-    switch key
-      case "w"
-        set dir to Direction.up
-      case "s"
-        set dir to Direction.down
-      case "a"
-        set dir to Direction.left
-      case "d"
-        set dir to Direction.right
-    end switch
-    return dir
   end function
 
 end class
@@ -160,6 +135,10 @@ class Square
         set newY to y + 1
     end switch
     return new Square(newX, newY)
+  end function
+
+  function isAtEdge() return Boolean
+    return (x is -1) or (y is -1) or (x is 40) or (y is 30)
   end function
 
 end class
