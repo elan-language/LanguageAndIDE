@@ -4,8 +4,15 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { AbstractField } from "./abstract-field";
 import { ElanSymbol } from "../interfaces/symbol";
-import { filteredSymbols, isExpression, isFunction, isProperty } from "../symbols/symbol-helpers";
+import {
+  filteredSymbols,
+  getClassScope,
+  isExpression,
+  isFunction,
+  isProperty,
+} from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
+import { propertyKeyword } from "../keywords";
 
 export class ExpressionField extends AbstractField {
   isParseByNodes = true;
@@ -52,7 +59,11 @@ export class ExpressionField extends AbstractField {
       return s.symbolId + "(";
     }
     if (isProperty(s)) {
-      return "property." + s.symbolId;
+      const scope = getClassScope(this.getHolder());
+      if (s.getParent() === scope) {
+        // ie property's class is same as this field's class
+        return `${propertyKeyword}.${s.symbolId}`;
+      }
     }
     return s.symbolId;
   }

@@ -13,6 +13,7 @@ import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-t
 import { ImmutableListType } from "./frames/symbols/immutable-list-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterType } from "./frames/symbols/iter-type";
+import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
@@ -28,7 +29,7 @@ export class StdLibSymbols implements Scope {
   }
 
   getParentScope(): Scope {
-    throw new Error("Method not implemented.");
+    return NullScope.Instance;
   }
 
   private getSymbol(id: string, st: SymbolType): ElanSymbol {

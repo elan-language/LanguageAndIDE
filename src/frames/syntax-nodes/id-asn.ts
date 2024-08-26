@@ -1,4 +1,3 @@
-import { getParentScope } from "../symbols/symbol-helpers";
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
@@ -33,7 +32,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
       // don't prefix properties with this
       return this.id;
     }
-    const symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
+    const symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
 
     if (symbol instanceof LetStatement) {
       return `${this.id}()`;
@@ -51,7 +50,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    const st = getParentScope(this.scope)
+    const st = this.scope
+      .getParentScope()
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
 
@@ -62,11 +62,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
   }
 
   get symbolScope() {
-    const st = getParentScope(this.scope).resolveSymbol(
-      this.id,
-      transforms(),
-      this.scope,
-    ).symbolScope;
+    const st = this.scope
+      .getParentScope()
+      .resolveSymbol(this.id, transforms(), this.scope).symbolScope;
 
     return st;
   }

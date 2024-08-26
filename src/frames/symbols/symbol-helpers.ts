@@ -1,5 +1,7 @@
+import { Property } from "../class-members/property";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
+import { Class } from "../interfaces/class";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
@@ -22,6 +24,7 @@ import { ImmutableDictionaryType } from "./immutable-dictionary-type";
 import { ImmutableListType } from "./immutable-list-type";
 import { IntType } from "./int-type";
 import { IterType } from "./iter-type";
+import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
@@ -43,7 +46,7 @@ export function isVarStatement(s?: ElanSymbol): boolean {
   return !!s && "isVarStatement" in s;
 }
 
-export function isProperty(s?: ElanSymbol): boolean {
+export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
 
@@ -112,41 +115,34 @@ export function updateScopeAndQualifier(
   } else if (qualifier) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {
-    currentScope = getParentScope(currentScope);
+    currentScope = currentScope.getParentScope();
   }
 
   return [qualifier, currentScope];
 }
 
 export function getGlobalScope(start: Scope): File {
+  if (start instanceof NullScope) {
+    throw new Error("Global scope not found");
+  }
+
   if (isFile(start)) {
     return start;
   }
 
-  if (isScope(start)) {
-    return getGlobalScope(start.getParentScope());
-  }
-
-  throw new Error("Global scope not found");
+  return getGlobalScope(start.getParentScope());
 }
 
-export function getClassScope(start: Scope): Scope {
+export function getClassScope(start: Scope): Class | NullScope {
+  if (start instanceof NullScope) {
+    return start;
+  }
+
   if (isClass(start)) {
     return start;
   }
 
-  if (isScope(start)) {
-    return getClassScope(start.getParentScope());
-  }
-
-  return start;
-}
-
-export function getParentScope(start: Scope): Scope {
-  if (isScope(start)) {
-    return start.getParentScope();
-  }
-  return start;
+  return getClassScope(start.getParentScope());
 }
 
 export function wrapScopeInScope(wrapped: Scope): Scope {

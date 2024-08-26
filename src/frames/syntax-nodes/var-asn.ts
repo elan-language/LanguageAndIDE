@@ -25,7 +25,6 @@ import { StringType } from "../symbols/string-type";
 import {
   getClassScope,
   getGlobalScope,
-  getParentScope,
   isDictionarySymbolType,
   isGenericSymbolType,
 } from "../symbols/symbol-helpers";
@@ -155,7 +154,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
     } else {
-      symbol = getParentScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);
+      symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
     }
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
@@ -197,7 +196,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       currentScope = getGlobalScope(currentScope);
     } else {
-      currentScope = getParentScope(currentScope);
+      currentScope = currentScope.getParentScope();
     }
 
     return currentScope;
