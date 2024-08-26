@@ -71,6 +71,325 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
+  test("Pass_FunctionMethodReturnType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var f set to new Foo()
+  var x set to 1.1
+  set x to f.times(x)
+  print x
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Float
+
+    function times(value as Float) return Float
+        return p1 * value
+    end function
+
+    function asString() return String
+         return ""
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  var x = 1.1;
+  x = f.times(x);
+  system.printLine(_stdlib.asString(x));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  times(value) {
+    return this.p1 * value;
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5.5");
+  });
+
+  test("Pass_FunctionMethodReturnType1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var f set to new Foo()
+  var x set to empty {Float}
+  set x to f.times(2)
+  print x
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Float
+
+    function times(value as Float) return {Float}
+        return {p1 * value}
+    end function
+
+    function asString() return String
+         return ""
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  var x = system.emptyImmutableList();
+  x = f.times(2);
+  system.printLine(_stdlib.asString(x));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  times(value) {
+    return system.immutableList([this.p1 * value]);
+  }
+
+  asString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {10}");
+  });
+
+  test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var b set to new Bar()
+  var x set to b.getTimes()
+  print x
+end main
+
+class Bar
+  constructor()
+    set p1 to new Foo()
+  end constructor
+
+  property p1 as Foo
+
+  function getTimes() return {Float}
+    var x set to empty {Float}
+    set x to p1.times(2)
+    return x
+  end function
+
+end class
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Float
+
+    function times(value as Float) return {Float}
+        return {p1 * value}
+    end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var b = system.initialise(new Bar());
+  var x = b.getTimes();
+  system.printLine(_stdlib.asString(x));
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    this.p1 = system.initialise(new Foo());
+  }
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Foo.emptyInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  getTimes() {
+    var x = system.emptyImmutableList();
+    x = this.p1.times(2);
+    return x;
+  }
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  times(value) {
+    return system.immutableList([this.p1 * value]);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {10}");
+  });
+
+  test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var b set to new Bar()
+  var x set to b.getTimes()
+  print x
+end main
+
+class Bar
+  constructor()
+    set p1 to new Foo()
+  end constructor
+
+  property p1 as Foo
+
+  function getTimes() return {Qux}
+    var x set to empty {Qux}
+    set x to p1.times(2)
+    return x
+  end function
+
+end class
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 as Float
+
+    function times(value as Float) return {Qux}
+        return {new Qux()}
+    end function
+
+end class
+
+class Qux
+  constructor()
+  end constructor
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var b = system.initialise(new Bar());
+  var x = b.getTimes();
+  system.printLine(_stdlib.asString(x));
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    this.p1 = system.initialise(new Foo());
+  }
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Foo.emptyInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  getTimes() {
+    var x = system.emptyImmutableList();
+    x = this.p1.times(2);
+    return x;
+  }
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  constructor() {
+    this.p1 = 5;
+  }
+
+  p1 = 0;
+
+  times(value) {
+    return system.immutableList([system.initialise(new Qux())]);
+  }
+
+}
+
+class Qux {
+  static emptyInstance() { return system.emptyClass(Qux, []);};
+  constructor() {
+
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "ImmutableList {a Qux}");
+  });
+
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
