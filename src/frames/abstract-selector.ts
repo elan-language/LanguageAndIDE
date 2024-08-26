@@ -199,7 +199,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   processOptions(key: string | undefined) {
-    if (this.overtyper.preProcessor(key)) {
+    if (this.overtyper.finishedConsuming(key)) {
       const options = this.optionsMatchingUserInput(this.text + key);
       if (options.length > 1) {
         this.text += this.commonStartText(this.text + key).substring(this.text.length);
