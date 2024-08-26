@@ -41,6 +41,8 @@ export async function assertEffectOfActionNew(
     assert.strictEqual(actualHtml, expectedHtml);
   } catch (e) {
     if (updateTestFiles) {
+      // update original not copied 
+      htmlFile = htmlFile.replace("out\\", "");
       updateTestFileNew(htmlFile, actualHtml);
       throw new Error("Files updated");
     } else {
@@ -64,6 +66,10 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     assert.strictEqual(actualHtml, expectedHtml);
   } catch (e) {
     if (updateTestFiles) {
+      // update original not copied 
+      sourceFile = sourceFile.replace("out\\", "");
+      htmlFile = htmlFile.replace("out\\", "");
+
       updateTestFileNew(sourceFile, actualSource);
       updateTestFileNew(htmlFile, actualHtml);
       throw new Error("Files updated");
