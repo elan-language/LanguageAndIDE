@@ -1,4 +1,3 @@
-import { Parent } from "./frames/interfaces/parent";
 import { Scope } from "./frames/interfaces/scope";
 import { ElanSymbol } from "./frames/interfaces/symbol";
 import { SymbolType } from "./frames/interfaces/symbol-type";
@@ -364,9 +363,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withKey",
+      "withKeyValue",
       this.getSymbol(
-        "withKey",
+        "withKeyValue",
         new FunctionType(
           [
             new ImmutableDictionaryType(

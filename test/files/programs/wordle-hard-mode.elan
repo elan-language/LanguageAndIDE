@@ -176,7 +176,7 @@ function incrementCount(dd as {String:Int}, possAnswer as String, attempt as Str
   let mark be markAttempt(attempt, possAnswer)
   let keys be dd.keys()
   let count be if keys.contains(mark) then dd.getKey(mark) else 0
-  let dd2 be dd.withKey(mark, count + 1)
+  let dd2 be dd.withKeyValue(mark, count + 1)
   return dd2
 end function
 

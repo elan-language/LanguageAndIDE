@@ -1,4 +1,4 @@
-# 30a5adb8a028d641fe27a4294c7ac189c7966114ff5977c3c93d060d0f46de37 Elan Beta 1 valid
+# 0fe09e576760dd26e01378dacd2a8d8fdde736af698095d8b1b609af1d2cde29 Elan Beta 1 valid
 
 main
   var possible set to validWords
@@ -169,7 +169,7 @@ function incrementCount(dd as {String:Int}, possAnswer as String, attempt as Str
   let mark be markAttempt(attempt, possAnswer)
   let keys be dd.keys()
   let count be if keys.contains(mark) then dd.getKey(mark) else 0
-  let dd2 be dd.withKey(mark, count + 1)
+  let dd2 be dd.withKeyValue(mark, count + 1)
   return dd2
 end function
 

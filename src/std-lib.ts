@@ -277,7 +277,7 @@ export class StdLib {
     list.push(value);
   }
 
-  withKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+  withKeyValue<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";

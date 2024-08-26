@@ -663,7 +663,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a to a.withKey("a", 2)
+  set a to a.withKeyValue("a", 2)
   print a
 end main
 `;
