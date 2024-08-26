@@ -285,14 +285,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeKey("b")
+  call a.removeByKey("b")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeKey(a, "b");
+  _stdlib.removeByKey(a, "b");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -311,14 +311,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a["b"].removeKey("b")
+  call a["b"].removeByKey("b")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.removeKey(system.safeIndex(a, "b"), "b");
+  _stdlib.removeByKey(system.safeIndex(a, "b"), "b");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -340,14 +340,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeKey("c")
+  call a.removeByKey("c")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeKey(a, "c");
+  _stdlib.removeByKey(a, "c");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -615,7 +615,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeKey(10)
+  call a.removeByKey(10)
 end main
 `;
 

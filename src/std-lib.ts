@@ -139,7 +139,7 @@ export class StdLib {
     return newDict;
   }
 
-  removeKey<T>(dict: { [key: string]: T }, key: string) {
+  removeByKey<T>(dict: { [key: string]: T }, key: string) {
     delete dict[key];
   }
 

@@ -384,9 +384,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "removeKey",
+      "removeByKey",
       this.getSymbol(
-        "removeKey",
+        "removeByKey",
         new ProcedureType(
           [
             new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),

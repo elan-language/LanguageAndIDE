@@ -558,7 +558,7 @@ end main
 
 main
   var a set to {"a":1, "b":3, "z":10}
-  call a.removeKey("b")
+  call a.removeByKey("b")
   print a
 end main`;
 
