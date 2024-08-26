@@ -89,4 +89,10 @@ ${this.renderChildrenAsHtml()}
     return `${name}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r`;
   }
+
+  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
+    const localMatches = this.params.symbolMatches(id, all, initialScope);
+    return localMatches.concat(matches);
+  }
 }

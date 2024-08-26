@@ -12,6 +12,7 @@ import {
 } from "../symbols/symbol-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { propertyKeyword } from "../keywords";
+import { SymbolScope } from "../symbols/symbol-scope";
 
 export class ExpressionField extends AbstractField {
   isParseByNodes = true;
@@ -61,5 +62,13 @@ export class ExpressionField extends AbstractField {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;
+  }
+
+  protected override getSymbolId(symbol: ElanSymbol) {
+    return symbol.symbolScope === SymbolScope.property &&
+      !this.text.includes(".") &&
+      this.autocompleteSymbols.filter((s) => s.symbolId === symbol.symbolId).length > 1
+      ? `property.${symbol.symbolId}`
+      : symbol.symbolId;
   }
 }

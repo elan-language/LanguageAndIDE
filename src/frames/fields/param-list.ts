@@ -11,7 +11,7 @@ import { ParseStatus } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { isAstCollectionNode, isAstIdNode } from "../syntax-nodes/ast-helpers";
+import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractField } from "./abstract-field";
 
@@ -30,7 +30,25 @@ export class ParamList extends AbstractField implements Scope {
   }
 
   symbolMatches(id: string, all: boolean, initialScope?: Scope): ElanSymbol[] {
-    return []; // todo ?
+    const ast = this.getOrTransformAstNode(transforms());
+
+    if (isAstCollectionNode(ast)) {
+      const matches: ElanSymbol[] = [];
+      for (const n of ast.items) {
+        if (isAstIdNode(n)) {
+          if (n.id.startsWith(id) || all) {
+            matches.push({
+              symbolId: n.id,
+              symbolType: () => n.symbolType(),
+              symbolScope: SymbolScope.parameter,
+            });
+          }
+        }
+      }
+      return matches;
+    }
+
+    return [];
   }
 
   getIdPrefix(): string {

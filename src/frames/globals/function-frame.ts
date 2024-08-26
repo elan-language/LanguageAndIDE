@@ -15,9 +15,6 @@ import { FunctionType } from "../symbols/function-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { Transforms } from "../syntax-nodes/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { mustBeCompatibleType, mustBeUniqueNameInScope } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: IdentifierField;
@@ -112,5 +109,11 @@ ${this.renderChildrenAsHtml()}
   public compile(transforms: Transforms): string {
     return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
 ${this.compileStatements(transforms)}\r`;
+  }
+
+  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
+    const localMatches = this.params.symbolMatches(id, all, initialScope);
+    return localMatches.concat(matches);
   }
 }
