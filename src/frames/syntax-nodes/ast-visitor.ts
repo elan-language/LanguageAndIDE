@@ -14,6 +14,7 @@ import { CSV } from "../parse-nodes/csv";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../parse-nodes/dictionary-node";
+import { Dotted } from "../parse-nodes/dotted";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
@@ -41,7 +42,6 @@ import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
-import { Qualifier } from "../parse-nodes/qualifier";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
@@ -453,7 +453,7 @@ export function transform(
     return new IndexAsn(index, undefined, fieldId, scope);
   }
 
-  if (node instanceof Qualifier) {
+  if (node instanceof Dotted) {
     const q = transform(node.qualifier, fieldId, scope)!;
     return new QualifierAsn(q, fieldId, scope);
   }

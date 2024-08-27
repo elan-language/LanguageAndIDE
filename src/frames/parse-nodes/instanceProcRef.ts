@@ -1,10 +1,10 @@
-import { IdentifierNode } from "./identifier-node";
-import { AbstractSequence } from "./abstract-sequence";
-import { Qualifier } from "./qualifier";
-import { KeywordNode } from "./keyword-node";
-import { InstanceNode } from "./instanceNode";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
+import { Dotted } from "./dotted";
+import { IdentifierNode } from "./identifier-node";
+import { InstanceNode } from "./instanceNode";
+import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 
 export class InstanceProcRef extends AbstractSequence {
@@ -18,9 +18,9 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const global = () => new Qualifier(new KeywordNode(globalKeyword));
-      const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
-      const instance = () => new Qualifier(new InstanceNode());
+      const global = () => new Dotted(new KeywordNode(globalKeyword));
+      const lib = () => new Dotted(new KeywordNode(libraryKeyword));
+      const instance = () => new Dotted(new InstanceNode());
       const qualifier = new Alternatives([global, lib, instance]);
       this.qualifier = new OptionalNode(qualifier);
       this.simple = new IdentifierNode();

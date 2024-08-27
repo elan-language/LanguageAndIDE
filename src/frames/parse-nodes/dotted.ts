@@ -3,7 +3,8 @@ import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class Qualifier extends AbstractSequence {
+// A node followed by a '.'
+export class Dotted extends AbstractSequence {
   qualifier: ParseNode;
 
   constructor(qual: ParseNode) {
