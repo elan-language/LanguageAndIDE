@@ -17,7 +17,6 @@ import { DictionaryNode } from "../parse-nodes/dictionary-node";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
-import { FunctionCallNode } from "../parse-nodes/function-call-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
@@ -35,6 +34,7 @@ import { LitInt } from "../parse-nodes/lit-int";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
+import { MethodCallNode } from "../parse-nodes/method-call-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
@@ -241,8 +241,8 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof FunctionCallNode) {
-    const qualifier = transform(node.qualifier, fieldId, scope);
+  if (node instanceof MethodCallNode) {
+    const qualifier = transform(node.optQualifier, fieldId, scope);
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
