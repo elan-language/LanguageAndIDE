@@ -1,6 +1,10 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";
 import { CopyWith } from "./copy-with";
+import { EmptyOfTypeNode } from "./empty-of-type-node";
+import { IfExpr } from "./if-expr";
+import { Lambda } from "./lambda";
+import { NewInstance } from "./new-instance";
 import { Term } from "./term";
 
 export class ExprNode extends AbstractAlternatives {
@@ -12,7 +16,11 @@ export class ExprNode extends AbstractAlternatives {
   parseText(text: string): void {
     this.alternatives.push(new Term());
     this.alternatives.push(new BinaryExpression());
+    this.alternatives.push(new NewInstance());
+    this.alternatives.push(new EmptyOfTypeNode());
     this.alternatives.push(new CopyWith());
+    this.alternatives.push(new IfExpr());
+    this.alternatives.push(new Lambda());
     super.parseText(text);
   }
 }

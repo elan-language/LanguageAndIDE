@@ -87,13 +87,6 @@ suite("Parsing Nodes", () => {
     testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Term", () => {
-    testNodeParse(
-      new Term(),
-      "new ArrayList<of String>()",
-      ParseStatus.valid,
-      "new ArrayList<of String>()",
-      "",
-    );
     testNodeParse(new Term(), "", ParseStatus.empty, "", "", "");
     testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
   });
@@ -110,6 +103,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %", "a");
     testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
     testNodeParse(new ExprNode(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
+    testNodeParse(
+      new ExprNode(),
+      "new ArrayList<of String>()",
+      ParseStatus.valid,
+      "new ArrayList<of String>()",
+      "",
+    );
     testNodeParse(
       new ExprNode(),
       "points.foo(0.0)",
@@ -1344,6 +1344,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new NewInstance(), ``, ParseStatus.empty, "", "", "", "");
     testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
     testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+    testNodeParse(
+      new NewInstance(),
+      "new ArrayList<of String>()",
+      ParseStatus.valid,
+      "new ArrayList<of String>()",
+      "",
+    );
   });
   test("String Interpolation", () => {
     testNodeParse(new StringInterpolation(), ``, ParseStatus.empty, "", "", "", "");
