@@ -1,10 +1,10 @@
 import { CodeSourceFromString } from "../../src/frames/code-source";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
-import { testHash, transforms, assertParses, assertStatusIsValid, assertObjectCodeIs, assertObjectCodeExecutes } from "./compiler-test-helpers";
+import { testHash, transforms, assertParses, assertStatusIsValid, assertObjectCodeIs, assertObjectCodeExecutes, assertDoesNotParse, ignore_test } from "./compiler-test-helpers";
 
 suite("T54_With", () => {
-  test("Pass_SingleSet", async () => {
+  test("Pass_SingleSetToVar", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -48,6 +48,95 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_SingleSetToSet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  set a to copy a with a to 2
+  print a.a
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+  end constructor
+
+  property a as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  a = (() => {const _a = {...a}; _a.a = 2; return _a;})();
+  system.printLine(_stdlib.asString(a.a));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  constructor() {
+    this.a = 1;
+  }
+
+  a = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  ignore_test("Pass_SingleSetToLet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  let b be copy a with a to 2
+  print a.a
+  print b.a
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+  end constructor
+
+  property a as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  a = (() => {const _a = {...a}; _a.a = 2; return _a;})();
+  system.printLine(_stdlib.asString(a.a));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  constructor() {
+    this.a = 1;
+  }
+
+  a = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
   });
 
   test("Pass_MultiSet", async () => {
@@ -104,5 +193,30 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1bill2fred");
+  });
+
+  test("Fail_NoSets", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a
+  print a.a
+  print b.a
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+  end constructor
+
+  property a as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 });
