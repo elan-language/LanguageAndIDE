@@ -521,7 +521,7 @@ export function transform(
   }
 
   if (node instanceof InstanceProcRef) {
-    const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
+    const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     return new VarAsn(id, false, q, undefined, fieldId, scope);
   }
