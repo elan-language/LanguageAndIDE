@@ -1,16 +1,16 @@
-import { ExprNode } from "./expr-node";
-import { BinaryOperation } from "./binary-operation";
-import { AbstractSequence } from "./abstract-sequence";
-import { Term } from "./term";
-import { SpaceNode } from "./space-node";
-import { Space } from "./parse-node-helpers";
-import { DIVIDE, MULT, POWER } from "../symbols";
 import { ParseStatus } from "../status-enums";
+import { DIVIDE, MULT, POWER } from "../symbols";
+import { AbstractSequence } from "./abstract-sequence";
+import { BinaryOperation } from "./binary-operation";
+import { ExprNode } from "./expr-node";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
+import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
   lhs: Term | undefined;
   op: BinaryOperation | undefined;
-  rhs: Term | undefined;
+  rhs: ExprNode | undefined;
 
   constructor() {
     super();
