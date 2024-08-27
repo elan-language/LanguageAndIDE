@@ -1,0 +1,26 @@
+import { AbstractSequence } from "./abstract-sequence";
+import { Alternatives } from "./alternatives";
+import { Dotted } from "./dotted";
+import { Multiple } from "./multiple";
+import { Qualifier } from "./qualifier";
+import { SymbolNode } from "./symbol-node";
+import { TermSimple } from "./term-simple";
+
+export class TermChained extends AbstractSequence {
+  head: Alternatives | undefined;
+  tail: Multiple | undefined;
+
+  parseText(text: string): void {
+    if (text.length > 0) {
+      const termSimple = () => new TermSimple();
+      const qualifier = () => new Qualifier();
+      const dottedSymbol = () => new Dotted(new SymbolNode());
+
+      this.head = new Alternatives([termSimple, qualifier]);
+      this.tail = new Multiple(dottedSymbol, 1);
+      this.addElement(this.head);
+      this.addElement(this.tail);
+      super.parseText(text);
+    }
+  }
+}
