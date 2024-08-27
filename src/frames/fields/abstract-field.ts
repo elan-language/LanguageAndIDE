@@ -601,8 +601,9 @@ export abstract class AbstractField implements Selectable, Field {
   protected showAutoComplete() {
     return (
       this.selected &&
+      this.cursorPos === this.text.length &&
       this.readParseStatus() !== ParseStatus.invalid &&
-      this.cursorPos === this.text.length
+      this.getCompletion() !== '"'
     );
   }
 }
