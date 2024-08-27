@@ -42,7 +42,7 @@ export class AssignableField extends AbstractField {
   }
 
   protected override getId(s: ElanSymbol) {
-    if (isPropertyOnFieldsClass(s, this)) {
+    if (isPropertyOnFieldsClass(s, this.getHolder())) {
       return `${propertyKeyword}.${s.symbolId}`;
     }
     return s.symbolId;

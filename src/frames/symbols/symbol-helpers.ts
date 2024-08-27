@@ -55,8 +55,8 @@ export function isVarOrPropertyStatement(s?: ElanSymbol): boolean {
   return !!s && (isVarStatement(s) || isProperty(s));
 }
 
-export function isPropertyOnFieldsClass(s: ElanSymbol, f: AbstractField) {
-  return isProperty(s) && s.getParent() === getClassScope(f.getHolder());
+export function isPropertyOnFieldsClass(s: ElanSymbol, scope: Scope) {
+  return isProperty(s) && s.getParent() === getClassScope(scope);
 }
 
 export function rawSymbolToType(s: string) {

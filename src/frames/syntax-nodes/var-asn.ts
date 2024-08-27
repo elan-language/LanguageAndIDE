@@ -27,6 +27,7 @@ import {
   getGlobalScope,
   isDictionarySymbolType,
   isGenericSymbolType,
+  isPropertyOnFieldsClass,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -149,7 +150,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       const classSymbol = this.scope.resolveSymbol(classScope.className, transforms(), this.scope);
       if (isScope(classSymbol)) {
         symbol = classSymbol.resolveSymbol(this.id, transforms(), classSymbol);
-        mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
+        if (!isPropertyOnFieldsClass(symbol, this.scope)) {
+          mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
+        }
       }
     } else if (isAstIdNode(this.qualifier?.value) && this.qualifier.value.id === globalKeyword) {
       symbol = getGlobalScope(this.scope).resolveSymbol(this.id, transforms(), this.scope);

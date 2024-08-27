@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T56_PrivateProperties", () => {
-  ignore_test("Pass_PrivatePropertyCanBeDeclared", async () => {
+  test("Pass_PrivatePropertyCanBeDeclared", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
