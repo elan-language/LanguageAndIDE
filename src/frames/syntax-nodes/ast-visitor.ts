@@ -425,7 +425,7 @@ export function transform(
 
   if (node instanceof CopyWith) {
     const obj = transform(node.original, fieldId, scope) as ExprAsn;
-    const changes = transform(node.changes, fieldId, scope) as CSV | undefined;
+    const changes = transformMany(node.changes!, fieldId, scope);
     return new WithAsn(obj, changes, fieldId, scope);
   }
 
