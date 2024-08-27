@@ -1,18 +1,18 @@
+import { globalKeyword, libraryKeyword } from "../keywords";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { Alternatives } from "./alternatives";
+import { ArrayListNode } from "./array-list-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { SymbolNode } from "./symbol-node";
 import { IdentifierNode } from "./identifier-node";
-import { globalKeyword, libraryKeyword } from "../keywords";
-import { Alternatives } from "./alternatives";
-import { KeywordNode } from "./keyword-node";
-import { OptionalNode } from "./optional-node";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
-import { Qualifier } from "./qualifier";
-import { InstanceNode } from "./instanceNode";
-import { LitValueNode } from "./lit-value";
 import { ImmutableListNode } from "./immutable-list-node";
-import { ArrayListNode } from "./array-list-node";
+import { InstanceNode } from "./instanceNode";
+import { KeywordNode } from "./keyword-node";
+import { LitValueNode } from "./lit-value";
+import { OptionalNode } from "./optional-node";
+import { PunctuationNode } from "./punctuation-node";
+import { Qualifier } from "./qualifier";
 
 export class FunctionCallNode extends AbstractSequence {
   qualifier: OptionalNode | undefined;
@@ -34,9 +34,9 @@ export class FunctionCallNode extends AbstractSequence {
 
       this.addElement(this.qualifier);
       this.addElement(this.name);
-      this.addElement(new SymbolNode(OPEN_BRACKET));
+      this.addElement(new PunctuationNode(OPEN_BRACKET));
       this.addElement(this.args); //arg list
-      this.addElement(new SymbolNode(CLOSE_BRACKET));
+      this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
   }

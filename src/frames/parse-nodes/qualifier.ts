@@ -1,7 +1,7 @@
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ParseNode } from "./parse-node";
-import { SymbolNode } from "./symbol-node";
+import { PunctuationNode } from "./punctuation-node";
 
 export class Qualifier extends AbstractSequence {
   qualifier: ParseNode;
@@ -14,7 +14,7 @@ export class Qualifier extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.addElement(this.qualifier);
-      this.addElement(new SymbolNode(DOT));
+      this.addElement(new PunctuationNode(DOT));
       super.parseText(text);
     }
   }

@@ -1,11 +1,11 @@
-import { AbstractSequence } from "./abstract-sequence";
-import { SymbolNode } from "./symbol-node";
-import { RegExMatchNode } from "./regex-match-node";
-import { DOUBLE_QUOTES } from "../symbols";
 import { Regexes } from "../fields/regexes";
-import { StringInterpolation } from "./string-interpolation";
+import { DOUBLE_QUOTES } from "../symbols";
+import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { Multiple } from "./multiple";
+import { PunctuationNode } from "./punctuation-node";
+import { RegExMatchNode } from "./regex-match-node";
+import { StringInterpolation } from "./string-interpolation";
 
 export class LitStringNonEmpty extends AbstractSequence {
   segments: Multiple | undefined;
@@ -21,9 +21,9 @@ export class LitStringNonEmpty extends AbstractSequence {
       const plainText = () => new RegExMatchNode(Regexes.nonEmptyStringContent);
       const segment = () => new Alternatives([field, plainText]);
       this.segments = new Multiple(segment, 1);
-      this.addElement(new SymbolNode(DOUBLE_QUOTES));
+      this.addElement(new PunctuationNode(DOUBLE_QUOTES));
       this.addElement(this.segments);
-      this.addElement(new SymbolNode(DOUBLE_QUOTES));
+      this.addElement(new PunctuationNode(DOUBLE_QUOTES));
       super.parseText(text);
     }
   }

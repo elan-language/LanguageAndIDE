@@ -1,8 +1,8 @@
 import { escapeAngleBrackets } from "../helpers";
 import { POWER } from "../symbols";
-import { SymbolNode } from "./symbol-node";
+import { PunctuationNode } from "./punctuation-node";
 
-export class OperatorNode extends SymbolNode {
+export class OperatorNode extends PunctuationNode {
   constructor(operator: string) {
     super(operator);
   }

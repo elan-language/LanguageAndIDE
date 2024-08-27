@@ -1,9 +1,9 @@
-import { ParseNode } from "./parse-node";
-import { KVPnode } from "./kvp-node";
+import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
-import { OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET } from "../symbols";
-import { SymbolNode } from "./symbol-node";
+import { KVPnode } from "./kvp-node";
+import { ParseNode } from "./parse-node";
+import { PunctuationNode } from "./punctuation-node";
 
 export class DictionaryNode extends AbstractSequence {
   csv: CSV | undefined;
@@ -16,10 +16,10 @@ export class DictionaryNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new SymbolNode(OPEN_SQ_BRACKET));
+      this.addElement(new PunctuationNode(OPEN_SQ_BRACKET));
       this.csv = new CSV(this.elementConstructor, 1);
       this.addElement(this.csv);
-      this.addElement(new SymbolNode(CLOSE_SQ_BRACKET));
+      this.addElement(new PunctuationNode(CLOSE_SQ_BRACKET));
       super.parseText(text);
     }
   }

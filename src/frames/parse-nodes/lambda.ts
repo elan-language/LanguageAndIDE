@@ -1,12 +1,12 @@
+import { lambdaKeyword } from "../keywords";
+import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
-import { KeywordNode } from "./keyword-node";
 import { ExprNode } from "./expr-node";
-import { lambdaKeyword, returnKeyword } from "../keywords";
+import { KeywordNode } from "./keyword-node";
 import { ParamDefNode } from "./param-def-node";
-import { SymbolNode } from "./symbol-node";
-import { ARROW } from "../symbols";
 import { Space } from "./parse-node-helpers";
+import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
 
 export class Lambda extends AbstractSequence {
@@ -20,7 +20,7 @@ export class Lambda extends AbstractSequence {
       this.params = new CSV(() => new ParamDefNode(), 1);
       this.addElement(this.params);
       this.addElement(new SpaceNode(Space.required));
-      this.addElement(new SymbolNode(ARROW));
+      this.addElement(new PunctuationNode(ARROW));
       this.addElement(new SpaceNode(Space.required));
       this.expr = new ExprNode();
       this.addElement(this.expr);

@@ -5,8 +5,8 @@ import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
+import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
-import { SymbolNode } from "./symbol-node";
 import { TypeSimpleOrGeneric } from "./type-simple-or-generic";
 
 export class NewInstance extends AbstractSequence {
@@ -18,11 +18,11 @@ export class NewInstance extends AbstractSequence {
     this.addElement(new SpaceNode(Space.required));
     this.type = new TypeSimpleOrGeneric();
     this.addElement(this.type);
-    this.addElement(new SymbolNode(OPEN_BRACKET));
+    this.addElement(new PunctuationNode(OPEN_BRACKET));
     this.args = new CSV(() => new ExprNode(), 0);
     this.args.setCompletionWhenEmpty("arguments");
     this.addElement(this.args);
-    this.addElement(new SymbolNode(CLOSE_BRACKET));
+    this.addElement(new PunctuationNode(CLOSE_BRACKET));
     super.parseText(text);
   }
 }

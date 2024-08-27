@@ -1,5 +1,4 @@
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
@@ -41,6 +40,7 @@ import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
+import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { Qualifier } from "../parse-nodes/qualifier";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
@@ -48,7 +48,6 @@ import { Sequence } from "../parse-nodes/sequence";
 import { SetClause } from "../parse-nodes/set-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { StringInterpolation } from "../parse-nodes/string-interpolation";
-import { SymbolNode } from "../parse-nodes/symbol-node";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -329,7 +328,7 @@ export function transform(
     return new SetAsn(id, to, fieldId, scope);
   }
 
-  if (node instanceof SymbolNode) {
+  if (node instanceof PunctuationNode) {
     return undefined;
   }
 

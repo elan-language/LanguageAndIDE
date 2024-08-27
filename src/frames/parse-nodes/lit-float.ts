@@ -1,11 +1,11 @@
-import { AbstractSequence } from "./abstract-sequence";
-import { SymbolNode } from "./symbol-node";
-import { LitInt } from "./lit-int";
-import { RegExMatchNode } from "./regex-match-node";
-import { OptionalNode } from "./optional-node";
-import { Sequence } from "./sequence";
-import { DOT } from "../symbols";
 import { Regexes } from "../fields/regexes";
+import { DOT } from "../symbols";
+import { AbstractSequence } from "./abstract-sequence";
+import { LitInt } from "./lit-int";
+import { OptionalNode } from "./optional-node";
+import { PunctuationNode } from "./punctuation-node";
+import { RegExMatchNode } from "./regex-match-node";
+import { Sequence } from "./sequence";
 
 export class LitFloat extends AbstractSequence {
   constructor() {
@@ -17,7 +17,7 @@ export class LitFloat extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.addElement(new LitInt());
-      this.addElement(new SymbolNode(DOT));
+      this.addElement(new PunctuationNode(DOT));
       this.addElement(new RegExMatchNode(Regexes.literalInt));
       const exponent = new OptionalNode(
         new Sequence([

@@ -2,7 +2,7 @@ import { escapeAngleBrackets } from "../helpers";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
 
-export class SymbolNode extends FixedTextNode {
+export class PunctuationNode extends FixedTextNode {
   constructor(symbol: string) {
     super(symbol);
   }
