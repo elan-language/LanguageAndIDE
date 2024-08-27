@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Dotted } from "./dotted";
+import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { InstanceNode } from "./instanceNode";
 import { OptionalNode } from "./optional-node";
@@ -17,8 +17,8 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifier = () => new Dotted(new Qualifier());
-      const instance = () => new Dotted(new InstanceNode());
+      const qualifier = () => new DotAfter(new Qualifier());
+      const instance = () => new DotAfter(new InstanceNode());
       this.prefix = new OptionalNode(new Alternatives([qualifier, instance]));
       this.simple = new IdentifierNode();
       this.addElement(this.prefix);

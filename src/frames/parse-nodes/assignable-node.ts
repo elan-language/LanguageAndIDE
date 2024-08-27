@@ -1,7 +1,7 @@
 import { propertyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Dotted } from "./dotted";
+import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
 import { KeywordNode } from "./keyword-node";
@@ -14,7 +14,7 @@ export class AssignableNode extends AbstractSequence {
 
   constructor() {
     super();
-    const propDot = () => new Dotted(new KeywordNode(propertyKeyword));
+    const propDot = () => new DotAfter(new KeywordNode(propertyKeyword));
     const simple = () => new IdentifierNode();
     const qualProp = () => new Sequence([propDot, simple]);
     this.simpleOrProp = new Alternatives([simple, qualProp]);

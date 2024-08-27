@@ -4,7 +4,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { ArrayListNode } from "./array-list-node";
 import { CSV } from "./csv";
-import { Dotted } from "./dotted";
+import { DotAfter } from "./dot-after";
 import { ExprNode } from "./expr-node";
 import { IdentifierNode } from "./identifier-node";
 import { ImmutableListNode } from "./immutable-list-node";
@@ -21,12 +21,12 @@ export class MethodCallNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const array = () => new Dotted(new ArrayListNode(() => new ExprNode()));
-      const list = () => new Dotted(new ImmutableListNode(() => new ExprNode()));
-      const literal = () => new Dotted(new LitValueNode());
-      const global = () => new Dotted(new KeywordNode(globalKeyword));
-      const lib = () => new Dotted(new KeywordNode(libraryKeyword));
-      const instance = () => new Dotted(new InstanceNode());
+      const array = () => new DotAfter(new ArrayListNode(() => new ExprNode()));
+      const list = () => new DotAfter(new ImmutableListNode(() => new ExprNode()));
+      const literal = () => new DotAfter(new LitValueNode());
+      const global = () => new DotAfter(new KeywordNode(globalKeyword));
+      const lib = () => new DotAfter(new KeywordNode(libraryKeyword));
+      const instance = () => new DotAfter(new InstanceNode());
       const qualifier = new Alternatives([global, lib, instance, literal, list, array]);
       this.optQualifier = new OptionalNode(qualifier);
       this.name = new IdentifierNode();

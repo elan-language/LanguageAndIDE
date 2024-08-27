@@ -9,8 +9,8 @@ export class Qualifier extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    const global =  new KeywordNode(globalKeyword);
-    const lib =  new KeywordNode(libraryKeyword);
+    const global = new KeywordNode(globalKeyword);
+    const lib = new KeywordNode(libraryKeyword);
     const prop = new KeywordNode(propertyKeyword);
     this.alternatives.push(global);
     this.alternatives.push(lib);

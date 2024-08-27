@@ -40,9 +40,7 @@ export class Term extends AbstractAlternatives {
     this.alternatives.push(new BracketedExpression());
     this.alternatives.push(new LitValueNode());
 
-
     this.alternatives.push(new KeywordNode(thisKeyword));
-
 
     this.alternatives.push(new VarRefNode());
     this.alternatives.push(new MethodCallNode());

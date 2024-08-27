@@ -9,7 +9,6 @@ export class Term2 extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-
     this.alternatives.push(new TermSimple());
     this.alternatives.push(new TermChained());
     super.parseText(text);

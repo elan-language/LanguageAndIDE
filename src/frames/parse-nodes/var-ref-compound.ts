@@ -1,7 +1,7 @@
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Dotted } from "./dotted";
+import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
 import { KeywordNode } from "./keyword-node";
@@ -19,10 +19,10 @@ export class VarRefCompound extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const instance = () => new Dotted(new IdentifierNode());
-      const global = () => new Dotted(new KeywordNode(globalKeyword));
-      const lib = () => new Dotted(new KeywordNode(libraryKeyword));
-      const prop = () => new Dotted(new KeywordNode(propertyKeyword));
+      const instance = () => new DotAfter(new IdentifierNode());
+      const global = () => new DotAfter(new KeywordNode(globalKeyword));
+      const lib = () => new DotAfter(new KeywordNode(libraryKeyword));
+      const prop = () => new DotAfter(new KeywordNode(propertyKeyword));
       const qualifier = new Alternatives([global, lib, prop, instance]);
       this.optQualifier = new OptionalNode(qualifier);
       this.simple = new IdentifierNode();

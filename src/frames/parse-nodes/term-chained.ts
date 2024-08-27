@@ -1,6 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Dotted } from "./dotted";
+import { DotBefore } from "./dot-before";
 import { Multiple } from "./multiple";
 import { Qualifier } from "./qualifier";
 import { SymbolNode } from "./symbol-node";
@@ -14,7 +14,7 @@ export class TermChained extends AbstractSequence {
     if (text.length > 0) {
       const termSimple = () => new TermSimple();
       const qualifier = () => new Qualifier();
-      const dottedSymbol = () => new Dotted(new SymbolNode());
+      const dottedSymbol = () => new DotBefore(new SymbolNode());
 
       this.head = new Alternatives([termSimple, qualifier]);
       this.tail = new Multiple(dottedSymbol, 1);
