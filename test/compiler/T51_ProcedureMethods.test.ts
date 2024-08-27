@@ -460,4 +460,30 @@ end class`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name a not unique in scope"]);
   });
+
+  test("Fail_SetPropertyWithoutPrefix", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+
+end main
+    
+class Foo
+  constructor()
+  end constructor
+  
+  procedure foo()
+    set p1 to 4
+  end procedure
+
+  property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["assigning to a property requires a prefix"]);
+  });
 });

@@ -774,7 +774,7 @@ export class StdLib {
   }
 
   // Functional random
-  // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation 
+  // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
   next(current: [number, number]): [number, number] {
     const u = current[0];
     const v = current[1];

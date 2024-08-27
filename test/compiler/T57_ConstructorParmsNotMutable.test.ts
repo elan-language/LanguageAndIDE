@@ -45,4 +45,23 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
   });
+
+  test("Fail_SetPropertyWithoutPrefix", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+class Foo
+    constructor()
+        set p1 to 4
+    end constructor
+
+    property p1 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["assigning to a property requires a prefix"]);
+  });
 });
