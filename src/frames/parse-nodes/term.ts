@@ -9,7 +9,6 @@ import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ImmutableListNode } from "./immutable-list-node";
 import { KeywordNode } from "./keyword-node";
 import { LitValueNode } from "./lit-value";
-import { LiteralNode } from "./literal-node";
 import { TupleNode } from "./tuple-node";
 import { UnaryExpression } from "./unary-expression";
 import { VarRefNode } from "./var-ref-node";
@@ -21,10 +20,7 @@ export class Term extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    //Term simple:
-    //  SymbolNode:
-
-
+    //TermSimple:
     this.alternatives.push(new ImmutableListNode(() => new ExprNode()));
     this.alternatives.push(new ArrayListNode(() => new ExprNode()));
     this.alternatives.push(new DictionaryNode(() => new ExprNode(), () => new ExprNode()));
@@ -32,9 +28,13 @@ export class Term extends AbstractAlternatives {
     this.alternatives.push(new TupleNode());
     this.alternatives.push(new UnaryExpression());
     this.alternatives.push(new BracketedExpression());
-
+    //  Symbol
     this.alternatives.push(new LitValueNode());
-    this.alternatives.push(new LiteralNode()); // Literal must be before Var to detect true/false
+
+    // ends TermSimple
+
+
+    // 'this' needs to not be a keyword see #707
     this.alternatives.push(new KeywordNode(thisKeyword));
     this.alternatives.push(new VarRefNode());
     this.alternatives.push(new FunctionCallNode());
