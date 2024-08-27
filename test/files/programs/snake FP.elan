@@ -26,7 +26,7 @@ function updateGraphics(g as Game) return Game
 end function
 
 function moveApple(g as Game) return Game
-  let x be g.random.valueAsInt(0,39)
+  let x be g.random.valueInt(0,39)
   let rnd2 be g.random.next()
   let y be rnd2.valueAsInt(0, 29)
   let g2 be copy g with apple to new Square(x, y), rnd to rnd2.next()
