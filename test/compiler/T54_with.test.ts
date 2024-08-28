@@ -25,7 +25,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; _a.a = 2; return _a;})();
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   system.printLine(_stdlib.asString(a.a));
   system.printLine(_stdlib.asString(b.a));
 }
@@ -70,7 +70,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
-  a = (() => {const _a = {...a}; _a.a = 2; return _a;})();
+  a = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   system.printLine(_stdlib.asString(a.a));
 }
 
@@ -126,7 +126,7 @@ function foo() {
   var a = system.initialise(new Foo());
   var b = (() => {
     var _cache;
-    return () => _cache ??= (() => {const _a = {...a}; _a.a = 2; return _a;})();
+    return () => _cache ??= (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   })();
   return b();
 }
@@ -186,7 +186,7 @@ function foo() {
   })();
   var b = (() => {
     var _cache;
-    return () => _cache ??= (() => {const _a = {...a()}; _a.a = 2; return _a;})();
+    return () => _cache ??= (() => {const _a = {...a()}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a())); _a.a = 2; return _a;})();
   })();
   return b();
 }
@@ -240,7 +240,7 @@ async function main() {
 
 function foo() {
   var a = system.initialise(new Foo());
-  return (() => {const _a = {...a}; _a.a = 2; return _a;})();
+  return (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
 }
 
 class Foo {
@@ -289,7 +289,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
-  var b = (() => {const _a = {...a}; _a.a = 2; _a.b = "fred"; return _a;})();
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
   system.printLine(_stdlib.asString(a.a));
   system.printLine(_stdlib.asString(a.b));
   system.printLine(_stdlib.asString(b.a));
@@ -317,6 +317,67 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1bill2fred");
+  });
+
+  test("Pass_CopiedObjectStillValid", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a with a to 2
+  print a.ff()
+  print b.ff()
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+    set property.b to 100
+  end constructor
+
+  property a as Int
+
+  property b as Int
+
+  function ff() return Int
+    return a + b
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  system.printLine(_stdlib.asString(a.ff()));
+  system.printLine(_stdlib.asString(b.ff()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0], ["b", 0]]);};
+  constructor() {
+    this.a = 1;
+    this.b = 100;
+  }
+
+  a = 0;
+
+  b = 0;
+
+  ff() {
+    return this.a + this.b;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "101102");
   });
 
   test("Fail_NoSets", async () => {

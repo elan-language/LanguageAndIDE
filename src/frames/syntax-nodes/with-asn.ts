@@ -33,7 +33,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
       withClauseStr = ` ${withClause.join("; ")};`;
     }
 
-    return `(() => {const ${tempTo} = {...${from}};${withClauseStr} return ${tempTo};})()`;
+    return `(() => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
   }
 
   symbolType() {
