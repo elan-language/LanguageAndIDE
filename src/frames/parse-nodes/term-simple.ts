@@ -6,7 +6,7 @@ import { ExprNode } from "./expr-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ImmutableListNode } from "./immutable-list-node";
 import { LitValueNode } from "./lit-value";
-import { SymbolNode } from "./symbol-node";
+import { ReferenceNode } from "./reference-node";
 import { TupleNode } from "./tuple-node";
 import { UnaryExpression } from "./unary-expression";
 
@@ -17,7 +17,7 @@ export class TermSimple extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new SymbolNode());
+    this.alternatives.push(new ReferenceNode());
     this.alternatives.push(new LitValueNode());
     this.alternatives.push(new ImmutableListNode(() => new ExprNode()));
     this.alternatives.push(new ArrayListNode(() => new ExprNode()));

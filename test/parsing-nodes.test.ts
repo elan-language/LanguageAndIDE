@@ -41,7 +41,7 @@ import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
 import { SetClause } from "../src/frames/parse-nodes/set-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { StringInterpolation } from "../src/frames/parse-nodes/string-interpolation";
-import { SymbolNode } from "../src/frames/parse-nodes/symbol-node";
+import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
@@ -1458,14 +1458,14 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[5]");
   });
   test("#670 new parse node structure for terms & expressions", () => {
-    testNodeParse(new SymbolNode(), `abc`, ParseStatus.valid, "abc", "");
-    testNodeParse(new SymbolNode(), `abc()`, ParseStatus.valid, "abc()", "");
-    testNodeParse(new SymbolNode(), `this`, ParseStatus.valid, "this", "");
-    testNodeParse(new SymbolNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
+    testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
+    testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");
+    testNodeParse(new ReferenceNode(), `this`, ParseStatus.valid, "this", "");
+    testNodeParse(new ReferenceNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
     testNodeParse(new IndexNode(), `[1]`, ParseStatus.valid, "[1]", "");
-    testNodeParse(new SymbolNode(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-    testNodeParse(new SymbolNode(), `abc[1][2]`, ParseStatus.valid, "abc[1][2]", "");
-    testNodeParse(new SymbolNode(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    testNodeParse(new ReferenceNode(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
+    testNodeParse(new ReferenceNode(), `abc[1][2]`, ParseStatus.valid, "abc[1][2]", "");
+    testNodeParse(new ReferenceNode(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
     testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
     testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", "");// tuple
     testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", ""); 
@@ -1476,9 +1476,9 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
     testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
     testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
-    testNodeParse(new SymbolNode(), `a`, ParseStatus.valid, `a`, "");
-    testNodeParse(new DotBefore(new SymbolNode()), `.a`, ParseStatus.valid, `.a`, "");
-    testNodeParse(new DotAfter(new SymbolNode()), `.a`, ParseStatus.invalid, ``, ".a");
+    testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
+    testNodeParse(new DotBefore(new ReferenceNode()), `.a`, ParseStatus.valid, `.a`, "");
+    testNodeParse(new DotAfter(new ReferenceNode()), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
     testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
     testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");

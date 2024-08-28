@@ -3,7 +3,7 @@ import { Alternatives } from "./alternatives";
 import { DotBefore } from "./dot-before";
 import { Multiple } from "./multiple";
 import { Qualifier } from "./qualifier";
-import { SymbolNode } from "./symbol-node";
+import { ReferenceNode } from "./reference-node";
 import { TermSimple } from "./term-simple";
 
 export class TermChained extends AbstractSequence {
@@ -14,7 +14,7 @@ export class TermChained extends AbstractSequence {
     if (text.length > 0) {
       const termSimple = () => new TermSimple();
       const qualifier = () => new Qualifier();
-      const dottedSymbol = () => new DotBefore(new SymbolNode());
+      const dottedSymbol = () => new DotBefore(new ReferenceNode());
 
       this.head = new Alternatives([termSimple, qualifier]);
       this.tail = new Multiple(dottedSymbol, 1);

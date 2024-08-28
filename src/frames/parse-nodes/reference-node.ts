@@ -7,9 +7,9 @@ import { KeywordNode } from "./keyword-node";
 import { MethodCallNode2 } from "./method-call-node2";
 import { OptionalNode } from "./optional-node";
 
-// Here 'symbol' refers to an entry in the symbol table. It has an optional index term.
-export class SymbolNode extends AbstractSequence {
-  symbol: Alternatives | undefined;
+// A reference node is a variable, or a functionCall, or 'this, with an optional index
+export class ReferenceNode extends AbstractSequence {
+  reference: Alternatives | undefined;
   index: OptionalNode | undefined;
 
   parseText(text: string): void {
@@ -17,9 +17,9 @@ export class SymbolNode extends AbstractSequence {
       const identifier = () => new IdentifierNode();
       const methodCall = () => new MethodCallNode2();
       const thisRef = () => new KeywordNode(thisKeyword);
-      this.symbol = new Alternatives([thisRef,identifier, methodCall]);
+      this.reference = new Alternatives([thisRef,identifier, methodCall]);
       this.index = new OptionalNode(new IndexNode());
-      this.addElement(this.symbol);
+      this.addElement(this.reference);
       this.addElement(this.index);
       super.parseText(text);
     }
