@@ -12,6 +12,7 @@ import { DictionaryNode } from "../src/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../src/frames/parse-nodes/dot-after";
 import { DotBefore } from "../src/frames/parse-nodes/dot-before";
 import { ExprNode } from "../src/frames/parse-nodes/expr-node";
+import { ExprNode2 } from "../src/frames/parse-nodes/expr-node2";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImmutableListNode } from "../src/frames/parse-nodes/immutable-list-node";
@@ -1471,6 +1472,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new DotAfter(new SymbolNode()), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
     testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
-    testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, ""); 
+    testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");
+    testNodeParse(new ExprNode2(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
+    testNodeParse(new ExprNode2(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
   });
 });
