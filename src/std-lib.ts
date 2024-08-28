@@ -796,7 +796,7 @@ export class StdLib {
     return n % 65536;
   }
   hi16(n: number): number {
-    return this.lo16(n / 65536)
+    return this.lo16(n / 65536);
   }
   valueInt(current: [number, number], min: number, max: number): number {
     const float = this.value(current);
@@ -810,4 +810,14 @@ export class StdLib {
     const c = this.clock();
     return [this.hi16(c), this.lo16(c)];
   }
+  // Standard colours
+
+  black = 0x000000;
+  grey = 0x808080;
+  white = 0xffffff;
+  red = 0xff0000;
+  green = 0x008000;
+  blue = 0x0000ff;
+  yellow = 0xffff00;
+  brown = 0xa52a2a;
 }

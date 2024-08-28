@@ -1221,6 +1221,13 @@ export class StdLibSymbols implements Scope {
         new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
       ),
     ],
+    ["black", this.getSymbol("black", IntType.Instance)],
+    ["grey", this.getSymbol("grey", IntType.Instance)],
+    ["white", this.getSymbol("white", IntType.Instance)],
+    ["red", this.getSymbol("red", IntType.Instance)],
+    ["green", this.getSymbol("green", IntType.Instance)],
+    ["yellow", this.getSymbol("yellow", IntType.Instance)],
+    ["brown", this.getSymbol("brown", IntType.Instance)],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

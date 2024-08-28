@@ -1,4 +1,4 @@
-# FFFF Elan Beta 1 valid
+# eaf5c48f0907088f7593e53ec7bc0789412a77585de4407399820f13dbda4866 Elan Beta 1 valid
 
 main
   var gr set to new Graphics()
@@ -96,12 +96,6 @@ function directionByKey(current as String, key as String) return String
   end switch
   return dir
 end function
-
-constant green set to 0x00ff00
-
-constant red set to 0xff0000
-
-constant white set to 0xffffff
 
 test hasHitEdge
   assert hasHitEdge([0, 0]) is false
