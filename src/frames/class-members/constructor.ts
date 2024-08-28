@@ -73,4 +73,10 @@ ${this.indent()}}\r
     const s = this.params.resolveSymbol(id, transforms, this);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
+
+  public override symbolMatches(id: string, all: boolean, initialScope?: Frame): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
+    const localMatches = this.params.symbolMatches(id, all, initialScope);
+    return localMatches.concat(matches);
+  }
 }
