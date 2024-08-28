@@ -1482,6 +1482,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
     testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
     testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");
+    testNodeParse(new TermChained(), `this.a[1].b().c(d)[e]`, ParseStatus.valid, `this.a[1].b().c(d)[e]`, "");
     testNodeParse(new ExprNode2(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
     testNodeParse(new ExprNode2(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
   });
