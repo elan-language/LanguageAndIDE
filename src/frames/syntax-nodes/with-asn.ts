@@ -21,7 +21,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     const from = this.obj.compile();
-    const tempTo = `_${from}`;
+    const tempTo = `_a`; // only scoped to lambda so safe
     const withClause: string[] = [];
     let withClauseStr = "";
 
