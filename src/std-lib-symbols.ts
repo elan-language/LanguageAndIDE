@@ -664,7 +664,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "contains",
         new FunctionType(
-          [new IterType(StringType.Instance), StringType.Instance],
+          [new IterType(new GenericParameterType("T")), new GenericParameterType("T")],
           BooleanType.Instance,
           true,
         ),

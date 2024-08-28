@@ -3,24 +3,24 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
 import { AssertOutcome } from "../../src/system";
 import {
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    assertTestObjectCodeExecutes,
-    testHash,
-    transforms,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T71_StandardLib", () => {
   test("Pass_contains", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
-constant lst set to {"one", "two"}
+constant lst set to {1, 2}
 main
   var arr set to ["three", "four"]
-  print lst.contains("two")
-  print lst.contains("three")
+  print lst.contains(1)
+  print lst.contains(3)
   print arr.contains("four")
   print arr.contains("five")
   print "onetwo".contains("two")
@@ -28,12 +28,12 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const lst = system.immutableList(["one", "two"]);
+const lst = system.immutableList([1, 2]);
 
 async function main() {
   var arr = system.literalArray(["three", "four"]);
-  system.printLine(_stdlib.asString(_stdlib.contains(lst, "two")));
-  system.printLine(_stdlib.asString(_stdlib.contains(lst, "three")));
+  system.printLine(_stdlib.asString(_stdlib.contains(lst, 1)));
+  system.printLine(_stdlib.asString(_stdlib.contains(lst, 3)));
   system.printLine(_stdlib.asString(_stdlib.contains(arr, "four")));
   system.printLine(_stdlib.asString(_stdlib.contains(arr, "five")));
   system.printLine(_stdlib.asString(_stdlib.contains("onetwo", "two")));
@@ -50,7 +50,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruefalse");
   });
 
-  test("Pass_pause", async () => {
+   test("Pass_pause", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main

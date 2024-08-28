@@ -385,8 +385,8 @@ export class StdLib {
     }
   }
 
-  contains(source: string[], substr: string) {
-    return source.includes(substr);
+  contains<T>(source: T[], item: T): boolean {
+    return source.includes(item);
   }
 
   pause(ms: number): Promise<void> {
