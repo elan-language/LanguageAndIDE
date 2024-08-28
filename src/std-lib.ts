@@ -795,17 +795,19 @@ export class StdLib {
   lo16(n: number): number {
     return n % 65536;
   }
-
+  hi16(n: number): number {
+    return this.lo16(n / 65536)
+  }
   valueInt(current: [number, number], min: number, max: number): number {
     const float = this.value(current);
     return Math.floor(float * (max - min + 1) + min);
   }
-  functionalRandomSeed(u: number, v: number): [number, number] {
-    return [u === 0 ? 521288629 : u, v === 0 ? 362436069 : v];
+  firstRandomInFixedSequence(): [number, number] {
+    return [521288629, 362436069];
   }
 
-  functionalRandom(): [number, number] {
+  firstRandom(): [number, number] {
     const c = this.clock();
-    return this.functionalRandomSeed(this.lo16(c / 65536), this.lo16(c));
+    return [this.hi16(c), this.lo16(c)];
   }
 }

@@ -1208,22 +1208,17 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "functionalRandom",
+      "firstRandom",
       this.getSymbol(
-        "functionalRandom",
+        "firstRandom",
         new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
       ),
     ],
     [
-      "functionalRandomSeed",
+      "firstRandomInFixedSequence",
       this.getSymbol(
-        "functionalRandomSeed",
-        new FunctionType(
-          [IntType.Instance, IntType.Instance],
-          new TupleType([IntType.Instance, IntType.Instance]),
-          false,
-          false,
-        ),
+        "firstRandomInFixedSequence",
+        new FunctionType([], new TupleType([IntType.Instance, IntType.Instance]), false, false),
       ),
     ],
   ]);
