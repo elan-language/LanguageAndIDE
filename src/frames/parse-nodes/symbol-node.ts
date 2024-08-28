@@ -1,7 +1,9 @@
+import { thisKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
+import { KeywordNode } from "./keyword-node";
 import { MethodCallNode2 } from "./method-call-node2";
 import { OptionalNode } from "./optional-node";
 
@@ -14,7 +16,8 @@ export class SymbolNode extends AbstractSequence {
     if (text.length > 0) {
       const identifier = () => new IdentifierNode();
       const methodCall = () => new MethodCallNode2();
-      this.symbol = new Alternatives([identifier, methodCall]);
+      const thisRef = () => new KeywordNode(thisKeyword);
+      this.symbol = new Alternatives([thisRef,identifier, methodCall]);
       this.index = new OptionalNode(new IndexNode());
       this.addElement(this.symbol);
       this.addElement(this.index);

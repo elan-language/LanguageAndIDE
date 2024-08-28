@@ -32,7 +32,7 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { ElanSymbol } from "./interfaces/symbol";
 import { SymbolType } from "./interfaces/symbol-type";
-import { allKeywords, reservedWords, thisKeyword } from "./keywords";
+import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayListType } from "./symbols/array-list-type";
@@ -52,8 +52,7 @@ import { ProcedureType } from "./symbols/procedure-type";
 import { StringType } from "./symbols/string-type";
 import {
   isDictionarySymbolType,
-  isGenericSymbolType,
-  isPropertyOnFieldsClass,
+  isGenericSymbolType
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
@@ -61,7 +60,6 @@ import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import { InFunctionScope, isAstIdNode, isAstIndexableNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
-import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -135,10 +133,6 @@ export function mustBeImmutableType(
 }
 
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (id === thisKeyword) {
-    return;
-  }
-
   if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
