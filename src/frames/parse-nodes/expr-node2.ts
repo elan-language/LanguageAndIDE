@@ -5,7 +5,6 @@ import { EmptyOfTypeNode } from "./empty-of-type-node";
 import { IfExpr } from "./if-expr";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
-import { Term } from "./term";
 import { Term2 } from "./term2";
 
 export class ExprNode2 extends AbstractAlternatives {
