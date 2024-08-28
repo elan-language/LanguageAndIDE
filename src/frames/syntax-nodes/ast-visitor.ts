@@ -36,6 +36,7 @@ import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
 import { MethodCallNode } from "../parse-nodes/method-call-node";
+import { MethodCallNode2 } from "../parse-nodes/method-call-node2";
 import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
@@ -247,6 +248,12 @@ export function transform(
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
     return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
+  }
+  if (node instanceof MethodCallNode2) {
+    const id = node.name!.matchedText;
+    const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
+
+    return new FuncCallAsn(id, undefined, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {
