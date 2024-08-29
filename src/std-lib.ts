@@ -820,4 +820,26 @@ export class StdLib {
   blue = 0x0000ff;
   yellow = 0xffff00;
   brown = 0xa52a2a;
+
+  bitAnd(a: number, b: number): number {
+    return a & b;
+  }
+  bitOr(a: number, b: number): number {
+    return a | b;
+  }
+  bitXor(a: number, b: number): number {
+    return a ^ b;
+  }
+  bitNot(a: number): number {
+    return ~a;
+  }
+  bitShiftL(a: number, shift: number): number {
+    return a << shift;
+  }
+  bitShiftR(a: number, shift: number): number {
+    return a >>> shift;
+  }
+  asBinary(a: number): string {
+    return a.toString(2);
+  }
 }

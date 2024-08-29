@@ -552,4 +552,41 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
   });
+  test("bitwise operations", async () => {
+    const code = `# FFFF Elan Beta 1 valid
+
+main
+  var a set to 13
+  var b set to 30
+  var anb set to bitAnd(a, b)
+  var aob set to bitOr(a, b)
+  var axb set to bitXor(a, b)
+  var nota set to bitNot(a)
+  var aL set to bitShiftL(a, 2)
+  var aR set to bitShiftR(a, 2)
+  print a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 13;
+  var b = 30;
+  var anb = _stdlib.bitAnd(a, b);
+  var aob = _stdlib.bitOr(a, b);
+  var axb = _stdlib.bitXor(a, b);
+  var nota = _stdlib.bitNot(a);
+  var aL = _stdlib.bitShiftL(a, 2);
+  var aR = _stdlib.bitShiftR(a, 2);
+  system.printLine(_stdlib.asString(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
+  });
 });

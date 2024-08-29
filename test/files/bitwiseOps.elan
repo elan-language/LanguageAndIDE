@@ -1,0 +1,13 @@
+# c078a2ad248462c26042e4721a067442bed6e2e8f1ae66e8349ef1b70c8a1820 Elan Beta 1 valid
+
+main
+  var a set to 13
+  var b set to 30
+  var anb set to bitAnd(a, b)
+  var aob set to bitOr(a, b)
+  var axb set to bitXor(a, b)
+  var nota set to bitNot(a)
+  var aL set to bitShiftL(a, 2)
+  var aR set to bitShiftR(a, 2)
+  print "{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}"
+end main
