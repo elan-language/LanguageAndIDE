@@ -1,23 +1,23 @@
+import { CompileError } from "../compile-error";
+import { mustMatchGenericParameters } from "../compile-rules";
+import { AstNode } from "../interfaces/ast-node";
+import { AstTypeNode } from "../interfaces/ast-type-node";
+import { Scope } from "../interfaces/scope";
+import { ArrayListType } from "../symbols/array-list-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
+import { FunctionType } from "../symbols/function-type";
+import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
+import { RegExType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
-import { Scope } from "../interfaces/scope";
-import { AstNode } from "../interfaces/ast-node";
-import { CompileError } from "../compile-error";
-import { ArrayListType } from "../symbols/array-list-type";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { AstTypeNode } from "../interfaces/ast-type-node";
-import { FunctionType } from "../symbols/function-type";
-import { transforms } from "./ast-helpers";
-import { EnumType } from "../symbols/enum-type";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { mustMatchGenericParameters } from "../compile-rules";
 import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -84,6 +84,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   symbolType() {
     switch (this.id) {
+      case "RegEx":
+        return RegExType.Instance;
       case "Int":
         return IntType.Instance;
       case "Float":

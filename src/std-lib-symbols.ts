@@ -14,6 +14,7 @@ import { IntType } from "./frames/symbols/int-type";
 import { IterType } from "./frames/symbols/iter-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
+import { RegExType } from "./frames/symbols/regex-type";
 import { StringType } from "./frames/symbols/string-type";
 import { SymbolScope } from "./frames/symbols/symbol-scope";
 import { TupleType } from "./frames/symbols/tuple-type";
@@ -1271,6 +1272,13 @@ export class StdLibSymbols implements Scope {
     [
       "asBinary",
       this.getSymbol("asBinary", new FunctionType([IntType.Instance], StringType.Instance, true)),
+    ],
+    [
+      "matchesRegex",
+      this.getSymbol(
+        "matchesRegex",
+        new FunctionType([StringType.Instance, RegExType.Instance], BooleanType.Instance, false),
+      ),
     ],
   ]);
 

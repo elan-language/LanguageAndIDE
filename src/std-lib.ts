@@ -842,4 +842,9 @@ export class StdLib {
   asBinary(a: number): string {
     return a.toString(2);
   }
+  matchesRegex(a: string, b: RegExp): boolean {
+    const r = /.*/;
+    r.toString();
+    return false;
+  }
 }
