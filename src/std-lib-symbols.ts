@@ -1226,6 +1226,7 @@ export class StdLibSymbols implements Scope {
     ["white", this.getSymbol("white", IntType.Instance)],
     ["red", this.getSymbol("red", IntType.Instance)],
     ["green", this.getSymbol("green", IntType.Instance)],
+    ["blue", this.getSymbol("blue", IntType.Instance)],
     ["yellow", this.getSymbol("yellow", IntType.Instance)],
     ["brown", this.getSymbol("brown", IntType.Instance)],
   ]);
