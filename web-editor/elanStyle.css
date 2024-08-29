@@ -62,6 +62,10 @@ string {
     white-space: pre;
 }
 
+regex {
+    color: var(--string);
+}
+
 /* Header & comments */
 comment *, comment field.ok text  {
     color: var(--comment);
@@ -325,4 +329,6 @@ statement.selected > frno
     color: white;
     text-indent: 0;
 }
+
+
 
