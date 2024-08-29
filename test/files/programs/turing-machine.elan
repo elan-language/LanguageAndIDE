@@ -127,6 +127,4 @@ immutable class Rule
 
 end class
 
-enum Dir
-  left, right
-end enum
+enum Dir left, right

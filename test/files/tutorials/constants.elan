@@ -16,6 +16,4 @@ constant red set to 0xff0000
 
 constant colours set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
 
-enum Suit
-  clubs, diamonds, hearts, spades
-end enum
+enum Suit clubs, diamonds, hearts, spades

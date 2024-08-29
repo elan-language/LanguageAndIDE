@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T35_enums", () => {
@@ -21,9 +21,7 @@ main
   print Fruit.pear
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -54,9 +52,7 @@ main
   print e
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -93,9 +89,7 @@ class Foo
   property fruit as Fruit
 end class
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -142,9 +136,7 @@ class Foo
   property fruit as Fruit
 end class
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -185,9 +177,7 @@ main
   print x
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -219,9 +209,7 @@ main
   print y
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -252,9 +240,7 @@ main
   print isFavourite(Fruit.pear)
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum
+enum Fruit apple, orange, pear
 
 function isFavourite(f as Fruit) return Boolean
   return f is Fruit.pear
@@ -292,9 +278,7 @@ main
   print firstFruit() is Fruit.apple
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum
+enum Fruit apple, orange, pear
 
 function firstFruit() return Fruit
   return Fruit.apple
@@ -333,9 +317,7 @@ main
   print x is Fruit.pear
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -374,9 +356,7 @@ main
   end switch
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -419,9 +399,7 @@ main
   print a
 end main
    
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 var Fruit = {
@@ -449,9 +427,7 @@ return [main, _tests];}`;
 main
 end main
 
-enum fruit
-  apple, orange, pear
-end enum`;
+enum fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -465,9 +441,7 @@ end enum`;
 main
 end main
 
-enum Fruit
-  apple, Orange, pear
-end enum`;
+enum Fruit apple, Orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -481,9 +455,7 @@ end enum`;
 main
 end main
 
-enum Fruit
-  apple = 1, orange = 2, pear = 3
-end enum`;
+enum Fruit apple = 1, orange = 2, pear = 3`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -499,9 +471,7 @@ main
   set a to Fruit.apple
 end main
 
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -531,9 +501,7 @@ main
   print Fruit.kiwi
 end main
 
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -549,9 +517,7 @@ main
 
 end main
 
-enum if
-  apple, orange, pear
-end enum`;
+enum if apple, orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -566,9 +532,7 @@ main
 
 end main
 
-enum Fruit
-  apple, orange, if
-end enum`;
+enum Fruit apple, orange, if`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -584,9 +548,7 @@ main
 
 end main
 
-enum Fruit
-  apple, orange, break
-end enum`;
+enum Fruit apple, orange, break`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -604,13 +566,9 @@ main
 
 end main
 
-enum Fruit
-  banana, kiwi
-end enum
+enum Fruit banana, kiwi
 
-enum Fruit
-  apple, orange, pear
-end enum`;
+enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -626,9 +584,7 @@ main
 
 end main
 
-enum Fruit
-  apple, orange, pear, orange
-end enum`;
+enum Fruit apple, orange, pear, orange`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));

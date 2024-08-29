@@ -1,4 +1,4 @@
-# d0fa3f24151f52583a2fb4e11ba7e5fed4de5f9a236a0094708f3f28fd8c38b4 Elan Beta 1 valid
+# 05f50b6f3aee11b93f157be08a0271d04c049880df93177af22cc9d998c091f5 Elan Beta 1 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
@@ -143,6 +143,4 @@ class Square
 
 end class
 
-enum Direction
-  up, down, left, right
-end enum
+enum Direction up, down, left, right

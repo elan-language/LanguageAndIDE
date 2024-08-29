@@ -1,4 +1,4 @@
-# 6d1330fdb5c4199b3154ec038866d7db6410e4840e2e7d6663c877aca3fe76bc Elan Beta 1 valid
+# 6b039210cca54cfb895c5ee9523fd43a83849f8c42f660ffbc5765693438b922 Elan Beta 1 valid
 
 main
   var start set to new Point(0, 0)
@@ -26,8 +26,8 @@ main
 end main
 
 procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], solver as Solver, alg as Algorithm)
-  var gr2 set to gr
   call solver.initialise(alg)
+  var gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
@@ -270,18 +270,16 @@ immutable class Point
 
 end class
 
-enum Algorithm
-  dijkstra, aStar, heuristic
-end enum
+enum Algorithm dijkstra, aStar, heuristic
 
 # 'infinity' need only be larger than longest possible route
 constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant lightBlue set to 0x80abff
-
 constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \n'x' to exit\nEnter option: "
+
+constant lightBlue set to 0x80abff
 
 test point
   let p be new Point(0, 0)

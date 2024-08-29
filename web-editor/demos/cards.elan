@@ -45,13 +45,9 @@ class Card
 
 end class
 
-enum Suit
-  clubs, diamonds, hearts, spades
-end enum
+enum Suit clubs, diamonds, hearts, spades
 
-enum Rank
-  ace, one, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
-end enum
+enum Rank ace, one, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
 
 constant black set to 0x000000
 

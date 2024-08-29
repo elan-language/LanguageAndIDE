@@ -270,9 +270,7 @@ immutable class Point
 
 end class
 
-enum Algorithm
-  dijkstra, aStar, heuristic
-end enum
+enum Algorithm dijkstra, aStar, heuristic
 
 # 'infinity' need only be larger than longest possible route
 constant infinity set to 2000.0

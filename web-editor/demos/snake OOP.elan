@@ -143,9 +143,7 @@ class Square
 
 end class
 
-enum Direction
-  up, down, left, right
-end enum
+enum Direction up, down, left, right
 
 constant green set to 0x00ff00
 

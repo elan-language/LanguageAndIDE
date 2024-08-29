@@ -241,7 +241,7 @@ end main
   });
 
   test("parse Frames - all globals except class", async () => {
-    const code = `# d42e30f3e2fae50239f698d1df8d8ba0d45d3c21073ce4536018af90636a58ad Elan Beta 1 valid
+    const code = `# ada104a0372b64b05778204c583912deac1e4cd91737036c52437d8e86b98581 Elan Beta 1 valid
 
 constant phi set to 1.618
 
@@ -257,9 +257,7 @@ function hypotenuse(sideB as Float, sideC as Float) return Float
   return 0.0
 end function
 
-enum Fruit
-  apple, orange, pear
-end enum
+enum Fruit apple, orange, pear
 `;
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());

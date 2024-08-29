@@ -1,4 +1,4 @@
-# c2786a32d83516d2ab5c2e8e24e4660bbd99257cd22cfdf58112be7a46604513 Elan Beta 1 valid
+# 0633fc6f662a97f49fd941480ff48328d29c5eeeecab44ff8e0e0d507b25df5e Elan Beta 1 valid
 
 constant phi set to 1.618
 
@@ -14,6 +14,4 @@ function hypotenuse(sideB as Float, sideC as Float) return Float
   return sqrt(sideB^2 + sideC^2)
 end function
 
-enum Fruit
-  apple, orange, pear
-end enum
+enum Fruit apple, orange, pear

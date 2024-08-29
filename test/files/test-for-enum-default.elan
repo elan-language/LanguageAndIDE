@@ -1,13 +1,11 @@
-# 2b1f8c095bab0338628f30b910143738212bff8310eb1479823b83c45f9249af Elan Beta 1 valid
+# c03fbfbd519b5697ff7f1dce43924b29e2010b62cfaa0ca42d2742044b24de3c Elan Beta 1 valid
 
 main
   var r set to new Rule("a", "b", "c", "d", Dir.left)
   print r
 end main
 
-enum Dir
-  left, right
-end enum
+enum Dir left, right
 
 immutable class Rule
   constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)

@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T17.5_ImmutableDictionaries", () => {
@@ -40,9 +40,7 @@ return [main, _tests];}`;
   test("Pass_LiteralEnumKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
-enum Fruit
-  apple, orange, pear
-end enum  
+enum Fruit apple, orange, pear  
 constant a set to {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10}
 main
   print a
@@ -329,9 +327,7 @@ return [main, _tests];}`;
   test("Pass_EnumKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
-enum Fruit
-  apple, orange, pear
-end enum  
+enum Fruit apple, orange, pear  
 
 main
   var a set to new ImmutableDictionary<of Fruit, Int>()

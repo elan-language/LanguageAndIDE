@@ -1,4 +1,4 @@
-# 9317ea4b21f011873828f2d84c50745cce45cbf8da699dee7d734b8f6ad5c66f Elan Beta 1 valid
+# a8c2d1c9e055ca747d5f14478d9eb1589201ab8b1fce504a399ced124be96195 Elan Beta 1 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -150,9 +150,7 @@ class Rule
 
 end class
 
-enum Dir
-  left, right
-end enum
+enum Dir left, right
 
 # Make this longer if you need to
 constant spaces set to "                                                  "
