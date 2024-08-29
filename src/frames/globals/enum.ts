@@ -1,22 +1,22 @@
-import { EnumValues } from "../fields/enum-values";
 import { AbstractFrame } from "../abstract-frame";
-import { File } from "../interfaces/file";
-import { singleIndent } from "../helpers";
-import { Field } from "../interfaces/field";
 import { CodeSource } from "../code-source";
-import { TypeNameField } from "../fields/type-name-field";
-import { enumKeyword } from "../keywords";
-import { Frame } from "../interfaces/frame";
-import { ElanSymbol } from "../interfaces/symbol";
-import { EnumValueType } from "../symbols/enum-value-type";
-import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../syntax-nodes/transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { EnumType } from "../symbols/enum-type";
-import { Collapsible } from "../interfaces/collapsible";
 import { mustBeUniqueNameInScope } from "../compile-rules";
+import { EnumValues } from "../fields/enum-values";
+import { TypeNameField } from "../fields/type-name-field";
+import { singleIndent } from "../helpers";
+import { Collapsible } from "../interfaces/collapsible";
+import { Field } from "../interfaces/field";
+import { File } from "../interfaces/file";
+import { Frame } from "../interfaces/frame";
+import { GlobalFrame } from "../interfaces/global-frame";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolType } from "../interfaces/symbol-type";
+import { enumKeyword } from "../keywords";
+import { EnumType } from "../symbols/enum-type";
+import { EnumValueType } from "../symbols/enum-value-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { Transforms } from "../syntax-nodes/transforms";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
@@ -59,19 +59,16 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return "enum";
   }
   renderAsHtml(): string {
-    return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0">
-<top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</top>
-<statement>${this.values.renderAsHtml()}</statement>       
-<keyword>end enum</keyword>
-</enum>`;
+    return `<enum class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>enum </keyword>${this.name.renderAsHtml()}</top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</enum>`;
   }
+
+  //`<constant class="${this.cls()}" id='${this.htmlId}' tabindex="0"><top><expand>+</expand><keyword>constant </keyword>${this.name.renderAsHtml()}</top><keyword> set to </keyword>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</constant>`;
+
   indent(): string {
     return "";
   }
   renderAsSource(): string {
-    return `enum ${this.name.renderAsSource()}\r
-${singleIndent()}${this.values.renderAsSource()}\r
-end enum\r
+    return `enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
 `;
   }
 
@@ -96,11 +93,7 @@ ${singleIndent()}${this.values.compile(transforms)}\r
   parseFrom(source: CodeSource): void {
     source.remove("enum ");
     this.name.parseFrom(source);
-    source.removeNewLine();
-    source.removeIndent();
     this.values.parseFrom(source);
-    source.removeNewLine();
-    source.remove("end enum");
   }
 
   resolveSymbol(id: string, transforms: Transforms, initialScope: Frame): ElanSymbol {
