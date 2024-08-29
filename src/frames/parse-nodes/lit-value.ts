@@ -1,9 +1,9 @@
-import { Field } from "../interfaces/field";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { EnumVal } from "./enum-val";
 import { LitBoolean } from "./lit-boolean";
 import { LitFloat } from "./lit-float";
 import { LitInt } from "./lit-int";
+import { LitRegEx } from "./lit-regex";
 import { LitStringEmpty } from "./lit-string-empty";
 import { LitStringNonEmpty } from "./lit-string-non-empty";
 import { LitTuple } from "./lit-tuple";
@@ -22,6 +22,7 @@ export class LitValueNode extends AbstractAlternatives {
     this.alternatives.push(new LitStringNonEmpty());
     this.alternatives.push(new EnumVal());
     this.alternatives.push(new LitTuple());
+    this.alternatives.push(new LitRegEx());
     super.parseText(text);
   }
 }

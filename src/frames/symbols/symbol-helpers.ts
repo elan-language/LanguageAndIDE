@@ -27,6 +27,7 @@ import { IntType } from "./int-type";
 import { IterType } from "./iter-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
+import { RegExType } from "./regex-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownType } from "./unknown-type";
@@ -167,7 +168,8 @@ export function isValueType(type: SymbolType) {
     type instanceof IntType ||
     type instanceof FloatType ||
     type instanceof BooleanType ||
-    type instanceof StringType
+    type instanceof StringType ||
+    type instanceof RegExType
   );
 }
 

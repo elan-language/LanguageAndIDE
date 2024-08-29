@@ -12,4 +12,5 @@ export class Regexes {
   static readonly charValue = /[^']/;
   static readonly nonEmptyStringContent = /^[^{"]+/;
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
+  static readonly regexExpression = /^\/.*\//;
 }

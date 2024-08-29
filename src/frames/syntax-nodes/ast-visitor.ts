@@ -1,5 +1,4 @@
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
@@ -33,6 +32,7 @@ import { Lambda } from "../parse-nodes/lambda";
 import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
+import { LitRegEx } from "../parse-nodes/lit-regex";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
@@ -91,6 +91,7 @@ import { LiteralFloatAsn } from "./literal-float-asn";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
 import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
+import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
 import { LiteralTupleAsn } from "./literal-tuple-asn";
 import { NewAsn } from "./new-asn";
@@ -226,6 +227,10 @@ export function transform(
     }
 
     return new LiteralStringAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitRegEx) {
+    return new LiteralRegExAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof IdentifierNode) {
