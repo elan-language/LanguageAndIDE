@@ -1,17 +1,17 @@
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class RegExType implements SymbolType {
+export class RegexType implements SymbolType {
   private constructor() {}
 
   initialValue = "";
 
   isImmutable = true;
 
-  static Instance: SymbolType = new RegExType();
+  static Instance: SymbolType = new RegexType();
 
-  name = "RegEx";
+  name = "Regex";
 
   toString(): string {
-    return `RegEx`;
+    return `Regex`;
   }
 }

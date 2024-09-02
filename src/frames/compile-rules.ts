@@ -49,19 +49,15 @@ import { ImmutableListType } from "./symbols/immutable-list-type";
 import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
 import { ProcedureType } from "./symbols/procedure-type";
+import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
-import {
-  isDictionarySymbolType,
-  isGenericSymbolType,
-  isPropertyOnFieldsClass,
-} from "./symbols/symbol-helpers";
+import { isDictionarySymbolType, isGenericSymbolType } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import { InFunctionScope, isAstIdNode, isAstIndexableNode } from "./syntax-nodes/ast-helpers";
 import { Transforms } from "./syntax-nodes/transforms";
-import { VarAsn } from "./syntax-nodes/var-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType | undefined,
@@ -500,6 +496,10 @@ export function mustBeCompatibleType(
   compileErrors: CompileError[],
   location: string,
 ) {
+  if (lhs instanceof RegexType && !(rhs instanceof RegexType)) {
+    FailIncompatible(lhs, rhs, compileErrors, location);
+    return;
+  }
   if (lhs instanceof BooleanType && !(rhs instanceof BooleanType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;

@@ -12,7 +12,7 @@ import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
-import { RegExType } from "../symbols/regex-type";
+import { RegexType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
@@ -85,7 +85,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   symbolType() {
     switch (this.id) {
       case "RegEx":
-        return RegExType.Instance;
+        return RegexType.Instance;
       case "Int":
         return IntType.Instance;
       case "Float":

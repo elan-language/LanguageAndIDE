@@ -1,6 +1,6 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { RegExType } from "../symbols/regex-type";
+import { RegexType } from "../symbols/regex-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
@@ -10,7 +10,8 @@ export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   ) {
     super();
     const trimmed = rawValue.trim();
-    this.value = new RegExp(trimmed);
+    const r = trimmed.substring(1, trimmed.length - 1); //Remove delimiting slashes as RegExp will add them back automatically
+    this.value = new RegExp(r);
   }
 
   value: RegExp;
@@ -24,7 +25,7 @@ export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return RegExType.Instance;
+    return RegexType.Instance;
   }
 
   toString() {

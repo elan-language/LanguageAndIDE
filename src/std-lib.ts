@@ -29,6 +29,10 @@ export class StdLib {
       return v.toString();
     }
 
+    if (v instanceof RegExp) {
+      return "A Regex";
+    }
+
     if (Array.isArray(v)) {
       const type = (v as unknown as hasHiddenType)._type;
 
@@ -842,9 +846,7 @@ export class StdLib {
   asBinary(a: number): string {
     return a.toString(2);
   }
-  matchesRegex(a: string, b: RegExp): boolean {
-    const r = /.*/;
-    r.toString();
-    return false;
+  matchesRegex(a: string, r: RegExp): boolean {
+    return r.test(a);
   }
 }

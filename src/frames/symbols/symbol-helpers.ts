@@ -1,5 +1,4 @@
 import { Property } from "../class-members/property";
-import { AbstractField } from "../fields/abstract-field";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Class } from "../interfaces/class";
@@ -27,7 +26,7 @@ import { IntType } from "./int-type";
 import { IterType } from "./iter-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
-import { RegExType } from "./regex-type";
+import { RegexType } from "./regex-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownType } from "./unknown-type";
@@ -169,7 +168,7 @@ export function isValueType(type: SymbolType) {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
-    type instanceof RegExType
+    type instanceof RegexType
   );
 }
 
