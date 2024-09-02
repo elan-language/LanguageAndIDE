@@ -256,3 +256,7 @@ button#expand-collapse {
   background-color: var(--ideDefaultBackground);
   color: white;
 }
+
+.elan-code:not( :focus-within) {
+  opacity: 0.75;  
+}
