@@ -37,7 +37,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [1, 2], ArrayList [3, 4]]");
+    await assertObjectCodeExecutes(fileImpl, "[[1, 2], [3, 4]]");
   });
 
   test("Pass_DeclareAnEmptyArrayBySizeAndCheckLength", async () => {
@@ -89,7 +89,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "0ArrayList [empty ArrayList, empty ArrayList, empty ArrayList]",
+      "0[[], [], []]",
     );
   });
 
@@ -178,7 +178,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [foo]ArrayList [yon]");
+    await assertObjectCodeExecutes(fileImpl, "[foo][yon]");
   });
 
   test("Pass_AddAndReadElements2", async () => {
@@ -208,7 +208,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [empty ArrayList, ArrayList [foo], ArrayList [yon]]",
+      "[[], [foo], [yon]]",
     );
   });
 
@@ -239,7 +239,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [one], ArrayList [foo], ArrayList [two], ArrayList [yon], ArrayList [three]]",
+      "[[one], [foo], [two], [yon], [three]]",
     );
   });
 
@@ -270,7 +270,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [foo, one], ArrayList [two], ArrayList [three, yon]]",
+      "[[foo, one], [two], [three, yon]]",
     );
   });
 
@@ -299,7 +299,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [two]]");
+    await assertObjectCodeExecutes(fileImpl, "[[two]]");
   });
 
   test("Pass_remove2", async () => {
@@ -329,7 +329,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [empty ArrayList, ArrayList [two], empty ArrayList]",
+      "[[], [two], []]",
     );
   });
 
@@ -358,7 +358,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [one], ArrayList [three], ArrayList [one], ArrayList [two], ArrayList [three]]",
+      "[[one], [three], [one], [two], [three]]",
     );
   });
 
@@ -387,7 +387,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [one], empty ArrayList, ArrayList [three], ArrayList [one], ArrayList [two], ArrayList [three]]",
+      "[[one], [], [three], [one], [two], [three]]",
     );
   });
 
@@ -416,7 +416,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [one], ArrayList [three], ArrayList [one], ArrayList [three]]",
+      "[[one], [three], [one], [three]]",
     );
   });
 
@@ -445,7 +445,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [one], empty ArrayList, ArrayList [three], ArrayList [one], ArrayList [two], ArrayList [three]]",
+      "[[one], [], [three], [one], [two], [three]]",
     );
   });
 
@@ -474,7 +474,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "2ArrayList [ImmutableList {foo}, ImmutableList {bar, yon}]",
+      "2[{foo}, {bar, yon}]",
     );
   });
 
@@ -513,7 +513,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [ArrayList [3]]empty ArrayListfalsefalsetrue",
+      "[[3]][]falsefalsetrue",
     );
   });
 
@@ -538,7 +538,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [0, 0], ArrayList [0, 0]]");
+    await assertObjectCodeExecutes(fileImpl, "[[0, 0], [0, 0]]");
   });
 
   test("Pass_InitialiseArrayList", async () => {
@@ -562,7 +562,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [ArrayList [1, 1], ArrayList [1, 1]]");
+    await assertObjectCodeExecutes(fileImpl, "[[1, 1], [1, 1]]");
   });
 
   test("Fail_EmptyArrayList1", async () => {

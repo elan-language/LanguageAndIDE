@@ -114,7 +114,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ChloeJoeImmutableList {5, 2, 4}");
+    await assertObjectCodeExecutes(fileImpl, "ChloeJoe{5, 2, 4}");
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)0",
+      "00false{}[]{}[](0, , {})0",
     );
   });
 
@@ -329,7 +329,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "00falseempty ImmutableListempty Dictionaryempty ImmutableDictionaryempty ArrayListTuple (0, , empty ImmutableList)",
+      "00false{}[]{}[](0, , {})",
     );
   });
 
@@ -800,7 +800,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "empty ImmutableListempty Dictionaryempty ArrayListtruetruetruetrue",
+      "{}[][]truetruetruetrue",
     );
   });
 

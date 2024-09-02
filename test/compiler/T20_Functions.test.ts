@@ -142,7 +142,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty ArrayList");
+    await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
   test("Pass_Recursive", async () => {

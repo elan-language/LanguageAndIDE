@@ -34,7 +34,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, z:10}");
   });
 
   test("Pass_LiteralEnumKey", async () => {
@@ -64,7 +64,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {apple:1, orange:3, pear:10}");
+    await assertObjectCodeExecutes(fileImpl, "{apple:1, orange:3, pear:10}");
   });
 
   test("Pass_LiteralVarAndPrinting", async () => {
@@ -88,7 +88,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, z:10}");
   });
 
   test("Pass_AccessByKey", async () => {
@@ -142,7 +142,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {a, b, z}");
+    await assertObjectCodeExecutes(fileImpl, "{a, b, z}");
   });
 
   test("Pass_hasKey", async () => {
@@ -194,7 +194,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 3, 10}");
+    await assertObjectCodeExecutes(fileImpl, "{1, 3, 10}");
   });
 
   test("Pass_putAtKey", async () => {
@@ -227,7 +227,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableDictionary {a:1, b:3, z:10}ImmutableDictionary {a:1, b:4, z:10, d:2}",
+      "{a:1, b:3, z:10}{a:1, b:4, z:10, d:2}",
     );
   });
 
@@ -259,7 +259,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableDictionary {a:1, b:3, z:10}ImmutableDictionary {a:1, z:10}",
+      "{a:1, b:3, z:10}{a:1, z:10}",
     );
   });
 
@@ -287,7 +287,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, z:10}");
+    await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, z:10}");
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
@@ -399,7 +399,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "empty ImmutableDictionaryImmutableDictionary {a:1}falsetruefalse",
+      "{}{a:1}falsetruefalse",
     );
   });
 

@@ -1,12 +1,12 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T55_asString", () => {
@@ -404,7 +404,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList {1, 2, 3}ArrayList [1, 2, 3]Dictionary [a:1, b:3, z:10]",
+      "{1, 2, 3}[1, 2, 3][a:1, b:3, z:10]",
     );
   });
 });

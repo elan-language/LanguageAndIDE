@@ -280,7 +280,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2}");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2}");
   });
 
   test("Pass_IdShadowsFunction", async () => {

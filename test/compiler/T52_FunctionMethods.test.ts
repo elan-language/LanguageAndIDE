@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T52_FunctionMethods", () => {
@@ -194,7 +194,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {10}");
+    await assertObjectCodeExecutes(fileImpl, "{10}");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
@@ -284,7 +284,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {10}");
+    await assertObjectCodeExecutes(fileImpl, "{10}");
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
@@ -387,7 +387,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {a Qux}");
+    await assertObjectCodeExecutes(fileImpl, "{a Qux}");
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {

@@ -1,13 +1,13 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T26_Iter", () => {
@@ -76,7 +76,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {one, two}");
+    await assertObjectCodeExecutes(fileImpl, "{one, two}");
   });
 
   test("Pass_IterAssignToList", async () => {
@@ -112,7 +112,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {one, two}");
+    await assertObjectCodeExecutes(fileImpl, "{one, two}");
   });
 
   test("Pass_Array", async () => {
@@ -230,7 +230,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList {1, 2, 3, 4, 5, 6, 7}ImmutableList {4, 5, 6, 7}",
+      "{1, 2, 3, 4, 5, 6, 7}{4, 5, 6, 7}",
     );
   });
 
@@ -280,7 +280,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty Iter");
+    await assertObjectCodeExecutes(fileImpl, "an Iterable");
   });
 
   test("Pass_EmptyIter", async () => {
@@ -342,7 +342,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1}empty Iterfalsefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "{1}an Iterablefalsefalsetrue");
   });
 
   test("Fail_NoGenericType", async () => {

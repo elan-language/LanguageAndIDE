@@ -38,22 +38,13 @@ export class StdLib {
 
       switch (type) {
         case "ImmutableList":
-          if (v.length === 0) {
-            return "empty ImmutableList";
-          }
-          return `ImmutableList {${v.map((i) => this.asString(i)).join(", ")}}`;
+          return `{${v.map((i) => this.asString(i)).join(", ")}}`;
         case "Tuple":
-          return `Tuple (${v.map((i) => this.asString(i)).join(", ")})`;
+          return `(${v.map((i) => this.asString(i)).join(", ")})`;
         case "ArrayList":
-          if (v.length === 0) {
-            return "empty ArrayList";
-          }
-          return `ArrayList [${v.map((i) => this.asString(i)).join(", ")}]`;
+          return `[${v.map((i) => this.asString(i)).join(", ")}]`;
         case "Iter":
-          if (v.length === 0) {
-            return "empty Iter";
-          }
-          return `Iter [${v.map((i) => this.asString(i)).join(", ")}]`;
+          return `an Iterable`;
         default:
           throw new Error("_type not set");
       }
@@ -65,17 +56,11 @@ export class StdLib {
 
     if (typeof v === "object" && v.constructor.name === "Object") {
       const type = (v as unknown as hasHiddenType)._type;
-      const [tn, pf, sf] =
-        type === "Dictionary" ? ["Dictionary", "[", "]"] : ["ImmutableDictionary", "{", "}"];
+      const [pf, sf] = type === "Dictionary" ? ["[", "]"] : ["{", "}"];
 
       const items = Object.getOwnPropertyNames(v).filter((s) => s !== "_type");
-      if (items.length === 0) {
-        return `empty ${tn}`;
-      }
-
       const o = v as { [key: string]: object };
-
-      return `${tn} ${pf}${items.map((n) => `${n}:${this.asString(o[n])}`).join(", ")}${sf}`;
+      return `${pf}${items.map((n) => `${n}:${this.asString(o[n])}`).join(", ")}${sf}`;
     }
 
     if (typeof v === "object") {

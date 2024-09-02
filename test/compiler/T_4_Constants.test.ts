@@ -280,7 +280,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2, 3}");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}");
   });
 
   test("Fail_ArrayList", async () => {
@@ -323,7 +323,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ImmutableList {ImmutableList {4, 5}, ImmutableList {6, 7, 8}}",
+      "{{4, 5}, {6, 7, 8}}",
     );
   });
 

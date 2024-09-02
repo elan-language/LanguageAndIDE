@@ -3,14 +3,14 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
 import { AssertOutcome } from "../../src/system";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    assertTestObjectCodeExecutes,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T80_TestAndAsserts", () => {
@@ -101,7 +101,7 @@ return [main, _tests];}`;
       [
         "test3",
         [
-          new AssertOutcome(TestStatus.pass, "Tuple (one, two)", "Tuple (one, two)", "assert9"),
+          new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9"),
           new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
         ],
       ],
@@ -146,7 +146,7 @@ return [main, _tests];}`;
       [
         "test3",
         [
-          new AssertOutcome(TestStatus.pass, "Tuple (one, two)", "Tuple (one, two)", "assert9"),
+          new AssertOutcome(TestStatus.pass, "(one, two)", "(one, two)", "assert9"),
           new AssertOutcome(TestStatus.pass, "one", "one", "assert12"),
         ],
       ],
@@ -365,8 +365,8 @@ return [main, _tests];}`;
         [
           new AssertOutcome(
             TestStatus.pass,
-            "ImmutableList {3, 2, 4, 0}",
-            "ImmutableList {3, 2, 4, 0}",
+            "{3, 2, 4, 0}",
+            "{3, 2, 4, 0}",
             "assert12",
           ),
         ],
@@ -376,8 +376,8 @@ return [main, _tests];}`;
         [
           new AssertOutcome(
             TestStatus.pass,
-            "Dictionary [2:b, 3:a, 4:c]",
-            "Dictionary [2:b, 3:a, 4:c]",
+            "[2:b, 3:a, 4:c]",
+            "[2:b, 3:a, 4:c]",
             "assert24",
           ),
         ],

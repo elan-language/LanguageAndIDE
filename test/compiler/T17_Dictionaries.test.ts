@@ -33,7 +33,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
   test("Pass_LiteralDictionaryOfDictionary", async () => {
@@ -59,7 +59,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:Dictionary [a:1], b:Dictionary [b:3, z:10]]",
+      "[a:[a:1], b:[b:3, z:10]]",
     );
   });
 
@@ -90,7 +90,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [apple:1, orange:3, pear:10]");
+    await assertObjectCodeExecutes(fileImpl, "[apple:1, orange:3, pear:10]");
   });
 
   test("Pass_AccessByKey", async () => {
@@ -166,7 +166,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {a, b, z}");
+    await assertObjectCodeExecutes(fileImpl, "{a, b, z}");
   });
 
   test("Pass_hasKey", async () => {
@@ -216,7 +216,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 3, 10}");
+    await assertObjectCodeExecutes(fileImpl, "{1, 3, 10}");
   });
 
   test("Pass_set", async () => {
@@ -244,7 +244,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:4, z:10, d:2]");
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:4, z:10, d:2]");
   });
 
   test("Pass_set2d", async () => {
@@ -274,7 +274,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:Dictionary [a:1, x:2], b:Dictionary [c:4]]",
+      "[a:[a:1, x:2], b:[c:4]]",
     );
   });
 
@@ -301,7 +301,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "[a:1, z:10]");
   });
 
   test("Pass_remove2dKey", async () => {
@@ -329,7 +329,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:Dictionary [a:1], b:Dictionary [z:10]]",
+      "[a:[a:1], b:[z:10]]",
     );
   });
 
@@ -356,7 +356,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:1, b:3, z:10]");
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
   test("Pass_CreateEmptyDictionary", async () => {
@@ -424,7 +424,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2Dictionary [ff:1]Dictionary [bb:3]");
+    await assertObjectCodeExecutes(fileImpl, "2[ff:1][bb:3]");
   });
 
   test("Pass_EnumKey", async () => {
@@ -500,7 +500,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Dictionary [a:3]empty Dictionaryfalsefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "[a:3][]falsefalsetrue");
   });
 
   test("Pass_Empty2dDictionary", async () => {
@@ -538,7 +538,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Dictionary [a:Dictionary [a:1]]empty Dictionaryfalsefalsetrue",
+      "[a:[a:1]][]falsefalsetrue",
     );
   });
 

@@ -93,7 +93,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Tuple (a, 1, 2)");
+    await assertObjectCodeExecutes(fileImpl, "(a, 1, 2)");
   });
 
   test("Pass_PutChar", async () => {
@@ -339,7 +339,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Tuple (, )");
+    await assertObjectCodeExecutes(fileImpl, "(, )");
   });
 
   test("Pass_clearKeyBuffer", async () => {
@@ -428,7 +428,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "empty ImmutableList");
+    await assertObjectCodeExecutes(fileImpl, "{}");
   });
 
   test("Fail_emptyGraphics", async () => {

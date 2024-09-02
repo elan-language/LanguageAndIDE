@@ -1,15 +1,15 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T19_Procedures", () => {
@@ -89,7 +89,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "ArrayList [1, 2]ImmutableList {3, 4}Dictionary [a:true, b:false]ImmutableDictionary {a:true, b:false}",
+      "[1, 2]{3, 4}[a:true, b:false]{a:true, b:false}",
     );
   });
 
@@ -184,7 +184,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ArrayList [5, 3]");
+    await assertObjectCodeExecutes(fileImpl, "[5, 3]");
   });
 
   test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {

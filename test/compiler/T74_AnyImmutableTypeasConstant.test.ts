@@ -1,13 +1,13 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T74_AnyImmutableTypeAsConstant", () => {
@@ -60,7 +60,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Tuple (3, Apple)");
+    await assertObjectCodeExecutes(fileImpl, "(3, Apple)");
   });
 
   test("Pass_List", async () => {
@@ -86,7 +86,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableList {1, 2, 3}");
+    await assertObjectCodeExecutes(fileImpl, "{1, 2, 3}");
   });
 
   test("Pass_Dictionary", async () => {
@@ -112,7 +112,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "ImmutableDictionary {a:1, b:3, c:3}");
+    await assertObjectCodeExecutes(fileImpl, "{a:1, b:3, c:3}");
   });
 
   test("Fail_ImmutableClass", async () => {
