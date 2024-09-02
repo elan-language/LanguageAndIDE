@@ -2,7 +2,6 @@ import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
-import { globalKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstIdNode, transforms } from "./ast-helpers";
 
@@ -29,13 +28,7 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
 
   compileAsParameter(): string {
     this.compileErrors = [];
-    const s = this.value.compile();
-
-    if (s === globalKeyword) {
-      return "";
-    }
-
-    return `${s}`;
+    return this.value.compile();
   }
 
   symbolType() {
@@ -50,12 +43,6 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   }
 
   toString() {
-    const s = this.value.toString();
-
-    if (s === globalKeyword) {
-      return "";
-    }
-
-    return `${s}.`;
+    return `${this.value}.`;
   }
 }

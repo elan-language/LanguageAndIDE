@@ -29,6 +29,6 @@ export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return this.value;
+    return `${this.value}`;
   }
 }

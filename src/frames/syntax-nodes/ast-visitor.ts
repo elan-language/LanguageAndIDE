@@ -63,7 +63,6 @@ import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { VarRefCompound } from "../parse-nodes/var-ref-compound";
 import { VarRefNode } from "../parse-nodes/var-ref-node";
-import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
@@ -256,7 +255,7 @@ export function transform(
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
-    return new FuncCallAsn(id, undefined, parameters, fieldId, scope);
+    return new FuncCallAsn(id, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {
@@ -413,10 +412,6 @@ export function transform(
     const hd = node.head!.matchedText;
     const tl = node.tail!.matchedText;
     return new DeconstructedListAsn(hd, tl, fieldId, scope);
-  }
-
-  if (node instanceof WithClause) {
-    return transform(node.changes, fieldId, scope);
   }
 
   if (node instanceof NewInstance) {

@@ -50,7 +50,6 @@ import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { VarRefNode } from "../src/frames/parse-nodes/var-ref-node";
-import { WithClause } from "../src/frames/parse-nodes/with-clause";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
 import { testNodeParse } from "./testHelpers";
@@ -223,17 +222,7 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("with clause", () => {
-    testNodeParse(
-      new WithClause(),
-      " with x to p.x + 3, y to p.y - 1",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
+ 
   test("Expression + with clause", () => {
     testNodeParse(
       new ExprNode(),
