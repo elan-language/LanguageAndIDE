@@ -20,7 +20,7 @@ export class SetAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.id} = ${this.to}`;
+    return `${this.id} = ${this.to.compile()}`;
   }
 
   symbolType() {

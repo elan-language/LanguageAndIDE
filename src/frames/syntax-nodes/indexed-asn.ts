@@ -160,6 +160,6 @@ export class IndexedAsn extends AbstractAstNode implements ChainedAsn {
   }
 
   toString() {
-    return `(${this.body})`;
+    return `${this.body}`;
   }
 }

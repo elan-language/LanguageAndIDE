@@ -69,6 +69,14 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${this.expr1}.${this.expr2}`;
+    const ss: string[] = [`${this.expr1}`];
+
+    const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
+
+    for (const ln of leafNodes) {
+      ss.push(`${ln}`);
+    }
+
+    return ss.join(".");
   }
 }

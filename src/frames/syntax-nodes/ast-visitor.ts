@@ -256,7 +256,7 @@ export function transform(
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
-    return new FuncCallAsn(id, undefined, parameters, fieldId, scope);
+    return new FuncCallAsn(id, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {

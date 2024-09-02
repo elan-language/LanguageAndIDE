@@ -17,7 +17,6 @@ import { ChainedAsn } from "./chained-asn";
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
-    private readonly qualifier: AstNode | undefined,
     private readonly parameters: Array<AstNode>,
     public readonly fieldId: string,
     private scope: Scope,
@@ -49,10 +48,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
     for (const i of this.parameters) {
       cc = cc.concat(i.aggregateCompileErrors());
-    }
-
-    if (this.qualifier) {
-      cc.concat(this.qualifier.aggregateCompileErrors());
     }
 
     return this.compileErrors.concat(cc);
@@ -126,7 +121,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
   toString() {
     const pp = this.parameters.map((p) => p.toString()).join(", ");
-    const q = this.qualifier ? `${this.qualifier}` : "";
-    return `Func Call ${q}${this.id} (${pp})`;
+    return `Func Call ${this.id}(${pp})`;
   }
 }
