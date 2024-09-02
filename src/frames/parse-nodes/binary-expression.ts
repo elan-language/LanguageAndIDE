@@ -2,15 +2,15 @@ import { ParseStatus } from "../status-enums";
 import { DIVIDE, MULT, POWER } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { BinaryOperation } from "./binary-operation";
-import { ExprNode2 } from "./expr-node2";
+import { ExprNode } from "./expr-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
-import { Term2 } from "./term2";
+import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
-  lhs: Term2 | undefined;
+  lhs: Term | undefined;
   op: BinaryOperation | undefined;
-  rhs: ExprNode2 | undefined;
+  rhs: ExprNode | undefined;
 
   constructor() {
     super();
@@ -18,13 +18,13 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.lhs = new Term2();
+    this.lhs = new Term();
     this.addElement(this.lhs);
     this.addElement(new SpaceNode(Space.ignored));
     this.op = new BinaryOperation();
     this.addElement(this.op);
     this.addElement(new SpaceNode(Space.ignored));
-    this.rhs = new ExprNode2();
+    this.rhs = new ExprNode();
     this.addElement(this.rhs);
     return super.parseText(text);
   }

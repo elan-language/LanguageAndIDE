@@ -3,7 +3,7 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { PunctuationNode } from "./punctuation-node";
-import { Term2 } from "./term2";
+import { Term } from "./term";
 
 import { MINUS } from "../symbols";
 import { Space } from "./parse-node-helpers";
@@ -12,7 +12,7 @@ import { SpaceNode } from "./space-node";
 
 export class UnaryExpression extends AbstractSequence {
   unaryOp: Alternatives | undefined;
-  term: Term2 | undefined;
+  term: Term | undefined;
 
   constructor() {
     super();
@@ -27,7 +27,7 @@ export class UnaryExpression extends AbstractSequence {
       const notSp = () => new Sequence([not, sp]);
       this.unaryOp = new Alternatives([minus, notSp]);
       this.addElement(this.unaryOp);
-      this.term = new Term2();
+      this.term = new Term();
       this.addElement(this.term);
       return super.parseText(text);
     }

@@ -11,7 +11,7 @@ import { DeconstructedTuple } from "../src/frames/parse-nodes/deconstructed-tupl
 import { DictionaryNode } from "../src/frames/parse-nodes/dictionary-node";
 import { DotAfter } from "../src/frames/parse-nodes/dot-after";
 import { DotBefore } from "../src/frames/parse-nodes/dot-before";
-import { ExprNode2 } from "../src/frames/parse-nodes/expr-node2";
+import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImmutableListNode } from "../src/frames/parse-nodes/immutable-list-node";
@@ -41,7 +41,7 @@ import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
 import { SetClause } from "../src/frames/parse-nodes/set-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { StringInterpolation } from "../src/frames/parse-nodes/string-interpolation";
-import { Term2 } from "../src/frames/parse-nodes/term2";
+import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
@@ -91,34 +91,34 @@ suite("Parsing Nodes", () => {
     testNodeParse(new BinaryOperation(), "%", ParseStatus.invalid, "", "%", "");
   });
   test("IndexableTerm", () => {
-    testNodeParse(new Term2(), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Term2", () => {
-    testNodeParse(new Term2(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new Term2(), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new Term(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Expression", () => {
-    testNodeParse(new ExprNode2(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new ExprNode2(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new ExprNode2(), "a", ParseStatus.valid, "a", "", "a", "");
-    testNodeParse(new ExprNode2(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
-    testNodeParse(new ExprNode2(), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
-    testNodeParse(new ExprNode2(), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
-    testNodeParse(new ExprNode2(), "+", ParseStatus.invalid, "", "+", "");
-    testNodeParse(new ExprNode2(), "+b", ParseStatus.invalid, "", "+b", "");
-    testNodeParse(new ExprNode2(), "a +", ParseStatus.incomplete, "a +", "", "a + ");
-    testNodeParse(new ExprNode2(), "a %", ParseStatus.valid, "a", " %", "a");
-    testNodeParse(new ExprNode2(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
-    testNodeParse(new ExprNode2(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
+    testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode(), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new ExprNode(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
+    testNodeParse(new ExprNode(), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
+    testNodeParse(new ExprNode(), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
+    testNodeParse(new ExprNode(), "+", ParseStatus.invalid, "", "+", "");
+    testNodeParse(new ExprNode(), "+b", ParseStatus.invalid, "", "+b", "");
+    testNodeParse(new ExprNode(), "a +", ParseStatus.incomplete, "a +", "", "a + ");
+    testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %", "a");
+    testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
+    testNodeParse(new ExprNode(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "new ArrayList<of String>()",
       ParseStatus.valid,
       "new ArrayList<of String>()",
       "",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "points.foo(0.0)",
       ParseStatus.valid,
       "points.foo(0.0)",
@@ -127,7 +127,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
       ParseStatus.valid,
       "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
@@ -135,7 +135,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "this",
       ParseStatus.valid,
       "this",
@@ -144,7 +144,7 @@ suite("Parsing Nodes", () => {
       "<keyword>this</keyword>",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "thisWidget",
       ParseStatus.valid,
       "thisWidget",
@@ -154,7 +154,7 @@ suite("Parsing Nodes", () => {
     );
     // empty data structures
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "empty [Int]",
       ParseStatus.valid,
       "empty [Int]",
@@ -163,7 +163,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> [<type>Int</type>]",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "empty {Int}",
       ParseStatus.valid,
       "empty {Int}",
@@ -172,7 +172,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> {<type>Int</type>}",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "empty [Int:String]",
       ParseStatus.valid,
       "empty [Int:String]",
@@ -181,7 +181,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> [<type>Int</type>:<type>String</type>]",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "empty {Int:Boolean}",
       ParseStatus.valid,
       "empty {Int:Boolean}",
@@ -190,7 +190,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> {<type>Int</type>:<type>Boolean</type>}",
     );
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "empty String",
       ParseStatus.valid,
       "empty String",
@@ -198,9 +198,9 @@ suite("Parsing Nodes", () => {
       "",
       "<keyword>empty</keyword> <type>String</type>",
     );
-    testNodeParse(new ExprNode2(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new ExprNode(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.valid,
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
@@ -236,7 +236,7 @@ suite("Parsing Nodes", () => {
   });
   test("Expression + with clause", () => {
     testNodeParse(
-      new ExprNode2(),
+      new ExprNode(),
       "copy p with x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
@@ -580,14 +580,14 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(() => new ExprNode2(), 0),
+      new CSV(() => new ExprNode(), 0),
       `a + b, c, 1`,
       ParseStatus.valid,
       `a + b, c, 1`,
       "",
       "",
     );
-    testNodeParse(new CSV(() => new ExprNode2(), 0), `)`, ParseStatus.valid, ``, ")", "");
+    testNodeParse(new CSV(() => new ExprNode(), 0), `)`, ParseStatus.valid, ``, ")", "");
 
     testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo, foo`, ParseStatus.valid, "", "");
     testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo`, ParseStatus.valid, "", "");
@@ -629,7 +629,7 @@ suite("Parsing Nodes", () => {
       "foo, fo",
     );
 
-    testNodeParse(new CSV(() => new ExprNode2(), 0), ``, ParseStatus.valid, "", "");
+    testNodeParse(new CSV(() => new ExprNode(), 0), ``, ParseStatus.valid, "", "");
   });
   test("Instance", () => {
     testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
@@ -813,7 +813,7 @@ suite("Parsing Nodes", () => {
   });
   test("ImmutableList of expressions", () => {
     testNodeParse(
-      new ImmutableListNode(() => new ExprNode2()),
+      new ImmutableListNode(() => new ExprNode()),
       `{a, 3 + 4, func(a, 3)- 1, new Foo()}`,
       ParseStatus.valid,
       "{a, 3 + 4, func(a, 3)- 1, new Foo()}",
@@ -821,7 +821,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ImmutableListNode(() => new ExprNode2()),
+      new ImmutableListNode(() => new ExprNode()),
       `{a, 3+ 4, foo(a, 3) - 1}`,
       ParseStatus.valid,
       "",
@@ -1417,7 +1417,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitValueNode(), `3 `, ParseStatus.valid, "3", " ");
     testNodeParse(new BinaryExpression(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
 
-    testNodeParse(new ExprNode2(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
   test("ProcRefCompound", () => {
@@ -1482,7 +1482,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
     testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");
     testNodeParse(new TermChained(), `this.a.b()`, ParseStatus.valid, `this.a.b()`, "","this.a.b()","<keyword>this</keyword>.a.<method>b</method>()");
-    testNodeParse(new ExprNode2(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
-    testNodeParse(new ExprNode2(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
+    testNodeParse(new ExprNode(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
+    testNodeParse(new ExprNode(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
   });
 });

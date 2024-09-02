@@ -2,7 +2,7 @@ import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
 import { ElanSymbol } from "../interfaces/symbol";
 import { propertyKeyword } from "../keywords";
-import { ExprNode2 } from "../parse-nodes/expr-node2";
+import { ExprNode } from "../parse-nodes/expr-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
@@ -29,7 +29,7 @@ export class ExpressionField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new ExprNode2();
+    this.rootNode = new ExprNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

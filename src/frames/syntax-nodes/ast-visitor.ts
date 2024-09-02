@@ -37,7 +37,7 @@ import { LitRegEx } from "../parse-nodes/lit-regex";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
-import { MethodCallNode2 } from "../parse-nodes/method-call-node2";
+import { MethodCallNode } from "../parse-nodes/method-call-node";
 import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
@@ -70,7 +70,6 @@ import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, isAstQualifierNode } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
-import { IndexedAsn } from "./indexed-asn";
 import { CompositeAsn } from "./composite-asn";
 import { CsvAsn } from "./csv-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -84,6 +83,7 @@ import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
 import { IndexAsn } from "./index-asn";
+import { IndexedAsn } from "./indexed-asn";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
@@ -259,7 +259,7 @@ export function transform(
 
   //   return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
   // }
-  if (node instanceof MethodCallNode2) {
+  if (node instanceof MethodCallNode) {
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 

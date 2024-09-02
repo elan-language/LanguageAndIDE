@@ -1,16 +1,16 @@
 import { CLOSE_BRACE, OPEN_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { ExprNode2 } from "./expr-node2";
+import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class StringInterpolation extends AbstractSequence {
-  expr: ExprNode2 | undefined;
+  expr: ExprNode | undefined;
 
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
       this.addElement(new PunctuationNode(OPEN_BRACE));
-      this.expr = new ExprNode2();
+      this.expr = new ExprNode();
       this.addElement(this.expr);
       this.addElement(new PunctuationNode(CLOSE_BRACE));
       super.parseText(text);
