@@ -60,43 +60,12 @@ export function isPropertyOnFieldsClass(s: ElanSymbol, scope: Scope) {
   return isProperty(s) && s.getParent() === getClassScope(scope);
 }
 
-export function rawSymbolToType(s: string) {
-  switch (s) {
-    case ">":
-    case "<":
-    case "<=":
-    case ">=":
-    case "is":
-    case "isnt":
-    case "and":
-    case "or":
-    case "xor":
-      return BooleanType.Instance;
-    case "div":
-    case "mod":
-      return IntType.Instance;
-    case "/":
-      return FloatType.Instance;
-    case ",":
-      return undefined;
-    default:
-      return UnknownType.Instance;
-  }
-}
-
 export function scopePrefix(symbolScope: SymbolScope | undefined) {
   if (symbolScope === SymbolScope.stdlib) {
     return `_stdlib.`;
   }
   if (symbolScope === SymbolScope.property) {
     return `this.`;
-  }
-  return "";
-}
-
-export function funcScopePrefix(symbolScope: SymbolScope | undefined) {
-  if (symbolScope === SymbolScope.stdlib) {
-    return `_stdlib.`;
   }
   return "";
 }
