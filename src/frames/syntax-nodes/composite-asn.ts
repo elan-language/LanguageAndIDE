@@ -27,18 +27,35 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
+    const code: string[] = [];
+
     const leafNodes = (this.expr2 as CsvAsn).items as ChainedAsn[];
-    const node2 = leafNodes[0];
 
-    const scope = updateScopeInChain(this.expr1, transforms(), this.scope);
+    let previousNode = this.expr1;
+    let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
+    let previousCode = previousNode.compile();
 
-    let e1 = this.expr1.compile();
+    for (let i = 0; i < leafNodes.length; i++) {
+      const currentNode = leafNodes[i];
+      currentNode.updateScopeAndChain(previousScope, previousNode);
 
-    node2.updateScopeAndChain(scope, this.expr1);
-    const e2 = node2.compile();
-    e1 = e1 && node2.showPreviousNode ? `${e1}.` : "";
+      const currentCode = currentNode.compile();
 
-    return `${e1}${e2}`;
+      if (previousCode && currentNode.showPreviousNode) {
+        code.push(previousCode);
+      }
+
+      previousNode = currentNode;
+      previousCode = currentCode;
+      previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
+
+      // last node in chain
+      if (i === leafNodes.length - 1) {
+        code.push(previousCode);
+      }
+    }
+
+    return code.join(".");
   }
 
   symbolType() {

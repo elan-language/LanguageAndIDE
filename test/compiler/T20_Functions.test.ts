@@ -41,7 +41,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "12");
   });
-
   test("Pass_ReturnSimpleDefault", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
