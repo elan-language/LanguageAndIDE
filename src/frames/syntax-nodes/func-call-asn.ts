@@ -11,7 +11,7 @@ import { Scope } from "../interfaces/scope";
 import { FunctionType } from "../symbols/function-type";
 import { scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { containsGenericType, generateType, matchGenericTypes2, transforms } from "./ast-helpers";
+import { containsGenericType, matchGenericTypes, generateType, transforms } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
 
 export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
@@ -83,7 +83,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
       if (parameterTypes.some((pt) => containsGenericType(pt))) {
         // this.parameters is correct - function adds qualifier if extension
-        const matches = matchGenericTypes2(fst, this.parameters, this.precedingNode);
+        const matches = matchGenericTypes(fst, this.parameters, this.precedingNode);
         parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
       }
 
@@ -115,7 +115,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       const returnType = fst.returnType;
 
       if (containsGenericType(returnType)) {
-        const matches = matchGenericTypes2(fst, this.parameters, this.precedingNode);
+        const matches = matchGenericTypes(fst, this.parameters, this.precedingNode);
         return generateType(returnType, matches);
       }
       return returnType;

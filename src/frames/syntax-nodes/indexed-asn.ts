@@ -127,8 +127,6 @@ export class IndexedAsn extends AbstractAstNode implements ChainedAsn {
     this.compileErrors = [];
 
     const b = `${this.body.compile()}`;
-
-    // const call = this.scope instanceof LetStatement ? "()" : "";
     const idx = this.index ? this.index.compile() : "";
     let code = `${b}`;
 
