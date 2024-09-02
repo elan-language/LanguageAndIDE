@@ -101,7 +101,11 @@ export class CallStatement extends AbstractFrame implements Statement {
 
         if (parameterTypes.some((pt) => containsGenericType(pt))) {
           // this.parameters is correct - function adds qualifier if extension
-          const matches = matchGenericTypes(ps, argList.items, updatedQualifier);
+          const matches = matchGenericTypes(
+            ps,
+            argList.items,
+            (updatedQualifier as QualifierAsn | undefined)?.value,
+          );
           parameterTypes = parameterTypes.map((pt) => generateType(pt, matches));
         }
 

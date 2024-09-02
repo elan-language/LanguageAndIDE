@@ -222,26 +222,6 @@ export function match(
 export function matchGenericTypes(
   type: FunctionType | ProcedureType,
   parameters: AstNode[],
-  qualifier: AstNode | undefined,
-) {
-  const matches = new Map<string, SymbolType>();
-
-  const flattened = type.parametersTypes.map((n) => flatten(n));
-
-  if (type.isExtension && qualifier) {
-    parameters = [(qualifier as QualifierAsn).value as AstNode].concat(parameters);
-  }
-
-  const pTypes = parameters.map((p) => flatten(p.symbolType()));
-
-  match(flattened, pTypes, matches);
-
-  return matches;
-}
-
-export function matchGenericTypes2(
-  type: FunctionType | ProcedureType,
-  parameters: AstNode[],
   precedingNode: AstNode | undefined,
 ) {
   const matches = new Map<string, SymbolType>();
