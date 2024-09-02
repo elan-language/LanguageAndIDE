@@ -1,14 +1,13 @@
-import { IdentifierNode } from "./identifier-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { Qualifier } from "./qualifier";
-import { KeywordNode } from "./keyword-node";
-import { InstanceNode } from "./instanceNode";
-import { globalKeyword, libraryKeyword } from "../keywords";
 import { Alternatives } from "./alternatives";
+import { DotAfter } from "./dot-after";
+import { IdentifierNode } from "./identifier-node";
+import { InstanceNode } from "./instanceNode";
 import { OptionalNode } from "./optional-node";
+import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
-  qualifier: OptionalNode | undefined;
+  prefix: OptionalNode | undefined;
   simple: IdentifierNode | undefined;
 
   constructor() {
@@ -18,19 +17,17 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const global = () => new Qualifier(new KeywordNode(globalKeyword));
-      const lib = () => new Qualifier(new KeywordNode(libraryKeyword));
-      const instance = () => new Qualifier(new InstanceNode());
-      const qualifier = new Alternatives([global, lib, instance]);
-      this.qualifier = new OptionalNode(qualifier);
+      const qualifier = () => new DotAfter(new Qualifier());
+      const instance = () => new DotAfter(new InstanceNode());
+      this.prefix = new OptionalNode(new Alternatives([qualifier, instance]));
       this.simple = new IdentifierNode();
-      this.addElement(this.qualifier!);
+      this.addElement(this.prefix);
       this.addElement(this.simple!);
       super.parseText(text);
     }
   }
 
   renderAsHtml(): string {
-    return `${this.qualifier!.matchedNode ? this.qualifier?.matchedNode.renderAsHtml() : ""}<method>${this.simple?.renderAsHtml()}</method>`;
+    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<method>${this.simple?.renderAsHtml()}</method>`;
   }
 }

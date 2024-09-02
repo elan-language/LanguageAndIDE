@@ -1,13 +1,11 @@
-import { ExprNode } from "./expr-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { SymbolNode } from "./symbol-node";
-import { UnknownType } from "../symbols/unknown-type";
-import { Field } from "../interfaces/field";
+import { ExprNode2 } from "./expr-node2";
+import { PunctuationNode } from "./punctuation-node";
 
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 
 export class BracketedExpression extends AbstractSequence {
-  expr: ExprNode | undefined;
+  expr: ExprNode2 | undefined;
 
   constructor() {
     super();
@@ -16,10 +14,10 @@ export class BracketedExpression extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new SymbolNode(OPEN_BRACKET));
-      this.expr = new ExprNode();
+      this.addElement(new PunctuationNode(OPEN_BRACKET));
+      this.expr = new ExprNode2();
       this.addElement(this.expr);
-      this.addElement(new SymbolNode(CLOSE_BRACKET));
+      this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
   }

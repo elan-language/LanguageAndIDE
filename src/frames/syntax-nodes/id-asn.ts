@@ -1,5 +1,5 @@
 import { CompileError } from "../compile-error";
-import { mustBeKnownSymbol, mustNotBeKeyword } from "../compile-rules";
+import { mustBeKnownSymbol, mustBePublicProperty, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -8,15 +8,28 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { LetStatement } from "../statements/let-statement";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { ChainedAsn } from "./chained-asn";
+import { AstNode } from "../interfaces/ast-node";
+import { isPropertyOnFieldsClass } from "../symbols/symbol-helpers";
 
-export class IdAsn extends AbstractAstNode implements AstIdNode {
+export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,
-    private readonly scope: Scope,
+    private scope: Scope,
   ) {
     super();
     this.id = id.trim();
+  }
+
+  private classScope?: Scope;
+
+  updateScopeAndChain(s: Scope, ast: AstNode) {
+    this.classScope = s;
+  }
+
+  get showPreviousNode() {
+    return true;
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -32,7 +45,12 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
       // don't prefix properties with this
       return this.id;
     }
-    const symbol = this.scope.getParentScope().resolveSymbol(this.id, transforms(), this.scope);
+
+    const searchScope = this.classScope ?? this.scope.getParentScope();
+
+    const symbol = searchScope.resolveSymbol(this.id, transforms(), this.scope);
+
+    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
     if (symbol instanceof LetStatement) {
       return `${this.id}()`;
@@ -40,18 +58,20 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
     if (symbol.symbolScope === SymbolScope.stdlib) {
       return `_stdlib.${this.id}`;
     }
-    if (symbol.symbolScope === SymbolScope.property) {
+    if (symbol.symbolScope === SymbolScope.property && !this.classScope) {
       return `this.${this.id}`;
     }
-
-    mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
+    if (!isPropertyOnFieldsClass(symbol, this.scope)) {
+      mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
+    }
 
     return this.id;
   }
 
   symbolType() {
-    const st = this.scope
-      .getParentScope()
+    const searchScope = this.classScope ?? this.scope.getParentScope();
+
+    const st = searchScope
       .resolveSymbol(this.id, transforms(), this.scope)
       .symbolType(transforms());
 
@@ -62,9 +82,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode {
   }
 
   get symbolScope() {
-    const st = this.scope
-      .getParentScope()
-      .resolveSymbol(this.id, transforms(), this.scope).symbolScope;
+    const searchScope = this.classScope ?? this.scope.getParentScope();
+
+    const st = searchScope.resolveSymbol(this.id, transforms(), this.scope).symbolScope;
 
     return st;
   }

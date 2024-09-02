@@ -1,18 +1,18 @@
 import { CodeSource } from "../code-source";
 import { Frame } from "../interfaces/frame";
-import { ExprNode } from "../parse-nodes/expr-node";
-import { ParseNode } from "../parse-nodes/parse-node";
-import { AbstractField } from "./abstract-field";
 import { ElanSymbol } from "../interfaces/symbol";
+import { propertyKeyword } from "../keywords";
+import { ExprNode2 } from "../parse-nodes/expr-node2";
+import { ParseNode } from "../parse-nodes/parse-node";
 import {
   filteredSymbols,
   isExpression,
   isFunction,
   isPropertyOnFieldsClass,
 } from "../symbols/symbol-helpers";
-import { transforms } from "../syntax-nodes/ast-helpers";
-import { propertyKeyword } from "../keywords";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { transforms } from "../syntax-nodes/ast-helpers";
+import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
   isParseByNodes = true;
@@ -29,7 +29,7 @@ export class ExpressionField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new ExprNode();
+    this.rootNode = new ExprNode2();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

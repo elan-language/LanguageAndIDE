@@ -1,8 +1,8 @@
+import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
-import { SymbolNode } from "./symbol-node";
+import { PunctuationNode } from "./punctuation-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import { DOT } from "../symbols";
 
 export class EnumVal extends AbstractSequence {
   type: TypeSimpleNode | undefined;
@@ -11,7 +11,7 @@ export class EnumVal extends AbstractSequence {
   parseText(text: string): void {
     this.type = new TypeSimpleNode();
     this.addElement(this.type);
-    this.addElement(new SymbolNode(DOT));
+    this.addElement(new PunctuationNode(DOT));
     this.val = new IdentifierNode();
     this.addElement(this.val);
     super.parseText(text.trimStart());

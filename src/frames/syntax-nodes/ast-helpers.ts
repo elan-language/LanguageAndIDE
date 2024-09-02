@@ -20,8 +20,13 @@ import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
+import { ChainedAsn } from "./chained-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
+
+export function isAstChainedNode(n: AstNode): n is ChainedAsn {
+  return !!n && "updateScopeAndChain" in n;
+}
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -225,6 +230,26 @@ export function matchGenericTypes(
 
   if (type.isExtension && qualifier) {
     parameters = [(qualifier as QualifierAsn).value as AstNode].concat(parameters);
+  }
+
+  const pTypes = parameters.map((p) => flatten(p.symbolType()));
+
+  match(flattened, pTypes, matches);
+
+  return matches;
+}
+
+export function matchGenericTypes2(
+  type: FunctionType | ProcedureType,
+  parameters: AstNode[],
+  precedingNode: AstNode | undefined,
+) {
+  const matches = new Map<string, SymbolType>();
+
+  const flattened = type.parametersTypes.map((n) => flatten(n));
+
+  if (type.isExtension && precedingNode) {
+    parameters = [precedingNode].concat(parameters);
   }
 
   const pTypes = parameters.map((p) => flatten(p.symbolType()));

@@ -1,8 +1,7 @@
-import { AbstractSequence } from "./abstract-sequence";
-import { SymbolNode } from "./symbol-node";
-import { ParseNode } from "./parse-node";
 import { COLON } from "../symbols";
-import { ParseStatus } from "../status-enums";
+import { AbstractSequence } from "./abstract-sequence";
+import { ParseNode } from "./parse-node";
+import { PunctuationNode } from "./punctuation-node";
 
 export class KVPnode extends AbstractSequence {
   key: ParseNode | undefined;
@@ -22,7 +21,7 @@ export class KVPnode extends AbstractSequence {
       this.key = this.keyConstructor();
       this.value = this.valueConstructor();
       this.addElement(this.key);
-      this.addElement(new SymbolNode(COLON));
+      this.addElement(new PunctuationNode(COLON));
       this.addElement(this.value);
       super.parseText(text);
     }

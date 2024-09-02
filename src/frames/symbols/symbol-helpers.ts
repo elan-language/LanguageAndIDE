@@ -93,6 +93,13 @@ export function scopePrefix(symbolScope: SymbolScope | undefined) {
   return "";
 }
 
+export function funcScopePrefix(symbolScope: SymbolScope | undefined) {
+  if (symbolScope === SymbolScope.stdlib) {
+    return `_stdlib.`;
+  }
+  return "";
+}
+
 export function updateScopeAndQualifier(
   rootNode: AstNode,
   transforms: Transforms,
@@ -124,6 +131,36 @@ export function updateScopeAndQualifier(
   }
 
   return [qualifier, currentScope];
+}
+
+export function updateScopeInChain(
+  qualifier: AstNode,
+  transforms: Transforms,
+  currentScope: Scope,
+): Scope {
+  const qualifierScope = qualifier?.symbolType();
+  //const value = qualifier?.value;
+
+  if (qualifierScope instanceof ClassType) {
+    const classSymbol = currentScope.resolveSymbol(
+      qualifierScope.className,
+      transforms,
+      currentScope,
+    );
+    // replace scope with class scope
+    currentScope = isScope(classSymbol) ? classSymbol : currentScope;
+  } else if (isAstIdNode(qualifier) && qualifier.id === globalKeyword) {
+    // todo kludge
+    currentScope = getGlobalScope(currentScope);
+  } else if (isAstIdNode(qualifier) && qualifier.id === libraryKeyword) {
+    currentScope = getGlobalScope(currentScope).libraryScope;
+  } else if (qualifier) {
+    currentScope = getGlobalScope(currentScope).libraryScope;
+  } else {
+    currentScope = currentScope.getParentScope();
+  }
+
+  return currentScope;
 }
 
 export function getGlobalScope(start: Scope): File {

@@ -1,9 +1,9 @@
-import { AbstractField } from "./abstract-field";
-import { Frame } from "../interfaces/frame";
 import { CodeSource } from "../code-source";
-import { ParseNode } from "../parse-nodes/parse-node";
-import { ExprNode } from "../parse-nodes/expr-node";
+import { Frame } from "../interfaces/frame";
 import { CSV } from "../parse-nodes/csv";
+import { ExprNode2 } from "../parse-nodes/expr-node2";
+import { ParseNode } from "../parse-nodes/parse-node";
+import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
   isParseByNodes = true;
@@ -26,7 +26,7 @@ export class ArgListField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new CSV(() => new ExprNode(), 0);
+    this.rootNode = new CSV(() => new ExprNode2(), 0);
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

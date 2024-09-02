@@ -14,10 +14,11 @@ import { CSV } from "../parse-nodes/csv";
 import { DeconstructedList } from "../parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../parse-nodes/dictionary-node";
+import { DotAfter } from "../parse-nodes/dot-after";
+import { DotBefore } from "../parse-nodes/dot-before";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
 import { FuncTypeNode } from "../parse-nodes/func-type-node";
-import { FunctionCallNode } from "../parse-nodes/function-call-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
@@ -36,19 +37,21 @@ import { LitRegEx } from "../parse-nodes/lit-regex";
 import { LitStringEmpty } from "../parse-nodes/lit-string-empty";
 import { LitStringNonEmpty } from "../parse-nodes/lit-string-non-empty";
 import { LitTuple } from "../parse-nodes/lit-tuple";
+import { MethodCallNode2 } from "../parse-nodes/method-call-node2";
 import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
-import { Qualifier } from "../parse-nodes/qualifier";
+import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
+import { ReferenceNode } from "../parse-nodes/reference-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SetClause } from "../parse-nodes/set-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { StringInterpolation } from "../parse-nodes/string-interpolation";
-import { SymbolNode } from "../parse-nodes/symbol-node";
+import { TermChained } from "../parse-nodes/term-chained";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -67,6 +70,8 @@ import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, isAstQualifierNode } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
+import { IndexedAsn } from "./indexed-asn";
+import { CompositeAsn } from "./composite-asn";
 import { CsvAsn } from "./csv-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
@@ -247,12 +252,18 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof FunctionCallNode) {
-    const qualifier = transform(node.qualifier, fieldId, scope);
+  // if (node instanceof MethodCallNode) {
+  //   const qualifier = transform(node.optQualifier, fieldId, scope);
+  //   const id = node.name!.matchedText;
+  //   const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
+
+  //   return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
+  // }
+  if (node instanceof MethodCallNode2) {
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
 
-    return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
+    return new FuncCallAsn(id, undefined, parameters, fieldId, scope);
   }
 
   if (node instanceof Lambda) {
@@ -334,7 +345,7 @@ export function transform(
     return new SetAsn(id, to, fieldId, scope);
   }
 
-  if (node instanceof SymbolNode) {
+  if (node instanceof PunctuationNode) {
     return undefined;
   }
 
@@ -428,6 +439,22 @@ export function transform(
     return new VarAsn(id, false, q, index, fieldId, scope);
   }
 
+  if (node instanceof ReferenceNode) {
+    const q = transform(node.reference, fieldId, scope) as ExprAsn;
+    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
+    return new IndexedAsn(q, index, fieldId, scope);
+  }
+
+  if (node instanceof TermChained) {
+    const expr1 = transform(node.head, fieldId, scope) as ExprAsn;
+    const expr2 = transformMany(node.tail!, fieldId, scope) as ExprAsn;
+    return new CompositeAsn(expr1, expr2, fieldId, scope);
+  }
+
+  if (node instanceof DotBefore) {
+    return transform(node.node, fieldId, scope);
+  }
+
   if (node instanceof CopyWith) {
     const obj = transform(node.original, fieldId, scope) as ExprAsn;
     const changes = transformMany(node.changes!, fieldId, scope);
@@ -459,8 +486,8 @@ export function transform(
     return new IndexAsn(index, undefined, fieldId, scope);
   }
 
-  if (node instanceof Qualifier) {
-    const q = transform(node.qualifier, fieldId, scope)!;
+  if (node instanceof DotAfter) {
+    const q = transform(node.node, fieldId, scope)!;
     return new QualifierAsn(q, fieldId, scope);
   }
 
@@ -527,7 +554,7 @@ export function transform(
   }
 
   if (node instanceof InstanceProcRef) {
-    const q = transform(node.qualifier, fieldId, scope) as AstQualifierNode | undefined;
+    const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     return new VarAsn(id, false, q, undefined, fieldId, scope);
   }

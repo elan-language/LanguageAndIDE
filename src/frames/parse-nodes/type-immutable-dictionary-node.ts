@@ -1,8 +1,8 @@
+import { CLOSE_BRACE, COLON, OPEN_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { SymbolNode } from "./symbol-node";
+import { PunctuationNode } from "./punctuation-node";
 import { TypeNode } from "./type-node";
 import { TypeSimpleNode } from "./type-simple-node";
-import { CLOSE_BRACE, CLOSE_SQ_BRACKET, COLON, OPEN_BRACE, OPEN_SQ_BRACKET } from "../symbols";
 
 export class TypeImmutableDictionaryNode extends AbstractSequence {
   simpleType: TypeSimpleNode | undefined;
@@ -18,13 +18,13 @@ export class TypeImmutableDictionaryNode extends AbstractSequence {
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(); //Not added to elements, as not present in the text
       this.simpleType.parseText("ImmutableDictionary");
-      this.addElement(new SymbolNode(OPEN_BRACE));
+      this.addElement(new PunctuationNode(OPEN_BRACE));
       this.keyType = new TypeNode();
       this.addElement(this.keyType);
-      this.addElement(new SymbolNode(COLON));
+      this.addElement(new PunctuationNode(COLON));
       this.valueType = new TypeNode();
       this.addElement(this.valueType);
-      this.addElement(new SymbolNode(CLOSE_BRACE));
+      this.addElement(new PunctuationNode(CLOSE_BRACE));
       super.parseText(text);
     }
   }

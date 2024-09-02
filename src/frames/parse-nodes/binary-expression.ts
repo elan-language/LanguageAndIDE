@@ -1,16 +1,16 @@
-import { ExprNode } from "./expr-node";
-import { BinaryOperation } from "./binary-operation";
-import { AbstractSequence } from "./abstract-sequence";
-import { Term } from "./term";
-import { SpaceNode } from "./space-node";
-import { Space } from "./parse-node-helpers";
-import { DIVIDE, MULT, POWER } from "../symbols";
 import { ParseStatus } from "../status-enums";
+import { DIVIDE, MULT, POWER } from "../symbols";
+import { AbstractSequence } from "./abstract-sequence";
+import { BinaryOperation } from "./binary-operation";
+import { ExprNode2 } from "./expr-node2";
+import { Space } from "./parse-node-helpers";
+import { SpaceNode } from "./space-node";
+import { Term2 } from "./term2";
 
 export class BinaryExpression extends AbstractSequence {
-  lhs: Term | undefined;
+  lhs: Term2 | undefined;
   op: BinaryOperation | undefined;
-  rhs: Term | undefined;
+  rhs: ExprNode2 | undefined;
 
   constructor() {
     super();
@@ -18,13 +18,13 @@ export class BinaryExpression extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.lhs = new Term();
+    this.lhs = new Term2();
     this.addElement(this.lhs);
     this.addElement(new SpaceNode(Space.ignored));
     this.op = new BinaryOperation();
     this.addElement(this.op);
     this.addElement(new SpaceNode(Space.ignored));
-    this.rhs = new ExprNode();
+    this.rhs = new ExprNode2();
     this.addElement(this.rhs);
     return super.parseText(text);
   }

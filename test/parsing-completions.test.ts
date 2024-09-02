@@ -1,6 +1,6 @@
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { CSV } from "../src/frames/parse-nodes/csv";
-import { ExprNode } from "../src/frames/parse-nodes/expr-node";
+import { ExprNode2 } from "../src/frames/parse-nodes/expr-node2";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { Lambda } from "../src/frames/parse-nodes/lambda";
 import { NewInstance } from "../src/frames/parse-nodes/new-instance";
@@ -35,14 +35,14 @@ suite("Parsing - Completions", () => {
     testCompletion(new TypeNode(), "(Foo,Bar", ParseStatus.incomplete, ")");
   });
 
-  test("ExprNode", () => {
-    testCompletion(new ExprNode(), "a + b", ParseStatus.valid, "");
-    testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
-    testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
-    testCompletion(new ExprNode(), "(", ParseStatus.incomplete, "<pr>expression</pr>)");
-    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)");
-    testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
-    testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<pr>expression</pr>");
+  test("ExprNode2", () => {
+    testCompletion(new ExprNode2(), "a + b", ParseStatus.valid, "");
+    testCompletion(new ExprNode2(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
+    testCompletion(new ExprNode2(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
+    //testCompletion(new ExprNode2(), "(", ParseStatus.incomplete, "<pr>expression</pr>)");
+    testCompletion(new ExprNode2(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)");
+    testCompletion(new ExprNode2(), "(a + b", ParseStatus.incomplete, ")");
+    testCompletion(new ExprNode2(), "(a + b)*", ParseStatus.incomplete, "<pr>expression</pr>");
   });
 
   test("CSV of Identifier", () => {

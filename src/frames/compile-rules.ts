@@ -32,7 +32,7 @@ import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { ElanSymbol } from "./interfaces/symbol";
 import { SymbolType } from "./interfaces/symbol-type";
-import { allKeywords, reservedWords, thisKeyword } from "./keywords";
+import { allKeywords, reservedWords } from "./keywords";
 import { LetStatement } from "./statements/let-statement";
 import { AbstractDictionaryType } from "./symbols/abstract-dictionary-type";
 import { ArrayListType } from "./symbols/array-list-type";
@@ -131,10 +131,6 @@ export function mustBeImmutableType(
 }
 
 export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (id === thisKeyword) {
-    return;
-  }
-
   if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(

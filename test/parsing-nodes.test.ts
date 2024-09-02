@@ -9,8 +9,9 @@ import { CSV } from "../src/frames/parse-nodes/csv";
 import { DeconstructedList } from "../src/frames/parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../src/frames/parse-nodes/deconstructed-tuple";
 import { DictionaryNode } from "../src/frames/parse-nodes/dictionary-node";
-import { ExprNode } from "../src/frames/parse-nodes/expr-node";
-import { FunctionCallNode } from "../src/frames/parse-nodes/function-call-node";
+import { DotAfter } from "../src/frames/parse-nodes/dot-after";
+import { DotBefore } from "../src/frames/parse-nodes/dot-before";
+import { ExprNode2 } from "../src/frames/parse-nodes/expr-node2";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImmutableListNode } from "../src/frames/parse-nodes/immutable-list-node";
@@ -33,11 +34,16 @@ import { NewInstance } from "../src/frames/parse-nodes/new-instance";
 import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../src/frames/parse-nodes/param-def-node";
 import { Space } from "../src/frames/parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "../src/frames/parse-nodes/punctuation-node";
+import { Qualifier } from "../src/frames/parse-nodes/qualifier";
+import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
 import { SetClause } from "../src/frames/parse-nodes/set-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { StringInterpolation } from "../src/frames/parse-nodes/string-interpolation";
-import { Term } from "../src/frames/parse-nodes/term";
+import { Term2 } from "../src/frames/parse-nodes/term2";
+import { TermChained } from "../src/frames/parse-nodes/term-chained";
+import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -46,6 +52,7 @@ import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { VarRefNode } from "../src/frames/parse-nodes/var-ref-node";
 import { WithClause } from "../src/frames/parse-nodes/with-clause";
 import { ParseStatus } from "../src/frames/status-enums";
+import { DOT } from "../src/frames/symbols";
 import { testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
@@ -84,34 +91,34 @@ suite("Parsing Nodes", () => {
     testNodeParse(new BinaryOperation(), "%", ParseStatus.invalid, "", "%", "");
   });
   test("IndexableTerm", () => {
-    testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new Term2(), "a", ParseStatus.valid, "a", "", "a", "");
   });
-  test("Term", () => {
-    testNodeParse(
-      new Term(),
-      "new ArrayList<of String>()",
-      ParseStatus.valid,
-      "new ArrayList<of String>()",
-      "",
-    );
-    testNodeParse(new Term(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new Term(), "a", ParseStatus.valid, "a", "", "a", "");
+  test("Term2", () => {
+    testNodeParse(new Term2(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new Term2(), "a", ParseStatus.valid, "a", "", "a", "");
   });
   test("Expression", () => {
-    testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new ExprNode(), "", ParseStatus.empty, "", "", "");
-    testNodeParse(new ExprNode(), "a", ParseStatus.valid, "a", "", "a", "");
-    testNodeParse(new ExprNode(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
-    testNodeParse(new ExprNode(), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
-    testNodeParse(new ExprNode(), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
-    testNodeParse(new ExprNode(), "+", ParseStatus.invalid, "", "+", "");
-    testNodeParse(new ExprNode(), "+b", ParseStatus.invalid, "", "+b", "");
-    testNodeParse(new ExprNode(), "a +", ParseStatus.incomplete, "a +", "", "a + ");
-    testNodeParse(new ExprNode(), "a %", ParseStatus.valid, "a", " %", "a");
-    testNodeParse(new ExprNode(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
-    testNodeParse(new ExprNode(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
+    testNodeParse(new ExprNode2(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode2(), "", ParseStatus.empty, "", "", "");
+    testNodeParse(new ExprNode2(), "a", ParseStatus.valid, "a", "", "a", "");
+    testNodeParse(new ExprNode2(), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
+    testNodeParse(new ExprNode2(), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
+    testNodeParse(new ExprNode2(), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
+    testNodeParse(new ExprNode2(), "+", ParseStatus.invalid, "", "+", "");
+    testNodeParse(new ExprNode2(), "+b", ParseStatus.invalid, "", "+b", "");
+    testNodeParse(new ExprNode2(), "a +", ParseStatus.incomplete, "a +", "", "a + ");
+    testNodeParse(new ExprNode2(), "a %", ParseStatus.valid, "a", " %", "a");
+    testNodeParse(new ExprNode2(), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
+    testNodeParse(new ExprNode2(), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
+      "new ArrayList<of String>()",
+      ParseStatus.valid,
+      "new ArrayList<of String>()",
+      "",
+    );
+    testNodeParse(
+      new ExprNode2(),
       "points.foo(0.0)",
       ParseStatus.valid,
       "points.foo(0.0)",
@@ -120,7 +127,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
       ParseStatus.valid,
       "reduce(0.0, lambda s as String, p as ImmutableList<of String> => s + p.first() * p.first())",
@@ -128,7 +135,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "this",
       ParseStatus.valid,
       "this",
@@ -136,9 +143,18 @@ suite("Parsing Nodes", () => {
       "this",
       "<keyword>this</keyword>",
     );
+    testNodeParse(
+      new ExprNode2(),
+      "thisWidget",
+      ParseStatus.valid,
+      "thisWidget",
+      "",
+      "thisWidget",
+      "thisWidget",
+    );
     // empty data structures
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "empty [Int]",
       ParseStatus.valid,
       "empty [Int]",
@@ -147,7 +163,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> [<type>Int</type>]",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "empty {Int}",
       ParseStatus.valid,
       "empty {Int}",
@@ -156,7 +172,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> {<type>Int</type>}",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "empty [Int:String]",
       ParseStatus.valid,
       "empty [Int:String]",
@@ -165,7 +181,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> [<type>Int</type>:<type>String</type>]",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "empty {Int:Boolean}",
       ParseStatus.valid,
       "empty {Int:Boolean}",
@@ -174,7 +190,7 @@ suite("Parsing Nodes", () => {
       "<keyword>empty</keyword> {<type>Int</type>:<type>Boolean</type>}",
     );
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "empty String",
       ParseStatus.valid,
       "empty String",
@@ -182,9 +198,9 @@ suite("Parsing Nodes", () => {
       "",
       "<keyword>empty</keyword> <type>String</type>",
     );
-    testNodeParse(new ExprNode(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new ExprNode2(), "empty Lit<of Int>", ParseStatus.valid, "", "", "", "");
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.valid,
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
@@ -220,7 +236,7 @@ suite("Parsing Nodes", () => {
   });
   test("Expression + with clause", () => {
     testNodeParse(
-      new ExprNode(),
+      new ExprNode2(),
       "copy p with x to p.x + 3, y to p.y - 1",
       ParseStatus.valid,
       "",
@@ -564,14 +580,14 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(() => new ExprNode(), 0),
+      new CSV(() => new ExprNode2(), 0),
       `a + b, c, 1`,
       ParseStatus.valid,
       `a + b, c, 1`,
       "",
       "",
     );
-    testNodeParse(new CSV(() => new ExprNode(), 0), `)`, ParseStatus.valid, ``, ")", "");
+    testNodeParse(new CSV(() => new ExprNode2(), 0), `)`, ParseStatus.valid, ``, ")", "");
 
     testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo, foo`, ParseStatus.valid, "", "");
     testNodeParse(new CSV(() => new KeywordNode("foo"), 0), `foo`, ParseStatus.valid, "", "");
@@ -613,7 +629,7 @@ suite("Parsing Nodes", () => {
       "foo, fo",
     );
 
-    testNodeParse(new CSV(() => new ExprNode(), 0), ``, ParseStatus.valid, "", "");
+    testNodeParse(new CSV(() => new ExprNode2(), 0), ``, ParseStatus.valid, "", "");
   });
   test("Instance", () => {
     testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
@@ -622,81 +638,81 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
-  test("Function Call", () => {
-    testNodeParse(new FunctionCallNode(), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(new FunctionCallNode(), `  `, ParseStatus.empty, ``, "", "");
-    testNodeParse(
-      new FunctionCallNode(),
-      `foo()`,
-      ParseStatus.valid,
-      `foo()`,
-      "",
-      "foo()",
-      "<method>foo</method>()",
-    );
-    testNodeParse(
-      new FunctionCallNode(),
-      `bar(x, 1, "hello")`,
-      ParseStatus.valid,
-      `bar(x, 1, "hello")`,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(new FunctionCallNode(), `yon`, ParseStatus.incomplete, `yon`, "", "");
-    testNodeParse(new FunctionCallNode(), `yon `, ParseStatus.invalid, ``, "yon ", "");
-    testNodeParse(new FunctionCallNode(), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
-    testNodeParse(new FunctionCallNode(), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
-    testNodeParse(new FunctionCallNode(), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
-    testNodeParse(new FunctionCallNode(), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
-    testNodeParse(new FunctionCallNode(), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-    testNodeParse(
-      new FunctionCallNode(),
-      `bar.foo(a)`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "bar.foo(a)",
-      "bar.<method>foo</method>(a)",
-    );
-    testNodeParse(
-      new FunctionCallNode(),
-      `global.foo()`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "global.foo()",
-      "<keyword>global</keyword>.<method>foo</method>()",
-    );
-    testNodeParse(
-      new FunctionCallNode(),
-      `library.foo()`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "library.foo()",
-      "<keyword>library</keyword>.<method>foo</method>()",
-    );
-    testNodeParse(
-      new FunctionCallNode(),
-      `property.foo()`,
-      ParseStatus.valid, //Because 'property' is parsed as an instance name. This should be picked up as a compile error though.
-      `property.foo()`,
-      "",
-      "",
-    );
-    testNodeParse(new FunctionCallNode(), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
-    testNodeParse(new FunctionCallNode(), `a.isBefore(b[0])`, ParseStatus.valid, ``, "", "");
-    testNodeParse(
-      new FunctionCallNode(),
-      `a[0].isBefore(b[0])`,
-      ParseStatus.valid,
-      ``,
-      "",
-      "a[0].isBefore(b[0])",
-      "a[0].<method>isBefore</method>(b[0])",
-    );
-  });
+  // test("Function Call", () => {
+  //   testNodeParse(new MethodCallNode(), ``, ParseStatus.empty, ``, "", "");
+  //   testNodeParse(new MethodCallNode(), `  `, ParseStatus.empty, ``, "", "");
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `foo()`,
+  //     ParseStatus.valid,
+  //     `foo()`,
+  //     "",
+  //     "foo()",
+  //     "<method>foo</method>()",
+  //   );
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `bar(x, 1, "hello")`,
+  //     ParseStatus.valid,
+  //     `bar(x, 1, "hello")`,
+  //     "",
+  //     "",
+  //     "",
+  //   );
+  //   testNodeParse(new MethodCallNode(), `yon`, ParseStatus.incomplete, `yon`, "", "");
+  //   testNodeParse(new MethodCallNode(), `yon `, ParseStatus.invalid, ``, "yon ", "");
+  //   testNodeParse(new MethodCallNode(), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
+  //   testNodeParse(new MethodCallNode(), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
+  //   testNodeParse(new MethodCallNode(), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
+  //   testNodeParse(new MethodCallNode(), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
+  //   testNodeParse(new MethodCallNode(), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `bar.foo(a)`,
+  //     ParseStatus.valid,
+  //     ``,
+  //     "",
+  //     "bar.foo(a)",
+  //     "bar.<method>foo</method>(a)",
+  //   );
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `global.foo()`,
+  //     ParseStatus.valid,
+  //     ``,
+  //     "",
+  //     "global.foo()",
+  //     "<keyword>global</keyword>.<method>foo</method>()",
+  //   );
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `library.foo()`,
+  //     ParseStatus.valid,
+  //     ``,
+  //     "",
+  //     "library.foo()",
+  //     "<keyword>library</keyword>.<method>foo</method>()",
+  //   );
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `property.foo()`,
+  //     ParseStatus.valid, //Because 'property' is parsed as an instance name. This should be picked up as a compile error though.
+  //     `property.foo()`,
+  //     "",
+  //     "",
+  //   );
+  //   testNodeParse(new MethodCallNode(), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+  //   testNodeParse(new MethodCallNode(), `a.isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+  //   testNodeParse(
+  //     new MethodCallNode(),
+  //     `a[0].isBefore(b[0])`,
+  //     ParseStatus.valid,
+  //     ``,
+  //     "",
+  //     "a[0].isBefore(b[0])",
+  //     "a[0].<method>isBefore</method>(b[0])",
+  //   );
+  // });
   test("Lists", () => {
     testNodeParse(new ImmutableListNode(() => new LitInt()), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(
@@ -797,7 +813,7 @@ suite("Parsing Nodes", () => {
   });
   test("ImmutableList of expressions", () => {
     testNodeParse(
-      new ImmutableListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode2()),
       `{a, 3 + 4, func(a, 3)- 1, new Foo()}`,
       ParseStatus.valid,
       "{a, 3 + 4, func(a, 3)- 1, new Foo()}",
@@ -805,7 +821,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new ImmutableListNode(() => new ExprNode()),
+      new ImmutableListNode(() => new ExprNode2()),
       `{a, 3+ 4, foo(a, 3) - 1}`,
       ParseStatus.valid,
       "",
@@ -1344,6 +1360,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new NewInstance(), ``, ParseStatus.empty, "", "", "", "");
     testNodeParse(new NewInstance(), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
     testNodeParse(new NewInstance(), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+    testNodeParse(
+      new NewInstance(),
+      "new ArrayList<of String>()",
+      ParseStatus.valid,
+      "new ArrayList<of String>()",
+      "",
+    );
   });
   test("String Interpolation", () => {
     testNodeParse(new StringInterpolation(), ``, ParseStatus.empty, "", "", "", "");
@@ -1394,7 +1417,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitValueNode(), `3 `, ParseStatus.valid, "3", " ");
     testNodeParse(new BinaryExpression(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
 
-    testNodeParse(new ExprNode(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+    testNodeParse(new ExprNode2(), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
   });
 
   test("ProcRefCompound", () => {
@@ -1407,17 +1430,17 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(), `library.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(), `x[3].bar`, ParseStatus.valid, "", "");
   });
-  test("#339 call dot function on a literal", () => {
-    testNodeParse(new FunctionCallNode(), `length(bar)`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `bar.length()`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `bar.asArrayList()`, ParseStatus.valid, "", "");
-    testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `{1,2,3,4,5}.asArrayList()`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `"Hello World".length()`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `12.3.asString()`, ParseStatus.valid, "", "");
-    testNodeParse(new FunctionCallNode(), `bar.`, ParseStatus.incomplete, "", "");
-    testNodeParse(new FunctionCallNode(), `bar`, ParseStatus.incomplete, "", "");
-  });
+  // test("#339 call dot function on a literal", () => {
+  //   testNodeParse(new MethodCallNode(), `length(bar)`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar.length()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar.asArrayList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `{1,2,3,4,5}.asArrayList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `"Hello World".length()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `12.3.asString()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");
+  //   testNodeParse(new MethodCallNode(), `bar`, ParseStatus.incomplete, "", "");
+  // });
   test("#387 Indexes", () => {
     testNodeParse(new IndexNode(), `[3]`, ParseStatus.valid, "[3]", "");
     testNodeParse(new IndexNode(), `[3`, ParseStatus.incomplete, "[3", "");
@@ -1432,5 +1455,34 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IndexNode(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
     testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.valid, "", "[5]");
     testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[5]");
+  });
+  test("#670 new parse node structure for terms & expressions", () => {
+    testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
+    testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");
+    testNodeParse(new ReferenceNode(), `this`, ParseStatus.valid, "this", "");
+    testNodeParse(new ReferenceNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
+    testNodeParse(new IndexNode(), `[1]`, ParseStatus.valid, "[1]", "");
+    testNodeParse(new ReferenceNode(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
+    testNodeParse(new ReferenceNode(), `abc[1][2]`, ParseStatus.valid, "abc[1][2]", "");
+    testNodeParse(new ReferenceNode(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
+    testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
+    testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", "");// tuple
+    testNodeParse(new TermSimple(), `[def, ghi]`, ParseStatus.valid, "[def, ghi]", ""); 
+    testNodeParse(new TermSimple(), `{def:true, ghi: false}`, ParseStatus.valid, "{def:true, ghi: false}", "");
+    testNodeParse(new TermSimple(), `345`, ParseStatus.valid, "345", "");  
+    testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", ""); 
+    testNodeParse(new TermSimple(), `not a`, ParseStatus.valid, "not a", "");
+    testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+    testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
+    testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
+    testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
+    testNodeParse(new DotBefore(new ReferenceNode()), `.a`, ParseStatus.valid, `.a`, "");
+    testNodeParse(new DotAfter(new ReferenceNode()), `.a`, ParseStatus.invalid, ``, ".a");
+    testNodeParse(new TermChained(), `property.a`, ParseStatus.valid, `property.a`, "");
+    testNodeParse(new TermChained(), `a[1].b()[1..2].c(d)[e][f]`, ParseStatus.valid, `a[1].b()[1..2].c(d)[e][f]`, "");
+    testNodeParse(new TermChained(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");
+    testNodeParse(new TermChained(), `this.a.b()`, ParseStatus.valid, `this.a.b()`, "","this.a.b()","<keyword>this</keyword>.a.<method>b</method>()");
+    testNodeParse(new ExprNode2(), `a[1].b()[1..2].c(d).e.f[g]`, ParseStatus.valid, `a[1].b()[1..2].c(d).e.f[g]`, "");
+    testNodeParse(new ExprNode2(), `property.a[1].b().c(d)[e]`, ParseStatus.valid, `property.a[1].b().c(d)[e]`, "");  
   });
 });

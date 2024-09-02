@@ -1,18 +1,18 @@
+import { notKeyword } from "../keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Term } from "./term";
-import { SymbolNode } from "./symbol-node";
 import { KeywordNode } from "./keyword-node";
-import { notKeyword } from "../keywords";
+import { PunctuationNode } from "./punctuation-node";
+import { Term2 } from "./term2";
 
 import { MINUS } from "../symbols";
-import { SpaceNode } from "./space-node";
 import { Space } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
+import { SpaceNode } from "./space-node";
 
 export class UnaryExpression extends AbstractSequence {
   unaryOp: Alternatives | undefined;
-  term: Term | undefined;
+  term: Term2 | undefined;
 
   constructor() {
     super();
@@ -21,13 +21,13 @@ export class UnaryExpression extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const minus = () => new SymbolNode(MINUS);
+      const minus = () => new PunctuationNode(MINUS);
       const not = () => new KeywordNode(notKeyword);
       const sp = () => new SpaceNode(Space.required);
       const notSp = () => new Sequence([not, sp]);
       this.unaryOp = new Alternatives([minus, notSp]);
       this.addElement(this.unaryOp);
-      this.term = new Term();
+      this.term = new Term2();
       this.addElement(this.term);
       return super.parseText(text);
     }

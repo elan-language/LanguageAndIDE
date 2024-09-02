@@ -1,21 +1,20 @@
-import { DOT } from "../symbols";
-import { AbstractSequence } from "./abstract-sequence";
-import { ParseNode } from "./parse-node";
-import { SymbolNode } from "./symbol-node";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
+import { AbstractAlternatives } from "./abstract-alternatives";
+import { KeywordNode } from "./keyword-node";
 
-export class Qualifier extends AbstractSequence {
-  qualifier: ParseNode;
-
-  constructor(qual: ParseNode) {
+export class Qualifier extends AbstractAlternatives {
+  constructor() {
     super();
-    this.qualifier = qual;
+    this.completionWhenEmpty = "";
   }
 
   parseText(text: string): void {
-    if (text.length > 0) {
-      this.addElement(this.qualifier);
-      this.addElement(new SymbolNode(DOT));
-      super.parseText(text);
-    }
+    const global = new KeywordNode(globalKeyword);
+    const lib = new KeywordNode(libraryKeyword);
+    const prop = new KeywordNode(propertyKeyword);
+    this.alternatives.push(global);
+    this.alternatives.push(lib);
+    this.alternatives.push(prop);
+    super.parseText(text);
   }
 }
