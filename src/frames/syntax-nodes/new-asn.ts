@@ -1,4 +1,3 @@
-import { ClassType } from "../symbols/class-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
@@ -7,16 +6,16 @@ import {
   mustMatchParameters,
 } from "../compile-rules";
 import { ClassFrame } from "../globals/class-frame";
+import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
+import { ArrayListType } from "../symbols/array-list-type";
+import { ClassType } from "../symbols/class-type";
+import { DictionaryType } from "../symbols/dictionary-type";
+import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { AstNode } from "../interfaces/ast-node";
 import { TypeAsn } from "./type-asn";
-import { ImmutableListType } from "../symbols/immutable-list-type";
-import { ArrayListType } from "../symbols/array-list-type";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { DictionaryType } from "../symbols/dictionary-type";
-import { IntType } from "../symbols/int-type";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
   constructor(

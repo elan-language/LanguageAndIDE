@@ -7,7 +7,6 @@ import {
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { LetStatement } from "../statements/let-statement";
 import { ArrayListType } from "../symbols/array-list-type";
 import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
@@ -18,7 +17,6 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstChainedNode } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
 import { ExprAsn } from "./expr-asn";
-import { FuncCallAsn } from "./func-call-asn";
 import { IndexAsn } from "./index-asn";
 import { RangeAsn } from "./range-asn";
 

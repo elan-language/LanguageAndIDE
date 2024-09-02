@@ -1,7 +1,7 @@
-import { FloatType } from "../symbols/float-type";
 import { CompileError } from "../compile-error";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { FloatType } from "../symbols/float-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LiteralFloatAsn extends AbstractAstNode implements AstNode {
   constructor(

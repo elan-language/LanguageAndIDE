@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
-import { UnknownType } from "../symbols/unknown-type";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 
 export class EmptyAsn implements AstNode {
   constructor(public readonly fieldId: string) {}

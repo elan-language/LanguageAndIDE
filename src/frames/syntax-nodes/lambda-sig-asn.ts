@@ -1,14 +1,12 @@
-import { ElanSymbol } from "../interfaces/symbol";
-import { SymbolType } from "../interfaces/symbol-type";
-import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { ElanSymbol } from "../interfaces/symbol";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 import { Transforms } from "./transforms";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { Parent } from "../interfaces/parent";
 
 export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(

@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
+import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
 import { ExprAsn } from "./expr-asn";
 
 export class SetAsn extends AbstractAstNode implements AstIdNode {

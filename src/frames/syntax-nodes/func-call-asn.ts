@@ -9,7 +9,7 @@ import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { FunctionType } from "../symbols/function-type";
-import { funcScopePrefix, scopePrefix } from "../symbols/symbol-helpers";
+import { scopePrefix } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { containsGenericType, generateType, matchGenericTypes2, transforms } from "./ast-helpers";
 import { ChainedAsn } from "./chained-asn";
@@ -63,15 +63,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
     let parameters = [...this.parameters];
     const currentScope = this.updatedScope ?? this.scope.getParentScope();
-    // const [updatedQualifier, currentScope] = updateScopeAndQualifier(
-    //   this,
-    //   transforms(),
-    //   this.scope,
-    // );
 
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const fst = funcSymbol.symbolType(transforms());
-    //let qualifier = updatedQualifier;
     let isAsync: boolean = false;
 
     mustBeKnownSymbol(funcSymbol, this.compileErrors, this.fieldId);
@@ -83,7 +77,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       if (fst.isExtension && this.precedingNode) {
         this.isExtensionMethod = true;
         parameters = [this.precedingNode].concat(parameters);
-        //qualifier = undefined;
       }
 
       let parameterTypes = fst.parametersTypes;
@@ -109,18 +102,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const pp = parameters.map((p) => p.compile()).join(", ");
     const q =
       this.precedingNode && this.showPreviousNode ? "" : scopePrefix(funcSymbol?.symbolScope);
-    //return q ? `${a}${q}${this.id}(${pp})` : `${this.mId}(${pp})`;
 
     return `${a}${q}${this.mId}(${pp})`;
   }
 
   symbolType() {
-    // const [updatedQualifier, currentScope] = updateScopeAndQualifier(
-    //   this,
-    //   transforms(),
-    //   this.scope,
-    // );
-
     const currentScope = this.updatedScope ?? this.scope.getParentScope();
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const fst = funcSymbol.symbolType(transforms());

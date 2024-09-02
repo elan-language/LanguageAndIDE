@@ -1,13 +1,12 @@
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
-import { ExprAsn } from "./expr-asn";
+import { Scope } from "../interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
-import { FuncCallAsn } from "./func-call-asn";
-import { CsvAsn } from "./csv-asn";
 import { ChainedAsn } from "./chained-asn";
+import { CsvAsn } from "./csv-asn";
+import { ExprAsn } from "./expr-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
   constructor(

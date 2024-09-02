@@ -1,9 +1,9 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 export class CsvAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(

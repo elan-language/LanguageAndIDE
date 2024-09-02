@@ -1,16 +1,16 @@
 import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol, mustBePublicProperty, mustNotBeKeyword } from "../compile-rules";
 import { isMember } from "../helpers";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
-import { SymbolScope } from "../symbols/symbol-scope";
+import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
 import { LetStatement } from "../statements/let-statement";
 import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
-import { ChainedAsn } from "./chained-asn";
-import { AstNode } from "../interfaces/ast-node";
 import { isPropertyOnFieldsClass } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
+import { ChainedAsn } from "./chained-asn";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(

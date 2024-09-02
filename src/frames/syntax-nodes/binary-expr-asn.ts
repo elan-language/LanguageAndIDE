@@ -1,8 +1,3 @@
-import { BooleanType } from "../symbols/boolean-type";
-import { IntType } from "../symbols/int-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
-import { FloatType } from "../symbols/float-type";
-import { SymbolType } from "../interfaces/symbol-type";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanType,
@@ -10,15 +5,19 @@ import {
   mustBeCompatibleType,
   mustBeNumberType,
 } from "../compile-rules";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { SymbolType } from "../interfaces/symbol-type";
+import { BooleanType } from "../symbols/boolean-type";
+import { EnumType } from "../symbols/enum-type";
+import { FloatType } from "../symbols/float-type";
+import { ImmutableListType } from "../symbols/immutable-list-type";
+import { IntType } from "../symbols/int-type";
+import { StringType } from "../symbols/string-type";
+import { isValueType } from "../symbols/symbol-helpers";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
-import { StringType } from "../symbols/string-type";
-import { ClassType } from "../symbols/class-type";
-import { isValueType } from "../symbols/symbol-helpers";
-import { EnumType } from "../symbols/enum-type";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(

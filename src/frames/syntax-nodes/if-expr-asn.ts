@@ -1,9 +1,9 @@
-import { BooleanType } from "../symbols/boolean-type";
 import { CompileError } from "../compile-error";
 import { mustBeOfType } from "../compile-rules";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { BooleanType } from "../symbols/boolean-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {

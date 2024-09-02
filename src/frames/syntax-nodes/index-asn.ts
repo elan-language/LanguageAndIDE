@@ -1,8 +1,8 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 import { RangeAsn } from "./range-asn";
 

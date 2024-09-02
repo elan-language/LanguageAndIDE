@@ -1,8 +1,8 @@
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { TupleType } from "../symbols/tuple-type";
 import { AstIdNode } from "../interfaces/ast-id-node";
+import { Scope } from "../interfaces/scope";
+import { TupleType } from "../symbols/tuple-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode {
   constructor(

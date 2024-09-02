@@ -252,13 +252,6 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, scope);
   }
 
-  // if (node instanceof MethodCallNode) {
-  //   const qualifier = transform(node.optQualifier, fieldId, scope);
-  //   const id = node.name!.matchedText;
-  //   const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;
-
-  //   return new FuncCallAsn(id, qualifier, parameters, fieldId, scope);
-  // }
   if (node instanceof MethodCallNode) {
     const id = node.name!.matchedText;
     const parameters = transformMany(node.args as CSV, fieldId, scope).items as Array<ExprAsn>;

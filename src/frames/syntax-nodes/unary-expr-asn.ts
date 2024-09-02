@@ -1,8 +1,8 @@
-import { BooleanType } from "../symbols/boolean-type";
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { BooleanType } from "../symbols/boolean-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 

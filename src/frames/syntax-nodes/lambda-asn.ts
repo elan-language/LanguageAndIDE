@@ -1,10 +1,10 @@
 import { CompileError } from "../compile-error";
-import { Scope } from "../interfaces/scope";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
+import { FunctionType } from "../symbols/function-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 import { ExprAsn } from "./expr-asn";
 import { LambdaSigAsn } from "./lambda-sig-asn";
-import { FunctionType } from "../symbols/function-type";
 
 export class LambdaAsn extends AbstractAstNode implements AstNode {
   constructor(

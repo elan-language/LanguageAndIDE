@@ -1,8 +1,8 @@
-import { UnknownType } from "../symbols/unknown-type";
 import { CompileError } from "../compile-error";
-import { AbstractAstNode } from "./abstract-ast-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 export class FixedIdAsn extends AbstractAstNode implements AstIdNode {
   constructor(
