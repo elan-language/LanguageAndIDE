@@ -15,7 +15,7 @@ import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ThenStatement } from "../src/frames/statements/then-statement";
 import { ParseStatus } from "../src/frames/status-enums";
 import { ignore_test } from "./compiler/compiler-test-helpers";
-import { T03_mainWithAllStatements, T05_classes } from "./model-generating-functions.";
+import { T00_emptyFile, T03_mainWithAllStatements, T04_allGlobalsExceptClass, T05_classes } from "./model-generating-functions.";
 import {
   back,
   createTestRunner,
@@ -383,4 +383,37 @@ suite("Editing Frames", () => {
     assert.equal(main.getChildren()[0].renderAsSource(), var3.renderAsSource());
 
   });
-});
+  test("#653 able to delete a frame that has not been added to", async () => {
+    const file = T00_emptyFile();
+    // 1. Backspace on the first field
+    const sel0 = file.getById("select0");
+    sel0.processKey(key("f"));
+    const name = file.getById("ident3")
+    assert.equal(name.isSelected(), true);
+    name.processKey(key("Backspace"));
+    assert.equal(file.getChildren().length, 1);
+    // 2. Backspace after selecting the frame
+    sel0.processKey(key("f"));
+    assert.equal(file.getChildren().length, 2);
+    assert.equal(file.getFirstChild().getHtmlId(), "func8");
+    const f2 = file.getById("func8");
+    f2.processKey(key("Backspace"));
+    assert.equal(file.getChildren().length, 1);
+    // 3. Does not work if field has been edited
+    sel0.processKey(key("f"));
+    assert.equal(file.getChildren().length, 2);
+    var f3 = file.getById("func15");
+    var name3 = file.getById("ident17");
+    name3.processKey(key("x"));
+    f3.processKey(key("Backspace"));
+    assert.equal(file.getChildren().length, 2);
+    // 4. Does not work if any child frame has been added
+    sel0.processKey(key("f"));
+    assert.equal(file.getChildren().length, 3);
+    var f4 = file.getById("func22");
+    var sel4 = file.getById("select23");
+    sel4.processKey(key("v"));
+    f4.processKey(key("Backspace"));
+    assert.equal(file.getChildren().length, 3);
+  });
+});   

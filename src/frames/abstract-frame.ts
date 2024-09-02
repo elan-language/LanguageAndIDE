@@ -31,6 +31,7 @@ import { Transforms } from "./syntax-nodes/transforms";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
+  isNew = true;
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
   private selected: boolean = false;
@@ -49,6 +50,9 @@ export abstract class AbstractFrame implements Frame {
     this.htmlId = `${this.getIdPrefix()}${file.getNextId()}`;
     map.set(this.htmlId, this);
     this.setMap(map);
+  }
+  hasBeenAddedTo(): void {
+    this.isNew = false;
   }
 
   get symbolId() {
@@ -256,6 +260,13 @@ export abstract class AbstractFrame implements Frame {
       }
       case "Delete": {
         if (e.modKey.control) {
+          this.deleteIfPermissible();
+          codeHasChanged = true;
+        }
+        break;
+      }
+      case "Backspace": {
+        if (this.isNew) {
           this.deleteIfPermissible();
           codeHasChanged = true;
         }

@@ -10,6 +10,8 @@ import { ElanSymbol } from "./symbol";
 
 export interface Frame extends Selectable, Scope, ElanSymbol {
   isFrame: boolean;
+  isNew: boolean; //A frame is 'New' until any field has been edited or any child added
+  hasBeenAddedTo(): void;
 
   getFile(): File;
   getParent(): Parent;
@@ -51,4 +53,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
 
   initialKeywords(): string;
   setParent(parent: Parent): void;
+
+  deleteIfPermissible(): void;
 }

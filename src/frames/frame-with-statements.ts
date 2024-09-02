@@ -141,9 +141,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return parentHelper_selectFirstChild(this, multiSelect);
   }
   addChildBefore(child: Frame, before: Frame): void {
+    this.hasBeenAddedTo();
     parentHelper_addChildBefore(this, child, before);
   }
   addChildAfter(child: Frame, before: Frame): void {
+    this.hasBeenAddedTo();
     parentHelper_addChildAfter(this, child, before);
   }
 

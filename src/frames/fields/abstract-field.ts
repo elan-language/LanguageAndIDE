@@ -79,6 +79,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   parseFrom(source: CodeSource): void {
+    this.holder.hasBeenAddedTo();
     const text = this.readToDelimiter(source);
     const root = this.initialiseRoot();
     this.parseCompleteTextUsingNode(text, root);
@@ -186,13 +187,15 @@ export abstract class AbstractField implements Selectable, Field {
         break;
       }
       case "Backspace": {
-        if (this.cursorPos > 0) {
+        if (this.holder.isNew) {
+          this.holder.deleteIfPermissible();
+          this.codeHasChanged = true;
+        } else if (this.cursorPos > 0) {
           const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
           this.cursorPos--;
           const cursorBeforeParse = this.cursorPos;
           this.parseCurrentText();
-          const afterParse = this.text.length;
           if (this.text.length > reduced.length) {
             this.text = reduced;
             this.cursorPos = cursorBeforeParse;
@@ -221,6 +224,7 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (key?.length === 1) {
           this.processInput(key);
           this.codeHasChanged = true;
+          this.holder.hasBeenAddedTo();
           this.editingField();
         }
       }
