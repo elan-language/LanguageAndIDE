@@ -1,6 +1,7 @@
 import { Property } from "../class-members/property";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
+import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
@@ -100,15 +101,13 @@ export function funcScopePrefix(symbolScope: SymbolScope | undefined) {
   return "";
 }
 
-export function updateScopeAndQualifier(
-  rootNode: AstNode,
-  transforms: Transforms,
+function internalUpdateScopeAndQualifier(
+  qualifierScope: SymbolType | undefined,
   currentScope: Scope,
+  transforms: Transforms,
+  value: AstNode | undefined,
+  qualifier: AstNode | undefined,
 ): [AstNode | undefined, Scope] {
-  let qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : undefined;
-  const qualifierScope = qualifier?.symbolType();
-  const value = qualifier?.value;
-
   if (qualifierScope instanceof ClassType) {
     const classSymbol = currentScope.resolveSymbol(
       qualifierScope.className,
@@ -129,8 +128,25 @@ export function updateScopeAndQualifier(
   } else {
     currentScope = currentScope.getParentScope();
   }
-
   return [qualifier, currentScope];
+}
+
+export function updateScopeAndQualifier(
+  rootNode: AstNode,
+  transforms: Transforms,
+  currentScope: Scope,
+): [AstNode | undefined, Scope] {
+  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : undefined;
+  const qualifierScope = qualifier?.symbolType();
+  const value = qualifier?.value;
+
+  return internalUpdateScopeAndQualifier(
+    qualifierScope,
+    currentScope,
+    transforms,
+    value,
+    qualifier,
+  );
 }
 
 export function updateScopeInChain(
@@ -139,28 +155,16 @@ export function updateScopeInChain(
   currentScope: Scope,
 ): Scope {
   const qualifierScope = qualifier?.symbolType();
-  //const value = qualifier?.value;
 
-  if (qualifierScope instanceof ClassType) {
-    const classSymbol = currentScope.resolveSymbol(
-      qualifierScope.className,
-      transforms,
-      currentScope,
-    );
-    // replace scope with class scope
-    currentScope = isScope(classSymbol) ? classSymbol : currentScope;
-  } else if (isAstIdNode(qualifier) && qualifier.id === globalKeyword) {
-    // todo kludge
-    currentScope = getGlobalScope(currentScope);
-  } else if (isAstIdNode(qualifier) && qualifier.id === libraryKeyword) {
-    currentScope = getGlobalScope(currentScope).libraryScope;
-  } else if (qualifier) {
-    currentScope = getGlobalScope(currentScope).libraryScope;
-  } else {
-    currentScope = currentScope.getParentScope();
-  }
+  const [, newScope] = internalUpdateScopeAndQualifier(
+    qualifierScope,
+    currentScope,
+    transforms,
+    qualifier,
+    qualifier,
+  );
 
-  return currentScope;
+  return newScope;
 }
 
 export function getGlobalScope(start: Scope): File {

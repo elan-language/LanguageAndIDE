@@ -21,7 +21,6 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
-import { QualifierAsn } from "./qualifier-asn";
 import { Transforms } from "./transforms";
 
 export function isAstChainedNode(n: AstNode): n is ChainedAsn {
