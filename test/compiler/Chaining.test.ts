@@ -200,7 +200,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-
   test("Pass_StringRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -298,6 +297,56 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A");
+  });
+
+  test("Pass_CreateArray", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var aFoo set to new Foo()
+  var b set to 0
+  set b to aFoo.createArr(10)[1..5].length() + 3
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function createArr(n as Int) return [Int]
+    return createArray(n, 7)
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var aFoo = system.initialise(new Foo());
+  var b = 0;
+  b = _stdlib.length(system.array(aFoo.createArr(10).slice(1, 5))) + 3;
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  createArr(n) {
+    return _stdlib.createArray(n, 7);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7");
   });
 
   test("Pass_HoFs1", async () => {
