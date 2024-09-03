@@ -37,4 +37,52 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "4");
   });
 
+  test("Pass_PropertyChain", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var a set to new Foo()
+  var b set to a.a.get(0)
+  print b
+end main
+
+class Foo
+  constructor()
+    set property.a to {1}
+  end constructor
+  
+  property a as {Int}
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = _stdlib.get(a.a, 0);
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
+  constructor() {
+    this.a = system.immutableList([1]);
+  }
+
+  a = system.emptyImmutableList();
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+
+
+
+
 });
