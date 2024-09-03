@@ -253,7 +253,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
-
   test("Pass_New", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -298,7 +297,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "A");
   });
-
   test("Pass_CreateArray", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -349,7 +347,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  ignore_test("Pass_CreateArray1", async () => {
+  test("Pass_CreateArray1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main 
@@ -379,6 +377,40 @@ class Foo
 end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var aBar = system.initialise(new Bar());
+  var b = 0;
+  b = 5 + system.safeIndex(system.safeIndex(aBar.foo.create2DArr(), 2), 1) - 2;
+  system.printLine(_stdlib.asString(b));
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+    this.foo = system.initialise(new Foo());
+  }
+
+  _foo;
+  get foo() {
+    return this._foo ??= Foo.emptyInstance();
+  }
+  set foo(foo) {
+    this._foo = foo;
+  }
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  create2DArr() {
+    return _stdlib.create2DArray(3, 4, 8);
+  }
+
+}
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -387,7 +419,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "6");
+    await assertObjectCodeExecutes(fileImpl, "11");
   });
 
   test("Pass_HoFs1", async () => {
