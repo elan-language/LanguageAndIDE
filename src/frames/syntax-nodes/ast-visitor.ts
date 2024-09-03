@@ -45,7 +45,6 @@ import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
-import { ReferenceNode } from "../parse-nodes/reference-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SetClause } from "../parse-nodes/set-clause";
@@ -83,7 +82,6 @@ import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
 import { IndexAsn } from "./index-asn";
-import { IndexedAsn } from "./indexed-asn";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
@@ -431,13 +429,11 @@ export function transform(
   if (node instanceof TermSimple) {
     const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
-    const indexed = new IndexedAsn(alts, fieldId, scope);
     if (index) {
-      index.updateScopeAndChain(scope, indexed);
+      index.updateScopeAndChain(scope, alts);
       return index;
     }
-
-    return indexed;
+    return alts;
   }
 
   if (node instanceof TermChained) {
