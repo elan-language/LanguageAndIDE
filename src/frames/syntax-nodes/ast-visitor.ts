@@ -52,6 +52,7 @@ import { SetClause } from "../parse-nodes/set-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { StringInterpolation } from "../parse-nodes/string-interpolation";
 import { TermChained } from "../parse-nodes/term-chained";
+import { TermSimple } from "../parse-nodes/term-simple";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeDictionaryNode } from "../parse-nodes/type-dictionary-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -431,6 +432,12 @@ export function transform(
     const q = transform(node.reference, fieldId, scope) as ExprAsn;
     const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
     return new IndexedAsn(q, index, fieldId, scope);
+  }
+
+  if (node instanceof TermSimple) {
+    const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
+    const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
+    return new IndexedAsn(alts, index, fieldId, scope);
   }
 
   if (node instanceof TermChained) {
