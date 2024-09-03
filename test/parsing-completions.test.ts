@@ -40,8 +40,8 @@ suite("Parsing - Completions", () => {
     testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<pr>expression</pr>");
     testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<pr>expression</pr>");
     //testCompletion(new ExprNode2(), "(", ParseStatus.incomplete, "<pr>expression</pr>)");
-    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)");
-    testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
+    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<pr>expression</pr>)<pr></pr>");
+    testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")<pr></pr>");
     testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<pr>expression</pr>");
   });
 

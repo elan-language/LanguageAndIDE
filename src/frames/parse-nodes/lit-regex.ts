@@ -1,13 +1,13 @@
 import { Regexes } from "../fields/regexes";
 import { DIVIDE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { PunctuationNode } from "./punctuation-node";
 import { RegExMatchNode } from "./regex-match-node";
-import { SymbolNode } from "./symbol-node";
 
 export class LitRegEx extends AbstractSequence {
-  open: SymbolNode | undefined;
+  open: PunctuationNode | undefined;
   content: RegExMatchNode | undefined;
-  close: SymbolNode | undefined;
+  close: PunctuationNode | undefined;
 
   constructor() {
     super();
@@ -17,9 +17,9 @@ export class LitRegEx extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.open = new SymbolNode(DIVIDE);
+      this.open = new PunctuationNode(DIVIDE);
       this.content = new RegExMatchNode(Regexes.anythingExceptUnescapedForwardSlash);
-      this.close = new SymbolNode(DIVIDE);
+      this.close = new PunctuationNode(DIVIDE);
       this.addElement(this.open);
       this.addElement(this.content);
       this.addElement(this.close);

@@ -12,7 +12,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("T70_StandardHofs", () => {
-  ignore_test("Pass_filter", async () => {
+  test("Pass_filter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -44,12 +44,12 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_filterInFunction", async () => {
+  test("Pass_filterInFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print filterIt(source)
+  print filterIt(source).asImmutableList()
 end main
 
 function filterIt(tofilter as Iter<of Int>) return Iter<of Int>
@@ -61,7 +61,7 @@ end function
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(filterIt(source)));
+  system.printLine(_stdlib.asString(_stdlib.asImmutableList(filterIt(source))));
 }
 
 function filterIt(tofilter) {
@@ -75,24 +75,24 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Iter [23, 27, 31, 37]");
+    await assertObjectCodeExecutes(fileImpl, "{23, 27, 31, 37}");
   });
 
-  ignore_test("Pass_map", async () => {
+  test("Pass_map", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.map(lambda x as Int => x + 1)
-  print source.map(lambda x as Int => x.asString() + "*")
+  print source.map(lambda x as Int => x + 1).asArrayList()
+  print source.map(lambda x as Int => x.asString() + "*").asArrayList()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.map(source, (x) => x + 1)));
-  system.printLine(_stdlib.asString(_stdlib.map(source, (x) => _stdlib.asString(x) + "*")));
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => x + 1))));
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => _stdlib.asString(x) + "*"))));
 }
 return [main, _tests];}`;
 
@@ -104,24 +104,24 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]Iter [2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*]",
+      "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38][2*, 3*, 5*, 7*, 11*, 13*, 17*, 19*, 23*, 27*, 31*, 37*]",
     );
   });
 
-  ignore_test("Pass_mapTestType", async () => {
+  test("Pass_mapTestType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
   var source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}.asIter()
   set source to source.map(lambda x as Int => x + 1)
-  print source
+  print source.asArrayList()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var source = _stdlib.asIter(system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]));
   source = _stdlib.map(source, (x) => x + 1);
-  system.printLine(_stdlib.asString(source));
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(source)));
 }
 return [main, _tests];}`;
 
@@ -131,7 +131,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "Iter [3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
+    await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
   test("Pass_reduce", async () => {
@@ -399,16 +399,16 @@ return [main, _tests];}`;
   ignore_test("Pass_groupBy", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
-constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+constant source set to {2, 3, 5, 7, 1, 3, 7, 9, 3, 7, 1, 7}
 main
-  print source.groupBy(lambda x as Int => x.mod(5))
+  print source.groupBy(lambda x as Int => x)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const source = system.immutableList({2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37});
+const source = system.immutableList([2, 3, 5, 7, 1, 3, 7, 9, 3, 7, 1, 7]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.groupBy(source, (x) => x % 5)));
+  system.printLine(_stdlib.asString(_stdlib.groupBy(source, (x) => x)));
 }
 return [main, _tests];}`;
 
@@ -421,12 +421,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  ignore_test("Pass_sortBy", async () => {
+  test("Pass_sortBy", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
+  print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1).asArrayList()
   print source
 end main`;
 
@@ -434,7 +434,7 @@ end main`;
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.sortBy(source, (x, y) => x === y ? 0 : x < y ? 1 : -1)));
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.sortBy(source, (x, y) => x === y ? 0 : x < y ? 1 : -1))));
   system.printLine(_stdlib.asString(source));
 }
 return [main, _tests];}`;
@@ -447,7 +447,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "Iter [37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2]{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2]{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
     );
   });
 
