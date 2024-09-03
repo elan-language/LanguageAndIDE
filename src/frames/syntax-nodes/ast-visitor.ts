@@ -431,7 +431,13 @@ export function transform(
   if (node instanceof TermSimple) {
     const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
-    return new IndexedAsn(alts, index, fieldId, scope);
+    const indexed = new IndexedAsn(alts, undefined, fieldId, scope);
+    if (index) {
+      index.updateScopeAndChain(scope, indexed);
+      return index;
+    }
+
+    return indexed;
   }
 
   if (node instanceof TermChained) {
