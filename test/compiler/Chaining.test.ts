@@ -82,6 +82,98 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_PropertyChain2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var f set to new Foo()
+  var b set to 0
+  set b to f.b.y.z
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+  
+  property b as Bar
+end class
+
+class Bar
+  constructor()
+  end constructor
+  
+  property y as Yon
+end class
+
+class Yon
+  constructor()
+    set property.z to 2
+  end constructor
+  
+  property z as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.initialise(new Foo());
+  var b = 0;
+  b = f.b.y.z;
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  _b;
+  get b() {
+    return this._b ??= Bar.emptyInstance();
+  }
+  set b(b) {
+    this._b = b;
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+
+  }
+
+  _y;
+  get y() {
+    return this._y ??= Yon.emptyInstance();
+  }
+  set y(y) {
+    this._y = y;
+  }
+
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, [["z", 0]]);};
+  constructor() {
+    this.z = 2;
+  }
+
+  z = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
   test("Fail_TypeError", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
