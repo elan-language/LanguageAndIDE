@@ -349,6 +349,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
+  ignore_test("Pass_CreateArray1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var aBar set to new Bar()
+  var b set to 0
+  set b to 5 + aBar.foo.create2DArr()[2][1] - 2
+  print b
+end main
+
+class Bar
+  constructor()
+    set property.foo to new Foo()
+  end constructor
+
+  property foo as Foo
+
+end class
+
+class Foo
+  constructor()
+  end constructor
+
+  function create2DArr() return [[Int]]
+    return create2DArray(3, 4, 8)
+  end function
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
+
   test("Pass_HoFs1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
