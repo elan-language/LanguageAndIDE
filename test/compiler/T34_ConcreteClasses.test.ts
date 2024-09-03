@@ -315,6 +315,51 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00");
   });
 
+  test("Pass_IndexProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var foo set to new Foo()
+  var b set to foo.strArr[0]
+  print b
+end main
+
+class Foo
+  constructor()
+    set property.strArr to ["apple", "orange", "pair"]
+  end constructor
+
+  property strArr as [String]
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var foo = system.initialise(new Foo());
+  var b = system.safeIndex(foo.strArr, 0);
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.emptyArrayList()]]);};
+  constructor() {
+    this.strArr = system.literalArray(["apple", "orange", "pair"]);
+  }
+
+  strArr = system.emptyArrayList();
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "apple");
+  });
+
   test("Pass_MutableClassAsProcedureParameter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 

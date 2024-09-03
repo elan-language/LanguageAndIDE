@@ -42,11 +42,12 @@ export class IndexedAsn extends AbstractAstNode implements ChainedAsn {
   }
 
   get showPreviousNode() {
+    const indexed = !!this.index;
     if (isAstChainedNode(this.body)) {
       this.body.compile(); // todo make this not necessary
-      return this.body.showPreviousNode;
+      return this.body.showPreviousNode && !indexed;
     }
-    return true;
+    return !indexed;
   }
 
   aggregateCompileErrors(): CompileError[] {
@@ -131,6 +132,10 @@ export class IndexedAsn extends AbstractAstNode implements ChainedAsn {
     let code = `${b}`;
 
     if (this.isIndex() || this.isRange()) {
+      if (this.precedingNode && isAstChainedNode(this.body) && this.body.showPreviousNode) {
+        code = `${this.precedingNode.compile()}.${code}`;
+      }
+
       const rootType = this.body.symbolType();
 
       if (this.isIndex()) {

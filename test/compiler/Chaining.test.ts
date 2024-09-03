@@ -6,6 +6,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms
 } from "./compiler-test-helpers";
@@ -252,6 +253,51 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_New", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var a set to ""
+  set a to (new Bar()).strArr[0].upperCase()[0]
+  print a
+end main
+
+class Bar
+  constructor()
+    set property.strArr to ["apple", "orange", "pair"]
+  end constructor
+
+  property strArr as [String]
+
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = "";
+  a = system.safeIndex(_stdlib.upperCase(system.safeIndex((system.initialise(new Bar())).strArr, 0)), 0);
+  system.printLine(_stdlib.asString(a));
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["strArr", system.emptyArrayList()]]);};
+  constructor() {
+    this.strArr = system.literalArray(["apple", "orange", "pair"]);
+  }
+
+  strArr = system.emptyArrayList();
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "A");
   });
 
   test("Pass_HoFs1", async () => {
