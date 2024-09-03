@@ -605,6 +605,20 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "groupBy",
+      this.getSymbol(
+        "groupBy",
+        new FunctionType(
+          [
+            new IterType(new GenericParameterType("T")),
+            new FunctionType([new GenericParameterType("T")], new GenericParameterType("U"), false),
+          ],
+          new IterType(new IterType(new GenericParameterType("U"))),
+          true,
+        ),
+      ),
+    ],
+    [
       "max",
       this.getSymbol(
         "max",
