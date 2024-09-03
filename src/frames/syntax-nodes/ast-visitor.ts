@@ -428,12 +428,6 @@ export function transform(
     return new VarAsn(id, false, q, index, fieldId, scope);
   }
 
-  if (node instanceof ReferenceNode) {
-    const q = transform(node.reference, fieldId, scope) as ExprAsn;
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    return new IndexedAsn(q, index, fieldId, scope);
-  }
-
   if (node instanceof TermSimple) {
     const alts = transform(node.alternatives, fieldId, scope) as ExprAsn;
     const index = transform(node.optIndex, fieldId, scope) as IndexAsn | undefined;
