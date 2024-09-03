@@ -254,7 +254,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_HolyTrinity", async () => {
+  test("Pass_HoFs1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main 
@@ -276,6 +276,30 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "86");
+  });
+
+  test("Pass_HoFs2", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var a set to [1,2,3,4,5,6]
+  print a[..5].map(lambda x as Int => x * x).asArrayList()[2..].reduce(0, lambda s as Int, x as Int => s + x)
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([1, 2, 3, 4, 5, 6]);
+  system.printLine(_stdlib.asString(_stdlib.reduce(system.array(_stdlib.asArrayList(_stdlib.map(system.array(a.slice(0, 5)), (x) => x * x)).slice(2)), 0, (s, x) => s + x)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "50");
   });
 
   test("Fail_TypeError", async () => {
