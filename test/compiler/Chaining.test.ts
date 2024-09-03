@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
     assertDoesNotCompileWithId,
     assertObjectCodeExecutes,
     assertObjectCodeIs,
@@ -81,7 +82,24 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Fail_TypeError", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
+main 
+  var a set to {[1,2], [3,4]}
+  var b set to a.get(1).get(1)
+  print b
+end main`;
+
+   
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
+  });
 
 
 
