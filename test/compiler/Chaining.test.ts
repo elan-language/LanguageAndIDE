@@ -199,6 +199,61 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+
+  test("Pass_StringRange", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var s set to ""
+  set s to "Hello World!".lowerCase()[0..1].upperCase()
+  print s
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var s = "";
+  s = _stdlib.upperCase(_stdlib.lowerCase("Hello World!").slice(0, 1));
+  system.printLine(_stdlib.asString(s));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "H");
+  });
+
+  test("Pass_StringRange1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main 
+  var aStringVar set to "abcdexefg"
+  var s set to ""
+  set s to aStringVar.upperCase().substring(1, 7)[2..6].indexOf("X").asString()
+  print s
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var aStringVar = "abcdexefg";
+  var s = "";
+  s = _stdlib.asString(_stdlib.indexOf(_stdlib.substring(_stdlib.upperCase(aStringVar), 1, 7).slice(2, 6), "X"));
+  system.printLine(_stdlib.asString(s));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
   test("Fail_TypeError", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
