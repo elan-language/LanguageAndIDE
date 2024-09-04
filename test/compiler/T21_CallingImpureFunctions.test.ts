@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T21_Functions_Procedures_ImpureFunctions_rules", () => {
   test("Pass_CanUseImpureMethodsWithinExpressionsInMainOrProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var gr set to new Graphics()
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotCallAProcedureWithinAnExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var k set to foo()
@@ -81,7 +81,7 @@ end procedure
   });
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call square(3)
@@ -100,7 +100,7 @@ end function`;
   });
 
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var k set to foo()
@@ -122,7 +122,7 @@ end function
   });
 
   test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
 end main

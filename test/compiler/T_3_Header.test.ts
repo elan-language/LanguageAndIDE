@@ -2,16 +2,16 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { hash } from "../../src/util";
 import {
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    transforms,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_3_Header", () => {
   test("Pass_hash", async () => {
-    const code = `# f563a4748f657e668b43072b5826950ee08a62b67f705cc648d8e16dafff2449 Elan Beta 1 valid
+    const code = `# f563a4748f657e668b43072b5826950ee08a62b67f705cc648d8e16dafff2449 Elan Beta 2 valid
 
 main
   # My first program

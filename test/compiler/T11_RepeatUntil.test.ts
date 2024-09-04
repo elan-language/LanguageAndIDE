@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T11_RepeatUntil", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0
@@ -43,7 +43,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var t set to 0
@@ -85,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_variableRedeclaredInTest", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0
@@ -102,7 +102,7 @@ end main
   });
 
   test("Fail_variableDefinedInLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   repeat
@@ -122,7 +122,7 @@ end main
   });
 
   test("Fail_testPutOnRepeat", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0
@@ -139,7 +139,7 @@ end main
   });
 
   test("Fail_noCondition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0
@@ -156,7 +156,7 @@ end main
   });
 
   test("Fail_invalidCondition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0
@@ -173,7 +173,7 @@ end main
   });
 
   test("Fail_RepeatConditionNotBool", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to 0

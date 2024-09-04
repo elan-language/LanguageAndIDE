@@ -2,19 +2,19 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { MainFrame } from "../../src/frames/globals/main-frame";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_7_IfStatement", () => {
   test("Pass_1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to true
@@ -48,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to false
@@ -81,7 +81,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 2
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_4", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -155,7 +155,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_5", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to true
@@ -184,7 +184,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_6", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -225,7 +225,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_7_end_with_else_if", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -262,7 +262,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEndIf", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to true
@@ -277,7 +277,7 @@ end main`;
   });
 
   test("Fail_TwoElses", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -299,7 +299,7 @@ end main`;
   });
 
   test("Fail_ElseIfAfterElse", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -321,7 +321,7 @@ end main`;
   });
 
   test("Fail_IfConditionNotBool", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 3
@@ -341,7 +341,7 @@ end main`;
   });
 
   test("Fail_ElseConditionNotBool", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
   main
     var a set to 2

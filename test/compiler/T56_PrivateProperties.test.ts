@@ -1,19 +1,18 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T56_PrivateProperties", () => {
   test("Pass_PrivatePropertyCanBeDeclared", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo()
@@ -70,7 +69,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PrivatePropertyCannotBeAccessed", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -101,7 +100,7 @@ end class`;
   });
 
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()

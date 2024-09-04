@@ -1,18 +1,18 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompileWithId,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompileWithId,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_4.5_LetStatement", () => {
   test("Pass_normal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print add()
@@ -52,7 +52,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_proveCached", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var z set to foo1()
@@ -127,7 +127,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_proveLazilyEvaluated", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print lazy()
@@ -167,7 +167,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print foo()
@@ -211,7 +211,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_cannotRedefine ", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print foo()
@@ -232,7 +232,7 @@ end function`;
   });
 
   test("Fail_cannotAssign", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print foo()
@@ -253,7 +253,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to foo()
@@ -278,7 +278,7 @@ end function`;
   });
 
   test("Fail_RecursiveDefinition1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print foo()

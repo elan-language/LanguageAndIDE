@@ -7,7 +7,7 @@ import { createTestRunner, key, loadFileAsModelNew } from "./testHelpers";
 
 suite("Overall Status Tests", () => {
   ignore_test("Pattern for starting from literal program", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
   
       constant a set to 3
       main

@@ -1,16 +1,16 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms
 } from "./compiler-test-helpers";
 
 suite("T93_PassingLoopVariableIntoProcedure", () => {
   test("Pass_Pattern1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Pattern2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure removeLetters(wordAsPlayed as String)
   each letter in wordAsPlayed

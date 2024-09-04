@@ -12,7 +12,7 @@ import {
 
 suite("T_1_ComplexTypes", () => {
   test("Pass_ArrayListOfDictionary", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to [["a":1], ["b":3, "z":10]]
@@ -38,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DictionaryOfArrayList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]
@@ -64,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IndexWrongType1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to [["a":1], ["b":3, "z":10]]
@@ -80,7 +80,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to [["a":1], ["b":3, "z":10]]
@@ -96,7 +96,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]
@@ -112,7 +112,7 @@ end main`;
   });
 
   test("Fail_IndexWrongType4", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]

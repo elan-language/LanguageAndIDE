@@ -6,14 +6,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   transforms
 } from "./compiler-test-helpers";
 
 suite("Chaining", () => {
   test("Pass_SimpleChain", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to {{1,2}, {3,4}}
@@ -39,7 +38,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ChainWithIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to {[1,2], [3,4]}
@@ -65,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to new Foo()
@@ -109,7 +108,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var f set to new Foo()
@@ -201,7 +200,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringRange", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var s set to ""
@@ -227,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringRange1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var aStringVar set to "abcdexefg"
@@ -254,7 +253,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
   test("Pass_New", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to ""
@@ -298,7 +297,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A");
   });
   test("Pass_CreateArray", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var aFoo set to new Foo()
@@ -348,7 +347,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateArray1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var aBar set to new Bar()
@@ -423,7 +422,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HoFs1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to {1,2,3,4,5,6}
@@ -447,7 +446,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HoFs2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to [1,2,3,4,5,6]
@@ -471,7 +470,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TypeError", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to {[1,2], [3,4]}

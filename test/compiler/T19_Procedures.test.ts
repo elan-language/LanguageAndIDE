@@ -14,7 +14,7 @@ import {
 
 suite("T19_Procedures", () => {
   test("Pass_BasicOperationIncludingPrint", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 1
@@ -47,7 +47,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
   test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [1, 2]
@@ -94,7 +94,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExternalCall", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call pause(1)
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithParamsPassingVariables", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 2
@@ -154,7 +154,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReferenceTypesCanBeMutated", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [2, 3]
@@ -188,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 1
@@ -222,7 +222,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NestedCalls", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call foo()
@@ -264,7 +264,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Recursion", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call foo(3)
@@ -303,7 +303,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -403,7 +403,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CallingUndeclaredProc", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call bar()
@@ -418,7 +418,7 @@ end main
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
 end main
@@ -434,7 +434,7 @@ end procedure
   });
 
   test("Fail_CannotCallMain", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 1
@@ -455,7 +455,7 @@ end procedure
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 1
@@ -476,7 +476,7 @@ end procedure
   });
 
   test("Fail_PassingTooFewParams", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 1
@@ -497,7 +497,7 @@ end procedure
   });
 
   test("Fail_ExtensionParameterCount", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [1]
@@ -516,7 +516,7 @@ end main`;
   });
 
   test("Fail_PassingWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call foo(1, 2)
@@ -536,7 +536,7 @@ end procedure
   });
 
   test("Fail_UnterminatedRecursion", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call foo(3)
@@ -556,7 +556,7 @@ end procedure
   });
 
   test("Fail_CannotCallPrintAsAProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call print(""Hello World!"")
@@ -570,7 +570,7 @@ end main
   });
 
   test("Fail_ParameterCount", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure f(p as Float)
   return 0
@@ -592,7 +592,7 @@ end main`;
   });
 
   test("Fail_ParameterType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure f(p as Int)
 
@@ -614,7 +614,7 @@ end main`;
   });
 
   test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {2, 3}
@@ -635,7 +635,7 @@ end procedure`;
   });
 
   test("Fail_ArrayListParamMayNotBeReassigned", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [2, 3]
@@ -656,7 +656,7 @@ end procedure`;
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 4
@@ -679,7 +679,7 @@ end procedure`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -698,7 +698,7 @@ end procedure`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   
@@ -716,7 +716,7 @@ end procedure`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   
@@ -736,7 +736,7 @@ end procedure`;
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   
@@ -754,7 +754,7 @@ end procedure`;
   });
 
   test("Fail_UseOfReservedwordAsParamName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   
@@ -774,7 +774,7 @@ end procedure`;
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure foo()
 
@@ -794,7 +794,7 @@ end procedure
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 procedure foo(a as Int, b as String, a as Int)
 
@@ -809,7 +809,7 @@ end procedure`;
   });
 
   test("Fail_OperatorsAndProcedures", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to p1 is p2
@@ -836,7 +836,7 @@ end procedure`;
   });
 
   test("Fail_ProcedureInExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [1,2]

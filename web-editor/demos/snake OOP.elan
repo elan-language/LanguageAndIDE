@@ -1,7 +1,7 @@
-# 183a4629061e5863f73f9c22d1551ec67c1dcd9a12335e7bf6fe94452adeae85 Elan Beta 1 valid
+# 90a85498e1f1f311b9b2d84cd4a5e2cfe2ed20070e0aedd7107afa14c2e8f654 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
-# Try to 'eat' as many (red) apples, and avoid hitting the edge or the body of the snake.
+# Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var gr set to new Graphics()
   var snake set to new Snake()
@@ -20,10 +20,10 @@ end main
 class Snake
   constructor()
     var tail set to new Square(20, 15)
-    set currentDir to Direction.right
-    set body to [tail]
-    set head to tail.getAdjacentSquare(currentDir)
-    set priorTail to tail
+    set property.currentDir to Direction.right
+    set property.body to [tail]
+    set property.head to tail.getAdjacentSquare(currentDir)
+    set property.priorTail to tail
   end constructor
 
   property currentDir as Direction
@@ -37,21 +37,21 @@ class Snake
   procedure setDirection(key as String)
     switch key
       case "w"
-        set currentDir to Direction.up
+        set property.currentDir to Direction.up
       case "s"
-        set currentDir to Direction.down
+        set property.currentDir to Direction.down
       case "a"
-        set currentDir to Direction.left
+        set property.currentDir to Direction.left
       case "d"
-        set currentDir to Direction.right
+        set property.currentDir to Direction.right
     end switch
   end procedure
 
   procedure clockTick(key as String, apple as Apple)
     call setDirection(key)
-    set priorTail to body[0]
+    set property.priorTail to body[0]
     call body.add(head)
-    set head to head.getAdjacentSquare(currentDir)
+    set property.head to head.getAdjacentSquare(currentDir)
     if head is apple.location
       then
         call apple.newRandomPosition(this)
@@ -144,9 +144,3 @@ class Square
 end class
 
 enum Direction up, down, left, right
-
-constant green set to 0x00ff00
-
-constant red set to 0xff0000
-
-constant white set to 0xffffff

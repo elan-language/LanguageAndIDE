@@ -13,7 +13,7 @@ import {
 
 suite("T52_FunctionMethods", () => {
   test("Pass_HappyCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -72,7 +72,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -198,7 +198,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -288,7 +288,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -391,7 +391,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -491,7 +491,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionMethod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -595,7 +595,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodNameHidesGlobalFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -654,7 +654,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_FunctionCannotBeCalledDirectly", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -686,7 +686,7 @@ end class`;
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
   constructor()
@@ -714,7 +714,7 @@ end class`;
   });
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
     constructor()
@@ -745,7 +745,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -769,7 +769,7 @@ end class`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -793,7 +793,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -816,7 +816,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -841,7 +841,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
 

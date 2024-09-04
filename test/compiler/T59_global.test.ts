@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T59_Global", () => {
   ignore_test("Pass_DisambiguateConstantFromLocalVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to 4
 
@@ -41,7 +41,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateConstantFromInstanceProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to 4
 
@@ -114,7 +114,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateGlobalFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var f set to new Foo()
@@ -194,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibFunctionFromInstanceFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var f set to new Foo()
@@ -251,7 +251,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_NoSuchGlobal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant b set to 4
 
@@ -269,7 +269,7 @@ end main`;
   });
 
   test("Fail_NoSuchGlobalConstant", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -307,7 +307,7 @@ end class`;
   });
 
   test("Fail_NoSuchGlobalSubroutine", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()

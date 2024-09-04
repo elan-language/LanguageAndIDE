@@ -1,4 +1,4 @@
-# 13b972b0878d5dc2a8a9a6d9c54cab22080ce82ddb4dab4f0f1796b7c33cddad Elan Beta 1 valid
+# 13b972b0878d5dc2a8a9a6d9c54cab22080ce82ddb4dab4f0f1796b7c33cddad Elan Beta 2 valid
 
 main
   call print("Table of Squares\nNumber    Square    Cube\n")
