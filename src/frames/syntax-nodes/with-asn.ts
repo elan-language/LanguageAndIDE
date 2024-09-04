@@ -4,6 +4,7 @@ import {
   mustBeClassType,
   mustBeCompatibleType,
   mustBeConcreteClass,
+  mustBeImmutableType,
   mustBeOfSymbolType,
   mustBePropertyAndPublic,
 } from "../compile-rules";
@@ -47,6 +48,7 @@ export class WithAsn extends AbstractAstNode implements AstNode {
         .resolveSymbol(fromType.className, transforms(), this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
+      mustBeImmutableType(classSymbol.symbolType(), this.compileErrors, this.fieldId);
 
       if (isClass(classSymbol)) {
         for (const ast of this.withClause.items as SetAsn[]) {
