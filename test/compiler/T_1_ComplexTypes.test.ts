@@ -1,13 +1,13 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompileWithId,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompileWithId,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_1_ComplexTypes", () => {
@@ -24,7 +24,7 @@ end main`;
 async function main() {
   var a = system.literalArray([system.dictionary({["a"] : 1}), system.dictionary({["b"] : 3, ["z"] : 10})]);
   system.safeDoubleSet(a, 0, "b", 2);
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, "b")));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), "b")));
 }
 return [main, _tests];}`;
 
@@ -50,7 +50,7 @@ end main`;
 async function main() {
   var a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
   system.safeDoubleSet(a, "b", 0, 2);
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, "b", 0)));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, "b"), 0)));
 }
 return [main, _tests];}`;
 

@@ -128,7 +128,7 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, "b", "z")));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, "b"), "z")));
 }
 return [main, _tests];}`;
 

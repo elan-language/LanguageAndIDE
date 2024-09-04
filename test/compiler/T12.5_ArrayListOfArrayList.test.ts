@@ -109,8 +109,8 @@ async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 2, 0)));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 2), 0)));
 }
 return [main, _tests];}`;
 
@@ -138,7 +138,7 @@ async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
   system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
   system.safeDoubleSet(a, 0, 1, "yon");
-  system.printLine(_stdlib.asString(system.safeDoubleIndex(a, 0, 1)));
+  system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
 }
 return [main, _tests];}`;
 

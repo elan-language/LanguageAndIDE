@@ -6,7 +6,7 @@ import { DictionaryNode } from "./dictionary-node";
 import { ExprNode } from "./expr-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
 import { ImmutableListNode } from "./immutable-list-node";
-import { IndexNode } from "./index-node";
+import { IndexSingle } from "./index-single";
 import { LitValueNode } from "./lit-value";
 import { OptionalNode } from "./optional-node";
 import { ReferenceNode } from "./reference-node";
@@ -51,7 +51,7 @@ export class TermSimple extends AbstractSequence {
       unary,
       bracketed,
     ]);
-    this.optIndex = new OptionalNode(new IndexNode());
+    this.optIndex = new OptionalNode(new IndexSingle());
     this.addElement(this.alternatives);
     this.addElement(this.optIndex);
     super.parseText(text);
