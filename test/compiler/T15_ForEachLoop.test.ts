@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T15_eachLoop", () => {
   test("Pass_List", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {7,8,9}
@@ -45,7 +45,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Array", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {7,8,9}.asArrayList()
@@ -77,7 +77,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to "hello"
@@ -105,7 +105,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DoubleLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   each x in "12"
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_functionProvidingList", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   each x in fruit()
@@ -169,7 +169,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_variableIsScoped", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {7, 8, 9}
@@ -189,7 +189,7 @@ end main
   });
 
   test("Fail_variableIsScoped2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {7, 8, 9}
@@ -208,7 +208,7 @@ end main
   });
 
   test("Fail_NoEndeach", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to [7, 8, 9]
@@ -226,7 +226,7 @@ end main
   });
 
   test("Fail_applyToANonIterable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var y set to 10
@@ -244,7 +244,7 @@ end main
   });
 
   test("Fail_CannotAlterTheIterableWithinLoop", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {1, 2, 3, 4, 5}

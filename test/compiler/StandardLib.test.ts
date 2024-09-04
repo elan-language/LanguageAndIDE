@@ -14,7 +14,7 @@ import {
 
 suite("StandardLib", () => {
   test("Pass_contains", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant lst set to {1, 2}
 main
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
    test("Pass_pause", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 1
@@ -77,7 +77,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clock", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to clock()
@@ -105,7 +105,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_random", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to random()
@@ -133,7 +133,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsFloat1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to  parseAsFloat("10.1")
@@ -159,7 +159,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsFloat2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to parseAsFloat("x12")
@@ -185,7 +185,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to parseAsInt("10.1")
@@ -211,7 +211,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_parseAsInt2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to parseAsInt("")
@@ -236,7 +236,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "false0");
   });
   test("Pass print (procedure)", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call print("Hello")
@@ -260,7 +260,7 @@ return [main, _tests];}`;
   });
 
   test("Pass printTab", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   call printTab(0,"Hello")
@@ -284,7 +284,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maths_tests", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 test 
   assert pi is 3.141592653589793
@@ -376,7 +376,7 @@ return [main, _tests];}`;
     ]);
   });
   test("random", async () => {
-    const code = `# FFFF Elan Beta 1 valid
+    const code = `# FFFF Elan Beta 2 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
@@ -416,7 +416,7 @@ return [main, _tests];}`;
   });
 
   test("firstRandom", async () => {
-    const code = `# FFFF Elan Beta 1 valid
+    const code = `# FFFF Elan Beta 2 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
@@ -459,7 +459,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
   });
   test("firstRandomInFixedSequence", async () => {
-    const code = `# FFFF Elan Beta 1 valid
+    const code = `# FFFF Elan Beta 2 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
@@ -502,7 +502,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
   test("passing Random type", async () => {
-    const code = `# FFFF Elan Beta 1 valid
+    const code = `# FFFF Elan Beta 2 valid
 
 main
   var results set to [0, 0, 0, 0, 0, 0, 0]
@@ -553,7 +553,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
   });
   test("bitwise operations", async () => {
-    const code = `# FFFF Elan Beta 1 valid
+    const code = `# FFFF Elan Beta 2 valid
 
 main
   var a set to 13

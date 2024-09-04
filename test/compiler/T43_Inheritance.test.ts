@@ -1,20 +1,20 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    ignore_test,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T43_Inheritance", () => {
   test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -125,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsAbstractClassIntoFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Yon()
@@ -223,7 +223,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InheritFromMoreThanOneAbstractClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -344,7 +344,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SuperclassesCanDefineSameMember", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -472,7 +472,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotInheritFromConcreteClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -506,7 +506,7 @@ end class`;
   });
 
   test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -572,7 +572,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractImmutableClassAsProcedureParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -638,7 +638,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractImmutableClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -704,7 +704,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractImmutableClassAsProcedureParameter1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -797,7 +797,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractImmutableClassAsFunctionParameter1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -890,7 +890,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Invariance", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -958,7 +958,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractMutableClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Bar()
@@ -1024,7 +1024,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
 end main
@@ -1055,7 +1055,7 @@ end class`;
   });
 
   test("Fail_MustImplementAllInheritedMethods", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1094,7 +1094,7 @@ end class`;
   });
 
   test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1141,7 +1141,7 @@ end class`;
   });
 
   test("Fail_ImplementedMethodMustHaveSameSignature", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1185,7 +1185,7 @@ end class`;
   });
 
   test("Fail_AbstractClassDefinesMethodBody", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1209,7 +1209,7 @@ end class`;
   });
 
   test("Fail_MissingAbstractProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
 
@@ -1226,7 +1226,7 @@ end class`;
   });
 
   test("Fail_MissingAbstractFunction", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1243,7 +1243,7 @@ end class`;
   });
 
   test("Fail_MissingAbstractProcedure", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1260,7 +1260,7 @@ end class`;
   });
 
   test("Fail_CannotInstantiateAbstractClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var a set to new Bar()
@@ -1279,7 +1279,7 @@ end class`;
   });
 
   test("Fail_SuperClassAsFunctionParameter", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -1317,7 +1317,7 @@ end function
   // #482
   // todo fix by resolveing all types properly in func call
   ignore_test("Fail_Invariance1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -1353,7 +1353,7 @@ end function
   // #482
   // as invariance 1
   ignore_test("Fail_Invariance2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var b set to new Bar()
@@ -1388,7 +1388,7 @@ end procedure
 
   // #482
   ignore_test("Fail_Invariance3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var lst set to new ImmutableDictionary<of String, Bar>()
@@ -1421,7 +1421,7 @@ end function
   });
 
   test("Fail_InheritFromNonexistentClass", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Bar()
@@ -1444,7 +1444,7 @@ end class`;
   });
 
   test("Fail_DuplicateNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1467,7 +1467,7 @@ end class`;
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1487,7 +1487,7 @@ end class`;
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1507,7 +1507,7 @@ end class`;
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1527,7 +1527,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1547,7 +1547,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  
@@ -1567,7 +1567,7 @@ end class`;
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
  

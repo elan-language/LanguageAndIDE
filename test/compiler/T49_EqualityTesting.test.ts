@@ -1,18 +1,18 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T49_EqualityTesting", () => {
   test("Pass_DifferentInstancesWithSameValuesAreEqual", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo(7, "Apple")
@@ -82,7 +82,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyDoesEqualDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo()
@@ -141,7 +141,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ActuallyTheSameReference", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo(7, "Apple")
@@ -214,7 +214,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CompareLambdas", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo()

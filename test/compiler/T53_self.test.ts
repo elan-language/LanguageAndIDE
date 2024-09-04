@@ -1,18 +1,18 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T53_Self", () => {
   test("Pass_DisambiguateParamAndProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var x set to new Foo(7)
@@ -63,7 +63,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingThisAsAnInstance", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -130,7 +130,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UsingPropertyAsIndex", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -182,7 +182,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UsingPropertyAsIndex1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var f set to new Foo()
@@ -211,7 +211,7 @@ end class`;
   });
 
   test("Fail_NoSuchProperty", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var x set to new Foo(7)
@@ -239,7 +239,7 @@ end class`;
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var x set to new Foo(7)

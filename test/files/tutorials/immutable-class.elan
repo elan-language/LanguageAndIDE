@@ -1,4 +1,4 @@
-# FFFF Elan Beta 1 valid
+# FFFF Elan Beta 2 valid
 
 main
   var d set to new Person("Dan", 16)

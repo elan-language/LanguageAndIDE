@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T16_SwitchCase", () => {
   test("Pass_minimal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_bracketsIgnored", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultIsUsed", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -145,7 +145,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_switchOnExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -189,7 +189,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CompatibleCaseType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   switch 3.1
@@ -233,7 +233,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NoDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 4 step 1
@@ -256,7 +256,7 @@ end main
   });
 
   test("Fail_NoCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 4 step 1
@@ -275,7 +275,7 @@ end main
   });
 
   test("Fail_IncompatibleCaseType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -300,7 +300,7 @@ end main
   });
 
   test("Fail_UseOfVariableForCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 2
@@ -324,7 +324,7 @@ end main
   });
 
   test("Fail_UseOfExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -347,7 +347,7 @@ end main
   });
 
   test("Pass_CaseAfterDefault", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -369,7 +369,7 @@ end main
   });
 
   test("Fail_WithColons", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 4 step 1
@@ -391,7 +391,7 @@ end main
   });
 
   test("Fail_actionOnSameLineAsCase", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -410,7 +410,7 @@ end main
   });
 
   test("Fail_missingExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1
@@ -431,7 +431,7 @@ end main
   });
 
   test("Fail_caseValueMissing", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   for i from 1 to 3 step 1

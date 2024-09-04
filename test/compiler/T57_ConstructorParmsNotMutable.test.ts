@@ -4,7 +4,7 @@ import { assertDoesNotCompile, assertParses, testHash, transforms } from "./comp
 
 suite("T57_ConstructorParmsNotMutable", () => {
   test("Fail_reassigningIntParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
     constructor(p_1 as Int)
@@ -27,7 +27,7 @@ end class`;
   });
 
   test("Fail_MutatingArrayParam", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
     constructor(a as ArrayList<of Float>)
@@ -47,7 +47,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 class Foo
     constructor()

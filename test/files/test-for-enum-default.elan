@@ -1,4 +1,4 @@
-# c03fbfbd519b5697ff7f1dce43924b29e2010b62cfaa0ca42d2742044b24de3c Elan Beta 1 valid
+# c03fbfbd519b5697ff7f1dce43924b29e2010b62cfaa0ca42d2742044b24de3c Elan Beta 2 valid
 
 main
   var r set to new Rule("a", "b", "c", "d", Dir.left)

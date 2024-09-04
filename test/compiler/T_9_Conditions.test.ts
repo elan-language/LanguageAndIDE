@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T_9_Conditions", () => {
   test("Pass_lessThan", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 < 4
@@ -39,7 +39,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_greaterThan", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 > 4
@@ -65,7 +65,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lessThanOrEqual", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 <= 4
@@ -91,7 +91,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_greaterThanOrEqual", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 >= 4
@@ -117,7 +117,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_isnt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 isnt 4
@@ -143,7 +143,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_is", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 is 4
@@ -169,7 +169,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_canCompareCoercibleTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 < 3.1
@@ -209,7 +209,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_combineComparisonWithArithmetic", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print (5 + 3) > (4 + 2)
@@ -235,7 +235,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_not_is", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 not is 3
@@ -249,7 +249,7 @@ end main
   });
 
   test("Fail_not", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 not 3
@@ -263,7 +263,7 @@ end main
   });
 
   test("Fail_notEqual", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 != 3
@@ -277,7 +277,7 @@ end main
   });
 
   test("Fail_EqualToOrLessThan", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 =< 3
@@ -291,7 +291,7 @@ end main
   });
 
   test("Fail_Greater_Or_Equal", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 > or = 3
@@ -305,7 +305,7 @@ end main
   });
 
   test("Fail_SingleEquals", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 = 4
@@ -319,7 +319,7 @@ end main
   });
 
   test("Fail_compareDifferentTypes", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 is "3"
@@ -346,7 +346,7 @@ end main
   });
 
   test("Fail_greaterOrLessThan", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 <> 3  
@@ -360,7 +360,7 @@ end main
   });
 
   test("Fail_doubleEquals", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 3 == 3  
@@ -374,7 +374,7 @@ end main
   });
 
   test("Fail_combineComparisonWithArithmeticWithoutBrackets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   print 5 + 3 > 4 + 2

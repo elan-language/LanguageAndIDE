@@ -1,18 +1,18 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T30_Input", () => {
   test("Pass_InputString", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to inputString("")
@@ -36,7 +36,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringWithPrompt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to inputString("Your name")
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputInt", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0
@@ -86,7 +86,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0.0
@@ -112,7 +112,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReuseVariable", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to "value"
@@ -142,7 +142,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringWithLimits", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to inputStringWithLimits("aprompt", 3, 7)
@@ -166,7 +166,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringFromOptions", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to inputStringFromOptions("aprompt", ["y", "n"])
@@ -190,7 +190,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputInt1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0
@@ -216,7 +216,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputIntBetween", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0
@@ -242,7 +242,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0.0
@@ -268,7 +268,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloatBetween", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to 0.0
@@ -294,7 +294,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ReuseVariableWrongType", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to ""
@@ -311,7 +311,7 @@ end main`;
   });
 
   test("Pass_InputInExpression", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to "Hello " + inputString("")

@@ -1,19 +1,19 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    testHash,
-    transforms,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("T31_Expressions5_LogicalOperators", () => {
   test("Pass_and", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to false and false
@@ -49,7 +49,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_or", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to false or false
@@ -85,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_not", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to not false
@@ -121,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Precedence", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to not false and true
@@ -148,7 +148,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetrue");
   });
   test("Pass_CombineLogicalOpsWithComparison1", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to (4 > 3) and (6 > 5)
@@ -179,7 +179,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
   test("Pass_CombineLogicalOpsWithComparison2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to (true and false) is (true or false)
@@ -203,7 +203,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TypeCheck", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to false and 1
@@ -232,7 +232,7 @@ end main`;
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to 4 > 3 and 6 > 5
@@ -248,7 +248,7 @@ end main`;
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to not 4 > 3
@@ -264,7 +264,7 @@ end main`;
   });
 
   test("fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to true and false is true or false
@@ -288,7 +288,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseNotWithTwoArgs", async () => {
-    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to true not false
