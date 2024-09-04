@@ -276,6 +276,19 @@ export function mustBePublicProperty(
   }
 }
 
+export function mustBePropertyAndPublic(
+  symbol: ElanSymbol,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbol instanceof Property && symbol.private === true) {
+    compileErrors.push(new PrivatePropertyCompileError(symbol.name.text, location));
+  }
+  if (!(symbol instanceof Property)) {
+    compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, location));
+  }
+}
+
 export function mustImplementSuperClasses(
   transforms: Transforms,
   classType: ClassType,

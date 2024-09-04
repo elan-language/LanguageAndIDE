@@ -1,16 +1,21 @@
 import { CompileError } from "../compile-error";
+import { mustBeCompatibleType, mustBePropertyAndPublic } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
+import { Class } from "../interfaces/class";
 import { Scope } from "../interfaces/scope";
+import { ClassType } from "../symbols/class-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { transforms } from "./ast-helpers";
 import { ExprAsn } from "./expr-asn";
+import { SetAsn } from "./set-asn";
 
 export class WithAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly obj: ExprAsn,
     private readonly withClause: AstCollectionNode,
     public readonly fieldId: string,
-    scope: Scope,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -23,9 +28,28 @@ export class WithAsn extends AbstractAstNode implements AstNode {
     const from = this.obj.compile();
     const tempTo = `_a`; // only scoped to lambda so safe
     const withClause: string[] = [];
+    const fromType = this.obj.symbolType() as ClassType;
+    // to do must be class type
+
+    const classSymbol = this.scope
+      .getParentScope()
+      .resolveSymbol(fromType.className, transforms(), this.scope) as Class;
+
     let withClauseStr = "";
 
-    for (const ast of this.withClause.items) {
+    for (const ast of this.withClause.items as SetAsn[]) {
+      const propertyId = ast.id;
+      const type = ast.symbolType();
+
+      const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
+      mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
+      mustBeCompatibleType(
+        pSymbol.symbolType(transforms()),
+        type,
+        this.compileErrors,
+        this.fieldId,
+      );
+
       withClause.push(`${tempTo}.${ast.compile()}`);
     }
 
