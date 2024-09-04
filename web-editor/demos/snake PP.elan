@@ -1,5 +1,7 @@
-# FFFF Elan Beta 1 valid
+# ac431dea520f5940b48ebd78d9a3768b77f89b759d7a999178f0e6fb2bee9fa8 Elan Beta 1 valid
 
+# Run the program and use the standard W,A,S,D keys to change Snake direction
+# Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var gr set to new Graphics()
   var head set to [20, 15]
@@ -96,12 +98,6 @@ function directionByKey(current as String, key as String) return String
   end switch
   return dir
 end function
-
-constant green set to 0x00ff00
-
-constant red set to 0xff0000
-
-constant white set to 0xffffff
 
 test hasHitEdge
   assert hasHitEdge([0, 0]) is false
