@@ -1,5 +1,13 @@
 import { CompileError } from "../compile-error";
-import { mustBeCompatibleType, mustBePropertyAndPublic } from "../compile-rules";
+import {
+  mustBeClass,
+  mustBeClassType,
+  mustBeCompatibleType,
+  mustBeConcreteClass,
+  mustBeOfSymbolType,
+  mustBePropertyAndPublic,
+} from "../compile-rules";
+import { isClass } from "../helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Class } from "../interfaces/class";
@@ -28,29 +36,35 @@ export class WithAsn extends AbstractAstNode implements AstNode {
     const from = this.obj.compile();
     const tempTo = `_a`; // only scoped to lambda so safe
     const withClause: string[] = [];
-    const fromType = this.obj.symbolType() as ClassType;
-    // to do must be class type
-
-    const classSymbol = this.scope
-      .getParentScope()
-      .resolveSymbol(fromType.className, transforms(), this.scope) as Class;
-
+    const fromType = this.obj.symbolType();
     let withClauseStr = "";
 
-    for (const ast of this.withClause.items as SetAsn[]) {
-      const propertyId = ast.id;
-      const type = ast.symbolType();
+    mustBeClassType(fromType, this.compileErrors, this.fieldId);
 
-      const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
-      mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
-      mustBeCompatibleType(
-        pSymbol.symbolType(transforms()),
-        type,
-        this.compileErrors,
-        this.fieldId,
-      );
+    if (fromType instanceof ClassType) {
+      const classSymbol = this.scope
+        .getParentScope()
+        .resolveSymbol(fromType.className, transforms(), this.scope);
 
-      withClause.push(`${tempTo}.${ast.compile()}`);
+      mustBeClass(classSymbol, this.compileErrors, this.fieldId);
+
+      if (isClass(classSymbol)) {
+        for (const ast of this.withClause.items as SetAsn[]) {
+          const propertyId = ast.id;
+          const type = ast.symbolType();
+
+          const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
+          mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
+          mustBeCompatibleType(
+            pSymbol.symbolType(transforms()),
+            type,
+            this.compileErrors,
+            this.fieldId,
+          );
+
+          withClause.push(`${tempTo}.${ast.compile()}`);
+        }
+      }
     }
 
     if (withClause.length > 0) {

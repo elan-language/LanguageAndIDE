@@ -731,6 +731,40 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Int"]);
   });
 
+  test("Fail_NotClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to {1, 2}
+  var b set to copy a with a to 0
+  print b
+end main`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Class"]);
+  });
+
+  test("Fail_NotClass1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a with a to 0
+  print b
+end main`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo is not defined", "Cannot new Foo", "Expression must be Class"]);
+  });
+
   test("Fail_NoSuchProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
