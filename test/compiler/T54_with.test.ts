@@ -380,6 +380,155 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "101102");
   });
 
+  test("Pass_ExpressionSimple", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a with a to 2 + 2
+  print a.a
+  print b.a
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+  end constructor
+
+  property a as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
+  system.printLine(_stdlib.asString(a.a));
+  system.printLine(_stdlib.asString(b.a));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  constructor() {
+    this.a = 1;
+  }
+
+  a = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "14");
+  });
+
+  test("Pass_ExpressionNew", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo(1)
+  var b set to copy a with a to new Foo(2)
+  print a.a.b
+  print b.a.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property a as Foo
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo(1));
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = system.initialise(new Foo(2)); return _a;})();
+  system.printLine(_stdlib.asString(a.a.b));
+  system.printLine(_stdlib.asString(b.a.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  _a;
+  get a() {
+    return this._a ??= Foo.emptyInstance();
+  }
+  set a(a) {
+    this._a = a;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "02");
+  });
+
+  test("Pass_ExpressionIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to [0,2]
+  var b set to new Foo(1)
+  var c set to copy b with b to a[1]
+  print b.b
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([0, 2]);
+  var b = system.initialise(new Foo(1));
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
+  system.printLine(_stdlib.asString(b.b));
+  system.printLine(_stdlib.asString(c.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
   test("Fail_NoSets", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 

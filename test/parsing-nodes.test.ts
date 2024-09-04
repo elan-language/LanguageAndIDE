@@ -1435,7 +1435,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new ReferenceNode(), `this`, ParseStatus.valid, "this", "");
     testNodeParse(new ReferenceNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
     testNodeParse(new TermSimple(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-    //testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1][2]", "");
+    testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
     testNodeParse(new TermSimple(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
     testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
     testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", "");// tuple
