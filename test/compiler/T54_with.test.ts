@@ -706,7 +706,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_WrongType", async () => {
+  test("Fail_WrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
 main
@@ -728,7 +728,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["no"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Int"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
