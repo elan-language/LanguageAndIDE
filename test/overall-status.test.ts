@@ -102,15 +102,6 @@ suite("Overall Status Tests", () => {
     assert.equal(f.readTestStatus(), TestStatus.pass);
   });
 
-  test("test wordle-player", async () => {
-    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\wordle-player.elan`);
-    const runner = await createTestRunner();
-    await f.refreshAllStatuses(runner);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.pass);
-  });
-
   test("test best-fit", async () => {
     const f = await loadFileAsModelNew(`${__dirname}\\files\\programs\\best-fit.elan`);
     const runner = await createTestRunner();

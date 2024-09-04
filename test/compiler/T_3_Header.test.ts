@@ -11,7 +11,7 @@ import {
 
 suite("T_3_Header", () => {
   test("Pass_hash", async () => {
-    const code = `# f563a4748f657e668b43072b5826950ee08a62b67f705cc648d8e16dafff2449 Elan Beta 2 valid
+    const code = `# 1477b152cbf774a70fc1ab2de640c89c756441a871812d31d11502c2865f7cac Elan Beta 2 valid
 
 main
   # My first program

@@ -1,4 +1,4 @@
-# a1a8143ac967d7c716cfc0998123f9fd334c4dafebbebbd9443d96f3cc2707a6 Elan Beta 2 valid
+# b0b7237a162ef0134210399119e5bbccbc4976f3cceaa59d7a9dfdb7db66daba Elan Beta 2 valid
 
 main
   # Minimal example - 1 rule, writes * onto empty tape and halts
@@ -12,10 +12,10 @@ class TuringMachine
   constructor(initialState as String, haltState as String)
     set property.initialState to initialState
     set property.haltState to haltState
-    set rules to empty {Rule}
-    set currentState to initialState
-    set headPosition to 0
-    set tape to " "
+    set property.rules to empty {Rule}
+    set property.currentState to initialState
+    set property.headPosition to 0
+    set property.tape to " "
   end constructor
 
   property initialState as String
@@ -39,12 +39,12 @@ class TuringMachine
   end procedure
 
   procedure add(rule as Rule)
-    set rules to rules + rule
+    set property.rules to rules + rule
   end procedure
 
   procedure reset()
-    set currentState to initialState
-    set headPosition to 0
+    set property.currentState to initialState
+    set property.headPosition to 0
   end procedure
 
   procedure singleStep()
@@ -77,11 +77,11 @@ class TuringMachine
 
   procedure write(newSymbol as String)
     var hp set to headPosition
-    set tape to tape[..hp] + newSymbol + tape[hp + 1..]
+    set property.tape to tape[..hp] + newSymbol + tape[hp + 1..]
   end procedure
 
   procedure execute(rule as Rule)
-    set currentState to rule.nextState
+    set property.currentState to rule.nextState
     call write(rule.writeSymbol)
     if rule.move is Dir.right
       then
