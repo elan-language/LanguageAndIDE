@@ -199,6 +199,150 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
+  test("Pass_PropertyChain3", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main 
+  var f set to [new Foo()]
+  var b set to 0
+  set b to f[0].b.ff()
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+  
+  property b as Bar
+end class
+
+class Bar
+  constructor()
+  end constructor
+
+  function ff() return Int
+    return 4
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.literalArray([system.initialise(new Foo())]);
+  var b = 0;
+  b = system.safeIndex(f, 0).b.ff();
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  _b;
+  get b() {
+    return this._b ??= Bar.emptyInstance();
+  }
+  set b(b) {
+    this._b = b;
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+
+  }
+
+  ff() {
+    return 4;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
+  test("Pass_PropertyChain4", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main 
+  var f set to {new Foo()}
+  var b set to 0
+  set b to f.get(0).b.ff()
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+  
+  property b as Bar
+end class
+
+class Bar
+  constructor()
+  end constructor
+
+  function ff() return Int
+    return 4
+  end function
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var f = system.immutableList([system.initialise(new Foo())]);
+  var b = 0;
+  b = _stdlib.get(f, 0).b.ff();
+  system.printLine(_stdlib.asString(b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  constructor() {
+
+  }
+
+  _b;
+  get b() {
+    return this._b ??= Bar.emptyInstance();
+  }
+  set b(b) {
+    this._b = b;
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+  constructor() {
+
+  }
+
+  ff() {
+    return 4;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   test("Pass_StringRange", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -486,6 +630,43 @@ end main`;
     
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
+  });
+
+  test("Fail_TypeError1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main 
+  var a set to new Foo()
+  var b set to a.ff().fd()
+  print b
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function ff() return Bar
+    return new Bar()
+  end function
+end class
+
+class Bar
+   constructor()
+   end constructor
+
+  function ff() return Int
+    return 0
+  end function
+end class`;
+
+   
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["fd is not defined"]);
   });
 
 

@@ -26,7 +26,7 @@ import {
   TypesCompileError,
   UndefinedSymbolCompileError,
 } from "./compile-error";
-import { isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
+import { isClass, isFunction, isInsideFunctionOrConstructor, isMember } from "./helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
@@ -158,6 +158,16 @@ export function mustBeProcedure(
     compileErrors.push(
       new CannotCallAFunction(symbolType.toString(), location, symbolType instanceof UnknownType),
     );
+  }
+}
+
+export function mustBeClassType(
+  symbolType: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (!(symbolType instanceof ClassType)) {
+    compileErrors.push(new TypeCompileError("Class", location, symbolType instanceof UnknownType));
   }
 }
 
@@ -330,6 +340,14 @@ export function mustBeConcreteClass(
 ) {
   if (classType.isAbstract) {
     compileErrors.push(new MustBeConcreteCompileError(classType.toString(), location));
+  }
+}
+
+export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
+  if (!isClass(symbol)) {
+    const st = symbol.symbolType();
+    const unknown = st instanceof UnknownType;
+    compileErrors.push(new TypeCompileError("Class", location, unknown));
   }
 }
 

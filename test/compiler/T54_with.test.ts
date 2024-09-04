@@ -14,7 +14,7 @@ main
   print b.a
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -59,7 +59,7 @@ main
   print a.a
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -108,7 +108,7 @@ function foo() return Foo
   return b
 end function
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -165,7 +165,7 @@ function foo() return Foo
   return b
 end function
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -224,7 +224,7 @@ function foo() return Foo
   return copy a with a to 2
 end function
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -275,7 +275,7 @@ main
   print b.b
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
     set property.b to "bill"
@@ -329,7 +329,7 @@ main
   print b.ff()
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
     set property.b to 100
@@ -390,7 +390,7 @@ main
   print b.a
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -436,7 +436,7 @@ main
   print b.a.b
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -492,7 +492,7 @@ main
   print c.b
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -541,7 +541,7 @@ main
   print c.d
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -596,7 +596,7 @@ main
   print c.b
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -644,7 +644,7 @@ main
   print c.b
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -691,7 +691,7 @@ main
   print b.a
 end main
 
-class Foo
+immutable class Foo
   constructor()
     set property.a to 1
   end constructor
@@ -715,7 +715,7 @@ main
   print c.b
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -731,6 +731,40 @@ end class`;
     assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to Int"]);
   });
 
+  test("Fail_NotClass", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to {1, 2}
+  var b set to copy a with a to 0
+  print b
+end main`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Expression must be Class"]);
+  });
+
+  test("Fail_NotClass1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a with a to 0
+  print b
+end main`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo is not defined", "Cannot new Foo", "Expression must be Class"]);
+  });
+
   test("Fail_NoSuchProperty", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -740,7 +774,7 @@ main
   print c.d
 end main
 
-class Foo
+immutable class Foo
   constructor(i as Int)
     set property.b to i
   end constructor
@@ -754,6 +788,56 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["b is not defined"]);
+  });
+
+  test("Fail_PrivateProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var b set to new Foo(1)
+  var c set to copy b with b to 0
+  print c.d
+end main
+
+immutable class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  private property b as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private property b"]);
+  });
+
+  test("Fail_NotImmutable", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var b set to new Foo(1)
+  var c set to copy b with b to 0
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Foo must be immutable"]);
   });
 
 });
