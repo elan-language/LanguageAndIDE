@@ -1,4 +1,4 @@
-# 3181fc8621665f5e2b02bfd783199cf627a3f7f6a9efb353afffb58952b14dc9 Elan Beta 2 valid
+# f7582ff5c33411b0e69f936c1c0fa867a8607efbb28b92c6af4e9a69363adb47 Elan Beta 2 valid
 
 main
   print "Press any key to halt"
@@ -142,7 +142,7 @@ test
 end test
 
 test 
-  assert neighbourCells(90) is {49, 50, 51, 89,91, 129, 130, 131}
+  assert neighbourCells(90) is {49, 50, 51, 89, 91, 129, 130, 131}
 end test
 
 test 

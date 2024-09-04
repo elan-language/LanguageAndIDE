@@ -1,4 +1,4 @@
-# 955b0ae25cee8ad6fd1961d342d5c93a71480e8d4043dc7051640cf7b2bd4b10 Elan Beta 2 valid
+# d3f90d068e2f0769cd80a9fadcd9f5aa7b9fac731d163a15d221f32fa84bc704 Elan Beta 2 valid
 
 main
   var start set to new Point(0, 0)
@@ -26,8 +26,8 @@ main
 end main
 
 procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks as [Point], solver as Solver, alg as Algorithm)
-  var gr2 set to gr
   call solver.initialise(alg)
+  var gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     set gr2 to addVisited(gr2, solver.getLastVisited())
@@ -117,7 +117,7 @@ class Solver
 
   procedure visitNextPoint()
     call updateNeighbours()
-    set current to nextNodeToVisit()
+    set property.current to nextNodeToVisit()
     if (current is empty Node) or (current.point is destination)
       then
         set running to false
@@ -211,9 +211,9 @@ end class
 class Node
   constructor(p as Point, distFromStart as Float, estDistToDest as Float)
     set property.point to p
-    set visited to false
+    set property.visited to false
     set property.distFromStart to distFromStart
-    set via to empty Point
+    set property.via to empty Point
     set property.estDistToDest to estDistToDest
   end constructor
 
@@ -228,15 +228,15 @@ class Node
   property estDistToDest as Float
 
   procedure setVisited(value as Boolean)
-    set visited to value
+    set property.visited to value
   end procedure
 
   procedure setDistanceFromStart(d as Float)
-    set distFromStart to d
+    set property.distFromStart to d
   end procedure
 
   procedure setVia(p as Point)
-    set via to p
+    set property.via to p
   end procedure
 
 end class
@@ -246,7 +246,7 @@ immutable class Point
     set property.x to x
     set property.y to y
     # isNotEmpty is needed to distinguish Point(0,0) from empty Point, which will also have zero values
-    set isNotEmpty to true
+    set property.isNotEmpty to true
   end constructor
 
   property x as Int
@@ -277,19 +277,9 @@ constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant white set to 0xffffff
-
-constant red set to 0xff0000
-
-constant green set to 0x00ff00
-
-constant yellow set to 0xffd000
+constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \n'x' to exit\nEnter option: "
 
 constant lightBlue set to 0x80abff
-
-constant black set to 0x000000
-
-constant algPrompt set to "\n'a' for A-star \n'd' for Dijkstra \n'h' for Heuristic \n'x' to exit\nEnter option: "
 
 test point
   let p be new Point(0, 0)

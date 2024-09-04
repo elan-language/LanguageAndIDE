@@ -1,4 +1,4 @@
-# a7aa9b14b4dfaecdb7c21082d83f15cb3c0d5656304e2793580d74e640ced7ba Elan Beta 2 valid
+# f81e39689492d9ba41bc359470fdec6abe8405e0968b4a7a735733e17ac17815 Elan Beta 2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -36,9 +36,9 @@ class TuringMachine
   constructor(initialState as String, haltState as String)
     set property.initialState to initialState
     set property.haltState to haltState
-    set rules to empty {Rule}
-    set currentState to initialState
-    set headPosition to 0
+    set property.rules to empty {Rule}
+    set property.currentState to initialState
+    set property.headPosition to 0
   end constructor
 
   property initialState as String
@@ -62,12 +62,12 @@ class TuringMachine
   end procedure
 
   procedure add(rule as Rule)
-    set rules to rules + rule
+    set property.rules to rules + rule
   end procedure
 
   procedure reset()
-    set currentState to initialState
-    set headPosition to 0
+    set property.currentState to initialState
+    set property.headPosition to 0
   end procedure
 
   procedure singleStep()
@@ -100,11 +100,11 @@ class TuringMachine
 
   procedure write(newSymbol as String)
     var hp set to headPosition
-    set tape to tape[..hp] + newSymbol + tape[hp + 1..]
+    set property.tape to tape[..hp] + newSymbol + tape[hp + 1..]
   end procedure
 
   procedure execute(rule as Rule)
-    set currentState to rule.nextState
+    set property.currentState to rule.nextState
     call write(rule.writeSymbol)
     if rule.move is Dir.right
       then
