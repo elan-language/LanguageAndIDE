@@ -1,6 +1,5 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
-import { IndexNode } from "./index-node";
 import { IndexSingle } from "./index-single";
 import { OptionalNode } from "./optional-node";
 

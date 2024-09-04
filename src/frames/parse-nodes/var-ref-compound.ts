@@ -3,7 +3,6 @@ import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
-import { IndexNode } from "./index-node";
 import { IndexSingle } from "./index-single";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";

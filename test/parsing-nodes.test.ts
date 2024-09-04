@@ -15,8 +15,6 @@ import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImmutableListNode } from "../src/frames/parse-nodes/immutable-list-node";
-import { IndexDouble } from "../src/frames/parse-nodes/index-double";
-import { IndexNode } from "../src/frames/parse-nodes/index-node";
 import { InstanceNode } from "../src/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -1430,21 +1428,7 @@ suite("Parsing Nodes", () => {
   //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");
   //   testNodeParse(new MethodCallNode(), `bar`, ParseStatus.incomplete, "", "");
   // });
-  test("#387 Indexes", () => {
-    testNodeParse(new IndexNode(), `[3]`, ParseStatus.valid, "[3]", "");
-    testNodeParse(new IndexNode(), `[3`, ParseStatus.incomplete, "[3", "");
-    testNodeParse(new IndexNode(), `(3)`, ParseStatus.invalid, "", "(3)");
-    testNodeParse(new IndexNode(), `[x + y]`, ParseStatus.valid, "[x + y]", "");
-    testNodeParse(new IndexNode(), `[3..4]`, ParseStatus.valid, "[3..4]", "");
-    testNodeParse(new IndexNode(), `[3..]`, ParseStatus.valid, "[3..]", "");
-    testNodeParse(new IndexNode(), `[..4]`, ParseStatus.valid, "[..4]", "");
-    testNodeParse(new IndexNode(), `[3..`, ParseStatus.incomplete, "[3..", "");
-
-    testNodeParse(new IndexDouble(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
-    testNodeParse(new IndexNode(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
-    testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.valid, "", "[5]");
-    testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[5]");
-  });
+ 
   test("#670 new parse node structure for terms & expressions", () => {
     testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
     testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");

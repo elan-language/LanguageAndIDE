@@ -24,7 +24,6 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
-import { IndexDouble } from "../parse-nodes/index-double";
 import { IndexSingle } from "../parse-nodes/index-single";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -464,13 +463,6 @@ export function transform(
     const toNode = node.toIndex?.matchedNode;
     const to = toNode ? transform(toNode, fieldId, scope) : undefined;
     return new RangeAsn(from, to, fieldId, scope);
-  }
-
-  if (node instanceof IndexDouble) {
-    const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
-    const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
-
-    return new IndexAsn(indexOne, indexTwo, fieldId, scope);
   }
 
   if (node instanceof IndexSingle) {
