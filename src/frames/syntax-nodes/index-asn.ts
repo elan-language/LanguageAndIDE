@@ -159,6 +159,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     if (!this.precedingNode) {
       return UnknownType.Instance;
     }
+
     const rootType = this.precedingNode.symbolType();
 
     if (this.isIndex()) {

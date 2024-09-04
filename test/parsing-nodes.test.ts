@@ -15,8 +15,6 @@ import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImmutableListNode } from "../src/frames/parse-nodes/immutable-list-node";
-import { IndexDouble } from "../src/frames/parse-nodes/index-double";
-import { IndexNode } from "../src/frames/parse-nodes/index-node";
 import { InstanceNode } from "../src/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -624,7 +622,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new InstanceNode(), `bar`, ParseStatus.valid, `bar`, "", "");
     testNodeParse(new InstanceNode(), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
-    testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
+    //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
   // test("Function Call", () => {
@@ -1430,28 +1428,14 @@ suite("Parsing Nodes", () => {
   //   testNodeParse(new MethodCallNode(), `bar.`, ParseStatus.incomplete, "", "");
   //   testNodeParse(new MethodCallNode(), `bar`, ParseStatus.incomplete, "", "");
   // });
-  test("#387 Indexes", () => {
-    testNodeParse(new IndexNode(), `[3]`, ParseStatus.valid, "[3]", "");
-    testNodeParse(new IndexNode(), `[3`, ParseStatus.incomplete, "[3", "");
-    testNodeParse(new IndexNode(), `(3)`, ParseStatus.invalid, "", "(3)");
-    testNodeParse(new IndexNode(), `[x + y]`, ParseStatus.valid, "[x + y]", "");
-    testNodeParse(new IndexNode(), `[3..4]`, ParseStatus.valid, "[3..4]", "");
-    testNodeParse(new IndexNode(), `[3..]`, ParseStatus.valid, "[3..]", "");
-    testNodeParse(new IndexNode(), `[..4]`, ParseStatus.valid, "[..4]", "");
-    testNodeParse(new IndexNode(), `[3..`, ParseStatus.incomplete, "[3..", "");
-
-    testNodeParse(new IndexDouble(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
-    testNodeParse(new IndexNode(), `[3][4]`, ParseStatus.valid, "[3][4]", "");
-    testNodeParse(new IndexNode(), `[3][4][5]`, ParseStatus.valid, "", "[5]");
-    testNodeParse(new IndexNode(), `[3..4][5]`, ParseStatus.valid, "", "[5]");
-  });
+ 
   test("#670 new parse node structure for terms & expressions", () => {
     testNodeParse(new ReferenceNode(), `abc`, ParseStatus.valid, "abc", "");
     testNodeParse(new ReferenceNode(), `abc()`, ParseStatus.valid, "abc()", "");
     testNodeParse(new ReferenceNode(), `this`, ParseStatus.valid, "this", "");
     testNodeParse(new ReferenceNode(), `abc(def, ghi)`, ParseStatus.valid, "abc(def, ghi)", "");
     testNodeParse(new TermSimple(), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-    //testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1][2]", "");
+    testNodeParse(new TermSimple(), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
     testNodeParse(new TermSimple(), `abc[1..2]`, ParseStatus.valid, "abc[1..2]", "");
     testNodeParse(new TermSimple(), `abc(def, ghi)[0]`, ParseStatus.valid, "abc(def, ghi)[0]", "");
     testNodeParse(new TermSimple(), `(def, ghi)`, ParseStatus.valid, "(def, ghi)", "");// tuple

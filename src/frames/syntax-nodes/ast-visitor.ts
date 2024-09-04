@@ -4,6 +4,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
+import { Alternatives } from "../parse-nodes/alternatives";
 import { ArrayListNode } from "../parse-nodes/array-list-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
@@ -23,7 +24,6 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
 import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
-import { IndexDouble } from "../parse-nodes/index-double";
 import { IndexSingle } from "../parse-nodes/index-single";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -465,13 +465,6 @@ export function transform(
     return new RangeAsn(from, to, fieldId, scope);
   }
 
-  if (node instanceof IndexDouble) {
-    const indexOne = transform(node.indexOne, fieldId, scope) as ExprAsn;
-    const indexTwo = transform(node.indexTwo, fieldId, scope) as ExprAsn;
-
-    return new IndexAsn(indexOne, indexTwo, fieldId, scope);
-  }
-
   if (node instanceof IndexSingle) {
     const index = transform(node.contents, fieldId, scope) as ExprAsn;
     return new IndexAsn(index, undefined, fieldId, scope);
@@ -540,7 +533,23 @@ export function transform(
       }
     }
 
-    const index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
+    let index: IndexAsn | undefined;
+
+    if (
+      node.index.matchedNode instanceof Alternatives &&
+      node.index.matchedNode.bestMatch instanceof Sequence
+    ) {
+      const di = transformMany(node.index.matchedNode.bestMatch, fieldId, scope);
+      index = new IndexAsn(
+        (di.items[0] as IndexAsn).index1,
+        (di.items[1] as IndexAsn).index1,
+        fieldId,
+        scope,
+      );
+    } else if (node.index) {
+      index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
+    }
+
     return new VarAsn(id, true, q, index, fieldId, scope);
   }
 

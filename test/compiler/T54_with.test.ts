@@ -1,7 +1,7 @@
 import { CodeSourceFromString } from "../../src/frames/code-source";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
-import { testHash, transforms, assertParses, assertStatusIsValid, assertObjectCodeIs, assertObjectCodeExecutes, assertDoesNotParse, ignore_test } from "./compiler-test-helpers";
+import { testHash, transforms, assertParses, assertStatusIsValid, assertObjectCodeIs, assertObjectCodeExecutes, assertDoesNotParse, ignore_test, assertDoesNotCompile } from "./compiler-test-helpers";
 
 suite("T54_With", () => {
   test("Pass_SingleSetToVar", async () => {
@@ -380,6 +380,307 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "101102");
   });
 
+  test("Pass_ExpressionSimple", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo()
+  var b set to copy a with a to 2 + 2
+  print a.a
+  print b.a
+end main
+
+class Foo
+  constructor()
+    set property.a to 1
+  end constructor
+
+  property a as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
+  system.printLine(_stdlib.asString(a.a));
+  system.printLine(_stdlib.asString(b.a));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", 0]]);};
+  constructor() {
+    this.a = 1;
+  }
+
+  a = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "14");
+  });
+
+  test("Pass_ExpressionNew", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to new Foo(1)
+  var b set to copy a with a to new Foo(2)
+  print a.a.b
+  print b.a.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property a as Foo
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo(1));
+  var b = (() => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = system.initialise(new Foo(2)); return _a;})();
+  system.printLine(_stdlib.asString(a.a.b));
+  system.printLine(_stdlib.asString(b.a.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  _a;
+  get a() {
+    return this._a ??= Foo.emptyInstance();
+  }
+  set a(a) {
+    this._a = a;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "02");
+  });
+
+  test("Pass_ExpressionIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to [0,2]
+  var b set to new Foo(1)
+  var c set to copy b with b to a[1]
+  print b.b
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([0, 2]);
+  var b = system.initialise(new Foo(1));
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
+  system.printLine(_stdlib.asString(b.b));
+  system.printLine(_stdlib.asString(c.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_MultiExpressionIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to [0,2]
+  var b set to new Foo(1)
+  var c set to copy b with b to a[0], c to a[1], d to a.length()
+  print c.b
+  print c.c
+  print c.d
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+  property c as Int
+  property d as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.literalArray([0, 2]);
+  var b = system.initialise(new Foo(1));
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 0); _a.c = system.safeIndex(a, 1); _a.d = _stdlib.length(a); return _a;})();
+  system.printLine(_stdlib.asString(c.b));
+  system.printLine(_stdlib.asString(c.c));
+  system.printLine(_stdlib.asString(c.d));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0], ["c", 0], ["d", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  b = 0;
+
+  c = 0;
+
+  d = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "022");
+  });
+
+  test("Pass_ExpressionIndex1", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to {0,2}
+  var b set to new Foo(1)
+  var c set to copy b with b to a.get(1)
+  print b.b
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableList([0, 2]);
+  var b = system.initialise(new Foo(1));
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.get(a, 1); return _a;})();
+  system.printLine(_stdlib.asString(b.b));
+  system.printLine(_stdlib.asString(c.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_ExpressionExtension", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var a set to {0,2,3}
+  var b set to new Foo(1)
+  var c set to copy b with b to a.length()
+  print b.b
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.immutableList([0, 2, 3]);
+  var b = system.initialise(new Foo(1));
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.length(a); return _a;})();
+  system.printLine(_stdlib.asString(b.b));
+  system.printLine(_stdlib.asString(c.b));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["b", 0]]);};
+  constructor(i) {
+    this.b = i;
+  }
+
+  b = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "13");
+  });
+
   test("Fail_NoSets", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
 
@@ -404,4 +705,55 @@ end class`;
 
     assertDoesNotParse(fileImpl);
   });
+
+  ignore_test("Fail_WrongType", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var b set to new Foo(1)
+  var c set to copy b with b to [0]
+  print c.b
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property b as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["no"]);
+  });
+
+  test("Fail_NoSuchProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 1 valid
+
+main
+  var b set to new Foo(1)
+  var c set to copy b with b to 0
+  print c.d
+end main
+
+class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  property d as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["b is not defined"]);
+  });
+
 });
