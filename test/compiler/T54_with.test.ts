@@ -706,7 +706,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_WrongType", async () => {
+  test("Fail_WrongType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
