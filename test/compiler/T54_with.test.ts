@@ -790,6 +790,31 @@ end class`;
     assertDoesNotCompile(fileImpl, ["b is not defined"]);
   });
 
+  test("Fail_PrivateProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var b set to new Foo(1)
+  var c set to copy b with b to 0
+  print c.d
+end main
+
+immutable class Foo
+  constructor(i as Int)
+    set property.b to i
+  end constructor
+
+  private property b as Int
+end class`;
+
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot reference private property b"]);
+  });
+
   test("Fail_NotImmutable", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
