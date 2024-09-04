@@ -1,6 +1,7 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";
 import { IndexNode } from "./index-node";
+import { IndexSingle } from "./index-single";
 import { OptionalNode } from "./optional-node";
 
 export class InstanceNode extends AbstractSequence {
@@ -10,7 +11,7 @@ export class InstanceNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.variable = new IdentifierNode();
-      this.index = new OptionalNode(new IndexNode());
+      this.index = new OptionalNode(new IndexSingle());
       this.addElement(this.variable);
       this.addElement(this.index);
       super.parseText(text);

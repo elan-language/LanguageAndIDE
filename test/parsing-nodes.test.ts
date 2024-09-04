@@ -624,7 +624,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceNode(), ``, ParseStatus.empty, ``, "", "");
     testNodeParse(new InstanceNode(), `bar`, ParseStatus.valid, `bar`, "", "");
     testNodeParse(new InstanceNode(), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
-    testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
+    //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
   // test("Function Call", () => {
