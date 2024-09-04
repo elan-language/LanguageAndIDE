@@ -1294,6 +1294,56 @@ export class StdLibSymbols implements Scope {
         new FunctionType([StringType.Instance, RegexType.Instance], BooleanType.Instance, true),
       ),
     ],
+    [
+      "openRead",
+      this.getSymbol(
+        "openRead",
+        new FunctionType(
+          [StringType.Instance],
+          new TupleType([IntType.Instance, StringType.Instance, IntType.Instance]),
+          false,
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
+      "readLine",
+      this.getSymbol(
+        "readLine",
+        new FunctionType(
+          [new TupleType([IntType.Instance, StringType.Instance, IntType.Instance])],
+          StringType.Instance,
+          true,
+          false,
+          true,
+        ),
+      ),
+    ],
+    [
+      "endOfFile",
+      this.getSymbol(
+        "endOfFile",
+        new FunctionType(
+          [new TupleType([IntType.Instance, StringType.Instance, IntType.Instance])],
+          BooleanType.Instance,
+          true,
+          true,
+          true,
+        ),
+      ),
+    ],
+    [
+      "close",
+      this.getSymbol(
+        "close",
+        new ProcedureType(
+          [new TupleType([IntType.Instance, StringType.Instance, IntType.Instance])],
+          true,
+          true,
+        ),
+      ),
+    ],
   ]);
 
   resolveSymbol(id: string | undefined, transforms: Transforms, scope: Scope): ElanSymbol {

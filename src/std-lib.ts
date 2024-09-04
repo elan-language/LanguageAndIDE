@@ -4,6 +4,7 @@ import { System } from "./system";
 
 type Location = [string, number, number];
 type Graphics = Location[];
+type File = [number, string, number]; // open/closed, read/write, contents, pointer
 
 export class StdLib {
   constructor(private readonly system: System) {}
@@ -46,7 +47,7 @@ export class StdLib {
         case "Iter":
           return `an Iterable`;
         default:
-          throw new Error("_type not set");
+          return v.toString();
       }
     }
 
@@ -833,5 +834,35 @@ export class StdLib {
   }
   matchesRegex(a: string, r: RegExp): boolean {
     return r.test(a);
+  }
+  //File operations
+  openRead(contents: string): File {
+    return [1, contents, 0];
+  }
+  readLine(file: File): string {
+    const status = file[0];
+    const contents = file[1];
+    const pointer = file[2];
+    if (status === 0) {
+      throw new Error("File is not open");
+    }
+    if (status === 2) {
+      throw new Error("File is open for writing, not reading");
+    }
+    let newline = contents.indexOf("\n", pointer);
+    if (newline === -1) {
+      newline = contents.length;
+    }
+    const line = contents.substring(pointer, newline);
+    file[2] = newline + 1;
+    return line;
+  }
+
+  endOfFile(file: File): boolean {
+    return file[2] >= file[1].length - 1;
+  }
+
+  close(file: File): void {
+    //Does nothing for now.
   }
 }
