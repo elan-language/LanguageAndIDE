@@ -1,4 +1,4 @@
-# f01835d61b6e684e3a61bc20f9d1ce747c3dc34592967b50a381cccc5e35696a Elan Beta 2 valid
+# 88515fcfe626ca19af6d4c67361e7d883de877ccba93262c8084e86166b80fb1 Elan Beta 2 valid
 
 # This is *not* a card game: it's a demo of how you could *start* to draw cards for such game
 main
@@ -28,9 +28,9 @@ class Card
   constructor(rank as Rank, suit as Suit)
     set property.rank to rank
     set property.suit to suit
-    set symbol to unicode(symbols.getValueByKey(suit))
-    set colour to colourForSuit.getValueByKey(suit)
-    set label to labels.getValueByKey(rank)
+    set property.symbol to unicode(symbols.getValueByKey(suit))
+    set property.colour to colourForSuit.getValueByKey(suit)
+    set property.label to labels.getValueByKey(rank)
   end constructor
 
   property suit as Suit
@@ -48,14 +48,6 @@ end class
 enum Suit clubs, diamonds, hearts, spades
 
 enum Rank ace, one, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
-
-constant black set to 0x000000
-
-constant white set to 0xffffff
-
-constant green set to 0x008000
-
-constant red set to 0xff0000
 
 constant colourForSuit set to {Suit.clubs:black, Suit.diamonds:red, Suit.hearts:red, Suit.spades:black}
 
