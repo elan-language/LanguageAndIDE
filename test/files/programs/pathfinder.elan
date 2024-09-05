@@ -1,11 +1,11 @@
-# d3f90d068e2f0769cd80a9fadcd9f5aa7b9fac731d163a15d221f32fa84bc704 Elan Beta 2 valid
+# 9fcea896ea2476991429a65c35c08fd0e783d85dcb76408b449d7709ede43942 Elan Beta 2 valid
 
 main
-  var start set to new Point(0, 0)
-  var destination set to new Point(39, 29)
+  var start set to new Point(5, 5)
+  var destination set to new Point(34, 24)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
-  var percentRocks set to inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
+  var percentRocks set to inputIntBetween("Enter % rocks: ", 0, 100)
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()

@@ -1,9 +1,10 @@
-# 47af217d897263c5f73bfaf0518e6a22b55e92f19cd8386edadbd52cdab6c9a5 Elan Beta 2 valid
+# b4467dd62a9a0fb5ce2f0751418e10c0c898e02919a970056811b6f3eecad2d2 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
 main
   var game set to new Game(firstRandom())
+  set game to newApple(game)
   while game.isOn
     set game to updateGraphics(game)
     var gr set to game.graphics
@@ -79,7 +80,6 @@ immutable class Game
     set property.head to new Square(22, 15)
     set property.priorTail to empty Square
     set property.body to {new Square(20, 15), new Square(21, 15)}
-    set property.apple to new Square(10, 10)
     set property.isOn to true
     set property.key to "d"
     set property.rnd to rnd
