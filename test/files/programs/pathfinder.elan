@@ -1,11 +1,11 @@
-# 9fcea896ea2476991429a65c35c08fd0e783d85dcb76408b449d7709ede43942 Elan Beta 2 valid
+# 16c150490885368a9a96649dc70e05dee2df4ff8c4598307d24aa6f8f8f30346 Elan Beta 1 valid
 
 main
   var start set to new Point(5, 5)
   var destination set to new Point(34, 24)
   var rocks set to empty [Point]
   var nodes set to empty [Node]
-  var percentRocks set to inputIntBetween("Enter % rocks: ", 0, 100)
+  var percentRocks set to inputIntBetween("Enter % to fill with rocks (0-100): ", 0, 100)
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   var gr set to initialiseGraphics(start, destination, rocks)
   call gr.draw()
@@ -82,6 +82,10 @@ function addRoute(gr as Graphics, route as {Point}) return Graphics
   each p in route
     set gr2 to gr2.putBackground(p.x, p.y, yellow)
   end each
+  let start be route.get(0)
+  let dest be route.get(route.length() - 1)
+  set gr2 to gr2.putBackground(start.x, start.y, green)
+  set gr2 to gr2.putBackground(dest.x, dest.y, red)
   return gr2
 end function
 
