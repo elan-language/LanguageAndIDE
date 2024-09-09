@@ -431,18 +431,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "substring",
-      this.getSymbol(
-        "substring",
-        new FunctionType(
-          [StringType.Instance, IntType.Instance, IntType.Instance],
-          StringType.Instance,
-          true,
-          true,
-        ),
-      ),
-    ],
-    [
       "upperCase",
       this.getSymbol(
         "upperCase",

@@ -375,7 +375,7 @@ return [main, _tests];}`;
 main 
   var aStringVar set to "abcdexefg"
   var s set to ""
-  set s to aStringVar.upperCase().substring(1, 7)[2..6].indexOf("X").asString()
+  set s to aStringVar.upperCase()[1..7][2..6].indexOf("X").asString()
   print s
 end main`;
 
@@ -383,7 +383,7 @@ end main`;
 async function main() {
   var aStringVar = "abcdexefg";
   var s = "";
-  s = _stdlib.asString(_stdlib.indexOf(_stdlib.substring(_stdlib.upperCase(aStringVar), 1, 7).slice(2, 6), "X"));
+  s = _stdlib.asString(_stdlib.indexOf(_stdlib.upperCase(aStringVar).slice(1, 7).slice(2, 6), "X"));
   system.printLine(_stdlib.asString(s));
 }
 return [main, _tests];}`;

@@ -143,10 +143,6 @@ export class StdLib {
     return this.keys(coll).length;
   }
 
-  substring(s1: string, start: number, end: number) {
-    return s1.substring(start, end);
-  }
-
   upperCase(s1: string): string {
     return s1.toUpperCase();
   }
