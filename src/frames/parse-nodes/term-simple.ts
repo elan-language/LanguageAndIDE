@@ -11,6 +11,7 @@ import { LitValueNode } from "./lit-value";
 import { OptionalNode } from "./optional-node";
 import { ReferenceNode } from "./reference-node";
 import { TupleNode } from "./tuple-node";
+import { TypeOfNode } from "./type-of-node";
 import { UnaryExpression } from "./unary-expression";
 
 export class TermSimple extends AbstractSequence {
@@ -25,6 +26,7 @@ export class TermSimple extends AbstractSequence {
   parseText(text: string): void {
     const litVal = () => new LitValueNode();
     const ref = () => new ReferenceNode();
+    const typeOf = () => new TypeOfNode();
     const immList = () => new ImmutableListNode(() => new ExprNode());
     const arrList = () => new ArrayListNode(() => new ExprNode());
     const dict = () =>
@@ -43,6 +45,7 @@ export class TermSimple extends AbstractSequence {
     this.alternatives = new Alternatives([
       litVal,
       ref,
+      typeOf,
       immList,
       arrList,
       dict,

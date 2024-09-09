@@ -1445,6 +1445,10 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", ""); 
     testNodeParse(new TermSimple(), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+    testNodeParse(new TermSimple(), `typeof a`, ParseStatus.valid, "typeof a", "");
+    testNodeParse(new TermSimple(), `typeof 3`, ParseStatus.valid, "typeof 3", "");
+    testNodeParse(new TermSimple(), `typeof (3 + a)`, ParseStatus.valid, "typeof (3 + a)", "");
+    testNodeParse(new TermSimple(), `typeof 3 + a`, ParseStatus.valid, "typeof 3", " + a");
     testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
     testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
