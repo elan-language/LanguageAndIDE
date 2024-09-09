@@ -225,16 +225,16 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a["b"] to 4
-  set a["d"] to 2
+  call a.putAtKey("b", 4)
+  call a.putAtKey("d", 2)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  system.safeSet(a, "b", 4);
-  system.safeSet(a, "d", 2);
+  _stdlib.putAtKey(a, "b", 4);
+  _stdlib.putAtKey(a, "d", 2);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -253,16 +253,16 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
-  set a["b"] to ["c":4]
-  set a["a"]["x"] to 2
+  call a.putAtKey("b", ["c":4])
+  call a["a"].putAtKey("x", 2)
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  system.safeSet(a, "b", system.dictionary({["c"] : 4}));
-  system.safeDoubleSet(a, "a", "x", 2);
+  _stdlib.putAtKey(a, "b", system.dictionary({["c"] : 4}));
+  _stdlib.putAtKey(system.safeIndex(a, "a"), "x", 2);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -365,8 +365,8 @@ return [main, _tests];}`;
 
 main
   var a set to new Dictionary<of String, Int>()
-  set a["Foo"] to 1
-  set a["Bar"] to 3
+  call a.putAtKey("Foo", 1)
+  call a.putAtKey("Bar", 3)
   var k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -376,8 +376,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  system.safeSet(a, "Foo", 1);
-  system.safeSet(a, "Bar", 3);
+  _stdlib.putAtKey(a, "Foo", 1);
+  _stdlib.putAtKey(a, "Bar", 3);
   var k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Foo")));
@@ -399,8 +399,9 @@ return [main, _tests];}`;
 
 main
   var a set to new Dictionary<of String, Dictionary<of String, Int>>()
-  set a["Foo"] to ["ff":1]
-  set a["Bar"]["bb"] to 3
+  call a.putAtKey("Foo", ["ff":1])
+  call a.putAtKey("Bar", new Dictionary<of String, Int>())
+  call a["Bar"].putAtKey("bb", 3)
   var k set to a.keys()
   print k.length()
   print a["Foo"]
@@ -410,8 +411,9 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  system.safeSet(a, "Foo", system.dictionary({["ff"] : 1}));
-  system.safeDoubleSet(a, "Bar", "bb", 3);
+  _stdlib.putAtKey(a, "Foo", system.dictionary({["ff"] : 1}));
+  _stdlib.putAtKey(a, "Bar", system.initialise(system.dictionary(new Object())));
+  _stdlib.putAtKey(system.safeIndex(a, "Bar"), "bb", 3);
   var k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, "Foo")));
@@ -435,8 +437,8 @@ return [main, _tests];}`;
 
 main
   var a set to new Dictionary<of Fruit, Int>()
-  set a[Fruit.apple] to 1
-  set a[Fruit.orange] to 3
+  call a.putAtKey(Fruit.apple, 1)
+  call a.putAtKey(Fruit.orange, 3)
   var k set to a.keys()
   print k.length()
   print a[Fruit.apple]
@@ -450,8 +452,8 @@ var Fruit = {
 
 async function main() {
   var a = system.initialise(system.dictionary(new Object()));
-  system.safeSet(a, Fruit.apple, 1);
-  system.safeSet(a, Fruit.orange, 3);
+  _stdlib.putAtKey(a, Fruit.apple, 1);
+  _stdlib.putAtKey(a, Fruit.orange, 3);
   var k = _stdlib.keys(a);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(a, Fruit.apple)));
@@ -474,7 +476,7 @@ return [main, _tests];}`;
 main
   var a set to empty [String:Int]
   var b set to empty [String:Int]
-  set a["a"] to 3
+  call a.putAtKey("a", 3)
   print a
   print b
   print a is b
@@ -486,7 +488,7 @@ end main`;
 async function main() {
   var a = system.emptyDictionary();
   var b = system.emptyDictionary();
-  system.safeSet(a, "a", 3);
+  _stdlib.putAtKey(a, "a", 3);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
@@ -510,7 +512,7 @@ return [main, _tests];}`;
 main
   var a set to empty [String:[String:Int]]
   var b set to empty [String:[String:Int]]
-  set a["a"] to ["a":1]
+  call a.putAtKey("a", ["a":1])
   print a
   print b
   print a is b
@@ -522,7 +524,7 @@ end main`;
 async function main() {
   var a = system.emptyDictionary();
   var b = system.emptyDictionary();
-  system.safeSet(a, "a", system.dictionary({["a"] : 1}));
+  _stdlib.putAtKey(a, "a", system.dictionary({["a"] : 1}));
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
@@ -628,7 +630,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a[10] to 4
+  call a.putAtKey(10, 4)
 end main
 `;
 
@@ -677,7 +679,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a["b"] to 3.1
+  call a.putAtKey("b", 3.1)
 end main
 `;
 
@@ -725,7 +727,7 @@ end main`;
 
 main
   var a set to ["a":1, "d":2]
-  set a[1] to 1
+  call a.putAtKey(1, 1)
 end main
 `;
 
@@ -741,7 +743,7 @@ end main
 
 main
   var a set to ["a":["a":1, "d":2]]
-  set a[0]["a"] to 1
+  call a[0].putAtKey("a", 1)
 end main
 `;
 
@@ -757,7 +759,7 @@ end main
 
 main
   var a set to ["a":["a":1, "d":2]]
-  set a["a"][1] to 1
+  call a["a"].putAtKey(1, 1)
 end main
 `;
 
