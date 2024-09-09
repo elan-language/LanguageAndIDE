@@ -1071,6 +1071,33 @@ suite("Parsing Nodes", () => {
       "x as String",
       "x <keyword>as</keyword> <type>String</type>",
     );
+    testNodeParse(
+      new ParamDefNode(),
+      `out x as String`,
+      ParseStatus.valid,
+      "out x as String",
+      "",
+      "out x as String",
+      "<keyword>out</keyword> x <keyword>as</keyword> <type>String</type>",
+    );
+    testNodeParse(
+      new ParamDefNode(),
+      `ref x as String`,
+      ParseStatus.invalid,
+      "",
+      "ref x as String",
+      "",
+      "",
+    );
+    testNodeParse(
+      new ParamDefNode(),
+      `out as String`,
+      ParseStatus.invalid,
+      "",
+      "out as String",
+      "",
+      "",
+    );
     testNodeParse(new ParamDefNode(), `y asString`, ParseStatus.invalid, "", "y asString", "");
     testNodeParse(new ParamDefNode(), `z`, ParseStatus.incomplete, "z", "", "");
     testNodeParse(new ParamDefNode(), `w as`, ParseStatus.incomplete, "w as", "", "");
@@ -1445,6 +1472,10 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(), `-345`, ParseStatus.valid, "-345", ""); 
     testNodeParse(new TermSimple(), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+    testNodeParse(new TermSimple(), `typeof a`, ParseStatus.valid, "typeof a", "");
+    testNodeParse(new TermSimple(), `typeof 3`, ParseStatus.valid, "typeof 3", "");
+    testNodeParse(new TermSimple(), `typeof (3 + a)`, ParseStatus.valid, "typeof (3 + a)", "");
+    testNodeParse(new TermSimple(), `typeof 3 + a`, ParseStatus.valid, "typeof 3", " + a");
     testNodeParse(new Qualifier(), `property`, ParseStatus.valid, `property`, "");
     testNodeParse(new PunctuationNode(DOT), `.`, ParseStatus.valid, `.`, "");
     testNodeParse(new ReferenceNode(), `a`, ParseStatus.valid, `a`, "");
