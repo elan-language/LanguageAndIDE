@@ -453,7 +453,7 @@ export class StdLib {
     }
   }
 
-  putAt(
+  putDetails(
     map: Graphics,
     x: number,
     y: number,
@@ -466,15 +466,15 @@ export class StdLib {
     return cm;
   }
 
-  getAt(map: Graphics, x: number, y: number) {
+  getDetails(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
     return this.system.safeIndex(cm, this.idx(x, y));
   }
 
   putChar(map: Graphics, x: number, y: number, c: string) {
     const cm = this.ensureInitialised(map);
-    const [, f, b] = this.getAt(cm, x, y);
-    return this.putAt(cm, x, y, c[0], f, b);
+    const [, f, b] = this.getDetails(cm, x, y);
+    return this.putDetails(cm, x, y, c[0], f, b);
   }
 
   putString(
@@ -488,11 +488,11 @@ export class StdLib {
     let cm = this.ensureInitialised(map);
     for (let i = 0; i < text.length; i++) {
       if (x + i < this.xSize) {
-        cm = this.putAt(cm, x + i, y, text[i], foreground, background);
+        cm = this.putDetails(cm, x + i, y, text[i], foreground, background);
       } else {
         const newX = (x + i) % this.xSize;
         const newY = (y + this.floor((x + i) / this.xSize)) % this.ySize;
-        cm = this.putAt(cm, newX, newY, text[i], foreground, background);
+        cm = this.putDetails(cm, newX, newY, text[i], foreground, background);
       }
     }
     return cm;
@@ -500,29 +500,29 @@ export class StdLib {
 
   getChar(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getAt(cm, x, y), 0);
+    return this.system.safeIndex(this.getDetails(cm, x, y), 0);
   }
 
   putForeground(map: Graphics, x: number, y: number, f: number) {
     const cm = this.ensureInitialised(map);
-    const [c, , b] = this.getAt(map, x, y);
-    return this.putAt(cm, x, y, c, f, b);
+    const [c, , b] = this.getDetails(map, x, y);
+    return this.putDetails(cm, x, y, c, f, b);
   }
 
   getForeground(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getAt(cm, x, y), 1);
+    return this.system.safeIndex(this.getDetails(cm, x, y), 1);
   }
 
   putBackground(map: Graphics, x: number, y: number, b: number) {
     const cm = this.ensureInitialised(map);
-    const [c, f] = this.getAt(cm, x, y);
-    return this.putAt(cm, x, y, c, f, b);
+    const [c, f] = this.getDetails(cm, x, y);
+    return this.putDetails(cm, x, y, c, f, b);
   }
 
   getBackground(map: Graphics, x: number, y: number) {
     const cm = this.ensureInitialised(map);
-    return this.system.safeIndex(this.getAt(cm, x, y), 2);
+    return this.system.safeIndex(this.getDetails(cm, x, y), 2);
   }
 
   fill(map: Graphics, c: string, f: number, b: number): Graphics {
@@ -539,7 +539,7 @@ export class StdLib {
 
     for (let y = 0; y < this.ySize; y++) {
       for (let x = 0; x < this.xSize; x++) {
-        const [c, f, b] = this.getAt(cm, x, y);
+        const [c, f, b] = this.getDetails(cm, x, y);
         rendered = `${rendered}<div style="color:${this.asHex(f)};background-color:${this.asHex(b)};">${c}</div>`;
       }
     }

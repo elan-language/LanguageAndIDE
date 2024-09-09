@@ -45,14 +45,14 @@ return [main, _tests];}`;
 
 main
   var g set to new Graphics()
-  set g to g.putAt(0, 0, "F", 1, 2)
+  set g to g.putDetails(0, 0, "F", 1, 2)
   call g.draw()
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putAt(g, 0, 0, "F", 1, 2);
+  g = _stdlib.putDetails(g, 0, 0, "F", 1, 2);
   await _stdlib.draw(g);
 }
 return [main, _tests];}`;
@@ -75,15 +75,15 @@ return [main, _tests];}`;
 
 main
   var g set to new Graphics()
-  set g to g.putAt(10, 20, "a", 1, 2)
-  print g.getAt(10, 20)
+  set g to g.putDetails(10, 20, "a", 1, 2)
+  print g.getDetails(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putAt(g, 10, 20, "a", 1, 2);
-  system.printLine(_stdlib.asString(_stdlib.getAt(g, 10, 20)));
+  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
+  system.printLine(_stdlib.asString(_stdlib.getDetails(g, 10, 20)));
 }
 return [main, _tests];}`;
 
@@ -131,14 +131,14 @@ return [main, _tests];}`;
 
 main
   var g set to new Graphics()
-  set g to g.putAt(10, 20, "a", 1, 2)
+  set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getChar(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putAt(g, 10, 20, "a", 1, 2);
+  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getChar(g, 10, 20)));
 }
 return [main, _tests];}`;
@@ -187,14 +187,14 @@ return [main, _tests];}`;
 
 main
   var g set to new Graphics()
-  set g to g.putAt(10, 20, "a", 1, 2)
+  set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getForeground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putAt(g, 10, 20, "a", 1, 2);
+  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getForeground(g, 10, 20)));
 }
 return [main, _tests];}`;
@@ -243,14 +243,14 @@ return [main, _tests];}`;
 
 main
   var g set to new Graphics()
-  set g to g.putAt(10, 20, "a", 1, 2)
+  set g to g.putDetails(10, 20, "a", 1, 2)
   print g.getBackground(10, 20)
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var g = system.initialise(system.immutableList(new Array()));
-  g = _stdlib.putAt(g, 10, 20, "a", 1, 2);
+  g = _stdlib.putDetails(g, 10, 20, "a", 1, 2);
   system.printLine(_stdlib.asString(_stdlib.getBackground(g, 10, 20)));
 }
 return [main, _tests];}`;

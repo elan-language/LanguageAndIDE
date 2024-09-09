@@ -757,9 +757,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "putAt",
+      "putDetails",
       this.getSymbol(
-        "putAt",
+        "putDetails",
         new FunctionType(
           [
             new ImmutableListType(
@@ -780,9 +780,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "getAt",
+      "getDetails",
       this.getSymbol(
-        "getAt",
+        "getDetails",
         new FunctionType(
           [
             new ImmutableListType(
