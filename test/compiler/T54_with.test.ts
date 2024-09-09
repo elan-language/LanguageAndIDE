@@ -591,7 +591,7 @@ return [main, _tests];}`;
 main
   var a set to {0,2}
   var b set to new Foo(1)
-  var c set to copy b with b to a.get(1)
+  var c set to copy b with b to a[1]
   print b.b
   print c.b
 end main
@@ -608,7 +608,7 @@ end class`;
 async function main() {
   var a = system.immutableList([0, 2]);
   var b = system.initialise(new Foo(1));
-  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.get(a, 1); return _a;})();
+  var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
   system.printLine(_stdlib.asString(b.b));
   system.printLine(_stdlib.asString(c.b));
 }

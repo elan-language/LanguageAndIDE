@@ -202,7 +202,7 @@ end procedure
   
 procedure printasImmutableList(target as Iter<of Float>)
   var some set to target.asImmutableList()
-  print some.getRange(3, 7)
+  print some[3..7]
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -218,7 +218,7 @@ async function printAsIter(target) {
 
 async function printasImmutableList(target) {
   var some = _stdlib.asImmutableList(target);
-  system.printLine(_stdlib.asString(_stdlib.getRange(some, 3, 7)));
+  system.printLine(_stdlib.asString(system.immutableList(some.slice(3, 7))));
 }
 return [main, _tests];}`;
 

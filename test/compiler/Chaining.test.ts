@@ -16,14 +16,14 @@ suite("Chaining", () => {
 
 main 
   var a set to {{1,2}, {3,4}}
-  var b set to a.get(1).get(1)
+  var b set to a[1][1]
   print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([system.immutableList([1, 2]), system.immutableList([3, 4])]);
-  var b = _stdlib.get(_stdlib.get(a, 1), 1);
+  var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -42,14 +42,14 @@ return [main, _tests];}`;
 
 main 
   var a set to {[1,2], [3,4]}
-  var b set to a.get(1)[1]
+  var b set to a[1][1]
   print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([system.literalArray([1, 2]), system.literalArray([3, 4])]);
-  var b = system.safeIndex(_stdlib.get(a, 1), 1);
+  var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -68,7 +68,7 @@ return [main, _tests];}`;
 
 main 
   var a set to new Foo()
-  var b set to a.a.get(0)
+  var b set to a.a[0]
   print b
 end main
 
@@ -83,7 +83,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
-  var b = _stdlib.get(a.a, 0);
+  var b = system.safeIndex(a.a, 0);
   system.printLine(_stdlib.asString(b));
 }
 
@@ -277,7 +277,7 @@ return [main, _tests];}`;
 main 
   var f set to {new Foo()}
   var b set to 0
-  set b to f.get(0).b.ff()
+  set b to f[0].b.ff()
   print b
 end main
 
@@ -301,7 +301,7 @@ end class`;
 async function main() {
   var f = system.immutableList([system.initialise(new Foo())]);
   var b = 0;
-  b = _stdlib.get(f, 0).b.ff();
+  b = system.safeIndex(f, 0).b.ff();
   system.printLine(_stdlib.asString(b));
 }
 
@@ -618,7 +618,8 @@ return [main, _tests];}`;
 
 main 
   var a set to {[1,2], [3,4]}
-  var b set to a.get(1).get(1)
+  var b set to ""
+  set b to a[1][1]
   print b
 end main`;
 
@@ -629,7 +630,7 @@ end main`;
 
     
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_TypeError1", async () => {

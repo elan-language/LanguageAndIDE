@@ -655,7 +655,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
+    assertDoesNotCompile(fileImpl, ["get is not defined"]);
   });
 
   test("Fail_getRange", async () => {
@@ -671,7 +671,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to ImmutableList"]);
+    assertDoesNotCompile(fileImpl, ["getRange is not defined"]);
   });
 
   test("Fail_put", async () => {

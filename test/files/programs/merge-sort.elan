@@ -1,4 +1,4 @@
-# ea0d398f6f445428e7612d917fbc02623d78cb68415cc6f03cfc9aef39ed5e35 Elan Beta 2 valid
+# 453360036e8bb8d49eeaa26fb279d60d4bb7945a9586b5819d9f11391c514b6a Elan Beta 2 valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -14,8 +14,8 @@ function mergeSort(li as {String}) return {String}
   if len > 1
     then
       let mid be floor(len/2)
-      let frontHalf be mergeSort(li.getRange(0, mid))
-      let backHalf be mergeSort(li.getRange(mid, len))
+      let frontHalf be mergeSort(li[0..mid])
+      let backHalf be mergeSort(li[mid..len])
       set result to merge(frontHalf, backHalf)
   end if
   return result
@@ -30,10 +30,10 @@ function merge(a as {String}, b as {String}) return {String}
       set result to b
     else if bLen is 0
       set result to a
-    else if isBefore(a.get(0), b.get(0))
-      set result to {a.get(0)} + merge(a.getRange(1, aLen), b)
+    else if isBefore(a[0], b[0])
+      set result to {a[0]} + merge(a[1..aLen], b)
     else
-      set result to {b.get(0)} + merge(a, b.getRange(1, bLen))
+      set result to {b[0]} + merge(a, b[1..bLen])
   end if
   return result
 end function

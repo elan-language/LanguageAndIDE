@@ -1,12 +1,12 @@
-# 7651e6436f48c404e37f3a85051ff5255c5bbaf815856d567fd8118c1a7a19e7 Elan Beta 2 valid
+# 60002ec167919191f92d933cda367cc0e3220d715a02b14009c6079d3c29cc9a Elan Beta 2 valid
 
 function asRoman(d as Int) return String
   var result set to ""
   var d2 set to d
   for i from 0 to decValues.length() - 1 step 1
-    var decValue set to decValues.get(i)
+    var decValue set to decValues[i]
     while d2 >= decValue
-      set result to result + romSymbols.get(i)
+      set result to result + romSymbols[i]
       set d2 to d2 - decValue
     end while
   end for
