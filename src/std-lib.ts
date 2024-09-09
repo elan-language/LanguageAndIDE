@@ -185,7 +185,7 @@ export class StdLib {
     return list;
   }
 
-  with<T>(list: Array<T>, index: number, value: T) {
+  withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
     (newList as unknown as hasHiddenType)._type = "ImmutableList";

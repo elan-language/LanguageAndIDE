@@ -243,9 +243,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "with",
+      "withPutAt",
       this.getSymbol(
-        "with",
+        "withPutAt",
         new FunctionType(
           [
             new ImmutableListType(new GenericParameterType("T")),

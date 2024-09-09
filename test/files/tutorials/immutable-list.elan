@@ -8,7 +8,7 @@ main
   print a
   # An immutable list...
   var b set to {"apple", "orange", "pear"}
-  set b to b.with(0, "plum") + "lemon"
+  set b to b.withPutAt(0, "plum") + "lemon"
   print b
   # ...just like manipulating Strings (in any language)
   var c set to "Hello World!"
