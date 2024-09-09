@@ -3,7 +3,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
-  mustBePublicProperty
+  mustBePublicProperty,
 } from "../compile-rules";
 import { isScope } from "../helpers";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
@@ -63,10 +63,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return this.index instanceof IndexAsn && !(this.index.index1 instanceof RangeAsn);
   }
 
-  isDoubleIndex() {
-    return this.isIndex() && this.index!.isDoubleIndex();
-  }
-
   private getQualifier() {
     if (this.qualifier) {
       return `${this.qualifier.compile()}`;
@@ -81,9 +77,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   wrapIndex(code: string): string {
-    if (this.isDoubleIndex()) {
-      return `system.safeDoubleIndex(${code})`;
-    }
     return `system.safeIndex(${code})`;
   }
 

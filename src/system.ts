@@ -136,26 +136,6 @@ export class System {
     throw new ElanRuntimeError(`No such key: ${index}`);
   }
 
-  safeDoubleIndex(toIndex: any, index1: any, index2: any) {
-    if (toIndex === undefined) {
-      throw new ElanRuntimeError(`Out of range index`);
-    }
-
-    const r = toIndex[index1];
-
-    if (r === undefined) {
-      this.throwRangeError(toIndex, index1);
-    }
-
-    const r1 = r[index2];
-
-    if (r1 === undefined) {
-      this.throwRangeError(r, index2);
-    }
-
-    return r1;
-  }
-
   safeArrayListSet<T>(toIndex: T[], index: number, value: T) {
     const size = toIndex.length;
     if (index >= size) {

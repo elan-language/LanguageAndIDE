@@ -52,17 +52,9 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return !(this.index1 instanceof RangeAsn);
   }
 
-  isDoubleIndex() {
-    return this.index2 !== undefined;
-  }
-
   compileIndexParameters() {
     if (this.index1 instanceof RangeAsn || this.index1 instanceof IndexAsn) {
       return `${this.index1.compile()}`;
-    }
-
-    if (this.index2) {
-      return `${this.index1.compile()}, ${this.index2.compile()}`;
     }
 
     return `${this.index1.compile()}`;
@@ -82,9 +74,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   wrapIndex(code: string): string {
-    if (this.isDoubleIndex()) {
-      return `system.safeDoubleIndex(${code})`;
-    }
     return `system.safeIndex(${code})`;
   }
 
@@ -99,25 +88,9 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   compileIndex(rootType: SymbolType, index: IndexAsn, q: string, idx: string) {
-    if (this.isDoubleIndex()) {
-      const [indexType, ofType] = this.getIndexType(rootType);
-
-      mustBeIndexableSymbol(ofType, true, this.compileErrors, this.fieldId);
-      mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-
-      const [indexType1] = this.getIndexType(ofType);
-
-      mustBeCompatibleType(
-        indexType1,
-        index.index2!.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
-    } else {
-      mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
-      const [indexType] = this.getIndexType(rootType);
-      mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-    }
+    mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
+    const [indexType] = this.getIndexType(rootType);
+    mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
     let code = `${q}, ${idx}`;
 
@@ -171,9 +144,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   toString() {
-    if (this.isDoubleIndex()) {
-      return `${this.index1}`;
-    }
     if (this.index2) {
       return `[${this.index1}][${this.index2}]`;
     }
