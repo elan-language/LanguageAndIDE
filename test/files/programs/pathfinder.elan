@@ -1,4 +1,4 @@
-# 16c150490885368a9a96649dc70e05dee2df4ff8c4598307d24aa6f8f8f30346 Elan Beta 1 valid
+# FFFF Elan Beta 1 valid
 
 main
   var start set to new Point(5, 5)
@@ -82,8 +82,8 @@ function addRoute(gr as Graphics, route as {Point}) return Graphics
   each p in route
     set gr2 to gr2.putBackground(p.x, p.y, yellow)
   end each
-  let start be route.get(0)
-  let dest be route.get(route.length() - 1)
+  let start be route[0]
+  let dest be route[route.length() - 1]
   set gr2 to gr2.putBackground(start.x, start.y, green)
   set gr2 to gr2.putBackground(dest.x, dest.y, red)
   return gr2

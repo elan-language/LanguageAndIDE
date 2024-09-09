@@ -98,17 +98,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "get",
-      this.getSymbol(
-        "get",
-        new FunctionType(
-          [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
-          new GenericParameterType("T"),
-          true,
-        ),
-      ),
-    ],
-    [
       "getValueByKey",
       this.getSymbol(
         "getValueByKey",
@@ -121,21 +110,6 @@ export class StdLibSymbols implements Scope {
             new GenericParameterType("T"),
           ],
           new GenericParameterType("U"),
-          true,
-        ),
-      ),
-    ],
-    [
-      "getRange",
-      this.getSymbol(
-        "getRange",
-        new FunctionType(
-          [
-            new ImmutableListType(new GenericParameterType("T")),
-            IntType.Instance,
-            IntType.Instance,
-          ],
-          new ImmutableListType(new GenericParameterType("T")),
           true,
         ),
       ),

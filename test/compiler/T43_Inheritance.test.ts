@@ -909,7 +909,7 @@ immutable class Bar inherits Foo
 end class
 
 function fun(l as ImmutableList<of Bar>) return Bar
-    return l.get(0)
+    return l[0]
 end function
 `;
 
@@ -944,7 +944,7 @@ class Bar {
 }
 
 function fun(l) {
-  return _stdlib.get(l, 0);
+  return system.safeIndex(l, 0);
 }
 return [main, _tests];}`;
 

@@ -799,7 +799,7 @@ end main
 
 main
   var a set to {4, 5, 6, 7, 8}
-  var b set to a.get(5)
+  var b set to a[5]
 end main
 `;
 
