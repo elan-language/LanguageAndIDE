@@ -527,15 +527,14 @@ main
 end main
 
 function foo(a as ArrayList<of Int>) return Int
-    set a[0] to 1
+    call a.putAt(0, 1)
     return a[0]
 end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_CannotPassInArrayMultipleParameters", async () => {
@@ -545,15 +544,14 @@ main
 end main
 
 function foo(b as Int, a as ArrayList<of Int>) return Int
-    set a[0] to b
+    call a.setAt(0, 0)
     return a[0]
 end function`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: a"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_TooManyParams", async () => {
@@ -639,7 +637,7 @@ main
 end main
 
 function foo(a as ArrayList<of Int>, b as Dictionary<of String, Int>, c as Foo) return Int
-  set b["key"] to 1
+  call b.setAtKey("key", 1)
   return 1
 end function
 
@@ -653,8 +651,7 @@ end class
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: b"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_ParameterUnknownType", async () => {
