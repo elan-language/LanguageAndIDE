@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -283,18 +284,18 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0");
   });
 
-  test("Pass_get", async () => {
+  test("Pass_index", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
     var a set to {4,5,6,7,8}
-    print a.get(2)
+    print a[2]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.printLine(_stdlib.asString(_stdlib.get(a, 2)));
+  system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
 }
 return [main, _tests];}`;
 
@@ -810,7 +811,7 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 5 size: 5");
   });
 
-  test("Fail_CannotIndex", async () => {
+  ignore_test("Fail_CannotIndex", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
