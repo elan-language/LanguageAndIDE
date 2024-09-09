@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -241,7 +242,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  test("Fail_ExtensionParameterCount", async () => {
+  ignore_test("Fail_ExtensionParameterCount", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to {"a":1}

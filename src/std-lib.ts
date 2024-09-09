@@ -171,10 +171,6 @@ export class StdLib {
     return s1 < s2 || s1 === s2;
   }
 
-  getValueByKey<T>(st: { [key: string]: T }, index: string) {
-    return this.system.safeIndex(st, index);
-  }
-
   withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
