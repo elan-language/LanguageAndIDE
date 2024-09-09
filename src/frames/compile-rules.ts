@@ -255,7 +255,11 @@ export function mustBeRangeableSymbol(
   location: string,
 ) {
   if (
-    !((read && symbolType instanceof ArrayListType) || (read && symbolType instanceof StringType))
+    !(
+      (read && symbolType instanceof ArrayListType) ||
+      (read && symbolType instanceof StringType) ||
+      (read && symbolType instanceof ImmutableListType)
+    )
   ) {
     compileErrors.push(
       new NotRangeableCompileError(

@@ -456,22 +456,22 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, three, one, three}");
   });
 
-  test("Pass_getRange", async () => {
+  test("Pass_Range", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to {4,5,6,7,8}
-  print a.getRange(2, 5)
-  print a.getRange(1, 3)
-  print a.getRange(0, 2)
+  print a[2..5]
+  print a[1..3]
+  print a[0..2]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.printLine(_stdlib.asString(_stdlib.getRange(a, 2, 5)));
-  system.printLine(_stdlib.asString(_stdlib.getRange(a, 1, 3)));
-  system.printLine(_stdlib.asString(_stdlib.getRange(a, 0, 2)));
+  system.printLine(_stdlib.asString(system.immutableList(a.slice(2, 5))));
+  system.printLine(_stdlib.asString(system.immutableList(a.slice(1, 3))));
+  system.printLine(_stdlib.asString(system.immutableList(a.slice(0, 2))));
 }
 return [main, _tests];}`;
 
