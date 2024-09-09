@@ -679,7 +679,7 @@ end main
 
 main
   var a set to ["one", "two", "three"]
-  set a to a.with(1, "TWO")
+  set a to a.withPutAt(1, "TWO")
   print a
 end main
 `;
