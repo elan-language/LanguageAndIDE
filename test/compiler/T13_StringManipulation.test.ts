@@ -388,7 +388,7 @@ end main
 
 main
   var a set to "abcde"
-  set a[0] to "b"
+  call a.putAt(0, "b")
   print a
 end main
 `;
@@ -398,7 +398,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
   test("Fail_ComparisonOperators", async () => {

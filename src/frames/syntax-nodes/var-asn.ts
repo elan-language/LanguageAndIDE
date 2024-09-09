@@ -3,8 +3,7 @@ import {
   mustBeCompatibleType,
   mustBeIndexableSymbol,
   mustBeKnownSymbol,
-  mustBePublicProperty,
-  mustBeRangeableSymbol,
+  mustBePublicProperty
 } from "../compile-rules";
 import { isScope } from "../helpers";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
@@ -18,10 +17,8 @@ import { LetStatement } from "../statements/let-statement";
 import { AbstractDictionaryType } from "../symbols/abstract-dictionary-type";
 import { ArrayListType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
-import { FunctionType } from "../symbols/function-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
-import { StringType } from "../symbols/string-type";
 import {
   getClassScope,
   getGlobalScope,
@@ -83,19 +80,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     return "";
   }
 
-  wrapListOrArray(rootType: SymbolType, code: string): string {
-    if (rootType instanceof ImmutableListType) {
-      return `system.immutableList(${code})`;
-    }
-    if (rootType instanceof ArrayListType) {
-      return `system.array(${code})`;
-    }
-    if (rootType instanceof FunctionType) {
-      return this.wrapListOrArray(rootType.returnType, code);
-    }
-    return code;
-  }
-
   wrapIndex(code: string): string {
     if (this.isDoubleIndex()) {
       return `system.safeDoubleIndex(${code})`;
@@ -114,25 +98,9 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   compileIndex(rootType: SymbolType, index: IndexAsn, q: string, call: string, idx: string) {
-    if (this.isDoubleIndex()) {
-      const [indexType, ofType] = this.getIndexType(rootType);
-
-      mustBeIndexableSymbol(ofType, true, this.compileErrors, this.fieldId);
-      mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-
-      const [indexType1] = this.getIndexType(ofType);
-
-      mustBeCompatibleType(
-        indexType1,
-        index.index2!.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-      );
-    } else {
-      mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
-      const [indexType] = this.getIndexType(rootType);
-      mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
-    }
+    mustBeIndexableSymbol(rootType, true, this.compileErrors, this.fieldId);
+    const [indexType] = this.getIndexType(rootType);
+    mustBeCompatibleType(indexType, index.index1.symbolType(), this.compileErrors, this.fieldId);
 
     let code = `${q}${this.id}${call}, ${idx}`;
     if (!this.isAssignable) {
@@ -175,12 +143,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       if (this.isIndex()) {
         code = this.compileIndex(rootType, this.index!, q, call, idx);
       }
-      if (this.isRange()) {
-        mustBeRangeableSymbol(rootType, true, this.compileErrors, this.fieldId);
-        const [indexType] = this.getIndexType(rootType);
-        mustBeCompatibleType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
-        code = this.wrapListOrArray(rootType, code);
-      }
     }
 
     return code;
@@ -222,18 +184,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       return rootType.valueType;
     }
 
-    if (rootType instanceof StringType) {
-      return rootType;
-    }
-
     return UnknownType.Instance;
   }
 
   symbolType() {
     const rootType = this.rootSymbolType();
-    if (this.isDoubleIndex()) {
-      return this.getOfType(this.getOfType(rootType));
-    }
     if (this.isIndex()) {
       return this.getOfType(rootType);
     }

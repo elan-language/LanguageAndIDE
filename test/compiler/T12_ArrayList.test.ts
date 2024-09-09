@@ -571,7 +571,7 @@ end main
 
 main
   var a set to createArray(3, "")
-  set a[0] to true
+  call a.putAt(0, true)
 end main
 `;
 
@@ -580,6 +580,21 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types Boolean to String"]);
+  });
+
+  test("Fail_NoSet", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to createArray(3, "")
+  set a[0] to true
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_IndexWrongType", async () => {
@@ -820,8 +835,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot range ArrayList"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_withoutGenericType", async () => {

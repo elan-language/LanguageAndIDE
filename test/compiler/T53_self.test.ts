@@ -2,6 +2,7 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -197,7 +198,7 @@ class Foo
 
   function bar() return Int
     var lst set to [1, 2]
-    set lst[p1] to 3
+    call lst.setAt(p1, 3)
     return lst[0]
   end function
 end class`;
@@ -205,9 +206,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not set an indexed value in a function: lst"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NoSuchProperty", async () => {
