@@ -1349,11 +1349,8 @@ suite("Parsing Nodes", () => {
     );
   });
   test("DeconstructedList", () => {
-    testNodeParse(new DeconstructedList(), `[a:b]`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedList(), `[a:b`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedList(), `[a:`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedList(), `[a`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedList(), `[`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new DeconstructedList(), `a:b`, ParseStatus.valid, "", "", "");
+    testNodeParse(new DeconstructedList(), `a:`, ParseStatus.incomplete, "", "", "");
     testNodeParse(new DeconstructedList(), `[a,b]`, ParseStatus.invalid, "", "[a,b]", "");
     testNodeParse(new DeconstructedList(), `[a:3]`, ParseStatus.invalid, "", "[a:3]", "");
     testNodeParse(new DeconstructedList(), `(a:b)`, ParseStatus.invalid, "", "(a:b)", "");
