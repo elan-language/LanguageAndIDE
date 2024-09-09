@@ -236,7 +236,7 @@ export function mustBeIndexableSymbol(
       (read && symbolType instanceof ImmutableListType) ||
       (read && symbolType instanceof ImmutableDictionaryType) ||
       (read && symbolType instanceof StringType) ||
-      symbolType instanceof DictionaryType
+      (read && symbolType instanceof DictionaryType)
     )
   ) {
     compileErrors.push(

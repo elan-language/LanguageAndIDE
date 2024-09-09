@@ -178,6 +178,10 @@ export class StdLib {
     this.system.safeArrayListSet(list, index, value);
   }
 
+  putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
+    this.system.safeDictionarySet(dict, key, value);
+  }
+
   withInsert<T>(list: Array<T>, index: number, value: T) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
