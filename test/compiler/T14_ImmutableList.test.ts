@@ -828,6 +828,23 @@ end main
     assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
   });
 
+  test("Fail_CannotPutAt", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to {4, 5, 6, 7, 8}
+  call a.putAt(0, 0)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+  });
+
   test("Fail_CannotSetIndex", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -840,9 +857,7 @@ end main
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_putAtKey", async () => {

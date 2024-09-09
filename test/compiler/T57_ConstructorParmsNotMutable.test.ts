@@ -1,6 +1,6 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { assertDoesNotCompile, assertParses, testHash, transforms } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertParses, testHash, transforms } from "./compiler-test-helpers";
 
 suite("T57_ConstructorParmsNotMutable", () => {
   test("Fail_reassigningIntParam", async () => {
@@ -31,7 +31,7 @@ end class`;
 
 class Foo
     constructor(a as ArrayList<of Float>)
-        set a[0] to 4
+        call a.putAt(0, 4)
     end constructor
 
     function asString() return String
@@ -42,8 +42,7 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not reassign parameter: a"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {

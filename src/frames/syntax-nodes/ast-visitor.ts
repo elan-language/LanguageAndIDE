@@ -533,24 +533,7 @@ export function transform(
       }
     }
 
-    let index: IndexAsn | undefined;
-
-    if (
-      node.index.matchedNode instanceof Alternatives &&
-      node.index.matchedNode.bestMatch instanceof Sequence
-    ) {
-      const di = transformMany(node.index.matchedNode.bestMatch, fieldId, scope);
-      index = new IndexAsn(
-        (di.items[0] as IndexAsn).index1,
-        (di.items[1] as IndexAsn).index1,
-        fieldId,
-        scope,
-      );
-    } else if (node.index) {
-      index = transform(node.index, fieldId, scope) as IndexAsn | undefined;
-    }
-
-    return new VarAsn(id, true, q, index, fieldId, scope);
+    return new VarAsn(id, true, q, undefined, fieldId, scope);
   }
 
   if (node instanceof InstanceProcRef) {

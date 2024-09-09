@@ -602,7 +602,7 @@ end main
 
 main
   var a set to createArray(3, "")
-  set a[0][0] to "foo"
+  call a[0].putAt(0, "foo")
 end main
 `;
 
@@ -610,7 +610,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to ArrayList"]);
   });
 
   test("Fail_1DArrayAccessedAs2D2", async () => {
@@ -618,7 +618,7 @@ end main
 
 main
   var a set to createArray(3, 0)
-  set a[0][0] to 1
+  call a[0].putAt(0, 1)
 end main
 `;
 
@@ -626,7 +626,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to ArrayList"]);
   });
 
   test("Fail_2DArrayAccessedAs1D", async () => {
@@ -634,7 +634,7 @@ end main
 
 main
   var a set to createArray(3, empty [String])
-  set a[0] to "foo"
+  call a.putAt(0, "foo")
 end main
 `;
 
@@ -668,7 +668,7 @@ end main
 
 main
   var a set to createArray(3, empty [String])
-  set a[0] to true
+  call a.putAt(0, true)
 end main
 `;
 

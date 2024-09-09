@@ -1,6 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
+  assertDoesNotCompile,
   assertDoesNotCompileWithId,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -68,7 +69,7 @@ return [main, _tests];}`;
 
 main 
   var a set to [["a":1], ["b":3, "z":10]]
-  set a["b"]["b"] to 2
+  call a.putAt("b", ["b":2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -76,7 +77,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 
   test("Fail_IndexWrongType2", async () => {
@@ -84,7 +85,7 @@ end main`;
 
 main 
   var a set to [["a":1], ["b":3, "z":10]]
-  set a[0][0] to 2
+  call a[0].putAtKey(0, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -92,7 +93,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_IndexWrongType3", async () => {
@@ -100,7 +101,7 @@ end main`;
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]
-  set a[0][0] to 2
+  call a.putAtKey(0, [2,2])
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -108,7 +109,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types Int to String"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_IndexWrongType4", async () => {
@@ -116,7 +117,7 @@ end main`;
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]
-  set a["b"]["b"] to 2
+  call a["b"].putAt("b", 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -124,6 +125,6 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident7", ["Incompatible types String to Int"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Int"]);
   });
 });
