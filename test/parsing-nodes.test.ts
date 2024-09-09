@@ -1071,6 +1071,33 @@ suite("Parsing Nodes", () => {
       "x as String",
       "x <keyword>as</keyword> <type>String</type>",
     );
+    testNodeParse(
+      new ParamDefNode(),
+      `out x as String`,
+      ParseStatus.valid,
+      "out x as String",
+      "",
+      "out x as String",
+      "<keyword>out</keyword> x <keyword>as</keyword> <type>String</type>",
+    );
+    testNodeParse(
+      new ParamDefNode(),
+      `ref x as String`,
+      ParseStatus.invalid,
+      "",
+      "ref x as String",
+      "",
+      "",
+    );
+    testNodeParse(
+      new ParamDefNode(),
+      `out as String`,
+      ParseStatus.invalid,
+      "",
+      "out as String",
+      "",
+      "",
+    );
     testNodeParse(new ParamDefNode(), `y asString`, ParseStatus.invalid, "", "y asString", "");
     testNodeParse(new ParamDefNode(), `z`, ParseStatus.incomplete, "z", "", "");
     testNodeParse(new ParamDefNode(), `w as`, ParseStatus.incomplete, "w as", "", "");
