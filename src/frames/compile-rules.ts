@@ -234,6 +234,7 @@ export function mustBeIndexableSymbol(
     !(
       symbolType instanceof ArrayListType ||
       (read && symbolType instanceof ImmutableListType) ||
+      (read && symbolType instanceof ImmutableDictionaryType) ||
       (read && symbolType instanceof StringType) ||
       symbolType instanceof DictionaryType
     )

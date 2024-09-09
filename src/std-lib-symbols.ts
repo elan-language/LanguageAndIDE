@@ -98,23 +98,6 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "getValueByKey",
-      this.getSymbol(
-        "getValueByKey",
-        new FunctionType(
-          [
-            new ImmutableDictionaryType(
-              new GenericParameterType("T"),
-              new GenericParameterType("U"),
-            ),
-            new GenericParameterType("T"),
-          ],
-          new GenericParameterType("U"),
-          true,
-        ),
-      ),
-    ],
-    [
       "head",
       this.getSymbol(
         "head",

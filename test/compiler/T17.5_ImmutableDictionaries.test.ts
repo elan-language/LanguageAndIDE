@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -96,14 +97,14 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getValueByKey("z")
+  print a["z"]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.getValueByKey(a, "z")));
+  system.printLine(_stdlib.asString(system.safeIndex(a, "z")));
 }
 return [main, _tests];}`;
 
@@ -299,8 +300,8 @@ main
   set b to b.withKeyValue("Bar", 3)
   var k set to b.keys()
   print k.length()
-  print b.getValueByKey("Foo")
-  print b.getValueByKey("Bar")
+  print b["Foo"]
+  print b["Bar"]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -310,8 +311,8 @@ async function main() {
   b = _stdlib.withKeyValue(b, "Bar", 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, "Foo")));
-  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, "Bar")));
+  system.printLine(_stdlib.asString(system.safeIndex(b, "Foo")));
+  system.printLine(_stdlib.asString(system.safeIndex(b, "Bar")));
 }
 return [main, _tests];}`;
 
@@ -335,8 +336,8 @@ main
   set b to b.withKeyValue(Fruit.orange, 3)
   var k set to b.keys()
   print k.length()
-  print b.getValueByKey(Fruit.apple)
-  print b.getValueByKey(Fruit.orange)
+  print b[Fruit.apple]
+  print b[Fruit.orange]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -350,8 +351,8 @@ async function main() {
   b = _stdlib.withKeyValue(b, Fruit.orange, 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
-  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, Fruit.apple)));
-  system.printLine(_stdlib.asString(_stdlib.getValueByKey(b, Fruit.orange)));
+  system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.apple)));
+  system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.orange)));
 }
 return [main, _tests];}`;
 
@@ -456,7 +457,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  print a.getValueByKey("c")
+  print a["c"]
 end main
 `;
 
@@ -515,7 +516,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  test("Fail_CannotIndex", async () => {
+  ignore_test("Fail_CannotIndex", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main

@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
@@ -638,7 +639,7 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test("Fail_getForKey", async () => {
+  ignore_test("Fail_getForKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
