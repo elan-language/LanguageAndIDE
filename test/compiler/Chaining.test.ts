@@ -613,29 +613,24 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "50");
   });
 
-  test("Pass_ mixingArrayListWithImmutable", async () => {
+  test("Fail_TypeError", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main 
   var a set to {[1,2], [3,4]}
-  var b set to a[1][1]
+  var b set to ""
+  set b to a[1][1]
   print b
 end main`;
+
+   
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-async function main() {
-  var a = system.immutableList([system.literalArray([1, 2]), system.literalArray([3, 4])]);
-  var b = system.safeIndex(system.safeIndex(a, 1), 1);
-  system.printLine(_stdlib.asString(b));
-}
-return [main, _tests];}`;
-
+    
     assertParses(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "4");
+    assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
   test("Fail_TypeError1", async () => {

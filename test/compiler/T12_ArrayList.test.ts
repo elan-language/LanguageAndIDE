@@ -642,6 +642,37 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
+  test("Fail_get", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to ["one", "two", "three"]
+  print a.get(1)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["get is not defined"]);
+  });
+
+  test("Fail_getRange", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to ["one", "two", "three"]
+  print a.getRange(1, 2)
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["getRange is not defined"]);
+  });
 
   test("Fail_put", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
