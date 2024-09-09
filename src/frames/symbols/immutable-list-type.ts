@@ -1,8 +1,9 @@
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class ImmutableListType implements GenericSymbolType {
+export class ImmutableListType implements IterableSymbolType {
   constructor(public readonly ofType: SymbolType) {}
+  isIterable = true;
   initialValue = "system.emptyImmutableList()";
 
   isImmutable = true;

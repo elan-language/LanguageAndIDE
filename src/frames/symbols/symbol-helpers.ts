@@ -1,11 +1,11 @@
 import { Property } from "../class-members/property";
 import { isClass, isFile, isScope } from "../helpers";
 import { AstNode } from "../interfaces/ast-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { ElanSymbol } from "../interfaces/symbol";
@@ -30,7 +30,10 @@ import { ProcedureType } from "./procedure-type";
 import { RegexType } from "./regex-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
-import { UnknownType } from "./unknown-type";
+
+export function isIterableType(s?: SymbolType): s is IterableSymbolType {
+  return !!s && "isIterable" in s;
+}
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;

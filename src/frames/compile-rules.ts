@@ -51,7 +51,11 @@ import { IterType } from "./symbols/iter-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
-import { isDictionarySymbolType, isGenericSymbolType } from "./symbols/symbol-helpers";
+import {
+  isDictionarySymbolType,
+  isGenericSymbolType,
+  isIterableType,
+} from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownSymbol } from "./symbols/unknown-symbol";
@@ -614,31 +618,13 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (
-    lhs instanceof IterType &&
-    !(
-      rhs instanceof ImmutableListType ||
-      rhs instanceof ArrayListType ||
-      rhs instanceof StringType ||
-      rhs instanceof IterType
-    )
-  ) {
+  if (lhs instanceof IterType && !isIterableType(rhs)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
 
-  if (
-    lhs instanceof IterType &&
-    (rhs instanceof ImmutableListType || rhs instanceof ArrayListType || rhs instanceof IterType)
-  ) {
+  if (lhs instanceof IterType && isIterableType(rhs)) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
-  }
-
-  if (lhs instanceof IterType && rhs instanceof StringType) {
-    if (!(lhs.ofType instanceof StringType)) {
-      FailIncompatible(lhs, rhs, compileErrors, location);
-      return;
-    }
   }
 
   if (lhs instanceof EnumType && rhs instanceof EnumType) {

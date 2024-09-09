@@ -1,8 +1,9 @@
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
+import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class StringType implements GenericSymbolType {
+export class StringType implements IterableSymbolType {
   private constructor() {}
+  isIterable = true;
 
   get ofType() {
     return StringType.Instance;

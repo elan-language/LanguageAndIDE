@@ -197,7 +197,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types String to Iter<of Float>"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types String to Float"]);
   });
 
   test("Fail_UnconsumedExpressionResult1", async () => {
