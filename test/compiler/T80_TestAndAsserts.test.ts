@@ -473,7 +473,7 @@ main
 end main
 
 procedure square(x as Int, y as [Int])
-  set y[0] to x ^ 2
+  call y.putAt(0,  x ^ 2)
 end procedure
 
 test square
@@ -489,7 +489,7 @@ async function main() {
 }
 
 async function square(x, y) {
-  system.safeSet(y, 0, x ** 2);
+  _stdlib.putAt(y, 0, x ** 2);
 }
 
 _tests.push(["test10", async (_outcomes) => {

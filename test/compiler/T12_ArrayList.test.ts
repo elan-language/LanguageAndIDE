@@ -123,14 +123,14 @@ return [main, _tests];}`;
 
 main
   var a set to [1,2,3]
-  set a[0] to a[1]
+  call a.putAt(0, a[1])
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.literalArray([1, 2, 3]);
-  system.safeSet(a, 0, system.safeIndex(a, 1));
+  _stdlib.putAt(a, 0, system.safeIndex(a, 1));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -198,8 +198,8 @@ end main`;
 
 main
   var a set to createArray(3, "")
-  set a[0] to "foo"
-  set a[2] to "yon"
+  call a.putAt(0, "foo")
+  call a.putAt(2, "yon")
   print a[0]
   print a[2]
 end main`;
@@ -207,8 +207,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.createArray(3, "");
-  system.safeSet(a, 0, "foo");
-  system.safeSet(a, 2, "yon");
+  _stdlib.putAt(a, 0, "foo");
+  _stdlib.putAt(a, 2, "yon");
   system.printLine(_stdlib.asString(system.safeIndex(a, 0)));
   system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
 }
@@ -490,7 +490,7 @@ return [main, _tests];}`;
 
 main
   var a set to empty [Int]
-  set a[0] to 3
+  call a.putAt(0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -587,7 +587,7 @@ end main
 
 main
   var a set to new ArrayList<of String>()
-  set a["b"] to "fred"
+  call a.putAt("b", "fred")
 end main
 `;
 

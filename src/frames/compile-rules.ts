@@ -232,7 +232,7 @@ export function mustBeIndexableSymbol(
 ) {
   if (
     !(
-      symbolType instanceof ArrayListType ||
+      (read && symbolType instanceof ArrayListType) ||
       (read && symbolType instanceof ImmutableListType) ||
       (read && symbolType instanceof ImmutableDictionaryType) ||
       (read && symbolType instanceof StringType) ||

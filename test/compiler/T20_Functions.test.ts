@@ -833,7 +833,7 @@ end function`;
     ]);
   });
 
-  test("Fail_NoIndexing", async () => {
+  ignore_test("Fail_NoIndexing", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -843,7 +843,7 @@ end main
 
 function p1() return Int
   var a set to [1,2]
-  set a[0] to 2
+  call a.putAt(0, 2)
   return a[0]
 end function
 

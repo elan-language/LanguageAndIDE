@@ -214,7 +214,7 @@ end main`;
       ["putAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
       ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
       ["removeAt", "Procedure (ArrayList <Generic Parameter T>, Int)"],
-      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["removeFirst", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"]
     ] as [string, string][];
 
     await assertAutocompletes(fileImpl, "ident7", ".", 3, expected);

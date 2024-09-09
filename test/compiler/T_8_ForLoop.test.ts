@@ -210,7 +210,7 @@ end main
 
 procedure foo(arr as [Int])
   for i from 0 to 10 step 1
-    set arr[i] to 1
+    call arr.putAt(i, 1)
   end for
   print arr[0]
 end procedure`;
@@ -223,7 +223,7 @@ async function main() {
 
 async function foo(arr) {
   for (var i = 0; i <= 10; i = i + 1) {
-    system.safeSet(arr, i, 1);
+    _stdlib.putAt(arr, i, 1);
   }
   system.printLine(_stdlib.asString(system.safeIndex(arr, 0)));
 }

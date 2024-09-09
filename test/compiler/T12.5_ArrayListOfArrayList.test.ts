@@ -98,8 +98,8 @@ return [main, _tests];}`;
 
 main
   var a set to create2DArray(3, 0, "")
-  set a[0] to ["bar", "foo"]
-  set a[2] to ["yon", "xan"]
+  call a.putAt(0, ["bar", "foo"])
+  call a.putAt(2, ["yon", "xan"])
   print a[0][1]
   print a[2][0]
 end main`;
@@ -107,8 +107,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
-  system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
-  system.safeSet(a, 2, system.literalArray(["yon", "xan"]));
+  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
+  _stdlib.putAt(a, 2, system.literalArray(["yon", "xan"]));
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 2), 0)));
 }
@@ -128,16 +128,16 @@ return [main, _tests];}`;
 
 main
   var a set to create2DArray(3, 0, "")
-  set a[0] to ["bar", "foo"]
-  set a[0][1] to "yon"
+  call a.putAt(0, ["bar", "foo"])
+  call a[0].putAt(1, "yon")
   print a[0][1]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
-  system.safeSet(a, 0, system.literalArray(["bar", "foo"]));
-  system.safeDoubleSet(a, 0, 1, "yon");
+  _stdlib.putAt(a, 0, system.literalArray(["bar", "foo"]));
+  _stdlib.putAt(system.safeIndex(a, 0), 1, "yon");
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, 0), 1)));
 }
 return [main, _tests];}`;
@@ -570,7 +570,7 @@ return [main, _tests];}`;
 
 main
   var a set to empty [[Int]]
-  set a[0][0] to 3
+  call a[0].putAt(0, 3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -650,7 +650,7 @@ end main
 
 main
   var a set to create2DArray(3, 0, "")
-  set a[0] to empty [String]
+  call a.putAt(0, empty [String])
   var b set to a[0][0]
 end main
 `;
@@ -700,7 +700,7 @@ end main
 
 main
   var a set to [[1,2],[3,4]]
-  set a["b"][0] to 5
+  call a["b"].putAt(0, 5)
 end main
 `;
 
@@ -716,7 +716,7 @@ end main
 
 main
   var a set to [[1,2],[3,4]]
-  set a[0]["b"] to 5
+  call a[0].putAt("b", 5)
 end main
 `;
 

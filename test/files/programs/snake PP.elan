@@ -1,4 +1,4 @@
-# FFFF Elan Beta 2 valid
+# fe42666abe951e709a0b114bf60d9dda4c90c35fa7d25c8655d8a5b4a2401c31 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -27,8 +27,8 @@ end main
 
 procedure setAppleToRandomPosition(apple as [Int], body as [[Int]])
   repeat
-    set apple[0] to randomInt(0, 39)
-    set apple[1] to randomInt(0, 29)
+    call apple.putAt(0, randomInt(0, 39))
+    call apple.putAt(1, randomInt(0, 29))
   end repeat when not overlaps(body, apple)
 end procedure
 

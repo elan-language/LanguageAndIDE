@@ -171,15 +171,15 @@ export class StdLib {
     return s1 < s2 || s1 === s2;
   }
 
-  putAt<T>(list: Array<T>, index: number, value: T) {
-    list[index] = value;
-  }
-
   withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
     (newList as unknown as hasHiddenType)._type = "ImmutableList";
     return newList;
+  }
+
+  putAt<T>(list: Array<T>, index: number, value: T) {
+    this.system.safeArrayListSet(list, index, value);
   }
 
   withInsert<T>(list: Array<T>, index: number, value: T) {

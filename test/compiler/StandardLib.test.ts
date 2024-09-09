@@ -382,7 +382,7 @@ main
   var results set to [0, 0, 0, 0, 0, 0, 0]
   for i from 1 to 10000 step 1
     var r set to randomInt(3, 5)
-    set results[r] to results[r] + 1
+    call results.putAt(r, results[r] + 1)
   end for
   for i from 0 to 6 step 1
     var r set to round(results[i]/10000, 1)
@@ -396,7 +396,7 @@ async function main() {
   var results = system.literalArray([0, 0, 0, 0, 0, 0, 0]);
   for (var i = 1; i <= 10000; i = i + 1) {
     var r = _stdlib.randomInt(3, 5);
-    system.safeSet(results, r, system.safeIndex(results, r) + 1);
+    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
   }
   for (var i = 0; i <= 6; i = i + 1) {
     var r = _stdlib.round(system.safeIndex(results, i) / 10000, 1);
@@ -423,7 +423,7 @@ main
   var rnd set to firstRandom()
   for i from 1 to 10000 step 1
     var r set to rnd.valueInt(3, 5)
-    set results[r] to results[r] + 1
+    call results.putAt(r, results[r] + 1)
     set rnd to rnd.next()
   end for
   for i from 0 to 6 step 1
@@ -439,7 +439,7 @@ async function main() {
   var rnd = _stdlib.firstRandom();
   for (var i = 1; i <= 10000; i = i + 1) {
     var r = _stdlib.valueInt(rnd, 3, 5);
-    system.safeSet(results, r, system.safeIndex(results, r) + 1);
+    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
     rnd = _stdlib.next(rnd);
   }
   for (var i = 0; i <= 6; i = i + 1) {
@@ -466,7 +466,7 @@ main
   var rnd set to firstRandomInFixedSequence()
   for i from 1 to 10000 step 1
     var r set to rnd.valueInt(3, 5)
-    set results[r] to results[r] + 1
+    call results.putAt(r, results[r] + 1)
     set rnd to rnd.next()
   end for
   for i from 0 to 6 step 1
@@ -482,7 +482,7 @@ async function main() {
   var rnd = _stdlib.firstRandomInFixedSequence();
   for (var i = 1; i <= 10000; i = i + 1) {
     var r = _stdlib.valueInt(rnd, 3, 5);
-    system.safeSet(results, r, system.safeIndex(results, r) + 1);
+    _stdlib.putAt(results, r, system.safeIndex(results, r) + 1);
     rnd = _stdlib.next(rnd);
   }
   for (var i = 0; i <= 6; i = i + 1) {
@@ -510,7 +510,7 @@ main
   var dice set to 0
   for i from 1 to 10000 step 1
     set (dice, rnd) to rollDice(rnd)
-    set results[dice] to results[dice] + 1
+    call results.putAt(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1
     var r set to results[i]
@@ -530,7 +530,7 @@ async function main() {
   var dice = 0;
   for (var i = 1; i <= 10000; i = i + 1) {
     [dice, rnd] = rollDice(rnd);
-    system.safeSet(results, dice, system.safeIndex(results, dice) + 1);
+    _stdlib.putAt(results, dice, system.safeIndex(results, dice) + 1);
   }
   for (var i = 0; i <= 6; i = i + 1) {
     var r = system.safeIndex(results, i);

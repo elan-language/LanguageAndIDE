@@ -163,7 +163,7 @@ main
 end main
 
 procedure changeFirst(a as ArrayList<of Int>)
-    set a[0] to 5
+    call a.putAt(0, 5)
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -174,7 +174,7 @@ async function main() {
 }
 
 async function changeFirst(a) {
-  system.safeSet(a, 0, 5);
+  _stdlib.putAt(a, 0, 5);
 }
 return [main, _tests];}`;
 

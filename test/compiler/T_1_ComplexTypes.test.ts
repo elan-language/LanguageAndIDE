@@ -42,14 +42,14 @@ return [main, _tests];}`;
 
 main 
   var a set to ["a":[1,2], "b":[3,4,5]]
-  set a["b"][0] to 2
+  call a["b"].putAt(0, 2)
   print a["b"][0]
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : system.literalArray([1, 2]), ["b"] : system.literalArray([3, 4, 5])});
-  system.safeDoubleSet(a, "b", 0, 2);
+  _stdlib.putAt(system.safeIndex(a, "b"), 0, 2);
   system.printLine(_stdlib.asString(system.safeIndex(system.safeIndex(a, "b"), 0)));
 }
 return [main, _tests];}`;
