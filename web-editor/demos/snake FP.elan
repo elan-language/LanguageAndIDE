@@ -1,4 +1,4 @@
-# 47af217d897263c5f73bfaf0518e6a22b55e92f19cd8386edadbd52cdab6c9a5 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -24,7 +24,7 @@ end function
 function updateGraphics(g as Game) return Game
   let g2 be copy g with graphics to g.graphics.putBackground(g.apple.x, g.apple.y, red)
   let g3 be copy g2 with graphics to g2.graphics.putBackground(g2.head.x, g2.head.y, green)
-  let tail be g3.body.get(0)
+  let tail be g3.body[0]
   let tailColour be if tail is g3.priorTail then green else white
   return copy g3 with graphics to g3.graphics.putBackground(tail.x, tail.y, tailColour)
 end function
@@ -50,9 +50,8 @@ function moveSnake(g as Game) return Game
 end function
 
 function eatAppleOrNot(g as Game) return Game
-  let tail be g.body.get(0)
-  let moveTail be g.body.getRange(1, g.body.length())
-  return if overApple(g) then newApple(g) else copy g with priorTail to tail, body to moveTail
+  let shortenedTail be g.body[1..]
+  return if overApple(g) then newApple(g) else copy g with priorTail to g.body[0], body to shortenedTail
 end function
 
 function overApple(g as Game) return Boolean
