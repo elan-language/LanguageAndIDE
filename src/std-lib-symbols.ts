@@ -200,6 +200,21 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
+      "putAt",
+      this.getSymbol(
+        "putAt",
+        new ProcedureType(
+          [
+            new ArrayListType(new GenericParameterType("T")),
+            IntType.Instance,
+            new GenericParameterType("T"),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
       "withPutAt",
       this.getSymbol(
         "withPutAt",
