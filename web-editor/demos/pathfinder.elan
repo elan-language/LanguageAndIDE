@@ -51,13 +51,13 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as [Point], nodes as [N
       var p set to new Point(x, y)
       if p is start
         then
-          call nodes.add(new Node(p, 0, p.minDistTo(dest)))
+          call nodes.append(new Node(p, 0, p.minDistTo(dest)))
         else if p is dest
-          call nodes.add(new Node(p, infinity, 0))
+          call nodes.append(new Node(p, infinity, 0))
         else if random() < percentRocks/100
-          call rocks.add(p)
+          call rocks.append(p)
         else
-          call nodes.add(new Node(p, infinity, p.minDistTo(dest)))
+          call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
       end if
     end for
   end for

@@ -3,7 +3,7 @@
 main
   # Minimal example - 1 rule, writes * onto empty tape and halts
   var tm set to new TuringMachine("init", "halt")
-  call tm.add(new Rule("init", " ", "halt", "*", Dir.right))
+  call tm.append(new Rule("init", " ", "halt", "*", Dir.right))
   call tm.runToEnd()
   print tm.tape
 end main
@@ -38,7 +38,7 @@ class TuringMachine
     set property.rules to rules
   end procedure
 
-  procedure add(rule as Rule)
+  procedure append(rule as Rule)
     set property.rules to rules + rule
   end procedure
 

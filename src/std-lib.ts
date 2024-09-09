@@ -122,14 +122,14 @@ export class StdLib {
     return this.keys(dict).includes(key);
   }
 
-  withRemoveKey<T>(dict: { [key: string]: T }, key: string) {
+  withRemoveAtKey<T>(dict: { [key: string]: T }, key: string) {
     const newDict = { ...dict };
     (newDict as unknown as hasHiddenType)._type = (dict as unknown as hasHiddenType)._type;
     delete newDict[key];
     return newDict;
   }
 
-  removeByKey<T>(dict: { [key: string]: T }, key: string) {
+  removeAtKey<T>(dict: { [key: string]: T }, key: string) {
     delete dict[key];
   }
 
@@ -193,13 +193,6 @@ export class StdLib {
     list.splice(index, 0, value);
   }
 
-  withRemoveByKey<T>(list: Array<T>, index: number) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newList = (list as any).toSpliced(index, 1);
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
-    return newList;
-  }
-
   // custom impl
   elanIndexOf<T>(list: T[], elem: T) {
     for (let i = 0; i < list.length; i++) {
@@ -209,6 +202,13 @@ export class StdLib {
       }
     }
     return -1;
+  }
+
+  withRemoveAt<T>(list: Array<T>, index: number) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newList = (list as any).toSpliced(index, 1);
+    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    return newList;
   }
 
   withRemoveFirst<T>(list: Array<T>, value: T) {
@@ -253,11 +253,23 @@ export class StdLib {
     }
   }
 
-  add<T>(list: Array<T>, value: T) {
+  append<T>(list: Array<T>, value: T) {
     list.push(value);
   }
 
-  withKeyValue<T>(dict: { [key: string]: T }, key: string, value: T) {
+  appendList<T>(list: Array<T>, listB: Array<T>) {
+    list.push(...listB);
+  }
+
+  prepend<T>(list: Array<T>, value: T) {
+    list.unshift(value);
+  }
+
+  prependList<T>(list: Array<T>, listB: Array<T>) {
+    list.unshift(...listB);
+  }
+
+  withPutAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
     const newDict = { ...dict };
     newDict[key] = value;
     (newDict as unknown as hasHiddenType)._type = "ImmutableDictionary";

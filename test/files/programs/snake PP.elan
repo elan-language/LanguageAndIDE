@@ -1,4 +1,4 @@
-# fe42666abe951e709a0b114bf60d9dda4c90c35fa7d25c8655d8a5b4a2401c31 Elan Beta 2 valid
+# bb7babf90fdb8f7f2d7fae527d5db9c6688a951fb1bfd8db75c6eccce51b14f4 Elan Beta 2 valid
 
 # Run the program and use the standard W,A,S,D keys to change Snake direction
 # Try to 'eat' the (red) apples, and avoid hitting the edge or the body of the snake.
@@ -16,7 +16,7 @@ main
     call gr.draw()
     set currentDir to directionByKey(currentDir, gr.getKeystroke())
     set tail to body[0]
-    call body.add(head)
+    call body.append(head)
     set head to getAdjacentSquare(head, currentDir)
     set gameOn to not hasHitEdge(head) and not overlaps(body, head)
     call eatAppleIfPoss(head, body, apple)

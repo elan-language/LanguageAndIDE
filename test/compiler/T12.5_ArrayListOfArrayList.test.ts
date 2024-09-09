@@ -1,14 +1,14 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("T12.5_ArrayListOfArrayList", () => {
@@ -156,8 +156,8 @@ return [main, _tests];}`;
 
 main
   var a set to create2DArray(3, 0, "")
-  call a.add(["foo"])
-  call a.add(["yon"])
+  call a.append(["foo"])
+  call a.append(["yon"])
   print a[3]
   print a[4]
 end main`;
@@ -165,8 +165,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
-  _stdlib.add(a, system.literalArray(["foo"]));
-  _stdlib.add(a, system.literalArray(["yon"]));
+  _stdlib.append(a, system.literalArray(["foo"]));
+  _stdlib.append(a, system.literalArray(["yon"]));
   system.printLine(_stdlib.asString(system.safeIndex(a, 3)));
   system.printLine(_stdlib.asString(system.safeIndex(a, 4)));
 }
@@ -186,16 +186,16 @@ return [main, _tests];}`;
 
 main
   var a set to create2DArray(3, 0, "")
-  call a[1].add("foo")
-  call a[2].add("yon")
+  call a[1].append("foo")
+  call a[2].append("yon")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = _stdlib.create2DArray(3, 0, "");
-  _stdlib.add(system.safeIndex(a, 1), "foo");
-  _stdlib.add(system.safeIndex(a, 2), "yon");
+  _stdlib.append(system.safeIndex(a, 1), "foo");
+  _stdlib.append(system.safeIndex(a, 2), "yon");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -484,7 +484,7 @@ return [main, _tests];}`;
 main
   var a set to empty [[Int]]
   var b set to empty [[Int]]
-  call a.add([3])
+  call a.append([3])
   print a
   print b
   print a is b
@@ -496,7 +496,7 @@ end main`;
 async function main() {
   var a = system.emptyArrayList();
   var b = system.emptyArrayList();
-  _stdlib.add(a, system.literalArray([3]));
+  _stdlib.append(a, system.literalArray([3]));
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
@@ -684,7 +684,7 @@ end main
 
 main
   var a set to new ArrayList<of ArrayList<of String>>()
-  call a.add("foo")
+  call a.append("foo")
 end main
 `;
 

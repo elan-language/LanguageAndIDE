@@ -50,7 +50,7 @@ class Snake
   procedure clockTick(key as String, apple as Apple)
     call setDirection(key)
     set property.priorTail to body[0]
-    call body.add(head)
+    call body.append(head)
     set property.head to head.getAdjacentSquare(currentDir)
     if head is apple.location
       then

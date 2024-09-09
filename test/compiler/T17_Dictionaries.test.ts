@@ -284,14 +284,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeByKey("b")
+  call a.removeAtKey("b")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeByKey(a, "b");
+  _stdlib.removeAtKey(a, "b");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -310,14 +310,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":["a":1], "b":["b":3, "z":10]]
-  call a["b"].removeByKey("b")
+  call a["b"].removeAtKey("b")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : system.dictionary({["a"] : 1}), ["b"] : system.dictionary({["b"] : 3, ["z"] : 10})});
-  _stdlib.removeByKey(system.safeIndex(a, "b"), "b");
+  _stdlib.removeAtKey(system.safeIndex(a, "b"), "b");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -339,14 +339,14 @@ return [main, _tests];}`;
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeByKey("c")
+  call a.removeAtKey("c")
   print a
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.dictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
-  _stdlib.removeByKey(a, "c");
+  _stdlib.removeAtKey(a, "c");
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -612,7 +612,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  call a.removeByKey(10)
+  call a.removeAtKey(10)
 end main
 `;
 
@@ -660,7 +660,7 @@ end main
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  set a to a.withKeyValue("a", 2)
+  set a to a.withPutAtKey("a", 2)
   print a
 end main
 `;
@@ -688,12 +688,12 @@ end main
     assertDoesNotCompile(fileImpl, ["Incompatible types Float to Int"]);
   });
 
-  test("Fail_withRemoveKey", async () => {
+  test("Fail_withRemoveAtKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
   var a set to ["a":1, "b":3, "z":10]
-  var b set to a.withRemoveKey("b")
+  var b set to a.withRemoveAtKey("b")
   print a
   print b
 end main`;

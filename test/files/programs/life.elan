@@ -1,4 +1,4 @@
-# f7582ff5c33411b0e69f936c1c0fa867a8607efbb28b92c6af4e9a69363adb47 Elan Beta 2 valid
+# 6dfbf021384950d880afe020e7e08962c6d75609ca280cb64d3a4efd8e04d23c Elan Beta 2 valid
 
 main
   print "Press any key to halt"
@@ -21,7 +21,7 @@ end main
 
 procedure fillRandom(starter as [Boolean])
   for i from 0 to 1199 step 1
-    call starter.add(random() > 0.5)
+    call starter.append(random() > 0.5)
   end for
 end procedure
 

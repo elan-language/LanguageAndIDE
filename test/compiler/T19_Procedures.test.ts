@@ -1,15 +1,15 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("T19_Procedures", () => {
@@ -501,8 +501,8 @@ end procedure
 
 main
   var a set to [1]
-  call a.add()
-  call a.add(1, 2)
+  call a.append()
+  call a.append(1, 2)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
@@ -840,7 +840,7 @@ end procedure`;
 
 main
   var a set to [1,2]
-  set a to a.add(3)
+  set a to a.append(3)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

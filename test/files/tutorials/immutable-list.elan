@@ -4,7 +4,7 @@ main
   # A mutable list
   var a set to ["apple", "orange", "pear"]
   set a[0] to "plum"
-  call a.add("lemon")
+  call a.append("lemon")
   print a
   # An immutable list...
   var b set to {"apple", "orange", "pear"}

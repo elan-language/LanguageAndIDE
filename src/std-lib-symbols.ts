@@ -245,9 +245,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withRemoveByKey",
+      "withRemoveAt",
       this.getSymbol(
-        "withRemoveByKey",
+        "withRemoveAt",
         new FunctionType(
           [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
           new ImmutableListType(new GenericParameterType("T")),
@@ -278,11 +278,50 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "add",
+      "append",
       this.getSymbol(
-        "add",
+        "append",
         new ProcedureType(
           [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "appendList",
+      this.getSymbol(
+        "appendList",
+        new ProcedureType(
+          [
+            new ArrayListType(new GenericParameterType("T")),
+            new ArrayListType(new GenericParameterType("T")),
+          ],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "prepend",
+      this.getSymbol(
+        "prepend",
+        new ProcedureType(
+          [new ArrayListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          true,
+          false,
+        ),
+      ),
+    ],
+    [
+      "prependList",
+      this.getSymbol(
+        "prependList",
+        new ProcedureType(
+          [
+            new ArrayListType(new GenericParameterType("T")),
+            new ArrayListType(new GenericParameterType("T")),
+          ],
           true,
           false,
         ),
@@ -337,9 +376,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withKeyValue",
+      "withPutAtKey",
       this.getSymbol(
-        "withKeyValue",
+        "withPutAtKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(
@@ -358,9 +397,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "removeByKey",
+      "removeAtKey",
       this.getSymbol(
-        "removeByKey",
+        "removeAtKey",
         new ProcedureType(
           [
             new DictionaryType(new GenericParameterType("T1"), new GenericParameterType("T2")),
@@ -372,9 +411,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "withRemoveKey",
+      "withRemoveAtKey",
       this.getSymbol(
-        "withRemoveKey",
+        "withRemoveAtKey",
         new FunctionType(
           [
             new ImmutableDictionaryType(

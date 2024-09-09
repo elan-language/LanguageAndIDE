@@ -379,8 +379,8 @@ return [main, _tests];}`;
 
 main
     var a set to {"one", "two", "three"}
-    set a to a.withRemoveByKey(1)
-    var b set to a.withRemoveByKey(0)
+    set a to a.withRemoveAt(1)
+    var b set to a.withRemoveAt(0)
     print a
     print b
 end main`;
@@ -388,8 +388,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.immutableList(["one", "two", "three"]);
-  a = _stdlib.withRemoveByKey(a, 1);
-  var b = _stdlib.withRemoveByKey(a, 0);
+  a = _stdlib.withRemoveAt(a, 1);
+  var b = _stdlib.withRemoveAt(a, 0);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
@@ -850,7 +850,7 @@ end main
 
 main
   var a set to {"one", "two", "three"}
-  set a to a.withKeyValue(1, "TWO")
+  set a to a.withPutAtKey(1, "TWO")
   print a
 end main
 `;
@@ -867,7 +867,7 @@ end main
 
 main
   var a set to {"one", "two", "three"}
-  call a.add("four")
+  call a.append("four")
   print a
 end main
 `;

@@ -209,8 +209,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
       ["insertAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
+      ["prepend", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["prependList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
       ["putAt", "Procedure (ArrayList <Generic Parameter T>, Int, Generic Parameter T)"],
       ["removeAll", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
       ["removeAt", "Procedure (ArrayList <Generic Parameter T>, Int)"],
@@ -232,10 +235,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["add", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["append", "Procedure (ArrayList <Generic Parameter T>, Generic Parameter T)"],
+      ["appendList", "Procedure (ArrayList <Generic Parameter T>, ArrayList <Generic Parameter T>)"],
     ] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident7", "d", 5, expected);
+    await assertAutocompletes(fileImpl, "ident7", "p", 5, expected);
   });
 
   test("Pass_ExpressionId", async () => {

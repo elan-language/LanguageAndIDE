@@ -203,8 +203,8 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withKeyValue("b", 4)
-  var c set to b.withKeyValue("d", 2)
+  var b set to a.withPutAtKey("b", 4)
+  var c set to b.withPutAtKey("d", 2)
   print a
   print c
 end main`;
@@ -213,8 +213,8 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  var b = _stdlib.withKeyValue(a, "b", 4);
-  var c = _stdlib.withKeyValue(b, "d", 2);
+  var b = _stdlib.withPutAtKey(a, "b", 4);
+  var c = _stdlib.withPutAtKey(b, "d", 2);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(c));
 }
@@ -232,12 +232,12 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_withRemoveKey", async () => {
+  test("Pass_withRemoveAtKey", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveKey("b")
+  var b set to a.withRemoveAtKey("b")
   print a
   print b
 end main`;
@@ -246,7 +246,7 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  var b = _stdlib.withRemoveKey(a, "b");
+  var b = _stdlib.withRemoveAtKey(a, "b");
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
 }
@@ -269,7 +269,7 @@ return [main, _tests];}`;
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveKey("c")
+  var b set to a.withRemoveAtKey("c")
   print b
 end main`;
 
@@ -277,7 +277,7 @@ end main`;
 const a = system.immutableDictionary({["a"] : 1, ["b"] : 3, ["z"] : 10});
 
 async function main() {
-  var b = _stdlib.withRemoveKey(a, "c");
+  var b = _stdlib.withRemoveAtKey(a, "c");
   system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
@@ -296,8 +296,8 @@ return [main, _tests];}`;
 
 main
   var a set to new ImmutableDictionary<of String, Int>()
-  var b set to a.withKeyValue("Foo", 1)
-  set b to b.withKeyValue("Bar", 3)
+  var b set to a.withPutAtKey("Foo", 1)
+  set b to b.withPutAtKey("Bar", 3)
   var k set to b.keys()
   print k.length()
   print b["Foo"]
@@ -307,8 +307,8 @@ end main`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(system.immutableDictionary(new Object()));
-  var b = _stdlib.withKeyValue(a, "Foo", 1);
-  b = _stdlib.withKeyValue(b, "Bar", 3);
+  var b = _stdlib.withPutAtKey(a, "Foo", 1);
+  b = _stdlib.withPutAtKey(b, "Bar", 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(b, "Foo")));
@@ -332,8 +332,8 @@ enum Fruit apple, orange, pear
 
 main
   var a set to new ImmutableDictionary<of Fruit, Int>()
-  var b set to a.withKeyValue(Fruit.apple, 1)
-  set b to b.withKeyValue(Fruit.orange, 3)
+  var b set to a.withPutAtKey(Fruit.apple, 1)
+  set b to b.withPutAtKey(Fruit.orange, 3)
   var k set to b.keys()
   print k.length()
   print b[Fruit.apple]
@@ -347,8 +347,8 @@ var Fruit = {
 
 async function main() {
   var a = system.initialise(system.immutableDictionary(new Object()));
-  var b = _stdlib.withKeyValue(a, Fruit.apple, 1);
-  b = _stdlib.withKeyValue(b, Fruit.orange, 3);
+  var b = _stdlib.withPutAtKey(a, Fruit.apple, 1);
+  b = _stdlib.withPutAtKey(b, Fruit.orange, 3);
   var k = _stdlib.keys(b);
   system.printLine(_stdlib.asString(_stdlib.length(k)));
   system.printLine(_stdlib.asString(system.safeIndex(b, Fruit.apple)));
@@ -371,7 +371,7 @@ return [main, _tests];}`;
 main
   var a set to empty {String:Int}
   var b set to empty {String:Int}
-  set b to a.withKeyValue("a", 1)
+  set b to a.withPutAtKey("a", 1)
   print a
   print b
   print a is b
@@ -383,7 +383,7 @@ end main`;
 async function main() {
   var a = system.emptyImmutableDictionary();
   var b = system.emptyImmutableDictionary();
-  b = _stdlib.withKeyValue(a, "a", 1);
+  b = _stdlib.withPutAtKey(a, "a", 1);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
   system.printLine(_stdlib.asString(system.objectEquals(a, b)));
@@ -473,7 +473,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withRemoveKey(10)
+  var b set to a.withRemoveAtKey(10)
 end main
 `;
 
@@ -489,7 +489,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withKeyValue(10, 4)
+  var b set to a.withPutAtKey(10, 4)
 end main
 `;
 
@@ -505,7 +505,7 @@ end main
 
 constant a set to {"a":1, "b":3, "z":10}
 main
-  var b set to a.withKeyValue("b", 3.1)
+  var b set to a.withPutAtKey("b", 3.1)
 end main
 `;
 
@@ -555,7 +555,7 @@ end main
 
 main
   var a set to {"a":1, "b":3, "z":10}
-  call a.removeByKey("b")
+  call a.removeAtKey("b")
   print a
 end main`;
 
