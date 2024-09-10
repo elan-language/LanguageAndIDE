@@ -1,7 +1,7 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 
-export class IterType implements IterableSymbolType {
+export class IterableType implements IterableSymbolType {
   constructor(public readonly ofType: SymbolType) {}
   isIterable = true;
 

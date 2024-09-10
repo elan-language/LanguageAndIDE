@@ -24,7 +24,7 @@ import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ImmutableDictionaryType } from "./immutable-dictionary-type";
 import { IntType } from "./int-type";
-import { IterType } from "./iter-type";
+import { IterableType } from "./itererable-type";
 import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
@@ -45,7 +45,7 @@ export function isListType(s?: SymbolType): s is AbstractListType {
 }
 
 export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
-  return isIterableType(s) && !(s instanceof IterType);
+  return isIterableType(s) && !(s instanceof IterableType);
 }
 
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
@@ -204,7 +204,7 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
   }
 
   if (
-    paramType instanceof IterType &&
+    paramType instanceof IterableType &&
     (actualType instanceof ListType || actualType instanceof ArrayListType)
   ) {
     return true;

@@ -45,7 +45,7 @@ import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 import { IntType } from "./symbols/int-type";
-import { IterType } from "./symbols/iter-type";
+import { IterableType } from "./symbols/itererable-type";
 import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
@@ -613,12 +613,12 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof IterType && !isIterableType(rhs)) {
+  if (lhs instanceof IterableType && !isIterableType(rhs)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }
 
-  if (lhs instanceof IterType && isIterableType(rhs)) {
+  if (lhs instanceof IterableType && isIterableType(rhs)) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
     return;
   }

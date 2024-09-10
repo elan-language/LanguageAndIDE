@@ -10,7 +10,7 @@ import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
-import { IterType } from "./frames/symbols/iter-type";
+import { IterableType } from "./frames/symbols/itererable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
@@ -58,7 +58,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "asArrayList",
         new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
+          [new IterableType(new GenericParameterType("T"))],
           new ArrayListType(new GenericParameterType("T")),
           true,
         ),
@@ -69,7 +69,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "asList",
         new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
+          [new IterableType(new GenericParameterType("T"))],
           new ListType(new GenericParameterType("T")),
           true,
         ),
@@ -81,7 +81,7 @@ export class StdLibSymbols implements Scope {
         "range",
         new FunctionType(
           [IntType.Instance, IntType.Instance],
-          new IterType(IntType.Instance),
+          new IterableType(IntType.Instance),
           false,
         ),
       ),
@@ -91,8 +91,8 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "asIter",
         new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
-          new IterType(new GenericParameterType("T")),
+          [new IterableType(new GenericParameterType("T"))],
+          new IterableType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -102,7 +102,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "head",
         new FunctionType(
-          [new IterType(new GenericParameterType("T"))],
+          [new IterableType(new GenericParameterType("T"))],
           new GenericParameterType("T"),
           true,
         ),
@@ -196,7 +196,7 @@ export class StdLibSymbols implements Scope {
       "length",
       this.getSymbol(
         "length",
-        new FunctionType([new IterType(new GenericParameterType("T"))], IntType.Instance, true),
+        new FunctionType([new IterableType(new GenericParameterType("T"))], IntType.Instance, true),
       ),
     ],
     [
@@ -559,10 +559,10 @@ export class StdLibSymbols implements Scope {
         "filter",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false),
           ],
-          new IterType(new GenericParameterType("T")),
+          new IterableType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -573,10 +573,10 @@ export class StdLibSymbols implements Scope {
         "map",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], new GenericParameterType("U"), false),
           ],
-          new IterType(new GenericParameterType("U")),
+          new IterableType(new GenericParameterType("U")),
           true,
         ),
       ),
@@ -587,7 +587,7 @@ export class StdLibSymbols implements Scope {
         "reduce",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new GenericParameterType("U"),
             new FunctionType(
               [new GenericParameterType("U"), new GenericParameterType("T")],
@@ -606,14 +606,14 @@ export class StdLibSymbols implements Scope {
         "sortBy",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType(
               [new GenericParameterType("T"), new GenericParameterType("T")],
               IntType.Instance,
               false,
             ),
           ],
-          new IterType(new GenericParameterType("T")),
+          new IterableType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -624,10 +624,10 @@ export class StdLibSymbols implements Scope {
         "groupBy",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], new GenericParameterType("U"), false),
           ],
-          new IterType(new IterType(new GenericParameterType("U"))),
+          new IterableType(new IterableType(new GenericParameterType("U"))),
           true,
         ),
       ),
@@ -636,7 +636,7 @@ export class StdLibSymbols implements Scope {
       "max",
       this.getSymbol(
         "max",
-        new FunctionType([new IterType(FloatType.Instance)], FloatType.Instance, true),
+        new FunctionType([new IterableType(FloatType.Instance)], FloatType.Instance, true),
       ),
     ],
     [
@@ -645,7 +645,7 @@ export class StdLibSymbols implements Scope {
         "maxBy",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], FloatType.Instance, false),
           ],
           new GenericParameterType("T"),
@@ -657,7 +657,7 @@ export class StdLibSymbols implements Scope {
       "min",
       this.getSymbol(
         "min",
-        new FunctionType([new IterType(FloatType.Instance)], FloatType.Instance, true),
+        new FunctionType([new IterableType(FloatType.Instance)], FloatType.Instance, true),
       ),
     ],
     [
@@ -666,7 +666,7 @@ export class StdLibSymbols implements Scope {
         "minBy",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], FloatType.Instance, false),
           ],
           new GenericParameterType("T"),
@@ -680,7 +680,7 @@ export class StdLibSymbols implements Scope {
         "any",
         new FunctionType(
           [
-            new IterType(new GenericParameterType("T")),
+            new IterableType(new GenericParameterType("T")),
             new FunctionType([new GenericParameterType("T")], BooleanType.Instance, false),
           ],
           BooleanType.Instance,
@@ -693,7 +693,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "contains",
         new FunctionType(
-          [new IterType(new GenericParameterType("T")), new GenericParameterType("T")],
+          [new IterableType(new GenericParameterType("T")), new GenericParameterType("T")],
           BooleanType.Instance,
           true,
         ),
