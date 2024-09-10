@@ -2,7 +2,7 @@ import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractListType } from "./abstract-list-type";
 
-export class ImmutableListType extends AbstractListType implements IterableSymbolType {
+export class ListType extends AbstractListType implements IterableSymbolType {
   constructor(ofType: SymbolType) {
     super(ofType);
   }
@@ -14,9 +14,9 @@ export class ImmutableListType extends AbstractListType implements IterableSymbo
   isImmutable = true;
 
   get name() {
-    return `ImmutableList <${this.ofType.name}>`;
+    return `List <${this.ofType.name}>`;
   }
   toString(): string {
-    return `ImmutableList`;
+    return `List`;
   }
 }

@@ -9,9 +9,9 @@ import { FloatType } from "./frames/symbols/float-type";
 import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
-import { ImmutableListType } from "./frames/symbols/immutable-list-type";
 import { IntType } from "./frames/symbols/int-type";
 import { IterType } from "./frames/symbols/iter-type";
+import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";
 import { RegexType } from "./frames/symbols/regex-type";
@@ -70,7 +70,7 @@ export class StdLibSymbols implements Scope {
         "asImmutableList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
-          new ImmutableListType(new GenericParameterType("T")),
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -119,7 +119,7 @@ export class StdLibSymbols implements Scope {
               new GenericParameterType("T2"),
             ),
           ],
-          new ImmutableListType(new GenericParameterType("T1")),
+          new ListType(new GenericParameterType("T1")),
           true,
         ),
       ),
@@ -170,7 +170,7 @@ export class StdLibSymbols implements Scope {
               new GenericParameterType("T2"),
             ),
           ],
-          new ImmutableListType(new GenericParameterType("T1")),
+          new ListType(new GenericParameterType("T1")),
           true,
         ),
       ),
@@ -235,11 +235,11 @@ export class StdLibSymbols implements Scope {
         "withPutAt",
         new FunctionType(
           [
-            new ImmutableListType(new GenericParameterType("T")),
+            new ListType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
-          new ImmutableListType(new GenericParameterType("T")),
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -250,11 +250,11 @@ export class StdLibSymbols implements Scope {
         "withInsert",
         new FunctionType(
           [
-            new ImmutableListType(new GenericParameterType("T")),
+            new ListType(new GenericParameterType("T")),
             IntType.Instance,
             new GenericParameterType("T"),
           ],
-          new ImmutableListType(new GenericParameterType("T")),
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -264,8 +264,8 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "withRemoveAt",
         new FunctionType(
-          [new ImmutableListType(new GenericParameterType("T")), IntType.Instance],
-          new ImmutableListType(new GenericParameterType("T")),
+          [new ListType(new GenericParameterType("T")), IntType.Instance],
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -275,8 +275,8 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "withRemoveFirst",
         new FunctionType(
-          [new ImmutableListType(new GenericParameterType("T")), new GenericParameterType("T")],
-          new ImmutableListType(new GenericParameterType("T")),
+          [new ListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -286,8 +286,8 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "withRemoveAll",
         new FunctionType(
-          [new ImmutableListType(new GenericParameterType("T")), new GenericParameterType("T")],
-          new ImmutableListType(new GenericParameterType("T")),
+          [new ListType(new GenericParameterType("T")), new GenericParameterType("T")],
+          new ListType(new GenericParameterType("T")),
           true,
         ),
       ),
@@ -755,16 +755,12 @@ export class StdLibSymbols implements Scope {
         "fill",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             StringType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -776,18 +772,14 @@ export class StdLibSymbols implements Scope {
         "putDetails",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
             StringType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -799,9 +791,7 @@ export class StdLibSymbols implements Scope {
         "getDetails",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
           ],
@@ -819,16 +809,12 @@ export class StdLibSymbols implements Scope {
         "putChar",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
             StringType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -840,18 +826,14 @@ export class StdLibSymbols implements Scope {
         "putChar",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
             StringType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -863,9 +845,7 @@ export class StdLibSymbols implements Scope {
         "getChar",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
           ],
@@ -881,16 +861,12 @@ export class StdLibSymbols implements Scope {
         "putForeground",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -902,9 +878,7 @@ export class StdLibSymbols implements Scope {
         "getForeground",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
           ],
@@ -920,16 +894,12 @@ export class StdLibSymbols implements Scope {
         "putBackground",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
             IntType.Instance,
           ],
-          new ImmutableListType(
-            new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-          ),
+          new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
           true,
           true,
         ),
@@ -941,9 +911,7 @@ export class StdLibSymbols implements Scope {
         "getBackground",
         new FunctionType(
           [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
+            new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
             IntType.Instance,
             IntType.Instance,
           ],
@@ -967,11 +935,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "clearGraphics",
         new ProcedureType(
-          [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
-          ],
+          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
           true,
           false,
         ),
@@ -982,11 +946,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "clearKeyBuffer",
         new ProcedureType(
-          [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
-          ],
+          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
           true,
           false,
         ),
@@ -997,11 +957,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "getKeystroke",
         new FunctionType(
-          [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
-          ],
+          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
           StringType.Instance,
           true,
           false,
@@ -1013,11 +969,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "getKeystrokeWithModifier",
         new FunctionType(
-          [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
-          ],
+          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
           new TupleType([StringType.Instance, StringType.Instance]),
           true,
           false,
@@ -1029,11 +981,7 @@ export class StdLibSymbols implements Scope {
       this.getSymbol(
         "draw",
         new ProcedureType(
-          [
-            new ImmutableListType(
-              new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-            ),
-          ],
+          [new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]))],
           true,
           true,
         ),
@@ -1043,9 +991,7 @@ export class StdLibSymbols implements Scope {
       "Graphics",
       this.getSymbol(
         "Graphics",
-        new ImmutableListType(
-          new TupleType([StringType.Instance, IntType.Instance, IntType.Instance]),
-        ),
+        new ListType(new TupleType([StringType.Instance, IntType.Instance, IntType.Instance])),
       ),
     ],
     [

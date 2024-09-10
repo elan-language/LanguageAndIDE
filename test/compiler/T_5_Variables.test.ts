@@ -475,7 +475,7 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set22", ["Incompatible types Float to Boolean"]);
     assertDoesNotCompileWithId(fileImpl, "set25", ["Incompatible types Boolean to Int"]);
-    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types ImmutableList to String"]);
+    assertDoesNotCompileWithId(fileImpl, "set28", ["Incompatible types List to String"]);
     assertDoesNotCompileWithId(fileImpl, "set31", ["Incompatible types Float to Int"]);
   });
 
@@ -496,15 +496,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types ImmutableList to ArrayList",
+      "Incompatible types List to ArrayList",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types ArrayList to ImmutableList",
+      "Incompatible types ArrayList to List",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types ImmutableList to Dictionary",
+      "Incompatible types List to Dictionary",
     ]);
   });
 

@@ -16,7 +16,7 @@ export class TypeImmutableListNode extends AbstractSequence {
     this.remainingText = text;
     if (text.length > 0) {
       this.simpleType = new TypeSimpleNode(); //Not added to elements, as not present in the text
-      this.simpleType.parseText("ImmutableList");
+      this.simpleType.parseText("List");
       this.addElement(new PunctuationNode(OPEN_BRACE));
       this.generic = new TypeNode();
       this.addElement(this.generic);

@@ -38,7 +38,7 @@ export class StdLib {
       const type = (v as unknown as hasHiddenType)._type;
 
       switch (type) {
-        case "ImmutableList":
+        case "List":
           return `{${v.map((i) => this.asString(i)).join(", ")}}`;
         case "Tuple":
           return `(${v.map((i) => this.asString(i)).join(", ")})`;
@@ -83,7 +83,7 @@ export class StdLib {
 
   asImmutableList<T>(arr: T[]): T[] {
     const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "ImmutableList";
+    (list as unknown as hasHiddenType)._type = "List";
     return list;
   }
 
@@ -108,13 +108,13 @@ export class StdLib {
 
   keys<T>(dict: { [key: string]: T }): string[] {
     const lst = Object.getOwnPropertyNames(dict).filter((s) => s !== "_type");
-    (lst as unknown as hasHiddenType)._type = "ImmutableList";
+    (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
   values<T>(dict: { [key: string]: T }): T[] {
     const lst = this.keys(dict).map((k) => dict[k]);
-    (lst as unknown as hasHiddenType)._type = "ImmutableList";
+    (lst as unknown as hasHiddenType)._type = "List";
     return lst;
   }
 
@@ -170,7 +170,7 @@ export class StdLib {
   withPutAt<T>(list: Array<T>, index: number, value: T) {
     const newList = [...list];
     newList[index] = value;
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -185,7 +185,7 @@ export class StdLib {
   withInsert<T>(list: Array<T>, index: number, value: T) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 0, value);
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -207,7 +207,7 @@ export class StdLib {
   withRemoveAt<T>(list: Array<T>, index: number) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newList = (list as any).toSpliced(index, 1);
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -218,7 +218,7 @@ export class StdLib {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       newList = (newList as any).toSpliced(index, 1);
     }
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 
@@ -230,7 +230,7 @@ export class StdLib {
       newList = (newList as any).toSpliced(index, 1);
       index = this.elanIndexOf(newList, value);
     }
-    (newList as unknown as hasHiddenType)._type = "ImmutableList";
+    (newList as unknown as hasHiddenType)._type = "List";
     return newList;
   }
 

@@ -264,7 +264,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-    var a set to new ImmutableList<of Int>()
+    var a set to new List<of Int>()
     print a.length()
 end main`;
 
@@ -645,7 +645,7 @@ return [main, _tests];}`;
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-  var a set to new ImmutableList<of Int>()
+  var a set to new List<of Int>()
   print a
 end main`;
 
@@ -677,7 +677,7 @@ class Foo
   constructor()
   end constructor
   
-  property it as ImmutableList<of Int>
+  property it as List<of Int>
   
   function asString() return String
     return "A Foo"
@@ -825,7 +825,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index ImmutableList"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index List"]);
   });
 
   test("Fail_CannotPutAt", async () => {
@@ -842,7 +842,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_CannotSetIndex", async () => {
@@ -874,7 +874,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to ImmutableList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableDictionary to List"]);
   });
 
   test("Fail_add", async () => {
@@ -891,7 +891,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_insertAt", async () => {
@@ -908,7 +908,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_removeAt", async () => {
@@ -925,7 +925,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_removeFirst", async () => {
@@ -941,7 +941,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_removeAll", async () => {
@@ -957,14 +957,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_withoutGenericType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
-    var a set to new ImmutableList()
+    var a set to new List()
     print a
 end main`;
 

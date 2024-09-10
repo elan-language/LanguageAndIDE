@@ -57,7 +57,7 @@ export class System {
   }
 
   immutableList(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "ImmutableList";
+    (t as unknown as hasHiddenType)._type = "List";
     return t;
   }
 

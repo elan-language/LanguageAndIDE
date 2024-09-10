@@ -908,7 +908,7 @@ immutable class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as ImmutableList<of Bar>) return Bar
+function fun(l as List<of Bar>) return Bar
     return l[0]
 end function
 `;
@@ -1335,7 +1335,7 @@ immutable class Bar inherits Foo
   property p1 as Int
 end class
 
-function fun(l as ImmutableList<of Foo>) return Foo
+function fun(l as List<of Foo>) return Foo
     return l.get(0)
 end function
 `;
@@ -1346,7 +1346,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types ImmutableList<of Class Bar> to ImmutableList<of Class Foo>",
+      "Incompatible types List<of Class Bar> to List<of Class Foo>",
     ]);
   });
 

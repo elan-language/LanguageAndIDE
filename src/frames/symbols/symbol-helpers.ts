@@ -23,9 +23,9 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ImmutableDictionaryType } from "./immutable-dictionary-type";
-import { ImmutableListType } from "./immutable-list-type";
 import { IntType } from "./int-type";
 import { IterType } from "./iter-type";
+import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
 import { RegexType } from "./regex-type";
@@ -205,7 +205,7 @@ function matchGenericTypes(actualType: SymbolType, paramType: SymbolType) {
 
   if (
     paramType instanceof IterType &&
-    (actualType instanceof ImmutableListType || actualType instanceof ArrayListType)
+    (actualType instanceof ListType || actualType instanceof ArrayListType)
   ) {
     return true;
   }

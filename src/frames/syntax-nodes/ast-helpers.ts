@@ -13,8 +13,8 @@ import { DictionaryType } from "../symbols/dictionary-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IterType } from "../symbols/iter-type";
+import { ListType } from "../symbols/list-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
@@ -84,7 +84,7 @@ class TypeHolder implements SymbolType {
 }
 
 export function flatten(p: SymbolType): SymbolType {
-  if (p instanceof ArrayListType || p instanceof ImmutableListType || p instanceof IterType) {
+  if (p instanceof ArrayListType || p instanceof ListType || p instanceof IterType) {
     return new TypeHolder(p, [flatten(p.ofType)]);
   }
 
@@ -121,11 +121,7 @@ export function containsGenericType(type: SymbolType): boolean {
   if (type instanceof GenericParameterType) {
     return true;
   }
-  if (
-    type instanceof ArrayListType ||
-    type instanceof ImmutableListType ||
-    type instanceof IterType
-  ) {
+  if (type instanceof ArrayListType || type instanceof ListType || type instanceof IterType) {
     return containsGenericType(type.ofType);
   }
   if (type instanceof AbstractDictionaryType) {
@@ -151,8 +147,8 @@ export function generateType(type: SymbolType, matches: Map<string, SymbolType>)
   if (type instanceof ArrayListType) {
     return new ArrayListType(generateType(type.ofType, matches));
   }
-  if (type instanceof ImmutableListType) {
-    return new ImmutableListType(generateType(type.ofType, matches));
+  if (type instanceof ListType) {
+    return new ListType(generateType(type.ofType, matches));
   }
   if (type instanceof IterType) {
     return new IterType(generateType(type.ofType, matches));

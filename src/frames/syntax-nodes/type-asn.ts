@@ -9,9 +9,9 @@ import { DictionaryType } from "../symbols/dictionary-type";
 import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
 import { IterType } from "../symbols/iter-type";
+import { ListType } from "../symbols/list-type";
 import { RegexType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
 import { TupleType } from "../symbols/tuple-type";
@@ -39,7 +39,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   expectedMinimumGenericParameters() {
     switch (this.id) {
-      case "ImmutableList":
+      case "List":
       case "ArrayList":
       case "Func":
       case "Iter":
@@ -66,7 +66,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return "Object";
     }
 
-    if (this.id === "ImmutableList") {
+    if (this.id === "List") {
       return "Array";
     }
 
@@ -94,8 +94,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         return BooleanType.Instance;
       case "String":
         return StringType.Instance;
-      case "ImmutableList":
-        return new ImmutableListType(this.safeGetGenericParameterSymbolType(0));
+      case "List":
+        return new ListType(this.safeGetGenericParameterSymbolType(0));
       case "ArrayList":
         return new ArrayListType(this.safeGetGenericParameterSymbolType(0));
       case "Dictionary":

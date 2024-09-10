@@ -143,7 +143,7 @@ main
   end each
 end main
 
-function fruit() return ImmutableList<of String>
+function fruit() return List<of String>
   return {"apple","orange", "pear"}
 end function`;
 

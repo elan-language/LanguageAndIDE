@@ -703,7 +703,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_withInsert", async () => {
@@ -720,7 +720,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_withRemove", async () => {
@@ -754,7 +754,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_appendWithPlus", async () => {
@@ -804,7 +804,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_withRemoveAll", async () => {
@@ -820,7 +820,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Incompatible types ImmutableList to ArrayList"]);
+    assertDoesNotCompile(fileImpl, ["Incompatible types List to ArrayList"]);
   });
 
   test("Fail_assignRange", async () => {

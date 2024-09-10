@@ -3,11 +3,11 @@ import { mustBeCompatibleType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
-import { ImmutableListType } from "../symbols/immutable-list-type";
+import { ListType } from "../symbols/list-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralImmutableListAsn extends AbstractAstNode implements AstCollectionNode {
+export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,
@@ -39,9 +39,9 @@ export class LiteralImmutableListAsn extends AbstractAstNode implements AstColle
   symbolType() {
     const ofType = this.items[0]?.symbolType();
     if (ofType) {
-      return new ImmutableListType(ofType);
+      return new ListType(ofType);
     }
-    return new ImmutableListType(UnknownType.Instance);
+    return new ListType(UnknownType.Instance);
   }
 
   toString() {

@@ -10,7 +10,7 @@ export class ConstantValueField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("literal");
-    this.help = `A literal value (such as a number or string), or a literal ImmutableList or Dictionary (consult documentation for format).`;
+    this.help = `A literal value (such as a number or string), or a literal List or Dictionary (consult documentation for format).`;
   }
 
   initialiseRoot(): ParseNode {

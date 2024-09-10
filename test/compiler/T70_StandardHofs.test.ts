@@ -328,7 +328,7 @@ return [main, _tests];}`;
 
 constant source set to {{1}, {2, 2}}
 main
-  print source.maxBy(lambda x as ImmutableList<of Int> => x.length())
+  print source.maxBy(lambda x as List<of Int> => x.length())
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

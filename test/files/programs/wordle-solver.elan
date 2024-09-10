@@ -1,4 +1,4 @@
-# 00e87fc1c809ff3d6c35b9dc3078c3538e92626a54c9e8aad3752f75c258a3f6 Elan Beta 2 valid
+# 992c7e78f1807e568a5718cc5822885dc32af19dde1daa8994a142da01f4da04 Elan Beta 2 valid
 
 main
   var possible set to validWords
@@ -200,7 +200,7 @@ function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of Str
 end function
 
 test betterOf
-  let possAnswers be new ImmutableList<of String>()
+  let possAnswers be new List<of String>()
   let b2 be new WordCount("B", 2)
   let a3 be new WordCount("A", 3)
   let a2 be new WordCount("A", 2)

@@ -44,9 +44,9 @@ import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
-import { ImmutableListType } from "./symbols/immutable-list-type";
 import { IntType } from "./symbols/int-type";
 import { IterType } from "./symbols/iter-type";
+import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
@@ -541,11 +541,11 @@ export function mustBeCompatibleType(
     return;
   }
 
-  if (lhs instanceof ImmutableListType && rhs instanceof ImmutableListType) {
+  if (lhs instanceof ListType && rhs instanceof ListType) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
   }
 
-  if (lhs instanceof ImmutableListType && !(rhs instanceof ImmutableListType)) {
+  if (lhs instanceof ListType && !(rhs instanceof ListType)) {
     FailIncompatible(lhs, rhs, compileErrors, location);
     return;
   }

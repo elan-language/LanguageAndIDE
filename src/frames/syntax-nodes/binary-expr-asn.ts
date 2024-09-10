@@ -11,8 +11,8 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { EnumType } from "../symbols/enum-type";
 import { FloatType } from "../symbols/float-type";
-import { ImmutableListType } from "../symbols/immutable-list-type";
 import { IntType } from "../symbols/int-type";
+import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import { isValueType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -142,15 +142,12 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    if (
-      this.op === OperationSymbol.Add &&
-      (lst instanceof ImmutableListType || rst instanceof ImmutableListType)
-    ) {
-      if (lst instanceof ImmutableListType && rst instanceof ImmutableListType) {
+    if (this.op === OperationSymbol.Add && (lst instanceof ListType || rst instanceof ListType)) {
+      if (lst instanceof ListType && rst instanceof ListType) {
         mustBeCompatibleType(lst, rst, this.compileErrors, this.fieldId);
-      } else if (lst instanceof ImmutableListType) {
+      } else if (lst instanceof ListType) {
         mustBeCompatibleType(lst.ofType, rst, this.compileErrors, this.fieldId);
-      } else if (rst instanceof ImmutableListType) {
+      } else if (rst instanceof ListType) {
         mustBeCompatibleType(lst, rst.ofType, this.compileErrors, this.fieldId);
       }
       return `system.concat(${this.lhs.compile()}, ${this.rhs.compile()})`;

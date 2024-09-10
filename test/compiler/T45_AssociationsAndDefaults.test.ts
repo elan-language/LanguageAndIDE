@@ -32,7 +32,7 @@ class Game
     property p1 as Player
     property p2 as Player
 
-    property previousScores as ImmutableList<of Int>
+    property previousScores as List<of Int>
 
     function asString() return String
         return "A game"
@@ -142,11 +142,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as ImmutableList<of Int>
+    property li as List<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as ImmutableDictionary<of String, Int>
     property ai as ArrayList<of Int>
-    property t as Tuple<of Int, String, ImmutableList<of Int>>
+    property t as Tuple<of Int, String, List<of Int>>
     property ff as Func<of String, String => Int>
 
     function asString() return String
@@ -247,11 +247,11 @@ class Game
     property f as Float
     property b as Boolean
     property s as String
-    property li as ImmutableList<of Int>
+    property li as List<of Int>
     property ds as Dictionary<of String, Int>
     property dsi as ImmutableDictionary<of String, Int>
     property ai as ArrayList<of Int>
-    property t as Tuple<of Int, String, ImmutableList<of Int>>
+    property t as Tuple<of Int, String, List<of Int>>
 
     function asString() return String
         return "A game"
@@ -486,7 +486,7 @@ main
   print g.p1 is empty Player
   print g.p2 is empty Player
   print g.previousGame is empty Game
-  print g.previousScores is empty ImmutableList<of Int>
+  print g.previousScores is empty List<of Int>
   print g.score is empty Int
   print g.best is empty Int
 end main
@@ -504,7 +504,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as ImmutableList<of Int>
+  property previousScores as List<of Int>
 
   function asString() return String
     return "A game"
@@ -629,7 +629,7 @@ class Game
 
   property previousGame as Game
 
-  property previousScores as ImmutableList<of Int>
+  property previousScores as List<of Int>
 
   function asString() return String
     return "A game"
@@ -737,7 +737,7 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is empty ImmutableList<of Int>
+  print f.a is empty List<of Int>
   print f.b is empty String
   print f.c is empty Dictionary<of String,Int>
   print f.d is empty ArrayList<of Int>
@@ -747,7 +747,7 @@ class Foo
   constructor()
   end constructor
 
-  property a as ImmutableList<of Int>
+  property a as List<of Int>
   property b as String
   property c as Dictionary<of String, Int>
   property d as ArrayList<of Int>

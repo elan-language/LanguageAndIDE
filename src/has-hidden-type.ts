@@ -1,3 +1,3 @@
 export interface hasHiddenType {
-  _type: "ImmutableList" | "ArrayList" | "Tuple" | "Iter" | "Dictionary" | "ImmutableDictionary";
+  _type: "List" | "ArrayList" | "Tuple" | "Iter" | "Dictionary" | "ImmutableDictionary";
 }

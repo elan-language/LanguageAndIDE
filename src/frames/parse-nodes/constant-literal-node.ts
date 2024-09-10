@@ -1,7 +1,7 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { ImmutableDictionaryNode } from "./immutable-dictionary-node";
-import { ImmutableListNode } from "./immutable-list-node";
+import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value";
 
 export class ConstantLiteralNode extends AbstractAlternatives {
@@ -12,7 +12,7 @@ export class ConstantLiteralNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     this.alternatives.push(new LitValueNode());
-    this.alternatives.push(new ImmutableListNode(() => new ConstantLiteralNode()));
+    this.alternatives.push(new ListNode(() => new ConstantLiteralNode()));
     this.alternatives.push(
       new ImmutableDictionaryNode(
         () => new LitValueNode(),

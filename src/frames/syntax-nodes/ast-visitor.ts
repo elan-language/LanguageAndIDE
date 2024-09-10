@@ -4,7 +4,6 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { AbstractAlternatives } from "../parse-nodes/abstract-alternatives";
-import { Alternatives } from "../parse-nodes/alternatives";
 import { ArrayListNode } from "../parse-nodes/array-list-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { BinaryExpression } from "../parse-nodes/binary-expression";
@@ -23,13 +22,13 @@ import { FuncTypeNode } from "../parse-nodes/func-type-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImmutableDictionaryNode } from "../parse-nodes/immutable-dictionary-node";
-import { ImmutableListNode } from "../parse-nodes/immutable-list-node";
 import { IndexSingle } from "../parse-nodes/index-single";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { KVPnode } from "../parse-nodes/kvp-node";
 import { Lambda } from "../parse-nodes/lambda";
+import { ListNode } from "../parse-nodes/list-node";
 import { LitBoolean } from "../parse-nodes/lit-boolean";
 import { LitFloat } from "../parse-nodes/lit-float";
 import { LitInt } from "../parse-nodes/lit-int";
@@ -92,7 +91,7 @@ import { LiteralDictionaryAsn } from "./literal-dictionary-asn";
 import { LiteralEnumAsn } from "./literal-enum-asn";
 import { LiteralFloatAsn } from "./literal-float-asn";
 import { LiteralImmutableDictionaryAsn } from "./literal-immutable-dictionary-asn";
-import { LiteralImmutableListAsn } from "./literal-immutable-list-asn";
+import { LiteralListAsn } from "./literal-list-asn";
 import { LiteralIntAsn } from "./literal-int-asn";
 import { LiteralRegExAsn } from "./literal-regex-asn";
 import { LiteralStringAsn } from "./literal-string-asn";
@@ -371,9 +370,9 @@ export function transform(
     return new EmptyAsn(fieldId);
   }
 
-  if (node instanceof ImmutableListNode) {
+  if (node instanceof ListNode) {
     const items = transformMany(node.csv as CSV, fieldId, scope).items;
-    return new LiteralImmutableListAsn(items, fieldId, scope);
+    return new LiteralListAsn(items, fieldId, scope);
   }
 
   if (node instanceof ArrayListNode) {
