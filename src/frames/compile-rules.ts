@@ -399,13 +399,21 @@ function FailIncompatible(
   compileErrors: CompileError[],
   location: string,
 ) {
+  let addInfo = "";
+  // special case
+  if (lhs instanceof ListType && rhs instanceof ArrayListType) {
+    addInfo = " try converting with '.asList()'";
+  }
+
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(rhs.toString(), lhs.toString(), location, unknown));
+  compileErrors.push(
+    new TypesCompileError(rhs.toString(), lhs.toString(), addInfo, location, unknown),
+  );
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
   const unknown = lhs === UnknownType.Instance;
-  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", location, unknown));
+  compileErrors.push(new TypesCompileError(lhs.toString(), "Float or Int", "", location, unknown));
 }
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {

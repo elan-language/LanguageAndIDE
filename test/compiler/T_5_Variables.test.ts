@@ -500,7 +500,7 @@ end main`;
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types ArrayList to List",
+      "Incompatible types ArrayList to List try converting with '.asList()'",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [

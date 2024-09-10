@@ -37,8 +37,13 @@ export class TypeCompileError extends CompileError {
 }
 
 export class TypesCompileError extends CompileError {
-  constructor(type1: string, type2: string, location: string, unknown: boolean) {
-    super(Priority.typeError, `Incompatible types ${type1} to ${type2}`, location, unknown);
+  constructor(type1: string, type2: string, addInfo: string, location: string, unknown: boolean) {
+    super(
+      Priority.typeError,
+      `Incompatible types ${type1} to ${type2}${addInfo}`,
+      location,
+      unknown,
+    );
   }
 }
 

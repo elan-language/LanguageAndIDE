@@ -974,4 +974,20 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
   });
+
+  test("Fail_typeErrorMessage", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+    var a set to empty [Int]
+    var b set to empty {Int}
+    set b to a
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types ArrayList to List try converting with '.asList()'"]);
+  });
 });
