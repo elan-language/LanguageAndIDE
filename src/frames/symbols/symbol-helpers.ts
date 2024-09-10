@@ -14,6 +14,7 @@ import { globalKeyword, libraryKeyword } from "../keywords";
 import { isAstIdNode, isAstQualifiedNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
 import { AbstractDictionaryType } from "./abstract-dictionary-type";
+import { AbstractListType } from "./abstract-list-type";
 import { ArrayListType } from "./array-list-type";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
@@ -37,6 +38,10 @@ export function isIterableType(s?: SymbolType): s is IterableSymbolType {
 
 export function isDictionaryType(s?: SymbolType): s is AbstractDictionaryType {
   return s instanceof AbstractDictionaryType;
+}
+
+export function isListType(s?: SymbolType): s is AbstractListType {
+  return s instanceof AbstractListType;
 }
 
 export function isIndexableType(s?: SymbolType): s is IterableSymbolType {

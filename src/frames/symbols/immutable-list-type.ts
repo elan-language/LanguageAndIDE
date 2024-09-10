@@ -1,10 +1,15 @@
 import { IterableSymbolType } from "../interfaces/iterable-symbol-type";
 import { SymbolType } from "../interfaces/symbol-type";
+import { AbstractListType } from "./abstract-list-type";
 
-export class ImmutableListType implements IterableSymbolType {
-  constructor(public readonly ofType: SymbolType) {}
-  isIterable = true;
+export class ImmutableListType extends AbstractListType implements IterableSymbolType {
+  constructor(ofType: SymbolType) {
+    super(ofType);
+  }
+
   initialValue = "system.emptyImmutableList()";
+
+  factoryName = "system.immutableList";
 
   isImmutable = true;
 

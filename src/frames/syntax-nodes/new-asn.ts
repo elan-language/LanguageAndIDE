@@ -10,10 +10,8 @@ import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { ArrayListType } from "../symbols/array-list-type";
 import { ClassType } from "../symbols/class-type";
-import { DictionaryType } from "../symbols/dictionary-type";
-import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
-import { isDictionaryType } from "../symbols/symbol-helpers";
+import { isDictionaryType, isListType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { TypeAsn } from "./type-asn";
@@ -45,14 +43,9 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
-    if (type instanceof ArrayListType) {
+    if (isListType(type)) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.array(new Array()))`;
-    }
-
-    if (type instanceof ImmutableListType) {
-      mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.immutableList(new Array()))`;
+      return `system.initialise(${type.factoryName}(new Array()))`;
     }
 
     if (isDictionaryType(type)) {
