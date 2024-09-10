@@ -18,7 +18,7 @@ export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
 
   // constant immutables
-  emptyImmutableListSingleton = this.immutableList([]);
+  emptyImmutableListSingleton = this.list([]);
   emptyIterableSingleton = this.iter([]);
   emptyImmutableDictionarySingleton = this.immutableDictionary({});
 
@@ -56,7 +56,7 @@ export class System {
     return t;
   }
 
-  immutableList(t: Array<any>) {
+  list(t: Array<any>) {
     (t as unknown as hasHiddenType)._type = "List";
     return t;
   }
@@ -161,15 +161,15 @@ export class System {
 
   concat<T>(lhs: Array<T> | T, rhs: Array<T> | T) {
     if (Array.isArray(lhs) && Array.isArray(rhs)) {
-      return this.immutableList(lhs.concat(rhs));
+      return this.list(lhs.concat(rhs));
     }
 
     if (Array.isArray(lhs)) {
-      return this.immutableList(lhs.concat([rhs as T]));
+      return this.list(lhs.concat([rhs as T]));
     }
 
     // if (Array.isArray(rhs)){
-    return this.immutableList([lhs as T].concat(rhs));
+    return this.list([lhs as T].concat(rhs));
   }
 
   equals(i1: any, i2: any) {

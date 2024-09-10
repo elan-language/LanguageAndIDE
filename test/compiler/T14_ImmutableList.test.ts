@@ -24,7 +24,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
+  var a = system.list([4, 5, 6, 7, 8]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -48,7 +48,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([system.immutableList([4, 5]), system.immutableList([6, 7, 8])]);
+  var a = system.list([system.list([4, 5]), system.list([6, 7, 8])]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -87,7 +87,7 @@ end class`;
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
   var a = system.initialise(new Foo());
-  var b = system.immutableList([a]);
+  var b = system.list([a]);
   system.printLine(_stdlib.asString(b));
 }
 
@@ -151,11 +151,11 @@ async function main() {
   var c = "c";
   var d = "d";
   var e = true;
-  var v = system.immutableList([a]);
-  var w = system.immutableList([b]);
-  var x = system.immutableList([c]);
-  var y = system.immutableList([d]);
-  var z = system.immutableList([e]);
+  var v = system.list([a]);
+  var w = system.list([b]);
+  var x = system.list([c]);
+  var y = system.list([d]);
+  var z = system.list([e]);
   system.printLine(_stdlib.asString(v));
   system.printLine(_stdlib.asString(w));
   system.printLine(_stdlib.asString(x));
@@ -198,7 +198,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["Foo", "Bar"]);
+  var a = system.list(["Foo", "Bar"]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -222,7 +222,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4.1, 5, 6, 7, 8]);
+  var a = system.list([4.1, 5, 6, 7, 8]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -246,7 +246,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
+  var a = system.list([4, 5, 6, 7, 8]);
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -270,7 +270,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.immutableList(new Array()));
+  var a = system.initialise(system.list(new Array()));
   system.printLine(_stdlib.asString(_stdlib.length(a)));
 }
 return [main, _tests];}`;
@@ -294,7 +294,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
+  var a = system.list([4, 5, 6, 7, 8]);
   system.printLine(_stdlib.asString(system.safeIndex(a, 2)));
 }
 return [main, _tests];}`;
@@ -321,7 +321,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["one", "two", "three"]);
+  var a = system.list(["one", "two", "three"]);
   a = _stdlib.withPutAt(a, 1, "TWO");
   var b = _stdlib.withPutAt(a, 0, "ONE");
   system.printLine(_stdlib.asString(a));
@@ -354,7 +354,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["one", "two", "three"]);
+  var a = system.list(["one", "two", "three"]);
   a = _stdlib.withInsert(a, 1, "TWO");
   var b = _stdlib.withInsert(a, 0, "ONE");
   system.printLine(_stdlib.asString(a));
@@ -387,7 +387,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["one", "two", "three"]);
+  var a = system.list(["one", "two", "three"]);
   a = _stdlib.withRemoveAt(a, 1);
   var b = _stdlib.withRemoveAt(a, 0);
   system.printLine(_stdlib.asString(a));
@@ -415,7 +415,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["one", "two", "three", "one", "two", "three"]);
+  var a = system.list(["one", "two", "three", "one", "two", "three"]);
   a = _stdlib.withRemoveFirst(a, "two");
   system.printLine(_stdlib.asString(a));
 }
@@ -441,7 +441,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["one", "two", "three", "one", "two", "three"]);
+  var a = system.list(["one", "two", "three", "one", "two", "three"]);
   a = _stdlib.withRemoveAll(a, "two");
   system.printLine(_stdlib.asString(a));
 }
@@ -468,10 +468,10 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
-  system.printLine(_stdlib.asString(system.immutableList(a.slice(2, 5))));
-  system.printLine(_stdlib.asString(system.immutableList(a.slice(1, 3))));
-  system.printLine(_stdlib.asString(system.immutableList(a.slice(0, 2))));
+  var a = system.list([4, 5, 6, 7, 8]);
+  system.printLine(_stdlib.asString(system.list(a.slice(2, 5))));
+  system.printLine(_stdlib.asString(system.list(a.slice(1, 3))));
+  system.printLine(_stdlib.asString(system.list(a.slice(0, 2))));
 }
 return [main, _tests];}`;
 
@@ -499,7 +499,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
+  var a = system.list([4, 5, 6, 7, 8]);
   var b = system.concat(a, 9);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
@@ -530,7 +530,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
+  var a = system.list([4, 5, 6, 7, 8]);
   var b = system.concat(9, a);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
@@ -563,8 +563,8 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([4, 5, 6, 7, 8]);
-  var b = system.immutableList([1, 2, 3]);
+  var a = system.list([4, 5, 6, 7, 8]);
+  var b = system.list([1, 2, 3]);
   var c = system.concat(a, b);
   system.printLine(_stdlib.asString(a));
   system.printLine(_stdlib.asString(b));
@@ -598,7 +598,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList(["a", "b"]);
+  var a = system.list(["a", "b"]);
   var b = "cd";
   var c = system.concat(a, system.safeIndex(b, 0));
   system.printLine(_stdlib.asString(a));
@@ -625,7 +625,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const a = system.immutableList([4, 5, 6, 7, 8]);
+const a = system.list([4, 5, 6, 7, 8]);
 
 async function main() {
   system.printLine(_stdlib.asString(a));
@@ -651,7 +651,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.initialise(system.immutableList(new Array()));
+  var a = system.initialise(system.list(new Array()));
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

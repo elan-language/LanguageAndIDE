@@ -1,7 +1,7 @@
 import { CodeSourceFromString } from "../../src/frames/code-source";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
-import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, ignore_test, testHash, transforms } from "./compiler-test-helpers";
+import { assertDoesNotCompile, assertDoesNotParse, assertObjectCodeExecutes, assertObjectCodeIs, assertParses, assertStatusIsValid, testHash, transforms } from "./compiler-test-helpers";
 
 suite("T54_With", () => {
   test("Pass_SingleSetToVar", async () => {
@@ -606,7 +606,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([0, 2]);
+  var a = system.list([0, 2]);
   var b = system.initialise(new Foo(1));
   var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
   system.printLine(_stdlib.asString(b.b));
@@ -654,7 +654,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([0, 2, 3]);
+  var a = system.list([0, 2, 3]);
   var b = system.initialise(new Foo(1));
   var c = (() => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = _stdlib.length(a); return _a;})();
   system.printLine(_stdlib.asString(b.b));

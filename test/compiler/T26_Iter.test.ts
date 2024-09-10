@@ -27,7 +27,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList([1, 5, 6]);
+  var it = system.list([1, 5, 6]);
   await printEach(it);
 }
 
@@ -61,7 +61,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList(["one", "two"]);
+  var it = system.list(["one", "two"]);
   system.printLine(_stdlib.asString(printEach(it)));
 }
 
@@ -95,7 +95,7 @@ end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var lst = system.immutableList(["one", "two"]);
+  var lst = system.list(["one", "two"]);
   var it = printEach(lst);
   lst = _stdlib.asList(it);
   system.printLine(_stdlib.asString(lst));
@@ -207,7 +207,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList([1, 2, 3, 4, 5, 6, 7]);
+  var it = system.list([1, 2, 3, 4, 5, 6, 7]);
   await printAsIter(it);
   await printasList(it);
 }
@@ -218,7 +218,7 @@ async function printAsIter(target) {
 
 async function printasList(target) {
   var some = _stdlib.asList(target);
-  system.printLine(_stdlib.asString(system.immutableList(some.slice(3, 7))));
+  system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
 }
 return [main, _tests];}`;
 
@@ -330,7 +330,7 @@ class Foo {
   i = system.emptyIter();
 
   async update() {
-    this.i = system.immutableList([1]);
+    this.i = system.list([1]);
   }
 
 }

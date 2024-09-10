@@ -264,12 +264,12 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 function f() {
-  return system.immutableList([1, 2]);
+  return system.list([1, 2]);
 }
 
 async function main() {
   var a = f();
-  a = system.immutableList([1, 2]);
+  a = system.list([1, 2]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;

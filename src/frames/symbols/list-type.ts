@@ -9,7 +9,7 @@ export class ListType extends AbstractListType implements IterableSymbolType {
 
   initialValue = "system.emptyImmutableList()";
 
-  factoryName = "system.immutableList";
+  factoryName = "system.list";
 
   isImmutable = true;
 

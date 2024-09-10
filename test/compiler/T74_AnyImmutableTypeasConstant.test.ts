@@ -73,7 +73,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const k = system.immutableList([1, 2, 3]);
+const k = system.list([1, 2, 3]);
 
 async function main() {
   system.printLine(_stdlib.asString(k));

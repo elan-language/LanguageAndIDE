@@ -28,7 +28,7 @@ main
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const lst = system.immutableList([1, 2]);
+const lst = system.list([1, 2]);
 
 async function main() {
   var arr = system.literalArray(["three", "four"]);

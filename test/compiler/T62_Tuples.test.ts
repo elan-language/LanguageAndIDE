@@ -124,7 +124,7 @@ async function main() {
   system.printLine(_stdlib.asString(_stdlib.first(t)));
 }
 
-const a = system.immutableList([system.tuple([1, 2])]);
+const a = system.list([system.tuple([1, 2])]);
 return [main, _tests];}`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);

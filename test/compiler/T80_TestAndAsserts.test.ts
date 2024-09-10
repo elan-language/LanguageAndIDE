@@ -300,8 +300,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  var a = system.immutableList([3, 2, 4, 0]);
-  var b = system.immutableList([3, 2, 4, 0]);
+  var a = system.list([3, 2, 4, 0]);
+  var b = system.list([3, 2, 4, 0]);
   _outcomes.push(system.assert(a, b, "assert12", _stdlib));
 }]);
 

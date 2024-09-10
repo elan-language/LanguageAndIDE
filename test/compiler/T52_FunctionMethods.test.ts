@@ -178,7 +178,7 @@ class Foo {
   p1 = 0;
 
   times(value) {
-    return system.immutableList([this.p1 * value]);
+    return system.list([this.p1 * value]);
   }
 
   asString() {
@@ -272,7 +272,7 @@ class Foo {
   p1 = 0;
 
   times(value) {
-    return system.immutableList([this.p1 * value]);
+    return system.list([this.p1 * value]);
   }
 
 }
@@ -367,7 +367,7 @@ class Foo {
   p1 = 0;
 
   times(value) {
-    return system.immutableList([system.initialise(new Qux())]);
+    return system.list([system.initialise(new Qux())]);
   }
 
 }

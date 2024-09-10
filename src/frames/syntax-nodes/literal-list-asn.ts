@@ -33,7 +33,7 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");
-    return `system.immutableList([${it}])`;
+    return `system.list([${it}])`;
   }
 
   symbolType() {
