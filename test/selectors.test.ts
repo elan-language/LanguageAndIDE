@@ -126,7 +126,7 @@ suite("Unit tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
     s.processKey(key("s"));
     help = s.getCompletion();
     assert.equal(help, " set switch");
@@ -144,12 +144,12 @@ suite("Unit tests", () => {
     assert.equal(help, " each for if let repeat set switch throw try var while #");
   });
 
-  test("Selection Context - in a Procedire", () => {
+  test("Selection Context - in a Procedure", () => {
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
-    assert.equal(help, " call each for if print repeat set switch throw try var while #");
+    assert.equal(help, " call each for if let print repeat set switch throw try var while #");
   });
 
   test("Selection Context - in a Test", () => {
