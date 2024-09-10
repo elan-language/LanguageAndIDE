@@ -21,10 +21,11 @@ export class Property extends AbstractFrame implements Member, ElanSymbol {
   type: TypeField;
   public private: boolean = false;
 
-  constructor(parent: ClassFrame) {
+  constructor(parent: ClassFrame, priv = false) {
     super(parent);
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
+    this.private = priv;
   }
   initialKeywords(): string {
     return propertyKeyword;

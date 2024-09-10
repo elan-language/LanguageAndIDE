@@ -349,14 +349,14 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
 }\r\n`;
   }
 
-  createFunction(): Frame {
-    return new FunctionMethod(this);
+  createFunction(priv: boolean = false): Frame {
+    return new FunctionMethod(this, priv);
   }
-  createProperty(): Frame {
-    return new Property(this);
+  createProperty(priv: boolean = false): Frame {
+    return new Property(this, priv);
   }
-  createProcedure(): Frame {
-    return new ProcedureMethod(this);
+  createProcedure(priv: boolean = false): Frame {
+    return new ProcedureMethod(this, priv);
   }
   createAbstractFunction(): Frame {
     return new AbstractFunction(this);
