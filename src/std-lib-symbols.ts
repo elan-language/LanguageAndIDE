@@ -65,9 +65,9 @@ export class StdLibSymbols implements Scope {
       ),
     ],
     [
-      "asImmutableList",
+      "asList",
       this.getSymbol(
-        "asImmutableList",
+        "asList",
         new FunctionType(
           [new IterType(new GenericParameterType("T"))],
           new ListType(new GenericParameterType("T")),

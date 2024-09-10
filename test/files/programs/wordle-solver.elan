@@ -1,4 +1,4 @@
-# 992c7e78f1807e568a5718cc5822885dc32af19dde1daa8994a142da01f4da04 Elan Beta 2 valid
+# f4f0c8f2ddcb8ccb49837e6c41a9041ceef7088791e79b6465959382b393ee4d Elan Beta 2 valid
 
 main
   var possible set to validWords
@@ -8,7 +8,7 @@ main
     print attempt
     set marking to inputString("")
     var possAnswers set to possibleAnswersAfterAttempt(possible, attempt, marking)
-    set attempt to bestAttempt(possAnswers.asImmutableList(), validWords)
+    set attempt to bestAttempt(possAnswers.asList(), validWords)
   end while
 end main
 

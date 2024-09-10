@@ -85,7 +85,7 @@ return [main, _tests];}`;
 main
   var lst set to {"one", "two"}
   var it set to printEach(lst)
-  set lst to it.asImmutableList()
+  set lst to it.asList()
   print lst
 end main
 
@@ -97,7 +97,7 @@ end function`;
 async function main() {
   var lst = system.immutableList(["one", "two"]);
   var it = printEach(lst);
-  lst = _stdlib.asImmutableList(it);
+  lst = _stdlib.asList(it);
   system.printLine(_stdlib.asString(lst));
 }
 
@@ -193,15 +193,15 @@ return [main, _tests];}`;
 main
   var it set to {1.0, 2, 3, 4, 5, 6, 7}
   call printAsIter(it)
-  call printasImmutableList(it)
+  call printasList(it)
 end main
   
 procedure printAsIter(target as Iter<of Float>)
   print target
 end procedure
   
-procedure printasImmutableList(target as Iter<of Float>)
-  var some set to target.asImmutableList()
+procedure printasList(target as Iter<of Float>)
+  var some set to target.asList()
   print some[3..7]
 end procedure`;
 
@@ -209,15 +209,15 @@ end procedure`;
 async function main() {
   var it = system.immutableList([1, 2, 3, 4, 5, 6, 7]);
   await printAsIter(it);
-  await printasImmutableList(it);
+  await printasList(it);
 }
 
 async function printAsIter(target) {
   system.printLine(_stdlib.asString(target));
 }
 
-async function printasImmutableList(target) {
-  var some = _stdlib.asImmutableList(target);
+async function printasList(target) {
+  var some = _stdlib.asList(target);
   system.printLine(_stdlib.asString(system.immutableList(some.slice(3, 7))));
 }
 return [main, _tests];}`;

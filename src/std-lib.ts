@@ -81,7 +81,7 @@ export class StdLib {
     return arr;
   }
 
-  asImmutableList<T>(arr: T[]): T[] {
+  asList<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "List";
     return list;
@@ -375,7 +375,7 @@ export class StdLib {
       if (result[i]) {
         result[i].push(i);
       } else {
-        result[i] = this.asImmutableList([i]);
+        result[i] = this.asList([i]);
       }
     }
   }

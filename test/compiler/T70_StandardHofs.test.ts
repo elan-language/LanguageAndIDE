@@ -77,7 +77,7 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print filterIt(source).asImmutableList()
+  print filterIt(source).asList()
 end main
 
 function filterIt(tofilter as Iter<of Int>) return Iter<of Int>
@@ -89,7 +89,7 @@ end function
 const source = system.immutableList([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asImmutableList(filterIt(source))));
+  system.printLine(_stdlib.asString(_stdlib.asList(filterIt(source))));
 }
 
 function filterIt(tofilter) {
