@@ -35,6 +35,14 @@ export function isIterableType(s?: SymbolType): s is IterableSymbolType {
   return !!s && "isIterable" in s;
 }
 
+export function isDictionaryType(s?: SymbolType): s is AbstractDictionaryType {
+  return s instanceof AbstractDictionaryType;
+}
+
+export function isIndexableType(s?: SymbolType): s is IterableSymbolType {
+  return isIterableType(s) && !(s instanceof IterType);
+}
+
 export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }

@@ -13,6 +13,7 @@ import { ClassType } from "../symbols/class-type";
 import { DictionaryType } from "../symbols/dictionary-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { ImmutableListType } from "../symbols/immutable-list-type";
+import { isDictionaryType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { TypeAsn } from "./type-asn";
@@ -54,14 +55,9 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       return `system.initialise(system.immutableList(new Array()))`;
     }
 
-    if (type instanceof ImmutableDictionaryType) {
+    if (isDictionaryType(type)) {
       mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.immutableDictionary(new Object()))`;
-    }
-
-    if (type instanceof DictionaryType) {
-      mustMatchParameters(this.parameters, [], false, this.compileErrors, this.fieldId);
-      return `system.initialise(system.dictionary(new Object()))`;
+      return `system.initialise(${type.factoryName}(new Object()))`;
     }
 
     if (type instanceof ClassType) {

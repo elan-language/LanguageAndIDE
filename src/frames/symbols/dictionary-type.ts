@@ -9,6 +9,8 @@ export class DictionaryType extends AbstractDictionaryType implements SymbolType
 
   initialValue = "system.emptyDictionary()";
 
+  factoryName = "system.dictionary";
+
   get name() {
     return `Dictionary <${this.keyType.name},${this.valueType.name}>`;
   }

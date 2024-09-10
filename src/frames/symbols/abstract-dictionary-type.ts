@@ -9,6 +9,8 @@ export class AbstractDictionaryType implements SymbolType {
 
   initialValue = "";
 
+  factoryName = "";
+
   get name() {
     return `AbstractDictionary <${this.keyType.name},${this.valueType.name}>`;
   }

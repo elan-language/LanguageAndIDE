@@ -53,7 +53,9 @@ import { RegexType } from "./symbols/regex-type";
 import { StringType } from "./symbols/string-type";
 import {
   isDictionarySymbolType,
+  isDictionaryType,
   isGenericSymbolType,
+  isIndexableType,
   isIterableType,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -234,15 +236,7 @@ export function mustBeIndexableSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(
-      (read && symbolType instanceof ArrayListType) ||
-      (read && symbolType instanceof ImmutableListType) ||
-      (read && symbolType instanceof ImmutableDictionaryType) ||
-      (read && symbolType instanceof StringType) ||
-      (read && symbolType instanceof DictionaryType)
-    )
-  ) {
+  if (!(read && (isIndexableType(symbolType) || isDictionaryType(symbolType)))) {
     compileErrors.push(
       new NotIndexableCompileError(
         symbolType.toString(),
@@ -259,13 +253,7 @@ export function mustBeRangeableSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(
-      (read && symbolType instanceof ArrayListType) ||
-      (read && symbolType instanceof StringType) ||
-      (read && symbolType instanceof ImmutableListType)
-    )
-  ) {
+  if (!(read && isIndexableType(symbolType))) {
     compileErrors.push(
       new NotRangeableCompileError(
         symbolType.toString(),
@@ -840,14 +828,7 @@ export function mustBeIterable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(
-      symbolType instanceof ImmutableListType ||
-      symbolType instanceof ArrayListType ||
-      symbolType instanceof StringType ||
-      symbolType instanceof IterType
-    )
-  ) {
+  if (!isIterableType(symbolType)) {
     compileErrors.push(
       new NotIterableCompileError(
         symbolType.toString(),

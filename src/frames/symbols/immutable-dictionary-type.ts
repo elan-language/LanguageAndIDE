@@ -10,6 +10,8 @@ export class ImmutableDictionaryType extends AbstractDictionaryType implements S
 
   isImmutable = true;
 
+  factoryName = "system.immutableDictionary";
+
   get name() {
     return `ImmutableDictionary <${this.keyType.name},${this.valueType.name}>`;
   }
