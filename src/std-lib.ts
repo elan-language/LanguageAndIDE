@@ -99,7 +99,7 @@ export class StdLib {
   asIter<T>(arr: T[]): T[] {
     const list = [...arr];
     (list as unknown as hasHiddenType)._type = "Iter";
-    return list;
+    return list as T[];
   }
 
   head<T>(arr: T[]): T {
@@ -321,16 +321,19 @@ export class StdLib {
     return `${type} [${items.map((n) => `"${n}":${o[n]}`).join(", ")}]`;
   }
 
-  filter<T>(source: T[], predicate: (value: T) => boolean) {
-    return this.asIter(source.filter(predicate));
+  filter<T>(source: T[] | string, predicate: (value: T | string) => boolean): (T | string)[] {
+    const list = typeof source === "string" ? source.split("") : [...source];
+    return this.asIter(list.filter(predicate));
   }
 
-  map<T, U>(source: T[], predicate: (value: T) => U) {
-    return this.asIter(source.map(predicate));
+  map<T, U>(source: T[] | string, predicate: (value: T | string) => U) {
+    const list = typeof source === "string" ? source.split("") : [...source];
+    return this.asIter(list.map(predicate));
   }
 
-  reduce<T, U>(source: T[], initValue: U, predicate: (s: U, value: T) => U): U {
-    return source.reduce(predicate, initValue);
+  reduce<T, U>(source: T[] | string, initValue: U, predicate: (s: U, value: T | string) => U): U {
+    const list = typeof source === "string" ? source.split("") : [...source];
+    return list.reduce(predicate, initValue);
   }
 
   max(source: number[]): number {

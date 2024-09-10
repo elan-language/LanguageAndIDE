@@ -44,6 +44,34 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_filterString", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+constant source set to "onetwo"
+main
+  print source.filter(lambda x as String => x is "o").asArrayList()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = "onetwo";
+
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.filter(source, (x) => x === "o"))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[o, o]",
+    );
+  });
+
   test("Pass_filterInFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -108,6 +136,34 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_mapString", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+constant source set to "onetwo"
+main
+  print source.map(lambda x as String => x + "*").asArrayList()
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = "onetwo";
+
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.map(source, (x) => x + "*"))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[o*, n*, e*, t*, w*, o*]",
+    );
+  });
+
   test("Pass_mapTestType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -161,6 +217,31 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
+  });
+
+  test("Pass_reduceString", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+constant source set to "onetwo"
+main
+  print source.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = "onetwo";
+
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.reduce(source, "Concat:", (s, x) => s + "*" + x)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Concat:*o*n*e*t*w*o");
   });
 
   test("Pass_reduceToImmutableDictionary", async () => {
@@ -451,6 +532,36 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_sortByString", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+constant source set to "dbcd"
+main
+  print source.sortBy(lambda x as String, y as String => if x is y then 0 else if isAfter(x, y) then 1 else -1).asArrayList()
+  print source
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const source = "dbcd";
+
+async function main() {
+  system.printLine(_stdlib.asString(_stdlib.asArrayList(_stdlib.sortBy(source, (x, y) => x === y ? 0 : _stdlib.isAfter(x, y) ? 1 : -1))));
+  system.printLine(_stdlib.asString(source));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[b, c, d, d]dbcd",
+    );
+  });
+
   test("Fail_MaxOnNonNumeric", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
@@ -480,4 +591,6 @@ end main`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Incompatible types String to Float"]);
   });
+
+
 });

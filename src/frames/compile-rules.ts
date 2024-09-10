@@ -613,6 +613,7 @@ export function mustBeCompatibleType(
 
   if (lhs instanceof IterType && isIterableType(rhs)) {
     mustBeCompatibleType(lhs.ofType, rhs.ofType, compileErrors, location);
+    return;
   }
 
   if (lhs instanceof EnumType && rhs instanceof EnumType) {
