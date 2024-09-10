@@ -35,7 +35,7 @@ end procedure
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var gr = system.initialise(system.immutableList(new Array()));
+  var gr = system.initialise(system.list(new Array()));
   var k = _stdlib.getKeystroke(gr);
   var r = _stdlib.randomInt(1, 6);
   r = _stdlib.randomInt(1, 6) * 10;

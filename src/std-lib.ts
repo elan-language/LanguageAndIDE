@@ -44,7 +44,7 @@ export class StdLib {
           return `(${v.map((i) => this.asString(i)).join(", ")})`;
         case "ArrayList":
           return `[${v.map((i) => this.asString(i)).join(", ")}]`;
-        case "Iter":
+        case "Iterable":
           return `an Iterable`;
         default:
           return v.toString();
@@ -92,13 +92,13 @@ export class StdLib {
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    (seq as unknown as hasHiddenType)._type = "Iter";
+    (seq as unknown as hasHiddenType)._type = "Iterable";
     return seq;
   }
 
   asIter<T>(arr: T[]): T[] {
     const list = [...arr];
-    (list as unknown as hasHiddenType)._type = "Iter";
+    (list as unknown as hasHiddenType)._type = "Iterable";
     return list as T[];
   }
 

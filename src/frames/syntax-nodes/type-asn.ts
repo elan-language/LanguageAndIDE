@@ -10,7 +10,7 @@ import { FloatType } from "../symbols/float-type";
 import { FunctionType } from "../symbols/function-type";
 import { ImmutableDictionaryType } from "../symbols/immutable-dictionary-type";
 import { IntType } from "../symbols/int-type";
-import { IterType } from "../symbols/iter-type";
+import { IterableType } from "../symbols/itererable-type";
 import { ListType } from "../symbols/list-type";
 import { RegexType } from "../symbols/regex-type";
 import { StringType } from "../symbols/string-type";
@@ -42,7 +42,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "List":
       case "ArrayList":
       case "Func":
-      case "Iter":
+      case "Iterable":
         return 1;
       case "Dictionary":
       case "ImmutableDictionary":
@@ -110,8 +110,8 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-      case "Iter":
-        return new IterType(this.safeGetGenericParameterSymbolType(0));
+      case "Iterable":
+        return new IterableType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
         const types = this.genericParameters.map((p) => p.symbolType());
         const pTypes = types.slice(0, -1);

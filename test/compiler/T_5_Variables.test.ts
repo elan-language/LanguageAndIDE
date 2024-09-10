@@ -252,7 +252,7 @@ return [main, _tests];}`;
   test("Pass_Iter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
-function f() return Iter<of Int>
+function f() return Iterable<of Int>
   return {1, 2}
 end function
 
@@ -264,12 +264,12 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 function f() {
-  return system.immutableList([1, 2]);
+  return system.list([1, 2]);
 }
 
 async function main() {
   var a = f();
-  a = system.immutableList([1, 2]);
+  a = system.list([1, 2]);
   system.printLine(_stdlib.asString(a));
 }
 return [main, _tests];}`;
@@ -500,7 +500,7 @@ end main`;
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types ArrayList to List",
+      "Incompatible types ArrayList to List try converting with '.asList()'",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [

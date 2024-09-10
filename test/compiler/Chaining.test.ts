@@ -22,7 +22,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([system.immutableList([1, 2]), system.immutableList([3, 4])]);
+  var a = system.list([system.list([1, 2]), system.list([3, 4])]);
   var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
@@ -48,7 +48,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([system.literalArray([1, 2]), system.literalArray([3, 4])]);
+  var a = system.list([system.literalArray([1, 2]), system.literalArray([3, 4])]);
   var b = system.safeIndex(system.safeIndex(a, 1), 1);
   system.printLine(_stdlib.asString(b));
 }
@@ -90,7 +90,7 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["a", system.emptyImmutableList()]]);};
   constructor() {
-    this.a = system.immutableList([1]);
+    this.a = system.list([1]);
   }
 
   a = system.emptyImmutableList();
@@ -299,7 +299,7 @@ end class`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var f = system.immutableList([system.initialise(new Foo())]);
+  var f = system.list([system.initialise(new Foo())]);
   var b = 0;
   b = system.safeIndex(f, 0).b.ff();
   system.printLine(_stdlib.asString(b));
@@ -575,7 +575,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var a = system.immutableList([1, 2, 3, 4, 5, 6]);
+  var a = system.list([1, 2, 3, 4, 5, 6]);
   system.printLine(_stdlib.asString(_stdlib.reduce(_stdlib.map(_stdlib.filter(a, (x) => x > 2), (x) => x * x), 0, (s, x) => s + x)));
 }
 return [main, _tests];}`;

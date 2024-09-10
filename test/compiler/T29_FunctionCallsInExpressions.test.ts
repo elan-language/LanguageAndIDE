@@ -146,7 +146,7 @@ end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var x = _stdlib.min(system.immutableList([3.1, 3]));
+  var x = _stdlib.min(system.list([3.1, 3]));
   system.printLine(_stdlib.asString(x));
 }
 return [main, _tests];}`;

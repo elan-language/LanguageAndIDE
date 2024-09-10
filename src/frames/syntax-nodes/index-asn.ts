@@ -62,7 +62,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   wrapListOrArray(rootType: SymbolType, code: string): string {
     if (rootType instanceof ListType) {
-      return `system.immutableList(${code})`;
+      return `system.list(${code})`;
     }
     if (rootType instanceof ArrayListType) {
       return `system.array(${code})`;

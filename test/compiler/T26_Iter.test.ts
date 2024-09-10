@@ -19,7 +19,7 @@ main
   call printEach(it)
 end main
   
-procedure printEach(target as Iter<of Float>)
+procedure printEach(target as Iterable<of Float>)
   each x in target
     print x
   end each
@@ -27,7 +27,7 @@ end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList([1, 5, 6]);
+  var it = system.list([1, 5, 6]);
   await printEach(it);
 }
 
@@ -55,13 +55,13 @@ main
   print printEach(it)
 end main
   
-function printEach(target as Iter<of String>) return Iter<of String>
+function printEach(target as Iterable<of String>) return Iterable<of String>
   return target
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList(["one", "two"]);
+  var it = system.list(["one", "two"]);
   system.printLine(_stdlib.asString(printEach(it)));
 }
 
@@ -89,13 +89,13 @@ main
   print lst
 end main
 
-function printEach(target as Iter<of String>) return Iter<of String>
+function printEach(target as Iterable<of String>) return Iterable<of String>
   return target
 end function`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var lst = system.immutableList(["one", "two"]);
+  var lst = system.list(["one", "two"]);
   var it = printEach(lst);
   lst = _stdlib.asList(it);
   system.printLine(_stdlib.asString(lst));
@@ -123,7 +123,7 @@ main
   call printEach(arr)
 end main
   
-procedure printEach(target as Iter<of Float>)
+procedure printEach(target as Iterable<of Float>)
   each x in target
     print x
   end each
@@ -159,7 +159,7 @@ main
   call printEach(s)
 end main
   
-procedure printEach(target as Iter<of String>)
+procedure printEach(target as Iterable<of String>)
   each x in target
     print x
   end each
@@ -196,18 +196,18 @@ main
   call printasList(it)
 end main
   
-procedure printAsIter(target as Iter<of Float>)
+procedure printAsIter(target as Iterable<of Float>)
   print target
 end procedure
   
-procedure printasList(target as Iter<of Float>)
+procedure printasList(target as Iterable<of Float>)
   var some set to target.asList()
   print some[3..7]
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 async function main() {
-  var it = system.immutableList([1, 2, 3, 4, 5, 6, 7]);
+  var it = system.list([1, 2, 3, 4, 5, 6, 7]);
   await printAsIter(it);
   await printasList(it);
 }
@@ -218,7 +218,7 @@ async function printAsIter(target) {
 
 async function printasList(target) {
   var some = _stdlib.asList(target);
-  system.printLine(_stdlib.asString(system.immutableList(some.slice(3, 7))));
+  system.printLine(_stdlib.asString(system.list(some.slice(3, 7))));
 }
 return [main, _tests];}`;
 
@@ -246,7 +246,7 @@ class Foo
   constructor()
   end constructor
   
-  property it as Iter<of Int>
+  property it as Iterable<of Int>
   
   function asString() return String
     return "A Foo"
@@ -293,8 +293,8 @@ main
   print foo.i
   print foo1.i
   print foo.i is foo1.i
-  print foo.i is empty Iter<of Int>
-  print foo1.i is empty Iter<of Int>
+  print foo.i is empty Iterable<of Int>
+  print foo1.i is empty Iterable<of Int>
 end main
 
 class Foo
@@ -302,7 +302,7 @@ class Foo
 
   end constructor
 
-  property i as Iter<of Int>
+  property i as Iterable<of Int>
 
   procedure update()
     set property.i to {1}
@@ -330,7 +330,7 @@ class Foo {
   i = system.emptyIter();
 
   async update() {
-    this.i = system.immutableList([1]);
+    this.i = system.list([1]);
   }
 
 }
@@ -352,7 +352,7 @@ main
 
 end main
 
-procedure printEach(target as Iter)
+procedure printEach(target as Iterable)
   each x in target
     print x
   end each
@@ -373,7 +373,7 @@ main
   call printEach(it)
 end main
 
-procedure printEach(target as Iter<of String>)
+procedure printEach(target as Iterable<of String>)
   each x in target
     print x
   end each
@@ -394,7 +394,7 @@ main
   call printEach(it)
 end main
 
-procedure printEach(target as Iter<of Int>)
+procedure printEach(target as Iterable<of Int>)
   print target[0]
 end procedure`;
 
@@ -402,7 +402,7 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Iter<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index Iterable<of Int>"]);
   });
 
   test("Fail_Indexing2", async () => {
@@ -413,7 +413,7 @@ main
   call printEach(it)
 end main
 
-procedure printEach(target as Iter<of Int>)
+procedure printEach(target as Iterable<of Int>)
   print target[2..4]
 end procedure`;
 
@@ -421,6 +421,6 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot range Iter<of Int>"]);
+    assertDoesNotCompile(fileImpl, ["Cannot range Iterable<of Int>"]);
   });
 });

@@ -1,4 +1,4 @@
-# f4f0c8f2ddcb8ccb49837e6c41a9041ceef7088791e79b6465959382b393ee4d Elan Beta 2 valid
+# 5e0c6fee78effea0d011aa8a30d524f96d8c3d18865207d7b475bbe30fa73300 Elan Beta 2 valid
 
 main
   var possible set to validWords
@@ -147,7 +147,7 @@ test markAttempt
   assert markAttempt("COLON", "GLORY") is "_++__"
 end test
 
-function possibleAnswersAfterAttempt(prior as Iter<of String>, attempt as String, mark as String) return Iter<of String>
+function possibleAnswersAfterAttempt(prior as Iterable<of String>, attempt as String, mark as String) return Iterable<of String>
   return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
@@ -158,7 +158,7 @@ test possibleAnswersAfterAttempt
   assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
 end test
 
-function maxWordCountRemainingAfterAttempt(possibleAnswers as Iter<of String>, attempt as String) return Int
+function maxWordCountRemainingAfterAttempt(possibleAnswers as Iterable<of String>, attempt as String) return Int
   let d be emptyDictionaryOfAllOutcomes
   let d2 be possibleAnswers.reduce(d, lambda dd as {String:Int}, possAnswer as String => incrementCount(dd, possAnswer, attempt))
   let keys be d2.keys()
@@ -181,7 +181,7 @@ test maxWordCountRemainingAfterAttempt
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
 end test
 
-function allRemainingWordCounts(possAnswers as {String}, possAttempts as Iter<of String>) return Iter<of WordCount>
+function allRemainingWordCounts(possAnswers as {String}, possAttempts as Iterable<of String>) return Iterable<of WordCount>
   let parallel be possAttempts
   return parallel.map(lambda w as String => new WordCount(w, maxWordCountRemainingAfterAttempt(possAnswers, w)))
 end function
@@ -193,7 +193,7 @@ test allRemainingWordCounts
   assert allRemainingWordCounts(possAnswers, possAttempts) is expected
 end test
 
-function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iter<of String>) return WordCount
+function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as Iterable<of String>) return WordCount
   let isBetter be wc2.count < wc1.count
   let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
