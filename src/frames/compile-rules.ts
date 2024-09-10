@@ -6,7 +6,6 @@ import {
   CompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
-  IndexCompileError,
   MustBeAbstractCompileError,
   MustBeConcreteCompileError,
   MustBeImmutableCompileError,
@@ -716,19 +715,6 @@ export function mustBePropertyPrefixedOnAssignable(
           new SyntaxCompileError(`assigning to a property requires a prefix`, location),
         );
       }
-    }
-  }
-}
-
-export function mustNotIndexOnFunctionMethod(
-  assignable: AstNode,
-  parent: Parent,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  if (isFunction(parent)) {
-    if (isIndexed(assignable)) {
-      compileErrors.push(new IndexCompileError(`${getId(assignable)}`, location));
     }
   }
 }

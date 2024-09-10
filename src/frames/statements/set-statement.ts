@@ -2,15 +2,12 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSource } from "../code-source";
 import {
   mustBeCompatibleNode,
-  mustBeIndexableSymbol,
   mustBePropertyPrefixedOnAssignable,
-  mustBeRangeableSymbol,
   mustNotBeConstant,
   mustNotBeCounter,
   mustNotBeLet,
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
-  mustNotIndexOnFunctionMethod,
 } from "../compile-rules";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
@@ -18,10 +15,8 @@ import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { setKeyword, toKeyword } from "../keywords";
-import { isDictionarySymbolType, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { isAstIdNode } from "../syntax-nodes/ast-helpers";
 import { Transforms } from "../syntax-nodes/transforms";
-import { VarAsn } from "../syntax-nodes/var-asn";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -64,13 +59,6 @@ export class SetStatement extends AbstractFrame implements Statement {
     const exprAstNode = this.expr.getOrTransformAstNode(transforms);
 
     mustNotBePropertyOnFunctionMethod(
-      assignableAstNode,
-      this.getParent(),
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    mustNotIndexOnFunctionMethod(
       assignableAstNode,
       this.getParent(),
       this.compileErrors,
