@@ -177,7 +177,7 @@ main
   var x set to (3, "Apple")
   var y set to 0
   var z set to ""
-  set (y, z) to x
+  set y, z to x
   print y
   print z
 end main
@@ -238,7 +238,7 @@ return [main, _tests];}`;
 
 main
   var x set to (3, "Apple")
-  var (y, z) set to x
+  var y, z set to x
   print y
   print z
 end main
@@ -267,7 +267,7 @@ return [main, _tests];}`;
 
 main
   var x set to (3, "Apple")
-  var (y, z) set to x
+  var y, z set to x
   var a set to 0
   var b set to ""
   set a to y
@@ -386,7 +386,7 @@ main
   var x set to (3,"Apple")
   var y set to 0
   var z set to ""
-  set (z, y) to x
+  set z, y to x
   print y
   print z
 end main
@@ -409,7 +409,7 @@ end main
 main
   var x set to (3,"Apple")
   var z set to ""
-  set (z, y) to x
+  set z, y to x
   print y
   print z
 end main
@@ -429,7 +429,7 @@ end main
 main
   var x set to (3,"Apple")
   var z set to ""
-  var (z, y) set to x
+  var z, y set to x
   print y
   print z
 end main

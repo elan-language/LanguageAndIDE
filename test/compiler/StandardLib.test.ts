@@ -509,7 +509,7 @@ main
   var rnd set to firstRandomInFixedSequence()
   var dice set to 0
   for i from 1 to 10000 step 1
-    set (dice, rnd) to rollDice(rnd)
+    set dice, rnd to rollDice(rnd)
     call results.putAt(dice, results[dice] + 1)
   end for
   for i from 0 to 6 step 1

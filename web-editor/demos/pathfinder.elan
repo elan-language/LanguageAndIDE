@@ -1,4 +1,4 @@
-# d3f90d068e2f0769cd80a9fadcd9f5aa7b9fac731d163a15d221f32fa84bc704 Elan Beta 2 valid
+# FFFF Elan Beta 2 valid
 
 main
   var start set to new Point(0, 0)
@@ -36,7 +36,7 @@ procedure runSolver(gr as Graphics, start as Point, destination as Point, rocks 
   end while
   if solver.getLastVisited() is destination
     then
-      var (route, length) set to solver.getRouteAndLength()
+      var route, length set to solver.getRouteAndLength()
       set gr2 to addRoute(gr2, route)
       call gr2.draw()
       print "Length of route: {round(length, 2)}"

@@ -1299,10 +1299,12 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitTuple(), `()`, ParseStatus.invalid, "", "()", "");
   });
   test("DeconstructedTuple", () => {
-    testNodeParse(new DeconstructedTuple(), `(a,b)`, ParseStatus.valid, "", "", "");
-    testNodeParse(new DeconstructedTuple(), `(a,b`, ParseStatus.incomplete, "", "", "");
-    testNodeParse(new DeconstructedTuple(), `(3,4)`, ParseStatus.invalid, "", "(3,4)", "");
-    testNodeParse(new DeconstructedTuple(), `(a[2],b)`, ParseStatus.invalid, "", "(a[2],b)", "");
+    testNodeParse(new DeconstructedTuple(), `a, b`, ParseStatus.valid, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `a,b`, ParseStatus.valid, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `a,`, ParseStatus.incomplete, "", "", "");
+    testNodeParse(new DeconstructedTuple(), `(a,b)`, ParseStatus.invalid, "", "(a,b)", "");
+    testNodeParse(new DeconstructedTuple(), `3,4`, ParseStatus.invalid, "", "3,4", "");
+    testNodeParse(new DeconstructedTuple(), `property.a, b`, ParseStatus.invalid, "", "property.a, b", "");
   });
   test("Literal", () => {
     testNodeParse(new LiteralNode(), `"hello"`, ParseStatus.valid, "", "", "");

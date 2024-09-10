@@ -60,7 +60,7 @@ suite("File Parsing Tests", async () => {
   });
 
   test("parse Frames - let statement 2", () => {
-    const code = "  let (attemptAfterGreens, targetAfterGreens) be evaluateGreens(attempt, target)";
+    const code = "  let attemptAfterGreens, targetAfterGreens be evaluateGreens(attempt, target)";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(hash, new DefaultProfile(), transforms());
     const m = new MainFrame(fl);
