@@ -252,7 +252,7 @@ return [main, _tests];}`;
   test("Pass_Iter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
-function f() return Iter<of Int>
+function f() return Iterable<of Int>
   return {1, 2}
 end function
 

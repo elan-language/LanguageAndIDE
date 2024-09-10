@@ -42,7 +42,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       case "List":
       case "ArrayList":
       case "Func":
-      case "Iter":
+      case "Iterable":
         return 1;
       case "Dictionary":
       case "ImmutableDictionary":
@@ -110,7 +110,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         );
       case "Tuple":
         return new TupleType(this.genericParameters.map((p) => p.symbolType()));
-      case "Iter":
+      case "Iterable":
         return new IterType(this.safeGetGenericParameterSymbolType(0));
       case "Func":
         const types = this.genericParameters.map((p) => p.symbolType());

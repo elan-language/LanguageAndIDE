@@ -77,7 +77,7 @@ export class System {
   }
 
   iter(t: Array<any>) {
-    (t as unknown as hasHiddenType)._type = "Iter";
+    (t as unknown as hasHiddenType)._type = "Iterable";
     return t;
   }
 

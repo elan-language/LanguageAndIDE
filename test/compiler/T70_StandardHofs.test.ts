@@ -80,7 +80,7 @@ main
   print filterIt(source).asList()
 end main
 
-function filterIt(tofilter as Iter<of Int>) return Iter<of Int>
+function filterIt(tofilter as Iterable<of Int>) return Iterable<of Int>
     return tofilter.filter(lambda x as Int => x > 20)
 end function
 `;
