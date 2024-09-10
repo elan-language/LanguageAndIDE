@@ -424,4 +424,20 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["Cannot range Iterable<of Int>"]);
   });
+
+  test("Fail_TypeMsg", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var it set to {1,2,3,4,5,6,7}
+  set it to it.map(lambda x as Int => x)
+  print it
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Incompatible types Iterable<of Int> to List try converting Iterable to a concrete type with e.g. '.asList()'"]);
+  });
 });

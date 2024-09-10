@@ -56,6 +56,7 @@ import {
   isGenericSymbolType,
   isIndexableType,
   isIterableType,
+  isListType,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
@@ -403,6 +404,10 @@ function FailIncompatible(
   // special case
   if (lhs instanceof ListType && rhs instanceof ArrayListType) {
     addInfo = " try converting with '.asList()'";
+  }
+
+  if (isListType(lhs) && rhs instanceof IterableType) {
+    addInfo = " try converting Iterable to a concrete type with e.g. '.asList()'";
   }
 
   const unknown = lhs === UnknownType.Instance || rhs === UnknownType.Instance;
