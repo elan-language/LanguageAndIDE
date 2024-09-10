@@ -24,7 +24,7 @@ import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { ImmutableDictionaryType } from "./immutable-dictionary-type";
 import { IntType } from "./int-type";
-import { IterableType } from "./itererable-type";
+import { IterableType } from "./iterable-type";
 import { ListType } from "./list-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";

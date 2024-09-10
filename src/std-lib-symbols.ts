@@ -10,7 +10,7 @@ import { FunctionType } from "./frames/symbols/function-type";
 import { GenericParameterType } from "./frames/symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./frames/symbols/immutable-dictionary-type";
 import { IntType } from "./frames/symbols/int-type";
-import { IterableType } from "./frames/symbols/itererable-type";
+import { IterableType } from "./frames/symbols/iterable-type";
 import { ListType } from "./frames/symbols/list-type";
 import { NullScope } from "./frames/symbols/null-scope";
 import { ProcedureType } from "./frames/symbols/procedure-type";

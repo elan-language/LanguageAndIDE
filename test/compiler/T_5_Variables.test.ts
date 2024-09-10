@@ -252,25 +252,21 @@ return [main, _tests];}`;
   test("Pass_Iter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
-function f() return Iterable<of Int>
-  return {1, 2}
-end function
+constant a set to {1, 2}
 
 main
-  var a set to f()
-  set a to {1, 2}
-  print a
+  var b set to a.map(lambda x as Int => x)
+  set b to {1, 2}
+  print b
 end main`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-function f() {
-  return system.list([1, 2]);
-}
+const a = system.list([1, 2]);
 
 async function main() {
-  var a = f();
-  a = system.list([1, 2]);
-  system.printLine(_stdlib.asString(a));
+  var b = _stdlib.map(a, (x) => x);
+  b = system.list([1, 2]);
+  system.printLine(_stdlib.asString(b));
 }
 return [main, _tests];}`;
 

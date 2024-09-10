@@ -77,11 +77,11 @@ return [main, _tests];}`;
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
 main
-  print filterIt(source).asList()
+  print filterIt(source)
 end main
 
-function filterIt(tofilter as Iterable<of Int>) return Iterable<of Int>
-    return tofilter.filter(lambda x as Int => x > 20)
+function filterIt(tofilter as List<of Int>) return List<of Int>
+    return tofilter.filter(lambda x as Int => x > 20).asList()
 end function
 `;
 
@@ -89,11 +89,11 @@ end function
 const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
 
 async function main() {
-  system.printLine(_stdlib.asString(_stdlib.asList(filterIt(source))));
+  system.printLine(_stdlib.asString(filterIt(source)));
 }
 
 function filterIt(tofilter) {
-  return _stdlib.filter(tofilter, (x) => x > 20);
+  return _stdlib.asList(_stdlib.filter(tofilter, (x) => x > 20));
 }
 return [main, _tests];}`;
 

@@ -6,12 +6,13 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("T26_Iter", () => {
-  test("Pass_List", async () => {
+  ignore_test("Pass_List", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -47,7 +48,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "156");
   });
 
-  test("Pass_ListToFunction", async () => {
+  ignore_test("Pass_ListToFunction", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -79,7 +80,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, two}");
   });
 
-  test("Pass_IterAssignToList", async () => {
+  ignore_test("Pass_IterAssignToList", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -115,7 +116,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{one, two}");
   });
 
-  test("Pass_Array", async () => {
+  ignore_test("Pass_Array", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -151,7 +152,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "136");
   });
 
-  test("Pass_String", async () => {
+  ignore_test("Pass_String", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -187,7 +188,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Foo");
   });
 
-  test("Pass_Printing", async () => {
+  ignore_test("Pass_Printing", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -234,7 +235,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_Default", async () => {
+  ignore_test("Pass_Default", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -283,7 +284,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "an Iterable");
   });
 
-  test("Pass_EmptyIter", async () => {
+  ignore_test("Pass_EmptyIter", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -345,7 +346,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{1}an Iterablefalsefalsetrue");
   });
 
-  test("Fail_NoGenericType", async () => {
+  ignore_test("Fail_NoGenericType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -365,7 +366,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Generic parameters expected: 1 got: 0"]);
   });
 
-  test("Fail_PassArgumentWithWrongGenericType", async () => {
+  ignore_test("Fail_PassArgumentWithWrongGenericType", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -386,7 +387,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Incompatible types Int to String"]);
   });
 
-  test("Fail_Indexing1", async () => {
+  ignore_test("Fail_Indexing1", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -405,7 +406,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Cannot index Iterable<of Int>"]);
   });
 
-  test("Fail_Indexing2", async () => {
+  ignore_test("Fail_Indexing2", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main

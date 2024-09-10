@@ -45,7 +45,7 @@ import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { ImmutableDictionaryType } from "./symbols/immutable-dictionary-type";
 import { IntType } from "./symbols/int-type";
-import { IterableType } from "./symbols/itererable-type";
+import { IterableType } from "./symbols/iterable-type";
 import { ListType } from "./symbols/list-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import { RegexType } from "./symbols/regex-type";
