@@ -4,6 +4,7 @@ export enum SymbolScope {
   stdlib,
   program,
   parameter,
+  outParameter,
   property,
   member,
   local,

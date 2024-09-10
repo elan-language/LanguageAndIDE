@@ -9,13 +9,16 @@ import {
 } from "../compile-rules";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
+import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
+import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
 import { scopePrefix, updateScopeAndQualifier } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import {
   containsGenericType,
   generateType,
@@ -124,11 +127,40 @@ export class CallStatement extends AbstractFrame implements Statement {
         isAsync = false;
       }
 
-      const pp = parameters.map((p) => p.compile()).join(", ");
+      const wrappedInParameters: string[] = [];
+      const wrappedOutParameters: string[] = [];
+      const passedParameters: string[] = [];
+
+      for (const p of parameters) {
+        let pName = p.compile();
+        if (isAstIdNode(p) && procSymbol instanceof ProcedureFrame) {
+          const s = procSymbol.resolveSymbol(p.id, transforms, this);
+
+          if (s.symbolScope === SymbolScope.outParameter) {
+            const tpName = `_${pName}`;
+            wrappedInParameters.push(`var ${tpName} = [${pName}]`);
+            wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
+            pName = tpName;
+          }
+        }
+        passedParameters.push(pName);
+      }
+
+      const pp = passedParameters.join(", ");
       const q = qualifier ? `${qualifier.compile()}` : scopePrefix(procSymbol.symbolScope);
       const a = isAsync ? "await " : "";
+      let prefix = "";
+      let postfix = "";
 
-      return `${this.indent()}${a}${q}${id}(${pp});`;
+      if (wrappedInParameters.length > 0) {
+        prefix = `${this.indent()}${wrappedInParameters.join("; ")};\n`;
+      }
+
+      if (wrappedOutParameters.length > 0) {
+        postfix = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
+      }
+
+      return `${prefix}${this.indent()}${a}${q}${id}(${pp});${postfix}`;
     }
     return "";
   }

@@ -2,12 +2,14 @@ import { CompileError } from "../compile-error";
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { Scope } from "../interfaces/scope";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
     private readonly type: AstIdNode,
+    private readonly out: boolean,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -40,6 +42,6 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   get symbolScope() {
-    return this.type.symbolScope;
+    return this.out ? SymbolScope.outParameter : SymbolScope.parameter;
   }
 }
