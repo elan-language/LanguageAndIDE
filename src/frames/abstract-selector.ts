@@ -70,7 +70,20 @@ export abstract class AbstractSelector extends AbstractFrame {
   getCompletion(): string {
     return this.optionsMatchingUserInput(this.text)
       .map((o) => o[0])
-      .reduce((soFar, kw) => `${soFar} ${kw}${kw.includes(" ") ? "," : ""}`, "");
+      .reduce((soFar, kw) => `${soFar} ${this.adjusted(kw, this.text, soFar)}`, "");
+  }
+
+  adjusted(kw: string, input: string, soFar: string): string {
+    const words = kw.split(" ");
+    if (words.length === 1) {
+      return kw;
+    } else if (input.startsWith(`${words[0]}`)) {
+      return words[1];
+    } else if (soFar.includes(`${words[0]}...`)) {
+      return "";
+    } else {
+      return `${words[0]}...`;
+    }
   }
 
   addFrame(keyword: string, pendingChars: string): Frame {
