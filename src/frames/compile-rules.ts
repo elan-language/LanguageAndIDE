@@ -795,7 +795,7 @@ export function CannotPassAsOutParameter(
     compileErrors.push(new OutParameterCompileError(parameter, location, false));
   } else {
     const unknown = parameter.symbolType() === UnknownType.Instance;
-    compileErrors.push(new OutParameterCompileError(parameter.compile(), location, unknown));
+    compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
   }
 }
 

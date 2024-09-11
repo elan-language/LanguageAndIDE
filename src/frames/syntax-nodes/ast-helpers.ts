@@ -21,6 +21,7 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
+import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
 export function isAstChainedNode(n: AstNode): n is ChainedAsn {
@@ -232,4 +233,75 @@ export function matchGenericTypes(
   match(flattened, pTypes, matches);
 
   return matches;
+}
+
+const opMap = new Map<OperationSymbol, string>([
+  [OperationSymbol.Add, "+"],
+  [OperationSymbol.Minus, "-"],
+  [OperationSymbol.Not, "not"],
+  [OperationSymbol.Multiply, "*"],
+  [OperationSymbol.And, "and"],
+  [OperationSymbol.Equals, "is"],
+  [OperationSymbol.LT, "<"],
+  [OperationSymbol.GT, ">"],
+  [OperationSymbol.GTE, ">="],
+  [OperationSymbol.LTE, "<="],
+  [OperationSymbol.Div, "div"],
+  [OperationSymbol.Mod, "mod"],
+  [OperationSymbol.Divide, "/"],
+  [OperationSymbol.NotEquals, "isnt"],
+  [OperationSymbol.Pow, "^"],
+  [OperationSymbol.Or, "or"],
+  [OperationSymbol.Xor, "xor"],
+]);
+
+export function mapOperationSymbol(os: OperationSymbol) {
+  const op = opMap.get(os);
+  if (op) {
+    return op;
+  }
+  throw new Error("Not implemented");
+}
+
+export function mapOperation(op: string) {
+  op = op.trim();
+
+  switch (op.trim()) {
+    case "+":
+      return OperationSymbol.Add;
+    case "-":
+      return OperationSymbol.Minus;
+    case "*":
+      return OperationSymbol.Multiply;
+    case "<":
+      return OperationSymbol.LT;
+    case ">":
+      return OperationSymbol.GT;
+    case ">=":
+      return OperationSymbol.GTE;
+    case "<=":
+      return OperationSymbol.LTE;
+    case "and":
+      return OperationSymbol.And;
+    case "or":
+      return OperationSymbol.Or;
+    case "xor":
+      return OperationSymbol.Xor;
+    case "not":
+      return OperationSymbol.Not;
+    case "is":
+      return OperationSymbol.Equals;
+    case "isnt":
+      return OperationSymbol.NotEquals;
+    case "div":
+      return OperationSymbol.Div;
+    case "mod":
+      return OperationSymbol.Mod;
+    case "/":
+      return OperationSymbol.Divide;
+    case "^":
+      return OperationSymbol.Pow;
+    default:
+      throw new Error("Not implemented");
+  }
 }

@@ -1199,4 +1199,54 @@ end function`;
       "Cannot pass 'bar()' as an out parameter"
     ]);
   });
+
+  test("Fail_PassProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo()
+  call foo(f.ff)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure
+
+class Foo
+  constructor()
+    set property.ff to 1
+  end constructor
+
+  property ff as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f.ff' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to [1,2]
+  call foo(f[0])
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f[0]' as an out parameter"
+    ]);
+  });
 });
