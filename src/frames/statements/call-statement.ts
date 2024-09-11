@@ -28,6 +28,7 @@ import {
 } from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
+import { LetStatement } from "./let-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -143,10 +144,15 @@ export class CallStatement extends AbstractFrame implements Statement {
         const symbolScope = i < parameterScopes.length ? parameterScopes[i] : SymbolScope.parameter;
         if (symbolScope === SymbolScope.outParameter) {
           if (isAstIdNode(p)) {
-            const tpName = `_${p.id}`;
-            wrappedInParameters.push(`var ${tpName} = [${pName}]`);
-            wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
-            pName = tpName;
+            const symbol = currentScope.resolveSymbol(p.id, transforms, this);
+            if (!(symbol instanceof LetStatement)) {
+              const tpName = `_${p.id}`;
+              wrappedInParameters.push(`var ${tpName} = [${pName}]`);
+              wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
+              pName = tpName;
+            } else {
+              CannotPassAsOutParameter(`let ${p.id}`, this.compileErrors, this.htmlId);
+            }
           } else {
             CannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
           }

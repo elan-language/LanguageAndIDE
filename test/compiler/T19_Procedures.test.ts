@@ -1098,4 +1098,25 @@ end procedure`;
       "Cannot pass 'a + b' as an out parameter"
     ]);
   });
+
+  test("Fail_PassLetAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  let a be 1
+  call foo(a)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'let a' as an out parameter"
+    ]);
+  });
 });

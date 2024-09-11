@@ -787,12 +787,16 @@ export function mustNotBeConstant(
 }
 
 export function CannotPassAsOutParameter(
-  parameter: AstNode,
+  parameter: AstNode | string,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const unknown = parameter.symbolType() === UnknownType.Instance;
-  compileErrors.push(new OutParameterCompileError(`'${parameter.compile()}'`, location, unknown));
+  if (typeof parameter === "string") {
+    compileErrors.push(new OutParameterCompileError(parameter, location, false));
+  } else {
+    const unknown = parameter.symbolType() === UnknownType.Instance;
+    compileErrors.push(new OutParameterCompileError(parameter.compile(), location, unknown));
+  }
 }
 
 export function mustBeUniqueNameInScope(
