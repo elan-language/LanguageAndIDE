@@ -27,6 +27,6 @@ export class DeconstructedListAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `[${this.head}:${this.tail}]`;
+    return `${this.head}:${this.tail}`;
   }
 }

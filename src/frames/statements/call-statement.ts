@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import {
+  CannotPassAsOutParameter,
   mustBeKnownSymbol,
   mustBeProcedure,
   mustCallExtensionViaQualifier,
@@ -13,7 +14,6 @@ import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -28,6 +28,8 @@ import {
 } from "../syntax-nodes/ast-helpers";
 import { QualifierAsn } from "../syntax-nodes/qualifier-asn";
 import { Transforms } from "../syntax-nodes/transforms";
+import { LetStatement } from "./let-statement";
+import { VarStatement } from "./var-statement";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;
@@ -89,14 +91,14 @@ export class CallStatement extends AbstractFrame implements Statement {
     const argList = this.args.getOrTransformAstNode(transforms);
 
     if (isAstCollectionNode(argList)) {
-      let parameters = argList.items;
+      let callParameters = argList.items;
       let isAsync: boolean = false;
 
       if (ps instanceof ProcedureType) {
         mustCallExtensionViaQualifier(ps, qualifier, this.compileErrors, this.htmlId);
 
         if (ps.isExtension && qualifier instanceof QualifierAsn) {
-          parameters = [qualifier.value as AstNode].concat(parameters);
+          callParameters = [qualifier.value as AstNode].concat(callParameters);
           qualifier = undefined;
         }
 
@@ -113,7 +115,7 @@ export class CallStatement extends AbstractFrame implements Statement {
         }
 
         mustMatchParameters(
-          parameters,
+          callParameters,
           parameterTypes,
           ps.isExtension,
           this.compileErrors,
@@ -131,16 +133,35 @@ export class CallStatement extends AbstractFrame implements Statement {
       const wrappedOutParameters: string[] = [];
       const passedParameters: string[] = [];
 
-      for (const p of parameters) {
-        let pName = p.compile();
-        if (isAstIdNode(p) && procSymbol instanceof ProcedureFrame) {
-          const s = procSymbol.resolveSymbol(p.id, transforms, this);
+      const parameterDefScopes =
+        procSymbol instanceof ProcedureFrame
+          ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
+          : [];
 
-          if (s.symbolScope === SymbolScope.outParameter) {
-            const tpName = `_${p.id}`;
-            wrappedInParameters.push(`var ${tpName} = [${pName}]`);
-            wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
-            pName = tpName;
+      for (let i = 0; i < callParameters.length; i++) {
+        const p = callParameters[i];
+        let pName = p.compile();
+
+        const parameterDefScope =
+          i < parameterDefScopes.length ? parameterDefScopes[i] : SymbolScope.parameter;
+        if (parameterDefScope === SymbolScope.outParameter) {
+          if (isAstIdNode(p)) {
+            const callParamSymbol = this.getParentScope().resolveSymbol(p.id, transforms, this);
+            if (
+              callParamSymbol instanceof VarStatement ||
+              callParamSymbol.symbolScope === SymbolScope.parameter ||
+              callParamSymbol.symbolScope === SymbolScope.outParameter
+            ) {
+              const tpName = `_${p.id}`;
+              wrappedInParameters.push(`var ${tpName} = [${pName}]`);
+              wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
+              pName = tpName;
+            } else {
+              const msg = callParamSymbol instanceof LetStatement ? `let ${p.id}` : p;
+              CannotPassAsOutParameter(msg, this.compileErrors, this.htmlId);
+            }
+          } else {
+            CannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
           }
         }
         passedParameters.push(pName);

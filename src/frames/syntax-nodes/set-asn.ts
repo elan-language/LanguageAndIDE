@@ -28,6 +28,6 @@ export class SetAsn extends AbstractAstNode implements AstIdNode {
   }
 
   toString() {
-    return `Set (${this.id}) (${this.to})`;
+    return `set ${this.id} to ${this.to}`;
   }
 }

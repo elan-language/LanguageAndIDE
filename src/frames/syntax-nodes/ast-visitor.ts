@@ -65,7 +65,7 @@ import { VarRefNode } from "../parse-nodes/var-ref-node";
 import { SetStatement } from "../statements/set-statement";
 import { EnumType } from "../symbols/enum-type";
 import { wrapScopeInScope } from "../symbols/symbol-helpers";
-import { isAstIdNode, isAstQualifierNode } from "./ast-helpers";
+import { isAstIdNode, isAstQualifierNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
 import { CompositeAsn } from "./composite-asn";
@@ -108,51 +108,6 @@ import { TypeAsn } from "./type-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 import { WithAsn } from "./with-asn";
-
-function mapOperation(op: string) {
-  switch (op.trim()) {
-    case "+":
-      return OperationSymbol.Add;
-    case "-":
-      return OperationSymbol.Minus;
-    case "*":
-      return OperationSymbol.Multiply;
-    case "<":
-      return OperationSymbol.LT;
-    case ">":
-      return OperationSymbol.GT;
-    case ">=":
-      return OperationSymbol.GTE;
-    case "<=":
-      return OperationSymbol.LTE;
-    case "and":
-      return OperationSymbol.And;
-    case "or":
-      return OperationSymbol.Or;
-    case "xor":
-      return OperationSymbol.Xor;
-    case "not":
-      return OperationSymbol.Not;
-    case "is":
-      return OperationSymbol.Equals;
-    case "isnt":
-      return OperationSymbol.NotEquals;
-    case "div":
-      return OperationSymbol.Div;
-    case "mod":
-      return OperationSymbol.Mod;
-    case "/":
-      return OperationSymbol.Divide;
-    case "^":
-      return OperationSymbol.Pow;
-    default:
-      throw new Error("Not implemented");
-  }
-}
-
-export function asCsv(nodes: AstNode[], id: string, scope: Scope) {
-  return new CsvAsn(nodes, id, scope);
-}
 
 export function transformMany(
   node: CSV | Multiple | Sequence,

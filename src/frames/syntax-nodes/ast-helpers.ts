@@ -21,6 +21,7 @@ import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
 import { ChainedAsn } from "./chained-asn";
+import { OperationSymbol } from "./operation-symbol";
 import { Transforms } from "./transforms";
 
 export function isAstChainedNode(n: AstNode): n is ChainedAsn {
@@ -232,4 +233,43 @@ export function matchGenericTypes(
   match(flattened, pTypes, matches);
 
   return matches;
+}
+
+const opMap = new Map<OperationSymbol, string>([
+  [OperationSymbol.Add, "+"],
+  [OperationSymbol.Minus, "-"],
+  [OperationSymbol.Not, "not"],
+  [OperationSymbol.Multiply, "*"],
+  [OperationSymbol.And, "and"],
+  [OperationSymbol.Equals, "is"],
+  [OperationSymbol.LT, "<"],
+  [OperationSymbol.GT, ">"],
+  [OperationSymbol.GTE, ">="],
+  [OperationSymbol.LTE, "<="],
+  [OperationSymbol.Div, "div"],
+  [OperationSymbol.Mod, "mod"],
+  [OperationSymbol.Divide, "/"],
+  [OperationSymbol.NotEquals, "isnt"],
+  [OperationSymbol.Pow, "^"],
+  [OperationSymbol.Or, "or"],
+  [OperationSymbol.Xor, "xor"],
+]);
+
+export function mapOperationSymbol(os: OperationSymbol) {
+  const op = opMap.get(os);
+  if (op) {
+    return op;
+  }
+  throw new Error("Not implemented");
+}
+
+export function mapOperation(op: string): OperationSymbol {
+  op = op.trim();
+
+  for (const e of opMap.entries()) {
+    if (e[1] === op) {
+      return e[0];
+    }
+  }
+  throw new Error("Not implemented");
 }

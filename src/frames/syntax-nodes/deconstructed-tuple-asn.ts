@@ -38,6 +38,6 @@ export class DeconstructedTupleAsn extends AbstractAstNode implements AstIdNode 
 
   toString() {
     const it = this.items.map((p) => p.toString()).join(", ");
-    return `(${it})`;
+    return `${it}`;
   }
 }

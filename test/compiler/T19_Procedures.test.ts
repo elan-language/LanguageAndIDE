@@ -415,9 +415,9 @@ main
   print b
 end main
 
-procedure foo(out a as Float, out b as String)
-  set a to 3
-  set b to "goodbye"
+procedure foo(out x as Float, out y as String)
+  set x to 3
+  set y to "goodbye"
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -431,9 +431,9 @@ async function main() {
   system.printLine(_stdlib.asString(b));
 }
 
-async function foo(a, b) {
-  a[0] = 3;
-  b[0] = "goodbye";
+async function foo(x, y) {
+  x[0] = 3;
+  y[0] = "goodbye";
 }
 return [main, _tests];}`;
 
@@ -457,10 +457,10 @@ main
   print b
 end main
 
-procedure foo(out a as Float, out b as Float)
-  var c set to a
-  set a to b
-  set b to c
+procedure foo(out x as Float, out y as Float)
+  var c set to x
+  set x to y
+  set y to c
 end procedure`;
 
     const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -474,10 +474,10 @@ async function main() {
   system.printLine(_stdlib.asString(b));
 }
 
-async function foo(a, b) {
-  var c = a[0];
-  a[0] = b[0];
-  b[0] = c;
+async function foo(x, y) {
+  var c = x[0];
+  x[0] = y[0];
+  y[0] = c;
 }
 return [main, _tests];}`;
 
@@ -544,7 +544,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  ignore_test("Pass_CallOnOutParameters", async () => {
+  test("Pass_CallOnOutParameters", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
 
 main
@@ -554,16 +554,16 @@ main
   print b
 end main
 
-procedure foo(out a as Foo, out b as Int)
-  call a.bar(b)
+procedure foo(out f as Foo, out y as Int)
+  call f.bar(y)
 end procedure
 
 class Foo
   constructor()
   end constructor
 
-  procedure bar(out a as Int)
-    set a to 1
+  procedure bar(out z as Int)
+    set z to 1
   end procedure
 end class`;
 
@@ -577,8 +577,10 @@ async function main() {
   system.printLine(_stdlib.asString(b));
 }
 
-async function foo(a, b) {
-  await a[0].bar(b[0]);
+async function foo(f, y) {
+  var _y = [y[0]];
+  await f[0].bar(_y);
+  y[0] = _y[0];
 }
 
 class Foo {
@@ -587,8 +589,8 @@ class Foo {
 
   }
 
-  async bar(a) {
-    a[0] = 1;
+  async bar(z) {
+    z[0] = 1;
   }
 
 }
@@ -601,6 +603,62 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_ExpressionOnOutParameters", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to new Foo()
+  var b set to 100
+  call foo(a, b)
+  print b
+end main
+
+procedure foo(out f as Foo, out y as Int)
+  set y to f.ff + y
+end procedure
+
+class Foo
+  constructor()
+    set property.ff to 1
+  end constructor
+
+  property ff as Int
+end class`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = system.initialise(new Foo());
+  var b = 100;
+  var _a = [a]; var _b = [b];
+  await foo(_a, _b);
+  a = _a[0]; b = _b[0];
+  system.printLine(_stdlib.asString(b));
+}
+
+async function foo(f, y) {
+  y[0] = f[0].ff + y[0];
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};
+  constructor() {
+    this.ff = 1;
+  }
+
+  ff = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "101");
   });
 
 
@@ -1052,6 +1110,143 @@ end main`;
     assertDoesNotCompile(fileImpl, [
       "Incompatible types Procedure to ArrayList",
       "Cannot call Procedure",
+    ]);
+  });
+
+  test("Fail_PassLiteralAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call foo(0)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass '0' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassExpressionAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 1
+  var b set to 2
+  call foo(a + b)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'a + b' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassLetAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  let a be 1
+  call foo(a)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'let a' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassFuncCall", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call foo(bar())
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure
+
+function bar() return Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'bar()' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassProperty", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to new Foo()
+  call foo(f.ff)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure
+
+class Foo
+  constructor()
+    set property.ff to 1
+  end constructor
+
+  property ff as Int
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f.ff' as an out parameter"
+    ]);
+  });
+
+  test("Fail_PassIndex", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var f set to [1,2]
+  call foo(f[0])
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'f[0]' as an out parameter"
     ]);
   });
 });

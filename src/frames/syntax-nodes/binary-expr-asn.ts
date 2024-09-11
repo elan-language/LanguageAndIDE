@@ -16,6 +16,7 @@ import { ListType } from "../symbols/list-type";
 import { StringType } from "../symbols/string-type";
 import { isValueType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { mapOperationSymbol } from "./ast-helpers";
 import { ExprAsn } from "./expr-asn";
 import { OperationSymbol } from "./operation-symbol";
 
@@ -228,6 +229,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${OperationSymbol[this.op]} (${this.lhs}) (${this.rhs})`;
+    return `${this.lhs} ${mapOperationSymbol(this.op)} ${this.rhs}`;
   }
 }

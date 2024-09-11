@@ -16,6 +16,7 @@ import {
   NotNewableCompileError,
   NotRangeableCompileError,
   NotUniqueNameCompileError,
+  OutParameterCompileError,
   ParametersCompileError,
   PrintFunctionCompileError,
   PrivatePropertyCompileError,
@@ -782,6 +783,19 @@ export function mustNotBeConstant(
 
   if (s === SymbolScope.program) {
     compileErrors.push(new MutateCompileError(`constant`, location));
+  }
+}
+
+export function CannotPassAsOutParameter(
+  parameter: AstNode | string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (typeof parameter === "string") {
+    compileErrors.push(new OutParameterCompileError(parameter, location, false));
+  } else {
+    const unknown = parameter.symbolType() === UnknownType.Instance;
+    compileErrors.push(new OutParameterCompileError(parameter.toString(), location, unknown));
   }
 }
 

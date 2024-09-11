@@ -35,6 +35,6 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `Ternary (${this.condition}) ? (${this.expr1}) : (${this.expr2})`;
+    return `${this.condition} ? ${this.expr1} : ${this.expr2}`;
   }
 }

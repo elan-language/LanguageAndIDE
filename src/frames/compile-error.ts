@@ -141,6 +141,12 @@ export class MustBeImmutableCompileError extends CompileError {
   }
 }
 
+export class OutParameterCompileError extends CompileError {
+  constructor(name: string, location: string, unknown: boolean) {
+    super(Priority.typeError, `Cannot pass '${name}' as an out parameter`, location, unknown);
+  }
+}
+
 export class ExtensionCompileError extends CompileError {
   constructor(location: string) {
     super(Priority.illegalOperation, `Cannot call extension method directly`, location, false);
