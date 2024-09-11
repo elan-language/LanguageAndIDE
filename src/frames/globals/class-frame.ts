@@ -29,13 +29,7 @@ import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { ElanSymbol } from "../interfaces/symbol";
-import {
-  abstractKeyword,
-  classKeyword,
-  immutableKeyword,
-  inheritsKeyword,
-  thisKeyword,
-} from "../keywords";
+import { classKeyword, inheritsKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -70,23 +64,26 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   isParent: boolean = true;
   isClass: boolean = true;
   public name: TypeNameField;
-  public abstract: OptionalKeyword;
-  public immutable: OptionalKeyword;
+  public abstract: boolean;
+  public immutable: boolean;
   public inherits: OptionalKeyword;
   public superClasses: InheritsFrom;
   private _children: Array<Frame> = new Array<Frame>();
 
-  constructor(parent: File) {
+  constructor(parent: File, abstract = false, immutable = false) {
     super(parent);
     this.name = new TypeNameField(this);
-    this.abstract = new OptionalKeyword(this, abstractKeyword);
-    this.immutable = new OptionalKeyword(this, immutableKeyword);
     this.inherits = new OptionalKeyword(this, inheritsKeyword);
     this.superClasses = new InheritsFrom(this);
     this.superClasses.setOptional(true);
-    this.getChildren().push(new Constructor(this));
+    this.immutable = immutable;
+    this.abstract = abstract;
+    if (!abstract) {
+      this.getChildren().push(new Constructor(this));
+    }
     this.getChildren().push(new MemberSelector(this));
   }
+
   getFile(): File {
     return this.getParent() as File;
   }
@@ -184,15 +181,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
 
   fieldUpdated(field: Field): void {
-    if (field === this.abstract) {
-      if (this.abstract.keywordExists()) {
-        if ("isConstructor" in this.getChildren()[0]) {
-          this.getChildren().splice(0, 1);
-        }
-      } else if (!("isConstructor" in this.getChildren()[0])) {
-        this.getChildren().splice(0, 0, new Constructor(this));
-      }
-    } else if (field === this.inherits) {
+    if (field === this.inherits) {
       if (this.inherits.keywordExists()) {
         this.superClasses.setOptional(false);
       } else {
@@ -208,16 +197,17 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
 
   isAbstract(): boolean {
-    return this.abstract.keywordExists();
+    return this.abstract;
   }
   makeAbstract(): void {
-    this.abstract.specify();
+    this.abstract = true;
+    this.getChildren().splice(0, 1); //remove constructor
   }
   isImmutable(): boolean {
-    return this.immutable.keywordExists();
+    return this.immutable;
   }
   makeImmutable(): void {
-    this.immutable.specify();
+    this.immutable = true;
   }
   doesInherit(): boolean {
     return this.inherits.keywordExists();
@@ -227,9 +217,7 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
 
   getFields(): Field[] {
-    return this.hasAddedMembers()
-      ? [this.name, this.inherits, this.superClasses]
-      : [this.abstract, this.immutable, this.name, this.inherits, this.superClasses];
+    return [this.name, this.inherits, this.superClasses];
   }
 
   getIdPrefix(): string {
@@ -237,12 +225,8 @@ export class ClassFrame extends AbstractFrame implements Class, Parent, Collapsi
   }
   private modifiersAsHtml(): string {
     let result = "";
-    if (this.hasAddedMembers()) {
-      result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
-      result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
-    } else {
-      result += `${this.abstract.renderAsHtml()} ${this.immutable.renderAsHtml()} `;
-    }
+    result += this.isAbstract() ? `<keyword>abstract </keyword>` : ``;
+    result += this.isImmutable() ? `<keyword>immutable </keyword>` : ``;
     return result;
   }
   private modifiersAsSource(): string {

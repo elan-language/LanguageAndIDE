@@ -4,7 +4,8 @@ import { Frame } from "../interfaces/frame";
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
 import {
-  abstractKeyword,
+  abstractClassKeywords,
+  abstractImmutableKeywords,
   classKeyword,
   commentMarker,
   constantKeyword,
@@ -32,13 +33,14 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [mainKeyword, (parent: Parent) => this.file.createMain()],
       [procedureKeyword, (parent: Parent) => this.file.createProcedure()],
       [functionKeyword, (parent: Parent) => this.file.createFunction()],
-      [classKeyword, (parent: Parent) => this.file.createClass()],
       [constantKeyword, (parent: Parent) => this.file.createConstant()],
       [enumKeyword, (parent: Parent) => this.file.createEnum()],
       [testKeyword, (parent: Parent) => this.file.createTest()],
       [commentMarker, (parent: Parent) => this.file.createGlobalComment()],
-      [abstractKeyword, (parent: Parent) => this.file.createClass()],
-      [immutableKeyword, (parent: Parent) => this.file.createClass()],
+      [classKeyword, (parent: Parent) => this.file.createClass(false, false)],
+      [abstractClassKeywords, (parent: Parent) => this.file.createClass(true, false)],
+      [abstractImmutableKeywords, (parent: Parent) => this.file.createClass(true, true)],
+      [immutableKeyword, (parent: Parent) => this.file.createClass(false, true)],
     ];
   }
 
@@ -50,9 +52,6 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     let result = false;
     if (keyword === mainKeyword) {
       result = !this.file.containsMain();
-    } else if (keyword === abstractKeyword || keyword === immutableKeyword) {
-      //Those options available for parsing code from file only
-      result = !userEntry;
     } else {
       result = true;
     }
