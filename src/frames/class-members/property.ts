@@ -89,7 +89,6 @@ ${this.indent()}}\r\n`;
     const priv = `${privateKeyword} `;
     if (source.isMatch(priv)) {
       source.remove(priv);
-      this.private = true;
     }
     source.remove(`${propertyKeyword} `);
     this.name.parseFrom(source);

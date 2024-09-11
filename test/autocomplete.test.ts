@@ -52,7 +52,7 @@ end class`;
       ["aa3", "Int"],
     ] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident18", "a", 1, expected);
+    await assertAutocompletes(fileImpl, "ident16", "a", 1, expected);
   });
 
   test("Pass_FiltersByInput", async () => {
@@ -157,7 +157,7 @@ end main`;
       ["proc2", "Procedure ()"],
     ] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident39", ".", 3, expected);
+    await assertAutocompletes(fileImpl, "ident37", ".", 3, expected);
   });
 
   test("Pass_CallMembersFilter", async () => {
@@ -194,7 +194,7 @@ end main`;
 
     const expected = [["pproc3", "Procedure ()"]] as [string, string][];
 
-    await assertAutocompletes(fileImpl, "ident39", "p", 5, expected);
+    await assertAutocompletes(fileImpl, "ident37", "p", 5, expected);
   });
 
   test("Pass_CallExtensions", async () => {

@@ -29,7 +29,13 @@ import { Parent } from "../interfaces/parent";
 import { Profile } from "../interfaces/profile";
 import { StatementFactory } from "../interfaces/statement-factory";
 import { ElanSymbol } from "../interfaces/symbol";
-import { classKeyword, inheritsKeyword, thisKeyword } from "../keywords";
+import {
+  abstractKeyword,
+  classKeyword,
+  immutableKeyword,
+  inheritsKeyword,
+  thisKeyword,
+} from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -370,19 +376,17 @@ ${parentHelper_compileChildren(this, transforms)}\r${asString}\r
     }
   }
   parseTop(source: CodeSource): boolean {
-    const abs = "abstract ";
+    const abs = `${abstractKeyword} `;
     if (source.isMatch(abs)) {
       source.remove(abs);
-      this.makeAbstract();
     }
-    const imm = "immutable ";
+    const imm = `${immutableKeyword} `;
     if (source.isMatch(imm)) {
       source.remove(imm);
-      this.makeImmutable();
     }
-    source.remove("class ");
+    source.remove(`${classKeyword} `);
     this.name.parseFrom(source);
-    const inh = " inherits "; //Note leading & trailing space
+    const inh = ` ${inheritsKeyword} `; //Note leading & trailing space
     if (source.isMatch(inh)) {
       source.remove(inh);
       this.makeInherits();
