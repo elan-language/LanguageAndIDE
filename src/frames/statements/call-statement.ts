@@ -137,7 +137,7 @@ export class CallStatement extends AbstractFrame implements Statement {
           const s = procSymbol.resolveSymbol(p.id, transforms, this);
 
           if (s.symbolScope === SymbolScope.outParameter) {
-            const tpName = `_${pName}`;
+            const tpName = `_${p.id}`;
             wrappedInParameters.push(`var ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
