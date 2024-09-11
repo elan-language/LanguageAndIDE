@@ -2,7 +2,8 @@ import { AbstractFrame } from "../abstract-frame";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import {
-  CannotPassAsOutParameter,
+  cannotCallOnParameter,
+  cannotPassAsOutParameter,
   mustBeKnownSymbol,
   mustBeProcedure,
   mustCallExtensionViaQualifier,
@@ -158,13 +159,20 @@ export class CallStatement extends AbstractFrame implements Statement {
               pName = tpName;
             } else {
               const msg = callParamSymbol instanceof LetStatement ? `let ${p.id}` : p;
-              CannotPassAsOutParameter(msg, this.compileErrors, this.htmlId);
+              cannotPassAsOutParameter(msg, this.compileErrors, this.htmlId);
             }
           } else {
-            CannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
+            cannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
           }
         }
         passedParameters.push(pName);
+      }
+
+      if (qualifier instanceof QualifierAsn && isAstIdNode(qualifier.value)) {
+        const qSymbol = this.getParentScope().resolveSymbol(qualifier.value.id, transforms, this);
+        if (qSymbol.symbolScope === SymbolScope.parameter) {
+          cannotCallOnParameter(qualifier.value, this.compileErrors, this.htmlId);
+        }
       }
 
       const pp = passedParameters.join(", ");

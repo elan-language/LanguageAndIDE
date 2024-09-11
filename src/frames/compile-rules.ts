@@ -762,6 +762,14 @@ export function mustNotBeParameter(
   }
 }
 
+export function cannotCallOnParameter(
+  assignable: AstNode,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new MutateCompileError(`parameter: ${getId(assignable)}`, location));
+}
+
 export function mustNotBeCounter(
   assignable: AstNode,
   compileErrors: CompileError[],
@@ -786,7 +794,7 @@ export function mustNotBeConstant(
   }
 }
 
-export function CannotPassAsOutParameter(
+export function cannotPassAsOutParameter(
   parameter: AstNode | string,
   compileErrors: CompileError[],
   location: string,
