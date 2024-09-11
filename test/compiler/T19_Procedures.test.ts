@@ -445,6 +445,50 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3goodbye");
   });
 
+  test("Pass_SetFromOutParameters", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 2
+  var b set to 3
+  call foo(a, b)
+  print a
+  print b
+end main
+
+procedure foo(out a as Float, out b as Float)
+  var c set to a
+  set a to b
+  set b to c
+end procedure`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var a = 2;
+  var b = 3;
+  var _a = [a]; var _b = [b];
+  await foo(_a, _b);
+  a = _a[0]; b = _b[0];
+  system.printLine(_stdlib.asString(a));
+  system.printLine(_stdlib.asString(b));
+}
+
+async function foo(a, b) {
+  var c = a[0];
+  a[0] = b[0];
+  b[0] = c;
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "32");
+  });
+
 
   test("Fail_CallingUndeclaredProc", async () => {
     const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid

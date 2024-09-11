@@ -52,20 +52,27 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     mustBeKnownSymbol(symbol, this.compileErrors, this.fieldId);
 
+    let prefix = "";
+
+    let postfix = "";
+
+    if (symbol.symbolScope === SymbolScope.outParameter) {
+      postfix = `[0]`;
+    }
     if (symbol instanceof LetStatement) {
-      return `${this.id}()`;
+      postfix = `${postfix}()`;
     }
     if (symbol.symbolScope === SymbolScope.stdlib) {
-      return `_stdlib.${this.id}`;
+      prefix = "_stdlib.";
     }
     if (symbol.symbolScope === SymbolScope.property && !this.classScope) {
-      return `this.${this.id}`;
+      prefix = "this.";
     }
     if (!isPropertyOnFieldsClass(symbol, this.scope)) {
       mustBePublicProperty(symbol, this.compileErrors, this.fieldId);
     }
 
-    return this.id;
+    return `${prefix}${this.id}${postfix}`;
   }
 
   symbolType() {

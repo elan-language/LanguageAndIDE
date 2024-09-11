@@ -125,7 +125,12 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     const q = this.getQualifier();
     const call = symbol instanceof LetStatement ? "()" : "";
-    const idx = this.index ? this.index.compile() : "";
+    const idx = this.index
+      ? this.index.compile()
+      : symbol.symbolScope === SymbolScope.outParameter
+        ? "[0]"
+        : "";
+
     let code = `${q}${this.id}${call}${idx}`;
 
     if (this.isIndex() || this.isRange()) {
