@@ -1076,4 +1076,26 @@ end procedure`;
       "Cannot pass '0' as an out parameter"
     ]);
   });
+
+  test("Fail_PassExpressionAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  var a set to 1
+  var b set to 2
+  call foo(a + b)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass 'a + b' as an out parameter"
+    ]);
+  });
 });
