@@ -2,6 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { Constructor } from "../class-members/constructor";
 import { CodeSource } from "../code-source";
 import {
+  CannotPassAsOutParameter,
   mustBeKnownSymbol,
   mustBeProcedure,
   mustCallExtensionViaQualifier,
@@ -13,7 +14,6 @@ import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { callKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
@@ -139,15 +139,16 @@ export class CallStatement extends AbstractFrame implements Statement {
       for (let i = 0; i < parameters.length; i++) {
         const p = parameters[i];
         let pName = p.compile();
-        if (isAstIdNode(p)) {
-          const symbolScope =
-            i < parameterScopes.length ? parameterScopes[i] : SymbolScope.parameter;
 
-          if (symbolScope === SymbolScope.outParameter) {
+        const symbolScope = i < parameterScopes.length ? parameterScopes[i] : SymbolScope.parameter;
+        if (symbolScope === SymbolScope.outParameter) {
+          if (isAstIdNode(p)) {
             const tpName = `_${p.id}`;
             wrappedInParameters.push(`var ${tpName} = [${pName}]`);
             wrappedOutParameters.push(`${pName} = ${tpName}[0]`);
             pName = tpName;
+          } else {
+            CannotPassAsOutParameter(p, this.compileErrors, this.htmlId);
           }
         }
         passedParameters.push(pName);

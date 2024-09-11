@@ -1056,4 +1056,24 @@ end main`;
       "Cannot call Procedure",
     ]);
   });
+
+  test("Fail_PassLiteralAsOut", async () => {
+    const code = `# FFFFFFFFFFFFFFFF Elan Beta 2 valid
+
+main
+  call foo(0)
+end main
+
+procedure foo(out a as Int)
+  set a to 1
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot pass '0' as an out parameter"
+    ]);
+  });
 });
