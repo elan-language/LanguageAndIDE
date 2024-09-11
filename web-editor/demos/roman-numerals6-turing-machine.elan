@@ -1,4 +1,4 @@
-# f81e39689492d9ba41bc359470fdec6abe8405e0968b4a7a735733e17ac17815 Elan Beta 2 valid
+# 0b2b61f86b2a2c1e9c7ccfdb1061e20d00cf5ec70c7acc49e791bda1cee38883 Elan Beta 2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -18,7 +18,7 @@ main
     set steps to steps + 1
     call clearConsole()
     print tm.tape
-    print "{spaces.substring(0, tm.headPosition - 1)}^"
+    print "{spaces[0..tm.headPosition - 1]}^"
     print "Step: {steps}\nState: {tm.currentState}\nRule applied: {rule}"
     call pause(40)
   end while
