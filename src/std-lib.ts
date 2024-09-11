@@ -178,6 +178,10 @@ export class StdLib {
     this.system.safeArrayListSet(list, index, value);
   }
 
+  putAt2D<T>(list: Array<Array<T>>, col: number, row: number, value: T) {
+    this.system.safeArrayListSet(list[col], row, value);
+  }
+
   putAtKey<T>(dict: { [key: string]: T }, key: string, value: T) {
     this.system.safeDictionarySet(dict, key, value);
   }
