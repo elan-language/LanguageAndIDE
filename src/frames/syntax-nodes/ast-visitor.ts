@@ -108,6 +108,8 @@ import { TypeAsn } from "./type-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 import { VarAsn } from "./var-asn";
 import { WithAsn } from "./with-asn";
+import { TypeOfNode } from "../parse-nodes/type-of-node";
+import { TypeOfAsn } from "./typeof-asn";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -495,6 +497,11 @@ export function transform(
     const q = transform(node.prefix, fieldId, scope) as AstQualifierNode | undefined;
     const id = node.simple!.matchedText;
     return new VarAsn(id, false, q, undefined, fieldId, scope);
+  }
+
+  if (node instanceof TypeOfNode) {
+    const term = transform(node.argument, fieldId, scope);
+    return new TypeOfAsn(term!, fieldId, scope);
   }
 
   throw new Error("Not implemented " + (node ? node.constructor.name : "undefined"));
