@@ -589,4 +589,33 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
   });
+  test("2D arrays", async () => {
+    const code = `# FFFF Elan Beta 2 valid
+
+main
+  var oxoBoard set to create2DArray(3,3,"")
+  call oxoBoard.putAt2D(0, 0, "o")
+  call oxoBoard.putAt2D(2, 2, "o")
+  call oxoBoard.putAt2D(1, 1, "x")
+  print oxoBoard
+end main`;
+
+    const objectCode = `var system; var _stdlib; var _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+async function main() {
+  var oxoBoard = _stdlib.create2DArray(3, 3, "");
+  _stdlib.putAt2D(oxoBoard, 0, 0, "o");
+  _stdlib.putAt2D(oxoBoard, 2, 2, "o");
+  _stdlib.putAt2D(oxoBoard, 1, 1, "x");
+  system.printLine(_stdlib.asString(oxoBoard));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[[o, , ], [, x, ], [, , o]]");
+  });
 });
