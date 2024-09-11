@@ -41,6 +41,6 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `(${this.type.name}).${this.value}`;
+    return `${this.type.name}.${this.value}`;
   }
 }

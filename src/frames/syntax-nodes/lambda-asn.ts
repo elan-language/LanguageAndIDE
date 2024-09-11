@@ -33,6 +33,6 @@ export class LambdaAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `Lambda (${this.signature}) => (${this.body})`;
+    return `lambda ${this.signature} => ${this.body}`;
   }
 }

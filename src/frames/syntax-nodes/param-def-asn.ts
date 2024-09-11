@@ -38,7 +38,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   toString() {
-    return `Param ${this.id} : ${this.type}`;
+    return `${this.out ? "out " : ""}${this.id} as ${this.type}`;
   }
 
   get symbolScope() {

@@ -81,6 +81,6 @@ export class WithAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `With (${this.obj}) (${this.withClause})`;
+    return `${this.obj} copy with ${this.withClause}`;
   }
 }

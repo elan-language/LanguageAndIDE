@@ -125,6 +125,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   toString() {
     const pp = this.genericParameters.map((p) => p.toString()).join(", ");
     const gp = pp ? `<${pp}>` : "";
-    return `Type ${this.id}${gp}`;
+    return `${this.id}${gp}`;
   }
 }

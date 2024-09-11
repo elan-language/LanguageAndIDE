@@ -39,6 +39,6 @@ export class RangeAsn extends AbstractAstNode implements AstNode {
   toString() {
     const f = this.from ? `${this.from}` : "";
     const t = this.to ? `${this.to}` : "";
-    return `Range ${f}..${t}`;
+    return `${f}..${t}`;
   }
 }

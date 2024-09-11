@@ -28,6 +28,6 @@ export class EmptyTypeAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `Default (${this.type})`;
+    return `${this.type}`;
   }
 }
